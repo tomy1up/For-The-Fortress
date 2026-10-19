@@ -1,0 +1,14 @@
+# Fichiers locaux et temporaires
+~$*
+*.tmp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Paramètres privés
+.env
+.env.*
+!.env.example
+
+# Cache Godot si ce moteur est retenu
+.godot/
