@@ -30,6 +30,10 @@ Les coûts d’achat de 50, 75 et 100 or, les DPS de 8, 9,6 et 10,8 et les amél
 
 PC sur Steam en priorité ; Godot envisagé ; modèle premium avec prix de travail de 7,99 €. Cibles envisagées : deux factions, seize défenseurs, six cartes, environ soixante bonus, douze familles d’ennemis et six boss. Le mode infini est seulement envisagé. Ces cibles ne constituent pas des engagements de production.
 
+## Proposition de vagues à valider
+
+La [composition détaillée des dix vagues](design/Proposition_dix_vagues.md) décrit les quantités, les horaires d’apparition, les revenus maximaux et un scénario de dépenses. Son statut est **P — proposition à valider** ; ses réglages sont des hypothèses H et ne constituent pas encore des décisions approuvées du GDD.
+
 ## Statuts et suivi
 
 Le GDD utilise **V** validé, **H** hypothèse, **C** cible, **O** ouvert et **P** proposition. La feuille de route et les conventions de suivi sont proposées, sans nouvelle fonctionnalité approuvée. Les calculs économiques dérivés sont identifiés.
