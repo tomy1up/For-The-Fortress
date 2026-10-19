@@ -8,7 +8,7 @@ Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. 
 
 - [GDD Word](For_the_Fortress_GDD.docx) : présentation structurée avec sommaire et tableaux.
 - [GDD Markdown](For_the_Fortress_GDD.md) : référence éditoriale adaptée au versionnement Git.
-- Version documentaire : **0.2 — 19 octobre 2026**, consolidée à partir du GDD v0.1 et de cinq captures transmises.
+- Version documentaire : **0.3 — 19 octobre 2026**, consolidée à partir du GDD v0.1, de cinq captures et des règles de combat Alliance approuvées.
 
 ## Mécaniques établies
 
@@ -34,7 +34,9 @@ PC sur Steam en priorité ; Godot envisagé ; modèle premium avec prix de trava
 
 Le GDD utilise **V** validé, **H** hypothèse, **C** cible, **O** ouvert et **P** proposition. La feuille de route et les conventions de suivi sont proposées, sans nouvelle fonctionnalité approuvée. Les calculs économiques dérivés sont identifiés.
 
-Prochain travail proposé : trancher le ciblage et les dégâts, les revenus et les arrondis, les spécialisations, les règles précises de synergie, le catalogue roguelite et les vagues. La progression entre les parties reste ouverte.
+Le combat Alliance au niveau 1 est précisé dans le GDD : archer à 8 dégâts par seconde, arbalétrier à 24 dégâts toutes les 2,5 secondes et mage à 27 dégâts toutes les 2,5 secondes, avec jusqu’à deux cibles secondaires à 40 %. Portées initiales : 4, 5 et 3,5 unités. Les rôles et le ciblage de l’ennemi le plus avancé sont validés ; les nombres restent à tester.
+
+Prochain travail proposé : définir les comportements des trois défenseurs de la Horde, puis les ennemis et revenus nécessaires au premier essai. Trancher ensuite les arrondis, spécialisations, synergies, bonus et vagues. La progression entre les parties reste ouverte.
 
 Mettre à jour le Markdown et le Word dans une même révision. Documenter toute modification avec un identifiant, une date, un statut, une source et son impact. Une valeur manquante reste « À définir » et ne vaut pas zéro.
 
