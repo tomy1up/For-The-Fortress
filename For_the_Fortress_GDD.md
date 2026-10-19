@@ -1,8 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.4 — 19 octobre 2026
+Game Design Document — Version 0.5 — 19 octobre 2026
 
-Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions approuvées ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
+Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis et les récompenses approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -16,11 +16,12 @@ Nom de travail — disponibilité juridique à confirmer.
 6. [6 Combat des défenseurs de la Horde](#s6)
 7. [7 Économie et calculs de référence](#s7)
 8. [8 Bonus roguelite et synergies](#s8)
-9. [9 Ennemis vagues et difficulté](#s9)
-10. [10 Présentation interface et validation du prototype](#s10)
-11. [11 Périmètre commercial et feuille de route](#s11)
-12. [12 Registre des décisions](#s12)
-13. [13 Sources et maintenance du GDD](#s13)
+9. [9 Ennemis et boss du prototype](#s9)
+10. [10 Vagues et difficulté](#s10)
+11. [11 Présentation interface et validation du prototype](#s11)
+12. [12 Périmètre commercial et feuille de route](#s12)
+13. [13 Registre des décisions](#s13)
+14. [14 Sources et maintenance du GDD](#s14)
 
 <a id="s1"></a>
 
@@ -91,7 +92,7 @@ La carte initiale est une scène médiévale-fantasy en vue isométrique. Elle c
 | Choix roguelite | Après les vagues 3, 6 et 9 | V — calendrier du prototype |
 
 ### Conditions de fin à préciser
-La destruction de la forteresse met fin à la partie — V. Le seuil opérationnel de destruction, les dégâts infligés par un ennemi qui atteint l’objectif et le traitement des arrivées simultanées restent ouverts — O. Terminer les dix vagues avec une forteresse survivante est la condition de victoire proposée pour le prototype — P ; la règle exacte de fin de vague et de victoire doit être confirmée.
+La destruction de la forteresse met fin à la partie — V. Les dégâts d’arrivée sont définis par ennemi en section 9, avec des valeurs H ; le traitement des arrivées simultanées reste ouvert. Terminer les dix vagues avec une forteresse survivante est la condition de victoire proposée — P ; les règles exactes de fin de vague et de victoire restent à confirmer.
 
 Le tracé détaillé, les distances et les positions des six emplacements restent ouverts. Les portées initiales des deux factions figurent en sections 5 et 6 ; leur échelle reste à calibrer. Aucun placement libre n’est ajouté.
 
@@ -243,7 +244,13 @@ La cible principale reste l’ennemi à portée le plus avancé. Pour les rebond
 ## 7 Économie et calculs de référence
 
 ### Règles et paramètres
-L’or finance les achats et les améliorations — V. La boucle prévoit de récupérer de l’or après les combats, mais le détail des sources, des montants et de leur versement reste ouvert. Le capital initial de référence est de 150 or — H. Aucun revenu passif ni monnaie supplémentaire n’est validé.
+L’or finance les achats et les améliorations — V. Pour le premier essai, chaque élimination rapporte immédiatement une récompense unique, selon le tableau de la section 9. Les montants sont H. Le capital initial de référence est de 150 or — H. Aucun revenu passif ni monnaie supplémentaire n’est validé.
+
+### Récompenses validées pour le premier essai
+- Créditer l’or immédiatement à la mort d’un ennemi, une seule fois, y compris après des dégâts de malédiction.
+- Appliquer les mêmes récompenses aux deux factions.
+- Lorsqu’un ennemi atteint la forteresse, appliquer ses dégâts puis le retirer de la partie, sans récompense.
+- Ne pas attribuer de prime de fin de vague pendant ce premier essai.
 
 Une unité peut être vendue uniquement entre les vagues contre 70 % de l’or total investi — V. Les synergies sont alors recalculées — V. La règle d’arrondi et le traitement d’éventuels modificateurs de prix restent à préciser — O.
 
@@ -269,7 +276,7 @@ Formules dérivées : investissement = achat + améliorations payées ; rembours
 Ces exemples vérifient seulement l’arithmétique. La duplication d’un même type d’unité n’est pas explicitement encadrée dans le socle ; les deux premières compositions dépendent donc de cette décision — O. Aucune composition n’est présentée comme stratégie optimale.
 
 ### Décisions d’équilibrage à prendre
-Définir les gains par ennemi ou par vague, leur calendrier, l’arrondi des ventes et les éventuelles limites de recrutement. Tester ensuite si les revenus permettent des choix réels entre élargir une défense et atteindre une spécialisation. Aucun montant de récompense ni objectif de rentabilité par vague n’est inventé.
+Tester les gains par ennemi retenus en section 9, décider l’arrondi des ventes et les éventuelles limites de recrutement. La composition des vagues déterminera les revenus cumulés disponibles. Vérifier alors les choix entre élargir une défense et atteindre une spécialisation ; aucun revenu total par vague n’est encore fixé.
 
 <a id="s8"></a>
 
@@ -306,10 +313,45 @@ Le recalcul des synergies après une vente est validé. Les déclencheurs après
 
 <a id="s9"></a>
 
-## 9 Ennemis vagues et difficulté
+## 9 Ennemis et boss du prototype
 
-### Contenu prévu
-Le prototype vise sept archétypes d’ennemis et un boss — C. Leurs noms, statistiques et comportements ne sont pas décrits dans les sources. La cible commerciale est d’environ douze familles d’ennemis et six boss — C. La correspondance entre « archétype » et « famille » devra être fixée avant d’utiliser ces nombres comme inventaire de production.
+### Périmètre et statut des valeurs
+Sept archétypes ordinaires et un boss distinct sont retenus pour le prototype — V. Leurs noms restent provisoires. Les PV, vitesses, dégâts à la forteresse et récompenses sont des réglages initiaux — H. Les premiers essais distinguent les ennemis par leur endurance, leur vitesse et leur nombre, sans résistances ni capacités spéciales supplémentaires.
+
+### Statistiques initiales
+Les vitesses utilisent l’unité de carte commune aux portées des défenseurs, dont l’échelle reste à calibrer. La récompense est exprimée en pièces d’or et créditée uniquement à l’élimination. Tous les nombres de ce tableau sont H.
+
+| Ennemi provisoire | PV | Vitesse par seconde | Dégâts forteresse | Or |
+| --- | --- | --- | --- | --- |
+| Grouillant | 12 | 1,15 | 1 | 1 |
+| Pillard | 40 | 1 | 1 | 3 |
+| Sprinter | 24 | 1,65 | 1 | 3 |
+| Brute | 120 | 0,70 | 2 | 7 |
+| Maraudeur | 80 | 1,20 | 2 | 6 |
+| Colosse | 240 | 0,50 | 3 | 14 |
+| Élite | 360 | 0,75 | 4 | 20 |
+| Boss Seigneur de siège | 600 | 0,45 | 20 | 40 |
+
+### Rôle des sept archétypes ordinaires
+Le grouillant teste les groupes denses. Ses 12 PV de référence lui permettent de survivre à une seule application secondaire du mage à 10,8 dégâts ou au rebond du troll à 8 dégâts. Le nombre et l’espacement des grouillants restent à définir dans les vagues.
+
+Le pillard est l’ennemi de référence pour comparer les défenseurs. Sans bonus, 40 PV nécessitent cinq impacts d’archer à 8 dégâts ou deux impacts d’arbalétrier à 24 dégâts. Ces calculs comptent les impacts et ne prédisent pas un temps d’élimination.
+
+Le sprinter teste la couverture du chemin. Fragile et rapide, il peut être éliminé par un impact d’arbalétrier ; des arrivées rapprochées exposent la lenteur de cette arme. La brute est lente et endurante ; elle permet d’observer les dégâts soutenus et les malédictions.
+
+Le maraudeur combine endurance et vitesse pour éprouver les défenses concentrées sur un seul emplacement. Le colosse occupe longtemps les défenseurs ; sa position sur le chemin peut détourner des tirs d’autres ennemis. L’élite, robuste et plus mobile que le colosse, prépare les dernières vagues sans capacité particulière.
+
+### Seigneur de siège
+Le boss est prévu à la vague 10 — V. Les essais initiaux lui attribuent 600 PV, une vitesse de 0,45 et 20 dégâts à la forteresse — H. Avec la forteresse initiale à 20 PV, son arrivée est fatale. Il rapporte 40 or s’il est éliminé ; cette récompense ne présume pas d’une utilisation après la dernière vague.
+
+Le premier essai ne comporte ni phases ni invocations. Rebonds, explosions et malédictions s’appliquent normalement au boss. Ses éventuelles capacités ultérieures et la condition exacte de victoire restent ouvertes. Aucun résultat d’équilibrage ni test jouable n’est encore établi.
+
+<a id="s10"></a>
+
+## 10 Vagues et difficulté
+
+### Contenu et objectifs
+Le prototype comporte dix vagues et le boss est prévu à la vague 10 — V. La composition, le nombre d’ennemis et les espacements ne sont pas encore fixés. La cible commerciale reste d’environ douze familles d’ennemis et six boss — C ; la correspondance entre « archétype » et « famille » demeure à préciser.
 
 ### Calendrier des dix vagues
 | Vague | Composition et statistiques | Sélection roguelite après la vague |
@@ -323,9 +365,9 @@ Le prototype vise sept archétypes d’ennemis et un boss — C. Leurs noms, sta
 | 7 | À définir — O | Non |
 | 8 | À définir — O | Non |
 | 9 | À définir — O | Oui — trois propositions |
-| 10 | À définir — O | Aucun choix prévu dans le socle |
+| 10 | Seigneur de siège ; accompagnants à définir — O | Aucun choix prévu dans le socle |
 
-La présence d’un boss à la vague 10 n’est pas confirmée. La vague d’apparition du boss, les délais entre ennemis, les groupes d’apparition et les récompenses sont ouverts. Le tableau réserve le calendrier sans inventer sa composition.
+La présence du boss à la vague 10 est validée. Son instant d’apparition, les éventuels autres ennemis, les délais et les groupes restent ouverts. Les récompenses individuelles figurent en section 9 ; les revenus totaux dépendront des compositions retenues et des ennemis effectivement éliminés.
 
 ### Schéma de fiche ennemi proposé
 | Champ | Contenu attendu |
@@ -341,9 +383,9 @@ Ce schéma est une proposition documentaire — P. Un champ de comportement spé
 ### Validation de la difficulté proposée
 Observer les vagues qui causent des pertes, les compositions utilisées, l’or disponible et la durée des parties. Comparer les deux factions sur la même carte. Les taux de victoire cibles, multiplicateurs de difficulté et courbes de croissance des ennemis restent à fixer ; aucun mode de difficulté supplémentaire n’est validé.
 
-<a id="s10"></a>
+<a id="s11"></a>
 
-## 10 Présentation interface et validation du prototype
+## 11 Présentation interface et validation du prototype
 
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
@@ -374,9 +416,9 @@ Godot est le moteur envisagé et PC sur Steam la plateforme prioritaire. La vers
 
 Ces vérifications constituent un plan de validation — P. Les objectifs de performance, configurations matérielles et seuils d’acceptation chiffrés restent à définir.
 
-<a id="s11"></a>
+<a id="s12"></a>
 
-## 11 Périmètre commercial et feuille de route
+## 12 Périmètre commercial et feuille de route
 
 ### Comparaison des périmètres envisagés
 | Élément | Prototype | Objectif commercial |
@@ -387,7 +429,7 @@ Ces vérifications constituent un plan de validation — P. Les objectifs de per
 | Cartes | 1 | 6 |
 | Vagues | 10 | À définir par carte |
 | Bonus roguelite | Sélection réduite | Environ 60 |
-| Ennemis | 7 archétypes | Environ 12 familles |
+| Ennemis ordinaires | 7 archétypes, hors boss | Environ 12 familles |
 | Boss | 1 | Environ 6 |
 | Mode infini | Absent du prototype | Envisagé |
 
@@ -407,9 +449,9 @@ La feuille de route est une proposition d’organisation — P. Aucun délai, bu
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
 
-<a id="s12"></a>
+<a id="s13"></a>
 
-## 12 Registre des décisions
+## 13 Registre des décisions
 
 ### Décisions de référence
 | Identifiant | Décision | Statut |
@@ -427,32 +469,36 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | DEC-011 | Essai N1 sans résistances, bonus raciaux ni spécialisations | V — essai initial |
 | DEC-012 | Horde N1 : rebond, explosion et malédiction ; réglages en section 6 | V / H |
 | DEC-013 | Victimes secondaires : priorité aux plus proches du point d’impact | V |
+| DEC-014 | Sept archétypes ordinaires et boss distinct en vague 10 ; valeurs en section 9 | V / H |
+| DEC-015 | Or immédiat et unique à l’élimination ; aucun or en cas d’arrivée ; pas de prime de vague | V — essai initial |
 
 ### Questions ouvertes prioritaires
 | Identifiant | Décision attendue | Dépendance principale |
 | --- | --- | --- |
 | O-001 | Niveaux supérieurs et résistances après l’essai initial | Combat et statistiques par niveau |
-| O-002 | Revenus, versement, arrondis et copies d’unités | Économie et recrutement |
+| O-002 | Équilibrage des récompenses, arrondis et copies d’unités | Économie et recrutement |
 | O-003 | Noms et effets des spécialisations ; coût distinct éventuel | Niveau 4 et synergies |
 | O-004 | Seuils raciaux, proximité, cumul et recalcul | Système de synergies |
 | O-005 | Catalogue, tirage, éligibilité et doublons des bonus | Choix roguelite |
-| O-006 | Sept archétypes, boss, composition des vagues et victoire | Partie complète |
+| O-006 | Composition et cadence des vagues, capacités futures du boss et victoire | Partie complète |
 | O-007 | Progression entre les parties et interface de combat | Expérience globale |
 | O-008 | Moteur, prix final, périmètre commercial et nom | Plan de production |
 | O-009 | Échelle, premier tir, égalités, projectiles et portée après application d’un effet | Combat des deux factions |
 
-<a id="s13"></a>
+<a id="s14"></a>
 
-## 13 Sources et maintenance du GDD
+## 14 Sources et maintenance du GDD
 
 ### Sources et historique
-S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». Le lien partagé reste une référence d’origine.
+S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». Le lien partagé reste une référence d’origine.
 
 Version 0.2 — 19 octobre 2026 : consolidation, statuts, calculs dérivés et feuille de route proposée ; aucune nouvelle fonctionnalité validée.
 
 Version 0.3 — 19 octobre 2026 : combat Alliance N1, ciblage et essai initial validés par S4 ; valeurs H conservées.
 
 Version 0.4 — 19 octobre 2026 : combat Horde N1 et priorité des victimes secondaires validés par S5 ; valeurs H conservées.
+
+Version 0.5 — 19 octobre 2026 : sept archétypes, boss en vague 10 et règles de récompense validés par S6 ; statistiques H conservées.
 
 ### Procédure de mise à jour proposée
 Le Markdown est la référence éditoriale ; le Word en est la présentation. Actualiser les deux ensemble. Consigner identifiant, date, ancienne et nouvelle règle, statut, source et impact. Une hypothèse ou question ouverte devient validée uniquement après confirmation explicite du porteur du projet.

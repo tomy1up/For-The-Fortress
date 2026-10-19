@@ -8,7 +8,7 @@ Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. 
 
 - [GDD Word](For_the_Fortress_GDD.docx) : présentation structurée avec sommaire et tableaux.
 - [GDD Markdown](For_the_Fortress_GDD.md) : référence éditoriale adaptée au versionnement Git.
-- Version documentaire : **0.4 — 19 octobre 2026**, consolidée à partir du GDD v0.1, de cinq captures et des règles de combat approuvées pour les deux factions.
+- Version documentaire : **0.5 — 19 octobre 2026**, intégrant le socle, les combats des deux factions, les ennemis et les récompenses approuvés.
 
 ## Mécaniques établies
 
@@ -22,7 +22,7 @@ Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. 
 
 ## Prototype de référence
 
-La Vallée du Gué : une carte isométrique, six emplacements et dix vagues. Six défenseurs, trois par faction. Capital initial de travail : 150 or ; forteresse : 20 PV. Choix roguelite après les vagues 3, 6 et 9. Durée ciblée : 8 à 12 minutes. Sept archétypes d’ennemis et un boss sont visés, avec leurs détails encore à définir.
+La Vallée du Gué : une carte isométrique, six emplacements et dix vagues. Six défenseurs, trois par faction. Capital initial de travail : 150 or ; forteresse : 20 PV. Choix roguelite après les vagues 3, 6 et 9. Durée ciblée : 8 à 12 minutes. Sept archétypes ordinaires sont retenus : Grouillant, Pillard, Sprinter, Brute, Maraudeur, Colosse et Élite. Le boss provisoire Seigneur de siège est prévu en vague 10. Leurs statistiques figurent dans le GDD comme réglages à tester.
 
 Les coûts d’achat de 50, 75 et 100 or, les DPS de 8, 9,6 et 10,8 et les améliorations de 50, 100 et 150 or restent des **hypothèses non équilibrées**.
 
@@ -38,7 +38,9 @@ Le combat Alliance au niveau 1 est précisé dans le GDD : archer à 8 dégâts 
 
 Le combat Horde est également validé pour les essais : troll avec rebond, sapeur avec explosion et chaman avec malédiction. Leurs DPS théoriques sur une cible restent 8, 9,6 et 10,8. Les victimes secondaires les plus proches du point d’impact sont prioritaires. Tous les nouveaux réglages numériques restent provisoires.
 
-Prochain travail proposé : définir les ennemis et revenus nécessaires au premier essai. Trancher ensuite les arrondis, spécialisations, synergies, bonus et vagues. La progression entre les parties reste ouverte.
+Les éliminations rapportent immédiatement une récompense unique, identique pour les deux factions, y compris par malédiction. Un ennemi atteignant la forteresse inflige ses dégâts puis quitte la partie sans récompense. Aucune prime de fin de vague pour le premier essai.
+
+Prochain travail proposé : composer les dix vagues, fixer les espacements et calculer les revenus cumulés. Trancher ensuite les arrondis, spécialisations, synergies, bonus et vagues. La progression entre les parties reste ouverte.
 
 Mettre à jour le Markdown et le Word dans une même révision. Documenter toute modification avec un identifiant, une date, un statut, une source et son impact. Une valeur manquante reste « À définir » et ne vaut pas zéro.
 
