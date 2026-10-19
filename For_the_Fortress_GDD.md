@@ -1,8 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.3 — 19 octobre 2026
+Game Design Document — Version 0.4 — 19 octobre 2026
 
-Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat Alliance approuvées ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
+Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions approuvées ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -13,12 +13,14 @@ Nom de travail — disponibilité juridique à confirmer.
 3. [3 Factions races et classes](#s3)
 4. [4 Statistiques niveaux et spécialisations](#s4)
 5. [5 Combat des défenseurs de l Alliance](#s5)
-6. [6 Économie et calculs de référence](#s6)
-7. [7 Bonus roguelite et synergies](#s7)
-8. [8 Ennemis vagues et difficulté](#s8)
-9. [9 Présentation interface et validation du prototype](#s9)
-10. [10 Périmètre commercial et feuille de route](#s10)
-11. [11 Registre des décisions et maintenance](#s11)
+6. [6 Combat des défenseurs de la Horde](#s6)
+7. [7 Économie et calculs de référence](#s7)
+8. [8 Bonus roguelite et synergies](#s8)
+9. [9 Ennemis vagues et difficulté](#s9)
+10. [10 Présentation interface et validation du prototype](#s10)
+11. [11 Périmètre commercial et feuille de route](#s11)
+12. [12 Registre des décisions](#s12)
+13. [13 Sources et maintenance du GDD](#s13)
 
 <a id="s1"></a>
 
@@ -91,7 +93,7 @@ La carte initiale est une scène médiévale-fantasy en vue isométrique. Elle c
 ### Conditions de fin à préciser
 La destruction de la forteresse met fin à la partie — V. Le seuil opérationnel de destruction, les dégâts infligés par un ennemi qui atteint l’objectif et le traitement des arrivées simultanées restent ouverts — O. Terminer les dix vagues avec une forteresse survivante est la condition de victoire proposée pour le prototype — P ; la règle exacte de fin de vague et de victoire doit être confirmée.
 
-Le tracé détaillé, les distances et les positions des six emplacements restent ouverts. Les portées initiales de l’Alliance figurent en section 5 ; leur échelle reste à calibrer. Aucun placement libre n’est ajouté.
+Le tracé détaillé, les distances et les positions des six emplacements restent ouverts. Les portées initiales des deux factions figurent en sections 5 et 6 ; leur échelle reste à calibrer. Aucun placement libre n’est ajouté.
 
 <a id="s3"></a>
 
@@ -103,7 +105,7 @@ Le tracé détaillé, les distances et les positions des six emplacements resten
 | Alliance des Royaumes | Humains, Elfes, Nains | Défense, précision, magie et ingénierie |
 | Horde des Cendres | Orcs, Trolls, Morts-vivants, Gobelins | Offensive, poisons, malédictions et explosifs |
 
-Les deux factions sont jouables — V. Leurs noms sont provisoires. Les orientations constituent des axes de conception ; elles ne définissent pas encore des effets chiffrés de poison, de malédiction, de défense ou d’explosion.
+Les deux factions sont jouables — V. Leurs noms sont provisoires. Les comportements retenus pour le prototype sont détaillés en sections 5 et 6. Les autres axes, dont le poison, restent à spécifier.
 
 ### Roster du prototype
 | Identifiant | Faction | Race | Classe ou rôle nommé |
@@ -141,7 +143,7 @@ Toutes les valeurs de ce tableau sont des hypothèses initiales non équilibrée
 | Sapeur gobelin | 75 | 9,6 | H |
 | Chaman orc | 100 | 10,8 | H |
 
-Les factions partagent les mêmes trois couples coût/DPS pour le prototype. Cette symétrie numérique n’annule pas l’objectif validé de différenciation. Les comportements spécifiques permettant de la réaliser restent à spécifier.
+Les factions partagent les mêmes trois couples coût/DPS pour le prototype. Cette symétrie numérique n’annule pas l’objectif validé de différenciation. Les comportements initiaux sont précisés en sections 5 et 6 ; leur équilibre reste à tester.
 
 ### Progression avec l’or
 Chaque défenseur peut être amélioré jusqu’au niveau 4 — V. Le niveau 4 débloque un choix entre deux branches de spécialisation — V. Les coûts d’amélioration restent provisoires — H.
@@ -157,7 +159,7 @@ La lecture séquentielle des trois coûts correspond aux trois améliorations ju
 ### Paramètres manquants
 | Domaine | Données à définir — O |
 | --- | --- |
-| Attaque | Alliance N1 précisée en section 5 ; Horde et niveaux supérieurs ouverts |
+| Attaque | Niveaux 1 précisés en sections 5 et 6 ; niveaux supérieurs ouverts |
 | Résolution des dégâts | Types, résistances hors essai initial, ordre de calcul et arrondis |
 | Spécialisations | Noms, effets, conditions et éventuel coût distinct |
 | Niveaux | Gains exacts et interaction avec les bonus roguelite |
@@ -198,11 +200,47 @@ Le DPS total théorique du mage atteint (27 + 10,8 + 10,8) ÷ 2,5 = 19,44 lorsqu
 - Commencer une attaque uniquement avec une cible valide à portée ; sélectionner une nouvelle cible si la précédente est éliminée avant le prochain tir.
 - Tester sans réduction de dégâts liée aux résistances, sans bonus raciaux et sans spécialisations, afin de comparer les niveaux 1.
 
-Le choix des deux victimes secondaires lorsqu’il y a davantage de candidats, les égalités de ciblage, le premier délai de tir, les projectiles en vol et la règle de portée à l’impact restent ouverts. Le premier test comparera des ennemis isolés puis regroupés sur le même tronçon de route ; aucun test jouable n’est encore réalisé.
+Les victimes secondaires les plus proches du point d’impact sont prioritaires — V. Les égalités de ciblage, le premier délai de tir, les projectiles en vol et la règle de portée à l’impact restent ouverts. Le premier test comparera des ennemis isolés puis regroupés sur le même tronçon de route ; aucun test jouable n’est encore réalisé.
 
 <a id="s6"></a>
 
-## 6 Économie et calculs de référence
+## 6 Combat des défenseurs de la Horde
+
+### Portée de la validation
+Les comportements sont approuvés pour le prototype — V. Les nombres restent des réglages initiaux — H. Les fiches décrivent le niveau 1 sans bonus ni spécialisation, avec les coûts et DPS du socle.
+
+### Statistiques initiales
+| Paramètre | Lanceur de haches troll | Sapeur gobelin | Chaman orc |
+| --- | --- | --- | --- |
+| Coût en or — H | 50 | 75 | 100 |
+| Dégâts principaux par attaque — H | 16 | 24 | 12 immédiats et malédiction |
+| Intervalle entre attaques — H | 2 secondes | 2,5 secondes | 2 secondes |
+| DPS théorique sur une cible — H | 8 | 9,6 | 10,8, malédiction comprise |
+| Portée en unités de carte — H | 3,5 | 3 | 4,5 |
+
+L’unité de distance est commune aux factions et reste à calibrer. Les DPS supposent des attaques continues et des cibles survivant assez longtemps.
+
+### Lanceur de haches troll
+Une attaque inflige 16 dégâts à la cible principale, puis la hache peut rebondir sur un autre ennemi situé à moins d’une unité de celle-ci. Le rebond inflige 8 dégâts, soit 50 % du premier impact. Une attaque touche au maximum deux ennemis distincts ; elle ne revient pas blesser la cible principale. Sans seconde cible admissible, aucun rebond n’a lieu.
+
+Le DPS théorique sur deux ennemis atteint (16 + 8) ÷ 2 = 12. Le troll traite les petits groupes ; face à l’archer, il perd en portée et en régularité. Le comportement de rebond est V ; ses valeurs restent H.
+
+### Sapeur gobelin
+Un explosif inflige 24 dégâts à la cible principale et 9,6 dégâts à chacune de ses victimes secondaires, soit 40 %. Jusqu’à trois ennemis secondaires situés à moins d’une unité du point d’impact peuvent être touchés. Chaque ennemi reçoit au maximum une application par explosion.
+
+Avec quatre ennemis constamment regroupés, le DPS total théorique atteint (24 + 3 × 9,6) ÷ 2,5 = 21,12. La courte portée limite ses emplacements efficaces et son temps d’attaque. Sa supériorité possible sur le mage contre les groupes denses est un risque d’équilibrage à tester, pas un résultat acquis.
+
+### Chaman orc
+Toutes les deux secondes, une attaque inflige 12 dégâts immédiats et applique une malédiction. Celle-ci inflige 4,8 dégâts après une seconde puis 4,8 après deux secondes. Le total d’une attaque complète est de 21,6 dégâts, soit 10,8 DPS théoriques en régime continu. Une partie des dégâts peut arriver trop tard contre une cible fragile ou proche de la forteresse.
+
+Les malédictions d’un même chaman ne se cumulent pas sur une cible ; une nouvelle application renouvelle l’effet. Au même instant, le dernier dégât périodique précède le renouvellement. Les effets de chamans différents fonctionnent indépendamment. La malédiction ne ralentit pas et ne réduit pas les résistances.
+
+### Ciblage et comparaison des factions
+La cible principale reste l’ennemi à portée le plus avancé. Pour les rebonds et explosions, priorité aux victimes secondaires les plus proches du point d’impact — V ; égalités ouvertes. Comparer les deux factions sur la même carte avant de conclure à leur équilibre.
+
+<a id="s7"></a>
+
+## 7 Économie et calculs de référence
 
 ### Règles et paramètres
 L’or finance les achats et les améliorations — V. La boucle prévoit de récupérer de l’or après les combats, mais le détail des sources, des montants et de leur versement reste ouvert. Le capital initial de référence est de 150 or — H. Aucun revenu passif ni monnaie supplémentaire n’est validé.
@@ -233,9 +271,9 @@ Ces exemples vérifient seulement l’arithmétique. La duplication d’un même
 ### Décisions d’équilibrage à prendre
 Définir les gains par ennemi ou par vague, leur calendrier, l’arrondi des ventes et les éventuelles limites de recrutement. Tester ensuite si les revenus permettent des choix réels entre élargir une défense et atteindre une spécialisation. Aucun montant de récompense ni objectif de rentabilité par vague n’est inventé.
 
-<a id="s7"></a>
+<a id="s8"></a>
 
-## 7 Bonus roguelite et synergies
+## 8 Bonus roguelite et synergies
 
 ### Améliorations pendant une partie
 Après certaines vagues, le joueur choisit une amélioration parmi trois propositions aléatoires — V. Les bonus obtenus restent actifs jusqu’à la fin de la partie — V. Pour le prototype, les sélections ont lieu après les vagues 3, 6 et 9 — V, soit trois moments de choix.
@@ -266,9 +304,9 @@ Le socle illustre une interaction possible par un archer elfe placé près d’u
 ### Recalcul et progression persistante
 Le recalcul des synergies après une vente est validé. Les déclencheurs après construction, amélioration, spécialisation ou retrait d’un bonus doivent être explicités — O. La progression entre les parties demeure ouverte : aucune monnaie persistante, arbre de talents ou amélioration permanente n’est approuvé.
 
-<a id="s8"></a>
+<a id="s9"></a>
 
-## 8 Ennemis vagues et difficulté
+## 9 Ennemis vagues et difficulté
 
 ### Contenu prévu
 Le prototype vise sept archétypes d’ennemis et un boss — C. Leurs noms, statistiques et comportements ne sont pas décrits dans les sources. La cible commerciale est d’environ douze familles d’ennemis et six boss — C. La correspondance entre « archétype » et « famille » devra être fixée avant d’utiliser ces nombres comme inventaire de production.
@@ -303,9 +341,9 @@ Ce schéma est une proposition documentaire — P. Un champ de comportement spé
 ### Validation de la difficulté proposée
 Observer les vagues qui causent des pertes, les compositions utilisées, l’or disponible et la durée des parties. Comparer les deux factions sur la même carte. Les taux de victoire cibles, multiplicateurs de difficulté et courbes de croissance des ennemis restent à fixer ; aucun mode de difficulté supplémentaire n’est validé.
 
-<a id="s9"></a>
+<a id="s10"></a>
 
-## 9 Présentation interface et validation du prototype
+## 10 Présentation interface et validation du prototype
 
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
@@ -336,9 +374,9 @@ Godot est le moteur envisagé et PC sur Steam la plateforme prioritaire. La vers
 
 Ces vérifications constituent un plan de validation — P. Les objectifs de performance, configurations matérielles et seuils d’acceptation chiffrés restent à définir.
 
-<a id="s10"></a>
+<a id="s11"></a>
 
-## 10 Périmètre commercial et feuille de route
+## 11 Périmètre commercial et feuille de route
 
 ### Comparaison des périmètres envisagés
 | Élément | Prototype | Objectif commercial |
@@ -369,9 +407,9 @@ La feuille de route est une proposition d’organisation — P. Aucun délai, bu
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
 
-<a id="s11"></a>
+<a id="s12"></a>
 
-## 11 Registre des décisions et maintenance
+## 12 Registre des décisions
 
 ### Décisions de référence
 | Identifiant | Décision | Statut |
@@ -387,11 +425,13 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | DEC-009 | Rôles Alliance N1 et attaque de groupe du mage ; valeurs initiales en section 5 | V / H |
 | DEC-010 | Cibler l’ennemi à portée le plus avancé ; nouvelle cible avant le prochain tir | V |
 | DEC-011 | Essai N1 sans résistances, bonus raciaux ni spécialisations | V — essai initial |
+| DEC-012 | Horde N1 : rebond, explosion et malédiction ; réglages en section 6 | V / H |
+| DEC-013 | Victimes secondaires : priorité aux plus proches du point d’impact | V |
 
 ### Questions ouvertes prioritaires
 | Identifiant | Décision attendue | Dépendance principale |
 | --- | --- | --- |
-| O-001 | Combat Horde, niveaux supérieurs et résistances après l’essai initial | Combat et statistiques par niveau |
+| O-001 | Niveaux supérieurs et résistances après l’essai initial | Combat et statistiques par niveau |
 | O-002 | Revenus, versement, arrondis et copies d’unités | Économie et recrutement |
 | O-003 | Noms et effets des spécialisations ; coût distinct éventuel | Niveau 4 et synergies |
 | O-004 | Seuils raciaux, proximité, cumul et recalcul | Système de synergies |
@@ -399,14 +439,31 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-006 | Sept archétypes, boss, composition des vagues et victoire | Partie complète |
 | O-007 | Progression entre les parties et interface de combat | Expérience globale |
 | O-008 | Moteur, prix final, périmètre commercial et nom | Plan de production |
-| O-009 | Échelle des portées, premier tir, égalités, projectiles et victimes secondaires | Précision du combat Alliance |
+| O-009 | Échelle, premier tir, égalités, projectiles et portée après application d’un effet | Combat des deux factions |
+
+<a id="s13"></a>
+
+## 13 Sources et maintenance du GDD
 
 ### Sources et historique
-S1 — GDD v0.1 fourni dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables et de traçabilité. S4 — Proposition de combat Alliance et approbation « oui on fait comme ca ». Le lien partagé reste une référence d’origine.
+S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». Le lien partagé reste une référence d’origine.
 
 Version 0.2 — 19 octobre 2026 : consolidation, statuts, calculs dérivés et feuille de route proposée ; aucune nouvelle fonctionnalité validée.
 
 Version 0.3 — 19 octobre 2026 : combat Alliance N1, ciblage et essai initial validés par S4 ; valeurs H conservées.
 
+Version 0.4 — 19 octobre 2026 : combat Horde N1 et priorité des victimes secondaires validés par S5 ; valeurs H conservées.
+
 ### Procédure de mise à jour proposée
 Le Markdown est la référence éditoriale ; le Word en est la présentation. Actualiser les deux ensemble. Consigner identifiant, date, ancienne et nouvelle règle, statut, source et impact. Une hypothèse ou question ouverte devient validée uniquement après confirmation explicite du porteur du projet.
+
+### Fiche de modification proposée
+| Champ | Information à conserver |
+| --- | --- |
+| Référence | Identifiant DEC ou O concerné et version du GDD |
+| Évolution | Ancienne règle, nouvelle règle et motif |
+| Statut | V, H, C, O ou P ; date et source de confirmation |
+| Incidences | Défenseurs, économie, vagues ou autres règles concernés |
+| Vérification | Essai prévu, résultat observé et ajustement éventuel |
+
+Conserver une valeur H tant qu’elle n’a pas été équilibrée par des essais. Une validation de principe autorise le comportement décrit ; elle n’établit pas sa puissance relative. Les résultats futurs doivent préciser la carte, les vagues, les unités et les réglages employés pour permettre une comparaison utile.
