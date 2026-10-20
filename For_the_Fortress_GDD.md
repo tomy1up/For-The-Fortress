@@ -1,8 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.13 — 20 octobre 2026
+Game Design Document — Version 0.14 — 20 octobre 2026
 
-Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat, les bonus roguelite, les synergies, le recrutement et la vente approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
+Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat, les bonus roguelite, les synergies, le recrutement, la vente et le cahier de réalisation approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -48,11 +48,17 @@ Nom de travail — disponibilité juridique à confirmer.
 38. [38 Compositions et budgets des copies](#s38)
 39. [39 Vérifications du recrutement et des ventes](#s39)
 40. [40 Présentation interface et validation du prototype](#s40)
-41. [41 Périmètre commercial et feuille de route](#s41)
-42. [42 Registre des décisions](#s42)
-43. [43 Questions ouvertes et suivi](#s43)
-44. [44 Sources et historique du GDD](#s44)
-45. [45 Maintenance du GDD](#s45)
+41. [41 Parcours et panneaux du prototype](#s41)
+42. [42 Phases et contrats de réalisation](#s42)
+43. [43 Lots de réalisation du prototype](#s43)
+44. [44 Critères de conformité du prototype](#s44)
+45. [45 Mesures et essais de jeu du prototype](#s45)
+46. [46 Socle technique de réalisation](#s46)
+47. [47 Périmètre commercial et feuille de route](#s47)
+48. [48 Registre des décisions](#s48)
+49. [49 Questions ouvertes et suivi](#s49)
+50. [50 Sources et historique du GDD](#s50)
+51. [51 Maintenance du GDD](#s51)
 
 <a id="s1"></a>
 
@@ -66,7 +72,7 @@ For the Fortress! est un Tower Defense roguelite solo dans un univers médiéval
 | Nom de travail | For the Fortress! | V — nom de travail ; disponibilité juridique à confirmer |
 | Genre et mode | Tower Defense roguelite fantasy, solo | V |
 | Plateforme prioritaire | PC, Steam | C — orientation prioritaire |
-| Moteur envisagé | Godot | C — choix à confirmer |
+| Moteur du premier essai | Godot avec GDScript | Choix initial de réalisation ; révisable |
 | Modèle économique | Premium | C — intention commerciale |
 | Prix envisagé | 7,99 € | H — prix de travail |
 | Durée d’une partie prototype | 8 à 12 minutes | C — cible à mesurer |
@@ -107,7 +113,7 @@ Les calculs dérivés sont signalés comme tels. Ils illustrent les valeurs de r
 | Améliorer un défenseur | Autorisé — V | Non autorisé — V |
 | Vendre un défenseur | Autorisé — V | Non autorisé — V |
 | Observer et inspecter les unités | Ergonomie à préciser — O | Autorisé — V |
-| Accélérer le déroulement | Sans objet | Autorisé — V ; multiplicateurs ouverts |
+| Accélérer le déroulement | Sans objet | Autorisé — V ; ×1 / ×2 pour les essais (H) |
 | Choisir un bonus roguelite | Après les vagues prévues — V | Pas de choix en combat dans le socle |
 
 ### La Vallée du Gué
@@ -786,7 +792,7 @@ Les règles de résolution sont approuvées pour le premier prototype — V. Les
 - Si aucune cible n’est admissible lorsque ce délai se termine, l’unité reste prête. Elle tire dès l’acquisition suivante. Aucun tir, charge ou salve ne s’accumule pendant l’attente.
 - Changer de cible ne remet pas le délai à zéro et ne permet pas un tir supplémentaire.
 - Le début d’une nouvelle vague réinitialise la disponibilité. Construire, améliorer, choisir une branche et vendre restent interdits pendant les combats.
-- Les horaires utilisent le temps de jeu. L’accélération doit accélérer aussi apparitions, déplacements, tirs et malédictions, sans changer leur ordre relatif. Ses multiplicateurs restent ouverts.
+- Les horaires utilisent le temps de jeu. L’accélération doit accélérer aussi apparitions, déplacements, tirs et malédictions, sans changer leur ordre relatif. Les vitesses ×1 et ×2 sont retenues pour les essais (H).
 
 Exemple : archer prêt à t = 0, première cible admissible à t = 0,3 s. Il tire à 0,3 s, puis au plus tôt à 1,3 s. Si aucune cible n’est présente à 1,3 s et qu’une cible entre à 1,8 s, il tire à 1,8 s ; son prochain tir sera autorisé à 2,8 s. Il ne récupère pas le tir manqué.
 
@@ -1329,10 +1335,10 @@ Ces cas sont des vérifications futures. Aucun prototype jouable n’a encore me
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
 
-Les détails de production graphique, d’animation, de musique et de son ne sont pas définis. Le GDD ne fixe pas de technique 2D ou 3D à partir de la seule vue isométrique.
+Les détails de production graphique, d’animation, de musique et de son ne sont pas définis. Le premier essai utilise une représentation 2D isométrique, comme choix initial de réalisation.
 
 ### Interface et lisibilité
-Observer les combats, inspecter ses unités et accélérer le déroulement sont des interactions validées. L’interface de combat reste à concevoir. Les besoins d’information suivants sont proposés — P — pour rendre les systèmes existants compréhensibles, sans figer de maquette.
+Observer les combats, inspecter ses unités et accélérer le déroulement sont des interactions validées. Les panneaux et le parcours sont approuvés en section 41 ; leur mise en forme reste à réaliser. Les besoins suivants sont retenus — V — pour rendre les systèmes compréhensibles.
 
 | Situation | Information à rendre compréhensible |
 | --- | --- |
@@ -1341,10 +1347,10 @@ Observer les combats, inspecter ses unités et accélérer le déroulement sont 
 | Choix roguelite | Trois propositions et effet de chacune |
 | Composition | Race, classe, spécialisation et conditions de synergie |
 
-Les raccourcis, commandes exactes, multiplicateurs de vitesse, options d’accessibilité, pause et modalités de sauvegarde restent ouverts. Ces sujets ne sont pas des fonctionnalités approuvées par défaut.
+Les vitesses ×1 et ×2 sont retenues pour les essais (H). Les raccourcis, commandes exactes, options d’accessibilité, pause et modalités de sauvegarde restent ouverts. Ces sujets ne sont pas des fonctionnalités approuvées par défaut.
 
 ### Cadre technique
-Godot est le moteur envisagé et PC sur Steam la plateforme prioritaire. La version du moteur, le langage, l’organisation des scènes et le format des données restent ouverts. Aucun support multijoueur, mobile, console ou intégration de service supplémentaire n’est ajouté.
+Godot avec GDScript est retenu pour la réalisation initiale, en 2D isométrique ; voir section 46. PC sur Steam reste la plateforme commerciale prioritaire. L’organisation du projet et le format des données sont documentés pendant la réalisation. Aucun support multijoueur, mobile, console ou intégration de service supplémentaire n’est ajouté.
 
 ### Vérifications proposées avant extension du contenu
 - Vérifier que construction, amélioration et vente sont bloquées pendant les combats.
@@ -1353,11 +1359,139 @@ Godot est le moteur envisagé et PC sur Steam la plateforme prioritaire. La vers
 - Vérifier trois propositions aux vagues 3, 6 et 9 et la conservation des bonus jusqu’à la fin de la partie.
 - Évaluer le plaisir de jeu, la lisibilité, la différence entre factions et l’économie, conformément à l’objectif du prototype.
 
-Ces vérifications constituent un plan de validation — P. Les objectifs de performance, configurations matérielles et seuils d’acceptation chiffrés restent à définir.
+Ces vérifications constituent le cadre de validation approuvé ; les critères détaillés figurent en sections 44 et 45. Les objectifs de performance, configurations matérielles et seuils d’acceptation chiffrés restent à définir.
 
 <a id="s41"></a>
 
-## 41 Périmètre commercial et feuille de route
+## 41 Parcours et panneaux du prototype
+
+| Vue ou panneau — V | Informations et actions | Critère de lecture |
+| --- | --- | --- |
+| Départ de partie | Choisir Alliance ou Horde ; afficher La Vallée du Gué comme carte du prototype ; lancer la partie | Le joueur comprend qu’il recrute uniquement dans le roster choisi |
+| Carte en préparation | Route, pont, forteresse, six emplacements ; or, PV actuels/maximaux, numéro de la prochaine vague et bouton de lancement | La phase active et les emplacements libres sont identifiables |
+| Emplacement libre sélectionné | Trois types de la faction, prix courant, nombre déployé / limite ; achat sur cet emplacement | Un achat impossible indique manque d’or ou limite atteinte et ne débite rien |
+| Défenseur sélectionné | Type, niveau, branche, dégâts et intervalle, portée, synergies actives, prochain coût et remboursement exact | Le prix réduit et la perte lors d’une vente sont visibles avant l’action |
+| Choix de branche N4 | Deux descriptions avec statistiques finales et coût total du passage | Une seule branche est choisie ; aucune branche n’est attribuée silencieusement |
+| Carte en combat | Vague en cours, or et PV actualisés ; inspection des unités ; commande d’accélération | Les commandes d’achat, d’amélioration et de vente sont indisponibles |
+| Choix roguelite | Trois offres distinctes, description et effet ; sélection d’un seul bonus | Le bonus sélectionné est identifiable et reste consultable pendant la partie |
+| Résultat de partie | Victoire ou défaite, vague atteinte et PV restants ; recommencer ou revenir au choix de faction | Une nouvelle partie repart de l’état initial, sans progression persistante |
+
+Ces vues peuvent être des panneaux sur une même scène ; leur nombre ne prescrit pas une architecture. Les informations chiffrées sont reliées aux valeurs réellement utilisées par la simulation. L’affichage peut arrondir les dégâts, mais ne doit pas modifier les calculs.
+
+Transaction N4 approuvée : ouvrir le choix après demande d’amélioration, puis confirmer branche et paiement ensemble. Fermer sans choisir conserve l’unité au N3 et ne débite rien. Cette transaction d’interface est approuvée ; le choix exclusif et son coût inclus sont déjà V.
+
+Vitesses retenues pour les essais : deux vitesses, ×1 et ×2, fondées sur le même temps de jeu. Le principe d’accélération est V ; les deux vitesses sont retenues pour les essais, valeurs H. La pause, les raccourcis et la sauvegarde restent ouverts. Aucune reprise de partie enregistrée n’est requise par ce cahier.
+
+<a id="s42"></a>
+
+## 42 Phases et contrats de réalisation
+
+Départ → sélection de faction → préparation de la vague 1 → combat → préparation de la vague suivante.
+
+Après les vagues 3, 6 et 9 entièrement résolues, insérer le choix roguelite avant le lancement suivant. Règle d’interface approuvée : empêcher le lancement tant que ce choix n’est pas fait ; laisser ensuite le joueur préparer sa défense avec le bonus actif.
+
+Pendant un combat, aucune construction, amélioration, vente, modification de branche ou permutation de position. Changer d’emplacement exige une vente et un nouvel achat au N1 entre les vagues. Les inspections restent disponibles.
+
+La vague se termine seulement quand toutes les apparitions ont eu lieu et que tous ses ennemis ont été éliminés ou retirés à l’arrivée. La forteresse à zéro PV provoque la défaite ; la défaite est prioritaire si plusieurs événements de fin surviennent ensemble. La victoire exige la résolution de la vague 10 avec une forteresse survivante.
+
+Un nouvel essai réinitialise or, PV, unités, investissements, branches, bonus, synergies, vague et événements de combat. Aucun gain permanent n’est introduit.
+
+### Contrats de réalisation
+| Domaine | Référence à respecter | Vérification attendue |
+| --- | --- | --- |
+| Carte | Coordonnées et trajet des sections 18 à 20 | Longueur 28 ; six positions exactes ; distances avant projection isométrique |
+| Temps et attaques | Sections 21 à 24 | Premier tir prêt, priorités déterministes, ticks puis tirs puis arrivées |
+| Défenseurs | Sections 5, 6 et 12 à 17 | Six fiches N1, progression, douze branches et effets secondaires conformes |
+| Vagues | Sections 9 à 11 | Dix séquences, quantités, espacements internes et délais entre groupes |
+| Économie | Sections 7, 28 et 35 à 39 | Investissement par exemplaire, prix réduits au plafond et vente au plancher |
+| Bonus | Sections 25 à 29 | Trois choix distincts, un seul acquis ; choix acquis exclus des offres futures |
+| Synergies | Sections 30 à 36 | Conditions, code appliqué une seule fois par bénéficiaire et recalcul sans accumulation |
+
+Conserver une fiche de réglages identifiable pour chaque essai : version du GDD, prix, dégâts, cadences, portées, ennemis et vagues. Séparer autant que possible ces valeurs H de la logique de résolution pour ajuster l’équilibrage sans changer les règles.
+
+Prévoir des contrôles internes permettant de reproduire les cas du GDD : positions et PV imposés, instant de tir et liste des événements. Ces moyens servent à vérifier le prototype ; ils ne constituent pas de nouveaux pouvoirs pour le joueur.
+
+L’affichage et les animations suivent les dégâts instantanés approuvés. Un projectile visuel ne décale pas l’impact. Les curseurs de vitesse doivent accélérer tous les événements de simulation de façon cohérente, sans modifier leur ordre.
+
+<a id="s43"></a>
+
+## 43 Lots de réalisation du prototype
+
+| Lot — V | Travail | Livrable vérifiable avant la suite |
+| --- | --- | --- |
+| L0 — Préparer | Confirmer moteur, version, langage et cible locale ; créer une base minimale dans le dépôt existant | Projet qui s’ouvre, démarre et produit un exécutable de test |
+| L1 — Faire traverser la carte | Tracé logique, projection, six emplacements ; Pillards en déplacement ; arrivées et PV | Un Pillard non attaqué traverse 28 unités à vitesse 1 en 28 s et retire 1 PV sans donner d’or |
+| L2 — Installer la boucle minimale | Une faction, achats N1, tirs automatiques, récompenses, vague 1 et préparation suivante | Départ à 150 or ; achats et ventes entre vagues ; aucune transaction en combat |
+| L3 — Couvrir le combat | Six défenseurs, sept archétypes et boss ; groupe, rebonds, malédictions et résolution simultanée | Les douze cas de combat de la section 24 passent avant d’évaluer la difficulté |
+| L4 — Étendre la progression | Niveaux, branches N4, limite de copies et historique des dépenses | Statistiques conformes ; troisième copie bloquée ; vente et rachat au N1 vérifiés |
+| L5 — Jouer une partie complète | Dix vagues, défaite, victoire, choix roguelite et synergies | Les deux factions peuvent lancer les dix vagues ; les fins de partie et réinitialisations sont correctes |
+| L6 — Vérifier et observer | Cas économiques, tirages, synergies, vitesses et essais des deux factions | Résultats consignés, anomalies triées, propositions d’équilibrage séparées des règles |
+
+« Une faction » au lot L2 est un ordre de réalisation temporaire ; le prototype final conserve les deux factions. Le lancement des dix vagues ne garantit pas qu’une composition quelconque puisse les gagner. La présence d’une stratégie de victoire sera recherchée et mesurée lors des essais.
+
+Pas d’estimation calendaire ou budgétaire ferme avant le choix technique et les premiers lots. Une anomalie de règle doit être corrigée avant d’interpréter un échec comme un problème d’équilibrage.
+
+<a id="s44"></a>
+
+## 44 Critères de conformité du prototype
+
+### Conformité des règles
+
+- Chaque achat exige emplacement libre, quota disponible et or suffisant ; en cas d’échec, aucun débit ni unité partiellement créée.
+- N4 exige une seule branche, incluse dans le passage de niveau. Deux copies peuvent avoir des branches différentes sans contourner le quota du type de base.
+- Un ennemi mort rapporte une seule récompense, y compris sous plusieurs tirs ou malédictions ; une arrivée ne rapporte rien.
+- Les douze cas de combat de la section 24 et les douze cas de recrutement/vente de la section 39 sont exécutés et leurs résultats consignés.
+- Un arbalétrier payé 75 rend 52 ; deux ventes rendent 104. Un exemplaire payé 68 + 45 + 90 + 135 rend 236. R-11 acquis plus tard ne modifie pas les dépenses passées.
+- Les bonus choisis sont exclus des tirages suivants ; chaque offre contient trois codes distincts. Tester les conditions par niveau, l’exclusion du chaman de R-02 et les 4 PV supplémentaires de R-09.
+- Une même synergie ne double pas avec deux partenaires identiques ; un partenaire restant peut maintenir l’effet. Le recalcul répété sans changement ne modifie pas les valeurs.
+- À ×1 et ×2, une situation contrôlée identique conserve mêmes éliminations, récompenses et PV aux mêmes instants de jeu ; la durée réelle change.
+
+
+
+Ces critères définissent les résultats à vérifier ; ils ne constituent pas des essais déjà exécutés.
+
+<a id="s45"></a>
+
+## 45 Mesures et essais de jeu du prototype
+
+### Séquence et budgets
+
+Exécuter aussi un scénario contrôlé où chaque ennemi est éliminé, pour vérifier les comptes sans prétendre démontrer une stratégie gagnante. Les dix vagues représentent 182 ennemis, 10 944 PV bruts et 770 or de récompenses. Avec les 150 or initiaux, le revenu brut atteint 920 avant dépenses, dont 816 avant la vague 10. La somme de 273,1 s couvre les fenêtres d’apparition des dix vagues ; elle exclut les fins de combat et les préparations.
+
+Dans une partie réelle, consigner les éliminations et arrivées : le revenu peut être inférieur à ces plafonds. Deux exemplaires N1 de chaque type coûtent 450 or ; trois unités distinctes N4/N3/N2 coûtent 725 sans bonus. Ces références ne définissent pas une composition obligatoire.
+
+### Lisibilité et essais de jeu
+
+Vérifier qu’un joueur peut identifier sa phase, son or, ses PV, le niveau d’une unité, le prix de sa prochaine amélioration et le remboursement avant vente. Relever les erreurs de compréhension et les actions impossibles mal expliquées.
+
+Pour chaque essai : faction, placements E1–E6, achats et niveaux par vague, branches, bonus, synergies, fuites, PV restants, or restant, durée de combat et durée de préparation. Conserver également l’ordre des offres roguelite pour expliquer les différences entre parties.
+
+Comparer des essais avec les mêmes réglages et, quand possible, les mêmes offres. Une proposition de modification H doit préciser la valeur précédente, la valeur testée et le résultat observé. Ni une victoire isolée ni le DPS théorique ne suffisent à conclure à l’équilibre des factions.
+
+<a id="s46"></a>
+
+## 46 Socle technique de réalisation
+
+### Choix initial de réalisation
+Après la demande de recommandation du porteur du projet, Godot avec GDScript et une représentation 2D isométrique sont retenus pour préparer le premier essai. Il s’agit d’un choix de réalisation révisable, distinct d’une nouvelle mécanique de jeu. La version utilisée et les résultats de lancement sont consignés dans le README du prototype.
+
+### Choix et limites
+| Sujet | Référence | État |
+| --- | --- | --- |
+| Moteur et langage | Godot 4.7.2 stable standard, GDScript | Choix de réalisation initial, révisable |
+| Présentation | 2D isométrique, visuels temporaires | Choix de réalisation initial |
+| Rendu | Compatibility | Choix de réalisation initial, à vérifier sur le PC cible |
+| Livraison initiale | Scène locale de traversée du Gué | Lot L1 réalisé ; les combats viennent ensuite |
+| Temps de combat complet | Ordonnanceur conforme aux sections 21 à 24 | À réaliser au lot L3 |
+| Publication | Essai local PC | Aucune publication commerciale engagée |
+
+Le cahier et les critères sont approuvés ; l’approbation ne prouve ni la jouabilité complète ni l’équilibre. Les valeurs H restent à tester. Les tolérances numériques et le format de données seront documentés à mesure de l’implémentation.
+
+Les raccourcis, la pause, la sauvegarde, la configuration matérielle minimale et les objectifs de performance restent ouverts. Le choix d’un rendu 2D ne définit pas la direction artistique finale.
+
+<a id="s47"></a>
+
+## 47 Périmètre commercial et feuille de route
 
 ### Comparaison des périmètres envisagés
 | Élément | Prototype | Objectif commercial |
@@ -1374,23 +1508,23 @@ Ces vérifications constituent un plan de validation — P. Les objectifs de per
 
 Ces objectifs sont des cibles de contenu — C — et non des engagements de production. Ils seront ajustés selon le temps de développement et les tests. Le modèle premium et le prix de 7,99 € sont envisagés ; la commercialisation, le budget, les ventes attendues et le calendrier ne sont pas arrêtés.
 
-### Feuille de route proposée
+### Feuille de route de référence
 | Jalon | Travail à effectuer | Condition de passage proposée |
 | --- | --- | --- |
-| J0 — Préparer | Définir le cahier de réalisation et les choix techniques | Plan de réalisation examiné |
+| J0 — Préparer | Cahier approuvé ; préparer le socle technique | Projet de test démarrable |
 | J1 — Construire | Carte du Gué, six emplacements, deux factions, six défenseurs | Boucle de préparation et combat jouable |
 | J2 — Compléter | Dix vagues, économie, niveaux, spécialisations et bonus | Partie jouable du début à la fin |
 | J3 — Tester | Lisibilité, factions, économie et durée | Résultats consignés et corrections priorisées |
 | J4 — Réviser le périmètre | Examiner la cible commerciale selon les essais | Contenu, charge et priorités explicitement confirmés |
 
-La feuille de route est une proposition d’organisation — P. Aucun délai, budget, responsable ou engagement de livraison n’est supposé. L’extension vers six cartes et seize défenseurs dépend de la validation du prototype.
+L’ordre détaillé L0 à L6 est approuvé en section 43 ; les jalons ci-dessus le résument. Aucun délai, budget, responsable ou engagement de livraison n’est supposé. L’extension vers six cartes et seize défenseurs dépend de la validation du prototype.
 
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
 
-<a id="s42"></a>
+<a id="s48"></a>
 
-## 42 Registre des décisions
+## 48 Registre des décisions
 
 ### Décisions de référence
 | Identifiant | Décision | Statut |
@@ -1425,10 +1559,13 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | DEC-028 | Synergies de proximité et N4, cumul et recalcul ; volet racial différé | V / H |
 | DEC-029 | Exemplaires indépendants ; limite de deux par type déployé (H) | V / H |
 | DEC-030 | Vente : total réellement payé, 70 %, arrondi inférieur par exemplaire ; rachat N1 | V |
+| DEC-031 | Parcours, panneaux, transaction N4 et réinitialisation de partie | V |
+| DEC-032 | Lots L0 à L6 et critères de conformité du prototype | V |
+| DEC-033 | Accélération ×1 et ×2 pour les essais, facteurs H | V / H |
 
-<a id="s43"></a>
+<a id="s49"></a>
 
-## 43 Questions ouvertes et suivi
+## 49 Questions ouvertes et suivi
 
 | Identifiant | Décision attendue | Dépendance principale |
 | --- | --- | --- |
@@ -1436,15 +1573,15 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-002 | Équilibrage des récompenses et de la limite de deux copies | Économie et recrutement |
 | O-003 | Noms définitifs, interface du choix et équilibre des branches | Niveau 4 et synergies |
 | O-006 | Équilibrage des vagues et capacités futures du boss | Partie complète |
-| O-007 | Progression entre les parties et interface de combat | Expérience globale |
-| O-008 | Moteur, prix final, périmètre commercial et nom | Plan de production |
+| O-007 | Progression entre les parties, ergonomie et accessibilité | Expérience globale |
+| O-008 | Prix final, périmètre commercial et nom | Plan de production |
 
-<a id="s44"></a>
+<a id="s50"></a>
 
-## 44 Sources et historique du GDD
+## 50 Sources et historique du GDD
 
 ### Sources et historique
-S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». S10 — Géométrie du Gué approuvée par « ok on continu ». S11 — Résolution du combat approuvée par « ok c’est bon ». S12 — Bonus roguelite approuvés par « ok on continu ». S13 — Synergies approuvées par « ok on continu ». S14 — Recrutement et vente approuvés par « ok on continu ». Le lien partagé reste une référence d’origine.
+S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». S10 — Géométrie du Gué approuvée par « ok on continu ». S11 — Résolution du combat approuvée par « ok c’est bon ». S12 — Bonus roguelite approuvés par « ok on continu ». S13 — Synergies approuvées par « ok on continu ». S14 — Recrutement et vente approuvés par « ok on continu ». S15 — Cahier de réalisation approuvé par « ok on continu » ; recommandation technique demandée ensuite. Le lien partagé reste une référence d’origine.
 
 Version 0.2 — 19 octobre 2026 : consolidation, statuts, calculs dérivés et feuille de route proposée ; aucune nouvelle fonctionnalité validée.
 
@@ -1470,9 +1607,12 @@ Version 0.12 — 20 octobre 2026 : proximité, associations N4, cumul et recalcu
 
 Version 0.13 — 20 octobre 2026 : copies indépendantes, limite H de deux par type, remboursements entiers par exemplaire et budgets intégrés après validation S14.
 
-<a id="s45"></a>
 
-## 45 Maintenance du GDD
+Version 0.14 — 20 octobre 2026 : cahier de réalisation, parcours, lots et critères intégrés après validation S15 ; choix technique de réalisation documenté séparément.
+
+<a id="s51"></a>
+
+## 51 Maintenance du GDD
 
 ### Procédure de mise à jour proposée
 Le Markdown est la référence éditoriale ; le Word en est la présentation. Actualiser les deux ensemble. Consigner identifiant, date, ancienne et nouvelle règle, statut, source et impact. Une hypothèse ou question ouverte devient validée uniquement après confirmation explicite du porteur du projet.

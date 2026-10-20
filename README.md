@@ -8,7 +8,7 @@ Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. 
 
 - [GDD Word](For_the_Fortress_GDD.docx) : présentation structurée avec sommaire et tableaux.
 - [GDD Markdown](For_the_Fortress_GDD.md) : référence éditoriale adaptée au versionnement Git.
-- Version documentaire : **0.13 — 20 octobre 2026**, intégrant le socle, les combats, les ennemis, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat, les bonus roguelite les synergies, le recrutement et la vente approuvés.
+- Version documentaire : **0.14 — 20 octobre 2026**, intégrant le socle, les combats, les ennemis, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat, les bonus roguelite, les synergies, le recrutement, la vente et le cahier de réalisation approuvés.
 
 ## Mécaniques établies
 
@@ -28,7 +28,7 @@ Les coûts d’achat de 50, 75 et 100 or, les DPS de 8, 9,6 et 10,8 et les amél
 
 ## Intentions commerciales
 
-PC sur Steam en priorité ; Godot envisagé ; modèle premium avec prix de travail de 7,99 €. Cibles envisagées : deux factions, seize défenseurs, six cartes, environ soixante bonus, douze familles d’ennemis et six boss. Le mode infini est seulement envisagé. Ces cibles ne constituent pas des engagements de production.
+PC sur Steam en priorité ; Godot retenu pour le premier essai ; modèle premium avec prix de travail de 7,99 €. Cibles envisagées : deux factions, seize défenseurs, six cartes, environ soixante bonus, douze familles d’ennemis et six boss. Le mode infini est seulement envisagé. Ces cibles ne constituent pas des engagements de production.
 
 ## Séquence de référence des dix vagues
 
@@ -62,9 +62,9 @@ La [proposition de synergies](design/Proposition_synergies.md) est intégrée au
 
 La [proposition de recrutement et de vente](design/Proposition_recrutement_vente.md) prévoit deux copies maximum par type et une vente à 70 % du montant réellement payé, arrondie à l’entier inférieur par exemplaire. Elle est intégrée au GDD v0.13. Les comportements sont validés ; la limite de deux exemplaires et les coûts restent H.
 
-## Réalisation du prototype proposée
+## Réalisation du prototype approuvée
 
-Le [cahier de réalisation du premier prototype](design/Proposition_realisation_prototype.md) décrit les panneaux de préparation et de combat, les étapes L0 à L6 et les critères de vérification. **Statut P — à valider** ; Godot reste envisagé, sa version et le langage restent ouverts. Le GDD approuvé demeure en v0.13.
+Le [cahier de réalisation du premier prototype](design/Proposition_realisation_prototype.md) décrit les panneaux de préparation et de combat, les étapes L0 à L6 et les critères de vérification. Le cadre est intégré au GDD v0.14. Les critères sont à exécuter ; ils ne constituent pas des résultats de test. Le premier essai utilise Godot avec GDScript, en 2D isométrique.
 
 ## Statuts et suivi
 
@@ -76,8 +76,8 @@ Le combat Horde est également validé pour les essais : troll avec rebond, sape
 
 Les éliminations rapportent immédiatement une récompense unique, identique pour les deux factions, y compris par malédiction. Un ennemi atteignant la forteresse inflige ses dégâts puis quitte la partie sans récompense. Aucune prime de fin de vague pour le premier essai.
 
-Prochain travail proposé : préparer le cahier de réalisation du prototype, ses écrans, ses étapes et ses critères de validation. La progression entre les parties reste ouverte.
+Prochain travail : lot L2, achats de défenseurs au N1, attaques automatiques et première vague. La progression entre les parties reste ouverte.
 
 Mettre à jour le Markdown et le Word dans une même révision. Documenter toute modification avec un identifiant, une date, un statut, une source et son impact. Une valeur manquante reste « À définir » et ne vaut pas zéro.
 
-Ce dossier contient des documents de conception ; il ne constitue pas encore un projet Godot jouable.
+Le [prototype Godot](prototype/README.md) contient la première scène de traversée. Les défenseurs et les dix vagues ne sont pas encore implémentés ; voir prototype/README.md.

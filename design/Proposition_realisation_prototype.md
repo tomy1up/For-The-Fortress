@@ -2,7 +2,7 @@
 
 Proposition du 20 octobre 2026, fondée sur le **GDD v0.13**.
 
-**Statut P — organisation, interface et choix de réalisation à valider.** Les règles V et les réglages H du GDD restent la référence. Ce cahier prépare la réalisation ; aucun prototype jouable ni résultat d’équilibrage n’est encore livré. For the Fortress! reste un nom de travail dont la disponibilité juridique est à confirmer.
+**Cadre de réalisation approuvé le 20 octobre 2026 par « ok on continu », intégré au GDD v0.14 — V.** Les éléments techniques encore ouverts à cette date restent distingués des règles approuvées. Les règles V et les réglages H du GDD restent la référence. Ce cahier prépare la réalisation ; aucun prototype jouable ni résultat d’équilibrage n’est encore livré. For the Fortress! reste un nom de travail dont la disponibilité juridique est à confirmer.
 
 ## 1. Résultat attendu
 
@@ -14,9 +14,9 @@ Le capital de départ est 150 or, la forteresse commence à 20 PV, les choix de 
 
 Priorité de réalisation proposée : représentation simple et lisible, contrôles fiables, puis amélioration visuelle. Des formes et couleurs temporaires peuvent identifier les unités et ennemis. Aucun achat d’assets ni style graphique final n’est décidé ici.
 
-## 2. Parcours et écrans proposés
+## 2. Parcours et écrans approuvés
 
-| Vue ou panneau — P | Informations et actions | Critère de lecture |
+| Vue ou panneau — V | Informations et actions | Critère de lecture |
 | --- | --- | --- |
 | Départ de partie | Choisir Alliance ou Horde ; afficher La Vallée du Gué comme carte du prototype ; lancer la partie | Le joueur comprend qu’il recrute uniquement dans le roster choisi |
 | Carte en préparation | Route, pont, forteresse, six emplacements ; or, PV actuels/maximaux, numéro de la prochaine vague et bouton de lancement | La phase active et les emplacements libres sont identifiables |
@@ -29,15 +29,15 @@ Priorité de réalisation proposée : représentation simple et lisible, contrô
 
 Ces vues peuvent être des panneaux sur une même scène ; leur nombre ne prescrit pas une architecture. Les informations chiffrées sont reliées aux valeurs réellement utilisées par la simulation. L’affichage peut arrondir les dégâts, mais ne doit pas modifier les calculs.
 
-Proposition pour le N4 : ouvrir le choix après demande d’amélioration, puis confirmer branche et paiement ensemble. Fermer sans choisir conserve l’unité au N3 et ne débite rien. Cette transaction d’interface reste P ; le choix exclusif et son coût inclus sont déjà V.
+Transaction N4 approuvée : ouvrir le choix après demande d’amélioration, puis confirmer branche et paiement ensemble. Fermer sans choisir conserve l’unité au N3 et ne débite rien. Cette transaction d’interface est approuvée ; le choix exclusif et son coût inclus sont déjà V.
 
-Proposition pour l’accélération : deux vitesses, ×1 et ×2, fondées sur le même temps de jeu. Le principe d’accélération est V ; ces multiplicateurs sont P/H. La pause, les raccourcis et la sauvegarde restent ouverts. Aucune reprise de partie enregistrée n’est requise par ce cahier.
+Vitesses d’essai approuvées : deux vitesses, ×1 et ×2, fondées sur le même temps de jeu. Le principe d’accélération est V ; ces multiplicateurs sont retenus pour les essais, valeurs H. La pause, les raccourcis et la sauvegarde restent ouverts. Aucune reprise de partie enregistrée n’est requise par ce cahier.
 
 ## 3. Enchaînement des phases
 
 Départ → sélection de faction → préparation de la vague 1 → combat → préparation de la vague suivante.
 
-Après les vagues 3, 6 et 9 entièrement résolues, insérer le choix roguelite avant le lancement suivant. Proposition d’interface : empêcher le lancement tant que ce choix n’est pas fait ; laisser ensuite le joueur préparer sa défense avec le bonus actif.
+Après les vagues 3, 6 et 9 entièrement résolues, insérer le choix roguelite avant le lancement suivant. Règle d’interface approuvée : empêcher le lancement tant que ce choix n’est pas fait ; laisser ensuite le joueur préparer sa défense avec le bonus actif.
 
 Pendant un combat, aucune construction, amélioration, vente, modification de branche ou permutation de position. Changer d’emplacement exige une vente et un nouvel achat au N1 entre les vagues. Les inspections restent disponibles.
 
@@ -45,7 +45,7 @@ La vague se termine seulement quand toutes les apparitions ont eu lieu et que to
 
 Un nouvel essai réinitialise or, PV, unités, investissements, branches, bonus, synergies, vague et événements de combat. Aucun gain permanent n’est introduit.
 
-## 4. Contrats de réalisation proposés
+## 4. Contrats de réalisation approuvés
 
 | Domaine | Référence à respecter | Vérification attendue |
 | --- | --- | --- |
@@ -63,9 +63,9 @@ Prévoir des contrôles internes permettant de reproduire les cas du GDD : posit
 
 L’affichage et les animations suivent les dégâts instantanés approuvés. Un projectile visuel ne décale pas l’impact. Les curseurs de vitesse doivent accélérer tous les événements de simulation de façon cohérente, sans modifier leur ordre.
 
-## 5. Ordre de construction proposé
+## 5. Ordre de construction approuvé
 
-| Lot — P | Travail | Livrable vérifiable avant la suite |
+| Lot — V | Travail | Livrable vérifiable avant la suite |
 | --- | --- | --- |
 | L0 — Préparer | Confirmer moteur, version, langage et cible locale ; créer une base minimale dans le dépôt existant | Projet qui s’ouvre, démarre et produit un exécutable de test |
 | L1 — Faire traverser la carte | Tracé logique, projection, six emplacements ; Pillards en déplacement ; arrivées et PV | Un Pillard non attaqué traverse 28 unités à vitesse 1 en 28 s et retire 1 PV sans donner d’or |
@@ -79,7 +79,7 @@ L’affichage et les animations suivent les dégâts instantanés approuvés. Un
 
 Pas d’estimation calendaire ou budgétaire ferme avant le choix technique et les premiers lots. Une anomalie de règle doit être corrigée avant d’interpréter un échec comme un problème d’équilibrage.
 
-## 6. Critères d’acceptation proposés
+## 6. Critères d’acceptation approuvés
 
 ### Conformité des règles
 
@@ -114,12 +114,16 @@ Comparer des essais avec les mêmes réglages et, quand possible, les mêmes off
 | Version et langage | O | Fixer une version exacte et un langage après confirmation du moteur, puis les documenter dans le README |
 | Représentation numérique | O | Choisir une méthode qui reproduit les fractions et les égalités de temps du GDD ; documenter les tolérances |
 | Organisation des fichiers | O | Définir scènes, données et contrôles dans le projet retenu ; garder les documents actuels dans le même dépôt |
-| Vitesse | Accélération V, facteurs O | Essayer ×1 / ×2 — P/H ; vérifier la cohérence des événements |
-| Affichage | Inspection V, présentation O | Examiner les panneaux proposés en section 2 avant intégration au GDD |
+| Vitesse | Accélération V, facteurs ×1 / ×2 retenus (H) | Essayer ×1 / ×2 — V/H ; vérifier la cohérence des événements |
+| Affichage | Panneaux et parcours V, mise en forme à réaliser | Examiner les panneaux proposés en section 2 avant intégration au GDD |
 | Distribution de test | Cible PC ; Steam commercial envisagé | Commencer par une version locale ; aucune publication Steam engagée par cette proposition |
 
 ## 8. Passage à la réalisation
 
-Ce cahier propose de valider le parcours d’interface, les lots L0–L6 et les critères d’acceptation comme cadre du premier prototype. Les choix techniques ouverts doivent être consignés explicitement. La validation du cahier ne confirme pas à elle seule une version de moteur ou un langage encore absents de la décision.
+Ce cahier approuvé définit le parcours d’interface, les lots L0–L6 et les critères d’acceptation du premier prototype. Les choix techniques ouverts doivent être consignés explicitement. La validation du cahier ne confirme pas à elle seule une version de moteur ou un langage encore absents de la décision.
 
-La prochaine action concrète après examen est de fixer le socle technique de L0, puis de réaliser L1 : une carte traversable, six emplacements et une forteresse qui perd correctement ses PV. Les autres lots suivent les critères ci-dessus ; le contenu commercial reste une étape ultérieure.
+La première action de réalisation est de fixer le socle technique de L0, puis de réaliser L1 : une carte traversable, six emplacements et une forteresse qui perd correctement ses PV. Les autres lots suivent les critères ci-dessus ; le contenu commercial reste une étape ultérieure.
+
+## Suivi de réalisation
+
+Le premier essai est réalisé avec Godot et GDScript, en 2D isométrique, après demande de recommandation technique du porteur du projet. Voir prototype/README.md pour la version utilisée et les résultats vérifiés. Ce choix initial est révisable et ne modifie pas les mécaniques.
