@@ -50,6 +50,10 @@ La [fiche de La Vallée du Gué](design/Proposition_Vallee_du_Gue.md) est intég
 
 La [fiche de résolution du combat](design/Proposition_resolution_combat.md) est intégrée au GDD v0.10 : premier tir, égalités, dégâts instantanés, malédictions hors portée et événements simultanés, avec douze cas de référence. Ces règles sont approuvées pour le prototype.
 
+## Bonus roguelite proposés
+
+La [proposition des douze bonus roguelite](design/Proposition_bonus_roguelite.md) couvre dégâts, cadence, portée, zones, niveaux, forteresse et prix. Elle précise le tirage des trois offres, le cumul et l’exclusion du chaman du bonus de cadence. **Statut P — à valider** ; le GDD approuvé reste en v0.10.
+
 ## Statuts et suivi
 
 Le GDD utilise **V** validé, **H** hypothèse, **C** cible, **O** ouvert et **P** proposition. La feuille de route et les conventions de suivi sont proposées, sans nouvelle fonctionnalité approuvée. Les calculs économiques dérivés sont identifiés.
