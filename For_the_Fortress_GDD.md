@@ -1,8 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.6 — 20 octobre 2026
+Game Design Document — Version 0.7 — 20 octobre 2026
 
-Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses et les dix vagues approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
+Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses les dix vagues et la progression par niveau approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -19,10 +19,12 @@ Nom de travail — disponibilité juridique à confirmer.
 9. [9 Ennemis et boss du prototype](#s9)
 10. [10 Composition des dix vagues](#s10)
 11. [11 Calendrier et budget des vagues](#s11)
-12. [12 Présentation interface et validation du prototype](#s12)
-13. [13 Périmètre commercial et feuille de route](#s13)
-14. [14 Registre des décisions](#s14)
-15. [15 Sources et maintenance du GDD](#s15)
+12. [12 Progression et dégâts par niveau](#s12)
+13. [13 Coûts et lecture de la progression](#s13)
+14. [14 Présentation interface et validation du prototype](#s14)
+15. [15 Périmètre commercial et feuille de route](#s15)
+16. [16 Registre des décisions](#s16)
+17. [17 Sources et maintenance du GDD](#s17)
 
 <a id="s1"></a>
 
@@ -156,15 +158,15 @@ Chaque défenseur peut être amélioré jusqu’au niveau 4 — V. Le niveau 4 d
 | Niveau 2 vers niveau 3 | 100 | 150 |
 | Niveau 3 vers niveau 4 | 150 | 300 |
 
-La lecture séquentielle des trois coûts correspond aux trois améliorations jusqu’au niveau 4. Les niveaux 2 à 4 n’ont pas de multiplicateurs de dégâts, de portée ou de cadence définis. Il n’existe pas de statistique finale de spécialisation validée.
+La lecture séquentielle des trois coûts correspond aux trois améliorations jusqu’au niveau 4. La progression approuvée augmente uniquement les dégâts : × 1,5 au N2, × 2,25 au N3 et × 3,25 au N4, relativement au N1 — valeurs H. Cadence, portée, rayons, plafonds de victimes et horaires des effets restent inchangés — V. Les tableaux complets figurent en sections 12 et 13. Il n’existe pas de statistique finale de spécialisation validée.
 
 ### Paramètres manquants
 | Domaine | Données à définir — O |
 | --- | --- |
-| Attaque | Niveaux 1 précisés en sections 5 et 6 ; niveaux supérieurs ouverts |
+| Attaque | Comportements en sections 5 et 6 ; valeurs N1 à N4 en section 12 |
 | Résolution des dégâts | Types, résistances hors essai initial, ordre de calcul et arrondis |
 | Spécialisations | Noms, effets, conditions et éventuel coût distinct |
-| Niveaux | Gains exacts et interaction avec les bonus roguelite |
+| Niveaux | Interaction et ordre de calcul avec les bonus roguelite |
 
 Un coût distinct de spécialisation ne doit pas être supposé nul ni ajouté sans décision. Les effets ne sont pas déduits des seuls noms de classe. Les dégâts secondaires du mage constituent une décision explicite documentée en section 5 ; critiques, soins, invocations et contrôle restent non définis.
 
@@ -417,16 +419,101 @@ Exemple pour les trois défenseurs distincts de chaque faction, sans vente ni do
 | Après vague 9 | Défenseur à 75 or au niveau 3 | 100 | 91 |
 | Après vague 10 | Aucun achat supplémentaire prévu | 0 | 195 |
 
-Le niveau 4 est finançable avant la vague 8, hors éventuel coût distinct de spécialisation encore ouvert. Les gains par niveau et les branches restent à définir avant de juger la puissance de cette composition.
+Le N4 est finançable avant la vague 8. Avant le boss, la composition N4 / N3 / N2 atteint 63,8 DPS théoriques hors spécialisation (section 13). Ce calcul ne garantit pas la victoire.
 
 ### Totaux et durée à éprouver
-Les dix vagues totalisent 182 ennemis et 770 or de récompenses maximales. Avant la vague 10, 666 or peuvent avoir été gagnés, soit 816 or de budget brut avec le capital initial. Les 104 or de la dernière vague ne peuvent pas financer sa défense ; les achats en combat restent interdits.
+Total : 182 ennemis et 770 or de récompenses maximales. Avant le boss : 816 or bruts, capital inclus. Les 104 or de la dernière vague ne peuvent financer sa défense : les achats en combat sont interdits.
 
-Les fenêtres d’émission totalisent 273,1 secondes, soit 4 min 33,1 s à vitesse normale, hors fins de combat, préparations et choix roguelite. La cible de 8 à 12 minutes reste à vérifier en jeu. La fiche design/Proposition_dix_vagues.md détaille les horaires.
+Les apparitions durent au total 4 min 33,1 s (273,1 s), hors fins de combat et préparations. La cible de 8 à 12 minutes reste à vérifier. Horaires détaillés : design/Proposition_dix_vagues.md.
 
 <a id="s12"></a>
 
-## 12 Présentation interface et validation du prototype
+## 12 Progression et dégâts par niveau
+
+### Principe et multiplicateurs
+Le principe de progression est validé — V ; les nombres sont des hypothèses H. Les dégâts N1 sont multipliés par 1 / 1,5 / 2,25 / 3,25 aux niveaux 1 / 2 / 3 / 4. Un multiplicateur s’applique au N1, jamais au niveau précédent. Il affecte les dégâts directs, secondaires et périodiques.
+
+Cadence, portée, rayons, nombre de victimes secondaires, coefficients et horaires des effets restent inchangés. Les fractions sont conservées sans arrondi intermédiaire pour les statistiques de référence. Bonus, résistances et branches sont exclus de ces tableaux. Le N4 représente le socle avant spécialisation.
+
+### DPS théorique sur une cible
+Le chaman inclut les deux applications de malédiction, sur une cible survivante et attaquée en continu.
+
+| Défenseur | N1 | N2 | N3 | N4 |
+| --- | --- | --- | --- | --- |
+| Archer elfe | 8 | 12 | 18 | 26 |
+| Arbalétrier nain | 9,6 | 14,4 | 21,6 | 31,2 |
+| Mage humain | 10,8 | 16,2 | 24,3 | 35,1 |
+| Lanceur de haches troll | 8 | 12 | 18 | 26 |
+| Sapeur gobelin | 9,6 | 14,4 | 21,6 | 31,2 |
+| Chaman orc | 10,8 | 16,2 | 24,3 | 35,1 |
+
+### Dégâts directs par attaque
+Intervalles : archer 1 s ; arbalétrier, mage et sapeur 2,5 s ; troll et chaman 2 s.
+
+| Défenseur | N1 | N2 | N3 | N4 |
+| --- | --- | --- | --- | --- |
+| Archer elfe | 8 | 12 | 18 | 26 |
+| Arbalétrier nain | 24 | 36 | 54 | 78 |
+| Mage humain | 27 | 40,5 | 60,75 | 87,75 |
+| Lanceur de haches troll | 16 | 24 | 36 | 52 |
+| Sapeur gobelin | 24 | 36 | 54 | 78 |
+| Chaman orc | 12 | 18 | 27 | 39 |
+
+### Dégâts secondaires et périodiques
+Par victime secondaire pour mage, troll et sapeur ; par application à +1 s et +2 s pour le chaman.
+
+| Défenseur | N1 | N2 | N3 | N4 |
+| --- | --- | --- | --- | --- |
+| Mage humain | 10,8 | 16,2 | 24,3 | 35,1 |
+| Lanceur de haches troll | 8 | 12 | 18 | 26 |
+| Sapeur gobelin | 9,6 | 14,4 | 21,6 | 31,2 |
+| Chaman orc | 4,8 | 7,2 | 10,8 | 15,6 |
+
+Le mage conserve au maximum deux victimes secondaires à 40 %, le troll un rebond à 50 % et le sapeur trois victimes secondaires à 40 %. Leur rayon ou distance reste d’une unité de carte. Les règles de renouvellement de malédiction restent celles de la section 6.
+
+<a id="s13"></a>
+
+## 13 Coûts et lecture de la progression
+
+### Plafonds théoriques de dégâts de groupe — H
+Ces plafonds supposent des attaques continues, des cibles admissibles au maximum et assez de PV. Mage : trois victimes au total ; troll : deux ; sapeur : quatre. Ils ne prédisent pas les éliminations réelles.
+
+| Défenseur | N1 | N2 | N3 | N4 |
+| --- | --- | --- | --- | --- |
+| Mage humain | 19,44 | 29,16 | 43,74 | 63,18 |
+| Lanceur de haches troll | 12 | 18 | 27 | 39 |
+| Sapeur gobelin | 21,12 | 31,68 | 47,52 | 68,64 |
+
+### Investissement total par défenseur — H
+Pièces d’or, achat et améliorations compris ; hors éventuel coût distinct de spécialisation. Les trois passages coûtent 50, 100 et 150 or.
+
+| Défenseur | N1 | N2 | N3 | N4 |
+| --- | --- | --- | --- | --- |
+| Archer elfe | 50 | 100 | 200 | 350 |
+| Arbalétrier nain | 75 | 125 | 225 | 375 |
+| Mage humain | 100 | 150 | 250 | 400 |
+| Lanceur de haches troll | 50 | 100 | 200 | 350 |
+| Sapeur gobelin | 75 | 125 | 225 | 375 |
+| Chaman orc | 100 | 150 | 250 | 400 |
+
+### Seuils de dégâts à vérifier
+Sans résistance ni bonus et aux PV ennemis actuels :
+- Archer N2 : 12 dégâts, soit un Grouillant en un impact ; N4 : 26 dégâts, soit un Sprinter.
+- Troll N2 : 24 dégâts directs contre un Sprinter et 12 par rebond contre un Grouillant.
+- Arbalétrier N3 : 54 dégâts directs, suffisants contre un Pillard à 40 PV.
+- Mage N2 : 16,2 dégâts secondaires et sapeur N2 : 14,4 ; chacun suffit contre un Grouillant.
+- Chaman N3 : 27 dégâts immédiats, suffisants contre un Sprinter sans attendre sa malédiction.
+
+Ces seuils peuvent produire des sauts de difficulté, notamment sur la vague 8. Aucun essai jouable ne les a encore vérifiés.
+
+### Achats et concentration de puissance
+Pour l’archer, les améliorations coûtent 50 or pour +4 DPS, 100 or pour +6 et 150 or pour +8 et le choix de spécialisation. Le rendement marginal diminue ; les six emplacements et les branches doivent rendre la concentration de puissance intéressante. La possibilité de recruter des copies reste ouverte.
+
+Le scénario de la section 11 investit 350 + 225 + 150 = 725 or avant le boss, avec un solde maximal de 91 or. La fiche design/Proposition_progression_niveaux.md rassemble les calculs. Les noms, effets et éventuel coût distinct des branches restent ouverts.
+
+<a id="s14"></a>
+
+## 14 Présentation interface et validation du prototype
 
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
@@ -457,9 +544,9 @@ Godot est le moteur envisagé et PC sur Steam la plateforme prioritaire. La vers
 
 Ces vérifications constituent un plan de validation — P. Les objectifs de performance, configurations matérielles et seuils d’acceptation chiffrés restent à définir.
 
-<a id="s13"></a>
+<a id="s15"></a>
 
-## 13 Périmètre commercial et feuille de route
+## 15 Périmètre commercial et feuille de route
 
 ### Comparaison des périmètres envisagés
 | Élément | Prototype | Objectif commercial |
@@ -479,7 +566,7 @@ Ces objectifs sont des cibles de contenu — C — et non des engagements de pro
 ### Feuille de route proposée
 | Jalon | Travail à effectuer | Condition de passage proposée |
 | --- | --- | --- |
-| J0 — Clarifier | Finaliser les gains par niveau, les spécialisations, les synergies et les distances | Règles nécessaires au prototype documentées |
+| J0 — Clarifier | Finaliser les spécialisations, les synergies et les distances | Règles nécessaires au prototype documentées |
 | J1 — Construire | Carte du Gué, six emplacements, deux factions, six défenseurs | Boucle de préparation et combat jouable |
 | J2 — Compléter | Dix vagues, économie, niveaux, spécialisations et bonus | Partie jouable du début à la fin |
 | J3 — Tester | Lisibilité, factions, économie et durée | Résultats consignés et corrections priorisées |
@@ -490,9 +577,9 @@ La feuille de route est une proposition d’organisation — P. Aucun délai, bu
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
 
-<a id="s14"></a>
+<a id="s16"></a>
 
-## 14 Registre des décisions
+## 16 Registre des décisions
 
 ### Décisions de référence
 | Identifiant | Décision | Statut |
@@ -515,11 +602,13 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | DEC-016 | Séquence des dix vagues et accompagnants du boss ; quantités et intervalles H | V / H |
 | DEC-017 | Première apparition à t = 0 ; séparation des groupes de 4 secondes H | V / H |
 | DEC-018 | Fin de vague après toutes les apparitions et résolutions ; victoire après vague 10 si survie | V |
+| DEC-019 | Progression de dégâts seuls ; courbe N1 × 1 / 1,5 / 2,25 / 3,25 | V / H |
+| DEC-020 | Même facteur pour dégâts directs, secondaires et périodiques ; cadence et portée inchangées | V |
 
 ### Questions ouvertes prioritaires
 | Identifiant | Décision attendue | Dépendance principale |
 | --- | --- | --- |
-| O-001 | Niveaux supérieurs et résistances après l’essai initial | Combat et statistiques par niveau |
+| O-001 | Résistances, arrondis et ordre de calcul avec les bonus | Combat et statistiques par niveau |
 | O-002 | Équilibrage des récompenses, arrondis et copies d’unités | Économie et recrutement |
 | O-003 | Noms et effets des spécialisations ; coût distinct éventuel | Niveau 4 et synergies |
 | O-004 | Seuils raciaux, proximité, cumul et recalcul | Système de synergies |
@@ -529,12 +618,12 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-008 | Moteur, prix final, périmètre commercial et nom | Plan de production |
 | O-009 | Échelle, premier tir, égalités, projectiles et portée après application d’un effet | Combat des deux factions |
 
-<a id="s15"></a>
+<a id="s17"></a>
 
-## 15 Sources et maintenance du GDD
+## 17 Sources et maintenance du GDD
 
 ### Sources et historique
-S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». Le lien partagé reste une référence d’origine.
+S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». Le lien partagé reste une référence d’origine.
 
 Version 0.2 — 19 octobre 2026 : consolidation, statuts, calculs dérivés et feuille de route proposée ; aucune nouvelle fonctionnalité validée.
 
@@ -545,6 +634,8 @@ Version 0.4 — 19 octobre 2026 : combat Horde N1 et priorité des victimes seco
 Version 0.5 — 19 octobre 2026 : sept archétypes, boss en vague 10 et règles de récompense validés par S6 ; statistiques H conservées.
 
 Version 0.6 — 20 octobre 2026 : dix vagues, horaires, revenus et scénario de dépenses intégrés après validation S7 ; réglages H et calculs dérivés distingués.
+
+Version 0.7 — 20 octobre 2026 : progression N1 à N4, dégâts secondaires et coûts cumulés intégrés après validation S8 ; valeurs H conservées.
 
 ### Procédure de mise à jour proposée
 Le Markdown est la référence éditoriale ; le Word en est la présentation. Actualiser les deux ensemble. Consigner identifiant, date, ancienne et nouvelle règle, statut, source et impact. Une hypothèse ou question ouverte devient validée uniquement après confirmation explicite du porteur du projet.

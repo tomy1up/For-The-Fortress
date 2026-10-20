@@ -8,7 +8,7 @@ Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. 
 
 - [GDD Word](For_the_Fortress_GDD.docx) : présentation structurée avec sommaire et tableaux.
 - [GDD Markdown](For_the_Fortress_GDD.md) : référence éditoriale adaptée au versionnement Git.
-- Version documentaire : **0.6 — 20 octobre 2026**, intégrant le socle, les combats, les ennemis et la séquence des dix vagues approuvée.
+- Version documentaire : **0.7 — 20 octobre 2026**, intégrant le socle, les combats, les ennemis la séquence des dix vagues et la progression par niveau approuvées.
 
 ## Mécaniques établies
 
@@ -34,9 +34,9 @@ PC sur Steam en priorité ; Godot envisagé ; modèle premium avec prix de trava
 
 La [séquence détaillée des dix vagues](design/Proposition_dix_vagues.md) est approuvée pour le prototype et intégrée au GDD v0.6. Quantités et intervalles restent des réglages H. Elle prévoit 182 ennemis, 770 or de récompenses maximales et 4 min 33,1 s de fenêtres d’apparition, hors fins de combat et préparations.
 
-## Proposition de progression à valider
+## Progression approuvée
 
-La [progression des niveaux 2 à 4](design/Proposition_progression_niveaux.md) propose une courbe de dégâts, les statistiques des six défenseurs et leurs coûts cumulés. Statut **P — proposition à valider** ; les valeurs sont des hypothèses H. Le GDD approuvé reste en version 0.6.
+La [progression des niveaux 2 à 4](design/Proposition_progression_niveaux.md) est intégrée au GDD v0.7 : dégâts × 1 / 1,5 / 2,25 / 3,25 du N1 au N4, cadence et portée inchangées. Le principe est validé ; les valeurs restent des hypothèses H à tester. Les tableaux couvrent les six défenseurs, leurs effets secondaires et leurs coûts cumulés.
 
 ## Statuts et suivi
 
@@ -48,7 +48,7 @@ Le combat Horde est également validé pour les essais : troll avec rebond, sape
 
 Les éliminations rapportent immédiatement une récompense unique, identique pour les deux factions, y compris par malédiction. Un ennemi atteignant la forteresse inflige ses dégâts puis quitte la partie sans récompense. Aucune prime de fin de vague pour le premier essai.
 
-Prochain travail proposé : définir les gains de statistiques aux niveaux 2 à 4, puis les spécialisations et la géométrie de la carte. Trancher aussi les arrondis, les synergies et les bonus avant les essais d’équilibrage. La progression entre les parties reste ouverte.
+Prochain travail proposé : définir les spécialisations et la géométrie de la carte. Trancher aussi les arrondis, les synergies et les bonus avant les essais d’équilibrage. La progression entre les parties reste ouverte.
 
 Mettre à jour le Markdown et le Word dans une même révision. Documenter toute modification avec un identifiant, une date, un statut, une source et son impact. Une valeur manquante reste « À définir » et ne vaut pas zéro.
 

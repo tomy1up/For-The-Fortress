@@ -1,10 +1,10 @@
-# For the Fortress! — Proposition de progression des niveaux
+# For the Fortress! — Progression des niveaux approuvée
 
-Proposition du 20 octobre 2026, fondée sur le GDD v0.6.
+Approuvée le 20 octobre 2026 et intégrée au GDD v0.7.
 
-**Statut P — proposition à valider.** Les multiplicateurs et valeurs dérivées sont des hypothèses H. Le niveau maximum 4, les coûts provisoires de 50, 100 puis 150 or et le déblocage de deux spécialisations au niveau 4 proviennent du GDD. Aucune branche ni effet de spécialisation n’est défini ici.
+**Statut V — principe approuvé ; valeurs H à tester.** Les multiplicateurs et valeurs dérivées sont des hypothèses H. Le niveau maximum 4, les coûts provisoires de 50, 100 puis 150 or et le déblocage de deux spécialisations au niveau 4 proviennent du GDD. Aucune branche ni effet de spécialisation n’est défini ici.
 
-## Principe proposé
+## Principe approuvé
 
 Augmenter les dégâts aux niveaux 2 à 4. La cadence, la portée, les rayons, le nombre maximal de victimes secondaires, les coefficients de rebond et d’explosion, la durée et les horaires de malédiction conservent leurs valeurs de niveau 1. Le comportement et le rôle de chaque défenseur restent ainsi comparables entre niveaux.
 
@@ -95,7 +95,7 @@ Ces seuils rendent les améliorations sensibles ; ils peuvent aussi provoquer de
 
 ## Cohérence avec le scénario de dépenses du GDD
 
-Le scénario approuvé atteint avant la vague 10 : défenseur à 50 or au N4, défenseur à 75 or au N3 et défenseur à 100 or au N2. Avec cette proposition, son DPS théorique sur une cible est de 26 + 21,6 + 16,2 = 63,8, pour l’Alliance comme pour la Horde. Les attaques secondaires et les dégâts différés conservent leurs différences.
+Le scénario approuvé atteint avant la vague 10 : défenseur à 50 or au N4, défenseur à 75 or au N3 et défenseur à 100 or au N2. Avec cette progression, son DPS théorique sur une cible est de 26 + 21,6 + 16,2 = 63,8, pour l’Alliance comme pour la Horde. Les attaques secondaires et les dégâts différés conservent leurs différences.
 
 L’investissement total est de 350 + 225 + 150 = 725 or. Avec les 816 or de budget brut maximal avant la vague 10, le solde est de 91 or, conformément au GDD. La faisabilité économique ne garantit pas la victoire : portée effective, géométrie de la carte, tirs perdus et bonus restent déterminants.
 
@@ -105,6 +105,6 @@ L’amélioration concentre la puissance sur un emplacement déjà choisi. L’a
 
 Le rendement marginal en DPS par pièce d’or diminue dans cet exemple. Les six emplacements et les spécialisations doivent rendre la concentration de puissance intéressante. La possibilité de recruter des copies reste ouverte : elle influencera fortement la comparaison entre nouveaux achats et améliorations, et n’est pas approuvée par cette fiche.
 
-## Points à valider et essais suivants
+## Questions ouvertes et essais suivants
 
-Confirmer le principe de dégâts seuls et la courbe × 1,5 / × 2,25 / × 3,25. Définir ensuite les branches du niveau 4 et leur éventuel coût distinct, puis la géométrie de la carte. Comparer les deux factions avec les mêmes vagues et budgets. Aucun essai jouable n’a encore vérifié cette progression ou les dix vagues complètes.
+Le principe de dégâts seuls et la courbe × 1,5 / × 2,25 / × 3,25 sont approuvés pour les essais. Définir ensuite les branches du niveau 4 et leur éventuel coût distinct, puis la géométrie de la carte. Comparer les deux factions avec les mêmes vagues et budgets. Aucun essai jouable n’a encore vérifié cette progression ou les dix vagues complètes.
