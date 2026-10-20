@@ -42,6 +42,10 @@ La [progression des niveaux 2 à 4](design/Proposition_progression_niveaux.md) e
 
 La [fiche des douze spécialisations](design/Proposition_specialisations.md) est intégrée au GDD v0.8. Le choix est inclus dans le coût du N4, exclusif et fixé jusqu’à la vente. Les effets sont approuvés ; les noms restent provisoires et les valeurs sont des hypothèses H à tester.
 
+## Carte proposée
+
+La [fiche de La Vallée du Gué](design/Proposition_Vallee_du_Gue.md) propose un trajet de 28 unités et six emplacements, avec [plan](design/Vallee_du_Gue_plan.svg), longueurs de couverture et temps de traversée. **Statut P — à valider** ; le GDD approuvé reste en v0.8. Le plan présente la géométrie vue du dessus, avant projection isométrique.
+
 ## Statuts et suivi
 
 Le GDD utilise **V** validé, **H** hypothèse, **C** cible, **O** ouvert et **P** proposition. La feuille de route et les conventions de suivi sont proposées, sans nouvelle fonctionnalité approuvée. Les calculs économiques dérivés sont identifiés.

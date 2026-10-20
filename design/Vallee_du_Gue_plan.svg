@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="880" viewBox="0 0 1240 880" role="img" aria-labelledby="title desc"><title id="title">La Vallée du Gué — proposition de tracé</title><desc id="desc">Chemin de 28 unités de A à H, un pont entre C et D et six emplacements E1 à E6. Plan de conception à valider.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#705b42"/></marker></defs><rect width="1240" height="880" fill="#f7f8f4"/><g font-family="Segoe UI, Arial, sans-serif" fill="#182b30"><text x="70" y="53" font-size="30" font-weight="700">La Vallée du Gué</text><text x="70" y="85" font-size="17">Proposition à valider · 28 unités de trajet · 6 emplacements fixes</text><text x="1150" y="85" text-anchor="end" font-size="14" fill="#586a6e">Plan logique vu du dessus</text><rect x="70" y="150" width="1080" height="600" rx="6" fill="#edf1e5" stroke="#bac4b7"/>
+<path d="M70 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="70" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">0</text>
+<path d="M130 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="130" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">1</text>
+<path d="M190 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="190" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">2</text>
+<path d="M250 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="250" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">3</text>
+<path d="M310 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="310" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">4</text>
+<path d="M370 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="370" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">5</text>
+<path d="M430 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="430" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">6</text>
+<path d="M490 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="490" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">7</text>
+<path d="M550 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="550" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">8</text>
+<path d="M610 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="610" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">9</text>
+<path d="M670 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="670" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">10</text>
+<path d="M730 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="730" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">11</text>
+<path d="M790 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="790" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">12</text>
+<path d="M850 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="850" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">13</text>
+<path d="M910 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="910" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">14</text>
+<path d="M970 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="970" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">15</text>
+<path d="M1030 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="1030" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">16</text>
+<path d="M1090 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="1090" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">17</text>
+<path d="M1150 150 V750" stroke="#d6ded0" stroke-width="1"/><text x="1150" y="139" text-anchor="middle" font-size="12" fill="#6d7a73">18</text>
+<path d="M70 750 H1150" stroke="#d6ded0" stroke-width="1"/><text x="53" y="754" text-anchor="end" font-size="12" fill="#6d7a73">0</text>
+<path d="M70 690 H1150" stroke="#d6ded0" stroke-width="1"/><text x="53" y="694" text-anchor="end" font-size="12" fill="#6d7a73">1</text>
+<path d="M70 630 H1150" stroke="#d6ded0" stroke-width="1"/><text x="53" y="634" text-anchor="end" font-size="12" fill="#6d7a73">2</text>
+<path d="M70 570 H1150" stroke="#d6ded0" stroke-width="1"/><text x="53" y="574" text-anchor="end" font-size="12" fill="#6d7a73">3</text>
+<path d="M70 510 H1150" stroke="#d6ded0" stroke-width="1"/><text x="53" y="514" text-anchor="end" font-size="12" fill="#6d7a73">4</text>
+<path d="M70 450 H1150" stroke="#d6ded0" stroke-width="1"/><text x="53" y="454" text-anchor="end" font-size="12" fill="#6d7a73">5</text>
+<path d="M70 390 H1150" stroke="#d6ded0" stroke-width="1"/><text x="53" y="394" text-anchor="end" font-size="12" fill="#6d7a73">6</text>
+<path d="M70 330 H1150" stroke="#d6ded0" stroke-width="1"/><text x="53" y="334" text-anchor="end" font-size="12" fill="#6d7a73">7</text>
+<path d="M70 270 H1150" stroke="#d6ded0" stroke-width="1"/><text x="53" y="274" text-anchor="end" font-size="12" fill="#6d7a73">8</text>
+<path d="M70 210 H1150" stroke="#d6ded0" stroke-width="1"/><text x="53" y="214" text-anchor="end" font-size="12" fill="#6d7a73">9</text>
+<path d="M70 150 H1150" stroke="#d6ded0" stroke-width="1"/><text x="53" y="154" text-anchor="end" font-size="12" fill="#6d7a73">10</text>
+<path d="M450 750 C400 620 500 550 460 430 C430 310 510 250 470 150" fill="none" stroke="#9ccbd5" stroke-width="34" opacity=".8"/>
+<polyline points="70,570 310,570 310,330 610,330 610,570 910,570 910,390 1090,390" fill="none" stroke="#bbaa89" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/><polyline points="70,570 310,570 310,330 610,330 610,570 910,570 910,390 1090,390" fill="none" stroke="#e8d9b9" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="430" y="308" width="60" height="44" rx="3" fill="#b48d66" stroke="#725942" stroke-width="2"/>
+<path d="M436 309 v42" stroke="#806246" stroke-width="2"/>
+<path d="M446.2 309 v42" stroke="#806246" stroke-width="2"/>
+<path d="M456.4 309 v42" stroke="#806246" stroke-width="2"/>
+<path d="M466.59999999999997 309 v42" stroke="#806246" stroke-width="2"/>
+<path d="M476.79999999999995 309 v42" stroke="#806246" stroke-width="2"/>
+<path d="M486.99999999999994 309 v42" stroke="#806246" stroke-width="2"/>
+<text x="460" y="295" text-anchor="middle" font-size="15">Pont</text>
+<path d="M179.2 570 L200.8 570" stroke="#705b42" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M310 460.79999999999995 L310 439.20000000000005" stroke="#705b42" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M539.2 330 L560.8 330" stroke="#705b42" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M610 439.20000000000005 L610 460.79999999999995" stroke="#705b42" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M749.2 570 L770.8 570" stroke="#705b42" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M910 490.79999999999995 L910 469.20000000000005" stroke="#705b42" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M989.2 390 L1010.8 390" stroke="#705b42" stroke-width="2" marker-end="url(#arrow)"/>
+<circle cx="70" cy="570" r="5" fill="#705b42"/><text x="84" y="600" text-anchor="middle" font-size="15" font-weight="600">A</text>
+<circle cx="310" cy="570" r="5" fill="#705b42"/><text x="310" y="600" text-anchor="middle" font-size="15" font-weight="600">B</text>
+<circle cx="310" cy="330" r="5" fill="#705b42"/><text x="310" y="310" text-anchor="middle" font-size="15" font-weight="600">C</text>
+<circle cx="610" cy="330" r="5" fill="#705b42"/><text x="610" y="310" text-anchor="middle" font-size="15" font-weight="600">D</text>
+<circle cx="610" cy="570" r="5" fill="#705b42"/><text x="610" y="600" text-anchor="middle" font-size="15" font-weight="600">E</text>
+<circle cx="910" cy="570" r="5" fill="#705b42"/><text x="910" y="600" text-anchor="middle" font-size="15" font-weight="600">F</text>
+<circle cx="910" cy="390" r="5" fill="#705b42"/><text x="910" y="420" text-anchor="middle" font-size="15" font-weight="600">G</text>
+<circle cx="1090" cy="390" r="5" fill="#705b42"/><text x="1090" y="420" text-anchor="middle" font-size="15" font-weight="600">H</text>
+<circle cx="250" cy="660" r="20" fill="#243c52" stroke="#ffffff" stroke-width="3"/><text x="250" y="665" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">E1</text>
+<circle cx="190" cy="390" r="20" fill="#243c52" stroke="#ffffff" stroke-width="3"/><text x="190" y="395" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">E2</text>
+<circle cx="430" cy="450" r="20" fill="#243c52" stroke="#ffffff" stroke-width="3"/><text x="430" y="455" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">E3</text>
+<circle cx="550" cy="210" r="20" fill="#243c52" stroke="#ffffff" stroke-width="3"/><text x="550" y="215" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">E4</text>
+<circle cx="730" cy="480" r="20" fill="#243c52" stroke="#ffffff" stroke-width="3"/><text x="730" y="485" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">E5</text>
+<circle cx="1000" cy="480" r="20" fill="#243c52" stroke="#ffffff" stroke-width="3"/><text x="1000" y="485" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">E6</text>
+<text x="87" y="542" font-size="16" font-weight="600">Entrée</text><rect x="1073" y="367" width="34" height="38" rx="3" fill="#6c7e89" stroke="#344e5f" stroke-width="2"/><path d="M1069 366 h42" stroke="#344e5f" stroke-width="6" stroke-dasharray="7 4"/><text x="1090" y="352" text-anchor="middle" font-size="16" font-weight="600">Forteresse</text>
+<circle cx="84" cy="798" r="10" fill="#243c52"/><text x="105" y="804" font-size="16">Emplacement de défenseur</text><path d="M410 798 h45" stroke="#bbaa89" stroke-width="12"/><text x="470" y="804" font-size="16">Chemin fixe A → H</text><path d="M780 798 h60" stroke="#243c52" stroke-width="3"/><path d="M780 791 v14 M840 791 v14" stroke="#243c52" stroke-width="2"/><text x="858" y="804" font-size="16">1 unité</text><text x="70" y="845" font-size="14" fill="#586a6e">Distances mesurées avant projection isométrique · Géométrie proposée, valeurs à tester · Aucun bonus de terrain</text></g></svg>
