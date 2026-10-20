@@ -1,8 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.9 — 20 octobre 2026
+Game Design Document — Version 0.10 — 20 octobre 2026
 
-Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau, les spécialisations et la géométrie du Gué approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
+Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué et la résolution du combat approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -28,10 +28,14 @@ Nom de travail — disponibilité juridique à confirmer.
 18. [18 Géométrie de La Vallée du Gué](#s18)
 19. [19 Emplacements et couvertures](#s19)
 20. [20 Plan et temps de traversée](#s20)
-21. [21 Présentation interface et validation du prototype](#s21)
-22. [22 Périmètre commercial et feuille de route](#s22)
-23. [23 Registre des décisions](#s23)
-24. [24 Sources et maintenance du GDD](#s24)
+21. [21 Premier tir et ciblage](#s21)
+22. [22 Impacts et malédictions](#s22)
+23. [23 Ordre de résolution du combat](#s23)
+24. [24 Cas de référence du combat](#s24)
+25. [25 Présentation interface et validation du prototype](#s25)
+26. [26 Périmètre commercial et feuille de route](#s26)
+27. [27 Registre des décisions](#s27)
+28. [28 Sources et maintenance du GDD](#s28)
 
 <a id="s1"></a>
 
@@ -102,7 +106,7 @@ La carte initiale est une scène médiévale-fantasy en vue isométrique. Elle c
 | Choix roguelite | Après les vagues 3, 6 et 9 | V — calendrier du prototype |
 
 ### Conditions de fin à préciser
-La destruction de la forteresse met fin à la partie — V. Les dégâts d’arrivée sont définis par ennemi en section 9, avec des valeurs H ; le traitement des arrivées simultanées reste ouvert. La victoire survient lorsque la vague 10 est entièrement résolue et que la forteresse survit — V. Les règles de résolution figurent en section 10.
+La destruction de la forteresse met fin à la partie — V. Les dégâts d’arrivée sont définis par ennemi en section 9, avec des valeurs H ; les arrivées simultanées sont résolues selon la section 23. La victoire survient lorsque la vague 10 est entièrement résolue et que la forteresse survit — V. Les règles de résolution figurent en section 10.
 
 Le tracé de 28 unités et les six positions sont approuvés pour les essais, avec dimensions H. Les conventions et mesures figurent en sections 18 à 20 ; les portées initiales restent en sections 5 et 6. Aucun placement libre n’est ajouté.
 
@@ -171,7 +175,7 @@ La lecture séquentielle des trois coûts correspond aux trois améliorations ju
 | Domaine | Données à définir — O |
 | --- | --- |
 | Attaque | Comportements en sections 5 et 6 ; valeurs N1 à N4 en section 12 |
-| Résolution des dégâts | Types, résistances hors essai initial, ordre de calcul et arrondis |
+| Résolution des dégâts | Types, résistances futures et ordre de calcul des bonus ; fractions conservées |
 | Spécialisations | Noms définitifs, interface et équilibre des branches |
 | Niveaux | Interaction et ordre de calcul avec les bonus roguelite |
 
@@ -208,10 +212,10 @@ Le DPS total théorique du mage atteint (27 + 10,8 + 10,8) ÷ 2,5 = 19,44 lorsqu
 
 ### Règles communes validées pour le premier essai
 - Cibler automatiquement l’ennemi à portée le plus avancé sur le chemin vers la forteresse.
-- Commencer une attaque uniquement avec une cible valide à portée ; sélectionner une nouvelle cible si la précédente est éliminée avant le prochain tir.
+- Commencer une attaque uniquement avec une cible valide à portée ; recalculer sa priorité avant chaque tir selon la section 21.
 - Tester sans réduction de dégâts liée aux résistances, sans bonus raciaux et sans spécialisations, afin de comparer les niveaux 1.
 
-Les victimes secondaires les plus proches du point d’impact sont prioritaires — V. Les égalités de ciblage, le premier délai de tir, les projectiles en vol et la règle de portée à l’impact restent ouverts. Le premier test comparera des ennemis isolés puis regroupés sur le même tronçon de route ; aucun test jouable n’est encore réalisé.
+Les victimes secondaires les plus proches du point d’impact sont prioritaires — V. Le premier tir, les égalités et les impacts instantanés sont précisés en sections 21 à 23. Le premier test comparera des ennemis isolés puis regroupés sur le même tronçon de route ; aucun test jouable n’est encore réalisé.
 
 <a id="s6"></a>
 
@@ -247,7 +251,7 @@ Toutes les deux secondes, une attaque inflige 12 dégâts immédiats et applique
 Les malédictions d’un même chaman ne se cumulent pas sur une cible ; une nouvelle application renouvelle l’effet. Au même instant, le dernier dégât périodique précède le renouvellement. Les effets de chamans différents fonctionnent indépendamment. La malédiction ne ralentit pas et ne réduit pas les résistances.
 
 ### Ciblage et comparaison des factions
-La cible principale reste l’ennemi à portée le plus avancé. Pour les rebonds et explosions, priorité aux victimes secondaires les plus proches du point d’impact — V ; égalités ouvertes. Comparer les deux factions sur la même carte avant de conclure à leur équilibre.
+La cible principale reste l’ennemi à portée le plus avancé. Pour les rebonds et explosions, priorité aux victimes secondaires les plus proches du point d’impact — V ; égalités départagées selon la section 21. Comparer les deux factions sur la même carte avant de conclure à leur équilibre.
 
 <a id="s7"></a>
 
@@ -612,7 +616,7 @@ Intervalle 2 s et portée 3,5 pour les deux branches.
 
 Fendeur : 32,5 DPS sur une cible et 40,625 sur deux. Meilleur impact principal, mais rebond plus faible que celui du N4 de base.
 
-Ricochets : 23 DPS sur une cible et 57,5 au plafond de quatre victimes. Les rebonds sont successifs : à chaque étape, chercher l’ennemi admissible le plus proche de la dernière victime, à une distance strictement inférieure à 1. Chaque rebond inflige 50 % du dégât principal initial, sans réduction supplémentaire d’étape en étape. Une attaque ne touche jamais deux fois le même ennemi ; elle s’arrête faute de cible. Les égalités de distance restent à trancher avec les règles générales de ciblage.
+Ricochets : 23 DPS sur une cible et 57,5 au plafond de quatre victimes. Les rebonds sont successifs : à chaque étape, chercher l’ennemi admissible le plus proche de la dernière victime, à une distance strictement inférieure à 1. Chaque rebond inflige 50 % du dégât principal initial, sans réduction supplémentaire d’étape en étape. Une attaque ne touche jamais deux fois le même ennemi ; elle s’arrête faute de cible. Les égalités de distance sont départagées par progression puis ordre d’apparition, selon la section 21.
 
 ### Sapeur gobelin charge concentrée ou large explosion
 
@@ -648,14 +652,14 @@ Guerre : davantage de dégâts dès l’impact, moins de dégâts différés. Ut
 
 Malédictions : chaque application périodique devient plus forte, contre un impact initial plus faible. Les effets déjà appliqués suivent les règles de renouvellement du GDD ; au même instant, le dernier dégât périodique précède le renouvellement. Aucun cumul supplémentaire, ralentissement, transfert de malédiction ou réduction de résistance n’est proposé.
 
-Guerre élimine un Pillard à 40 PV dès l’impact ; Malédictions élimine un Sprinter à 24 PV dès l’impact, mais doit attendre la suite de l’effet pour dépasser le total de Guerre. Le maintien des effets après sortie de portée reste ouvert, conformément au GDD ; il faudra le trancher avant les essais. Le gain total de Malédictions donne une contrepartie mesurable à son impact initial réduit. Les synergies et bonus futurs restent ouverts.
+Guerre élimine un Pillard à 40 PV dès l’impact ; Malédictions élimine un Sprinter à 24 PV dès l’impact, mais doit attendre la suite de l’effet pour dépasser le total de Guerre. Les malédictions continuent après sortie de portée tant que la cible reste présente, selon la section 22. Le gain total de Malédictions donne une contrepartie mesurable à son impact initial réduit. Les synergies et bonus futurs restent ouverts.
 
 
 
 ### Essais et questions ouvertes
 Comparer chaque branche au N4 de base puis à sa concurrente, sur les mêmes vagues, carte et budget. Observer le temps de tir, les victimes secondaires réelles, les dégâts perdus et les PV de forteresse perdus. Vérifier les vagues 4 et 8 pour les groupes, les vagues 6, 7, 9 et 10 pour les cibles endurantes, et la vague 3 pour la vitesse.
 
-L’interface, les égalités de ciblage, les arrondis, les effets après sortie de portée et les synergies restent ouverts. Aucun test jouable n’établit encore l’équilibre des branches.
+L’interface, les arrondis de l’économie et les synergies restent ouverts ; le combat conserve les fractions. Aucun test jouable n’établit encore l’équilibre des branches.
 
 <a id="s18"></a>
 
@@ -685,11 +689,11 @@ Le pont occupe C → D, de (6 ; 7) à (7 ; 7), soit de 10 à 11 unités parcouru
 - Déplacement à vitesse constante le long de la ligne centrale, sans arrêt aux virages ; vitesses en unités par seconde.
 - Distances euclidiennes entre centres, dans le plan logique, avant projection isométrique.
 - Acquisition d’une cible principale à distance inférieure ou égale à la portée ; rayons secondaires et rebonds gardent leur règle strictement inférieure.
-- Priorité au plus avancé selon la distance parcourue de A vers H ; égalités encore ouvertes.
+- Priorité au plus avancé selon la distance parcourue de A vers H ; égalités selon la section 21.
 - Aucun blocage mutuel ni ralentissement de circulation pour l’essai initial. Les emplacements ne bloquent pas la route.
 - Les décors ne bloquent pas les attaques. Les frontières servent au cadrage ; les portées peuvent les dépasser.
 
-Les tailles graphiques ne modifient pas les distances. Largeur visuelle, empreintes, collisions des projectiles, premier tir et effets après sortie de portée restent ouverts. La fiche design/Proposition_Vallee_du_Gue.md conserve le protocole de vérification.
+Les tailles graphiques ne modifient pas les distances. Largeur visuelle et empreintes restent à concevoir. Les projectiles sont visuels ; tir et effets hors portée suivent les sections 21 à 23. La fiche design/Proposition_Vallee_du_Gue.md conserve le protocole de vérification.
 
 <a id="s19"></a>
 
@@ -753,7 +757,128 @@ Calcul : 28 ÷ vitesse, sans élimination ni blocage. Le dernier Pillard de la v
 
 <a id="s21"></a>
 
-## 21 Présentation interface et validation du prototype
+## 21 Premier tir et ciblage
+
+### Statut des règles
+Les règles de résolution sont approuvées pour le premier prototype — V. Les statistiques H du GDD ne changent pas. Elles s’appliquent au combat de référence hors bonus non définis.
+
+### Premier tir et cadence
+- Chaque défenseur est prêt à tirer au début d’une vague. Il ne tire que lorsqu’une cible admissible est présente à portée.
+- Le premier tir a lieu dès que cette condition est remplie, sans délai initial supplémentaire.
+- Après un tir à l’instant t, le prochain tir est autorisé au plus tôt à t + intervalle du défenseur. La cadence commence au tir réellement effectué.
+- Si aucune cible n’est admissible lorsque ce délai se termine, l’unité reste prête. Elle tire dès l’acquisition suivante. Aucun tir, charge ou salve ne s’accumule pendant l’attente.
+- Changer de cible ne remet pas le délai à zéro et ne permet pas un tir supplémentaire.
+- Le début d’une nouvelle vague réinitialise la disponibilité. Construire, améliorer, choisir une branche et vendre restent interdits pendant les combats.
+- Les horaires utilisent le temps de jeu. L’accélération doit accélérer aussi apparitions, déplacements, tirs et malédictions, sans changer leur ordre relatif. Ses multiplicateurs restent ouverts.
+
+Exemple : archer prêt à t = 0, première cible admissible à t = 0,3 s. Il tire à 0,3 s, puis au plus tôt à 1,3 s. Si aucune cible n’est présente à 1,3 s et qu’une cible entre à 1,8 s, il tire à 1,8 s ; son prochain tir sera autorisé à 2,8 s. Il ne récupère pas le tir manqué.
+
+Le pas de simulation du moteur n’est pas fixé par ces exemples. L’implémentation devra mesurer son erreur temporelle et préserver les règles ; aucun résultat ne doit dépendre de la fréquence d’affichage.
+
+### Acquisition et égalités
+Recalculer la cible principale avant chaque tir. Une cible encore vivante n’est pas verrouillée si une autre devient prioritaire. Cette précision résout l’ambiguïté entre « conserver sa cible » et la priorité déjà validée de l’ennemi le plus avancé.
+
+Une cible principale est admissible si elle est vivante, présente sur le trajet et à distance de centre à centre inférieure ou égale à la portée. Un ennemi qui atteint exactement H à cet instant reste admissible jusqu’à la phase d’arrivée décrite en section 23.
+
+Ordre de priorité principal :
+1. Plus grande distance parcourue de A vers H.
+2. En cas d’égalité exacte, plus ancien ordre d’apparition dans la partie.
+
+L’ordre d’apparition est unique et croissant, y compris pour des ennemis apparus au même instant. Il suit l’ordre des groupes puis l’ordre interne de la vague. Aucun choix aléatoire n’est ajouté.
+
+Pour les victimes secondaires :
+1. Plus courte distance au centre de l’explosion ou à la victime précédente du rebond.
+2. En cas d’égalité, plus grande progression sur le chemin.
+3. En cas d’égalité persistante, plus ancien ordre d’apparition.
+
+La règle de distance strictement inférieure au rayon ou à la distance de rebond reste celle du GDD. La cible principale est exclue des victimes secondaires ; les victimes déjà touchées par une même chaîne sont exclues des rebonds suivants.
+
+<a id="s22"></a>
+
+## 22 Impacts et malédictions
+
+### Dégâts au moment du tir
+Les dégâts sont résolus immédiatement au tir — V. Les projectiles peuvent être animés, mais leur trajet visuel ne retarde pas les dégâts et ne provoque aucun second impact. Leur vitesse visuelle n’est pas une statistique de combat. Ajouter ultérieurement de vrais projectiles en vol nécessiterait une révision.
+
+La cible principale doit être à portée au moment du tir. Les dégâts sont appliqués à sa position actuelle dans ce même événement : il n’existe pas de seconde vérification de portée à un impact différé.
+
+- Archer et arbalétrier : une cible, sans transfert des dégâts excédentaires.
+- Mage et sapeur : explosion centrée sur la position actuelle de la cible principale ; choix des victimes secondaires à cet instant, selon rayon et plafond du défenseur ou de sa branche.
+- Troll : première victime puis chaîne de rebonds résolue au même instant. Chaque étape utilise le centre de la dernière victime. Respecter le plafond et l’exclusion des victimes déjà visées.
+- Chaman : dégâts directs immédiats et création ou renouvellement de sa malédiction si la cible survit à la phase de tirs.
+
+Une victime secondaire peut être hors de la portée principale du défenseur : elle doit satisfaire le rayon de l’explosion ou la distance du rebond. La portée principale et le rayon secondaire ne sont pas additionnés pour l’acquisition.
+
+Les morts provoquées dans une même phase ne déclenchent pas d’explosion ou d’effet supplémentaire non défini. Les dégâts excédentaires restent perdus ; ils ne se reportent pas sur une nouvelle cible.
+
+### Malédictions hors portée
+Une malédiction déjà appliquée continue à infliger ses dégâts à +1 s puis +2 s même si la cible sort de la portée du chaman. La portée conditionne le tir initial, pas le maintien de l’effet.
+
+Les règles déjà validées restent applicables :
+- Deux applications périodiques, avec les valeurs du niveau et de la branche du chaman au moment de l’application.
+- Un seul effet par couple chaman–cible : une nouvelle attaque du même chaman renouvelle cet effet, remplace ses échéances futures et programme de nouvelles échéances à +1 s et +2 s.
+- Au même instant, le dernier dégât périodique précède le renouvellement.
+- Les effets de chamans différents sont indépendants.
+
+La mort de la cible ou son retrait à la forteresse annule ses échéances futures. Aucun dégât ne s’applique à un ennemi retiré et aucune récompense supplémentaire n’est versée. Une malédiction ne prolonge pas une vague lorsqu’il ne reste plus d’ennemis présents.
+
+<a id="s23"></a>
+
+## 23 Ordre de résolution du combat
+
+### Ordre des événements
+Appliquer les événements selon leur instant de jeu. Lorsqu’ils partagent exactement le même instant, ordre commun validé :
+
+| Phase | Résolution |
+| --- | --- |
+| 1 | Faire apparaître les ennemis prévus et calculer les positions à cet instant. Marquer ceux qui ont atteint H, sans les retirer encore. |
+| 2 | Additionner et appliquer les dégâts des malédictions déjà programmées à cet instant ; retirer les morts et attribuer une seule récompense par mort. |
+| 3 | Pour tous les défenseurs prêts, choisir les cibles sur le même état des survivants. Préparer les dégâts directs, explosions et chaînes, puis additionner et appliquer ces dégâts. Retirer les morts, verser leurs récompenses uniques et appliquer ou renouveler les malédictions sur les survivants visés. |
+| 4 | Additionner les dégâts de forteresse de tous les survivants ayant atteint H, puis les retirer sans récompense et annuler leurs effets. |
+| 5 | Vérifier la défaite, puis la fin de vague et la victoire selon les règles existantes. |
+
+Pour la phase 3, toutes les cibles et chaînes sont déterminées avant l’application des dégâts de cette phase. Plusieurs défenseurs peuvent donc tirer sur le même ennemi et gaspiller une partie de leurs dégâts. Aucun ne bénéficie d’un ordre arbitraire de traitement des emplacements. Chacun consomme normalement son délai de tir.
+
+Un ennemi déjà éliminé en phase 2 n’est pas candidat en phase 3. Une victime prévue dans une chaîne en phase 3 peut recevoir aussi les tirs d’autres défenseurs de cette phase ; les dégâts sont simplement additionnés. La récompense n’est jamais multipliée.
+
+À la frontière de la forteresse, les dégâts de combat de cet instant sont résolus avant les dégâts d’arrivée. Un ennemi tué à cet instant rapporte son or et n’inflige aucun dégât à la forteresse. Cette priorité complète les règles de la v0.9.
+
+Les dégâts d’arrivée simultanés sont additionnés avant le contrôle de défaite ; les PV de forteresse affichés sont bornés à zéro. La défaite est prioritaire si les PV sont nuls, même si la dernière vague vient d’être entièrement résolue. Les récompenses des autres ennemis réellement éliminés dans les phases précédentes restent uniques ; elles ne permettent toujours aucun achat en combat.
+
+### Fractions et fin de vague
+Conserver les fractions de dégâts et de PV pendant les calculs de référence, sans arrondi à chaque impact. Une cible meurt dès que ses PV deviennent inférieurs ou égaux à zéro. L’affichage peut être arrondi sans modifier le calcul ; son format reste à concevoir.
+
+Exemple : quatre dégâts de rebond à 16,25 totalisent 65. Quatre valeurs arrondies à 16 ne seraient pas équivalentes. Le choix technique de représentation numérique et les tolérances de calcul sont à documenter lors de l’implémentation ; cette fiche définit les résultats mathématiques attendus.
+
+La vague se termine quand toutes ses apparitions sont passées et que tous ses ennemis ont été éliminés ou retirés à la forteresse. Attendre la fin d’animations purement visuelles n’est pas nécessaire. La forteresse survivante passe à la préparation suivante ; après la vague 10, elle remporte la victoire. Les choix roguelite restent après les vagues 3, 6 et 9.
+
+L’or reste attribué uniquement aux éliminations, une seule fois, y compris par malédiction. Aucun bonus de fin de vague, gain passif ou nouvelle monnaie n’est ajouté.
+
+<a id="s24"></a>
+
+## 24 Cas de référence du combat
+
+### Vérifications du prototype
+| Cas | Situation contrôlée | Résultat attendu |
+| --- | --- | --- |
+| C-01 | Archer prêt ; première cible à t = 0,3 s | Tir à 0,3 s ; prochain tir au plus tôt à 1,3 s |
+| C-02 | Tir à t = 0,3 s ; aucune cible à 1,3 s ; acquisition à 1,8 s | Un tir à 1,8 s, aucun rattrapage ; prochain tir à 2,8 s |
+| C-03 | Deux cibles à la même progression | Priorité à celle dont l’ordre d’apparition est le plus ancien |
+| C-04 | Deux victimes secondaires à même distance | Départager par progression, puis ordre d’apparition |
+| C-05 | Deux archers N1 prêts, un Pillard à 8 PV et un autre Pillard à portée moins avancé | Les deux visent le premier ; 16 dégâts cumulés, une récompense de 3 or ; aucun transfert vers le second |
+| C-06 | Malédiction N1 déjà appliquée, cible vivante quittant la portée | 4,8 dégâts à chacune des deux échéances, tant qu’elle reste présente |
+| C-07 | Chaman N1 tire à t = 0 puis à 2 s, cible toujours vivante | À 2 s : ancien tick de 4,8, puis tir direct de 12 ; nouvelle malédiction à 3 et 4 s |
+| C-08 | Ennemi à 4,8 PV atteignant H au moment d’un tick de 4,8 | Mort par malédiction, récompense unique ; aucun dégât d’arrivée |
+| C-09 | Forteresse à 3 PV ; deux survivants infligeant chacun 2 dégâts arrivent ensemble | 4 dégâts cumulés, PV bornés à 0, défaite |
+| C-10 | Cible principale à la limite exacte de portée ; victime secondaire à la limite exacte du rayon | Cible principale admissible ; victime secondaire exclue par la règle stricte du rayon |
+| C-11 | Dernier ennemi éliminé après la dernière apparition ; animations encore visibles | Fin de vague sans attendre les animations ; effets futurs annulés sur l’ennemi mort |
+| C-12 | Plus aucun ennemi en vague 10 ; forteresse à 0 PV après les arrivées | Défaite, aucune victoire simultanée |
+
+Ces cas décrivent des vérifications futures. Aucun prototype jouable ni test automatisé de combat n’est réputé avoir été exécuté par cette fiche.
+
+<a id="s25"></a>
+
+## 25 Présentation interface et validation du prototype
 
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
@@ -784,9 +909,9 @@ Godot est le moteur envisagé et PC sur Steam la plateforme prioritaire. La vers
 
 Ces vérifications constituent un plan de validation — P. Les objectifs de performance, configurations matérielles et seuils d’acceptation chiffrés restent à définir.
 
-<a id="s22"></a>
+<a id="s26"></a>
 
-## 22 Périmètre commercial et feuille de route
+## 26 Périmètre commercial et feuille de route
 
 ### Comparaison des périmètres envisagés
 | Élément | Prototype | Objectif commercial |
@@ -817,9 +942,9 @@ La feuille de route est une proposition d’organisation — P. Aucun délai, bu
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
 
-<a id="s23"></a>
+<a id="s27"></a>
 
-## 23 Registre des décisions
+## 27 Registre des décisions
 
 ### Décisions de référence
 | Identifiant | Décision | Statut |
@@ -847,11 +972,13 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | DEC-021 | Choix N4 inclus, exclusif, fixé jusqu’à la vente ; accessible dès les essais | V |
 | DEC-022 | Douze branches et rebonds successifs distincts du troll ; valeurs H | V / H |
 | DEC-023 | Géométrie du Gué, distances et circulation sans blocage ; valeurs H | V / H |
+| DEC-024 | Premier tir prêt, ciblage déterministe, impacts instantanés, malédictions hors portée | V |
+| DEC-025 | Ticks avant tirs simultanés, puis arrivées ; récompense unique et défaite prioritaire | V |
 
-### Questions ouvertes prioritaires
+### Questions ouvertes et suivi
 | Identifiant | Décision attendue | Dépendance principale |
 | --- | --- | --- |
-| O-001 | Résistances, arrondis et ordre de calcul avec les bonus | Combat et statistiques par niveau |
+| O-001 | Résistances futures et ordre de calcul avec les bonus | Combat et statistiques par niveau |
 | O-002 | Équilibrage des récompenses, arrondis et copies d’unités | Économie et recrutement |
 | O-003 | Noms définitifs, interface du choix et équilibre des branches | Niveau 4 et synergies |
 | O-004 | Seuils raciaux, proximité, cumul et recalcul | Système de synergies |
@@ -859,14 +986,13 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-006 | Équilibrage des vagues et capacités futures du boss | Partie complète |
 | O-007 | Progression entre les parties et interface de combat | Expérience globale |
 | O-008 | Moteur, prix final, périmètre commercial et nom | Plan de production |
-| O-009 | Premier tir, égalités, projectiles et effets hors portée | Combat des deux factions |
 
-<a id="s24"></a>
+<a id="s28"></a>
 
-## 24 Sources et maintenance du GDD
+## 28 Sources et maintenance du GDD
 
 ### Sources et historique
-S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». S10 — Géométrie du Gué approuvée par « ok on continu ». Le lien partagé reste une référence d’origine.
+S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». S10 — Géométrie du Gué approuvée par « ok on continu ». S11 — Résolution du combat approuvée par « ok c’est bon ». Le lien partagé reste une référence d’origine.
 
 Version 0.2 — 19 octobre 2026 : consolidation, statuts, calculs dérivés et feuille de route proposée ; aucune nouvelle fonctionnalité validée.
 
@@ -883,6 +1009,8 @@ Version 0.7 — 20 octobre 2026 : progression N1 à N4, dégâts secondaires et 
 Version 0.8 — 20 octobre 2026 : douze spécialisations et règles du choix intégrées après validation S9 ; noms provisoires et valeurs H conservés.
 
 Version 0.9 — 20 octobre 2026 : tracé du Gué, six emplacements, distances et circulation intégrés après validation S10 ; dimensions H et mesures dérivées distinguées.
+
+Version 0.10 — 20 octobre 2026 : premier tir, ciblage, impacts instantanés, effets hors portée et ordre de résolution intégrés après validation S11 ; douze cas de référence ajoutés.
 
 ### Procédure de mise à jour proposée
 Le Markdown est la référence éditoriale ; le Word en est la présentation. Actualiser les deux ensemble. Consigner identifiant, date, ancienne et nouvelle règle, statut, source et impact. Une hypothèse ou question ouverte devient validée uniquement après confirmation explicite du porteur du projet.

@@ -1,14 +1,14 @@
-# For the Fortress! — Proposition de résolution du combat
+# For the Fortress! — Résolution du combat approuvée
 
-Proposition du 20 octobre 2026, fondée sur le GDD v0.9.
+Approuvée le 20 octobre 2026 et intégrée au GDD v0.10.
 
-**Statut P — règles à valider.** Cette fiche propose de fermer les questions O-009 et le traitement des arrivées simultanées pour le premier prototype. Elle ne modifie pas le GDD approuvé v0.9. Les dégâts, cadences, portées, ennemis, vagues et coûts H restent ceux du GDD.
+**Statut V — règles approuvées pour le prototype.** Cette fiche ferme O-009 et le traitement des arrivées simultanées. Elle est intégrée au GDD approuvé v0.10. Les dégâts, cadences, portées, ennemis, vagues et coûts H restent ceux du GDD.
 
 ## 1. Intention
 
 Obtenir des résultats compréhensibles et reproductibles : à mêmes ennemis, placements et horaires, les mêmes dégâts et revenus doivent être produits. Les règles portent sur le combat de référence hors bonus non définis. Le catalogue roguelite, les synergies, les résistances futures et leur ordre de calcul restent ouverts.
 
-Proposition pour le premier prototype : **dégâts instantanés au moment du tir**. Les flèches, haches, explosifs et sorts peuvent être représentés par des animations, mais leur trajet visuel ne retarde pas les dégâts et ne déclenche pas un second impact. Leur vitesse visuelle n’est pas une statistique de combat. Ajouter ultérieurement de vrais projectiles en vol constituerait une révision de règle à documenter.
+Règle approuvée pour le premier prototype : dégâts instantanés au moment du tir. Les flèches, haches, explosifs et sorts peuvent être représentés par des animations, mais leur trajet visuel ne retarde pas les dégâts et ne déclenche pas un second impact. Leur vitesse visuelle n’est pas une statistique de combat. Ajouter ultérieurement de vrais projectiles en vol constituerait une révision de règle à documenter.
 
 ## 2. Premier tir et cadence
 
@@ -26,7 +26,7 @@ Le pas de simulation du moteur n’est pas fixé par ces exemples. L’implémen
 
 ## 3. Acquisition et égalités
 
-Recalculer la cible principale avant chaque tir. Une cible encore vivante n’est pas verrouillée si une autre devient prioritaire. Cette précision propose de résoudre l’ambiguïté entre « conserver sa cible » et la priorité déjà validée de l’ennemi le plus avancé.
+Recalculer la cible principale avant chaque tir. Une cible encore vivante n’est pas verrouillée si une autre devient prioritaire. Cette précision résout l’ambiguïté entre « conserver sa cible » et la priorité déjà validée de l’ennemi le plus avancé.
 
 Une cible principale est admissible si elle est vivante, présente sur le trajet et à distance de centre à centre inférieure ou égale à la portée. Un ennemi qui atteint exactement H à cet instant reste admissible jusqu’à la phase d’arrivée décrite en section 6.
 
@@ -70,7 +70,7 @@ La mort de la cible ou son retrait à la forteresse annule ses échéances futur
 
 ## 6. Événements au même instant
 
-Appliquer les événements selon leur instant de jeu. Lorsqu’ils partagent exactement le même instant, proposition d’ordre commun :
+Appliquer les événements selon leur instant de jeu. Lorsqu’ils partagent exactement le même instant, ordre commun validé :
 
 | Phase | Résolution |
 | --- | --- |
@@ -84,7 +84,7 @@ Pour la phase 3, toutes les cibles et chaînes sont déterminées avant l’appl
 
 Un ennemi déjà éliminé en phase 2 n’est pas candidat en phase 3. Une victime prévue dans une chaîne en phase 3 peut recevoir aussi les tirs d’autres défenseurs de cette phase ; les dégâts sont simplement additionnés. La récompense n’est jamais multipliée.
 
-À la frontière de la forteresse, les dégâts de combat de cet instant sont résolus avant les dégâts d’arrivée. Un ennemi tué à cet instant rapporte son or et n’inflige aucun dégât à la forteresse. C’est un choix de priorité proposé, pas une règle déjà contenue dans la v0.9.
+À la frontière de la forteresse, les dégâts de combat de cet instant sont résolus avant les dégâts d’arrivée. Un ennemi tué à cet instant rapporte son or et n’inflige aucun dégât à la forteresse. Cette priorité complète les règles de la v0.9.
 
 Les dégâts d’arrivée simultanés sont additionnés avant le contrôle de défaite ; les PV de forteresse affichés sont bornés à zéro. La défaite est prioritaire si les PV sont nuls, même si la dernière vague vient d’être entièrement résolue. Les récompenses des autres ennemis réellement éliminés dans les phases précédentes restent uniques ; elles ne permettent toujours aucun achat en combat.
 
@@ -100,7 +100,7 @@ L’or reste attribué uniquement aux éliminations, une seule fois, y compris p
 
 ## 8. Cas de référence à vérifier lors du prototype
 
-| Cas | Situation contrôlée | Résultat attendu si la proposition est approuvée |
+| Cas | Situation contrôlée | Résultat attendu |
 | --- | --- | --- |
 | C-01 | Archer prêt ; première cible à t = 0,3 s | Tir à 0,3 s ; prochain tir au plus tôt à 1,3 s |
 | C-02 | Tir à t = 0,3 s ; aucune cible à 1,3 s ; acquisition à 1,8 s | Un tir à 1,8 s, aucun rattrapage ; prochain tir à 2,8 s |
@@ -117,10 +117,10 @@ L’or reste attribué uniquement aux éliminations, une seule fois, y compris p
 
 Ces cas décrivent des vérifications futures. Aucun prototype jouable ni test automatisé de combat n’est réputé avoir été exécuté par cette fiche.
 
-## 9. Décisions demandées et suites
+## 9. Validation et suites
 
-À valider : le premier tir immédiat lorsque prêt, l’absence de stockage de tirs, les priorités déterministes, la résolution instantanée, le maintien des malédictions hors portée et l’ordre des événements simultanés.
+Sont approuvés : le premier tir immédiat lorsque prêt, l’absence de stockage de tirs, les priorités déterministes, la résolution instantanée, le maintien des malédictions hors portée et l’ordre des événements simultanés.
 
-Les règles proposées doivent être intégrées au GDD seulement après accord. Les paramètres H existants ne sont pas modifiés. Le format visuel des tirs, les performances et les détails de programmation restent ouverts.
+Les règles sont intégrées au GDD v0.10. Les paramètres H existants ne sont pas modifiés. Le format visuel des tirs, les performances et les détails de programmation restent ouverts.
 
-Après accord, préparer le petit catalogue de bonus roguelite et les règles de leur tirage pour les trois choix du prototype. Les synergies, les copies d’unités et les arrondis de l’économie restent aussi à décider avant de considérer la conception du prototype comme complète.
+Préparer ensuite le petit catalogue de bonus roguelite et les règles de leur tirage pour les trois choix du prototype. Les synergies, les copies d’unités et les arrondis de l’économie restent aussi à décider avant de considérer la conception du prototype comme complète.
