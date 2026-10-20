@@ -54,6 +54,10 @@ La [fiche de résolution du combat](design/Proposition_resolution_combat.md) est
 
 La [proposition des douze bonus roguelite](design/Proposition_bonus_roguelite.md) est intégrée au GDD v0.11 : dégâts, cadence, portée, zones, niveaux, forteresse et prix. Tirage uniforme de trois offres distinctes, bonus choisis exclus, pourcentages additionnés par composante. Le chaman est exclu du bonus de cadence ; les valeurs restent H.
 
+## Synergies proposées
+
+La [proposition de synergies](design/Proposition_synergies.md) décrit six associations de proximité et six associations de spécialisations, leurs conditions, cumuls et budgets. Le volet racial reste prévu mais non activable avec un seul type de défenseur par race. **Statut P — à valider** ; le GDD approuvé reste en v0.11.
+
 ## Statuts et suivi
 
 Le GDD utilise **V** validé, **H** hypothèse, **C** cible, **O** ouvert et **P** proposition. La feuille de route et les conventions de suivi sont proposées, sans nouvelle fonctionnalité approuvée. Les calculs économiques dérivés sont identifiés.
