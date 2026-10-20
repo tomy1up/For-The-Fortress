@@ -1,8 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.10 — 20 octobre 2026
+Game Design Document — Version 0.11 — 20 octobre 2026
 
-Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué et la résolution du combat approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
+Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat et les bonus roguelite approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -32,10 +32,15 @@ Nom de travail — disponibilité juridique à confirmer.
 22. [22 Impacts et malédictions](#s22)
 23. [23 Ordre de résolution du combat](#s23)
 24. [24 Cas de référence du combat](#s24)
-25. [25 Présentation interface et validation du prototype](#s25)
-26. [26 Périmètre commercial et feuille de route](#s26)
-27. [27 Registre des décisions](#s27)
-28. [28 Sources et maintenance du GDD](#s28)
+25. [25 Bonus de combat et couverture](#s25)
+26. [26 Bonus de niveau survie et économie](#s26)
+27. [27 Tirage et cumul des bonus](#s27)
+28. [28 Paramètres et prix avec bonus](#s28)
+29. [29 Calculs et essais des bonus](#s29)
+30. [30 Présentation interface et validation du prototype](#s30)
+31. [31 Périmètre commercial et feuille de route](#s31)
+32. [32 Registre des décisions](#s32)
+33. [33 Sources et maintenance du GDD](#s33)
 
 <a id="s1"></a>
 
@@ -175,9 +180,9 @@ La lecture séquentielle des trois coûts correspond aux trois améliorations ju
 | Domaine | Données à définir — O |
 | --- | --- |
 | Attaque | Comportements en sections 5 et 6 ; valeurs N1 à N4 en section 12 |
-| Résolution des dégâts | Types, résistances futures et ordre de calcul des bonus ; fractions conservées |
+| Résolution des dégâts | Types, résistances futures et cumul avec les synergies ; fractions conservées |
 | Spécialisations | Noms définitifs, interface et équilibre des branches |
-| Niveaux | Interaction et ordre de calcul avec les bonus roguelite |
+| Niveaux | Bonus définis en section 27 ; interaction avec les futures synergies |
 
 Le choix de spécialisation est inclus dans le coût du passage au N4. Les effets approuvés sont détaillés en sections 14 à 17. Les dégâts secondaires du mage constituent une décision explicite documentée en section 5 ; critiques, soins, invocations et contrôle restent non définis.
 
@@ -266,7 +271,7 @@ L’or finance les achats et les améliorations — V. Pour le premier essai, ch
 - Lorsqu’un ennemi atteint la forteresse, appliquer ses dégâts puis le retirer de la partie, sans récompense.
 - Ne pas attribuer de prime de fin de vague pendant ce premier essai.
 
-Une unité peut être vendue uniquement entre les vagues contre 70 % de l’or total investi — V. Les synergies sont alors recalculées — V. La règle d’arrondi et le traitement d’éventuels modificateurs de prix restent à préciser — O.
+Une unité peut être vendue uniquement entre les vagues contre 70 % de l’or total investi — V. Les synergies sont alors recalculées — V. L’arrondi des ventes reste O. R-10 et R-11 réduisent les dépenses futures selon la section 28 ; le remboursement utilise les montants réellement payés.
 
 ### Achat et améliorations cumulés
 Le total au niveau 4 ci-dessous additionne l’achat et les trois coûts provisoires de 50, 100 et 150 or. Le choix de spécialisation est inclus dans l’amélioration vers le N4. Les remboursements sont des calculs à 70 %, avant toute règle d’arrondi.
@@ -299,16 +304,16 @@ Tester les gains par ennemi retenus en section 9, décider l’arrondi des vente
 ### Améliorations pendant une partie
 Après certaines vagues, le joueur choisit une amélioration parmi trois propositions aléatoires — V. Les bonus obtenus restent actifs jusqu’à la fin de la partie — V. Pour le prototype, les sélections ont lieu après les vagues 3, 6 et 9 — V, soit trois moments de choix.
 
-Le catalogue du prototype est une sélection réduite — C ; aucun nombre précis ni bonus détaillé n’est fourni. La cible commerciale est d’environ 60 bonus — C. Une sélection de trois propositions ne signifie pas que la sélection de doublons, les relances ou les raretés sont approuvées.
+Le prototype utilise douze bonus approuvés, détaillés en sections 25 à 29. Les valeurs restent H. La cible commerciale d’environ 60 bonus reste C. Les trois offres sont distinctes et les bonus déjà sélectionnés sont exclus ; pas de relance ni de rareté pour le prototype.
 
 | Règle de génération | État |
 | --- | --- |
 | Trois propositions par choix | V |
 | Tirage aléatoire | V |
-| Poids, raretés et conditions d’éligibilité | O |
-| Doublons dans un tirage et entre tirages | O |
-| Cumul et ordre d’application des effets | O |
-| Comportement si moins de trois bonus sont éligibles | O |
+| Poids égaux ; douze bonus éligibles aux deux factions ; aucune rareté | V |
+| Trois offres distinctes ; bonus choisi exclu des tirages suivants | V |
+| Pourcentages de dégâts additionnés selon les composantes ; voir section 27 | V |
+| Catalogue de 12, 11 puis 10 entrées avant les trois tirages | Calcul dérivé |
 
 ### Les trois mécanismes de synergie
 | Mécanisme validé | Intention | Règles ouvertes |
@@ -417,7 +422,7 @@ Les horaires indiquent la dernière apparition depuis le lancement de chaque vag
 Le budget brut vaut 150 + récompenses cumulées, avant toute dépense. Le revenu réel additionne seulement les récompenses des ennemis éliminés. Deux Pillards atteignant la forteresse en vague 1 ramènent son revenu de 30 à 24 or.
 
 ### Scénario de dépenses calculé
-Exemple pour les trois défenseurs distincts de chaque faction, sans vente ni doublon et avec toutes les éliminations. Les soldes incluent les vagues intermédiaires sans achat. Les prix restent H ; le scénario démontre seulement la capacité de financement.
+Exemple pour les trois défenseurs distincts de chaque faction, sans bonus, vente ni doublon et avec toutes les éliminations. Les soldes incluent les vagues intermédiaires sans achat. Les prix restent H ; le scénario démontre seulement la capacité de financement.
 
 | Moment | Achat ou amélioration | Dépense en or | Solde en or |
 | --- | --- | --- | --- |
@@ -538,7 +543,7 @@ Les noms sont provisoires. Les rôles et comportements des douze branches sont a
 ### Lecture des valeurs spécialisées
 Les sections 15 à 17 donnent les valeurs finales au N4 spécialisé, hors bonus et résistances. Ne pas appliquer à nouveau le multiplicateur × 3,25. Les branches dérogent uniquement aux paramètres explicitement remplacés ; les autres règles du GDD continuent de s’appliquer.
 
-Le ciblage principal reste l’ennemi à portée le plus avancé et les victimes secondaires les plus proches restent prioritaires. Le DPS suppose des attaques continues et assez de PV ; les plafonds de groupe supposent toutes les victimes admissibles. L’ordre de calcul avec les futurs bonus et résistances reste ouvert.
+Le ciblage principal reste l’ennemi à portée le plus avancé et les victimes secondaires les plus proches restent prioritaires. Le DPS suppose des attaques continues et assez de PV ; les plafonds de groupe supposent toutes les victimes admissibles. Les douze bonus suivent les formules de la section 27 ; résistances futures et synergies restent ouvertes.
 
 ### Budget conservé et comparaisons
 Le total investi au N4 reste 350, 375 ou 400 or. La vente théorique à 70 % reste 245, 262,5 ou 280 or, avant arrondi encore ouvert.
@@ -652,7 +657,7 @@ Guerre : davantage de dégâts dès l’impact, moins de dégâts différés. Ut
 
 Malédictions : chaque application périodique devient plus forte, contre un impact initial plus faible. Les effets déjà appliqués suivent les règles de renouvellement du GDD ; au même instant, le dernier dégât périodique précède le renouvellement. Aucun cumul supplémentaire, ralentissement, transfert de malédiction ou réduction de résistance n’est proposé.
 
-Guerre élimine un Pillard à 40 PV dès l’impact ; Malédictions élimine un Sprinter à 24 PV dès l’impact, mais doit attendre la suite de l’effet pour dépasser le total de Guerre. Les malédictions continuent après sortie de portée tant que la cible reste présente, selon la section 22. Le gain total de Malédictions donne une contrepartie mesurable à son impact initial réduit. Les synergies et bonus futurs restent ouverts.
+Guerre élimine un Pillard à 40 PV dès l’impact ; Malédictions élimine un Sprinter à 24 PV dès l’impact, mais doit attendre la suite de l’effet pour dépasser le total de Guerre. Les malédictions continuent après sortie de portée tant que la cible reste présente, selon la section 22. Le gain total de Malédictions donne une contrepartie mesurable à son impact initial réduit. Les synergies et bonus hors catalogue restent ouverts.
 
 
 
@@ -760,7 +765,7 @@ Calcul : 28 ÷ vitesse, sans élimination ni blocage. Le dernier Pillard de la v
 ## 21 Premier tir et ciblage
 
 ### Statut des règles
-Les règles de résolution sont approuvées pour le premier prototype — V. Les statistiques H du GDD ne changent pas. Elles s’appliquent au combat de référence hors bonus non définis.
+Les règles de résolution sont approuvées pour le premier prototype — V. Les statistiques H du GDD ne changent pas. Elles s’appliquent au combat de référence hors bonus ; leur catalogue est défini en sections 25 à 29.
 
 ### Premier tir et cadence
 - Chaque défenseur est prêt à tirer au début d’une vague. Il ne tire que lorsqu’une cible admissible est présente à portée.
@@ -878,7 +883,157 @@ Ces cas décrivent des vérifications futures. Aucun prototype jouable ni test a
 
 <a id="s25"></a>
 
-## 25 Présentation interface et validation du prototype
+## 25 Bonus de combat et couverture
+
+### Catalogue de référence
+Douze bonus sont approuvés pour le prototype — V ; noms provisoires et valeurs H à tester. Les effets s’appliquent à la faction jouée, à ses unités présentes et futures, selon leurs conditions. Ils ne créent aucune unité supplémentaire.
+
+| Code | Nom provisoire | Effet de référence — H | Limite et contrepartie de choix |
+| --- | --- | --- | --- |
+| R-01 | Armes affûtées | +10 % à tous les dégâts des défenseurs | Dégâts directs, secondaires et périodiques ; aucun gain de portée ou de cadence |
+| R-02 | Exercice de tir | +12 % de fréquence d’attaque à l’archer, l’arbalétrier, le mage, le troll et le sapeur | Exclut explicitement le chaman pour préserver ses deux échéances de malédiction |
+| R-03 | Postes d’observation | +0,5 unité à la portée principale de chaque défenseur | Ne modifie pas les rayons, rebonds, plafonds de victimes ou dégâts |
+| R-04 | Éclats meurtriers | +20 % aux dégâts des victimes secondaires des explosions et rebonds | Mage, troll et sapeur ; aucun effet sur le dégât principal ou la malédiction |
+| R-05 | Propagation | +0,2 unité aux rayons d’explosion et à la distance de chaque rebond | Mage, troll et sapeur ; plafonds de victimes et dégâts inchangés |
+| R-06 | Impacts appuyés | +15 % aux dégâts directs de la cible principale | Tous les défenseurs, y compris le tir initial du chaman ; aucun effet secondaire ou périodique |
+
+### Choix de composition
+Ces six bonus renforcent dégâts, cadence, portée ou attaques de groupe. Les plafonds de victimes restent inchangés. R-02 exclut toutes les branches du chaman ; R-04 et R-05 concernent mage, troll et sapeur. Les formules précises sont en sections 27 et 28.
+
+<a id="s26"></a>
+
+## 26 Bonus de niveau survie et économie
+
+### Niveau survie et dépenses
+Ces six bonus complètent le catalogue. Toutes les valeurs sont H. Le choix consomme l’une des trois sélections de la partie ; les douze gains ne sont pas acquis simultanément.
+
+| Code | Nom provisoire | Effet de référence — H | Limite et contrepartie de choix |
+| --- | --- | --- | --- |
+| R-07 | Recrues aguerries | +15 % à tous les dégâts des défenseurs actuellement N1 ou N2 | Le bonus cesse de s’appliquer à une unité dès son passage au N3 |
+| R-08 | Vétérans | +12 % à tous les dégâts des défenseurs actuellement N3 ou N4 | Aucun effet sur les unités N1 ou N2 ; s’applique aussi aux branches N4 |
+| R-09 | Maçonnerie renforcée | +4 PV maximum de forteresse et +4 PV actuels à la sélection | Nouveau maximum conservé jusqu’à la fin ; aucun soin automatique ultérieur |
+| R-10 | Ateliers efficaces | −10 % au prix des améliorations N1→N2, N2→N3 et N3→N4 futures | Aucun remboursement rétroactif et aucun effet sur le prix d’achat |
+| R-11 | Recrutement organisé | −10 % au prix des achats futurs de défenseurs | Aucun remboursement rétroactif et aucun effet sur les améliorations |
+| R-12 | Chasse aux colosses | +20 % aux dégâts infligés aux Brutes, Colosses, Élites et au Seigneur de siège | Aucun effet contre Grouillants, Pillards, Sprinters et Maraudeurs ; ne modifie pas le ciblage |
+
+R-07 et R-08 dépendent du niveau actuel. Une amélioration recalcule leur éligibilité ; aucun défenseur ne reçoit les deux effets simultanément. Le nouveau maximum de PV de R-09 reste actif jusqu’à la fin, sans soin automatique ultérieur. Les réductions de R-10 et R-11 portent uniquement sur les dépenses futures.
+
+<a id="s27"></a>
+
+## 27 Tirage et cumul des bonus
+
+### Tirage et application
+- Les douze bonus sont accessibles dès le premier choix aux deux factions, sans condition de déploiement, niveau ou branche. Chaque bonus a un bénéficiaire potentiel dans chaque roster.
+- Tirer trois codes distincts, avec poids égaux, sans remise à l’intérieur de cette offre.
+- Après sélection, retirer uniquement le bonus choisi du catalogue de la partie. Il ne peut plus être offert ni sélectionné une seconde fois.
+- Les deux offres non choisies retournent dans le catalogue disponible et peuvent réapparaître plus tard.
+- Pas de relance, de rareté, de coût de sélection ou de cumul de plusieurs copies du même bonus pour ce prototype.
+- Choisir un seul bonus avant de reprendre la préparation et de lancer la vague suivante. Ses effets commencent dès la sélection, y compris les réductions de prix utilisables pendant cette même préparation.
+- Réinitialiser tous les choix et effets à la fin de la partie.
+
+Le catalogue disponible compte donc 12 bonus après la vague 3, 11 après la vague 6 et 10 après la vague 9, avant chacun de ces tirages. Il contient toujours au moins trois offres possibles. Ces nombres supposent les douze entrées actives et la sélection d’un seul bonus à chaque étape.
+
+Un bonus de niveau ou d’attaque de groupe peut être proposé avant qu’une unité bénéficiaire soit recrutée : son intérêt futur doit être lisible dans sa description. Aucune promesse de rareté, garantie de catégorie ou adaptation cachée du tirage n’est ajoutée.
+
+### Formules de dégâts
+Calculer d’abord les statistiques de référence de l’unité à son niveau et, au N4, de sa branche. Ces valeurs constituent le socle avant bonus. Ne pas appliquer à nouveau × 3,25 aux valeurs finales spécialisées.
+
+Pour chaque victime et chaque composante de dégâts :
+
+Dégât final = dégât de référence de la composante × (1 + somme des pourcentages applicables).
+
+Les pourcentages de R-01, du bonus de niveau applicable R-07 ou R-08, de R-12 selon le type de victime et du bonus de composante R-04 ou R-06 s’additionnent. Ils ne se multiplient pas successivement.
+
+| Composante | Pourcentages applicables dans ce catalogue |
+| --- | --- |
+| Dégât principal direct | R-01 + R-06 + R-07 ou R-08 selon le niveau + R-12 selon la victime |
+| Dégât secondaire d’explosion ou rebond | R-01 + R-04 + R-07 ou R-08 selon le niveau + R-12 selon la victime |
+| Chaque dégât périodique de malédiction | R-01 + R-07 ou R-08 selon le niveau + R-12 selon la victime |
+
+Les dégâts secondaires de référence se calculent avec le coefficient du niveau ou de la branche avant les bonus. Ils ne sont pas recalculés à partir d’un dégât principal déjà bonifié : R-06 ne se transmet donc pas aux explosions, rebonds ou malédictions.
+
+R-12 se vérifie par victime : une explosion visant un Pillard bonifie la Brute secondaire, pas le Pillard. Le ciblage reste inchangé.
+
+Les effets liés au niveau sont recalculés lors d’une amélioration entre les vagues. R-07 reste sélectionné après le passage d’une unité au N3, mais cesse d’affecter cette unité ; il peut encore bénéficier à d’autres unités N1/N2. Sélectionner R-07 et R-08 couvre les deux groupes de niveaux, sans les additionner sur une même unité.
+
+Lorsqu’une malédiction est appliquée, conserver sa valeur calculée pour ses deux échéances selon les règles du GDD. Les bonus ne créent pas de dégâts supplémentaires après la mort ou le retrait de la cible.
+
+Ces formules concernent le catalogue initial sans résistance. Futures résistances, autres bonus et synergies restent à définir.
+
+<a id="s28"></a>
+
+## 28 Paramètres et prix avec bonus
+
+### Portée cadence et rayons
+R-03 ajoute 0,5 à la portée principale de référence, après la branche éventuelle. Exemples : sapeur 3 → 3,5 ; Veilleur 5 → 5,5 ; Sentinelle 6,5 → 7. Le calcul des distances et la règle d’acquisition inclusive restent ceux de la carte.
+
+R-05 ajoute 0,2 au rayon d’explosion ou à la distance de chaque rebond, après la branche. Exemples : explosion de base 1 → 1,2 ; Artificier des foules 1,4 → 1,6 ; rebond du troll 1 → 1,2. La comparaison de rayon reste strictement inférieure ; les plafonds de victimes et exclusions des chaînes restent inchangés.
+
+R-02 modifie la fréquence d’attaque, et non directement le pourcentage de réduction de l’intervalle :
+
+Nouvel intervalle = intervalle de référence ÷ 1,12.
+
+L’archer de base passe de 1 s à environ 0,892857 s ; l’arbalétrier de 2,5 s à environ 2,232143 s. Ne pas utiliser intervalle × 0,88 : ce serait un autre réglage. Conserver la valeur non arrondie dans les calculs.
+
+Le chaman est exclu de R-02 : un tir plus rapide peut renouveler sa malédiction avant le tick à +2 s et l’annuler. Sur une cible continue au N1, appliquer naïvement R-02 donnerait (12 + 4,8) ÷ (2 ÷ 1,12) = 9,408 DPS au lieu de 10,8. Son intervalle de 2 s reste donc inchangé.
+
+Cette exclusion donne à R-02 trois bénéficiaires potentiels dans l’Alliance et deux dans la Horde. Son intérêt relatif entre factions doit être testé. Les bonus R-01, R-06, R-07/R-08, R-03 et R-12 peuvent renforcer le chaman selon leur effet propre ; R-04 et R-05 ne le concernent pas.
+
+### Forteresse et économie
+R-09 ajoute 4 au maximum et aux PV actuels, sans résurrection : 10/20 devient 14/24 et 20/20 devient 24/24. À 24 PV, l’arrivée du boss à 20 dégâts laisse 4 PV ; cet effet sur la victoire doit être testé.
+
+Pour R-10 et R-11, appliquer la réduction au prix de référence puis arrondir le prix à l’entier supérieur, avec un coût minimal de 1 or. Ce minimum ne change aucun prix actuel. Les deux bonus concernent des opérations différentes et ne se multiplient donc pas sur un même prix.
+
+| Opération | Prix de référence H | Prix avec son bonus de réduction |
+| --- | --- | --- |
+| Achat du défenseur à 50 or | 50 | 45 |
+| Achat du défenseur à 75 or | 75 | 68 |
+| Achat du défenseur à 100 or | 100 | 90 |
+| Amélioration N1 vers N2 | 50 | 45 |
+| Amélioration N2 vers N3 | 100 | 90 |
+| Amélioration N3 vers N4 et choix de branche | 150 | 135 |
+
+Les dépenses déjà payées ne changent pas. La vente reste à 70 % du montant réellement payé pour cette unité, achats et améliorations compris. Aucun remboursement ne se calcule sur un prix plein non payé ; aucune différence n’est rendue lors de la sélection d’un bonus de prix. La règle générale d’arrondi des ventes reste ouverte, distincte de l’arrondi approuvé pour ces prix réduits.
+
+Avec les deux bonus acquis avant l’achat et les améliorations d’un arbalétrier : 68 + 45 + 90 + 135 = 338 or investis ; vente théorique 236,6 or avant arrondi. Ce calcul diffère du scénario sans bonus du GDD.
+
+Les revenus maximaux des vagues ne changent pas : R-10 et R-11 réduisent des dépenses et n’ajoutent aucune récompense. Les budgets et DPS sans bonus du GDD demeurent des références, pas les résultats d’une partie avec bonus.
+
+<a id="s29"></a>
+
+## 29 Calculs et essais des bonus
+
+### Exemples de calcul
+| Cas | Calcul et résultat attendu |
+| --- | --- |
+| Archer N4 avec R-01 et R-06 | 26 × (1 + 0,10 + 0,15) = 32,5 dégâts par tir ; cadence inchangée |
+| Mage N1 avec R-01 et R-06 | Principal : 27 × 1,25 = 33,75 ; secondaire : 10,8 × 1,10 = 11,88 par victime |
+| Mage N1 avec R-01 et R-04 | Principal : 29,7 ; secondaire : 10,8 × 1,30 = 14,04 par victime |
+| Archer N4 avec R-01 et R-02 | 28,6 dégâts, intervalle 1 ÷ 1,12 ; DPS continu 32,032 |
+| Chaman N1 avec R-01 | 13,2 directs et deux ticks de 5,28 ; DPS continu 11,88 si cycle complet |
+| Archer N2 avec R-07, puis passage N3 | N2 : 12 × 1,15 = 13,8 ; N3 : 18, R-07 ne s’applique plus |
+| Archer N3 avec R-08 et R-12 contre une Brute | 18 × (1 + 0,12 + 0,20) = 23,76 dégâts ; contre un Pillard : 20,16 |
+
+Ces calculs ne démontrent pas l’équilibre des offres. Le placement, les seuils d’élimination, les dégâts excédentaires et l’économie peuvent modifier fortement leur intérêt.
+
+### Essais à mener
+Vérifications proposées :
+- Trois codes distincts par offre ; un code choisi absent des offres suivantes ; offres non choisies à nouveau possibles.
+- Trois choix seulement, après les vagues 3, 6 et 9 ; catalogue restant de 12, 11 et 10 avant tirage.
+- R-02 inactif sur toutes les branches du chaman et sans effet sur les échéances de malédiction.
+- R-04/R-06 séparés : aucun double calcul du bonus principal dans les dégâts secondaires.
+- R-07/R-08 recalculés au changement de niveau ; aucun cumul des deux sur la même unité.
+- R-12 évalué par victime, sans priorité de ciblage supplémentaire.
+- R-09 augmente maximum et PV actuels une seule fois ; les dégâts futurs restent normaux.
+- R-10/R-11 sur les dépenses futures seulement ; investissement réel conservé pour les ventes.
+- Comparer les bonus à même carte, faction, budget et composition, puis avec des compositions adaptées à chaque choix.
+- Mesurer les fuites, les PV de forteresse, l’accès aux spécialisations et la réussite, en plus du DPS théorique.
+
+Aucun essai jouable n’a validé ces réglages. Il faudra surveiller la supériorité éventuelle des bonus de prix acquis tôt, les emplacements centraux avec portée accrue et le poids de R-12 contre les dernières vagues.
+
+<a id="s30"></a>
+
+## 30 Présentation interface et validation du prototype
 
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
@@ -909,9 +1064,9 @@ Godot est le moteur envisagé et PC sur Steam la plateforme prioritaire. La vers
 
 Ces vérifications constituent un plan de validation — P. Les objectifs de performance, configurations matérielles et seuils d’acceptation chiffrés restent à définir.
 
-<a id="s26"></a>
+<a id="s31"></a>
 
-## 26 Périmètre commercial et feuille de route
+## 31 Périmètre commercial et feuille de route
 
 ### Comparaison des périmètres envisagés
 | Élément | Prototype | Objectif commercial |
@@ -921,7 +1076,7 @@ Ces vérifications constituent un plan de validation — P. Les objectifs de per
 | Spécialisations | Deux branches débloquées au niveau 4 | Deux par défenseur |
 | Cartes | 1 | 6 |
 | Vagues | 10 | À définir par carte |
-| Bonus roguelite | Sélection réduite | Environ 60 |
+| Bonus roguelite | Douze, valeurs H | Environ 60 |
 | Ennemis ordinaires | 7 archétypes, hors boss | Environ 12 familles |
 | Boss | 1 | Environ 6 |
 | Mode infini | Absent du prototype | Envisagé |
@@ -931,7 +1086,7 @@ Ces objectifs sont des cibles de contenu — C — et non des engagements de pro
 ### Feuille de route proposée
 | Jalon | Travail à effectuer | Condition de passage proposée |
 | --- | --- | --- |
-| J0 — Clarifier | Finaliser les synergies et les règles de résolution du combat | Règles nécessaires au prototype documentées |
+| J0 — Clarifier | Finaliser les synergies, les copies et l’arrondi des ventes | Règles nécessaires au prototype documentées |
 | J1 — Construire | Carte du Gué, six emplacements, deux factions, six défenseurs | Boucle de préparation et combat jouable |
 | J2 — Compléter | Dix vagues, économie, niveaux, spécialisations et bonus | Partie jouable du début à la fin |
 | J3 — Tester | Lisibilité, factions, économie et durée | Résultats consignés et corrections priorisées |
@@ -942,9 +1097,9 @@ La feuille de route est une proposition d’organisation — P. Aucun délai, bu
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
 
-<a id="s27"></a>
+<a id="s32"></a>
 
-## 27 Registre des décisions
+## 32 Registre des décisions
 
 ### Décisions de référence
 | Identifiant | Décision | Statut |
@@ -974,25 +1129,26 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | DEC-023 | Géométrie du Gué, distances et circulation sans blocage ; valeurs H | V / H |
 | DEC-024 | Premier tir prêt, ciblage déterministe, impacts instantanés, malédictions hors portée | V |
 | DEC-025 | Ticks avant tirs simultanés, puis arrivées ; récompense unique et défaite prioritaire | V |
+| DEC-026 | Douze bonus, trois offres distinctes ; poids égaux, bonus choisis exclus | V / H |
+| DEC-027 | Cumul par composante, chaman sans R-02, PV et réductions de prix définis | V / H |
 
 ### Questions ouvertes et suivi
 | Identifiant | Décision attendue | Dépendance principale |
 | --- | --- | --- |
-| O-001 | Résistances futures et ordre de calcul avec les bonus | Combat et statistiques par niveau |
+| O-001 | Résistances futures et cumul avec les synergies | Combat et statistiques par niveau |
 | O-002 | Équilibrage des récompenses, arrondis et copies d’unités | Économie et recrutement |
 | O-003 | Noms définitifs, interface du choix et équilibre des branches | Niveau 4 et synergies |
 | O-004 | Seuils raciaux, proximité, cumul et recalcul | Système de synergies |
-| O-005 | Catalogue, tirage, éligibilité et doublons des bonus | Choix roguelite |
 | O-006 | Équilibrage des vagues et capacités futures du boss | Partie complète |
 | O-007 | Progression entre les parties et interface de combat | Expérience globale |
 | O-008 | Moteur, prix final, périmètre commercial et nom | Plan de production |
 
-<a id="s28"></a>
+<a id="s33"></a>
 
-## 28 Sources et maintenance du GDD
+## 33 Sources et maintenance du GDD
 
 ### Sources et historique
-S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». S10 — Géométrie du Gué approuvée par « ok on continu ». S11 — Résolution du combat approuvée par « ok c’est bon ». Le lien partagé reste une référence d’origine.
+S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». S10 — Géométrie du Gué approuvée par « ok on continu ». S11 — Résolution du combat approuvée par « ok c’est bon ». S12 — Bonus roguelite approuvés par « ok on continu ». Le lien partagé reste une référence d’origine.
 
 Version 0.2 — 19 octobre 2026 : consolidation, statuts, calculs dérivés et feuille de route proposée ; aucune nouvelle fonctionnalité validée.
 
@@ -1011,6 +1167,8 @@ Version 0.8 — 20 octobre 2026 : douze spécialisations et règles du choix int
 Version 0.9 — 20 octobre 2026 : tracé du Gué, six emplacements, distances et circulation intégrés après validation S10 ; dimensions H et mesures dérivées distinguées.
 
 Version 0.10 — 20 octobre 2026 : premier tir, ciblage, impacts instantanés, effets hors portée et ordre de résolution intégrés après validation S11 ; douze cas de référence ajoutés.
+
+Version 0.11 — 20 octobre 2026 : douze bonus et règles de tirage, cumul, cadence, PV et prix intégrés après validation S12 ; valeurs H conservées.
 
 ### Procédure de mise à jour proposée
 Le Markdown est la référence éditoriale ; le Word en est la présentation. Actualiser les deux ensemble. Consigner identifiant, date, ancienne et nouvelle règle, statut, source et impact. Une hypothèse ou question ouverte devient validée uniquement après confirmation explicite du porteur du projet.

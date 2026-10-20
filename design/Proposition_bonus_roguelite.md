@@ -1,18 +1,18 @@
-# For the Fortress! — Proposition des bonus roguelite du prototype
+# For the Fortress! — Bonus roguelite approuvés du prototype
 
-Proposition du 20 octobre 2026, fondée sur le GDD v0.10.
+Approuvés le 20 octobre 2026 et intégrés au GDD v0.11.
 
-**Statut P — catalogue, tirage et règles de calcul à valider.** Les douze noms sont provisoires ; toutes les valeurs sont des hypothèses H à tester. Le GDD approuvé reste en version 0.10. Les quelque 60 bonus envisagés pour la version commerciale restent une cible, sans engagement de production.
+**Statut V — catalogue, tirage et règles de calcul approuvés.** Les douze noms sont provisoires ; toutes les valeurs sont des hypothèses H à tester. Le GDD approuvé est en version 0.11. Les quelque 60 bonus envisagés pour la version commerciale restent une cible, sans engagement de production.
 
 ## 1. Ce qui est déjà validé
 
 Après les vagues 3, 6 et 9, choisir un bonus parmi trois propositions aléatoires. Les bonus sélectionnés restent actifs jusqu’à la fin de la partie. Cette fiche conserve ces trois choix et n’ajoute ni monnaie persistante, ni relance, ni rareté ou autre moment de sélection.
 
-## 2. Catalogue proposé
+## 2. Catalogue approuvé
 
 Les effets concernent la faction jouée, ses unités présentes et ses futurs recrutements, sauf précision. Les défenseurs des deux factions restent séparés. Un bonus ne crée aucune unité ni copie supplémentaire.
 
-| Code | Nom provisoire | Effet proposé — H | Limite et contrepartie de choix |
+| Code | Nom provisoire | Effet de référence — H | Limite et contrepartie de choix |
 | --- | --- | --- | --- |
 | R-01 | Armes affûtées | +10 % à tous les dégâts des défenseurs | Dégâts directs, secondaires et périodiques ; aucun gain de portée ou de cadence |
 | R-02 | Exercice de tir | +12 % de fréquence d’attaque à l’archer, l’arbalétrier, le mage, le troll et le sapeur | Exclut explicitement le chaman pour préserver ses deux échéances de malédiction |
@@ -29,7 +29,7 @@ Les effets concernent la faction jouée, ses unités présentes et ses futurs re
 
 Un choix consomme une des trois sélections de la partie : les gains ne sont pas acquis simultanément. Les options de dégâts, de couverture, de survie et de prix ne sont pas considérées équivalentes avant les essais.
 
-## 3. Tirage proposé
+## 3. Tirage approuvé
 
 - Les douze bonus sont accessibles dès le premier choix pour chacune des deux factions.
 - Chaque bonus du catalogue possède au moins un bénéficiaire potentiel dans le roster de chaque faction. Aucune condition liée aux unités actuellement déployées, au niveau atteint ou à la branche choisie n’est ajoutée.
@@ -44,7 +44,7 @@ Le catalogue disponible compte donc 12 bonus après la vague 3, 11 après la vag
 
 Un bonus de niveau ou d’attaque de groupe peut être proposé avant qu’une unité bénéficiaire soit recrutée : son intérêt futur doit être lisible dans sa description. Aucune promesse de rareté, garantie de catégorie ou adaptation cachée du tirage n’est ajoutée.
 
-## 4. Cumul des dégâts proposé
+## 4. Cumul des dégâts approuvé
 
 Calculer d’abord les statistiques de référence de l’unité à son niveau et, au N4, de sa branche. Ces valeurs constituent le socle avant bonus. Ne pas appliquer à nouveau × 3,25 aux valeurs finales spécialisées.
 
@@ -60,7 +60,7 @@ Les pourcentages de R-01, du bonus de niveau applicable R-07 ou R-08, de R-12 se
 | Dégât secondaire d’explosion ou rebond | R-01 + R-04 + R-07 ou R-08 selon le niveau + R-12 selon la victime |
 | Chaque dégât périodique de malédiction | R-01 + R-07 ou R-08 selon le niveau + R-12 selon la victime |
 
-Les dégâts secondaires de référence se calculent avec le coefficient du niveau ou de la branche **avant** les bonus. Ils ne sont pas recalculés à partir d’un dégât principal déjà bonifié : R-06 ne se transmet donc pas aux explosions, rebonds ou malédictions.
+Les dégâts secondaires de référence se calculent avec le coefficient du niveau ou de la branche avant les bonus. Ils ne sont pas recalculés à partir d’un dégât principal déjà bonifié : R-06 ne se transmet donc pas aux explosions, rebonds ou malédictions.
 
 R-12 se vérifie séparément sur chaque victime : une explosion visant un Pillard peut toucher une Brute secondaire et bonifier uniquement cette dernière. Le ciblage principal sur le plus avancé reste inchangé.
 
@@ -88,7 +88,7 @@ Cette exclusion donne à R-02 trois bénéficiaires potentiels dans l’Alliance
 
 ## 6. Forteresse et économie
 
-R-09 augmente le maximum de PV de 4 et les PV actuels de 4, sans dépasser le nouveau maximum. Exemple : 10/20 devient 14/24 ; 20/20 devient 24/24. Il ne ressuscite pas une forteresse détruite : le choix n’est accessible qu’après une vague terminée avec survie. À 24 PV actuels, la forteresse peut survivre à l’arrivée du boss infligeant 20 dégâts et rester à 4 PV, contrairement au cas initial à 20 PV. Cet effet sur la victoire est une conséquence proposée à tester explicitement.
+R-09 augmente le maximum de PV de 4 et les PV actuels de 4, sans dépasser le nouveau maximum. Exemple : 10/20 devient 14/24 ; 20/20 devient 24/24. Il ne ressuscite pas une forteresse détruite : le choix n’est accessible qu’après une vague terminée avec survie. À 24 PV actuels, la forteresse peut survivre à l’arrivée du boss infligeant 20 dégâts et rester à 4 PV, contrairement au cas initial à 20 PV. Cet effet sur la victoire est une conséquence approuvée à tester explicitement.
 
 Pour R-10 et R-11, appliquer la réduction au prix de référence puis arrondir le prix à l’entier supérieur, avec un coût minimal de 1 or. Ce minimum ne change aucun prix actuel. Les deux bonus concernent des opérations différentes et ne se multiplient donc pas sur un même prix.
 
@@ -101,7 +101,7 @@ Pour R-10 et R-11, appliquer la réduction au prix de référence puis arrondir 
 | Amélioration N2 vers N3 | 100 | 90 |
 | Amélioration N3 vers N4 et choix de branche | 150 | 135 |
 
-Les dépenses déjà payées ne changent pas. La vente reste à 70 % du montant réellement payé pour cette unité, achats et améliorations compris. Aucun remboursement ne se calcule sur un prix plein non payé ; aucune différence n’est rendue lors de la sélection d’un bonus de prix. La règle générale d’arrondi des ventes reste ouverte, distincte de l’arrondi proposé pour ces prix réduits.
+Les dépenses déjà payées ne changent pas. La vente reste à 70 % du montant réellement payé pour cette unité, achats et améliorations compris. Aucun remboursement ne se calcule sur un prix plein non payé ; aucune différence n’est rendue lors de la sélection d’un bonus de prix. La règle générale d’arrondi des ventes reste ouverte, distincte de l’arrondi approuvé pour ces prix réduits.
 
 Exemple si les deux bonus sont acquis avant l’achat et toutes les améliorations d’un arbalétrier : 68 + 45 + 90 + 135 = 338 or investis ; vente théorique 236,6 or avant l’arrondi restant à définir. Ce n’est pas le scénario de dépenses initial du GDD, où certains achats précèdent les choix roguelite.
 
@@ -121,7 +121,7 @@ Les revenus maximaux des vagues ne changent pas : R-10 et R-11 réduisent des d�
 
 Ces calculs ne démontrent pas l’équilibre des offres. Le placement, les seuils d’élimination, les dégâts excédentaires et l’économie peuvent modifier fortement leur intérêt.
 
-## 8. Essais à mener et décisions attendues
+## 8. Essais à mener et suites
 
 Vérifications proposées :
 - Trois codes distincts par offre ; un code choisi absent des offres suivantes ; offres non choisies à nouveau possibles.
@@ -137,6 +137,6 @@ Vérifications proposées :
 
 Aucun essai jouable n’a validé ces réglages. Il faudra surveiller la supériorité éventuelle des bonus de prix acquis tôt, les emplacements centraux avec portée accrue et le poids de R-12 contre les dernières vagues.
 
-À valider : les douze entrées, leur éligibilité commune, le tirage uniforme sans doublon d’offre, l’exclusion des bonus déjà choisis, les additions de pourcentages et les règles spécifiques de cadence, forteresse et prix.
+Sont approuvés : les douze entrées, leur éligibilité commune, le tirage uniforme sans doublon d’offre, l’exclusion des bonus déjà choisis, les additions de pourcentages et les règles spécifiques de cadence, forteresse et prix.
 
-Après validation, intégrer le catalogue et les règles au GDD. Étape proposée suivante : définir les synergies du prototype, puis trancher les copies d’unités et l’arrondi des ventes pour terminer les règles nécessaires au premier prototype.
+Le catalogue et les règles sont intégrés au GDD v0.11. Étape proposée suivante : définir les synergies du prototype, puis trancher les copies d’unités et l’arrondi des ventes pour terminer les règles nécessaires au premier prototype.
