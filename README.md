@@ -76,8 +76,10 @@ Le combat Horde est également validé pour les essais : troll avec rebond, sape
 
 Les éliminations rapportent immédiatement une récompense unique, identique pour les deux factions, y compris par malédiction. Un ennemi atteignant la forteresse inflige ses dégâts puis quitte la partie sans récompense. Aucune prime de fin de vague pour le premier essai.
 
-Prochain travail : lot L2, achats de défenseurs au N1, attaques automatiques et première vague. La progression entre les parties reste ouverte.
+Prochain travail : lot L3, défenseurs de la Horde et autres archétypes, puis résolution complète du combat. La progression entre les parties reste ouverte.
 
 Mettre à jour le Markdown et le Word dans une même révision. Documenter toute modification avec un identifiant, une date, un statut, une source et son impact. Une valeur manquante reste « À définir » et ne vaut pas zéro.
 
-Le [prototype Godot](prototype/README.md) contient la première scène de traversée. Les défenseurs et les dix vagues ne sont pas encore implémentés ; voir prototype/README.md.
+Le [prototype Godot](prototype/README.md) est en **v0.15 — 20 octobre 2026** : achats et ventes de trois défenseurs Alliance N1, tirs automatiques, première vague de dix Pillards, récompenses et arrivées. Les 117 contrôles du modèle et de l’interface passent. Les documents de conception restent en v0.14. La Horde et les vagues suivantes ne sont pas encore disponibles.
+
+Sur ce PC, lancer prototype/Lancer_le_prototype.cmd ; sélectionner un emplacement, acheter sa défense, puis lancer la vague. Le [suivi du prototype](design/Suivi_prototype.md) distingue les lots réalisés et ceux à venir.

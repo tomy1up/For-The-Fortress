@@ -47,18 +47,67 @@ func _draw() -> void:
 		draw_line(project(Vector2(x, 6.6)), project(Vector2(x, 7.4)), Color("b29a6b"), 2)
 	for tree in [Vector2(1, 1), Vector2(1.4, 8.5), Vector2(4.6, 9), Vector2(10, 1), Vector2(12, 8.7), Vector2(16.8, 2), Vector2(17, 8.7)]:
 		_draw_tree(project(tree))
+	if model != null and selected >= 0 and not model.defenders[selected].is_empty():
+		var stats: Dictionary = Model.ROSTER[model.defenders[selected].type]
+		var ring := PackedVector2Array()
+		for step in range(65):
+			var angle: float = TAU * step / 64.0
+			ring.append(project(Model.SLOTS[selected] + Vector2(cos(angle), sin(angle)) * stats.range))
+		draw_colored_polygon(ring, Color(0.8, 0.85, 0.5, 0.05))
+		draw_polyline(ring, Color(0.8, 0.85, 0.5, 0.35), 1.5, true)
 	for index in range(Model.SLOTS.size()):
 		var center: Vector2 = project(Model.SLOTS[index])
 		var diamond := PackedVector2Array([center + Vector2(-26, 0), center + Vector2(0, -13), center + Vector2(26, 0), center + Vector2(0, 13)])
 		draw_colored_polygon(diamond, SLOT_FILL)
 		draw_polyline(PackedVector2Array([diamond[0], diamond[1], diamond[2], diamond[3], diamond[0]]), Color("ddbd78") if selected == index else Color("779b89"), 2, true)
-		draw_string(font, center + Vector2(-9, 5), "E%d" % (index + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, INK)
+		var occupied: bool = model != null and not model.defenders[index].is_empty()
+		draw_string(font, center + Vector2(-9, 22 if occupied else 5), "E%d" % (index + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, INK)
 	_draw_fortress(project(Vector2(17, 6)))
 	var entrance: Vector2 = project(Model.PATH_POINTS[0])
 	draw_circle(entrance, 5, Color("debd7f"))
 	draw_string(font, entrance + Vector2(-48, -20), "ENTRÉE", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("a7b8aa"))
-	if model != null and model.active:
-		_draw_pillager(project(model.enemy_position()))
+	if model != null:
+		var actors: Array[Dictionary] = []
+		for slot in range(model.defenders.size()):
+			if not model.defenders[slot].is_empty():
+				actors.append({"point": project(Model.SLOTS[slot]), "defender": model.defenders[slot]})
+		for enemy in model.enemies:
+			actors.append({"point": project(Model.position_at(enemy.distance)), "enemy": enemy})
+		actors.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.point.y < b.point.y)
+		for actor in actors:
+			if actor.has("defender"):
+				_draw_defender(actor.point, actor.defender.type)
+			else:
+				_draw_pillager(actor.point)
+				var ratio: float = clampf(actor.enemy.hp / 40.0, 0.0, 1.0)
+				draw_rect(Rect2(actor.point + Vector2(-12, -34), Vector2(24, 4)), Color("472f2a"))
+				draw_rect(Rect2(actor.point + Vector2(-12, -34), Vector2(24 * ratio, 4)), Color("a1ba75"))
+		if model.active:
+			for shot in model.shots:
+				if model.elapsed - shot.time <= 0.18:
+					var color: Color = Color("9cc4e4") if shot.type == 2 else Color("e8ce92")
+					draw_line(project(shot.from) + Vector2(0, -17), project(shot.to) + Vector2(0, -12), color, 2, true)
+					if shot.type == 2:
+						draw_arc(project(shot.to), 20, 0, TAU, 24, Color(0.5, 0.7, 0.9, 0.7), 2, true)
+
+func _draw_defender(center: Vector2, type: int) -> void:
+	var color: Color = [Color("6f9c6b"), Color("b79a64"), Color("668db5")][type]
+	draw_circle(center + Vector2(0, 3), 9, Color(0, 0, 0, 0.25))
+	draw_rect(Rect2(center + Vector2(-6, -17), Vector2(12, 19)), color)
+	draw_circle(center + Vector2(0, -23), 6, Color("e4d0a5"))
+	match type:
+		0:
+			draw_arc(center + Vector2(6, -14), 9, -PI / 2, PI / 2, 12, Color("e0c99e"), 2, true)
+			draw_line(center + Vector2(6, -23), center + Vector2(6, -5), Color("e0c99e"), 1)
+			draw_colored_polygon(PackedVector2Array([center + Vector2(-8, -25), center + Vector2(1, -34), center + Vector2(8, -25)]), color)
+		1:
+			draw_line(center + Vector2(-10, -15), center + Vector2(10, -15), Color("eee0b7"), 3)
+			draw_line(center + Vector2(0, -20), center + Vector2(0, -7), Color("463e33"), 3)
+			draw_line(center + Vector2(-6, -26), center + Vector2(6, -26), Color("c3c8b7"), 4)
+		2:
+			draw_colored_polygon(PackedVector2Array([center + Vector2(-9, -26), center + Vector2(0, -40), center + Vector2(9, -26)]), color)
+			draw_line(center + Vector2(11, -28), center + Vector2(11, 1), Color("c7b080"), 2)
+			draw_circle(center + Vector2(11, -30), 4, Color("abcdeb"))
 
 func _draw_tree(center: Vector2) -> void:
 	draw_circle(center + Vector2(0, 3), 10, Color(0, 0, 0, 0.1))
