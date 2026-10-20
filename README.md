@@ -34,6 +34,10 @@ PC sur Steam en priorité ; Godot envisagé ; modèle premium avec prix de trava
 
 La [séquence détaillée des dix vagues](design/Proposition_dix_vagues.md) est approuvée pour le prototype et intégrée au GDD v0.6. Quantités et intervalles restent des réglages H. Elle prévoit 182 ennemis, 770 or de récompenses maximales et 4 min 33,1 s de fenêtres d’apparition, hors fins de combat et préparations.
 
+## Proposition de progression à valider
+
+La [progression des niveaux 2 à 4](design/Proposition_progression_niveaux.md) propose une courbe de dégâts, les statistiques des six défenseurs et leurs coûts cumulés. Statut **P — proposition à valider** ; les valeurs sont des hypothèses H. Le GDD approuvé reste en version 0.6.
+
 ## Statuts et suivi
 
 Le GDD utilise **V** validé, **H** hypothèse, **C** cible, **O** ouvert et **P** proposition. La feuille de route et les conventions de suivi sont proposées, sans nouvelle fonctionnalité approuvée. Les calculs économiques dérivés sont identifiés.
