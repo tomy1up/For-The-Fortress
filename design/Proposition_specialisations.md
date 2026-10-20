@@ -1,12 +1,12 @@
-# For the Fortress! — Proposition des spécialisations du prototype
+# For the Fortress! — Spécialisations approuvées du prototype
 
-Proposition du 20 octobre 2026, fondée sur le GDD v0.7.
+Approuvées le 20 octobre 2026 et intégrées au GDD v0.8.
 
-**Statut P — proposition à valider.** Les noms, règles de choix et comportements décrits ici sont proposés. Tous les réglages chiffrés sont des hypothèses H à tester. Le GDD approuvé reste en version 0.7. Cette fiche ne valide ni nouvelles unités, ni bonus roguelite, ni synergies supplémentaires.
+**Statut V — comportements et règles de choix approuvés.** Les noms restent provisoires. Tous les réglages chiffrés sont des hypothèses H à tester. Le GDD approuvé est en version 0.8. Cette fiche ne valide ni nouvelles unités, ni bonus roguelite, ni synergies supplémentaires.
 
-## 1. Cadre du choix proposé
+## 1. Cadre du choix approuvé
 
-Le niveau maximum 4 et le choix entre deux branches sont déjà validés. Pour rendre ce choix exploitable, proposition :
+Le niveau maximum 4 et le choix entre deux branches sont déjà validés. Les règles complémentaires suivantes sont approuvées pour le prototype :
 
 - Choisir une branche au passage N3 vers N4, pendant la préparation entre deux vagues.
 - Les 150 or du passage au N4 comprennent le choix : aucun surcoût de spécialisation pour le prototype.
@@ -31,7 +31,7 @@ L’ordre d’application des futurs bonus et résistances reste ouvert. Ces tab
 
 N4 de base : 26 dégâts toutes les 1 s, portée 4, soit 26 DPS sur une cible.
 
-| Branche proposée | Dégâts par tir | Intervalle | Portée | DPS sur une cible |
+| Branche | Dégâts par tir | Intervalle | Portée | DPS sur une cible |
 | --- | --- | --- | --- | --- |
 | A — Veilleur des remparts | 39 | 1,5 s | 5 | 26 |
 | B — Tireur de volée | 19,5 | 0,6 s | 3,5 | 32,5 |
@@ -44,7 +44,7 @@ N4 de base : 26 dégâts toutes les 1 s, portée 4, soit 26 DPS sur une cible.
 
 N4 de base : 78 dégâts toutes les 2,5 s, portée 5, soit 31,2 DPS sur une cible.
 
-| Branche proposée | Dégâts par tir | Intervalle | Portée | DPS sur une cible |
+| Branche | Dégâts par tir | Intervalle | Portée | DPS sur une cible |
 | --- | --- | --- | --- | --- |
 | A — Brise-siège | 117 | 3 s | 5 | 39 |
 | B — Sentinelle des tours | 78 | 2,5 s | 6,5 | 31,2 |
@@ -57,7 +57,7 @@ N4 de base : 78 dégâts toutes les 2,5 s, portée 5, soit 31,2 DPS sur une cibl
 
 N4 de base : 87,75 dégâts principaux, deux victimes secondaires à 35,1 chacune, intervalle 2,5 s, portée 3,5, rayon 1. DPS : 35,1 sur une cible ; 63,18 au plafond de trois victimes.
 
-| Branche proposée | Dégâts principaux | Par victime secondaire | Maximum secondaire | Rayon |
+| Branche | Dégâts principaux | Par victime secondaire | Maximum secondaire | Rayon |
 | --- | --- | --- | --- | --- |
 | A — Arcaniste de concentration | 110 | 22 (20 %) | 2 | 1 |
 | B — Maître des déflagrations | 70 | 28 (40 %) | 4 | 1,3 |
@@ -74,7 +74,7 @@ Intervalle 2,5 s et portée 3,5 pour les deux branches.
 
 N4 de base : 52 dégâts principaux, un rebond à 26, intervalle 2 s, portée 3,5, distance de rebond 1. DPS : 26 sur une cible ; 39 sur deux.
 
-| Branche proposée | Dégâts principaux | Par rebond | Nombre maximal de rebonds | Distance par rebond |
+| Branche | Dégâts principaux | Par rebond | Nombre maximal de rebonds | Distance par rebond |
 | --- | --- | --- | --- | --- |
 | A — Fendeur de crânes | 65 | 16,25 (25 %) | 1 | 1 |
 | B — Maître des ricochets | 46 | 23 (50 %) | 3 | 1 |
@@ -89,7 +89,7 @@ Intervalle 2 s et portée 3,5 pour les deux branches.
 
 N4 de base : 78 dégâts principaux et trois victimes secondaires à 31,2, intervalle 2,5 s, portée 3, rayon 1. DPS : 31,2 sur une cible ; 68,64 sur quatre.
 
-| Branche proposée | Dégâts principaux | Par victime secondaire | Maximum secondaire | Rayon |
+| Branche | Dégâts principaux | Par victime secondaire | Maximum secondaire | Rayon |
 | --- | --- | --- | --- | --- |
 | A — Expert en démolition | 104 | 26 (25 %) | 3 | 1 |
 | B — Artificier des foules | 65 | 26 (40 %) | 5 | 1,4 |
@@ -104,7 +104,7 @@ Intervalle 2,5 s et portée 3 pour les deux branches.
 
 N4 de base : 39 dégâts immédiats et deux applications à 15,6, à +1 s et +2 s. Intervalle 2 s, portée 4,5. DPS complet sur une cible survivante : 35,1.
 
-| Branche proposée | Dégâts immédiats | Dégâts à +1 s | Dégâts à +2 s | DPS complet |
+| Branche | Dégâts immédiats | Dégâts à +1 s | Dégâts à +2 s | DPS complet |
 | --- | --- | --- | --- | --- |
 | A — Chaman de guerre | 58,5 | 9,75 | 9,75 | 39 |
 | B — Tisseur de malédictions | 26 | 29,25 | 29,25 | 42,25 |
@@ -119,7 +119,7 @@ Guerre élimine un Pillard à 40 PV dès l’impact ; Malédictions élimine un 
 
 ## 5. Compatibilité économique et vagues
 
-L’absence proposée de surcoût conserve le scénario de dépenses du GDD : avant la vague 10, un défenseur à 50 or au N4, celui à 75 or au N3 et celui à 100 or au N2 ; 725 or investis et 91 or de solde maximal.
+L’absence de surcoût conserve le scénario de dépenses du GDD : avant la vague 10, un défenseur à 50 or au N4, celui à 75 or au N3 et celui à 100 or au N2 ; 725 or investis et 91 or de solde maximal.
 
 | Composition avant le boss | DPS théorique sur une cible |
 | --- | --- |
@@ -142,14 +142,10 @@ Dans ce scénario, les branches des défenseurs à 75 et 100 or ne sont pas atte
 
 Comparer chaque branche à son N4 de base, puis les branches entre elles, à carte, budget, choix roguelite et règles identiques. Mesurer les PV de forteresse perdus et la réussite, pas seulement le DPS. Aucun test jouable n’a encore établi l’équilibre de ces propositions.
 
-## 6. Décisions demandées et suites
+## 6. Validation et suites
 
-À examiner avant intégration au GDD :
-1. Les six paires de rôles et leurs effets.
-2. Le choix sans surcoût, exclusif et fixé jusqu’à la vente.
-3. Les rebonds successifs et distincts du troll spécialisé.
-4. Les valeurs H comme points de départ des essais.
+Les six paires de rôles, le choix sans surcoût fixé jusqu’à la vente et les rebonds successifs du troll sont approuvés. Les valeurs H servent de points de départ aux essais.
 
 Les noms restent provisoires même après un accord de principe. Une approbation de cette fiche ne signifie pas que les valeurs sont équilibrées. L’interface du choix, les égalités de ciblage, les arrondis, les interactions avec bonus/résistances et les synergies restent à définir.
 
-Après validation, intégrer ces règles au GDD Word et Markdown dans une même version. Étape proposée ensuite : fixer la géométrie de La Vallée du Gué et les six emplacements pour donner un sens mesurable aux portées et zones.
+Ces règles sont intégrées au GDD v0.8, en Word et Markdown. Étape proposée ensuite : fixer la géométrie de La Vallée du Gué et les six emplacements pour donner un sens mesurable aux portées et zones.

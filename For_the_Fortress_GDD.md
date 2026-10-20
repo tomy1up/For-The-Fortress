@@ -1,8 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.7 — 20 octobre 2026
+Game Design Document — Version 0.8 — 20 octobre 2026
 
-Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses les dix vagues et la progression par niveau approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
+Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau et les spécialisations approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -21,10 +21,14 @@ Nom de travail — disponibilité juridique à confirmer.
 11. [11 Calendrier et budget des vagues](#s11)
 12. [12 Progression et dégâts par niveau](#s12)
 13. [13 Coûts et lecture de la progression](#s13)
-14. [14 Présentation interface et validation du prototype](#s14)
-15. [15 Périmètre commercial et feuille de route](#s15)
-16. [16 Registre des décisions](#s16)
-17. [17 Sources et maintenance du GDD](#s17)
+14. [14 Choix des spécialisations](#s14)
+15. [15 Spécialisations de l Alliance](#s15)
+16. [16 Rebonds et explosifs spécialisés](#s16)
+17. [17 Spécialisations du chaman](#s17)
+18. [18 Présentation interface et validation du prototype](#s18)
+19. [19 Périmètre commercial et feuille de route](#s19)
+20. [20 Registre des décisions](#s20)
+21. [21 Sources et maintenance du GDD](#s21)
 
 <a id="s1"></a>
 
@@ -158,17 +162,17 @@ Chaque défenseur peut être amélioré jusqu’au niveau 4 — V. Le niveau 4 d
 | Niveau 2 vers niveau 3 | 100 | 150 |
 | Niveau 3 vers niveau 4 | 150 | 300 |
 
-La lecture séquentielle des trois coûts correspond aux trois améliorations jusqu’au niveau 4. La progression approuvée augmente uniquement les dégâts : × 1,5 au N2, × 2,25 au N3 et × 3,25 au N4, relativement au N1 — valeurs H. Cadence, portée, rayons, plafonds de victimes et horaires des effets restent inchangés — V. Les tableaux complets figurent en sections 12 et 13. Il n’existe pas de statistique finale de spécialisation validée.
+La lecture séquentielle des trois coûts correspond aux trois améliorations jusqu’au niveau 4. La progression approuvée augmente uniquement les dégâts : × 1,5 au N2, × 2,25 au N3 et × 3,25 au N4, relativement au N1 — valeurs H. Cadence, portée, rayons, plafonds de victimes et horaires des effets restent inchangés — V. Les tableaux complets figurent en sections 12 et 13. Les valeurs finales spécialisées sont détaillées en sections 15 à 17 ; elles restent H.
 
 ### Paramètres manquants
 | Domaine | Données à définir — O |
 | --- | --- |
 | Attaque | Comportements en sections 5 et 6 ; valeurs N1 à N4 en section 12 |
 | Résolution des dégâts | Types, résistances hors essai initial, ordre de calcul et arrondis |
-| Spécialisations | Noms, effets, conditions et éventuel coût distinct |
+| Spécialisations | Noms définitifs, interface et équilibre des branches |
 | Niveaux | Interaction et ordre de calcul avec les bonus roguelite |
 
-Un coût distinct de spécialisation ne doit pas être supposé nul ni ajouté sans décision. Les effets ne sont pas déduits des seuls noms de classe. Les dégâts secondaires du mage constituent une décision explicite documentée en section 5 ; critiques, soins, invocations et contrôle restent non définis.
+Le choix de spécialisation est inclus dans le coût du passage au N4. Les effets approuvés sont détaillés en sections 14 à 17. Les dégâts secondaires du mage constituent une décision explicite documentée en section 5 ; critiques, soins, invocations et contrôle restent non définis.
 
 <a id="s5"></a>
 
@@ -258,7 +262,7 @@ L’or finance les achats et les améliorations — V. Pour le premier essai, ch
 Une unité peut être vendue uniquement entre les vagues contre 70 % de l’or total investi — V. Les synergies sont alors recalculées — V. La règle d’arrondi et le traitement d’éventuels modificateurs de prix restent à préciser — O.
 
 ### Achat et améliorations cumulés
-Le total au niveau 4 ci-dessous additionne l’achat et les trois coûts provisoires de 50, 100 et 150 or. Il exclut tout éventuel coût distinct de spécialisation, encore ouvert. Les remboursements sont des calculs à 70 %, avant toute règle d’arrondi.
+Le total au niveau 4 ci-dessous additionne l’achat et les trois coûts provisoires de 50, 100 et 150 or. Le choix de spécialisation est inclus dans l’amélioration vers le N4. Les remboursements sont des calculs à 70 %, avant toute règle d’arrondi.
 
 | Défenseurs concernés | Investi N1 | Investi N4 | Vente N1 / N4 |
 | --- | --- | --- | --- |
@@ -431,6 +435,8 @@ Les apparitions durent au total 4 min 33,1 s (273,1 s), hors fins de combat et p
 ## 12 Progression et dégâts par niveau
 
 ### Principe et multiplicateurs
+Ces règles décrivent la progression de base, avant les dérogations des branches spécialisées.
+
 Le principe de progression est validé — V ; les nombres sont des hypothèses H. Les dégâts N1 sont multipliés par 1 / 1,5 / 2,25 / 3,25 aux niveaux 1 / 2 / 3 / 4. Un multiplicateur s’applique au N1, jamais au niveau précédent. Il affecte les dégâts directs, secondaires et périodiques.
 
 Cadence, portée, rayons, nombre de victimes secondaires, coefficients et horaires des effets restent inchangés. Les fractions sont conservées sans arrondi intermédiaire pour les statistiques de référence. Bonus, résistances et branches sont exclus de ces tableaux. Le N4 représente le socle avant spécialisation.
@@ -485,7 +491,7 @@ Ces plafonds supposent des attaques continues, des cibles admissibles au maximum
 | Sapeur gobelin | 21,12 | 31,68 | 47,52 | 68,64 |
 
 ### Investissement total par défenseur — H
-Pièces d’or, achat et améliorations compris ; hors éventuel coût distinct de spécialisation. Les trois passages coûtent 50, 100 et 150 or.
+Pièces d’or, achat et améliorations compris ; spécialisation incluse. Les trois passages coûtent 50, 100 et 150 or.
 
 | Défenseur | N1 | N2 | N3 | N4 |
 | --- | --- | --- | --- | --- |
@@ -509,11 +515,148 @@ Ces seuils peuvent produire des sauts de difficulté, notamment sur la vague 8. 
 ### Achats et concentration de puissance
 Pour l’archer, les améliorations coûtent 50 or pour +4 DPS, 100 or pour +6 et 150 or pour +8 et le choix de spécialisation. Le rendement marginal diminue ; les six emplacements et les branches doivent rendre la concentration de puissance intéressante. La possibilité de recruter des copies reste ouverte.
 
-Le scénario de la section 11 investit 350 + 225 + 150 = 725 or avant le boss, avec un solde maximal de 91 or. La fiche design/Proposition_progression_niveaux.md rassemble les calculs. Les noms, effets et éventuel coût distinct des branches restent ouverts.
+Le scénario de la section 11 investit 350 + 225 + 150 = 725 or avant le boss, avec un solde maximal de 91 or. La fiche design/Proposition_progression_niveaux.md rassemble les calculs. Les branches sont détaillées en sections 14 à 17.
 
 <a id="s14"></a>
 
-## 14 Présentation interface et validation du prototype
+## 14 Choix des spécialisations
+
+### Choix validé au niveau 4
+Choisir une des deux branches pendant le passage N3 vers N4, entre les vagues — V. Le choix est inclus dans les 150 or provisoires de l’amélioration : aucun surcoût pour le prototype. Une seule branche par unité, fixée jusqu’à la vente. Une nouvelle unité repart au N1 ; le recrutement de copies reste ouvert.
+
+Les deux branches sont accessibles dès les essais, sans déblocage persistant ni prérequis racial ajouté. Terminer le choix avant de lancer la vague suivante. Aucun effet n’est rétroactif sur une attaque ou malédiction déjà appliquée. La présentation de cette interaction reste à concevoir.
+
+Les noms sont provisoires. Les rôles et comportements des douze branches sont approuvés — V ; toutes les statistiques sont des hypothèses H. La fiche design/Proposition_specialisations.md conserve les détails et le plan d’essais.
+
+### Lecture des valeurs spécialisées
+Les sections 15 à 17 donnent les valeurs finales au N4 spécialisé, hors bonus et résistances. Ne pas appliquer à nouveau le multiplicateur × 3,25. Les branches dérogent uniquement aux paramètres explicitement remplacés ; les autres règles du GDD continuent de s’appliquer.
+
+Le ciblage principal reste l’ennemi à portée le plus avancé et les victimes secondaires les plus proches restent prioritaires. Le DPS suppose des attaques continues et assez de PV ; les plafonds de groupe supposent toutes les victimes admissibles. L’ordre de calcul avec les futurs bonus et résistances reste ouvert.
+
+### Budget conservé et comparaisons
+Le total investi au N4 reste 350, 375 ou 400 or. La vente théorique à 70 % reste 245, 262,5 ou 280 or, avant arrondi encore ouvert.
+
+Le scénario de la section 11 conserve 725 or investis et 91 or de solde maximal avant le boss. Seul le défenseur à 50 or y atteint le N4 ; les deux autres sont N3 et N2.
+
+| Composition avant le boss | DPS sur une cible |
+| --- | --- |
+| Alliance : Veilleur N4 + Arbalétrier N3 + Mage N2 | 63,8 |
+| Alliance : Tireur de volée N4 + Arbalétrier N3 + Mage N2 | 70,3 |
+| Horde : Fendeur N4 + Sapeur N3 + Chaman N2 | 70,3 |
+| Horde : Ricochets N4 + Sapeur N3 + Chaman N2 | 60,8 |
+
+Dégâts secondaires exclus. Ces calculs ne garantissent pas la victoire. Tester les branches à 75 et 100 or avec d’autres allocations du même budget, sans leur attribuer gratuitement des niveaux supplémentaires.
+
+<a id="s15"></a>
+
+## 15 Spécialisations de l Alliance
+
+### Archer elfe portée ou cadence
+
+N4 de base : 26 dégâts toutes les 1 s, portée 4, soit 26 DPS sur une cible.
+
+| Branche | Dégâts par tir | Intervalle | Portée | DPS sur une cible |
+| --- | --- | --- | --- | --- |
+| A — Veilleur des remparts | 39 | 1,5 s | 5 | 26 |
+| B — Tireur de volée | 19,5 | 0,6 s | 3,5 | 32,5 |
+
+Veilleur : couvrir un segment plus long et frapper plus fort par impact. La cadence plus lente augmente les dégâts perdus sur les petites cibles. Le gain de portée peut accroître le temps de tir réel sans modifier le DPS continu.
+
+Tireur de volée : attaques fréquentes et meilleur DPS continu, contre une portée réduite et un dégât par impact plus faible. Les tirs restent dirigés sur une seule cible ; « volée » ne signifie pas attaque de zone.
+
+### Arbalétrier nain puissance ou couverture
+
+N4 de base : 78 dégâts toutes les 2,5 s, portée 5, soit 31,2 DPS sur une cible.
+
+| Branche | Dégâts par tir | Intervalle | Portée | DPS sur une cible |
+| --- | --- | --- | --- | --- |
+| A — Brise-siège | 117 | 3 s | 5 | 39 |
+| B — Sentinelle des tours | 78 | 2,5 s | 6,5 | 31,2 |
+
+Brise-siège : tirs puissants pour les ennemis endurants ; cadence plus lente, dégâts excédentaires perdus. À 117 dégâts, il n’élimine pas une Brute à 120 PV en un impact sans autre effet.
+
+Sentinelle : étendre la couverture depuis un emplacement fixe, sans gain de dégâts ou de cadence. Son intérêt dépend fortement du tracé de la carte. Aucun changement de priorité vers les boss ou ennemis à forts PV n’est ajouté.
+
+### Mage humain concentration ou dispersion
+
+N4 de base : 87,75 dégâts principaux, deux victimes secondaires à 35,1 chacune, intervalle 2,5 s, portée 3,5, rayon 1. DPS : 35,1 sur une cible ; 63,18 au plafond de trois victimes.
+
+| Branche | Dégâts principaux | Par victime secondaire | Maximum secondaire | Rayon |
+| --- | --- | --- | --- | --- |
+| A — Arcaniste de concentration | 110 | 22 (20 %) | 2 | 1 |
+| B — Maître des déflagrations | 70 | 28 (40 %) | 4 | 1,3 |
+
+Intervalle 2,5 s et portée 3,5 pour les deux branches.
+
+Concentration : 44 DPS sur une cible et 61,6 au plafond de trois victimes. Renforce la cible principale ; réduit l’efficacité de zone.
+
+Déflagrations : 28 DPS sur une cible et 72,8 au plafond de cinq victimes. Agrandit la zone et le nombre de victimes, au prix du dégât principal. Une même victime n’est touchée qu’une fois par explosion.
+
+<a id="s16"></a>
+
+## 16 Rebonds et explosifs spécialisés
+
+### Lanceur de haches troll impact ou chaîne
+
+N4 de base : 52 dégâts principaux, un rebond à 26, intervalle 2 s, portée 3,5, distance de rebond 1. DPS : 26 sur une cible ; 39 sur deux.
+
+| Branche | Dégâts principaux | Par rebond | Nombre maximal de rebonds | Distance par rebond |
+| --- | --- | --- | --- | --- |
+| A — Fendeur de crânes | 65 | 16,25 (25 %) | 1 | 1 |
+| B — Maître des ricochets | 46 | 23 (50 %) | 3 | 1 |
+
+Intervalle 2 s et portée 3,5 pour les deux branches.
+
+Fendeur : 32,5 DPS sur une cible et 40,625 sur deux. Meilleur impact principal, mais rebond plus faible que celui du N4 de base.
+
+Ricochets : 23 DPS sur une cible et 57,5 au plafond de quatre victimes. Les rebonds sont successifs : à chaque étape, chercher l’ennemi admissible le plus proche de la dernière victime, à une distance strictement inférieure à 1. Chaque rebond inflige 50 % du dégât principal initial, sans réduction supplémentaire d’étape en étape. Une attaque ne touche jamais deux fois le même ennemi ; elle s’arrête faute de cible. Les égalités de distance restent à trancher avec les règles générales de ciblage.
+
+### Sapeur gobelin charge concentrée ou large explosion
+
+N4 de base : 78 dégâts principaux et trois victimes secondaires à 31,2, intervalle 2,5 s, portée 3, rayon 1. DPS : 31,2 sur une cible ; 68,64 sur quatre.
+
+| Branche | Dégâts principaux | Par victime secondaire | Maximum secondaire | Rayon |
+| --- | --- | --- | --- | --- |
+| A — Expert en démolition | 104 | 26 (25 %) | 3 | 1 |
+| B — Artificier des foules | 65 | 26 (40 %) | 5 | 1,4 |
+
+Intervalle 2,5 s et portée 3 pour les deux branches.
+
+Démolition : 41,6 DPS sur une cible et 72,8 au plafond de quatre victimes. Renforce le point d’impact en sacrifiant les dégâts par victime secondaire.
+
+Foules : 26 DPS sur une cible et 78 au plafond de six victimes. Plus de couverture et de victimes possibles, mais moins de dégâts sur la cible principale et sur chaque victime que le N4 de base. Aucune mine, zone persistante ou explosion en chaîne n’est ajoutée. Chaque victime n’est touchée qu’une fois par attaque.
+
+<a id="s17"></a>
+
+## 17 Spécialisations du chaman
+
+### Chaman orc dégâts immédiats ou malédiction
+
+N4 de base : 39 dégâts immédiats et deux applications à 15,6, à +1 s et +2 s. Intervalle 2 s, portée 4,5. DPS complet sur une cible survivante : 35,1.
+
+| Branche | Dégâts immédiats | Dégâts à +1 s | Dégâts à +2 s | DPS complet |
+| --- | --- | --- | --- | --- |
+| A — Chaman de guerre | 58,5 | 9,75 | 9,75 | 39 |
+| B — Tisseur de malédictions | 26 | 29,25 | 29,25 | 42,25 |
+
+Intervalle 2 s et portée 4,5 inchangés. Guerre inflige 78 dégâts sur un cycle complet ; Malédictions en inflige 84,5.
+
+Guerre : davantage de dégâts dès l’impact, moins de dégâts différés. Utile lorsque la cible risque d’atteindre rapidement la forteresse.
+
+Malédictions : chaque application périodique devient plus forte, contre un impact initial plus faible. Les effets déjà appliqués suivent les règles de renouvellement du GDD ; au même instant, le dernier dégât périodique précède le renouvellement. Aucun cumul supplémentaire, ralentissement, transfert de malédiction ou réduction de résistance n’est proposé.
+
+Guerre élimine un Pillard à 40 PV dès l’impact ; Malédictions élimine un Sprinter à 24 PV dès l’impact, mais doit attendre la suite de l’effet pour dépasser le total de Guerre. Le maintien des effets après sortie de portée reste ouvert, conformément au GDD ; il faudra le trancher avant les essais. Le gain total de Malédictions donne une contrepartie mesurable à son impact initial réduit. Les synergies et bonus futurs restent ouverts.
+
+
+
+### Essais et questions ouvertes
+Comparer chaque branche au N4 de base puis à sa concurrente, sur les mêmes vagues, carte et budget. Observer le temps de tir, les victimes secondaires réelles, les dégâts perdus et les PV de forteresse perdus. Vérifier les vagues 4 et 8 pour les groupes, les vagues 6, 7, 9 et 10 pour les cibles endurantes, et la vague 3 pour la vitesse.
+
+L’interface, les égalités de ciblage, les arrondis, les effets après sortie de portée et les synergies restent ouverts. Aucun test jouable n’établit encore l’équilibre des branches.
+
+<a id="s18"></a>
+
+## 18 Présentation interface et validation du prototype
 
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
@@ -544,9 +687,9 @@ Godot est le moteur envisagé et PC sur Steam la plateforme prioritaire. La vers
 
 Ces vérifications constituent un plan de validation — P. Les objectifs de performance, configurations matérielles et seuils d’acceptation chiffrés restent à définir.
 
-<a id="s15"></a>
+<a id="s19"></a>
 
-## 15 Périmètre commercial et feuille de route
+## 19 Périmètre commercial et feuille de route
 
 ### Comparaison des périmètres envisagés
 | Élément | Prototype | Objectif commercial |
@@ -566,7 +709,7 @@ Ces objectifs sont des cibles de contenu — C — et non des engagements de pro
 ### Feuille de route proposée
 | Jalon | Travail à effectuer | Condition de passage proposée |
 | --- | --- | --- |
-| J0 — Clarifier | Finaliser les spécialisations, les synergies et les distances | Règles nécessaires au prototype documentées |
+| J0 — Clarifier | Finaliser les synergies et les distances | Règles nécessaires au prototype documentées |
 | J1 — Construire | Carte du Gué, six emplacements, deux factions, six défenseurs | Boucle de préparation et combat jouable |
 | J2 — Compléter | Dix vagues, économie, niveaux, spécialisations et bonus | Partie jouable du début à la fin |
 | J3 — Tester | Lisibilité, factions, économie et durée | Résultats consignés et corrections priorisées |
@@ -577,9 +720,9 @@ La feuille de route est une proposition d’organisation — P. Aucun délai, bu
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
 
-<a id="s16"></a>
+<a id="s20"></a>
 
-## 16 Registre des décisions
+## 20 Registre des décisions
 
 ### Décisions de référence
 | Identifiant | Décision | Statut |
@@ -603,14 +746,16 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | DEC-017 | Première apparition à t = 0 ; séparation des groupes de 4 secondes H | V / H |
 | DEC-018 | Fin de vague après toutes les apparitions et résolutions ; victoire après vague 10 si survie | V |
 | DEC-019 | Progression de dégâts seuls ; courbe N1 × 1 / 1,5 / 2,25 / 3,25 | V / H |
-| DEC-020 | Même facteur pour dégâts directs, secondaires et périodiques ; cadence et portée inchangées | V |
+| DEC-020 | Progression de base : même facteur sur tous les dégâts ; cadence et portée inchangées | V |
+| DEC-021 | Choix N4 inclus, exclusif, fixé jusqu’à la vente ; accessible dès les essais | V |
+| DEC-022 | Douze branches et rebonds successifs distincts du troll ; valeurs H | V / H |
 
 ### Questions ouvertes prioritaires
 | Identifiant | Décision attendue | Dépendance principale |
 | --- | --- | --- |
 | O-001 | Résistances, arrondis et ordre de calcul avec les bonus | Combat et statistiques par niveau |
 | O-002 | Équilibrage des récompenses, arrondis et copies d’unités | Économie et recrutement |
-| O-003 | Noms et effets des spécialisations ; coût distinct éventuel | Niveau 4 et synergies |
+| O-003 | Noms définitifs, interface du choix et équilibre des branches | Niveau 4 et synergies |
 | O-004 | Seuils raciaux, proximité, cumul et recalcul | Système de synergies |
 | O-005 | Catalogue, tirage, éligibilité et doublons des bonus | Choix roguelite |
 | O-006 | Équilibrage des vagues et capacités futures du boss | Partie complète |
@@ -618,12 +763,12 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-008 | Moteur, prix final, périmètre commercial et nom | Plan de production |
 | O-009 | Échelle, premier tir, égalités, projectiles et portée après application d’un effet | Combat des deux factions |
 
-<a id="s17"></a>
+<a id="s21"></a>
 
-## 17 Sources et maintenance du GDD
+## 21 Sources et maintenance du GDD
 
 ### Sources et historique
-S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». Le lien partagé reste une référence d’origine.
+S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». Le lien partagé reste une référence d’origine.
 
 Version 0.2 — 19 octobre 2026 : consolidation, statuts, calculs dérivés et feuille de route proposée ; aucune nouvelle fonctionnalité validée.
 
@@ -636,6 +781,8 @@ Version 0.5 — 19 octobre 2026 : sept archétypes, boss en vague 10 et règles 
 Version 0.6 — 20 octobre 2026 : dix vagues, horaires, revenus et scénario de dépenses intégrés après validation S7 ; réglages H et calculs dérivés distingués.
 
 Version 0.7 — 20 octobre 2026 : progression N1 à N4, dégâts secondaires et coûts cumulés intégrés après validation S8 ; valeurs H conservées.
+
+Version 0.8 — 20 octobre 2026 : douze spécialisations et règles du choix intégrées après validation S9 ; noms provisoires et valeurs H conservés.
 
 ### Procédure de mise à jour proposée
 Le Markdown est la référence éditoriale ; le Word en est la présentation. Actualiser les deux ensemble. Consigner identifiant, date, ancienne et nouvelle règle, statut, source et impact. Une hypothèse ou question ouverte devient validée uniquement après confirmation explicite du porteur du projet.

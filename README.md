@@ -8,7 +8,7 @@ Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. 
 
 - [GDD Word](For_the_Fortress_GDD.docx) : présentation structurée avec sommaire et tableaux.
 - [GDD Markdown](For_the_Fortress_GDD.md) : référence éditoriale adaptée au versionnement Git.
-- Version documentaire : **0.7 — 20 octobre 2026**, intégrant le socle, les combats, les ennemis la séquence des dix vagues et la progression par niveau approuvées.
+- Version documentaire : **0.8 — 20 octobre 2026**, intégrant le socle, les combats, les ennemis, les dix vagues, la progression par niveau et les spécialisations approuvées.
 
 ## Mécaniques établies
 
@@ -38,9 +38,9 @@ La [séquence détaillée des dix vagues](design/Proposition_dix_vagues.md) est 
 
 La [progression des niveaux 2 à 4](design/Proposition_progression_niveaux.md) est intégrée au GDD v0.7 : dégâts × 1 / 1,5 / 2,25 / 3,25 du N1 au N4, cadence et portée inchangées. Le principe est validé ; les valeurs restent des hypothèses H à tester. Les tableaux couvrent les six défenseurs, leurs effets secondaires et leurs coûts cumulés.
 
-## Spécialisations proposées
+## Spécialisations approuvées
 
-La [proposition des douze spécialisations](design/Proposition_specialisations.md) décrit deux branches par défenseur au N4, avec effets, valeurs H, contreparties et essais à mener. **Statut P — à valider** : elle ne modifie pas le GDD approuvé v0.7.
+La [fiche des douze spécialisations](design/Proposition_specialisations.md) est intégrée au GDD v0.8. Le choix est inclus dans le coût du N4, exclusif et fixé jusqu’à la vente. Les effets sont approuvés ; les noms restent provisoires et les valeurs sont des hypothèses H à tester.
 
 ## Statuts et suivi
 
@@ -52,7 +52,7 @@ Le combat Horde est également validé pour les essais : troll avec rebond, sape
 
 Les éliminations rapportent immédiatement une récompense unique, identique pour les deux factions, y compris par malédiction. Un ennemi atteignant la forteresse inflige ses dégâts puis quitte la partie sans récompense. Aucune prime de fin de vague pour le premier essai.
 
-Prochain travail proposé : définir les spécialisations et la géométrie de la carte. Trancher aussi les arrondis, les synergies et les bonus avant les essais d’équilibrage. La progression entre les parties reste ouverte.
+Prochain travail proposé : définir la géométrie de la carte. Trancher aussi les arrondis, les synergies et les bonus avant les essais d’équilibrage. La progression entre les parties reste ouverte.
 
 Mettre à jour le Markdown et le Word dans une même révision. Documenter toute modification avec un identifiant, une date, un statut, une source et son impact. Une valeur manquante reste « À définir » et ne vaut pas zéro.
 
