@@ -1,10 +1,10 @@
-# For the Fortress! — Proposition des dix vagues
+# For the Fortress! — Séquence de référence des dix vagues
 
-Version de proposition 1 — 19 octobre 2026.
+Proposition initiale du 19 octobre 2026 — approuvée et intégrée au GDD v0.6 le 20 octobre 2026.
 
-**Statut : P — proposition à valider.** Quantités, ordre des groupes, intervalles et réglages temporels : hypothèses H. Cette fiche ne remplace pas le GDD v0.5 validé. Elle utilise ses sept archétypes ordinaires, son boss et ses récompenses sans en changer les valeurs. Aucun essai jouable ne confirme encore l’équilibrage.
+**Statut : séquence approuvée pour le prototype — V.** Quantités, intervalles et réglages temporels restent des hypothèses H. Cette fiche détaille la séquence intégrée au GDD v0.6 ; elle utilise les sept archétypes ordinaires, le boss et les récompenses établis, sans en changer les valeurs. Aucun essai jouable ne confirme encore l’équilibrage.
 
-## Règles de lecture et d’apparition proposées
+## Règles de lecture et d’apparition approuvées
 
 - Le temps de chaque vague repart à zéro ; son premier ennemi apparaît à t = 0.
 - Les groupes apparaissent dans l’ordre des flèches. Chaque intervalle concerne les apparitions successives d’un même groupe, à vitesse de jeu normale.
@@ -14,7 +14,7 @@ Version de proposition 1 — 19 octobre 2026.
 - Les constructions, améliorations et ventes restent limitées aux préparations. L’or des éliminations est immédiatement crédité, mais ne devient dépensable qu’à la préparation suivante.
 - Les choix roguelite restent après les vagues 3, 6 et 9, avant le lancement de la suivante. Aucune prime de fin de vague n’est ajoutée.
 
-La règle de fin de vague et son articulation exacte avec la victoire sont proposées ici, sans être promues en décisions validées. Après la vague 10 entièrement résolue et si la forteresse survit, afficher la victoire est la règle proposée. Avec les valeurs actuelles, laisser passer le boss inflige 20 dégâts, donc détruit la forteresse initiale à 20 PV.
+La fin de vague intervient après toutes ses apparitions et la résolution de tous ses ennemis. Après la vague 10 entièrement résolue et si la forteresse survit, la partie est gagnée — V. Avec les valeurs actuelles, laisser passer le boss inflige 20 dégâts, donc détruit la forteresse initiale à 20 PV.
 
 ## Composition et revenus maximaux
 
@@ -128,4 +128,4 @@ La somme des fenêtres d’émission des dix vagues vaut 273,1 secondes, soit 4 
 
 Surveiller d’abord les ouvertures des deux factions, les Grouillants de la vague 4, la densité de la vague 8, le saut de PV en vague 9 et le temps d’attaque réellement disponible contre le boss. Les vagues 8 et 9 sollicitent des défenses différentes : moins de PV ne signifie pas automatiquement moins de difficulté.
 
-Avant implémentation définitive, confirmer cette proposition, la géométrie de la carte, les premiers tirs et projectiles, les gains par niveau, les spécialisations et le catalogue des bonus. Un essai limité au niveau 1 reste utile pour comparer les défenseurs, mais ne valide pas à lui seul cette partie complète.
+Avant implémentation définitive, préciser la géométrie de la carte, les premiers tirs et projectiles, les gains par niveau, les spécialisations et le catalogue des bonus. Un essai limité au niveau 1 reste utile pour comparer les défenseurs, mais ne valide pas à lui seul cette partie complète.
