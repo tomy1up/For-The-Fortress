@@ -1,8 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.8 — 20 octobre 2026
+Game Design Document — Version 0.9 — 20 octobre 2026
 
-Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau et les spécialisations approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
+Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau, les spécialisations et la géométrie du Gué approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -25,10 +25,13 @@ Nom de travail — disponibilité juridique à confirmer.
 15. [15 Spécialisations de l Alliance](#s15)
 16. [16 Rebonds et explosifs spécialisés](#s16)
 17. [17 Spécialisations du chaman](#s17)
-18. [18 Présentation interface et validation du prototype](#s18)
-19. [19 Périmètre commercial et feuille de route](#s19)
-20. [20 Registre des décisions](#s20)
-21. [21 Sources et maintenance du GDD](#s21)
+18. [18 Géométrie de La Vallée du Gué](#s18)
+19. [19 Emplacements et couvertures](#s19)
+20. [20 Plan et temps de traversée](#s20)
+21. [21 Présentation interface et validation du prototype](#s21)
+22. [22 Périmètre commercial et feuille de route](#s22)
+23. [23 Registre des décisions](#s23)
+24. [24 Sources et maintenance du GDD](#s24)
 
 <a id="s1"></a>
 
@@ -101,7 +104,7 @@ La carte initiale est une scène médiévale-fantasy en vue isométrique. Elle c
 ### Conditions de fin à préciser
 La destruction de la forteresse met fin à la partie — V. Les dégâts d’arrivée sont définis par ennemi en section 9, avec des valeurs H ; le traitement des arrivées simultanées reste ouvert. La victoire survient lorsque la vague 10 est entièrement résolue et que la forteresse survit — V. Les règles de résolution figurent en section 10.
 
-Le tracé détaillé, les distances et les positions des six emplacements restent ouverts. Les portées initiales des deux factions figurent en sections 5 et 6 ; leur échelle reste à calibrer. Aucun placement libre n’est ajouté.
+Le tracé de 28 unités et les six positions sont approuvés pour les essais, avec dimensions H. Les conventions et mesures figurent en sections 18 à 20 ; les portées initiales restent en sections 5 et 6. Aucun placement libre n’est ajouté.
 
 <a id="s3"></a>
 
@@ -192,7 +195,7 @@ Valeurs sans bonus ni synergie. Les coûts et DPS prolongent les hypothèses du 
 | DPS sur une cible — H | 8 | 9,6 | 10,8 |
 | Portée en unités de carte — H | 4 | 5 | 3,5 |
 
-Les distances n’imposent pas de grille de placement. L’échelle de l’unité de carte sera calibrée sur La Vallée du Gué — O. DPS = dégâts par attaque ÷ intervalle entre attaques ; il s’agit d’un débit théorique en régime continu, sans déplacement de cible ni temps perdu.
+Les distances n’imposent pas de grille de placement. L’échelle commune utilise le plan logique de La Vallée du Gué, en sections 18 à 20 ; ses dimensions restent H. DPS = dégâts par attaque ÷ intervalle entre attaques ; il s’agit d’un débit théorique en régime continu, sans déplacement de cible ni temps perdu.
 
 ### Rôles et comportements validés
 L’archer elfe est une défense économique à cadence régulière. Il tire sur une seule cible, sans effet secondaire au niveau 1. Sa faiblesse est l’absence de dégâts de zone et des dégâts modestes par tir.
@@ -226,7 +229,7 @@ Les comportements sont approuvés pour le prototype — V. Les nombres restent d
 | DPS théorique sur une cible — H | 8 | 9,6 | 10,8, malédiction comprise |
 | Portée en unités de carte — H | 3,5 | 3 | 4,5 |
 
-L’unité de distance est commune aux factions et reste à calibrer. Les DPS supposent des attaques continues et des cibles survivant assez longtemps.
+L’unité de distance est commune aux factions et suit le plan logique de la carte, avec dimensions H. Les DPS supposent des attaques continues et des cibles survivant assez longtemps.
 
 ### Lanceur de haches troll
 Une attaque inflige 16 dégâts à la cible principale, puis la hache peut rebondir sur un autre ennemi situé à moins d’une unité de celle-ci. Le rebond inflige 8 dégâts, soit 50 % du premier impact. Une attaque touche au maximum deux ennemis distincts ; elle ne revient pas blesser la cible principale. Sans seconde cible admissible, aucun rebond n’a lieu.
@@ -326,7 +329,7 @@ Le recalcul des synergies après une vente est validé. Les déclencheurs après
 Sept archétypes ordinaires et un boss distinct sont retenus pour le prototype — V. Leurs noms restent provisoires. Les PV, vitesses, dégâts à la forteresse et récompenses sont des réglages initiaux — H. Les premiers essais distinguent les ennemis par leur endurance, leur vitesse et leur nombre, sans résistances ni capacités spéciales supplémentaires.
 
 ### Statistiques initiales
-Les vitesses utilisent l’unité de carte commune aux portées des défenseurs, dont l’échelle reste à calibrer. La récompense est exprimée en pièces d’or et créditée uniquement à l’élimination. Tous les nombres de ce tableau sont H.
+Les vitesses utilisent l’unité de carte commune aux portées des défenseurs, selon le plan logique approuvé, avec dimensions H. La récompense est exprimée en pièces d’or et créditée uniquement à l’élimination. Tous les nombres de ce tableau sont H.
 
 | Ennemi provisoire | PV | Vitesse par seconde | Dégâts forteresse | Or |
 | --- | --- | --- | --- | --- |
@@ -656,7 +659,101 @@ L’interface, les égalités de ciblage, les arrondis, les effets après sortie
 
 <a id="s18"></a>
 
-## 18 Présentation interface et validation du prototype
+## 18 Géométrie de La Vallée du Gué
+
+### Géométrie approuvée pour le prototype
+La Vallée du Gué utilise un seul trajet A → B → C → D → E → F → G → H, identique pour tous les ennemis et les deux factions — V. Une entrée et une arrivée à la forteresse, sans bifurcation. Dimensions et coordonnées ci-dessous : réglages initiaux H.
+
+Le terrain logique mesure 18 × 10 unités. Origine en bas à gauche ; x vers la droite et y vers le haut. Cette convention ne prescrit pas les axes du moteur. La projection isométrique conserve les distances du plan logique.
+
+| Point | Coordonnées (x ; y) | Distance depuis l’entrée |
+| --- | --- | --- |
+| A | 0 ; 3 | 0 u |
+| B | 4 ; 3 | 4 u |
+| C | 4 ; 7 | 8 u |
+| D | 9 ; 7 | 13 u |
+| E | 9 ; 3 | 17 u |
+| F | 14 ; 3 | 22 u |
+| G | 14 ; 6 | 25 u |
+| H | 17 ; 6 | 28 u |
+
+Le trajet mesure 28 unités : sept segments de 4, 4, 5, 4, 5, 3 et 3 unités. Les virages orthogonaux servent de référence ; les arrondir imposerait de recalculer longueur et couvertures.
+
+Le pont occupe C → D, de (6 ; 7) à (7 ; 7), soit de 10 à 11 unités parcourues. Il reste une partie ordinaire du chemin. La rivière est un décor ; aucun effet de terrain supplémentaire n’est défini.
+
+### Distances et circulation validées
+- Déplacement à vitesse constante le long de la ligne centrale, sans arrêt aux virages ; vitesses en unités par seconde.
+- Distances euclidiennes entre centres, dans le plan logique, avant projection isométrique.
+- Acquisition d’une cible principale à distance inférieure ou égale à la portée ; rayons secondaires et rebonds gardent leur règle strictement inférieure.
+- Priorité au plus avancé selon la distance parcourue de A vers H ; égalités encore ouvertes.
+- Aucun blocage mutuel ni ralentissement de circulation pour l’essai initial. Les emplacements ne bloquent pas la route.
+- Les décors ne bloquent pas les attaques. Les frontières servent au cadrage ; les portées peuvent les dépasser.
+
+Les tailles graphiques ne modifient pas les distances. Largeur visuelle, empreintes, collisions des projectiles, premier tir et effets après sortie de portée restent ouverts. La fiche design/Proposition_Vallee_du_Gue.md conserve le protocole de vérification.
+
+<a id="s19"></a>
+
+## 19 Emplacements et couvertures
+
+### Positions fixes
+Les six emplacements sont disponibles dès le départ. Chacun accueille un défenseur de la faction choisie, sans restriction de classe — V. La possibilité de recruter des copies reste ouverte. Coordonnées H ; intentions sans bonus d’emplacement.
+
+| Repère | Coordonnées (x ; y) | Intention de positionnement |
+| --- | --- | --- |
+| E1 | 3 ; 1,5 | Entrée et premier virage |
+| E2 | 2 ; 6 | Premier lacet et accès au pont |
+| E3 | 6 ; 5 | Pont et cœur du premier lacet |
+| E4 | 8 ; 9 | Sortie du pont et virage central |
+| E5 | 11 ; 4,5 | Second lacet et approche finale |
+| E6 | 15,5 ; 4,5 | Dernier virage et porte de la forteresse |
+
+Les centres sont hors du trajet, à une distance minimale d’au moins 1,5 unité. E3 et E5 couvrent plusieurs segments : leur avantage potentiel est un risque d’équilibrage à tester. E6 conserve une dernière fenêtre de tir.
+
+### Longueurs du trajet à portée
+Valeurs calculées, en unités de chemin, à partir des coordonnées H. Le tableau additionne les portions situées dans un cercle centré sur l’emplacement. Il ne mesure ni les dégâts ni les éliminations. Affichage arrondi à deux décimales au maximum, sans arrondi intermédiaire par segment.
+
+| Emplacement | Portée 3 | Portée 3,5 | Portée 4 | Portée 5 | Portée 6,5 |
+| --- | --- | --- | --- | --- | --- |
+| E1 | 4,93 u | 5,85 u | 6,37 u | 7,4 u | 11,79 u |
+| E2 | 4,06 u | 8,83 u | 9,87 u | 10,9 u | 12,42 u |
+| E3 | 8,47 u | 13,35 u | 14,93 u | 17,17 u | 20,18 u |
+| E4 | 4,06 u | 5,23 u | 6,34 u | 8,9 u | 13,62 u |
+| E5 | 8,33 u | 12,61 u | 13,83 u | 16,1 u | 19 u |
+| E6 | 7,1 u | 7,66 u | 8,21 u | 9,27 u | 10,82 u |
+
+Références : sapeur 3 ; mage et troll 3,5 ; archer 4 ; chaman 4,5 ; arbalétrier 5. Tireur de volée 3,5 ; Veilleur 5 ; Sentinelle 6,5. La portée 4,5 se calcule selon les mêmes conventions.
+
+Pour un ennemi jamais éliminé, à vitesse constante v, le temps cumulé à portée vaut longueur couverte ÷ v. Plusieurs fenêtres peuvent être séparées. Cadence, premier tir, concurrence des cibles et dégâts perdus déterminent le résultat réel.
+
+### Vérification proposée
+Contrôler les cercles de portée puis comparer les emplacements à défenseur, niveau, branche et vague identiques. Noter temps de tir utile, éliminations et fuites. Tester les zones au pont, les ricochets et l’intérêt réel des branches de portée. Ne pas modifier simultanément carte, ennemis et défenseurs sans conserver une référence.
+
+<a id="s20"></a>
+
+## 20 Plan et temps de traversée
+
+### Plan logique de référence
+![Plan de La Vallée du Gué](design/Vallee_du_Gue_plan.png)
+
+Le plan est vu du dessus pour mesurer la géométrie ; la présentation du jeu reste isométrique. Il ne fixe pas les assets ni le style graphique final.
+
+### Traversée théorique sans combat
+| Archétype | Vitesse du GDD | 28 ÷ vitesse |
+| --- | --- | --- |
+| Grouillant | 1,15 u/s | 24,35 s |
+| Pillard | 1 u/s | 28 s |
+| Sprinter | 1,65 u/s | 16,97 s |
+| Brute | 0,7 u/s | 40 s |
+| Maraudeur | 1,2 u/s | 23,33 s |
+| Colosse | 0,5 u/s | 56 s |
+| Élite | 0,75 u/s | 37,33 s |
+| Seigneur de siège | 0,45 u/s | 62,22 s |
+
+Calcul : 28 ÷ vitesse, sans élimination ni blocage. Le dernier Pillard de la vague 1 apparaîtrait à 22,5 s et arriverait à 50,5 s. Les horaires d’apparition restent ceux des sections 10 et 11. La cible de 8 à 12 minutes doit être mesurée avec les combats et préparations.
+
+<a id="s21"></a>
+
+## 21 Présentation interface et validation du prototype
 
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
@@ -687,9 +784,9 @@ Godot est le moteur envisagé et PC sur Steam la plateforme prioritaire. La vers
 
 Ces vérifications constituent un plan de validation — P. Les objectifs de performance, configurations matérielles et seuils d’acceptation chiffrés restent à définir.
 
-<a id="s19"></a>
+<a id="s22"></a>
 
-## 19 Périmètre commercial et feuille de route
+## 22 Périmètre commercial et feuille de route
 
 ### Comparaison des périmètres envisagés
 | Élément | Prototype | Objectif commercial |
@@ -709,7 +806,7 @@ Ces objectifs sont des cibles de contenu — C — et non des engagements de pro
 ### Feuille de route proposée
 | Jalon | Travail à effectuer | Condition de passage proposée |
 | --- | --- | --- |
-| J0 — Clarifier | Finaliser les synergies et les distances | Règles nécessaires au prototype documentées |
+| J0 — Clarifier | Finaliser les synergies et les règles de résolution du combat | Règles nécessaires au prototype documentées |
 | J1 — Construire | Carte du Gué, six emplacements, deux factions, six défenseurs | Boucle de préparation et combat jouable |
 | J2 — Compléter | Dix vagues, économie, niveaux, spécialisations et bonus | Partie jouable du début à la fin |
 | J3 — Tester | Lisibilité, factions, économie et durée | Résultats consignés et corrections priorisées |
@@ -720,9 +817,9 @@ La feuille de route est une proposition d’organisation — P. Aucun délai, bu
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
 
-<a id="s20"></a>
+<a id="s23"></a>
 
-## 20 Registre des décisions
+## 23 Registre des décisions
 
 ### Décisions de référence
 | Identifiant | Décision | Statut |
@@ -737,11 +834,11 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | DEC-008 | Choix roguelite après les vagues 3, 6 et 9 du prototype | V |
 | DEC-009 | Rôles Alliance N1 et attaque de groupe du mage ; valeurs initiales en section 5 | V / H |
 | DEC-010 | Cibler l’ennemi à portée le plus avancé ; nouvelle cible avant le prochain tir | V |
-| DEC-011 | Essai N1 sans résistances, bonus raciaux ni spécialisations | V — essai initial |
+| DEC-011 | Essai N1 sans résistances, bonus raciaux ni spécialisations | V |
 | DEC-012 | Horde N1 : rebond, explosion et malédiction ; réglages en section 6 | V / H |
 | DEC-013 | Victimes secondaires : priorité aux plus proches du point d’impact | V |
 | DEC-014 | Sept archétypes ordinaires et boss distinct en vague 10 ; valeurs en section 9 | V / H |
-| DEC-015 | Or immédiat et unique à l’élimination ; aucun or en cas d’arrivée ; pas de prime de vague | V — essai initial |
+| DEC-015 | Or immédiat et unique à l’élimination ; aucun or en cas d’arrivée ; pas de prime de vague | V |
 | DEC-016 | Séquence des dix vagues et accompagnants du boss ; quantités et intervalles H | V / H |
 | DEC-017 | Première apparition à t = 0 ; séparation des groupes de 4 secondes H | V / H |
 | DEC-018 | Fin de vague après toutes les apparitions et résolutions ; victoire après vague 10 si survie | V |
@@ -749,6 +846,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | DEC-020 | Progression de base : même facteur sur tous les dégâts ; cadence et portée inchangées | V |
 | DEC-021 | Choix N4 inclus, exclusif, fixé jusqu’à la vente ; accessible dès les essais | V |
 | DEC-022 | Douze branches et rebonds successifs distincts du troll ; valeurs H | V / H |
+| DEC-023 | Géométrie du Gué, distances et circulation sans blocage ; valeurs H | V / H |
 
 ### Questions ouvertes prioritaires
 | Identifiant | Décision attendue | Dépendance principale |
@@ -761,14 +859,14 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-006 | Équilibrage des vagues et capacités futures du boss | Partie complète |
 | O-007 | Progression entre les parties et interface de combat | Expérience globale |
 | O-008 | Moteur, prix final, périmètre commercial et nom | Plan de production |
-| O-009 | Échelle, premier tir, égalités, projectiles et portée après application d’un effet | Combat des deux factions |
+| O-009 | Premier tir, égalités, projectiles et effets hors portée | Combat des deux factions |
 
-<a id="s21"></a>
+<a id="s24"></a>
 
-## 21 Sources et maintenance du GDD
+## 24 Sources et maintenance du GDD
 
 ### Sources et historique
-S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». Le lien partagé reste une référence d’origine.
+S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». S10 — Géométrie du Gué approuvée par « ok on continu ». Le lien partagé reste une référence d’origine.
 
 Version 0.2 — 19 octobre 2026 : consolidation, statuts, calculs dérivés et feuille de route proposée ; aucune nouvelle fonctionnalité validée.
 
@@ -783,6 +881,8 @@ Version 0.6 — 20 octobre 2026 : dix vagues, horaires, revenus et scénario de 
 Version 0.7 — 20 octobre 2026 : progression N1 à N4, dégâts secondaires et coûts cumulés intégrés après validation S8 ; valeurs H conservées.
 
 Version 0.8 — 20 octobre 2026 : douze spécialisations et règles du choix intégrées après validation S9 ; noms provisoires et valeurs H conservés.
+
+Version 0.9 — 20 octobre 2026 : tracé du Gué, six emplacements, distances et circulation intégrés après validation S10 ; dimensions H et mesures dérivées distinguées.
 
 ### Procédure de mise à jour proposée
 Le Markdown est la référence éditoriale ; le Word en est la présentation. Actualiser les deux ensemble. Consigner identifiant, date, ancienne et nouvelle règle, statut, source et impact. Une hypothèse ou question ouverte devient validée uniquement après confirmation explicite du porteur du projet.

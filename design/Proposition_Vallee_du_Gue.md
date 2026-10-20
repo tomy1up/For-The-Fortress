@@ -1,14 +1,14 @@
-# For the Fortress! — Proposition de La Vallée du Gué
+# For the Fortress! — La Vallée du Gué approuvée
 
-Proposition du 20 octobre 2026, fondée sur le GDD v0.8.
+Approuvée le 20 octobre 2026 et intégrée au GDD v0.9.
 
-**Statut P — géométrie et conventions à valider ; dimensions H à tester.** La carte initiale, le chemin fixe, le pont, les six emplacements et la vue isométrique proviennent du socle. Cette fiche propose leur disposition mesurable. Le GDD approuvé reste en v0.8.
+**Statut V — géométrie et conventions approuvées ; dimensions H à tester.** La carte initiale, le chemin fixe, le pont, les six emplacements et la vue isométrique proviennent du socle. Cette fiche décrit leur disposition mesurable. Le GDD approuvé est en v0.9.
 
 ![Plan de travail de La Vallée du Gué](Vallee_du_Gue_plan.svg)
 
 Le schéma est un plan de conception vu du dessus. Il ne remplace pas la vue isométrique prévue ni la direction artistique ; le convertir en perspective ne doit pas déformer les distances de jeu.
 
-## 1. Conventions proposées
+## 1. Conventions approuvées
 
 - Un seul trajet continu A → B → C → D → E → F → G → H, identique pour tous les archétypes et les deux factions. Une entrée, une arrivée à la forteresse, aucune bifurcation.
 - Terrain logique de 18 × 10 unités. Origine (0 ; 0) en bas à gauche ; x vers la droite et y vers le haut. Cette convention ne prescrit pas les axes du moteur.
@@ -20,7 +20,7 @@ Le schéma est un plan de conception vu du dessus. Il ne remplace pas la vue iso
 - Tous les six emplacements sont disponibles dès le départ et acceptent chacun un défenseur de la faction choisie. Aucune position n’est réservée à une classe. Le recrutement de copies reste ouvert.
 - Les frontières du terrain servent au cadrage ; les portées peuvent les dépasser sans créer de nouvelles zones de déplacement.
 
-Les décors ne bloquent pas les attaques dans ce premier essai proposé. La largeur visuelle du chemin, l’empreinte des unités et les collisions des projectiles restent à traiter séparément. La règle de portée à l’impact et le maintien des malédictions après sortie de portée restent ouverts.
+Les décors ne bloquent pas les attaques dans ce premier essai approuvé. La largeur visuelle du chemin, l’empreinte des unités et les collisions des projectiles restent à traiter séparément. La règle de portée à l’impact et le maintien des malédictions après sortie de portée restent ouverts.
 
 ## 2. Tracé et progression
 
@@ -102,8 +102,8 @@ Le boss parcourt le chemin en environ 62,22 s sans combat. Les temps d’apparit
 
 ## 7. Décisions et suites
 
-À examiner : le trajet de 28 unités, les coordonnées des six emplacements, l’échelle commune des portées et vitesses, la convention de ciblage par centres et l’absence de blocage mutuel pour l’essai initial.
+Sont approuvés : le trajet de 28 unités, les coordonnées des six emplacements, l’échelle commune des portées et vitesses, la convention de ciblage par centres et l’absence de blocage mutuel pour l’essai initial.
 
 Les égalités, le premier délai de tir, les projectiles et l’effet d’une sortie de portée doivent ensuite être précisés. Les bonus roguelite et synergies ne sont pas définis par la carte. Aucun nouvel effet de terrain ou mode de jeu n’est approuvé par cette proposition.
 
-Après validation, intégrer la géométrie au GDD et utiliser ces mesures pour préparer le premier prototype jouable.
+La géométrie est intégrée au GDD v0.9. Utiliser ces mesures pour préparer le premier prototype jouable.

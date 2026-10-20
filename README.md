@@ -8,7 +8,7 @@ Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. 
 
 - [GDD Word](For_the_Fortress_GDD.docx) : présentation structurée avec sommaire et tableaux.
 - [GDD Markdown](For_the_Fortress_GDD.md) : référence éditoriale adaptée au versionnement Git.
-- Version documentaire : **0.8 — 20 octobre 2026**, intégrant le socle, les combats, les ennemis, les dix vagues, la progression par niveau et les spécialisations approuvées.
+- Version documentaire : **0.9 — 20 octobre 2026**, intégrant le socle, les combats, les ennemis, les dix vagues, la progression par niveau, les spécialisations et la géométrie du Gué approuvées.
 
 ## Mécaniques établies
 
@@ -42,9 +42,9 @@ La [progression des niveaux 2 à 4](design/Proposition_progression_niveaux.md) e
 
 La [fiche des douze spécialisations](design/Proposition_specialisations.md) est intégrée au GDD v0.8. Le choix est inclus dans le coût du N4, exclusif et fixé jusqu’à la vente. Les effets sont approuvés ; les noms restent provisoires et les valeurs sont des hypothèses H à tester.
 
-## Carte proposée
+## Carte approuvée
 
-La [fiche de La Vallée du Gué](design/Proposition_Vallee_du_Gue.md) propose un trajet de 28 unités et six emplacements, avec [plan](design/Vallee_du_Gue_plan.svg), longueurs de couverture et temps de traversée. **Statut P — à valider** ; le GDD approuvé reste en v0.8. Le plan présente la géométrie vue du dessus, avant projection isométrique.
+La [fiche de La Vallée du Gué](design/Proposition_Vallee_du_Gue.md) est intégrée au GDD v0.9 : trajet de 28 unités et six emplacements, avec [plan](design/Vallee_du_Gue_plan.svg), couvertures et temps de traversée. Le tracé et les conventions sont approuvés ; les dimensions restent des valeurs H à tester. Le plan présente la géométrie vue du dessus, avant projection isométrique.
 
 ## Statuts et suivi
 
@@ -56,7 +56,7 @@ Le combat Horde est également validé pour les essais : troll avec rebond, sape
 
 Les éliminations rapportent immédiatement une récompense unique, identique pour les deux factions, y compris par malédiction. Un ennemi atteignant la forteresse inflige ses dégâts puis quitte la partie sans récompense. Aucune prime de fin de vague pour le premier essai.
 
-Prochain travail proposé : définir la géométrie de la carte. Trancher aussi les arrondis, les synergies et les bonus avant les essais d’équilibrage. La progression entre les parties reste ouverte.
+Prochain travail proposé : définir le premier tir, les égalités de ciblage, les projectiles et les effets après sortie de portée. Trancher aussi les arrondis, les synergies et les bonus avant les essais d’équilibrage. La progression entre les parties reste ouverte.
 
 Mettre à jour le Markdown et le Word dans une même révision. Documenter toute modification avec un identifiant, une date, un statut, une source et son impact. Une valeur manquante reste « À définir » et ne vaut pas zéro.
 
