@@ -1,14 +1,14 @@
-# For the Fortress! — Proposition des synergies du prototype
+# For the Fortress! — Synergies approuvées du prototype
 
-Proposition du 20 octobre 2026, fondée sur le GDD v0.11.
+Approuvées le 20 octobre 2026 et intégrées au GDD v0.12.
 
-**Statut P — règles, associations et effets à valider.** Tous les seuils et valeurs sont des hypothèses H. Les noms des synergies sont provisoires. Le GDD approuvé reste en version 0.11. Aucun défenseur, classe, race, branche ou pouvoir actif supplémentaire n’est créé par cette fiche.
+**Statut V — règles, associations et effets approuvés.** Tous les seuils et valeurs sont des hypothèses H. Les noms des synergies sont provisoires. Le GDD approuvé est en version 0.12. Aucun défenseur, classe, race, branche ou pouvoir actif supplémentaire n’est créé par cette fiche.
 
 ## 1. Les trois mécanismes conservés
 
 Le socle valide trois axes : diversité de défenseurs d’une même race, choix de spécialisations et proximité entre certaines unités. La proposition les distingue :
 
-| Axe | Condition proposée | Situation avec le roster actuel |
+| Axe | Condition de référence | Situation avec le roster actuel |
 | --- | --- | --- |
 | Diversité raciale | Au moins deux types de défenseurs distincts de la même race, déployés | Non activable : un seul type par race dans chaque faction |
 | Proximité | Deux types partenaires dont les centres sont distants d’au plus 5 unités | Activable avec les défenseurs et emplacements existants |
@@ -20,9 +20,9 @@ Les synergies s’activent automatiquement, sans coût ou choix supplémentaire.
 
 Dans l’Alliance, les types actuels sont Archer elfe, Arbalétrier nain et Mage humain. Dans la Horde : Lanceur de haches troll, Sapeur gobelin et Chaman orc. Chaque race n’a donc qu’un type disponible.
 
-**Proposition de cadrage : conserver le volet racial, mais différer son activation jusqu’à l’approbation de plusieurs types d’une même race.** Il ne fait pas partie des synergies activables à vérifier dans le premier prototype à six défenseurs. Cela n’approuve pas de nouvelles unités pour le rendre artificiellement accessible.
+Cadrage approuvé : conserver le volet racial, mais différer son activation jusqu’à l’approbation de plusieurs types d’une même race. Il ne fait pas partie des synergies activables à vérifier dans le premier prototype à six défenseurs. Cela n’approuve pas de nouvelles unités pour le rendre artificiellement accessible.
 
-Contrat de conception proposé pour cette activation future : deux types distincts déployés d’une même race donnent **+8 % à tous les dégâts des défenseurs déployés de cette race**, sans condition de distance. Un seul palier ; trois types ou plus ne donnent pas de gain supplémentaire dans ce contrat.
+Contrat de conception approuvé pour cette activation future : deux types distincts déployés d’une même race donnent +8 % à tous les dégâts des défenseurs déployés de cette race, sans condition de distance. Un seul palier ; trois types ou plus ne donnent pas de gain supplémentaire dans ce contrat.
 
 Compter l’identité du défenseur de base, pas son nombre d’exemplaires, son niveau ou sa branche. Deux archers elfes identiques, même spécialisés différemment, ne représentent pas deux types. L’autorisation de recruter des copies demeure ouverte. Aucun mélange de races ne satisfait ce seuil.
 
@@ -30,11 +30,11 @@ Le seuil et le gain restent H ; ce contrat devra être réexaminé avec le futur
 
 ## 3. Proximité entre défenseurs
 
-Distance proposée : **centre à centre, inférieure ou égale à 5 unités du plan logique**. Elle est indépendante des portées d’attaque, rayons, rebonds et bonus R-03/R-05. Une portée augmentée ne crée donc pas un lien de proximité supplémentaire.
+Distance approuvée : centre à centre, inférieure ou égale à 5 unités du plan logique. Elle est indépendante des portées d’attaque, rayons, rebonds et bonus R-03/R-05. Une portée augmentée ne crée donc pas un lien de proximité supplémentaire.
 
 Aucune condition de niveau ou de branche pour ces six associations. Un défenseur peut bénéficier de plusieurs codes différents lorsque toutes leurs conditions sont remplies.
 
-| Code | Partenaires requis à proximité | Effet proposé — H |
+| Code | Partenaires requis à proximité | Effet de référence — H |
 | --- | --- | --- |
 | P-ALL-01 | Archer elfe + Arbalétrier nain | +8 % aux dégâts principaux directs des deux |
 | P-ALL-02 | Archer elfe + Mage humain | Archer : +8 % aux dégâts principaux directs ; mage : +8 % aux dégâts secondaires |
@@ -57,7 +57,7 @@ Les deux défenseurs d’une association reçoivent uniquement leur effet indiqu
 | E3 — E4 | 4,472 |
 | E5 — E6 | 4,500 |
 
-E3 — E5 mesure environ 5,025 unités et est donc exclue. Ne pas arrondir une distance à 5 avant de vérifier le seuil. Les dix autres paires d’emplacements ne satisfont pas la proximité de cette proposition.
+E3 — E5 mesure environ 5,025 unités et est donc exclue. Ne pas arrondir une distance à 5 avant de vérifier le seuil. Les dix autres paires d’emplacements ne satisfont pas la proximité de cette règle.
 
 Le triangle E1/E2/E3 permet trois associations si les trois défenseurs distincts de la faction y sont installés. E2/E3/E4 n’en permet que deux, autour d’E3. E5/E6 offre une association près de la fin du trajet.
 
@@ -65,9 +65,9 @@ Ce résultat donne des choix de placement, mais peut renforcer excessivement le 
 
 ## 4. Associations de spécialisations
 
-Deux branches partenaires N4 doivent être déployées. **Aucune proximité n’est requise** pour cet axe ; il récompense le choix de branches et l’investissement. Chaque branche du prototype figure dans une seule association de ce tableau.
+Deux branches partenaires N4 doivent être déployées. Aucune proximité n’est requise pour cet axe ; il récompense le choix de branches et l’investissement. Chaque branche du prototype figure dans une seule association de ce tableau.
 
-| Code | Branches partenaires | Effet proposé — H |
+| Code | Branches partenaires | Effet de référence — H |
 | --- | --- | --- |
 | S-ALL-01 | Veilleur des remparts + Sentinelle des tours | +0,25 unité de portée principale à chacun |
 | S-ALL-02 | Tireur de volée + Arcaniste de concentration | +8 % aux dégâts principaux directs des deux |
@@ -80,7 +80,7 @@ Les autres défenseurs ne bénéficient pas de cette association. Aucune branche
 
 Une association de proximité et une association de spécialisations peuvent coexister sur les mêmes défenseurs. Leurs conditions sont vérifiées séparément. Un partenaire au N3 peut activer la proximité, mais ne peut jamais activer une association de spécialisations.
 
-## 5. Cumul et recalcul proposés
+## 5. Cumul et recalcul approuvés
 
 - Pour un défenseur donné, chaque code de synergie s’applique au maximum une fois. Avoir plusieurs partenaires identiques ne multiplie pas ce même effet ; cette précision n’autorise pas leur recrutement.
 - Si des copies sont ultérieurement autorisées, évaluer chaque bénéficiaire séparément selon ses propres partenaires et sa propre distance. Elles ne créent toujours pas de diversité raciale supplémentaire.
@@ -91,7 +91,7 @@ Une association de proximité et une association de spécialisations peuvent coe
 - La vente retire le partenaire et les effets qui ne remplissent plus leurs conditions pendant cette même préparation. Elle ne modifie pas les dépenses historiques ni le remboursement à 70 % du montant payé.
 - Aucun déplacement libre des défenseurs n’est introduit. Pendant une vague, leurs centres, niveaux et branches restent fixes et les conditions ne changent pas selon la position des ennemis.
 
-Formule de dégâts étendue proposée :
+Formule de dégâts étendue approuvée :
 
 Dégât = référence de la composante × (1 + somme des bonus R applicables + somme des synergies applicables).
 
@@ -101,7 +101,7 @@ Les résistances futures et les autres effets non définis restent ouverts.
 
 ## 6. Exemples de référence
 
-| Situation | Résultat théorique proposé |
+| Situation | Résultat théorique |
 | --- | --- |
 | Archer N2 proche d’un arbalétrier et d’un mage, avec R-01 | 12 × (1 + 0,08 + 0,08 + 0,10) = 15,12 dégâts directs |
 | Mage N1 proche d’un archer, avec R-04 | Secondaire : 10,8 × (1 + 0,08 + 0,20) = 13,824 par victime ; son dégât principal ne reçoit pas ces deux effets |
@@ -128,7 +128,7 @@ Avec R-10 acquis avant toutes les améliorations de deux unités : 60 or d’éc
 
 Les synergies ne modifient pas les revenus des vagues. Aucun or supplémentaire, niveau gratuit ou changement de prix non approuvé n’est ajouté.
 
-## 8. Essais et décisions attendues
+## 8. Essais et suites
 
 Vérifications proposées :
 1. Confirmer qu’aucune race du roster actuel ne peut remplir le seuil de deux types distincts.
@@ -143,6 +143,6 @@ Vérifications proposées :
 
 Aucun essai jouable n’a validé ces règles ou les valeurs H. Les principaux risques sont la concentration des unités dans le triangle de gauche, la portée élevée de certaines combinaisons et l’accès tardif aux associations N4.
 
-À valider : la proximité à 5 unités, les six associations de proximité, les six associations de spécialisations, leur cumul, les déclencheurs de recalcul et le maintien du volet racial sans activation avec le roster actuel. Le contrat racial futur de deux types et +8 % doit également être examiné comme hypothèse.
+Sont approuvés : la proximité à 5 unités, les six associations de proximité, les six associations de spécialisations, leur cumul, les déclencheurs de recalcul et le maintien du volet racial sans activation avec le roster actuel. Le contrat racial futur de deux types et +8 % reste une hypothèse à tester lors de l’extension du roster.
 
-Après accord, intégrer les règles au GDD. Il restera à trancher le recrutement de copies et l’arrondi des ventes avant de figer les règles économiques du premier prototype.
+Les règles sont intégrées au GDD v0.12. Il restera à trancher le recrutement de copies et l’arrondi des ventes avant de figer les règles économiques du premier prototype.

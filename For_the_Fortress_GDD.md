@@ -1,8 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.11 — 20 octobre 2026
+Game Design Document — Version 0.12 — 20 octobre 2026
 
-Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat et les bonus roguelite approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
+Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat, les bonus roguelite et les synergies approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -37,10 +37,15 @@ Nom de travail — disponibilité juridique à confirmer.
 27. [27 Tirage et cumul des bonus](#s27)
 28. [28 Paramètres et prix avec bonus](#s28)
 29. [29 Calculs et essais des bonus](#s29)
-30. [30 Présentation interface et validation du prototype](#s30)
-31. [31 Périmètre commercial et feuille de route](#s31)
-32. [32 Registre des décisions](#s32)
-33. [33 Sources et maintenance du GDD](#s33)
+30. [30 Cadre et diversité raciale des synergies](#s30)
+31. [31 Synergies de proximité](#s31)
+32. [32 Synergies de spécialisations et budget](#s32)
+33. [33 Cumul et recalcul des synergies](#s33)
+34. [34 Calculs et essais des synergies](#s34)
+35. [35 Présentation interface et validation du prototype](#s35)
+36. [36 Périmètre commercial et feuille de route](#s36)
+37. [37 Registre des décisions](#s37)
+38. [38 Sources et maintenance du GDD](#s38)
 
 <a id="s1"></a>
 
@@ -180,9 +185,9 @@ La lecture séquentielle des trois coûts correspond aux trois améliorations ju
 | Domaine | Données à définir — O |
 | --- | --- |
 | Attaque | Comportements en sections 5 et 6 ; valeurs N1 à N4 en section 12 |
-| Résolution des dégâts | Types, résistances futures et cumul avec les synergies ; fractions conservées |
+| Résolution des dégâts | Types et résistances futures ; cumul des bonus et synergies défini |
 | Spécialisations | Noms définitifs, interface et équilibre des branches |
-| Niveaux | Bonus définis en section 27 ; interaction avec les futures synergies |
+| Niveaux | Bonus et synergies définis en sections 27 et 33 |
 
 Le choix de spécialisation est inclus dans le coût du passage au N4. Les effets approuvés sont détaillés en sections 14 à 17. Les dégâts secondaires du mage constituent une décision explicite documentée en section 5 ; critiques, soins, invocations et contrôle restent non définis.
 
@@ -316,19 +321,19 @@ Le prototype utilise douze bonus approuvés, détaillés en sections 25 à 29. L
 | Catalogue de 12, 11 puis 10 entrées avant les trois tirages | Calcul dérivé |
 
 ### Les trois mécanismes de synergie
-| Mécanisme validé | Intention | Règles ouvertes |
+| Mécanisme validé | Intention | Règle du prototype |
 | --- | --- | --- |
-| Diversité de défenseurs d’une même race | Récompenser une composition raciale diversifiée | Décompte des unités distinctes, seuils et effets |
-| Spécialisations | Créer des interactions entre choix de branches | Combinaisons, cumul et exclusivité |
-| Proximité entre certaines unités | Valoriser la disposition des défenseurs | Distance, voisinage, nombre de bénéficiaires |
+| Diversité de défenseurs d’une même race | Récompenser une composition raciale diversifiée | Deux types distincts par race ; +8 % H ; non activable avec le roster actuel |
+| Spécialisations | Créer des interactions entre choix de branches | Six associations N4 ; cumul par composante |
+| Proximité entre certaines unités | Valoriser la disposition des défenseurs | Six associations ; centres à 5 unités H au maximum |
 
-La diversité ne doit pas être assimilée automatiquement au nombre total d’unités d’une race. La présence de copies, les conditions de seuil et la relation entre classe et diversité restent à définir.
+La diversité compte les types de défenseurs de base, pas les copies, niveaux ou branches. Chaque race n’ayant qu’un type dans le prototype, le volet racial est conservé sans activation. Les sections 30 à 34 précisent les synergies ; le recrutement de copies reste ouvert.
 
 ### Exemple non contractuel
 Le socle illustre une interaction possible par un archer elfe placé près d’un druide qui pourrait recevoir des flèches empoisonnées. Cet exemple n’approuve ni le druide comme défenseur, ni une valeur de poison, ni une portée de voisinage. Il sert uniquement à expliquer le principe.
 
 ### Recalcul et progression persistante
-Le recalcul des synergies après une vente est validé. Les déclencheurs après construction, amélioration, spécialisation ou retrait d’un bonus doivent être explicités — O. La progression entre les parties demeure ouverte : aucune monnaie persistante, arbre de talents ou amélioration permanente n’est approuvé.
+Recalculer conditions et valeurs après construction, amélioration, choix de branche, vente et sélection d’un bonus, depuis les références sans cumul répété — V. La progression entre les parties demeure ouverte : aucune monnaie persistante, arbre de talents ou amélioration permanente n’est approuvé.
 
 <a id="s9"></a>
 
@@ -543,7 +548,7 @@ Les noms sont provisoires. Les rôles et comportements des douze branches sont a
 ### Lecture des valeurs spécialisées
 Les sections 15 à 17 donnent les valeurs finales au N4 spécialisé, hors bonus et résistances. Ne pas appliquer à nouveau le multiplicateur × 3,25. Les branches dérogent uniquement aux paramètres explicitement remplacés ; les autres règles du GDD continuent de s’appliquer.
 
-Le ciblage principal reste l’ennemi à portée le plus avancé et les victimes secondaires les plus proches restent prioritaires. Le DPS suppose des attaques continues et assez de PV ; les plafonds de groupe supposent toutes les victimes admissibles. Les douze bonus suivent les formules de la section 27 ; résistances futures et synergies restent ouvertes.
+Le ciblage principal reste l’ennemi à portée le plus avancé et les victimes secondaires les plus proches restent prioritaires. Le DPS suppose des attaques continues et assez de PV ; les plafonds de groupe supposent toutes les victimes admissibles. Les douze bonus suivent les formules de la section 27 ; les résistances futures restent ouvertes ; les synergies suivent la section 33.
 
 ### Budget conservé et comparaisons
 Le total investi au N4 reste 350, 375 ou 400 or. La vente théorique à 70 % reste 245, 262,5 ou 280 or, avant arrondi encore ouvert.
@@ -657,14 +662,14 @@ Guerre : davantage de dégâts dès l’impact, moins de dégâts différés. Ut
 
 Malédictions : chaque application périodique devient plus forte, contre un impact initial plus faible. Les effets déjà appliqués suivent les règles de renouvellement du GDD ; au même instant, le dernier dégât périodique précède le renouvellement. Aucun cumul supplémentaire, ralentissement, transfert de malédiction ou réduction de résistance n’est proposé.
 
-Guerre élimine un Pillard à 40 PV dès l’impact ; Malédictions élimine un Sprinter à 24 PV dès l’impact, mais doit attendre la suite de l’effet pour dépasser le total de Guerre. Les malédictions continuent après sortie de portée tant que la cible reste présente, selon la section 22. Le gain total de Malédictions donne une contrepartie mesurable à son impact initial réduit. Les synergies et bonus hors catalogue restent ouverts.
+Guerre élimine un Pillard à 40 PV dès l’impact ; Malédictions élimine un Sprinter à 24 PV dès l’impact, mais doit attendre la suite de l’effet pour dépasser le total de Guerre. Les malédictions continuent après sortie de portée tant que la cible reste présente, selon la section 22. Le gain total de Malédictions donne une contrepartie mesurable à son impact initial réduit. Les synergies du catalogue suivent les sections 30 à 34 ; autres effets ouverts.
 
 
 
 ### Essais et questions ouvertes
 Comparer chaque branche au N4 de base puis à sa concurrente, sur les mêmes vagues, carte et budget. Observer le temps de tir, les victimes secondaires réelles, les dégâts perdus et les PV de forteresse perdus. Vérifier les vagues 4 et 8 pour les groupes, les vagues 6, 7, 9 et 10 pour les cibles endurantes, et la vague 3 pour la vitesse.
 
-L’interface, les arrondis de l’économie et les synergies restent ouverts ; le combat conserve les fractions. Aucun test jouable n’établit encore l’équilibre des branches.
+L’interface et les arrondis de l’économie restent ouverts ; le combat conserve les fractions et applique les synergies définies. Aucun test jouable n’établit encore l’équilibre des branches.
 
 <a id="s18"></a>
 
@@ -958,7 +963,7 @@ Les effets liés au niveau sont recalculés lors d’une amélioration entre les
 
 Lorsqu’une malédiction est appliquée, conserver sa valeur calculée pour ses deux échéances selon les règles du GDD. Les bonus ne créent pas de dégâts supplémentaires après la mort ou le retrait de la cible.
 
-Ces formules concernent le catalogue initial sans résistance. Futures résistances, autres bonus et synergies restent à définir.
+Ces formules concernent le catalogue initial sans résistance ; ajouter les synergies selon la section 33. Résistances et effets hors catalogue restent ouverts.
 
 <a id="s28"></a>
 
@@ -1033,7 +1038,161 @@ Aucun essai jouable n’a validé ces réglages. Il faudra surveiller la supéri
 
 <a id="s30"></a>
 
-## 30 Présentation interface et validation du prototype
+## 30 Cadre et diversité raciale des synergies
+
+### Statut et périmètre
+Les conditions, associations et règles de cumul sont approuvées — V ; noms provisoires et valeurs H. Aucun défenseur, classe, race, branche ou pouvoir actif n’est ajouté.
+
+### Les trois mécanismes
+Le socle valide trois axes : diversité de défenseurs d’une même race, choix de spécialisations et proximité entre certaines unités. La proposition les distingue :
+
+| Axe | Condition de référence | Situation avec le roster actuel |
+| --- | --- | --- |
+| Diversité raciale | Au moins deux types de défenseurs distincts de la même race, déployés | Non activable : un seul type par race dans chaque faction |
+| Proximité | Deux types partenaires dont les centres sont distants d’au plus 5 unités | Activable avec les défenseurs et emplacements existants |
+| Spécialisations | Deux branches partenaires N4 présentes, sans condition de distance | Activable si le budget permet les deux spécialisations |
+
+Les synergies s’activent automatiquement, sans coût ou choix supplémentaire. Elles ne permettent pas de mélanger les factions. Leurs effets restent actifs tant que leurs conditions sont réunies.
+
+### Diversité raciale et prototype
+Dans l’Alliance, les types actuels sont Archer elfe, Arbalétrier nain et Mage humain. Dans la Horde : Lanceur de haches troll, Sapeur gobelin et Chaman orc. Chaque race n’a donc qu’un type disponible.
+
+Cadrage approuvé : conserver le volet racial, mais différer son activation jusqu’à l’approbation de plusieurs types d’une même race. Il ne fait pas partie des synergies activables à vérifier dans le premier prototype à six défenseurs. Cela n’approuve pas de nouvelles unités pour le rendre artificiellement accessible.
+
+Contrat de conception approuvé pour cette activation future : deux types distincts déployés d’une même race donnent +8 % à tous les dégâts des défenseurs déployés de cette race, sans condition de distance. Un seul palier ; trois types ou plus ne donnent pas de gain supplémentaire dans ce contrat.
+
+Compter l’identité du défenseur de base, pas son nombre d’exemplaires, son niveau ou sa branche. Deux archers elfes identiques, même spécialisés différemment, ne représentent pas deux types. L’autorisation de recruter des copies demeure ouverte. Aucun mélange de races ne satisfait ce seuil.
+
+Le seuil et le gain restent H ; ce contrat devra être réexaminé avec le futur roster avant toute activation commerciale. Il ne valide ni un druide, ni des flèches empoisonnées.
+
+<a id="s31"></a>
+
+## 31 Synergies de proximité
+
+### Proximité entre défenseurs
+Distance approuvée : centre à centre, inférieure ou égale à 5 unités du plan logique. Elle est indépendante des portées d’attaque, rayons, rebonds et bonus R-03/R-05. Une portée augmentée ne crée donc pas un lien de proximité supplémentaire.
+
+Aucune condition de niveau ou de branche pour ces six associations. Un défenseur peut bénéficier de plusieurs codes différents lorsque toutes leurs conditions sont remplies.
+
+| Code | Partenaires requis à proximité | Effet de référence — H |
+| --- | --- | --- |
+| P-ALL-01 | Archer elfe + Arbalétrier nain | +8 % aux dégâts principaux directs des deux |
+| P-ALL-02 | Archer elfe + Mage humain | Archer : +8 % aux dégâts principaux directs ; mage : +8 % aux dégâts secondaires |
+| P-ALL-03 | Arbalétrier nain + Mage humain | Arbalétrier : +0,25 unité de portée principale ; mage : +6 % aux dégâts principaux directs |
+| P-HOR-01 | Troll + Sapeur gobelin | +8 % aux dégâts secondaires de rebond et d’explosion, pour chacun |
+| P-HOR-02 | Troll + Chaman orc | Troll : +8 % aux dégâts principaux directs ; chaman : +8 % à chaque dégât périodique |
+| P-HOR-03 | Sapeur gobelin + Chaman orc | +8 % aux dégâts principaux directs des deux |
+
+Les deux défenseurs d’une association reçoivent uniquement leur effet indiqué. Aucun bonus ne s’applique à toute la faction par simple présence d’une paire de proximité.
+
+### Liens possibles sur La Vallée du Gué
+
+À partir des coordonnées H approuvées, la distance de 5 unités autorise exactement les cinq paires d’emplacements suivantes, indépendamment de leur contenu :
+
+| Paire | Distance calculée, affichée à trois décimales |
+| --- | --- |
+| E1 — E2 | 4,610 |
+| E1 — E3 | 4,610 |
+| E2 — E3 | 4,123 |
+| E3 — E4 | 4,472 |
+| E5 — E6 | 4,500 |
+
+E3 — E5 mesure environ 5,025 unités et est donc exclue. Ne pas arrondir une distance à 5 avant de vérifier le seuil. Les dix autres paires d’emplacements ne satisfont pas la proximité de cette règle.
+
+Le triangle E1/E2/E3 permet trois associations si les trois défenseurs distincts de la faction y sont installés. E2/E3/E4 n’en permet que deux, autour d’E3. E5/E6 offre une association près de la fin du trajet.
+
+Ce résultat donne des choix de placement, mais peut renforcer excessivement le groupe de gauche. Comparer ses synergies au gain de couverture et à la défense finale avant de considérer le seuil comme équilibré.
+
+<a id="s32"></a>
+
+## 32 Synergies de spécialisations et budget
+
+### Associations de branches
+Deux branches partenaires N4 doivent être déployées. Aucune proximité n’est requise pour cet axe ; il récompense le choix de branches et l’investissement. Chaque branche du prototype figure dans une seule association de ce tableau.
+
+| Code | Branches partenaires | Effet de référence — H |
+| --- | --- | --- |
+| S-ALL-01 | Veilleur des remparts + Sentinelle des tours | +0,25 unité de portée principale à chacun |
+| S-ALL-02 | Tireur de volée + Arcaniste de concentration | +8 % aux dégâts principaux directs des deux |
+| S-ALL-03 | Brise-siège + Maître des déflagrations | +6 % à toutes les composantes de dégâts des deux |
+| S-HOR-01 | Fendeur de crânes + Chaman de guerre | +8 % aux dégâts principaux directs des deux |
+| S-HOR-02 | Maître des ricochets + Artificier des foules | +8 % aux dégâts secondaires des deux |
+| S-HOR-03 | Expert en démolition + Tisseur de malédictions | +6 % à toutes les composantes de dégâts des deux |
+
+Les autres défenseurs ne bénéficient pas de cette association. Aucune branche n’est transformée ou débloquée par une synergie ; les choix N4 restent fixés jusqu’à la vente.
+
+Une association de proximité et une association de spécialisations peuvent coexister sur les mêmes défenseurs. Leurs conditions sont vérifiées séparément. Un partenaire au N3 peut activer la proximité, mais ne peut jamais activer une association de spécialisations.
+
+### Accès économique
+Une association de proximité ne demande pas de niveau supplémentaire : seul le coût des deux achats et leur position comptent.
+
+Sans bonus de prix :
+- Les deux défenseurs à 50 et 75 or coûtent 125 or, dans les 150 or initiaux.
+- Deux N4 distincts coûtent 725, 750 ou 775 or selon la paire, achat et améliorations compris.
+- Les trois défenseurs distincts dont deux N4 et un N1 coûtent toujours 825 or. Le maximum brut avant le boss est de 816 or : il manque 9 or.
+- Les trois défenseurs tous au N4 coûtent 1125 or. Ce total dépasse même les 920 or bruts maximaux de la partie, et les gains de la dernière vague ne financent pas les achats en combat.
+
+Une composition à deux N4 est donc finançable avant le boss si le joueur renonce au troisième défenseur ou utilise des réductions de prix. Elle ne découle pas automatiquement du scénario initial, qui n’atteint qu’un N4.
+
+Avec R-10 acquis avant toutes les améliorations de deux unités : 60 or d’économie, soit 665 or pour les N4 à 50 et 75 or, ou 765 or en ajoutant le troisième défenseur N1 à 100 or. Cette dernière composition devient finançable avant le boss ; la sélection de R-10 et les achats doivent réellement avoir eu lieu dans le bon ordre.
+
+Les synergies ne modifient pas les revenus des vagues. Aucun or supplémentaire, niveau gratuit ou changement de prix non approuvé n’est ajouté.
+
+<a id="s33"></a>
+
+## 33 Cumul et recalcul des synergies
+
+### Cumul et recalcul
+- Pour un défenseur donné, chaque code de synergie s’applique au maximum une fois. Avoir plusieurs partenaires identiques ne multiplie pas ce même effet ; cette précision n’autorise pas leur recrutement.
+- Si des copies sont ultérieurement autorisées, évaluer chaque bénéficiaire séparément selon ses propres partenaires et sa propre distance. Elles ne créent toujours pas de diversité raciale supplémentaire.
+- Additionner les pourcentages de synergies aux pourcentages des bonus R déjà applicables à la même victime et à la même composante.
+- Ajouter les gains de portée à la portée de référence de la branche, avec R-03. Ils ne changent ni distance de proximité, ni rayon secondaire, ni durée de malédiction.
+- Ne pas augmenter la cadence du chaman. Les synergies de ce catalogue ne changent aucune cadence, échéance de malédiction, récompense ou dépense.
+- Recalculer les conditions et les statistiques dérivées après construction, amélioration, choix de branche, vente et sélection d’un bonus. Repartir des valeurs de référence, sans ajouter les effets une seconde fois au résultat précédent.
+- La vente retire le partenaire et les effets qui ne remplissent plus leurs conditions pendant cette même préparation. Elle ne modifie pas les dépenses historiques ni le remboursement à 70 % du montant payé.
+- Aucun déplacement libre des défenseurs n’est introduit. Pendant une vague, leurs centres, niveaux et branches restent fixes et les conditions ne changent pas selon la position des ennemis.
+
+Formule de dégâts étendue approuvée :
+
+Dégât = référence de la composante × (1 + somme des bonus R applicables + somme des synergies applicables).
+
+Le dégât secondaire reste calculé à partir de sa propre référence avant bonus. Une amélioration du dégât principal ne se transmet pas automatiquement au rebond, à l’explosion ou aux ticks. Une malédiction conserve la valeur calculée lors de son application, conformément au GDD.
+
+Les résistances futures et les autres effets non définis restent ouverts.
+
+<a id="s34"></a>
+
+## 34 Calculs et essais des synergies
+
+### Calculs de référence
+| Situation | Résultat théorique |
+| --- | --- |
+| Archer N2 proche d’un arbalétrier et d’un mage, avec R-01 | 12 × (1 + 0,08 + 0,08 + 0,10) = 15,12 dégâts directs |
+| Mage N1 proche d’un archer, avec R-04 | Secondaire : 10,8 × (1 + 0,08 + 0,20) = 13,824 par victime ; son dégât principal ne reçoit pas ces deux effets |
+| Fendeur + Chaman de guerre proches, avec R-01 | Chaman : 58,5 × 1,18 = 69,03 directs ; chaque tick : 9,75 × 1,18 = 11,505 ; DPS complet 46,02 |
+| Veilleur + Sentinelle présents, Sentinelle proche d’un mage, avec R-03 | Portée de Sentinelle : 6,5 + 0,25 + 0,25 + 0,5 = 7,5 |
+
+Dans le troisième exemple, +8 % direct vient de S-HOR-01 et +8 % périodique vient de P-HOR-02 ; le même pourcentage total ne signifie pas le même effet. Dans le dernier, les deux gains de 0,25 viennent de S-ALL-01 et P-ALL-03.
+
+Les présences et budgets nécessaires doivent être respectés. Ces exemples ne donnent pas gratuitement des niveaux ou des bonus et ne démontrent pas l’équilibre des compositions.
+
+### Essais du prototype
+Vérifications proposées :
+1. Confirmer qu’aucune race du roster actuel ne peut remplir le seuil de deux types distincts.
+2. Vérifier les cinq liens d’emplacement et l’exclusion E3/E5, sans utiliser la distance d’attaque.
+3. Vérifier qu’un partenaire N1 active la proximité, mais pas une association N4.
+4. Vérifier que chaque branche figure une seule fois dans les six associations de spécialisations.
+5. Vérifier qu’un code ne se cumule pas plusieurs fois sur un même bénéficiaire et que les codes différents s’additionnent.
+6. Vendre un partenaire et vérifier le retrait immédiat de l’effet ; recalculer sans dérive à chaque opération.
+7. Vérifier les quatre calculs de référence avec les mêmes unités, branches et bonus.
+8. Comparer le triangle de gauche au couple final E5/E6 sur les vagues 8 à 10, à budget égal.
+9. Tester l’investissement en deux N4 avec et sans R-10, sans supposer une troisième unité gratuite.
+
+Aucun essai jouable n’a validé ces règles ou les valeurs H. Les principaux risques sont la concentration des unités dans le triangle de gauche, la portée élevée de certaines combinaisons et l’accès tardif aux associations N4.
+
+<a id="s35"></a>
+
+## 35 Présentation interface et validation du prototype
 
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
@@ -1064,9 +1223,9 @@ Godot est le moteur envisagé et PC sur Steam la plateforme prioritaire. La vers
 
 Ces vérifications constituent un plan de validation — P. Les objectifs de performance, configurations matérielles et seuils d’acceptation chiffrés restent à définir.
 
-<a id="s31"></a>
+<a id="s36"></a>
 
-## 31 Périmètre commercial et feuille de route
+## 36 Périmètre commercial et feuille de route
 
 ### Comparaison des périmètres envisagés
 | Élément | Prototype | Objectif commercial |
@@ -1086,7 +1245,7 @@ Ces objectifs sont des cibles de contenu — C — et non des engagements de pro
 ### Feuille de route proposée
 | Jalon | Travail à effectuer | Condition de passage proposée |
 | --- | --- | --- |
-| J0 — Clarifier | Finaliser les synergies, les copies et l’arrondi des ventes | Règles nécessaires au prototype documentées |
+| J0 — Clarifier | Finaliser les copies et l’arrondi des ventes | Règles nécessaires au prototype documentées |
 | J1 — Construire | Carte du Gué, six emplacements, deux factions, six défenseurs | Boucle de préparation et combat jouable |
 | J2 — Compléter | Dix vagues, économie, niveaux, spécialisations et bonus | Partie jouable du début à la fin |
 | J3 — Tester | Lisibilité, factions, économie et durée | Résultats consignés et corrections priorisées |
@@ -1097,9 +1256,9 @@ La feuille de route est une proposition d’organisation — P. Aucun délai, bu
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
 
-<a id="s32"></a>
+<a id="s37"></a>
 
-## 32 Registre des décisions
+## 37 Registre des décisions
 
 ### Décisions de référence
 | Identifiant | Décision | Statut |
@@ -1131,44 +1290,46 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | DEC-025 | Ticks avant tirs simultanés, puis arrivées ; récompense unique et défaite prioritaire | V |
 | DEC-026 | Douze bonus, trois offres distinctes ; poids égaux, bonus choisis exclus | V / H |
 | DEC-027 | Cumul par composante, chaman sans R-02, PV et réductions de prix définis | V / H |
+| DEC-028 | Synergies de proximité et N4, cumul et recalcul ; volet racial différé | V / H |
 
 ### Questions ouvertes et suivi
 | Identifiant | Décision attendue | Dépendance principale |
 | --- | --- | --- |
-| O-001 | Résistances futures et cumul avec les synergies | Combat et statistiques par niveau |
+| O-001 | Types et résistances futures | Combat et statistiques par niveau |
 | O-002 | Équilibrage des récompenses, arrondis et copies d’unités | Économie et recrutement |
 | O-003 | Noms définitifs, interface du choix et équilibre des branches | Niveau 4 et synergies |
-| O-004 | Seuils raciaux, proximité, cumul et recalcul | Système de synergies |
 | O-006 | Équilibrage des vagues et capacités futures du boss | Partie complète |
 | O-007 | Progression entre les parties et interface de combat | Expérience globale |
 | O-008 | Moteur, prix final, périmètre commercial et nom | Plan de production |
 
-<a id="s33"></a>
+<a id="s38"></a>
 
-## 33 Sources et maintenance du GDD
+## 38 Sources et maintenance du GDD
 
 ### Sources et historique
-S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». S10 — Géométrie du Gué approuvée par « ok on continu ». S11 — Résolution du combat approuvée par « ok c’est bon ». S12 — Bonus roguelite approuvés par « ok on continu ». Le lien partagé reste une référence d’origine.
+S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». S10 — Géométrie du Gué approuvée par « ok on continu ». S11 — Résolution du combat approuvée par « ok c’est bon ». S12 — Bonus roguelite approuvés par « ok on continu ». S13 — Synergies approuvées par « ok on continu ». Le lien partagé reste une référence d’origine.
 
 Version 0.2 — 19 octobre 2026 : consolidation, statuts, calculs dérivés et feuille de route proposée ; aucune nouvelle fonctionnalité validée.
 
-Version 0.3 — 19 octobre 2026 : combat Alliance N1, ciblage et essai initial validés par S4 ; valeurs H conservées.
+Version 0.3 — 19 octobre 2026 : combat Alliance N1, ciblage et essai initial validés par S4.
 
-Version 0.4 — 19 octobre 2026 : combat Horde N1 et priorité des victimes secondaires validés par S5 ; valeurs H conservées.
+Version 0.4 — 19 octobre 2026 : combat Horde N1 et priorité des victimes secondaires validés par S5.
 
 Version 0.5 — 19 octobre 2026 : sept archétypes, boss en vague 10 et règles de récompense validés par S6 ; statistiques H conservées.
 
-Version 0.6 — 20 octobre 2026 : dix vagues, horaires, revenus et scénario de dépenses intégrés après validation S7 ; réglages H et calculs dérivés distingués.
+Version 0.6 — 20 octobre 2026 : dix vagues, horaires, revenus et scénario de dépenses intégrés après validation S7 ; calculs dérivés distingués.
 
-Version 0.7 — 20 octobre 2026 : progression N1 à N4, dégâts secondaires et coûts cumulés intégrés après validation S8 ; valeurs H conservées.
+Version 0.7 — 20 octobre 2026 : progression N1 à N4, dégâts secondaires et coûts cumulés intégrés après validation S8.
 
-Version 0.8 — 20 octobre 2026 : douze spécialisations et règles du choix intégrées après validation S9 ; noms provisoires et valeurs H conservés.
+Version 0.8 — 20 octobre 2026 : douze spécialisations et règles du choix intégrées après validation S9 ; noms provisoires.
 
 Version 0.9 — 20 octobre 2026 : tracé du Gué, six emplacements, distances et circulation intégrés après validation S10 ; dimensions H et mesures dérivées distinguées.
 
 Version 0.10 — 20 octobre 2026 : premier tir, ciblage, impacts instantanés, effets hors portée et ordre de résolution intégrés après validation S11 ; douze cas de référence ajoutés.
 
-Version 0.11 — 20 octobre 2026 : douze bonus et règles de tirage, cumul, cadence, PV et prix intégrés après validation S12 ; valeurs H conservées.
+Version 0.11 — 20 octobre 2026 : douze bonus et règles de tirage, cumul, cadence, PV et prix intégrés après validation S12.
+
+Version 0.12 — 20 octobre 2026 : proximité, associations N4, cumul et recalcul intégrés après validation S13 ; volet racial conservé sans activation et valeurs H maintenues.
 
 ### Procédure de mise à jour proposée
 Le Markdown est la référence éditoriale ; le Word en est la présentation. Actualiser les deux ensemble. Consigner identifiant, date, ancienne et nouvelle règle, statut, source et impact. Une hypothèse ou question ouverte devient validée uniquement après confirmation explicite du porteur du projet.
@@ -1182,4 +1343,4 @@ Le Markdown est la référence éditoriale ; le Word en est la présentation. Ac
 | Incidences | Défenseurs, économie, vagues ou autres règles concernés |
 | Vérification | Essai prévu, résultat observé et ajustement éventuel |
 
-Conserver une valeur H tant qu’elle n’a pas été équilibrée par des essais. Une validation de principe autorise le comportement décrit ; elle n’établit pas sa puissance relative. Les résultats futurs doivent préciser la carte, les vagues, les unités et les réglages employés pour permettre une comparaison utile.
+Conserver le statut H jusqu’aux essais d’équilibrage. Une validation de principe confirme le comportement, pas sa puissance. Consigner carte, vagues, unités, réglages et résultats pour comparer les essais.

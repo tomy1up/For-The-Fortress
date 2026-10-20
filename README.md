@@ -8,7 +8,7 @@ Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. 
 
 - [GDD Word](For_the_Fortress_GDD.docx) : présentation structurée avec sommaire et tableaux.
 - [GDD Markdown](For_the_Fortress_GDD.md) : référence éditoriale adaptée au versionnement Git.
-- Version documentaire : **0.11 — 20 octobre 2026**, intégrant le socle, les combats, les ennemis, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat et les bonus roguelite approuvés.
+- Version documentaire : **0.12 — 20 octobre 2026**, intégrant le socle, les combats, les ennemis, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat, les bonus roguelite et les synergies approuvés.
 
 ## Mécaniques établies
 
@@ -54,9 +54,9 @@ La [fiche de résolution du combat](design/Proposition_resolution_combat.md) est
 
 La [proposition des douze bonus roguelite](design/Proposition_bonus_roguelite.md) est intégrée au GDD v0.11 : dégâts, cadence, portée, zones, niveaux, forteresse et prix. Tirage uniforme de trois offres distinctes, bonus choisis exclus, pourcentages additionnés par composante. Le chaman est exclu du bonus de cadence ; les valeurs restent H.
 
-## Synergies proposées
+## Synergies approuvées
 
-La [proposition de synergies](design/Proposition_synergies.md) décrit six associations de proximité et six associations de spécialisations, leurs conditions, cumuls et budgets. Le volet racial reste prévu mais non activable avec un seul type de défenseur par race. **Statut P — à valider** ; le GDD approuvé reste en v0.11.
+La [proposition de synergies](design/Proposition_synergies.md) est intégrée au GDD v0.12 : six associations de proximité et six associations de spécialisations, conditions, cumuls et budgets. Le volet racial est conservé sans activation avec un seul type par race ; les valeurs restent H.
 
 ## Statuts et suivi
 
@@ -68,7 +68,7 @@ Le combat Horde est également validé pour les essais : troll avec rebond, sape
 
 Les éliminations rapportent immédiatement une récompense unique, identique pour les deux factions, y compris par malédiction. Un ennemi atteignant la forteresse inflige ses dégâts puis quitte la partie sans récompense. Aucune prime de fin de vague pour le premier essai.
 
-Prochain travail proposé : définir les synergies, puis trancher les copies d’unités et l’arrondi des ventes avant les essais d’équilibrage. La progression entre les parties reste ouverte.
+Prochain travail proposé : trancher les copies d’unités et l’arrondi des ventes avant les essais d’équilibrage. La progression entre les parties reste ouverte.
 
 Mettre à jour le Markdown et le Word dans une même révision. Documenter toute modification avec un identifiant, une date, un statut, une source et son impact. Une valeur manquante reste « À définir » et ne vaut pas zéro.
 
