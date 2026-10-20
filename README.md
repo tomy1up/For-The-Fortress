@@ -46,6 +46,10 @@ La [fiche des douze spécialisations](design/Proposition_specialisations.md) est
 
 La [fiche de La Vallée du Gué](design/Proposition_Vallee_du_Gue.md) est intégrée au GDD v0.9 : trajet de 28 unités et six emplacements, avec [plan](design/Vallee_du_Gue_plan.svg), couvertures et temps de traversée. Le tracé et les conventions sont approuvés ; les dimensions restent des valeurs H à tester. Le plan présente la géométrie vue du dessus, avant projection isométrique.
 
+## Résolution du combat proposée
+
+La [fiche de résolution du combat](design/Proposition_resolution_combat.md) précise le premier tir, les égalités, les dégâts instantanés, les malédictions hors portée et les événements simultanés, avec douze cas de référence. **Statut P — à valider** ; le GDD approuvé reste en v0.9.
+
 ## Statuts et suivi
 
 Le GDD utilise **V** validé, **H** hypothèse, **C** cible, **O** ouvert et **P** proposition. La feuille de route et les conventions de suivi sont proposées, sans nouvelle fonctionnalité approuvée. Les calculs économiques dérivés sont identifiés.
