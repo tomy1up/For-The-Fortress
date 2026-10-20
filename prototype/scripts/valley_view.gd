@@ -78,20 +78,23 @@ func _draw() -> void:
 			if actor.has("defender"):
 				_draw_defender(actor.point, actor.defender.type)
 			else:
-				_draw_pillager(actor.point)
-				var ratio: float = clampf(actor.enemy.hp / 40.0, 0.0, 1.0)
-				draw_rect(Rect2(actor.point + Vector2(-12, -34), Vector2(24, 4)), Color("472f2a"))
-				draw_rect(Rect2(actor.point + Vector2(-12, -34), Vector2(24 * ratio, 4)), Color("a1ba75"))
+				_draw_pillager(actor.point, actor.enemy)
+				var ratio: float = clampf(actor.enemy.hp / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
+				var bar_position: Vector2 = actor.point + Vector2(-12, -36 * _enemy_scale(actor.enemy))
+				draw_rect(Rect2(bar_position, Vector2(24, 4)), Color("472f2a"))
+				draw_rect(Rect2(bar_position, Vector2(24 * ratio, 4)), Color("a1ba75"))
 		if model.active:
 			for shot in model.shots:
 				if model.elapsed - shot.time <= 0.18:
-					var color: Color = Color("9cc4e4") if shot.type == 2 else Color("e8ce92")
+					var color: Color = {2: Color("9cc4e4"), 3: Color("a1d6ab"), 4: Color("e3a56d"), 5: Color("cfa4e3")}.get(shot.type, Color("e8ce92"))
 					draw_line(project(shot.from) + Vector2(0, -17), project(shot.to) + Vector2(0, -12), color, 2, true)
-					if shot.type == 2:
+					for secondary_point in shot.get("secondary", []):
+						draw_line(project(shot.to) + Vector2(0, -12), project(secondary_point) + Vector2(0, -12), color, 1.5, true)
+					if shot.type in [2, 4]:
 						draw_arc(project(shot.to), 20, 0, TAU, 24, Color(0.5, 0.7, 0.9, 0.7), 2, true)
 
 func _draw_defender(center: Vector2, type: int) -> void:
-	var color: Color = [Color("6f9c6b"), Color("b79a64"), Color("668db5")][type]
+	var color: Color = [Color("6f9c6b"), Color("b79a64"), Color("668db5"), Color("72a392"), Color("b8a16a"), Color("a782b7")][type]
 	draw_circle(center + Vector2(0, 3), 9, Color(0, 0, 0, 0.25))
 	draw_rect(Rect2(center + Vector2(-6, -17), Vector2(12, 19)), color)
 	draw_circle(center + Vector2(0, -23), 6, Color("e4d0a5"))
@@ -108,6 +111,20 @@ func _draw_defender(center: Vector2, type: int) -> void:
 			draw_colored_polygon(PackedVector2Array([center + Vector2(-9, -26), center + Vector2(0, -40), center + Vector2(9, -26)]), color)
 			draw_line(center + Vector2(11, -28), center + Vector2(11, 1), Color("c7b080"), 2)
 			draw_circle(center + Vector2(11, -30), 4, Color("abcdeb"))
+
+		3:
+			draw_line(center + Vector2(8, -25), center + Vector2(8, -3), Color("d2c295"), 2)
+			draw_colored_polygon(PackedVector2Array([center + Vector2(8, -27), center + Vector2(19, -22), center + Vector2(8, -15)]), Color("b8d1c1"))
+			draw_line(center + Vector2(-6, -22), center + Vector2(-10, -15), Color("e0d8b8"), 2)
+		4:
+			draw_circle(center + Vector2(10, -10), 7, Color("6c7043"))
+			draw_line(center + Vector2(10, -17), center + Vector2(12, -23), Color("e0c578"), 2)
+			draw_line(center + Vector2(-7, -26), center + Vector2(7, -26), Color("a4bc85"), 4)
+		5:
+			draw_line(center + Vector2(11, -29), center + Vector2(11, 1), Color("c7b080"), 2)
+			draw_circle(center + Vector2(11, -31), 5, Color("dabbe6"))
+			draw_line(center + Vector2(-6, -27), center + Vector2(-11, -32), Color("d6c59b"), 3)
+			draw_line(center + Vector2(6, -27), center + Vector2(11, -32), Color("d6c59b"), 3)
 
 func _draw_tree(center: Vector2) -> void:
 	draw_circle(center + Vector2(0, 3), 10, Color(0, 0, 0, 0.1))
@@ -132,11 +149,26 @@ func _draw_fortress(anchor: Vector2) -> void:
 	draw_colored_polygon(PackedVector2Array([center + Vector2(1, -68), center + Vector2(20, -62), center + Vector2(1, -55)]), Color("d3b676"))
 	draw_string(font, center + Vector2(-42, 32), "FORTERESSE", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, INK)
 
-func _draw_pillager(center: Vector2) -> void:
+func _enemy_scale(enemy: Dictionary) -> float:
+	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7][enemy.get("type", 1)]
+
+func _draw_pillager(center: Vector2, enemy: Dictionary) -> void:
+	var type: int = enemy.get("type", 1)
+	var armor: Color = [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384")][type]
+	draw_set_transform(center, 0.0, Vector2.ONE * _enemy_scale(enemy))
+	center = Vector2.ZERO
+	for curse in model.curses:
+		if curse.enemy_id == enemy.id:
+			draw_arc(center + Vector2(0, -13), 19, 0, TAU, 24, Color("be83d3"), 1.5, true)
+			break
 	draw_circle(center + Vector2(0, 3), 8, Color(0, 0, 0, 0.3))
 	draw_line(center + Vector2(-3, -2), center + Vector2(-5, 5), Color("b5a68a"), 3)
 	draw_line(center + Vector2(3, -2), center + Vector2(5, 5), Color("b5a68a"), 3)
-	draw_rect(Rect2(center + Vector2(-6, -15), Vector2(12, 16)), Color("b45f4c"))
+	draw_rect(Rect2(center + Vector2(-6, -15), Vector2(12, 16)), armor)
 	draw_circle(center + Vector2(0, -20), 6, Color("dbc3a1"))
 	draw_line(center + Vector2(-6, -23), center + Vector2(6, -23), Color("77695a"), 3)
 	draw_line(center + Vector2(10, -21), center + Vector2(10, 0), Color("dac494"), 2)
+
+	if type == 7:
+		draw_line(center + Vector2(-7, -26), center + Vector2(7, -26), Color("e4c980"), 4)
+	draw_set_transform(Vector2.ZERO)

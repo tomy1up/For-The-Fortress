@@ -76,10 +76,10 @@ Le combat Horde est également validé pour les essais : troll avec rebond, sape
 
 Les éliminations rapportent immédiatement une récompense unique, identique pour les deux factions, y compris par malédiction. Un ennemi atteignant la forteresse inflige ses dégâts puis quitte la partie sans récompense. Aucune prime de fin de vague pour le premier essai.
 
-Prochain travail : lot L3, défenseurs de la Horde et autres archétypes, puis résolution complète du combat. La progression entre les parties reste ouverte.
+Prochain travail : lot L4, progression de niveaux et douze spécialisations. La progression entre les parties reste ouverte.
 
 Mettre à jour le Markdown et le Word dans une même révision. Documenter toute modification avec un identifiant, une date, un statut, une source et son impact. Une valeur manquante reste « À définir » et ne vaut pas zéro.
 
-Le [prototype Godot](prototype/README.md) est en **v0.15 — 20 octobre 2026** : achats et ventes de trois défenseurs Alliance N1, tirs automatiques, première vague de dix Pillards, récompenses et arrivées. Les 117 contrôles du modèle et de l’interface passent. Les documents de conception restent en v0.14. La Horde et les vagues suivantes ne sont pas encore disponibles.
+Le [prototype Godot](prototype/README.md) est en **v0.16 — 20 octobre 2026** : choix Alliance ou Horde, six défenseurs N1, tirs, rebonds, explosions, malédictions et première vague de dix Pillards. Les huit profils ennemis sont intégrés et vérifiés en situations contrôlées. Les 199 contrôles passent, et 56 valeurs sont comparées au GDD. Les documents de conception restent en v0.14 ; les vagues suivantes ne sont pas encore jouables.
 
-Sur ce PC, lancer prototype/Lancer_le_prototype.cmd ; sélectionner un emplacement, acheter sa défense, puis lancer la vague. Le [suivi du prototype](design/Suivi_prototype.md) distingue les lots réalisés et ceux à venir.
+Sur ce PC, lancer prototype/Lancer_le_prototype.cmd ; choisir sa faction et un emplacement, acheter sa défense, puis lancer la vague. Le [suivi du prototype](design/Suivi_prototype.md) distingue les lots réalisés et ceux à venir.

@@ -20,8 +20,26 @@ const ROSTER: Array[Dictionary] = [
 	{"name": "Archer elfe", "price": 50, "damage": 8.0, "interval": 1.0, "range": 4.0},
 	{"name": "Arbalétrier nain", "price": 75, "damage": 24.0, "interval": 2.5, "range": 5.0},
 	{"name": "Mage humain", "price": 100, "damage": 27.0, "interval": 2.5, "range": 3.5},
+	{"name": "Lanceur de haches troll", "short_name": "Lanceur de haches", "price": 50, "damage": 16.0, "interval": 2.0, "range": 3.5},
+	{"name": "Sapeur gobelin", "price": 75, "damage": 24.0, "interval": 2.5, "range": 3.0},
+	{"name": "Chaman orc", "price": 100, "damage": 12.0, "interval": 2.0, "range": 4.5, "curse_damage": 4.8},
 ]
 
+const ENEMY_TYPES: Array[Dictionary] = [
+	{"name": "Grouillant", "hp": 12.0, "speed": 1.15, "fortress_damage": 1, "reward": 1},
+	{"name": "Pillard", "hp": 40.0, "speed": 1.0, "fortress_damage": 1, "reward": 3},
+	{"name": "Sprinter", "hp": 24.0, "speed": 1.65, "fortress_damage": 1, "reward": 3},
+	{"name": "Brute", "hp": 120.0, "speed": 0.7, "fortress_damage": 2, "reward": 7},
+	{"name": "Maraudeur", "hp": 80.0, "speed": 1.2, "fortress_damage": 2, "reward": 6},
+	{"name": "Colosse", "hp": 240.0, "speed": 0.5, "fortress_damage": 3, "reward": 14},
+	{"name": "Élite", "hp": 360.0, "speed": 0.75, "fortress_damage": 4, "reward": 20},
+	{"name": "Seigneur de siège", "hp": 600.0, "speed": 0.45, "fortress_damage": 20, "reward": 40},
+]
+
+var faction: int = 0
+var next_instance_id: int = 0
+var curses: Array[Dictionary] = []
+var spawn_schedule: Array[Dictionary] = []
 var gold: int = INITIAL_GOLD
 var fortress_hp: int = INITIAL_HP
 var elapsed: float = 0.0
@@ -42,6 +60,12 @@ func _init() -> void:
 
 func reset() -> void:
 	gold = INITIAL_GOLD
+	faction = 0
+	next_instance_id = 0
+	curses.clear()
+	spawn_schedule.clear()
+	for index in range(WAVE_COUNT):
+		spawn_schedule.append({"time": index * SPAWN_INTERVAL, "type": 1})
 	fortress_hp = INITIAL_HP
 	elapsed = 0.0
 	phase = "preparation"
@@ -54,6 +78,24 @@ func reset() -> void:
 	defenders.clear()
 	for index in range(SLOTS.size()):
 		defenders.append({})
+
+func available_types() -> Array[int]:
+	return [0, 1, 2] if faction == 0 else [3, 4, 5]
+
+func select_faction(choice: int) -> bool:
+	if choice not in [0, 1] or phase != "preparation" or spawned != 0 or gold != INITIAL_GOLD:
+		return false
+	for defender in defenders:
+		if not defender.is_empty():
+			return false
+	faction = choice
+	return true
+
+static func make_enemy(id: int, type: int, spawn_time: float) -> Dictionary:
+	var definition: Dictionary = ENEMY_TYPES[type]
+	return {"id": id, "type": type, "spawn_time": spawn_time, "distance": 0.0,
+		"hp": definition.hp, "max_hp": definition.hp, "speed": definition.speed,
+		"fortress_damage": definition.fortress_damage, "reward": definition.reward}
 
 func can_build() -> bool:
 	return phase == "preparation" or phase == "finished"
@@ -72,6 +114,8 @@ func purchase_error(slot: int, type: int) -> String:
 		return "Sélectionnez un emplacement."
 	if type < 0 or type >= ROSTER.size():
 		return "Défenseur inconnu."
+	if type not in available_types():
+		return "Ce défenseur appartient à l’autre faction."
 	if not defenders[slot].is_empty():
 		return "Cet emplacement est occupé."
 	if count_type(type) >= 2:
@@ -84,8 +128,9 @@ func buy(slot: int, type: int) -> bool:
 	if not purchase_error(slot, type).is_empty():
 		return false
 	var stats: Dictionary = ROSTER[type]
-	defenders[slot] = {"type": type, "paid": stats.price, "ready_at": 0.0,
+	defenders[slot] = {"instance_id": next_instance_id, "type": type, "paid": stats.price, "ready_at": 0.0,
 		"windows": coverage_windows(SLOTS[slot], stats.range)}
+	next_instance_id += 1
 	gold -= stats.price
 	return true
 
@@ -127,34 +172,50 @@ func advance(seconds: float) -> void:
 
 func _next_event_time() -> float:
 	var next_time: float = INF
-	if spawned < WAVE_COUNT:
-		next_time = spawned * SPAWN_INTERVAL
+	if spawned < spawn_schedule.size():
+		next_time = spawn_schedule[spawned].time
+	for curse in curses:
+		next_time = minf(next_time, curse.next_at)
 	for enemy in enemies:
-		next_time = minf(next_time, enemy.spawn_time + PATH_LENGTH)
+		next_time = minf(next_time, enemy.spawn_time + PATH_LENGTH / enemy.get("speed", 1.0))
 	for defender in defenders:
 		if defender.is_empty():
 			continue
 		for enemy in enemies:
 			for window in defender.windows:
-				var first: float = maxf(defender.ready_at, enemy.spawn_time + window.first)
-				var last: float = enemy.spawn_time + window.last
+				var first: float = maxf(defender.ready_at, enemy.spawn_time + window.first / enemy.get("speed", 1.0))
+				var last: float = enemy.spawn_time + window.last / enemy.get("speed", 1.0)
 				if first > elapsed + EPS and first <= last + EPS:
 					next_time = minf(next_time, first)
 	return next_time
 
 func _update_positions() -> void:
 	for enemy in enemies:
-		enemy.distance = clampf(elapsed - enemy.spawn_time, 0.0, PATH_LENGTH)
+		enemy.distance = clampf((elapsed - enemy.spawn_time) * enemy.get("speed", 1.0), 0.0, PATH_LENGTH)
 
 func _resolve_instant() -> void:
-	# 1. Apparitions et déplacement ; les arrivants restent ciblables jusqu'aux tirs.
-	while spawned < WAVE_COUNT and spawned * SPAWN_INTERVAL <= elapsed + EPS:
-		enemies.append({"id": spawned, "spawn_time": spawned * SPAWN_INTERVAL,
-			"distance": 0.0, "hp": 40.0})
+	# 1. Apparitions et positions ; les arrivants restent ciblables jusqu'à la phase 4.
+	while spawned < spawn_schedule.size() and spawn_schedule[spawned].time <= elapsed + EPS:
+		var entry: Dictionary = spawn_schedule[spawned]
+		enemies.append(make_enemy(spawned, entry.type, entry.time))
 		spawned += 1
 	_update_positions()
-	# Pas de malédiction dans ce lot Alliance N1. Tous les tirs partagent cet état.
+	# 2. Anciens ticks additionnés, puis morts retirés avant le choix des nouveaux tirs.
 	var damage: Dictionary = {}
+	var pending: Array[Dictionary] = []
+	for curse in curses:
+		if curse.next_at <= elapsed + EPS:
+			_add_damage(damage, curse.enemy_id, curse.damage)
+			event_log.append("%.9f tick source %d cible %d" % [elapsed, curse.source_id, curse.enemy_id])
+			curse.ticks_left -= 1
+			curse.next_at += 1.0
+		if curse.ticks_left > 0:
+			pending.append(curse)
+	curses = pending
+	_apply_damage(damage)
+	# 3. Tous les défenseurs visent le même état des survivants, sans ordre privilégié.
+	damage = {}
+	var applications: Array[Dictionary] = []
 	for slot in range(defenders.size()):
 		var defender: Dictionary = defenders[slot]
 		if defender.is_empty() or defender.ready_at > elapsed + EPS:
@@ -172,47 +233,83 @@ func _resolve_instant() -> void:
 		var primary: Dictionary = targets[0]
 		var impact: Vector2 = position_at(primary.distance)
 		_add_damage(damage, primary.id, stats.damage)
-		shots.append({"time": elapsed, "slot": slot, "type": defender.type,
-			"target_id": primary.id, "from": SLOTS[slot], "to": impact})
+		var shot: Dictionary = {"time": elapsed, "slot": slot, "type": defender.type,
+			"target_id": primary.id, "from": SLOTS[slot], "to": impact, "secondary": []}
 		event_log.append("%.9f tir E%d cible %d" % [elapsed, slot + 1, primary.id])
-		if defender.type == 2:
-			var secondary: Array[Dictionary] = []
+		if defender.type in [2, 3, 4]:
+			var candidates: Array[Dictionary] = []
 			for enemy in enemies:
-				var squared: float = impact.distance_squared_to(position_at(enemy.distance))
+				var squared: float = separation_squared(primary.distance, enemy.distance)
 				if enemy.id != primary.id and squared < 1.0:
-					secondary.append({"enemy": enemy, "squared": squared})
-			secondary.sort_custom(_secondary_priority)
-			for index in range(mini(2, secondary.size())):
-				_add_damage(damage, secondary[index].enemy.id, 10.8)
+					candidates.append({"enemy": enemy, "squared": squared})
+			candidates.sort_custom(_secondary_priority)
+			var cap: int = {2: 2, 3: 1, 4: 3}[defender.type]
+			var secondary_damage: float = {2: 10.8, 3: 8.0, 4: 9.6}[defender.type]
+			for index in range(mini(cap, candidates.size())):
+				_add_damage(damage, candidates[index].enemy.id, secondary_damage)
+				shot.secondary.append(position_at(candidates[index].enemy.distance))
+		elif defender.type == 5:
+			applications.append({"source_id": defender.instance_id, "enemy_id": primary.id, "damage": stats.curse_damage})
+		shots.append(shot)
 		defender.ready_at = elapsed + stats.interval
-	# 3. Additionner les impacts avant de retirer les morts et créditer une seule prime.
+	_apply_damage(damage)
+	for application in applications:
+		if _has_enemy(application.enemy_id):
+			_apply_curse(application.source_id, application.enemy_id, application.damage)
+	# 4. Les survivants arrivés infligent leurs dégâts sans récompense.
+	var survivors: Array[Dictionary] = []
+	var arrival_damage: int = 0
+	for enemy in enemies:
+		if enemy.distance >= PATH_LENGTH - EPS:
+			escaped += 1
+			arrival_damage += enemy.get("fortress_damage", 1)
+			event_log.append("%.9f arrivee %d" % [elapsed, enemy.id])
+		else:
+			survivors.append(enemy)
+	enemies = survivors
+	_purge_curses()
+	fortress_hp = maxi(0, fortress_hp - arrival_damage)
+	# 5. Défaite prioritaire ; finir la vague 1 n'est pas gagner la partie complète.
+	if fortress_hp == 0:
+		phase = "defeat"
+	elif spawned == spawn_schedule.size() and enemies.is_empty():
+		phase = "finished"
+
+func _has_enemy(id: int) -> bool:
+	for enemy in enemies:
+		if enemy.id == id:
+			return true
+	return false
+
+func _purge_curses() -> void:
+	var surviving: Array[Dictionary] = []
+	for curse in curses:
+		if _has_enemy(curse.enemy_id):
+			surviving.append(curse)
+	curses = surviving
+
+func _apply_damage(damage: Dictionary) -> void:
 	var survivors: Array[Dictionary] = []
 	for enemy in enemies:
 		enemy.hp -= damage.get(enemy.id, 0.0)
 		if enemy.hp <= 0.0:
 			killed += 1
-			gold += 3
-			event_log.append("%.9f mort %d +3" % [elapsed, enemy.id])
+			var reward: int = enemy.get("reward", 3)
+			gold += reward
+			event_log.append("%.9f mort %d +%d" % [elapsed, enemy.id, reward])
 		else:
 			survivors.append(enemy)
 	enemies = survivors
-	# 4. Les survivants arrivés infligent leurs dégâts sans récompense.
-	survivors = []
-	var arrival_damage: int = 0
-	for enemy in enemies:
-		if enemy.distance >= PATH_LENGTH - EPS:
-			escaped += 1
-			arrival_damage += 1
-			event_log.append("%.9f arrivee %d -1PV" % [elapsed, enemy.id])
-		else:
-			survivors.append(enemy)
-	enemies = survivors
-	fortress_hp = maxi(0, fortress_hp - arrival_damage)
-	# 5. Défaite prioritaire ; finir cette vague n'est pas gagner la partie complète.
-	if fortress_hp == 0:
-		phase = "defeat"
-	elif spawned == WAVE_COUNT and enemies.is_empty():
-		phase = "finished"
+	_purge_curses()
+
+func _apply_curse(source_id: int, enemy_id: int, damage: float) -> void:
+	var surviving: Array[Dictionary] = []
+	for curse in curses:
+		if curse.source_id != source_id or curse.enemy_id != enemy_id:
+			surviving.append(curse)
+	surviving.append({"source_id": source_id, "enemy_id": enemy_id,
+		"damage": damage, "next_at": elapsed + 1.0, "ticks_left": 2})
+	curses = surviving
 
 static func _add_damage(damage: Dictionary, id: int, amount: float) -> void:
 	damage[id] = damage.get(id, 0.0) + amount
@@ -253,13 +350,23 @@ static func coverage_windows(center: Vector2, radius: float) -> Array[Dictionary
 		cumulative += length
 	return windows
 
-static func position_at(progress: float) -> Vector2:
+static func position_components(progress: float) -> Dictionary:
 	var remaining: float = clampf(progress, 0.0, PATH_LENGTH)
 	for index in range(PATH_POINTS.size() - 1):
-		var start_point: Vector2 = PATH_POINTS[index]
-		var end_point: Vector2 = PATH_POINTS[index + 1]
-		var length: float = start_point.distance_to(end_point)
+		var a: Vector2 = PATH_POINTS[index]
+		var b: Vector2 = PATH_POINTS[index + 1]
+		var length: float = a.distance_to(b)
 		if remaining <= length:
-			return start_point.lerp(end_point, remaining / length)
+			var ratio: float = remaining / length
+			return {"x": float(a.x) + (float(b.x) - a.x) * ratio, "y": float(a.y) + (float(b.y) - a.y) * ratio}
 		remaining -= length
-	return PATH_POINTS[-1]
+	return {"x": float(PATH_POINTS[-1].x), "y": float(PATH_POINTS[-1].y)}
+
+static func separation_squared(first: float, second: float) -> float:
+	var a: Dictionary = position_components(first)
+	var b: Dictionary = position_components(second)
+	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)
+
+static func position_at(progress: float) -> Vector2:
+	var point: Dictionary = position_components(progress)
+	return Vector2(point.x, point.y)

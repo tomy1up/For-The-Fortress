@@ -32,3 +32,7 @@ Le choix de ces outils découle des besoins du prototype ; les sources ne garant
 ## Mise à jour au repère v0.15
 
 L2 est réalisé avec une boucle Alliance N1 et dix Pillards. Le modèle utilise désormais un calendrier d’événements pour les apparitions, les entrées de portée, les tirs et les arrivées, afin de conserver les mêmes résultats à ×1 et ×2. Les bornes de couverture et les instants restent des float 64 bits. Voir le [suivi du prototype](Suivi_prototype.md) pour les 117 contrôles réussis et les limites du lot. Le moteur, le langage et le rendu restent inchangés.
+
+## Mise à jour au repère v0.16
+
+Le choix de faction, les trois défenseurs Horde et les huit profils ennemis sont intégrés au même modèle. Les malédictions sont indexées par instance de chaman et par cible ; les ticks sont agrégés avant les tirs, puis les arrivées sont résolues. Les positions de séparation sont calculées en float 64 bits pour conserver les seuils stricts des attaques secondaires. Les deux factions et leurs effets sont affichés avec des visuels temporaires. Le moteur, le langage et le rendu restent inchangés.
