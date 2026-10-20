@@ -2,7 +2,7 @@
 
 Proposition du 20 octobre 2026, fondée sur le GDD v0.12.
 
-**Statut P — recrutement de copies et arrondi des ventes à valider.** La limite de deux exemplaires est une hypothèse H d’équilibrage. Le GDD approuvé reste en version 0.12. Les valeurs de prix et de remboursement dépendent des réglages H existants.
+**Règles approuvées le 20 octobre 2026 par « ok on continu », intégrées au GDD v0.13 — V.** La limite de deux exemplaires reste une hypothèse H d’équilibrage. Les valeurs de prix et de remboursement dépendent des réglages H existants.
 
 ## 1. Règles déjà validées
 
@@ -10,7 +10,7 @@ Acheter, améliorer et vendre uniquement entre les vagues. Chaque emplacement fi
 
 Les prix réduits par R-10/R-11 sont déjà arrondis à l’entier supérieur lors du paiement. Les branches N4 sont incluses dans le dernier passage de niveau et restent fixées jusqu’à la vente. Cette fiche complète ces règles, sans les remplacer.
 
-## 2. Recrutement de copies proposé
+## 2. Recrutement de copies approuvé
 
 Autoriser **au maximum deux exemplaires déployés de chaque type de défenseur de base**, dans la faction choisie, avec toujours six emplacements occupés au maximum.
 
@@ -39,7 +39,7 @@ Exemple : archer en E1, second archer en E2 et arbalétrier en E3. Les deux arch
 
 Les attaques simultanées conservent le choix des cibles sur un état commun : deux copies peuvent gaspiller des tirs sur la même cible. Les malédictions de deux chamans restent indépendantes, et chaque ennemi éliminé ne rapporte toujours qu’une récompense. Aucune optimisation automatique des tirs n’est ajoutée.
 
-## 4. Arrondi des ventes proposé
+## 4. Arrondi des ventes approuvé
 
 Calculer pour chaque exemplaire vendu :
 
@@ -61,11 +61,11 @@ Les dégâts et PV conservent leurs fractions selon le GDD. Cette règle d’or 
 | 75 or — Arbalétrier ou Sapeur | 75 / 52 | 125 / 87 | 225 / 157 | 375 / 262 |
 | 100 or — Mage ou Chaman | 100 / 70 | 150 / 105 | 250 / 175 | 400 / 280 |
 
-Les améliorations coûtent toujours 50, 100 et 150 or avant bonus. Ces montants restent H ; le tableau applique le taux de 70 % existant et l’arrondi nouvellement proposé.
+Les améliorations coûtent toujours 50, 100 et 150 or avant bonus. Ces montants restent H ; le tableau applique le taux de 70 % existant et l’arrondi nouvellement approuvé.
 
 ### Référence avec réductions
 
-| Historique réel de cet exemplaire | Total payé | Vente proposée |
+| Historique réel de cet exemplaire | Total payé | Vente |
 | --- | --- | --- |
 | Archer N1 acheté avec R-11 | 45 | 31 |
 | Arbalétrier N1 acheté avec R-11 | 68 | 47 |
@@ -89,7 +89,7 @@ La vente recalcule les synergies pendant la préparation. Les bonus roguelite s�
 
 ## 6. Effets sur les compositions et budgets
 
-| Composition initiale sans bonus | Dépense | Solde sur 150 or | Admissible avec la proposition |
+| Composition initiale sans bonus | Dépense | Solde sur 150 or | Admissible |
 | --- | --- | --- | --- |
 | Deux défenseurs à 50 or du même type | 100 | 50 | Oui, deux copies |
 | Trois défenseurs à 50 or du même type | 150 | 0 | Non, limite de deux dépassée |
@@ -97,7 +97,7 @@ La vente recalcule les synergies pendant la préparation. Les bonus roguelite s�
 | Un défenseur à 75 et un à 50 | 125 | 25 | Oui |
 | Un défenseur à 100 et un à 50 | 150 | 0 | Oui |
 
-L’exemple de trois défenseurs à 50 or du GDD était conditionné à la décision sur les copies. S’il y a validation de cette fiche, il devra être marqué comme non admissible et remplacé dans les compositions de référence utilisables.
+Le GDD v0.13 corrige les compositions de référence : trois exemplaires du même type sont non admissibles.
 
 Deux exemplaires de chaque type au N1 remplissent les six emplacements et coûtent **450 or**, sans réduction ni vente. Avec toutes les éliminations, cette dépense devient finançable après la vague 6 : 480 or bruts, soit 30 de solde si aucun autre achat ou amélioration n’a été effectué. Avant cela, le budget brut maximal après la vague 5 est de 398.
 
@@ -107,9 +107,9 @@ Le DPS théorique de ces six N1 sur une cible est de 2 × (8 + 9,6 + 10,8) = **5
 
 Les six emplacements donnent une capacité de composition, pas la promesse de six N4. Deux exemplaires de chaque type au N4 coûteraient 2250 or sans bonus, largement au-delà des 920 or bruts maximaux de la partie. Les revenus de la dernière vague ne financent toujours aucun achat pendant son combat.
 
-## 7. Cas de vérification proposés
+## 7. Cas de vérification à exécuter
 
-| Cas | Résultat attendu après validation |
+| Cas | Résultat attendu |
 | --- | --- |
 | Deux copies déjà déployées, tentative d’achat d’une troisième | Achat impossible, aucun débit d’or |
 | Vente d’une des deux copies, puis achat avec assez d’or | Achat à nouveau possible ; nouvel exemplaire N1 |
@@ -128,8 +128,8 @@ Ces cas sont des vérifications futures. Aucun prototype jouable n’a encore me
 
 ## 8. Décisions et suites
 
-À valider : deux copies maximum par type déployé, indépendance des exemplaires, vente libérant la limite, nouvel achat au N1 et remboursement arrondi vers le bas par exemplaire.
+Validation S14 : deux copies maximum par type déployé, indépendance des exemplaires, vente libérant la limite, nouvel achat au N1 et remboursement arrondi vers le bas par exemplaire.
 
-La valeur de deux copies reste H. Un accord fixe le comportement à essayer, sans démontrer son équilibre. Après validation, mettre à jour les exemples de compositions et tous les tableaux de vente du GDD.
+La valeur de deux copies reste H. La validation fixe le comportement à essayer, sans démontrer son équilibre. Le GDD v0.13 intègre les exemples de compositions et les remboursements corrigés.
 
 Étape proposée suivante : transformer les règles approuvées en cahier de réalisation du premier prototype, avec écrans de préparation et de combat, critères de réussite et décisions techniques explicites. Le moteur Godot reste envisagé dans le GDD ; sa version et le langage ne sont pas choisis par cette fiche.

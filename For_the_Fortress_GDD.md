@@ -1,8 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.12 — 20 octobre 2026
+Game Design Document — Version 0.13 — 20 octobre 2026
 
-Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat, les bonus roguelite et les synergies approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
+Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat, les bonus roguelite, les synergies, le recrutement et la vente approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -42,10 +42,17 @@ Nom de travail — disponibilité juridique à confirmer.
 32. [32 Synergies de spécialisations et budget](#s32)
 33. [33 Cumul et recalcul des synergies](#s33)
 34. [34 Calculs et essais des synergies](#s34)
-35. [35 Présentation interface et validation du prototype](#s35)
-36. [36 Périmètre commercial et feuille de route](#s36)
-37. [37 Registre des décisions](#s37)
-38. [38 Sources et maintenance du GDD](#s38)
+35. [35 Recrutement des exemplaires](#s35)
+36. [36 Copies synergies et nouvelle construction](#s36)
+37. [37 Vente et remboursements](#s37)
+38. [38 Compositions et budgets des copies](#s38)
+39. [39 Vérifications du recrutement et des ventes](#s39)
+40. [40 Présentation interface et validation du prototype](#s40)
+41. [41 Périmètre commercial et feuille de route](#s41)
+42. [42 Registre des décisions](#s42)
+43. [43 Questions ouvertes et suivi](#s43)
+44. [44 Sources et historique du GDD](#s44)
+45. [45 Maintenance du GDD](#s45)
 
 <a id="s1"></a>
 
@@ -147,7 +154,7 @@ Les six défenseurs sont issus du socle validé. Les identifiants ci-dessus sont
 ### Limites du contenu défini
 Les Morts-vivants appartiennent à la Horde, mais aucun défenseur mort-vivant n’est nommé dans le prototype. Aucun rôle supplémentaire ne doit être créé pour compléter artificiellement la liste. Le druide est cité uniquement dans un exemple de synergie ; sa présence dans le jeu et son appartenance de faction ne sont pas validées.
 
-La version commerciale envisage huit défenseurs par faction, chacun doté de deux spécialisations — C. Les dix défenseurs supplémentaires, leurs races, leurs classes et leurs branches restent à définir. La possibilité de mélanger les deux factions dans une même partie n’est pas spécifiée — O.
+La version commerciale envisage huit défenseurs par faction, chacun doté de deux spécialisations — C. Les dix défenseurs supplémentaires, leurs races, leurs classes et leurs branches restent à définir. Le recrutement est limité au roster de la faction choisie pour le prototype — V.
 
 ### Fiche évolutive de défenseur
 Chaque fiche pourra réunir : identifiant, nom, faction, race, classe, coût d’achat, statistiques par niveau, ciblage, spécialisation A, spécialisation B, interactions de synergie, statut des valeurs et source de validation. Tout champ non documenté conserve la valeur « À définir » ; cette absence ne signifie jamais zéro.
@@ -276,31 +283,31 @@ L’or finance les achats et les améliorations — V. Pour le premier essai, ch
 - Lorsqu’un ennemi atteint la forteresse, appliquer ses dégâts puis le retirer de la partie, sans récompense.
 - Ne pas attribuer de prime de fin de vague pendant ce premier essai.
 
-Une unité peut être vendue uniquement entre les vagues contre 70 % de l’or total investi — V. Les synergies sont alors recalculées — V. L’arrondi des ventes reste O. R-10 et R-11 réduisent les dépenses futures selon la section 28 ; le remboursement utilise les montants réellement payés.
+Une unité peut être vendue uniquement entre les vagues contre 70 % de l’or total investi — V. Les synergies sont alors recalculées — V. Le remboursement est arrondi à l’entier inférieur, une seule fois par exemplaire vendu — V. R-10 et R-11 réduisent les dépenses futures selon la section 28 ; le remboursement utilise les montants réellement payés.
 
 ### Achat et améliorations cumulés
-Le total au niveau 4 ci-dessous additionne l’achat et les trois coûts provisoires de 50, 100 et 150 or. Le choix de spécialisation est inclus dans l’amélioration vers le N4. Les remboursements sont des calculs à 70 %, avant toute règle d’arrondi.
+Le total au niveau 4 ci-dessous additionne l’achat et les trois coûts provisoires de 50, 100 et 150 or. Le choix de spécialisation est inclus dans l’amélioration vers le N4. Les remboursements appliquent 70 % puis l’arrondi inférieur par exemplaire.
 
 | Défenseurs concernés | Investi N1 | Investi N4 | Vente N1 / N4 |
 | --- | --- | --- | --- |
 | Archer elfe ; Lanceur de haches troll | 50 | 350 | 35 / 245 |
-| Arbalétrier nain ; Sapeur gobelin | 75 | 375 | 52,5 / 262,5 |
+| Arbalétrier nain ; Sapeur gobelin | 75 | 375 | 52 / 262 |
 | Mage humain ; Chaman orc | 100 | 400 | 70 / 280 |
 
-Formules dérivées : investissement = achat + améliorations payées ; remboursement théorique = investissement × 0,70. La perte théorique lors d’une vente représente 30 % de cet investissement. Ces calculs dépendent des hypothèses de coût et n’attestent pas leur équilibre.
+Formules dérivées : investissement = achat + améliorations payées ; remboursement = partie entière inférieure de (investissement × 0,70). La perte représente au moins 30 % de cet investissement. Ces calculs dépendent des hypothèses de coût et n’attestent pas leur équilibre.
 
 ### Exemples de budget initial
 | Composition dans une seule faction | Dépense en or | Solde sur 150 or |
 | --- | --- | --- |
-| Trois défenseurs à 50 | 150 | 0 |
+| Deux défenseurs à 50 | 100 | 50 |
 | Deux défenseurs à 75 | 150 | 0 |
 | Un défenseur à 100 et un à 50 | 150 | 0 |
 | Un défenseur à 75 et un à 50 | 125 | 25 |
 
-Ces exemples vérifient seulement l’arithmétique. La duplication d’un même type d’unité n’est pas explicitement encadrée dans le socle ; les deux premières compositions dépendent donc de cette décision — O. Aucune composition n’est présentée comme stratégie optimale.
+Ces compositions respectent la limite de deux exemplaires par type (valeur H). Trois défenseurs à 50 or du même type sont interdits. Aucune composition n’est présentée comme stratégie optimale.
 
 ### Décisions d’équilibrage à prendre
-Tester les gains par ennemi retenus en section 9, décider l’arrondi des ventes et les éventuelles limites de recrutement. Les plafonds de revenus et un scénario de dépenses figurent en sections 10 et 11. Vérifier en jeu les choix entre élargir une défense et atteindre une spécialisation ; les gains réels dépendent des éliminations.
+Tester les gains par ennemi retenus en section 9 et la limite H de deux exemplaires par type. Les plafonds de revenus et un scénario de dépenses figurent en sections 10 et 11. Vérifier en jeu les choix entre élargir une défense et atteindre une spécialisation ; les gains réels dépendent des éliminations.
 
 <a id="s8"></a>
 
@@ -327,7 +334,7 @@ Le prototype utilise douze bonus approuvés, détaillés en sections 25 à 29. L
 | Spécialisations | Créer des interactions entre choix de branches | Six associations N4 ; cumul par composante |
 | Proximité entre certaines unités | Valoriser la disposition des défenseurs | Six associations ; centres à 5 unités H au maximum |
 
-La diversité compte les types de défenseurs de base, pas les copies, niveaux ou branches. Chaque race n’ayant qu’un type dans le prototype, le volet racial est conservé sans activation. Les sections 30 à 34 précisent les synergies ; le recrutement de copies reste ouvert.
+La diversité compte les types de défenseurs de base, pas les copies, niveaux ou branches. Chaque race n’ayant qu’un type dans le prototype, le volet racial est conservé sans activation. Les sections 30 à 34 précisent les synergies ; le recrutement est limité à deux exemplaires par type (H).
 
 ### Exemple non contractuel
 Le socle illustre une interaction possible par un archer elfe placé près d’un druide qui pourrait recevoir des flèches empoisonnées. Cet exemple n’approuve ni le druide comme défenseur, ni une valeur de poison, ni une portée de voisinage. Il sert uniquement à expliquer le principe.
@@ -530,7 +537,7 @@ Sans résistance ni bonus et aux PV ennemis actuels :
 Ces seuils peuvent produire des sauts de difficulté, notamment sur la vague 8. Aucun essai jouable ne les a encore vérifiés.
 
 ### Achats et concentration de puissance
-Pour l’archer, les améliorations coûtent 50 or pour +4 DPS, 100 or pour +6 et 150 or pour +8 et le choix de spécialisation. Le rendement marginal diminue ; les six emplacements et les branches doivent rendre la concentration de puissance intéressante. La possibilité de recruter des copies reste ouverte.
+Pour l’archer, les améliorations coûtent 50 or pour +4 DPS, 100 or pour +6 et 150 or pour +8 et le choix de spécialisation. Le rendement marginal diminue ; les six emplacements et les branches doivent rendre la concentration de puissance intéressante. Deux exemplaires par type peuvent être déployés ; le seuil reste H.
 
 Le scénario de la section 11 investit 350 + 225 + 150 = 725 or avant le boss, avec un solde maximal de 91 or. La fiche design/Proposition_progression_niveaux.md rassemble les calculs. Les branches sont détaillées en sections 14 à 17.
 
@@ -539,7 +546,7 @@ Le scénario de la section 11 investit 350 + 225 + 150 = 725 or avant le boss, a
 ## 14 Choix des spécialisations
 
 ### Choix validé au niveau 4
-Choisir une des deux branches pendant le passage N3 vers N4, entre les vagues — V. Le choix est inclus dans les 150 or provisoires de l’amélioration : aucun surcoût pour le prototype. Une seule branche par unité, fixée jusqu’à la vente. Une nouvelle unité repart au N1 ; le recrutement de copies reste ouvert.
+Choisir une des deux branches pendant le passage N3 vers N4, entre les vagues — V. Le choix est inclus dans les 150 or provisoires de l’amélioration : aucun surcoût pour le prototype. Une seule branche par unité, fixée jusqu’à la vente. Une nouvelle unité repart au N1 ; le recrutement est limité à deux exemplaires par type (H).
 
 Les deux branches sont accessibles dès les essais, sans déblocage persistant ni prérequis racial ajouté. Terminer le choix avant de lancer la vague suivante. Aucun effet n’est rétroactif sur une attaque ou malédiction déjà appliquée. La présentation de cette interaction reste à concevoir.
 
@@ -551,7 +558,7 @@ Les sections 15 à 17 donnent les valeurs finales au N4 spécialisé, hors bonus
 Le ciblage principal reste l’ennemi à portée le plus avancé et les victimes secondaires les plus proches restent prioritaires. Le DPS suppose des attaques continues et assez de PV ; les plafonds de groupe supposent toutes les victimes admissibles. Les douze bonus suivent les formules de la section 27 ; les résistances futures restent ouvertes ; les synergies suivent la section 33.
 
 ### Budget conservé et comparaisons
-Le total investi au N4 reste 350, 375 ou 400 or. La vente théorique à 70 % reste 245, 262,5 ou 280 or, avant arrondi encore ouvert.
+Le total investi au N4 reste 350, 375 ou 400 or. La vente à 70 %, arrondie vers le bas par exemplaire, rend 245, 262 ou 280 or.
 
 Le scénario de la section 11 conserve 725 or investis et 91 or de solde maximal avant le boss. Seul le défenseur à 50 or y atteint le N4 ; les deux autres sont N3 et N2.
 
@@ -669,7 +676,7 @@ Guerre élimine un Pillard à 40 PV dès l’impact ; Malédictions élimine un 
 ### Essais et questions ouvertes
 Comparer chaque branche au N4 de base puis à sa concurrente, sur les mêmes vagues, carte et budget. Observer le temps de tir, les victimes secondaires réelles, les dégâts perdus et les PV de forteresse perdus. Vérifier les vagues 4 et 8 pour les groupes, les vagues 6, 7, 9 et 10 pour les cibles endurantes, et la vague 3 pour la vitesse.
 
-L’interface et les arrondis de l’économie restent ouverts ; le combat conserve les fractions et applique les synergies définies. Aucun test jouable n’établit encore l’équilibre des branches.
+L’interface reste ouverte ; la vente est arrondie à l’entier inférieur par exemplaire ; le combat conserve les fractions et applique les synergies définies. Aucun test jouable n’établit encore l’équilibre des branches.
 
 <a id="s18"></a>
 
@@ -710,7 +717,7 @@ Les tailles graphiques ne modifient pas les distances. Largeur visuelle et empre
 ## 19 Emplacements et couvertures
 
 ### Positions fixes
-Les six emplacements sont disponibles dès le départ. Chacun accueille un défenseur de la faction choisie, sans restriction de classe — V. La possibilité de recruter des copies reste ouverte. Coordonnées H ; intentions sans bonus d’emplacement.
+Les six emplacements sont disponibles dès le départ. Chacun accueille un défenseur de la faction choisie, sans restriction de classe — V. Deux exemplaires par type peuvent être déployés ; le seuil reste H. Coordonnées H ; intentions sans bonus d’emplacement.
 
 | Repère | Coordonnées (x ; y) | Intention de positionnement |
 | --- | --- | --- |
@@ -998,9 +1005,9 @@ Pour R-10 et R-11, appliquer la réduction au prix de référence puis arrondir 
 | Amélioration N2 vers N3 | 100 | 90 |
 | Amélioration N3 vers N4 et choix de branche | 150 | 135 |
 
-Les dépenses déjà payées ne changent pas. La vente reste à 70 % du montant réellement payé pour cette unité, achats et améliorations compris. Aucun remboursement ne se calcule sur un prix plein non payé ; aucune différence n’est rendue lors de la sélection d’un bonus de prix. La règle générale d’arrondi des ventes reste ouverte, distincte de l’arrondi approuvé pour ces prix réduits.
+Les dépenses déjà payées ne changent pas. La vente reste à 70 % du montant réellement payé pour cette unité, achats et améliorations compris. Aucun remboursement ne se calcule sur un prix plein non payé ; aucune différence n’est rendue lors de la sélection d’un bonus de prix. La vente est arrondie à l’entier inférieur par exemplaire ; les prix réduits sont arrondis à l’entier supérieur.
 
-Avec les deux bonus acquis avant l’achat et les améliorations d’un arbalétrier : 68 + 45 + 90 + 135 = 338 or investis ; vente théorique 236,6 or avant arrondi. Ce calcul diffère du scénario sans bonus du GDD.
+Avec les deux bonus acquis avant l’achat et les améliorations d’un arbalétrier : 68 + 45 + 90 + 135 = 338 or investis ; vente de 236 or après arrondi inférieur. Ce calcul diffère du scénario sans bonus du GDD.
 
 Les revenus maximaux des vagues ne changent pas : R-10 et R-11 réduisent des dépenses et n’ajoutent aucune récompense. Les budgets et DPS sans bonus du GDD demeurent des références, pas les résultats d’une partie avec bonus.
 
@@ -1061,7 +1068,7 @@ Cadrage approuvé : conserver le volet racial, mais différer son activation jus
 
 Contrat de conception approuvé pour cette activation future : deux types distincts déployés d’une même race donnent +8 % à tous les dégâts des défenseurs déployés de cette race, sans condition de distance. Un seul palier ; trois types ou plus ne donnent pas de gain supplémentaire dans ce contrat.
 
-Compter l’identité du défenseur de base, pas son nombre d’exemplaires, son niveau ou sa branche. Deux archers elfes identiques, même spécialisés différemment, ne représentent pas deux types. L’autorisation de recruter des copies demeure ouverte. Aucun mélange de races ne satisfait ce seuil.
+Compter l’identité du défenseur de base, pas son nombre d’exemplaires, son niveau ou sa branche. Deux archers elfes identiques, même spécialisés différemment, ne représentent pas deux types. Les deux exemplaires autorisés par type (seuil H) restent un seul type pour ce calcul. Aucun mélange de races ne satisfait ce seuil.
 
 Le seuil et le gain restent H ; ce contrat devra être réexaminé avec le futur roster avant toute activation commerciale. Il ne valide ni un druide, ni des flèches empoisonnées.
 
@@ -1143,8 +1150,8 @@ Les synergies ne modifient pas les revenus des vagues. Aucun or supplémentaire,
 ## 33 Cumul et recalcul des synergies
 
 ### Cumul et recalcul
-- Pour un défenseur donné, chaque code de synergie s’applique au maximum une fois. Avoir plusieurs partenaires identiques ne multiplie pas ce même effet ; cette précision n’autorise pas leur recrutement.
-- Si des copies sont ultérieurement autorisées, évaluer chaque bénéficiaire séparément selon ses propres partenaires et sa propre distance. Elles ne créent toujours pas de diversité raciale supplémentaire.
+- Pour un défenseur donné, chaque code de synergie s’applique au maximum une fois. Avoir plusieurs partenaires identiques ne multiplie pas ce même effet ; la limite de recrutement reste de deux exemplaires par type (H).
+- Pour les copies autorisées, évaluer chaque bénéficiaire séparément selon ses propres partenaires et sa propre distance. Elles ne créent toujours pas de diversité raciale supplémentaire.
 - Additionner les pourcentages de synergies aux pourcentages des bonus R déjà applicables à la même victime et à la même composante.
 - Ajouter les gains de portée à la portée de référence de la branche, avec R-03. Ils ne changent ni distance de proximité, ni rayon secondaire, ni durée de malédiction.
 - Ne pas augmenter la cadence du chaman. Les synergies de ce catalogue ne changent aucune cadence, échéance de malédiction, récompense ou dépense.
@@ -1192,7 +1199,132 @@ Aucun essai jouable n’a validé ces règles ou les valeurs H. Les principaux r
 
 <a id="s35"></a>
 
-## 35 Présentation interface et validation du prototype
+## 35 Recrutement des exemplaires
+
+Autoriser au maximum deux exemplaires déployés de chaque type de défenseur de base, dans la faction choisie, avec toujours six emplacements occupés au maximum.
+
+Le type est Archer elfe, Arbalétrier nain, Mage humain, Lanceur de haches troll, Sapeur gobelin ou Chaman orc. Compter le type de base, quels que soient niveau et branche.
+
+- Un troisième exemplaire du même type ne peut pas être acheté tant que deux sont déployés.
+- Une vente libère immédiatement l’emplacement et une place dans la limite de ce type. Il n’existe pas de quota d’achats cumulés pendant la partie.
+- Les exemplaires ont des niveaux, investissements, choix de branches et délais de tir indépendants. Ils utilisent les mêmes statistiques de référence à niveau et branche identiques.
+- Chaque achat crée un défenseur N1, sans branche choisie. Les bonus de partie déjà acquis lui sont applicables selon leurs conditions.
+- Deux exemplaires N4 peuvent choisir la même branche ou des branches différentes ; ils restent deux exemplaires du même type.
+- Le recrutement exige à la fois un emplacement libre, une place dans la limite et assez d’or au prix courant. Une tentative impossible ne consomme pas d’or.
+- Le joueur recrute dans le roster de sa faction. Aucun mélange de factions, réserve hors carte ou fusion d’unités n’est ajouté.
+
+Le choix de deux copies permet de remplir les six emplacements avec les trois types du prototype, tout en limitant la répétition du défenseur le moins cher. Le seuil reste H : tester son intérêt avant de le traiter comme une règle commerciale définitive.
+
+<a id="s36"></a>
+
+## 36 Copies synergies et nouvelle construction
+
+Les règles approuvées de la v0.12 continuent de s’appliquer :
+- Deux exemplaires identiques ne créent jamais deux types pour la diversité raciale. Le volet racial reste donc non activable avec ce roster.
+- Pour chaque bénéficiaire, un code de synergie ne s’applique qu’une fois, même si plusieurs partenaires satisfont sa condition.
+- Deux exemplaires d’un même bénéficiaire peuvent chacun recevoir leur propre effet si leurs conditions sont remplies.
+- Vendre un partenaire retire l’effet uniquement lorsqu’aucun autre partenaire admissible ne maintient la condition.
+- Une association N4 exige les branches requises ; deux branches différentes d’un même type ne constituent pas à elles seules une association non listée.
+
+Exemple : archer en E1, second archer en E2 et arbalétrier en E3. Les deux archers sont à moins de 5 unités de l’arbalétrier. P-ALL-01 donne +8 % directs à chaque archer et +8 % à l’arbalétrier, une seule fois pour chacun. Sans autre effet, un archer N1 inflige 8,64 et l’arbalétrier N1 25,92 par tir. Vendre un archer laisse l’effet actif pour l’arbalétrier tant que l’autre reste admissible.
+
+Les attaques simultanées conservent le choix des cibles sur un état commun : deux copies peuvent gaspiller des tirs sur la même cible. Les malédictions de deux chamans restent indépendantes, et chaque ennemi éliminé ne rapporte toujours qu’une récompense. Aucune optimisation automatique des tirs n’est ajoutée.
+
+### Vente et nouvelle construction
+Une vente retire cet exemplaire et son niveau. Un achat ultérieur, sur cet emplacement ou un autre emplacement libre, repart au N1. Il ne récupère ni les améliorations ni la branche de l’exemplaire vendu.
+
+Le prototype ne propose pas de déplacement gratuit ou d’échange de positions. Changer l’emplacement d’une unité passe par la vente et un nouvel achat, entre les vagues. La perte économique doit être visible dans le montant de remboursement avant la vente ; la présentation exacte reste à concevoir.
+
+Exemple sans bonus : vendre un archer N4 acheté et amélioré pour 350 rend 245. Reconstituer un archer N4 coûte 350 : il faut 105 or nets supplémentaires. Cela permet de changer sa branche après une vente, en payant les coûts normaux et sans réinitialisation gratuite.
+
+La vente recalcule les synergies pendant la préparation. Les bonus roguelite sélectionnés restent acquis pour la partie et s’appliquent aux nouvelles unités selon leurs règles. La forteresse ne perd pas les PV maximum de R-09 lorsqu’une unité est vendue.
+
+<a id="s37"></a>
+
+## 37 Vente et remboursements
+
+Calculer pour chaque exemplaire vendu :
+
+Remboursement = partie entière inférieure de (total réellement payé × 70 / 100).
+
+Additionner d’abord l’achat et toutes les améliorations payées pour cet exemplaire ; appliquer les 70 % ; arrondir une seule fois, à la fin de cette vente. Ne pas arrondir séparément chaque dépense historique.
+
+Le résultat est crédité immédiatement à l’or disponible, en entier. Le prix de rachat courant et les bonus acquis plus tard ne modifient pas l’investissement historique.
+
+Deux ventes successives sont deux calculs distincts. Exemple : deux arbalétriers N1 achetés 75 chacun rendent 52 + 52 = 104 or, et non 105. Ne pas fusionner leurs investissements avant l’arrondi.
+
+Les dégâts et PV conservent leurs fractions selon le GDD. Cette règle d’or ne s’applique pas aux statistiques de combat. L’arrondi des achats réduits reste à l’entier supérieur, comme déjà approuvé.
+
+### Référence sans bonus de prix
+
+| Prix d’achat du type | Investi N1 / vente | Investi N2 / vente | Investi N3 / vente | Investi N4 / vente |
+| --- | --- | --- | --- | --- |
+| 50 or — Archer ou Troll | 50 / 35 | 100 / 70 | 200 / 140 | 350 / 245 |
+| 75 or — Arbalétrier ou Sapeur | 75 / 52 | 125 / 87 | 225 / 157 | 375 / 262 |
+| 100 or — Mage ou Chaman | 100 / 70 | 150 / 105 | 250 / 175 | 400 / 280 |
+
+Les améliorations coûtent toujours 50, 100 et 150 or avant bonus. Ces montants restent H ; le tableau applique le taux de 70 % existant et l’arrondi nouvellement validé.
+
+### Référence avec réductions
+
+| Historique réel de cet exemplaire | Total payé | Vente |
+| --- | --- | --- |
+| Archer N1 acheté avec R-11 | 45 | 31 |
+| Arbalétrier N1 acheté avec R-11 | 68 | 47 |
+| Mage N1 acheté avec R-11 | 90 | 63 |
+| Arbalétrier N4, R-11 avant achat et R-10 avant toutes les améliorations | 68 + 45 + 90 + 135 = 338 | 236 |
+| Arbalétrier N1 acheté avant l’acquisition de R-11 | 75 | 52 |
+
+Le dernier cas rappelle l’absence d’effet rétroactif. Le bonus R-11 peut réduire le prix d’un prochain arbalétrier à 68, mais l’exemplaire déjà acheté conserve son investissement de 75.
+
+Pour tout investissement positif, le remboursement demeure inférieur au montant payé. Acheter puis vendre ne crée donc pas d’or dans ce cadre ; une réduction ultérieure ne réécrit jamais une dépense passée.
+
+<a id="s38"></a>
+
+## 38 Compositions et budgets des copies
+
+| Composition initiale sans bonus | Dépense | Solde sur 150 or | Admissible |
+| --- | --- | --- | --- |
+| Deux défenseurs à 50 or du même type | 100 | 50 | Oui, deux copies |
+| Trois défenseurs à 50 or du même type | 150 | 0 | Non, limite de deux dépassée |
+| Deux défenseurs à 75 or du même type | 150 | 0 | Oui, deux copies |
+| Un défenseur à 75 et un à 50 | 125 | 25 | Oui |
+| Un défenseur à 100 et un à 50 | 150 | 0 | Oui |
+
+Trois exemplaires du même type ne sont pas admissibles ; la section 7 présente les compositions de référence corrigées.
+
+Deux exemplaires de chaque type au N1 remplissent les six emplacements et coûtent 450 or, sans réduction ni vente. Avec toutes les éliminations, cette dépense devient finançable après la vague 6 : 480 or bruts, soit 30 de solde si aucun autre achat ou amélioration n’a été effectué. Avant cela, le budget brut maximal après la vague 5 est de 398.
+
+Le DPS théorique de ces six N1 sur une cible est de 2 × (8 + 9,6 + 10,8) = 56,8, hors bonus et synergies, pour chaque faction. Le chaman exige ses cycles complets. Ce calcul ne prédit pas les dégâts effectifs ni la victoire.
+
+À comparer au scénario du GDD avant le boss : trois défenseurs distincts N4/N3/N2, 725 or investis et 63,8 DPS théoriques sur une cible avant spécialisation. Les budgets, nombres d’emplacements, portées et attaques de groupe diffèrent. Les synergies peuvent modifier ces résultats.
+
+Les six emplacements donnent une capacité de composition, pas la promesse de six N4. Deux exemplaires de chaque type au N4 coûteraient 2250 or sans bonus, largement au-delà des 920 or bruts maximaux de la partie. Les revenus de la dernière vague ne financent toujours aucun achat pendant son combat.
+
+<a id="s39"></a>
+
+## 39 Vérifications du recrutement et des ventes
+
+| Cas | Résultat attendu |
+| --- | --- |
+| Deux copies déjà déployées, tentative d’achat d’une troisième | Achat impossible, aucun débit d’or |
+| Vente d’une des deux copies, puis achat avec assez d’or | Achat à nouveau possible ; nouvel exemplaire N1 |
+| Deux copies choisissent deux branches N4 différentes | Choix autorisés ; toujours deux exemplaires d’un seul type |
+| Plusieurs partenaires identiques pour une même synergie | Un seul effet du code par bénéficiaire |
+| Vente d’un partenaire, un autre partenaire admissible reste | Effet conservé pour les bénéficiaires encore éligibles |
+| Arbalétrier payé 75, revendu sans amélioration | Crédit de 52 or |
+| Deux arbalétriers payés 75 chacun, vendus successivement | Crédit total de 104 or |
+| Arbalétrier payé 68, puis améliorations payées 45, 90 et 135 | Investissement 338 ; crédit de 236 or |
+| R-11 sélectionné après l’achat d’une unité | Dépense passée et remboursement historique inchangés |
+| Vente et rachat d’un défenseur spécialisé | Niveau et branche remis au N1 sans spécialisation ; bonus de partie conservés |
+| Vente pendant une vague | Interdite selon le GDD |
+| Tentative de troisième copie après achat des deux premières branches | Toujours interdite : la limite compte le type de base |
+
+Ces cas sont des vérifications futures. Aucun prototype jouable n’a encore mesuré le rendement des copies, la difficulté ou l’équilibre des ventes.
+
+<a id="s40"></a>
+
+## 40 Présentation interface et validation du prototype
 
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
@@ -1223,9 +1355,9 @@ Godot est le moteur envisagé et PC sur Steam la plateforme prioritaire. La vers
 
 Ces vérifications constituent un plan de validation — P. Les objectifs de performance, configurations matérielles et seuils d’acceptation chiffrés restent à définir.
 
-<a id="s36"></a>
+<a id="s41"></a>
 
-## 36 Périmètre commercial et feuille de route
+## 41 Périmètre commercial et feuille de route
 
 ### Comparaison des périmètres envisagés
 | Élément | Prototype | Objectif commercial |
@@ -1245,7 +1377,7 @@ Ces objectifs sont des cibles de contenu — C — et non des engagements de pro
 ### Feuille de route proposée
 | Jalon | Travail à effectuer | Condition de passage proposée |
 | --- | --- | --- |
-| J0 — Clarifier | Finaliser les copies et l’arrondi des ventes | Règles nécessaires au prototype documentées |
+| J0 — Préparer | Définir le cahier de réalisation et les choix techniques | Plan de réalisation examiné |
 | J1 — Construire | Carte du Gué, six emplacements, deux factions, six défenseurs | Boucle de préparation et combat jouable |
 | J2 — Compléter | Dix vagues, économie, niveaux, spécialisations et bonus | Partie jouable du début à la fin |
 | J3 — Tester | Lisibilité, factions, économie et durée | Résultats consignés et corrections priorisées |
@@ -1256,9 +1388,9 @@ La feuille de route est une proposition d’organisation — P. Aucun délai, bu
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
 
-<a id="s37"></a>
+<a id="s42"></a>
 
-## 37 Registre des décisions
+## 42 Registre des décisions
 
 ### Décisions de référence
 | Identifiant | Décision | Statut |
@@ -1291,23 +1423,28 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | DEC-026 | Douze bonus, trois offres distinctes ; poids égaux, bonus choisis exclus | V / H |
 | DEC-027 | Cumul par composante, chaman sans R-02, PV et réductions de prix définis | V / H |
 | DEC-028 | Synergies de proximité et N4, cumul et recalcul ; volet racial différé | V / H |
+| DEC-029 | Exemplaires indépendants ; limite de deux par type déployé (H) | V / H |
+| DEC-030 | Vente : total réellement payé, 70 %, arrondi inférieur par exemplaire ; rachat N1 | V |
 
-### Questions ouvertes et suivi
+<a id="s43"></a>
+
+## 43 Questions ouvertes et suivi
+
 | Identifiant | Décision attendue | Dépendance principale |
 | --- | --- | --- |
 | O-001 | Types et résistances futures | Combat et statistiques par niveau |
-| O-002 | Équilibrage des récompenses, arrondis et copies d’unités | Économie et recrutement |
+| O-002 | Équilibrage des récompenses et de la limite de deux copies | Économie et recrutement |
 | O-003 | Noms définitifs, interface du choix et équilibre des branches | Niveau 4 et synergies |
 | O-006 | Équilibrage des vagues et capacités futures du boss | Partie complète |
 | O-007 | Progression entre les parties et interface de combat | Expérience globale |
 | O-008 | Moteur, prix final, périmètre commercial et nom | Plan de production |
 
-<a id="s38"></a>
+<a id="s44"></a>
 
-## 38 Sources et maintenance du GDD
+## 44 Sources et historique du GDD
 
 ### Sources et historique
-S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». S10 — Géométrie du Gué approuvée par « ok on continu ». S11 — Résolution du combat approuvée par « ok c’est bon ». S12 — Bonus roguelite approuvés par « ok on continu ». S13 — Synergies approuvées par « ok on continu ». Le lien partagé reste une référence d’origine.
+S1 — GDD v0.1 dans « Texte collé.txt ». S2 — Cinq captures concordantes. S3 — Demande des livrables. S4 — Combat Alliance approuvé par « oui on fait comme ca ». S5 — Combat Horde approuvé par « très bien ». S6 — Ennemis, boss et récompenses approuvés par « ok pour ca ». S7 — Séquence des vagues et fiche détaillée approuvées par « ok go avec ca ». S8 — Progression approuvée par « ok on part la dessus ». S9 — Spécialisations approuvées par « on continu ». S10 — Géométrie du Gué approuvée par « ok on continu ». S11 — Résolution du combat approuvée par « ok c’est bon ». S12 — Bonus roguelite approuvés par « ok on continu ». S13 — Synergies approuvées par « ok on continu ». S14 — Recrutement et vente approuvés par « ok on continu ». Le lien partagé reste une référence d’origine.
 
 Version 0.2 — 19 octobre 2026 : consolidation, statuts, calculs dérivés et feuille de route proposée ; aucune nouvelle fonctionnalité validée.
 
@@ -1330,6 +1467,12 @@ Version 0.10 — 20 octobre 2026 : premier tir, ciblage, impacts instantanés, e
 Version 0.11 — 20 octobre 2026 : douze bonus et règles de tirage, cumul, cadence, PV et prix intégrés après validation S12.
 
 Version 0.12 — 20 octobre 2026 : proximité, associations N4, cumul et recalcul intégrés après validation S13 ; volet racial conservé sans activation et valeurs H maintenues.
+
+Version 0.13 — 20 octobre 2026 : copies indépendantes, limite H de deux par type, remboursements entiers par exemplaire et budgets intégrés après validation S14.
+
+<a id="s45"></a>
+
+## 45 Maintenance du GDD
 
 ### Procédure de mise à jour proposée
 Le Markdown est la référence éditoriale ; le Word en est la présentation. Actualiser les deux ensemble. Consigner identifiant, date, ancienne et nouvelle règle, statut, source et impact. Une hypothèse ou question ouverte devient validée uniquement après confirmation explicite du porteur du projet.
