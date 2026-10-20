@@ -58,6 +58,10 @@ La [proposition des douze bonus roguelite](design/Proposition_bonus_roguelite.md
 
 La [proposition de synergies](design/Proposition_synergies.md) est intégrée au GDD v0.12 : six associations de proximité et six associations de spécialisations, conditions, cumuls et budgets. Le volet racial est conservé sans activation avec un seul type par race ; les valeurs restent H.
 
+## Recrutement et vente proposés
+
+La [proposition de recrutement et de vente](design/Proposition_recrutement_vente.md) prévoit deux copies maximum par type et une vente à 70 % du montant réellement payé, arrondie à l’entier inférieur par exemplaire. Elle détaille les synergies et les budgets concernés. **Statut P — à valider** ; le GDD approuvé reste en v0.12.
+
 ## Statuts et suivi
 
 Le GDD utilise **V** validé, **H** hypothèse, **C** cible, **O** ouvert et **P** proposition. La feuille de route et les conventions de suivi sont proposées, sans nouvelle fonctionnalité approuvée. Les calculs économiques dérivés sont identifiés.
