@@ -38,6 +38,10 @@ La [séquence détaillée des dix vagues](design/Proposition_dix_vagues.md) est 
 
 La [progression des niveaux 2 à 4](design/Proposition_progression_niveaux.md) est intégrée au GDD v0.7 : dégâts × 1 / 1,5 / 2,25 / 3,25 du N1 au N4, cadence et portée inchangées. Le principe est validé ; les valeurs restent des hypothèses H à tester. Les tableaux couvrent les six défenseurs, leurs effets secondaires et leurs coûts cumulés.
 
+## Spécialisations proposées
+
+La [proposition des douze spécialisations](design/Proposition_specialisations.md) décrit deux branches par défenseur au N4, avec effets, valeurs H, contreparties et essais à mener. **Statut P — à valider** : elle ne modifie pas le GDD approuvé v0.7.
+
 ## Statuts et suivi
 
 Le GDD utilise **V** validé, **H** hypothèse, **C** cible, **O** ouvert et **P** proposition. La feuille de route et les conventions de suivi sont proposées, sans nouvelle fonctionnalité approuvée. Les calculs économiques dérivés sont identifiés.
