@@ -1,10 +1,10 @@
 # Suivi du prototype
 
-État du 21 octobre 2026 — prototype v0.18, GDD v0.14.
+État du 22 octobre 2026 — prototype v0.19, GDD v0.14.
 
 ## Périmètre réalisé
 
-Les dix vagues sont jouables avec les deux factions, les niveaux, les douze spécialisations, les bonus roguelite et les douze synergies activables. Les deux campagnes de référence atteignent une victoire au budget normal ; les essais comparatifs L6 restent à mener.
+Les dix vagues sont jouables avec les deux factions, les niveaux, les douze spécialisations, les bonus roguelite et les douze synergies activables. Les deux campagnes de référence atteignent une victoire au budget normal ; une première matrice comparative L6 est consignée ; les essais humains restent à mener.
 
 | Lot du cahier | État | Preuve ou travail restant |
 | --- | --- | --- |
@@ -14,7 +14,7 @@ Les dix vagues sont jouables avec les deux factions, les niveaux, les douze spé
 | L3 Couvrir le combat | Réalisé | Six défenseurs, huit profils, effets, ordre des événements et campagne intégrés |
 | L4 Progression | Réalisé | N1 à N4, douze branches, choix atomique et dépenses historiques |
 | L5 Partie complète | Réalisé | Dix vagues, trois choix, douze bonus, douze synergies ; victoires et défaites testées |
-| L6 Essais et équilibrage | À mener | Premières références techniques consignées ; essais humains et comparatifs encore nécessaires |
+| L6 Essais et équilibrage | Partiel | 1 728 parties automatisées consignées ; essais humains et comparaisons ciblées encore nécessaires |
 
 ## Référence historique v0.15
 
@@ -106,3 +106,11 @@ Les offres ont trois codes distincts et n’excluent ensuite que le choix effect
 Les quatre pages du catalogue de bonus, le choix après vague 3, le récapitulatif, le combat tardif et les victoires ont été rendus et inspectés. Les retours à la ligne des textes ont été rendus explicites pour éviter un chevauchement des compteurs sous Windows.
 
 L5 est réalisé. L6 reste à mener : compréhension par des joueurs, diversité des stratégies, comparaisons à budget et offres contrôlés, durées avec préparation, anomalies et propositions de réglage H. L0 demeure partiel sans export Windows autonome. Les documents de conception restent en v0.14 ; cette livraison implémente leurs règles.
+
+## Livraison L6 initiale — v0.19, 22 octobre 2026
+
+1 728 parties automatisées au budget normal : deux factions, quatre placements, trois politiques de dépenses, trois priorités de bonus, deux choix de branches et douze graines. Aucun paramètre de gameplay changé. Résultats, protocole, limites et relevés versionnés dans [le bilan](Bilan_equilibrage_v019.md) et [les données](essais/README.md).
+
+109 111 vérifications d’intégrité sans échec pendant ces essais ; 969 contrôles de régression toujours réussis. La politique renforts gagne ses 576 essais ; la politique référence 399/576 ; la spécialisation des deux unités initiales 82/576. Le nombre de types et la couverture changent avec les politiques : aucune conclusion isolée sur le prix des améliorations. 54 parties activent une association N4 réellement financée.
+
+L6 reste partiel. La [fiche d’essai joueur](Fiche_essai_joueur.md) est prête mais aucun retour humain n’est inventé. Prochain travail : essais humains et comparaison des politiques avec les mêmes trois types, positions et budget. Les réglages H sont conservés ; toute proposition ultérieure devra préciser le changement et sa mesure. L0 reste partiel sans export autonome. Les documents de conception restent en v0.14.

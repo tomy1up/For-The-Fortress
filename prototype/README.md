@@ -1,8 +1,8 @@
 # Dix vagues jouables sur La Vallée du Gué
 
-**Prototype v0.18 — 21 octobre 2026.** Référence de conception : GDD v0.14. For the Fortress! reste un nom de travail.
+**Prototype v0.19 — 22 octobre 2026.** Référence de conception : GDD v0.14. For the Fortress! reste un nom de travail.
 
-Cette version réalise L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. Les règles sont celles du GDD v0.14 ; les réglages numériques restent H et aucune nouvelle mécanique de conception n’est ajoutée.
+Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. Les règles sont celles du GDD v0.14 ; les réglages numériques restent H et aucune nouvelle mécanique de conception n’est ajoutée.
 
 ## Jouer localement
 
@@ -85,7 +85,7 @@ Les huit profils apparaissent désormais dans leurs vagues approuvées, jusqu’
 
 ## Vérifications effectuées
 
-Godot 4.7.2.stable.official.ed1daf0bf, GDScript, rendu Compatibility ; 21 octobre 2026.
+Godot 4.7.2.stable.official.ed1daf0bf, GDScript, rendu Compatibility ; contrôles de régression relancés le 22 octobre 2026.
 
 | Contrôle | Résultat |
 | --- | --- |
@@ -115,8 +115,16 @@ Les tests peuvent être relancés depuis ce dossier avec le moteur :
 
 Vérifier le résumé failures=0 et l’absence de messages ERROR, même si le processus rend un code de sortie nul. Les fichiers .godot sont un cache local exclu de Git ; les fichiers .gd.uid sont suivis.
 
+## Premiers essais comparatifs (L6)
+
+La v0.19 ajoute des outils d’essai et des relevés ; les règles et réglages jouables sont inchangés depuis v0.18. Le [bilan](../design/Bilan_equilibrage_v019.md) compare 1 728 parties de politiques fixes, avec 109 111 vérifications d’intégrité sans échec. Les 969 contrôles de régression restent distincts et réussis.
+
+Dans cette matrice, la politique renforts gagne 576/576 parties ; référence 399/576 ; spécialisation de deux unités initiales 82/576. Les placements, types et couvertures diffèrent entre politiques : ces résultats ne suffisent pas à conclure que les niveaux sont trop chers ou qu’une faction est équilibrée. 54 parties financent réellement une association N4. Aucun réglage n’est changé à partir de ces seuls résultats.
+
+Les [données et commandes de reproduction](../design/essais/README.md) sont versionnées. Une [fiche d’essai](../design/Fiche_essai_joueur.md) sert à recueillir compréhension, choix et durées humaines. Aucun essai humain ni temps de préparation humain n’est présenté comme déjà mesuré.
+
 ## État et suite
 
-L1, L2, L3, L4 et L5 sont réalisés. L0 reste partiellement réalisé : le projet démarre avec le moteur portable préparé localement, mais l’export Windows autonome reste à produire. Les documents de conception restent en v0.14 ; v0.18 désigne la révision du prototype et du dépôt.
+L1, L2, L3, L4 et L5 sont réalisés. L0 reste partiellement réalisé : le projet démarre avec le moteur portable préparé localement, mais l’export Windows autonome reste à produire. Les documents de conception restent en v0.14 ; v0.19 désigne la révision du prototype et du dépôt.
 
-Prochain lot L6 : essais de jeu, diversité des compositions, comparaison à budget et offres identiques, anomalies de compréhension et propositions d’équilibrage séparées des règles. La cible de 8 à 12 minutes reste à mesurer avec les préparations humaines. Voir le [cahier de réalisation](../design/Proposition_realisation_prototype.md), le [suivi du prototype](../design/Suivi_prototype.md) et les [choix techniques](../design/Choix_techniques_prototype.md).
+L6 est partiellement réalisé : la matrice automatisée est consignée ; restent les essais humains et les comparaisons à types, placements et budget contrôlés, avant toute proposition de réglage. La cible de 8 à 12 minutes reste à mesurer avec les préparations humaines. Voir le [cahier de réalisation](../design/Proposition_realisation_prototype.md), le [suivi du prototype](../design/Suivi_prototype.md) et les [choix techniques](../design/Choix_techniques_prototype.md).

@@ -62,3 +62,11 @@ La construction historique Model.new(false) sert uniquement aux anciens scénari
 L’interface affiche vague, PV maximum effectifs, durée de combat cumulée, offres, bonus acquis, statistiques effectives et synergies au survol. Le bouton de lancement décrit les prochains groupes. Le récapitulatif des bonus ne suspend pas un combat. Les textes multilignes utilisent des séquences explicites pour éviter l’effet des fins de ligne Windows sur la mise en page.
 
 Validation : 969 contrôles réussis, dont 362 pour L5. Même chronologie à grand pas, ×1 et ×2 sur la vague 8 avec bonus et synergies. Deux campagnes maximales de contrôle et deux campagnes financées normalement réussies. L6 doit élargir les essais ; aucune conclusion d’équilibrage général ou de durée humaine n’est tirée de ces références.
+
+## Outillage L6 — v0.19, 22 octobre 2026
+
+Le lanceur headless prototype/tests/survey_balance.gd joue 1 728 combinaisons déterministes sur le modèle normal. Il n’attribue aucun budget de contrôle et ne modifie aucune règle ; les seules décisions automatiques concernent les transactions, les branches et les offres. Chaque vague conserve la défense au lancement, l’investissement, les synergies, le résultat et les décisions roguelite. Les audits répétés vérifient transactions et conservation ; ils restent distincts des contrôles de régression.
+
+prototype/tests/analyse_balance.py utilise uniquement la bibliothèque standard Python : validation des 1 728 identifiants, lecture des offres et soldes, agrégation et compression JSON déterministe. Les sources du modèle, des données, du GDD et des outils sont identifiées par SHA-256. L’archive JSON compressée et la synthèse sont versionnées ; le protocole de reproduction écrit dans un dossier séparé.
+
+Résultats : 109 111 vérifications d’intégrité sans échec et 969 contrôles de régression réussis. Les statistiques sont descriptives d’une matrice de politiques fixes ; les graines communes et les branches parfois inactives rendent certaines lignes dépendantes. Les préparations humaines et le ressenti ne sont pas mesurés. Aucune modification de gameplay ni de GDD n’est effectuée pour cette livraison.

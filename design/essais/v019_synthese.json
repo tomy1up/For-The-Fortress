@@ -1,0 +1,576 @@
+{
+  "schema": 1,
+  "engine": "4.7.2-stable (official)",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    42
+  ],
+  "audit_checks": 109111,
+  "overall": {
+    "runs": 1728,
+    "wins": 1057,
+    "win_percent": 61.169,
+    "hp_mean_wins": 13.289,
+    "combat_seconds_mean_wins": 418.772,
+    "defeats_by_wave": {
+      "6": 332,
+      "7": 240,
+      "8": 53,
+      "9": 43,
+      "10": 3
+    },
+    "specialisation_link_runs": 54
+  },
+  "factions": {
+    "0": {
+      "runs": 864,
+      "wins": 552,
+      "win_percent": 63.889,
+      "hp_mean_wins": 13.793,
+      "combat_seconds_mean_wins": 408.12,
+      "defeats_by_wave": {
+        "6": 182,
+        "7": 88,
+        "8": 32,
+        "9": 10
+      },
+      "specialisation_link_runs": 31
+    },
+    "1": {
+      "runs": 864,
+      "wins": 505,
+      "win_percent": 58.449,
+      "hp_mean_wins": 12.737,
+      "combat_seconds_mean_wins": 430.415,
+      "defeats_by_wave": {
+        "6": 150,
+        "7": 152,
+        "8": 21,
+        "9": 33,
+        "10": 3
+      },
+      "specialisation_link_runs": 23
+    }
+  },
+  "layouts": {
+    "aval": {
+      "runs": 432,
+      "wins": 280,
+      "win_percent": 64.815,
+      "hp_mean_wins": 11.493,
+      "combat_seconds_mean_wins": 480.901,
+      "defeats_by_wave": {
+        "6": 66,
+        "7": 50,
+        "8": 13,
+        "9": 23
+      },
+      "specialisation_link_runs": 11
+    },
+    "milieu": {
+      "runs": 432,
+      "wins": 334,
+      "win_percent": 77.315,
+      "hp_mean_wins": 13.231,
+      "combat_seconds_mean_wins": 397.059,
+      "defeats_by_wave": {
+        "7": 48,
+        "8": 34,
+        "9": 14,
+        "10": 2
+      },
+      "specialisation_link_runs": 33
+    },
+    "reparti": {
+      "runs": 432,
+      "wins": 155,
+      "win_percent": 35.88,
+      "hp_mean_wins": 11.329,
+      "combat_seconds_mean_wins": 435.882,
+      "defeats_by_wave": {
+        "6": 174,
+        "7": 90,
+        "8": 6,
+        "9": 6,
+        "10": 1
+      },
+      "specialisation_link_runs": 0
+    },
+    "triangle": {
+      "runs": 432,
+      "wins": 288,
+      "win_percent": 66.667,
+      "hp_mean_wins": 16.156,
+      "combat_seconds_mean_wins": 374.34,
+      "defeats_by_wave": {
+        "6": 92,
+        "7": 52
+      },
+      "specialisation_link_runs": 10
+    }
+  },
+  "policies": {
+    "reference": {
+      "runs": 576,
+      "wins": 399,
+      "win_percent": 69.271,
+      "hp_mean_wins": 11.366,
+      "combat_seconds_mean_wins": 432.039,
+      "defeats_by_wave": {
+        "6": 82,
+        "7": 54,
+        "8": 6,
+        "9": 33,
+        "10": 2
+      },
+      "specialisation_link_runs": 14
+    },
+    "renforts": {
+      "runs": 576,
+      "wins": 576,
+      "win_percent": 100.0,
+      "hp_mean_wins": 15.312,
+      "combat_seconds_mean_wins": 410.528,
+      "defeats_by_wave": {},
+      "specialisation_link_runs": 0
+    },
+    "specialisation": {
+      "runs": 576,
+      "wins": 82,
+      "win_percent": 14.236,
+      "hp_mean_wins": 8.427,
+      "combat_seconds_mean_wins": 412.122,
+      "defeats_by_wave": {
+        "6": 250,
+        "7": 186,
+        "8": 47,
+        "9": 10,
+        "10": 1
+      },
+      "specialisation_link_runs": 40
+    }
+  },
+  "priorities": {
+    "couverture": {
+      "runs": 576,
+      "wins": 359,
+      "win_percent": 62.326,
+      "hp_mean_wins": 12.908,
+      "combat_seconds_mean_wins": 420.977,
+      "defeats_by_wave": {
+        "6": 108,
+        "7": 66,
+        "8": 28,
+        "9": 13,
+        "10": 2
+      },
+      "specialisation_link_runs": 12
+    },
+    "degats": {
+      "runs": 576,
+      "wins": 378,
+      "win_percent": 65.625,
+      "hp_mean_wins": 12.913,
+      "combat_seconds_mean_wins": 414.881,
+      "defeats_by_wave": {
+        "6": 74,
+        "7": 102,
+        "8": 13,
+        "9": 8,
+        "10": 1
+      },
+      "specialisation_link_runs": 17
+    },
+    "economie": {
+      "runs": 576,
+      "wins": 320,
+      "win_percent": 55.556,
+      "hp_mean_wins": 14.159,
+      "combat_seconds_mean_wins": 420.893,
+      "defeats_by_wave": {
+        "6": 150,
+        "7": 72,
+        "8": 12,
+        "9": 22
+      },
+      "specialisation_link_runs": 25
+    }
+  },
+  "cells": [
+    {
+      "faction": 0,
+      "layout": "triangle",
+      "policy": "reference",
+      "runs": 72,
+      "wins": 72,
+      "win_percent": 100.0,
+      "hp_mean_wins": 17.889,
+      "combat_seconds_mean_wins": 347.08,
+      "defeats_by_wave": {},
+      "specialisation_link_runs": 7
+    },
+    {
+      "faction": 0,
+      "layout": "triangle",
+      "policy": "renforts",
+      "runs": 72,
+      "wins": 72,
+      "win_percent": 100.0,
+      "hp_mean_wins": 18.778,
+      "combat_seconds_mean_wins": 364.176,
+      "defeats_by_wave": {},
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 0,
+      "layout": "triangle",
+      "policy": "specialisation",
+      "runs": 72,
+      "wins": 0,
+      "win_percent": 0.0,
+      "hp_mean_wins": null,
+      "combat_seconds_mean_wins": null,
+      "defeats_by_wave": {
+        "6": 40,
+        "7": 32
+      },
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 0,
+      "layout": "milieu",
+      "policy": "reference",
+      "runs": 72,
+      "wins": 72,
+      "win_percent": 100.0,
+      "hp_mean_wins": 13.028,
+      "combat_seconds_mean_wins": 407.445,
+      "defeats_by_wave": {},
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 0,
+      "layout": "milieu",
+      "policy": "renforts",
+      "runs": 72,
+      "wins": 72,
+      "win_percent": 100.0,
+      "hp_mean_wins": 19.083,
+      "combat_seconds_mean_wins": 376.723,
+      "defeats_by_wave": {},
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 0,
+      "layout": "milieu",
+      "policy": "specialisation",
+      "runs": 72,
+      "wins": 46,
+      "win_percent": 63.889,
+      "hp_mean_wins": 9.913,
+      "combat_seconds_mean_wins": 387.184,
+      "defeats_by_wave": {
+        "8": 26
+      },
+      "specialisation_link_runs": 23
+    },
+    {
+      "faction": 0,
+      "layout": "reparti",
+      "policy": "reference",
+      "runs": 72,
+      "wins": 6,
+      "win_percent": 8.333,
+      "hp_mean_wins": 2.667,
+      "combat_seconds_mean_wins": 467.531,
+      "defeats_by_wave": {
+        "6": 36,
+        "7": 18,
+        "8": 6,
+        "9": 6
+      },
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 0,
+      "layout": "reparti",
+      "policy": "renforts",
+      "runs": 72,
+      "wins": 72,
+      "win_percent": 100.0,
+      "hp_mean_wins": 12.167,
+      "combat_seconds_mean_wins": 422.472,
+      "defeats_by_wave": {},
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 0,
+      "layout": "reparti",
+      "policy": "specialisation",
+      "runs": 72,
+      "wins": 0,
+      "win_percent": 0.0,
+      "hp_mean_wins": null,
+      "combat_seconds_mean_wins": null,
+      "defeats_by_wave": {
+        "6": 40,
+        "7": 32
+      },
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 0,
+      "layout": "aval",
+      "policy": "reference",
+      "runs": 72,
+      "wins": 68,
+      "win_percent": 94.444,
+      "hp_mean_wins": 6.794,
+      "combat_seconds_mean_wins": 510.758,
+      "defeats_by_wave": {
+        "9": 4
+      },
+      "specialisation_link_runs": 1
+    },
+    {
+      "faction": 0,
+      "layout": "aval",
+      "policy": "renforts",
+      "runs": 72,
+      "wins": 72,
+      "win_percent": 100.0,
+      "hp_mean_wins": 11.833,
+      "combat_seconds_mean_wins": 442.313,
+      "defeats_by_wave": {},
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 0,
+      "layout": "aval",
+      "policy": "specialisation",
+      "runs": 72,
+      "wins": 0,
+      "win_percent": 0.0,
+      "hp_mean_wins": null,
+      "combat_seconds_mean_wins": null,
+      "defeats_by_wave": {
+        "6": 66,
+        "7": 6
+      },
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 1,
+      "layout": "triangle",
+      "policy": "reference",
+      "runs": 72,
+      "wins": 72,
+      "win_percent": 100.0,
+      "hp_mean_wins": 12.514,
+      "combat_seconds_mean_wins": 391.676,
+      "defeats_by_wave": {},
+      "specialisation_link_runs": 3
+    },
+    {
+      "faction": 1,
+      "layout": "triangle",
+      "policy": "renforts",
+      "runs": 72,
+      "wins": 72,
+      "win_percent": 100.0,
+      "hp_mean_wins": 15.444,
+      "combat_seconds_mean_wins": 394.428,
+      "defeats_by_wave": {},
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 1,
+      "layout": "triangle",
+      "policy": "specialisation",
+      "runs": 72,
+      "wins": 0,
+      "win_percent": 0.0,
+      "hp_mean_wins": null,
+      "combat_seconds_mean_wins": null,
+      "defeats_by_wave": {
+        "6": 52,
+        "7": 20
+      },
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 1,
+      "layout": "milieu",
+      "policy": "reference",
+      "runs": 72,
+      "wins": 50,
+      "win_percent": 69.444,
+      "hp_mean_wins": 5.76,
+      "combat_seconds_mean_wins": 430.429,
+      "defeats_by_wave": {
+        "7": 16,
+        "9": 5,
+        "10": 1
+      },
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 1,
+      "layout": "milieu",
+      "policy": "renforts",
+      "runs": 72,
+      "wins": 72,
+      "win_percent": 100.0,
+      "hp_mean_wins": 16.583,
+      "combat_seconds_mean_wins": 391.825,
+      "defeats_by_wave": {},
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 1,
+      "layout": "milieu",
+      "policy": "specialisation",
+      "runs": 72,
+      "wins": 22,
+      "win_percent": 30.556,
+      "hp_mean_wins": 7.682,
+      "combat_seconds_mean_wins": 391.561,
+      "defeats_by_wave": {
+        "7": 32,
+        "8": 8,
+        "9": 9,
+        "10": 1
+      },
+      "specialisation_link_runs": 10
+    },
+    {
+      "faction": 1,
+      "layout": "reparti",
+      "policy": "reference",
+      "runs": 72,
+      "wins": 5,
+      "win_percent": 6.944,
+      "hp_mean_wins": 3.2,
+      "combat_seconds_mean_wins": 498.535,
+      "defeats_by_wave": {
+        "6": 46,
+        "7": 20,
+        "10": 1
+      },
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 1,
+      "layout": "reparti",
+      "policy": "renforts",
+      "runs": 72,
+      "wins": 72,
+      "win_percent": 100.0,
+      "hp_mean_wins": 11.778,
+      "combat_seconds_mean_wins": 442.303,
+      "defeats_by_wave": {},
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 1,
+      "layout": "reparti",
+      "policy": "specialisation",
+      "runs": 72,
+      "wins": 0,
+      "win_percent": 0.0,
+      "hp_mean_wins": null,
+      "combat_seconds_mean_wins": null,
+      "defeats_by_wave": {
+        "6": 52,
+        "7": 20
+      },
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 1,
+      "layout": "aval",
+      "policy": "reference",
+      "runs": 72,
+      "wins": 54,
+      "win_percent": 75.0,
+      "hp_mean_wins": 11.593,
+      "combat_seconds_mean_wins": 524.19,
+      "defeats_by_wave": {
+        "9": 18
+      },
+      "specialisation_link_runs": 3
+    },
+    {
+      "faction": 1,
+      "layout": "aval",
+      "policy": "renforts",
+      "runs": 72,
+      "wins": 72,
+      "win_percent": 100.0,
+      "hp_mean_wins": 16.833,
+      "combat_seconds_mean_wins": 449.984,
+      "defeats_by_wave": {},
+      "specialisation_link_runs": 0
+    },
+    {
+      "faction": 1,
+      "layout": "aval",
+      "policy": "specialisation",
+      "runs": 72,
+      "wins": 14,
+      "win_percent": 19.444,
+      "hp_mean_wins": 4.714,
+      "combat_seconds_mean_wins": 526.372,
+      "defeats_by_wave": {
+        "7": 44,
+        "8": 13,
+        "9": 1
+      },
+      "specialisation_link_runs": 7
+    }
+  ],
+  "paired_outcomes": {
+    "A gagne / H gagne": 476,
+    "A perd / H perd": 283,
+    "A gagne / H perd": 76,
+    "A perd / H gagne": 29
+  },
+  "specialisation_links": {
+    "runs": 54,
+    "wins": 53,
+    "win_percent": 98.148,
+    "hp_mean_wins": 10.34,
+    "combat_seconds_mean_wins": 413.523,
+    "defeats_by_wave": {
+      "10": 1
+    },
+    "specialisation_link_runs": 54
+  },
+  "link_examples": [
+    "0-triangle-reference-economie-association-1",
+    "0-triangle-reference-economie-association-2",
+    "0-triangle-reference-economie-association-4",
+    "0-triangle-reference-economie-association-7",
+    "0-triangle-reference-economie-association-9",
+    "0-triangle-reference-economie-association-10"
+  ],
+  "source_sha256": {
+    "prototype/scripts/valley_model.gd": "b4a4caadf33d4a9de205d66db51f78914b152f832cd3f81a910a3daa558b662a",
+    "prototype/scripts/campaign_data.gd": "e7000625c063122623d9338ff118c5624b53b1e66bd5153663c26a268aa5cdf6",
+    "prototype/scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755",
+    "prototype/tests/survey_balance.gd": "61cb14aa2f1d552c025763bd7a3fb66bc4ab3eed1f1e3758b1214d897510df3f",
+    "prototype/tests/analyse_balance.py": "7cc15442a45ba9e020d74c3ed2ef34c1a1dc45df00b2ea4513e72f81441d087e",
+    "For_the_Fortress_GDD.md": "60d13ae131d0cdd3ac1390285cf25751f72f65488ac0b983467331cacaf1d3ba"
+  },
+  "records_sha256": "3e507596731569d7a1ef5cb2cd73cb63a8dcba9b156b2c1681c7c4313ba1641c"
+}
