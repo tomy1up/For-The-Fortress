@@ -48,7 +48,7 @@ func _draw() -> void:
 	for tree in [Vector2(1, 1), Vector2(1.4, 8.5), Vector2(4.6, 9), Vector2(10, 1), Vector2(12, 8.7), Vector2(16.8, 2), Vector2(17, 8.7)]:
 		_draw_tree(project(tree))
 	if model != null and selected >= 0 and not model.defenders[selected].is_empty():
-		var stats: Dictionary = Model.ROSTER[model.defenders[selected].type]
+		var stats: Dictionary = model.get_stats(selected)
 		var ring := PackedVector2Array()
 		for step in range(65):
 			var angle: float = TAU * step / 64.0
@@ -76,7 +76,7 @@ func _draw() -> void:
 		actors.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.point.y < b.point.y)
 		for actor in actors:
 			if actor.has("defender"):
-				_draw_defender(actor.point, actor.defender.type)
+				_draw_defender(actor.point, actor.defender.type, actor.defender.get("level", 1), actor.defender.get("branch", -1))
 			else:
 				_draw_pillager(actor.point, actor.enemy)
 				var ratio: float = clampf(actor.enemy.hp / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
@@ -88,12 +88,15 @@ func _draw() -> void:
 				if model.elapsed - shot.time <= 0.18:
 					var color: Color = {2: Color("9cc4e4"), 3: Color("a1d6ab"), 4: Color("e3a56d"), 5: Color("cfa4e3")}.get(shot.type, Color("e8ce92"))
 					draw_line(project(shot.from) + Vector2(0, -17), project(shot.to) + Vector2(0, -12), color, 2, true)
+					var last_point: Vector2 = shot.to
 					for secondary_point in shot.get("secondary", []):
-						draw_line(project(shot.to) + Vector2(0, -12), project(secondary_point) + Vector2(0, -12), color, 1.5, true)
+						draw_line(project(last_point) + Vector2(0, -12), project(secondary_point) + Vector2(0, -12), color, 1.5, true)
+						if shot.type == 3:
+							last_point = secondary_point
 					if shot.type in [2, 4]:
-						draw_arc(project(shot.to), 20, 0, TAU, 24, Color(0.5, 0.7, 0.9, 0.7), 2, true)
+						draw_arc(project(shot.to), 20 * shot.get("radius", 1.0), 0, TAU, 24, Color(0.5, 0.7, 0.9, 0.7), 2, true)
 
-func _draw_defender(center: Vector2, type: int) -> void:
+func _draw_defender(center: Vector2, type: int, level: int = 1, branch: int = -1) -> void:
 	var color: Color = [Color("6f9c6b"), Color("b79a64"), Color("668db5"), Color("72a392"), Color("b8a16a"), Color("a782b7")][type]
 	draw_circle(center + Vector2(0, 3), 9, Color(0, 0, 0, 0.25))
 	draw_rect(Rect2(center + Vector2(-6, -17), Vector2(12, 19)), color)
@@ -125,6 +128,12 @@ func _draw_defender(center: Vector2, type: int) -> void:
 			draw_circle(center + Vector2(11, -31), 5, Color("dabbe6"))
 			draw_line(center + Vector2(-6, -27), center + Vector2(-11, -32), Color("d6c59b"), 3)
 			draw_line(center + Vector2(6, -27), center + Vector2(11, -32), Color("d6c59b"), 3)
+
+	if level > 1:
+		var badge: Vector2 = center + Vector2(14, 4)
+		draw_circle(badge, 11 if level == 4 else 9, Color("7b6c41") if level == 4 else Color("304d42"))
+		var badge_text: String = str(level) + ("A" if branch == 0 else "B") if level == 4 else str(level)
+		draw_string(font, badge + Vector2(-7 if level == 4 else -3, 4), badge_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color("efe0b8"))
 
 func _draw_tree(center: Vector2) -> void:
 	draw_circle(center + Vector2(0, 3), 10, Color(0, 0, 0, 0.1))

@@ -36,3 +36,15 @@ L2 est réalisé avec une boucle Alliance N1 et dix Pillards. Le modèle utilise
 ## Mise à jour au repère v0.16
 
 Le choix de faction, les trois défenseurs Horde et les huit profils ennemis sont intégrés au même modèle. Les malédictions sont indexées par instance de chaman et par cible ; les ticks sont agrégés avant les tirs, puis les arrivées sont résolues. Les positions de séparation sont calculées en float 64 bits pour conserver les seuils stricts des attaques secondaires. Les deux factions et leurs effets sont affichés avec des visuels temporaires. Le moteur, le langage et le rendu restent inchangés.
+
+## Implémentation L4 — v0.17, 21 octobre 2026
+
+Les données de progression sont isolées dans prototype/scripts/progression_data.gd : coûts par passage, multiplicateurs depuis N1 et douze fiches de spécialisation. Le modèle calcule les statistiques effectives depuis la base à chaque consultation, puis remplace les champs de branche au N4. Les tirs, délais, effets et portées utilisent cette même fiche effective, comme l’interface.
+
+Chaque défenseur mémorise level, branch et paid, en plus de son instance_id. La transaction upgrade valide phase, emplacement, plafond, fonds et branche avant toute mutation ; le N4 sans branche n’est pas un état accessible par cette transaction. Les fenêtres de couverture sont recalculées après le changement de portée. La vente utilise les dépenses cumulées réelles, sans arrondi intermédiaire.
+
+Les ricochets spécialisés recherchent leur prochaine victime depuis la précédente et excluent toutes les victimes déjà touchées. Les explosions recherchent autour de la cible principale. Les sélections simultanées conservent la convention de photographie avant dégâts. La malédiction conserve le montant calculé à son application ; ses échéances existantes ne consultent pas à nouveau les statistiques de la source.
+
+Le dialogue retient emplacement et identité d’exemplaire. Il n’engage aucun paiement avant confirmation ; une identité remplacée annule la confirmation. Les commandes d’achat, vente, lancement et relance sont aussi gardées côté gestionnaire pendant le choix. Les captures de progression utilisent uniquement des arguments de contrôle et un budget imposé explicitement signalé, sans modifier le budget normal.
+
+Validation : 607 contrôles réussis sous Godot 4.7.2, dont 408 pour L4 ; huit vues de progression rendues et inspectées. Les documents de conception restent en v0.14. L5 doit intégrer les règles de campagne, de bonus et de synergies avant les essais d’équilibrage complets.

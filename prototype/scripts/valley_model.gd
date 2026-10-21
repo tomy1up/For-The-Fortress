@@ -1,4 +1,6 @@
 extends RefCounted
+
+const Progression = preload("res://scripts/progression_data.gd")
 ## Distances dans le plan logique du GDD, avant projection isométrique.
 
 const PATH_POINTS: Array[Vector2] = [
@@ -19,9 +21,9 @@ const EPS: float = 0.000000001
 const ROSTER: Array[Dictionary] = [
 	{"name": "Archer elfe", "price": 50, "damage": 8.0, "interval": 1.0, "range": 4.0},
 	{"name": "Arbalétrier nain", "price": 75, "damage": 24.0, "interval": 2.5, "range": 5.0},
-	{"name": "Mage humain", "price": 100, "damage": 27.0, "interval": 2.5, "range": 3.5},
-	{"name": "Lanceur de haches troll", "short_name": "Lanceur de haches", "price": 50, "damage": 16.0, "interval": 2.0, "range": 3.5},
-	{"name": "Sapeur gobelin", "price": 75, "damage": 24.0, "interval": 2.5, "range": 3.0},
+	{"name": "Mage humain", "price": 100, "damage": 27.0, "interval": 2.5, "range": 3.5, "secondary_damage": 10.8, "secondary_cap": 2, "radius": 1.0},
+	{"name": "Lanceur de haches troll", "short_name": "Lanceur de haches", "price": 50, "damage": 16.0, "interval": 2.0, "range": 3.5, "secondary_damage": 8.0, "secondary_cap": 1, "radius": 1.0},
+	{"name": "Sapeur gobelin", "price": 75, "damage": 24.0, "interval": 2.5, "range": 3.0, "secondary_damage": 9.6, "secondary_cap": 3, "radius": 1.0},
 	{"name": "Chaman orc", "price": 100, "damage": 12.0, "interval": 2.0, "range": 4.5, "curse_damage": 4.8},
 ]
 
@@ -128,10 +130,69 @@ func buy(slot: int, type: int) -> bool:
 	if not purchase_error(slot, type).is_empty():
 		return false
 	var stats: Dictionary = ROSTER[type]
-	defenders[slot] = {"instance_id": next_instance_id, "type": type, "paid": stats.price, "ready_at": 0.0,
+	defenders[slot] = {"instance_id": next_instance_id, "type": type, "level": 1, "branch": -1, "paid": stats.price, "ready_at": 0.0,
 		"windows": coverage_windows(SLOTS[slot], stats.range)}
 	next_instance_id += 1
 	gold -= stats.price
+	return true
+
+static func stats_for(type: int, level: int = 1, branch: int = -1) -> Dictionary:
+	var stats: Dictionary = ROSTER[type].duplicate(true)
+	var multiplier: float = Progression.DAMAGE_MULTIPLIERS[level - 1]
+	stats.damage *= multiplier
+	stats.secondary_damage = stats.get("secondary_damage", 0.0) * multiplier
+	stats.curse_damage = stats.get("curse_damage", 0.0) * multiplier
+	stats.secondary_cap = stats.get("secondary_cap", 0)
+	stats.radius = stats.get("radius", 1.0)
+	stats.branch_name = ""
+	if level == 4 and branch in [0, 1]:
+		var specialization: Dictionary = Progression.BRANCHES[type * 2 + branch]
+		for key in specialization:
+			if key == "name":
+				stats.branch_name = specialization.name
+			else:
+				stats[key] = specialization[key]
+	return stats
+
+func get_stats(slot: int) -> Dictionary:
+	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty():
+		return {}
+	var defender: Dictionary = defenders[slot]
+	return stats_for(defender.type, defender.get("level", 1), defender.get("branch", -1))
+
+func upgrade_cost(slot: int) -> int:
+	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty():
+		return 0
+	var level: int = defenders[slot].get("level", 1)
+	return Progression.UPGRADE_COSTS[level - 1] if level < 4 else 0
+
+func upgrade_error(slot: int, branch: int = -1) -> String:
+	if not can_build():
+		return "Améliorations possibles uniquement entre les vagues."
+	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty():
+		return "Sélectionnez un défenseur."
+	var level: int = defenders[slot].get("level", 1)
+	if level >= 4:
+		return "Niveau maximum atteint."
+	if gold < upgrade_cost(slot):
+		return "Or insuffisant."
+	if level == 3 and branch not in [0, 1]:
+		return "Choisissez une spécialisation pour atteindre le niveau 4."
+	if level < 3 and branch != -1:
+		return "La spécialisation se choisit au passage au niveau 4."
+	return ""
+
+func upgrade(slot: int, branch: int = -1) -> bool:
+	if not upgrade_error(slot, branch).is_empty():
+		return false
+	var paid: int = upgrade_cost(slot)
+	var defender: Dictionary = defenders[slot]
+	defender.level += 1
+	if defender.level == 4:
+		defender.branch = branch
+	defender.paid += paid
+	gold -= paid
+	defender.windows = coverage_windows(SLOTS[slot], get_stats(slot).range)
 	return true
 
 func refund(slot: int) -> int:
@@ -220,7 +281,7 @@ func _resolve_instant() -> void:
 		var defender: Dictionary = defenders[slot]
 		if defender.is_empty() or defender.ready_at > elapsed + EPS:
 			continue
-		var stats: Dictionary = ROSTER[defender.type]
+		var stats: Dictionary = get_stats(slot)
 		var targets: Array[Dictionary] = []
 		for enemy in enemies:
 			for window in defender.windows:
@@ -234,20 +295,27 @@ func _resolve_instant() -> void:
 		var impact: Vector2 = position_at(primary.distance)
 		_add_damage(damage, primary.id, stats.damage)
 		var shot: Dictionary = {"time": elapsed, "slot": slot, "type": defender.type,
-			"target_id": primary.id, "from": SLOTS[slot], "to": impact, "secondary": []}
+			"target_id": primary.id, "from": SLOTS[slot], "to": impact, "secondary": [], "radius": stats.radius}
 		event_log.append("%.9f tir E%d cible %d" % [elapsed, slot + 1, primary.id])
 		if defender.type in [2, 3, 4]:
-			var candidates: Array[Dictionary] = []
-			for enemy in enemies:
-				var squared: float = separation_squared(primary.distance, enemy.distance)
-				if enemy.id != primary.id and squared < 1.0:
-					candidates.append({"enemy": enemy, "squared": squared})
-			candidates.sort_custom(_secondary_priority)
-			var cap: int = {2: 2, 3: 1, 4: 3}[defender.type]
-			var secondary_damage: float = {2: 10.8, 3: 8.0, 4: 9.6}[defender.type]
-			for index in range(mini(cap, candidates.size())):
-				_add_damage(damage, candidates[index].enemy.id, secondary_damage)
-				shot.secondary.append(position_at(candidates[index].enemy.distance))
+			var hit_ids: Array[int] = [primary.id]
+			var origin: Dictionary = primary
+			for hit in range(stats.secondary_cap):
+				var candidates: Array[Dictionary] = []
+				for enemy in enemies:
+					var squared: float = separation_squared(origin.distance, enemy.distance)
+					if enemy.id not in hit_ids and squared < stats.radius * stats.radius:
+						candidates.append({"enemy": enemy, "squared": squared})
+				if candidates.is_empty():
+					break
+				candidates.sort_custom(_secondary_priority)
+				var victim: Dictionary = candidates[0].enemy
+				_add_damage(damage, victim.id, stats.secondary_damage)
+				hit_ids.append(victim.id)
+				shot.secondary.append(position_at(victim.distance))
+				# Les explosions restent centrées sur l'impact ; les ricochets avancent.
+				if defender.type == 3:
+					origin = victim
 		elif defender.type == 5:
 			applications.append({"source_id": defender.instance_id, "enemy_id": primary.id, "damage": stats.curse_damage})
 		shots.append(shot)

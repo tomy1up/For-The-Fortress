@@ -21,6 +21,17 @@ var hint_label: Label
 var start_button: Button
 var speed_button: Button
 var reset_button: Button
+var upgrade_button: Button
+var specialisation_panel: ColorRect
+var specialisation_title: Label
+var specialisation_cost: Label
+var specialisation_names: Array[Label] = []
+var specialisation_descriptions: Array[Label] = []
+var specialisation_stats: Array[Label] = []
+var specialisation_buttons: Array[Button] = []
+var specialisation_cancel: Button
+var pending_slot: int = -1
+var pending_instance: int = -1
 var sell_button: Button
 var buy_buttons: Array[Button] = []
 
@@ -32,17 +43,30 @@ func _ready() -> void:
 	var capture_path: String = ""
 	var capture_state: String = "combat"
 	var capture_faction: int = 0
+	var capture_type: int = 0
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture="):
 			capture_path = argument.trim_prefix("--capture=")
 		elif argument == "--capture-faction=horde":
 			capture_faction = 1
+		elif argument.begins_with("--capture-type="):
+			capture_type = clampi(int(argument.trim_prefix("--capture-type=")), 0, 5)
 		elif argument.begins_with("--capture-state="):
 			capture_state = argument.trim_prefix("--capture-state=")
 	if not capture_path.is_empty():
 		if capture_state != "selection":
-			_choose_faction(capture_faction)
-			if capture_state not in ["shop", "catalogue"]:
+			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
+			if capture_state in ["upgrade", "specialisation", "specialised"]:
+				if capture_state != "upgrade": model.gold = 1000 # Fixture de capture uniquement.
+				model.buy(0, capture_type)
+				model.upgrade(0)
+				selected = 0
+				map_view.selected = 0
+				if capture_state != "upgrade":
+					model.upgrade(0)
+					if capture_state == "specialised": model.upgrade(0, 1)
+					else: _upgrade()
+			if capture_state not in ["shop", "catalogue", "upgrade", "specialisation", "specialised"]:
 				model.buy(0, model.available_types()[0])
 				model.buy(1, model.available_types()[2 if capture_state == "curse" else 1])
 			selected = 1 if capture_state == "curse" else 0
@@ -58,11 +82,13 @@ func _ready() -> void:
 					model.enemies.append(enemy)
 				model.spawned = model.enemies.size()
 				model.phase = "combat"
-			elif capture_state not in ["preparation", "shop"]:
+			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised"]:
 				model.start()
 				model.advance(1.0 if capture_state == "curse" else 7.5 if capture_state == "combat" else 100.0)
 		set_process(false)
 		_update_interface()
+		if capture_state in ["specialisation", "specialised"]:
+			faction_label.text = "CONTRÔLE PROGRESSION · BUDGET IMPOSÉ"
 		if capture_state == "catalogue":
 			faction_label.text = "CATALOGUE ENNEMI · CONTRÔLE"
 			status_label.text = "Profils de référence\nVue de contrôle"
@@ -78,7 +104,7 @@ func _process(delta: float) -> void:
 	map_view.queue_redraw()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if choosing_faction:
+	if choosing_faction or pending_slot >= 0:
 		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var closest: int = -1
@@ -117,7 +143,7 @@ ennemis à portée.", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
 	start_button = _button(side, "Lancer la vague 1", Rect2(22, 428, 234, 44), _start)
 	speed_button = _button(side, "Vitesse ×1", Rect2(22, 482, 234, 40), _toggle_speed)
 	reset_button = _button(side, "Nouvel essai", Rect2(22, 532, 234, 40), _reset)
-	_label(side, "Essai N1 · Sans bonus ni synergies", Vector2(22, 594), Vector2(238, 20), 11, Color("8fa69a"))
+	_label(side, "Première vague · Sans bonus ni synergies", Vector2(22, 594), Vector2(238, 20), 11, Color("8fa69a"))
 	var info := _panel(screen, Rect2(330, 608, 926, 152))
 	title_label = _label(info, "CONSTRUIRE · ALLIANCE", Vector2(24, 12), Vector2(860, 24), 13, Color("cdb47e"))
 	details_label = _label(info, "", Vector2(24, 41), Vector2(876, 44), 14, Color("bbcbbf"))
@@ -126,10 +152,12 @@ ennemis à portée.", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
 		button.add_theme_font_size_override("font_size", 14)
 		buy_buttons.append(button)
 	sell_button = _button(info, "", Rect2(24, 96, 278, 40), _sell)
+	upgrade_button = _button(info, "", Rect2(318, 96, 278, 40), _upgrade)
 	hint_label = _label(screen, "", Vector2(347, 574), Vector2(890, 24), 13, Color("91a799"))
 	_label(screen, "Nom de travail · Visuels temporaires", Vector2(34, 776), Vector2(900, 20), 11, Color("718b7d"))
 
 	_build_faction_selector(screen)
+	_build_specialisation_selector(screen)
 
 func _build_faction_selector(screen: Control) -> void:
 	faction_panel = ColorRect.new()
@@ -149,6 +177,84 @@ func _choose_faction(choice: int) -> void:
 	if choosing_faction and model.select_faction(choice):
 		choosing_faction = false
 		_update_interface()
+
+func _build_specialisation_selector(screen: Control) -> void:
+	specialisation_panel = ColorRect.new()
+	specialisation_panel.color = Color(0.02, 0.04, 0.035, 0.94)
+	specialisation_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	screen.add_child(specialisation_panel)
+	var panel: Panel = _panel(specialisation_panel, Rect2(220, 144, 840, 512))
+	specialisation_title = _label(panel, "", Vector2(30, 22), Vector2(780, 36), 24, Color("e0dbbf"))
+	specialisation_cost = _label(panel, "", Vector2(30, 72), Vector2(780, 52), 15, Color("cdb47e"))
+	for branch in range(2):
+		var x: int = 30 + branch * 410
+		specialisation_names.append(_label(panel, "", Vector2(x, 132), Vector2(370, 30), 17, Color("e0dbbf")))
+		specialisation_descriptions.append(_label(panel, "", Vector2(x, 174), Vector2(370, 50), 14, Color("aabbb0")))
+		specialisation_descriptions[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		specialisation_stats.append(_label(panel, "", Vector2(x, 238), Vector2(370, 130), 14, Color("bbcbbf")))
+		specialisation_buttons.append(_button(panel, "Choisir cette branche", Rect2(x, 384, 370, 44), _choose_branch.bind(branch)))
+	specialisation_cancel = _button(panel, "Annuler", Rect2(330, 452, 180, 40), _cancel_specialisation)
+
+func _upgrade() -> void:
+	if choosing_faction or pending_slot >= 0 or selected < 0 or model.defenders[selected].is_empty():
+		return
+	var defender: Dictionary = model.defenders[selected]
+	if defender.level == 3:
+		if not model.upgrade_error(selected, 0).is_empty():
+			return
+		pending_slot = selected
+		pending_instance = defender.instance_id
+		_update_specialisation_choices()
+	else:
+		model.upgrade(selected)
+	_update_interface()
+	map_view.queue_redraw()
+
+func _update_specialisation_choices() -> void:
+	if pending_slot < 0:
+		return
+	var defender: Dictionary = model.defenders[pending_slot]
+	var type: int = defender.type
+	specialisation_title.text = "Spécialisation · " + Model.ROSTER[type].name
+	specialisation_cost.text = "N3 → N4 : %d or, choix inclus. Investissement après passage : %d or." % [model.upgrade_cost(pending_slot), defender.paid + model.upgrade_cost(pending_slot)]
+	for branch in range(2):
+		var stats: Dictionary = Model.stats_for(type, 4, branch)
+		specialisation_names[branch].text = ("A · " if branch == 0 else "B · ") + stats.branch_name
+		specialisation_descriptions[branch].text = stats.description
+		specialisation_stats[branch].text = "Dégâts principaux : %s\nIntervalle : %s s\nPortée : %s unités" % [_number(stats.damage), _number(stats.interval), _number(stats.range)]
+		if type in [2, 3, 4]:
+			specialisation_stats[branch].text += "\nSecondaires : %s dégâts\n%s %s, distance < %s" % [_number(stats.secondary_damage), stats.secondary_cap, ("rebond" if stats.secondary_cap == 1 else "rebonds") if type == 3 else "victimes", _number(stats.radius)]
+		elif type == 5:
+			specialisation_stats[branch].text += "\nMalédiction : %s dégâts\nÀ +1 s puis +2 s, même hors portée." % _number(stats.curse_damage)
+		specialisation_buttons[branch].disabled = not model.upgrade_error(pending_slot, branch).is_empty()
+
+func _choose_branch(branch: int) -> void:
+	if pending_slot < 0:
+		return
+	var defender: Dictionary = model.defenders[pending_slot]
+	if defender.is_empty() or defender.instance_id != pending_instance:
+		_cancel_specialisation()
+		return
+	if model.upgrade(pending_slot, branch):
+		_cancel_specialisation()
+	else:
+		_update_specialisation_choices()
+		_update_interface()
+
+func _cancel_specialisation() -> void:
+	pending_slot = -1
+	pending_instance = -1
+	_update_interface()
+	map_view.queue_redraw()
+
+func _effect_text(stats: Dictionary, type: int) -> String:
+	if type == 3:
+		return "%s rebond%s : %s dégâts chacun, distance < %s." % [stats.secondary_cap, "" if stats.secondary_cap == 1 else "s successifs", _number(stats.secondary_damage), _number(stats.radius)]
+	if type in [2, 4]:
+		return "Explosion : %s dégâts × %s cibles secondaires, rayon < %s." % [_number(stats.secondary_damage), stats.secondary_cap, _number(stats.radius)]
+	if type == 5:
+		return "Malédiction : %s dégâts à +1 s puis +2 s, même hors portée." % _number(stats.curse_damage)
+	return ""
 
 func _panel(parent: Control, rectangle: Rect2) -> Panel:
 	var panel := Panel.new()
@@ -195,7 +301,7 @@ func _button(parent: Control, text: String, rectangle: Rect2, action: Callable) 
 	return button
 
 func _start() -> void:
-	if choosing_faction:
+	if choosing_faction or pending_slot >= 0:
 		return
 	model.start()
 	_update_interface()
@@ -205,7 +311,7 @@ func _toggle_speed() -> void:
 	_update_interface()
 
 func _reset() -> void:
-	if model.active:
+	if model.active or pending_slot >= 0:
 		return
 	model.reset()
 	choosing_faction = true
@@ -216,13 +322,15 @@ func _reset() -> void:
 	map_view.queue_redraw()
 
 func _buy(type: int) -> void:
-	if choosing_faction:
+	if choosing_faction or pending_slot >= 0:
 		return
 	model.buy(selected, model.available_types()[type])
 	_update_interface()
 	map_view.queue_redraw()
 
 func _sell() -> void:
+	if pending_slot >= 0:
+		return
 	model.sell(selected)
 	_update_interface()
 	map_view.queue_redraw()
@@ -232,10 +340,11 @@ func _update_interface() -> void:
 	gold_label.text = "OR DISPONIBLE     %d" % model.gold
 	faction_panel.visible = choosing_faction
 	faction_label.text = "CHOIX DE FACTION" if choosing_faction else ("ALLIANCE" if model.faction == 0 else "HORDE") + "  /  PREMIÈRE VAGUE"
-	start_button.disabled = choosing_faction or model.phase != "preparation"
+	specialisation_panel.visible = pending_slot >= 0
+	start_button.disabled = choosing_faction or pending_slot >= 0 or model.phase != "preparation"
 	start_button.text = "Lancer la vague 1" if model.phase == "preparation" else "Vague 1 en cours" if model.active else "Vague 1 terminée"
 	speed_button.text = "Vitesse ×%d" % int(speed)
-	reset_button.disabled = model.active
+	reset_button.disabled = model.active or pending_slot >= 0
 	reset_button.tooltip_text = "Terminez la vague avant de recommencer." if model.active else "Repartir avec 150 or et 20 PV."
 	match model.phase:
 		"preparation": status_label.text = "Préparation · Vague 1
@@ -253,7 +362,8 @@ En chemin : %d" % [model.spawned, model.spawn_schedule.size(), model.killed, mod
 	hint_label.text = "Sélectionnez E1 à E6 pour construire ou inspecter un défenseur."
 	var occupied: bool = selected >= 0 and not model.defenders[selected].is_empty()
 	sell_button.visible = occupied
-	sell_button.disabled = not model.can_build()
+	sell_button.disabled = pending_slot >= 0 or not model.can_build()
+	upgrade_button.visible = occupied
 	for type in range(buy_buttons.size()):
 		var button: Button = buy_buttons[type]
 		var actual_type: int = model.available_types()[type]
@@ -268,17 +378,17 @@ En chemin : %d" % [model.spawned, model.spawn_schedule.size(), model.killed, mod
 Les défenseurs du premier essai commencent au niveau 1."
 	elif occupied:
 		var defender: Dictionary = model.defenders[selected]
-		var stats: Dictionary = Model.ROSTER[defender.type]
-		title_label.text = "E%d · %s · NIVEAU 1" % [selected + 1, stats.name.to_upper()]
-		details_label.text = "Dégâts : %s · Intervalle : %s s · Portée : %s unités · Payé : %d or" % [_number(stats.damage), _number(stats.interval), _number(stats.range), defender.paid]
-		if defender.type == 2:
-			details_label.text += "\nExplosion : 10,8 dégâts à deux cibles secondaires au maximum, à moins d’une unité."
-		elif defender.type == 3:
-			details_label.text += "\nUn rebond : 8 dégâts à une autre cible située à moins d’une unité de la première."
-		elif defender.type == 4:
-			details_label.text += "\nExplosion : 9,6 dégâts à trois cibles secondaires au maximum, à moins d’une unité."
-		elif defender.type == 5:
-			details_label.text += "\nMalédiction : 4,8 dégâts après 1 s puis 2 s, même hors portée, sans ralentissement."
+		var stats: Dictionary = model.get_stats(selected)
+		title_label.text = "E%d · %s · NIVEAU %d" % [selected + 1, stats.name.to_upper(), defender.level]
+		if defender.level == 4:
+			title_label.text += " · " + stats.branch_name
+		details_label.text = "Dégâts : %s · Intervalle : %s s · Portée : %s unités · Investi : %d or" % [_number(stats.damage), _number(stats.interval), _number(stats.range), defender.paid]
+		var effect: String = _effect_text(stats, defender.type)
+		if not effect.is_empty():
+			details_label.text += "\n" + effect
+		upgrade_button.text = "Niveau maximum" if defender.level == 4 else "Choisir spécialisation · %d or" % model.upgrade_cost(selected) if defender.level == 3 else "Améliorer N%d · %d or" % [defender.level + 1, model.upgrade_cost(selected)]
+		upgrade_button.tooltip_text = model.upgrade_error(selected, 0 if defender.level == 3 else -1)
+		upgrade_button.disabled = pending_slot >= 0 or not upgrade_button.tooltip_text.is_empty()
 		sell_button.text = "Vendre · %d or" % model.refund(selected)
 	else:
 		var slot: Vector2 = Model.SLOTS[selected]
