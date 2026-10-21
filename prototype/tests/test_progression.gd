@@ -11,7 +11,7 @@ func check(ok: bool, message: String) -> void:
 func close(a: float, b: float) -> bool:
 	return absf(a-b) < 0.00000001
 func fixture(type: int) -> RefCounted:
-	var m = Model.new()
+	var m = Model.new(false)
 	m.select_faction(0 if type < 3 else 1)
 	m.gold = 1000
 	m.buy(0,type)
@@ -94,7 +94,7 @@ func run_checks() -> void:
 	m.enemies.assign([enemy(0,3),enemy(1,2)])
 	m._resolve_instant()
 	check(m.shots[0].secondary.is_empty(),"Distance exactement 1 exclue")
-	m = Model.new(); m.buy(0,0); m.upgrade(0)
+	m = Model.new(false); m.buy(0,0); m.upgrade(0)
 	check(m.gold == 50 and not m.upgrade(0),"Budget normal inchangé")
 	for type in range(6):
 		var scene = Main.new()

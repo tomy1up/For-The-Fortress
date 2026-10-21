@@ -11,7 +11,7 @@ func check(condition: bool, message: String) -> void:
 		push_error(message)
 
 func fixture(types: Array[int] = []) -> RefCounted:
-	var model = Model.new()
+	var model = Model.new(false)
 	model.select_faction(1)
 	model.gold = 600
 	for index in range(types.size()):
@@ -31,7 +31,7 @@ func close(a: float, b: float) -> bool:
 	return absf(a - b) < 0.00000001
 
 func _initialize() -> void:
-	var model = Model.new()
+	var model = Model.new(false)
 	check(model.select_faction(1) and model.available_types() == [3, 4, 5], "Roster Horde")
 	check(not model.buy(0, 0) and model.gold == 150, "Aucun mélange de factions")
 	check(model.buy(0, 3) and model.buy(1, 3) and not model.buy(2, 3), "Quota de deux trolls")
@@ -132,7 +132,7 @@ func _initialize() -> void:
 
 	# Huit profils exécutés : déplacement, arrivée puis récompense après élimination.
 	for type in range(Model.ENEMY_TYPES.size()):
-		model = Model.new()
+		model = Model.new(false)
 		model.spawn_schedule.assign([{"time": 0.0, "type": type}])
 		model.start()
 		var travel: float = 28.0 / Model.ENEMY_TYPES[type].speed
@@ -143,7 +143,7 @@ func _initialize() -> void:
 		check(model.gold == 150 and close(model.elapsed, travel), "Pas de prime d'arrivée du type %d" % type)
 		if type == 7:
 			check(model.phase == "defeat", "Boss : arrivée fatale à 20 PV")
-		model = Model.new()
+		model = Model.new(false)
 		model.buy(0, 0)
 		model.phase = "combat"
 		model.spawned = 10
@@ -152,13 +152,13 @@ func _initialize() -> void:
 		check(model.killed == 1 and model.gold == 100 + Model.ENEMY_TYPES[type].reward, "Récompense unique du type %d" % type)
 
 	# C-01 et C-02 : cibles contrôlées tardives, aucun rattrapage des tirs manqués.
-	model = Model.new()
+	model = Model.new(false)
 	model.buy(0, 0)
 	model.spawn_schedule.assign([{"time": 0.3, "type": 1}])
 	model.start()
 	model.advance(0.3)
 	check(close(model.shots[0].time, 0.3) and close(model.defenders[0].ready_at, 1.3), "C-01 : premier tir immédiat à 0,3 s")
-	model = Model.new()
+	model = Model.new(false)
 	model.buy(0, 0)
 	model.buy(1, 0)
 	model.spawn_schedule.assign([{"time": 0.3, "type": 0}, {"time": 1.8, "type": 0}])
@@ -171,7 +171,7 @@ func _initialize() -> void:
 	# C-04 : comparateur utilisé par rebonds et explosions en cas d'égalité.
 	check(Model._secondary_priority({"squared": 0.25, "enemy": {"distance": 8.0, "id": 9}}, {"squared": 0.25, "enemy": {"distance": 7.0, "id": 1}}), "C-04 : progression avant ordre d'apparition")
 	check(Model._secondary_priority({"squared": 0.25, "enemy": {"distance": 8.0, "id": 1}}, {"squared": 0.25, "enemy": {"distance": 8.0, "id": 9}}), "C-04 : ancienneté en dernier départage")
-	model = Model.new()
+	model = Model.new(false)
 	model.buy(0, 0)
 	model.buy(1, 0)
 	model.phase = "combat"
@@ -180,14 +180,14 @@ func _initialize() -> void:
 	model._resolve_instant()
 	check(model.shots.size() == 2 and model.enemies[0].id == 1 and model.enemies[0].hp == 40, "C-05 : tirs gaspillés sans transfert")
 
-	model = Model.new()
+	model = Model.new(false)
 	model.fortress_hp = 3
 	model.spawn_schedule.assign([{"time": 0.0, "type": 3}, {"time": 0.0, "type": 3}])
 	model.start()
 	model.advance(40)
 	check(model.fortress_hp == 0 and model.phase == "defeat" and model.escaped == 2, "C-09 : quatre dégâts simultanés, PV bornés à zéro")
 	check(model.phase != "finished", "C-12 : défaite prioritaire sur fin de vague")
-	model = Model.new()
+	model = Model.new(false)
 	model.buy(0, 0)
 	model.phase = "combat"
 	model.spawned = 10
@@ -198,7 +198,7 @@ func _initialize() -> void:
 	# Intégration mêlant vitesses, groupes et malédictions : comparer toute la chronologie.
 	var runs: Array = []
 	for run_index in range(3):
-		var run = Model.new()
+		var run = Model.new(false)
 		run.select_faction(1)
 		run.gold = 225
 		run.buy(0, 3)
@@ -218,7 +218,7 @@ func _initialize() -> void:
 	check(runs[0].gold == runs[2].gold and runs[0].fortress_hp == runs[2].fortress_hp, "Revenus et PV identiques aux deux vitesses")
 	check(runs[0].curses.is_empty(), "Aucun effet persistant après fin de combat")
 
-	model = Model.new()
+	model = Model.new(false)
 	model.select_faction(1)
 	model.buy(0, 3)
 	model.buy(1, 4)

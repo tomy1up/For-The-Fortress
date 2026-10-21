@@ -1,5 +1,6 @@
 extends RefCounted
 
+const Campaign = preload("res://scripts/campaign_data.gd")
 const Progression = preload("res://scripts/progression_data.gd")
 ## Distances dans le plan logique du GDD, avant projection isométrique.
 
@@ -15,8 +16,6 @@ const PATH_LENGTH: float = 28.0
 const INITIAL_GOLD: int = 150
 const INITIAL_HP: int = 20
 
-const WAVE_COUNT: int = 10
-const SPAWN_INTERVAL: float = 2.5
 const EPS: float = 0.000000001
 const ROSTER: Array[Dictionary] = [
 	{"name": "Archer elfe", "price": 50, "damage": 8.0, "interval": 1.0, "range": 4.0},
@@ -38,6 +37,16 @@ const ENEMY_TYPES: Array[Dictionary] = [
 	{"name": "Seigneur de siège", "hp": 600.0, "speed": 0.45, "fortress_damage": 20, "reward": 40},
 ]
 
+var wave: int = 1
+var max_hp: int = INITIAL_HP
+var total_killed: int = 0
+var total_escaped: int = 0
+var total_income: int = 0
+var completed_time: float = 0.0
+var bonuses: Array[int] = [] # indices 0..11 du catalogue R
+var bonus_offer: Array[int] = []
+var rng := RandomNumberGenerator.new()
+var synergies_enabled: bool = true # Désactivé uniquement dans les références historiques de test.
 var faction: int = 0
 var next_instance_id: int = 0
 var curses: Array[Dictionary] = []
@@ -57,7 +66,9 @@ var defenders: Array[Dictionary] = []
 var shots: Array[Dictionary] = []
 var event_log: Array[String] = []
 
-func _init() -> void:
+func _init(enable_synergies: bool = true) -> void:
+	synergies_enabled = enable_synergies
+	rng.randomize()
 	reset()
 
 func reset() -> void:
@@ -65,9 +76,15 @@ func reset() -> void:
 	faction = 0
 	next_instance_id = 0
 	curses.clear()
-	spawn_schedule.clear()
-	for index in range(WAVE_COUNT):
-		spawn_schedule.append({"time": index * SPAWN_INTERVAL, "type": 1})
+	wave = 1
+	max_hp = INITIAL_HP
+	total_killed = 0
+	total_escaped = 0
+	total_income = 0
+	completed_time = 0.0
+	bonuses.clear()
+	bonus_offer.clear()
+	spawn_schedule = Campaign.schedule(wave)
 	fortress_hp = INITIAL_HP
 	elapsed = 0.0
 	phase = "preparation"
@@ -85,7 +102,7 @@ func available_types() -> Array[int]:
 	return [0, 1, 2] if faction == 0 else [3, 4, 5]
 
 func select_faction(choice: int) -> bool:
-	if choice not in [0, 1] or phase != "preparation" or spawned != 0 or gold != INITIAL_GOLD:
+	if choice not in [0, 1] or wave != 1 or not bonuses.is_empty() or phase != "preparation" or spawned != 0 or gold != INITIAL_GOLD:
 		return false
 	for defender in defenders:
 		if not defender.is_empty():
@@ -122,7 +139,7 @@ func purchase_error(slot: int, type: int) -> String:
 		return "Cet emplacement est occupé."
 	if count_type(type) >= 2:
 		return "Deux exemplaires de ce type sont déjà déployés."
-	if gold < ROSTER[type].price:
+	if gold < purchase_cost(type):
 		return "Or insuffisant."
 	return ""
 
@@ -130,10 +147,11 @@ func buy(slot: int, type: int) -> bool:
 	if not purchase_error(slot, type).is_empty():
 		return false
 	var stats: Dictionary = ROSTER[type]
-	defenders[slot] = {"instance_id": next_instance_id, "type": type, "level": 1, "branch": -1, "paid": stats.price, "ready_at": 0.0,
+	defenders[slot] = {"instance_id": next_instance_id, "type": type, "level": 1, "branch": -1, "paid": purchase_cost(type), "ready_at": 0.0,
 		"windows": coverage_windows(SLOTS[slot], stats.range)}
 	next_instance_id += 1
-	gold -= stats.price
+	gold -= purchase_cost(type)
+	_refresh_windows()
 	return true
 
 static func stats_for(type: int, level: int = 1, branch: int = -1) -> Dictionary:
@@ -154,17 +172,106 @@ static func stats_for(type: int, level: int = 1, branch: int = -1) -> Dictionary
 				stats[key] = specialization[key]
 	return stats
 
-func get_stats(slot: int) -> Dictionary:
-	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty():
-		return {}
+func synergy_effects(slot: int, branch_override: int = -1) -> Dictionary:
+	var result: Dictionary = {"direct":0.0,"secondary":0.0,"curse":0.0,"range":0.0,"codes":[]}
+	if not synergies_enabled or slot < 0 or defenders[slot].is_empty(): return result
+	var unit: Dictionary = defenders[slot]
+	var level: int = 4 if branch_override >= 0 else unit.level
+	var branch: int = branch_override if branch_override >= 0 else unit.branch
+	for specialised in [false,true]:
+		for rule in Campaign.SPECIALISATIONS if specialised else Campaign.PROXIMITY:
+			var side: int = rule.types.find(unit.type)
+			if side < 0: continue
+			if specialised and (level != 4 or branch != rule.branches[side]): continue
+			for other_slot in range(defenders.size()):
+				var partner: Dictionary = defenders[other_slot]
+				if other_slot == slot or partner.is_empty() or partner.type != rule.types[1-side]: continue
+				if specialised:
+					if partner.level != 4 or partner.branch != rule.branches[1-side]: continue
+				elif SLOTS[slot].distance_squared_to(SLOTS[other_slot]) > 25.0: continue
+				for i in range(4):
+					result[["direct","secondary","curse","range"][i]] += rule.effects[side][i]
+				result.codes.append(rule.code)
+				break # Un même code au maximum une fois par bénéficiaire.
+	return result
+
+func get_stats(slot: int, branch_override: int = -1) -> Dictionary:
+	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty(): return {}
 	var defender: Dictionary = defenders[slot]
-	return stats_for(defender.type, defender.get("level", 1), defender.get("branch", -1))
+	var level: int = 4 if branch_override >= 0 else defender.get("level",1)
+	var stats: Dictionary = stats_for(defender.type,level,branch_override if branch_override >= 0 else defender.get("branch",-1))
+	var synergy: Dictionary = synergy_effects(slot,branch_override)
+	var common: float = (0.10 if 0 in bonuses else 0.0) + (0.15 if 6 in bonuses and level <= 2 else 0.0) + (0.12 if 7 in bonuses and level >= 3 else 0.0)
+	stats.reference_damage = stats.damage
+	stats.reference_secondary = stats.secondary_damage
+	stats.reference_curse = stats.curse_damage
+	stats.direct_bonus = common + synergy.direct + (0.15 if 5 in bonuses else 0.0)
+	stats.secondary_bonus = common + synergy.secondary + (0.20 if 3 in bonuses and defender.type in [2,3,4] else 0.0)
+	stats.curse_bonus = common + synergy.curse
+	stats.damage = stats.reference_damage * (1.0+stats.direct_bonus)
+	stats.secondary_damage = stats.reference_secondary * (1.0+stats.secondary_bonus)
+	stats.curse_damage = stats.reference_curse * (1.0+stats.curse_bonus)
+	stats.range += synergy.range + (0.5 if 2 in bonuses else 0.0)
+	if 1 in bonuses and defender.type != 5: stats.interval /= 1.12
+	if 4 in bonuses and defender.type in [2,3,4]: stats.radius += 0.2
+	stats.synergies = synergy.codes
+	return stats
+
+func damage_for(stats: Dictionary, component: String, victim: Dictionary) -> float:
+	var reference: float = stats[{"direct":"reference_damage","secondary":"reference_secondary","curse":"reference_curse"}[component]]
+	var extra: float = 0.20 if 11 in bonuses and victim.type in [3,5,6,7] else 0.0
+	return reference * (1.0+stats[component+"_bonus"]+extra)
+
+func _refresh_windows() -> void:
+	for slot in range(defenders.size()):
+		if not defenders[slot].is_empty():
+			defenders[slot].windows = coverage_windows(SLOTS[slot],get_stats(slot).range)
+
+func purchase_cost(type: int) -> int:
+	return maxi(1,int(ceil(ROSTER[type].price * (0.9 if 10 in bonuses else 1.0))))
+
+func prepare_next_wave() -> bool:
+	if phase != "finished" or wave >= 10: return false
+	completed_time += elapsed
+	wave += 1
+	elapsed = 0.0
+	spawned = 0
+	killed = 0
+	escaped = 0
+	shots.clear()
+	curses.clear()
+	event_log.clear()
+	spawn_schedule = Campaign.schedule(wave)
+	phase = "preparation"
+	return true
+
+func choose_bonus(code: int) -> bool:
+	if phase != "bonus" or code not in bonus_offer or code in bonuses: return false
+	bonuses.append(code)
+	bonus_offer.clear()
+	if code == 8:
+		max_hp += 4
+		fortress_hp += 4
+	_refresh_windows()
+	phase = "finished"
+	return true
+
+func _offer_bonus() -> void:
+	var pool: Array[int] = []
+	for code in range(Campaign.BONUSES.size()):
+		if code not in bonuses: pool.append(code)
+	bonus_offer.clear()
+	for index in range(3):
+		var selected_index: int = rng.randi_range(0,pool.size()-1)
+		bonus_offer.append(pool[selected_index])
+		pool.remove_at(selected_index)
+	phase = "bonus"
 
 func upgrade_cost(slot: int) -> int:
 	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty():
 		return 0
 	var level: int = defenders[slot].get("level", 1)
-	return Progression.UPGRADE_COSTS[level - 1] if level < 4 else 0
+	return maxi(1,int(ceil(Progression.UPGRADE_COSTS[level-1] * (0.9 if 9 in bonuses else 1.0)))) if level < 4 else 0
 
 func upgrade_error(slot: int, branch: int = -1) -> String:
 	if not can_build():
@@ -192,7 +299,7 @@ func upgrade(slot: int, branch: int = -1) -> bool:
 		defender.branch = branch
 	defender.paid += paid
 	gold -= paid
-	defender.windows = coverage_windows(SLOTS[slot], get_stats(slot).range)
+	_refresh_windows()
 	return true
 
 func refund(slot: int) -> int:
@@ -205,6 +312,7 @@ func sell(slot: int) -> bool:
 		return false
 	gold += refund(slot)
 	defenders[slot] = {}
+	_refresh_windows()
 	return true
 
 func start() -> bool:
@@ -293,7 +401,7 @@ func _resolve_instant() -> void:
 		targets.sort_custom(_progress_priority)
 		var primary: Dictionary = targets[0]
 		var impact: Vector2 = position_at(primary.distance)
-		_add_damage(damage, primary.id, stats.damage)
+		_add_damage(damage, primary.id, damage_for(stats,"direct",primary))
 		var shot: Dictionary = {"time": elapsed, "slot": slot, "type": defender.type,
 			"target_id": primary.id, "from": SLOTS[slot], "to": impact, "secondary": [], "radius": stats.radius}
 		event_log.append("%.9f tir E%d cible %d" % [elapsed, slot + 1, primary.id])
@@ -310,14 +418,14 @@ func _resolve_instant() -> void:
 					break
 				candidates.sort_custom(_secondary_priority)
 				var victim: Dictionary = candidates[0].enemy
-				_add_damage(damage, victim.id, stats.secondary_damage)
+				_add_damage(damage, victim.id, damage_for(stats,"secondary",victim))
 				hit_ids.append(victim.id)
 				shot.secondary.append(position_at(victim.distance))
 				# Les explosions restent centrées sur l'impact ; les ricochets avancent.
 				if defender.type == 3:
 					origin = victim
 		elif defender.type == 5:
-			applications.append({"source_id": defender.instance_id, "enemy_id": primary.id, "damage": stats.curse_damage})
+			applications.append({"source_id": defender.instance_id, "enemy_id": primary.id, "damage": damage_for(stats,"curse",primary)})
 		shots.append(shot)
 		defender.ready_at = elapsed + stats.interval
 	_apply_damage(damage)
@@ -330,6 +438,7 @@ func _resolve_instant() -> void:
 	for enemy in enemies:
 		if enemy.distance >= PATH_LENGTH - EPS:
 			escaped += 1
+			total_escaped += 1
 			arrival_damage += enemy.get("fortress_damage", 1)
 			event_log.append("%.9f arrivee %d" % [elapsed, enemy.id])
 		else:
@@ -337,11 +446,16 @@ func _resolve_instant() -> void:
 	enemies = survivors
 	_purge_curses()
 	fortress_hp = maxi(0, fortress_hp - arrival_damage)
-	# 5. Défaite prioritaire ; finir la vague 1 n'est pas gagner la partie complète.
+	# 5. Défaite prioritaire sur le choix, la fin et la victoire.
 	if fortress_hp == 0:
 		phase = "defeat"
 	elif spawned == spawn_schedule.size() and enemies.is_empty():
-		phase = "finished"
+		if wave == 10:
+			phase = "victory"
+		elif wave in [3,6,9]:
+			_offer_bonus()
+		else:
+			phase = "finished"
 
 func _has_enemy(id: int) -> bool:
 	for enemy in enemies:
@@ -362,8 +476,10 @@ func _apply_damage(damage: Dictionary) -> void:
 		enemy.hp -= damage.get(enemy.id, 0.0)
 		if enemy.hp <= 0.0:
 			killed += 1
+			total_killed += 1
 			var reward: int = enemy.get("reward", 3)
 			gold += reward
+			total_income += reward
 			event_log.append("%.9f mort %d +%d" % [elapsed, enemy.id, reward])
 		else:
 			survivors.append(enemy)

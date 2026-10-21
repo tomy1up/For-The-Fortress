@@ -34,6 +34,15 @@ var pending_slot: int = -1
 var pending_instance: int = -1
 var sell_button: Button
 var buy_buttons: Array[Button] = []
+var bonus_panel: ColorRect
+var bonus_title: Label
+var bonus_subtitle: Label
+var bonus_names: Array[Label] = []
+var bonus_descriptions: Array[Label] = []
+var bonus_buttons: Array[Button] = []
+var bonus_close: Button
+var bonus_summary_button: Button
+var overview_open: bool = false
 
 func _ready() -> void:
 	map_view.model = model
@@ -56,6 +65,8 @@ func _ready() -> void:
 	if not capture_path.is_empty():
 		if capture_state != "selection":
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
+			if capture_state in ["bonus", "campaign", "victory", "overview"]:
+				_prepare_campaign_capture(capture_state)
 			if capture_state in ["upgrade", "specialisation", "specialised"]:
 				if capture_state != "upgrade": model.gold = 1000 # Fixture de capture uniquement.
 				model.buy(0, capture_type)
@@ -66,7 +77,7 @@ func _ready() -> void:
 					model.upgrade(0)
 					if capture_state == "specialised": model.upgrade(0, 1)
 					else: _upgrade()
-			if capture_state not in ["shop", "catalogue", "upgrade", "specialisation", "specialised"]:
+			if capture_state not in ["shop", "catalogue", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview"]:
 				model.buy(0, model.available_types()[0])
 				model.buy(1, model.available_types()[2 if capture_state == "curse" else 1])
 			selected = 1 if capture_state == "curse" else 0
@@ -82,7 +93,7 @@ func _ready() -> void:
 					model.enemies.append(enemy)
 				model.spawned = model.enemies.size()
 				model.phase = "combat"
-			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised"]:
+			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview"]:
 				model.start()
 				model.advance(1.0 if capture_state == "curse" else 7.5 if capture_state == "combat" else 100.0)
 		set_process(false)
@@ -103,8 +114,33 @@ func _process(delta: float) -> void:
 	_update_interface()
 	map_view.queue_redraw()
 
+func _prepare_campaign_capture(state: String) -> void:
+	# Référence financée au budget normal ; même politique que test_campaign.gd.
+	model.rng.seed = 42
+	model.buy(0,model.faction*3)
+	model.buy(1,model.faction*3+1)
+	selected = 0
+	map_view.selected = 0
+	for wave in range(1,11):
+		if wave >= 4 and model.defenders[2].is_empty(): model.buy(2,model.faction*3+2)
+		if wave >= 5:
+			for slot in [0,1,2]:
+				if not model.defenders[slot].is_empty(): model.upgrade(slot,0 if model.defenders[slot].level == 3 else -1)
+		model.start()
+		if wave == 9 and state == "campaign":
+			model.advance(12)
+			return
+		model.advance(300)
+		if state == "bonus" and wave == 3: return
+		if model.phase == "defeat": return
+		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+		if state == "overview" and wave == 9:
+			overview_open = true
+			return
+		if wave < 10: model.prepare_next_wave()
+
 func _unhandled_input(event: InputEvent) -> void:
-	if choosing_faction or pending_slot >= 0:
+	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open:
 		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var closest: int = -1
@@ -132,9 +168,7 @@ func _build_interface() -> void:
 	faction_label = _label(screen, "CHOIX DE FACTION", Vector2(898, 33), Vector2(350, 25), 13, Color("cdb47e"))
 	var side := _panel(screen, Rect2(24, 122, 278, 632))
 	_label(side, "DÉFENDRE LE GUÉ", Vector2(22, 20), Vector2(240, 28), 18, Color("e0dbbf"))
-	_label(side, "Placez vos défenseurs, puis lancez
-la vague. Ils attaquent seuls les
-ennemis à portée.", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
+	_label(side, "Placez vos défenseurs, puis lancez\nla vague. Ils attaquent seuls les\nennemis à portée.", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
 	hp_label = _label(side, "", Vector2(22, 144), Vector2(238, 28), 21, Color("e2d5ad"))
 	gold_label = _label(side, "", Vector2(22, 184), Vector2(238, 24), 16, Color("cdb47e"))
 	status_label = _label(side, "", Vector2(22, 232), Vector2(238, 52), 16, Color("d0dfd1"))
@@ -143,7 +177,8 @@ ennemis à portée.", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
 	start_button = _button(side, "Lancer la vague 1", Rect2(22, 428, 234, 44), _start)
 	speed_button = _button(side, "Vitesse ×1", Rect2(22, 482, 234, 40), _toggle_speed)
 	reset_button = _button(side, "Nouvel essai", Rect2(22, 532, 234, 40), _reset)
-	_label(side, "Première vague · Sans bonus ni synergies", Vector2(22, 594), Vector2(238, 20), 11, Color("8fa69a"))
+	bonus_summary_button = _button(side, "Bonus acquis · 0/3", Rect2(22, 582, 234, 32), _show_bonuses)
+	bonus_summary_button.add_theme_font_size_override("font_size", 13)
 	var info := _panel(screen, Rect2(330, 608, 926, 152))
 	title_label = _label(info, "CONSTRUIRE · ALLIANCE", Vector2(24, 12), Vector2(860, 24), 13, Color("cdb47e"))
 	details_label = _label(info, "", Vector2(24, 41), Vector2(876, 44), 14, Color("bbcbbf"))
@@ -154,10 +189,12 @@ ennemis à portée.", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
 	sell_button = _button(info, "", Rect2(24, 96, 278, 40), _sell)
 	upgrade_button = _button(info, "", Rect2(318, 96, 278, 40), _upgrade)
 	hint_label = _label(screen, "", Vector2(347, 574), Vector2(890, 24), 13, Color("91a799"))
+	hint_label.mouse_filter = Control.MOUSE_FILTER_STOP # Autoriser les infobulles des synergies.
 	_label(screen, "Nom de travail · Visuels temporaires", Vector2(34, 776), Vector2(900, 20), 11, Color("718b7d"))
 
 	_build_faction_selector(screen)
 	_build_specialisation_selector(screen)
+	_build_bonus_selector(screen)
 
 func _build_faction_selector(screen: Control) -> void:
 	faction_panel = ColorRect.new()
@@ -166,7 +203,7 @@ func _build_faction_selector(screen: Control) -> void:
 	screen.add_child(faction_panel)
 	var panel: Panel = _panel(faction_panel, Rect2(240, 220, 800, 350))
 	_label(panel, "Choisissez votre faction", Vector2(30, 28), Vector2(740, 42), 28, Color("e0dbbf"))
-	_label(panel, "Chaque camp possède trois défenseurs pour ce premier affrontement.", Vector2(30, 88), Vector2(740, 30), 16, Color("aabbb0"))
+	_label(panel, "Chaque camp possède trois défenseurs pour les dix vagues.", Vector2(30, 88), Vector2(740, 30), 16, Color("aabbb0"))
 	faction_buttons.append(_button(panel, "Alliance des Royaumes", Rect2(30, 152, 350, 52), _choose_faction.bind(0)))
 	faction_buttons.append(_button(panel, "Horde des Cendres", Rect2(420, 152, 350, 52), _choose_faction.bind(1)))
 	_label(panel, "Archer, arbalétrier et mage.\nPrécision et attaque de groupe.", Vector2(30, 224), Vector2(350, 62), 15, Color("bbcbbf"))
@@ -196,7 +233,7 @@ func _build_specialisation_selector(screen: Control) -> void:
 	specialisation_cancel = _button(panel, "Annuler", Rect2(330, 452, 180, 40), _cancel_specialisation)
 
 func _upgrade() -> void:
-	if choosing_faction or pending_slot >= 0 or selected < 0 or model.defenders[selected].is_empty():
+	if choosing_faction or overview_open or pending_slot >= 0 or selected < 0 or model.defenders[selected].is_empty():
 		return
 	var defender: Dictionary = model.defenders[selected]
 	if defender.level == 3:
@@ -218,7 +255,7 @@ func _update_specialisation_choices() -> void:
 	specialisation_title.text = "Spécialisation · " + Model.ROSTER[type].name
 	specialisation_cost.text = "N3 → N4 : %d or, choix inclus. Investissement après passage : %d or." % [model.upgrade_cost(pending_slot), defender.paid + model.upgrade_cost(pending_slot)]
 	for branch in range(2):
-		var stats: Dictionary = Model.stats_for(type, 4, branch)
+		var stats: Dictionary = model.get_stats(pending_slot, branch)
 		specialisation_names[branch].text = ("A · " if branch == 0 else "B · ") + stats.branch_name
 		specialisation_descriptions[branch].text = stats.description
 		specialisation_stats[branch].text = "Dégâts principaux : %s\nIntervalle : %s s\nPortée : %s unités" % [_number(stats.damage), _number(stats.interval), _number(stats.range)]
@@ -301,8 +338,9 @@ func _button(parent: Control, text: String, rectangle: Rect2, action: Callable) 
 	return button
 
 func _start() -> void:
-	if choosing_faction or pending_slot >= 0:
+	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open:
 		return
+	if model.phase == "finished": model.prepare_next_wave()
 	model.start()
 	_update_interface()
 
@@ -313,6 +351,7 @@ func _toggle_speed() -> void:
 func _reset() -> void:
 	if model.active or pending_slot >= 0:
 		return
+	overview_open = false
 	model.reset()
 	choosing_faction = true
 	speed = 1.0
@@ -322,43 +361,47 @@ func _reset() -> void:
 	map_view.queue_redraw()
 
 func _buy(type: int) -> void:
-	if choosing_faction or pending_slot >= 0:
+	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open:
 		return
 	model.buy(selected, model.available_types()[type])
 	_update_interface()
 	map_view.queue_redraw()
 
 func _sell() -> void:
-	if pending_slot >= 0:
+	if pending_slot >= 0 or overview_open:
 		return
 	model.sell(selected)
 	_update_interface()
 	map_view.queue_redraw()
 
 func _update_interface() -> void:
-	hp_label.text = "FORTERESSE   %d / 20 PV" % model.fortress_hp
+	hp_label.text = "FORTERESSE   %d / %d PV" % [model.fortress_hp,model.max_hp]
 	gold_label.text = "OR DISPONIBLE     %d" % model.gold
 	faction_panel.visible = choosing_faction
-	faction_label.text = "CHOIX DE FACTION" if choosing_faction else ("ALLIANCE" if model.faction == 0 else "HORDE") + "  /  PREMIÈRE VAGUE"
+	faction_label.text = "CHOIX DE FACTION" if choosing_faction else ("ALLIANCE" if model.faction == 0 else "HORDE") + "  /  VAGUE %d SUR 10" % model.wave
 	specialisation_panel.visible = pending_slot >= 0
-	start_button.disabled = choosing_faction or pending_slot >= 0 or model.phase != "preparation"
-	start_button.text = "Lancer la vague 1" if model.phase == "preparation" else "Vague 1 en cours" if model.active else "Vague 1 terminée"
+	start_button.disabled = choosing_faction or pending_slot >= 0 or overview_open or model.phase not in ["preparation","finished"]
+	start_button.text = "Lancer la vague %d" % (model.wave+1 if model.phase == "finished" else model.wave) if model.phase in ["preparation","finished"] else "Vague %d en cours" % model.wave if model.active else "Partie gagnée" if model.phase == "victory" else "Choisissez un bonus" if model.phase == "bonus" else "Partie terminée"
+	var preview_wave: int = mini(10, model.wave+1 if model.phase == "finished" else model.wave)
+	var preview: Array[String] = []
+	for group in Model.Campaign.WAVES[preview_wave-1]:
+		preview.append("%d %s · intervalle %s s" % [group[1],Model.ENEMY_TYPES[group[0]].name,_number(group[2])])
+	start_button.tooltip_text = "Vague %d\n%s\n4 s entre la dernière apparition d’un groupe et la première du suivant." % [preview_wave,"\n".join(preview)]
 	speed_button.text = "Vitesse ×%d" % int(speed)
 	reset_button.disabled = model.active or pending_slot >= 0
 	reset_button.tooltip_text = "Terminez la vague avant de recommencer." if model.active else "Repartir avec 150 or et 20 PV."
 	match model.phase:
-		"preparation": status_label.text = "Préparation · Vague 1
-10 Pillards · 40 PV chacun"
-		"combat": status_label.text = "Combat · Vague 1
-Achats et ventes bloqués"
-		"finished": status_label.text = "Vague 1 terminée
-La forteresse a survécu"
-		"defeat": status_label.text = "Forteresse détruite
-Relancez un nouvel essai"
-	tally_label.text = "Apparus : %d / %d
-Éliminés : %d · Arrivés : %d
-En chemin : %d" % [model.spawned, model.spawn_schedule.size(), model.killed, model.escaped, model.enemies.size()]
-	time_label.text = ("Temps de jeu : %.1f s" % model.elapsed).replace(".", ",")
+		"preparation": status_label.text = "Préparation · Vague %d/10\n%d ennemis" % [model.wave,model.spawn_schedule.size()]
+		"combat": status_label.text = "Combat · Vague %d/10\nAchats et ventes bloqués" % model.wave
+		"finished": status_label.text = "Vague %d terminée\nPréparez la vague %d" % [model.wave,model.wave+1]
+		"bonus": status_label.text = "Vague %d terminée\nChoix roguelite obligatoire" % model.wave
+		"victory": status_label.text = "VICTOIRE · Dix vagues\nLa forteresse a survécu"
+		"defeat": status_label.text = "Forteresse détruite\nRelancez un nouvel essai"
+	bonus_summary_button.text = "Bonus acquis · %d/3" % model.bonuses.size()
+	bonus_summary_button.disabled = choosing_faction or pending_slot >= 0 or model.phase == "bonus"
+	_update_bonus_panel()
+	tally_label.text = "Apparus : %d / %d\nÉliminés : %d · Arrivés : %d\nEn chemin : %d" % [model.spawned, model.spawn_schedule.size(), model.killed, model.escaped, model.enemies.size()]
+	time_label.text = ("Combat cumulé : %.1f s" % (model.completed_time+model.elapsed)).replace(".", ",")
 	hint_label.text = "Sélectionnez E1 à E6 pour construire ou inspecter un défenseur."
 	var occupied: bool = selected >= 0 and not model.defenders[selected].is_empty()
 	sell_button.visible = occupied
@@ -369,13 +412,12 @@ En chemin : %d" % [model.spawned, model.spawn_schedule.size(), model.killed, mod
 		var actual_type: int = model.available_types()[type]
 		var offer: Dictionary = Model.ROSTER[actual_type]
 		button.visible = not occupied
-		button.text = "%s · %d or  (%d/2)" % [offer.get("short_name", offer.name), offer.price, model.count_type(actual_type)]
+		button.text = "%s · %d or  (%d/2)" % [offer.get("short_name", offer.name), model.purchase_cost(actual_type), model.count_type(actual_type)]
 		button.tooltip_text = model.purchase_error(selected, actual_type)
 		button.disabled = choosing_faction or not button.tooltip_text.is_empty()
 	if selected < 0:
 		title_label.text = "CONSTRUIRE · " + ("ALLIANCE" if model.faction == 0 else "HORDE")
-		details_label.text = "Choisissez un emplacement sur la carte.
-Les défenseurs du premier essai commencent au niveau 1."
+		details_label.text = "Choisissez un emplacement sur la carte.\nLes défenseurs du premier essai commencent au niveau 1."
 	elif occupied:
 		var defender: Dictionary = model.defenders[selected]
 		var stats: Dictionary = model.get_stats(selected)
@@ -393,12 +435,79 @@ Les défenseurs du premier essai commencent au niveau 1."
 	else:
 		var slot: Vector2 = Model.SLOTS[selected]
 		title_label.text = "E%d · EMPLACEMENT LIBRE" % (selected + 1)
-		details_label.text = "Position logique (%s ; %s) · Un seul défenseur par emplacement.
-Deux exemplaires maximum par type dans votre faction." % [_number(slot.x), _number(slot.y)]
+		details_label.text = "Position logique (%s ; %s) · Un seul défenseur par emplacement.\nDeux exemplaires maximum par type dans votre faction." % [_number(slot.x), _number(slot.y)]
 	if model.active:
 		hint_label.text = "Les tirs sont automatiques. Vous pouvez inspecter les unités et changer la vitesse."
 	elif model.phase == "finished":
-		hint_label.text = "Vous pouvez revoir votre défense ou relancer un nouvel essai."
+		hint_label.text = "Achats, améliorations et ventes autorisés avant la vague suivante."
+	if occupied:
+		var effects: Dictionary = model.get_stats(selected)
+		var codes: String = ", ".join(effects.synergies)
+		hint_label.text = "Synergies : " + (codes if not codes.is_empty() else "aucune") + (" · R-12 : +20 % contre Brutes, Colosses, Élites et boss." if 11 in model.bonuses else "")
+		var descriptions: Array[String] = []
+		for rule in Model.Campaign.PROXIMITY + Model.Campaign.SPECIALISATIONS:
+			if rule.code not in effects.synergies: continue
+			var side: int = rule.types.find(model.defenders[selected].type)
+			var gains: Array[String] = []
+			for i in range(4):
+				var gain: float = rule.effects[side][i]
+				if gain > 0:
+					gains.append("+%s %s" % [_number(gain if i == 3 else gain*100),["% dégâts principaux","% dégâts secondaires","% dégâts périodiques","unité de portée"][i]])
+			descriptions.append(rule.code+" : "+", ".join(gains))
+		hint_label.tooltip_text = "\n".join(descriptions) + "\nLes statistiques incluent les bonus et synergies actifs. R-12 dépend de chaque victime."
+	else:
+		hint_label.tooltip_text = ""
+	if model.phase in ["victory","defeat"]:
+		hint_label.text = "%d éliminés · %d arrivées · %d or gagnés au combat." % [model.total_killed,model.total_escaped,model.total_income]
 
 func _number(value: float) -> String:
 	return str(value).trim_suffix(".0").replace(".", ",")
+
+func _build_bonus_selector(screen: Control) -> void:
+	bonus_panel = ColorRect.new()
+	bonus_panel.color = Color(0.02,0.04,0.035,0.96)
+	bonus_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	screen.add_child(bonus_panel)
+	var panel: Panel = _panel(bonus_panel,Rect2(100,166,1080,468))
+	bonus_title = _label(panel,"",Vector2(28,24),Vector2(1024,40),26,Color("e0dbbf"))
+	bonus_subtitle = _label(panel,"",Vector2(28,78),Vector2(1024,46),15,Color("aabbb0"))
+	for index in range(3):
+		var x: int = 28+index*348
+		bonus_names.append(_label(panel,"",Vector2(x,148),Vector2(328,54),18,Color("e0dbbf")))
+		bonus_names[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		bonus_descriptions.append(_label(panel,"",Vector2(x,216),Vector2(320,108),16,Color("bbcbbf")))
+		bonus_descriptions[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		bonus_buttons.append(_button(panel,"Choisir ce bonus",Rect2(x,354,328,48),_choose_bonus.bind(index)))
+	bonus_close = _button(panel,"Fermer",Rect2(442,408,196,36),_close_bonuses)
+
+func _show_bonuses() -> void:
+	if choosing_faction or pending_slot >= 0 or model.phase == "bonus": return
+	overview_open = true
+	_update_interface()
+
+func _close_bonuses() -> void:
+	overview_open = false
+	_update_interface()
+
+func _choose_bonus(index: int) -> void:
+	if model.phase != "bonus" or index < 0 or index >= model.bonus_offer.size(): return
+	model.choose_bonus(model.bonus_offer[index])
+	_update_interface()
+	map_view.queue_redraw()
+
+func _update_bonus_panel() -> void:
+	var choosing: bool = model.phase == "bonus"
+	bonus_panel.visible = choosing or overview_open
+	if not bonus_panel.visible: return
+	bonus_title.text = "Choisissez une amélioration · Vague %d terminée" % model.wave if choosing else "Bonus acquis pour cette partie"
+	bonus_subtitle.text = "Un choix gratuit, conservé jusqu’à la fin. Les deux autres offres pourront revenir." if choosing else "Les effets concernent aussi les futures recrues selon leurs conditions. Aucun bonus acquis." if model.bonuses.is_empty() else "Les effets concernent aussi les futures recrues selon leurs conditions."
+	var entries: Array[int] = model.bonus_offer if choosing else model.bonuses
+	for index in range(3):
+		bonus_names[index].visible = index < entries.size()
+		bonus_descriptions[index].visible = index < entries.size()
+		bonus_buttons[index].visible = choosing and index < entries.size()
+		if index < entries.size():
+			var data: Dictionary = Model.Campaign.BONUSES[entries[index]]
+			bonus_names[index].text = data.code+" · "+data.name
+			bonus_descriptions[index].text = data.description
+	bonus_close.visible = not choosing

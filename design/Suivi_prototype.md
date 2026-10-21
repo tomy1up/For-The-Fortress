@@ -1,20 +1,20 @@
 # Suivi du prototype
 
-État du 20 octobre 2026 — prototype v0.16, GDD v0.14.
+État du 21 octobre 2026 — prototype v0.18, GDD v0.14.
 
 ## Périmètre réalisé
 
-La première vague est jouable avec les deux factions et leurs trois défenseurs N1. Le combat du lot L3 et les huit profils ennemis sont intégrés ; leurs rencontres dans les dix vagues seront assemblées en L5.
+Les dix vagues sont jouables avec les deux factions, les niveaux, les douze spécialisations, les bonus roguelite et les douze synergies activables. Les deux campagnes de référence atteignent une victoire au budget normal ; les essais comparatifs L6 restent à mener.
 
 | Lot du cahier | État | Preuve ou travail restant |
 | --- | --- | --- |
 | L0 Préparer | Partiel | Projet Godot démarrable ; export autonome non encore produit |
 | L1 Traversée du Gué | Réalisé | Tracé 28 unités, six emplacements, déplacements, arrivées et PV |
 | L2 Boucle minimale | Réalisé | Achats et ventes Alliance N1, tirs, récompenses, vague 1 complète, retour entre les vagues |
-| L3 Couvrir le combat | Réalisé pour le N1 | Six défenseurs, huit profils, rebonds, explosions, ticks et ordre des événements testés ; campagne complète en L5 |
-| L4 Progression | À faire | Niveaux et douze branches ; limite de copies et remboursements N1 déjà réalisés pour L2 |
-| L5 Partie complète | À faire | Dix vagues successives, bonus et synergies, fins de partie complètes ; sélection de faction déjà réalisée |
-| L6 Essais et équilibrage | À faire | Campagne d’essais à mener après intégration ; résultats techniques actuels consignés ci-dessous |
+| L3 Couvrir le combat | Réalisé | Six défenseurs, huit profils, effets, ordre des événements et campagne intégrés |
+| L4 Progression | Réalisé | N1 à N4, douze branches, choix atomique et dépenses historiques |
+| L5 Partie complète | Réalisé | Dix vagues, trois choix, douze bonus, douze synergies ; victoires et défaites testées |
+| L6 Essais et équilibrage | À mener | Premières références techniques consignées ; essais humains et comparatifs encore nécessaires |
 
 ## Référence historique v0.15
 
@@ -77,7 +77,7 @@ Des contrôles supplémentaires couvrent deux sources de malédiction indépenda
 
 ## Prochaine étape
 
-L5 : campagne de dix vagues, bonus roguelite et synergies déjà définis dans le GDD.
+L6 : essais de jeu, compositions, comparaison des factions et propositions d’équilibrage documentées.
 
 ## Livraison L4 — v0.17, 21 octobre 2026
 
@@ -92,3 +92,17 @@ Les investissements N4 sans réduction de 350/375/400 rendent 245/262/280 or ; l
 La partie reste limitée à la vague 1 : le budget normal autorise N2 seulement. N3 et N4 sont testés avec budget imposé dans des scénarios de vérification explicitement identifiés. Aucun ajout d’or au parcours normal ; aucune conclusion sur l’équilibre des dix vagues. L4 est réalisé sur ce périmètre ; l’intégration à la campagne relève de L5. L0 reste partiel, sans export Windows autonome.
 
 Les GDD Word et Markdown restent en v0.14. Prochaine livraison : L5 (campagne, bonus et synergies), suivie des essais de campagne.
+
+## Livraison L5 — v0.18, 21 octobre 2026
+
+Campagne de dix vagues implémentée selon le GDD v0.14 : 26 groupes, 182 ennemis, 10 944 PV bruts et 770 or de récompenses au maximum. Trois choix obligatoires après les vagues 3, 6 et 9, catalogue de douze bonus, six associations de proximité et six de spécialisations. Le volet racial reste différé. Aucun réglage de conception n’a été changé.
+
+969 contrôles réussis : 607 précédents, références sans bonus ni synergies explicitement isolées, et 362 pour la campagne active. Les contrôles de base et de branches restent concordants avec le GDD. Les deux campagnes de contrôle à six N4 vérifient les 182 éliminations et 770 or ; elles utilisent un budget imposé. Les deux références au budget normal (graine 42) gagnent avec 14 et 12 PV, sans or ni unité ajoutés. Voir [le protocole et les résultats](Resultats_campagne_v018.md).
+
+Le modèle conserve unités, dépenses, or, PV et bonus entre vagues ; les délais, compteurs locaux, malédictions et horaires sont remis à zéro pour la suivante. La victoire n’est possible qu’après résolution de la vague 10 ; la défaite reste prioritaire. Aucun achat n’est permis après une fin de partie.
+
+Les offres ont trois codes distincts et n’excluent ensuite que le choix effectué. Les composantes de dégâts additionnent les pourcentages applicables ; R-12 est évalué sur chaque victime. La cadence du chaman reste inchangée. La maçonnerie augmente une seule fois PV actuels et maximum. Prix réduits arrondis au supérieur, remboursements arrondis au inférieur sur l’investissement réel.
+
+Les quatre pages du catalogue de bonus, le choix après vague 3, le récapitulatif, le combat tardif et les victoires ont été rendus et inspectés. Les retours à la ligne des textes ont été rendus explicites pour éviter un chevauchement des compteurs sous Windows.
+
+L5 est réalisé. L6 reste à mener : compréhension par des joueurs, diversité des stratégies, comparaisons à budget et offres contrôlés, durées avec préparation, anomalies et propositions de réglage H. L0 demeure partiel sans export Windows autonome. Les documents de conception restent en v0.14 ; cette livraison implémente leurs règles.

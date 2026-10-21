@@ -26,6 +26,7 @@ func run_checks() -> void:
 	var scene = Main.new()
 	root.add_child(scene)
 	scene.set_process(false)
+	scene.model.synergies_enabled = false
 	check(scene.choosing_faction and scene.faction_panel.visible and scene.start_button.disabled, "Choix de faction obligatoire")
 	scene.faction_buttons[0].pressed.emit()
 	check(scene.model.fortress_hp == 20 and scene.model.gold == 150 and not scene.start_button.disabled, "Préparation initiale")
@@ -66,7 +67,7 @@ func run_checks() -> void:
 	check(scene.model.killed == 10 and scene.model.escaped == 0 and scene.hp_label.text.contains("20 / 20"), "Première composition gagnante contre les dix Pillards")
 	check(scene.model.gold == 40 and scene.gold_label.text.contains("40"), "Récompenses affichées, sans prime de vague")
 	select_slot(scene, 0)
-	check(not scene.sell_button.disabled and scene.start_button.disabled and not scene.reset_button.disabled, "Vente après vague, sans vague 2 disponible")
+	check(not scene.sell_button.disabled and not scene.start_button.disabled and not scene.reset_button.disabled, "Préparation suivante disponible après vague")
 	scene.reset_button.pressed.emit()
 	check(scene.speed == 1 and scene.model.phase == "preparation" and scene.model.gold == 150 and scene.model.fortress_hp == 20, "Nouvel essai propre")
 	check(scene.selected == -1 and scene.model.count_type(0) == 0 and scene.model.count_type(1) == 0, "Défense et sélection réinitialisées")

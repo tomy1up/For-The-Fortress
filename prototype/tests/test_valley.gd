@@ -14,13 +14,13 @@ func enemy(id: int, progress: float, hp: float = 100.0) -> Dictionary:
 	return {"id": id, "spawn_time": -progress, "distance": progress, "hp": hp}
 
 func fixture() -> RefCounted:
-	var model = Model.new()
+	var model = Model.new(false)
 	model.phase = "combat"
 	model.spawned = 10
 	return model
 
 func _initialize() -> void:
-	var model = Model.new()
+	var model = Model.new(false)
 	var length: float = 0.0
 	for i in range(Model.PATH_POINTS.size() - 1):
 		length += Model.PATH_POINTS[i].distance_to(Model.PATH_POINTS[i + 1])
@@ -162,9 +162,9 @@ func _initialize() -> void:
 	check(model.phase == "defeat" and model.fortress_hp == 0 and model.escaped == 2 and model.gold == 150, "Défaite prioritaire et PV bornés à zéro")
 
 	# Comparer les résultats et la chronologie complète entre gros et petits pas.
-	var coarse = Model.new()
-	var normal = Model.new()
-	var fast = Model.new()
+	var coarse = Model.new(false)
+	var normal = Model.new(false)
+	var fast = Model.new(false)
 	for run in [coarse, normal, fast]:
 		run.buy(0, 0)
 		run.buy(1, 1)

@@ -48,3 +48,17 @@ Les ricochets spécialisés recherchent leur prochaine victime depuis la précé
 Le dialogue retient emplacement et identité d’exemplaire. Il n’engage aucun paiement avant confirmation ; une identité remplacée annule la confirmation. Les commandes d’achat, vente, lancement et relance sont aussi gardées côté gestionnaire pendant le choix. Les captures de progression utilisent uniquement des arguments de contrôle et un budget imposé explicitement signalé, sans modifier le budget normal.
 
 Validation : 607 contrôles réussis sous Godot 4.7.2, dont 408 pour L4 ; huit vues de progression rendues et inspectées. Les documents de conception restent en v0.14. L5 doit intégrer les règles de campagne, de bonus et de synergies avant les essais d’équilibrage complets.
+
+## Implémentation L5 — v0.18, 21 octobre 2026
+
+Les dix compositions, douze fiches de bonus et douze associations sont regroupées dans prototype/scripts/campaign_data.gd. Le calendrier développe les groupes à partir de leur type, quantité et intervalle ; le suivant commence 4 s après la dernière apparition. Le modèle distingue fin de vague, choix roguelite, préparation, victoire et défaite. La commande prepare_next_wave ne répète jamais la vague précédente et conserve l’état de partie ; le lancement reste manuel.
+
+Le tirage utilise RandomNumberGenerator avec trois prélèvements uniformes dans le catalogue restant, sans remise au sein de l’offre. Seul le code choisi rejoint les bonus acquis et disparaît des prochains catalogues. La graine fixe 42 sert aux références de test et de capture ; la partie normale utilise un générateur initialisé aléatoirement. Aucune commande de graine ou de relance n’est ajoutée à l’interface.
+
+Les synergies sont calculées par bénéficiaire depuis les partenaires actuels, avec un arrêt après le premier partenaire admissible pour chaque code. Les portées de toutes les unités sont recalculées après achat, vente, amélioration ou bonus. Les références propres aux composantes restent séparées des pourcentages pour additionner R-12 au moment de chaque impact, sans multiplier les effets entre eux ni transmettre R-06 aux secondaires. Une malédiction conserve les dégâts calculés à l’application.
+
+La construction historique Model.new(false) sert uniquement aux anciens scénarios sans synergies du GDD ; le jeu et les nouveaux tests de campagne utilisent Model.new(), avec synergies actives. Cette option n’est pas exposée au joueur. Les réductions de prix concernent les opérations futures et ne modifient jamais paid.
+
+L’interface affiche vague, PV maximum effectifs, durée de combat cumulée, offres, bonus acquis, statistiques effectives et synergies au survol. Le bouton de lancement décrit les prochains groupes. Le récapitulatif des bonus ne suspend pas un combat. Les textes multilignes utilisent des séquences explicites pour éviter l’effet des fins de ligne Windows sur la mise en page.
+
+Validation : 969 contrôles réussis, dont 362 pour L5. Même chronologie à grand pas, ×1 et ×2 sur la vague 8 avec bonus et synergies. Deux campagnes maximales de contrôle et deux campagnes financées normalement réussies. L6 doit élargir les essais ; aucune conclusion d’équilibrage général ou de durée humaine n’est tirée de ces références.
