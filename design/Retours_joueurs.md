@@ -24,7 +24,7 @@ Aucun réglage ni texte du jeu modifié sur la base de ce seul retour. Aucun nou
 
 ## RJ-002 — Victoire Horde, 23 octobre 2026
 
-Source : deux captures de fin de partie envoyées par le porteur du projet dans le chat. Version exacte non affichée ; les textes et le délai correspondent à la v0.23 distribuée au moment du retour. Aucun ressenti de difficulté n’accompagne ces captures.
+Source : deux captures de fin de partie envoyées par le porteur du projet dans le chat, puis précision de son ressenti. Version exacte non affichée ; les textes et le délai correspondent à la v0.23 distribuée au moment du retour.
 
 ### Résultats visibles
 
@@ -53,6 +53,8 @@ Les coûts de référence de ces trois unités totalisent 800 or (350 + 250 + 20
 
 ### Interprétation à vérifier
 
-Cette run montre qu’une composition finale à trois défenseurs peut gagner avec ces bonus et placements. La dernière vague ne provoque aucune fuite sur cet essai. Cela ne mesure ni la tension ressentie ni le temps nécessaire pour éliminer le boss et ne suffit pas à conclure à un déséquilibre général. Le ressenti comparé des vagues 9 et 10 reste à recueillir ; la proposition antérieure de boss à 900 PV n’est pas appliquée.
+Cette run montre qu’une composition finale à trois défenseurs peut gagner avec ces bonus et placements. La dernière vague ne provoque aucune fuite sur cet essai. Les captures seules ne mesurent ni la tension ressentie ni le temps nécessaire pour éliminer le boss et ne suffisent pas à conclure à un déséquilibre général.
+
+Précision du joueur après discussion de la finale : « c’est mieux et à la fin tout dépend des améliorations que j’ai choisi aussi ». La finale est donc mieux appréciée sur cette run ; le joueur souligne l’influence des améliorations choisies. Cela ne valide pas tous les ensembles de bonus ni un changement des statistiques du boss. Conserver les réglages actuels et comparer d’autres compositions avant d’en déduire une correction. La proposition antérieure de boss à 900 PV n’est pas appliquée.
 
 Captures conservées : [victoire](essais/captures/RJ-002_victoire_horde.png) et [bonus](essais/captures/RJ-002_bonus_horde.png). Aucun paramètre du jeu modifié à partir de ce relevé.
