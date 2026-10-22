@@ -1,6 +1,6 @@
 # Dix vagues jouables sur La Vallée du Gué
 
-**Prototype v0.19 — 22 octobre 2026.** Référence de conception : GDD v0.14. For the Fortress! reste un nom de travail.
+**Prototype v0.20 — 22 octobre 2026.** Référence de conception : GDD v0.14. For the Fortress! reste un nom de travail.
 
 Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. Les règles sont celles du GDD v0.14 ; les réglages numériques restent H et aucune nouvelle mécanique de conception n’est ajoutée.
 
@@ -123,8 +123,16 @@ Dans cette matrice, la politique renforts gagne 576/576 parties ; référence 39
 
 Les [données et commandes de reproduction](../design/essais/README.md) sont versionnées. Une [fiche d’essai](../design/Fiche_essai_joueur.md) sert à recueillir compréhension, choix et durées humaines. Aucun essai humain ni temps de préparation humain n’est présenté comme déjà mesuré.
 
+## Améliorations à trois types constants (v0.20)
+
+Le [nouveau bilan](../design/Bilan_ameliorations_v020.md) conserve trois types et leurs positions depuis 96 préparations communes après vague 4. Il compare 384 essais de vague 5 (épargne ou un N2 à 50 or) puis 768 continuations avec différentes répartitions et branches. Les copies d’état et de générateur sont vérifiées ; les revenus futurs ne sont jamais artificiellement égalisés.
+
+Les trois traitements N2 réduisent les arrivées dans 53 à 55 états sur 96 selon la cible et ne les augmentent dans aucun de ces essais isolés. En continuation, equilibre gagne 152/192 scénarios contre 150/192 pour reference ; la meilleure répartition dépend du placement. Les 51 801 vérifications d’intégrité réussissent et les 969 contrôles de régression passent toujours. Les trajectoires parfois identiques ne sont pas des observations indépendantes.
+
+Aucun coût ni dégât changé : ces résultats ne justifient pas une baisse générale des améliorations. Les archives et commandes sont dans [les données d’essais](../design/essais/README.md). Les essais humains et leurs durées restent à recueillir.
+
 ## État et suite
 
-L1, L2, L3, L4 et L5 sont réalisés. L0 reste partiellement réalisé : le projet démarre avec le moteur portable préparé localement, mais l’export Windows autonome reste à produire. Les documents de conception restent en v0.14 ; v0.19 désigne la révision du prototype et du dépôt.
+L1, L2, L3, L4 et L5 sont réalisés. L0 reste partiellement réalisé : le projet démarre avec le moteur portable préparé localement, mais l’export Windows autonome reste à produire. Les documents de conception restent en v0.14 ; v0.20 désigne la révision du prototype et du dépôt.
 
-L6 est partiellement réalisé : la matrice automatisée est consignée ; restent les essais humains et les comparaisons à types, placements et budget contrôlés, avant toute proposition de réglage. La cible de 8 à 12 minutes reste à mesurer avec les préparations humaines. Voir le [cahier de réalisation](../design/Proposition_realisation_prototype.md), le [suivi du prototype](../design/Suivi_prototype.md) et les [choix techniques](../design/Choix_techniques_prototype.md).
+L6 est partiellement réalisé : la matrice automatisée et les comparaisons à trois types constants sont consignées ; restent les essais humains avant de décider un réglage. Prochaine étape technique : distribution Windows autonome pour faciliter ces essais. La cible de 8 à 12 minutes reste à mesurer avec les préparations humaines. Voir le [cahier de réalisation](../design/Proposition_realisation_prototype.md), le [suivi du prototype](../design/Suivi_prototype.md) et les [choix techniques](../design/Choix_techniques_prototype.md).

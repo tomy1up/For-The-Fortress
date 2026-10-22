@@ -1,10 +1,10 @@
 # Suivi du prototype
 
-État du 22 octobre 2026 — prototype v0.19, GDD v0.14.
+État du 22 octobre 2026 — prototype v0.20, GDD v0.14.
 
 ## Périmètre réalisé
 
-Les dix vagues sont jouables avec les deux factions, les niveaux, les douze spécialisations, les bonus roguelite et les douze synergies activables. Les deux campagnes de référence atteignent une victoire au budget normal ; une première matrice comparative L6 est consignée ; les essais humains restent à mener.
+Les dix vagues sont jouables avec les deux factions, les niveaux, les douze spécialisations, les bonus roguelite et les douze synergies activables. Les deux campagnes de référence atteignent une victoire au budget normal ; la matrice comparative et les essais à trois types constants de L6 sont consignés ; les essais humains restent à mener.
 
 | Lot du cahier | État | Preuve ou travail restant |
 | --- | --- | --- |
@@ -14,7 +14,7 @@ Les dix vagues sont jouables avec les deux factions, les niveaux, les douze spé
 | L3 Couvrir le combat | Réalisé | Six défenseurs, huit profils, effets, ordre des événements et campagne intégrés |
 | L4 Progression | Réalisé | N1 à N4, douze branches, choix atomique et dépenses historiques |
 | L5 Partie complète | Réalisé | Dix vagues, trois choix, douze bonus, douze synergies ; victoires et défaites testées |
-| L6 Essais et équilibrage | Partiel | 1 728 parties automatisées consignées ; essais humains et comparaisons ciblées encore nécessaires |
+| L6 Essais et équilibrage | Partiel | Matrice et comparaisons d’améliorations consignées ; essais humains encore nécessaires |
 
 ## Référence historique v0.15
 
@@ -114,3 +114,13 @@ L5 est réalisé. L6 reste à mener : compréhension par des joueurs, diversité
 109 111 vérifications d’intégrité sans échec pendant ces essais ; 969 contrôles de régression toujours réussis. La politique renforts gagne ses 576 essais ; la politique référence 399/576 ; la spécialisation des deux unités initiales 82/576. Le nombre de types et la couverture changent avec les politiques : aucune conclusion isolée sur le prix des améliorations. 54 parties activent une association N4 réellement financée.
 
 L6 reste partiel. La [fiche d’essai joueur](Fiche_essai_joueur.md) est prête mais aucun retour humain n’est inventé. Prochain travail : essais humains et comparaison des politiques avec les mêmes trois types, positions et budget. Les réglages H sont conservés ; toute proposition ultérieure devra préciser le changement et sa mesure. L0 reste partiel sans export autonome. Les documents de conception restent en v0.14.
+
+## Livraison d’essais appariés — v0.20, 22 octobre 2026
+
+96 préparations communes après vague 4, avec trois types N1 payés au budget normal. 384 essais isolés comparent l’épargne et trois dépenses N2 identiques de 50 or. 768 continuations conservent ces trois types et leurs positions en faisant varier politique d’amélioration et ensemble de branches. Les offres restent identiques aux choix communs ; les revenus futurs varient naturellement avec les éliminations.
+
+51 801 vérifications d’intégrité réussies, dont copie profonde de l’état et du générateur, original préservé, positions et types conservés, conservation de l’or et transitions. Les 969 contrôles de régression passent. Le [bilan](Bilan_ameliorations_v020.md) et les relevés compressés sont versionnés.
+
+L’amélioration N2 réduit les arrivées dans 53 à 55 préfixes sur 96 selon l’unité choisie, sans aggravation dans cette vague isolée. Les continuations equilibre et reference gagnent 152 et 150 fois sur 192 ; la priorité aux dégâts de groupe dépend fortement du placement. reference et priorite_0 donnent les mêmes 192 trajectoires et ne constituent pas deux confirmations indépendantes.
+
+Décision : conserver coûts et statistiques H. Aucun fichier de gameplay ni GDD modifié. L6 reste partiel, sans observations humaines ; L0 reste partiel sans export autonome. Prochaine réalisation : préparer la distribution Windows pour faciliter l’essai joueur, puis consigner compréhension et durées avec la fiche existante.

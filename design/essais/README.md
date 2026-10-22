@@ -1,6 +1,8 @@
-# Données des essais v0.19
+# Données des essais automatisés
 
-22 octobre 2026. Sources de gameplay et GDD inchangés depuis la v0.18.
+22 octobre 2026. Sources de gameplay et GDD inchangés depuis la v0.18. Les lots v0.19 et v0.20 conservent leurs propres relevés et synthèses.
+
+## Matrice v0.19
 
 - `v019_tableaux.md` : lecture des résultats par faction, placement et politique.
 - `v019_synthese.json` : agrégations, graines et empreintes SHA-256 des sources et des relevés.
@@ -36,3 +38,18 @@ Pour relire l’archive existante sans rejouer les parties :
 ~~~
 
 Les empreintes supposent les mêmes octets des sources : une conversion locale des fins de ligne peut les modifier sans changer le comportement. Les résultats déterministes supposent la même version de Godot et le même algorithme de tirage. Les commandes écrivent dans des dossiers de travail séparés, pour permettre une comparaison avant remplacement des données versionnées.
+
+## Comparaisons d’améliorations v0.20
+
+Voir [le bilan apparié](../Bilan_ameliorations_v020.md). Les nouveaux fichiers sont `v020_releves.json.gz`, `v020_synthese.json` et `v020_tableaux.md`. Ils contiennent 96 préparations communes, 384 essais isolés de vague 5 et 768 continuations à trois types constants. Les 96 préfixes ne sont joués qu’une fois chacun, puis copiés sans ressources supplémentaires.
+
+`checkpoints` décrit le départ après la vague 4. `immediate.target` vaut −1 pour épargner et 0/1/2 pour améliorer le premier/deuxième/troisième type local de la faction ; ces indices ne sont pas des emplacements. Les traitements paient chacun 50 or. `campaigns.policy` et `branch` décrivent la politique et le choix A (0) ou B (1), utilisé seulement lors d’un N4 réellement acheté.
+
+Les défenses sont relevées au lancement de chaque vague ; les résultats après sa résolution. Les offres après les vagues 6 et 9 sont enregistrées ensuite. Les revenus futurs des continuations peuvent diverger ; seul leur état de départ est identique. Les résultats A/B et les politiques parfois identiques ne sont pas des observations indépendantes.
+
+~~~powershell
+& $fortressEngine --headless --path prototype --script res://tests/survey_upgrades.gd -- --output=C:/Projet/.tools/upgrades_replay.json
+& $fortressPython prototype/tests/analyse_upgrades.py C:/Projet/.tools/upgrades_replay.json --destination C:/Projet/.tools/upgrades_replay
+~~~
+
+Vérifier le résumé `checkpoints=96 immediate=384 campaigns=768`, `failures=0` et l’absence d’erreur moteur. L’analyse valide la dépense identique des traitements, le maintien des types et emplacements, les soldes terminaux et l’identité des offres aux choix communs. La relecture peut utiliser directement `design/essais/v020_releves.json.gz` à la place du relevé brut. Aucun fichier v0.19 n’est remplacé par ces commandes.

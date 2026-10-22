@@ -1,0 +1,786 @@
+{
+  "schema": 1,
+  "engine": "4.7.2-stable (official)",
+  "checks": 51801,
+  "checkpoints": 96,
+  "immediate": {
+    "-1": {
+      "runs": 96,
+      "kills_mean": 16.510417,
+      "escapes_mean": 1.479167,
+      "hp_mean": 12.5625,
+      "improved_kills_vs_saving": 0
+    },
+    "0": {
+      "runs": 96,
+      "kills_mean": 17.5625,
+      "escapes_mean": 0.4375,
+      "hp_mean": 14.427083,
+      "improved_kills_vs_saving": 53
+    },
+    "1": {
+      "runs": 96,
+      "kills_mean": 17.572917,
+      "escapes_mean": 0.427083,
+      "hp_mean": 14.59375,
+      "improved_kills_vs_saving": 55
+    },
+    "2": {
+      "runs": 96,
+      "kills_mean": 17.760417,
+      "escapes_mean": 0.239583,
+      "hp_mean": 14.833333,
+      "improved_kills_vs_saving": 53
+    }
+  },
+  "immediate_cells": [
+    {
+      "faction": 0,
+      "layout": "triangle",
+      "target": -1,
+      "runs": 12,
+      "kills_mean": 17.833333,
+      "hp_mean": 17.666667
+    },
+    {
+      "faction": 0,
+      "layout": "triangle",
+      "target": 0,
+      "runs": 12,
+      "kills_mean": 18,
+      "hp_mean": 18
+    },
+    {
+      "faction": 0,
+      "layout": "triangle",
+      "target": 1,
+      "runs": 12,
+      "kills_mean": 18,
+      "hp_mean": 18
+    },
+    {
+      "faction": 0,
+      "layout": "triangle",
+      "target": 2,
+      "runs": 12,
+      "kills_mean": 18,
+      "hp_mean": 18
+    },
+    {
+      "faction": 0,
+      "layout": "milieu",
+      "target": -1,
+      "runs": 12,
+      "kills_mean": 17.416667,
+      "hp_mean": 17.083333
+    },
+    {
+      "faction": 0,
+      "layout": "milieu",
+      "target": 0,
+      "runs": 12,
+      "kills_mean": 18,
+      "hp_mean": 18.25
+    },
+    {
+      "faction": 0,
+      "layout": "milieu",
+      "target": 1,
+      "runs": 12,
+      "kills_mean": 18,
+      "hp_mean": 18.25
+    },
+    {
+      "faction": 0,
+      "layout": "milieu",
+      "target": 2,
+      "runs": 12,
+      "kills_mean": 17.833333,
+      "hp_mean": 17.916667
+    },
+    {
+      "faction": 0,
+      "layout": "reparti",
+      "target": -1,
+      "runs": 12,
+      "kills_mean": 14.833333,
+      "hp_mean": 8.166667
+    },
+    {
+      "faction": 0,
+      "layout": "reparti",
+      "target": 0,
+      "runs": 12,
+      "kills_mean": 16.333333,
+      "hp_mean": 11
+    },
+    {
+      "faction": 0,
+      "layout": "reparti",
+      "target": 1,
+      "runs": 12,
+      "kills_mean": 16.833333,
+      "hp_mean": 12.166667
+    },
+    {
+      "faction": 0,
+      "layout": "reparti",
+      "target": 2,
+      "runs": 12,
+      "kills_mean": 17,
+      "hp_mean": 12.5
+    },
+    {
+      "faction": 0,
+      "layout": "aval",
+      "target": -1,
+      "runs": 12,
+      "kills_mean": 17.833333,
+      "hp_mean": 11.833333
+    },
+    {
+      "faction": 0,
+      "layout": "aval",
+      "target": 0,
+      "runs": 12,
+      "kills_mean": 18,
+      "hp_mean": 12.166667
+    },
+    {
+      "faction": 0,
+      "layout": "aval",
+      "target": 1,
+      "runs": 12,
+      "kills_mean": 18,
+      "hp_mean": 12.166667
+    },
+    {
+      "faction": 0,
+      "layout": "aval",
+      "target": 2,
+      "runs": 12,
+      "kills_mean": 18,
+      "hp_mean": 12.166667
+    },
+    {
+      "faction": 1,
+      "layout": "triangle",
+      "target": -1,
+      "runs": 12,
+      "kills_mean": 17.5,
+      "hp_mean": 14.25
+    },
+    {
+      "faction": 1,
+      "layout": "triangle",
+      "target": 0,
+      "runs": 12,
+      "kills_mean": 18,
+      "hp_mean": 14.916667
+    },
+    {
+      "faction": 1,
+      "layout": "triangle",
+      "target": 1,
+      "runs": 12,
+      "kills_mean": 17.833333,
+      "hp_mean": 14.75
+    },
+    {
+      "faction": 1,
+      "layout": "triangle",
+      "target": 2,
+      "runs": 12,
+      "kills_mean": 18,
+      "hp_mean": 14.916667
+    },
+    {
+      "faction": 1,
+      "layout": "milieu",
+      "target": -1,
+      "runs": 12,
+      "kills_mean": 15.5,
+      "hp_mean": 12.083333
+    },
+    {
+      "faction": 1,
+      "layout": "milieu",
+      "target": 0,
+      "runs": 12,
+      "kills_mean": 17.583333,
+      "hp_mean": 15.833333
+    },
+    {
+      "faction": 1,
+      "layout": "milieu",
+      "target": 1,
+      "runs": 12,
+      "kills_mean": 17.833333,
+      "hp_mean": 16.416667
+    },
+    {
+      "faction": 1,
+      "layout": "milieu",
+      "target": 2,
+      "runs": 12,
+      "kills_mean": 17.833333,
+      "hp_mean": 16.25
+    },
+    {
+      "faction": 1,
+      "layout": "reparti",
+      "target": -1,
+      "runs": 12,
+      "kills_mean": 13.833333,
+      "hp_mean": 3.916667
+    },
+    {
+      "faction": 1,
+      "layout": "reparti",
+      "target": 0,
+      "runs": 12,
+      "kills_mean": 16.583333,
+      "hp_mean": 8.416667
+    },
+    {
+      "faction": 1,
+      "layout": "reparti",
+      "target": 1,
+      "runs": 12,
+      "kills_mean": 16.416667,
+      "hp_mean": 8.833333
+    },
+    {
+      "faction": 1,
+      "layout": "reparti",
+      "target": 2,
+      "runs": 12,
+      "kills_mean": 17.416667,
+      "hp_mean": 10.083333
+    },
+    {
+      "faction": 1,
+      "layout": "aval",
+      "target": -1,
+      "runs": 12,
+      "kills_mean": 17.333333,
+      "hp_mean": 15.5
+    },
+    {
+      "faction": 1,
+      "layout": "aval",
+      "target": 0,
+      "runs": 12,
+      "kills_mean": 18,
+      "hp_mean": 16.833333
+    },
+    {
+      "faction": 1,
+      "layout": "aval",
+      "target": 1,
+      "runs": 12,
+      "kills_mean": 17.666667,
+      "hp_mean": 16.166667
+    },
+    {
+      "faction": 1,
+      "layout": "aval",
+      "target": 2,
+      "runs": 12,
+      "kills_mean": 18,
+      "hp_mean": 16.833333
+    }
+  ],
+  "campaigns": {
+    "reference": {
+      "runs": 192,
+      "wins": 150,
+      "hp_mean_all": 8.927083,
+      "hp_mean_wins": 11.426667,
+      "defeats_by_wave": {
+        "6": 14,
+        "7": 16,
+        "8": 4,
+        "9": 7,
+        "10": 1
+      }
+    },
+    "equilibre": {
+      "runs": 192,
+      "wins": 152,
+      "hp_mean_all": 10.666667,
+      "hp_mean_wins": 13.473684,
+      "defeats_by_wave": {
+        "6": 14,
+        "7": 12,
+        "8": 8,
+        "9": 4,
+        "10": 2
+      }
+    },
+    "priorite_0": {
+      "runs": 192,
+      "wins": 150,
+      "hp_mean_all": 8.927083,
+      "hp_mean_wins": 11.426667,
+      "defeats_by_wave": {
+        "6": 14,
+        "7": 16,
+        "8": 4,
+        "9": 7,
+        "10": 1
+      }
+    },
+    "priorite_groupe": {
+      "runs": 192,
+      "wins": 146,
+      "hp_mean_all": 8.364583,
+      "hp_mean_wins": 11,
+      "defeats_by_wave": {
+        "6": 4,
+        "7": 10,
+        "8": 18,
+        "9": 3,
+        "10": 11
+      }
+    }
+  },
+  "campaign_cells": [
+    {
+      "faction": 0,
+      "layout": "triangle",
+      "policy": "reference",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 16.833333,
+      "hp_mean_wins": 16.833333,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 0,
+      "layout": "triangle",
+      "policy": "equilibre",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 17,
+      "hp_mean_wins": 17,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 0,
+      "layout": "triangle",
+      "policy": "priorite_0",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 16.833333,
+      "hp_mean_wins": 16.833333,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 0,
+      "layout": "triangle",
+      "policy": "priorite_groupe",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 17.791667,
+      "hp_mean_wins": 17.791667,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 0,
+      "layout": "milieu",
+      "policy": "reference",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 16,
+      "hp_mean_wins": 16,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 0,
+      "layout": "milieu",
+      "policy": "equilibre",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 17.916667,
+      "hp_mean_wins": 17.916667,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 0,
+      "layout": "milieu",
+      "policy": "priorite_0",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 16,
+      "hp_mean_wins": 16,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 0,
+      "layout": "milieu",
+      "policy": "priorite_groupe",
+      "runs": 24,
+      "wins": 17,
+      "hp_mean_all": 3.666667,
+      "hp_mean_wins": 5.176471,
+      "defeats_by_wave": {
+        "10": 7
+      }
+    },
+    {
+      "faction": 0,
+      "layout": "reparti",
+      "policy": "reference",
+      "runs": 24,
+      "wins": 2,
+      "hp_mean_all": 0.166667,
+      "hp_mean_wins": 2,
+      "defeats_by_wave": {
+        "6": 4,
+        "7": 8,
+        "8": 4,
+        "9": 6
+      }
+    },
+    {
+      "faction": 0,
+      "layout": "reparti",
+      "policy": "equilibre",
+      "runs": 24,
+      "wins": 4,
+      "hp_mean_all": 0.416667,
+      "hp_mean_wins": 2.5,
+      "defeats_by_wave": {
+        "6": 4,
+        "7": 6,
+        "8": 6,
+        "9": 2,
+        "10": 2
+      }
+    },
+    {
+      "faction": 0,
+      "layout": "reparti",
+      "policy": "priorite_0",
+      "runs": 24,
+      "wins": 2,
+      "hp_mean_all": 0.166667,
+      "hp_mean_wins": 2,
+      "defeats_by_wave": {
+        "6": 4,
+        "7": 8,
+        "8": 4,
+        "9": 6
+      }
+    },
+    {
+      "faction": 0,
+      "layout": "reparti",
+      "policy": "priorite_groupe",
+      "runs": 24,
+      "wins": 4,
+      "hp_mean_all": 0.25,
+      "hp_mean_wins": 1.5,
+      "defeats_by_wave": {
+        "7": 4,
+        "8": 14,
+        "9": 2
+      }
+    },
+    {
+      "faction": 0,
+      "layout": "aval",
+      "policy": "reference",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 7.5,
+      "hp_mean_wins": 7.5,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 0,
+      "layout": "aval",
+      "policy": "equilibre",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 10.166667,
+      "hp_mean_wins": 10.166667,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 0,
+      "layout": "aval",
+      "policy": "priorite_0",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 7.5,
+      "hp_mean_wins": 7.5,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 0,
+      "layout": "aval",
+      "policy": "priorite_groupe",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 10.333333,
+      "hp_mean_wins": 10.333333,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 1,
+      "layout": "triangle",
+      "policy": "reference",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 12.416667,
+      "hp_mean_wins": 12.416667,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 1,
+      "layout": "triangle",
+      "policy": "equilibre",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 14.583333,
+      "hp_mean_wins": 14.583333,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 1,
+      "layout": "triangle",
+      "policy": "priorite_0",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 12.416667,
+      "hp_mean_wins": 12.416667,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 1,
+      "layout": "triangle",
+      "policy": "priorite_groupe",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 14.25,
+      "hp_mean_wins": 14.25,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 1,
+      "layout": "milieu",
+      "policy": "reference",
+      "runs": 24,
+      "wins": 23,
+      "hp_mean_all": 5.416667,
+      "hp_mean_wins": 5.652174,
+      "defeats_by_wave": {
+        "9": 1
+      }
+    },
+    {
+      "faction": 1,
+      "layout": "milieu",
+      "policy": "equilibre",
+      "runs": 24,
+      "wins": 22,
+      "hp_mean_all": 9.166667,
+      "hp_mean_wins": 10,
+      "defeats_by_wave": {
+        "9": 2
+      }
+    },
+    {
+      "faction": 1,
+      "layout": "milieu",
+      "policy": "priorite_0",
+      "runs": 24,
+      "wins": 23,
+      "hp_mean_all": 5.416667,
+      "hp_mean_wins": 5.652174,
+      "defeats_by_wave": {
+        "9": 1
+      }
+    },
+    {
+      "faction": 1,
+      "layout": "milieu",
+      "policy": "priorite_groupe",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 10,
+      "hp_mean_wins": 10,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 1,
+      "layout": "reparti",
+      "policy": "reference",
+      "runs": 24,
+      "wins": 5,
+      "hp_mean_all": 0.666667,
+      "hp_mean_wins": 3.2,
+      "defeats_by_wave": {
+        "6": 10,
+        "7": 8,
+        "10": 1
+      }
+    },
+    {
+      "faction": 1,
+      "layout": "reparti",
+      "policy": "equilibre",
+      "runs": 24,
+      "wins": 6,
+      "hp_mean_all": 1,
+      "hp_mean_wins": 4,
+      "defeats_by_wave": {
+        "6": 10,
+        "7": 6,
+        "8": 2
+      }
+    },
+    {
+      "faction": 1,
+      "layout": "reparti",
+      "policy": "priorite_0",
+      "runs": 24,
+      "wins": 5,
+      "hp_mean_all": 0.666667,
+      "hp_mean_wins": 3.2,
+      "defeats_by_wave": {
+        "6": 10,
+        "7": 8,
+        "10": 1
+      }
+    },
+    {
+      "faction": 1,
+      "layout": "reparti",
+      "policy": "priorite_groupe",
+      "runs": 24,
+      "wins": 7,
+      "hp_mean_all": 0.708333,
+      "hp_mean_wins": 2.428571,
+      "defeats_by_wave": {
+        "6": 4,
+        "7": 6,
+        "8": 2,
+        "9": 1,
+        "10": 4
+      }
+    },
+    {
+      "faction": 1,
+      "layout": "aval",
+      "policy": "reference",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 12.416667,
+      "hp_mean_wins": 12.416667,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 1,
+      "layout": "aval",
+      "policy": "equilibre",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 15.083333,
+      "hp_mean_wins": 15.083333,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 1,
+      "layout": "aval",
+      "policy": "priorite_0",
+      "runs": 24,
+      "wins": 24,
+      "hp_mean_all": 12.416667,
+      "hp_mean_wins": 12.416667,
+      "defeats_by_wave": {}
+    },
+    {
+      "faction": 1,
+      "layout": "aval",
+      "policy": "priorite_groupe",
+      "runs": 24,
+      "wins": 22,
+      "hp_mean_all": 9.916667,
+      "hp_mean_wins": 10.818182,
+      "defeats_by_wave": {
+        "8": 2
+      }
+    }
+  ],
+  "paired_policies": {
+    "reference / equilibre": {
+      "deux victoires": 148,
+      "deux défaites": 38,
+      "seconde seule": 4,
+      "première seule": 2
+    },
+    "reference / priorite_0": {
+      "deux victoires": 150,
+      "deux défaites": 42
+    },
+    "reference / priorite_groupe": {
+      "deux victoires": 137,
+      "première seule": 13,
+      "deux défaites": 33,
+      "seconde seule": 9
+    },
+    "equilibre / priorite_0": {
+      "deux victoires": 148,
+      "deux défaites": 38,
+      "première seule": 4,
+      "seconde seule": 2
+    },
+    "equilibre / priorite_groupe": {
+      "deux victoires": 137,
+      "première seule": 15,
+      "deux défaites": 31,
+      "seconde seule": 9
+    },
+    "priorite_0 / priorite_groupe": {
+      "deux victoires": 137,
+      "première seule": 13,
+      "deux défaites": 33,
+      "seconde seule": 9
+    }
+  },
+  "paired_branches": {
+    "reference": {
+      "deux victoires": 74,
+      "deux défaites": 20,
+      "A gagne, B perd": 2
+    },
+    "equilibre": {
+      "deux victoires": 76,
+      "deux défaites": 20
+    },
+    "priorite_0": {
+      "deux victoires": 74,
+      "deux défaites": 20,
+      "A gagne, B perd": 2
+    },
+    "priorite_groupe": {
+      "deux victoires": 71,
+      "deux défaites": 21,
+      "B gagne, A perd": 4
+    }
+  },
+  "identical_reference_priority_runs": 192,
+  "source_sha256": {
+    "prototype/scripts/valley_model.gd": "b4a4caadf33d4a9de205d66db51f78914b152f832cd3f81a910a3daa558b662a",
+    "prototype/scripts/campaign_data.gd": "e7000625c063122623d9338ff118c5624b53b1e66bd5153663c26a268aa5cdf6",
+    "prototype/scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755",
+    "prototype/tests/survey_balance.gd": "61cb14aa2f1d552c025763bd7a3fb66bc4ab3eed1f1e3758b1214d897510df3f",
+    "prototype/tests/survey_upgrades.gd": "0ac5ddf9b65904b3d6a822f82f9377c28555a0eeeccfd13a20bc21a7a7a8e41a",
+    "prototype/tests/analyse_upgrades.py": "36bf3e7eff67b6e0f606d42d858faecf27e944ba00b1087a895345e96bd73748",
+    "For_the_Fortress_GDD.md": "60d13ae131d0cdd3ac1390285cf25751f72f65488ac0b983467331cacaf1d3ba"
+  },
+  "records_sha256": "a84c8a403ede079f06374c47020edc5e085ec47bcf1c3b11b97b9d58f665bdf9"
+}

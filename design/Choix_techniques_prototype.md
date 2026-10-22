@@ -70,3 +70,11 @@ Le lanceur headless prototype/tests/survey_balance.gd joue 1 728 combinaisons d�
 prototype/tests/analyse_balance.py utilise uniquement la bibliothèque standard Python : validation des 1 728 identifiants, lecture des offres et soldes, agrégation et compression JSON déterministe. Les sources du modèle, des données, du GDD et des outils sont identifiées par SHA-256. L’archive JSON compressée et la synthèse sont versionnées ; le protocole de reproduction écrit dans un dossier séparé.
 
 Résultats : 109 111 vérifications d’intégrité sans échec et 969 contrôles de régression réussis. Les statistiques sont descriptives d’une matrice de politiques fixes ; les graines communes et les branches parfois inactives rendent certaines lignes dépendantes. Les préparations humaines et le ressenti ne sont pas mesurés. Aucune modification de gameplay ni de GDD n’est effectuée pour cette livraison.
+
+## Comparaisons appariées — v0.20, 22 octobre 2026
+
+survey_upgrades.gd produit 96 préfixes normaux jusqu’à la fin de la vague 4, puis copie toutes les variables d’état et la graine/position du générateur. Chaque copie est comparée à sa source ; l’original est revérifié après chaque traitement. Les 384 essais isolés ne font qu’une dépense N2 ; les 768 suites testent quatre politiques et deux ensembles de branches, sans recrutement, vente ou modification de prix. Les trois unités restent aux mêmes emplacements.
+
+analyse_upgrades.py valide les variantes, les types et positions, les niveaux et prix identiques des traitements N2, les soldes terminaux et les offres communes. Il produit relevés JSON compressés déterministes, synthèse, tableaux et empreintes de sources. Les données v0.19 sont conservées séparément.
+
+51 801 vérifications d’intégrité sans échec et 969 contrôles de régression réussis. Les politiques reference et priorite_0 donnent ici exactement les mêmes trajectoires : le rapport signale cette dépendance. Les ressources sont identiques au départ, mais les revenus futurs ne sont pas forcés à l’égalité. Aucun fichier de gameplay, GDD ou réglage n’est changé. Les essais humains et l’export autonome restent à réaliser.
