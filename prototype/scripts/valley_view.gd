@@ -55,6 +55,16 @@ func _draw() -> void:
 			ring.append(project(Model.SLOTS[selected] + Vector2(cos(angle), sin(angle)) * stats.range))
 		draw_colored_polygon(ring, Color(0.8, 0.85, 0.5, 0.05))
 		draw_polyline(ring, Color(0.8, 0.85, 0.5, 0.35), 1.5, true)
+		# Montrer uniquement les partenaires actifs du défenseur sélectionné.
+		for rule in Model.Campaign.PROXIMITY + Model.Campaign.SPECIALISATIONS:
+			var specialised: bool = rule.has("branches")
+			var offset := Vector2(0, 4 if specialised else 0)
+			var link_color := Color("8cbde0") if specialised else Color("e1bb70")
+			for partner_slot in model.synergy_partners(selected, rule):
+				var start: Vector2 = project(Model.SLOTS[selected]) + offset
+				var finish: Vector2 = project(Model.SLOTS[partner_slot]) + offset
+				draw_line(start, finish, Color(link_color, 0.65), 2, true)
+				draw_circle(finish, 5, link_color, false, 2, true)
 	for index in range(Model.SLOTS.size()):
 		var center: Vector2 = project(Model.SLOTS[index])
 		var diamond := PackedVector2Array([center + Vector2(-26, 0), center + Vector2(0, -13), center + Vector2(26, 0), center + Vector2(0, 13)])

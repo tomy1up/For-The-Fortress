@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 23 octobre 2026 — prototype v0.22, GDD principal v0.14 et complément validé D-2026-10-23-01.
+État du 23 octobre 2026 — prototype v0.24, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -142,3 +142,11 @@ Demande explicite du porteur du projet : après le premier lancement manuel, suc
 60 secondes réelles, indépendantes du ×2. Choix roguelite sans limite puis délai complet ; choix N4 et lecture du récapitulatif d’améliorations suspendent le temps restant de préparation. Achats et ventes restent possibles pendant le délai. Départ anticipé possible. Aucune reprise après victoire, défaite ou réinitialisation ; la vague 1 reste manuelle au nouvel essai.
 
 1 075 contrôles réussis, dont 106 ciblés. Deux campagnes financées normalement, un seul premier départ manuel, résultats de référence conservés. Nouvelle archive Windows : six lancements hors projet, captures du compte à rebours et du choix inspectées. Aucune modification des nombres de combat ; le boss à 900 PV reste une proposition non appliquée. Les essais humains restent à compléter sur ce nouveau rythme.
+
+## Lisibilité des synergies — v0.24, 23 octobre 2026
+
+Les essais humains Horde et les clarifications suivantes sont consignés dans [les retours joueurs](Retours_joueurs.md). Le joueur apprécie mieux la finale et souligne l’influence des bonus choisis ; aucun réglage d’équilibrage n’est modifié. La v0.23 a réduit le délai à 30 secondes et clarifié les libellés de progression.
+
+La v0.24 rend les associations inspectables en clair : partenaires actifs reliés à l’unité sélectionnée, traits dorés pour la proximité et bleus pour les spécialisations, aide au survol avec noms, emplacements, conditions et gains. La recherche des partenaires est commune au calcul des bonus et à leur affichage. Voir [le compte rendu](Lisibilite_synergies_v024.md).
+
+1 198 contrôles réussis, dont 123 nouveaux ; résultats des campagnes de référence inchangés. Huit lancements du paquet Windows extrait vérifiés, dont les vues de synergies en combat des deux factions. Les aides et les liens sont inspectés visuellement. Le délai reste 30 secondes et le GDD principal reste en v0.14. L6 demeure partiel : élargir les essais humains aux compositions et factions avant toute modification d’équilibrage ou extension du contenu.

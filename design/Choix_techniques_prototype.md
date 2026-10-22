@@ -96,3 +96,11 @@ La scène Main gère autoplay_started, countdown_wave et countdown_remaining, av
 Une fin de combat arme les 60 secondes sans consommer le reste d’une image longue. Le choix roguelite désarme le décompte jusqu’à sa résolution, puis arme un délai entier ; les fenêtres N4 et récapitulatif gèlent le reste disponible. L’expiration appelle le même chemin de lancement que le bouton, qui permet aussi un départ anticipé.
 
 106 vérifications ciblées et 1 075 au total. Les scénarios contrôlés comparent économie, résultat et absence de vague 11 ; la version Windows exportée est contrôlée hors du projet avec une capture de préparation chronométrée supplémentaire. La décision complète le GDD principal sans changer les données de combat.
+
+## Inspection des synergies — v0.24, 23 octobre 2026
+
+La v0.23 a ramené la constante de préparation à 30 secondes. La v0.24 conserve ce délai et ajoute une recherche commune `synergy_partners(slot, rule, branch_override)` aux effets et à la vue. La recherche renvoie tous les partenaires admissibles pour dessiner leurs liens ; les gains ne sont appliqués qu’une fois par règle, comme auparavant. L’aperçu de branche conserve son calcul sans confirmer ni facturer la spécialisation.
+
+La vue dessine uniquement les liens du défenseur sélectionné, avant les personnages ; les liens de spécialisation sont décalés de quatre pixels pour distinguer deux associations sur une même paire. Le contrôleur produit l’aide à partir des mêmes règles : noms de la faction, emplacements, gains propres au bénéficiaire et conditions. Un thème d’infobulle opaque améliore la lecture, sans nouvelle fenêtre modale ni changement des horloges.
+
+1 198 contrôles réussis, dont 123 couvrant les partenaires, leurs retraits, le non-cumul et les descriptions. Huit lancements de la distribution Windows vérifiés ; captures de proximité, spécialisations et aide inspectées. Les données numériques, compositions de vagues et références des campagnes restent identiques.

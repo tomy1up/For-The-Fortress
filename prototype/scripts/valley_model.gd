@@ -172,27 +172,33 @@ static func stats_for(type: int, level: int = 1, branch: int = -1) -> Dictionary
 				stats[key] = specialization[key]
 	return stats
 
-func synergy_effects(slot: int, branch_override: int = -1) -> Dictionary:
-	var result: Dictionary = {"direct":0.0,"secondary":0.0,"curse":0.0,"range":0.0,"codes":[]}
-	if not synergies_enabled or slot < 0 or defenders[slot].is_empty(): return result
+func synergy_partners(slot: int, rule: Dictionary, branch_override: int = -1) -> Array[int]:
+	var partners: Array[int] = []
+	if not synergies_enabled or slot < 0 or slot >= defenders.size() or defenders[slot].is_empty(): return partners
 	var unit: Dictionary = defenders[slot]
+	var side: int = rule.types.find(unit.type)
+	if side < 0: return partners
+	var specialised: bool = rule.has("branches")
 	var level: int = 4 if branch_override >= 0 else unit.level
 	var branch: int = branch_override if branch_override >= 0 else unit.branch
-	for specialised in [false,true]:
-		for rule in Campaign.SPECIALISATIONS if specialised else Campaign.PROXIMITY:
-			var side: int = rule.types.find(unit.type)
-			if side < 0: continue
-			if specialised and (level != 4 or branch != rule.branches[side]): continue
-			for other_slot in range(defenders.size()):
-				var partner: Dictionary = defenders[other_slot]
-				if other_slot == slot or partner.is_empty() or partner.type != rule.types[1-side]: continue
-				if specialised:
-					if partner.level != 4 or partner.branch != rule.branches[1-side]: continue
-				elif SLOTS[slot].distance_squared_to(SLOTS[other_slot]) > 25.0: continue
-				for i in range(4):
-					result[["direct","secondary","curse","range"][i]] += rule.effects[side][i]
-				result.codes.append(rule.code)
-				break # Un même code au maximum une fois par bénéficiaire.
+	if specialised and (level != 4 or branch != rule.branches[side]): return partners
+	for other_slot in range(defenders.size()):
+		var partner: Dictionary = defenders[other_slot]
+		if other_slot == slot or partner.is_empty() or partner.type != rule.types[1-side]: continue
+		if specialised:
+			if partner.level != 4 or partner.branch != rule.branches[1-side]: continue
+		elif SLOTS[slot].distance_squared_to(SLOTS[other_slot]) > 25.0: continue
+		partners.append(other_slot)
+	return partners
+
+func synergy_effects(slot: int, branch_override: int = -1) -> Dictionary:
+	var result: Dictionary = {"direct":0.0,"secondary":0.0,"curse":0.0,"range":0.0,"codes":[]}
+	for rule in Campaign.PROXIMITY + Campaign.SPECIALISATIONS:
+		if synergy_partners(slot, rule, branch_override).is_empty(): continue
+		var side: int = rule.types.find(defenders[slot].type)
+		for i in range(4):
+			result[["direct","secondary","curse","range"][i]] += rule.effects[side][i]
+		result.codes.append(rule.code) # Un même code une seule fois, même avec plusieurs partenaires.
 	return result
 
 func get_stats(slot: int, branch_override: int = -1) -> Dictionary:

@@ -1,0 +1,80 @@
+{
+  "archive_sha256": "be36741f3dd94538f2e9c1ddc0bc6a2b41ae1faef35d1391451a9a61e866c70b",
+  "executable_sha256": "12c1f7f2006e28c70c1b3394d5c14bcf7b52c78c31a64fc595ec6af10830b9fe",
+  "files": [
+    "For_the_Fortress_v0.24_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.24_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.24_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.24_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.24_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Liens de proximite et de specialisation et infobulles inspectes dans les deux factions ; vues exportees de synergies Alliance/Horde inspectees.",
+  "version": "0.24",
+  "date": "2026-10-23",
+  "inter_wave_seconds": 30,
+  "regression_checks": 1198,
+  "synergy_feedback_checks": 123,
+  "archive_bytes": 39340632,
+  "source_manifest": {
+    "version": "0.24",
+    "date": "2026-10-23",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "12c1f7f2006e28c70c1b3394d5c14bcf7b52c78c31a64fc595ec6af10830b9fe",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "3f57e942a95b1cc1776b321f1cea75cb3b473aa1be866b21d0662c938f5b2969",
+      "export_presets.cfg": "855fc4f45a036e7483e151a74bf8c608461497c8c14f5955da2fa73997803d9b",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "e1e84c6171d3b46b14bf04e88c1b5a0626e18b870eede7e2f7815a338a535aff",
+      "scripts/valley_model.gd": "84e127494537526a015876332ef0a430b35d8637ea96e543460bc16b04142314",
+      "scripts/valley_view.gd": "345ec9444cd67de063e45058058d8013613686e411cac602198a32511cbfe9d4",
+      "scripts/campaign_data.gd": "e866f322fd3ffe6b4e0ba627ebaedbe775b56aa805a6ee134d91faf3df482206",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.23 — 23 octobre 2026
+Version : 0.24 — 23 octobre 2026
 
 JOUER
 
@@ -27,7 +27,10 @@ Vendre : le montant remboursé est affiché avant la vente.
 Vitesse ×1/×2 : change la durée réelle du combat, pas les 30 secondes de préparation.
 Bonus acquis : relire les effets sélectionnés ; le décompte de préparation est suspendu
 pendant la lecture. Pendant un combat, le combat continue.
-Survol des codes de synergie : lire leurs effets sur l’unité sélectionnée.
+Synergies : sélectionner une unité pour voir ses partenaires reliés sur la carte.
+Traits dorés : proximité ; traits bleus : spécialisations.
+Survol de la ligne des synergies : partenaires, effets et conditions de chaque association.
+La lecture au survol ne suspend pas le combat ni le décompte.
 Survol du bouton de lancement : voir les groupes de la prochaine vague.
 Nouvel essai : repartir sans défense ni bonus, avec 150 or et 20 PV.
 Fermer la fenêtre : quitter. Aucune sauvegarde de partie n’est prévue dans ce prototype.

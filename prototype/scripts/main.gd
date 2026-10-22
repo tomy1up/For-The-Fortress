@@ -189,6 +189,16 @@ func _build_interface() -> void:
 	var screen := Control.new()
 	screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	screen.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var tooltip_theme := Theme.new()
+	var tooltip_style := StyleBoxFlat.new()
+	tooltip_style.bg_color = Color("10271f")
+	tooltip_style.border_color = Color("647d69")
+	tooltip_style.set_border_width_all(1)
+	tooltip_style.set_content_margin_all(12)
+	tooltip_theme.set_stylebox("panel", "TooltipPanel", tooltip_style)
+	tooltip_theme.set_font_size("font_size", "TooltipLabel", 14)
+	tooltip_theme.set_color("font_color", "TooltipLabel", Color("e0e7db"))
+	screen.theme = tooltip_theme
 	ui.add_child(screen)
 	_label(screen, "FOR THE FORTRESS!", Vector2(32, 24), Vector2(720, 44), 29, Color("e0dbbf"))
 	_label(screen, "LA VALLÉE DU GUÉ", Vector2(34, 71), Vector2(600, 24), 14, Color("9fb5a5"))
@@ -479,23 +489,42 @@ func _update_interface() -> void:
 		hint_label.text = "Achats, améliorations et ventes autorisés avant la vague suivante."
 	if occupied:
 		var effects: Dictionary = model.get_stats(selected)
-		var codes: String = ", ".join(effects.synergies)
-		hint_label.text = "Synergies : " + (codes if not codes.is_empty() else "aucune") + (" · R-12 : +20 % contre Brutes, Colosses, Élites et boss." if 11 in model.bonuses else "")
-		var descriptions: Array[String] = []
-		for rule in Model.Campaign.PROXIMITY + Model.Campaign.SPECIALISATIONS:
-			if rule.code not in effects.synergies: continue
-			var side: int = rule.types.find(model.defenders[selected].type)
-			var gains: Array[String] = []
-			for i in range(4):
-				var gain: float = rule.effects[side][i]
-				if gain > 0:
-					gains.append("+%s %s" % [_number(gain if i == 3 else gain*100),["% dégâts principaux","% dégâts secondaires","% dégâts périodiques","unité de portée"][i]])
-			descriptions.append(rule.code+" : "+", ".join(gains))
-		hint_label.tooltip_text = "\n".join(descriptions) + "\nLes statistiques incluent les bonus et synergies actifs. R-12 dépend de chaque victime."
+		hint_label.text = "Synergies actives : %d · Partenaires reliés sur la carte · Survolez pour les détails" % effects.synergies.size() if not effects.synergies.is_empty() else "Aucune synergie active · Survolez pour voir les associations possibles"
+		hint_label.tooltip_text = _synergy_tooltip(selected)
 	else:
 		hint_label.tooltip_text = ""
 	if model.phase in ["victory","defeat"]:
-		hint_label.text = "%d éliminés · %d arrivées · %d or gagnés au combat." % [model.total_killed,model.total_escaped,model.total_income]
+		hint_label.text = "%d éliminés · %d arrivées · %d or gagnés · Survolez pour les synergies" % [model.total_killed,model.total_escaped,model.total_income] if occupied else "%d éliminés · %d arrivées · %d or gagnés au combat." % [model.total_killed,model.total_escaped,model.total_income]
+
+func _synergy_tooltip(slot: int) -> String:
+	var type: int = model.defenders[slot].type
+	var descriptions: Array[String] = ["SYNERGIES · " + Model.ROSTER[type].name, "Traits dorés : proximité · Traits bleus : spécialisations"]
+	for rule in Model.Campaign.PROXIMITY + Model.Campaign.SPECIALISATIONS:
+		var side: int = rule.types.find(type)
+		if side < 0: continue
+		var specialised: bool = rule.has("branches")
+		var partner_type: int = rule.types[1-side]
+		var partner_name: String = Model.stats_for(partner_type, 4, rule.branches[1-side]).branch_name if specialised else Model.ROSTER[partner_type].name
+		var partners: Array[int] = model.synergy_partners(slot, rule)
+		var places: Array[String] = []
+		for other_slot in partners: places.append("E%d" % (other_slot+1))
+		var status: String = "Active avec " + partner_name + " (" + ", ".join(places) + ")" if not partners.is_empty() else "Inactive · Partenaire requis : " + partner_name
+		descriptions.append("\n" + ("Spécialisation · " if specialised else "Proximité · ") + status)
+		var gains: Array[String] = []
+		for i in range(4):
+			var gain: float = rule.effects[side][i]
+			if gain > 0:
+				gains.append("+%s %s" % [_number(gain if i == 3 else gain*100), ["% aux dégâts directs", "% aux dégâts des rebonds" if type == 3 else "% aux dégâts des explosions", "% aux dégâts de malédiction", "de portée"][i]])
+		descriptions.append("Pour cette unité : " + ", ".join(gains))
+		if specialised:
+			descriptions.append("Votre spécialisation requise : " + Model.stats_for(type, 4, rule.branches[side]).branch_name + ".\nAucune limite de distance.")
+		else:
+			var compatible: Array[String] = []
+			for other_slot in range(Model.SLOTS.size()):
+				if other_slot != slot and Model.SLOTS[slot].distance_squared_to(Model.SLOTS[other_slot]) <= 25.0: compatible.append("E%d" % (other_slot+1))
+			descriptions.append("Emplacements du partenaire à proximité : " + ", ".join(compatible) + ".")
+	descriptions.append("\nUn même bonus ne se cumule pas avec plusieurs partenaires.\nLes statistiques affichées incluent déjà les synergies actives.")
+	return "\n".join(descriptions)
 
 func _number(value: float) -> String:
 	return str(value).trim_suffix(".0").replace(".", ",")
