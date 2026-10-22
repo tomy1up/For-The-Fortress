@@ -42,7 +42,7 @@ startup=subprocess.STARTUPINFO()
 startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW
 startup.wShowWindow=0
 results=[]
-cases=[('startup',None,None),('selection','selection',None),('bonus','bonus',None),
+cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
        ('alliance_victory','victory','alliance'),('horde_victory','victory','horde')]
 for name,state,faction in cases:
     log=destination/(name+'.log')

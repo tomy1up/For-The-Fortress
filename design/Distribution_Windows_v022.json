@@ -1,0 +1,71 @@
+{
+  "archive_sha256": "fdb2e9b97f474a381939d11119f469e116253ec9d64e2078db25bbe215421ed5",
+  "executable_sha256": "e48aa145b6cae8f313b3ca8b5ef7cd6920c47b1bbdee04b872d45ef46022f8d8",
+  "files": [
+    "For_the_Fortress_v0.22_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.22_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.22_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.22_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.22_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Sélection, compte à rebours, choix roguelite et deux victoires inspectés.",
+  "version": "0.22",
+  "date": "2026-10-23",
+  "archive_bytes": 39337600,
+  "source_manifest": {
+    "version": "0.22",
+    "date": "2026-10-23",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "e48aa145b6cae8f313b3ca8b5ef7cd6920c47b1bbdee04b872d45ef46022f8d8",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "d5088d71a9e44b572e70df190ba5bdfca3fee6f594707d8e408d05d5d034b444",
+      "export_presets.cfg": "a4e665460940ddc77ddddee2d390edff86974aca8f27131ee6f7cdee22aca119",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "acc827706da89a4a6e891948e7ec27f24aa8f51b2b5269f0f3d5fab1e636e18c",
+      "scripts/valley_model.gd": "b4a4caadf33d4a9de205d66db51f78914b152f832cd3f81a910a3daa558b662a",
+      "scripts/valley_view.gd": "876bbe64c4185fef29c5821bf606cd8e851b98fe0d8028dc88235c295d433606",
+      "scripts/campaign_data.gd": "e7000625c063122623d9338ff118c5624b53b1e66bd5153663c26a268aa5cdf6",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  },
+  "regression_checks": 1075,
+  "autoplay_checks": 106,
+  "inter_wave_seconds": 60,
+  "release_url": "https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.22"
+}

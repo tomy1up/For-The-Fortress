@@ -2,6 +2,7 @@ extends Node2D
 
 const Model = preload("res://scripts/valley_model.gd")
 const MapView = preload("res://scripts/valley_view.gd")
+const INTER_WAVE_SECONDS: float = 60.0
 var model = Model.new()
 var map_view = MapView.new()
 var speed: float = 1.0
@@ -43,6 +44,9 @@ var bonus_buttons: Array[Button] = []
 var bonus_close: Button
 var bonus_summary_button: Button
 var overview_open: bool = false
+var autoplay_started: bool = false
+var countdown_wave: int = -1
+var countdown_remaining: float = -1.0
 
 func _ready() -> void:
 	map_view.model = model
@@ -97,6 +101,7 @@ func _ready() -> void:
 				model.start()
 				model.advance(1.0 if capture_state == "curse" else 7.5 if capture_state == "combat" else 100.0)
 		set_process(false)
+		if capture_state == "finished": autoplay_started = true
 		_update_interface()
 		if capture_state in ["specialisation", "specialised"]:
 			faction_label.text = "CONTRÔLE PROGRESSION · BUDGET IMPOSÉ"
@@ -110,9 +115,31 @@ func _ready() -> void:
 		get_tree().quit(error)
 
 func _process(delta: float) -> void:
+	var was_active: bool = model.active
 	model.advance(delta * speed)
+	_sync_countdown()
+	# Une fin de combat arme le délai complet, même après une image très longue.
+	if not was_active and model.phase == "finished" and countdown_remaining >= 0.0 and not _countdown_paused():
+		countdown_remaining = maxf(0.0, countdown_remaining - delta)
+		if countdown_remaining <= 0.0:
+			_start()
 	_update_interface()
 	map_view.queue_redraw()
+
+func _countdown_paused() -> bool:
+	return pending_slot >= 0 or overview_open
+
+func _sync_countdown() -> void:
+	if model.phase == "bonus":
+		overview_open = false # Le choix obligatoire remplace la simple lecture.
+	if model.phase in ["victory", "defeat"]:
+		autoplay_started = false
+	if not autoplay_started or model.phase != "finished":
+		countdown_wave = -1
+		countdown_remaining = -1.0
+	elif countdown_wave != model.wave:
+		countdown_wave = model.wave
+		countdown_remaining = INTER_WAVE_SECONDS
 
 func _prepare_campaign_capture(state: String) -> void:
 	# Référence financée au budget normal ; même politique que test_campaign.gd.
@@ -168,7 +195,7 @@ func _build_interface() -> void:
 	faction_label = _label(screen, "CHOIX DE FACTION", Vector2(898, 33), Vector2(350, 25), 13, Color("cdb47e"))
 	var side := _panel(screen, Rect2(24, 122, 278, 632))
 	_label(side, "DÉFENDRE LE GUÉ", Vector2(22, 20), Vector2(240, 28), 18, Color("e0dbbf"))
-	_label(side, "Placez vos défenseurs, puis lancez\nla vague. Ils attaquent seuls les\nennemis à portée.", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
+	_label(side, "Lancez la première vague.\nLes suivantes partent seules :\n60 s pour préparer la défense.", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
 	hp_label = _label(side, "", Vector2(22, 144), Vector2(238, 28), 21, Color("e2d5ad"))
 	gold_label = _label(side, "", Vector2(22, 184), Vector2(238, 24), 16, Color("cdb47e"))
 	status_label = _label(side, "", Vector2(22, 232), Vector2(238, 52), 16, Color("d0dfd1"))
@@ -341,7 +368,7 @@ func _start() -> void:
 	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open:
 		return
 	if model.phase == "finished": model.prepare_next_wave()
-	model.start()
+	if model.start(): autoplay_started = true
 	_update_interface()
 
 func _toggle_speed() -> void:
@@ -352,6 +379,9 @@ func _reset() -> void:
 	if model.active or pending_slot >= 0:
 		return
 	overview_open = false
+	autoplay_started = false
+	countdown_wave = -1
+	countdown_remaining = -1.0
 	model.reset()
 	choosing_faction = true
 	speed = 1.0
@@ -375,6 +405,7 @@ func _sell() -> void:
 	map_view.queue_redraw()
 
 func _update_interface() -> void:
+	_sync_countdown()
 	hp_label.text = "FORTERESSE   %d / %d PV" % [model.fortress_hp,model.max_hp]
 	gold_label.text = "OR DISPONIBLE     %d" % model.gold
 	faction_panel.visible = choosing_faction
@@ -382,11 +413,15 @@ func _update_interface() -> void:
 	specialisation_panel.visible = pending_slot >= 0
 	start_button.disabled = choosing_faction or pending_slot >= 0 or overview_open or model.phase not in ["preparation","finished"]
 	start_button.text = "Lancer la vague %d" % (model.wave+1 if model.phase == "finished" else model.wave) if model.phase in ["preparation","finished"] else "Vague %d en cours" % model.wave if model.active else "Partie gagnée" if model.phase == "victory" else "Choisissez un bonus" if model.phase == "bonus" else "Partie terminée"
+	if countdown_remaining >= 0.0:
+		start_button.text = "En pause · %d s" % ceili(countdown_remaining) if _countdown_paused() else "Vague %d dans %d s" % [model.wave+1,ceili(countdown_remaining)]
 	var preview_wave: int = mini(10, model.wave+1 if model.phase == "finished" else model.wave)
 	var preview: Array[String] = []
 	for group in Model.Campaign.WAVES[preview_wave-1]:
 		preview.append("%d %s · intervalle %s s" % [group[1],Model.ENEMY_TYPES[group[0]].name,_number(group[2])])
 	start_button.tooltip_text = "Vague %d\n%s\n4 s entre la dernière apparition d’un groupe et la première du suivant." % [preview_wave,"\n".join(preview)]
+	if countdown_remaining >= 0.0:
+		start_button.tooltip_text += "\nDépart automatique après le décompte. Cliquez pour lancer maintenant."
 	speed_button.text = "Vitesse ×%d" % int(speed)
 	reset_button.disabled = model.active or pending_slot >= 0
 	reset_button.tooltip_text = "Terminez la vague avant de recommencer." if model.active else "Repartir avec 150 or et 20 PV."
@@ -397,6 +432,8 @@ func _update_interface() -> void:
 		"bonus": status_label.text = "Vague %d terminée\nChoix roguelite obligatoire" % model.wave
 		"victory": status_label.text = "VICTOIRE · Dix vagues\nLa forteresse a survécu"
 		"defeat": status_label.text = "Forteresse détruite\nRelancez un nouvel essai"
+	if countdown_remaining >= 0.0:
+		status_label.text = "Vague %d terminée\n%s" % [model.wave,"Décompte suspendu" if _countdown_paused() else "Préparation : %d s" % ceili(countdown_remaining)]
 	bonus_summary_button.text = "Bonus acquis · %d/3" % model.bonuses.size()
 	bonus_summary_button.disabled = choosing_faction or pending_slot >= 0 or model.phase == "bonus"
 	_update_bonus_panel()
@@ -471,6 +508,7 @@ func _build_bonus_selector(screen: Control) -> void:
 	var panel: Panel = _panel(bonus_panel,Rect2(100,166,1080,468))
 	bonus_title = _label(panel,"",Vector2(28,24),Vector2(1024,40),26,Color("e0dbbf"))
 	bonus_subtitle = _label(panel,"",Vector2(28,78),Vector2(1024,46),15,Color("aabbb0"))
+	bonus_subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	for index in range(3):
 		var x: int = 28+index*348
 		bonus_names.append(_label(panel,"",Vector2(x,148),Vector2(328,54),18,Color("e0dbbf")))
@@ -500,7 +538,7 @@ func _update_bonus_panel() -> void:
 	bonus_panel.visible = choosing or overview_open
 	if not bonus_panel.visible: return
 	bonus_title.text = "Choisissez une amélioration · Vague %d terminée" % model.wave if choosing else "Bonus acquis pour cette partie"
-	bonus_subtitle.text = "Un choix gratuit, conservé jusqu’à la fin. Les deux autres offres pourront revenir." if choosing else "Les effets concernent aussi les futures recrues selon leurs conditions. Aucun bonus acquis." if model.bonuses.is_empty() else "Les effets concernent aussi les futures recrues selon leurs conditions."
+	bonus_subtitle.text = "Choisissez sans limite de temps. Le décompte de 60 s commence après votre choix. Les deux autres offres pourront revenir." if choosing else "Les effets concernent aussi les futures recrues selon leurs conditions. Aucun bonus acquis." if model.bonuses.is_empty() else "Les effets concernent aussi les futures recrues selon leurs conditions."
 	var entries: Array[int] = model.bonus_offer if choosing else model.bonuses
 	for index in range(3):
 		bonus_names[index].visible = index < entries.size()

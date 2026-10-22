@@ -1,14 +1,14 @@
 # Dix vagues jouables sur La Vallée du Gué
 
-**Prototype v0.21 — 22 octobre 2026.** Référence de conception : GDD v0.14. For the Fortress! reste un nom de travail.
+**Prototype v0.22 — 23 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
 
-Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. Les règles sont celles du GDD v0.14 ; les réglages numériques restent H et aucune nouvelle mécanique de conception n’est ajoutée.
+Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.22 applique en plus la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 60 secondes. Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.21](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.21) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.22](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.22) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
-Sur ce PC : dist/For_the_Fortress_v0.21_Windows_x64 depuis la racine du dépôt. Le ZIP local pèse 39 336 231 octets, environ 39 Mo. Voir [le compte rendu d’export](../design/Distribution_Windows_v021.md) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
+Sur ce PC : dist/For_the_Fortress_v0.22_Windows_x64 depuis la racine du dépôt. Le ZIP local pèse 39 337 600 octets, environ 39 Mo. Voir [le compte rendu d’export](../design/Distribution_Windows_v022.md) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
 ## Jouer depuis le projet source
 
@@ -24,12 +24,12 @@ Autre possibilité : ouvrir project.godot dans Godot 4.7.2 standard, puis lancer
 3. Cliquer sur une unité pour lire ses statistiques, afficher sa portée, améliorer son niveau ou consulter son remboursement avant une vente.
 4. Lancer la vague 1 : dix Pillards de 40 PV, apparitions à t = 0 puis toutes les 2,5 s. Les tirs sont automatiques.
 5. Observer les éliminations, l’or et les arrivées ; changer la vitesse entre ×1 et ×2 si souhaité.
-6. Entre les vagues, acheter, améliorer ou vendre, puis lancer la suivante. Survoler le bouton de lancement pour voir sa composition et ses intervalles.
-7. Après les vagues 3, 6 et 9, choisir un bonus parmi trois offres distinctes. Le choix est gratuit et obligatoire avant la préparation suivante.
+6. Entre les vagues, acheter, améliorer ou vendre pendant les 60 secondes avant le départ automatique. Cliquer sur le bouton pour partir plus tôt. Survoler le bouton de lancement pour voir sa composition et ses intervalles.
+7. Après les vagues 3, 6 et 9, choisir un bonus parmi trois offres distinctes, sans limite de temps. Le délai complet de 60 secondes commence après le choix.
 8. Consulter « Bonus acquis » et les synergies de l’unité sélectionnée ; survoler leurs codes pour lire les effets.
 9. Survivre jusqu’à la résolution complète de la vague 10. « Nouvel essai » repart avec 150 or et 20 PV, sans bonus ni défense.
 
-Les achats, améliorations, ventes et la relance d’un essai sont bloqués pendant le combat. Le bouton de lancement passe à la vague suivante ; il ne répète pas la précédente. La victoire et la défaite bloquent toute nouvelle dépense. Consulter les bonus acquis pendant un combat ne met pas le jeu en pause.
+Les achats, améliorations, ventes et la relance d’un essai sont bloqués pendant le combat. Le bouton de lancement passe à la vague suivante ; il ne répète pas la précédente. La victoire et la défaite bloquent toute nouvelle dépense. Consulter les bonus acquis pendant un combat ne met pas le jeu en pause. Pendant la préparation, leur lecture suspend le décompte ; le choix N4 le suspend également. Fermer ou résoudre ces fenêtres reprend le temps restant. Le ×2 ne modifie pas les 60 secondes.
 
 ## Règles implémentées
 
@@ -75,7 +75,7 @@ Les vagues successives permettent désormais de financer N3 et N4 avec les reven
 
 ## Campagne, bonus et synergies
 
-Les dix compositions du GDD sont exécutées : 182 ennemis et 770 or au maximum, sans prime de fin de vague. Premier ennemi à t = 0, intervalles internes inchangés, groupe suivant 4 s après la dernière apparition du précédent. Le temps de vague repart à zéro au lancement ; la défense, l’or, les PV et les bonus persistent. La durée de combat cumulée est affichée séparément des préparations.
+Les dix compositions du GDD sont exécutées : 182 ennemis et 770 or au maximum, sans prime de fin de vague. Premier ennemi à t = 0, intervalles internes inchangés, groupe suivant 4 s après la dernière apparition du précédent. Le premier lancement est manuel, les suivants automatiques après le délai ; un départ anticipé reste possible. Le temps de vague repart à zéro au lancement ; la défense, l’or, les PV et les bonus persistent. La durée de combat cumulée est affichée séparément des préparations.
 
 Après les vagues 3, 6 et 9, trois codes distincts sont tirés avec poids égaux. Le code choisi est retiré du catalogue de cette partie ; les deux autres restent disponibles. Il n’y a ni relance, ni copie d’un même bonus. Les douze effets R-01 à R-12 suivent les sections 25 à 29 du GDD : dégâts additifs par composante et par victime, cadence hors chaman, portée, propagation, niveau, PV maximum et réductions de prix futures.
 
@@ -91,7 +91,7 @@ Les huit profils apparaissent désormais dans leurs vagues approuvées, jusqu’
 
 ## Vérifications effectuées
 
-Godot 4.7.2.stable.official.ed1daf0bf, GDScript, rendu Compatibility ; contrôles de régression relancés le 22 octobre 2026.
+Godot 4.7.2.stable.official.ed1daf0bf, GDScript, rendu Compatibility ; contrôles de régression relancés le 23 octobre 2026.
 
 | Contrôle | Résultat |
 | --- | --- |
@@ -105,7 +105,7 @@ Godot 4.7.2.stable.official.ed1daf0bf, GDScript, rendu Compatibility ; contrôle
 
 Références reproductibles, sans bonus ni synergies : Archer en E1 + Arbalétrier en E2, fin à 23,5 s ; Troll en E1 + Sapeur en E2, fin à 24,5 s. Dans chaque essai : départ après achats à 25 or, dix éliminations, aucune arrivée, 20 PV et 55 or restants. Ce résultat vérifie ce scénario ; il ne démontre pas l’équilibre de la partie ou des factions.
 
-**Total : 969 contrôles réussis.** Les références historiques sans bonus ni synergies utilisent un constructeur de test dédié ; le jeu normal active toujours les synergies. Les tests de campagne vérifient les règles actives et la conservation de l’économie.
+**Total actuel : 1 075 contrôles réussis**, dont 106 pour l’enchaînement automatique (premier lancement, échéance, pauses de choix, ×2, relance, deux campagnes financées et fins de partie). Les références historiques sans bonus ni synergies utilisent un constructeur de test dédié ; le jeu normal active toujours les synergies. Les tests de campagne vérifient les règles actives et la conservation de l’économie.
 
 Deux victoires au budget normal, graine de vérification 42, choix R-06 puis R-11 puis R-10 : Alliance 14 PV, 192 or, 178 éliminations et 4 arrivées ; Horde 12 PV, 189 or, 175 éliminations et 7 arrivées. Temps de combat simulé cumulé : 372,755 s et 392,541 s. Ces résultats ne mesurent ni le temps de préparation humain ni l’équilibre général. Le [compte rendu](../design/Resultats_campagne_v018.md) donne le protocole et les offres.
 
@@ -117,6 +117,7 @@ Les tests peuvent être relancés depuis ce dossier avec le moteur :
 & 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_horde.gd
 & 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_progression.gd
 & 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_campaign.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_autoplay.gd
 ~~~
 
 Vérifier le résumé failures=0 et l’absence de messages ERROR, même si le processus rend un code de sortie nul. Les fichiers .godot sont un cache local exclu de Git ; les fichiers .gd.uid sont suivis.
@@ -139,9 +140,9 @@ Aucun coût ni dégât changé : ces résultats ne justifient pas une baisse gé
 
 ## État et suite
 
-L1, L2, L3, L4 et L5 sont réalisés. L0 est réalisé pour le prototype Windows x86_64 : le projet source et la distribution autonome démarrent. Les essais humains et la validation sur d’autres machines restent à mener. Les documents de conception restent en v0.14 ; v0.21 désigne la révision du prototype et du dépôt.
+L1, L2, L3, L4 et L5 sont réalisés. L0 est réalisé pour le prototype Windows x86_64 : le projet source et la distribution autonome démarrent. Les essais humains et la validation sur d’autres machines restent à mener. Les documents de conception restent en v0.14 ; v0.22 désigne la révision du prototype et du dépôt.
 
-L6 est partiellement réalisé : la matrice automatisée et les comparaisons à trois types constants sont consignées ; restent les essais humains avant de décider un réglage. La distribution Windows autonome v0.21 permet désormais de mener ces essais. La cible de 8 à 12 minutes reste à mesurer avec les préparations humaines. Voir le [cahier de réalisation](../design/Proposition_realisation_prototype.md), le [suivi du prototype](../design/Suivi_prototype.md) et les [choix techniques](../design/Choix_techniques_prototype.md).
+L6 est partiellement réalisé : la matrice automatisée et les comparaisons à trois types constants sont consignées ; restent les essais humains avant de décider un réglage. La distribution Windows autonome v0.22 permet de tester également la préparation chronométrée. La cible de 8 à 12 minutes reste à mesurer avec les préparations humaines. Voir le [cahier de réalisation](../design/Proposition_realisation_prototype.md), le [suivi du prototype](../design/Suivi_prototype.md) et les [choix techniques](../design/Choix_techniques_prototype.md).
 
 ## Reconstruire et vérifier le ZIP
 
@@ -150,7 +151,7 @@ Installer les templates standard de Godot 4.7.2 avec le gestionnaire d’export,
 Les tests, outils d’essai et documents de développement sont exclus du paquet de jeu. Pour lancer le contrôle sur l’archive extraite hors du projet :
 
 ~~~powershell
-python prototype/tests/verify_windows_export.py dist/For_the_Fortress_v0.21_Windows_x64.zip --destination C:/Projet/.tools/controle_export
+python prototype/tests/verify_windows_export.py dist/For_the_Fortress_v0.22_Windows_x64.zip --destination C:/Projet/.tools/controle_export
 ~~~
 
 Cette dernière commande se lance depuis la racine du dépôt avec Python sur Windows. Elle vérifie les cinq fichiers attendus, le manifeste, l’architecture PE x86_64, le démarrage sans éditeur et quatre captures graphiques. L’inspection des captures reste à faire séparément ; la commande ne prétend pas remplacer un essai humain.

@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 22 octobre 2026 — prototype v0.21, GDD v0.14.
+État du 23 octobre 2026 — prototype v0.22, GDD principal v0.14 et complément validé D-2026-10-23-01.
 
 ## Périmètre réalisé
 
@@ -134,3 +134,11 @@ Après extraction dans un dossier de contrôle séparé, cinq lancements sans er
 Un premier paquet incomplet a été rejeté par le test hors projet. Le preset sélectionne désormais explicitement la scène et les cinq scripts runtime. Le paquet corrigé est celui identifié par le SHA-256 du compte rendu. Aucun réglage de gameplay changé ; seule la version de projet passe à 0.21.
 
 L0 est réalisé sur ce périmètre Windows x86_64. L6 reste partiel : essais humains, compréhension et durées encore à recueillir. Le prototype n’est pas signé et n’a pas été testé sur un parc de machines. Le GDD reste en v0.14.
+
+## Enchaînement automatique — v0.22, 23 octobre 2026
+
+Demande explicite du porteur du projet : après le premier lancement manuel, succession automatique des vagues avec compte à rebours ; durée ensuite précisée à 60 secondes. La [décision D-2026-10-23-01](Decision_enchainement_v022.md) remplace le relancement manuel systématique de la conception précédente. Le GDD principal Word et Markdown restent ensemble en v0.14 ; ce complément doit être intégré lors de leur prochaine révision commune.
+
+60 secondes réelles, indépendantes du ×2. Choix roguelite sans limite puis délai complet ; choix N4 et lecture du récapitulatif d’améliorations suspendent le temps restant de préparation. Achats et ventes restent possibles pendant le délai. Départ anticipé possible. Aucune reprise après victoire, défaite ou réinitialisation ; la vague 1 reste manuelle au nouvel essai.
+
+1 075 contrôles réussis, dont 106 ciblés. Deux campagnes financées normalement, un seul premier départ manuel, résultats de référence conservés. Nouvelle archive Windows : six lancements hors projet, captures du compte à rebours et du choix inspectées. Aucune modification des nombres de combat ; le boss à 900 PV reste une proposition non appliquée. Les essais humains restent à compléter sur ce nouveau rythme.

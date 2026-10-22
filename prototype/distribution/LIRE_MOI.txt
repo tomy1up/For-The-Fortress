@@ -1,13 +1,16 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.21 — 22 octobre 2026
+Version : 0.22 — 23 octobre 2026
 
 JOUER
 
 1. Si vous avez reçu une archive ZIP, extrayez tout son contenu.
 2. Ouvrez le dossier extrait, puis lancez For_the_Fortress.exe.
 3. Choisissez Alliance ou Horde, un emplacement E1 à E6 et vos défenseurs.
-4. Lancez la vague. Achats, améliorations et ventes se font entre les vagues.
-5. Choisissez un bonus après les vagues 3, 6 et 9 ; survivez aux dix vagues.
+4. Lancez la première vague. Les suivantes partent automatiquement après 60 secondes.
+5. Achetez, améliorez ou vendez pendant ce délai ; cliquez sur le bouton de lancement
+   pour partir plus tôt si vous êtes prêt.
+6. Après les vagues 3, 6 et 9, le jeu attend votre choix de bonus sans limite de temps,
+   puis vous accorde 60 secondes de préparation. Survivez aux dix vagues.
 
 Aucune installation de Godot ni connexion Internet n’est nécessaire pour jouer.
 Cette version est destinée à Windows 64 bits sur processeur Intel/AMD (x86_64).
@@ -18,10 +21,12 @@ COMMANDES ET INFORMATIONS
 
 Clic sur la carte : construire ou inspecter.
 Améliorer : niveaux 2, 3, puis choix entre deux branches au niveau 4.
-Annuler le choix N4 ne dépense rien et conserve le niveau 3.
+Le choix N4 suspend le compte à rebours. Le confirmer ou l’annuler reprend le temps
+restant ; annuler ne dépense rien et conserve le niveau 3.
 Vendre : le montant remboursé est affiché avant la vente.
-Vitesse ×1/×2 : change la durée réelle du combat, pas ses règles.
-Bonus acquis : relire les effets sélectionnés ; le combat continue pendant la lecture.
+Vitesse ×1/×2 : change la durée réelle du combat, pas les 60 secondes de préparation.
+Bonus acquis : relire les effets sélectionnés ; le décompte de préparation est suspendu
+pendant la lecture. Pendant un combat, le combat continue.
 Survol des codes de synergie : lire leurs effets sur l’unité sélectionnée.
 Survol du bouton de lancement : voir les groupes de la prochaine vague.
 Nouvel essai : repartir sans défense ni bonus, avec 150 or et 20 PV.
@@ -34,8 +39,9 @@ avec un éditeur de texte. Relevez votre faction, vos placements, vos choix,
 les passages difficiles et les éléments mal compris. Le temps de combat affiché
 ne mesure pas le temps passé à préparer ou à lire.
 
-Les règles et les réglages restent ceux du prototype précédent : cette version
-ajoute la distribution Windows autonome. Aucun ajustement d’équilibrage.
+Cette version ajoute l’enchaînement automatique après le premier lancement manuel.
+Les choix d’améliorations attendent votre intervention. Aucun ajustement d’équilibrage
+des unités ou ennemis.
 Les prix et statistiques restent des hypothèses à tester.
 
 FICHIERS FOURNIS

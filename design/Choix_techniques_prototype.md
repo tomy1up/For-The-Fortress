@@ -88,3 +88,11 @@ Exporter_Windows.ps1 vérifie version du projet, moteur et templates, génère l
 verify_windows_export.py extrait le ZIP en contrôlant les chemins, vérifie cinq fichiers, le hash EXE et l’architecture PE AMD64, puis lance ce binaire depuis le dossier extrait. Il rejette les erreurs de scripts même si le processus rend zéro et vérifie la présence des captures 1280×800. Les captures ont aussi été vues séparément. Les tests de développement ne sont pas inclus dans le paquet runtime.
 
 L0 réalisé pour Windows x86_64 : archive de 39 336 231 octets, cinq lancements vérifiés et 969 contrôles de régression conservés. Pas de modification du combat ou des nombres H. La signature, d’autres architectures et la qualification matérielle étendue ne font pas partie de cette livraison de test. Le GDD reste en v0.14.
+
+## Contrôleur de décompte — v0.22, 23 octobre 2026
+
+La scène Main gère autoplay_started, countdown_wave et countdown_remaining, avec une durée fixe de 60 secondes. Le modèle de combat conserve son API explicite, utilisée par le bouton et le départ automatique. Seul le premier départ réussi arme le flux ; les fins de partie et Nouvel essai le désarment. Le temps de préparation utilise delta non multiplié par speed.
+
+Une fin de combat arme les 60 secondes sans consommer le reste d’une image longue. Le choix roguelite désarme le décompte jusqu’à sa résolution, puis arme un délai entier ; les fenêtres N4 et récapitulatif gèlent le reste disponible. L’expiration appelle le même chemin de lancement que le bouton, qui permet aussi un départ anticipé.
+
+106 vérifications ciblées et 1 075 au total. Les scénarios contrôlés comparent économie, résultat et absence de vague 11 ; la version Windows exportée est contrôlée hors du projet avec une capture de préparation chronométrée supplémentaire. La décision complète le GDD principal sans changer les données de combat.
