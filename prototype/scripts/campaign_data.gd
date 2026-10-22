@@ -15,7 +15,7 @@ const WAVES: Array = [
 const BONUSES: Array[Dictionary] = [
 	{"code":"R-01","name":"Armes affûtées","description":"+10 % à tous les dégâts, directs, secondaires et périodiques."},
 	{"code":"R-02","name":"Exercice de tir","description":"+12 % de fréquence d’attaque. Exclut le chaman et ses branches."},
-	{"code":"R-03","name":"Postes d’observation","description":"+0,5 unité de portée principale à tous les défenseurs."},
+	{"code":"R-03","name":"Postes d’observation","description":"Tous les défenseurs attaquent plus loin. Leur portée augmente de 0,5 : par exemple, de 4 à 4,5 (+12,5 %)."},
 	{"code":"R-04","name":"Éclats meurtriers","description":"+20 % aux dégâts des explosions du mage et du sapeur, et des rebonds du lanceur de haches.","faction_descriptions":["+20 % aux dégâts des explosions du mage.","+20 % aux dégâts des rebonds du lanceur de haches et des explosions du sapeur."]},
 	{"code":"R-05","name":"Propagation","description":"+0,2 au rayon des explosions et à la portée de chaque rebond. Le nombre maximal d’ennemis touchés reste inchangé."},
 	{"code":"R-06","name":"Impacts appuyés","description":"+15 % aux dégâts principaux directs. Aucun gain secondaire ou périodique."},

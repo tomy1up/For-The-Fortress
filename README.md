@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Correctif v0.22.2 (23 octobre 2026)** : descriptions des bonus R-04, R-05 et R-12 adaptées à la faction pour R-04 et clarifiant les effets de R-05 et R-12. Aucun changement de mécanique. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.22.2).
+**Correctif v0.22.3 (23 octobre 2026)** : description de Postes d’observation (R-03) avec un exemple de portée avant/après. Inclut les clarifications R-04, R-05 et R-12. Aucun changement de mécanique. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.22.3).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 

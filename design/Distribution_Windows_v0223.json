@@ -1,0 +1,47 @@
+{
+  "archive_sha256": "95aaa72ba6abafee75d6971d112c12df5f8e89ed6811ce115356d2ca6dcc9bd5",
+  "executable_sha256": "d31061f242e257eb3f626dd388c66ee2c2077d0c9f9a25858f150767162192d6",
+  "files": [
+    "For_the_Fortress_v0.22.3_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.22.3_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.22.3_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.22.3_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.22.3_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Carte R-03 inspectee dans la fenetre des choix : texte entier et lisible.",
+  "version": "0.22.3",
+  "date": "2026-10-23",
+  "change": "R-03 : exemple de portee avant/apres ; mecanique inchangee."
+}
