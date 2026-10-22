@@ -1,0 +1,68 @@
+{
+  "archive_sha256": "d7305b40fba9d5667a363655a842d1146ce29ca7965e959b6b5abcd49d7bb243",
+  "executable_sha256": "aec1b28b4af3021174425474fce98b3f6a41f81f78dbaa1a47d70463621f33ae",
+  "files": [
+    "For_the_Fortress_v0.23_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.23_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.23_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.23_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.23_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Cartes R-07/R-08/R-10, boutons de niveaux, specialisation et compte a rebours 30 s inspectes.",
+  "version": "0.23",
+  "date": "2026-10-23",
+  "inter_wave_seconds": 30,
+  "regression_checks": 1075,
+  "source_manifest": {
+    "version": "0.23",
+    "date": "2026-10-23",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "aec1b28b4af3021174425474fce98b3f6a41f81f78dbaa1a47d70463621f33ae",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "9883590a7d9c60e88b8ba44c4fca042094188ad2ee108419236afd0934a1b85f",
+      "export_presets.cfg": "a5a9712bc67c7fdf4b23c5e36f4fd117052450fa47dd8a55fb2bfb8997747693",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "89a6e6b8a78d41dff1db92f0bbb7773894b4f664a1bb2d990733e2faedddfd56",
+      "scripts/valley_model.gd": "b4a4caadf33d4a9de205d66db51f78914b152f832cd3f81a910a3daa558b662a",
+      "scripts/valley_view.gd": "876bbe64c4185fef29c5821bf606cd8e851b98fe0d8028dc88235c295d433606",
+      "scripts/campaign_data.gd": "e866f322fd3ffe6b4e0ba627ebaedbe775b56aa805a6ee134d91faf3df482206",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  }
+}

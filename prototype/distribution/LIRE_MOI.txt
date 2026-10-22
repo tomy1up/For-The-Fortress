@@ -1,16 +1,16 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.22.3 — 23 octobre 2026
+Version : 0.23 — 23 octobre 2026
 
 JOUER
 
 1. Si vous avez reçu une archive ZIP, extrayez tout son contenu.
 2. Ouvrez le dossier extrait, puis lancez For_the_Fortress.exe.
 3. Choisissez Alliance ou Horde, un emplacement E1 à E6 et vos défenseurs.
-4. Lancez la première vague. Les suivantes partent automatiquement après 60 secondes.
+4. Lancez la première vague. Les suivantes partent automatiquement après 30 secondes.
 5. Achetez, améliorez ou vendez pendant ce délai ; cliquez sur le bouton de lancement
    pour partir plus tôt si vous êtes prêt.
 6. Après les vagues 3, 6 et 9, le jeu attend votre choix de bonus sans limite de temps,
-   puis vous accorde 60 secondes de préparation. Survivez aux dix vagues.
+   puis vous accorde 30 secondes de préparation. Survivez aux dix vagues.
 
 Aucune installation de Godot ni connexion Internet n’est nécessaire pour jouer.
 Cette version est destinée à Windows 64 bits sur processeur Intel/AMD (x86_64).
@@ -21,10 +21,10 @@ COMMANDES ET INFORMATIONS
 
 Clic sur la carte : construire ou inspecter.
 Améliorer : niveaux 2, 3, puis choix entre deux branches au niveau 4.
-Le choix N4 suspend le compte à rebours. Le confirmer ou l’annuler reprend le temps
+Le choix de spécialisation suspend le compte à rebours. Le confirmer ou l’annuler reprend le temps
 restant ; annuler ne dépense rien et conserve le niveau 3.
 Vendre : le montant remboursé est affiché avant la vente.
-Vitesse ×1/×2 : change la durée réelle du combat, pas les 60 secondes de préparation.
+Vitesse ×1/×2 : change la durée réelle du combat, pas les 30 secondes de préparation.
 Bonus acquis : relire les effets sélectionnés ; le décompte de préparation est suspendu
 pendant la lecture. Pendant un combat, le combat continue.
 Survol des codes de synergie : lire leurs effets sur l’unité sélectionnée.

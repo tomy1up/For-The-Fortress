@@ -2,7 +2,7 @@ extends Node2D
 
 const Model = preload("res://scripts/valley_model.gd")
 const MapView = preload("res://scripts/valley_view.gd")
-const INTER_WAVE_SECONDS: float = 60.0
+const INTER_WAVE_SECONDS: float = 30.0
 var model = Model.new()
 var map_view = MapView.new()
 var speed: float = 1.0
@@ -195,7 +195,7 @@ func _build_interface() -> void:
 	faction_label = _label(screen, "CHOIX DE FACTION", Vector2(898, 33), Vector2(350, 25), 13, Color("cdb47e"))
 	var side := _panel(screen, Rect2(24, 122, 278, 632))
 	_label(side, "DÉFENDRE LE GUÉ", Vector2(22, 20), Vector2(240, 28), 18, Color("e0dbbf"))
-	_label(side, "Lancez la première vague.\nLes suivantes partent seules :\n60 s pour préparer la défense.", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
+	_label(side, "Lancez la première vague.\nLes suivantes partent seules :\n30 s pour préparer la défense.", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
 	hp_label = _label(side, "", Vector2(22, 144), Vector2(238, 28), 21, Color("e2d5ad"))
 	gold_label = _label(side, "", Vector2(22, 184), Vector2(238, 24), 16, Color("cdb47e"))
 	status_label = _label(side, "", Vector2(22, 232), Vector2(238, 52), 16, Color("d0dfd1"))
@@ -256,7 +256,7 @@ func _build_specialisation_selector(screen: Control) -> void:
 		specialisation_descriptions.append(_label(panel, "", Vector2(x, 174), Vector2(370, 50), 14, Color("aabbb0")))
 		specialisation_descriptions[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		specialisation_stats.append(_label(panel, "", Vector2(x, 238), Vector2(370, 130), 14, Color("bbcbbf")))
-		specialisation_buttons.append(_button(panel, "Choisir cette branche", Rect2(x, 384, 370, 44), _choose_branch.bind(branch)))
+		specialisation_buttons.append(_button(panel, "Choisir cette spécialisation", Rect2(x, 384, 370, 44), _choose_branch.bind(branch)))
 	specialisation_cancel = _button(panel, "Annuler", Rect2(330, 452, 180, 40), _cancel_specialisation)
 
 func _upgrade() -> void:
@@ -280,7 +280,7 @@ func _update_specialisation_choices() -> void:
 	var defender: Dictionary = model.defenders[pending_slot]
 	var type: int = defender.type
 	specialisation_title.text = "Spécialisation · " + Model.ROSTER[type].name
-	specialisation_cost.text = "N3 → N4 : %d or, choix inclus. Investissement après passage : %d or." % [model.upgrade_cost(pending_slot), defender.paid + model.upgrade_cost(pending_slot)]
+	specialisation_cost.text = "Spécialisation (niveau 4) : %d or.\nTotal investi après amélioration : %d or." % [model.upgrade_cost(pending_slot), defender.paid + model.upgrade_cost(pending_slot)]
 	for branch in range(2):
 		var stats: Dictionary = model.get_stats(pending_slot, branch)
 		specialisation_names[branch].text = ("A · " if branch == 0 else "B · ") + stats.branch_name
@@ -465,7 +465,7 @@ func _update_interface() -> void:
 		var effect: String = _effect_text(stats, defender.type)
 		if not effect.is_empty():
 			details_label.text += "\n" + effect
-		upgrade_button.text = "Niveau maximum" if defender.level == 4 else "Choisir spécialisation · %d or" % model.upgrade_cost(selected) if defender.level == 3 else "Améliorer N%d · %d or" % [defender.level + 1, model.upgrade_cost(selected)]
+		upgrade_button.text = "Niveau maximum" if defender.level == 4 else "Spécialisation · %d or" % model.upgrade_cost(selected) if defender.level == 3 else "Niveau %d · %d or" % [defender.level + 1, model.upgrade_cost(selected)]
 		upgrade_button.tooltip_text = model.upgrade_error(selected, 0 if defender.level == 3 else -1)
 		upgrade_button.disabled = pending_slot >= 0 or not upgrade_button.tooltip_text.is_empty()
 		sell_button.text = "Vendre · %d or" % model.refund(selected)
@@ -538,7 +538,7 @@ func _update_bonus_panel() -> void:
 	bonus_panel.visible = choosing or overview_open
 	if not bonus_panel.visible: return
 	bonus_title.text = "Choisissez une amélioration · Vague %d terminée" % model.wave if choosing else "Bonus acquis pour cette partie"
-	bonus_subtitle.text = "Choisissez sans limite de temps. Le décompte de 60 s commence après votre choix. Les deux autres offres pourront revenir." if choosing else "Les effets concernent aussi les futures recrues selon leurs conditions. Aucun bonus acquis." if model.bonuses.is_empty() else "Les effets concernent aussi les futures recrues selon leurs conditions."
+	bonus_subtitle.text = "Choisissez sans limite de temps. Le décompte de 30 s commence après votre choix. Les deux autres offres pourront revenir." if choosing else "Les effets concernent aussi les futures recrues selon leurs conditions. Aucun bonus acquis." if model.bonuses.is_empty() else "Les effets concernent aussi les futures recrues selon leurs conditions."
 	var entries: Array[int] = model.bonus_offer if choosing else model.bonuses
 	for index in range(3):
 		bonus_names[index].visible = index < entries.size()

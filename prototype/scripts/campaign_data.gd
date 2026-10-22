@@ -19,10 +19,10 @@ const BONUSES: Array[Dictionary] = [
 	{"code":"R-04","name":"Éclats meurtriers","description":"+20 % aux dégâts des explosions du mage et du sapeur, et des rebonds du lanceur de haches.","faction_descriptions":["+20 % aux dégâts des explosions du mage.","+20 % aux dégâts des rebonds du lanceur de haches et des explosions du sapeur."]},
 	{"code":"R-05","name":"Propagation","description":"+0,2 au rayon des explosions et à la portée de chaque rebond. Le nombre maximal d’ennemis touchés reste inchangé."},
 	{"code":"R-06","name":"Impacts appuyés","description":"+15 % aux dégâts principaux directs. Aucun gain secondaire ou périodique."},
-	{"code":"R-07","name":"Recrues aguerries","description":"+15 % à tous les dégâts des unités N1/N2, présentes et futures. Cesse au N3."},
-	{"code":"R-08","name":"Vétérans","description":"+12 % à tous les dégâts des unités N3/N4, présentes et futures."},
+	{"code":"R-07","name":"Recrues aguerries","description":"+15 % à tous les dégâts des défenseurs de niveaux 1 et 2, actuels et futurs. Le bonus cesse au niveau 3."},
+	{"code":"R-08","name":"Vétérans","description":"+12 % à tous les dégâts des défenseurs de niveau 3 ou spécialisés (niveau 4), actuels et futurs."},
 	{"code":"R-09","name":"Maçonnerie renforcée","description":"+4 PV actuels et maximum de forteresse. Aucun soin automatique ultérieur."},
-	{"code":"R-10","name":"Ateliers efficaces","description":"−10 % au prix des améliorations futures, branche N4 incluse. Arrondi supérieur."},
+	{"code":"R-10","name":"Ateliers efficaces","description":"Réduit de 10 % le coût des prochaines améliorations et spécialisations. Le prix final est arrondi à la pièce d’or supérieure."},
 	{"code":"R-11","name":"Recrutement organisé","description":"−10 % au prix des achats futurs. Aucun effet rétroactif. Arrondi supérieur."},
 	{"code":"R-12","name":"Chasse aux colosses","description":"+20 % à tous les dégâts contre Brutes, Colosses, Élites et boss : coups directs, explosions, rebonds et malédictions. Priorité des cibles inchangée."}
 ]
