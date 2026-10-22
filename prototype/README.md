@@ -1,16 +1,16 @@
 # Dix vagues jouables sur La Vallée du Gué
 
-**Version v0.24 (23 octobre 2026)** : synergies lisibles au survol et partenaires reliés sur la carte. Délai de 30 secondes conservé. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.24).
+**Version v0.25 (23 octobre 2026)** : aperçu de portée avant achat au survol ou au focus clavier, avec la portion du chemin couverte en bleu. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.25).
 
-**Prototype v0.24 — 23 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
+**Prototype v0.25 — 23 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
 
 Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.24](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.24) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.25](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.25) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
-Sur ce PC : dist/For_the_Fortress_v0.24_Windows_x64 depuis la racine du dépôt. Le ZIP local pèse environ 39 Mo. Voir [le relevé d’export](../design/Distribution_Windows_v024.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
+Sur ce PC : dist/For_the_Fortress_v0.25_Windows_x64 depuis la racine du dépôt. Le ZIP local pèse environ 39 Mo. Voir [le relevé d’export](../design/Distribution_Windows_v025.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
 ## Jouer depuis le projet source
 
@@ -107,7 +107,7 @@ Godot 4.7.2.stable.official.ed1daf0bf, GDScript, rendu Compatibility ; contrôle
 
 Références reproductibles, sans bonus ni synergies : Archer en E1 + Arbalétrier en E2, fin à 23,5 s ; Troll en E1 + Sapeur en E2, fin à 24,5 s. Dans chaque essai : départ après achats à 25 or, dix éliminations, aucune arrivée, 20 PV et 55 or restants. Ce résultat vérifie ce scénario ; il ne démontre pas l’équilibre de la partie ou des factions.
 
-**Total actuel : 1 198 contrôles réussis**, dont 123 pour les partenaires et la lisibilité des synergies et 106 pour l’enchaînement automatique (premier lancement, échéance, pauses de choix, ×2, relance, deux campagnes financées et fins de partie). Les références historiques sans bonus ni synergies utilisent un constructeur de test dédié ; le jeu normal active toujours les synergies. Les tests de campagne vérifient les règles actives et la conservation de l’économie.
+**Total actuel : 1 606 contrôles réussis**, dont 408 pour les aperçus d’achat, 123 pour les partenaires et la lisibilité des synergies et 106 pour l’enchaînement automatique (premier lancement, échéance, pauses de choix, ×2, relance, deux campagnes financées et fins de partie). Les références historiques sans bonus ni synergies utilisent un constructeur de test dédié ; le jeu normal active toujours les synergies. Les tests de campagne vérifient les règles actives et la conservation de l’économie.
 
 Deux victoires au budget normal, graine de vérification 42, choix R-06 puis R-11 puis R-10 : Alliance 14 PV, 192 or, 178 éliminations et 4 arrivées ; Horde 12 PV, 189 or, 175 éliminations et 7 arrivées. Temps de combat simulé cumulé : 372,755 s et 392,541 s. Ces résultats ne mesurent ni le temps de préparation humain ni l’équilibre général. Le [compte rendu](../design/Resultats_campagne_v018.md) donne le protocole et les offres.
 
@@ -121,6 +121,7 @@ Les tests peuvent être relancés depuis ce dossier avec le moteur :
 & 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_campaign.gd
 & 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_autoplay.gd
 & 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_synergy_feedback.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_purchase_preview.gd
 ~~~
 
 Vérifier le résumé failures=0 et l’absence de messages ERROR, même si le processus rend un code de sortie nul. Les fichiers .godot sont un cache local exclu de Git ; les fichiers .gd.uid sont suivis.
@@ -154,7 +155,7 @@ Installer les templates standard de Godot 4.7.2 avec le gestionnaire d’export,
 Les tests, outils d’essai et documents de développement sont exclus du paquet de jeu. Pour lancer le contrôle sur l’archive extraite hors du projet :
 
 ~~~powershell
-python prototype/tests/verify_windows_export.py dist/For_the_Fortress_v0.24_Windows_x64.zip --destination C:/Projet/.tools/controle_export
+python prototype/tests/verify_windows_export.py dist/For_the_Fortress_v0.25_Windows_x64.zip --destination C:/Projet/.tools/controle_export
 ~~~
 
 Cette dernière commande se lance depuis la racine du dépôt avec Python sur Windows. Elle vérifie les cinq fichiers attendus, le manifeste, l’architecture PE x86_64, le démarrage sans éditeur et quatre captures graphiques. L’inspection des captures reste à faire séparément ; la commande ne prétend pas remplacer un essai humain.
@@ -162,3 +163,7 @@ Cette dernière commande se lance depuis la racine du dépôt avec Python sur Wi
 ## Lecture des synergies (v0.24)
 
 Sélectionnez un défenseur : les traits dorés relient ses partenaires de proximité actifs ; les traits bleus relient ses partenaires de spécialisation actifs. Survolez la ligne des synergies au-dessus de la fiche pour lire noms, emplacements, gains et conditions des associations possibles. Les statistiques comprennent déjà les gains ; plusieurs partenaires ne doublent pas une même association. La lecture au survol ne suspend pas le décompte ni le combat.
+
+## Comparer les portées avant achat (v0.25)
+
+Sélectionnez un emplacement libre puis survolez un bouton de recrutement (ou donnez-lui le focus au clavier). Le cercle bleu montre la portée effective du futur défenseur de niveau 1 ; la portion bleue du chemin indique les positions où il pourra viser les ennemis. Les bonus acquis et les synergies de portée apportées par les voisins sont inclus. L’aperçu ne dépense rien, reste disponible en cas de manque d’or ou de quota atteint et ne suspend pas le décompte. L’achat exige toujours un clic valide.

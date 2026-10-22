@@ -43,6 +43,7 @@ startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW
 startup.wShowWindow=0
 results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
+       ('alliance_purchase','purchase','alliance'),('horde_purchase','purchase','horde'),
        ('alliance_synergies','campaign','alliance'),('horde_synergies','campaign','horde'),
        ('alliance_victory','victory','alliance'),('horde_victory','victory','horde')]
 for name,state,faction in cases:

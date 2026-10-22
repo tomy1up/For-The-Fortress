@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 23 octobre 2026 — prototype v0.24, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 23 octobre 2026 — prototype v0.25, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -150,3 +150,9 @@ Les essais humains Horde et les clarifications suivantes sont consignés dans [l
 La v0.24 rend les associations inspectables en clair : partenaires actifs reliés à l’unité sélectionnée, traits dorés pour la proximité et bleus pour les spécialisations, aide au survol avec noms, emplacements, conditions et gains. La recherche des partenaires est commune au calcul des bonus et à leur affichage. Voir [le compte rendu](Lisibilite_synergies_v024.md).
 
 1 198 contrôles réussis, dont 123 nouveaux ; résultats des campagnes de référence inchangés. Huit lancements du paquet Windows extrait vérifiés, dont les vues de synergies en combat des deux factions. Les aides et les liens sont inspectés visuellement. Le délai reste 30 secondes et le GDD principal reste en v0.14. L6 demeure partiel : élargir les essais humains aux compositions et factions avant toute modification d’équilibrage ou extension du contenu.
+
+## Aperçu de portée avant achat — v0.25, 23 octobre 2026
+
+À la demande du joueur, sélectionner un emplacement libre puis survoler un recrutement montre sa portée et la portion du chemin couverte, avant toute dépense. Le focus clavier permet aussi cette comparaison. La portée inclut les bonus acquis et les synergies de proximité applicables à la recrue. Les interdictions d’achat demeurent effectives ; le décompte continue pendant la comparaison.
+
+1 606 contrôles réussis, dont 408 dédiés aux aperçus et à leur conformité à l’achat réel. Dix lancements du paquet extrait vérifiés ; aperçus Alliance et des trois unités Horde inspectés. Aucun changement d’équilibrage. Voir [la fiche](Apercu_achat_v025.md) et [le rapport d’export](Distribution_Windows_v025.json).

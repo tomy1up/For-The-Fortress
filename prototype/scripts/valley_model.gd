@@ -172,10 +172,11 @@ static func stats_for(type: int, level: int = 1, branch: int = -1) -> Dictionary
 				stats[key] = specialization[key]
 	return stats
 
-func synergy_partners(slot: int, rule: Dictionary, branch_override: int = -1) -> Array[int]:
+func synergy_partners(slot: int, rule: Dictionary, branch_override: int = -1, candidate: Dictionary = {}) -> Array[int]:
 	var partners: Array[int] = []
-	if not synergies_enabled or slot < 0 or slot >= defenders.size() or defenders[slot].is_empty(): return partners
-	var unit: Dictionary = defenders[slot]
+	if not synergies_enabled or slot < 0 or slot >= defenders.size(): return partners
+	var unit: Dictionary = defenders[slot] if candidate.is_empty() else candidate
+	if unit.is_empty(): return partners
 	var side: int = rule.types.find(unit.type)
 	if side < 0: return partners
 	var specialised: bool = rule.has("branches")
@@ -191,22 +192,28 @@ func synergy_partners(slot: int, rule: Dictionary, branch_override: int = -1) ->
 		partners.append(other_slot)
 	return partners
 
-func synergy_effects(slot: int, branch_override: int = -1) -> Dictionary:
+func synergy_effects(slot: int, branch_override: int = -1, candidate: Dictionary = {}) -> Dictionary:
 	var result: Dictionary = {"direct":0.0,"secondary":0.0,"curse":0.0,"range":0.0,"codes":[]}
 	for rule in Campaign.PROXIMITY + Campaign.SPECIALISATIONS:
-		if synergy_partners(slot, rule, branch_override).is_empty(): continue
-		var side: int = rule.types.find(defenders[slot].type)
+		if synergy_partners(slot, rule, branch_override, candidate).is_empty(): continue
+		var side: int = rule.types.find((defenders[slot] if candidate.is_empty() else candidate).type)
 		for i in range(4):
 			result[["direct","secondary","curse","range"][i]] += rule.effects[side][i]
 		result.codes.append(rule.code) # Un même code une seule fois, même avec plusieurs partenaires.
 	return result
 
-func get_stats(slot: int, branch_override: int = -1) -> Dictionary:
-	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty(): return {}
-	var defender: Dictionary = defenders[slot]
+func purchase_preview_stats(slot: int, type: int) -> Dictionary:
+	# Requête seule : ni recrutement, ni paiement, ni changement des unités ou du générateur.
+	if slot < 0 or slot >= defenders.size() or not defenders[slot].is_empty() or type not in available_types(): return {}
+	return get_stats(slot, -1, {"type":type,"level":1,"branch":-1})
+
+func get_stats(slot: int, branch_override: int = -1, candidate: Dictionary = {}) -> Dictionary:
+	if slot < 0 or slot >= defenders.size(): return {}
+	var defender: Dictionary = defenders[slot] if candidate.is_empty() else candidate
+	if defender.is_empty(): return {}
 	var level: int = 4 if branch_override >= 0 else defender.get("level",1)
 	var stats: Dictionary = stats_for(defender.type,level,branch_override if branch_override >= 0 else defender.get("branch",-1))
-	var synergy: Dictionary = synergy_effects(slot,branch_override)
+	var synergy: Dictionary = synergy_effects(slot,branch_override,candidate)
 	var common: float = (0.10 if 0 in bonuses else 0.0) + (0.15 if 6 in bonuses and level <= 2 else 0.0) + (0.12 if 7 in bonuses and level >= 3 else 0.0)
 	stats.reference_damage = stats.damage
 	stats.reference_secondary = stats.secondary_damage

@@ -1,0 +1,90 @@
+{
+  "archive_sha256": "b6f6f6229757cbc9978697de0b16abdfd5f81a960f94d042642802d0975cb331",
+  "executable_sha256": "89e81032dce369c0c06940e6570631b6316d921ef26f0c2be5f7e5a2b8c17262",
+  "files": [
+    "For_the_Fortress_v0.25_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.25_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.25_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.25_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.25_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Apercus exportes Alliance et trois unites Horde inspectes : cercle, chemin couvert et fiche avant achat.",
+  "version": "0.25",
+  "date": "2026-10-23",
+  "inter_wave_seconds": 30,
+  "regression_checks": 1606,
+  "purchase_preview_checks": 408,
+  "archive_bytes": 39343363,
+  "source_manifest": {
+    "version": "0.25",
+    "date": "2026-10-23",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "89e81032dce369c0c06940e6570631b6316d921ef26f0c2be5f7e5a2b8c17262",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "988d2e9ecc34a264a1b4efaf052fc515919755fb8c35d4c49ac30f44fa39b761",
+      "export_presets.cfg": "8bee077e82bc47c771734f0e919b6a3b3a20cb13659d0a653203c958bb8c4197",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "1c0117c8bb72029657a14edccc7e52b0fe3d13df20701e5d48efe5a2f3960628",
+      "scripts/valley_model.gd": "d8147ac5e5eb32d87ceb1d5a1a040d372b7d970e50e2df97854889c534c8e85b",
+      "scripts/valley_view.gd": "253b8ff6361b5155a8143b970739f1e5a0479c83e7502f5fadf53593845dc352",
+      "scripts/campaign_data.gd": "e866f322fd3ffe6b4e0ba627ebaedbe775b56aa805a6ee134d91faf3df482206",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  }
+}

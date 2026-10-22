@@ -104,3 +104,11 @@ La v0.23 a ramené la constante de préparation à 30 secondes. La v0.24 conserv
 La vue dessine uniquement les liens du défenseur sélectionné, avant les personnages ; les liens de spécialisation sont décalés de quatre pixels pour distinguer deux associations sur une même paire. Le contrôleur produit l’aide à partir des mêmes règles : noms de la faction, emplacements, gains propres au bénéficiaire et conditions. Un thème d’infobulle opaque améliore la lecture, sans nouvelle fenêtre modale ni changement des horloges.
 
 1 198 contrôles réussis, dont 123 couvrant les partenaires, leurs retraits, le non-cumul et les descriptions. Huit lancements de la distribution Windows vérifiés ; captures de proximité, spécialisations et aide inspectées. Les données numériques, compositions de vagues et références des campagnes restent identiques.
+
+## Aperçu de recrutement — v0.25, 23 octobre 2026
+
+`purchase_preview_stats` valide la faction et l’emplacement libre puis utilise `get_stats` avec un candidat virtuel de niveau 1. Ce candidat est transmis à la recherche des partenaires sans être inséré dans les défenseurs. Les statistiques sont calculées avec les bonus actuels ; les fenêtres des défenseurs réels, l’or, les identités et le générateur restent inchangés.
+
+Le contrôleur distingue survol et focus, rafraîchit l’aperçu avec l’interface et le retire lorsque le recrutement n’est plus pertinent. La vue projette le cercle avec le même outil que pour un défenseur déployé. Le chemin surligné suit les limites des fenêtres de couverture et leurs virages. Les captures d’export ajoutent l’état `purchase`, financé au budget initial normal.
+
+408 nouveaux contrôles, 1 606 au total. Le paquet Windows est vérifié avec dix lancements ; le délai reste 30 secondes et les résultats des campagnes sont conservés.

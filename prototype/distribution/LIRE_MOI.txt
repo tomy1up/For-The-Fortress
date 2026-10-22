@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.24 — 23 octobre 2026
+Version : 0.25 — 23 octobre 2026
 
 JOUER
 
@@ -19,7 +19,10 @@ Cette archive contient un prototype non signé, pas un installateur.
 
 COMMANDES ET INFORMATIONS
 
-Clic sur la carte : construire ou inspecter.
+Clic sur la carte : choisir un emplacement ou inspecter une unité.
+Sur une place libre, survoler un bouton de recrutement pour voir la portée avant achat.
+Le cercle et les portions de route en bleu montrent les positions ennemies à portée.
+Le focus clavier montre aussi cet aperçu. Aucun or dépensé avant le clic d’achat.
 Améliorer : niveaux 2, 3, puis choix entre deux branches au niveau 4.
 Le choix de spécialisation suspend le compte à rebours. Le confirmer ou l’annuler reprend le temps
 restant ; annuler ne dépense rien et conserve le niveau 3.

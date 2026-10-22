@@ -35,6 +35,8 @@ var pending_slot: int = -1
 var pending_instance: int = -1
 var sell_button: Button
 var buy_buttons: Array[Button] = []
+var hovered_purchase: int = -1
+var focused_purchase: int = -1
 var bonus_panel: ColorRect
 var bonus_title: Label
 var bonus_subtitle: Label
@@ -81,10 +83,13 @@ func _ready() -> void:
 					model.upgrade(0)
 					if capture_state == "specialised": model.upgrade(0, 1)
 					else: _upgrade()
-			if capture_state not in ["shop", "catalogue", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview"]:
+			if capture_state not in ["shop", "catalogue", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase"]:
 				model.buy(0, model.available_types()[0])
 				model.buy(1, model.available_types()[2 if capture_state == "curse" else 1])
 			selected = 1 if capture_state == "curse" else 0
+			if capture_state == "purchase":
+				selected = 3
+				hovered_purchase = capture_type % 3
 			map_view.selected = selected
 			if capture_state == "catalogue":
 				model.spawn_schedule.clear()
@@ -97,7 +102,7 @@ func _ready() -> void:
 					model.enemies.append(enemy)
 				model.spawned = model.enemies.size()
 				model.phase = "combat"
-			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview"]:
+			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase"]:
 				model.start()
 				model.advance(1.0 if capture_state == "curse" else 7.5 if capture_state == "combat" else 100.0)
 		set_process(false)
@@ -222,6 +227,10 @@ func _build_interface() -> void:
 	for type in range(3):
 		var button: Button = _button(info, "", Rect2(24 + type * 294, 96, 278, 40), _buy.bind(type))
 		button.add_theme_font_size_override("font_size", 14)
+		button.mouse_entered.connect(_purchase_hover.bind(type, true))
+		button.mouse_exited.connect(_purchase_hover.bind(type, false))
+		button.focus_entered.connect(_purchase_focus.bind(type, true))
+		button.focus_exited.connect(_purchase_focus.bind(type, false))
 		buy_buttons.append(button)
 	sell_button = _button(info, "", Rect2(24, 96, 278, 40), _sell)
 	upgrade_button = _button(info, "", Rect2(318, 96, 278, 40), _upgrade)
@@ -407,6 +416,35 @@ func _buy(type: int) -> void:
 	_update_interface()
 	map_view.queue_redraw()
 
+func _purchase_hover(type: int, entered: bool) -> void:
+	if entered: hovered_purchase = type
+	elif hovered_purchase == type: hovered_purchase = -1
+	_update_interface()
+	map_view.queue_redraw()
+
+func _purchase_focus(type: int, entered: bool) -> void:
+	if entered: focused_purchase = type
+	elif focused_purchase == type: focused_purchase = -1
+	_update_interface()
+	map_view.queue_redraw()
+
+func _refresh_purchase_preview() -> void:
+	map_view.purchase_preview = {}
+	if choosing_faction or pending_slot >= 0 or overview_open or not model.can_build() or selected < 0 or not model.defenders[selected].is_empty():
+		hovered_purchase = -1
+		focused_purchase = -1
+		return
+	var offer: int = hovered_purchase if hovered_purchase >= 0 else focused_purchase
+	if offer < 0 or offer >= buy_buttons.size(): return
+	var type: int = model.available_types()[offer]
+	map_view.purchase_preview = model.purchase_preview_stats(selected, type)
+	var stats: Dictionary = map_view.purchase_preview
+	if stats.is_empty(): return
+	title_label.text = "E%d · APERÇU AVANT ACHAT · %s · NIVEAU 1" % [selected+1, stats.name.to_upper()]
+	details_label.text = "Portée prévue : %s · Prix : %d or\nRoute bleue : portion du chemin à portée de cette unité." % [_number(stats.range), model.purchase_cost(type)]
+	var error: String = model.purchase_error(selected, type)
+	hint_label.text = "Aperçu sans achat · Cliquez sur le bouton pour recruter." if error.is_empty() else "Aperçu sans achat · " + error
+
 func _sell() -> void:
 	if pending_slot >= 0 or overview_open:
 		return
@@ -483,6 +521,7 @@ func _update_interface() -> void:
 		var slot: Vector2 = Model.SLOTS[selected]
 		title_label.text = "E%d · EMPLACEMENT LIBRE" % (selected + 1)
 		details_label.text = "Position logique (%s ; %s) · Un seul défenseur par emplacement.\nDeux exemplaires maximum par type dans votre faction." % [_number(slot.x), _number(slot.y)]
+		if model.can_build(): hint_label.text = "Survolez un défenseur pour voir sa portée avant l’achat."
 	if model.active:
 		hint_label.text = "Les tirs sont automatiques. Vous pouvez inspecter les unités et changer la vitesse."
 	elif model.phase == "finished":
@@ -495,6 +534,7 @@ func _update_interface() -> void:
 		hint_label.tooltip_text = ""
 	if model.phase in ["victory","defeat"]:
 		hint_label.text = "%d éliminés · %d arrivées · %d or gagnés · Survolez pour les synergies" % [model.total_killed,model.total_escaped,model.total_income] if occupied else "%d éliminés · %d arrivées · %d or gagnés au combat." % [model.total_killed,model.total_escaped,model.total_income]
+	_refresh_purchase_preview()
 
 func _synergy_tooltip(slot: int) -> String:
 	var type: int = model.defenders[slot].type

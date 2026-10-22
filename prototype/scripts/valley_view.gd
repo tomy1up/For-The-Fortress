@@ -7,10 +7,31 @@ const INK := Color("d9e4d7")
 const SLOT_FILL := Color("213e3b")
 var model: RefCounted
 var selected: int = -1
+var purchase_preview: Dictionary = {}
 var font: Font = ThemeDB.fallback_font
 
 static func project(point: Vector2) -> Vector2:
 	return ORIGIN + Vector2((point.x - point.y) * AXIS.x, (point.x + point.y) * AXIS.y)
+
+static func range_outline(center: Vector2, radius: float) -> PackedVector2Array:
+	var ring := PackedVector2Array()
+	for step in range(65):
+		var angle: float = TAU * step / 64.0
+		ring.append(project(center + Vector2(cos(angle), sin(angle)) * radius))
+	return ring
+
+static func covered_route(center: Vector2, radius: float) -> Array[PackedVector2Array]:
+	var sections: Array[PackedVector2Array] = []
+	for window in Model.coverage_windows(center, radius):
+		var points := PackedVector2Array([project(Model.position_at(window.first))])
+		var distance: float = 0.0
+		for index in range(1, Model.PATH_POINTS.size()):
+			distance += Model.PATH_POINTS[index-1].distance_to(Model.PATH_POINTS[index])
+			if distance > window.first + Model.EPS and distance < window.last - Model.EPS:
+				points.append(project(Model.PATH_POINTS[index]))
+		points.append(project(Model.position_at(window.last)))
+		sections.append(points)
+	return sections
 
 func polygon(points: Array[Vector2], color: Color) -> void:
 	var projected := PackedVector2Array()
@@ -47,12 +68,15 @@ func _draw() -> void:
 		draw_line(project(Vector2(x, 6.6)), project(Vector2(x, 7.4)), Color("b29a6b"), 2)
 	for tree in [Vector2(1, 1), Vector2(1.4, 8.5), Vector2(4.6, 9), Vector2(10, 1), Vector2(12, 8.7), Vector2(16.8, 2), Vector2(17, 8.7)]:
 		_draw_tree(project(tree))
+	if model != null and selected >= 0 and model.defenders[selected].is_empty() and not purchase_preview.is_empty():
+		var preview_ring := range_outline(Model.SLOTS[selected], purchase_preview.range)
+		draw_colored_polygon(preview_ring, Color(0.35, 0.8, 0.95, 0.12))
+		draw_polyline(preview_ring, Color("8bd5e6"), 2.5, true)
+		for section in covered_route(Model.SLOTS[selected], purchase_preview.range):
+			draw_polyline(section, Color("8bd5e6"), 6, true)
 	if model != null and selected >= 0 and not model.defenders[selected].is_empty():
 		var stats: Dictionary = model.get_stats(selected)
-		var ring := PackedVector2Array()
-		for step in range(65):
-			var angle: float = TAU * step / 64.0
-			ring.append(project(Model.SLOTS[selected] + Vector2(cos(angle), sin(angle)) * stats.range))
+		var ring := range_outline(Model.SLOTS[selected], stats.range)
 		draw_colored_polygon(ring, Color(0.8, 0.85, 0.5, 0.05))
 		draw_polyline(ring, Color(0.8, 0.85, 0.5, 0.35), 1.5, true)
 		# Montrer uniquement les partenaires actifs du défenseur sélectionné.
