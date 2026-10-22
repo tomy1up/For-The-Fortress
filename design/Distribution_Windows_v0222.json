@@ -1,0 +1,48 @@
+{
+  "archive_sha256": "6b76552c47aec32c3a25af33790eb16f9389012fa7371e93c0a0977dbc87e7e3",
+  "executable_sha256": "5bf9519013581674075cacc265cfec9a785c334d086c6a4ca06e8168b485b44c",
+  "files": [
+    "For_the_Fortress_v0.22.2_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.22.2_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.22.2_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.22.2_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.22.2_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "R-04, R-05 et R-12 inspectes ensemble dans les deux factions, sans debordement.",
+  "version": "0.22.2",
+  "date": "2026-10-23",
+  "change": "Descriptions R-04 selon faction, R-05 et R-12 clarifiees. Aucune modification de mecanique.",
+  "interface_checks": 37
+}

@@ -547,5 +547,5 @@ func _update_bonus_panel() -> void:
 		if index < entries.size():
 			var data: Dictionary = Model.Campaign.BONUSES[entries[index]]
 			bonus_names[index].text = data.code+" · "+data.name
-			bonus_descriptions[index].text = data.description
+			bonus_descriptions[index].text = data.faction_descriptions[model.faction] if data.has("faction_descriptions") else data.description
 	bonus_close.visible = not choosing
