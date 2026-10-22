@@ -1,5 +1,7 @@
 # Dix vagues jouables sur La Vallée du Gué
 
+**Correctif v0.22.1 (23 octobre 2026)** : description de Propagation (R-05) clarifiant que le nombre maximal de cibles reste inchangé. Aucun changement de mécanique. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.22.1).
+
 **Prototype v0.22 — 23 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
 
 Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.22 applique en plus la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 60 secondes. Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.

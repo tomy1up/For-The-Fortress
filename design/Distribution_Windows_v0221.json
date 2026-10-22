@@ -1,0 +1,47 @@
+{
+  "archive_sha256": "da6a783042b1c9553a94a3c1d3f6efa922e302b85b27f230a58c9680c4f8ed23",
+  "executable_sha256": "8311682278c18599aaf7291f0d818ba7ad8b087431d26f7098fa5a71a47cda2f",
+  "files": [
+    "For_the_Fortress_v0.22.1_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.22.1_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.22.1_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.22.1_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.22.1_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Fenetre des bonus inspectee ; la capture aleatoire ne presente pas R-05.",
+  "version": "0.22.1",
+  "date": "2026-10-23",
+  "change": "R-05 : description clarifiee ; nombre maximal de cibles inchange. Aucune modification de mecanique."
+}

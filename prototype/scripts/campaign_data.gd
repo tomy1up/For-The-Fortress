@@ -17,7 +17,7 @@ const BONUSES: Array[Dictionary] = [
 	{"code":"R-02","name":"Exercice de tir","description":"+12 % de fréquence d’attaque. Exclut le chaman et ses branches."},
 	{"code":"R-03","name":"Postes d’observation","description":"+0,5 unité de portée principale à tous les défenseurs."},
 	{"code":"R-04","name":"Éclats meurtriers","description":"+20 % aux dégâts secondaires du mage, du troll et du sapeur."},
-	{"code":"R-05","name":"Propagation","description":"+0,2 au rayon d’explosion ou à chaque rebond. Aucun gain de victimes."},
+	{"code":"R-05","name":"Propagation","description":"+0,2 au rayon des explosions et à la portée de chaque rebond. Le nombre maximal d’ennemis touchés reste inchangé."},
 	{"code":"R-06","name":"Impacts appuyés","description":"+15 % aux dégâts principaux directs. Aucun gain secondaire ou périodique."},
 	{"code":"R-07","name":"Recrues aguerries","description":"+15 % à tous les dégâts des unités N1/N2, présentes et futures. Cesse au N3."},
 	{"code":"R-08","name":"Vétérans","description":"+12 % à tous les dégâts des unités N3/N4, présentes et futures."},
