@@ -1,0 +1,50 @@
+FOR THE FORTRESS! — PROTOTYPE WINDOWS
+Version : 0.21 — 22 octobre 2026
+
+JOUER
+
+1. Si vous avez reçu une archive ZIP, extrayez tout son contenu.
+2. Ouvrez le dossier extrait, puis lancez For_the_Fortress.exe.
+3. Choisissez Alliance ou Horde, un emplacement E1 à E6 et vos défenseurs.
+4. Lancez la vague. Achats, améliorations et ventes se font entre les vagues.
+5. Choisissez un bonus après les vagues 3, 6 et 9 ; survivez aux dix vagues.
+
+Aucune installation de Godot ni connexion Internet n’est nécessaire pour jouer.
+Cette version est destinée à Windows 64 bits sur processeur Intel/AMD (x86_64).
+La fenêtre de référence est de 1280 × 800. Les visuels sont temporaires.
+Cette archive contient un prototype non signé, pas un installateur.
+
+COMMANDES ET INFORMATIONS
+
+Clic sur la carte : construire ou inspecter.
+Améliorer : niveaux 2, 3, puis choix entre deux branches au niveau 4.
+Annuler le choix N4 ne dépense rien et conserve le niveau 3.
+Vendre : le montant remboursé est affiché avant la vente.
+Vitesse ×1/×2 : change la durée réelle du combat, pas ses règles.
+Bonus acquis : relire les effets sélectionnés ; le combat continue pendant la lecture.
+Survol des codes de synergie : lire leurs effets sur l’unité sélectionnée.
+Survol du bouton de lancement : voir les groupes de la prochaine vague.
+Nouvel essai : repartir sans défense ni bonus, avec 150 or et 20 PV.
+Fermer la fenêtre : quitter. Aucune sauvegarde de partie n’est prévue dans ce prototype.
+
+RETOUR DE TEST
+
+La fiche Fiche_essai_joueur.md accompagne cette version ; elle peut être ouverte
+avec un éditeur de texte. Relevez votre faction, vos placements, vos choix,
+les passages difficiles et les éléments mal compris. Le temps de combat affiché
+ne mesure pas le temps passé à préparer ou à lire.
+
+Les règles et les réglages restent ceux du prototype précédent : cette version
+ajoute la distribution Windows autonome. Aucun ajustement d’équilibrage.
+Les prix et statistiques restent des hypothèses à tester.
+
+FICHIERS FOURNIS
+
+For_the_Fortress.exe : jeu et données intégrées.
+LIRE_MOI.txt : cette notice.
+Fiche_essai_joueur.md : relevé de test facultatif.
+LICENCES_GODOT.txt : licence du moteur et notices des composants intégrés.
+VERSION.json : version, sources et empreinte de l’exécutable.
+
+Godot Engine : https://godotengine.org/
+For the Fortress! est un nom de travail ; sa disponibilité juridique reste à confirmer.

@@ -12,3 +12,6 @@ desktop.ini
 
 # Cache Godot si ce moteur est retenu
 .godot/
+
+# Versions Windows générées (livrées en archives de version)
+dist/

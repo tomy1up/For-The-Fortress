@@ -78,3 +78,13 @@ survey_upgrades.gd produit 96 préfixes normaux jusqu’à la fin de la vague 4,
 analyse_upgrades.py valide les variantes, les types et positions, les niveaux et prix identiques des traitements N2, les soldes terminaux et les offres communes. Il produit relevés JSON compressés déterministes, synthèse, tableaux et empreintes de sources. Les données v0.19 sont conservées séparément.
 
 51 801 vérifications d’intégrité sans échec et 969 contrôles de régression réussis. Les politiques reference et priorite_0 donnent ici exactement les mêmes trajectoires : le rapport signale cette dépendance. Les ressources sont identiques au départ, mais les revenus futurs ne sont pas forcés à l’égalité. Aucun fichier de gameplay, GDD ou réglage n’est changé. Les essais humains et l’export autonome restent à réaliser.
+
+## Distribution Windows — v0.21, 22 octobre 2026
+
+Export Windows Desktop x86_64 release avec Godot 4.7.2 exact. Le preset sélectionne explicitement main.tscn et les cinq scripts runtime ; la sélection de scène seule ne retenait pas tous les preloads et a été rejetée au premier démarrage isolé. Les données sont intégrées au PE pour éviter un PCK externe. La console d’accompagnement, la signature et la modification des ressources PE sont désactivées ; aucun outil rcedit ou certificat ajouté.
+
+Exporter_Windows.ps1 vérifie version du projet, moteur et templates, génère les notices depuis Engine, produit l’EXE puis le ZIP avec notice, fiche et manifeste de hashes. Les templates sont installés dans le profil Godot standard après vérification SHA-512 du TPZ officiel. Les notices issues du moteur d’édition peuvent inclure des composants supplémentaires ; elles sont jointes au paquet.
+
+verify_windows_export.py extrait le ZIP en contrôlant les chemins, vérifie cinq fichiers, le hash EXE et l’architecture PE AMD64, puis lance ce binaire depuis le dossier extrait. Il rejette les erreurs de scripts même si le processus rend zéro et vérifie la présence des captures 1280×800. Les captures ont aussi été vues séparément. Les tests de développement ne sont pas inclus dans le paquet runtime.
+
+L0 réalisé pour Windows x86_64 : archive de 39 336 231 octets, cinq lancements vérifiés et 969 contrôles de régression conservés. Pas de modification du combat ou des nombres H. La signature, d’autres architectures et la qualification matérielle étendue ne font pas partie de cette livraison de test. Le GDD reste en v0.14.

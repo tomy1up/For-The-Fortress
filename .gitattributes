@@ -1,3 +1,5 @@
 * text=auto
 *.md text eol=lf
 *.docx binary
+# Notices générées conservées telles que fournies par le moteur.
+prototype/distribution/LICENCES_GODOT.txt whitespace=-blank-at-eof

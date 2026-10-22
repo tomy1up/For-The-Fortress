@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 22 octobre 2026 — prototype v0.20, GDD v0.14.
+État du 22 octobre 2026 — prototype v0.21, GDD v0.14.
 
 ## Périmètre réalisé
 
@@ -8,7 +8,7 @@ Les dix vagues sont jouables avec les deux factions, les niveaux, les douze spé
 
 | Lot du cahier | État | Preuve ou travail restant |
 | --- | --- | --- |
-| L0 Préparer | Partiel | Projet Godot démarrable ; export autonome non encore produit |
+| L0 Préparer | Réalisé pour Windows x86_64 | Projet source et export release autonome démarrables ; ZIP vérifié hors projet |
 | L1 Traversée du Gué | Réalisé | Tracé 28 unités, six emplacements, déplacements, arrivées et PV |
 | L2 Boucle minimale | Réalisé | Achats et ventes Alliance N1, tirs, récompenses, vague 1 complète, retour entre les vagues |
 | L3 Couvrir le combat | Réalisé | Six défenseurs, huit profils, effets, ordre des événements et campagne intégrés |
@@ -124,3 +124,13 @@ L6 reste partiel. La [fiche d’essai joueur](Fiche_essai_joueur.md) est prête 
 L’amélioration N2 réduit les arrivées dans 53 à 55 préfixes sur 96 selon l’unité choisie, sans aggravation dans cette vague isolée. Les continuations equilibre et reference gagnent 152 et 150 fois sur 192 ; la priorité aux dégâts de groupe dépend fortement du placement. reference et priorite_0 donnent les mêmes 192 trajectoires et ne constituent pas deux confirmations indépendantes.
 
 Décision : conserver coûts et statistiques H. Aucun fichier de gameplay ni GDD modifié. L6 reste partiel, sans observations humaines ; L0 reste partiel sans export autonome. Prochaine réalisation : préparer la distribution Windows pour faciliter l’essai joueur, puis consigner compréhension et durées avec la fiche existante.
+
+## Livraison Windows autonome — v0.21, 22 octobre 2026
+
+Export release Windows x86_64, données intégrées à l’EXE, sans console ni éditeur. Templates officiels 4.7.2 téléchargés et SHA-512 vérifié. Preset, script PowerShell de reconstruction, génération des notices de licences et vérificateur d’archive versionnés. Le ZIP et son SHA-256 sont livrés avec la version GitHub ; dist est exclu de Git.
+
+Après extraction dans un dossier de contrôle séparé, cinq lancements sans erreur : démarrage headless, choix de faction, choix roguelite, victoires Alliance et Horde. Les quatre captures ont été inspectées. Les résultats de référence restent 14 PV/192 or et 12 PV/189 or ; les 969 contrôles de régression passent. Voir [le compte rendu](Distribution_Windows_v021.md).
+
+Un premier paquet incomplet a été rejeté par le test hors projet. Le preset sélectionne désormais explicitement la scène et les cinq scripts runtime. Le paquet corrigé est celui identifié par le SHA-256 du compte rendu. Aucun réglage de gameplay changé ; seule la version de projet passe à 0.21.
+
+L0 est réalisé sur ce périmètre Windows x86_64. L6 reste partiel : essais humains, compréhension et durées encore à recueillir. Le prototype n’est pas signé et n’a pas été testé sur un parc de machines. Le GDD reste en v0.14.

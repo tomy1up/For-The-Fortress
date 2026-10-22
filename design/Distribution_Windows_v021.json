@@ -1,0 +1,81 @@
+{
+  "archive_sha256": "6138f16d9fbcb2cfffe49cba55cf6590adb7762f56a813d2228e05c586f8376e",
+  "executable_sha256": "5cbce6176424bb0fe7e9aa362d396fac8cc0223902f9146c46a9ebda1b68df84",
+  "files": [
+    "For_the_Fortress_v0.21_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.21_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.21_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.21_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.21_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Choix de faction, choix roguelite et deux victoires inspectés depuis le binaire exporté.",
+  "version": "0.21",
+  "date": "2026-10-22",
+  "platform": "Windows x86_64",
+  "archive_bytes": 39336231,
+  "executable_bytes": 109322328,
+  "reference_results": {
+    "alliance": {
+      "hp": 14,
+      "gold": 192,
+      "kills": 178,
+      "escapes": 4
+    },
+    "horde": {
+      "hp": 12,
+      "gold": 189,
+      "kills": 175,
+      "escapes": 7
+    }
+  },
+  "source_manifest": {
+    "version": "0.21",
+    "date": "2026-10-22",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "5cbce6176424bb0fe7e9aa362d396fac8cc0223902f9146c46a9ebda1b68df84",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "c1877df68d8125fd2e8d23c790630c73a4fcbd9742ef42bd7bd16b561f48068a",
+      "export_presets.cfg": "7131638f7b22564a2863b1e1be05fac520e9aff085c917e7d77adfe11098c37e",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "8058ae88ac874122644432f6f7f0516a1e881fe481e22c03157b8153fe5b0ea6",
+      "scripts/valley_model.gd": "b4a4caadf33d4a9de205d66db51f78914b152f832cd3f81a910a3daa558b662a",
+      "scripts/valley_view.gd": "876bbe64c4185fef29c5821bf606cd8e851b98fe0d8028dc88235c295d433606",
+      "scripts/campaign_data.gd": "e7000625c063122623d9338ff118c5624b53b1e66bd5153663c26a268aa5cdf6",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  },
+  "template_source": "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz",
+  "template_sha512": "ca4d71c4d7b81dfc15d1a98baa07534aa95b03fdda78a0075b06672e1648d2e5f40980c9adc28d23e1b92e732ee7bf3461997aa804af74ec2fcd7a93ccb84079",
+  "release_url": "https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.21"
+}

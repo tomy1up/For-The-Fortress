@@ -1,10 +1,16 @@
 # Dix vagues jouables sur La Vallée du Gué
 
-**Prototype v0.20 — 22 octobre 2026.** Référence de conception : GDD v0.14. For the Fortress! reste un nom de travail.
+**Prototype v0.21 — 22 octobre 2026.** Référence de conception : GDD v0.14. For the Fortress! reste un nom de travail.
 
 Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. Les règles sont celles du GDD v0.14 ; les réglages numériques restent H et aucune nouvelle mécanique de conception n’est ajoutée.
 
-## Jouer localement
+## Version Windows autonome
+
+Le [ZIP v0.21](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.21) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+
+Sur ce PC : dist/For_the_Fortress_v0.21_Windows_x64 depuis la racine du dépôt. Le ZIP local pèse 39 336 231 octets, environ 39 Mo. Voir [le compte rendu d’export](../design/Distribution_Windows_v021.md) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
+
+## Jouer depuis le projet source
 
 
 Sur ce PC, double-cliquer sur **Lancer_le_prototype.cmd** dans ce dossier. Le moteur officiel portable a été préparé dans C:/Projet/.tools/Godot-4.7.2, en dehors du dépôt Git.
@@ -133,6 +139,18 @@ Aucun coût ni dégât changé : ces résultats ne justifient pas une baisse gé
 
 ## État et suite
 
-L1, L2, L3, L4 et L5 sont réalisés. L0 reste partiellement réalisé : le projet démarre avec le moteur portable préparé localement, mais l’export Windows autonome reste à produire. Les documents de conception restent en v0.14 ; v0.20 désigne la révision du prototype et du dépôt.
+L1, L2, L3, L4 et L5 sont réalisés. L0 est réalisé pour le prototype Windows x86_64 : le projet source et la distribution autonome démarrent. Les essais humains et la validation sur d’autres machines restent à mener. Les documents de conception restent en v0.14 ; v0.21 désigne la révision du prototype et du dépôt.
 
-L6 est partiellement réalisé : la matrice automatisée et les comparaisons à trois types constants sont consignées ; restent les essais humains avant de décider un réglage. Prochaine étape technique : distribution Windows autonome pour faciliter ces essais. La cible de 8 à 12 minutes reste à mesurer avec les préparations humaines. Voir le [cahier de réalisation](../design/Proposition_realisation_prototype.md), le [suivi du prototype](../design/Suivi_prototype.md) et les [choix techniques](../design/Choix_techniques_prototype.md).
+L6 est partiellement réalisé : la matrice automatisée et les comparaisons à trois types constants sont consignées ; restent les essais humains avant de décider un réglage. La distribution Windows autonome v0.21 permet désormais de mener ces essais. La cible de 8 à 12 minutes reste à mesurer avec les préparations humaines. Voir le [cahier de réalisation](../design/Proposition_realisation_prototype.md), le [suivi du prototype](../design/Suivi_prototype.md) et les [choix techniques](../design/Choix_techniques_prototype.md).
+
+## Reconstruire et vérifier le ZIP
+
+Installer les templates standard de Godot 4.7.2 avec le gestionnaire d’export, puis exécuter Exporter_Windows.ps1 depuis PowerShell. La version demandée doit correspondre à application/config/version dans project.godot. Le script vérifie le moteur exact, génère les notices de licences, exporte la scène et les cinq scripts runtime explicitement sélectionnés, intègre les données dans l’EXE, puis produit notice, manifeste, ZIP et empreinte SHA-256 dans dist.
+
+Les tests, outils d’essai et documents de développement sont exclus du paquet de jeu. Pour lancer le contrôle sur l’archive extraite hors du projet :
+
+~~~powershell
+python prototype/tests/verify_windows_export.py dist/For_the_Fortress_v0.21_Windows_x64.zip --destination C:/Projet/.tools/controle_export
+~~~
+
+Cette dernière commande se lance depuis la racine du dépôt avec Python sur Windows. Elle vérifie les cinq fichiers attendus, le manifeste, l’architecture PE x86_64, le démarrage sans éditeur et quatre captures graphiques. L’inspection des captures reste à faire séparément ; la commande ne prétend pas remplacer un essai humain.
