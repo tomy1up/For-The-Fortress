@@ -207,6 +207,14 @@ func purchase_preview_stats(slot: int, type: int) -> Dictionary:
 	if slot < 0 or slot >= defenders.size() or not defenders[slot].is_empty() or type not in available_types(): return {}
 	return get_stats(slot, -1, {"type":type,"level":1,"branch":-1})
 
+func upgrade_preview_stats(slot: int, branch: int = -1) -> Dictionary:
+	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty(): return {}
+	var candidate: Dictionary = defenders[slot].duplicate(true)
+	if candidate.level >= 4 or (candidate.level == 3 and branch not in [0,1]) or (candidate.level < 3 and branch != -1): return {}
+	candidate.level += 1
+	if candidate.level == 4: candidate.branch = branch
+	return get_stats(slot, -1, candidate)
+
 func get_stats(slot: int, branch_override: int = -1, candidate: Dictionary = {}) -> Dictionary:
 	if slot < 0 or slot >= defenders.size(): return {}
 	var defender: Dictionary = defenders[slot] if candidate.is_empty() else candidate

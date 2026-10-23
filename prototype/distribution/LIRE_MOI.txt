@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.25 — 23 octobre 2026
+Version : 0.26 — 23 octobre 2026
 
 JOUER
 
@@ -24,6 +24,9 @@ Sur une place libre, survoler un bouton de recrutement pour voir la portée avan
 Le cercle et les portions de route en bleu montrent les positions ennemies à portée.
 Le focus clavier montre aussi cet aperçu. Aucun or dépensé avant le clic d’achat.
 Améliorer : niveaux 2, 3, puis choix entre deux branches au niveau 4.
+Survoler Niveau 2 ou Niveau 3 : comparer les valeurs avant/après et la portée prévue.
+Spécialisation : panneau latéral ; survoler chaque bouton pour voir sa portée sur la carte.
+Comparer ne dépense rien. Cliquer valide et paie ; Annuler conserve le niveau actuel.
 Le choix de spécialisation suspend le compte à rebours. Le confirmer ou l’annuler reprend le temps
 restant ; annuler ne dépense rien et conserve le niveau 3.
 Vendre : le montant remboursé est affiché avant la vente.

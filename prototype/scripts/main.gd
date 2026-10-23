@@ -37,6 +37,10 @@ var sell_button: Button
 var buy_buttons: Array[Button] = []
 var hovered_purchase: int = -1
 var focused_purchase: int = -1
+var hovered_upgrade: bool = false
+var focused_upgrade: bool = false
+var hovered_branch: int = -1
+var focused_branch: int = -1
 var bonus_panel: ColorRect
 var bonus_title: Label
 var bonus_subtitle: Label
@@ -83,6 +87,8 @@ func _ready() -> void:
 					model.upgrade(0)
 					if capture_state == "specialised": model.upgrade(0, 1)
 					else: _upgrade()
+				if capture_state == "upgrade": hovered_upgrade = true
+				if capture_state == "specialisation": hovered_branch = 0
 			if capture_state not in ["shop", "catalogue", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase"]:
 				model.buy(0, model.available_types()[0])
 				model.buy(1, model.available_types()[2 if capture_state == "curse" else 1])
@@ -234,6 +240,10 @@ func _build_interface() -> void:
 		buy_buttons.append(button)
 	sell_button = _button(info, "", Rect2(24, 96, 278, 40), _sell)
 	upgrade_button = _button(info, "", Rect2(318, 96, 278, 40), _upgrade)
+	upgrade_button.mouse_entered.connect(_upgrade_hover.bind(true))
+	upgrade_button.mouse_exited.connect(_upgrade_hover.bind(false))
+	upgrade_button.focus_entered.connect(_upgrade_focus.bind(true))
+	upgrade_button.focus_exited.connect(_upgrade_focus.bind(false))
 	hint_label = _label(screen, "", Vector2(347, 574), Vector2(890, 24), 13, Color("91a799"))
 	hint_label.mouse_filter = Control.MOUSE_FILTER_STOP # Autoriser les infobulles des synergies.
 	_label(screen, "Nom de travail · Visuels temporaires", Vector2(34, 776), Vector2(900, 20), 11, Color("718b7d"))
@@ -263,20 +273,26 @@ func _choose_faction(choice: int) -> void:
 
 func _build_specialisation_selector(screen: Control) -> void:
 	specialisation_panel = ColorRect.new()
-	specialisation_panel.color = Color(0.02, 0.04, 0.035, 0.94)
+	specialisation_panel.color = Color(0.02, 0.04, 0.035, 0.28)
 	specialisation_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	screen.add_child(specialisation_panel)
-	var panel: Panel = _panel(specialisation_panel, Rect2(220, 144, 840, 512))
-	specialisation_title = _label(panel, "", Vector2(30, 22), Vector2(780, 36), 24, Color("e0dbbf"))
-	specialisation_cost = _label(panel, "", Vector2(30, 72), Vector2(780, 52), 15, Color("cdb47e"))
+	var panel: Panel = _panel(specialisation_panel, Rect2(24, 104, 398, 654))
+	specialisation_title = _label(panel, "Spécialisation", Vector2(18, 14), Vector2(362, 32), 22, Color("e0dbbf"))
+	specialisation_cost = _label(panel, "", Vector2(18, 52), Vector2(362, 62), 13, Color("cdb47e"))
 	for branch in range(2):
-		var x: int = 30 + branch * 410
-		specialisation_names.append(_label(panel, "", Vector2(x, 132), Vector2(370, 30), 17, Color("e0dbbf")))
-		specialisation_descriptions.append(_label(panel, "", Vector2(x, 174), Vector2(370, 50), 14, Color("aabbb0")))
+		var y: int = 126 + branch * 224
+		specialisation_names.append(_label(panel, "", Vector2(18, y), Vector2(362, 24), 16, Color("e0dbbf")))
+		specialisation_descriptions.append(_label(panel, "", Vector2(18, y+28), Vector2(362, 36), 13, Color("aabbb0")))
 		specialisation_descriptions[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		specialisation_stats.append(_label(panel, "", Vector2(x, 238), Vector2(370, 130), 14, Color("bbcbbf")))
-		specialisation_buttons.append(_button(panel, "Choisir cette spécialisation", Rect2(x, 384, 370, 44), _choose_branch.bind(branch)))
-	specialisation_cancel = _button(panel, "Annuler", Rect2(330, 452, 180, 40), _cancel_specialisation)
+		specialisation_stats.append(_label(panel, "", Vector2(18, y+70), Vector2(362, 96), 13, Color("bbcbbf")))
+		specialisation_buttons.append(_button(panel, "Choisir cette spécialisation", Rect2(18, y+180, 362, 32), _choose_branch.bind(branch)))
+		specialisation_buttons[-1].add_theme_font_size_override("font_size",14)
+		specialisation_buttons[-1].mouse_entered.connect(_branch_hover.bind(branch,true))
+		specialisation_buttons[-1].mouse_exited.connect(_branch_hover.bind(branch,false))
+		specialisation_buttons[-1].focus_entered.connect(_branch_focus.bind(branch,true))
+		specialisation_buttons[-1].focus_exited.connect(_branch_focus.bind(branch,false))
+	_label(panel, "Survolez un bouton pour voir sa portée.", Vector2(18,572), Vector2(362,20),12,Color("aabbb0"))
+	specialisation_cancel = _button(panel, "Annuler", Rect2(117, 604, 164, 32), _cancel_specialisation)
 
 func _upgrade() -> void:
 	if choosing_faction or overview_open or pending_slot >= 0 or selected < 0 or model.defenders[selected].is_empty():
@@ -298,17 +314,17 @@ func _update_specialisation_choices() -> void:
 		return
 	var defender: Dictionary = model.defenders[pending_slot]
 	var type: int = defender.type
-	specialisation_title.text = "Spécialisation · " + Model.ROSTER[type].name
-	specialisation_cost.text = "Spécialisation (niveau 4) : %d or.\nTotal investi après amélioration : %d or." % [model.upgrade_cost(pending_slot), defender.paid + model.upgrade_cost(pending_slot)]
+	specialisation_cost.text = "%s\nNiveau 4 : %d or · Choix inclus\nTotal investi après amélioration : %d or" % [Model.ROSTER[type].name,model.upgrade_cost(pending_slot), defender.paid + model.upgrade_cost(pending_slot)]
+	var current: Dictionary = model.get_stats(pending_slot)
 	for branch in range(2):
 		var stats: Dictionary = model.get_stats(pending_slot, branch)
 		specialisation_names[branch].text = ("A · " if branch == 0 else "B · ") + stats.branch_name
 		specialisation_descriptions[branch].text = stats.description
-		specialisation_stats[branch].text = "Dégâts principaux : %s\nIntervalle : %s s\nPortée : %s unités" % [_number(stats.damage), _number(stats.interval), _number(stats.range)]
+		specialisation_stats[branch].text = _comparison_text(current,stats,true)
 		if type in [2, 3, 4]:
-			specialisation_stats[branch].text += "\nSecondaires : %s dégâts\n%s %s, distance < %s" % [_number(stats.secondary_damage), stats.secondary_cap, ("rebond" if stats.secondary_cap == 1 else "rebonds") if type == 3 else "victimes", _number(stats.radius)]
+			specialisation_stats[branch].text += "\n%s : %s → %s dégâts\nCibles : %d → %d · %s : <%s → <%s" % ["Rebonds" if type == 3 else "Explosion",_number(current.secondary_damage),_number(stats.secondary_damage),current.secondary_cap,stats.secondary_cap,"Distance" if type == 3 else "Rayon",_number(current.radius),_number(stats.radius)]
 		elif type == 5:
-			specialisation_stats[branch].text += "\nMalédiction : %s dégâts\nÀ +1 s puis +2 s, même hors portée." % _number(stats.curse_damage)
+			specialisation_stats[branch].text += "\nMalédiction : %s → %s dégâts\nÀ +1 s puis +2 s, même hors portée." % [_number(current.curse_damage),_number(stats.curse_damage)]
 		specialisation_buttons[branch].disabled = not model.upgrade_error(pending_slot, branch).is_empty()
 
 func _choose_branch(branch: int) -> void:
@@ -327,6 +343,10 @@ func _choose_branch(branch: int) -> void:
 func _cancel_specialisation() -> void:
 	pending_slot = -1
 	pending_instance = -1
+	hovered_branch = -1
+	focused_branch = -1
+	hovered_upgrade = false
+	focused_upgrade = false
 	_update_interface()
 	map_view.queue_redraw()
 
@@ -421,6 +441,56 @@ func _purchase_hover(type: int, entered: bool) -> void:
 	elif hovered_purchase == type: hovered_purchase = -1
 	_update_interface()
 	map_view.queue_redraw()
+
+func _upgrade_hover(entered: bool) -> void:
+	hovered_upgrade = entered
+	_update_interface()
+	map_view.queue_redraw()
+
+func _upgrade_focus(entered: bool) -> void:
+	focused_upgrade = entered
+	_update_interface()
+	map_view.queue_redraw()
+
+func _branch_hover(branch: int, entered: bool) -> void:
+	if entered: hovered_branch = branch
+	elif hovered_branch == branch: hovered_branch = -1
+	_update_interface()
+	map_view.queue_redraw()
+
+func _branch_focus(branch: int, entered: bool) -> void:
+	if entered: focused_branch = branch
+	elif focused_branch == branch: focused_branch = -1
+	_update_interface()
+	map_view.queue_redraw()
+
+func _comparison_text(current: Dictionary, future: Dictionary, multiline: bool = false) -> String:
+	var values: Array[String] = ["Dégâts : %s → %s" % [_number(current.damage),_number(future.damage)],"Intervalle : %s → %s s" % [_number(current.interval),_number(future.interval)],"Portée : %s → %s" % [_number(current.range),_number(future.range)]]
+	return ("\n" if multiline else " · ").join(values)
+
+func _refresh_upgrade_preview() -> void:
+	map_view.upgrade_preview = {}
+	if choosing_faction or overview_open or not model.can_build() or selected < 0 or model.defenders[selected].is_empty():
+		hovered_upgrade = false; focused_upgrade = false
+		hovered_branch = -1; focused_branch = -1
+		return
+	var branch: int = -1
+	if pending_slot >= 0:
+		if pending_slot != selected or model.defenders[selected].instance_id != pending_instance: return
+		branch = hovered_branch if hovered_branch >= 0 else focused_branch
+		if branch < 0: return
+	elif not hovered_upgrade and not focused_upgrade: return
+	var future: Dictionary = model.upgrade_preview_stats(selected,branch)
+	if future.is_empty(): return
+	map_view.upgrade_preview = future
+	if pending_slot >= 0: return # La fenêtre compare déjà les deux branches.
+	var current: Dictionary = model.get_stats(selected)
+	title_label.text = "E%d · APERÇU NIVEAU %d · %s" % [selected+1,model.defenders[selected].level+1,current.name.to_upper()]
+	details_label.text = _comparison_text(current,future)
+	var effect: String = _effect_text(future,model.defenders[selected].type)
+	if not effect.is_empty(): details_label.text += "\nAprès amélioration : " + effect
+	var error: String = model.upgrade_error(selected)
+	hint_label.text = "Aperçu sans dépense · %d or · Cliquez pour améliorer · Route bleue : portée prévue" % model.upgrade_cost(selected) if error.is_empty() else "Aperçu sans dépense · " + error
 
 func _purchase_focus(type: int, entered: bool) -> void:
 	if entered: focused_purchase = type
@@ -535,6 +605,7 @@ func _update_interface() -> void:
 	if model.phase in ["victory","defeat"]:
 		hint_label.text = "%d éliminés · %d arrivées · %d or gagnés · Survolez pour les synergies" % [model.total_killed,model.total_escaped,model.total_income] if occupied else "%d éliminés · %d arrivées · %d or gagnés au combat." % [model.total_killed,model.total_escaped,model.total_income]
 	_refresh_purchase_preview()
+	_refresh_upgrade_preview()
 
 func _synergy_tooltip(slot: int) -> String:
 	var type: int = model.defenders[slot].type

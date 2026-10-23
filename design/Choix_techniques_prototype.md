@@ -112,3 +112,11 @@ La vue dessine uniquement les liens du défenseur sélectionné, avant les perso
 Le contrôleur distingue survol et focus, rafraîchit l’aperçu avec l’interface et le retire lorsque le recrutement n’est plus pertinent. La vue projette le cercle avec le même outil que pour un défenseur déployé. Le chemin surligné suit les limites des fenêtres de couverture et leurs virages. Les captures d’export ajoutent l’état `purchase`, financé au budget initial normal.
 
 408 nouveaux contrôles, 1 606 au total. Le paquet Windows est vérifié avec dix lancements ; le délai reste 30 secondes et les résultats des campagnes sont conservés.
+
+## Comparaison des améliorations — v0.26, 23 octobre 2026
+
+`upgrade_preview_stats` duplique le défenseur en candidat virtuel, avance son niveau et applique la branche éventuelle avant de consulter le calcul effectif existant. Le modèle réel n’est pas modifié. Le contrôleur distingue survol et focus de l’amélioration ou d’une branche, rafraîchit les valeurs avant/après et retire les aperçus hors préparation. La vue réutilise le cercle et les fenêtres de chemin de l’aperçu d’achat.
+
+Le panneau des spécialisations devient latéral avec un fond modal moins opaque pour garder la carte lisible. Les commandes derrière le panneau restent bloquées et le délai reste suspendu par `pending_slot`, sans changement des conditions de paiement ou d’annulation.
+
+357 contrôles supplémentaires, 1 963 au total. Les captures d’export couvrent aussi l’amélioration ordinaire et la spécialisation ; douze lancements de l’archive extraite sont vérifiés. Les valeurs de référence et les campagnes restent inchangées.

@@ -1,0 +1,100 @@
+{
+  "archive_sha256": "d91c9b29e17c2dcb01fdc9a6b7ded49afe16b33d828d502081479a3d617bf451",
+  "executable_sha256": "8d094d40ff2066dcab1bda8a20de335ed05c416c3af4bffc55796863f38d741d",
+  "files": [
+    "For_the_Fortress_v0.26_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.26_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.26_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.26_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.26_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "upgrade_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "specialisation_preview",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Comparaison ordinaire et panneau lateral inspectes ; vues des six defenseurs rendues et inspectees, dont controle des trois derniers types dans le binaire final.",
+  "version": "0.26",
+  "date": "2026-10-23",
+  "inter_wave_seconds": 30,
+  "regression_checks": 1963,
+  "upgrade_preview_checks": 357,
+  "archive_bytes": 39345990,
+  "source_manifest": {
+    "version": "0.26",
+    "date": "2026-10-23",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "8d094d40ff2066dcab1bda8a20de335ed05c416c3af4bffc55796863f38d741d",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "cfb5055410593105bd5882be0e3dd901a93a09203fc33b9098152a8ef0909b5f",
+      "export_presets.cfg": "352ac037fcc892d0491f7ec5b900b69ec69d248b5f1ec9dd5b0bfdbe3da88b7d",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "a23301247fcfdde3d0e920b97a3243638e021eb9d9f42a14470989c860c482a7",
+      "scripts/valley_model.gd": "6da41cbf256bfb069011d3d8723452f49d67aeeeae6cbb9b785f290e1e1b6b2f",
+      "scripts/valley_view.gd": "59e363c3cc636239a45f14a5a316579945fc9b094548d04e21978acc96e64d2c",
+      "scripts/campaign_data.gd": "e866f322fd3ffe6b4e0ba627ebaedbe775b56aa805a6ee134d91faf3df482206",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  }
+}

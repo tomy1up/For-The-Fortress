@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 23 octobre 2026 — prototype v0.25, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 23 octobre 2026 — prototype v0.26, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -156,3 +156,9 @@ La v0.24 rend les associations inspectables en clair : partenaires actifs relié
 À la demande du joueur, sélectionner un emplacement libre puis survoler un recrutement montre sa portée et la portion du chemin couverte, avant toute dépense. Le focus clavier permet aussi cette comparaison. La portée inclut les bonus acquis et les synergies de proximité applicables à la recrue. Les interdictions d’achat demeurent effectives ; le décompte continue pendant la comparaison.
 
 1 606 contrôles réussis, dont 408 dédiés aux aperçus et à leur conformité à l’achat réel. Dix lancements du paquet extrait vérifiés ; aperçus Alliance et des trois unités Horde inspectés. Aucun changement d’équilibrage. Voir [la fiche](Apercu_achat_v025.md) et [le rapport d’export](Distribution_Windows_v025.json).
+
+## Comparaison des améliorations — v0.26, 23 octobre 2026
+
+Le survol ou le focus d’une amélioration affiche les valeurs actuelles et prévues, avec la portée principale future en bleu. Les spécialisations sont présentées dans un panneau latéral laissant la carte visible ; chaque branche compare ses statistiques au niveau 3 et prévisualise sa portée au survol de son bouton. Les paiements, conditions d’activation et horloges restent inchangés.
+
+1 963 contrôles réussis, dont 357 nouveaux. Douze lancements du paquet extrait vérifiés, six vues de spécialisations inspectées. Les résultats des campagnes sont conservés. Voir [la fiche](Comparaison_ameliorations_v026.md) et [le rapport d’export](Distribution_Windows_v026.json).

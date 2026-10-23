@@ -8,6 +8,7 @@ const SLOT_FILL := Color("213e3b")
 var model: RefCounted
 var selected: int = -1
 var purchase_preview: Dictionary = {}
+var upgrade_preview: Dictionary = {}
 var font: Font = ThemeDB.fallback_font
 
 static func project(point: Vector2) -> Vector2:
@@ -68,11 +69,12 @@ func _draw() -> void:
 		draw_line(project(Vector2(x, 6.6)), project(Vector2(x, 7.4)), Color("b29a6b"), 2)
 	for tree in [Vector2(1, 1), Vector2(1.4, 8.5), Vector2(4.6, 9), Vector2(10, 1), Vector2(12, 8.7), Vector2(16.8, 2), Vector2(17, 8.7)]:
 		_draw_tree(project(tree))
-	if model != null and selected >= 0 and model.defenders[selected].is_empty() and not purchase_preview.is_empty():
-		var preview_ring := range_outline(Model.SLOTS[selected], purchase_preview.range)
+	var preview: Dictionary = purchase_preview if not purchase_preview.is_empty() else upgrade_preview
+	if model != null and selected >= 0 and not preview.is_empty():
+		var preview_ring := range_outline(Model.SLOTS[selected], preview.range)
 		draw_colored_polygon(preview_ring, Color(0.35, 0.8, 0.95, 0.12))
 		draw_polyline(preview_ring, Color("8bd5e6"), 2.5, true)
-		for section in covered_route(Model.SLOTS[selected], purchase_preview.range):
+		for section in covered_route(Model.SLOTS[selected], preview.range):
 			draw_polyline(section, Color("8bd5e6"), 6, true)
 	if model != null and selected >= 0 and not model.defenders[selected].is_empty():
 		var stats: Dictionary = model.get_stats(selected)
