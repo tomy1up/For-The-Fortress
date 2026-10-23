@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 23 octobre 2026 — prototype v0.27, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 23 octobre 2026 — prototype v0.28, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -168,3 +168,9 @@ Le survol ou le focus d’une amélioration affiche les valeurs actuelles et pr�
 Le survol d’un ennemi montre nom, PV, dégâts d’arrivée, récompense et malédiction éventuelle. L’ennemi est repéré sur la carte, le boss est identifié et une arrivée actuellement fatale est signalée. La lecture ne modifie ni le combat ni la sélection du défenseur et ne suspend pas le temps.
 
 2 041 contrôles réussis, dont 78 nouveaux. Quatorze lancements du paquet extrait vérifiés ; fiches de l’ennemi ordinaire et du boss inspectées. Aucun changement d’équilibrage. Voir [la fiche](Inspection_ennemis_v027.md) et [le rapport d’export](Distribution_Windows_v027.json). Les essais humains et la comparaison des factions restent à élargir.
+
+## Bilan de fin de partie — v0.28, 23 octobre 2026
+
+Le bouton Bilan, à côté de Rejouer après victoire ou défaite, affiche résultats et temps simulés par vague, défense finale et bonus choisis. Le survol des lignes donne le contexte au départ des vagues. Les relevés sont conservés en mémoire jusqu’au nouvel essai, sans sauvegarde ni progression persistante.
+
+2 237 contrôles réussis, dont 196 nouveaux. Seize lancements du paquet extrait vérifiés ; bilans de victoire et de défaite inspectés. Les références des deux factions et l’équilibrage restent inchangés. Voir [la fiche](Bilan_partie_v028.md) et [le rapport d’export](Distribution_Windows_v028.json). Ce bilan facilite les prochains retours humains par vague.

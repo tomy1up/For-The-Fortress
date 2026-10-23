@@ -62,6 +62,17 @@ var enemy_threat: Label
 var enemy_reward: Label
 var enemy_status: Label
 var enemy_prompt: Label
+var summary_open: bool = false
+var summary_button: Button
+var summary_panel: ColorRect
+var summary_title: Label
+var summary_subtitle: Label
+var summary_totals: Label
+var summary_rows: Array[ColorRect] = []
+var summary_cells: Array = []
+var summary_army: Array[Label] = []
+var summary_bonuses: Array[Label] = []
+var summary_close: Button
 
 func _ready() -> void:
 	map_view.model = model
@@ -84,8 +95,14 @@ func _ready() -> void:
 	if not capture_path.is_empty():
 		if capture_state != "selection":
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
-			if capture_state in ["bonus", "campaign", "victory", "overview", "boss_inspection"]:
+			if capture_state in ["bonus", "campaign", "victory", "overview", "boss_inspection", "summary"]:
 				_prepare_campaign_capture(capture_state)
+			if capture_state == "defeat_summary":
+				for wave in range(10):
+					model.start(); model.advance(10000)
+					if model.phase == "defeat": break
+					if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+					model.prepare_next_wave()
 			if capture_state in ["upgrade", "specialisation", "specialised"]:
 				if capture_state != "upgrade": model.gold = 1000 # Fixture de capture uniquement.
 				model.buy(0, capture_type)
@@ -98,7 +115,7 @@ func _ready() -> void:
 					else: _upgrade()
 				if capture_state == "upgrade": hovered_upgrade = true
 				if capture_state == "specialisation": hovered_branch = 0
-			if capture_state not in ["shop", "catalogue", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection"]:
+			if capture_state not in ["shop", "catalogue", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection", "summary", "defeat_summary"]:
 				model.buy(0, model.available_types()[0])
 				model.buy(1, model.available_types()[2 if capture_state == "curse" else 1])
 			selected = 1 if capture_state == "curse" else 0
@@ -117,12 +134,13 @@ func _ready() -> void:
 					model.enemies.append(enemy)
 				model.spawned = model.enemies.size()
 				model.phase = "combat"
-			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection"]:
+			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection", "summary", "defeat_summary"]:
 				model.start()
 				model.advance(1.0 if capture_state == "curse" else 7.5 if capture_state in ["combat","inspection"] else 100.0)
 		set_process(false)
 		if capture_state == "finished": autoplay_started = true
 		_update_interface()
+		if capture_state in ["summary","defeat_summary"]: _show_run_summary()
 		if capture_state in ["inspection","boss_inspection"]:
 			var target: Dictionary = {}
 			for enemy in model.enemies:
@@ -203,7 +221,7 @@ func _prepare_campaign_capture(state: String) -> void:
 		if wave < 10: model.prepare_next_wave()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open:
+	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open or summary_open:
 		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var closest: int = -1
@@ -250,6 +268,8 @@ func _build_interface() -> void:
 	start_button = _button(side, "Lancer la vague 1", Rect2(22, 428, 234, 44), _start)
 	speed_button = _button(side, "Vitesse ×1", Rect2(22, 482, 234, 40), _toggle_speed)
 	reset_button = _button(side, "Nouvel essai", Rect2(22, 532, 234, 40), _reset)
+	summary_button = _button(side,"Bilan",Rect2(144,532,112,40),_show_run_summary)
+	summary_button.tooltip_text = "Voir le résultat de chaque vague et les améliorations de cette partie."
 	bonus_summary_button = _button(side, "Bonus acquis · 0/3", Rect2(22, 582, 234, 32), _show_bonuses)
 	bonus_summary_button.add_theme_font_size_override("font_size", 13)
 	var info := _panel(screen, Rect2(330, 608, 926, 152))
@@ -277,6 +297,94 @@ func _build_interface() -> void:
 	_build_faction_selector(screen)
 	_build_specialisation_selector(screen)
 	_build_bonus_selector(screen)
+	_build_run_summary(screen)
+
+func _build_run_summary(screen: Control) -> void:
+	summary_panel = ColorRect.new()
+	summary_panel.color = Color(0.02,0.04,0.035,0.95)
+	summary_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	screen.add_child(summary_panel)
+	var panel: Panel = _panel(summary_panel,Rect2(154,70,972,660))
+	summary_title = _label(panel,"",Vector2(24,18),Vector2(924,36),26,Color("e0dbbf"))
+	summary_subtitle = _label(panel,"",Vector2(24,64),Vector2(924,48),14,Color("bbcbbf"))
+	var positions: Array[int] = [8,88,206,320,444,564,724]
+	var widths: Array[int] = [70,110,108,116,112,152,192]
+	var headings: Array[String] = ["Vague","Éliminés","Passés","PV perdus","Or gagné","Combat","Résultat"]
+	for column in range(headings.size()):
+		_label(panel,headings[column],Vector2(24+positions[column],124),Vector2(widths[column],24),13,Color("cdb47e"))
+	for index in range(10):
+		var row := ColorRect.new()
+		row.position = Vector2(24,154+28*index)
+		row.size = Vector2(924,28)
+		row.mouse_filter = Control.MOUSE_FILTER_STOP
+		panel.add_child(row)
+		summary_rows.append(row)
+		var cells: Array[Label] = []
+		for column in range(headings.size()):
+			cells.append(_label(row,"",Vector2(positions[column],4),Vector2(widths[column],22),13,Color("bbcbbf")))
+		summary_cells.append(cells)
+	summary_totals = _label(panel,"",Vector2(24,444),Vector2(924,26),14,Color("e0dbbf"))
+	_label(panel,"Défense finale",Vector2(24,478),Vector2(600,22),14,Color("cdb47e"))
+	_label(panel,"Bonus choisis",Vector2(650,478),Vector2(298,22),14,Color("cdb47e"))
+	for index in range(6):
+		summary_army.append(_label(panel,"",Vector2(24,502+16*index),Vector2(610,18),12,Color("bbcbbf")))
+	for index in range(3):
+		summary_bonuses.append(_label(panel,"",Vector2(650,502+30*index),Vector2(298,28),13,Color("bbcbbf")))
+		summary_bonuses[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	summary_close = _button(panel,"Fermer",Rect2(404,614,164,32),_close_run_summary)
+	summary_panel.visible = false
+
+func _show_run_summary() -> void:
+	if model.phase not in ["victory","defeat"] or overview_open or pending_slot >= 0: return
+	summary_open = true
+	_populate_run_summary()
+	_update_interface()
+	summary_close.grab_focus()
+
+func _close_run_summary() -> void:
+	summary_open = false
+	_update_interface()
+	if summary_button.visible: summary_button.grab_focus()
+
+func _army_description(army: Array) -> Array[String]:
+	var lines: Array[String] = []
+	for unit in army:
+		var text: String = "E%d · %s · Niveau %d" % [unit.slot+1,Model.ROSTER[unit.type].name,unit.level]
+		if unit.level == 4: text += " · " + Model.stats_for(unit.type,4,unit.branch).branch_name
+		lines.append(text)
+	return lines
+
+func _populate_run_summary() -> void:
+	summary_title.text = "Bilan de partie · " + ("Victoire" if model.phase == "victory" else "Défaite") + " · " + ("Alliance" if model.faction == 0 else "Horde")
+	summary_subtitle.text = "Forteresse : %d/%d PV · %d or restants · Survolez une ligne pour les unités et bonus de la vague.\nCombat cumulé : %s s simulées, hors préparation et choix ; le ×2 réduit le temps réel." % [model.fortress_hp,model.max_hp,model.gold,("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
+	var lost: int = 0
+	for index in range(10):
+		var record: Dictionary = {}
+		for item in model.wave_history:
+			if item.wave == index+1: record = item; break
+		var values: Array[String] = [str(index+1),"—","—","—","—","—","Non relevée" if index+1 <= model.wave else "Non jouée"]
+		summary_rows[index].tooltip_text = "Cette vague n’a pas de relevé." if index+1 <= model.wave else "La partie s’est terminée avant cette vague."
+		summary_rows[index].color = Color(0.4,0.6,0.5,0.07 if index%2 == 0 else 0.02)
+		if not record.is_empty():
+			lost += record.hp_lost
+			values = [str(record.wave),str(record.killed),str(record.escaped),str(record.hp_lost),str(record.income),("%.1f s" % record.seconds).replace(".",","),"Défaite" if record.result == "defeat" else "Terminée"]
+			if record.result == "defeat": summary_rows[index].color = Color(0.8,0.3,0.2,0.15)
+			var names: Array[String] = []
+			for code in record.bonuses: names.append(Model.Campaign.BONUSES[code].name)
+			var army: Array[String] = _army_description(record.army)
+			summary_rows[index].tooltip_text = "Vague %d : %d ennemis prévus, %d apparus, %d encore en chemin à la fin.\nForteresse : %d → %d PV\nDéfense au départ :\n%s\nBonus actifs : %s" % [record.wave,record.planned,record.spawned,record.remaining,record.hp_before,record.hp_after,"\n".join(army) if not army.is_empty() else "Aucun défenseur"," · ".join(names) if not names.is_empty() else "Aucun"]
+		for column in range(values.size()): summary_cells[index][column].text = values[column]
+	summary_totals.text = "Total : %d éliminés · %d passés · %d PV perdus au combat · %d or gagnés au combat" % [model.total_killed,model.total_escaped,lost,model.total_income]
+	var army: Array[Dictionary] = []
+	for slot in range(model.defenders.size()):
+		if not model.defenders[slot].is_empty():
+			var unit: Dictionary = model.defenders[slot].duplicate(true)
+			unit.slot = slot
+			army.append(unit)
+	var lines: Array[String] = _army_description(army)
+	for index in range(summary_army.size()): summary_army[index].text = lines[index] if index < lines.size() else "Aucun défenseur" if index == 0 else ""
+	for index in range(summary_bonuses.size()):
+		summary_bonuses[index].text = Model.Campaign.BONUSES[model.bonuses[index]].name if index < model.bonuses.size() else "Aucun bonus" if index == 0 else ""
 
 func _build_enemy_inspector(screen: Control) -> void:
 	enemy_prompt = _label(screen,"Survolez un ennemi pour l’inspecter.",Vector2(946,96),Vector2(310,22),12,Color("aabbb0"))
@@ -482,7 +590,7 @@ func _button(parent: Control, text: String, rectangle: Rect2, action: Callable) 
 	return button
 
 func _start() -> void:
-	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open:
+	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open or summary_open:
 		return
 	if model.phase == "finished": model.prepare_next_wave()
 	if model.start(): autoplay_started = true
@@ -493,7 +601,7 @@ func _toggle_speed() -> void:
 	_update_interface()
 
 func _reset() -> void:
-	if model.active or pending_slot >= 0:
+	if model.active or pending_slot >= 0 or summary_open:
 		return
 	overview_open = false
 	autoplay_started = false
@@ -602,6 +710,12 @@ func _sell() -> void:
 
 func _update_interface() -> void:
 	_sync_countdown()
+	var terminal: bool = model.phase in ["victory","defeat"]
+	summary_button.visible = terminal
+	summary_button.disabled = overview_open or pending_slot >= 0
+	summary_panel.visible = summary_open
+	reset_button.size.x = 112 if terminal else 234
+	reset_button.text = "Rejouer" if terminal else "Nouvel essai"
 	hp_label.text = "FORTERESSE   %d / %d PV" % [model.fortress_hp,model.max_hp]
 	gold_label.text = "OR DISPONIBLE     %d" % model.gold
 	faction_panel.visible = choosing_faction
@@ -619,7 +733,7 @@ func _update_interface() -> void:
 	if countdown_remaining >= 0.0:
 		start_button.tooltip_text += "\nDépart automatique après le décompte. Cliquez pour lancer maintenant."
 	speed_button.text = "Vitesse ×%d" % int(speed)
-	reset_button.disabled = model.active or pending_slot >= 0
+	reset_button.disabled = model.active or pending_slot >= 0 or summary_open
 	reset_button.tooltip_text = "Terminez la vague avant de recommencer." if model.active else "Repartir avec 150 or et 20 PV."
 	match model.phase:
 		"preparation": status_label.text = "Préparation · Vague %d/10\n%d ennemis" % [model.wave,model.spawn_schedule.size()]
@@ -738,7 +852,7 @@ func _build_bonus_selector(screen: Control) -> void:
 	bonus_close = _button(panel,"Fermer",Rect2(442,408,196,36),_close_bonuses)
 
 func _show_bonuses() -> void:
-	if choosing_faction or pending_slot >= 0 or model.phase == "bonus": return
+	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or summary_open: return
 	overview_open = true
 	_update_interface()
 

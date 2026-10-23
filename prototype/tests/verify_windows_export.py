@@ -43,6 +43,7 @@ startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW
 startup.wShowWindow=0
 results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
+       ('victory_summary','summary','horde'),('defeat_summary','defeat_summary','alliance'),
        ('enemy_inspection','inspection','horde'),('boss_inspection','boss_inspection','alliance'),
        ('upgrade_comparison','upgrade',None),('specialisation_preview','specialisation',None),
        ('alliance_purchase','purchase','alliance'),('horde_purchase','purchase','horde'),

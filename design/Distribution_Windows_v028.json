@@ -1,0 +1,120 @@
+{
+  "archive_sha256": "23c3a326454c5203081dfd241c9741d1f0644591dc4f6c48ea58c0a7831d67b4",
+  "executable_sha256": "d8722c7391754850a28a4a598e67e580d093730e690a12eb9f6699f3d1d169ea",
+  "files": [
+    "For_the_Fortress_v0.28_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.28_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.28_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.28_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.28_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "victory_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "defeat_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "upgrade_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "specialisation_preview",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Bilans victoire Horde et defaite Alliance et acces Bilan/Rejouer inspectes dans le binaire final.",
+  "version": "0.28",
+  "date": "2026-10-23",
+  "inter_wave_seconds": 30,
+  "regression_checks": 2237,
+  "run_summary_checks": 196,
+  "archive_bytes": 39356090,
+  "source_manifest": {
+    "version": "0.28",
+    "date": "2026-10-23",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "d8722c7391754850a28a4a598e67e580d093730e690a12eb9f6699f3d1d169ea",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "e9114f9dc2bf4bf72c77db60bc2830d7a0ae072eb56d0aac40f70af5453032b8",
+      "export_presets.cfg": "49fa85065fd143f4dff3a8c85b94b5f7ee326bf5d4ad2d7a95e123544ac3aff7",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "e688ccb74cbb97e3c92d10f97350cb7ecbd065885bc88aec217ec7cde8afa58f",
+      "scripts/valley_model.gd": "4446098982db2d463a13fbe24093b480b2a2a91bb40717ace4947e509f0fc71c",
+      "scripts/valley_view.gd": "7dcb27d57ec475df58705aa9a4a7b443321d09a1a96f5f4c9563bb5d41519410",
+      "scripts/campaign_data.gd": "e866f322fd3ffe6b4e0ba627ebaedbe775b56aa805a6ee134d91faf3df482206",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  }
+}

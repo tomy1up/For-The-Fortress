@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.27 — 23 octobre 2026
+Version : 0.28 — 23 octobre 2026
 
 JOUER
 
@@ -40,7 +40,11 @@ Traits dorés : proximité ; traits bleus : spécialisations.
 Survol de la ligne des synergies : partenaires, effets et conditions de chaque association.
 La lecture au survol ne suspend pas le combat ni le décompte.
 Survol du bouton de lancement : voir les groupes de la prochaine vague.
-Nouvel essai : repartir sans défense ni bonus, avec 150 or et 20 PV.
+Nouvel essai / Rejouer : repartir sans défense ni bonus, avec 150 or et 20 PV.
+En fin de partie, Bilan affiche les résultats de chaque vague, votre défense et vos bonus.
+Survoler une ligne du bilan montre les unités et bonus au départ de la vague.
+Les temps sont ceux de la simulation, hors préparations et choix.
+Le bilan est effacé au nouvel essai ; il ne sauvegarde pas la partie.
 Fermer la fenêtre : quitter. Aucune sauvegarde de partie n’est prévue dans ce prototype.
 
 RETOUR DE TEST

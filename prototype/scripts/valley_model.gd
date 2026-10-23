@@ -65,6 +65,8 @@ var enemies: Array[Dictionary] = []
 var defenders: Array[Dictionary] = []
 var shots: Array[Dictionary] = []
 var event_log: Array[String] = []
+var wave_history: Array[Dictionary] = []
+var _wave_record: Dictionary = {}
 
 func _init(enable_synergies: bool = true) -> void:
 	synergies_enabled = enable_synergies
@@ -72,6 +74,8 @@ func _init(enable_synergies: bool = true) -> void:
 	reset()
 
 func reset() -> void:
+	wave_history.clear()
+	_wave_record.clear()
 	gold = INITIAL_GOLD
 	faction = 0
 	next_instance_id = 0
@@ -339,6 +343,11 @@ func sell(slot: int) -> bool:
 func start() -> bool:
 	if phase != "preparation":
 		return false
+	var army: Array[Dictionary] = []
+	for slot in range(defenders.size()):
+		var unit: Dictionary = defenders[slot]
+		if not unit.is_empty(): army.append({"slot":slot,"type":unit.type,"level":unit.level,"branch":unit.branch,"paid":unit.paid})
+	_wave_record = {"wave":wave,"hp_before":fortress_hp,"max_hp":max_hp,"income_before":total_income,"army":army,"bonuses":bonuses.duplicate(),"planned":spawn_schedule.size()}
 	phase = "combat"
 	for defender in defenders:
 		if not defender.is_empty():
@@ -477,6 +486,14 @@ func _resolve_instant() -> void:
 			_offer_bonus()
 		else:
 			phase = "finished"
+	if not active: _finish_wave_record()
+
+func _finish_wave_record() -> void:
+	if _wave_record.is_empty() or _wave_record.wave != wave: return
+	var record: Dictionary = _wave_record.duplicate(true)
+	record.merge({"hp_after":fortress_hp,"hp_lost":record.hp_before-fortress_hp,"income":total_income-record.income_before,"killed":killed,"escaped":escaped,"spawned":spawned,"remaining":enemies.size(),"seconds":elapsed,"result":"defeat" if phase == "defeat" else "cleared"})
+	wave_history.append(record)
+	_wave_record.clear()
 
 func _has_enemy(id: int) -> bool:
 	for enemy in enemies:

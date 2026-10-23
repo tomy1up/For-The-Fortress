@@ -128,3 +128,11 @@ La vue expose les zones de survol projetées des huit profils et recherche l’e
 La fiche en haut à droite lit directement les PV, dégâts d’arrivée, récompenses et malédictions existantes. Sa jauge conserve les PV réels ; seul le texte arrondit au supérieur. Le thème de jauge est appliqué avant son dimensionnement final pour éviter le recouvrement du texte. Les fenêtres modales et les phases hors combat masquent fiche et repère.
 
 78 contrôles supplémentaires, 2 041 au total. Les captures d’export ajoutent une inspection ordinaire et le boss de la vague 10 au budget normal : quatorze lancements vérifiés. Le modèle de combat et ses données ne sont pas modifiés.
+
+## Relevés de partie — v0.28, 23 octobre 2026
+
+Le modèle copie un contexte compact au départ de chaque vague : PV, revenus déjà acquis, composition, investissements et bonus actifs. À la résolution, une ligne immuable par rapport au reste du modèle rejoint `wave_history`, avec comptes, revenus propres à la vague et durée simulée. Le contexte en cours est alors vidé pour empêcher les doublons ; reset efface tous les relevés. La résolution du combat et le tirage des bonus ne changent pas.
+
+Le contrôleur construit le bilan uniquement sur demande après victoire ou défaite. Le panneau reprend les données copiées et les cumuls réels ; les lignes ont une aide décrivant leur contexte. Les commandes derrière le panneau sont bloquées. Le bouton de fermeture reçoit le focus, puis le rend à Bilan. Les copies de l’outil d’essais appariés incluent aussi l’historique et le contexte en cours, sans alias entre tableaux.
+
+196 contrôles supplémentaires, 2 237 au total. Les captures d’export couvrent deux bilans au budget normal ; seize lancements du paquet extrait sont vérifiés. Aucune persistance sur disque n’est ajoutée au jeu.
