@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.26 (23 octobre 2026)** : comparaison avant/après des améliorations et spécialisations, avec la portée future visible sur la carte avant validation. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.26).
+**Version v0.27 (23 octobre 2026)** : inspection des ennemis au survol pendant le combat : nom, PV, danger pour la forteresse et récompense. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.27).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 

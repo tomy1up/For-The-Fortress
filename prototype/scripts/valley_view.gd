@@ -9,6 +9,7 @@ var model: RefCounted
 var selected: int = -1
 var purchase_preview: Dictionary = {}
 var upgrade_preview: Dictionary = {}
+var inspected_enemy_id: int = -1
 var font: Font = ThemeDB.fallback_font
 
 static func project(point: Vector2) -> Vector2:
@@ -20,6 +21,24 @@ static func range_outline(center: Vector2, radius: float) -> PackedVector2Array:
 		var angle: float = TAU * step / 64.0
 		ring.append(project(center + Vector2(cos(angle), sin(angle)) * radius))
 	return ring
+
+static func enemy_bounds(enemy: Dictionary) -> Rect2:
+	var center: Vector2 = project(Model.position_at(enemy.distance))
+	var scale: float = _enemy_scale(enemy)
+	var width: float = maxf(28.0,32.0*scale)
+	return Rect2(center+Vector2(-width/2.0,-39.0*scale),Vector2(width,47.0*scale))
+
+func enemy_at(point: Vector2) -> int:
+	if model == null: return -1
+	var found: int = -1
+	var front_y: float = -INF
+	for enemy in model.enemies:
+		if enemy.hp <= 0.0 or not enemy_bounds(enemy).has_point(point): continue
+		var y: float = project(Model.position_at(enemy.distance)).y
+		if y >= front_y: # Même priorité visuelle que le dessin, dernier acteur en cas d'égalité.
+			front_y = y
+			found = enemy.id
+	return found
 
 static func covered_route(center: Vector2, radius: float) -> Array[PackedVector2Array]:
 	var sections: Array[PackedVector2Array] = []
@@ -106,10 +125,10 @@ func _draw() -> void:
 		var actors: Array[Dictionary] = []
 		for slot in range(model.defenders.size()):
 			if not model.defenders[slot].is_empty():
-				actors.append({"point": project(Model.SLOTS[slot]), "defender": model.defenders[slot]})
+				actors.append({"point": project(Model.SLOTS[slot]), "defender": model.defenders[slot],"order":actors.size()})
 		for enemy in model.enemies:
-			actors.append({"point": project(Model.position_at(enemy.distance)), "enemy": enemy})
-		actors.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.point.y < b.point.y)
+			actors.append({"point": project(Model.position_at(enemy.distance)), "enemy": enemy,"order":actors.size()})
+		actors.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.order < b.order if a.point.y == b.point.y else a.point.y < b.point.y)
 		for actor in actors:
 			if actor.has("defender"):
 				_draw_defender(actor.point, actor.defender.type, actor.defender.get("level", 1), actor.defender.get("branch", -1))
@@ -118,7 +137,7 @@ func _draw() -> void:
 				var ratio: float = clampf(actor.enemy.hp / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
 				var bar_position: Vector2 = actor.point + Vector2(-12, -36 * _enemy_scale(actor.enemy))
 				draw_rect(Rect2(bar_position, Vector2(24, 4)), Color("472f2a"))
-				draw_rect(Rect2(bar_position, Vector2(24 * ratio, 4)), Color("a1ba75"))
+				draw_rect(Rect2(bar_position, Vector2(24 * ratio, 4)), Color("edcc80") if actor.enemy.id == inspected_enemy_id else Color("a1ba75"))
 		if model.active:
 			for shot in model.shots:
 				if model.elapsed - shot.time <= 0.18:
@@ -194,7 +213,7 @@ func _draw_fortress(anchor: Vector2) -> void:
 	draw_colored_polygon(PackedVector2Array([center + Vector2(1, -68), center + Vector2(20, -62), center + Vector2(1, -55)]), Color("d3b676"))
 	draw_string(font, center + Vector2(-42, 32), "FORTERESSE", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, INK)
 
-func _enemy_scale(enemy: Dictionary) -> float:
+static func _enemy_scale(enemy: Dictionary) -> float:
 	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7][enemy.get("type", 1)]
 
 func _draw_pillager(center: Vector2, enemy: Dictionary) -> void:
@@ -202,6 +221,8 @@ func _draw_pillager(center: Vector2, enemy: Dictionary) -> void:
 	var armor: Color = [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384")][type]
 	draw_set_transform(center, 0.0, Vector2.ONE * _enemy_scale(enemy))
 	center = Vector2.ZERO
+	if enemy.id == inspected_enemy_id:
+		draw_arc(center+Vector2(0,3),14,0,TAU,32,Color("edcc80"),2,true)
 	for curse in model.curses:
 		if curse.enemy_id == enemy.id:
 			draw_arc(center + Vector2(0, -13), 19, 0, TAU, 24, Color("be83d3"), 1.5, true)

@@ -53,6 +53,15 @@ var overview_open: bool = false
 var autoplay_started: bool = false
 var countdown_wave: int = -1
 var countdown_remaining: float = -1.0
+var inspection_pointer := Vector2(-10000,-10000)
+var enemy_inspector: Panel
+var enemy_name: Label
+var enemy_health: Label
+var enemy_health_bar: ProgressBar
+var enemy_threat: Label
+var enemy_reward: Label
+var enemy_status: Label
+var enemy_prompt: Label
 
 func _ready() -> void:
 	map_view.model = model
@@ -75,7 +84,7 @@ func _ready() -> void:
 	if not capture_path.is_empty():
 		if capture_state != "selection":
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
-			if capture_state in ["bonus", "campaign", "victory", "overview"]:
+			if capture_state in ["bonus", "campaign", "victory", "overview", "boss_inspection"]:
 				_prepare_campaign_capture(capture_state)
 			if capture_state in ["upgrade", "specialisation", "specialised"]:
 				if capture_state != "upgrade": model.gold = 1000 # Fixture de capture uniquement.
@@ -89,7 +98,7 @@ func _ready() -> void:
 					else: _upgrade()
 				if capture_state == "upgrade": hovered_upgrade = true
 				if capture_state == "specialisation": hovered_branch = 0
-			if capture_state not in ["shop", "catalogue", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase"]:
+			if capture_state not in ["shop", "catalogue", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection"]:
 				model.buy(0, model.available_types()[0])
 				model.buy(1, model.available_types()[2 if capture_state == "curse" else 1])
 			selected = 1 if capture_state == "curse" else 0
@@ -108,12 +117,19 @@ func _ready() -> void:
 					model.enemies.append(enemy)
 				model.spawned = model.enemies.size()
 				model.phase = "combat"
-			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase"]:
+			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection"]:
 				model.start()
-				model.advance(1.0 if capture_state == "curse" else 7.5 if capture_state == "combat" else 100.0)
+				model.advance(1.0 if capture_state == "curse" else 7.5 if capture_state in ["combat","inspection"] else 100.0)
 		set_process(false)
 		if capture_state == "finished": autoplay_started = true
 		_update_interface()
+		if capture_state in ["inspection","boss_inspection"]:
+			var target: Dictionary = {}
+			for enemy in model.enemies:
+				if capture_state == "inspection" or enemy.type == 7: target = enemy; break
+			assert(not target.is_empty(),"La capture d'inspection requiert un ennemi vivant.")
+			inspection_pointer = MapView.enemy_bounds(target).get_center()
+			_update_enemy_inspector()
 		if capture_state in ["specialisation", "specialised"]:
 			faction_label.text = "CONTRÔLE PROGRESSION · BUDGET IMPOSÉ"
 		if capture_state == "catalogue":
@@ -136,6 +152,12 @@ func _process(delta: float) -> void:
 			_start()
 	_update_interface()
 	map_view.queue_redraw()
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		inspection_pointer = event.position
+		_update_enemy_inspector()
+		map_view.queue_redraw()
 
 func _countdown_paused() -> bool:
 	return pending_slot >= 0 or overview_open
@@ -167,6 +189,9 @@ func _prepare_campaign_capture(state: String) -> void:
 		model.start()
 		if wave == 9 and state == "campaign":
 			model.advance(12)
+			return
+		if wave == 10 and state == "boss_inspection":
+			model.advance(5)
 			return
 		model.advance(300)
 		if state == "bonus" and wave == 3: return
@@ -248,9 +273,62 @@ func _build_interface() -> void:
 	hint_label.mouse_filter = Control.MOUSE_FILTER_STOP # Autoriser les infobulles des synergies.
 	_label(screen, "Nom de travail · Visuels temporaires", Vector2(34, 776), Vector2(900, 20), 11, Color("718b7d"))
 
+	_build_enemy_inspector(screen)
 	_build_faction_selector(screen)
 	_build_specialisation_selector(screen)
 	_build_bonus_selector(screen)
+
+func _build_enemy_inspector(screen: Control) -> void:
+	enemy_prompt = _label(screen,"Survolez un ennemi pour l’inspecter.",Vector2(946,96),Vector2(310,22),12,Color("aabbb0"))
+	enemy_prompt.visible = false
+	enemy_inspector = _panel(screen,Rect2(946,96,310,166))
+	enemy_name = _label(enemy_inspector,"",Vector2(14,10),Vector2(282,24),17,Color("e0dbbf"))
+	enemy_health = _label(enemy_inspector,"",Vector2(14,38),Vector2(282,22),15,Color("e0e7db"))
+	enemy_health_bar = ProgressBar.new()
+	enemy_health_bar.position = Vector2(14,66)
+	enemy_health_bar.show_percentage = false
+	enemy_health_bar.step = 0.0
+	enemy_health_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for key in ["background","fill"]:
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color("a8c779") if key == "fill" else Color("253a31")
+		style.set_corner_radius_all(3)
+		enemy_health_bar.add_theme_stylebox_override(key,style)
+	enemy_inspector.add_child(enemy_health_bar)
+	enemy_health_bar.size = Vector2(282,8) # Redimensionner après application des styles, sans la hauteur du thème par défaut.
+	enemy_threat = _label(enemy_inspector,"",Vector2(14,84),Vector2(282,22),14,Color("e0dbbf"))
+	enemy_reward = _label(enemy_inspector,"",Vector2(14,108),Vector2(282,22),14,Color("cdb47e"))
+	enemy_status = _label(enemy_inspector,"",Vector2(14,136),Vector2(282,18),12,Color("aabbb0"))
+	enemy_inspector.visible = false
+
+func _update_enemy_inspector() -> void:
+	if enemy_inspector == null: return
+	enemy_inspector.visible = false
+	enemy_prompt.visible = false
+	map_view.inspected_enemy_id = -1
+	if choosing_faction or pending_slot >= 0 or overview_open or not model.active: return
+	enemy_prompt.visible = true
+	var id: int = map_view.enemy_at(inspection_pointer)
+	if id < 0: return
+	for enemy in model.enemies:
+		if enemy.id != id: continue
+		map_view.inspected_enemy_id = id
+		enemy_inspector.visible = true
+		enemy_prompt.visible = false
+		enemy_name.text = Model.ENEMY_TYPES[enemy.type].name + (" · BOSS" if enemy.type == 7 else "")
+		enemy_health.text = "PV : %d / %d" % [ceili(enemy.hp),enemy.max_hp]
+		enemy_health_bar.max_value = enemy.max_hp
+		enemy_health_bar.value = enemy.hp
+		var fatal: bool = enemy.fortress_damage >= model.fortress_hp
+		enemy_threat.text = "À l’arrivée : −%d PV%s" % [enemy.fortress_damage," · Défaite" if fatal else ""]
+		enemy_threat.add_theme_color_override("font_color",Color("ed9989") if fatal else Color("e0dbbf"))
+		enemy_reward.text = "Élimination : +%d or" % enemy.reward
+		var cursed: bool = false
+		for curse in model.curses:
+			if curse.enemy_id == id: cursed = true; break
+		enemy_status.text = "Malédiction active · Combat en cours" if cursed else "Survol : lecture sans pause"
+		enemy_status.add_theme_color_override("font_color",Color("d3afe4") if cursed else Color("aabbb0"))
+		return
 
 func _build_faction_selector(screen: Control) -> void:
 	faction_panel = ColorRect.new()
@@ -606,6 +684,7 @@ func _update_interface() -> void:
 		hint_label.text = "%d éliminés · %d arrivées · %d or gagnés · Survolez pour les synergies" % [model.total_killed,model.total_escaped,model.total_income] if occupied else "%d éliminés · %d arrivées · %d or gagnés au combat." % [model.total_killed,model.total_escaped,model.total_income]
 	_refresh_purchase_preview()
 	_refresh_upgrade_preview()
+	_update_enemy_inspector()
 
 func _synergy_tooltip(slot: int) -> String:
 	var type: int = model.defenders[slot].type

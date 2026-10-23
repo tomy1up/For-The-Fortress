@@ -120,3 +120,11 @@ Le contrôleur distingue survol et focus, rafraîchit l’aperçu avec l’inter
 Le panneau des spécialisations devient latéral avec un fond modal moins opaque pour garder la carte lisible. Les commandes derrière le panneau restent bloquées et le délai reste suspendu par `pending_slot`, sans changement des conditions de paiement ou d’annulation.
 
 357 contrôles supplémentaires, 1 963 au total. Les captures d’export couvrent aussi l’amélioration ordinaire et la spécialisation ; douze lancements de l’archive extraite sont vérifiés. Les valeurs de référence et les campagnes restent inchangées.
+
+## Inspection ennemie — v0.27, 23 octobre 2026
+
+La vue expose les zones de survol projetées des huit profils et recherche l’ennemi au premier plan. Le tri de dessin est déterministe en cas d’égalité de profondeur. Le contrôleur conserve la dernière position du pointeur et réévalue le survol avec les ennemis actuels à chaque mise à jour ; aucun identifiant n’est verrouillé entre vagues.
+
+La fiche en haut à droite lit directement les PV, dégâts d’arrivée, récompenses et malédictions existantes. Sa jauge conserve les PV réels ; seul le texte arrondit au supérieur. Le thème de jauge est appliqué avant son dimensionnement final pour éviter le recouvrement du texte. Les fenêtres modales et les phases hors combat masquent fiche et repère.
+
+78 contrôles supplémentaires, 2 041 au total. Les captures d’export ajoutent une inspection ordinaire et le boss de la vague 10 au budget normal : quatorze lancements vérifiés. Le modèle de combat et ses données ne sont pas modifiés.

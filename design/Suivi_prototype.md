@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 23 octobre 2026 — prototype v0.26, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 23 octobre 2026 — prototype v0.27, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -162,3 +162,9 @@ La v0.24 rend les associations inspectables en clair : partenaires actifs relié
 Le survol ou le focus d’une amélioration affiche les valeurs actuelles et prévues, avec la portée principale future en bleu. Les spécialisations sont présentées dans un panneau latéral laissant la carte visible ; chaque branche compare ses statistiques au niveau 3 et prévisualise sa portée au survol de son bouton. Les paiements, conditions d’activation et horloges restent inchangés.
 
 1 963 contrôles réussis, dont 357 nouveaux. Douze lancements du paquet extrait vérifiés, six vues de spécialisations inspectées. Les résultats des campagnes sont conservés. Voir [la fiche](Comparaison_ameliorations_v026.md) et [le rapport d’export](Distribution_Windows_v026.json).
+
+## Inspection des ennemis — v0.27, 23 octobre 2026
+
+Le survol d’un ennemi montre nom, PV, dégâts d’arrivée, récompense et malédiction éventuelle. L’ennemi est repéré sur la carte, le boss est identifié et une arrivée actuellement fatale est signalée. La lecture ne modifie ni le combat ni la sélection du défenseur et ne suspend pas le temps.
+
+2 041 contrôles réussis, dont 78 nouveaux. Quatorze lancements du paquet extrait vérifiés ; fiches de l’ennemi ordinaire et du boss inspectées. Aucun changement d’équilibrage. Voir [la fiche](Inspection_ennemis_v027.md) et [le rapport d’export](Distribution_Windows_v027.json). Les essais humains et la comparaison des factions restent à élargir.

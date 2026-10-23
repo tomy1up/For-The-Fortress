@@ -1,0 +1,110 @@
+{
+  "archive_sha256": "20ccad898e02a0213b380f72f30955fc056fced1e755b5fbde4b5f9b64cf32e6",
+  "executable_sha256": "2f133a825c2e3c8d7594571a39bcbb54078566c5123a4a99c75b626e5463f230",
+  "files": [
+    "For_the_Fortress_v0.27_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.27_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.27_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.27_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.27_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "upgrade_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "specialisation_preview",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Fiches ennemi ordinaire Horde et boss Alliance inspectees dans le binaire final : jauge fine, textes lisibles et repere sur la carte.",
+  "version": "0.27",
+  "date": "2026-10-23",
+  "inter_wave_seconds": 30,
+  "regression_checks": 2041,
+  "enemy_inspection_checks": 78,
+  "archive_bytes": 39349801,
+  "source_manifest": {
+    "version": "0.27",
+    "date": "2026-10-23",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "2f133a825c2e3c8d7594571a39bcbb54078566c5123a4a99c75b626e5463f230",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "18d30b9caf80d870ba5ff58b51fa33ae35d72c9b347ce3e2cd64ca894c10bd86",
+      "export_presets.cfg": "86998da65be4fbef576a4b8c54d78e68ebf48741a79b9b2455253f83cb82d441",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "4c0303c686b7a368a54e66c9ab8f79a7be494bf48d668a0f4cf937993d62729d",
+      "scripts/valley_model.gd": "6da41cbf256bfb069011d3d8723452f49d67aeeeae6cbb9b785f290e1e1b6b2f",
+      "scripts/valley_view.gd": "7dcb27d57ec475df58705aa9a4a7b443321d09a1a96f5f4c9563bb5d41519410",
+      "scripts/campaign_data.gd": "e866f322fd3ffe6b4e0ba627ebaedbe775b56aa805a6ee134d91faf3df482206",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  }
+}

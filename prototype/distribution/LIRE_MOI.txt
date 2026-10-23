@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.26 — 23 octobre 2026
+Version : 0.27 — 23 octobre 2026
 
 JOUER
 
@@ -30,6 +30,8 @@ Comparer ne dépense rien. Cliquer valide et paie ; Annuler conserve le niveau a
 Le choix de spécialisation suspend le compte à rebours. Le confirmer ou l’annuler reprend le temps
 restant ; annuler ne dépense rien et conserve le niveau 3.
 Vendre : le montant remboursé est affiché avant la vente.
+Survol d’un ennemi en combat : nom, PV, danger pour la forteresse et récompense.
+L’ennemi est marqué ; le combat continue et votre défenseur reste sélectionné.
 Vitesse ×1/×2 : change la durée réelle du combat, pas les 30 secondes de préparation.
 Bonus acquis : relire les effets sélectionnés ; le décompte de préparation est suspendu
 pendant la lecture. Pendant un combat, le combat continue.
