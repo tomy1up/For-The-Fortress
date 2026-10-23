@@ -1,0 +1,150 @@
+{
+  "archive_sha256": "14315fb8d4115d0b023fb4b54c49a479b1cb70e1add33dbc10a76a6558542401",
+  "executable_sha256": "25d233d68b0a7c4d070eab7a2cd25ccbb5b2a199ba35367d772a27cd3d2ddddb",
+  "files": [
+    "For_the_Fortress_v0.30_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.30_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.30_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.30_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.30_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_mage",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_troll",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_sapper",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_shaman",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "wave_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "victory_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "defeat_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "upgrade_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "specialisation_preview",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Quatre effets inspectés : explosions mage/sapeur, ricochet troll, malédiction chaman. Captures finales identiques aux quatre captures inspectées ; rendu sapeur final inspecté à nouveau.",
+  "version": "0.30",
+  "date": "2026-10-23",
+  "inter_wave_seconds": 30,
+  "regression_checks": 2685,
+  "combat_feedback_checks": 46,
+  "archive_bytes": 39361755,
+  "source_manifest": {
+    "version": "0.30",
+    "date": "2026-10-23",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "25d233d68b0a7c4d070eab7a2cd25ccbb5b2a199ba35367d772a27cd3d2ddddb",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "67a5cc6e077e144dd9e83442c9a039719458bfbba96448e9d231152d70a651ef",
+      "export_presets.cfg": "9c5f359cede048ce757a6125a58630a9930de3a930693c9ab21644d46f0ea6ac",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "ec83e39fe45c966d8c2924e76b91bcf5f583d3fb4918ae48e2a40f7c872e34b7",
+      "scripts/valley_model.gd": "6106d20d8ead7150f05ed1f758d675b98b10035ececd06b8bdf8375b0df4bc9c",
+      "scripts/valley_view.gd": "a8e01537614e3c15395ee1250fd63ba9c17a2b456c6f1c24dacd1fce844851ce",
+      "scripts/campaign_data.gd": "e866f322fd3ffe6b4e0ba627ebaedbe775b56aa805a6ee134d91faf3df482206",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  }
+}

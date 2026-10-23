@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 23 octobre 2026 — prototype v0.29, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 23 octobre 2026 — prototype v0.30, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -180,3 +180,7 @@ Le bouton Bilan, à côté de Rejouer après victoire ou défaite, affiche résu
 La préparation affiche la prochaine vague, ses groupes, leurs quantités, PV et dangers, ainsi que le revenu maximal conditionnel. Le survol détaille les horaires et intervalles à vitesse ×1, avec rappel de l’effet du ×2. La fiche suit le délai existant et se masque dans les autres phases et fenêtres modales.
 
 2 639 contrôles réussis, dont 402 nouveaux. Dix-huit lancements du paquet extrait vérifiés ; préparations de la vague 9 et du boss et aide des horaires inspectées. Aucun changement d’équilibrage. Voir [la fiche](Prevision_vagues_v029.md) et [le rapport d’export](Distribution_Windows_v029.json).
+
+## v0.30 — Repères de combat
+
+Explosions projetées au sol, palette distincte mage/sapeur, ricochets fléchés et marque de malédiction. Le modèle de combat reste identique. 2 685 contrôles réussis, dont 46 ciblés, et 22 démarrages du paquet Windows. Voir [le relevé détaillé](Lisibilite_combats_v030.md).

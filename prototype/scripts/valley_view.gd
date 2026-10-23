@@ -5,6 +5,7 @@ const ORIGIN := Vector2(658, 174)
 const AXIS := Vector2(27, 13.5)
 const INK := Color("d9e4d7")
 const SLOT_FILL := Color("213e3b")
+const IMPACT_DURATION := 0.32 # Secondes de simulation, comme les autres effets du combat.
 var model: RefCounted
 var selected: int = -1
 var purchase_preview: Dictionary = {}
@@ -21,6 +22,43 @@ static func range_outline(center: Vector2, radius: float) -> PackedVector2Array:
 		var angle: float = TAU * step / 64.0
 		ring.append(project(center + Vector2(cos(angle), sin(angle)) * radius))
 	return ring
+
+static func impact_opacity(age: float) -> float:
+	return clampf(1.0 - age / IMPACT_DURATION, 0.0, 1.0) if age >= 0.0 else 0.0
+
+static func secondary_segments(shot: Dictionary) -> Array[PackedVector2Array]:
+	var segments: Array[PackedVector2Array] = []
+	var origin: Vector2 = shot.to
+	for target in shot.get("secondary", []):
+		segments.append(PackedVector2Array([project(origin), project(target)]))
+		if shot.type == 3: origin = target
+	return segments
+
+func _draw_impact(shot: Dictionary, age: float) -> void:
+	var alpha: float = impact_opacity(age)
+	if alpha <= 0.0: return
+	var color: Color = {2: Color("9cc4e4"), 3: Color("a1d6ab"), 4: Color("f2aa64"), 5: Color("d6a1ef")}.get(shot.type, Color("e8ce92"))
+	color.a = alpha
+	var height := Vector2(0, -12)
+	var impact: Vector2 = project(shot.to)
+	draw_line(project(shot.from) + Vector2(0, -17), impact + height, color, 2, true)
+	draw_circle(impact + height, 4, color, false, 2, true)
+	if shot.type in [2, 4]:
+		# Le contour montre le rayon logique, sans prétendre toucher tous les ennemis dedans.
+		var ring := range_outline(shot.to, shot.get("radius", 1.0))
+		draw_colored_polygon(ring, Color(color, alpha * 0.12))
+		draw_polyline(ring, color, 2, true)
+	for segment in secondary_segments(shot):
+		var target: Vector2 = segment[1] + height
+		if shot.type == 3:
+			var start: Vector2 = segment[0] + height
+			draw_line(start, target, color, 2, true)
+			if start.distance_to(target) > 8.0:
+				var direction: Vector2 = (target - start).normalized()
+				var tip: Vector2 = start.lerp(target, 0.65)
+				draw_polyline(PackedVector2Array([tip-direction.rotated(0.55)*6, tip, tip-direction.rotated(-0.55)*6]), color, 2, true)
+		# Marquer uniquement les victimes réellement enregistrées par le modèle.
+		draw_circle(target, 3, color, false, 1.5, true)
 
 static func enemy_bounds(enemy: Dictionary) -> Rect2:
 	var center: Vector2 = project(Model.position_at(enemy.distance))
@@ -140,16 +178,7 @@ func _draw() -> void:
 				draw_rect(Rect2(bar_position, Vector2(24 * ratio, 4)), Color("edcc80") if actor.enemy.id == inspected_enemy_id else Color("a1ba75"))
 		if model.active:
 			for shot in model.shots:
-				if model.elapsed - shot.time <= 0.18:
-					var color: Color = {2: Color("9cc4e4"), 3: Color("a1d6ab"), 4: Color("e3a56d"), 5: Color("cfa4e3")}.get(shot.type, Color("e8ce92"))
-					draw_line(project(shot.from) + Vector2(0, -17), project(shot.to) + Vector2(0, -12), color, 2, true)
-					var last_point: Vector2 = shot.to
-					for secondary_point in shot.get("secondary", []):
-						draw_line(project(last_point) + Vector2(0, -12), project(secondary_point) + Vector2(0, -12), color, 1.5, true)
-						if shot.type == 3:
-							last_point = secondary_point
-					if shot.type in [2, 4]:
-						draw_arc(project(shot.to), 20 * shot.get("radius", 1.0), 0, TAU, 24, Color(0.5, 0.7, 0.9, 0.7), 2, true)
+				_draw_impact(shot, model.elapsed - shot.time)
 
 func _draw_defender(center: Vector2, type: int, level: int = 1, branch: int = -1) -> void:
 	var color: Color = [Color("6f9c6b"), Color("b79a64"), Color("668db5"), Color("72a392"), Color("b8a16a"), Color("a782b7")][type]
@@ -229,6 +258,8 @@ func _draw_pillager(center: Vector2, enemy: Dictionary) -> void:
 	for curse in model.curses:
 		if curse.enemy_id == enemy.id:
 			draw_arc(center + Vector2(0, -13), 19, 0, TAU, 24, Color("be83d3"), 1.5, true)
+			var mark: Vector2 = center + Vector2(0, -45)
+			draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]), Color("d6a1ef"))
 			break
 	draw_circle(center + Vector2(0, 3), 8, Color(0, 0, 0, 0.3))
 	draw_line(center + Vector2(-3, -2), center + Vector2(-5, 5), Color("b5a68a"), 3)

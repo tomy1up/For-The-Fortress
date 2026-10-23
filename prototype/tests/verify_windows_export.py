@@ -43,6 +43,8 @@ startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW
 startup.wShowWindow=0
 results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
+       ('effects_mage','effects','alliance'),('effects_troll','effects','horde'),
+       ('effects_sapper','effects','horde'),('effects_shaman','effects','horde'),
        ('wave_forecast','forecast','alliance'),('boss_forecast','forecast_boss','horde'),
        ('victory_summary','summary','horde'),('defeat_summary','defeat_summary','alliance'),
        ('enemy_inspection','inspection','horde'),('boss_inspection','boss_inspection','alliance'),
@@ -58,6 +60,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if state=='effects': command+=['--capture-type='+str({'effects_mage':2,'effects_troll':3,'effects_sapper':4,'effects_shaman':5}[name])]
     completed=subprocess.run(command,cwd=folder,capture_output=True,text=True,encoding='utf-8',errors='replace',startupinfo=startup,timeout=30)
     text=completed.stdout+completed.stderr+(log.read_text(encoding='utf-8') if log.exists() else '')
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')

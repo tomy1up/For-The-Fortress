@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.29 — 23 octobre 2026
+Version : 0.30 — 23 octobre 2026
 
 JOUER
 
@@ -72,3 +72,8 @@ VERSION.json : version, sources et empreinte de l’exécutable.
 
 Godot Engine : https://godotengine.org/
 For the Fortress! est un nom de travail ; sa disponibilité juridique reste à confirmer.
+
+LIRE LES COMBATS
+Les explosions du mage sont bleues, celles du sapeur orange, avec un contour au sol.
+Les ricochets verts du lanceur de haches indiquent leur sens par une flèche.
+Un losange violet au-dessus de la tête signale une malédiction encore active.

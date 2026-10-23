@@ -148,6 +148,25 @@ func _ready() -> void:
 			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection", "summary", "defeat_summary", "forecast", "forecast_boss"]:
 				model.start()
 				model.advance(1.0 if capture_state == "curse" else 7.5 if capture_state in ["combat","inspection"] else 100.0)
+		if capture_state == "effects":
+			model.reset()
+			model.select_faction(0 if capture_type < 3 else 1)
+			model.gold = 1000 # Fixture visuelle, pas une campagne jouée.
+			model.buy(1, capture_type)
+			model.wave = 8
+			model.spawn_schedule = Model.Campaign.schedule(8)
+			model.start()
+			var found: bool = false
+			for step in range(6000):
+				model.advance(0.01)
+				if capture_type == 5 and not model.curses.is_empty(): found = true
+				elif not model.shots.is_empty():
+					var shot: Dictionary = model.shots[-1]
+					found = not shot.secondary.is_empty() and model.elapsed-shot.time < 0.01
+				if found: break
+			assert(found, "La capture doit montrer un effet réellement résolu.")
+			selected = 1
+			map_view.selected = 1
 		set_process(false)
 		if capture_state in ["finished","forecast","forecast_boss"]: autoplay_started = true
 		_update_interface()
@@ -164,6 +183,7 @@ func _ready() -> void:
 		if capture_state == "catalogue":
 			faction_label.text = "CATALOGUE ENNEMI · CONTRÔLE"
 			status_label.text = "Profils de référence\nVue de contrôle"
+		if capture_state == "effects": faction_label.text = "CONTRÔLE EFFETS · BUDGET IMPOSÉ"
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)

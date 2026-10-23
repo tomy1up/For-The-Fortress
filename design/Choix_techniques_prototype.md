@@ -144,3 +144,7 @@ La requête statique `wave_forecast` construit des groupes indépendants depuis 
 La carte de préparation partage la zone en haut à droite avec l’inspection de combat, avec des conditions d’affichage exclusives. Le panneau s’adapte aux un à quatre groupes du prototype. Les deux nouvelles captures arrêtent des parcours au budget normal avant les vagues 9 et 10, puis arment le même délai de 30 secondes que le jeu normal.
 
 402 contrôles supplémentaires, 2 639 au total. Dix-huit lancements du paquet extrait vérifiés ; contenu, horaires et rendu des prévisions inspectés. Les apparitions réelles et les règles économiques restent inchangées.
+
+## v0.30 — Repères de combat
+
+Explosions projetées au sol, palette distincte mage/sapeur, ricochets fléchés et marque de malédiction. Le modèle de combat reste identique. 2 685 contrôles réussis, dont 46 ciblés, et 22 démarrages du paquet Windows. Voir [le relevé détaillé](Lisibilite_combats_v030.md).
