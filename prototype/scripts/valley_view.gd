@@ -216,9 +216,12 @@ func _draw_fortress(anchor: Vector2) -> void:
 static func _enemy_scale(enemy: Dictionary) -> float:
 	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7][enemy.get("type", 1)]
 
+static func enemy_color(type: int) -> Color:
+	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384")][type]
+
 func _draw_pillager(center: Vector2, enemy: Dictionary) -> void:
 	var type: int = enemy.get("type", 1)
-	var armor: Color = [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384")][type]
+	var armor: Color = enemy_color(type)
 	draw_set_transform(center, 0.0, Vector2.ONE * _enemy_scale(enemy))
 	center = Vector2.ZERO
 	if enemy.id == inspected_enemy_id:

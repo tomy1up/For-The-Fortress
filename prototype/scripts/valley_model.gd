@@ -120,6 +120,21 @@ static func make_enemy(id: int, type: int, spawn_time: float) -> Dictionary:
 		"hp": definition.hp, "max_hp": definition.hp, "speed": definition.speed,
 		"fortress_damage": definition.fortress_damage, "reward": definition.reward}
 
+static func wave_forecast(number: int) -> Dictionary:
+	if number < 1 or number > Campaign.WAVES.size(): return {}
+	var schedule: Array[Dictionary] = Campaign.schedule(number)
+	var groups: Array[Dictionary] = []
+	var offset: int = 0
+	var income: int = 0
+	for source in Campaign.WAVES[number-1]:
+		var type: int = source[0]
+		var count: int = source[1]
+		var enemy: Dictionary = ENEMY_TYPES[type]
+		groups.append({"type":type,"count":count,"name":enemy.name,"hp":enemy.hp,"fortress_damage":enemy.fortress_damage,"reward":enemy.reward,"interval":source[2],"first_at":schedule[offset].time,"last_at":schedule[offset+count-1].time})
+		income += count*enemy.reward
+		offset += count
+	return {"wave":number,"groups":groups,"total":schedule.size(),"income":income}
+
 func can_build() -> bool:
 	return phase == "preparation" or phase == "finished"
 

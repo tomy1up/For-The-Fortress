@@ -73,6 +73,17 @@ var summary_cells: Array = []
 var summary_army: Array[Label] = []
 var summary_bonuses: Array[Label] = []
 var summary_close: Button
+var forecast_panel: Panel
+var forecast_title: Label
+var forecast_timing: Label
+var forecast_rows: Array[Control] = []
+var forecast_names: Array[Label] = []
+var forecast_details: Array[Label] = []
+var forecast_marks: Array[ColorRect] = []
+var forecast_reward: Label
+var forecast_note: Label
+var forecast_wave: int = -1
+var forecast_data: Dictionary = {}
 
 func _ready() -> void:
 	map_view.model = model
@@ -95,7 +106,7 @@ func _ready() -> void:
 	if not capture_path.is_empty():
 		if capture_state != "selection":
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
-			if capture_state in ["bonus", "campaign", "victory", "overview", "boss_inspection", "summary"]:
+			if capture_state in ["bonus", "campaign", "victory", "overview", "boss_inspection", "summary", "forecast", "forecast_boss"]:
 				_prepare_campaign_capture(capture_state)
 			if capture_state == "defeat_summary":
 				for wave in range(10):
@@ -115,7 +126,7 @@ func _ready() -> void:
 					else: _upgrade()
 				if capture_state == "upgrade": hovered_upgrade = true
 				if capture_state == "specialisation": hovered_branch = 0
-			if capture_state not in ["shop", "catalogue", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection", "summary", "defeat_summary"]:
+			if capture_state not in ["shop", "catalogue", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection", "summary", "defeat_summary", "forecast", "forecast_boss"]:
 				model.buy(0, model.available_types()[0])
 				model.buy(1, model.available_types()[2 if capture_state == "curse" else 1])
 			selected = 1 if capture_state == "curse" else 0
@@ -134,11 +145,11 @@ func _ready() -> void:
 					model.enemies.append(enemy)
 				model.spawned = model.enemies.size()
 				model.phase = "combat"
-			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection", "summary", "defeat_summary"]:
+			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection", "summary", "defeat_summary", "forecast", "forecast_boss"]:
 				model.start()
 				model.advance(1.0 if capture_state == "curse" else 7.5 if capture_state in ["combat","inspection"] else 100.0)
 		set_process(false)
-		if capture_state == "finished": autoplay_started = true
+		if capture_state in ["finished","forecast","forecast_boss"]: autoplay_started = true
 		_update_interface()
 		if capture_state in ["summary","defeat_summary"]: _show_run_summary()
 		if capture_state in ["inspection","boss_inspection"]:
@@ -215,6 +226,7 @@ func _prepare_campaign_capture(state: String) -> void:
 		if state == "bonus" and wave == 3: return
 		if model.phase == "defeat": return
 		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+		if (state == "forecast" and wave == 8) or (state == "forecast_boss" and wave == 9): return
 		if state == "overview" and wave == 9:
 			overview_open = true
 			return
@@ -293,11 +305,64 @@ func _build_interface() -> void:
 	hint_label.mouse_filter = Control.MOUSE_FILTER_STOP # Autoriser les infobulles des synergies.
 	_label(screen, "Nom de travail · Visuels temporaires", Vector2(34, 776), Vector2(900, 20), 11, Color("718b7d"))
 
+	_build_wave_forecast(screen)
 	_build_enemy_inspector(screen)
 	_build_faction_selector(screen)
 	_build_specialisation_selector(screen)
 	_build_bonus_selector(screen)
 	_build_run_summary(screen)
+
+func _build_wave_forecast(screen: Control) -> void:
+	forecast_panel = _panel(screen,Rect2(946,96,310,156))
+	forecast_title = _label(forecast_panel,"",Vector2(14,10),Vector2(282,24),16,Color("e0dbbf"))
+	forecast_timing = _label(forecast_panel,"",Vector2(14,34),Vector2(282,18),12,Color("aabbb0"))
+	for index in range(4):
+		var row := Control.new()
+		row.position = Vector2(14,58+44*index)
+		row.size = Vector2(282,40)
+		row.mouse_filter = Control.MOUSE_FILTER_STOP
+		forecast_panel.add_child(row)
+		forecast_rows.append(row)
+		var mark := ColorRect.new()
+		mark.position = Vector2(0,4)
+		mark.size = Vector2(8,30)
+		mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.add_child(mark)
+		forecast_marks.append(mark)
+		forecast_names.append(_label(row,"",Vector2(18,0),Vector2(264,20),14,Color("e0dbbf")))
+		forecast_details.append(_label(row,"",Vector2(18,22),Vector2(264,18),12,Color("bbcbbf")))
+	forecast_reward = _label(forecast_panel,"",Vector2(14,106),Vector2(282,22),13,Color("cdb47e"))
+	forecast_note = _label(forecast_panel,"Survolez les groupes pour les détails.",Vector2(14,128),Vector2(282,18),11,Color("aabbb0"))
+	forecast_panel.visible = false
+
+func _update_wave_forecast() -> void:
+	forecast_panel.visible = false
+	if choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase not in ["preparation","finished"]: return
+	var number: int = model.wave+1 if model.phase == "finished" else model.wave
+	if number < 1 or number > Model.Campaign.WAVES.size(): return
+	if forecast_wave != number:
+		forecast_wave = number
+		forecast_data = Model.wave_forecast(number)
+	if forecast_data.is_empty(): return
+	forecast_panel.visible = true
+	forecast_title.text = "Prochaine vague · %d/10" % number
+	forecast_timing.text = "%d ennemis · %s" % [forecast_data.total,"Départ manuel" if countdown_remaining < 0 else "Décompte en pause" if _countdown_paused() else "Dans %d s" % ceili(countdown_remaining)]
+	for index in range(forecast_rows.size()):
+		forecast_rows[index].visible = index < forecast_data.groups.size()
+		if index >= forecast_data.groups.size(): continue
+		var group: Dictionary = forecast_data.groups[index]
+		forecast_marks[index].color = MapView.enemy_color(group.type)
+		forecast_names[index].text = "%d × %s%s" % [group.count,group.name," · BOSS" if group.type == 7 else ""]
+		var fatal: bool = group.fortress_damage >= model.fortress_hp
+		forecast_details[index].text = "%d PV · Arrivée : −%d PV%s" % [group.hp,group.fortress_damage," · Fatale" if fatal else ""]
+		forecast_details[index].add_theme_color_override("font_color",Color("ed9989") if fatal else Color("bbcbbf"))
+		forecast_rows[index].tooltip_text = "Groupe %d · %d × %s\n%d PV par ennemi\nPremière apparition : %s s après le départ\nDernière apparition : %s s après le départ\n%s\nArrivée : −%d PV par ennemi\nÉlimination : +%d or par ennemi" % [index+1,group.count,group.name,group.hp,_number(group.first_at),_number(group.last_at),"Ennemi unique." if group.count == 1 else "Un ennemi toutes les %s s." % _number(group.interval),group.fortress_damage,group.reward]
+		forecast_rows[index].tooltip_text += "\nHoraires et intervalles à vitesse ×1 ; divisés par deux en ×2."
+	var footer: int = 62+forecast_data.groups.size()*44
+	forecast_reward.position.y = footer
+	forecast_reward.text = "Si tous éliminés : +%d or" % forecast_data.income
+	forecast_note.position.y = footer+22
+	forecast_panel.size.y = footer+50
 
 func _build_run_summary(screen: Control) -> void:
 	summary_panel = ColorRect.new()
@@ -729,7 +794,7 @@ func _update_interface() -> void:
 	var preview: Array[String] = []
 	for group in Model.Campaign.WAVES[preview_wave-1]:
 		preview.append("%d %s · intervalle %s s" % [group[1],Model.ENEMY_TYPES[group[0]].name,_number(group[2])])
-	start_button.tooltip_text = "Vague %d\n%s\n4 s entre la dernière apparition d’un groupe et la première du suivant." % [preview_wave,"\n".join(preview)]
+	start_button.tooltip_text = "Vague %d\n%s\n4 s entre la dernière apparition d’un groupe et la première du suivant.\nHoraires et intervalles à vitesse ×1 ; divisés par deux en ×2." % [preview_wave,"\n".join(preview)]
 	if countdown_remaining >= 0.0:
 		start_button.tooltip_text += "\nDépart automatique après le décompte. Cliquez pour lancer maintenant."
 	speed_button.text = "Vitesse ×%d" % int(speed)
@@ -799,6 +864,7 @@ func _update_interface() -> void:
 	_refresh_purchase_preview()
 	_refresh_upgrade_preview()
 	_update_enemy_inspector()
+	_update_wave_forecast()
 
 func _synergy_tooltip(slot: int) -> String:
 	var type: int = model.defenders[slot].type

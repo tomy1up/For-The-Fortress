@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.28 — 23 octobre 2026
+Version : 0.29 — 23 octobre 2026
 
 JOUER
 
@@ -39,7 +39,10 @@ Synergies : sélectionner une unité pour voir ses partenaires reliés sur la ca
 Traits dorés : proximité ; traits bleus : spécialisations.
 Survol de la ligne des synergies : partenaires, effets et conditions de chaque association.
 La lecture au survol ne suspend pas le combat ni le décompte.
-Survol du bouton de lancement : voir les groupes de la prochaine vague.
+Préparation : la prochaine vague est affichée en haut à droite (groupes, PV et danger).
+Survoler un groupe : horaires d’apparition, intervalle et récompense individuelle.
+Le gain maximal affiché exige d’éliminer tous les ennemis ; la lecture ne suspend pas le délai.
+Survol du bouton de lancement : la composition reste aussi disponible.
 Nouvel essai / Rejouer : repartir sans défense ni bonus, avec 150 or et 20 PV.
 En fin de partie, Bilan affiche les résultats de chaque vague, votre défense et vos bonus.
 Survoler une ligne du bilan montre les unités et bonus au départ de la vague.

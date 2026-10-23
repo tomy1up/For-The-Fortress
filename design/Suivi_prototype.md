@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 23 octobre 2026 — prototype v0.28, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 23 octobre 2026 — prototype v0.29, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -174,3 +174,9 @@ Le survol d’un ennemi montre nom, PV, dégâts d’arrivée, récompense et ma
 Le bouton Bilan, à côté de Rejouer après victoire ou défaite, affiche résultats et temps simulés par vague, défense finale et bonus choisis. Le survol des lignes donne le contexte au départ des vagues. Les relevés sont conservés en mémoire jusqu’au nouvel essai, sans sauvegarde ni progression persistante.
 
 2 237 contrôles réussis, dont 196 nouveaux. Seize lancements du paquet extrait vérifiés ; bilans de victoire et de défaite inspectés. Les références des deux factions et l’équilibrage restent inchangés. Voir [la fiche](Bilan_partie_v028.md) et [le rapport d’export](Distribution_Windows_v028.json). Ce bilan facilite les prochains retours humains par vague.
+
+## Prévision des vagues — v0.29, 23 octobre 2026
+
+La préparation affiche la prochaine vague, ses groupes, leurs quantités, PV et dangers, ainsi que le revenu maximal conditionnel. Le survol détaille les horaires et intervalles à vitesse ×1, avec rappel de l’effet du ×2. La fiche suit le délai existant et se masque dans les autres phases et fenêtres modales.
+
+2 639 contrôles réussis, dont 402 nouveaux. Dix-huit lancements du paquet extrait vérifiés ; préparations de la vague 9 et du boss et aide des horaires inspectées. Aucun changement d’équilibrage. Voir [la fiche](Prevision_vagues_v029.md) et [le rapport d’export](Distribution_Windows_v029.json).

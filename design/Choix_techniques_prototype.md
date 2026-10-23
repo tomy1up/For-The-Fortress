@@ -136,3 +136,11 @@ Le modèle copie un contexte compact au départ de chaque vague : PV, revenus d�
 Le contrôleur construit le bilan uniquement sur demande après victoire ou défaite. Le panneau reprend les données copiées et les cumuls réels ; les lignes ont une aide décrivant leur contexte. Les commandes derrière le panneau sont bloquées. Le bouton de fermeture reçoit le focus, puis le rend à Bilan. Les copies de l’outil d’essais appariés incluent aussi l’historique et le contexte en cours, sans alias entre tableaux.
 
 196 contrôles supplémentaires, 2 237 au total. Les captures d’export couvrent deux bilans au budget normal ; seize lancements du paquet extrait sont vérifiés. Aucune persistance sur disque n’est ajoutée au jeu.
+
+## Prévision des vagues — v0.29, 23 octobre 2026
+
+La requête statique `wave_forecast` construit des groupes indépendants depuis les compositions, définitions ennemies et calendrier de combat existants. Elle ne touche ni au générateur ni au modèle de la partie. Le contrôleur met en cache les données par vague et conserve un recalcul dynamique du délai et de l’avertissement d’arrivée fatale. Les marqueurs utilisent la même palette que les ennemis dessinés.
+
+La carte de préparation partage la zone en haut à droite avec l’inspection de combat, avec des conditions d’affichage exclusives. Le panneau s’adapte aux un à quatre groupes du prototype. Les deux nouvelles captures arrêtent des parcours au budget normal avant les vagues 9 et 10, puis arment le même délai de 30 secondes que le jeu normal.
+
+402 contrôles supplémentaires, 2 639 au total. Dix-huit lancements du paquet extrait vérifiés ; contenu, horaires et rendu des prévisions inspectés. Les apparitions réelles et les règles économiques restent inchangées.

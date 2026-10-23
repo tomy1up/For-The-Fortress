@@ -1,0 +1,130 @@
+{
+  "archive_sha256": "e08efe7375248ddaeb08e9e6fed76e985549b098c218555cd6b58b95d67be264",
+  "executable_sha256": "1aaa3b28b89318711da552dd22a7168b003f17444659dfae92c8d8daa6adfde0",
+  "files": [
+    "For_the_Fortress_v0.29_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.29_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.29_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.29_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.29_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "wave_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "victory_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "defeat_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "upgrade_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "specialisation_preview",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Previsions finales de vague 9 Alliance et boss Horde inspectees dans le binaire ; aide des horaires x1/x2 inspectee dans le projet source final.",
+  "version": "0.29",
+  "date": "2026-10-23",
+  "inter_wave_seconds": 30,
+  "regression_checks": 2639,
+  "wave_forecast_checks": 402,
+  "archive_bytes": 39359751,
+  "source_manifest": {
+    "version": "0.29",
+    "date": "2026-10-23",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "1aaa3b28b89318711da552dd22a7168b003f17444659dfae92c8d8daa6adfde0",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "c86951dfd2110cd84aefab378164c998aa01e532a348715c3cd02a3ec65f1fb2",
+      "export_presets.cfg": "2935cca3cde0c23fa4c5e81c4126ef30a85cd8fd87c066f06498d18d2094fd34",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "e1d5acd8c4de5e87565ad0cfd8434dbfb5e252280fbecfd273cb5fe3372d5840",
+      "scripts/valley_model.gd": "6106d20d8ead7150f05ed1f758d675b98b10035ececd06b8bdf8375b0df4bc9c",
+      "scripts/valley_view.gd": "433e4059b21439050964cda0693386280c0fa6bacb3e7861ca3fa6b5698de148",
+      "scripts/campaign_data.gd": "e866f322fd3ffe6b4e0ba627ebaedbe775b56aa805a6ee134d91faf3df482206",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  }
+}
