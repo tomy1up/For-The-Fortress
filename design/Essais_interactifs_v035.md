@@ -22,7 +22,7 @@ Défense finale : archer E1 niveau 1, arbalétrier E2 niveau 1, mage E3 niveau 4
 
 Vérifiés en interaction : sélection de faction, recrutement, prix réduit, attente aux bonus, défilement d’une liste longue sans perte des boutons, lecture des nouvelles valeurs arrondies, passage niveau 3, ouverture/annulation/réouverture de spécialisation sans débit anticipé, confirmation à 150 or, état de victoire et bilan. Fenêtre agrandie sur le moniteur 2560 × 1440 puis restaurée : le panneau des bonus est resté lisible.
 
-[Capture du bilan Alliance](essais/captures/QA-v035_Alliance_bilan.png).
+[Capture du bilan Alliance](essais/captures/QA-v035_Alliance_bilan.jpg).
 
 ## Itération B — Horde
 
@@ -40,7 +40,7 @@ Version de travail locale : dev_v035_horde, incluant les nouveaux profils ennemi
 
 Les trois achats totalisent 225 or, cohérents avec 150 + 274 − 199. La partie a continué pendant d’autres travaux de développement, sans profiter de toutes les préparations. La défaite ne suffit donc pas à proposer un rééquilibrage de la Horde. Elle valide ici l’affichage de défaite, les vagues non jouées du bilan et la cohérence des ressources.
 
-[Capture du bilan Horde](essais/captures/QA-v035_Horde_defaite.png).
+[Capture du bilan Horde](essais/captures/QA-v035_Horde_defaite.jpg).
 
 ## Limites et suites
 
@@ -48,8 +48,8 @@ Les instantanés intermédiaires précèdent certains derniers changements de la
 
 ## Contrôle C — ×10 dans le paquet Windows
 
-Le bouton a été activé au PC en suivant ×1 → ×2 → ×10 debug. Une vague 1 Horde avec lanceur de haches E1 et sapeur E2 a conservé ses dix éliminations, zéro fuite, 20 PV, 55 or et 24,5 secondes simulées. Le décompte de préparation a continué en secondes réelles. [Capture du bouton ×10 et de son aide](essais/captures/QA-v035_x10.png). Ce contrôle n’est pas présenté comme une troisième campagne complète. L’infobulle de départ restée sur l’ancienne vague a conduit à la correction supplémentaire décrite dans le relevé de livraison.
+Le bouton a été activé au PC en suivant ×1 → ×2 → ×10 debug. Une vague 1 Horde avec lanceur de haches E1 et sapeur E2 a conservé ses dix éliminations, zéro fuite, 20 PV, 55 or et 24,5 secondes simulées. Le décompte de préparation a continué en secondes réelles. [Capture du bouton ×10 et de son aide](essais/captures/QA-v035_x10.jpg). Ce contrôle n’est pas présenté comme une troisième campagne complète. L’infobulle de départ restée sur l’ancienne vague a conduit à la correction supplémentaire décrite dans le relevé de livraison.
 
 ## Contrôle D — infobulle de départ actualisée
 
-Dans le binaire reconstruit après correction, le pointeur a été laissé sur le bouton de départ pendant le passage de vague 1 à vague 2 à ×10, sans défenseurs. Le texte est passé à la composition de la vague 2 et le panneau a conservé une taille lisible. Ce scénario volontaire sans défenseurs s’est terminé en défaite et sert uniquement à vérifier l’interface, pas l’équilibrage. [Capture du texte actualisé](essais/captures/QA-v035_infobulle_actualisee.png). Le jeu a été fermé après le contrôle.
+Dans le binaire reconstruit après correction, le pointeur a été laissé sur le bouton de départ pendant le passage de vague 1 à vague 2 à ×10, sans défenseurs. Le texte est passé à la composition de la vague 2 et le panneau a conservé une taille lisible. Ce scénario volontaire sans défenseurs s’est terminé en défaite et sert uniquement à vérifier l’interface, pas l’équilibrage. [Capture du texte actualisé](essais/captures/QA-v035_infobulle_actualisee.jpg). Le jeu a été fermé après le contrôle.
