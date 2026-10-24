@@ -58,3 +58,7 @@ Cette run montre qu’une composition finale à trois défenseurs peut gagner av
 Précision du joueur après discussion de la finale : « c’est mieux et à la fin tout dépend des améliorations que j’ai choisi aussi ». La finale est donc mieux appréciée sur cette run ; le joueur souligne l’influence des améliorations choisies. Cela ne valide pas tous les ensembles de bonus ni un changement des statistiques du boss. Conserver les réglages actuels et comparer d’autres compositions avant d’en déduire une correction. La proposition antérieure de boss à 900 PV n’est pas appliquée.
 
 Captures conservées : [victoire](essais/captures/RJ-002_victoire_horde.png) et [bonus](essais/captures/RJ-002_bonus_horde.png). Aucun paramètre du jeu modifié à partir de ce relevé.
+
+## RJ-003 — Référence au chaman en Alliance, retour du 24 octobre 2026
+
+Le joueur rapporte une partie Alliance jouée la veille et un bonus évoquant les chamans. Nom et version non précisés. Il demande une vérification de la cohérence des unités, bonus et améliorations dans les deux sens. La revue identifie notamment la mention du chaman dans le texte commun de R-02 et des effets sans bénéficiaire dans certaines aides de synergie. [Correction et vérifications v0.34](Coherence_factions_v034.md). Aucun achat adverse n’est rapporté comme constaté par le joueur.

@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 24 octobre 2026 — prototype v0.33, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 24 octobre 2026 — prototype v0.34, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -196,3 +196,7 @@ Le contrôleur compare les arrivées et PV avant/après l’avance du modèle. L
 ## v0.33 — Comparaison des bonus, 24 octobre 2026
 
 Projection sans mutation des douze bonus : valeurs avant/après sur la défense, PV, prix et conditions de grande cible. Calculs communs au jeu réel ; listes défilantes et récapitulatif acquis compact. 11 574 contrôles réussis, dont 8 752 ciblés ; 30 lancements Windows contrôlés. [Relevé détaillé](Comparaison_bonus_v033.md).
+
+## v0.34 — Cohérence des factions, 24 octobre 2026
+
+Descriptions de bonus centralisées par camp, synergies limitées aux attaques du bénéficiaire et garde explicite des améliorations adverses. 12 303 contrôles réussis, dont 729 ciblés ; 32 lancements Windows contrôlés. [Relevé détaillé](Coherence_factions_v034.md).

@@ -46,6 +46,7 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('fortress_breach','breach','horde'),
        ('bonus_alliance_comparison','bonus_preview','alliance'),('bonus_horde_comparison','bonus_preview','horde'),
        ('bonus_economy_comparison','bonus_preview','horde'),
+       ('alliance_faction_bonuses','bonus_preview','alliance'),('horde_faction_bonuses','bonus_preview','horde'),
        ('effects_mage','effects','alliance'),('effects_troll','effects','horde'),
        ('effects_sapper','effects','horde'),('effects_shaman','effects','horde'),
        ('wave_forecast','forecast','alliance'),('boss_forecast','forecast_boss','horde'),
@@ -67,6 +68,7 @@ for name,state,faction in cases:
         if faction: command+=['--capture-faction='+faction]
         if state=='effects': command+=['--capture-type='+str({'effects_mage':2,'effects_troll':3,'effects_sapper':4,'effects_shaman':5}[name])]
         if name=='bonus_economy_comparison': command+=['--capture-type=1']
+        if name in ['alliance_faction_bonuses','horde_faction_bonuses']: command+=['--capture-type=2']
         if name in ['alliance_crossbow_purchase','alliance_mage_purchase','horde_sapper_purchase','horde_shaman_purchase']:
             command+=['--capture-type='+str({'alliance_crossbow_purchase':1,'alliance_mage_purchase':2,'horde_sapper_purchase':4,'horde_shaman_purchase':5}[name])]
     completed=subprocess.run(command,cwd=folder,capture_output=True,text=True,encoding='utf-8',errors='replace',startupinfo=startup,timeout=30)

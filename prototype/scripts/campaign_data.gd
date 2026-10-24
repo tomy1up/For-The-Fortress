@@ -13,18 +13,18 @@ const WAVES: Array = [
 	[[7,1,0.0],[6,2,5.0],[2,8,1.0]]
 ]
 const BONUSES: Array[Dictionary] = [
-	{"code":"R-01","name":"Armes affûtées","description":"+10 % à tous les dégâts, directs, secondaires et périodiques."},
-	{"code":"R-02","name":"Exercice de tir","description":"+12 % de fréquence d’attaque. Exclut le chaman et ses branches."},
+	{"code":"R-01","name":"Armes affûtées","description":"+10 % à tous les dégâts, directs, secondaires et périodiques.","faction_descriptions":["+10 % aux dégâts des tirs et des explosions.","+10 % aux dégâts des impacts, rebonds, explosions et malédictions."]},
+	{"code":"R-02","name":"Exercice de tir","description":"+12 % de fréquence d’attaque. Exclut le chaman et ses branches.","faction_descriptions":["+12 % de fréquence d’attaque pour les archers, arbalétriers et mages, spécialisations incluses.","+12 % de fréquence d’attaque au lanceur de haches et au sapeur. Le chaman et ses spécialisations ne sont pas concernés."]},
 	{"code":"R-03","name":"Postes d’observation","description":"Tous les défenseurs attaquent plus loin. Leur portée augmente de 0,5 : par exemple, de 4 à 4,5 (+12,5 %)."},
 	{"code":"R-04","name":"Éclats meurtriers","description":"+20 % aux dégâts des explosions du mage et du sapeur, et des rebonds du lanceur de haches.","faction_descriptions":["+20 % aux dégâts des explosions du mage.","+20 % aux dégâts des rebonds du lanceur de haches et des explosions du sapeur."]},
-	{"code":"R-05","name":"Propagation","description":"+0,2 au rayon des explosions et à la portée de chaque rebond. Le nombre maximal d’ennemis touchés reste inchangé."},
-	{"code":"R-06","name":"Impacts appuyés","description":"+15 % aux dégâts principaux directs. Aucun gain secondaire ou périodique."},
+	{"code":"R-05","name":"Propagation","description":"+0,2 au rayon des explosions et à la portée de chaque rebond. Le nombre maximal d’ennemis touchés reste inchangé.","faction_descriptions":["+0,2 au rayon des explosions du mage. Le nombre maximal d’ennemis touchés reste inchangé.","+0,2 au rayon d’explosion du sapeur et à la distance des rebonds du lanceur de haches. Maximum de victimes inchangé."]},
+	{"code":"R-06","name":"Impacts appuyés","description":"+15 % aux dégâts principaux directs. Aucun gain secondaire ou périodique.","faction_descriptions":["+15 % aux dégâts directs des tirs. Les explosions restent inchangées.","+15 % aux dégâts directs. Les rebonds, explosions et malédictions restent inchangés."]},
 	{"code":"R-07","name":"Recrues aguerries","description":"+15 % à tous les dégâts des défenseurs de niveaux 1 et 2, actuels et futurs. Le bonus cesse au niveau 3."},
 	{"code":"R-08","name":"Vétérans","description":"+12 % à tous les dégâts des défenseurs de niveau 3 ou spécialisés (niveau 4), actuels et futurs."},
 	{"code":"R-09","name":"Maçonnerie renforcée","description":"+4 PV actuels et maximum de forteresse. Aucun soin automatique ultérieur."},
 	{"code":"R-10","name":"Ateliers efficaces","description":"Réduit de 10 % le coût des prochaines améliorations et spécialisations. Le prix final est arrondi à la pièce d’or supérieure."},
 	{"code":"R-11","name":"Recrutement organisé","description":"−10 % au prix des achats futurs. Aucun effet rétroactif. Arrondi supérieur."},
-	{"code":"R-12","name":"Chasse aux colosses","description":"+20 % à tous les dégâts contre Brutes, Colosses, Élites et boss : coups directs, explosions, rebonds et malédictions. Priorité des cibles inchangée."}
+	{"code":"R-12","name":"Chasse aux colosses","description":"+20 % à tous les dégâts contre Brutes, Colosses, Élites et boss : coups directs, explosions, rebonds et malédictions. Priorité des cibles inchangée.","faction_descriptions":["+20 % aux dégâts des tirs et explosions contre Brutes, Colosses, Élites et boss. Priorité des cibles inchangée.","+20 % aux dégâts des impacts, explosions, rebonds et malédictions contre Brutes, Colosses, Élites et boss. Priorité des cibles inchangée."]}
 ]
 # Chaque côté décrit ses gains propres [direct, secondaire, périodique, portée].
 const PROXIMITY: Array[Dictionary] = [
@@ -51,3 +51,8 @@ static func schedule(wave: int) -> Array[Dictionary]:
 			result.append({"type":group[0],"time":time+index*group[2]})
 		time += (group[1]-1)*group[2]+4.0
 	return result
+
+static func bonus_description(code: int, faction: int) -> String:
+	if code < 0 or code >= BONUSES.size() or faction not in [0,1]: return ""
+	var data: Dictionary = BONUSES[code]
+	return data.faction_descriptions[faction] if data.has("faction_descriptions") else data.description

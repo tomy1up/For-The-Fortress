@@ -191,6 +191,7 @@ func _ready() -> void:
 			model.wave = 9
 			model.phase = "bonus"
 			model.bonus_offer.assign([0,8,11] if capture_type == 0 else [9,10,7])
+			if capture_type == 2: model.bonus_offer.assign([1,3,4])
 		set_process(false)
 		if capture_state in ["finished","forecast","forecast_boss"]: autoplay_started = true
 		_update_interface()
@@ -970,7 +971,7 @@ func _synergy_tooltip(slot: int) -> String:
 		var gains: Array[String] = []
 		for i in range(4):
 			var gain: float = rule.effects[side][i]
-			if gain > 0:
+			if gain > 0 and (i != 1 or Model.ROSTER[type].has("secondary_damage")) and (i != 2 or Model.ROSTER[type].has("curse_damage")):
 				gains.append("+%s %s" % [_number(gain if i == 3 else gain*100), ["% aux dégâts directs", "% aux dégâts des rebonds" if type == 3 else "% aux dégâts des explosions", "% aux dégâts de malédiction", "de portée"][i]])
 		descriptions.append("Pour cette unité : " + ", ".join(gains))
 		if specialised:
@@ -1055,7 +1056,7 @@ func _update_bonus_panel() -> void:
 		if index < entries.size():
 			var data: Dictionary = Model.Campaign.BONUSES[entries[index]]
 			bonus_names[index].text = data.code+" · "+data.name
-			bonus_descriptions[index].text = data.faction_descriptions[model.faction] if data.has("faction_descriptions") else data.description
+			bonus_descriptions[index].text = Model.Campaign.bonus_description(entries[index],model.faction)
 			if choosing:
 				var impact_text: String = _bonus_impact_text(entries[index])
 				if bonus_impacts[index].text != impact_text:

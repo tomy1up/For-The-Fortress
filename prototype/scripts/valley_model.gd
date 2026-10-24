@@ -228,6 +228,7 @@ func purchase_preview_stats(slot: int, type: int) -> Dictionary:
 
 func upgrade_preview_stats(slot: int, branch: int = -1) -> Dictionary:
 	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty(): return {}
+	if defenders[slot].type not in available_types(): return {}
 	var candidate: Dictionary = defenders[slot].duplicate(true)
 	if candidate.level >= 4 or (candidate.level == 3 and branch not in [0,1]) or (candidate.level < 3 and branch != -1): return {}
 	candidate.level += 1
@@ -356,6 +357,8 @@ func upgrade_error(slot: int, branch: int = -1) -> String:
 		return "Améliorations possibles uniquement entre les vagues."
 	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty():
 		return "Sélectionnez un défenseur."
+	if defenders[slot].type not in available_types():
+		return "Ce défenseur appartient à l’autre faction."
 	var level: int = defenders[slot].get("level", 1)
 	if level >= 4:
 		return "Niveau maximum atteint."

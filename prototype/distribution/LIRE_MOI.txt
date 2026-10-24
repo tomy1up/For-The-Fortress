@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.33 — 24 octobre 2026
+Version : 0.34 — 24 octobre 2026
 
 JOUER
 
@@ -94,3 +94,8 @@ Chaque offre indique ses effets sur votre défense actuelle, avant/après.
 Faites défiler la liste dans sa colonne si plusieurs défenseurs sont concernés.
 PV, réductions de prix et dégâts contre les grandes cibles sont distingués.
 La lecture ne valide rien : cliquez sur Choisir ce bonus quand vous êtes prêt.
+
+COHÉRENCE DES FACTIONS
+Les bonus parlent des unités et effets de votre camp, dans les offres comme
+dans le récapitulatif. Les deux camps conservent les douze bonus communs.
+Les améliorations et spécialisations concernent uniquement vos défenseurs.
