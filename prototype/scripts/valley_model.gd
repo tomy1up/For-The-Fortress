@@ -67,6 +67,9 @@ var shots: Array[Dictionary] = []
 var event_log: Array[String] = []
 var wave_history: Array[Dictionary] = []
 var _wave_record: Dictionary = {}
+var action_history: Array[Dictionary] = []
+var initial_rng_seed: String = ""
+var initial_rng_state: String = ""
 
 func _init(enable_synergies: bool = true) -> void:
 	synergies_enabled = enable_synergies
@@ -74,6 +77,9 @@ func _init(enable_synergies: bool = true) -> void:
 	reset()
 
 func reset() -> void:
+	action_history.clear()
+	initial_rng_seed = ""
+	initial_rng_state = ""
 	wave_history.clear()
 	_wave_record.clear()
 	gold = INITIAL_GOLD
@@ -112,7 +118,14 @@ func select_faction(choice: int) -> bool:
 		if not defender.is_empty():
 			return false
 	faction = choice
+	_record_action("faction",{"faction":choice})
 	return true
+
+func _record_action(kind: String, details: Dictionary = {}) -> void:
+	var entry: Dictionary = {"sequence":action_history.size()+1,"kind":kind,"wave":wave,"phase":phase,
+		"combat_seconds":snappedf(completed_time+elapsed,0.000001),"gold":gold,"fortress_hp":fortress_hp}
+	entry.merge(details.duplicate(true))
+	action_history.append(entry)
 
 static func make_enemy(id: int, type: int, spawn_time: float) -> Dictionary:
 	var definition: Dictionary = ENEMY_TYPES[type]
@@ -171,6 +184,7 @@ func buy(slot: int, type: int) -> bool:
 	next_instance_id += 1
 	gold -= purchase_cost(type)
 	_refresh_windows()
+	_record_action("buy",{"slot":slot,"type":type,"instance_id":defenders[slot].instance_id,"cost":defenders[slot].paid})
 	return true
 
 static func stats_for(type: int, level: int = 1, branch: int = -1) -> Dictionary:
@@ -322,10 +336,12 @@ func prepare_next_wave() -> bool:
 	event_log.clear()
 	spawn_schedule = Campaign.schedule(wave)
 	phase = "preparation"
+	_record_action("wave_prepare")
 	return true
 
 func choose_bonus(code: int) -> bool:
 	if phase != "bonus" or code not in bonus_offer or code in bonuses: return false
+	var offered: Array[int] = bonus_offer.duplicate()
 	bonuses.append(code)
 	bonus_offer.clear()
 	if code == 8:
@@ -333,9 +349,11 @@ func choose_bonus(code: int) -> bool:
 		fortress_hp += 4
 	_refresh_windows()
 	phase = "finished"
+	_record_action("bonus_choice",{"offered":offered,"chosen":code})
 	return true
 
 func _offer_bonus() -> void:
+	var state_before: String = str(rng.state)
 	var pool: Array[int] = []
 	for code in range(Campaign.BONUSES.size()):
 		if code not in bonuses: pool.append(code)
@@ -345,6 +363,7 @@ func _offer_bonus() -> void:
 		bonus_offer.append(pool[selected_index])
 		pool.remove_at(selected_index)
 	phase = "bonus"
+	_record_action("bonus_offer",{"offered":bonus_offer.duplicate(),"rng_state_before":state_before,"rng_state_after":str(rng.state)})
 
 func upgrade_cost(slot: int) -> int:
 	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty():
@@ -381,6 +400,7 @@ func upgrade(slot: int, branch: int = -1) -> bool:
 	defender.paid += paid
 	gold -= paid
 	_refresh_windows()
+	_record_action("upgrade",{"slot":slot,"type":defender.type,"instance_id":defender.instance_id,"level":defender.level,"branch":defender.branch,"cost":paid})
 	return true
 
 func refund(slot: int) -> int:
@@ -391,14 +411,20 @@ func refund(slot: int) -> int:
 func sell(slot: int) -> bool:
 	if not can_build() or refund(slot) <= 0:
 		return false
-	gold += refund(slot)
+	var unit: Dictionary = defenders[slot].duplicate(true)
+	var received: int = refund(slot)
+	gold += received
 	defenders[slot] = {}
 	_refresh_windows()
+	_record_action("sell",{"slot":slot,"type":unit.type,"instance_id":unit.instance_id,"received":received,"invested":unit.paid})
 	return true
 
 func start() -> bool:
 	if phase != "preparation":
 		return false
+	if initial_rng_state.is_empty():
+		initial_rng_seed = str(rng.seed)
+		initial_rng_state = str(rng.state)
 	var army: Array[Dictionary] = []
 	for slot in range(defenders.size()):
 		var unit: Dictionary = defenders[slot]
@@ -408,6 +434,7 @@ func start() -> bool:
 	for defender in defenders:
 		if not defender.is_empty():
 			defender.ready_at = 0.0
+	_record_action("wave_start",{"army":army.duplicate(true),"bonuses":bonuses.duplicate()})
 	_resolve_instant()
 	return true
 
@@ -549,6 +576,7 @@ func _finish_wave_record() -> void:
 	var record: Dictionary = _wave_record.duplicate(true)
 	record.merge({"hp_after":fortress_hp,"hp_lost":record.hp_before-fortress_hp,"income":total_income-record.income_before,"killed":killed,"escaped":escaped,"spawned":spawned,"remaining":enemies.size(),"seconds":elapsed,"result":"defeat" if phase == "defeat" else "cleared"})
 	wave_history.append(record)
+	_record_action("wave_end",{"result":record.result,"killed":killed,"escaped":escaped,"income":record.income,"seconds":elapsed})
 	_wave_record.clear()
 
 func _has_enemy(id: int) -> bool:

@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.35 — 24 octobre 2026
+Version : 0.36 — 24 octobre 2026
 
 JOUER
 
@@ -111,3 +111,10 @@ VITESSE ×10 TEMPORAIRE
 Le bouton alterne ×1, ×2 et ×10 debug. Le ×10 sert au débogage et sera retiré
 plus tard. Les 30 secondes de préparation restent réelles ; les choix de bonus
 attendent toujours votre décision.
+
+RAPPORT DE PARTIE
+Après une victoire ou une défaite, ouvrez Bilan puis Exporter le rapport.
+Le jeu écrit rapport.md et rapport.json sur ce PC. Cliquez ensuite sur
+Ouvrir le dossier du rapport pour les retrouver. Les fichiers contiennent
+les vagues, ressources, décisions et offres de bonus ; aucun envoi réseau.
+Ce rapport sert au débogage et ne permet pas de reprendre une partie.

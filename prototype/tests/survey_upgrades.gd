@@ -6,7 +6,8 @@ const COPY_FIELDS: Array[String] = [
 	"wave","max_hp","total_killed","total_escaped","total_income","completed_time",
 	"bonuses","bonus_offer","synergies_enabled","faction","next_instance_id","curses",
 	"spawn_schedule","gold","fortress_hp","elapsed","phase","spawned","killed",
-	"escaped","enemies","defenders","shots","event_log","wave_history","_wave_record"
+	"escaped","enemies","defenders","shots","event_log","wave_history","_wave_record",
+	"action_history","initial_rng_seed","initial_rng_state"
 ]
 var checks: int = 0
 var failures: Array[String] = []

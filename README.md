@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.35 (24 octobre 2026)** : dégâts à la forteresse explicités, portée et silhouettes plus lisibles, aides économiques et ×10 temporaire de débogage. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.35).
+**Version v0.36 (24 octobre 2026)** : journal des décisions et export local d’un rapport depuis le bilan de partie. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.36).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -87,3 +87,7 @@ Le [prototype Godot](prototype/README.md) est en **v0.35 — 24 octobre 2026** :
 Pour jouer sans Godot, télécharger le ZIP de la [version Windows v0.22](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.22), extraire le dossier puis lancer For_the_Fortress.exe. Sur ce PC, la version prête est aussi dans dist/For_the_Fortress_v0.22_Windows_x64. Le lanceur prototype/Lancer_le_prototype.cmd reste disponible pour le projet source. Le [suivi du prototype](design/Suivi_prototype.md) distingue les lots réalisés et ceux à venir.
 
 La [v0.22 autonome](design/Distribution_Windows_v022.md) ajoute l’enchaînement automatique avec 60 secondes de préparation après le premier lancement manuel. Les choix d’amélioration attendent le joueur. Cette [décision validée](design/Decision_enchainement_v022.md) complète le GDD principal v0.14, dont les versions Word et Markdown restent inchangées et concordantes. Les nombres de combat sont conservés.
+
+## Rapports de partie — v0.36
+
+Le bilan permet d’exporter les décisions, offres de bonus, ressources et résultats dans deux fichiers locaux. [Fonctionnement et validation](design/Rapports_partie_v036.md). 12 717 contrôles et 38 lancements Windows vérifiés.

@@ -54,6 +54,7 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('effects_sapper','effects','horde'),('effects_shaman','effects','horde'),
        ('wave_forecast','forecast','alliance'),('boss_forecast','forecast_boss','horde'),
        ('victory_summary','summary','horde'),('defeat_summary','defeat_summary','alliance'),
+       ('alliance_run_report','summary','alliance'),('horde_run_report','summary','horde'),
        ('enemy_inspection','inspection','horde'),('boss_inspection','boss_inspection','alliance'),
        ('upgrade_comparison','upgrade',None),('specialisation_preview','specialisation',None),
        ('alliance_purchase','purchase','alliance'),('horde_purchase','purchase','horde'),
@@ -69,6 +70,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if name in ['alliance_run_report','horde_run_report']: command+=['--capture-export-report']
         if state=='effects': command+=['--capture-type='+str({'effects_mage':2,'effects_troll':3,'effects_sapper':4,'effects_shaman':5}[name])]
         if name=='bonus_economy_comparison': command+=['--capture-type=1']
         if name in ['alliance_faction_bonuses','horde_faction_bonuses']: command+=['--capture-type=2']
@@ -79,6 +81,13 @@ for name,state,faction in cases:
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
+    if name in ['alliance_run_report','horde_run_report']:
+        report_folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))
+        run_report=json.loads((report_folder/'rapport.json').read_text(encoding='utf-8'))
+        assert run_report['result']=='victory' and len(run_report['waves'])==10
+        assert run_report['faction']==(0 if faction=='alliance' else 1)
+        assert len([action for action in run_report['actions'] if action['kind']=='bonus_choice'])==3
+        assert 'Bonus proposés' in (report_folder/'rapport.md').read_text(encoding='utf-8')
     if state:
         assert 'CAPTURE_RESULT=0' in text,(name,text)
         header=image.read_bytes()[:24]

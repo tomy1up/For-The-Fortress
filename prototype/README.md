@@ -1,14 +1,14 @@
 # Dix vagues jouables sur La Vallée du Gué
 
-**Version v0.35 (24 octobre 2026)** : dégâts à la forteresse explicités, portée et silhouettes plus lisibles, aides économiques et ×10 temporaire de débogage. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.35).
+**Version v0.36 (24 octobre 2026)** : journal des décisions et export local d’un rapport depuis le bilan de partie. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.36).
 
-**Prototype v0.35 — 24 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
+**Prototype v0.36 — 24 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
 
 Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.35](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.35) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.36](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.36) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
 Sur ce PC : dist/For_the_Fortress_v0.35_Windows_x64 depuis la racine du dépôt. Le ZIP local pèse environ 39 Mo. Voir [le relevé d’export](../design/Distribution_Windows_v035.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
@@ -220,3 +220,7 @@ Les descriptions des bonus passent par une sélection centrale selon la faction,
 La fiche ennemie explique que la forteresse perd les PV indiqués si l’ennemi l’atteint, et que le joueur gagne l’or indiqué en l’éliminant. Les nombres affichent au maximum deux décimales ; les calculs restent précis. Les aides de vente et d’amélioration détaillent les investissements, pertes et soldes futurs. La route couverte par une unité sélectionnée est dorée ; les aperçus restent bleus. Silhouettes et équipements temporaires distinguent les huit ennemis et les races des défenseurs. Les listes de bonus repartent en haut lors d’un nouveau choix ou d’une nouvelle partie.
 
 Le bouton de vitesse suit temporairement ×1 → ×2 → ×10 debug → ×1, sur demande du porteur du projet. Seul le combat accélère ; préparations, choix et durée de lecture des percées gardent leurs règles. Retirer 10.0 de COMBAT_SPEEDS et adapter l’aide lors du retrait du mode debug. [Détail](../design/Lisibilite_et_debug_v035.md) · [Essais interactifs](../design/Essais_interactifs_v035.md).
+
+## Rapport de débogage local
+
+En fin de partie : **Bilan → Exporter le rapport**, puis **Ouvrir le dossier du rapport**. Le Markdown résume les vagues et décisions ; le JSON conserve les détails et les offres de bonus. Aucun envoi réseau ni reprise de partie. Voir [le détail](../design/Rapports_partie_v036.md).

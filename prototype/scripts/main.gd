@@ -32,6 +32,7 @@ class LiveTooltipButton extends Button:
 		return content
 
 const Model = preload("res://scripts/valley_model.gd")
+const RunReport = preload("res://scripts/run_report.gd")
 const MapView = preload("res://scripts/valley_view.gd")
 const INTER_WAVE_SECONDS: float = 30.0
 const BREACH_NOTICE_SECONDS: float = 2.5
@@ -112,6 +113,9 @@ var summary_cells: Array = []
 var summary_army: Array[Label] = []
 var summary_bonuses: Array[Label] = []
 var summary_close: Button
+var report_button: Button
+var report_status: Label
+var report_folder: String = ""
 var forecast_panel: Panel
 var forecast_title: Label
 var forecast_timing: Label
@@ -241,6 +245,10 @@ func _ready() -> void:
 		if capture_state in ["finished","forecast","forecast_boss"]: autoplay_started = true
 		_update_interface()
 		if capture_state in ["summary","defeat_summary"]: _show_run_summary()
+		if summary_open and "--capture-export-report" in OS.get_cmdline_user_args():
+			_export_run_report()
+			assert(not report_folder.is_empty(),"L’export de contrôle doit réussir.")
+			print("RUN_REPORT_FOLDER=" + report_folder)
 		if capture_state in ["inspection","boss_inspection"]:
 			var target: Dictionary = {}
 			for enemy in model.enemies:
@@ -497,8 +505,29 @@ func _build_run_summary(screen: Control) -> void:
 	for index in range(3):
 		summary_bonuses.append(_label(panel,"",Vector2(650,502+30*index),Vector2(298,28),13,Color("bbcbbf")))
 		summary_bonuses[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	summary_close = _button(panel,"Fermer",Rect2(404,614,164,32),_close_run_summary)
+	report_status = _label(panel,"",Vector2(24,600),Vector2(924,18),12,Color("bbcbbf"))
+	report_status.mouse_filter = Control.MOUSE_FILTER_STOP
+	report_button = _button(panel,"Exporter le rapport",Rect2(24,622,240,30),_export_run_report)
+	report_button.tooltip_text = "Enregistrer localement les vagues, bonus proposés et décisions de cette partie."
+	summary_close = _button(panel,"Fermer",Rect2(784,622,164,30),_close_run_summary)
 	summary_panel.visible = false
+
+func _export_run_report() -> void:
+	if not summary_open or model.phase not in ["victory","defeat"]: return
+	if not report_folder.is_empty():
+		var error: int = OS.shell_open(report_folder)
+		if error != OK: report_status.text = "Ouverture impossible. Survolez ce message pour lire le chemin du dossier."
+		return
+	var result: Dictionary = RunReport.export_local(model)
+	if result.ok:
+		report_folder = result.folder
+		report_status.text = "Rapport enregistré sur ce PC : rapport.md et rapport.json."
+		report_status.tooltip_text = report_folder
+		report_button.text = "Ouvrir le dossier du rapport"
+		report_button.tooltip_text = "Ouvrir le dossier local contenant rapport.md et rapport.json."
+	else:
+		report_status.text = "Export impossible. Survolez ce message pour lire le détail."
+		report_status.tooltip_text = result.error
 
 func _show_run_summary() -> void:
 	if model.phase not in ["victory","defeat"] or overview_open or pending_slot >= 0: return
@@ -808,6 +837,11 @@ func _reset() -> void:
 	bonus_contexts.assign(["","",""])
 	for scroll in bonus_impact_scrollers: scroll.scroll_vertical = 0
 	model.reset()
+	report_folder = ""
+	report_status.text = ""
+	report_status.tooltip_text = ""
+	report_button.text = "Exporter le rapport"
+	report_button.tooltip_text = "Enregistrer localement les vagues, bonus proposés et décisions de cette partie."
 	choosing_faction = true
 	speed = 1.0
 	selected = -1
