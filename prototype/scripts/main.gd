@@ -630,6 +630,33 @@ func _effect_text(stats: Dictionary, type: int) -> String:
 		return "Malédiction : %s dégâts à +1 s puis +2 s, même hors portée." % _number(stats.curse_damage)
 	return ""
 
+func _recruit_role(type: int) -> String:
+	return ["Tirs rapides sur une cible", "Longue portée, tirs espacés", "Explosion autour de la cible", "Rebonds entre ennemis proches", "Explosion contre les groupes", "Dégâts immédiats puis malédiction"][type]
+
+func _recruit_effect(stats: Dictionary, type: int) -> String:
+	if type in [2,4]:
+		return "Explosion : %s dégâts sur jusqu’à %d autres ennemis proches." % [_number(stats.secondary_damage), stats.secondary_cap]
+	if type == 3:
+		return "Rebond : %s dégâts sur jusqu’à %d autre ennemi proche." % [_number(stats.secondary_damage), stats.secondary_cap]
+	if type == 5:
+		return "Malédiction : %s dégâts après 1 s, puis %s après 2 s, même hors portée." % [_number(stats.curse_damage), _number(stats.curse_damage)]
+	return "Chaque attaque touche un seul ennemi."
+
+func _recruit_tooltip(type: int, error: String) -> String:
+	var lines: Array[String] = [Model.ROSTER[type].name + " · " + _recruit_role(type)]
+	var stats: Dictionary = model.purchase_preview_stats(selected,type)
+	if not stats.is_empty():
+		lines.append("Valeurs prévues à cet emplacement, bonus et synergies actuels inclus.")
+		lines.append("%s dégâts directs · Une attaque toutes les %s s · Portée : %s" % [_number(stats.damage),_number(stats.interval),_number(stats.range)])
+		lines.append(_recruit_effect(stats,type))
+		if type in [2,3,4]: lines.append("%s : strictement moins de %s sur la carte." % ["Distance de rebond" if type == 3 else "Rayon de l’explosion",_number(stats.radius)])
+		if type == 5: lines.append("Un nouveau tir de ce chaman renouvelle sa malédiction ; deux chamans conservent leurs effets séparés.")
+		lines.append("La cible principale est l’ennemi à portée le plus avancé vers la forteresse.")
+		lines.append("%d or · %d/2 exemplaires recrutés" % [model.purchase_cost(type),model.count_type(type)])
+		if error.is_empty(): lines.append("Cliquez pour acheter.")
+	if not error.is_empty(): lines.append("Achat impossible : " + error)
+	return "\n".join(lines)
+
 func _panel(parent: Control, rectangle: Rect2) -> Panel:
 	var panel := Panel.new()
 	panel.position = rectangle.position
@@ -782,9 +809,9 @@ func _refresh_purchase_preview() -> void:
 	var stats: Dictionary = map_view.purchase_preview
 	if stats.is_empty(): return
 	title_label.text = "E%d · APERÇU AVANT ACHAT · %s · NIVEAU 1" % [selected+1, stats.name.to_upper()]
-	details_label.text = "Portée prévue : %s · Prix : %d or\nRoute bleue : portion du chemin à portée de cette unité." % [_number(stats.range), model.purchase_cost(type)]
+	details_label.text = "Dégâts : %s · Une attaque toutes les %s s · Portée : %s · Prix : %d or\n%s" % [_number(stats.damage),_number(stats.interval),_number(stats.range),model.purchase_cost(type),_recruit_effect(stats,type)]
 	var error: String = model.purchase_error(selected, type)
-	hint_label.text = "Aperçu sans achat · Cliquez sur le bouton pour recruter." if error.is_empty() else "Aperçu sans achat · " + error
+	hint_label.text = _recruit_role(type) + " · Route bleue : chemin à portée · Cliquez pour recruter." if error.is_empty() else "Aperçu sans achat · " + error
 
 func _sell() -> void:
 	if pending_slot >= 0 or overview_open:
@@ -845,8 +872,9 @@ func _update_interface() -> void:
 		var offer: Dictionary = Model.ROSTER[actual_type]
 		button.visible = not occupied
 		button.text = "%s · %d or  (%d/2)" % [offer.get("short_name", offer.name), model.purchase_cost(actual_type), model.count_type(actual_type)]
-		button.tooltip_text = model.purchase_error(selected, actual_type)
-		button.disabled = choosing_faction or not button.tooltip_text.is_empty()
+		var purchase_error: String = model.purchase_error(selected, actual_type)
+		button.tooltip_text = _recruit_tooltip(actual_type,purchase_error)
+		button.disabled = choosing_faction or not purchase_error.is_empty()
 	if selected < 0:
 		title_label.text = "CONSTRUIRE · " + ("ALLIANCE" if model.faction == 0 else "HORDE")
 		details_label.text = "Choisissez un emplacement sur la carte.\nLes défenseurs du premier essai commencent au niveau 1."
@@ -865,9 +893,8 @@ func _update_interface() -> void:
 		upgrade_button.disabled = pending_slot >= 0 or not upgrade_button.tooltip_text.is_empty()
 		sell_button.text = "Vendre · %d or" % model.refund(selected)
 	else:
-		var slot: Vector2 = Model.SLOTS[selected]
 		title_label.text = "E%d · EMPLACEMENT LIBRE" % (selected + 1)
-		details_label.text = "Position logique (%s ; %s) · Un seul défenseur par emplacement.\nDeux exemplaires maximum par type dans votre faction." % [_number(slot.x), _number(slot.y)]
+		details_label.text = "Un défenseur par emplacement · Deux exemplaires maximum par type.\nSurvolez les recrues pour comparer leurs attaques et leur portée."
 		if model.can_build(): hint_label.text = "Survolez un défenseur pour voir sa portée avant l’achat."
 	if model.active:
 		hint_label.text = "Les tirs sont automatiques. Vous pouvez inspecter les unités et changer la vitesse."

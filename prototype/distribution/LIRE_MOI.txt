@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.30 — 23 octobre 2026
+Version : 0.31 — 24 octobre 2026
 
 JOUER
 
@@ -77,3 +77,9 @@ LIRE LES COMBATS
 Les explosions du mage sont bleues, celles du sapeur orange, avec un contour au sol.
 Les ricochets verts du lanceur de haches indiquent leur sens par une flèche.
 Un losange violet au-dessus de la tête signale une malédiction encore active.
+
+COMPARER LES RECRUES
+Avant achat, survolez une recrue pour voir son rôle, ses dégâts, sa cadence,
+sa portée et son prix. Ces valeurs incluent les bonus et synergies actuels.
+La seconde ligne explique son effet particulier. Attendez un instant pour
+lire l’infobulle complète. Le clic est nécessaire pour recruter.

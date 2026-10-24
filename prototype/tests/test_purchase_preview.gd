@@ -87,6 +87,36 @@ func run_checks() -> void:
 		scene.buy_buttons[1].mouse_entered.emit()
 		check(scene.map_view.purchase_preview.is_empty(),"Pas d'aperçu de recrutement en combat")
 		scene.free()
+	# L'aide de recrutement suit les vraies valeurs et n'affecte pas la disponibilité.
+	for faction in range(2):
+		for boosted in [false,true]:
+			var help_scene = Main.new(); root.add_child(help_scene); help_scene.set_process(false); help_scene._choose_faction(faction)
+			help_scene.selected = 3; help_scene.map_view.selected = 3
+			if boosted: help_scene.model.bonuses.assign([0,1,2,3,4,10])
+			help_scene._update_interface()
+			for offer in range(3):
+				var type: int = faction*3+offer
+				var before_help: Array = snapshot(help_scene.model)
+				var expected: Dictionary = help_scene.model.purchase_preview_stats(3,type)
+				help_scene.buy_buttons[offer].mouse_entered.emit()
+				var tooltip: String = help_scene.buy_buttons[offer].tooltip_text
+				check(not help_scene.buy_buttons[offer].disabled and tooltip.contains("Cliquez pour acheter"),"L'aide informative ne désactive pas un achat disponible")
+				check(help_scene.details_label.text.contains("Dégâts : "+help_scene._number(expected.damage)) and help_scene.details_label.text.contains("les "+help_scene._number(expected.interval)+" s"),"Dégâts et cadence affichés suivent les bonus effectifs")
+				check(tooltip.contains("Portée : "+help_scene._number(expected.range)) and help_scene.details_label.text.contains("Prix : %d or" % help_scene.model.purchase_cost(type)),"Portée et prix réduits suivent l'aperçu effectif")
+				check(tooltip.contains(Model.ROSTER[type].name) and (faction == 0 or not tooltip.to_lower().contains("mage")),"L'aide nomme le bon défenseur de la bonne faction")
+				var text_font: Font = help_scene.details_label.get_theme_font("font")
+				var fits: bool = true
+				for line in help_scene.details_label.text.split("\n"):
+					fits = fits and text_font.get_string_size(line,HORIZONTAL_ALIGNMENT_LEFT,-1,14).x <= help_scene.details_label.size.x
+				check(fits,"Les deux lignes de comparaison tiennent dans le panneau")
+				check(text_font.get_string_size(help_scene.hint_label.text,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x <= help_scene.hint_label.size.x,"Rôle et indication de portée tiennent dans leur ligne")
+				if type in [2,3,4]: check(tooltip.contains("jusqu’à") and tooltip.contains(help_scene._number(expected.radius)),"Plafond de victimes et limite de rayon explicités")
+				if type == 5: check(tooltip.contains("renouvelle") and tooltip.contains("séparés"),"Renouvellement et sources de malédiction explicités")
+				check(snapshot(help_scene.model) == before_help,"Survol et génération de l'aide ne dépensent et ne tirent rien")
+				help_scene.buy_buttons[offer].mouse_exited.emit()
+			help_scene.model.gold = 0; help_scene._update_interface()
+			check(help_scene.buy_buttons[0].disabled and help_scene.buy_buttons[0].tooltip_text.contains("Or insuffisant") and not help_scene.buy_buttons[0].tooltip_text.contains("Cliquez pour acheter"),"Aide d'un achat impossible sans invitation contradictoire")
+			help_scene.free()
 	var scene = Main.new(); root.add_child(scene); scene.set_process(false); scene._choose_faction(0)
 	scene.selected = 3; scene.map_view.selected = 3; scene.model.phase = "finished"; scene.autoplay_started = true
 	scene.buy_buttons[0].mouse_entered.emit(); scene._process(1)

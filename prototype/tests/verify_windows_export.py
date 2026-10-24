@@ -50,6 +50,8 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('enemy_inspection','inspection','horde'),('boss_inspection','boss_inspection','alliance'),
        ('upgrade_comparison','upgrade',None),('specialisation_preview','specialisation',None),
        ('alliance_purchase','purchase','alliance'),('horde_purchase','purchase','horde'),
+       ('alliance_crossbow_purchase','purchase','alliance'),('alliance_mage_purchase','purchase','alliance'),
+       ('horde_sapper_purchase','purchase','horde'),('horde_shaman_purchase','purchase','horde'),
        ('alliance_synergies','campaign','alliance'),('horde_synergies','campaign','horde'),
        ('alliance_victory','victory','alliance'),('horde_victory','victory','horde')]
 for name,state,faction in cases:
@@ -61,6 +63,8 @@ for name,state,faction in cases:
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
         if state=='effects': command+=['--capture-type='+str({'effects_mage':2,'effects_troll':3,'effects_sapper':4,'effects_shaman':5}[name])]
+        if name in ['alliance_crossbow_purchase','alliance_mage_purchase','horde_sapper_purchase','horde_shaman_purchase']:
+            command+=['--capture-type='+str({'alliance_crossbow_purchase':1,'alliance_mage_purchase':2,'horde_sapper_purchase':4,'horde_shaman_purchase':5}[name])]
     completed=subprocess.run(command,cwd=folder,capture_output=True,text=True,encoding='utf-8',errors='replace',startupinfo=startup,timeout=30)
     text=completed.stdout+completed.stderr+(log.read_text(encoding='utf-8') if log.exists() else '')
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
