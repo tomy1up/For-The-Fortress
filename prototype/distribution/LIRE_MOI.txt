@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.31 — 24 octobre 2026
+Version : 0.32 — 24 octobre 2026
 
 JOUER
 
@@ -83,3 +83,8 @@ Avant achat, survolez une recrue pour voir son rôle, ses dégâts, sa cadence,
 sa portée et son prix. Ces valeurs incluent les bonus et synergies actuels.
 La seconde ligne explique son effet particulier. Attendez un instant pour
 lire l’infobulle complète. Le clic est nécessaire pour recruter.
+
+PERCÉES ENNEMIES
+Quand des ennemis atteignent la forteresse, un signal indique les PV perdus
+et leur nombre. Le compteur de vie change brièvement de couleur.
+Ce signal reste visible 2,5 secondes, également à vitesse ×2.

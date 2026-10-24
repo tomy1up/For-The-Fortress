@@ -3,6 +3,7 @@ extends Node2D
 const Model = preload("res://scripts/valley_model.gd")
 const MapView = preload("res://scripts/valley_view.gd")
 const INTER_WAVE_SECONDS: float = 30.0
+const BREACH_NOTICE_SECONDS: float = 2.5
 var model = Model.new()
 var map_view = MapView.new()
 var speed: float = 1.0
@@ -84,6 +85,7 @@ var forecast_reward: Label
 var forecast_note: Label
 var forecast_wave: int = -1
 var forecast_data: Dictionary = {}
+var breach_remaining: float = 0.0
 
 func _ready() -> void:
 	map_view.model = model
@@ -167,6 +169,13 @@ func _ready() -> void:
 			assert(found, "La capture doit montrer un effet réellement résolu.")
 			selected = 1
 			map_view.selected = 1
+		if capture_state == "breach":
+			model.reset()
+			model.select_faction(capture_faction)
+			selected = -1
+			map_view.selected = -1
+			_start()
+			_process(28.0) # Première arrivée réelle sans défenseurs, budget normal.
 		set_process(false)
 		if capture_state in ["finished","forecast","forecast_boss"]: autoplay_started = true
 		_update_interface()
@@ -191,8 +200,17 @@ func _ready() -> void:
 		get_tree().quit(error)
 
 func _process(delta: float) -> void:
+	breach_remaining = maxf(0.0,breach_remaining-delta)
+	if breach_remaining <= 0.0: map_view.breach_feedback = {}
 	var was_active: bool = model.active
+	var hp_before: int = model.fortress_hp
+	var escaped_before: int = model.total_escaped
 	model.advance(delta * speed)
+	var passed: int = model.total_escaped-escaped_before
+	var lost: int = hp_before-model.fortress_hp
+	if passed > 0 and lost > 0:
+		breach_remaining = BREACH_NOTICE_SECONDS
+		map_view.breach_feedback = {"count":passed,"damage":lost}
 	_sync_countdown()
 	# Une fin de combat arme le délai complet, même après une image très longue.
 	if not was_active and model.phase == "finished" and countdown_remaining >= 0.0 and not _countdown_paused():
@@ -705,7 +723,10 @@ func _start() -> void:
 	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open or summary_open:
 		return
 	if model.phase == "finished": model.prepare_next_wave()
-	if model.start(): autoplay_started = true
+	if model.start():
+		autoplay_started = true
+		breach_remaining = 0.0
+		map_view.breach_feedback = {}
 	_update_interface()
 
 func _toggle_speed() -> void:
@@ -719,6 +740,8 @@ func _reset() -> void:
 	autoplay_started = false
 	countdown_wave = -1
 	countdown_remaining = -1.0
+	breach_remaining = 0.0
+	map_view.breach_feedback = {}
 	model.reset()
 	choosing_faction = true
 	speed = 1.0
@@ -829,6 +852,7 @@ func _update_interface() -> void:
 	reset_button.size.x = 112 if terminal else 234
 	reset_button.text = "Rejouer" if terminal else "Nouvel essai"
 	hp_label.text = "FORTERESSE   %d / %d PV" % [model.fortress_hp,model.max_hp]
+	hp_label.add_theme_color_override("font_color",Color("ef9b89") if breach_remaining > 0.0 else Color("e2d5ad"))
 	gold_label.text = "OR DISPONIBLE     %d" % model.gold
 	faction_panel.visible = choosing_faction
 	faction_label.text = "CHOIX DE FACTION" if choosing_faction else ("ALLIANCE" if model.faction == 0 else "HORDE") + "  /  VAGUE %d SUR 10" % model.wave

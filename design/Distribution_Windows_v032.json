@@ -1,0 +1,176 @@
+{
+  "archive_sha256": "caa8ccd9a7853362f7b60e215a37ed9c6ba1ce11fc1ac04fb43b123b9a548aee",
+  "executable_sha256": "96de676b8d3f9cfa26ceb6f3864325ccb7e00e6639f933a01bc2a646b4b610bf",
+  "files": [
+    "For_the_Fortress_v0.32_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.32_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.32_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.32_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.32_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "fortress_breach",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_mage",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_troll",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_sapper",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_shaman",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "wave_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "victory_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "defeat_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "upgrade_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "specialisation_preview",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_crossbow_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_mage_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_sapper_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_shaman_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Signal de première arrivée Horde inspecté dans le binaire : perte de 1 PV, un ennemi passé, forteresse encadrée et compteur de PV coloré. Scène au budget normal sans défenseurs, aucune arrivée fictive.",
+  "version": "0.32",
+  "date": "2026-10-24",
+  "inter_wave_seconds": 30,
+  "regression_checks": 2822,
+  "breach_feedback_checks": 41,
+  "breach_notice_real_seconds": 2.5,
+  "archive_bytes": 39360710,
+  "source_manifest": {
+    "version": "0.32",
+    "date": "2026-10-24",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "96de676b8d3f9cfa26ceb6f3864325ccb7e00e6639f933a01bc2a646b4b610bf",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "24b479d72559d9da444f8d263b3135addc0d643ae1f1c0f11ea7557285aed513",
+      "export_presets.cfg": "91c97ab1f41a091350aebf58be40052903bad293687b91e1d5f43b894e45ceda",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "53e1e712de7ef5201e633bba72cf330a2eb608ce4d0925efea10225135c0f4c7",
+      "scripts/valley_model.gd": "6106d20d8ead7150f05ed1f758d675b98b10035ececd06b8bdf8375b0df4bc9c",
+      "scripts/valley_view.gd": "4c7e3ccd21578b60f3f8ca741355ae0b4e74ad75d0ba0c04960636343d8eb869",
+      "scripts/campaign_data.gd": "e866f322fd3ffe6b4e0ba627ebaedbe775b56aa805a6ee134d91faf3df482206",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  }
+}

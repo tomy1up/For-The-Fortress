@@ -152,3 +152,7 @@ Explosions projetées au sol, palette distincte mage/sapeur, ricochets fléchés
 ## v0.31 — Aide au recrutement, 24 octobre 2026
 
 Le survol et le focus des recrues affichent attaques, rôle, effets et prix effectifs. Les infobulles complètent le ciblage et les limites des effets ; le refus d’achat reste distinct du contenu informatif. 2 781 contrôles réussis, dont 96 nouveaux ; 26 lancements du paquet Windows contrôlés. [Détail de la réalisation](Aide_recrutement_v031.md).
+
+## v0.32 — Signal des percées, 24 octobre 2026
+
+Le contrôleur compare les arrivées et PV avant/après l’avance du modèle. La vue affiche les pertes réelles pendant 2,5 secondes réelles, sans modifier le combat ou le délai. 2 822 contrôles réussis, dont 41 ciblés ; 27 lancements Windows contrôlés. [Détail de la réalisation](Signal_percees_v032.md).

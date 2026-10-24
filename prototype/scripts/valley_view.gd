@@ -11,6 +11,7 @@ var selected: int = -1
 var purchase_preview: Dictionary = {}
 var upgrade_preview: Dictionary = {}
 var inspected_enemy_id: int = -1
+var breach_feedback: Dictionary = {}
 var font: Font = ThemeDB.fallback_font
 
 static func project(point: Vector2) -> Vector2:
@@ -179,6 +180,21 @@ func _draw() -> void:
 		if model.active:
 			for shot in model.shots:
 				_draw_impact(shot, model.elapsed - shot.time)
+	if not breach_feedback.is_empty(): _draw_breach_feedback()
+
+static func breach_text(count: int, damage: int) -> String:
+	return "−%d PV · %d ennemi%s passé%s" % [damage,count,"" if count == 1 else "s","" if count == 1 else "s"]
+
+func _draw_breach_feedback() -> void:
+	var center: Vector2 = project(Vector2(17,6)) + Vector2(52,26)
+	var warning := Color("ef9b89")
+	draw_rect(Rect2(center+Vector2(-42,-72),Vector2(84,92)),Color(warning,0.75),false,2)
+	var text: String = breach_text(breach_feedback.count,breach_feedback.damage)
+	var width: float = font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,15).x+24
+	var box := Rect2(center+Vector2(-width/2.0,-110),Vector2(width,30))
+	draw_rect(box,Color("35241f"))
+	draw_rect(box,warning,false,1)
+	draw_string(font,box.position+Vector2(12,21),text,HORIZONTAL_ALIGNMENT_LEFT,-1,15,warning)
 
 func _draw_defender(center: Vector2, type: int, level: int = 1, branch: int = -1) -> void:
 	var color: Color = [Color("6f9c6b"), Color("b79a64"), Color("668db5"), Color("72a392"), Color("b8a16a"), Color("a782b7")][type]

@@ -43,6 +43,7 @@ startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW
 startup.wShowWindow=0
 results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
+       ('fortress_breach','breach','horde'),
        ('effects_mage','effects','alliance'),('effects_troll','effects','horde'),
        ('effects_sapper','effects','horde'),('effects_shaman','effects','horde'),
        ('wave_forecast','forecast','alliance'),('boss_forecast','forecast_boss','horde'),
