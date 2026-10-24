@@ -1,0 +1,190 @@
+{
+  "archive_sha256": "526cec867ddd4e9738261f8e48d3edd4576ee6f34b0497b05a77d2bc308e2f6f",
+  "executable_sha256": "4a6f14360f796d7819dd5019e68e885fdbef9d8b4540bf5897bc5816ff4076c2",
+  "files": [
+    "For_the_Fortress_v0.33_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.33_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.33_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.33_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.33_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "fortress_breach",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_alliance_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_horde_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_economy_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_mage",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_troll",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_sapper",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_shaman",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "wave_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "victory_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "defeat_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "upgrade_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "specialisation_preview",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_crossbow_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_mage_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_sapper_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_shaman_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Choix normal après vague 3 Alliance et trois scènes de comparaison inspectés dans le binaire : six défenseurs Alliance/Horde avec listes défilantes, PV et dégâts conditionnels ; économie et absence de bénéficiaire actuel. Les trois scènes imposées sont explicitement identifiées par leur titre, sans conclusion d’équilibrage.",
+  "version": "0.33",
+  "date": "2026-10-24",
+  "inter_wave_seconds": 30,
+  "regression_checks": 11574,
+  "bonus_preview_checks": 8752,
+  "archive_bytes": 39365285,
+  "source_manifest": {
+    "version": "0.33",
+    "date": "2026-10-24",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "4a6f14360f796d7819dd5019e68e885fdbef9d8b4540bf5897bc5816ff4076c2",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "2fc6e0a4df4c1452aec5501a22720ee1e924c2a94e0977b134b06d5815a554ae",
+      "export_presets.cfg": "5aa83c7b53a523e19cf6f48e203e116e945da367ad70c4fcac878b4f96b26800",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "623866b3a4c69586f1a97eece39ca82e33cca80bf157eda723503a60b92669fa",
+      "scripts/valley_model.gd": "96f3bab3b04e2f03d38a1bc39ef111d05f28acd56b93bcf433f5339b0a04f116",
+      "scripts/valley_view.gd": "4c7e3ccd21578b60f3f8ca741355ae0b4e74ad75d0ba0c04960636343d8eb869",
+      "scripts/campaign_data.gd": "e866f322fd3ffe6b4e0ba627ebaedbe775b56aa805a6ee134d91faf3df482206",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  }
+}

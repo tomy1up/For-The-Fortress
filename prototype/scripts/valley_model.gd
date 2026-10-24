@@ -235,31 +235,37 @@ func upgrade_preview_stats(slot: int, branch: int = -1) -> Dictionary:
 	return get_stats(slot, -1, candidate)
 
 func get_stats(slot: int, branch_override: int = -1, candidate: Dictionary = {}) -> Dictionary:
+	return _stats_with_bonuses(slot,branch_override,candidate,bonuses)
+
+func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary, active_bonuses: Array) -> Dictionary:
 	if slot < 0 or slot >= defenders.size(): return {}
 	var defender: Dictionary = defenders[slot] if candidate.is_empty() else candidate
 	if defender.is_empty(): return {}
 	var level: int = 4 if branch_override >= 0 else defender.get("level",1)
 	var stats: Dictionary = stats_for(defender.type,level,branch_override if branch_override >= 0 else defender.get("branch",-1))
 	var synergy: Dictionary = synergy_effects(slot,branch_override,candidate)
-	var common: float = (0.10 if 0 in bonuses else 0.0) + (0.15 if 6 in bonuses and level <= 2 else 0.0) + (0.12 if 7 in bonuses and level >= 3 else 0.0)
+	var common: float = (0.10 if 0 in active_bonuses else 0.0) + (0.15 if 6 in active_bonuses and level <= 2 else 0.0) + (0.12 if 7 in active_bonuses and level >= 3 else 0.0)
 	stats.reference_damage = stats.damage
 	stats.reference_secondary = stats.secondary_damage
 	stats.reference_curse = stats.curse_damage
-	stats.direct_bonus = common + synergy.direct + (0.15 if 5 in bonuses else 0.0)
-	stats.secondary_bonus = common + synergy.secondary + (0.20 if 3 in bonuses and defender.type in [2,3,4] else 0.0)
+	stats.direct_bonus = common + synergy.direct + (0.15 if 5 in active_bonuses else 0.0)
+	stats.secondary_bonus = common + synergy.secondary + (0.20 if 3 in active_bonuses and defender.type in [2,3,4] else 0.0)
 	stats.curse_bonus = common + synergy.curse
 	stats.damage = stats.reference_damage * (1.0+stats.direct_bonus)
 	stats.secondary_damage = stats.reference_secondary * (1.0+stats.secondary_bonus)
 	stats.curse_damage = stats.reference_curse * (1.0+stats.curse_bonus)
-	stats.range += synergy.range + (0.5 if 2 in bonuses else 0.0)
-	if 1 in bonuses and defender.type != 5: stats.interval /= 1.12
-	if 4 in bonuses and defender.type in [2,3,4]: stats.radius += 0.2
+	stats.range += synergy.range + (0.5 if 2 in active_bonuses else 0.0)
+	if 1 in active_bonuses and defender.type != 5: stats.interval /= 1.12
+	if 4 in active_bonuses and defender.type in [2,3,4]: stats.radius += 0.2
 	stats.synergies = synergy.codes
 	return stats
 
 func damage_for(stats: Dictionary, component: String, victim: Dictionary) -> float:
+	return _damage_with_bonuses(stats,component,victim,bonuses)
+
+func _damage_with_bonuses(stats: Dictionary, component: String, victim: Dictionary, active_bonuses: Array) -> float:
 	var reference: float = stats[{"direct":"reference_damage","secondary":"reference_secondary","curse":"reference_curse"}[component]]
-	var extra: float = 0.20 if 11 in bonuses and victim.type in [3,5,6,7] else 0.0
+	var extra: float = 0.20 if 11 in active_bonuses and victim.type in [3,5,6,7] else 0.0
 	return reference * (1.0+stats[component+"_bonus"]+extra)
 
 func _refresh_windows() -> void:
@@ -268,7 +274,39 @@ func _refresh_windows() -> void:
 			defenders[slot].windows = coverage_windows(SLOTS[slot],get_stats(slot).range)
 
 func purchase_cost(type: int) -> int:
-	return maxi(1,int(ceil(ROSTER[type].price * (0.9 if 10 in bonuses else 1.0))))
+	return _discounted_cost(ROSTER[type].price,10,bonuses)
+
+func _discounted_cost(base: float, discount_code: int, active_bonuses: Array) -> int:
+	return maxi(1,int(ceil(base * (0.9 if discount_code in active_bonuses else 1.0))))
+
+func bonus_preview(code: int) -> Dictionary:
+	# Lecture seule : aucun choix, soin, paiement, recalcul de fenêtres ou tirage.
+	if code < 0 or code >= Campaign.BONUSES.size() or code in bonuses: return {}
+	var projected: Array = bonuses.duplicate()
+	projected.append(code)
+	var units: Array[Dictionary] = []
+	for slot in range(defenders.size()):
+		if defenders[slot].is_empty(): continue
+		var before: Dictionary = get_stats(slot)
+		var after: Dictionary = _stats_with_bonuses(slot,-1,{},projected)
+		var large_before: Dictionary = {}
+		var large_after: Dictionary = {}
+		for component in ["direct","secondary","curse"]:
+			large_before[component] = damage_for(before,component,{"type":7})
+			large_after[component] = _damage_with_bonuses(after,component,{"type":7},projected)
+		var level: int = defenders[slot].level
+		units.append({"slot":slot,"type":defenders[slot].type,"before":before,"after":after,
+			"large_before":large_before,"large_after":large_after,
+			"upgrade_before":upgrade_cost(slot),"upgrade_after":_discounted_cost(Progression.UPGRADE_COSTS[level-1],9,projected) if level < 4 else 0})
+	var purchases: Array[Dictionary] = []
+	for type in available_types():
+		purchases.append({"type":type,"before":purchase_cost(type),"after":_discounted_cost(ROSTER[type].price,10,projected)})
+	var upgrades: Array[Dictionary] = []
+	for cost in Progression.UPGRADE_COSTS:
+		upgrades.append({"before":_discounted_cost(cost,9,bonuses),"after":_discounted_cost(cost,9,projected)})
+	return {"units":units,"purchases":purchases,"upgrades":upgrades,
+		"hp_before":fortress_hp,"hp_after":fortress_hp+(4 if code == 8 else 0),
+		"max_before":max_hp,"max_after":max_hp+(4 if code == 8 else 0)}
 
 func prepare_next_wave() -> bool:
 	if phase != "finished" or wave >= 10: return false
@@ -311,7 +349,7 @@ func upgrade_cost(slot: int) -> int:
 	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty():
 		return 0
 	var level: int = defenders[slot].get("level", 1)
-	return maxi(1,int(ceil(Progression.UPGRADE_COSTS[level-1] * (0.9 if 9 in bonuses else 1.0)))) if level < 4 else 0
+	return _discounted_cost(Progression.UPGRADE_COSTS[level-1],9,bonuses) if level < 4 else 0
 
 func upgrade_error(slot: int, branch: int = -1) -> String:
 	if not can_build():

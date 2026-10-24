@@ -43,6 +43,10 @@ var focused_upgrade: bool = false
 var hovered_branch: int = -1
 var focused_branch: int = -1
 var bonus_panel: ColorRect
+var bonus_body: Panel
+var bonus_impacts: Array[Label] = []
+var bonus_impact_titles: Array[Label] = []
+var bonus_impact_scrollers: Array[ScrollContainer] = []
 var bonus_title: Label
 var bonus_subtitle: Label
 var bonus_names: Array[Label] = []
@@ -176,6 +180,17 @@ func _ready() -> void:
 			map_view.selected = -1
 			_start()
 			_process(28.0) # Première arrivée réelle sans défenseurs, budget normal.
+		if capture_state == "bonus_preview":
+			model.reset(); model.select_faction(capture_faction)
+			model.gold = 10000 # Fixture pour vérifier six défenseurs, jamais en jeu normal.
+			for slot in range(6):
+				model.buy(slot,capture_faction*3+slot%3)
+				if capture_type == 0:
+					model.upgrade(slot); model.upgrade(slot); model.upgrade(slot,slot%2)
+			model.fortress_hp = 13
+			model.wave = 9
+			model.phase = "bonus"
+			model.bonus_offer.assign([0,8,11] if capture_type == 0 else [9,10,7])
 		set_process(false)
 		if capture_state in ["finished","forecast","forecast_boss"]: autoplay_started = true
 		_update_interface()
@@ -193,6 +208,7 @@ func _ready() -> void:
 			faction_label.text = "CATALOGUE ENNEMI · CONTRÔLE"
 			status_label.text = "Profils de référence\nVue de contrôle"
 		if capture_state == "effects": faction_label.text = "CONTRÔLE EFFETS · BUDGET IMPOSÉ"
+		if capture_state == "bonus_preview": bonus_title.text = "CONTRÔLE BONUS · BUDGET IMPOSÉ"
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
@@ -976,6 +992,7 @@ func _build_bonus_selector(screen: Control) -> void:
 	bonus_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	screen.add_child(bonus_panel)
 	var panel: Panel = _panel(bonus_panel,Rect2(100,166,1080,468))
+	bonus_body = panel
 	bonus_title = _label(panel,"",Vector2(28,24),Vector2(1024,40),26,Color("e0dbbf"))
 	bonus_subtitle = _label(panel,"",Vector2(28,78),Vector2(1024,46),15,Color("aabbb0"))
 	bonus_subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -985,7 +1002,22 @@ func _build_bonus_selector(screen: Control) -> void:
 		bonus_names[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		bonus_descriptions.append(_label(panel,"",Vector2(x,216),Vector2(320,108),16,Color("bbcbbf")))
 		bonus_descriptions[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		bonus_buttons.append(_button(panel,"Choisir ce bonus",Rect2(x,354,328,48),_choose_bonus.bind(index)))
+		bonus_impact_titles.append(_label(panel,"Avec votre défense actuelle",Vector2(x,318),Vector2(328,24),14,Color("cdb47e")))
+		var scroll := ScrollContainer.new()
+		scroll.position = Vector2(x,346)
+		scroll.size = Vector2(328,168)
+		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		panel.add_child(scroll)
+		bonus_impact_scrollers.append(scroll)
+		var impact := Label.new()
+		impact.custom_minimum_size.x = 302
+		impact.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		impact.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		impact.add_theme_font_size_override("font_size",13)
+		impact.add_theme_color_override("font_color",Color("bbcbbf"))
+		scroll.add_child(impact)
+		bonus_impacts.append(impact)
+		bonus_buttons.append(_button(panel,"Choisir ce bonus",Rect2(x,532,328,48),_choose_bonus.bind(index)))
 	bonus_close = _button(panel,"Fermer",Rect2(442,408,196,36),_close_bonuses)
 
 func _show_bonuses() -> void:
@@ -1007,15 +1039,63 @@ func _update_bonus_panel() -> void:
 	var choosing: bool = model.phase == "bonus"
 	bonus_panel.visible = choosing or overview_open
 	if not bonus_panel.visible: return
+	bonus_body.position.y = 95 if choosing else 166
+	bonus_body.size.y = 610 if choosing else 468
 	bonus_title.text = "Choisissez une amélioration · Vague %d terminée" % model.wave if choosing else "Bonus acquis pour cette partie"
 	bonus_subtitle.text = "Choisissez sans limite de temps. Le décompte de 30 s commence après votre choix. Les deux autres offres pourront revenir." if choosing else "Les effets concernent aussi les futures recrues selon leurs conditions. Aucun bonus acquis." if model.bonuses.is_empty() else "Les effets concernent aussi les futures recrues selon leurs conditions."
 	var entries: Array[int] = model.bonus_offer if choosing else model.bonuses
 	for index in range(3):
+		bonus_names[index].position.y = 138 if choosing else 148
+		bonus_descriptions[index].position.y = 204 if choosing else 216
 		bonus_names[index].visible = index < entries.size()
 		bonus_descriptions[index].visible = index < entries.size()
+		bonus_impact_titles[index].visible = choosing and index < entries.size()
+		bonus_impact_scrollers[index].visible = choosing and index < entries.size()
 		bonus_buttons[index].visible = choosing and index < entries.size()
 		if index < entries.size():
 			var data: Dictionary = Model.Campaign.BONUSES[entries[index]]
 			bonus_names[index].text = data.code+" · "+data.name
 			bonus_descriptions[index].text = data.faction_descriptions[model.faction] if data.has("faction_descriptions") else data.description
+			if choosing:
+				var impact_text: String = _bonus_impact_text(entries[index])
+				if bonus_impacts[index].text != impact_text:
+					bonus_impacts[index].text = impact_text
+					bonus_impact_scrollers[index].scroll_vertical = 0
 	bonus_close.visible = not choosing
+
+func _bonus_impact_text(code: int) -> String:
+	var preview: Dictionary = model.bonus_preview(code)
+	if preview.is_empty(): return "Ce bonus est déjà actif."
+	if code == 8:
+		return "PV actuels : %d → %d\nPV maximum : %d → %d\n\nEffet immédiat, sans soin automatique ensuite." % [preview.hp_before,preview.hp_after,preview.max_before,preview.max_after]
+	var lines: Array[String] = []
+	if code == 9:
+		lines.append("Prochaines améliorations uniquement :")
+		for index in range(3):
+			lines.append("%s : %d → %d or" % [["Niveau 2","Niveau 3","Spécialisation"][index],preview.upgrades[index].before,preview.upgrades[index].after])
+		lines.append("Aucun remboursement des achats passés.")
+		return "\n".join(lines)
+	if code == 10:
+		for purchase in preview.purchases:
+			lines.append("%s :\n%d → %d or" % [Model.ROSTER[purchase.type].get("short_name",Model.ROSTER[purchase.type].name),purchase.before,purchase.after])
+		lines.append("Prochaines recrues uniquement.")
+		return "\n".join(lines)
+	if code == 11: lines.append("Contre Brutes, Colosses, Élites et boss uniquement :")
+	var affected: int = 0
+	for unit in preview.units:
+		var changes: Array[String] = []
+		if code == 11:
+			for component in ["direct","secondary","curse"]:
+				if not is_equal_approx(unit.large_before[component],unit.large_after[component]):
+					changes.append("%s : %s → %s" % [{"direct":"Dégâts directs","secondary":"Rebonds" if unit.type == 3 else "Explosion","curse":"Malédiction"}[component],_number(unit.large_before[component]),_number(unit.large_after[component])])
+		else:
+			for field in ["damage","secondary_damage","curse_damage","interval","range","radius"]:
+				if not is_equal_approx(unit.before[field],unit.after[field]):
+					var label: String = {"damage":"Dégâts directs","secondary_damage":"Rebonds" if unit.type == 3 else "Explosion","curse_damage":"Malédiction","interval":"Intervalle (s)","range":"Portée","radius":"Distance de rebond" if unit.type == 3 else "Rayon d’explosion"}[field]
+					changes.append("%s : %s → %s" % [label,_number(unit.before[field]),_number(unit.after[field])])
+		if changes.is_empty(): continue
+		affected += 1
+		lines.append("E%d · %s\n%s" % [unit.slot+1,Model.ROSTER[unit.type].get("short_name",Model.ROSTER[unit.type].name),"\n".join(changes)])
+	if affected == 0:
+		lines.append("Aucun défenseur actuel concerné.\nPeut servir aux futures recrues selon ses conditions.")
+	return "\n\n".join(lines)

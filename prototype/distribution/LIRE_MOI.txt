@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.32 — 24 octobre 2026
+Version : 0.33 — 24 octobre 2026
 
 JOUER
 
@@ -88,3 +88,9 @@ PERCÉES ENNEMIES
 Quand des ennemis atteignent la forteresse, un signal indique les PV perdus
 et leur nombre. Le compteur de vie change brièvement de couleur.
 Ce signal reste visible 2,5 secondes, également à vitesse ×2.
+
+CHOISIR UN BONUS
+Chaque offre indique ses effets sur votre défense actuelle, avant/après.
+Faites défiler la liste dans sa colonne si plusieurs défenseurs sont concernés.
+PV, réductions de prix et dégâts contre les grandes cibles sont distingués.
+La lecture ne valide rien : cliquez sur Choisir ce bonus quand vous êtes prêt.
