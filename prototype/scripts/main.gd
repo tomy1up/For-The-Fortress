@@ -1,9 +1,42 @@
 extends Node2D
 
+class LiveTooltipLabel extends Label:
+	var source: WeakRef
+	func _process(_delta: float) -> void:
+		var button: Object = source.get_ref()
+		if button == null: return
+		if button.tooltip_blocked:
+			hide()
+			if get_parent() is PopupPanel: get_parent().hide()
+			return
+		if text != button.tooltip_text:
+			text = button.tooltip_text
+			reset_size()
+			var popup: Node = get_parent()
+			if popup is PopupPanel: popup.size = Vector2i.ZERO
+
+class LiveTooltipButton extends Button:
+	var tooltip_blocked: bool = false
+	func _get_tooltip(_at_position: Vector2) -> String:
+		return "" if tooltip_blocked else tooltip_text
+	func _make_custom_tooltip(for_text: String) -> Object:
+		if for_text.is_empty(): return null
+		var content := LiveTooltipLabel.new()
+		content.source = weakref(self)
+		content.text = for_text
+		content.custom_minimum_size.x = 520
+		content.size.x = 520
+		content.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		content.add_theme_font_size_override("font_size",14)
+		content.add_theme_color_override("font_color",Color("d9e4d7"))
+		return content
+
 const Model = preload("res://scripts/valley_model.gd")
 const MapView = preload("res://scripts/valley_view.gd")
 const INTER_WAVE_SECONDS: float = 30.0
 const BREACH_NOTICE_SECONDS: float = 2.5
+# Temporaire, demandé pour le débogage. Retirer 10.0 après les essais.
+const COMBAT_SPEEDS: Array[float] = [1.0,2.0,10.0]
 var model = Model.new()
 var map_view = MapView.new()
 var speed: float = 1.0
@@ -47,6 +80,7 @@ var bonus_body: Panel
 var bonus_impacts: Array[Label] = []
 var bonus_impact_titles: Array[Label] = []
 var bonus_impact_scrollers: Array[ScrollContainer] = []
+var bonus_contexts: Array[String] = ["","",""]
 var bonus_title: Label
 var bonus_subtitle: Label
 var bonus_names: Array[Label] = []
@@ -192,6 +226,17 @@ func _ready() -> void:
 			model.phase = "bonus"
 			model.bonus_offer.assign([0,8,11] if capture_type == 0 else [9,10,7])
 			if capture_type == 2: model.bonus_offer.assign([1,3,4])
+		if capture_state == "defender_catalogue":
+			model.reset(); model.select_faction(capture_faction); model.gold = 10000
+			for slot in range(6):
+				model.buy(slot,capture_faction*3+slot%3)
+				for level in range([1,2,3,4,4,4][slot]-1): model.upgrade(slot,slot%2 if level == 2 else -1)
+			selected = 3; map_view.selected = 3
+		if capture_state == "debug_speed":
+			model.reset(); model.select_faction(capture_faction)
+			model.buy(0,capture_faction*3); model.buy(1,capture_faction*3+1)
+			selected = 1; map_view.selected = 1; speed = 10.0
+			_start(); _process(0.75)
 		set_process(false)
 		if capture_state in ["finished","forecast","forecast_boss"]: autoplay_started = true
 		_update_interface()
@@ -210,6 +255,7 @@ func _ready() -> void:
 			status_label.text = "Profils de référence\nVue de contrôle"
 		if capture_state == "effects": faction_label.text = "CONTRÔLE EFFETS · BUDGET IMPOSÉ"
 		if capture_state == "bonus_preview": bonus_title.text = "CONTRÔLE BONUS · BUDGET IMPOSÉ"
+		if capture_state == "defender_catalogue": faction_label.text = "DÉFENSEURS · BUDGET IMPOSÉ"
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
@@ -409,10 +455,10 @@ func _update_wave_forecast() -> void:
 		forecast_marks[index].color = MapView.enemy_color(group.type)
 		forecast_names[index].text = "%d × %s%s" % [group.count,group.name," · BOSS" if group.type == 7 else ""]
 		var fatal: bool = group.fortress_damage >= model.fortress_hp
-		forecast_details[index].text = "%d PV · Arrivée : −%d PV%s" % [group.hp,group.fortress_damage," · Fatale" if fatal else ""]
+		forecast_details[index].text = "%d PV · Forteresse : −%d PV%s" % [group.hp,group.fortress_damage," · Défaite" if fatal else ""]
 		forecast_details[index].add_theme_color_override("font_color",Color("ed9989") if fatal else Color("bbcbbf"))
-		forecast_rows[index].tooltip_text = "Groupe %d · %d × %s\n%d PV par ennemi\nPremière apparition : %s s après le départ\nDernière apparition : %s s après le départ\n%s\nArrivée : −%d PV par ennemi\nÉlimination : +%d or par ennemi" % [index+1,group.count,group.name,group.hp,_number(group.first_at),_number(group.last_at),"Ennemi unique." if group.count == 1 else "Un ennemi toutes les %s s." % _number(group.interval),group.fortress_damage,group.reward]
-		forecast_rows[index].tooltip_text += "\nHoraires et intervalles à vitesse ×1 ; divisés par deux en ×2."
+		forecast_rows[index].tooltip_text = "Groupe %d · %d × %s\n%d PV par ennemi\nPremière apparition : %s s après le départ\nDernière apparition : %s s après le départ\n%s\nSi un ennemi atteint la forteresse, elle perd %d PV.\nÉlimination : +%d or par ennemi" % [index+1,group.count,group.name,group.hp,_number(group.first_at),_number(group.last_at),"Ennemi unique." if group.count == 1 else "Un ennemi toutes les %s s." % _number(group.interval),group.fortress_damage,group.reward]
+		forecast_rows[index].tooltip_text += "\nHoraires et intervalles à vitesse ×1 ; divisés par 2 en ×2 et par 10 en ×10 debug."
 	var footer: int = 62+forecast_data.groups.size()*44
 	forecast_reward.position.y = footer
 	forecast_reward.text = "Si tous éliminés : +%d or" % forecast_data.income
@@ -476,7 +522,7 @@ func _army_description(army: Array) -> Array[String]:
 
 func _populate_run_summary() -> void:
 	summary_title.text = "Bilan de partie · " + ("Victoire" if model.phase == "victory" else "Défaite") + " · " + ("Alliance" if model.faction == 0 else "Horde")
-	summary_subtitle.text = "Forteresse : %d/%d PV · %d or restants · Survolez une ligne pour les unités et bonus de la vague.\nCombat cumulé : %s s simulées, hors préparation et choix ; le ×2 réduit le temps réel." % [model.fortress_hp,model.max_hp,model.gold,("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
+	summary_subtitle.text = "Forteresse : %d/%d PV · %d or restants · Survolez une ligne pour les unités et bonus de la vague.\nCombat cumulé : %s s simulées, hors préparation et choix ; la vitesse réduit le temps réel." % [model.fortress_hp,model.max_hp,model.gold,("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
 	var lost: int = 0
 	for index in range(10):
 		var record: Dictionary = {}
@@ -509,7 +555,7 @@ func _populate_run_summary() -> void:
 func _build_enemy_inspector(screen: Control) -> void:
 	enemy_prompt = _label(screen,"Survolez un ennemi pour l’inspecter.",Vector2(946,96),Vector2(310,22),12,Color("aabbb0"))
 	enemy_prompt.visible = false
-	enemy_inspector = _panel(screen,Rect2(946,96,310,166))
+	enemy_inspector = _panel(screen,Rect2(946,96,310,190))
 	enemy_name = _label(enemy_inspector,"",Vector2(14,10),Vector2(282,24),17,Color("e0dbbf"))
 	enemy_health = _label(enemy_inspector,"",Vector2(14,38),Vector2(282,22),15,Color("e0e7db"))
 	enemy_health_bar = ProgressBar.new()
@@ -524,9 +570,9 @@ func _build_enemy_inspector(screen: Control) -> void:
 		enemy_health_bar.add_theme_stylebox_override(key,style)
 	enemy_inspector.add_child(enemy_health_bar)
 	enemy_health_bar.size = Vector2(282,8) # Redimensionner après application des styles, sans la hauteur du thème par défaut.
-	enemy_threat = _label(enemy_inspector,"",Vector2(14,84),Vector2(282,22),14,Color("e0dbbf"))
-	enemy_reward = _label(enemy_inspector,"",Vector2(14,108),Vector2(282,22),14,Color("cdb47e"))
-	enemy_status = _label(enemy_inspector,"",Vector2(14,136),Vector2(282,18),12,Color("aabbb0"))
+	enemy_threat = _label(enemy_inspector,"",Vector2(14,84),Vector2(282,44),14,Color("e0dbbf"))
+	enemy_reward = _label(enemy_inspector,"",Vector2(14,132),Vector2(282,22),14,Color("cdb47e"))
+	enemy_status = _label(enemy_inspector,"",Vector2(14,160),Vector2(282,18),12,Color("aabbb0"))
 	enemy_inspector.visible = false
 
 func _update_enemy_inspector() -> void:
@@ -548,13 +594,13 @@ func _update_enemy_inspector() -> void:
 		enemy_health_bar.max_value = enemy.max_hp
 		enemy_health_bar.value = enemy.hp
 		var fatal: bool = enemy.fortress_damage >= model.fortress_hp
-		enemy_threat.text = "À l’arrivée : −%d PV%s" % [enemy.fortress_damage," · Défaite" if fatal else ""]
+		enemy_threat.text = "S’il atteint la forteresse,\nelle perd %d PV%s" % [enemy.fortress_damage," · Défaite" if fatal else ""]
 		enemy_threat.add_theme_color_override("font_color",Color("ed9989") if fatal else Color("e0dbbf"))
-		enemy_reward.text = "Élimination : +%d or" % enemy.reward
+		enemy_reward.text = "Éliminé : vous gagnez %d or." % enemy.reward
 		var cursed: bool = false
 		for curse in model.curses:
 			if curse.enemy_id == id: cursed = true; break
-		enemy_status.text = "Malédiction active · Combat en cours" if cursed else "Survol : lecture sans pause"
+		enemy_status.text = "Malédiction active · Combat en cours" if cursed else "Le combat continue pendant la lecture."
 		enemy_status.add_theme_color_override("font_color",Color("d3afe4") if cursed else Color("aabbb0"))
 		return
 
@@ -718,7 +764,7 @@ func _label(parent: Control, text: String, point: Vector2, extent: Vector2, font
 	return label
 
 func _button(parent: Control, text: String, rectangle: Rect2, action: Callable) -> Button:
-	var button := Button.new()
+	var button := LiveTooltipButton.new()
 	button.text = text
 	button.position = rectangle.position
 	button.size = rectangle.size
@@ -747,7 +793,7 @@ func _start() -> void:
 	_update_interface()
 
 func _toggle_speed() -> void:
-	speed = 2.0 if speed == 1.0 else 1.0
+	speed = COMBAT_SPEEDS[(COMBAT_SPEEDS.find(speed)+1)%COMBAT_SPEEDS.size()]
 	_update_interface()
 
 func _reset() -> void:
@@ -759,6 +805,8 @@ func _reset() -> void:
 	countdown_remaining = -1.0
 	breach_remaining = 0.0
 	map_view.breach_feedback = {}
+	bonus_contexts.assign(["","",""])
+	for scroll in bonus_impact_scrollers: scroll.scroll_vertical = 0
 	model.reset()
 	choosing_faction = true
 	speed = 1.0
@@ -862,6 +910,9 @@ func _sell() -> void:
 
 func _update_interface() -> void:
 	_sync_countdown()
+	var modal: bool = choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
+	for control in [start_button,speed_button,reset_button,sell_button,upgrade_button,bonus_summary_button,summary_button]+buy_buttons:
+		control.set("tooltip_blocked",modal)
 	var terminal: bool = model.phase in ["victory","defeat"]
 	summary_button.visible = terminal
 	summary_button.disabled = overview_open or pending_slot >= 0
@@ -881,11 +932,12 @@ func _update_interface() -> void:
 	var preview_wave: int = mini(10, model.wave+1 if model.phase == "finished" else model.wave)
 	var preview: Array[String] = []
 	for group in Model.Campaign.WAVES[preview_wave-1]:
-		preview.append("%d %s · intervalle %s s" % [group[1],Model.ENEMY_TYPES[group[0]].name,_number(group[2])])
-	start_button.tooltip_text = "Vague %d\n%s\n4 s entre la dernière apparition d’un groupe et la première du suivant.\nHoraires et intervalles à vitesse ×1 ; divisés par deux en ×2." % [preview_wave,"\n".join(preview)]
+		preview.append("%d %s · %s" % [group[1],Model.ENEMY_TYPES[group[0]].name,"ennemi unique" if group[1] == 1 else "intervalle %s s" % _number(group[2])])
+	start_button.tooltip_text = "Vague %d\n%s\n4 s entre la dernière apparition d’un groupe et la première du suivant.\nHoraires et intervalles à vitesse ×1 ; divisés par 2 en ×2 et par 10 en ×10 debug." % [preview_wave,"\n".join(preview)]
 	if countdown_remaining >= 0.0:
 		start_button.tooltip_text += "\nDépart automatique après le décompte. Cliquez pour lancer maintenant."
-	speed_button.text = "Vitesse ×%d" % int(speed)
+	speed_button.text = "Vitesse ×%d%s" % [int(speed)," · debug" if speed == 10.0 else ""]
+	speed_button.tooltip_text = "Alterner entre ×1, ×2 et ×10 (débogage temporaire).\nSeul le combat accélère ; les 30 secondes de préparation restent inchangées."
 	reset_button.disabled = model.active or pending_slot >= 0 or summary_open
 	reset_button.tooltip_text = "Terminez la vague avant de recommencer." if model.active else "Repartir avec 150 or et 20 PV."
 	match model.phase:
@@ -900,7 +952,7 @@ func _update_interface() -> void:
 	bonus_summary_button.text = "Bonus acquis · %d/3" % model.bonuses.size()
 	bonus_summary_button.disabled = choosing_faction or pending_slot >= 0 or model.phase == "bonus"
 	_update_bonus_panel()
-	tally_label.text = "Apparus : %d / %d\nÉliminés : %d · Arrivés : %d\nEn chemin : %d" % [model.spawned, model.spawn_schedule.size(), model.killed, model.escaped, model.enemies.size()]
+	tally_label.text = "Apparus : %d / %d\nÉliminés : %d · Passés : %d\nEn chemin : %d" % [model.spawned, model.spawn_schedule.size(), model.killed, model.escaped, model.enemies.size()]
 	time_label.text = ("Combat cumulé : %.1f s" % (model.completed_time+model.elapsed)).replace(".", ",")
 	hint_label.text = "Sélectionnez E1 à E6 pour construire ou inspecter un défenseur."
 	var occupied: bool = selected >= 0 and not model.defenders[selected].is_empty()
@@ -930,9 +982,12 @@ func _update_interface() -> void:
 		if not effect.is_empty():
 			details_label.text += "\n" + effect
 		upgrade_button.text = "Niveau maximum" if defender.level == 4 else "Spécialisation · %d or" % model.upgrade_cost(selected) if defender.level == 3 else "Niveau %d · %d or" % [defender.level + 1, model.upgrade_cost(selected)]
-		upgrade_button.tooltip_text = model.upgrade_error(selected, 0 if defender.level == 3 else -1)
-		upgrade_button.disabled = pending_slot >= 0 or not upgrade_button.tooltip_text.is_empty()
+		var improvement_error: String = model.upgrade_error(selected, 0 if defender.level == 3 else -1)
+		upgrade_button.tooltip_text = _upgrade_tooltip(selected,improvement_error)
+		upgrade_button.disabled = pending_slot >= 0 or not improvement_error.is_empty()
 		sell_button.text = "Vendre · %d or" % model.refund(selected)
+		sell_button.tooltip_text = "Vous récupérez %d or sur les %d or investis.\nPerte à la vente : %d or.\nOr disponible après vente : %d.\nLe défenseur est retiré de cet emplacement." % [model.refund(selected),defender.paid,defender.paid-model.refund(selected),model.gold+model.refund(selected)]
+		if not model.can_build(): sell_button.tooltip_text += "\nVente possible uniquement entre les vagues."
 	else:
 		title_label.text = "E%d · EMPLACEMENT LIBRE" % (selected + 1)
 		details_label.text = "Un défenseur par emplacement · Deux exemplaires maximum par type.\nSurvolez les recrues pour comparer leurs attaques et leur portée."
@@ -945,10 +1000,11 @@ func _update_interface() -> void:
 		var effects: Dictionary = model.get_stats(selected)
 		hint_label.text = "Synergies actives : %d · Partenaires reliés sur la carte · Survolez pour les détails" % effects.synergies.size() if not effects.synergies.is_empty() else "Aucune synergie active · Survolez pour voir les associations possibles"
 		hint_label.tooltip_text = _synergy_tooltip(selected)
+		hint_label.tooltip_text += "\nChemin doré : portions à portée du défenseur sélectionné."
 	else:
 		hint_label.tooltip_text = ""
 	if model.phase in ["victory","defeat"]:
-		hint_label.text = "%d éliminés · %d arrivées · %d or gagnés · Survolez pour les synergies" % [model.total_killed,model.total_escaped,model.total_income] if occupied else "%d éliminés · %d arrivées · %d or gagnés au combat." % [model.total_killed,model.total_escaped,model.total_income]
+		hint_label.text = "%d éliminés · %d passés · %d or gagnés · Survolez pour les synergies" % [model.total_killed,model.total_escaped,model.total_income] if occupied else "%d éliminés · %d passés · %d or gagnés au combat." % [model.total_killed,model.total_escaped,model.total_income]
 	_refresh_purchase_preview()
 	_refresh_upgrade_preview()
 	_update_enemy_inspector()
@@ -985,7 +1041,18 @@ func _synergy_tooltip(slot: int) -> String:
 	return "\n".join(descriptions)
 
 func _number(value: float) -> String:
-	return str(value).trim_suffix(".0").replace(".", ",")
+	return ("%.2f" % value).trim_suffix("0").trim_suffix("0").trim_suffix(".").replace(".", ",")
+
+func _upgrade_tooltip(slot: int, error: String) -> String:
+	var defender: Dictionary = model.defenders[slot]
+	if defender.level >= 4: return "Niveau maximum atteint."
+	var cost: int = model.upgrade_cost(slot)
+	var lines: Array[String] = ["Spécialisation au niveau 4" if defender.level == 3 else "Passage au niveau %d" % (defender.level+1),"Prix : %d or" % cost]
+	if model.gold >= cost: lines.append("Or disponible après amélioration : %d." % (model.gold-cost))
+	lines.append("Total investi après amélioration : %d or." % (defender.paid+cost))
+	if defender.level == 3: lines.append("Choisissez l’une des deux branches. Aucun paiement avant confirmation.")
+	if not error.is_empty(): lines.append("Amélioration impossible : " + error)
+	return "\n".join(lines)
 
 func _build_bonus_selector(screen: Control) -> void:
 	bonus_panel = ColorRect.new()
@@ -1059,9 +1126,11 @@ func _update_bonus_panel() -> void:
 			bonus_descriptions[index].text = Model.Campaign.bonus_description(entries[index],model.faction)
 			if choosing:
 				var impact_text: String = _bonus_impact_text(entries[index])
-				if bonus_impacts[index].text != impact_text:
+				var context: String = "%d:%d:%d" % [model.faction,model.wave,entries[index]]
+				if bonus_impacts[index].text != impact_text or bonus_contexts[index] != context:
 					bonus_impacts[index].text = impact_text
 					bonus_impact_scrollers[index].scroll_vertical = 0
+					bonus_contexts[index] = context
 	bonus_close.visible = not choosing
 
 func _bonus_impact_text(code: int) -> String:

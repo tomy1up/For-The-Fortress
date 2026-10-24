@@ -1,0 +1,223 @@
+{
+  "archive_sha256": "b5d1e713a89fb69d83135082786874f9328499765fb9b1083ba13a51b0511ea7",
+  "executable_sha256": "e69bca5ddbbdfdfa550e268ba477ee62bf7ce2303dd5441ef454ac1b159d1a7d",
+  "files": [
+    "For_the_Fortress_v0.35_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.35_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.35_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.35_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.35_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "fortress_breach",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_alliance_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_horde_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_economy_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_faction_bonuses",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_faction_bonuses",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_defender_catalogue",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_defender_catalogue",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_silhouettes",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "debug_combat_speed",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_mage",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_troll",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_sapper",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_shaman",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "wave_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "victory_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "defeat_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "upgrade_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "specialisation_preview",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_crossbow_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_mage_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_sapper_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_shaman_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Fiches de Pillard et de boss inspectées : perte de PV explicitement attribuée à la forteresse et récompense au joueur, deux lignes sans chevauchement. Catalogues des défenseurs Alliance/Horde, huit silhouettes ennemies, route couverte et capture ×10 inspectés. Contrôles interactifs documentés séparément ; le dernier contrôle vérifie le texte actualisé de départ dans ce binaire final.",
+  "version": "0.35",
+  "date": "2026-10-24",
+  "inter_wave_seconds": 30,
+  "regression_checks": 12578,
+  "player_readability_checks": 203,
+  "debug_speed_checks": 53,
+  "bonus_scroll_checks": 10,
+  "temporary_debug_speed": 10,
+  "archive_bytes": 39371100,
+  "source_manifest": {
+    "version": "0.35",
+    "date": "2026-10-24",
+    "platform": "Windows x86_64",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable": "For_the_Fortress.exe",
+    "executable_sha256": "e69bca5ddbbdfdfa550e268ba477ee62bf7ce2303dd5441ef454ac1b159d1a7d",
+    "embedded_data": true,
+    "signed": false,
+    "source_sha256": {
+      "project.godot": "4c061fb846c67de55ddd6ce5e24c94d6d5c41ae2c5bf9cbbca126956e08a152d",
+      "export_presets.cfg": "32e2c44173dfc6de28d204b53d2949e6db5ae5b6c201bfaba049ea4f9b78fe0b",
+      "scenes/main.tscn": "c972c0e92289eb7a0b4767d47a40d5a6d65cb30c555865f460237a306a3174de",
+      "scripts/main.gd": "3f4fd01e49f3323e42c49f1429a95734e509a0cc8ddceb1f51eeeb58d7b0e254",
+      "scripts/valley_model.gd": "60478261847b313101dd1bd06e4c409b5fcdbb6b255b0df52318308194c4d3c8",
+      "scripts/valley_view.gd": "5d703df7daf6f1e42a2bffce0084e4dec860279d51eb7bf16774ef05b997d73e",
+      "scripts/campaign_data.gd": "c7f607ad748d42e68ba3b5d6b4d696f182609d3cda20f8edee1f9f8db5eaf2b2",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.34 — 24 octobre 2026
+Version : 0.35 — 24 octobre 2026
 
 JOUER
 
@@ -99,3 +99,15 @@ COHÉRENCE DES FACTIONS
 Les bonus parlent des unités et effets de votre camp, dans les offres comme
 dans le récapitulatif. Les deux camps conservent les douze bonus communs.
 Les améliorations et spécialisations concernent uniquement vos défenseurs.
+
+NOUVEAUTÉS DE LISIBILITÉ
+La fiche ennemie dit explicitement que la forteresse perd des PV si l’ennemi
+l’atteint, et que vous gagnez de l’or en l’éliminant. Les nombres sont arrondis
+à deux décimales au maximum pour la lecture, sans changer les calculs.
+Le chemin couvert par une unité sélectionnée est doré, les aperçus sont bleus.
+Les aides de vente et d’amélioration expliquent leurs montants et soldes futurs.
+
+VITESSE ×10 TEMPORAIRE
+Le bouton alterne ×1, ×2 et ×10 debug. Le ×10 sert au débogage et sera retiré
+plus tard. Les 30 secondes de préparation restent réelles ; les choix de bonus
+attendent toujours votre décision.

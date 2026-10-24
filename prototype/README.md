@@ -1,16 +1,16 @@
 # Dix vagues jouables sur La Vallée du Gué
 
-**Version v0.34 (24 octobre 2026)** : cohérence des factions corrigée dans les bonus et synergies ; achats et améliorations adverses verrouillés. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.34).
+**Version v0.35 (24 octobre 2026)** : dégâts à la forteresse explicités, portée et silhouettes plus lisibles, aides économiques et ×10 temporaire de débogage. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.35).
 
-**Prototype v0.34 — 24 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
+**Prototype v0.35 — 24 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
 
 Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.34](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.34) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.35](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.35) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
-Sur ce PC : dist/For_the_Fortress_v0.34_Windows_x64 depuis la racine du dépôt. Le ZIP local pèse environ 39 Mo. Voir [le relevé d’export](../design/Distribution_Windows_v034.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
+Sur ce PC : dist/For_the_Fortress_v0.35_Windows_x64 depuis la racine du dépôt. Le ZIP local pèse environ 39 Mo. Voir [le relevé d’export](../design/Distribution_Windows_v035.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
 ## Jouer depuis le projet source
 
@@ -25,13 +25,13 @@ Autre possibilité : ouvrir project.godot dans Godot 4.7.2 standard, puis lancer
 2. Cliquer sur E1 à E6, puis acheter un défenseur de sa faction : 50, 75 ou 100 or. Deux exemplaires maximum par type.
 3. Cliquer sur une unité pour lire ses statistiques, afficher sa portée, améliorer son niveau ou consulter son remboursement avant une vente.
 4. Lancer la vague 1 : dix Pillards de 40 PV, apparitions à t = 0 puis toutes les 2,5 s. Les tirs sont automatiques.
-5. Observer les éliminations, l’or et les arrivées ; changer la vitesse entre ×1 et ×2 si souhaité.
+5. Observer les éliminations, l’or et les arrivées ; alterner ×1, ×2 et ×10 debug. Le ×10 est temporaire pour les essais.
 6. Entre les vagues, acheter, améliorer ou vendre pendant les 30 secondes avant le départ automatique. Cliquer sur le bouton pour partir plus tôt. Survoler le bouton de lancement pour voir sa composition et ses intervalles.
 7. Après les vagues 3, 6 et 9, choisir un bonus parmi trois offres distinctes, sans limite de temps. Le délai complet de 30 secondes commence après le choix.
 8. Consulter « Bonus acquis » et les synergies de l’unité sélectionnée ; survoler leurs codes pour lire les effets.
 9. Survivre jusqu’à la résolution complète de la vague 10. « Nouvel essai » repart avec 150 or et 20 PV, sans bonus ni défense.
 
-Les achats, améliorations, ventes et la relance d’un essai sont bloqués pendant le combat. Le bouton de lancement passe à la vague suivante ; il ne répète pas la précédente. La victoire et la défaite bloquent toute nouvelle dépense. Consulter les bonus acquis pendant un combat ne met pas le jeu en pause. Pendant la préparation, leur lecture suspend le décompte ; le choix de spécialisation le suspend également. Fermer ou résoudre ces fenêtres reprend le temps restant. Le ×2 ne modifie pas les 30 secondes.
+Les achats, améliorations, ventes et la relance d’un essai sont bloqués pendant le combat. Le bouton de lancement passe à la vague suivante ; il ne répète pas la précédente. La victoire et la défaite bloquent toute nouvelle dépense. Consulter les bonus acquis pendant un combat ne met pas le jeu en pause. Pendant la préparation, leur lecture suspend le décompte ; le choix de spécialisation le suspend également. Fermer ou résoudre ces fenêtres reprend le temps restant. Ni ×2 ni ×10 ne modifient les 30 secondes.
 
 ## Règles implémentées
 
@@ -107,29 +107,32 @@ Godot 4.7.2.stable.official.ed1daf0bf, GDScript, rendu Compatibility ; contrôle
 
 Références reproductibles, sans bonus ni synergies : Archer en E1 + Arbalétrier en E2, fin à 23,5 s ; Troll en E1 + Sapeur en E2, fin à 24,5 s. Dans chaque essai : départ après achats à 25 or, dix éliminations, aucune arrivée, 20 PV et 55 or restants. Ce résultat vérifie ce scénario ; il ne démontre pas l’équilibre de la partie ou des factions.
 
-**Total actuel : 12 303 contrôles réussis**, dont 729 pour la cohérence des factions, 8 752 pour les projections des bonus, 402 pour la prévision des vagues, 196 pour le bilan, 78 pour l’inspection ennemie, 357 pour les comparaisons d’amélioration, 504 pour les aperçus d’achat, 123 pour les partenaires et la lisibilité des synergies et 106 pour l’enchaînement automatique (premier lancement, échéance, pauses de choix, ×2, relance, deux campagnes financées et fins de partie). Les références historiques sans bonus ni synergies utilisent un constructeur de test dédié ; le jeu normal active toujours les synergies. Les tests de campagne vérifient les règles actives et la conservation de l’économie.
+**Total actuel : 12 578 contrôles réussis**, dont 53 pour le ×10, 203 pour la lisibilité économique et numérique, 10 pour les remises à zéro de défilement, 729 pour la cohérence des factions, 8 752 pour les projections des bonus, 403 pour la prévision des vagues, 196 pour le bilan, 86 pour l’inspection ennemie, 357 pour les comparaisons d’amélioration, 504 pour les aperçus d’achat, 123 pour les partenaires et la lisibilité des synergies et 106 pour l’enchaînement automatique (premier lancement, échéance, pauses de choix, ×2, relance, deux campagnes financées et fins de partie). Les références historiques sans bonus ni synergies utilisent un constructeur de test dédié ; le jeu normal active toujours les synergies. Les tests de campagne vérifient les règles actives et la conservation de l’économie.
 
 Deux victoires au budget normal, graine de vérification 42, choix R-06 puis R-11 puis R-10 : Alliance 14 PV, 192 or, 178 éliminations et 4 arrivées ; Horde 12 PV, 189 or, 175 éliminations et 7 arrivées. Temps de combat simulé cumulé : 372,755 s et 392,541 s. Ces résultats ne mesurent ni le temps de préparation humain ni l’équilibre général. Le [compte rendu](../design/Resultats_campagne_v018.md) donne le protocole et les offres.
 
 Les tests peuvent être relancés depuis ce dossier avec le moteur :
 
 ~~~powershell
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_valley.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_interface.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_horde.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_progression.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_campaign.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_autoplay.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_synergy_feedback.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_purchase_preview.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_upgrade_preview.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_enemy_inspection.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_run_summary.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_wave_forecast.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_combat_feedback.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_breach_feedback.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_bonus_preview.gd
-& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 3 --script res://tests/test_faction_coherence.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_valley.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_interface.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_horde.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_progression.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_campaign.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_autoplay.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_synergy_feedback.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_purchase_preview.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_upgrade_preview.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_enemy_inspection.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_run_summary.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_wave_forecast.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_combat_feedback.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_breach_feedback.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_bonus_preview.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_faction_coherence.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_player_readability.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_bonus_scroll_reset.gd
+& 'CHEMIN_DU_MOTEUR_CONSOLE.exe' --headless --path . --quit-after 120 --script res://tests/test_debug_speed.gd
 ~~~
 
 Vérifier le résumé failures=0 et l’absence de messages ERROR, même si le processus rend un code de sortie nul. Les fichiers .godot sont un cache local exclu de Git ; les fichiers .gd.uid sont suivis.
@@ -163,10 +166,10 @@ Installer les templates standard de Godot 4.7.2 avec le gestionnaire d’export,
 Les tests, outils d’essai et documents de développement sont exclus du paquet de jeu. Pour lancer le contrôle sur l’archive extraite hors du projet :
 
 ~~~powershell
-python prototype/tests/verify_windows_export.py dist/For_the_Fortress_v0.34_Windows_x64.zip --destination C:/Projet/.tools/controle_export
+python prototype/tests/verify_windows_export.py dist/For_the_Fortress_v0.35_Windows_x64.zip --destination C:/Projet/.tools/controle_export
 ~~~
 
-Cette dernière commande se lance depuis la racine du dépôt avec Python sur Windows. Elle vérifie les cinq fichiers attendus, le manifeste, l’architecture PE x86_64, le démarrage sans éditeur et trente et une captures graphiques (32 lancements au total). L’inspection des captures reste à faire séparément ; la commande ne prétend pas remplacer un essai humain.
+Cette dernière commande se lance depuis la racine du dépôt avec Python sur Windows. Elle vérifie les cinq fichiers attendus, le manifeste, l’architecture PE x86_64, le démarrage sans éditeur et trente-cinq captures graphiques (36 lancements au total). L’inspection des captures reste à faire séparément ; la commande ne prétend pas remplacer un essai humain.
 
 ## Lecture des synergies (v0.24)
 
@@ -211,3 +214,9 @@ Après les vagues 3, 6 et 9, chaque proposition montre son effet avant/après su
 ## Cohérence des factions (v0.34)
 
 Les descriptions des bonus passent par une sélection centrale selon la faction, dans les offres comme dans le récapitulatif. Exercice de tir ne mentionne plus de chaman en Alliance ; les explosions, rebonds et malédictions ne sont décrits que pour le camp qui les possède. Les synergies ne promettent plus un effet secondaire ou de malédiction absent du défenseur. Achats et aperçus adverses sont refusés ; les améliorations et spécialisations sont aussi refusées même sur une unité adverse injectée dans un état de contrôle. Les douze bonus restent communs aux deux camps et gardent leurs effets. Voir [le relevé](../design/Coherence_factions_v034.md).
+
+## Lisibilité et débogage (v0.35)
+
+La fiche ennemie explique que la forteresse perd les PV indiqués si l’ennemi l’atteint, et que le joueur gagne l’or indiqué en l’éliminant. Les nombres affichent au maximum deux décimales ; les calculs restent précis. Les aides de vente et d’amélioration détaillent les investissements, pertes et soldes futurs. La route couverte par une unité sélectionnée est dorée ; les aperçus restent bleus. Silhouettes et équipements temporaires distinguent les huit ennemis et les races des défenseurs. Les listes de bonus repartent en haut lors d’un nouveau choix ou d’une nouvelle partie.
+
+Le bouton de vitesse suit temporairement ×1 → ×2 → ×10 debug → ×1, sur demande du porteur du projet. Seul le combat accélère ; préparations, choix et durée de lecture des percées gardent leurs règles. Retirer 10.0 de COMBAT_SPEEDS et adapter l’aide lors du retrait du mode debug. [Détail](../design/Lisibilite_et_debug_v035.md) · [Essais interactifs](../design/Essais_interactifs_v035.md).

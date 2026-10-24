@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 24 octobre 2026 — prototype v0.34, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 24 octobre 2026 — prototype v0.35, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -200,3 +200,7 @@ Projection sans mutation des douze bonus : valeurs avant/après sur la défense,
 ## v0.34 — Cohérence des factions, 24 octobre 2026
 
 Descriptions de bonus centralisées par camp, synergies limitées aux attaques du bénéficiaire et garde explicite des améliorations adverses. 12 303 contrôles réussis, dont 729 ciblés ; 32 lancements Windows contrôlés. [Relevé détaillé](Coherence_factions_v034.md).
+
+## v0.35 — Lisibilité, essais PC et ×10 temporaire
+
+Dégâts à la forteresse explicités, nombres lisibles, montants économiques détaillés, routes couvertes et silhouettes renforcées. Défilement remis à zéro au bon contexte. ×10 debug ajouté sur demande explicite, sans accélérer les préparations. 12 578 contrôles et 36 lancements Windows. [Détail](Lisibilite_et_debug_v035.md) · [Essais interactifs agent](Essais_interactifs_v035.md).

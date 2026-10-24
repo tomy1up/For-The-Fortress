@@ -139,6 +139,9 @@ func _draw() -> void:
 		var ring := range_outline(Model.SLOTS[selected], stats.range)
 		draw_colored_polygon(ring, Color(0.8, 0.85, 0.5, 0.05))
 		draw_polyline(ring, Color(0.8, 0.85, 0.5, 0.35), 1.5, true)
+		if preview.is_empty():
+			for section in covered_route(Model.SLOTS[selected],stats.range):
+				draw_polyline(section,Color(0.9,0.77,0.48,0.65),4,true)
 		# Montrer uniquement les partenaires actifs du défenseur sélectionné.
 		for rule in Model.Campaign.PROXIMITY + Model.Campaign.SPECIALISATIONS:
 			var specialised: bool = rule.has("branches")
@@ -198,9 +201,19 @@ func _draw_breach_feedback() -> void:
 
 func _draw_defender(center: Vector2, type: int, level: int = 1, branch: int = -1) -> void:
 	var color: Color = [Color("6f9c6b"), Color("b79a64"), Color("668db5"), Color("72a392"), Color("b8a16a"), Color("a782b7")][type]
+	var skin: Color = [Color("e4d0a5"),Color("e2bc94"),Color("e4d0a5"),Color("86b49d"),Color("a2b96e"),Color("96ad78")][type]
 	draw_circle(center + Vector2(0, 3), 9, Color(0, 0, 0, 0.25))
-	draw_rect(Rect2(center + Vector2(-6, -17), Vector2(12, 19)), color)
-	draw_circle(center + Vector2(0, -23), 6, Color("e4d0a5"))
+	var half_width: float = 8.0 if type == 1 else 6.0
+	draw_rect(Rect2(center + Vector2(-half_width, -17), Vector2(half_width*2, 19)), color)
+	draw_circle(center + Vector2(0, -23), 6, skin)
+	if type in [0,3,4,5]:
+		for side in [-1,1]:
+			draw_colored_polygon(PackedVector2Array([center+Vector2(side*5,-26),center+Vector2(side*10,-24),center+Vector2(side*5,-21)]),skin)
+	if type == 1:
+		draw_colored_polygon(PackedVector2Array([center+Vector2(-5,-22),center+Vector2(5,-22),center+Vector2(3,-15),center+Vector2(0,-12),center+Vector2(-3,-15)]),Color("9c6c44"))
+	elif type in [3,5]:
+		for side in [-1,1]:
+			draw_line(center+Vector2(side*3,-18),center+Vector2(side*3,-21),Color("ebe4c6"),1.5)
 	match type:
 		0:
 			draw_arc(center + Vector2(6, -14), 9, -PI / 2, PI / 2, 12, Color("e0c99e"), 2, true)
@@ -278,13 +291,42 @@ func _draw_pillager(center: Vector2, enemy: Dictionary) -> void:
 			draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]), Color("d6a1ef"))
 			break
 	draw_circle(center + Vector2(0, 3), 8, Color(0, 0, 0, 0.3))
-	draw_line(center + Vector2(-3, -2), center + Vector2(-5, 5), Color("b5a68a"), 3)
-	draw_line(center + Vector2(3, -2), center + Vector2(5, 5), Color("b5a68a"), 3)
-	draw_rect(Rect2(center + Vector2(-6, -15), Vector2(12, 16)), armor)
+	var stride: float = sin(model.elapsed*10.0*enemy.get("speed",1.0)+enemy.id)*2.0 if model.active else 0.0
+	draw_line(center + Vector2(-3, -2), center + Vector2(-5+stride, 5), Color("b5a68a"), 3)
+	draw_line(center + Vector2(3, -2), center + Vector2(5-stride, 5), Color("b5a68a"), 3)
+	if type == 7:
+		draw_colored_polygon(PackedVector2Array([Vector2(-8,-20),Vector2(8,-20),Vector2(13,3),Vector2(-13,3)]),Color("713b42"))
+	var half_width: float = 9.0 if type in [3,5] else 6.0
+	draw_rect(Rect2(center + Vector2(-half_width, -15), Vector2(half_width*2, 16)), armor)
 	draw_circle(center + Vector2(0, -20), 6, Color("dbc3a1"))
 	draw_line(center + Vector2(-6, -23), center + Vector2(6, -23), Color("77695a"), 3)
-	draw_line(center + Vector2(10, -21), center + Vector2(10, 0), Color("dac494"), 2)
-
-	if type == 7:
-		draw_line(center + Vector2(-7, -26), center + Vector2(7, -26), Color("e4c980"), 4)
+	match type:
+		0: # Petit couteau, silhouette légère.
+			draw_line(Vector2(8,-5),Vector2(11,-14),Color("c6c6a4"),2)
+		1: # Épée droite du pillard.
+			draw_line(Vector2(10,-21),Vector2(10,0),Color("dac494"),2)
+			draw_line(Vector2(7,-7),Vector2(13,-7),Color("746043"),2)
+		2: # Foulard et lame courte du sprinter.
+			draw_colored_polygon(PackedVector2Array([Vector2(-5,-18),Vector2(-14,-14),Vector2(-13,-20)]),Color("af5351"))
+			draw_line(Vector2(8,-7),Vector2(13,-16),Color("e1d0a4"),2)
+		3: # Massue de la brute.
+			draw_line(Vector2(10,-1),Vector2(10,-25),Color("a1865d"),3)
+			draw_circle(Vector2(10,-25),4,Color("6d5544"))
+		4: # Deux haches courtes du maraudeur.
+			for side in [-1,1]:
+				draw_line(Vector2(side*10,-3),Vector2(side*10,-23),Color("b69b70"),2)
+				draw_colored_polygon(PackedVector2Array([Vector2(side*9,-23),Vector2(side*15,-18),Vector2(side*9,-14)]),Color("c1b49a"))
+		5: # Large ceinture et marteau du colosse.
+			draw_line(Vector2(-9,-4),Vector2(9,-4),Color("4d5c59"),4)
+			draw_line(Vector2(10,0),Vector2(10,-25),Color("aa9470"),3)
+			draw_rect(Rect2(Vector2(5,-30),Vector2(10,8)),Color("b2bbb0"))
+		6: # Bouclier pointu et crête de l'élite.
+			draw_colored_polygon(PackedVector2Array([Vector2(-14,-17),Vector2(-5,-17),Vector2(-5,-8),Vector2(-10,-3),Vector2(-14,-8)]),Color("645d81"))
+			draw_line(Vector2(-10,-15),Vector2(-10,-7),Color("d5c495"),2)
+			draw_line(Vector2(0,-26),Vector2(0,-32),Color("c0a8cc"),4)
+			draw_line(Vector2(10,-24),Vector2(10,-2),Color("d4c8a1"),2)
+		7: # Cape et couronne du chef de siège.
+			draw_colored_polygon(PackedVector2Array([Vector2(-7,-24),Vector2(-7,-31),Vector2(-3,-27),Vector2(0,-33),Vector2(3,-27),Vector2(7,-31),Vector2(7,-24)]),Color("e4c980"))
+			draw_line(Vector2(11,-28),Vector2(11,0),Color("e4c980"),3)
+			draw_line(Vector2(7,-8),Vector2(14,-8),Color("c1a565"),2)
 	draw_set_transform(Vector2.ZERO)
