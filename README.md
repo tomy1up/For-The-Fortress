@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.43 (25 octobre 2026)** : numéro de version visible pendant le jeu. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.43).
+**Version v0.44 (25 octobre 2026)** : focus clavier conservé sur une commande disponible pendant les changements de phase. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.44).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -123,3 +123,7 @@ Verrouillage des commandes de fond pendant les panneaux : prévention des redém
 ## Identifier la version du jeu — v0.43
 
 La fenêtre et le bas de l’écran indiquent la version embarquée. Les contrôles du ZIP comparent aussi cette version à la notice, au nom du dossier et aux rapports de partie. [Détail](design/Identification_version_v043.md)
+
+## Clavier pendant les changements de phase — v0.44
+
+Au lancement manuel ou automatique, une commande devenue inactive libère le focus. Une commande encore disponible le conserve. [Détail](design/Focus_combat_v044.md).

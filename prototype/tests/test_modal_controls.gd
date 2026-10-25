@@ -89,5 +89,23 @@ func run_checks() -> void:
 	check(not scene.overview_open and not scene.choosing_faction and scene.model.gold == 150 and scene.model.phase == "preparation","Entrée ferme le récapitulatif au lieu de redémarrer ou démarrer")
 	check(scene.start_button.has_focus(),"Un focus utilisable est restauré au retour au jeu")
 	scene.free()
+	# Les boutons devenus indisponibles ne doivent pas retenir le focus entre deux phases.
+	for faction in range(2):
+		scene = Main.new(); root.add_child(scene); scene.set_process(false); scene._choose_faction(faction)
+		scene._select_slot(0); scene._buy(0); scene._select_slot(1); scene._buy(1)
+		scene.start_button.grab_focus(); scene._start()
+		check(scene.start_button.disabled and scene.bonus_summary_button.has_focus(),"Début de combat : focus déplacé du lancement inactif au récapitulatif disponible")
+		var before: String = fingerprint(scene)
+		inject(KEY_ENTER); await process_frame
+		check(scene.overview_open and scene.bonus_close.has_focus() and fingerprint(scene) == before,"Entrée ouvre une commande utilisable sans changer la simulation")
+		inject(KEY_ENTER); await process_frame
+		check(not scene.overview_open and scene.bonus_summary_button.has_focus(),"Fermer en combat rend le focus à une commande active")
+		scene.speed_button.grab_focus(); scene._update_interface()
+		check(scene.speed_button.has_focus(),"Une commande toujours disponible conserve son focus")
+		scene._process(1000)
+		check(scene.model.phase == "finished" and scene.speed_button.has_focus(),"La fin de vague ne vole pas un focus encore valide")
+		scene._select_slot(0); scene.upgrade_button.grab_focus(); scene._process(30)
+		check(scene.model.active and scene.upgrade_button.disabled and scene.bonus_summary_button.has_focus(),"Le lancement automatique libère aussi une amélioration devenue inactive")
+		scene.free()
 	print("MODAL_CONTROLS_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(0 if failures == 0 else 1)

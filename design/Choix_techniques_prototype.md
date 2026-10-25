@@ -200,3 +200,7 @@ Défaut reproduit de redémarrage derrière un choix. Focus et activation des co
 ## v0.43 — Identification de la version, 25 octobre 2026
 
 Version embarquée affichée dans le titre et le pied de fenêtre, conservée après redémarrage. Vérification de concordance entre dossier, notice, version du programme capturé et rapports. 25 suites, 14 159 contrôles Godot et 9 tests Python réussis. [Détail](Identification_version_v043.md).
+
+## v0.44 — Focus pendant les changements de phase, 25 octobre 2026
+
+Défaut reproduit : le bouton de lancement désactivé gardait le focus pendant le combat. Le focus est désormais rendu à une commande disponible, sans déplacer une sélection encore valide. 25 suites, 14 171 contrôles Godot, dont 12 ajouts dédiés aux deux factions, et 9 tests Python réussis. [Détail](Focus_combat_v044.md).

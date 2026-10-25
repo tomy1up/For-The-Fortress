@@ -1224,7 +1224,7 @@ func _sync_keyboard_focus() -> void:
 	else:
 		target = start_button if not start_button.disabled else bonus_summary_button
 	var current: Control = get_viewport().gui_get_focus_owner()
-	if context == keyboard_focus_context and current != null and current.is_visible_in_tree(): return
+	if context == keyboard_focus_context and current != null and current.is_visible_in_tree() and (not current is BaseButton or not current.disabled): return
 	keyboard_focus_context = context
 	if target == null or not target.is_visible_in_tree() or target.disabled: return
 	syncing_keyboard_focus = true
