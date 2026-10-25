@@ -79,7 +79,7 @@ func prepare(m: RefCounted, slots: Array, policy: String, branches: String) -> v
 				try_upgrade(m,slot,branches)
 				if m.defenders[slot].level == previous: break
 
-func run_case(faction: int, layout: Dictionary, policy: String, priority: String, branches: String, seed_value: int) -> Dictionary:
+func run_case(faction: int, layout: Dictionary, policy: String, priority: String, branches: String, seed_value: int, observer: Callable = Callable()) -> Dictionary:
 	var m = Model.new()
 	m.select_faction(faction)
 	m.rng.seed = seed_value
@@ -107,6 +107,7 @@ func run_case(faction: int, layout: Dictionary, policy: String, priority: String
 		m.advance(300)
 		audit(not m.active and m.gold == 150+m.total_income-paid,id+" résolution et conservation")
 		waves.append({"wave":wave,"phase":m.phase,"kills":m.killed,"escapes":m.escaped,"hp":m.fortress_hp,"max_hp":m.max_hp,"gold":m.gold,"income":m.total_income,"seconds":m.elapsed,"paid":paid,"deployed":deployed,"specialised_links":specialised_links})
+		if observer.is_valid(): observer.call(m,waves[-1])
 		if m.phase == "defeat" or m.phase == "victory": break
 		if m.phase == "bonus":
 			var offer: Array[int] = m.bonus_offer.duplicate()

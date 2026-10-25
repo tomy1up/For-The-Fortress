@@ -216,3 +216,7 @@ Liens bleus pointillés et détail des partenaires/gains avant recrutement et sp
 ## v0.38 — Mesurer l’activité, 25 octobre 2026
 
 Observation des impacts et des PV retirés, répartition proportionnelle des coups simultanés et suivi par recrue et par vague. Onglet Défenseurs dans le bilan, avec conservation des unités vendues et export JSON schéma 2/Markdown. Aucun changement de transaction de combat ou de statistique. 13 952 contrôles réussis, dont 73 ciblés ; 45 lancements Windows vérifiés sur l’écran de droite. [Détail](Activite_defenseurs_v038.md).
+
+## L6 — Matrice instrumentée après v0.38
+
+1 728 scénarios rejoués, 356 868 audits sans anomalie et concordance de tous les champs historiques avec le relevé v0.19. Suivi séparé de la mort du boss et de la résolution de la vague : 1 060 finales atteintes, 1 059 boss éliminés et deux défaites malgré le boss éliminé. Aucun réglage modifié. [Résultats, limites et données](Bilan_finale_v038.md). Le paquet Windows v0.38 reste inchangé ; ce complément concerne les outils d’essai et la documentation.

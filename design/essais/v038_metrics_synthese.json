@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "game_version": "0.38",
+  "engine": "4.7.2-stable (official)",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    42
+  ],
+  "audit_checks": 356868,
+  "baseline_cases_matched": 1728,
+  "overall": {
+    "runs": 1728,
+    "wins": 1057,
+    "reached_wave10": 1060,
+    "boss_outcomes": {
+      "killed": 1059,
+      "present": 1
+    },
+    "boss_kill_seconds_median": 10.0,
+    "fortress_loss_wave9_median_reached10": 0.0,
+    "fortress_loss_wave10_median_reached10": 0.0,
+    "fewer_fortress_losses_wave10": 75,
+    "equal_fortress_losses_wave10": 980,
+    "more_fortress_losses_wave10": 5
+  },
+  "cells": [
+    {
+      "faction": 0,
+      "policy": "reference",
+      "runs": 288,
+      "wins": 218,
+      "reached_wave10": 218,
+      "boss_outcomes": {
+        "killed": 218
+      },
+      "boss_kill_seconds_median": 16.5,
+      "fortress_loss_wave9_median_reached10": 0.0,
+      "fortress_loss_wave10_median_reached10": 0.0,
+      "fewer_fortress_losses_wave10": 30,
+      "equal_fortress_losses_wave10": 186,
+      "more_fortress_losses_wave10": 2
+    },
+    {
+      "faction": 0,
+      "policy": "renforts",
+      "runs": 288,
+      "wins": 288,
+      "reached_wave10": 288,
+      "boss_outcomes": {
+        "killed": 288
+      },
+      "boss_kill_seconds_median": 9.450485948,
+      "fortress_loss_wave9_median_reached10": 0.0,
+      "fortress_loss_wave10_median_reached10": 0.0,
+      "fewer_fortress_losses_wave10": 0,
+      "equal_fortress_losses_wave10": 288,
+      "more_fortress_losses_wave10": 0
+    },
+    {
+      "faction": 0,
+      "policy": "specialisation",
+      "runs": 288,
+      "wins": 46,
+      "reached_wave10": 46,
+      "boss_outcomes": {
+        "killed": 46
+      },
+      "boss_kill_seconds_median": 7.5,
+      "fortress_loss_wave9_median_reached10": 0.0,
+      "fortress_loss_wave10_median_reached10": 0.0,
+      "fewer_fortress_losses_wave10": 8,
+      "equal_fortress_losses_wave10": 38,
+      "more_fortress_losses_wave10": 0
+    },
+    {
+      "faction": 1,
+      "policy": "reference",
+      "runs": 288,
+      "wins": 181,
+      "reached_wave10": 183,
+      "boss_outcomes": {
+        "killed": 182,
+        "present": 1
+      },
+      "boss_kill_seconds_median": 14.5811335035,
+      "fortress_loss_wave9_median_reached10": 0,
+      "fortress_loss_wave10_median_reached10": 0,
+      "fewer_fortress_losses_wave10": 26,
+      "equal_fortress_losses_wave10": 154,
+      "more_fortress_losses_wave10": 3
+    },
+    {
+      "faction": 1,
+      "policy": "renforts",
+      "runs": 288,
+      "wins": 288,
+      "reached_wave10": 288,
+      "boss_outcomes": {
+        "killed": 288
+      },
+      "boss_kill_seconds_median": 12.0,
+      "fortress_loss_wave9_median_reached10": 0.0,
+      "fortress_loss_wave10_median_reached10": 0.0,
+      "fewer_fortress_losses_wave10": 0,
+      "equal_fortress_losses_wave10": 288,
+      "more_fortress_losses_wave10": 0
+    },
+    {
+      "faction": 1,
+      "policy": "specialisation",
+      "runs": 288,
+      "wins": 36,
+      "reached_wave10": 37,
+      "boss_outcomes": {
+        "killed": 37
+      },
+      "boss_kill_seconds_median": 14.723990646,
+      "fortress_loss_wave9_median_reached10": 0,
+      "fortress_loss_wave10_median_reached10": 0,
+      "fewer_fortress_losses_wave10": 11,
+      "equal_fortress_losses_wave10": 26,
+      "more_fortress_losses_wave10": 0
+    }
+  ],
+  "victory_with_escaped_boss_ids": [],
+  "source_sha256": {
+    "prototype/project.godot": "e9c6a7ea240ce821323084145ba43e0d5e34d4ead10788024940946a2e92df41",
+    "prototype/scripts/valley_model.gd": "c75549d77a61fd0c98a96509a5afea99d2a62cd9b364ba73e0e88805b794122b",
+    "prototype/scripts/combat_metrics.gd": "10a2a00aa85c0b430dbec33f3b457e66ce74b36e36b6fae91d4a26fff17ebf4b",
+    "prototype/scripts/campaign_data.gd": "c7f607ad748d42e68ba3b5d6b4d696f182609d3cda20f8edee1f9f8db5eaf2b2",
+    "prototype/scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755",
+    "prototype/tests/survey_balance.gd": "3d83f402113cd4fd6b563c73b753d072e3006aadb20478ebfdf7240c1b97a5bd",
+    "prototype/tests/survey_metrics.gd": "30104663818bfa7c080aa0089f995b51c7e04202851ffc17fb26cc47ba918b67",
+    "prototype/tests/analyse_metrics.py": "632b38ed0fd62f031587ea586cb6a01c0abc6ae4650e9d9d8dc81b23c3a7492f",
+    "For_the_Fortress_GDD.md": "60d13ae131d0cdd3ac1390285cf25751f72f65488ac0b983467331cacaf1d3ba"
+  },
+  "baseline_sha256": "3e507596731569d7a1ef5cb2cd73cb63a8dcba9b156b2c1681c7c4313ba1641c",
+  "records_sha256": "636fdbd57eaef9d4b8b517d01873fb28bfa3ee788634cf0df900086bc1b82b8f"
+}

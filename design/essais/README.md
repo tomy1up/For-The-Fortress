@@ -53,3 +53,16 @@ Les défenses sont relevées au lancement de chaque vague ; les résultats aprè
 ~~~
 
 Vérifier le résumé `checkpoints=96 immediate=384 campaigns=768`, `failures=0` et l’absence d’erreur moteur. L’analyse valide la dépense identique des traitements, le maintien des types et emplacements, les soldes terminaux et l’identité des offres aux choix communs. La relecture peut utiliser directement `design/essais/v020_releves.json.gz` à la place du relevé brut. Aucun fichier v0.19 n’est remplacé par ces commandes.
+
+## Relecture instrumentée de la matrice en v0.38
+
+Voir [le bilan de finale](../Bilan_finale_v038.md). Le nouveau banc réutilise les mêmes 1 728 scénarios, via un observateur optionnel de `survey_balance.gd`, et ajoute les contributions et le suivi du boss. Aucun fichier v0.19 ou v0.20 n’est remplacé.
+
+~~~powershell
+& $fortressEngine --headless --path prototype --script res://tests/survey_metrics.gd -- --output=C:/Projet/.tools/metrics_replay.json
+& $fortressPython prototype/tests/analyse_metrics.py C:/Projet/.tools/metrics_replay.json --baseline design/essais/v019_releves.json.gz --destination C:/Projet/.tools/metrics_replay
+~~~
+
+Attendre le résumé `runs=1728 audit_checks=356868 failures=0`, sans erreur moteur. L’analyse exige la concordance de chaque champ historique avec le relevé v0.19, avec une tolérance de 10⁻⁷ pour les nombres flottants, et contrôle les mesures par vague, recrue et faction. Les nouveaux fichiers sont `v038_metrics_releves.json.gz`, `v038_metrics_synthese.json` et `v038_metrics_tableaux.md`. La synthèse contient les empreintes des sources, de la référence et des relevés compressés.
+
+Pour relire les données sans rejouer la matrice, remplacer le premier argument de l’analyse par `design/essais/v038_metrics_releves.json.gz` et conserver une destination de travail distincte. Le temps d’élimination du boss est tiré de son événement de mort dans la vague 10, dont il est le premier ennemi (identifiant 0) ; le temps de la vague reste relevé séparément. Les résultats conditionnels aux survivants jusqu’à cette vague ne décrivent pas la difficulté humaine.
