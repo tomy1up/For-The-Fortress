@@ -192,3 +192,7 @@ Lanceur sans fenêtre, découverte des suites, contrôle des résumés/erreurs, 
 ## v0.41 — Sélection au clavier, 25 octobre 2026
 
 Sélection E1–E6 commune au clic et aux touches, prise en compte AZERTY/pavé numérique, garde des panneaux et conservation des ressources et délais. 14 072 contrôles Godot dont 68 ciblés, 9 tests Python et 46 lancements Windows. Test interactif sur le second écran. [Détail](Selection_clavier_v041.md).
+
+## v0.42 — Protection des commandes de fond, 25 octobre 2026
+
+Défaut reproduit de redémarrage derrière un choix. Focus et activation des commandes de fond bloqués pendant les panneaux ; boutons du panneau et reprise des commandes vérifiés. 14 156 contrôles Godot, dont 76 dédiés et huit extensions de contrôles existants, 9 tests Python et 46 lancements Windows. [Détail](Commandes_modales_v042.md).

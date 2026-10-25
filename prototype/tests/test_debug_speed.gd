@@ -40,6 +40,8 @@ func run_checks() -> void:
 			scene.model.phase = "bonus"; scene.model.bonus_offer.assign([0,1,2]); scene._update_interface(); scene._process(1000)
 			check(scene.model.phase == "bonus" and scene.model.bonuses.is_empty() and scene.countdown_remaining < 0,"Le choix obligatoire n'est jamais accéléré ou validé automatiquement")
 			scene._reset()
+			check(scene.model.phase == "bonus" and not scene.choosing_faction,"Le choix obligatoire protège aussi le redémarrage forcé")
+			scene._choose_bonus(0); scene._reset()
 			check(scene.speed == 1.0 and scene.choosing_faction,"Nouvel essai revient en ×1")
 			scene.free()
 		check(runs[0] == runs[1] and runs[1] == runs[2],"Même journal, économie, pertes et durée simulée en ×1, ×2 et ×10")

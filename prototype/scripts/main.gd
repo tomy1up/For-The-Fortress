@@ -139,6 +139,8 @@ var boss_name: Label
 var boss_health: Label
 var boss_bar: ProgressBar
 var boss_threat: Label
+var keyboard_focus_context: String = ""
+var syncing_keyboard_focus: bool = false
 
 func _ready() -> void:
 	map_view.model = model
@@ -962,11 +964,12 @@ func _start() -> void:
 	_update_interface()
 
 func _toggle_speed() -> void:
+	if _selection_blocked(): return
 	speed = COMBAT_SPEEDS[(COMBAT_SPEEDS.find(speed)+1)%COMBAT_SPEEDS.size()]
 	_update_interface()
 
 func _reset() -> void:
-	if model.active or pending_slot >= 0 or summary_open:
+	if model.active or _selection_blocked():
 		return
 	overview_open = false
 	autoplay_started = false
@@ -1098,9 +1101,11 @@ func _update_interface() -> void:
 	var modal: bool = choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
 	for control in [start_button,speed_button,reset_button,sell_button,upgrade_button,bonus_summary_button,summary_button]+buy_buttons:
 		control.set("tooltip_blocked",modal)
+		control.focus_mode = Control.FOCUS_NONE if modal else Control.FOCUS_ALL
+		if modal and control.has_focus(): control.release_focus()
 	var terminal: bool = model.phase in ["victory","defeat"]
 	summary_button.visible = terminal
-	summary_button.disabled = overview_open or pending_slot >= 0
+	summary_button.disabled = modal
 	summary_panel.visible = summary_open
 	reset_button.size.x = 112 if terminal else 234
 	reset_button.text = "Rejouer" if terminal else "Nouvel essai"
@@ -1110,7 +1115,7 @@ func _update_interface() -> void:
 	faction_panel.visible = choosing_faction
 	faction_label.text = "CHOIX DE FACTION" if choosing_faction else ("ALLIANCE" if model.faction == 0 else "HORDE") + "  /  VAGUE %d SUR 10" % model.wave
 	specialisation_panel.visible = pending_slot >= 0
-	start_button.disabled = choosing_faction or pending_slot >= 0 or overview_open or model.phase not in ["preparation","finished"]
+	start_button.disabled = modal or model.phase not in ["preparation","finished"]
 	start_button.text = "Lancer la vague %d" % (model.wave+1 if model.phase == "finished" else model.wave) if model.phase in ["preparation","finished"] else "Vague %d en cours" % model.wave if model.active else "Partie gagnée" if model.phase == "victory" else "Choisissez un bonus" if model.phase == "bonus" else "Partie terminée"
 	if countdown_remaining >= 0.0:
 		start_button.text = "En pause · %d s" % ceili(countdown_remaining) if _countdown_paused() else "Vague %d dans %d s" % [model.wave+1,ceili(countdown_remaining)]
@@ -1122,8 +1127,9 @@ func _update_interface() -> void:
 	if countdown_remaining >= 0.0:
 		start_button.tooltip_text += "\nDépart automatique après le décompte. Cliquez pour lancer maintenant."
 	speed_button.text = "Vitesse ×%d%s" % [int(speed)," · debug" if speed == 10.0 else ""]
+	speed_button.disabled = modal
 	speed_button.tooltip_text = "Alterner entre ×1, ×2 et ×10 (débogage temporaire).\nSeul le combat accélère ; les 30 secondes de préparation restent inchangées."
-	reset_button.disabled = model.active or pending_slot >= 0 or summary_open
+	reset_button.disabled = model.active or modal
 	reset_button.tooltip_text = "Terminez la vague avant de recommencer." if model.active else "Repartir avec 150 or et 20 PV."
 	match model.phase:
 		"preparation": status_label.text = "Préparation · Vague %d/10\n%d ennemis" % [model.wave,model.spawn_schedule.size()]
@@ -1135,14 +1141,14 @@ func _update_interface() -> void:
 	if countdown_remaining >= 0.0:
 		status_label.text = "Vague %d terminée\n%s" % [model.wave,"Décompte suspendu" if _countdown_paused() else "Préparation : %d s" % ceili(countdown_remaining)]
 	bonus_summary_button.text = "Bonus acquis · %d/3" % model.bonuses.size()
-	bonus_summary_button.disabled = choosing_faction or pending_slot >= 0 or model.phase == "bonus"
+	bonus_summary_button.disabled = modal
 	_update_bonus_panel()
 	tally_label.text = "Apparus : %d / %d\nÉliminés : %d · Passés : %d\nEn chemin : %d" % [model.spawned, model.spawn_schedule.size(), model.killed, model.escaped, model.enemies.size()]
 	time_label.text = ("Combat cumulé : %.1f s" % (model.completed_time+model.elapsed)).replace(".", ",")
 	hint_label.text = "Sélectionnez E1 à E6 (clic ou touches 1–6) pour construire ou inspecter."
 	var occupied: bool = selected >= 0 and not model.defenders[selected].is_empty()
 	sell_button.visible = occupied
-	sell_button.disabled = pending_slot >= 0 or not model.can_build()
+	sell_button.disabled = modal or not model.can_build()
 	upgrade_button.visible = occupied
 	for type in range(buy_buttons.size()):
 		var button: Button = buy_buttons[type]
@@ -1152,7 +1158,7 @@ func _update_interface() -> void:
 		button.text = "%s · %d or  (%d/2)" % [offer.get("short_name", offer.name), model.purchase_cost(actual_type), model.count_type(actual_type)]
 		var purchase_error: String = model.purchase_error(selected, actual_type)
 		button.tooltip_text = _recruit_tooltip(actual_type,purchase_error)
-		button.disabled = choosing_faction or not purchase_error.is_empty()
+		button.disabled = modal or not purchase_error.is_empty()
 	if selected < 0:
 		title_label.text = "CONSTRUIRE · " + ("ALLIANCE" if model.faction == 0 else "HORDE")
 		details_label.text = "Choisissez un emplacement sur la carte.\nLes défenseurs du premier essai commencent au niveau 1."
@@ -1169,7 +1175,7 @@ func _update_interface() -> void:
 		upgrade_button.text = "Niveau maximum" if defender.level == 4 else "Spécialisation · %d or" % model.upgrade_cost(selected) if defender.level == 3 else "Niveau %d · %d or" % [defender.level + 1, model.upgrade_cost(selected)]
 		var improvement_error: String = model.upgrade_error(selected, 0 if defender.level == 3 else -1)
 		upgrade_button.tooltip_text = _upgrade_tooltip(selected,improvement_error)
-		upgrade_button.disabled = pending_slot >= 0 or not improvement_error.is_empty()
+		upgrade_button.disabled = modal or not improvement_error.is_empty()
 		sell_button.text = "Vendre · %d or" % model.refund(selected)
 		sell_button.tooltip_text = "Vous récupérez %d or sur les %d or investis.\nPerte à la vente : %d or.\nOr disponible après vente : %d.\nLe défenseur est retiré de cet emplacement." % [model.refund(selected),defender.paid,defender.paid-model.refund(selected),model.gold+model.refund(selected)]
 		if not model.can_build(): sell_button.tooltip_text += "\nVente possible uniquement entre les vagues."
@@ -1195,6 +1201,32 @@ func _update_interface() -> void:
 	_update_enemy_inspector()
 	_update_wave_forecast()
 	_update_boss_status()
+	_sync_keyboard_focus()
+
+func _sync_keyboard_focus() -> void:
+	if syncing_keyboard_focus: return
+	var context: String = ""
+	var target: Button
+	if choosing_faction:
+		context = "faction"; target = faction_buttons[0]
+	elif pending_slot >= 0:
+		context = "specialisation:%d:%d" % [pending_slot,pending_instance]; target = specialisation_cancel
+	elif model.phase == "bonus":
+		context = "bonus:%d:%d" % [model.faction,model.wave]
+		if not model.bonus_offer.is_empty(): target = bonus_buttons[0]
+	elif overview_open:
+		context = "overview"; target = bonus_close
+	elif summary_open:
+		context = "summary"; target = summary_close
+	else:
+		target = start_button if not start_button.disabled else bonus_summary_button
+	var current: Control = get_viewport().gui_get_focus_owner()
+	if context == keyboard_focus_context and current != null and current.is_visible_in_tree(): return
+	keyboard_focus_context = context
+	if target == null or not target.is_visible_in_tree() or target.disabled: return
+	syncing_keyboard_focus = true
+	target.grab_focus()
+	syncing_keyboard_focus = false
 
 func _synergy_gain_text(type: int, rule: Dictionary, side: int) -> String:
 	var gains: Array[String] = []

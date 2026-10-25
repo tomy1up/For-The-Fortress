@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.41 — 25 octobre 2026
+Version : 0.42 — 25 octobre 2026
 
 JOUER
 
@@ -147,3 +147,11 @@ E1 à E6, comme un clic sur la carte. Sur AZERTY, les touches physiques de
 la rangée supérieure fonctionnent aussi sans Maj. Ctrl, Alt et les raccourcis
 système restent ignorés. La sélection seule ne dépense pas d’or et ne suspend
 pas les 30 secondes de préparation. Les écrans de choix et le bilan la bloquent.
+
+DIALOGUES ET CLAVIER
+Pendant un choix ou la lecture du bilan, les commandes de fond sont
+verrouillées : Tab reste sur le panneau visible et ne peut pas atteindre
+Nouvel essai, les achats ou la vitesse derrière celui-ci. Fermez le panneau
+ou validez le choix pour retrouver les commandes normales.
+Un bouton du panneau reçoit le focus initial. Tab change de commande et
+Entrée l’active. Le choix de spécialisation commence sur Annuler.
