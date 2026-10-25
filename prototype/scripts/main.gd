@@ -391,6 +391,14 @@ func _select_slot(slot: int) -> bool:
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo: return
 	if event.ctrl_pressed or event.alt_pressed or event.meta_pressed: return
+	if event.keycode == KEY_ESCAPE or event.physical_keycode == KEY_ESCAPE:
+		if choosing_faction or model.phase == "bonus": return
+		if pending_slot >= 0: _cancel_specialisation()
+		elif overview_open: _close_bonuses()
+		elif summary_open: _close_run_summary()
+		else: return
+		get_viewport().set_input_as_handled()
+		return
 	var codes: Array[int] = [event.physical_keycode,event.keycode]
 	for code in codes:
 		var slot: int = code-KEY_1 if code >= KEY_1 and code <= KEY_6 else code-KEY_KP_1 if code >= KEY_KP_1 and code <= KEY_KP_6 else -1
@@ -619,7 +627,7 @@ func _build_run_summary(screen: Control) -> void:
 	report_status.mouse_filter = Control.MOUSE_FILTER_STOP
 	report_button = _button(panel,"Exporter le rapport",Rect2(24,622,240,30),_export_run_report)
 	report_button.tooltip_text = "Enregistrer localement les vagues, bonus proposés et décisions de cette partie."
-	summary_close = _button(panel,"Fermer",Rect2(784,622,164,30),_close_run_summary)
+	summary_close = _button(panel,"Fermer · Échap",Rect2(784,622,164,30),_close_run_summary)
 	summary_panel.visible = false
 
 func _set_summary_tab(index: int) -> void:
@@ -815,7 +823,7 @@ func _build_specialisation_selector(screen: Control) -> void:
 		specialisation_buttons[-1].focus_entered.connect(_branch_focus.bind(branch,true))
 		specialisation_buttons[-1].focus_exited.connect(_branch_focus.bind(branch,false))
 	_label(panel, "Survolez un choix : portée et partenaires prévus.", Vector2(18,572), Vector2(362,20),12,Color("aabbb0"))
-	specialisation_cancel = _button(panel, "Annuler", Rect2(117, 604, 164, 32), _cancel_specialisation)
+	specialisation_cancel = _button(panel, "Annuler · Échap", Rect2(117, 604, 164, 32), _cancel_specialisation)
 
 func _upgrade() -> void:
 	if choosing_faction or overview_open or pending_slot >= 0 or selected < 0 or model.defenders[selected].is_empty():
@@ -1330,7 +1338,7 @@ func _build_bonus_selector(screen: Control) -> void:
 		scroll.add_child(impact)
 		bonus_impacts.append(impact)
 		bonus_buttons.append(_button(panel,"Choisir ce bonus",Rect2(x,532,328,48),_choose_bonus.bind(index)))
-	bonus_close = _button(panel,"Fermer",Rect2(442,408,196,36),_close_bonuses)
+	bonus_close = _button(panel,"Fermer · Échap",Rect2(442,408,196,36),_close_bonuses)
 
 func _show_bonuses() -> void:
 	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or summary_open: return

@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 25 octobre 2026 — prototype v0.47, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 25 octobre 2026 — prototype v0.48, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -256,3 +256,7 @@ Outil de rejeu en lecture seule pour rapports au format 2, non embarqué dans le
 ## v0.47 — Calcul des comparaisons de bonus, 25 octobre 2026
 
 Trois comparaisons réutilisées pendant la lecture, invalidées quand faction, vague, offres, bonus, défense, budget, PV ou activation des synergies changent. 27 suites, 14 283 contrôles Godot dont 70 dédiés, 15 tests Python réussis. Mesure locale sans rendu : mise à jour du panneau environ 1,35–1,40 ms avant, 0,23–0,25 ms après sur six N4 à budget imposé. [Limites et protocole](Calcul_bonus_v047.md).
+
+## v0.48 — Échap dans les panneaux, 25 octobre 2026
+
+Fermeture du récapitulatif et du bilan, annulation sans dépense de la spécialisation. Choix obligatoires conservés. 28 suites, 14 313 contrôles Godot dont 30 dédiés, 15 tests Python réussis. [Détail](Echap_panneaux_v048.md).
