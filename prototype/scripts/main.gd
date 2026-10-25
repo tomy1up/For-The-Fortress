@@ -134,6 +134,11 @@ var forecast_note: Label
 var forecast_wave: int = -1
 var forecast_data: Dictionary = {}
 var breach_remaining: float = 0.0
+var boss_panel: Panel
+var boss_name: Label
+var boss_health: Label
+var boss_bar: ProgressBar
+var boss_threat: Label
 
 func _ready() -> void:
 	map_view.model = model
@@ -276,6 +281,10 @@ func _ready() -> void:
 			assert(not target.is_empty(),"La capture d'inspection requiert un ennemi vivant.")
 			inspection_pointer = MapView.enemy_bounds(target).get_center()
 			_update_enemy_inspector()
+		if "--capture-boss-only" in OS.get_cmdline_user_args():
+			inspection_pointer = Vector2(30,60)
+			_update_enemy_inspector()
+			print("BOSS_STATUS_WITHOUT_HOVER=",boss_panel.visible and not enemy_inspector.visible)
 		if capture_state in ["specialisation", "specialised"]:
 			faction_label.text = "CONTRÔLE PROGRESSION · BUDGET IMPOSÉ"
 		if capture_state == "catalogue":
@@ -436,11 +445,47 @@ func _build_interface() -> void:
 	_label(screen, "Nom de travail · Visuels temporaires", Vector2(34, 776), Vector2(900, 20), 11, Color("718b7d"))
 
 	_build_wave_forecast(screen)
+	_build_boss_status(screen)
 	_build_enemy_inspector(screen)
 	_build_faction_selector(screen)
 	_build_specialisation_selector(screen)
 	_build_bonus_selector(screen)
 	_build_run_summary(screen)
+
+func _build_boss_status(screen: Control) -> void:
+	boss_panel = _panel(screen,Rect2(340,82,580,72))
+	boss_name = _label(boss_panel,"",Vector2(16,6),Vector2(350,24),18,Color("e3c58c"))
+	boss_health = _label(boss_panel,"",Vector2(386,8),Vector2(178,22),14,Color("e0e7db"))
+	boss_health.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	boss_bar = ProgressBar.new()
+	boss_bar.position = Vector2(16,34)
+	boss_bar.show_percentage = false
+	boss_bar.step = 0.0
+	boss_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for key in ["background","fill"]:
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color("c58272") if key == "fill" else Color("253a31")
+		style.set_corner_radius_all(3)
+		boss_bar.add_theme_stylebox_override(key,style)
+	boss_panel.add_child(boss_bar)
+	boss_bar.size = Vector2(548,8)
+	boss_threat = _label(boss_panel,"",Vector2(16,48),Vector2(548,18),13,Color("e0dbbf"))
+	boss_panel.visible = false
+
+func _update_boss_status() -> void:
+	boss_panel.visible = false
+	if choosing_faction or pending_slot >= 0 or overview_open or summary_open or not model.active: return
+	for enemy in model.enemies:
+		if enemy.type != 7 or enemy.hp <= 0.0: continue
+		boss_panel.visible = true
+		boss_name.text = "BOSS · " + Model.ENEMY_TYPES[enemy.type].name
+		boss_health.text = "PV : %d / %d" % [ceili(enemy.hp),enemy.max_hp]
+		boss_bar.max_value = enemy.max_hp
+		boss_bar.value = enemy.hp
+		var fatal: bool = enemy.fortress_damage >= model.fortress_hp
+		boss_threat.text = "S’il atteint la forteresse, elle perd %d PV%s" % [enemy.fortress_damage," · Défaite" if fatal else ""]
+		boss_threat.add_theme_color_override("font_color",Color("ed9989") if fatal else Color("e0dbbf"))
+		return
 
 func _build_wave_forecast(screen: Control) -> void:
 	forecast_panel = _panel(screen,Rect2(946,96,310,156))
@@ -1131,6 +1176,7 @@ func _update_interface() -> void:
 	_refresh_upgrade_preview()
 	_update_enemy_inspector()
 	_update_wave_forecast()
+	_update_boss_status()
 
 func _synergy_gain_text(type: int, rule: Dictionary, side: int) -> String:
 	var gains: Array[String] = []

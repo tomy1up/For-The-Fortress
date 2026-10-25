@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.38 — 25 octobre 2026
+Version : 0.39 — 25 octobre 2026
 
 JOUER
 
@@ -133,3 +133,10 @@ malédictions selon son type. Les unités vendues restent dans ce bilan.
 Les tirs simultanés partagent les PV retirés proportionnellement à leurs dégâts.
 Les dégâts excédentaires ne sont pas comptés. Le rapport exporté inclut ces
 mesures ; elles ne suffisent pas à juger les synergies ou l’utilité d’une unité.
+
+SUIVRE LE BOSS
+Pendant le combat, sa jauge reste visible sans survol. Elle indique ses PV
+et la perte de vie de la forteresse s’il l’atteint, avec Défaite si nécessaire.
+La fiche au survol reste disponible pour la récompense et la malédiction.
+La jauge disparaît quand le boss n’est plus présent, sans annoncer à elle seule
+la fin de la vague : les autres ennemis doivent encore être arrêtés.

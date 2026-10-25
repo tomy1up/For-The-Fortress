@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 25 octobre 2026 — prototype v0.38, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 25 octobre 2026 — prototype v0.39, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -220,3 +220,7 @@ Observation des impacts et des PV retirés, répartition proportionnelle des cou
 ## L6 — Matrice instrumentée après v0.38
 
 1 728 scénarios rejoués, 356 868 audits sans anomalie et concordance de tous les champs historiques avec le relevé v0.19. Suivi séparé de la mort du boss et de la résolution de la vague : 1 060 finales atteintes, 1 059 boss éliminés et deux défaites malgré le boss éliminé. Aucun réglage modifié. [Résultats, limites et données](Bilan_finale_v038.md). Le paquet Windows v0.38 reste inchangé ; ce complément concerne les outils d’essai et la documentation.
+
+## v0.39 — Jauge du boss, 25 octobre 2026
+
+Vie et dégâts à la forteresse visibles sans survol, avec signal de défaite conditionnel et masquage hors combat ou derrière les écrans de choix. 14 004 contrôles réussis, dont 52 ciblés, et 46 lancements Windows vérifiés sur l’écran de droite. [Détail](Suivi_boss_v039.md). Aucun réglage modifié.

@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.38 (25 octobre 2026)** : bilan de l’activité des défenseurs, PV retirés et contributions au boss. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.38).
+**Version v0.39 (25 octobre 2026)** : jauge du boss visible sans survol pendant le combat. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.39).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -103,3 +103,7 @@ Le bilan détaille les contributions des recrues, y compris celles vendues, avec
 ## Relecture de la finale
 
 La [matrice instrumentée en v0.38](design/Bilan_finale_v038.md) confirme les résultats historiques de 1 728 scénarios et distingue le boss de la fin de vague. Données et outils de reproduction versionnés ; aucun réglage changé. Les essais humains restent nécessaires pour le ressenti de difficulté.
+
+## Suivi du boss — v0.39
+
+Jauge permanente pendant sa présence en combat, sans changement de statistiques. [Détail](design/Suivi_boss_v039.md). 14 004 contrôles et 46 lancements Windows réussis.

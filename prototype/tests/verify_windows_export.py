@@ -61,6 +61,7 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('alliance_defender_summary','summary','alliance'),('horde_defender_summary','summary','horde'),
        ('defeat_defender_summary','defeat_summary','horde'),
        ('enemy_inspection','inspection','horde'),('boss_inspection','boss_inspection','alliance'),
+       ('boss_without_hover','boss_inspection','horde'),
        ('upgrade_comparison','upgrade',None),('specialisation_preview','specialisation',None),
        ('alliance_purchase','purchase','alliance'),('horde_purchase','purchase','horde'),
        ('alliance_crossbow_purchase','purchase','alliance'),('alliance_mage_purchase','purchase','alliance'),
@@ -76,6 +77,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if name=='boss_without_hover': command+=['--capture-boss-only']
         if name.endswith('_defender_summary'): command+=['--capture-performance']
         if name in ['alliance_synergy_purchase','horde_synergy_purchase','alliance_synergy_branch','horde_synergy_branch']: command+=['--capture-synergy-preview']
         if name in ['alliance_run_report','horde_run_report','horde_defender_summary']: command+=['--capture-export-report']
@@ -89,6 +91,7 @@ for name,state,faction in cases:
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
+    if name=='boss_without_hover': assert 'BOSS_STATUS_WITHOUT_HOVER=true' in text,(name,text)
     if name in ['alliance_run_report','horde_run_report','horde_defender_summary']:
         report_folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))
         run_report=json.loads((report_folder/'rapport.json').read_text(encoding='utf-8'))
