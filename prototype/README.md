@@ -1,14 +1,14 @@
 # Dix vagues jouables sur La Vallée du Gué
 
-**Version v0.49 (26 octobre 2026)** : consignes adaptées à la préparation, au combat et au résultat. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.49).
+**Version v0.50 (26 octobre 2026)** : sort et temps de résolution du boss conservés dans le rapport et consultables au survol de la vague 10. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.50).
 
-**Prototype v0.49 — 26 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
+**Prototype v0.50 — 26 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
 
 Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.49](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.49) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.50](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.50) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
 Sur ce PC : dist/For_the_Fortress_v0.35_Windows_x64 depuis la racine du dépôt. Le ZIP local pèse environ 39 Mo. Voir [le relevé d’export](../design/Distribution_Windows_v035.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
@@ -276,3 +276,7 @@ Les trois comparaisons ne sont plus recalculées à chaque image pendant la lect
 ## Consignes selon la situation — v0.49
 
 Le panneau de gauche indique quoi faire à chaque étape et cesse de parler de première vague après celle-ci. Le compteur précise « Combat simulé » ; une aide au survol explique les vitesses et les temps exclus. [Détail](../design/Consignes_contextuelles_v049.md).
+
+## Suivi du boss final — v0.50
+
+Le rapport et l’aide de la vague 10 distinguent boss éliminé, arrivé à la forteresse, encore en chemin ou non rencontré. Les temps mesurés restent des temps de simulation. [Détail et limites](../design/Releve_boss_v050.md).

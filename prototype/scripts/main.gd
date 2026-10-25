@@ -721,6 +721,7 @@ func _populate_run_summary() -> void:
 			for code in record.bonuses: names.append(Model.Campaign.BONUSES[code].name)
 			var army: Array[String] = _army_description(record.army)
 			summary_rows[index].tooltip_text = "Vague %d : %d ennemis prévus, %d apparus, %d encore en chemin à la fin.\nForteresse : %d → %d PV\nDéfense au départ :\n%s\nBonus actifs : %s" % [record.wave,record.planned,record.spawned,record.remaining,record.hp_before,record.hp_after,"\n".join(army) if not army.is_empty() else "Aucun défenseur"," · ".join(names) if not names.is_empty() else "Aucun"]
+			if record.wave == 10: summary_rows[index].tooltip_text += "\n\n" + RunReport.boss_description(RunReport.boss_encounter(model))
 		for column in range(values.size()): summary_cells[index][column].text = values[column]
 	summary_totals.text = "Total : %d éliminés · %d passés · %d PV perdus au combat · %d or gagnés au combat" % [model.total_killed,model.total_escaped,lost,model.total_income]
 	var army: Array[Dictionary] = []

@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.49 (26 octobre 2026)** : consignes adaptées à la préparation, au combat et au résultat. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.49).
+**Version v0.50 (26 octobre 2026)** : sort et temps de résolution du boss conservés dans le rapport et consultables au survol de la vague 10. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.50).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -147,3 +147,7 @@ Les trois comparaisons ne sont plus recalculées à chaque image pendant la lect
 ## Consignes selon la situation — v0.49
 
 Le panneau de gauche indique quoi faire à chaque étape et cesse de parler de première vague après celle-ci. Le compteur précise « Combat simulé » ; une aide au survol explique les vitesses et les temps exclus. [Détail](design/Consignes_contextuelles_v049.md).
+
+## Suivi du boss final — v0.50
+
+Le rapport et l’aide de la vague 10 distinguent boss éliminé, arrivé à la forteresse, encore en chemin ou non rencontré. Les temps mesurés restent des temps de simulation. [Détail et limites](design/Releve_boss_v050.md).

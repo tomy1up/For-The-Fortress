@@ -1,0 +1,40 @@
+{
+  "reports": [
+    {
+      "source": "Rapport exporté par le contrôle Windows v0.45 alliance",
+      "input_sha256": "77995d556842bcf83a294ef4992d24a45adeb53350b9b783a7fe57aac6540035",
+      "read_only_confirmed": true,
+      "result": {
+        "actions": 45,
+        "current_version": "0.50",
+        "faction": 0,
+        "fortress_hp": 14,
+        "gold": 192,
+        "ok": true,
+        "result": "victory",
+        "same_version": false,
+        "source_version": "0.45",
+        "wave": 10
+      }
+    },
+    {
+      "source": "Rapport exporté par le contrôle Windows v0.45 horde",
+      "input_sha256": "4d9d11c4ac531d50c3cc5c3906d74ec047446a71568be4eeb82df63a8db3f2ea",
+      "read_only_confirmed": true,
+      "result": {
+        "actions": 45,
+        "current_version": "0.50",
+        "faction": 1,
+        "fortress_hp": 12,
+        "gold": 189,
+        "ok": true,
+        "result": "victory",
+        "same_version": false,
+        "source_version": "0.45",
+        "wave": 10
+      }
+    }
+  ],
+  "usage_without_report_exit": 2,
+  "human_playtest": false
+}

@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.49 — 26 octobre 2026
+Version : 0.50 — 26 octobre 2026
 
 JOUER
 
@@ -157,3 +157,5 @@ Un bouton du panneau reçoit le focus initial. Tab change de commande et
 Entrée l’active. Le choix de spécialisation commence sur Annuler.
 Échap ferme le récapitulatif ou le bilan et annule un choix de spécialisation
 sans dépense. Les choix de faction et de bonus obligatoire restent ouverts.
+Dans le bilan, survolez la vague 10 pour lire le sort du boss et son temps
+de résolution. Le rapport exporté conserve aussi ces observations.

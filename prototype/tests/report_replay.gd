@@ -83,6 +83,7 @@ static func verify(data: Variant) -> Dictionary:
 	var observed: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
 	for field in observed:
 		if field in ["game_version","engine_version"]: continue
+		if field == "boss_encounter" and not data.has(field): continue # Champ ajouté en v0.50 ; rapports historiques au format 2.
 		if not data.has(field): return _fail("Champ absent : " + field)
 		var detail: String = _difference(data[field],observed[field],field)
 		if not detail.is_empty(): return _fail(detail)

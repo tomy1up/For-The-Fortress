@@ -104,6 +104,8 @@ for name,state,faction in cases:
         assert run_report['result']=='victory' and len(run_report['waves'])==10
         assert run_report['faction']==(0 if faction=='alliance' else 1)
         assert run_report['schema_version']==2 and len(run_report['performance'])==3
+        assert run_report['boss_encounter']['status']=='killed' and abs(run_report['boss_encounter']['removed_hp']-600)<0.000001
+        assert 0<run_report['boss_encounter']['resolved_seconds']<=run_report['waves'][-1]['seconds']
         assert abs(sum(unit['boss_hp'] for unit in run_report['performance'])-600)<0.000001
         assert len([action for action in run_report['actions'] if action['kind']=='bonus_choice'])==3
         assert 'Bonus proposés' in (report_folder/'rapport.md').read_text(encoding='utf-8')
