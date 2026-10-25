@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 25 octobre 2026 — prototype v0.39, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 25 octobre 2026 — prototype v0.40, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -224,3 +224,7 @@ Observation des impacts et des PV retirés, répartition proportionnelle des cou
 ## v0.39 — Jauge du boss, 25 octobre 2026
 
 Vie et dégâts à la forteresse visibles sans survol, avec signal de défaite conditionnel et masquage hors combat ou derrière les écrans de choix. 14 004 contrôles réussis, dont 52 ciblés, et 46 lancements Windows vérifiés sur l’écran de droite. [Détail](Suivi_boss_v039.md). Aucun réglage modifié.
+
+## v0.40 — Vérification complète versionnée, 25 octobre 2026
+
+Lanceur sans fenêtre, découverte des suites, contrôle des résumés/erreurs, journaux JSON, empreintes des sources et contrats du GDD inclus dans le dépôt. 23 suites et 14 004 contrôles Godot, 9 tests Python ; filtres, appel depuis un autre répertoire et mauvais moteur vérifiés. 46 lancements Windows. [Instructions et preuve](Verification_reproductible_v040.md). Comportements du jeu conservés.

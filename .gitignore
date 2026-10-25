@@ -15,3 +15,7 @@ desktop.ini
 
 # Versions Windows générées (livrées en archives de version)
 dist/
+
+# Cache des outils de vérification Python
+__pycache__/
+*.pyc
