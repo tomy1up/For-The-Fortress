@@ -1,0 +1,227 @@
+{
+  "archive_sha256": "5d86da38cfd5557c93ef99535896e5b6fece21f9a8eee9ab8bbaf153e101ca97",
+  "executable_sha256": "b2210f2534dd3ee4a62f6a93bedf730d8efa45c2855a15f753ecf09a1d28b619",
+  "files": [
+    "For_the_Fortress_v0.37_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.37_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.37_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.37_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.37_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "fortress_breach",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_alliance_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_horde_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_economy_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_faction_bonuses",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_faction_bonuses",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_defender_catalogue",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_defender_catalogue",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_silhouettes",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "debug_combat_speed",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergy_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergy_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergy_branch",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergy_branch",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_mage",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_troll",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_sapper",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_shaman",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "wave_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "victory_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "defeat_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "upgrade_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "specialisation_preview",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_crossbow_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_mage_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_sapper_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_shaman_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Quatre vues de prévision de synergies inspectées : recrutement et spécialisation Alliance/Horde. Essais interactifs au budget normal des deux factions sur le même paquet, à droite ; conformité des effets prévus, coût et confirmation Alliance vérifiés. Fenêtre fermée après contrôle.",
+  "automated_checks": 13879,
+  "feature_checks": 1162,
+  "test_screen": 1
+}

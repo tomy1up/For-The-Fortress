@@ -1,6 +1,6 @@
 param(
     [string]$EnginePath = '',
-    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.36',
+    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.37',
     [string]$OutputRoot = ''
 )
 $ErrorActionPreference = 'Stop'
@@ -56,7 +56,7 @@ foreach ($relative in @('project.godot','export_presets.cfg','scenes\main.tscn',
 }
 $manifest = [ordered]@{
     version = $Version
-    date = '2026-10-24'
+    date = '2026-10-25'
     platform = 'Windows x86_64'
     engine = $engineVersion
     executable = 'For_the_Fortress.exe'

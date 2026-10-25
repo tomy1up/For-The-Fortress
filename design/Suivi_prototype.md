@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 24 octobre 2026 — prototype v0.35, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 25 octobre 2026 — prototype v0.37, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -208,3 +208,7 @@ Dégâts à la forteresse explicités, nombres lisibles, montants économiques d
 ## v0.36 — Journal et rapports locaux, 24 octobre 2026
 
 Décisions acceptées, achats, améliorations, ventes, offres et choix roguelite conservés en mémoire. Export Markdown et JSON depuis le bilan, sans tirage supplémentaire ni reprise de partie. 12 717 contrôles réussis et 38 lancements Windows. [Détail et limites](Rapports_partie_v036.md).
+
+## v0.37 — Anticiper les synergies, 25 octobre 2026
+
+Liens bleus pointillés et détail des partenaires/gains avant recrutement et spécialisation, fondés sur les associations existantes et une unité candidate sans mutation. 13 879 contrôles réussis, dont 1 162 ciblés ; 42 lancements Windows et vérification interactive des deux factions sur l’écran de droite. [Détail](Apercu_synergies_v037.md).

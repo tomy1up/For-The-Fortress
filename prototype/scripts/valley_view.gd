@@ -10,6 +10,7 @@ var model: RefCounted
 var selected: int = -1
 var purchase_preview: Dictionary = {}
 var upgrade_preview: Dictionary = {}
+var preview_synergy_unit: Dictionary = {}
 var inspected_enemy_id: int = -1
 var breach_feedback: Dictionary = {}
 var font: Font = ThemeDB.fallback_font
@@ -92,6 +93,32 @@ static func covered_route(center: Vector2, radius: float) -> Array[PackedVector2
 		sections.append(points)
 	return sections
 
+func synergy_links(candidate: Dictionary = {}) -> Array[Dictionary]:
+	var links: Array[Dictionary] = []
+	if model == null or selected < 0 or selected >= model.defenders.size(): return links
+	var unit: Dictionary = model.defenders[selected] if candidate.is_empty() else candidate
+	if unit.is_empty() or int(unit.get("type",-1)) not in model.available_types(): return links
+	for rule in Model.Campaign.PROXIMITY + Model.Campaign.SPECIALISATIONS:
+		for partner in model.synergy_partners(selected,rule,-1,candidate):
+			links.append({"code":rule.code,"partner":partner,"specialised":rule.has("branches")})
+	return links
+
+func _draw_synergy_links(candidate: Dictionary = {}) -> void:
+	var planned: bool = not candidate.is_empty()
+	for link in synergy_links(candidate):
+		var offset := Vector2(0,4 if link.specialised else 0)
+		var start: Vector2 = project(Model.SLOTS[selected]) + offset
+		var finish: Vector2 = project(Model.SLOTS[link.partner]) + offset
+		var color := Color("8bd5e6") if planned else Color("8cbde0") if link.specialised else Color("e1bb70")
+		if planned:
+			var length: float = start.distance_to(finish)
+			var direction: Vector2 = (finish-start).normalized()
+			for step in range(0,int(ceil(length)),12):
+				draw_line(start+direction*step,start+direction*minf(step+7,length),color,2,true)
+		else:
+			draw_line(start,finish,Color(color,0.65),2,true)
+		draw_circle(finish,7 if planned else 5,color,false,2,true)
+
 func polygon(points: Array[Vector2], color: Color) -> void:
 	var projected := PackedVector2Array()
 	for point in points:
@@ -134,6 +161,7 @@ func _draw() -> void:
 		draw_polyline(preview_ring, Color("8bd5e6"), 2.5, true)
 		for section in covered_route(Model.SLOTS[selected], preview.range):
 			draw_polyline(section, Color("8bd5e6"), 6, true)
+		if not preview_synergy_unit.is_empty(): _draw_synergy_links(preview_synergy_unit)
 	if model != null and selected >= 0 and not model.defenders[selected].is_empty():
 		var stats: Dictionary = model.get_stats(selected)
 		var ring := range_outline(Model.SLOTS[selected], stats.range)
@@ -142,16 +170,7 @@ func _draw() -> void:
 		if preview.is_empty():
 			for section in covered_route(Model.SLOTS[selected],stats.range):
 				draw_polyline(section,Color(0.9,0.77,0.48,0.65),4,true)
-		# Montrer uniquement les partenaires actifs du défenseur sélectionné.
-		for rule in Model.Campaign.PROXIMITY + Model.Campaign.SPECIALISATIONS:
-			var specialised: bool = rule.has("branches")
-			var offset := Vector2(0, 4 if specialised else 0)
-			var link_color := Color("8cbde0") if specialised else Color("e1bb70")
-			for partner_slot in model.synergy_partners(selected, rule):
-				var start: Vector2 = project(Model.SLOTS[selected]) + offset
-				var finish: Vector2 = project(Model.SLOTS[partner_slot]) + offset
-				draw_line(start, finish, Color(link_color, 0.65), 2, true)
-				draw_circle(finish, 5, link_color, false, 2, true)
+		if preview.is_empty(): _draw_synergy_links()
 	for index in range(Model.SLOTS.size()):
 		var center: Vector2 = project(Model.SLOTS[index])
 		var diamond := PackedVector2Array([center + Vector2(-26, 0), center + Vector2(0, -13), center + Vector2(26, 0), center + Vector2(0, 13)])

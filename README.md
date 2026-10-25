@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.36 (24 octobre 2026)** : journal des décisions et export local d’un rapport depuis le bilan de partie. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.36).
+**Version v0.37 (25 octobre 2026)** : partenaires et gains de synergie visibles avant recrutement ou spécialisation. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.37).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -91,3 +91,7 @@ La [v0.22 autonome](design/Distribution_Windows_v022.md) ajoute l’enchaînemen
 ## Rapports de partie — v0.36
 
 Le bilan permet d’exporter les décisions, offres de bonus, ressources et résultats dans deux fichiers locaux. [Fonctionnement et validation](design/Rapports_partie_v036.md). 12 717 contrôles et 38 lancements Windows vérifiés.
+
+## Aperçu des synergies — v0.37
+
+Les liens et les gains prévus sont visibles avant de recruter ou spécialiser un défenseur. [Détail](design/Apercu_synergies_v037.md). 13 879 contrôles réussis et 42 lancements Windows vérifiés, sans changement d’équilibrage.

@@ -241,6 +241,19 @@ func _ready() -> void:
 			model.buy(0,capture_faction*3); model.buy(1,capture_faction*3+1)
 			selected = 1; map_view.selected = 1; speed = 10.0
 			_start(); _process(0.75)
+		if "--capture-synergy-preview" in OS.get_cmdline_user_args():
+			model.reset(); pending_slot = -1; pending_instance = -1
+			model.select_faction(capture_faction)
+			selected = 0; map_view.selected = 0
+			if capture_state == "purchase":
+				model.buy(1,capture_faction*3+1)
+				hovered_purchase = 0
+			else:
+				model.gold = 10000 # Contrôle de deux branches, pas une campagne jouée.
+				model.buy(0,capture_faction*3); model.buy(5,1 if capture_faction == 0 else 5)
+				for slot in [0,5]: model.upgrade(slot); model.upgrade(slot)
+				model.upgrade(5,1 if capture_faction == 0 else 0)
+				_upgrade(); hovered_branch = 0
 		set_process(false)
 		if capture_state in ["finished","forecast","forecast_boss"]: autoplay_started = true
 		_update_interface()
@@ -264,6 +277,7 @@ func _ready() -> void:
 		if capture_state == "effects": faction_label.text = "CONTRÔLE EFFETS · BUDGET IMPOSÉ"
 		if capture_state == "bonus_preview": bonus_title.text = "CONTRÔLE BONUS · BUDGET IMPOSÉ"
 		if capture_state == "defender_catalogue": faction_label.text = "DÉFENSEURS · BUDGET IMPOSÉ"
+		if "--capture-synergy-preview" in OS.get_cmdline_user_args() and capture_state == "specialisation": faction_label.text = "APERÇU SYNERGIES · BUDGET IMPOSÉ"
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
@@ -672,7 +686,7 @@ func _build_specialisation_selector(screen: Control) -> void:
 		specialisation_buttons[-1].mouse_exited.connect(_branch_hover.bind(branch,false))
 		specialisation_buttons[-1].focus_entered.connect(_branch_focus.bind(branch,true))
 		specialisation_buttons[-1].focus_exited.connect(_branch_focus.bind(branch,false))
-	_label(panel, "Survolez un bouton pour voir sa portée.", Vector2(18,572), Vector2(362,20),12,Color("aabbb0"))
+	_label(panel, "Survolez un choix : portée et partenaires prévus.", Vector2(18,572), Vector2(362,20),12,Color("aabbb0"))
 	specialisation_cancel = _button(panel, "Annuler", Rect2(117, 604, 164, 32), _cancel_specialisation)
 
 func _upgrade() -> void:
@@ -707,6 +721,9 @@ func _update_specialisation_choices() -> void:
 		elif type == 5:
 			specialisation_stats[branch].text += "\nMalédiction : %s → %s dégâts\nÀ +1 s puis +2 s, même hors portée." % [_number(current.curse_damage),_number(stats.curse_damage)]
 		specialisation_buttons[branch].disabled = not model.upgrade_error(pending_slot, branch).is_empty()
+		var candidate: Dictionary = defender.duplicate(true)
+		candidate.level = 4; candidate.branch = branch
+		specialisation_buttons[branch].tooltip_text = _preview_synergy_tooltip(pending_slot,candidate)
 
 func _choose_branch(branch: int) -> void:
 	if pending_slot < 0:
@@ -764,6 +781,7 @@ func _recruit_tooltip(type: int, error: String) -> String:
 		lines.append("La cible principale est l’ennemi à portée le plus avancé vers la forteresse.")
 		lines.append("%d or · %d/2 exemplaires recrutés" % [model.purchase_cost(type),model.count_type(type)])
 		if error.is_empty(): lines.append("Cliquez pour acheter.")
+		if model.can_build(): lines.append("\n" + _preview_synergy_tooltip(selected,{"type":type,"level":1,"branch":-1}))
 	if not error.is_empty(): lines.append("Achat impossible : " + error)
 	return "\n".join(lines)
 
@@ -903,6 +921,10 @@ func _refresh_upgrade_preview() -> void:
 	var future: Dictionary = model.upgrade_preview_stats(selected,branch)
 	if future.is_empty(): return
 	map_view.upgrade_preview = future
+	var candidate: Dictionary = model.defenders[selected].duplicate(true)
+	candidate.level += 1
+	if candidate.level == 4: candidate.branch = branch
+	map_view.preview_synergy_unit = candidate
 	if pending_slot >= 0: return # La fenêtre compare déjà les deux branches.
 	var current: Dictionary = model.get_stats(selected)
 	title_label.text = "E%d · APERÇU NIVEAU %d · %s" % [selected+1,model.defenders[selected].level+1,current.name.to_upper()]
@@ -911,6 +933,7 @@ func _refresh_upgrade_preview() -> void:
 	if not effect.is_empty(): details_label.text += "\nAprès amélioration : " + effect
 	var error: String = model.upgrade_error(selected)
 	hint_label.text = "Aperçu sans dépense · %d or · Cliquez pour améliorer · Route bleue : portée prévue" % model.upgrade_cost(selected) if error.is_empty() else "Aperçu sans dépense · " + error
+	hint_label.tooltip_text = _preview_synergy_tooltip(selected,candidate)
 
 func _purchase_focus(type: int, entered: bool) -> void:
 	if entered: focused_purchase = type
@@ -930,10 +953,13 @@ func _refresh_purchase_preview() -> void:
 	map_view.purchase_preview = model.purchase_preview_stats(selected, type)
 	var stats: Dictionary = map_view.purchase_preview
 	if stats.is_empty(): return
+	var candidate: Dictionary = {"type":type,"level":1,"branch":-1}
+	map_view.preview_synergy_unit = candidate
 	title_label.text = "E%d · APERÇU AVANT ACHAT · %s · NIVEAU 1" % [selected+1, stats.name.to_upper()]
 	details_label.text = "Dégâts : %s · Une attaque toutes les %s s · Portée : %s · Prix : %d or\n%s" % [_number(stats.damage),_number(stats.interval),_number(stats.range),model.purchase_cost(type),_recruit_effect(stats,type)]
 	var error: String = model.purchase_error(selected, type)
-	hint_label.text = _recruit_role(type) + " · Route bleue : chemin à portée · Cliquez pour recruter." if error.is_empty() else "Aperçu sans achat · " + error
+	hint_label.text = "Aperçu sans achat · Synergies prévues : %d · Route bleue : portée · Liens pointillés : partenaires" % stats.synergies.size() if error.is_empty() else "Aperçu sans achat · " + error
+	hint_label.tooltip_text = _preview_synergy_tooltip(selected,candidate)
 
 func _sell() -> void:
 	if pending_slot >= 0 or overview_open:
@@ -944,6 +970,7 @@ func _sell() -> void:
 
 func _update_interface() -> void:
 	_sync_countdown()
+	map_view.preview_synergy_unit = {}
 	var modal: bool = choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
 	for control in [start_button,speed_button,reset_button,sell_button,upgrade_button,bonus_summary_button,summary_button]+buy_buttons:
 		control.set("tooltip_blocked",modal)
@@ -1044,6 +1071,32 @@ func _update_interface() -> void:
 	_update_enemy_inspector()
 	_update_wave_forecast()
 
+func _synergy_gain_text(type: int, rule: Dictionary, side: int) -> String:
+	var gains: Array[String] = []
+	for i in range(4):
+		var gain: float = rule.effects[side][i]
+		if gain > 0 and (i != 1 or Model.ROSTER[type].has("secondary_damage")) and (i != 2 or Model.ROSTER[type].has("curse_damage")):
+			gains.append("+%s %s" % [_number(gain if i == 3 else gain*100), ["% aux dégâts directs", "% aux dégâts des rebonds" if type == 3 else "% aux dégâts des explosions", "% aux dégâts de malédiction", "de portée"][i]])
+	return ", ".join(gains)
+
+func _preview_synergy_tooltip(slot: int, candidate: Dictionary) -> String:
+	var type: int = candidate.type
+	var lines: Array[String] = ["SYNERGIES PRÉVUES · " + Model.ROSTER[type].name,"Liens bleus pointillés : partenaires après confirmation."]
+	var count: int = 0
+	for rule in Model.Campaign.PROXIMITY + Model.Campaign.SPECIALISATIONS:
+		var side: int = rule.types.find(type)
+		if side < 0: continue
+		var partners: Array[int] = model.synergy_partners(slot,rule,-1,candidate)
+		if partners.is_empty(): continue
+		count += 1
+		var names: Array[String] = []
+		for partner in partners: names.append("E%d · %s" % [partner+1,Model.ROSTER[model.defenders[partner].type].name])
+		lines.append("\n%s avec %s" % ["Spécialisation" if rule.has("branches") else "Proximité"," ; ".join(names)])
+		lines.append("Pour cette unité : " + _synergy_gain_text(type,rule,side))
+	if count == 0: lines.append("\nAucune synergie avec votre défense actuelle pour ce choix.")
+	lines.append("\nLes statistiques de l’aperçu incluent déjà ces effets.\nPlusieurs partenaires ne multiplient pas un même bonus.\nAucun achat ni changement avant confirmation.")
+	return "\n".join(lines)
+
 func _synergy_tooltip(slot: int) -> String:
 	var type: int = model.defenders[slot].type
 	var descriptions: Array[String] = ["SYNERGIES · " + Model.ROSTER[type].name, "Traits dorés : proximité · Traits bleus : spécialisations"]
@@ -1058,12 +1111,7 @@ func _synergy_tooltip(slot: int) -> String:
 		for other_slot in partners: places.append("E%d" % (other_slot+1))
 		var status: String = "Active avec " + partner_name + " (" + ", ".join(places) + ")" if not partners.is_empty() else "Inactive · Partenaire requis : " + partner_name
 		descriptions.append("\n" + ("Spécialisation · " if specialised else "Proximité · ") + status)
-		var gains: Array[String] = []
-		for i in range(4):
-			var gain: float = rule.effects[side][i]
-			if gain > 0 and (i != 1 or Model.ROSTER[type].has("secondary_damage")) and (i != 2 or Model.ROSTER[type].has("curse_damage")):
-				gains.append("+%s %s" % [_number(gain if i == 3 else gain*100), ["% aux dégâts directs", "% aux dégâts des rebonds" if type == 3 else "% aux dégâts des explosions", "% aux dégâts de malédiction", "de portée"][i]])
-		descriptions.append("Pour cette unité : " + ", ".join(gains))
+		descriptions.append("Pour cette unité : " + _synergy_gain_text(type,rule,side))
 		if specialised:
 			descriptions.append("Votre spécialisation requise : " + Model.stats_for(type, 4, rule.branches[side]).branch_name + ".\nAucune limite de distance.")
 		else:

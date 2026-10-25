@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.36 — 24 octobre 2026
+Version : 0.37 — 25 octobre 2026
 
 JOUER
 
@@ -118,3 +118,9 @@ Le jeu écrit rapport.md et rapport.json sur ce PC. Cliquez ensuite sur
 Ouvrir le dossier du rapport pour les retrouver. Les fichiers contiennent
 les vagues, ressources, décisions et offres de bonus ; aucun envoi réseau.
 Ce rapport sert au débogage et ne permet pas de reprendre une partie.
+
+APERÇU DES SYNERGIES
+Avant un recrutement ou une spécialisation, les liens bleus pointillés
+montrent les partenaires prévus. Survolez le bouton pour lire les gains.
+Plusieurs partenaires ne multiplient pas un même bonus. Les statistiques
+de l’aperçu incluent déjà ces synergies. Aucun paiement avant confirmation.

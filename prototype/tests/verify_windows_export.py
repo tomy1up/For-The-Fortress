@@ -11,6 +11,7 @@ import zipfile
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('archive',type=Path)
 parser.add_argument('--destination',required=True,type=Path)
+parser.add_argument('--screen',type=int,help='Écran réservé aux essais graphiques (index Godot).')
 args=parser.parse_args()
 assert os.name=='nt','Ce contrôle lance le binaire Windows sur Windows.'
 archive=args.archive.resolve()
@@ -50,6 +51,8 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('alliance_defender_catalogue','defender_catalogue','alliance'),('horde_defender_catalogue','defender_catalogue','horde'),
        ('enemy_silhouettes','catalogue',None),
        ('debug_combat_speed','debug_speed','horde'),
+       ('alliance_synergy_purchase','purchase','alliance'),('horde_synergy_purchase','purchase','horde'),
+       ('alliance_synergy_branch','specialisation','alliance'),('horde_synergy_branch','specialisation','horde'),
        ('effects_mage','effects','alliance'),('effects_troll','effects','horde'),
        ('effects_sapper','effects','horde'),('effects_shaman','effects','horde'),
        ('wave_forecast','forecast','alliance'),('boss_forecast','forecast_boss','horde'),
@@ -67,9 +70,11 @@ for name,state,faction in cases:
     command=[str(exe),'--log-file',str(log)]
     if state is None: command+=['--headless','--quit-after','3']
     else:
+        if args.screen is not None: command+=['--screen',str(args.screen)]
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if name in ['alliance_synergy_purchase','horde_synergy_purchase','alliance_synergy_branch','horde_synergy_branch']: command+=['--capture-synergy-preview']
         if name in ['alliance_run_report','horde_run_report']: command+=['--capture-export-report']
         if state=='effects': command+=['--capture-type='+str({'effects_mage':2,'effects_troll':3,'effects_sapper':4,'effects_shaman':5}[name])]
         if name=='bonus_economy_comparison': command+=['--capture-type=1']
