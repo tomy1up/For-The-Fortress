@@ -208,3 +208,7 @@ Défaut reproduit : le bouton de lancement désactivé gardait le focus pendant 
 ## v0.45 — Sources de compilation, 25 octobre 2026
 
 Empreintes des dix sources de distribution relevées avant export et comparées après compilation puis avant archivage. Le manifeste conserve ce relevé initial. Vérification locale du paquet par --source-project. 25 suites, 14 171 contrôles Godot et 15 tests Python réussis, dont six tests de sources. [Détail](Sources_compilation_v045.md).
+
+## v0.46 — Rejeu des rapports, 25 octobre 2026
+
+Outil de rejeu en lecture seule pour rapports au format 2, non embarqué dans le jeu distribué. Vérifie le journal et le résultat contre les règles actuelles, et signale les différences de version. 26 suites, 14 213 contrôles Godot, dont 42 dédiés, et 15 tests Python réussis. Deux rapports issus du paquet Windows v0.45 rejoués sans modification. [Détail](Rejeu_rapports_v046.md).
