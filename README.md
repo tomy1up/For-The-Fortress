@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.44 (25 octobre 2026)** : focus clavier conservé sur une commande disponible pendant les changements de phase. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.44).
+**Version v0.45 (25 octobre 2026)** : compilation protégée contre les changements de sources. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.45).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -127,3 +127,7 @@ La fenêtre et le bas de l’écran indiquent la version embarquée. Les contrô
 ## Clavier pendant les changements de phase — v0.44
 
 Au lancement manuel ou automatique, une commande devenue inactive libère le focus. Une commande encore disponible le conserve. [Détail](design/Focus_combat_v044.md).
+
+## Cohérence des sources compilées — v0.45
+
+L’export compare les empreintes des sources avant et après compilation puis avant archivage. Le vérificateur du paquet accepte `--source-project` pour comparer dix fichiers au projet local. [Protocole](design/Sources_compilation_v045.md).

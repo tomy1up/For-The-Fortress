@@ -74,7 +74,8 @@ def main(argv=None):
               'game_version': re.search(r'config/version="([^"]+)"', (project / 'project.godot').read_text(encoding='utf-8'))[1],
               'available_suites': available, 'suites': [], 'godot_checks': 0, 'ok': False}
     repo = project.parent
-    sources = sorted(set([project / 'project.godot', repo / 'For_the_Fortress_GDD.md'] +
+    sources = sorted(set([project / 'project.godot', project / 'export_presets.cfg', project / 'Exporter_Windows.ps1', repo / 'For_the_Fortress_GDD.md'] +
+                         list((project / 'build').glob('*.ps1')) +
                          list((project / 'scripts').glob('*.gd')) + list((project / 'tests').glob('*.gd')) +
                          list((project / 'tests').glob('*.py'))))
     report['source_sha256'] = {path.relative_to(repo).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest() for path in sources}

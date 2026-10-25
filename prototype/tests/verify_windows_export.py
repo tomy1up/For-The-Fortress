@@ -7,11 +7,13 @@ import os
 import struct
 import subprocess
 import zipfile
+from export_sources import verify_sources
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('archive',type=Path)
 parser.add_argument('--destination',required=True,type=Path)
 parser.add_argument('--screen',type=int,help='Écran réservé aux essais graphiques (index Godot).')
+parser.add_argument('--source-project',type=Path,help='Comparer les sources déclarées aux fichiers de ce projet local.')
 args=parser.parse_args()
 assert os.name=='nt','Ce contrôle lance le binaire Windows sur Windows.'
 archive=args.archive.resolve()
@@ -30,6 +32,7 @@ with zipfile.ZipFile(archive) as z:
 folder=destination/members[0].split('/')[0]
 exe=folder/'For_the_Fortress.exe'
 manifest=json.loads((folder/'VERSION.json').read_text(encoding='utf-8-sig'))
+source_count=verify_sources(manifest,args.source_project)
 assert folder.name=='For_the_Fortress_v'+manifest['version']+'_Windows_x64'
 assert 'Version : '+manifest['version']+' ' in (folder/'LIRE_MOI.txt').read_text(encoding='utf-8-sig')
 exe_hash=hashlib.file_digest(exe.open('rb'),'sha256').hexdigest()
@@ -112,6 +115,7 @@ for name,state,faction in cases:
     results.append({'case':name,'exit_code':completed.returncode,'capture':state is not None})
 report={'archive_sha256':hashlib.file_digest(archive.open('rb'),'sha256').hexdigest(),
         'executable_sha256':exe_hash,'files':members,'tests':results,
+        'source_checks':source_count,'local_sources_compared':args.source_project is not None,
         'visual_review':'Captures produites ; inspection visuelle à consigner séparément.'}
 (destination/'verification.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(json.dumps(report,ensure_ascii=True,indent=2))

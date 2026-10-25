@@ -1,9 +1,10 @@
 param(
     [string]$EnginePath = '',
-    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.44',
+    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.45',
     [string]$OutputRoot = ''
 )
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'build\SourceSnapshot.ps1')
 $projectText = [IO.File]::ReadAllText((Join-Path $PSScriptRoot 'project.godot'))
 if ($projectText -notmatch 'config/version="([^"]+)"' -or $Matches[1] -ne $Version) {
     throw 'La version demandee doit correspondre a application/config/version dans project.godot.'
@@ -41,19 +42,21 @@ $executable = Join-Path $artifactFolder 'For_the_Fortress.exe'
 $stdoutPath = Join-Path $OutputRoot "export_v${Version}.log"
 $stderrPath = Join-Path $OutputRoot "export_v${Version}.err"
 $arguments = @('--headless','--path',('"'+$PSScriptRoot+'"'),'--export-release','"Windows x86_64"',('"'+$executable+'"'))
+$sourcePaths = @('project.godot','export_presets.cfg','scenes\main.tscn','scripts\main.gd','scripts\valley_model.gd','scripts\valley_view.gd','scripts\campaign_data.gd','scripts\progression_data.gd','scripts\run_report.gd','scripts\combat_metrics.gd')
+$sources = Get-FortressSourceSnapshot -ProjectRoot $PSScriptRoot -RelativePaths $sourcePaths
+if ([IO.File]::ReadAllText((Join-Path $PSScriptRoot 'project.godot')) -notmatch 'config/version="([^"]+)"' -or $Matches[1] -ne $Version) {
+    throw 'La version du projet a change avant le lancement de la compilation.'
+}
 $process = Start-Process -FilePath $EnginePath -ArgumentList $arguments -WindowStyle Hidden -PassThru -Wait -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath
 $log = [IO.File]::ReadAllText($stdoutPath) + [IO.File]::ReadAllText($stderrPath)
 if ($process.ExitCode -ne 0 -or $log -match 'ERROR:|SCRIPT ERROR') {
     throw "Export incorrect. Consulter $stdoutPath et $stderrPath."
 }
 if (-not (Test-Path -LiteralPath $executable -PathType Leaf)) { throw 'Executable non produit.' }
+Assert-FortressSourceSnapshot -Expected $sources -Actual (Get-FortressSourceSnapshot -ProjectRoot $PSScriptRoot -RelativePaths $sourcePaths)
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'distribution\LIRE_MOI.txt') -Destination $artifactFolder
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'distribution\LICENCES_GODOT.txt') -Destination $artifactFolder
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot '..\design\Fiche_essai_joueur.md') -Destination $artifactFolder
-$sources = [ordered]@{}
-foreach ($relative in @('project.godot','export_presets.cfg','scenes\main.tscn','scripts\main.gd','scripts\valley_model.gd','scripts\valley_view.gd','scripts\campaign_data.gd','scripts\progression_data.gd','scripts\run_report.gd','scripts\combat_metrics.gd')) {
-    $sources[$relative.Replace('\','/')] = (Get-FileHash -LiteralPath (Join-Path $PSScriptRoot $relative) -Algorithm SHA256).Hash.ToLowerInvariant()
-}
 $manifest = [ordered]@{
     version = $Version
     date = '2026-10-25'
@@ -66,6 +69,7 @@ $manifest = [ordered]@{
     source_sha256 = $sources
 }
 $manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $artifactFolder 'VERSION.json') -Encoding UTF8
+Assert-FortressSourceSnapshot -Expected $sources -Actual (Get-FortressSourceSnapshot -ProjectRoot $PSScriptRoot -RelativePaths $sourcePaths)
 Compress-Archive -LiteralPath $artifactFolder -DestinationPath $archivePath -CompressionLevel Optimal
 $archiveHash = (Get-FileHash -LiteralPath $archivePath -Algorithm SHA256).Hash.ToLowerInvariant()
 "$archiveHash  $artifactName.zip" | Set-Content -LiteralPath (Join-Path $OutputRoot "$artifactName.sha256") -Encoding ASCII

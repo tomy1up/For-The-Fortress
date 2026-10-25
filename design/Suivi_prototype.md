@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 25 octobre 2026 — prototype v0.44, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 25 octobre 2026 — prototype v0.45, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -244,3 +244,7 @@ Version embarquée affichée dans le titre et le pied de fenêtre, conservée ap
 ## v0.44 — Focus pendant les changements de phase, 25 octobre 2026
 
 Défaut reproduit : le bouton de lancement désactivé gardait le focus pendant le combat. Le focus est désormais rendu à une commande disponible, sans déplacer une sélection encore valide. 25 suites, 14 171 contrôles Godot, dont 12 ajouts dédiés aux deux factions, et 9 tests Python réussis. [Détail](Focus_combat_v044.md).
+
+## v0.45 — Sources de compilation, 25 octobre 2026
+
+Empreintes des dix sources de distribution relevées avant export et comparées après compilation puis avant archivage. Le manifeste conserve ce relevé initial. Vérification locale du paquet par --source-project. 25 suites, 14 171 contrôles Godot et 15 tests Python réussis, dont six tests de sources. [Détail](Sources_compilation_v045.md).
