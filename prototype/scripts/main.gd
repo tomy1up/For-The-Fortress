@@ -47,6 +47,7 @@ var faction_panel: ColorRect
 var faction_label: Label
 var faction_buttons: Array[Button] = []
 var status_label: Label
+var guidance_label: Label
 var time_label: Label
 var hp_label: Label
 var gold_label: Label
@@ -441,12 +442,14 @@ func _build_interface() -> void:
 	faction_label = _label(screen, "CHOIX DE FACTION", Vector2(898, 33), Vector2(350, 25), 13, Color("cdb47e"))
 	var side := _panel(screen, Rect2(24, 122, 278, 632))
 	_label(side, "DÉFENDRE LE GUÉ", Vector2(22, 20), Vector2(240, 28), 18, Color("e0dbbf"))
-	_label(side, "Lancez la première vague.\nLes suivantes partent seules :\n30 s pour préparer la défense.", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
+	guidance_label = _label(side, "", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
 	hp_label = _label(side, "", Vector2(22, 144), Vector2(238, 28), 21, Color("e2d5ad"))
 	gold_label = _label(side, "", Vector2(22, 184), Vector2(238, 24), 16, Color("cdb47e"))
 	status_label = _label(side, "", Vector2(22, 232), Vector2(238, 52), 16, Color("d0dfd1"))
 	tally_label = _label(side, "", Vector2(22, 300), Vector2(238, 72), 14, Color("aabbb0"))
 	time_label = _label(side, "", Vector2(22, 382), Vector2(238, 24), 14, Color("aabbb0"))
+	time_label.mouse_filter = Control.MOUSE_FILTER_STOP
+	time_label.tooltip_text = "Temps passé dans les combats, hors préparations et choix.\nEn ×2 ou ×10, ce compteur avance plus vite que le temps réel."
 	start_button = _button(side, "Lancer la vague 1", Rect2(22, 428, 234, 44), _start)
 	speed_button = _button(side, "Vitesse ×1", Rect2(22, 482, 234, 40), _toggle_speed)
 	reset_button = _button(side, "Nouvel essai", Rect2(22, 532, 234, 40), _reset)
@@ -1110,6 +1113,7 @@ func _sell() -> void:
 
 func _update_interface() -> void:
 	_sync_countdown()
+	guidance_label.text = _guidance_text()
 	map_view.preview_synergy_unit = {}
 	var modal: bool = choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
 	for control in [start_button,speed_button,reset_button,sell_button,upgrade_button,bonus_summary_button,summary_button]+buy_buttons:
@@ -1157,7 +1161,7 @@ func _update_interface() -> void:
 	bonus_summary_button.disabled = modal
 	_update_bonus_panel()
 	tally_label.text = "Apparus : %d / %d\nÉliminés : %d · Passés : %d\nEn chemin : %d" % [model.spawned, model.spawn_schedule.size(), model.killed, model.escaped, model.enemies.size()]
-	time_label.text = ("Combat cumulé : %.1f s" % (model.completed_time+model.elapsed)).replace(".", ",")
+	time_label.text = ("Combat simulé : %.1f s" % (model.completed_time+model.elapsed)).replace(".", ",")
 	hint_label.text = "Sélectionnez E1 à E6 (clic ou touches 1–6) pour construire ou inspecter."
 	var occupied: bool = selected >= 0 and not model.defenders[selected].is_empty()
 	sell_button.visible = occupied
@@ -1215,6 +1219,30 @@ func _update_interface() -> void:
 	_update_wave_forecast()
 	_update_boss_status()
 	_sync_keyboard_focus()
+
+func _guidance_text() -> String:
+	if choosing_faction:
+		return "Choisissez votre faction.\nChaque camp a ses défenseurs.\nLa première vague attendra."
+	if pending_slot >= 0:
+		return "Préparation en pause.\nChoisissez une spécialisation\nou annulez sans dépenser."
+	if overview_open and model.can_build():
+		return "Préparation en pause.\nFermez le récapitulatif pour\nreprendre votre préparation."
+	if overview_open and model.active:
+		return "Le combat continue.\nLisez vos bonus, puis fermez\nle panneau pour revenir au jeu."
+	match model.phase:
+		"preparation":
+			return "Installez votre défense,\npuis lancez la première vague.\nEnsuite : 30 s entre les vagues." if model.wave == 1 else "La prochaine vague attend.\nAjustez vos défenseurs, puis\nlancez la vague suivante."
+		"combat":
+			return "Vos unités attaquent seules.\nInspectez unités et ennemis\nou changez la vitesse."
+		"finished":
+			return "La vague suivante part seule.\nAchetez, améliorez ou vendez\navant la fin du décompte." if countdown_remaining >= 0.0 else "Préparez la prochaine vague.\nAchetez, améliorez ou vendez,\npuis lancez la vague suivante."
+		"bonus":
+			return "Le jeu attend votre choix.\nChoisissez un bonus pour avoir\n30 s de préparation."
+		"victory":
+			return "La forteresse a tenu !\nConsultez le bilan de partie\nou tentez une autre stratégie."
+		"defeat":
+			return "La forteresse est détruite.\nLe bilan détaille les vagues.\nRejouez pour changer de plan."
+	return "Préparez votre défense.\nInspectez vos unités pour\ncomparer leurs améliorations."
 
 func _sync_keyboard_focus() -> void:
 	if syncing_keyboard_focus: return

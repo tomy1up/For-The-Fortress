@@ -220,3 +220,7 @@ Trois comparaisons réutilisées pendant la lecture, invalidées quand faction, 
 ## v0.48 — Échap dans les panneaux, 25 octobre 2026
 
 Fermeture du récapitulatif et du bilan, annulation sans dépense de la spécialisation. Choix obligatoires conservés. 28 suites, 14 313 contrôles Godot dont 30 dédiés, 15 tests Python réussis. [Détail](Echap_panneaux_v048.md).
+
+## v0.49 — Consignes contextuelles, 26 octobre 2026
+
+Le texte de gauche suit les étapes de partie, sans instruction de première vague en combat ou en fin de partie. Compteur renommé Combat simulé et expliqué au survol. Douze textes vérifiés à 60 px de haut sur 76 et 213 px de largeur maximale sur 238. 28 suites, 14 313 contrôles Godot et 15 tests Python réussis. [Détail](Consignes_contextuelles_v049.md).

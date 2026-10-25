@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.48 (25 octobre 2026)** : Échap ferme les panneaux facultatifs et annule une spécialisation sans dépense. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.48).
+**Version v0.49 (26 octobre 2026)** : consignes adaptées à la préparation, au combat et au résultat. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.49).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -143,3 +143,7 @@ Les trois comparaisons ne sont plus recalculées à chaque image pendant la lect
 ## Fermer un panneau avec Échap — v0.48
 
 Échap ferme le récapitulatif ou le bilan, et annule une spécialisation sans payer. Les choix de faction et de bonus obligatoires restent ouverts. [Règles et vérifications](design/Echap_panneaux_v048.md).
+
+## Consignes selon la situation — v0.49
+
+Le panneau de gauche indique quoi faire à chaque étape et cesse de parler de première vague après celle-ci. Le compteur précise « Combat simulé » ; une aide au survol explique les vitesses et les temps exclus. [Détail](design/Consignes_contextuelles_v049.md).
