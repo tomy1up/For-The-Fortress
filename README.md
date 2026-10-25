@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.37 (25 octobre 2026)** : partenaires et gains de synergie visibles avant recrutement ou spécialisation. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.37).
+**Version v0.38 (25 octobre 2026)** : bilan de l’activité des défenseurs, PV retirés et contributions au boss. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.38).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -95,3 +95,7 @@ Le bilan permet d’exporter les décisions, offres de bonus, ressources et rés
 ## Aperçu des synergies — v0.37
 
 Les liens et les gains prévus sont visibles avant de recruter ou spécialiser un défenseur. [Détail](design/Apercu_synergies_v037.md). 13 879 contrôles réussis et 42 lancements Windows vérifiés, sans changement d’équilibrage.
+
+## Activité des défenseurs — v0.38
+
+Le bilan détaille les contributions des recrues, y compris celles vendues, avec une mesure des PV retirés sans excédent létal. [Convention et vérifications](design/Activite_defenseurs_v038.md). 13 952 contrôles et 45 lancements Windows, sans changement d’équilibrage.

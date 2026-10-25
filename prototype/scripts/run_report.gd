@@ -2,6 +2,19 @@ extends RefCounted
 ## Local diagnostic snapshot; never a save game or a source of random draws.
 const Model = preload("res://scripts/valley_model.gd")
 
+static func _hp(value: float) -> String:
+	return ("%.2f" % value).replace(".",",")
+
+static func performance(model: RefCounted) -> Array[Dictionary]:
+	var rows: Array[Dictionary] = Model.Metrics.summarize(model.wave_history)
+	var present: Array[int] = []
+	for unit in model.defenders:
+		if not unit.is_empty(): present.append(unit.instance_id)
+	for row in rows:
+		row["name"] = Model.ROSTER[int(row.type)].name
+		row["present_at_end"] = int(row.instance_id) in present
+	return rows
+
 static func build(model: RefCounted) -> Dictionary:
 	var army: Array = []
 	for slot in range(model.defenders.size()):
@@ -13,11 +26,11 @@ static func build(model: RefCounted) -> Dictionary:
 	var bonuses: Array = []
 	for code in model.bonuses:
 		bonuses.append({"index":code,"code":Model.Campaign.BONUSES[code].code,"name":Model.Campaign.BONUSES[code].name,"description":Model.Campaign.bonus_description(code,model.faction)})
-	return {"schema_version":1,"game_version":str(ProjectSettings.get_setting("application/config/version","")),"engine_version":Engine.get_version_info().string,
+	return {"schema_version":2,"game_version":str(ProjectSettings.get_setting("application/config/version","")),"engine_version":Engine.get_version_info().string,
 		"faction":model.faction,"faction_name":"Alliance" if model.faction == 0 else "Horde","result":model.phase,"wave":model.wave,
 		"fortress_hp":model.fortress_hp,"max_hp":model.max_hp,"gold":model.gold,"total_income":model.total_income,"total_killed":model.total_killed,"total_escaped":model.total_escaped,
 		"combat_seconds":model.completed_time+model.elapsed,"initial_rng_seed":model.initial_rng_seed,"initial_rng_state":model.initial_rng_state,
-		"army":army,"bonuses":bonuses,"waves":model.wave_history.duplicate(true),"actions":model.action_history.duplicate(true)}
+		"army":army,"bonuses":bonuses,"waves":model.wave_history.duplicate(true),"actions":model.action_history.duplicate(true),"performance":performance(model)}
 
 static func markdown(report: Dictionary) -> String:
 	var lines: Array[String] = ["# For the Fortress! — Rapport de partie", "", "Version : %s · %s · %s" % [report.game_version,report.faction_name,"Victoire" if report.result == "victory" else "Défaite"],
@@ -25,6 +38,13 @@ static func markdown(report: Dictionary) -> String:
 		"", "Rapport de débogage local, sans fonction de reprise de partie.", "", "## Vagues", "", "| Vague | Éliminés | Passés | PV perdus | Or gagné | Résultat |", "| --- | --- | --- | --- | --- | --- |"]
 	for wave in report.waves:
 		lines.append("| %d | %d | %d | %d | %d | %s |" % [wave.wave,wave.killed,wave.escaped,wave.hp_lost,wave.income,"Défaite" if wave.result == "defeat" else "Terminée"])
+	lines.append("\n## Activité des défenseurs\n")
+	lines.append("PV réellement retirés, sans excédent sur les morts. Les tirs simultanés partagent ces PV proportionnellement à leurs dégâts. Les dégâts contre le boss sont inclus dans le total. Aucun décompte d’éliminations individuelles n’est attribué.\n")
+	lines.append("| Recrue | Emplacement | Vagues jouées | Attaques | Coups directs (PV) | Rebonds / explosions (PV) | Malédiction (PV) | Dont boss (PV) | État final |")
+	lines.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- |")
+	for row in report.get("performance",[]):
+		lines.append("| %s (#%d) | E%d | %s | %d | %s | %s | %s | %s | %s |" % [row.name,row.instance_id,row.slot+1,str(row.waves),row.attacks,_hp(row.direct_hp),_hp(row.secondary_hp),_hp(row.curse_hp),_hp(row.boss_hp),"Présente" if row.present_at_end else "Vendue"])
+	if report.get("performance",[]).is_empty(): lines.append("\nAucun défenseur n’a participé à une vague.")
 	lines.append("\n## Défense finale\n")
 	for unit in report.army:
 		var branch: String = " · " + Model.stats_for(int(unit.type),4,int(unit.branch)).branch_name if int(unit.level) == 4 else ""

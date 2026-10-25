@@ -1,0 +1,242 @@
+{
+  "archive_sha256": "4ba48031ad8afa766f4925ed80318a4b4f3a4cb8501637623067ba7b89d34a8e",
+  "executable_sha256": "5048809644f0b77aac73576678a103d5e1cd46fced41921933c61396f5b178bb",
+  "files": [
+    "For_the_Fortress_v0.38_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.38_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.38_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.38_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.38_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "fortress_breach",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_alliance_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_horde_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_economy_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_faction_bonuses",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_faction_bonuses",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_defender_catalogue",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_defender_catalogue",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_silhouettes",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "debug_combat_speed",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergy_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergy_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergy_branch",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergy_branch",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_mage",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_troll",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_sapper",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_shaman",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "wave_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "victory_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "defeat_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_defender_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_defender_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "defeat_defender_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "upgrade_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "specialisation_preview",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_crossbow_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_mage_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_sapper_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_shaman_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "visual_review": "Tableaux défenseurs Alliance/Horde et cas vide inspectés à 1280 × 800. Essai interactif Horde terminé en défaite vague 5 avec deux unités N1 : onglets, détail des rebonds et rapport exporté vérifiés, sans conclusion d’équilibrage. Fenêtre sur l’écran de droite puis fermée.",
+  "automated_checks": 13952,
+  "feature_checks": 73,
+  "test_screen": 1
+}

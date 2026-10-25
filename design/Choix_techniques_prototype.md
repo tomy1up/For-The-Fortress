@@ -176,3 +176,7 @@ Décisions acceptées, achats, améliorations, ventes, offres et choix roguelite
 ## v0.37 — Anticiper les synergies, 25 octobre 2026
 
 Liens bleus pointillés et détail des partenaires/gains avant recrutement et spécialisation, fondés sur les associations existantes et une unité candidate sans mutation. 13 879 contrôles réussis, dont 1 162 ciblés ; 42 lancements Windows et vérification interactive des deux factions sur l’écran de droite. [Détail](Apercu_synergies_v037.md).
+
+## v0.38 — Mesurer l’activité, 25 octobre 2026
+
+Observation des impacts et des PV retirés, répartition proportionnelle des coups simultanés et suivi par recrue et par vague. Onglet Défenseurs dans le bilan, avec conservation des unités vendues et export JSON schéma 2/Markdown. Aucun changement de transaction de combat ou de statistique. 13 952 contrôles réussis, dont 73 ciblés ; 45 lancements Windows vérifiés sur l’écran de droite. [Détail](Activite_defenseurs_v038.md).

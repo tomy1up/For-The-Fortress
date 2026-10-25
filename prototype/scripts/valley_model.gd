@@ -1,6 +1,7 @@
 extends RefCounted
 
 const Campaign = preload("res://scripts/campaign_data.gd")
+const Metrics = preload("res://scripts/combat_metrics.gd")
 const Progression = preload("res://scripts/progression_data.gd")
 ## Distances dans le plan logique du GDD, avant projection isométrique.
 
@@ -428,8 +429,9 @@ func start() -> bool:
 	var army: Array[Dictionary] = []
 	for slot in range(defenders.size()):
 		var unit: Dictionary = defenders[slot]
-		if not unit.is_empty(): army.append({"slot":slot,"type":unit.type,"level":unit.level,"branch":unit.branch,"paid":unit.paid})
+		if not unit.is_empty(): army.append({"slot":slot,"type":unit.type,"level":unit.level,"branch":unit.branch,"paid":unit.paid,"instance_id":unit.instance_id})
 	_wave_record = {"wave":wave,"hp_before":fortress_hp,"max_hp":max_hp,"income_before":total_income,"army":army,"bonuses":bonuses.duplicate(),"planned":spawn_schedule.size()}
+	_wave_record["performance"] = Metrics.create(army)
 	phase = "combat"
 	for defender in defenders:
 		if not defender.is_empty():
@@ -484,19 +486,22 @@ func _resolve_instant() -> void:
 	_update_positions()
 	# 2. Anciens ticks additionnés, puis morts retirés avant le choix des nouveaux tirs.
 	var damage: Dictionary = {}
+	var hits: Array[Dictionary] = []
 	var pending: Array[Dictionary] = []
 	for curse in curses:
 		if curse.next_at <= elapsed + EPS:
 			_add_damage(damage, curse.enemy_id, curse.damage)
+			hits.append({"source_id":curse.source_id,"enemy_id":curse.enemy_id,"component":"curse","amount":curse.damage})
 			event_log.append("%.9f tick source %d cible %d" % [elapsed, curse.source_id, curse.enemy_id])
 			curse.ticks_left -= 1
 			curse.next_at += 1.0
 		if curse.ticks_left > 0:
 			pending.append(curse)
 	curses = pending
-	_apply_damage(damage)
+	_apply_damage(damage,hits)
 	# 3. Tous les défenseurs visent le même état des survivants, sans ordre privilégié.
 	damage = {}
+	hits = []
 	var applications: Array[Dictionary] = []
 	for slot in range(defenders.size()):
 		var defender: Dictionary = defenders[slot]
@@ -514,7 +519,9 @@ func _resolve_instant() -> void:
 		targets.sort_custom(_progress_priority)
 		var primary: Dictionary = targets[0]
 		var impact: Vector2 = position_at(primary.distance)
-		_add_damage(damage, primary.id, damage_for(stats,"direct",primary))
+		var direct_damage: float = damage_for(stats,"direct",primary)
+		_add_damage(damage, primary.id, direct_damage)
+		hits.append({"source_id":defender.instance_id,"enemy_id":primary.id,"component":"direct","amount":direct_damage})
 		var shot: Dictionary = {"time": elapsed, "slot": slot, "type": defender.type,
 			"target_id": primary.id, "from": SLOTS[slot], "to": impact, "secondary": [], "radius": stats.radius}
 		event_log.append("%.9f tir E%d cible %d" % [elapsed, slot + 1, primary.id])
@@ -531,7 +538,9 @@ func _resolve_instant() -> void:
 					break
 				candidates.sort_custom(_secondary_priority)
 				var victim: Dictionary = candidates[0].enemy
-				_add_damage(damage, victim.id, damage_for(stats,"secondary",victim))
+				var secondary_damage: float = damage_for(stats,"secondary",victim)
+				_add_damage(damage, victim.id, secondary_damage)
+				hits.append({"source_id":defender.instance_id,"enemy_id":victim.id,"component":"secondary","amount":secondary_damage})
 				hit_ids.append(victim.id)
 				shot.secondary.append(position_at(victim.distance))
 				# Les explosions restent centrées sur l'impact ; les ricochets avancent.
@@ -541,7 +550,7 @@ func _resolve_instant() -> void:
 			applications.append({"source_id": defender.instance_id, "enemy_id": primary.id, "damage": damage_for(stats,"curse",primary)})
 		shots.append(shot)
 		defender.ready_at = elapsed + stats.interval
-	_apply_damage(damage)
+	_apply_damage(damage,hits)
 	for application in applications:
 		if _has_enemy(application.enemy_id):
 			_apply_curse(application.source_id, application.enemy_id, application.damage)
@@ -592,7 +601,8 @@ func _purge_curses() -> void:
 			surviving.append(curse)
 	curses = surviving
 
-func _apply_damage(damage: Dictionary) -> void:
+func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
+	Metrics.credit(_wave_record.get("performance",[]),enemies,damage,hits)
 	var survivors: Array[Dictionary] = []
 	for enemy in enemies:
 		enemy.hp -= damage.get(enemy.id, 0.0)

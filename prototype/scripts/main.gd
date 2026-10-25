@@ -113,6 +113,12 @@ var summary_cells: Array = []
 var summary_army: Array[Label] = []
 var summary_bonuses: Array[Label] = []
 var summary_close: Button
+var summary_tab: int = 0
+var summary_tabs: Array[Button] = []
+var summary_wave_content: Control
+var summary_performance_content: Control
+var performance_list: VBoxContainer
+var performance_rows: Array[Dictionary] = []
 var report_button: Button
 var report_status: Label
 var report_folder: String = ""
@@ -258,6 +264,7 @@ func _ready() -> void:
 		if capture_state in ["finished","forecast","forecast_boss"]: autoplay_started = true
 		_update_interface()
 		if capture_state in ["summary","defeat_summary"]: _show_run_summary()
+		if summary_open and "--capture-performance" in OS.get_cmdline_user_args(): _set_summary_tab(1)
 		if summary_open and "--capture-export-report" in OS.get_cmdline_user_args():
 			_export_run_report()
 			assert(not report_folder.is_empty(),"L’export de contrôle doit réussir.")
@@ -493,38 +500,88 @@ func _build_run_summary(screen: Control) -> void:
 	summary_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	screen.add_child(summary_panel)
 	var panel: Panel = _panel(summary_panel,Rect2(154,70,972,660))
-	summary_title = _label(panel,"",Vector2(24,18),Vector2(924,36),26,Color("e0dbbf"))
+	summary_title = _label(panel,"",Vector2(24,18),Vector2(610,36),26,Color("e0dbbf"))
 	summary_subtitle = _label(panel,"",Vector2(24,64),Vector2(924,48),14,Color("bbcbbf"))
+	for index in range(2): summary_tabs.append(_button(panel,["Vagues","Défenseurs"][index],Rect2(650+150*index,22,148,30),_set_summary_tab.bind(index)))
+	summary_wave_content = Control.new()
+	summary_wave_content.size = Vector2(972,600)
+	summary_wave_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(summary_wave_content)
 	var positions: Array[int] = [8,88,206,320,444,564,724]
 	var widths: Array[int] = [70,110,108,116,112,152,192]
 	var headings: Array[String] = ["Vague","Éliminés","Passés","PV perdus","Or gagné","Combat","Résultat"]
 	for column in range(headings.size()):
-		_label(panel,headings[column],Vector2(24+positions[column],124),Vector2(widths[column],24),13,Color("cdb47e"))
+		_label(summary_wave_content,headings[column],Vector2(24+positions[column],124),Vector2(widths[column],24),13,Color("cdb47e"))
 	for index in range(10):
 		var row := ColorRect.new()
 		row.position = Vector2(24,154+28*index)
 		row.size = Vector2(924,28)
 		row.mouse_filter = Control.MOUSE_FILTER_STOP
-		panel.add_child(row)
+		summary_wave_content.add_child(row)
 		summary_rows.append(row)
 		var cells: Array[Label] = []
 		for column in range(headings.size()):
 			cells.append(_label(row,"",Vector2(positions[column],4),Vector2(widths[column],22),13,Color("bbcbbf")))
 		summary_cells.append(cells)
-	summary_totals = _label(panel,"",Vector2(24,444),Vector2(924,26),14,Color("e0dbbf"))
-	_label(panel,"Défense finale",Vector2(24,478),Vector2(600,22),14,Color("cdb47e"))
-	_label(panel,"Bonus choisis",Vector2(650,478),Vector2(298,22),14,Color("cdb47e"))
+	summary_totals = _label(summary_wave_content,"",Vector2(24,444),Vector2(924,26),14,Color("e0dbbf"))
+	_label(summary_wave_content,"Défense finale",Vector2(24,478),Vector2(600,22),14,Color("cdb47e"))
+	_label(summary_wave_content,"Bonus choisis",Vector2(650,478),Vector2(298,22),14,Color("cdb47e"))
 	for index in range(6):
-		summary_army.append(_label(panel,"",Vector2(24,502+16*index),Vector2(610,18),12,Color("bbcbbf")))
+		summary_army.append(_label(summary_wave_content,"",Vector2(24,502+16*index),Vector2(610,18),12,Color("bbcbbf")))
 	for index in range(3):
-		summary_bonuses.append(_label(panel,"",Vector2(650,502+30*index),Vector2(298,28),13,Color("bbcbbf")))
+		summary_bonuses.append(_label(summary_wave_content,"",Vector2(650,502+30*index),Vector2(298,28),13,Color("bbcbbf")))
 		summary_bonuses[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	summary_performance_content = Control.new()
+	summary_performance_content.size = Vector2(972,600)
+	summary_performance_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(summary_performance_content)
+	var performance_headings: Array[String] = ["Défenseur","Vagues","Attaques","PV retirés","Dont boss"]
+	var performance_positions: Array[int] = [0,360,455,550,720]
+	for column in range(5): _label(summary_performance_content,performance_headings[column],Vector2(24+performance_positions[column],124),Vector2(350 if column == 0 else 145,24),13,Color("cdb47e"))
+	var scroll := ScrollContainer.new()
+	scroll.position = Vector2(24,154); scroll.size = Vector2(924,380)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	summary_performance_content.add_child(scroll)
+	performance_list = VBoxContainer.new()
+	performance_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(performance_list)
+	_label(summary_performance_content,"PV réellement retirés aux ennemis, sans compter les dégâts excédentaires.\nLe total inclut le boss. Survolez un défenseur pour le détail de ses attaques.",Vector2(24,544),Vector2(924,46),13,Color("bbcbbf"))
 	report_status = _label(panel,"",Vector2(24,600),Vector2(924,18),12,Color("bbcbbf"))
 	report_status.mouse_filter = Control.MOUSE_FILTER_STOP
 	report_button = _button(panel,"Exporter le rapport",Rect2(24,622,240,30),_export_run_report)
 	report_button.tooltip_text = "Enregistrer localement les vagues, bonus proposés et décisions de cette partie."
 	summary_close = _button(panel,"Fermer",Rect2(784,622,164,30),_close_run_summary)
 	summary_panel.visible = false
+
+func _set_summary_tab(index: int) -> void:
+	if not summary_open or index not in [0,1]: return
+	summary_tab = index
+	summary_subtitle.text = "Forteresse : %d/%d PV · %d or restants · %s\nCombat cumulé : %s s simulées, hors préparation et choix ; la vitesse réduit le temps réel." % [model.fortress_hp,model.max_hp,model.gold,"Survolez une ligne pour les unités et bonus de la vague." if index == 0 else "Survolez un défenseur pour ses contributions.",("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
+	summary_wave_content.visible = index == 0
+	summary_performance_content.visible = index == 1
+	for tab in range(2): summary_tabs[tab].disabled = index == tab
+
+func _populate_performance() -> void:
+	performance_rows = RunReport.performance(model)
+	for child in performance_list.get_children():
+		performance_list.remove_child(child); child.queue_free()
+	if performance_rows.is_empty():
+		_label(performance_list,"Aucun défenseur n’a participé à une vague.",Vector2.ZERO,Vector2(900,44),14,Color("bbcbbf"))
+	for data in performance_rows:
+		var row := ColorRect.new()
+		row.custom_minimum_size = Vector2(900,56)
+		row.color = Color(0.4,0.6,0.5,0.07)
+		row.mouse_filter = Control.MOUSE_FILTER_STOP
+		performance_list.add_child(row)
+		var total: float = data.direct_hp+data.secondary_hp+data.curse_hp
+		var values: Array[String] = ["E%d · %s\nNiveau %d · %s" % [data.slot+1,data.name,data.level,"Présent à la fin" if data.present_at_end else "Vendu"],str(data.waves.size()),str(data.attacks),_number(total),_number(data.boss_hp)]
+		for column in range(5): _label(row,values[column],Vector2([0,360,455,550,720][column],8),Vector2(350 if column == 0 else 145,42),13,Color("bbcbbf"))
+		var detail: Array[String] = [data.name,"Vagues jouées : " + str(data.waves),"Attaques principales : %d · %s PV retirés" % [data.attacks,_number(data.direct_hp)]]
+		if data.type in [2,3,4]: detail.append("%s : %d impacts · %s PV retirés" % ["Rebonds" if data.type == 3 else "Explosions",data.secondary_hits,_number(data.secondary_hp)])
+		if data.type == 5: detail.append("Malédiction : %d déclenchements · %s PV retirés" % [data.curse_ticks,_number(data.curse_hp)])
+		if data.level == 4: detail.append(Model.stats_for(data.type,4,data.branch).branch_name)
+		detail.append("Tirs simultanés : les PV retirés sont répartis proportionnellement aux dégâts.\nCes mesures ne suffisent pas à juger les synergies ou l’utilité d’une unité.")
+		row.tooltip_text = "\n".join(detail)
 
 func _export_run_report() -> void:
 	if not summary_open or model.phase not in ["victory","defeat"]: return
@@ -547,6 +604,8 @@ func _show_run_summary() -> void:
 	if model.phase not in ["victory","defeat"] or overview_open or pending_slot >= 0: return
 	summary_open = true
 	_populate_run_summary()
+	_populate_performance()
+	_set_summary_tab(summary_tab)
 	_update_interface()
 	summary_close.grab_focus()
 
@@ -855,6 +914,8 @@ func _reset() -> void:
 	bonus_contexts.assign(["","",""])
 	for scroll in bonus_impact_scrollers: scroll.scroll_vertical = 0
 	model.reset()
+	summary_tab = 0
+	performance_rows.clear()
 	report_folder = ""
 	report_status.text = ""
 	report_status.tooltip_text = ""

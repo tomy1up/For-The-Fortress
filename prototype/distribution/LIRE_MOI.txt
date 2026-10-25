@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.37 — 25 octobre 2026
+Version : 0.38 — 25 octobre 2026
 
 JOUER
 
@@ -124,3 +124,12 @@ Avant un recrutement ou une spécialisation, les liens bleus pointillés
 montrent les partenaires prévus. Survolez le bouton pour lire les gains.
 Plusieurs partenaires ne multiplient pas un même bonus. Les statistiques
 de l’aperçu incluent déjà ces synergies. Aucun paiement avant confirmation.
+
+BILAN DES DÉFENSEURS
+En fin de partie, ouvrez Bilan puis Défenseurs. Chaque recrue conserve ses
+attaques et les PV réellement retirés aux ennemis, avec la part contre le boss.
+Survolez une ligne pour distinguer impacts directs, rebonds ou explosions et
+malédictions selon son type. Les unités vendues restent dans ce bilan.
+Les tirs simultanés partagent les PV retirés proportionnellement à leurs dégâts.
+Les dégâts excédentaires ne sont pas comptés. Le rapport exporté inclut ces
+mesures ; elles ne suffisent pas à juger les synergies ou l’utilité d’une unité.

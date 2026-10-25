@@ -1,6 +1,6 @@
 param(
     [string]$EnginePath = '',
-    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.37',
+    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.38',
     [string]$OutputRoot = ''
 )
 $ErrorActionPreference = 'Stop'
@@ -51,7 +51,7 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'distribution\LIRE_MOI.txt') -De
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'distribution\LICENCES_GODOT.txt') -Destination $artifactFolder
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot '..\design\Fiche_essai_joueur.md') -Destination $artifactFolder
 $sources = [ordered]@{}
-foreach ($relative in @('project.godot','export_presets.cfg','scenes\main.tscn','scripts\main.gd','scripts\valley_model.gd','scripts\valley_view.gd','scripts\campaign_data.gd','scripts\progression_data.gd','scripts\run_report.gd')) {
+foreach ($relative in @('project.godot','export_presets.cfg','scenes\main.tscn','scripts\main.gd','scripts\valley_model.gd','scripts\valley_view.gd','scripts\campaign_data.gd','scripts\progression_data.gd','scripts\run_report.gd','scripts\combat_metrics.gd')) {
     $sources[$relative.Replace('\','/')] = (Get-FileHash -LiteralPath (Join-Path $PSScriptRoot $relative) -Algorithm SHA256).Hash.ToLowerInvariant()
 }
 $manifest = [ordered]@{
