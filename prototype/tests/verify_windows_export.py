@@ -30,6 +30,8 @@ with zipfile.ZipFile(archive) as z:
 folder=destination/members[0].split('/')[0]
 exe=folder/'For_the_Fortress.exe'
 manifest=json.loads((folder/'VERSION.json').read_text(encoding='utf-8-sig'))
+assert folder.name=='For_the_Fortress_v'+manifest['version']+'_Windows_x64'
+assert 'Version : '+manifest['version']+' ' in (folder/'LIRE_MOI.txt').read_text(encoding='utf-8-sig')
 exe_hash=hashlib.file_digest(exe.open('rb'),'sha256').hexdigest()
 assert manifest['executable_sha256']==exe_hash
 binary=exe.read_bytes()
@@ -95,6 +97,7 @@ for name,state,faction in cases:
     if name in ['alliance_run_report','horde_run_report','horde_defender_summary']:
         report_folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))
         run_report=json.loads((report_folder/'rapport.json').read_text(encoding='utf-8'))
+        assert run_report['game_version']==manifest['version'],(name,'Version du rapport différente du paquet')
         assert run_report['result']=='victory' and len(run_report['waves'])==10
         assert run_report['faction']==(0 if faction=='alliance' else 1)
         assert run_report['schema_version']==2 and len(run_report['performance'])==3
@@ -102,6 +105,7 @@ for name,state,faction in cases:
         assert len([action for action in run_report['actions'] if action['kind']=='bonus_choice'])==3
         assert 'Bonus proposés' in (report_folder/'rapport.md').read_text(encoding='utf-8')
     if state:
+        assert 'UI_VERSION='+manifest['version'] in text,(name,'Version embarquée différente du paquet')
         assert 'CAPTURE_RESULT=0' in text,(name,text)
         header=image.read_bytes()[:24]
         assert header[:8]==b'\x89PNG\r\n\x1a\n' and struct.unpack('>II',header[16:24])==(1280,800)

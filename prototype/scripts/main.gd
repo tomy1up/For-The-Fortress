@@ -53,6 +53,7 @@ var gold_label: Label
 var tally_label: Label
 var details_label: Label
 var title_label: Label
+var version_label: Label
 var hint_label: Label
 var start_button: Button
 var speed_button: Button
@@ -143,6 +144,7 @@ var keyboard_focus_context: String = ""
 var syncing_keyboard_focus: bool = false
 
 func _ready() -> void:
+	get_window().title = "%s · v%s" % [ProjectSettings.get_setting("application/config/name"),ProjectSettings.get_setting("application/config/version")]
 	map_view.model = model
 	add_child(map_view)
 	_build_interface()
@@ -161,6 +163,7 @@ func _ready() -> void:
 		elif argument.begins_with("--capture-state="):
 			capture_state = argument.trim_prefix("--capture-state=")
 	if not capture_path.is_empty():
+		print("UI_VERSION=",ProjectSettings.get_setting("application/config/version"))
 		if capture_state != "selection":
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
 			if capture_state in ["bonus", "campaign", "victory", "overview", "boss_inspection", "summary", "forecast", "forecast_boss"]:
@@ -461,7 +464,7 @@ func _build_interface() -> void:
 	upgrade_button.focus_exited.connect(_upgrade_focus.bind(false))
 	hint_label = _label(screen, "", Vector2(347, 574), Vector2(890, 24), 13, Color("91a799"))
 	hint_label.mouse_filter = Control.MOUSE_FILTER_STOP # Autoriser les infobulles des synergies.
-	_label(screen, "Nom de travail · Visuels temporaires", Vector2(34, 776), Vector2(900, 20), 11, Color("718b7d"))
+	version_label = _label(screen, "Prototype v%s · Nom de travail · Visuels temporaires" % ProjectSettings.get_setting("application/config/version"), Vector2(34, 776), Vector2(620, 20), 11, Color("718b7d"))
 	_label(screen,"Emplacements : 1–6 / pavé numérique",Vector2(946,776),Vector2(310,20),11,Color("91a799"))
 
 	_build_wave_forecast(screen)

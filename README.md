@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.42 (25 octobre 2026)** : commandes de fond protégées pendant les choix et récapitulatifs. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.42).
+**Version v0.43 (25 octobre 2026)** : numéro de version visible pendant le jeu. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.43).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -119,3 +119,7 @@ Touches 1 à 6 et pavé numérique pour sélectionner les six emplacements. [Dé
 ## Commandes des dialogues — v0.42
 
 Verrouillage des commandes de fond pendant les panneaux : prévention des redémarrages et changements de vitesse involontaires au clavier. [Détail](design/Commandes_modales_v042.md). 14 156 contrôles Godot, 9 tests Python et 46 lancements Windows réussis.
+
+## Identifier la version du jeu — v0.43
+
+La fenêtre et le bas de l’écran indiquent la version embarquée. Les contrôles du ZIP comparent aussi cette version à la notice, au nom du dossier et aux rapports de partie. [Détail](design/Identification_version_v043.md)

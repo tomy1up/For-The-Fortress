@@ -55,6 +55,7 @@ func run_checks() -> void:
 		check(m.initial_rng_seed == seed_value and m.initial_rng_state == state_value,"État initial 64 bits sans tirage supplémentaire")
 		var before: Array = [m.action_history.duplicate(true),m.rng.state,m.wave_history.duplicate(true),m.gold,m.phase]
 		var report: Dictionary = Report.build(m)
+		check(report.game_version == str(ProjectSettings.get_setting("application/config/version")),"Rapport identifié par la version embarquée")
 		var decoded: Dictionary = JSON.parse_string(JSON.stringify(report))
 		check(decoded.initial_rng_state == state_value and decoded.initial_rng_seed == seed_value,"JSON conserve exactement les entiers 64 bits sous forme de texte")
 		var copy = replay(decoded)
@@ -94,6 +95,8 @@ func run_checks() -> void:
 	check(scene.report_button.visible and scene.report_button.text == "Exporter le rapport" and scene.report_status.mouse_filter == Control.MOUSE_FILTER_STOP,"Accès à l’export et aux détails au survol depuis le bilan de défaite")
 	scene.report_folder = "test"; scene.report_status.text = "test"
 	scene._close_run_summary(); scene._reset()
+	var version: String = str(ProjectSettings.get_setting("application/config/version"))
+	check(scene.get_window().title.ends_with(" · v"+version) and scene.version_label.text.begins_with("Prototype v"+version+" · "),"Version visible après un nouvel essai et concordante avec le rapport")
 	check(scene.report_folder.is_empty() and scene.report_status.text.is_empty() and scene.report_button.text == "Exporter le rapport","Nouvel essai ne réutilise pas le précédent rapport")
 	scene.free()
 	print("RUN_REPORT_TESTS checks=%d failures=%d" % [checks,failures])
