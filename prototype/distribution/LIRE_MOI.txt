@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.40 — 25 octobre 2026
+Version : 0.41 — 25 octobre 2026
 
 JOUER
 
@@ -140,3 +140,10 @@ et la perte de vie de la forteresse s’il l’atteint, avec Défaite si nécess
 La fiche au survol reste disponible pour la récompense et la malédiction.
 La jauge disparaît quand le boss n’est plus présent, sans annoncer à elle seule
 la fin de la vague : les autres ennemis doivent encore être arrêtés.
+
+SÉLECTION AU CLAVIER
+Les touches 1 à 6 de la rangée supérieure ou du pavé numérique sélectionnent
+E1 à E6, comme un clic sur la carte. Sur AZERTY, les touches physiques de
+la rangée supérieure fonctionnent aussi sans Maj. Ctrl, Alt et les raccourcis
+système restent ignorés. La sélection seule ne dépense pas d’or et ne suspend
+pas les 30 secondes de préparation. Les écrans de choix et le bilan la bloquent.

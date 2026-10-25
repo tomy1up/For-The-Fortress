@@ -1,0 +1,261 @@
+{
+  "schema": 1,
+  "scope": "all",
+  "python_version": "3.12.14",
+  "game_version": "0.41",
+  "available_suites": 24,
+  "suites": [
+    {
+      "script": "test_autoplay.gd",
+      "ok": true,
+      "checks": 106,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.438
+    },
+    {
+      "script": "test_bonus_preview.gd",
+      "ok": true,
+      "checks": 8752,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.906
+    },
+    {
+      "script": "test_bonus_scroll_reset.gd",
+      "ok": true,
+      "checks": 10,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.359
+    },
+    {
+      "script": "test_boss_status.gd",
+      "ok": true,
+      "checks": 52,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.266
+    },
+    {
+      "script": "test_breach_feedback.gd",
+      "ok": true,
+      "checks": 41,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.344
+    },
+    {
+      "script": "test_campaign.gd",
+      "ok": true,
+      "checks": 362,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.562
+    },
+    {
+      "script": "test_combat_feedback.gd",
+      "ok": true,
+      "checks": 46,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.25
+    },
+    {
+      "script": "test_combat_metrics.gd",
+      "ok": true,
+      "checks": 73,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.453
+    },
+    {
+      "script": "test_debug_speed.gd",
+      "ok": true,
+      "checks": 53,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.531
+    },
+    {
+      "script": "test_enemy_inspection.gd",
+      "ok": true,
+      "checks": 86,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.36
+    },
+    {
+      "script": "test_faction_coherence.gd",
+      "ok": true,
+      "checks": 729,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.344
+    },
+    {
+      "script": "test_horde.gd",
+      "ok": true,
+      "checks": 75,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.359
+    },
+    {
+      "script": "test_interface.gd",
+      "ok": true,
+      "checks": 37,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.25
+    },
+    {
+      "script": "test_player_readability.gd",
+      "ok": true,
+      "checks": 203,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.453
+    },
+    {
+      "script": "test_progression.gd",
+      "ok": true,
+      "checks": 408,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.344
+    },
+    {
+      "script": "test_purchase_preview.gd",
+      "ok": true,
+      "checks": 504,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.453
+    },
+    {
+      "script": "test_run_report.gd",
+      "ok": true,
+      "checks": 139,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.453
+    },
+    {
+      "script": "test_run_summary.gd",
+      "ok": true,
+      "checks": 196,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.453
+    },
+    {
+      "script": "test_slot_shortcuts.gd",
+      "ok": true,
+      "checks": 68,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.344
+    },
+    {
+      "script": "test_synergy_feedback.gd",
+      "ok": true,
+      "checks": 123,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.359
+    },
+    {
+      "script": "test_synergy_preview.gd",
+      "ok": true,
+      "checks": 1162,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.438
+    },
+    {
+      "script": "test_upgrade_preview.gd",
+      "ok": true,
+      "checks": 357,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.453
+    },
+    {
+      "script": "test_valley.gd",
+      "ok": true,
+      "checks": 87,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.266
+    },
+    {
+      "script": "test_wave_forecast.gd",
+      "ok": true,
+      "checks": 403,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.25
+    }
+  ],
+  "godot_checks": 14072,
+  "ok": true,
+  "source_sha256": {
+    "For_the_Fortress_GDD.md": "60d13ae131d0cdd3ac1390285cf25751f72f65488ac0b983467331cacaf1d3ba",
+    "prototype/project.godot": "1661eec095b644ee871fef9b7cc223729d503a83b20783a2b0d71d4c3c6d81d0",
+    "prototype/scripts/campaign_data.gd": "c7f607ad748d42e68ba3b5d6b4d696f182609d3cda20f8edee1f9f8db5eaf2b2",
+    "prototype/scripts/combat_metrics.gd": "10a2a00aa85c0b430dbec33f3b457e66ce74b36e36b6fae91d4a26fff17ebf4b",
+    "prototype/scripts/main.gd": "4b603b22815ce4463170308b8bb91d36c4f04458383114758b579c14a0824aa3",
+    "prototype/scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755",
+    "prototype/scripts/run_report.gd": "0d4dab8ef11b0b39faff35488296805eaa850e0f334d975906322e6ab80d40cd",
+    "prototype/scripts/valley_model.gd": "c75549d77a61fd0c98a96509a5afea99d2a62cd9b364ba73e0e88805b794122b",
+    "prototype/scripts/valley_view.gd": "f577a612a5702d875f2d74d4870328b25ed7d1b2ad497e648456b8655e783c18",
+    "prototype/tests/analyse_balance.py": "7cc15442a45ba9e020d74c3ed2ef34c1a1dc45df00b2ea4513e72f81441d087e",
+    "prototype/tests/analyse_metrics.py": "632b38ed0fd62f031587ea586cb6a01c0abc6ae4650e9d9d8dc81b23c3a7492f",
+    "prototype/tests/analyse_upgrades.py": "36bf3e7eff67b6e0f606d42d858faecf27e944ba00b1087a895345e96bd73748",
+    "prototype/tests/export_licenses.gd": "d74ac621a4f5d8bf3bc39e17b0e87407393bd678d91866ff3c9ca952d4a01a07",
+    "prototype/tests/gdd_contracts.py": "3f57e0c30786cd6e9fcb327fbdcf288aaa9297f5dc6a4b907bd43f897b81c8dc",
+    "prototype/tests/run_regression.py": "ce8d08d175c58b970638d58126e36a920fb1f9283f6d850ffafa5cf020f683cb",
+    "prototype/tests/survey_balance.gd": "3d83f402113cd4fd6b563c73b753d072e3006aadb20478ebfdf7240c1b97a5bd",
+    "prototype/tests/survey_metrics.gd": "30104663818bfa7c080aa0089f995b51c7e04202851ffc17fb26cc47ba918b67",
+    "prototype/tests/survey_upgrades.gd": "98f83e10d345ef70ac5cb7071045277c79ef7bd36ac37c92e245714814127e45",
+    "prototype/tests/test_autoplay.gd": "8d1ab3406e967017d165b20b2d0a230bd29af625e043ef6f0819ebb2b09f62ce",
+    "prototype/tests/test_bonus_preview.gd": "3073f82c381abc74b4c22b07fe44b5575e69ff6ad87fe4c3b80bac4d60e65b5e",
+    "prototype/tests/test_bonus_scroll_reset.gd": "38a8417bcee83cccdf879d8f7ba77657ff8edc3673e4c509c29d45d1d35f9216",
+    "prototype/tests/test_boss_status.gd": "34ab87bd62319b88698f524beae667b5a68ae2a4bb9099a0054b59eb7a71d3a1",
+    "prototype/tests/test_breach_feedback.gd": "a2dec67c4eb1807ffb2273aad276578ab225a8af4cd1b1ce85ad5b0af25091b4",
+    "prototype/tests/test_campaign.gd": "37f2c929a0f847aca32995d697abc9dd2d8c68c814e6927d8aac6bfa1ce4b50c",
+    "prototype/tests/test_combat_feedback.gd": "4827611990ce20e13419002921a49f1386fced2a6ea3b08d5265e26d0eb4fd23",
+    "prototype/tests/test_combat_metrics.gd": "bb8733721f92c07f937e361ba2174a0d8b91fe0a821ef831dc3a578ce48f771d",
+    "prototype/tests/test_debug_speed.gd": "6d0df75a0047f104f5c3397c0e234771dcf0639b9d667a0f63dde58b020a41dc",
+    "prototype/tests/test_enemy_inspection.gd": "f84bf4f0d76a33846310560d78cc9b6b57d5e17a3b1216a2e3abdca35a55ca35",
+    "prototype/tests/test_faction_coherence.gd": "fa255406e15952a70cc302b9d2c16551215a70e1aa1d2b5b01eb62665a66c13f",
+    "prototype/tests/test_horde.gd": "905a3cf6144ffba290848be335380d7643bbcbd1192a662687334688866f1986",
+    "prototype/tests/test_interface.gd": "5c50bbc7d3fd07f76103c0eeb0e32af1179fbd019757b8f52c44dd1d95eeefe7",
+    "prototype/tests/test_player_readability.gd": "6a5bc67063be684590c3f5d7a7aaa1adf4fe5c7ee4a879aaeb26d9ff457d43b9",
+    "prototype/tests/test_progression.gd": "c14fad27a7e2fb77df233b4190808026f63dac53e8828f54f5931c668c026e60",
+    "prototype/tests/test_purchase_preview.gd": "05810df3638747bb5339796d029fbd5bcb0277adaefde134114e55de7e4cf327",
+    "prototype/tests/test_regression_runner.py": "0e1ce579f246fb2cf567b24b0801116a4d58bd321014c14cf3d427525f02e03b",
+    "prototype/tests/test_run_report.gd": "f167aae0a727f2062eea00c8279aff6501b369dc8fc599e1614d86541b8fe3b3",
+    "prototype/tests/test_run_summary.gd": "4ffe13726cf627498267c566b4557e3c767b9dd5a31f6f9d0e6f40bccc7e256c",
+    "prototype/tests/test_slot_shortcuts.gd": "07015df14419e4854574d0885b7611ada428b14ad549bc87d8398834b79db6fe",
+    "prototype/tests/test_synergy_feedback.gd": "6de1758c97a9aa6a58413667f0147292435daae2c390d28cf785ea2da0b2dc21",
+    "prototype/tests/test_synergy_preview.gd": "d68d17e1f9b9fcb55699669c17578f22115444c73bf0dccd7c9ecc86ae1de411",
+    "prototype/tests/test_upgrade_preview.gd": "7aba1d11b5ba373c85a3d4343feaad89ec3964b2a09485dd88b2e4f0db7feae2",
+    "prototype/tests/test_valley.gd": "5fec81ed633bdc83e1bc27131b43611fa4ad509df9f4b02e9d8dde27fad6683c",
+    "prototype/tests/test_wave_forecast.gd": "2283332b961c3553df1ccfba7f2f4fe50b0bb43021a2511297825610461369df",
+    "prototype/tests/verify_windows_export.py": "7fd041669a91ec7e42941aae7387722f510da97d3aad40fd2acd3ced6cc0ac60"
+  },
+  "engine_version": "4.7.2.stable.official.ed1daf0bf",
+  "python": {
+    "ok": true,
+    "tests": 9,
+    "exit_code": 0
+  },
+  "gdd_contracts": {
+    "defender_values": 24,
+    "enemy_values": 32,
+    "branch_values": 42,
+    "wave_groups": 26
+  }
+}

@@ -1,14 +1,14 @@
 # Dix vagues jouables sur La Vallée du Gué
 
-**Version v0.40 (25 octobre 2026)** : vérification complète du projet disponible dans le dépôt, avec rapport et journaux. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.40).
+**Version v0.41 (25 octobre 2026)** : sélection des emplacements au clavier, avec les touches 1 à 6 et le pavé numérique. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.41).
 
-**Prototype v0.40 — 25 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
+**Prototype v0.41 — 25 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
 
 Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.40](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.40) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.41](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.41) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
 Sur ce PC : dist/For_the_Fortress_v0.35_Windows_x64 depuis la racine du dépôt. Le ZIP local pèse environ 39 Mo. Voir [le relevé d’export](../design/Distribution_Windows_v035.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
@@ -240,3 +240,7 @@ Sa jauge de vie reste visible sans survol pendant le combat, avec les dégâts q
 ## Vérification complète (v0.40)
 
 Depuis la racine du dépôt : `python prototype/tests/run_regression.py`. Utiliser `--engine` pour préciser Godot et `--report` pour conserver un JSON et les journaux. Les 23 suites Godot, tests Python et contrats du GDD sont intégrés au dépôt. [Instructions et validations](../design/Verification_reproductible_v040.md).
+
+## Sélection au clavier (v0.41)
+
+Utiliser 1 à 6 ou le pavé numérique pour sélectionner E1 à E6. Les touches physiques de la rangée supérieure fonctionnent sur AZERTY sans Maj. La sélection reste sans dépense et les panneaux de choix la bloquent. [Détail et vérification](../design/Selection_clavier_v041.md).

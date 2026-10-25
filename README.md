@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.40 (25 octobre 2026)** : vérification complète du projet disponible dans le dépôt, avec rapport et journaux. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.40).
+**Version v0.41 (25 octobre 2026)** : sélection des emplacements au clavier, avec les touches 1 à 6 et le pavé numérique. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.41).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -111,3 +111,7 @@ Jauge permanente pendant sa présence en combat, sans changement de statistiques
 ## Vérifications du projet — v0.40
 
 Le [lanceur complet de régression](prototype/tests/run_regression.py) et les contrats du GDD sont versionnés. [Instructions et validation](design/Verification_reproductible_v040.md) : 14 004 contrôles Godot, 9 tests Python et 46 lancements Windows réussis.
+
+## Emplacements au clavier — v0.41
+
+Touches 1 à 6 et pavé numérique pour sélectionner les six emplacements. [Détail](design/Selection_clavier_v041.md). 14 072 contrôles Godot, 9 tests Python et 46 lancements Windows réussis.

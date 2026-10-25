@@ -188,3 +188,7 @@ Vie et dégâts à la forteresse visibles sans survol, avec signal de défaite c
 ## v0.40 — Vérification complète versionnée, 25 octobre 2026
 
 Lanceur sans fenêtre, découverte des suites, contrôle des résumés/erreurs, journaux JSON, empreintes des sources et contrats du GDD inclus dans le dépôt. 23 suites et 14 004 contrôles Godot, 9 tests Python ; filtres, appel depuis un autre répertoire et mauvais moteur vérifiés. 46 lancements Windows. [Instructions et preuve](Verification_reproductible_v040.md). Comportements du jeu conservés.
+
+## v0.41 — Sélection au clavier, 25 octobre 2026
+
+Sélection E1–E6 commune au clic et aux touches, prise en compte AZERTY/pavé numérique, garde des panneaux et conservation des ressources et délais. 14 072 contrôles Godot dont 68 ciblés, 9 tests Python et 46 lancements Windows. Test interactif sur le second écran. [Détail](Selection_clavier_v041.md).

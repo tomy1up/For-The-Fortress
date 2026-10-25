@@ -371,9 +371,29 @@ func _prepare_campaign_capture(state: String) -> void:
 			return
 		if wave < 10: model.prepare_next_wave()
 
+func _selection_blocked() -> bool:
+	return choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open or summary_open
+
+func _select_slot(slot: int) -> bool:
+	if _selection_blocked() or slot < 0 or slot >= Model.SLOTS.size(): return false
+	selected = slot
+	map_view.selected = slot
+	_update_interface()
+	map_view.queue_redraw()
+	return true
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if not event is InputEventKey or not event.pressed or event.echo: return
+	if event.ctrl_pressed or event.alt_pressed or event.meta_pressed: return
+	var codes: Array[int] = [event.physical_keycode,event.keycode]
+	for code in codes:
+		var slot: int = code-KEY_1 if code >= KEY_1 and code <= KEY_6 else code-KEY_KP_1 if code >= KEY_KP_1 and code <= KEY_KP_6 else -1
+		if slot >= 0:
+			if _select_slot(slot): get_viewport().set_input_as_handled()
+			return
+
 func _unhandled_input(event: InputEvent) -> void:
-	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open or summary_open:
-		return
+	if _selection_blocked(): return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var closest: int = -1
 		var best: float = 27.0
@@ -383,10 +403,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				closest = index
 				best = distance
 		if closest >= 0:
-			selected = closest
-			map_view.selected = selected
-			_update_interface()
-			map_view.queue_redraw()
+			_select_slot(closest)
 
 func _build_interface() -> void:
 	var ui := CanvasLayer.new()
@@ -443,6 +460,7 @@ func _build_interface() -> void:
 	hint_label = _label(screen, "", Vector2(347, 574), Vector2(890, 24), 13, Color("91a799"))
 	hint_label.mouse_filter = Control.MOUSE_FILTER_STOP # Autoriser les infobulles des synergies.
 	_label(screen, "Nom de travail · Visuels temporaires", Vector2(34, 776), Vector2(900, 20), 11, Color("718b7d"))
+	_label(screen,"Emplacements : 1–6 / pavé numérique",Vector2(946,776),Vector2(310,20),11,Color("91a799"))
 
 	_build_wave_forecast(screen)
 	_build_boss_status(screen)
@@ -1121,7 +1139,7 @@ func _update_interface() -> void:
 	_update_bonus_panel()
 	tally_label.text = "Apparus : %d / %d\nÉliminés : %d · Passés : %d\nEn chemin : %d" % [model.spawned, model.spawn_schedule.size(), model.killed, model.escaped, model.enemies.size()]
 	time_label.text = ("Combat cumulé : %.1f s" % (model.completed_time+model.elapsed)).replace(".", ",")
-	hint_label.text = "Sélectionnez E1 à E6 pour construire ou inspecter un défenseur."
+	hint_label.text = "Sélectionnez E1 à E6 (clic ou touches 1–6) pour construire ou inspecter."
 	var occupied: bool = selected >= 0 and not model.defenders[selected].is_empty()
 	sell_button.visible = occupied
 	sell_button.disabled = pending_slot >= 0 or not model.can_build()
