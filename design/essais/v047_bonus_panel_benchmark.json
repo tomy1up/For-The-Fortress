@@ -1,0 +1,77 @@
+{
+  "before": {
+    "phase": "before",
+    "game_version": "0.46",
+    "engine_version": "4.7.2.stable.official.ed1daf0bf",
+    "iterations_per_sample": 300,
+    "samples_per_faction": 3,
+    "headless": true,
+    "imposed_budget": 10000,
+    "defenders": 6,
+    "benchmark_sha256": "bf5b163c16473270be0d0d7de309dfb4d0c4a6db25463d736eacbae0852e959f",
+    "main_sha256": "38816503107154a86dff1de7d60d9082cb974504eb2797c9c33817f6d4ce58bd",
+    "measurements": [
+      {
+        "faction": 0,
+        "microseconds_per_update": [
+          1291.61333333333,
+          1350.62666666667,
+          1367.89
+        ]
+      },
+      {
+        "faction": 1,
+        "microseconds_per_update": [
+          1452.32333333333,
+          1385.41,
+          1404.63666666667
+        ]
+      }
+    ]
+  },
+  "after": {
+    "phase": "after",
+    "game_version": "0.47",
+    "engine_version": "4.7.2.stable.official.ed1daf0bf",
+    "iterations_per_sample": 300,
+    "samples_per_faction": 3,
+    "headless": true,
+    "imposed_budget": 10000,
+    "defenders": 6,
+    "benchmark_sha256": "bf5b163c16473270be0d0d7de309dfb4d0c4a6db25463d736eacbae0852e959f",
+    "main_sha256": "19cbc91641cb99cf44b33096d5896e8c92e58f7c30c6d3b69beb1f38bc06541c",
+    "measurements": [
+      {
+        "faction": 0,
+        "microseconds_per_update": [
+          242.426666666667,
+          233.29,
+          231.596666666667
+        ]
+      },
+      {
+        "faction": 1,
+        "microseconds_per_update": [
+          246.99,
+          241.55,
+          250.04
+        ]
+      }
+    ]
+  },
+  "summary": [
+    {
+      "faction": 0,
+      "before_median_us": 1350.62666666667,
+      "after_median_us": 233.29,
+      "reduction_percent": 82.72727721452763
+    },
+    {
+      "faction": 1,
+      "before_median_us": 1404.63666666667,
+      "after_median_us": 246.99,
+      "reduction_percent": 82.41609336696801
+    }
+  ],
+  "scope": "CPU de _update_interface sans rendu, fixture six N4 à budget imposé ; pas un relevé FPS ni un essai humain."
+}

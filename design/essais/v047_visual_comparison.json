@@ -1,0 +1,240 @@
+{
+  "baseline_version": "0.46",
+  "candidate_version": "0.47",
+  "compared_region": [
+    0,
+    0,
+    1280,
+    774
+  ],
+  "reason_for_exclusion": "Pied contenant le numéro de version modifié.",
+  "captures": [
+    {
+      "capture": "alliance_crossbow_purchase.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "alliance_defender_catalogue.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "alliance_defender_summary.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "alliance_faction_bonuses.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "alliance_mage_purchase.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "alliance_purchase.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "alliance_run_report.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "alliance_synergies.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "alliance_synergy_branch.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "alliance_synergy_purchase.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "alliance_victory.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "bonus.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "bonus_alliance_comparison.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "bonus_economy_comparison.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "bonus_horde_comparison.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "boss_forecast.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "boss_inspection.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "boss_without_hover.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "countdown.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "debug_combat_speed.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "defeat_defender_summary.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "defeat_summary.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "effects_mage.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "effects_sapper.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "effects_shaman.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "effects_troll.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "enemy_inspection.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "enemy_silhouettes.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "fortress_breach.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "horde_defender_catalogue.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "horde_defender_summary.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "horde_faction_bonuses.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "horde_purchase.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "horde_run_report.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "horde_sapper_purchase.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "horde_shaman_purchase.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "horde_synergies.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "horde_synergy_branch.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "horde_synergy_purchase.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "horde_victory.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "selection.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "specialisation_preview.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "upgrade_comparison.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "victory_summary.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    },
+    {
+      "capture": "wave_forecast.png",
+      "same_pixels_above_footer": true,
+      "difference_bounds": null
+    }
+  ],
+  "identical": 45,
+  "total": 45
+}

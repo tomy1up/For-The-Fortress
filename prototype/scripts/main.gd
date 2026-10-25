@@ -83,6 +83,7 @@ var bonus_impacts: Array[Label] = []
 var bonus_impact_titles: Array[Label] = []
 var bonus_impact_scrollers: Array[ScrollContainer] = []
 var bonus_contexts: Array[String] = ["","",""]
+var bonus_impact_keys: Array[String] = ["","",""]
 var bonus_title: Label
 var bonus_subtitle: Label
 var bonus_names: Array[Label] = []
@@ -981,6 +982,7 @@ func _reset() -> void:
 	breach_remaining = 0.0
 	map_view.breach_feedback = {}
 	bonus_contexts.assign(["","",""])
+	bonus_impact_keys.assign(["","",""])
 	for scroll in bonus_impact_scrollers: scroll.scroll_vertical = 0
 	model.reset()
 	summary_tab = 0
@@ -1354,6 +1356,8 @@ func _update_bonus_panel() -> void:
 	bonus_title.text = "Choisissez une amélioration · Vague %d terminée" % model.wave if choosing else "Bonus acquis pour cette partie"
 	bonus_subtitle.text = "Choisissez sans limite de temps. Le décompte de 30 s commence après votre choix. Les deux autres offres pourront revenir." if choosing else "Les effets concernent aussi les futures recrues selon leurs conditions. Aucun bonus acquis." if model.bonuses.is_empty() else "Les effets concernent aussi les futures recrues selon leurs conditions."
 	var entries: Array[int] = model.bonus_offer if choosing else model.bonuses
+	# Le choix suspend le combat ; recalculer uniquement si une donnée d’aperçu change.
+	var impact_key: String = JSON.stringify([model.faction,model.wave,model.bonus_offer,model.bonuses,model.defenders,model.gold,model.fortress_hp,model.max_hp,model.synergies_enabled]) if choosing else ""
 	for index in range(3):
 		bonus_names[index].position.y = 138 if choosing else 148
 		bonus_descriptions[index].position.y = 204 if choosing else 216
@@ -1366,13 +1370,14 @@ func _update_bonus_panel() -> void:
 			var data: Dictionary = Model.Campaign.BONUSES[entries[index]]
 			bonus_names[index].text = data.code+" · "+data.name
 			bonus_descriptions[index].text = Model.Campaign.bonus_description(entries[index],model.faction)
-			if choosing:
+			if choosing and bonus_impact_keys[index] != impact_key:
 				var impact_text: String = _bonus_impact_text(entries[index])
 				var context: String = "%d:%d:%d" % [model.faction,model.wave,entries[index]]
 				if bonus_impacts[index].text != impact_text or bonus_contexts[index] != context:
 					bonus_impacts[index].text = impact_text
 					bonus_impact_scrollers[index].scroll_vertical = 0
 					bonus_contexts[index] = context
+				bonus_impact_keys[index] = impact_key
 	bonus_close.visible = not choosing
 
 func _bonus_impact_text(code: int) -> String:

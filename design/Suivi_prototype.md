@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 25 octobre 2026 — prototype v0.46, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 25 octobre 2026 — prototype v0.47, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -252,3 +252,7 @@ Empreintes des dix sources de distribution relevées avant export et comparées 
 ## v0.46 — Rejeu des rapports, 25 octobre 2026
 
 Outil de rejeu en lecture seule pour rapports au format 2, non embarqué dans le jeu distribué. Vérifie le journal et le résultat contre les règles actuelles, et signale les différences de version. 26 suites, 14 213 contrôles Godot, dont 42 dédiés, et 15 tests Python réussis. Deux rapports issus du paquet Windows v0.45 rejoués sans modification. [Détail](Rejeu_rapports_v046.md).
+
+## v0.47 — Calcul des comparaisons de bonus, 25 octobre 2026
+
+Trois comparaisons réutilisées pendant la lecture, invalidées quand faction, vague, offres, bonus, défense, budget, PV ou activation des synergies changent. 27 suites, 14 283 contrôles Godot dont 70 dédiés, 15 tests Python réussis. Mesure locale sans rendu : mise à jour du panneau environ 1,35–1,40 ms avant, 0,23–0,25 ms après sur six N4 à budget imposé. [Limites et protocole](Calcul_bonus_v047.md).

@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.46 (25 octobre 2026)** : rejeu des rapports pour le débogage. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.46).
+**Version v0.47 (25 octobre 2026)** : lecture des bonus allégée, comparaisons réutilisées tant que leurs données restent identiques. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.47).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -135,3 +135,7 @@ L’export compare les empreintes des sources avant et après compilation puis a
 ## Rejouer un rapport de partie — v0.46
 
 Un outil réservé au développement vérifie les décisions d’un rapport JSON contre le modèle actuel : offres, dépenses, vagues, composition, contributions et résultat. Il ne modifie pas le fichier. [Utilisation et limites](design/Rejeu_rapports_v046.md).
+
+## Calcul des comparaisons de bonus — v0.47
+
+Les trois comparaisons ne sont plus recalculées à chaque image pendant la lecture. Les données pertinentes restent surveillées pour conserver des textes actuels. [Mesure et vérification](design/Calcul_bonus_v047.md).
