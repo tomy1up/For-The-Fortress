@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 26 octobre 2026 — prototype v0.56, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 26 octobre 2026 — prototype v0.57, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -294,3 +294,7 @@ Les six défenseurs possèdent des proportions et équipements distinctifs, avec
 ## v0.56 — Projectiles et impacts, 26 octobre 2026
 
 Formes distinctes pour les six attaques, points de départ sur les équipements, explosions discrètes et marques sur les véritables victimes. Habillage de 0,12 seconde simulée, impacts immédiats et extinction en 0,32 seconde. 32 suites, 14 681 contrôles Godot dont 60 nouveaux, 15 tests Python et contrats du GDD réussis. Aucun changement de simulation. [Détail](Presentation_attaques_v056.md).
+
+## v0.57 — Lecture du recrutement et des améliorations, 26 octobre 2026
+
+Fiches par défaut centrées sur le rôle et les dégâts ; aperçus d’amélioration centrés sur les gains et le prix ; aides de recrutement condensées. Voir les chiffres conserve les valeurs et règles exactes. 33 suites, 14 819 contrôles Godot dont 138 nouveaux, 15 tests Python et contrats du GDD réussis. Aucune modification de simulation ou de pause. [Détail](Lecture_recrutement_v057.md).

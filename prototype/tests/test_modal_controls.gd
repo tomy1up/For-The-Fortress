@@ -15,7 +15,7 @@ func inject(code: int) -> void:
 		event.keycode = code; event.physical_keycode = code; event.pressed = pressed
 		root.push_input(event)
 func background(scene: Node) -> Array:
-	return [scene.start_button,scene.speed_button,scene.reset_button,scene.sell_button,scene.upgrade_button,scene.bonus_summary_button,scene.summary_button]+scene.buy_buttons
+	return [scene.start_button,scene.speed_button,scene.reset_button,scene.sell_button,scene.upgrade_button,scene.bonus_summary_button,scene.summary_button,scene.inspection_numbers_button]+scene.buy_buttons
 func fingerprint(scene: Node) -> String:
 	return JSON.stringify([Report.build(scene.model),scene.model.defenders,scene.model.enemies,str(scene.model.rng.state),scene.speed,scene.choosing_faction])
 func protected_commands(scene: Node) -> void:

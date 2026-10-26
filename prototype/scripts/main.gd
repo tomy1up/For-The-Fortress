@@ -54,6 +54,8 @@ var hp_label: Label
 var gold_label: Label
 var tally_label: Label
 var details_label: Label
+var inspection_numbers_button: Button
+var inspection_numbers_visible: bool = false
 var title_label: Label
 var version_label: Label
 var hint_label: Label
@@ -289,6 +291,7 @@ func _ready() -> void:
 				model.upgrade(5,1 if capture_faction == 0 else 0)
 				_upgrade(); hovered_branch = 0
 		set_process(false)
+		inspection_numbers_visible = "--capture-inspection-numbers" in OS.get_cmdline_user_args()
 		if capture_state in ["finished","forecast","forecast_boss"]: autoplay_started = true
 		_update_interface()
 		if capture_state in ["summary","defeat_summary"]: _show_run_summary()
@@ -500,7 +503,11 @@ func _build_interface() -> void:
 	bonus_summary_button = _button(side, "Bonus acquis · 0/3", Rect2(22, 582, 234, 32), _show_bonuses)
 	bonus_summary_button.add_theme_font_size_override("font_size", 13)
 	var info := _panel(screen, Rect2(330, 608, 926, 152))
-	title_label = _label(info, "CONSTRUIRE · ALLIANCE", Vector2(24, 12), Vector2(860, 24), 13, Color("cdb47e"))
+	title_label = _label(info, "CONSTRUIRE · ALLIANCE", Vector2(24, 12), Vector2(690, 24), 13, Color("cdb47e"))
+	title_label.clip_text = true
+	inspection_numbers_button = _button(info,"Voir les chiffres",Rect2(732,10,170,26),_toggle_inspection_numbers)
+	inspection_numbers_button.add_theme_font_size_override("font_size",13)
+	inspection_numbers_button.tooltip_text = "Alterner les fiches et aides simplifiées ou chiffrées.\nPour comparer une recrue, survolez ensuite son bouton."
 	details_label = _label(info, "", Vector2(24, 41), Vector2(876, 44), 14, Color("bbcbbf"))
 	for type in range(3):
 		var button: Button = _button(info, "", Rect2(24 + type * 294, 96, 278, 40), _buy.bind(type))
@@ -992,6 +999,8 @@ func _recruit_effect(stats: Dictionary, type: int) -> String:
 func _recruit_tooltip(type: int, error: String) -> String:
 	var lines: Array[String] = [Model.ROSTER[type].name + " · " + _recruit_role(type)]
 	var stats: Dictionary = model.purchase_preview_stats(selected,type)
+	if not inspection_numbers_visible:
+		return "" if error.is_empty() else "Achat impossible : " + error
 	if not stats.is_empty():
 		lines.append("Valeurs prévues à cet emplacement, bonus et synergies actuels inclus.")
 		lines.append("%s dégâts directs · Une attaque toutes les %s s · Portée : %s" % [_number(stats.damage),_number(stats.interval),_number(stats.range)])
@@ -1004,6 +1013,25 @@ func _recruit_tooltip(type: int, error: String) -> String:
 		if model.can_build(): lines.append("\n" + _preview_synergy_tooltip(selected,{"type":type,"level":1,"branch":-1}))
 	if not error.is_empty(): lines.append("Achat impossible : " + error)
 	return "\n".join(lines)
+
+func _compact_damage(stats: Dictionary, type: int) -> String:
+	var result: String = "Dégâts : %s" % _number(stats.damage)
+	if type in [2,4]: result += " · Explosion : %s × %d autres max." % [_number(stats.secondary_damage),stats.secondary_cap]
+	elif type == 3: result += " · Rebond : %s × %d max." % [_number(stats.secondary_damage),stats.secondary_cap]
+	elif type == 5: result += " · Malédiction : %s après 1 s et 2 s" % _number(stats.curse_damage)
+	return result
+
+func _compact_upgrade(current: Dictionary, future: Dictionary, type: int) -> String:
+	var result: String = "Dégâts : %s → %s" % [_number(current.damage),_number(future.damage)]
+	if type in [2,3,4]: result += " · %s : %s → %s" % ["Rebond" if type == 3 else "Explosion",_number(current.secondary_damage),_number(future.secondary_damage)]
+	elif type == 5: result += " · Malédiction : %s → %s" % [_number(current.curse_damage),_number(future.curse_damage)]
+	return result
+
+func _toggle_inspection_numbers() -> void:
+	if choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus": return
+	inspection_numbers_visible = not inspection_numbers_visible
+	_update_interface()
+	map_view.queue_redraw()
 
 func _panel(parent: Control, rectangle: Rect2) -> Panel:
 	var panel := Panel.new()
@@ -1068,6 +1096,7 @@ func _toggle_speed() -> void:
 func _reset() -> void:
 	if model.active or _selection_blocked():
 		return
+	inspection_numbers_visible = false
 	overview_open = false
 	autoplay_started = false
 	countdown_wave = -1
@@ -1159,6 +1188,10 @@ func _refresh_upgrade_preview() -> void:
 	details_label.text = _comparison_text(current,future)
 	var effect: String = _effect_text(future,model.defenders[selected].type)
 	if not effect.is_empty(): details_label.text += "\nAprès amélioration : " + effect
+	if not inspection_numbers_visible:
+		details_label.text = _compact_upgrade(current,future,model.defenders[selected].type)
+		details_label.text += "\nPrix : %d or" % model.upgrade_cost(selected)
+		if model.gold >= model.upgrade_cost(selected): details_label.text += " · Or restant : %d" % (model.gold-model.upgrade_cost(selected))
 	var error: String = model.upgrade_error(selected)
 	hint_label.text = "Aperçu sans dépense · %d or · Cliquez pour améliorer · Route bleue : portée prévue" % model.upgrade_cost(selected) if error.is_empty() else "Aperçu sans dépense · " + error
 	hint_label.tooltip_text = _preview_synergy_tooltip(selected,candidate)
@@ -1185,6 +1218,8 @@ func _refresh_purchase_preview() -> void:
 	map_view.preview_synergy_unit = candidate
 	title_label.text = "E%d · APERÇU AVANT ACHAT · %s · NIVEAU 1" % [selected+1, stats.name.to_upper()]
 	details_label.text = "Dégâts : %s · Une attaque toutes les %s s · Portée : %s · Prix : %d or\n%s" % [_number(stats.damage),_number(stats.interval),_number(stats.range),model.purchase_cost(type),_recruit_effect(stats,type)]
+	if not inspection_numbers_visible:
+		details_label.text = _recruit_role(type)+" · Prix : %d or\n" % model.purchase_cost(type)+_compact_damage(stats,type)
 	var error: String = model.purchase_error(selected, type)
 	hint_label.text = "Aperçu sans achat · Synergies prévues : %d · Route bleue : portée · Liens pointillés : partenaires" % stats.synergies.size() if error.is_empty() else "Aperçu sans achat · " + error
 	hint_label.tooltip_text = _preview_synergy_tooltip(selected,candidate)
@@ -1201,7 +1236,7 @@ func _update_interface() -> void:
 	guidance_label.text = _guidance_text()
 	map_view.preview_synergy_unit = {}
 	var modal: bool = choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
-	for control in [start_button,speed_button,reset_button,sell_button,upgrade_button,bonus_summary_button,summary_button]+buy_buttons:
+	for control in [start_button,speed_button,reset_button,sell_button,upgrade_button,bonus_summary_button,summary_button,inspection_numbers_button]+buy_buttons:
 		control.set("tooltip_blocked",modal)
 		control.focus_mode = Control.FOCUS_NONE if modal else Control.FOCUS_ALL
 		if modal and control.has_focus(): control.release_focus()
@@ -1252,6 +1287,10 @@ func _update_interface() -> void:
 	time_label.text = ("Combat simulé : %.1f s" % (model.completed_time+model.elapsed)).replace(".", ",")
 	hint_label.text = "Sélectionnez E1 à E6 (clic ou touches 1–6) pour construire ou inspecter."
 	var occupied: bool = selected >= 0 and not model.defenders[selected].is_empty()
+	inspection_numbers_button.visible = selected >= 0
+	inspection_numbers_button.disabled = modal
+	inspection_numbers_button.text = "Vue simplifiée" if inspection_numbers_visible else "Voir les chiffres"
+	details_label.add_theme_font_size_override("font_size",14 if inspection_numbers_visible else 16)
 	sell_button.visible = occupied
 	sell_button.disabled = modal or not model.can_build()
 	upgrade_button.visible = occupied
@@ -1277,6 +1316,8 @@ func _update_interface() -> void:
 		var effect: String = _effect_text(stats, defender.type)
 		if not effect.is_empty():
 			details_label.text += "\n" + effect
+		if not inspection_numbers_visible:
+			details_label.text = (_specialisation_pitch(defender.type,defender.branch) if defender.level == 4 else _recruit_role(defender.type))+"\n"+_compact_damage(stats,defender.type)
 		upgrade_button.text = "Niveau maximum" if defender.level == 4 else "Spécialisation · %d or" % model.upgrade_cost(selected) if defender.level == 3 else "Niveau %d · %d or" % [defender.level + 1, model.upgrade_cost(selected)]
 		var improvement_error: String = model.upgrade_error(selected, 0 if defender.level == 3 else -1)
 		upgrade_button.tooltip_text = _upgrade_tooltip(selected,improvement_error)
@@ -1416,6 +1457,9 @@ func _number(value: float) -> String:
 func _upgrade_tooltip(slot: int, error: String) -> String:
 	var defender: Dictionary = model.defenders[slot]
 	if defender.level >= 4: return "Niveau maximum atteint."
+	if not inspection_numbers_visible:
+		if not error.is_empty(): return "Amélioration impossible : " + error
+		return "Choisissez une spécialisation ; aucun paiement avant confirmation." if defender.level == 3 else ""
 	var cost: int = model.upgrade_cost(slot)
 	var lines: Array[String] = ["Spécialisation au niveau 4" if defender.level == 3 else "Passage au niveau %d" % (defender.level+1),"Prix : %d or" % cost]
 	if model.gold >= cost: lines.append("Or disponible après amélioration : %d." % (model.gold-cost))

@@ -88,3 +88,7 @@ Les six silhouettes et les mouvements de tir sont livrés dans la [présentation
 ## Troisième lot réalisé — v0.56
 
 Les projectiles et impacts distincts sont livrés dans la [présentation des attaques v0.56](Presentation_attaques_v056.md). Les déplacements visuels ne modifient pas le moment des dégâts ni les autres règles de combat.
+
+## Quatrième lot réalisé — v0.57
+
+La [lecture du recrutement et des améliorations v0.57](Lecture_recrutement_v057.md) reprend la hiérarchie par rôle, gain et prix avec chiffres complets à la demande. Les portées et règles de jeu sont conservées.

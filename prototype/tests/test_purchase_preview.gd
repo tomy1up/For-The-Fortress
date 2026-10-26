@@ -91,6 +91,7 @@ func run_checks() -> void:
 	for faction in range(2):
 		for boosted in [false,true]:
 			var help_scene = Main.new(); root.add_child(help_scene); help_scene.set_process(false); help_scene._choose_faction(faction)
+			help_scene.inspection_numbers_visible = true # Contrôle des règles exactes dans la vue chiffrée.
 			help_scene.selected = 3; help_scene.map_view.selected = 3
 			if boosted: help_scene.model.bonuses.assign([0,1,2,3,4,10])
 			help_scene._update_interface()

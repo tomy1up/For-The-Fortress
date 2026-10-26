@@ -61,6 +61,7 @@ func run_checks() -> void:
 		scene.buy_buttons[0].mouse_entered.emit()
 		check(scene.map_view.preview_synergy_unit.type == faction*3 and scene.map_view.synergy_links(scene.map_view.preview_synergy_unit).size() == 2,"Deux partenaires visibles pour la recrue survolée")
 		check(scene.hint_label.text.contains("Synergies prévues : 1"),"Un bonus unique malgré deux partenaires")
+		scene.inspection_numbers_button.pressed.emit() # Détails de partenaires consultés dans la vue complète.
 		check(scene.buy_buttons[0].tooltip_text.contains("E2") and scene.buy_buttons[0].tooltip_text.contains("E3"),"Détail consultable sur le bouton sans quitter le survol")
 		check(scene.buy_buttons[0].tooltip_text.contains("+8 % aux dégâts directs" if faction == 0 else "+8 % aux dégâts des rebonds"),"Gain de la recrue propre à sa faction")
 		check(not scene.buy_buttons[0].tooltip_text.contains("chaman" if faction == 0 else "mage"),"Aucun texte étranger à la faction")

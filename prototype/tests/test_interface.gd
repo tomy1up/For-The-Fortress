@@ -44,6 +44,7 @@ func run_checks() -> void:
 	check(scene.model.gold == 135 and scene.model.defenders[0].is_empty() and scene.buy_buttons[0].visible, "Vente et retour à la boutique")
 	scene.buy_buttons[1].pressed.emit()
 	check(scene.model.gold == 60 and scene.sell_button.text.contains("52"), "Arbalétrier et arrondi de vente")
+	scene.inspection_numbers_button.pressed.emit()
 	check(scene.details_label.text.contains("Dégâts : 24") and scene.details_label.text.contains("Intervalle : 2,5 s"), "Statistiques affichées correctement")
 	select_slot(scene, 1)
 	check(scene.buy_buttons[1].disabled and scene.buy_buttons[1].tooltip_text.contains("Achat impossible : Or insuffisant."), "Motif d'achat impossible")

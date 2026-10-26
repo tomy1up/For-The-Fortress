@@ -31,6 +31,7 @@ func run_checks() -> void:
 		for offer in range(3):
 			for reduced in [false,true]:
 				var scene = Main.new(); root.add_child(scene); scene.set_process(false); scene._choose_faction(faction)
+				scene.inspection_numbers_visible = true # Comptabilité complète, accessible par le nouveau bouton.
 				scene.model.gold = 10000 # Budget de contrôle des quatre niveaux.
 				if reduced: scene.model.bonuses.assign([9,10])
 				scene.selected = 0; scene.map_view.selected = 0; scene._buy(offer)

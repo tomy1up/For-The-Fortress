@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.56 — 26 octobre 2026
+Version : 0.57 — 26 octobre 2026
 
 JOUER
 
@@ -175,3 +175,8 @@ Un mouvement bref accompagne leurs vrais tirs, sans changer leur cadence ni leur
 ATTAQUES PLUS LISIBLES
 Flèches, carreaux, orbes, haches, bombes et sorts ont des formes distinctes.
 Les impacts et explosions montrent les touches réellement résolues. Les dégâts restent immédiats.
+
+FICHES SIMPLIFIÉES
+Les fiches présentent le rôle, les dégâts utiles et le prix des recrues et améliorations.
+Voir les chiffres affiche les valeurs et règles complètes ; Vue simplifiée revient au résumé.
+Pour comparer une recrue, survolez son bouton après avoir choisi le mode de lecture.
