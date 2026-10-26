@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.52 (26 octobre 2026)** : relief visuel du plateau, berges et pont mieux dessinés, arbres à plusieurs étages. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.52).
+**Version v0.53 (26 octobre 2026)** : l’infobulle de lancement reste masquée après activation jusqu’à la sortie de la souris. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.53).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -159,3 +159,7 @@ Une barre suit les 30 secondes restantes, se fige pendant une lecture suspendue 
 ## Présentation de la carte — v0.52
 
 La carte gagne en relief et en détails de décor. Géométrie, emplacements, portées et statistiques conservent leurs valeurs. Les visuels restent temporaires. [Détail](design/Presentation_carte_v052.md).
+
+## Infobulle après lancement — v0.53
+
+Après activation sous la souris, l’aide du bouton de lancement attend que la souris le quitte. Revenir dessus permet de consulter la composition. [Vérification](design/Infobulle_lancement_v053.md).

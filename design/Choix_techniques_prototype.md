@@ -236,3 +236,7 @@ Barre proportionnelle au délai réel restant, sous le bouton de lancement. Lect
 ## v0.52 — Présentation de la carte, 26 octobre 2026
 
 Relief du plateau, contraste des berges et de l’eau, garde-corps du pont, étages de feuillage et détails de la porte. Dessin seul, sans collision ni nouvelle ressource externe. 29 suites, 14 350 contrôles Godot et 15 tests Python réussis. [Détail](Presentation_carte_v052.md).
+
+## v0.53 — Infobulle après lancement, 26 octobre 2026
+
+Comportement observé dans la partie native v0.52 : l’aide réapparaissait sous la souris après le départ et recouvrait l’interface. Lancement sous le pointeur : aide masquée jusqu’à sa sortie, puis consultable au retour. 29 suites, 14 350 contrôles Godot et 15 tests Python réussis. [Détail](Infobulle_lancement_v053.md).

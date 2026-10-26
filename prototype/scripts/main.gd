@@ -5,7 +5,7 @@ class LiveTooltipLabel extends Label:
 	func _process(_delta: float) -> void:
 		var button: Object = source.get_ref()
 		if button == null: return
-		if button.tooltip_blocked:
+		if button.tooltip_blocked or button.tooltip_quiet:
 			hide()
 			if get_parent() is PopupPanel: get_parent().hide()
 			return
@@ -17,8 +17,9 @@ class LiveTooltipLabel extends Label:
 
 class LiveTooltipButton extends Button:
 	var tooltip_blocked: bool = false
+	var tooltip_quiet: bool = false
 	func _get_tooltip(_at_position: Vector2) -> String:
-		return "" if tooltip_blocked else tooltip_text
+		return "" if tooltip_blocked or tooltip_quiet else tooltip_text
 	func _make_custom_tooltip(for_text: String) -> Object:
 		if for_text.is_empty(): return null
 		var content := LiveTooltipLabel.new()
@@ -453,6 +454,7 @@ func _build_interface() -> void:
 	time_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	time_label.tooltip_text = "Temps passé dans les combats, hors préparations et choix.\nEn ×2 ou ×10, ce compteur avance plus vite que le temps réel."
 	start_button = _button(side, "Lancer la vague 1", Rect2(22, 428, 234, 44), _start)
+	start_button.mouse_exited.connect(func(): start_button.tooltip_quiet = false)
 	countdown_bar = ProgressBar.new()
 	countdown_bar.position = Vector2(22,475)
 	countdown_bar.max_value = INTER_WAVE_SECONDS
@@ -992,6 +994,7 @@ func _start() -> void:
 		return
 	if model.phase == "finished": model.prepare_next_wave()
 	if model.start():
+		start_button.tooltip_quiet = start_button.is_hovered()
 		autoplay_started = true
 		breach_remaining = 0.0
 		map_view.breach_feedback = {}
@@ -1009,6 +1012,7 @@ func _reset() -> void:
 	autoplay_started = false
 	countdown_wave = -1
 	countdown_remaining = -1.0
+	start_button.tooltip_quiet = false
 	breach_remaining = 0.0
 	map_view.breach_feedback = {}
 	bonus_contexts.assign(["","",""])
