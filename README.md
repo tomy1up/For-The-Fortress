@@ -2,9 +2,11 @@
 
 **Version v0.53 (26 octobre 2026)** : l’infobulle de lancement reste masquée après activation jusqu’à la sortie de la souris. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.53).
 
-Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
+Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
 **Nom de travail : disponibilité juridique à confirmer.** Les noms des factions sont provisoires.
+
+**Orientation validée le 26 octobre 2026** : priorité à la présentation et à la compréhension des écrans, fantasy cartoon avec unités reconnaissables, aucune progression permanente pour l’instant, difficulté exigeante où plusieurs défaites avant la première victoire sont attendues. [Décisions et proposition du prochain lot](design/Orientation_presentation_2026-10-26.md).
 
 ## Documents
 

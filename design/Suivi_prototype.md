@@ -4,6 +4,8 @@
 
 ## Périmètre réalisé
 
+**Prochain lot cadré par le porteur du projet, le 26 octobre 2026** : présentation, lisibilité des encarts et fantasy cartoon. Aucune progression permanente pour l’instant ; parties exigeantes repartant à égalité. Proposition de premier chantier : hiérarchiser le choix des bonus, puis les spécialisations. [Décisions validées et proposition de réalisation](Orientation_presentation_2026-10-26.md).
+
 Les dix vagues sont jouables avec les deux factions, les niveaux, les douze spécialisations, les bonus roguelite et les douze synergies activables. Les deux campagnes de référence atteignent une victoire au budget normal ; la matrice comparative et les essais à trois types constants de L6 sont consignés. Un [premier retour humain Horde](Retours_joueurs.md) est recueilli ; les essais restent à compléter.
 
 | Lot du cahier | État | Preuve ou travail restant |

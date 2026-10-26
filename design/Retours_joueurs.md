@@ -62,3 +62,11 @@ Captures conservées : [victoire](essais/captures/RJ-002_victoire_horde.png) et 
 ## RJ-003 — Référence au chaman en Alliance, retour du 24 octobre 2026
 
 Le joueur rapporte une partie Alliance jouée la veille et un bonus évoquant les chamans. Nom et version non précisés. Il demande une vérification de la cohérence des unités, bonus et améliorations dans les deux sens. La revue identifie notamment la mention du chaman dans le texte commun de R-02 et des effets sans bénéficiaire dans certaines aides de synergie. [Correction et vérifications v0.34](Coherence_factions_v034.md). Aucun achat adverse n’est rapporté comme constaté par le joueur.
+
+## RJ-004 — Lisibilité et orientation, 26 octobre 2026
+
+Après la livraison v0.53, le porteur du projet choisit d’améliorer la présentation du prototype : visuels, animations et sensations de combat. Il précise que certains encarts contiennent trop d’informations et doivent être condensés ou mieux expliqués pour éviter de perdre les joueurs. Il ne désigne pas d’encart précis dans ce message ; les écrans prioritaires proposés ensuite relèvent de l’analyse de l’agent.
+
+Il retient une direction cartoon s’appuyant sur les codes reconnaissables des unités, avec World of Warcraft comme exemple visuel ; aucune progression permanente pour l’instant, chaque partie repartant à égalité ; et une difficulté exigeante où plusieurs défaites avant la première victoire sont normales.
+
+Ce retour exprime des choix d’orientation. Il ne rapporte pas une nouvelle partie, ne valide pas un taux de victoire mesuré et ne demande aucune valeur numérique particulière. [Décisions et proposition du prochain lot](Orientation_presentation_2026-10-26.md).
