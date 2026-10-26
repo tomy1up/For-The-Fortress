@@ -237,9 +237,10 @@ func _ready() -> void:
 				if capture_type == 5 and not model.curses.is_empty(): found = true
 				elif not model.shots.is_empty():
 					var shot: Dictionary = model.shots[-1]
-					found = not shot.secondary.is_empty() and model.elapsed-shot.time < 0.01
+					found = (capture_type < 2 or not shot.secondary.is_empty()) and model.elapsed-shot.time < 0.01
 				if found: break
 			assert(found, "La capture doit montrer un effet réellement résolu.")
+			if "--capture-attack-pose" in OS.get_cmdline_user_args(): model.advance(MapView.ATTACK_POSE_DURATION/2)
 			selected = 1
 			map_view.selected = 1
 		if capture_state == "breach":

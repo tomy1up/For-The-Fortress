@@ -244,3 +244,7 @@ Comportement observé dans la partie native v0.52 : l’aide réapparaissait sou
 ## v0.54 — Lecture progressive des choix, 26 octobre 2026
 
 Réalisation du premier lot demandé : trois cartes de bonus condensées et détails facultatifs, y compris pour les bonus acquis ; rôles des spécialisations et chiffres sur demande. 30 suites, 14 558 contrôles Godot dont 208 nouveaux, et 15 tests Python réussis. Règles, statistiques et pauses conservées. [Détail](Lecture_progressive_v054.md).
+
+## v0.55 — Silhouettes et attaques des défenseurs, 26 octobre 2026
+
+Les six défenseurs possèdent des proportions et équipements distinctifs, avec contours, ombres et accents de spécialisation. Leur mouvement bref lit uniquement les tirs réellement résolus. 31 suites, 14 621 contrôles Godot dont 63 nouveaux, 15 tests Python et contrats du GDD réussis. Statistiques, portées, ciblage et progression inchangés. [Détail](Presentation_defenseurs_v055.md).

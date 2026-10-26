@@ -80,3 +80,7 @@ For the Fortress! reste un nom de travail dont la disponibilité juridique est �
 ## Premier lot réalisé — v0.54
 
 Le porteur du projet a demandé la réalisation de cette proposition. La lecture progressive des bonus et des spécialisations est livrée dans la [v0.54](Lecture_progressive_v054.md). Les décisions d’orientation ci-dessus restent la référence pour les prochaines passes.
+
+## Deuxième lot réalisé — v0.55
+
+Les six silhouettes et les mouvements de tir sont livrés dans la [présentation des défenseurs v0.55](Presentation_defenseurs_v055.md). Aucun changement de progression ou d’équilibrage.

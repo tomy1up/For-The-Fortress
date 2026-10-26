@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.54 (26 octobre 2026)** : bonus condensés, détails à la demande et spécialisations centrées sur leur rôle. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.54).
+**Version v0.55 (26 octobre 2026)** : six silhouettes de défenseurs cartoon et mouvements liés aux attaques réelles. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.55).
 
 Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -169,3 +169,7 @@ Après activation sous la souris, l’aide du bouton de lancement attend que la 
 ## Choisir sans tout lire — v0.54
 
 Les cartes de bonus présentent le gain, les unités concernées et les conditions utiles. Voir les détails ouvre la règle complète et la comparaison réelle. Les spécialisations affichent leur rôle ; Voir les chiffres révèle les valeurs exactes. [Présentation et vérifications](design/Lecture_progressive_v054.md).
+
+## Défenseurs reconnaissables — v0.55
+
+Les six défenseurs ont des proportions, visages et équipements distincts. Un bref recul accompagne leurs attaques réelles. Dessins originaux produits par le jeu, sans changement des statistiques. [Présentation et contrôles](design/Presentation_defenseurs_v055.md).

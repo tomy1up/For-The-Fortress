@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.54 — 26 octobre 2026
+Version : 0.55 — 26 octobre 2026
 
 JOUER
 
@@ -167,3 +167,7 @@ Retour ou Échap ramène aux cartes ; seul Choisir ce bonus valide l’offre.
 Les bonus acquis peuvent aussi être détaillés depuis Bonus acquis.
 Dans les spécialisations, Voir les chiffres affiche les comparaisons exactes.
 Consulter ces informations ne dépense rien et conserve les pauses existantes.
+
+DÉFENSEURS PLUS RECONNAISSABLES
+Les six défenseurs possèdent des silhouettes cartoon et des équipements distincts.
+Un mouvement bref accompagne leurs vrais tirs, sans changer leur cadence ni leurs dégâts.
