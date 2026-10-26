@@ -1,0 +1,56 @@
+{
+  "input_sha256": "b4c79627cb4864060cd679526fc5ff5cc7174a9f41918083a999d651b99dd2f7",
+  "input_report": "v052_native_report.json",
+  "read_only_confirmed": true,
+  "interaction": "Partie de contrôle opérée par l’agent dans l’exécutable Windows sur écran 1 à droite, via clavier et souris. Aucun état de jeu modifié par script.",
+  "human_feedback": false,
+  "observed_debug_speed": 10,
+  "observed_automatic_starts": [
+    2,
+    3,
+    6,
+    9
+  ],
+  "mandatory_choice_observed_wait_seconds": 35,
+  "specialisation_resumed_seconds_displayed": 3,
+  "game_version": "0.52",
+  "faction": "Alliance",
+  "result": "victory",
+  "fortress_hp": 18,
+  "gold": 189,
+  "combat_seconds": 331.330723650741,
+  "total_killed": 180,
+  "total_escaped": 2,
+  "total_income": 764,
+  "bonuses": [
+    "R-06",
+    "R-02",
+    "R-12"
+  ],
+  "boss_encounter": {
+    "duration_seconds": 6.696428571,
+    "id": 0,
+    "max_hp": 600.0,
+    "name": "Seigneur de siège",
+    "observed_seconds": 21.4285714285714,
+    "phase": "victory",
+    "remaining_hp": 0.0,
+    "removed_hp": 600.0,
+    "resolved_seconds": 6.696428571,
+    "spawn_seconds": 0.0,
+    "status": "killed",
+    "wave": 10
+  },
+  "replay": {
+    "actions": 45,
+    "current_version": "0.52",
+    "faction": 0,
+    "fortress_hp": 18,
+    "gold": 189,
+    "ok": true,
+    "result": "victory",
+    "same_version": true,
+    "source_version": "0.52",
+    "wave": 10
+  }
+}

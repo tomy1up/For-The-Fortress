@@ -1,0 +1,248 @@
+{
+  "baseline_version": "0.51",
+  "candidate_version": "0.52",
+  "regions": {
+    "left_interface": [
+      0,
+      0,
+      320,
+      774
+    ],
+    "bottom_interface": [
+      320,
+      600,
+      1280,
+      774
+    ]
+  },
+  "excluded": "Décor de la carte et pied portant la version.",
+  "captures": [
+    {
+      "capture": "alliance_crossbow_purchase.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "alliance_defender_catalogue.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "alliance_defender_summary.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "alliance_faction_bonuses.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "alliance_mage_purchase.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "alliance_purchase.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "alliance_run_report.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "alliance_synergies.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "alliance_synergy_branch.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "alliance_synergy_purchase.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "alliance_victory.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "bonus.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "bonus_alliance_comparison.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "bonus_economy_comparison.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "bonus_horde_comparison.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "boss_forecast.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "boss_inspection.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "boss_without_hover.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "countdown.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "debug_combat_speed.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "defeat_defender_summary.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "defeat_summary.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "effects_mage.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "effects_sapper.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "effects_shaman.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "effects_troll.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "enemy_inspection.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "enemy_silhouettes.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "fortress_breach.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "horde_defender_catalogue.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "horde_defender_summary.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "horde_faction_bonuses.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "horde_purchase.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "horde_run_report.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "horde_sapper_purchase.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "horde_shaman_purchase.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "horde_synergies.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "horde_synergy_branch.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "horde_synergy_purchase.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "horde_victory.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "selection.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "specialisation_preview.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "upgrade_comparison.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "victory_summary.png",
+      "left_interface": true,
+      "bottom_interface": true
+    },
+    {
+      "capture": "wave_forecast.png",
+      "left_interface": true,
+      "bottom_interface": true
+    }
+  ],
+  "total": 45,
+  "all_regions_identical": true
+}

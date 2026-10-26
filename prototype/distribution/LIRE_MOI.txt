@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.51 — 26 octobre 2026
+Version : 0.52 — 26 octobre 2026
 
 JOUER
 
@@ -57,7 +57,7 @@ avec un éditeur de texte. Relevez votre faction, vos placements, vos choix,
 les passages difficiles et les éléments mal compris. Le temps de combat affiché
 ne mesure pas le temps passé à préparer ou à lire.
 
-Cette version ajoute l’enchaînement automatique après le premier lancement manuel.
+Le prototype enchaîne les vagues après le premier lancement manuel.
 Les choix d’améliorations attendent votre intervention. Aucun ajustement d’équilibrage
 des unités ou ennemis.
 Les prix et statistiques restent des hypothèses à tester.

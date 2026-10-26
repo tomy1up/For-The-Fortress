@@ -131,15 +131,23 @@ func _draw() -> void:
 	for corner in corners:
 		base.append(project(corner) + Vector2(0, 16))
 	draw_colored_polygon(base, Color("172c2b"))
-	polygon(corners, Color("354b3c"))
+	# Deux faces donnent de l'épaisseur au plateau, sans déplacer sa surface logique.
+	for edge in [[corners[1],corners[2],Color("263e34")],[corners[2],corners[3],Color("1c322c")]]:
+		var first: Vector2 = project(edge[0])
+		var last: Vector2 = project(edge[1])
+		draw_colored_polygon(PackedVector2Array([first,last,last+Vector2(0,16),first+Vector2(0,16)]),edge[2])
+	polygon(corners, Color("3a513e"))
 	for x in range(19):
 		draw_line(project(Vector2(x, 0)), project(Vector2(x, 10)), Color(0.75, 0.86, 0.7, 0.055), 1)
 	for y in range(11):
 		draw_line(project(Vector2(0, y)), project(Vector2(18, y)), Color(0.75, 0.86, 0.7, 0.055), 1)
 	# La rivière et le pont sont des éléments visuels, sans collision.
-	polygon([Vector2(6, 0), Vector2(7, 0), Vector2(7, 10), Vector2(6, 10)], Color("396968"))
+	polygon([Vector2(5.86,0),Vector2(7.14,0),Vector2(7.14,10),Vector2(5.86,10)],Color("68755a"))
+	polygon([Vector2(6, 0), Vector2(7, 0), Vector2(7, 10), Vector2(6, 10)], Color("407b7d"))
+	polygon([Vector2(6.76,0),Vector2(7,0),Vector2(7,10),Vector2(6.76,10)],Color("315e67"))
 	for y in range(10):
-		draw_line(project(Vector2(6.2, y + 0.2)), project(Vector2(6.75, y + 0.65)), Color("5b8b80"), 1.5)
+		draw_line(project(Vector2(6.16,y+0.24)),project(Vector2(6.52,y+0.28)),Color("83b7ab"),1.2,true)
+		draw_line(project(Vector2(6.45,y+0.65)),project(Vector2(6.82,y+0.68)),Color("659c9c"),1.2,true)
 	var route := PackedVector2Array()
 	for point in Model.PATH_POINTS:
 		route.append(project(point))
@@ -152,6 +160,11 @@ func _draw() -> void:
 	for plank in range(8):
 		var x: float = 5.85 + plank * 0.18
 		draw_line(project(Vector2(x, 6.6)), project(Vector2(x, 7.4)), Color("b29a6b"), 2)
+	for bank in [6.55,7.45]:
+		var first: Vector2 = project(Vector2(5.8,bank))
+		var last: Vector2 = project(Vector2(7.2,bank))
+		draw_line(first+Vector2(0,-5),last+Vector2(0,-5),Color("c3aa78"),2,true)
+		for post in [first,last]: draw_line(post,post+Vector2(0,-8),Color("725c42"),3,true)
 	for tree in [Vector2(1, 1), Vector2(1.4, 8.5), Vector2(4.6, 9), Vector2(10, 1), Vector2(12, 8.7), Vector2(16.8, 2), Vector2(17, 8.7)]:
 		_draw_tree(project(tree))
 	var preview: Dictionary = purchase_preview if not purchase_preview.is_empty() else upgrade_preview
@@ -270,8 +283,12 @@ func _draw_defender(center: Vector2, type: int, level: int = 1, branch: int = -1
 func _draw_tree(center: Vector2) -> void:
 	draw_circle(center + Vector2(0, 3), 10, Color(0, 0, 0, 0.1))
 	draw_line(center, center + Vector2(0, -22), Color("80755a"), 3)
-	draw_colored_polygon(PackedVector2Array([center + Vector2(-13, -8), center + Vector2(0, -38), center + Vector2(13, -8)]), Color("244237"))
-	draw_line(center + Vector2(0, -37), center + Vector2(10, -10), Color("4b6750"), 2)
+	for crown in [[14.0,-8.0,-31.0],[11.0,-18.0,-39.0],[7.5,-28.0,-45.0]]:
+		var left: Vector2 = center+Vector2(-crown[0],crown[1])
+		var right: Vector2 = center+Vector2(crown[0],crown[1])
+		var tip: Vector2 = center+Vector2(0,crown[2])
+		draw_colored_polygon(PackedVector2Array([left,tip,right]),Color("2b5140"))
+		draw_colored_polygon(PackedVector2Array([tip,right,center+Vector2(0,crown[1])]),Color("496e50"))
 
 func _draw_fortress(anchor: Vector2) -> void:
 	# Décaler le bâtiment dans sa cour pour laisser le repère E6 visible.
@@ -285,7 +302,11 @@ func _draw_fortress(anchor: Vector2) -> void:
 		draw_rect(Rect2(tower + Vector2(1, -39), Vector2(8, 39)), Color("7e9285"))
 		draw_colored_polygon(PackedVector2Array([tower + Vector2(-13, -39), tower + Vector2(0, -57), tower + Vector2(13, -39)]), Color("315b68"))
 	draw_rect(Rect2(center + Vector2(-17, -34), Vector2(34, 29)), Color("8b9e8e"))
+	for height in [-28,-19,-10]:
+		draw_line(center+Vector2(-16,height),center+Vector2(16,height),Color("7a9082"),1)
+	draw_circle(center+Vector2(0,-24),6,Color("233c36"))
 	draw_rect(Rect2(center + Vector2(-6, -24), Vector2(12, 19)), Color("233c36"))
+	for offset in [-3,3]:draw_line(center+Vector2(offset,-26),center+Vector2(offset,-5),Color("4f6858"),1)
 	draw_line(center + Vector2(0, -36), center + Vector2(0, -68), Color("d0bc8c"), 2)
 	draw_colored_polygon(PackedVector2Array([center + Vector2(1, -68), center + Vector2(20, -62), center + Vector2(1, -55)]), Color("d3b676"))
 	draw_string(font, center + Vector2(-42, 32), "FORTERESSE", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, INK)

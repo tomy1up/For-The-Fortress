@@ -1,0 +1,1854 @@
+{
+	"actions": [
+		{
+			"combat_seconds": 0.0,
+			"faction": 0,
+			"fortress_hp": 20,
+			"gold": 150,
+			"kind": "faction",
+			"phase": "preparation",
+			"sequence": 1,
+			"wave": 1
+		},
+		{
+			"combat_seconds": 0.0,
+			"cost": 50,
+			"fortress_hp": 20,
+			"gold": 100,
+			"instance_id": 0,
+			"kind": "buy",
+			"phase": "preparation",
+			"sequence": 2,
+			"slot": 0,
+			"type": 0,
+			"wave": 1
+		},
+		{
+			"combat_seconds": 0.0,
+			"cost": 75,
+			"fortress_hp": 20,
+			"gold": 25,
+			"instance_id": 1,
+			"kind": "buy",
+			"phase": "preparation",
+			"sequence": 3,
+			"slot": 1,
+			"type": 1,
+			"wave": 1
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 1,
+					"paid": 50,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"slot": 1,
+					"type": 1
+				}
+			],
+			"bonuses": [],
+			"combat_seconds": 0.0,
+			"fortress_hp": 20,
+			"gold": 25,
+			"kind": "wave_start",
+			"phase": "combat",
+			"sequence": 4,
+			"wave": 1
+		},
+		{
+			"combat_seconds": 23.5,
+			"escaped": 0,
+			"fortress_hp": 20,
+			"gold": 55,
+			"income": 30,
+			"killed": 10,
+			"kind": "wave_end",
+			"phase": "finished",
+			"result": "cleared",
+			"seconds": 23.5,
+			"sequence": 5,
+			"wave": 1
+		},
+		{
+			"combat_seconds": 23.5,
+			"fortress_hp": 20,
+			"gold": 55,
+			"kind": "wave_prepare",
+			"phase": "preparation",
+			"sequence": 6,
+			"wave": 2
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 1,
+					"paid": 50,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"slot": 1,
+					"type": 1
+				}
+			],
+			"bonuses": [],
+			"combat_seconds": 23.5,
+			"fortress_hp": 20,
+			"gold": 55,
+			"kind": "wave_start",
+			"phase": "combat",
+			"sequence": 7,
+			"wave": 2
+		},
+		{
+			"combat_seconds": 58.5,
+			"escaped": 0,
+			"fortress_hp": 20,
+			"gold": 93,
+			"income": 38,
+			"killed": 18,
+			"kind": "wave_end",
+			"phase": "finished",
+			"result": "cleared",
+			"seconds": 35.0,
+			"sequence": 8,
+			"wave": 2
+		},
+		{
+			"combat_seconds": 58.5,
+			"fortress_hp": 20,
+			"gold": 93,
+			"kind": "wave_prepare",
+			"phase": "preparation",
+			"sequence": 9,
+			"wave": 3
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 1,
+					"paid": 50,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"slot": 1,
+					"type": 1
+				}
+			],
+			"bonuses": [],
+			"combat_seconds": 58.5,
+			"fortress_hp": 20,
+			"gold": 93,
+			"kind": "wave_start",
+			"phase": "combat",
+			"sequence": 10,
+			"wave": 3
+		},
+		{
+			"combat_seconds": 100.469697,
+			"fortress_hp": 18,
+			"gold": 135,
+			"kind": "bonus_offer",
+			"offered": [
+				5,
+				3,
+				7
+			],
+			"phase": "bonus",
+			"rng_state_after": "7593104669933751028",
+			"rng_state_before": "1781279701474889247",
+			"sequence": 11,
+			"wave": 3
+		},
+		{
+			"combat_seconds": 100.469697,
+			"escaped": 2,
+			"fortress_hp": 18,
+			"gold": 135,
+			"income": 42,
+			"killed": 14,
+			"kind": "wave_end",
+			"phase": "bonus",
+			"result": "cleared",
+			"seconds": 41.969696969697,
+			"sequence": 12,
+			"wave": 3
+		},
+		{
+			"chosen": 5,
+			"combat_seconds": 100.469697,
+			"fortress_hp": 18,
+			"gold": 135,
+			"kind": "bonus_choice",
+			"offered": [
+				5,
+				3,
+				7
+			],
+			"phase": "finished",
+			"sequence": 13,
+			"wave": 3
+		},
+		{
+			"combat_seconds": 100.469697,
+			"cost": 100,
+			"fortress_hp": 18,
+			"gold": 35,
+			"instance_id": 2,
+			"kind": "buy",
+			"phase": "finished",
+			"sequence": 14,
+			"slot": 2,
+			"type": 2,
+			"wave": 3
+		},
+		{
+			"combat_seconds": 100.469697,
+			"fortress_hp": 18,
+			"gold": 35,
+			"kind": "wave_prepare",
+			"phase": "preparation",
+			"sequence": 15,
+			"wave": 4
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 1,
+					"paid": 50,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5
+			],
+			"combat_seconds": 100.469697,
+			"fortress_hp": 18,
+			"gold": 35,
+			"kind": "wave_start",
+			"phase": "combat",
+			"sequence": 16,
+			"wave": 4
+		},
+		{
+			"combat_seconds": 128.937867,
+			"escaped": 0,
+			"fortress_hp": 18,
+			"gold": 79,
+			"income": 44,
+			"killed": 20,
+			"kind": "wave_end",
+			"phase": "finished",
+			"result": "cleared",
+			"seconds": 28.4681695381871,
+			"sequence": 17,
+			"wave": 4
+		},
+		{
+			"branch": -1,
+			"combat_seconds": 128.937867,
+			"cost": 50,
+			"fortress_hp": 18,
+			"gold": 29,
+			"instance_id": 0,
+			"kind": "upgrade",
+			"level": 2,
+			"phase": "finished",
+			"sequence": 18,
+			"slot": 0,
+			"type": 0,
+			"wave": 4
+		},
+		{
+			"combat_seconds": 128.937867,
+			"fortress_hp": 18,
+			"gold": 29,
+			"kind": "wave_prepare",
+			"phase": "preparation",
+			"sequence": 19,
+			"wave": 5
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 2,
+					"paid": 100,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5
+			],
+			"combat_seconds": 128.937867,
+			"fortress_hp": 18,
+			"gold": 29,
+			"kind": "wave_start",
+			"phase": "combat",
+			"sequence": 20,
+			"wave": 5
+		},
+		{
+			"combat_seconds": 165.937867,
+			"escaped": 0,
+			"fortress_hp": 18,
+			"gold": 117,
+			"income": 88,
+			"killed": 18,
+			"kind": "wave_end",
+			"phase": "finished",
+			"result": "cleared",
+			"seconds": 37.0,
+			"sequence": 21,
+			"wave": 5
+		},
+		{
+			"branch": -1,
+			"combat_seconds": 165.937867,
+			"cost": 100,
+			"fortress_hp": 18,
+			"gold": 17,
+			"instance_id": 0,
+			"kind": "upgrade",
+			"level": 3,
+			"phase": "finished",
+			"sequence": 22,
+			"slot": 0,
+			"type": 0,
+			"wave": 5
+		},
+		{
+			"combat_seconds": 165.937867,
+			"fortress_hp": 18,
+			"gold": 17,
+			"kind": "wave_prepare",
+			"phase": "preparation",
+			"sequence": 23,
+			"wave": 6
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 3,
+					"paid": 200,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5
+			],
+			"combat_seconds": 165.937867,
+			"fortress_hp": 18,
+			"gold": 17,
+			"kind": "wave_start",
+			"phase": "combat",
+			"sequence": 24,
+			"wave": 6
+		},
+		{
+			"combat_seconds": 203.437867,
+			"fortress_hp": 18,
+			"gold": 99,
+			"kind": "bonus_offer",
+			"offered": [
+				1,
+				2,
+				3
+			],
+			"phase": "bonus",
+			"rng_state_after": "-5063059379109983539",
+			"rng_state_before": "7593104669933751028",
+			"sequence": 25,
+			"wave": 6
+		},
+		{
+			"combat_seconds": 203.437867,
+			"escaped": 0,
+			"fortress_hp": 18,
+			"gold": 99,
+			"income": 82,
+			"killed": 20,
+			"kind": "wave_end",
+			"phase": "bonus",
+			"result": "cleared",
+			"seconds": 37.5,
+			"sequence": 26,
+			"wave": 6
+		},
+		{
+			"chosen": 1,
+			"combat_seconds": 203.437867,
+			"fortress_hp": 18,
+			"gold": 99,
+			"kind": "bonus_choice",
+			"offered": [
+				1,
+				2,
+				3
+			],
+			"phase": "finished",
+			"sequence": 27,
+			"wave": 6
+		},
+		{
+			"branch": -1,
+			"combat_seconds": 203.437867,
+			"cost": 50,
+			"fortress_hp": 18,
+			"gold": 49,
+			"instance_id": 1,
+			"kind": "upgrade",
+			"level": 2,
+			"phase": "finished",
+			"sequence": 28,
+			"slot": 1,
+			"type": 1,
+			"wave": 6
+		},
+		{
+			"combat_seconds": 203.437867,
+			"fortress_hp": 18,
+			"gold": 49,
+			"kind": "wave_prepare",
+			"phase": "preparation",
+			"sequence": 29,
+			"wave": 7
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 3,
+					"paid": 200,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 2,
+					"paid": 125,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5,
+				1
+			],
+			"combat_seconds": 203.437867,
+			"fortress_hp": 18,
+			"gold": 49,
+			"kind": "wave_start",
+			"phase": "combat",
+			"sequence": 30,
+			"wave": 7
+		},
+		{
+			"combat_seconds": 234.687867,
+			"escaped": 0,
+			"fortress_hp": 18,
+			"gold": 145,
+			"income": 96,
+			"killed": 11,
+			"kind": "wave_end",
+			"phase": "finished",
+			"result": "cleared",
+			"seconds": 31.25,
+			"sequence": 31,
+			"wave": 7
+		},
+		{
+			"branch": -1,
+			"combat_seconds": 234.687867,
+			"cost": 100,
+			"fortress_hp": 18,
+			"gold": 45,
+			"instance_id": 1,
+			"kind": "upgrade",
+			"level": 3,
+			"phase": "finished",
+			"sequence": 32,
+			"slot": 1,
+			"type": 1,
+			"wave": 7
+		},
+		{
+			"combat_seconds": 234.687867,
+			"fortress_hp": 18,
+			"gold": 45,
+			"kind": "wave_prepare",
+			"phase": "preparation",
+			"sequence": 33,
+			"wave": 8
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 3,
+					"paid": 200,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 3,
+					"paid": 225,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5,
+				1
+			],
+			"combat_seconds": 234.687867,
+			"fortress_hp": 18,
+			"gold": 45,
+			"kind": "wave_start",
+			"phase": "combat",
+			"sequence": 34,
+			"wave": 8
+		},
+		{
+			"combat_seconds": 273.652152,
+			"escaped": 0,
+			"fortress_hp": 18,
+			"gold": 153,
+			"income": 108,
+			"killed": 44,
+			"kind": "wave_end",
+			"phase": "finished",
+			"result": "cleared",
+			"seconds": 38.9642857142857,
+			"sequence": 35,
+			"wave": 8
+		},
+		{
+			"branch": 0,
+			"combat_seconds": 273.652152,
+			"cost": 150,
+			"fortress_hp": 18,
+			"gold": 3,
+			"instance_id": 0,
+			"kind": "upgrade",
+			"level": 4,
+			"phase": "finished",
+			"sequence": 36,
+			"slot": 0,
+			"type": 0,
+			"wave": 8
+		},
+		{
+			"combat_seconds": 273.652152,
+			"fortress_hp": 18,
+			"gold": 3,
+			"kind": "wave_prepare",
+			"phase": "preparation",
+			"sequence": 37,
+			"wave": 9
+		},
+		{
+			"army": [
+				{
+					"branch": 0,
+					"instance_id": 0,
+					"level": 4,
+					"paid": 350,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 3,
+					"paid": 225,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5,
+				1
+			],
+			"combat_seconds": 273.652152,
+			"fortress_hp": 18,
+			"gold": 3,
+			"kind": "wave_start",
+			"phase": "combat",
+			"sequence": 38,
+			"wave": 9
+		},
+		{
+			"combat_seconds": 309.902152,
+			"fortress_hp": 18,
+			"gold": 135,
+			"kind": "bonus_offer",
+			"offered": [
+				11,
+				4,
+				9
+			],
+			"phase": "bonus",
+			"rng_state_after": "3425580804490661242",
+			"rng_state_before": "-5063059379109983539",
+			"sequence": 39,
+			"wave": 9
+		},
+		{
+			"combat_seconds": 309.902152,
+			"escaped": 0,
+			"fortress_hp": 18,
+			"gold": 135,
+			"income": 132,
+			"killed": 14,
+			"kind": "wave_end",
+			"phase": "bonus",
+			"result": "cleared",
+			"seconds": 36.25,
+			"sequence": 40,
+			"wave": 9
+		},
+		{
+			"chosen": 11,
+			"combat_seconds": 309.902152,
+			"fortress_hp": 18,
+			"gold": 135,
+			"kind": "bonus_choice",
+			"offered": [
+				11,
+				4,
+				9
+			],
+			"phase": "finished",
+			"sequence": 41,
+			"wave": 9
+		},
+		{
+			"branch": -1,
+			"combat_seconds": 309.902152,
+			"cost": 50,
+			"fortress_hp": 18,
+			"gold": 85,
+			"instance_id": 2,
+			"kind": "upgrade",
+			"level": 2,
+			"phase": "finished",
+			"sequence": 42,
+			"slot": 2,
+			"type": 2,
+			"wave": 9
+		},
+		{
+			"combat_seconds": 309.902152,
+			"fortress_hp": 18,
+			"gold": 85,
+			"kind": "wave_prepare",
+			"phase": "preparation",
+			"sequence": 43,
+			"wave": 10
+		},
+		{
+			"army": [
+				{
+					"branch": 0,
+					"instance_id": 0,
+					"level": 4,
+					"paid": 350,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 3,
+					"paid": 225,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 2,
+					"paid": 150,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5,
+				1,
+				11
+			],
+			"combat_seconds": 309.902152,
+			"fortress_hp": 18,
+			"gold": 85,
+			"kind": "wave_start",
+			"phase": "combat",
+			"sequence": 44,
+			"wave": 10
+		},
+		{
+			"combat_seconds": 331.330724,
+			"escaped": 0,
+			"fortress_hp": 18,
+			"gold": 189,
+			"income": 104,
+			"killed": 11,
+			"kind": "wave_end",
+			"phase": "victory",
+			"result": "cleared",
+			"seconds": 21.4285714285714,
+			"sequence": 45,
+			"wave": 10
+		}
+	],
+	"army": [
+		{
+			"branch": 0,
+			"instance_id": 0,
+			"level": 4,
+			"name": "Archer elfe",
+			"paid": 350,
+			"ready_at": 22.7678571428571,
+			"slot": 0,
+			"type": 0,
+			"windows": [
+				{
+					"first": 0.0,
+					"last": 7.39897948556636
+				}
+			]
+		},
+		{
+			"branch": -1,
+			"instance_id": 1,
+			"level": 3,
+			"name": "Arbalétrier nain",
+			"paid": 225,
+			"ready_at": 22.3214285714286,
+			"slot": 1,
+			"type": 1,
+			"windows": [
+				{
+					"first": 0.0,
+					"last": 11.1538820320221
+				}
+			]
+		},
+		{
+			"branch": -1,
+			"instance_id": 2,
+			"level": 2,
+			"name": "Mage humain",
+			"paid": 150,
+			"ready_at": 17.6345772832604,
+			"slot": 2,
+			"type": 2,
+			"windows": [
+				{
+					"first": 3.12771867673099,
+					"last": 12.872281323269
+				},
+				{
+					"first": 13.197224362268,
+					"last": 16.802775637732
+				}
+			]
+		}
+	],
+	"bonuses": [
+		{
+			"code": "R-06",
+			"description": "+15 % aux dégâts directs des tirs. Les explosions restent inchangées.",
+			"index": 5,
+			"name": "Impacts appuyés"
+		},
+		{
+			"code": "R-02",
+			"description": "+12 % de fréquence d’attaque pour les archers, arbalétriers et mages, spécialisations incluses.",
+			"index": 1,
+			"name": "Exercice de tir"
+		},
+		{
+			"code": "R-12",
+			"description": "+20 % aux dégâts des tirs et explosions contre Brutes, Colosses, Élites et boss. Priorité des cibles inchangée.",
+			"index": 11,
+			"name": "Chasse aux colosses"
+		}
+	],
+	"boss_encounter": {
+		"duration_seconds": 6.696428571,
+		"id": 0,
+		"max_hp": 600.0,
+		"name": "Seigneur de siège",
+		"observed_seconds": 21.4285714285714,
+		"phase": "victory",
+		"remaining_hp": 0.0,
+		"removed_hp": 600.0,
+		"resolved_seconds": 6.696428571,
+		"spawn_seconds": 0.0,
+		"status": "killed",
+		"wave": 10
+	},
+	"combat_seconds": 331.330723650741,
+	"engine_version": "4.7.2-stable (official)",
+	"faction": 0,
+	"faction_name": "Alliance",
+	"fortress_hp": 18,
+	"game_version": "0.52",
+	"gold": 189,
+	"initial_rng_seed": "5283217881916548833",
+	"initial_rng_state": "1781279701474889247",
+	"max_hp": 20,
+	"performance": [
+		{
+			"attacks": 304,
+			"boss_hp": 326.419598853868,
+			"branch": 0,
+			"curse_hp": 0.0,
+			"curse_ticks": 0,
+			"direct_hp": 5302.04085220575,
+			"instance_id": 0,
+			"level": 4,
+			"name": "Archer elfe",
+			"paid": 350,
+			"present_at_end": true,
+			"secondary_hits": 0,
+			"secondary_hp": 0.0,
+			"slot": 0,
+			"type": 0,
+			"waves": [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10
+			]
+		},
+		{
+			"attacks": 142,
+			"boss_hp": 273.580401146132,
+			"branch": -1,
+			"curse_hp": 0.0,
+			"curse_ticks": 0,
+			"direct_hp": 3885.10014779425,
+			"instance_id": 1,
+			"level": 3,
+			"name": "Arbalétrier nain",
+			"paid": 225,
+			"present_at_end": true,
+			"secondary_hits": 0,
+			"secondary_hp": 0.0,
+			"slot": 1,
+			"type": 1,
+			"waves": [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10
+			]
+		},
+		{
+			"attacks": 63,
+			"boss_hp": 0.0,
+			"branch": -1,
+			"curse_hp": 0.0,
+			"curse_ticks": 0,
+			"direct_hp": 1512.641,
+			"instance_id": 2,
+			"level": 2,
+			"name": "Mage humain",
+			"paid": 150,
+			"present_at_end": true,
+			"secondary_hits": 21,
+			"secondary_hp": 213.498,
+			"slot": 2,
+			"type": 2,
+			"waves": [
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10
+			]
+		}
+	],
+	"result": "victory",
+	"schema_version": 2,
+	"total_escaped": 2,
+	"total_income": 764,
+	"total_killed": 180,
+	"wave": 10,
+	"waves": [
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 1,
+					"paid": 50,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"slot": 1,
+					"type": 1
+				}
+			],
+			"bonuses": [],
+			"escaped": 0,
+			"hp_after": 20,
+			"hp_before": 20,
+			"hp_lost": 0,
+			"income": 30,
+			"income_before": 0,
+			"killed": 10,
+			"max_hp": 20,
+			"performance": [
+				{
+					"attacks": 20,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 140.8,
+					"instance_id": 0,
+					"level": 1,
+					"paid": 50,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"attacks": 10,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 259.2,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 1,
+					"type": 1
+				}
+			],
+			"planned": 10,
+			"remaining": 0,
+			"result": "cleared",
+			"seconds": 23.5,
+			"spawned": 10,
+			"wave": 1
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 1,
+					"paid": 50,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"slot": 1,
+					"type": 1
+				}
+			],
+			"bonuses": [],
+			"escaped": 0,
+			"hp_after": 20,
+			"hp_before": 20,
+			"hp_lost": 0,
+			"income": 38,
+			"income_before": 30,
+			"killed": 18,
+			"max_hp": 20,
+			"performance": [
+				{
+					"attacks": 33,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 241.92,
+					"instance_id": 0,
+					"level": 1,
+					"paid": 50,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"attacks": 15,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 254.08,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 1,
+					"type": 1
+				}
+			],
+			"planned": 18,
+			"remaining": 0,
+			"result": "cleared",
+			"seconds": 35.0,
+			"spawned": 18,
+			"wave": 2
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 1,
+					"paid": 50,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"slot": 1,
+					"type": 1
+				}
+			],
+			"bonuses": [],
+			"escaped": 2,
+			"hp_after": 18,
+			"hp_before": 20,
+			"hp_lost": 2,
+			"income": 42,
+			"income_before": 68,
+			"killed": 14,
+			"max_hp": 20,
+			"performance": [
+				{
+					"attacks": 31,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 247.76,
+					"instance_id": 0,
+					"level": 1,
+					"paid": 50,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"attacks": 14,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 233.52,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 1,
+					"type": 1
+				}
+			],
+			"planned": 16,
+			"remaining": 0,
+			"result": "cleared",
+			"seconds": 41.969696969697,
+			"spawned": 16,
+			"wave": 3
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 1,
+					"paid": 50,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5
+			],
+			"escaped": 0,
+			"hp_after": 18,
+			"hp_before": 18,
+			"hp_lost": 0,
+			"income": 44,
+			"income_before": 110,
+			"killed": 20,
+			"max_hp": 20,
+			"performance": [
+				{
+					"attacks": 27,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 246.376,
+					"instance_id": 0,
+					"level": 1,
+					"paid": 50,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"attacks": 12,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 214.092,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"attacks": 10,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 171.98,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"secondary_hits": 6,
+					"secondary_hp": 39.552,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"planned": 20,
+			"remaining": 0,
+			"result": "cleared",
+			"seconds": 28.4681695381871,
+			"spawned": 20,
+			"wave": 4
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 2,
+					"paid": 100,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5
+			],
+			"escaped": 0,
+			"hp_after": 18,
+			"hp_before": 18,
+			"hp_lost": 0,
+			"income": 88,
+			"income_before": 154,
+			"killed": 18,
+			"max_hp": 20,
+			"performance": [
+				{
+					"attacks": 38,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 519.543421750663,
+					"instance_id": 0,
+					"level": 2,
+					"paid": 100,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"attacks": 15,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 279.776578249337,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"attacks": 11,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 342.03,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"secondary_hits": 1,
+					"secondary_hp": 10.65,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"planned": 18,
+			"remaining": 0,
+			"result": "cleared",
+			"seconds": 37.0,
+			"spawned": 18,
+			"wave": 5
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 3,
+					"paid": 200,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5
+			],
+			"escaped": 0,
+			"hp_after": 18,
+			"hp_before": 18,
+			"hp_lost": 0,
+			"income": 82,
+			"income_before": 242,
+			"killed": 20,
+			"max_hp": 20,
+			"performance": [
+				{
+					"attacks": 35,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 723.528203389831,
+					"instance_id": 0,
+					"level": 3,
+					"paid": 200,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"attacks": 16,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 318.479796610169,
+					"instance_id": 1,
+					"level": 1,
+					"paid": 75,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"attacks": 11,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 267.0,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"secondary_hits": 3,
+					"secondary_hp": 34.992,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"planned": 20,
+			"remaining": 0,
+			"result": "cleared",
+			"seconds": 37.5,
+			"spawned": 20,
+			"wave": 6
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 3,
+					"paid": 200,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 2,
+					"paid": 125,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5,
+				1
+			],
+			"escaped": 0,
+			"hp_after": 18,
+			"hp_before": 18,
+			"hp_lost": 0,
+			"income": 96,
+			"income_before": 324,
+			"killed": 11,
+			"max_hp": 20,
+			"performance": [
+				{
+					"attacks": 32,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 708.692,
+					"instance_id": 0,
+					"level": 3,
+					"paid": 200,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"attacks": 15,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 456.49,
+					"instance_id": 1,
+					"level": 2,
+					"paid": 125,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"attacks": 11,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 279.826,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"secondary_hits": 3,
+					"secondary_hp": 34.992,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"planned": 11,
+			"remaining": 0,
+			"result": "cleared",
+			"seconds": 31.25,
+			"spawned": 11,
+			"wave": 7
+		},
+		{
+			"army": [
+				{
+					"branch": -1,
+					"instance_id": 0,
+					"level": 3,
+					"paid": 200,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 3,
+					"paid": 225,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5,
+				1
+			],
+			"escaped": 0,
+			"hp_after": 18,
+			"hp_before": 18,
+			"hp_lost": 0,
+			"income": 108,
+			"income_before": 420,
+			"killed": 44,
+			"max_hp": 20,
+			"performance": [
+				{
+					"attacks": 43,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 589.512112,
+					"instance_id": 0,
+					"level": 3,
+					"paid": 200,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"attacks": 18,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 361.065888,
+					"instance_id": 1,
+					"level": 3,
+					"paid": 225,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"attacks": 13,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 172.11,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"secondary_hits": 8,
+					"secondary_hp": 93.312,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"planned": 44,
+			"remaining": 0,
+			"result": "cleared",
+			"seconds": 38.9642857142857,
+			"spawned": 44,
+			"wave": 8
+		},
+		{
+			"army": [
+				{
+					"branch": 0,
+					"instance_id": 0,
+					"level": 4,
+					"paid": 350,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 3,
+					"paid": 225,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5,
+				1
+			],
+			"escaped": 0,
+			"hp_after": 18,
+			"hp_before": 18,
+			"hp_lost": 0,
+			"income": 132,
+			"income_before": 528,
+			"killed": 14,
+			"max_hp": 20,
+			"performance": [
+				{
+					"attacks": 28,
+					"boss_hp": 0.0,
+					"branch": 0,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 1134.03,
+					"instance_id": 0,
+					"level": 4,
+					"paid": 350,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"attacks": 17,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 941.59,
+					"instance_id": 1,
+					"level": 3,
+					"paid": 225,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"attacks": 3,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 84.38,
+					"instance_id": 2,
+					"level": 1,
+					"paid": 100,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"planned": 14,
+			"remaining": 0,
+			"result": "cleared",
+			"seconds": 36.25,
+			"spawned": 14,
+			"wave": 9
+		},
+		{
+			"army": [
+				{
+					"branch": 0,
+					"instance_id": 0,
+					"level": 4,
+					"paid": 350,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"branch": -1,
+					"instance_id": 1,
+					"level": 3,
+					"paid": 225,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"branch": -1,
+					"instance_id": 2,
+					"level": 2,
+					"paid": 150,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"bonuses": [
+				5,
+				1,
+				11
+			],
+			"escaped": 0,
+			"hp_after": 18,
+			"hp_before": 18,
+			"hp_lost": 0,
+			"income": 104,
+			"income_before": 660,
+			"killed": 11,
+			"max_hp": 20,
+			"performance": [
+				{
+					"attacks": 17,
+					"boss_hp": 326.419598853868,
+					"branch": 0,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 749.879115065254,
+					"instance_id": 0,
+					"level": 4,
+					"paid": 350,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 0,
+					"type": 0
+				},
+				{
+					"attacks": 10,
+					"boss_hp": 273.580401146132,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 566.805884934746,
+					"instance_id": 1,
+					"level": 3,
+					"paid": 225,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 1,
+					"type": 1
+				},
+				{
+					"attacks": 4,
+					"boss_hp": 0.0,
+					"branch": -1,
+					"curse_hp": 0.0,
+					"curse_ticks": 0,
+					"direct_hp": 195.315,
+					"instance_id": 2,
+					"level": 2,
+					"paid": 150,
+					"secondary_hits": 0,
+					"secondary_hp": 0.0,
+					"slot": 2,
+					"type": 2
+				}
+			],
+			"planned": 11,
+			"remaining": 0,
+			"result": "cleared",
+			"seconds": 21.4285714285714,
+			"spawned": 11,
+			"wave": 10
+		}
+	]
+}

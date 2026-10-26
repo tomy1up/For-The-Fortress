@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 26 octobre 2026 — prototype v0.51, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 26 octobre 2026 — prototype v0.52, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -272,3 +272,7 @@ Observation de l’issue du boss, de son temps de résolution et des PV retirés
 ## v0.51 — Barre de préparation, 26 octobre 2026
 
 Barre proportionnelle au délai réel restant, sous le bouton de lancement. Lecture seule, sans clic ni focus ; teinte de pause et accent dans les cinq dernières secondes. 29 suites, 14 350 contrôles Godot, dont onze ajouts à la suite d’enchaînement, 15 tests Python réussis. [Détail](Barre_preparation_v051.md).
+
+## v0.52 — Présentation de la carte, 26 octobre 2026
+
+Relief du plateau, contraste des berges et de l’eau, garde-corps du pont, étages de feuillage et détails de la porte. Dessin seul, sans collision ni nouvelle ressource externe. 29 suites, 14 350 contrôles Godot et 15 tests Python réussis. [Détail](Presentation_carte_v052.md).
