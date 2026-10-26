@@ -290,7 +290,7 @@ func _draw() -> void:
 			else:
 				_draw_pillager(actor.point, actor.enemy)
 				var ratio: float = clampf(actor.enemy.hp / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
-				var bar_position: Vector2 = actor.point + Vector2(-12, -36 * _enemy_scale(actor.enemy))
+				var bar_position: Vector2 = actor.point + Vector2(-12, -39 * _enemy_scale(actor.enemy))
 				draw_rect(Rect2(bar_position, Vector2(24, 4)), Color("472f2a"))
 				draw_rect(Rect2(bar_position, Vector2(24 * ratio, 4)), Color("edcc80") if actor.enemy.id == inspected_enemy_id else Color("a1ba75"))
 		if model.active:
@@ -516,43 +516,88 @@ func _draw_pillager(center: Vector2, enemy: Dictionary) -> void:
 			var mark: Vector2 = center + Vector2(0, -45)
 			draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]), Color("d6a1ef"))
 			break
-	draw_circle(center + Vector2(0, 3), 8, Color(0, 0, 0, 0.3))
+	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
 	var stride: float = sin(model.elapsed*10.0*enemy.get("speed",1.0)+enemy.id)*2.0 if model.active else 0.0
-	draw_line(center + Vector2(-3, -2), center + Vector2(-5+stride, 5), Color("b5a68a"), 3)
-	draw_line(center + Vector2(3, -2), center + Vector2(5-stride, 5), Color("b5a68a"), 3)
-	if type == 7:
-		draw_colored_polygon(PackedVector2Array([Vector2(-8,-20),Vector2(8,-20),Vector2(13,3),Vector2(-13,3)]),Color("713b42"))
-	var half_width: float = 9.0 if type in [3,5] else 6.0
-	draw_rect(Rect2(center + Vector2(-half_width, -15), Vector2(half_width*2, 16)), armor)
-	draw_circle(center + Vector2(0, -20), 6, Color("dbc3a1"))
-	draw_line(center + Vector2(-6, -23), center + Vector2(6, -23), Color("77695a"), 3)
+	var skin := Color("dbb991")
+	var metal := Color("b5bfb8")
+	_unit_stroke(Vector2(-4,-4),Vector2(-6+stride,4),Color("655043"),4)
+	_unit_stroke(Vector2(4,-4),Vector2(6-stride,4),Color("655043"),4)
 	match type:
-		0: # Petit couteau, silhouette légère.
-			draw_line(Vector2(8,-5),Vector2(11,-14),Color("c6c6a4"),2)
-		1: # Épée droite du pillard.
-			draw_line(Vector2(10,-21),Vector2(10,0),Color("dac494"),2)
-			draw_line(Vector2(7,-7),Vector2(13,-7),Color("746043"),2)
-		2: # Foulard et lame courte du sprinter.
-			draw_colored_polygon(PackedVector2Array([Vector2(-5,-18),Vector2(-14,-14),Vector2(-13,-20)]),Color("af5351"))
-			draw_line(Vector2(8,-7),Vector2(13,-16),Color("e1d0a4"),2)
-		3: # Massue de la brute.
-			draw_line(Vector2(10,-1),Vector2(10,-25),Color("a1865d"),3)
-			draw_circle(Vector2(10,-25),4,Color("6d5544"))
-		4: # Deux haches courtes du maraudeur.
+		0: # Petit couteau et capuche pointue, silhouette légère.
+			_unit_shape([Vector2(-6,-19),Vector2(6,-19),Vector2(8,-3),Vector2(-7,-3)],armor)
+			_unit_face(skin,6,-23)
+			_unit_shape([Vector2(-8,-23),Vector2(-4,-31),Vector2(4,-30),Vector2(8,-23),Vector2(3,-26),Vector2(-3,-26)],armor.darkened(0.2))
+			_unit_stroke(Vector2(-5,-16),Vector2(-9,-10),skin,3)
+			_unit_stroke(Vector2(5,-16),Vector2(10,-12),skin,3)
+			_unit_shape([Vector2(9,-11),Vector2(14,-20),Vector2(14,-11)],metal)
+		1: # Tunique rouge, calotte de métal et épée droite.
+			_unit_shape([Vector2(-8,-19),Vector2(8,-19),Vector2(9,-4),Vector2(-9,-4)],armor)
+			_unit_stroke(Vector2(-8,-6),Vector2(8,-6),Color("72533b"),3)
+			_unit_disk(Vector2(0,-6),2.5,Color("d5b96b"))
+			_unit_face(skin,7,-24)
+			_unit_shape([Vector2(-8,-25),Vector2(-5,-31),Vector2(5,-31),Vector2(8,-25)],metal.darkened(0.2))
+			_unit_stroke(Vector2(-7,-25),Vector2(8,-25),metal,2)
+			_unit_stroke(Vector2(-8,-17),Vector2(-11,-8),armor,4)
+			_unit_stroke(Vector2(8,-17),Vector2(12,-13),skin,3)
+			_unit_stroke(Vector2(12,-4),Vector2(12,-28),metal,2.5)
+			_unit_stroke(Vector2(8,-11),Vector2(16,-11),Color("d1b270"),2)
+		2: # Corps penché, foulard flottant et petites lames.
+			_unit_shape([Vector2(-6,-18),Vector2(7,-22),Vector2(9,-7),Vector2(-4,-4)],armor)
+			_unit_shape([Vector2(-3,-23),Vector2(-16,-22),Vector2(-12,-17),Vector2(-7,-20)],Color("bd6150"))
+			_unit_disk(Vector2(3,-25),6.5,skin)
+			draw_line(Vector2(3,-26),Vector2(6,-26),UNIT_INK,1.4,true)
+			_unit_shape([Vector2(-3,-28),Vector2(2,-32),Vector2(9,-29),Vector2(8,-26)],Color("5b4b3b"))
+			_unit_stroke(Vector2(-4,-17),Vector2(-11,-10),skin,3)
+			_unit_stroke(Vector2(7,-19),Vector2(12,-21),skin,3)
+			_unit_shape([Vector2(11,-20),Vector2(16,-28),Vector2(16,-20)],metal)
+		3: # Torse massif, bras nus et massue à gros nœuds.
+			_unit_shape([Vector2(-11,-21),Vector2(10,-21),Vector2(11,-5),Vector2(-11,-5)],armor)
+			_unit_stroke(Vector2(-11,-19),Vector2(-13,-8),skin,5)
+			_unit_stroke(Vector2(10,-19),Vector2(14,-13),skin,5)
+			_unit_face(skin,7.5,-26)
+			_unit_stroke(Vector2(-6,-30),Vector2(5,-30),Color("76513d"),3)
+			_unit_stroke(Vector2(-10,-6),Vector2(10,-6),Color("564439"),3)
+			_unit_stroke(Vector2(13,-3),Vector2(13,-25),Color("a57a4f"),3)
+			_unit_shape([Vector2(9,-29),Vector2(17,-30),Vector2(18,-19),Vector2(10,-17)],Color("806044"))
+			for y in [-26,-21]: draw_line(Vector2(12,y),Vector2(16,y-1),Color("bd9561"),1.5,true)
+		4: # Harnais et deux haches, posture d’assaillant.
+			_unit_shape([Vector2(-8,-20),Vector2(8,-20),Vector2(10,-4),Vector2(-9,-4)],armor)
+			_unit_stroke(Vector2(-6,-20),Vector2(5,-5),Color("624535"),3)
+			_unit_stroke(Vector2(6,-20),Vector2(-5,-5),Color("624535"),3)
+			_unit_face(skin,7,-25)
+			_unit_shape([Vector2(-7,-28),Vector2(-5,-32),Vector2(5,-32),Vector2(8,-27),Vector2(1,-29)],Color("5c4940"))
 			for side in [-1,1]:
-				draw_line(Vector2(side*10,-3),Vector2(side*10,-23),Color("b69b70"),2)
-				draw_colored_polygon(PackedVector2Array([Vector2(side*9,-23),Vector2(side*15,-18),Vector2(side*9,-14)]),Color("c1b49a"))
-		5: # Large ceinture et marteau du colosse.
-			draw_line(Vector2(-9,-4),Vector2(9,-4),Color("4d5c59"),4)
-			draw_line(Vector2(10,0),Vector2(10,-25),Color("aa9470"),3)
-			draw_rect(Rect2(Vector2(5,-30),Vector2(10,8)),Color("b2bbb0"))
-		6: # Bouclier pointu et crête de l'élite.
-			draw_colored_polygon(PackedVector2Array([Vector2(-14,-17),Vector2(-5,-17),Vector2(-5,-8),Vector2(-10,-3),Vector2(-14,-8)]),Color("645d81"))
-			draw_line(Vector2(-10,-15),Vector2(-10,-7),Color("d5c495"),2)
-			draw_line(Vector2(0,-26),Vector2(0,-32),Color("c0a8cc"),4)
-			draw_line(Vector2(10,-24),Vector2(10,-2),Color("d4c8a1"),2)
-		7: # Cape et couronne du chef de siège.
-			draw_colored_polygon(PackedVector2Array([Vector2(-7,-24),Vector2(-7,-31),Vector2(-3,-27),Vector2(0,-33),Vector2(3,-27),Vector2(7,-31),Vector2(7,-24)]),Color("e4c980"))
-			draw_line(Vector2(11,-28),Vector2(11,0),Color("e4c980"),3)
-			draw_line(Vector2(7,-8),Vector2(14,-8),Color("c1a565"),2)
+				_unit_stroke(Vector2(side*7,-18),Vector2(side*12,-12),skin,3)
+				_unit_stroke(Vector2(side*12,-3),Vector2(side*12,-26),Color("ad8754"),2)
+				_unit_shape([Vector2(side*11,-26),Vector2(side*17,-23),Vector2(side*17,-17),Vector2(side*11,-18)],metal)
+		5: # Armure carrée et marteau lourd, silhouette la plus large hors boss.
+			_unit_shape([Vector2(-12,-21),Vector2(12,-21),Vector2(12,-4),Vector2(-12,-4)],armor)
+			_unit_shape([Vector2(-8,-20),Vector2(8,-20),Vector2(7,-10),Vector2(-7,-10)],armor.lightened(0.18))
+			_unit_stroke(Vector2(-11,-6),Vector2(11,-6),Color("455754"),3)
+			for side in [-1,1]: _unit_shape([Vector2(side*6,-25),Vector2(side*13,-25),Vector2(side*15,-17),Vector2(side*7,-17)],metal.darkened(0.12))
+			_unit_shape([Vector2(-7,-31),Vector2(7,-31),Vector2(8,-22),Vector2(-8,-22)],armor.lightened(0.1))
+			_unit_stroke(Vector2(-5,-26),Vector2(5,-26),UNIT_INK,1.5)
+			_unit_stroke(Vector2(13,-1),Vector2(13,-24),Color("ae8d5f"),3)
+			_unit_shape([Vector2(6,-30),Vector2(19,-30),Vector2(19,-22),Vector2(6,-22)],metal)
+			draw_line(Vector2(9,-28),Vector2(17,-28),Color("e0e4d3"),1.5,true)
+		6: # Casque à crête, bouclier pointu et lance.
+			_unit_shape([Vector2(-8,-20),Vector2(8,-20),Vector2(10,-3),Vector2(-10,-3)],armor)
+			_unit_face(skin,6.5,-25)
+			_unit_shape([Vector2(-7,-29),Vector2(6,-29),Vector2(8,-24),Vector2(-7,-24)],metal.darkened(0.1))
+			_unit_shape([Vector2(-3,-30),Vector2(-3,-34),Vector2(4,-34),Vector2(6,-30)],Color("c7a4ce"))
+			_unit_shape([Vector2(-15,-21),Vector2(-4,-21),Vector2(-4,-10),Vector2(-9,-3),Vector2(-15,-10)],armor.darkened(0.2))
+			_unit_shape([Vector2(-9,-18),Vector2(-6,-13),Vector2(-9,-8),Vector2(-12,-13)],Color("e7ce82"),0.8)
+			_unit_stroke(Vector2(12,1),Vector2(12,-29),Color("d2b77f"),2)
+			_unit_shape([Vector2(12,-34),Vector2(15,-27),Vector2(9,-27)],metal)
+		7: # Cape écarlate, grandes épaulières, couronne et épée de siège.
+			_unit_shape([Vector2(-8,-23),Vector2(8,-23),Vector2(14,4),Vector2(0,1),Vector2(-14,4)],Color("813e49"))
+			_unit_shape([Vector2(-9,-20),Vector2(9,-20),Vector2(10,-3),Vector2(-10,-3)],armor.darkened(0.25))
+			_unit_shape([Vector2(-5,-18),Vector2(5,-18),Vector2(7,-8),Vector2(0,-4),Vector2(-7,-8)],armor)
+			for side in [-1,1]: _unit_shape([Vector2(side*6,-24),Vector2(side*13,-24),Vector2(side*15,-18),Vector2(side*7,-17)],Color("c6a66a"))
+			_unit_face(skin,7,-25)
+			_unit_shape([Vector2(-7,-28),Vector2(-7,-33),Vector2(-3,-30),Vector2(0,-34),Vector2(3,-30),Vector2(7,-33),Vector2(7,-28)],Color("edce80"))
+			_unit_stroke(Vector2(-6,-4),Vector2(6,-4),Color("c6a66a"),2)
+			_unit_stroke(Vector2(13,1),Vector2(13,-27),Color("d7dacf"),3)
+			_unit_stroke(Vector2(8,-8),Vector2(17,-8),Color("edce80"),2)
+
 	draw_set_transform(Vector2.ZERO)

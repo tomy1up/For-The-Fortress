@@ -96,3 +96,7 @@ La [lecture du recrutement et des améliorations v0.57](Lecture_recrutement_v057
 ## Cinquième lot réalisé — v0.58
 
 Le [bilan essentiel v0.58](Bilan_essentiel_v058.md) présente une première lecture du résultat et des pertes, puis les tableaux détaillés à la demande. Aucun changement de simulation.
+
+## Sixième lot réalisé — v0.59
+
+Les [huit silhouettes ennemies v0.59](Presentation_ennemis_v059.md) complètent les défenseurs cartoon, sans changement des caractéristiques ou règles.

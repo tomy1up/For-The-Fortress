@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 26 octobre 2026 — prototype v0.58, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 26 octobre 2026 — prototype v0.59, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -302,3 +302,7 @@ Fiches par défaut centrées sur le rôle et les dégâts ; aperçus d’amélio
 ## v0.58 — Bilan essentiel, 26 octobre 2026
 
 Une première vue courte présente résultat, PV, passés, or gagné, premières pertes, plus fortes pertes et statut du boss. Les tableaux de vagues et de contributions restent disponibles dans leurs onglets. 34 suites, 14 855 contrôles Godot dont 36 nouveaux, 15 tests Python et contrats du GDD réussis. Aucun changement des rapports ou de la simulation. [Détail](Bilan_essentiel_v058.md).
+
+## v0.59 — Silhouettes des ennemis, 26 octobre 2026
+
+Les huit profils reçoivent des corps et équipements cartoon plus distincts. Les jauges sont légèrement relevées pour dégager les casques. Échelles, ordre de dessin, détection au survol, déplacements et caractéristiques conservés. 34 suites, 14 855 contrôles Godot, 15 tests Python et contrats du GDD réussis. [Détail](Presentation_ennemis_v059.md).

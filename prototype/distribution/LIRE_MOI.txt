@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.58 — 26 octobre 2026
+Version : 0.59 — 26 octobre 2026
 
 JOUER
 
@@ -184,3 +184,7 @@ Pour comparer une recrue, survolez son bouton après avoir choisi le mode de lec
 BILAN ESSENTIEL
 Le bilan s’ouvre sur le résultat, trois chiffres clés et les vagues où des PV ont été perdus.
 Vagues et Défenseurs conservent les détails ; le rapport local reste exportable.
+
+ENNEMIS PLUS RECONNAISSABLES
+Les huit profils ont des silhouettes et équipements cartoon distincts.
+Leurs statistiques, déplacements, récompenses et dégâts à la forteresse restent identiques.

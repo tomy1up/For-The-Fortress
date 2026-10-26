@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.58 (26 octobre 2026)** : bilan essentiel, chiffres clés et vagues ayant coûté des PV. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.58).
+**Version v0.59 (26 octobre 2026)** : huit silhouettes d’ennemis cartoon, équipements distincts et jauges dégagées. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.59).
 
 Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -185,3 +185,7 @@ Les fiches mettent en avant le rôle, les dégâts utiles et le prix. Voir les c
 ## Bilan essentiel — v0.58
 
 Le premier bilan affiche le résultat, les chiffres clés et les moments où la forteresse a perdu des PV. Vagues et Défenseurs conservent les tableaux détaillés. [Présentation et contrôles](design/Bilan_essentiel_v058.md).
+
+## Ennemis reconnaissables — v0.59
+
+Les huit profils ont des silhouettes, visages et équipements distincts dans la même direction cartoon que les défenseurs. Statistiques et règles inchangées. [Présentation et contrôles](design/Presentation_ennemis_v059.md).
