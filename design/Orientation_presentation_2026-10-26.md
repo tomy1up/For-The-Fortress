@@ -76,3 +76,7 @@ Le niveau d’exigence est une intention désormais validée. Les réglages num�
 Ce complément consigne l’orientation et prépare le lot de présentation. La version jouable de référence reste v0.53. Les documents principaux du GDD conservent leur version v0.14 ; ce complément fait foi pour les points précisés ici.
 
 For the Fortress! reste un nom de travail dont la disponibilité juridique est à confirmer.
+
+## Premier lot réalisé — v0.54
+
+Le porteur du projet a demandé la réalisation de cette proposition. La lecture progressive des bonus et des spécialisations est livrée dans la [v0.54](Lecture_progressive_v054.md). Les décisions d’orientation ci-dessus restent la référence pour les prochaines passes.

@@ -71,6 +71,8 @@ var specialisation_descriptions: Array[Label] = []
 var specialisation_stats: Array[Label] = []
 var specialisation_buttons: Array[Button] = []
 var specialisation_cancel: Button
+var specialisation_numbers_button: Button
+var specialisation_numbers_visible: bool = false
 var pending_slot: int = -1
 var pending_instance: int = -1
 var sell_button: Button
@@ -93,6 +95,14 @@ var bonus_subtitle: Label
 var bonus_names: Array[Label] = []
 var bonus_descriptions: Array[Label] = []
 var bonus_buttons: Array[Button] = []
+var bonus_cards: Array[Panel] = []
+var bonus_effects: Array[Label] = []
+var bonus_scopes: Array[Label] = []
+var bonus_notes: Array[Label] = []
+var bonus_detail_buttons: Array[Button] = []
+var bonus_details_back: Button
+var bonus_detail_index: int = -1
+var bonus_view_context: String = ""
 var bonus_close: Button
 var bonus_summary_button: Button
 var overview_open: bool = false
@@ -251,6 +261,7 @@ func _ready() -> void:
 			model.phase = "bonus"
 			model.bonus_offer.assign([0,8,11] if capture_type == 0 else [9,10,7])
 			if capture_type == 2: model.bonus_offer.assign([1,3,4])
+			if capture_type == 3: model.bonus_offer.assign([2,5,6])
 		if capture_state == "defender_catalogue":
 			model.reset(); model.select_faction(capture_faction); model.gold = 10000
 			for slot in range(6):
@@ -304,6 +315,11 @@ func _ready() -> void:
 		if capture_state == "bonus_preview": bonus_title.text = "CONTRÔLE BONUS · BUDGET IMPOSÉ"
 		if capture_state == "defender_catalogue": faction_label.text = "DÉFENSEURS · BUDGET IMPOSÉ"
 		if "--capture-synergy-preview" in OS.get_cmdline_user_args() and capture_state == "specialisation": faction_label.text = "APERÇU SYNERGIES · BUDGET IMPOSÉ"
+		for argument in OS.get_cmdline_user_args():
+			if argument.begins_with("--capture-details="): _open_bonus_details(int(argument.trim_prefix("--capture-details=")))
+		if "--capture-specialisation-numbers" in OS.get_cmdline_user_args():
+			_toggle_specialisation_numbers()
+			faction_label.text = "CONTRÔLE PROGRESSION · BUDGET IMPOSÉ"
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
@@ -396,6 +412,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo: return
 	if event.ctrl_pressed or event.alt_pressed or event.meta_pressed: return
 	if event.keycode == KEY_ESCAPE or event.physical_keycode == KEY_ESCAPE:
+		if bonus_panel.visible and bonus_detail_index >= 0:
+			_close_bonus_details()
+			get_viewport().set_input_as_handled()
+			return
 		if choosing_faction or model.phase == "bonus": return
 		if pending_slot >= 0: _cancel_specialisation()
 		elif overview_open: _close_bonuses()
@@ -836,6 +856,7 @@ func _build_specialisation_selector(screen: Control) -> void:
 	specialisation_cost = _label(panel, "", Vector2(18, 52), Vector2(362, 62), 13, Color("cdb47e"))
 	for branch in range(2):
 		var y: int = 126 + branch * 224
+		_panel(panel,Rect2(10,y-10,378,212))
 		specialisation_names.append(_label(panel, "", Vector2(18, y), Vector2(362, 24), 16, Color("e0dbbf")))
 		specialisation_descriptions.append(_label(panel, "", Vector2(18, y+28), Vector2(362, 36), 13, Color("aabbb0")))
 		specialisation_descriptions[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -846,7 +867,8 @@ func _build_specialisation_selector(screen: Control) -> void:
 		specialisation_buttons[-1].mouse_exited.connect(_branch_hover.bind(branch,false))
 		specialisation_buttons[-1].focus_entered.connect(_branch_focus.bind(branch,true))
 		specialisation_buttons[-1].focus_exited.connect(_branch_focus.bind(branch,false))
-	_label(panel, "Survolez un choix : portée et partenaires prévus.", Vector2(18,572), Vector2(362,20),12,Color("aabbb0"))
+	specialisation_numbers_button = _button(panel,"Voir les chiffres",Rect2(18,568,362,28),_toggle_specialisation_numbers)
+	specialisation_numbers_button.add_theme_font_size_override("font_size",14)
 	specialisation_cancel = _button(panel, "Annuler · Échap", Rect2(117, 604, 164, 32), _cancel_specialisation)
 
 func _upgrade() -> void:
@@ -858,6 +880,7 @@ func _upgrade() -> void:
 			return
 		pending_slot = selected
 		pending_instance = defender.instance_id
+		specialisation_numbers_visible = false
 		_update_specialisation_choices()
 	else:
 		model.upgrade(selected)
@@ -869,12 +892,19 @@ func _update_specialisation_choices() -> void:
 		return
 	var defender: Dictionary = model.defenders[pending_slot]
 	var type: int = defender.type
-	specialisation_cost.text = "%s\nNiveau 4 : %d or · Choix inclus\nTotal investi après amélioration : %d or" % [Model.ROSTER[type].name,model.upgrade_cost(pending_slot), defender.paid + model.upgrade_cost(pending_slot)]
+	specialisation_cost.text = "%s\nSpécialisation : %d or" % [Model.ROSTER[type].name,model.upgrade_cost(pending_slot)]
+	if specialisation_numbers_visible: specialisation_cost.text += "\nTotal investi après amélioration : %d or" % (defender.paid+model.upgrade_cost(pending_slot))
+	specialisation_numbers_button.text = "Masquer les chiffres" if specialisation_numbers_visible else "Voir les chiffres"
 	var current: Dictionary = model.get_stats(pending_slot)
 	for branch in range(2):
 		var stats: Dictionary = model.get_stats(pending_slot, branch)
 		specialisation_names[branch].text = ("A · " if branch == 0 else "B · ") + stats.branch_name
-		specialisation_descriptions[branch].text = stats.description
+		specialisation_names[branch].add_theme_font_size_override("font_size",16 if specialisation_numbers_visible else 17)
+		specialisation_descriptions[branch].text = _specialisation_pitch(type,branch)
+		specialisation_descriptions[branch].position.y = 154+branch*224 if specialisation_numbers_visible else 166+branch*224
+		specialisation_descriptions[branch].size.y = 36 if specialisation_numbers_visible else 100
+		specialisation_descriptions[branch].add_theme_font_size_override("font_size",13 if specialisation_numbers_visible else 18)
+		specialisation_stats[branch].visible = specialisation_numbers_visible
 		specialisation_stats[branch].text = _comparison_text(current,stats,true)
 		if type in [2, 3, 4]:
 			specialisation_stats[branch].text += "\n%s : %s → %s dégâts\nCibles : %d → %d · %s : <%s → <%s" % ["Rebonds" if type == 3 else "Explosion",_number(current.secondary_damage),_number(stats.secondary_damage),current.secondary_cap,stats.secondary_cap,"Distance" if type == 3 else "Rayon",_number(current.radius),_number(stats.radius)]
@@ -884,6 +914,33 @@ func _update_specialisation_choices() -> void:
 		var candidate: Dictionary = defender.duplicate(true)
 		candidate.level = 4; candidate.branch = branch
 		specialisation_buttons[branch].tooltip_text = _preview_synergy_tooltip(pending_slot,candidate)
+		specialisation_buttons[branch].text = "Choisir · %d or" % model.upgrade_cost(pending_slot)
+
+func _toggle_specialisation_numbers() -> void:
+	if pending_slot < 0: return
+	var unit: Dictionary = model.defenders[pending_slot]
+	if unit.is_empty() or unit.instance_id != pending_instance:
+		_cancel_specialisation()
+		return
+	specialisation_numbers_visible = not specialisation_numbers_visible
+	_update_specialisation_choices()
+	_update_interface()
+
+func _specialisation_pitch(type: int, branch: int) -> String:
+	return [
+		"Des tirs puissants et lointains, mais moins fréquents.",
+		"Des volées rapides, avec une portée plus courte.",
+		"De très gros impacts, plus de temps entre les tirs.",
+		"Une très longue portée pour surveiller le chemin.",
+		"Un impact puissant, une explosion plus faible.",
+		"Une grande explosion : jusqu’à 4 ennemis autour de la cible.",
+		"Un gros premier impact, un rebond plus faible.",
+		"La hache ricoche jusqu’à 3 fois sur des ennemis différents.",
+		"Un impact puissant et jusqu’à 3 victimes autour.",
+		"Une large explosion : jusqu’à 5 victimes autour.",
+		"Un gros coup immédiat, une malédiction plus légère.",
+		"Une forte malédiction, au détriment du coup initial."
+	][type*2+branch]
 
 func _choose_branch(branch: int) -> void:
 	if pending_slot < 0:
@@ -901,6 +958,7 @@ func _choose_branch(branch: int) -> void:
 func _cancel_specialisation() -> void:
 	pending_slot = -1
 	pending_instance = -1
+	specialisation_numbers_visible = false
 	hovered_branch = -1
 	focused_branch = -1
 	hovered_upgrade = false
@@ -1017,6 +1075,8 @@ func _reset() -> void:
 	map_view.breach_feedback = {}
 	bonus_contexts.assign(["","",""])
 	bonus_impact_keys.assign(["","",""])
+	bonus_detail_index = -1
+	bonus_view_context = ""
 	for scroll in bonus_impact_scrollers: scroll.scroll_vertical = 0
 	model.reset()
 	summary_tab = 0
@@ -1279,10 +1339,12 @@ func _sync_keyboard_focus() -> void:
 	elif pending_slot >= 0:
 		context = "specialisation:%d:%d" % [pending_slot,pending_instance]; target = specialisation_cancel
 	elif model.phase == "bonus":
-		context = "bonus:%d:%d" % [model.faction,model.wave]
-		if not model.bonus_offer.is_empty(): target = bonus_buttons[0]
+		context = "bonus:%d:%d:%d" % [model.faction,model.wave,bonus_detail_index]
+		if bonus_detail_index >= 0: target = bonus_details_back
+		elif not model.bonus_offer.is_empty(): target = bonus_buttons[0]
 	elif overview_open:
-		context = "overview"; target = bonus_close
+		context = "overview:%d" % bonus_detail_index
+		target = bonus_details_back if bonus_detail_index >= 0 else bonus_close
 	elif summary_open:
 		context = "summary"; target = summary_close
 	else:
@@ -1372,8 +1434,14 @@ func _build_bonus_selector(screen: Control) -> void:
 	bonus_subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	for index in range(3):
 		var x: int = 28+index*348
+		bonus_cards.append(_panel(panel,Rect2(x,126,328,464)))
 		bonus_names.append(_label(panel,"",Vector2(x,148),Vector2(328,54),18,Color("e0dbbf")))
 		bonus_names[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		bonus_effects.append(_label(panel,"",Vector2(x+18,218),Vector2(292,78),25,Color("e6c987")))
+		bonus_scopes.append(_label(panel,"",Vector2(x+18,310),Vector2(292,60),16,Color("e0e7db")))
+		bonus_notes.append(_label(panel,"",Vector2(x+18,382),Vector2(292,72),14,Color("aabbb0")))
+		for label in [bonus_effects[-1],bonus_scopes[-1],bonus_notes[-1]]: label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		bonus_detail_buttons.append(_button(panel,"Voir les détails",Rect2(x+18,468,292,36),_open_bonus_details.bind(index)))
 		bonus_descriptions.append(_label(panel,"",Vector2(x,216),Vector2(320,108),16,Color("bbcbbf")))
 		bonus_descriptions[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		bonus_impact_titles.append(_label(panel,"Avec votre défense actuelle",Vector2(x,318),Vector2(328,24),14,Color("cdb47e")))
@@ -1391,46 +1459,102 @@ func _build_bonus_selector(screen: Control) -> void:
 		impact.add_theme_color_override("font_color",Color("bbcbbf"))
 		scroll.add_child(impact)
 		bonus_impacts.append(impact)
-		bonus_buttons.append(_button(panel,"Choisir ce bonus",Rect2(x,532,328,48),_choose_bonus.bind(index)))
+		bonus_buttons.append(_button(panel,"Choisir ce bonus",Rect2(x+18,532,292,48),_choose_bonus.bind(index)))
 	bonus_close = _button(panel,"Fermer · Échap",Rect2(442,408,196,36),_close_bonuses)
+	bonus_details_back = _button(panel,"Retour · Échap",Rect2(28,532,240,48),_close_bonus_details)
 
 func _show_bonuses() -> void:
 	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or summary_open: return
 	overview_open = true
+	bonus_detail_index = -1
 	_update_interface()
 
 func _close_bonuses() -> void:
 	overview_open = false
+	bonus_detail_index = -1
 	_update_interface()
+
+func _open_bonus_details(index: int) -> void:
+	if not bonus_panel.visible: return
+	var entries: Array[int] = model.bonus_offer if model.phase == "bonus" else model.bonuses
+	if index < 0 or index >= entries.size(): return
+	bonus_detail_index = index
+	_update_interface()
+
+func _close_bonus_details() -> void:
+	var previous: int = bonus_detail_index
+	bonus_detail_index = -1
+	_update_interface()
+	if previous >= 0 and previous < bonus_detail_buttons.size() and bonus_detail_buttons[previous].is_visible_in_tree():
+		bonus_detail_buttons[previous].grab_focus()
 
 func _choose_bonus(index: int) -> void:
 	if model.phase != "bonus" or index < 0 or index >= model.bonus_offer.size(): return
+	if bonus_detail_index >= 0 and bonus_detail_index != index: return
 	model.choose_bonus(model.bonus_offer[index])
+	bonus_detail_index = -1
 	_update_interface()
 	map_view.queue_redraw()
 
 func _update_bonus_panel() -> void:
 	var choosing: bool = model.phase == "bonus"
 	bonus_panel.visible = choosing or overview_open
-	if not bonus_panel.visible: return
-	bonus_body.position.y = 95 if choosing else 166
-	bonus_body.size.y = 610 if choosing else 468
-	bonus_title.text = "Choisissez une amélioration · Vague %d terminée" % model.wave if choosing else "Bonus acquis pour cette partie"
-	bonus_subtitle.text = "Choisissez sans limite de temps. Le décompte de 30 s commence après votre choix. Les deux autres offres pourront revenir." if choosing else "Les effets concernent aussi les futures recrues selon leurs conditions. Aucun bonus acquis." if model.bonuses.is_empty() else "Les effets concernent aussi les futures recrues selon leurs conditions."
+	if not bonus_panel.visible:
+		bonus_detail_index = -1
+		bonus_view_context = ""
+		return
 	var entries: Array[int] = model.bonus_offer if choosing else model.bonuses
+	var view_context: String = JSON.stringify([choosing,model.faction,model.wave,entries])
+	if view_context != bonus_view_context: bonus_detail_index = -1
+	bonus_view_context = view_context
+	var detailed: bool = bonus_detail_index >= 0 and bonus_detail_index < entries.size()
+	bonus_body.position.y = 95 if choosing or detailed else 166
+	bonus_body.size.y = 610 if choosing or detailed else 468
+	bonus_title.text = Model.Campaign.BONUSES[entries[bonus_detail_index]].name if detailed else "Choisissez un bonus" if choosing else "Vos bonus de partie"
+	bonus_subtitle.text = "Règle complète et effet sur votre défense." if detailed and choosing else "Ce bonus reste actif pour cette partie." if detailed else "Vague %d terminée · Prenez votre temps. Après le choix : 30 s de préparation." % model.wave if choosing else "Aucun bonus acquis." if entries.is_empty() else "Actifs jusqu’à la fin de cette partie."
 	# Le choix suspend le combat ; recalculer uniquement si une donnée d’aperçu change.
 	var impact_key: String = JSON.stringify([model.faction,model.wave,model.bonus_offer,model.bonuses,model.defenders,model.gold,model.fortress_hp,model.max_hp,model.synergies_enabled]) if choosing else ""
 	for index in range(3):
-		bonus_names[index].position.y = 138 if choosing else 148
-		bonus_descriptions[index].position.y = 204 if choosing else 216
-		bonus_names[index].visible = index < entries.size()
-		bonus_descriptions[index].visible = index < entries.size()
-		bonus_impact_titles[index].visible = choosing and index < entries.size()
-		bonus_impact_scrollers[index].visible = choosing and index < entries.size()
-		bonus_buttons[index].visible = choosing and index < entries.size()
+		var x: int = 28+index*348
+		var listed: bool = index < entries.size() and not detailed
+		var selected_detail: bool = detailed and index == bonus_detail_index
+		bonus_cards[index].visible = listed
+		bonus_cards[index].size.y = 464 if choosing else 250
+		bonus_names[index].visible = listed
+		bonus_names[index].position = Vector2(x+18,148)
+		bonus_names[index].size = Vector2(292,56)
+		bonus_names[index].add_theme_font_size_override("font_size",20)
+		bonus_effects[index].visible = listed
+		bonus_effects[index].position.y = 218 if choosing else 210
+		bonus_effects[index].size.y = 78 if choosing else 54
+		bonus_effects[index].add_theme_font_size_override("font_size",25 if choosing else 21)
+		bonus_scopes[index].visible = listed
+		bonus_scopes[index].position.y = 310 if choosing else 270
+		bonus_scopes[index].size.y = 60 if choosing else 48
+		bonus_notes[index].visible = listed and choosing
+		bonus_detail_buttons[index].visible = listed
+		bonus_detail_buttons[index].position.y = 468 if choosing else 330
+		bonus_descriptions[index].visible = selected_detail
+		bonus_descriptions[index].position = Vector2(28,96)
+		bonus_descriptions[index].size = Vector2(1024,88)
+		bonus_descriptions[index].add_theme_font_size_override("font_size",18)
+		bonus_impact_titles[index].visible = selected_detail
+		bonus_impact_titles[index].position = Vector2(28,202)
+		bonus_impact_titles[index].text = "Avec votre défense actuelle" if choosing else "Bénéficiaires"
+		bonus_impact_scrollers[index].visible = selected_detail
+		bonus_impact_scrollers[index].position = Vector2(28,240)
+		bonus_impact_scrollers[index].size = Vector2(1024,250)
+		bonus_impacts[index].custom_minimum_size.x = 994
+		bonus_impacts[index].add_theme_font_size_override("font_size",15)
+		bonus_buttons[index].visible = choosing and (listed or selected_detail)
+		bonus_buttons[index].position = Vector2(768,532) if selected_detail else Vector2(x+18,532)
 		if index < entries.size():
 			var data: Dictionary = Model.Campaign.BONUSES[entries[index]]
-			bonus_names[index].text = data.code+" · "+data.name
+			var card: Dictionary = _bonus_card_content(entries[index])
+			bonus_names[index].text = data.name
+			bonus_effects[index].text = card.effect
+			bonus_scopes[index].text = card.scope
+			bonus_notes[index].text = _bonus_audience_text(entries[index])+"\n"+card.note
 			bonus_descriptions[index].text = Model.Campaign.bonus_description(entries[index],model.faction)
 			if choosing and bonus_impact_keys[index] != impact_key:
 				var impact_text: String = _bonus_impact_text(entries[index])
@@ -1440,7 +1564,40 @@ func _update_bonus_panel() -> void:
 					bonus_impact_scrollers[index].scroll_vertical = 0
 					bonus_contexts[index] = context
 				bonus_impact_keys[index] = impact_key
-	bonus_close.visible = not choosing
+			elif not choosing:
+				bonus_impacts[index].text = card.scope+"\n\n"+_bonus_audience_text(entries[index])+"\n"+card.note
+	bonus_close.visible = not choosing and not detailed
+	bonus_details_back.visible = detailed
+
+func _bonus_audience_text(code: int) -> String:
+	if code == 8: return "Effet immédiat."
+	if code in [9,10]: return "Pour vos prochains achats."
+	var count: int = 0
+	for unit in model.defenders:
+		if unit.is_empty() or unit.type not in model.available_types(): continue
+		if code == 1 and unit.type == 5: continue
+		if code in [3,4] and unit.type not in [2,3,4]: continue
+		if code == 6 and unit.level > 2: continue
+		if code == 7 and unit.level < 3: continue
+		count += 1
+	return "Aucun défenseur actuel concerné." if count == 0 else "%d défenseur%s concerné%s actuellement." % [count,"s" if count > 1 else "","s" if count > 1 else ""]
+
+func _bonus_card_content(code: int) -> Dictionary:
+	var alliance: bool = model.faction == 0
+	match code:
+		0: return {"effect":"+10 % à tous les dégâts","scope":"Tous vos défenseurs.","note":"Actuels et futurs."}
+		1: return {"effect":"Tirs 12 % plus rapides","scope":"Archers, arbalétriers et mages." if alliance else "Lanceurs de haches et sapeurs.","note":"Spécialisations incluses."}
+		2: return {"effect":"Portée +0,5","scope":"Tous vos défenseurs.","note":"Le cercle d’attaque s’agrandit."}
+		3: return {"effect":"Dégâts d’explosion +20 %" if alliance else "Dégâts rebonds et\nexplosions +20 %","scope":"Vos mages." if alliance else "Lanceurs de haches et sapeurs.","note":"Tirs directs inchangés."}
+		4: return {"effect":"Rayon d’explosion +0,2" if alliance else "Explosions / rebonds\n+0,2 de distance","scope":"Vos mages." if alliance else "Lanceurs de haches et sapeurs.","note":"Maximum de cibles inchangé."}
+		5: return {"effect":"Dégâts des tirs +15 %","scope":"Tous vos défenseurs.","note":"Explosions inchangées." if alliance else "Rebonds, explosions et malédictions inchangés."}
+		6: return {"effect":"Dégâts +15 %","scope":"Défenseurs de niveau 1 ou 2.","note":"Le gain cesse au niveau 3."}
+		7: return {"effect":"Dégâts +12 %","scope":"Défenseurs de niveau 3 ou 4.","note":"Actuels et futurs."}
+		8: return {"effect":"+4 PV actuels et maximum","scope":"Votre forteresse.","note":"Sans régénération automatique."}
+		9: return {"effect":"Améliorations −10 %","scope":"Prochaines améliorations et spécialisations.","note":"Achats passés inchangés."}
+		10: return {"effect":"Recrutement −10 %","scope":"Vos prochaines recrues.","note":"Achats passés inchangés."}
+		11: return {"effect":"Dégâts +20 %","scope":"Contre Brutes, Colosses, Élites et boss.","note":"Priorité des cibles inchangée."}
+	return {"effect":"","scope":"","note":""}
 
 func _bonus_impact_text(code: int) -> String:
 	var preview: Dictionary = model.bonus_preview(code)

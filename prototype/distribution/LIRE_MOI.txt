@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.53 — 26 octobre 2026
+Version : 0.54 — 26 octobre 2026
 
 JOUER
 
@@ -159,3 +159,11 @@ Entrée l’active. Le choix de spécialisation commence sur Annuler.
 sans dépense. Les choix de faction et de bonus obligatoire restent ouverts.
 Dans le bilan, survolez la vague 10 pour lire le sort du boss et son temps
 de résolution. Le rapport exporté conserve aussi ces observations.
+
+CHOISIR SANS TOUT LIRE
+Les cartes de bonus résument le gain et les défenseurs concernés.
+Voir les détails affiche la règle complète et les valeurs avant/après.
+Retour ou Échap ramène aux cartes ; seul Choisir ce bonus valide l’offre.
+Les bonus acquis peuvent aussi être détaillés depuis Bonus acquis.
+Dans les spécialisations, Voir les chiffres affiche les comparaisons exactes.
+Consulter ces informations ne dépense rien et conserve les pauses existantes.

@@ -240,3 +240,7 @@ Relief du plateau, contraste des berges et de l’eau, garde-corps du pont, éta
 ## v0.53 — Infobulle après lancement, 26 octobre 2026
 
 Comportement observé dans la partie native v0.52 : l’aide réapparaissait sous la souris après le départ et recouvrait l’interface. Lancement sous le pointeur : aide masquée jusqu’à sa sortie, puis consultable au retour. 29 suites, 14 350 contrôles Godot et 15 tests Python réussis. [Détail](Infobulle_lancement_v053.md).
+
+## v0.54 — Lecture progressive des choix, 26 octobre 2026
+
+Réalisation du premier lot demandé : trois cartes de bonus condensées et détails facultatifs, y compris pour les bonus acquis ; rôles des spécialisations et chiffres sur demande. 30 suites, 14 558 contrôles Godot dont 208 nouveaux, et 15 tests Python réussis. Règles, statistiques et pauses conservées. [Détail](Lecture_progressive_v054.md).

@@ -13,6 +13,7 @@ func prepare(scene: Node, faction: int) -> void:
 	scene._choose_faction(faction); scene.model.gold = 10000
 	for slot in range(6): scene.model.buy(slot,faction*3+slot%3)
 	scene.model.phase = "bonus"; scene.model.wave = 3; scene.model.bonus_offer.assign([2,9,8]); scene._update_interface()
+	scene._open_bonus_details(0)
 func run_checks() -> void:
 	for faction in range(2):
 		var scene = Main.new(); root.add_child(scene); scene.set_process(false); prepare(scene,faction)
@@ -25,7 +26,7 @@ func run_checks() -> void:
 		var previous: int = scroll.scroll_vertical
 		scene._update_interface()
 		check(previous > 0 and scroll.scroll_vertical == previous,"Les rafraîchissements ordinaires ne ramènent pas la lecture au début")
-		scene.model.wave = 6; scene._update_interface()
+		scene.model.wave = 6; scene._update_interface(); scene._open_bonus_details(0)
 		check(scroll.scroll_vertical == 0,"Un nouveau choix repart en haut même si les chiffres sont identiques")
 		scroll.scroll_vertical = 80; scene._reset()
 		check(scene.model.phase == "bonus" and scroll.scroll_vertical == 80,"Le choix obligatoire ne peut pas être effacé par une commande de fond")

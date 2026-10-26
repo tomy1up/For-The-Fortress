@@ -65,7 +65,7 @@ func run_checks() -> void:
 		scene._update_interface()
 		check(scene.bonus_impacts[0].text.contains("Aucun défenseur actuel concerné"),"Vétérans ne promet pas de gain à une recrue niveau 1")
 		check(scene.bonus_impacts[1].text.contains("20 → 24") and scene.bonus_impacts[2].text.contains("uniquement"),"PV et condition des colosses explicites")
-		check(scene.bonus_impact_scrollers[0].visible and not scene.bonus_close.visible,"Comparaisons dans le choix obligatoire, sans bouton pour l'éviter")
+		check(not scene.bonus_impact_scrollers[0].visible and scene.bonus_detail_buttons[0].visible and not scene.bonus_close.visible,"Choix condensé, comparaisons accessibles à la demande, choix toujours obligatoire")
 		scene._process(100)
 		check(scene.model.phase == "bonus" and scene.countdown_remaining < 0 and signature(scene.model) == original,"Lecture sans choix automatique, paiement, soin ou tirage")
 		scene.bonus_buttons[1].pressed.emit()

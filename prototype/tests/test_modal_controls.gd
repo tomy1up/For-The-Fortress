@@ -84,7 +84,7 @@ func run_checks() -> void:
 	check(scene.bonus_close.has_focus(),"Le récapitulatif donne le focus à sa fermeture")
 	for step in range(4):
 		inject(KEY_TAB); await process_frame
-		check(scene.bonus_close.has_focus(),"Tab ne quitte pas le récapitulatif après plusieurs cycles")
+		check(root.gui_get_focus_owner() == scene.bonus_close or root.gui_get_focus_owner() in scene.bonus_detail_buttons,"Tab reste dans les commandes du récapitulatif")
 	inject(KEY_ENTER); await process_frame
 	check(not scene.overview_open and not scene.choosing_faction and scene.model.gold == 150 and scene.model.phase == "preparation","Entrée ferme le récapitulatif au lieu de redémarrer ou démarrer")
 	check(scene.start_button.has_focus(),"Un focus utilisable est restauré au retour au jeu")

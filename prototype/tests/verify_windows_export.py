@@ -72,7 +72,11 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('alliance_crossbow_purchase','purchase','alliance'),('alliance_mage_purchase','purchase','alliance'),
        ('horde_sapper_purchase','purchase','horde'),('horde_shaman_purchase','purchase','horde'),
        ('alliance_synergies','campaign','alliance'),('horde_synergies','campaign','horde'),
-       ('alliance_victory','victory','alliance'),('horde_victory','victory','horde')]
+       ('alliance_victory','victory','alliance'),('horde_victory','victory','horde'),
+       ('alliance_bonus_other','bonus_preview','alliance'),('horde_bonus_other','bonus_preview','horde'),
+       ('alliance_bonus_details','bonus_preview','alliance'),('horde_bonus_details','bonus_preview','horde'),
+       ('acquired_bonus_cards','overview','horde'),('acquired_bonus_details','overview','horde'),
+       ('mage_specialisation_numbers','specialisation','alliance'),('shaman_specialisation_numbers','specialisation','horde')]
 for name,state,faction in cases:
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
@@ -88,6 +92,10 @@ for name,state,faction in cases:
         if name in ['alliance_run_report','horde_run_report','horde_defender_summary']: command+=['--capture-export-report']
         if state=='effects': command+=['--capture-type='+str({'effects_mage':2,'effects_troll':3,'effects_sapper':4,'effects_shaman':5}[name])]
         if name=='bonus_economy_comparison': command+=['--capture-type=1']
+        if name.endswith('_bonus_other'): command+=['--capture-type=3']
+        if name.endswith('_bonus_details'): command+=['--capture-details=0']
+        if name.endswith('_specialisation_numbers'):
+            command+=['--capture-specialisation-numbers','--capture-type='+('2' if faction=='alliance' else '5')]
         if name in ['alliance_faction_bonuses','horde_faction_bonuses']: command+=['--capture-type=2']
         if name in ['alliance_crossbow_purchase','alliance_mage_purchase','horde_sapper_purchase','horde_shaman_purchase']:
             command+=['--capture-type='+str({'alliance_crossbow_purchase':1,'alliance_mage_purchase':2,'horde_sapper_purchase':4,'horde_shaman_purchase':5}[name])]
