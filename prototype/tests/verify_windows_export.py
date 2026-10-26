@@ -79,7 +79,10 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('mage_specialisation_numbers','specialisation','alliance'),('shaman_specialisation_numbers','specialisation','horde'),
        ('attack_archer','effects','alliance'),('attack_crossbow','effects','alliance'),
        ('attack_mage','effects','alliance'),('attack_troll','effects','horde'),
-       ('attack_sapper','effects','horde'),('attack_shaman','effects','horde')]
+       ('attack_sapper','effects','horde'),('attack_shaman','effects','horde'),
+       ('projectile_archer','effects','alliance'),('projectile_crossbow','effects','alliance'),
+       ('projectile_mage','effects','alliance'),('projectile_troll','effects','horde'),
+       ('projectile_sapper','effects','horde'),('projectile_shaman','effects','horde')]
 for name,state,faction in cases:
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
@@ -96,8 +99,10 @@ for name,state,faction in cases:
         if state=='effects':
             effect_types={'effects_mage':2,'effects_troll':3,'effects_sapper':4,'effects_shaman':5,
                           'attack_archer':0,'attack_crossbow':1,'attack_mage':2,'attack_troll':3,'attack_sapper':4,'attack_shaman':5}
+            effect_types.update({'projectile_'+unit:index for index,unit in enumerate(['archer','crossbow','mage','troll','sapper','shaman'])})
             command+=['--capture-type='+str(effect_types[name])]
             if name.startswith('attack_'): command+=['--capture-attack-pose']
+            if name.startswith('projectile_'): command+=['--capture-projectile']
         if name=='bonus_economy_comparison': command+=['--capture-type=1']
         if name.endswith('_bonus_other'): command+=['--capture-type=3']
         if name.endswith('_bonus_details'): command+=['--capture-details=0']

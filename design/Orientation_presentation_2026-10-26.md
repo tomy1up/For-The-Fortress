@@ -84,3 +84,7 @@ Le porteur du projet a demandé la réalisation de cette proposition. La lecture
 ## Deuxième lot réalisé — v0.55
 
 Les six silhouettes et les mouvements de tir sont livrés dans la [présentation des défenseurs v0.55](Presentation_defenseurs_v055.md). Aucun changement de progression ou d’équilibrage.
+
+## Troisième lot réalisé — v0.56
+
+Les projectiles et impacts distincts sont livrés dans la [présentation des attaques v0.56](Presentation_attaques_v056.md). Les déplacements visuels ne modifient pas le moment des dégâts ni les autres règles de combat.

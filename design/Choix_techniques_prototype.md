@@ -248,3 +248,7 @@ Réalisation du premier lot demandé : trois cartes de bonus condensées et dét
 ## v0.55 — Silhouettes et attaques des défenseurs, 26 octobre 2026
 
 Les six défenseurs possèdent des proportions et équipements distinctifs, avec contours, ombres et accents de spécialisation. Leur mouvement bref lit uniquement les tirs réellement résolus. 31 suites, 14 621 contrôles Godot dont 63 nouveaux, 15 tests Python et contrats du GDD réussis. Statistiques, portées, ciblage et progression inchangés. [Détail](Presentation_defenseurs_v055.md).
+
+## v0.56 — Projectiles et impacts, 26 octobre 2026
+
+Formes distinctes pour les six attaques, points de départ sur les équipements, explosions discrètes et marques sur les véritables victimes. Habillage de 0,12 seconde simulée, impacts immédiats et extinction en 0,32 seconde. 32 suites, 14 681 contrôles Godot dont 60 nouveaux, 15 tests Python et contrats du GDD réussis. Aucun changement de simulation. [Détail](Presentation_attaques_v056.md).

@@ -241,6 +241,7 @@ func _ready() -> void:
 				if found: break
 			assert(found, "La capture doit montrer un effet réellement résolu.")
 			if "--capture-attack-pose" in OS.get_cmdline_user_args(): model.advance(MapView.ATTACK_POSE_DURATION/2)
+			if "--capture-projectile" in OS.get_cmdline_user_args(): model.advance(MapView.PROJECTILE_FLIGHT/2)
 			selected = 1
 			map_view.selected = 1
 		if capture_state == "breach":

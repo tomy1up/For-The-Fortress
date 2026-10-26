@@ -36,31 +36,112 @@ static func secondary_segments(shot: Dictionary) -> Array[PackedVector2Array]:
 		if shot.type == 3: origin = target
 	return segments
 
+const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
+
+static func shot_origin(shot: Dictionary) -> Vector2:
+	# Points d'équipement des silhouettes, distincts du centre logique de portée.
+	var offset: Vector2 = [Vector2(12,-21),Vector2(3,-22),Vector2(15,-41),Vector2(12,-34),Vector2(15,-12),Vector2(17,-40)][int(shot.type)]
+	return project(shot.from)+offset
+
+static func projectile_position(shot: Dictionary, age: float) -> Vector2:
+	var progress: float = clampf(age / PROJECTILE_FLIGHT,0.0,1.0)
+	var origin: Vector2 = shot_origin(shot)
+	var target: Vector2 = project(shot.to)+Vector2(0,-12)
+	var point: Vector2 = origin.lerp(target,progress)
+	if shot.type in [3,4]: point.y -= sin(PI*progress)*(15.0 if shot.type == 4 else 8.0)
+	return point
+
+func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
+	if age < 0.0 or age >= PROJECTILE_FLIGHT: return
+	var point: Vector2 = projectile_position(shot,age)
+	var origin: Vector2 = shot_origin(shot)
+	var target: Vector2 = project(shot.to)+Vector2(0,-12)
+	var direction: Vector2 = (target-origin).normalized()
+	if direction.is_zero_approx(): direction = Vector2.RIGHT
+	var side: Vector2 = direction.orthogonal()
+	match int(shot.type):
+		0,1:
+			var length: float = 13.0 if shot.type == 0 else 9.0
+			draw_line(point-direction*length,point,Color("ead9a8"),1.8 if shot.type == 0 else 3.0,true)
+			draw_colored_polygon(PackedVector2Array([point+direction*3,point-direction*3+side*3,point-direction*3-side*3]),Color("e4f0e7"))
+			for sign in [-1,1]: draw_line(point-direction*(length-3),point-direction*length+side*sign*3,color,1.5,true)
+		2:
+			draw_circle(point,7,Color(color,0.12),true,-1,true)
+			draw_circle(point,3.5,color,true,-1,true)
+			draw_circle(point+Vector2(-1,-1),1.5,Color("ecffff"),true,-1,true)
+		3:
+			var rotation: float = age/PROJECTILE_FLIGHT*TAU
+			var shaft := Vector2(cos(rotation),sin(rotation))
+			var edge: Vector2 = shaft.orthogonal()
+			draw_line(point-shaft*6,point+shaft*5,Color("d0ac75"),2.5,true)
+			draw_colored_polygon(PackedVector2Array([point+shaft*4,point+shaft*7+edge*6,point-shaft*2+edge*7,point-shaft*3+edge*3]),Color("c9e5da"))
+		4:
+			draw_circle(point,5,Color("253a3e"),true,-1,true)
+			draw_arc(point,4,3.7,5.0,8,Color("a6b7a9"),1.5,true)
+			draw_line(point+Vector2(2,-4),point+Vector2(4,-8),Color("d8b16b"),1.5,true)
+			draw_circle(point+Vector2(4,-8),2,color,true,-1,true)
+		5:
+			var cross := PackedVector2Array([point+Vector2(0,-6),point+Vector2(4,0),point+Vector2(0,6),point+Vector2(-4,0)])
+			draw_colored_polygon(cross,color)
+			draw_line(point+Vector2(0,-3),point+Vector2(0,3),Color("f5def5"),1.5,true)
+
+func _draw_hit_marker(point: Vector2, alpha: float, primary: bool, type: int, age: float) -> void:
+	var color: Color = [Color("f0d796"),Color("e1e9dc"),Color("90dceb"),Color("a8ddbd"),Color("f2b269"),Color("d1a3ed")][type]
+	color.a = alpha
+	var spread: float = (5.0 if primary else 3.0)+minf(maxf(age,0.0)/IMPACT_DURATION,1.0)*4.0
+	if type == 5:
+		var diamond := PackedVector2Array([point+Vector2(0,-spread),point+Vector2(spread*0.65,0),point+Vector2(0,spread),point+Vector2(-spread*0.65,0),point+Vector2(0,-spread)])
+		draw_polyline(diamond,color,1.8,true)
+	else:
+		draw_circle(point,spread,color,false,1.7 if primary else 1.2,true)
+		if primary:
+			for index in range(4):
+				var direction := Vector2.RIGHT.rotated(index*PI/2+PI/4)
+				draw_line(point+direction*(spread+2),point+direction*(spread+5),color,1.5,true)
+	if age < 0.08: draw_circle(point,2.5 if primary else 1.5,Color(color,alpha*0.8),true,-1,true)
+
 func _draw_impact(shot: Dictionary, age: float) -> void:
 	var alpha: float = impact_opacity(age)
 	if alpha <= 0.0: return
-	var color: Color = {2: Color("9cc4e4"), 3: Color("a1d6ab"), 4: Color("f2aa64"), 5: Color("d6a1ef")}.get(shot.type, Color("e8ce92"))
+	var type: int = shot.type
+	var color: Color = [Color("f0d796"),Color("e1e9dc"),Color("90dceb"),Color("a8ddbd"),Color("f2b269"),Color("d1a3ed")][type]
 	color.a = alpha
-	var height := Vector2(0, -12)
-	var impact: Vector2 = project(shot.to)
-	draw_line(project(shot.from) + Vector2(0, -17), impact + height, color, 2, true)
-	draw_circle(impact + height, 4, color, false, 2, true)
-	if shot.type in [2, 4]:
-		# Le contour montre le rayon logique, sans prétendre toucher tous les ennemis dedans.
-		var ring := range_outline(shot.to, shot.get("radius", 1.0))
-		draw_colored_polygon(ring, Color(color, alpha * 0.12))
-		draw_polyline(ring, color, 2, true)
+	var height := Vector2(0,-12)
+	var origin: Vector2 = shot_origin(shot)
+	var target: Vector2 = project(shot.to)+height
+	# L'impact est visible dès le tir : le déplacement bref ne retarde aucun dégât.
+	_draw_hit_marker(target,alpha,true,type,age)
+	if type == 5:
+		var direction: Vector2 = target-origin
+		var side: Vector2 = direction.normalized().orthogonal()
+		var bolt := PackedVector2Array([origin,origin+direction*0.3+side*4,origin+direction*0.55-side*4,origin+direction*0.78+side*3,target])
+		draw_polyline(bolt,Color(color,alpha*0.65),1.5,true)
+	elif type in [0,1,2]:
+		draw_line(origin,target,Color(color,alpha*0.22),1 if type != 1 else 1.5,true)
+	else:
+		var trail := PackedVector2Array()
+		for index in range(9): trail.append(projectile_position(shot,PROJECTILE_FLIGHT*index/8.0))
+		draw_polyline(trail,Color(color,alpha*0.18),1,true)
+	_draw_projectile(shot,age,color)
+	if type in [2,4]:
+		var radius: float = shot.get("radius",1.0)
+		var ring := range_outline(shot.to,radius)
+		# Rayon exact, remplissage discret ; seules les victimes réelles sont marquées.
+		draw_colored_polygon(ring,Color(color,alpha*0.045))
+		draw_polyline(ring,Color(color,alpha*0.6),1.5,true)
+		var inner := range_outline(shot.to,radius*(0.25+0.75*minf(age/0.18,1.0)))
+		draw_polyline(inner,Color(color,alpha*0.4),1,true)
 	for segment in secondary_segments(shot):
-		var target: Vector2 = segment[1] + height
-		if shot.type == 3:
-			var start: Vector2 = segment[0] + height
-			draw_line(start, target, color, 2, true)
-			if start.distance_to(target) > 8.0:
-				var direction: Vector2 = (target - start).normalized()
-				var tip: Vector2 = start.lerp(target, 0.65)
-				draw_polyline(PackedVector2Array([tip-direction.rotated(0.55)*6, tip, tip-direction.rotated(-0.55)*6]), color, 2, true)
-		# Marquer uniquement les victimes réellement enregistrées par le modèle.
-		draw_circle(target, 3, color, false, 1.5, true)
+		var secondary: Vector2 = segment[1]+height
+		if type == 3:
+			var start: Vector2 = segment[0]+height
+			draw_line(start,secondary,Color(color,alpha*0.65),1.8,true)
+			if start.distance_to(secondary) > 8:
+				var direction: Vector2 = (secondary-start).normalized()
+				var tip: Vector2 = start.lerp(secondary,0.65)
+				draw_polyline(PackedVector2Array([tip-direction.rotated(0.55)*5,tip,tip-direction.rotated(-0.55)*5]),color,1.5,true)
+		_draw_hit_marker(secondary,alpha,false,type,age)
+
 
 static func enemy_bounds(enemy: Dictionary) -> Rect2:
 	var center: Vector2 = project(Model.position_at(enemy.distance))

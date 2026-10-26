@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.55 — 26 octobre 2026
+Version : 0.56 — 26 octobre 2026
 
 JOUER
 
@@ -171,3 +171,7 @@ Consulter ces informations ne dépense rien et conserve les pauses existantes.
 DÉFENSEURS PLUS RECONNAISSABLES
 Les six défenseurs possèdent des silhouettes cartoon et des équipements distincts.
 Un mouvement bref accompagne leurs vrais tirs, sans changer leur cadence ni leurs dégâts.
+
+ATTAQUES PLUS LISIBLES
+Flèches, carreaux, orbes, haches, bombes et sorts ont des formes distinctes.
+Les impacts et explosions montrent les touches réellement résolues. Les dégâts restent immédiats.
