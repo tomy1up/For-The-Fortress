@@ -256,3 +256,7 @@ Formes distinctes pour les six attaques, points de départ sur les équipements,
 ## v0.57 — Lecture du recrutement et des améliorations, 26 octobre 2026
 
 Fiches par défaut centrées sur le rôle et les dégâts ; aperçus d’amélioration centrés sur les gains et le prix ; aides de recrutement condensées. Voir les chiffres conserve les valeurs et règles exactes. 33 suites, 14 819 contrôles Godot dont 138 nouveaux, 15 tests Python et contrats du GDD réussis. Aucune modification de simulation ou de pause. [Détail](Lecture_recrutement_v057.md).
+
+## v0.58 — Bilan essentiel, 26 octobre 2026
+
+Une première vue courte présente résultat, PV, passés, or gagné, premières pertes, plus fortes pertes et statut du boss. Les tableaux de vagues et de contributions restent disponibles dans leurs onglets. 34 suites, 14 855 contrôles Godot dont 36 nouveaux, 15 tests Python et contrats du GDD réussis. Aucun changement des rapports ou de la simulation. [Détail](Bilan_essentiel_v058.md).

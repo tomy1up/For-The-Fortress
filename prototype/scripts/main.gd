@@ -131,10 +131,14 @@ var summary_cells: Array = []
 var summary_army: Array[Label] = []
 var summary_bonuses: Array[Label] = []
 var summary_close: Button
-var summary_tab: int = 0
+var summary_tab: int = 2
 var summary_tabs: Array[Button] = []
 var summary_wave_content: Control
 var summary_performance_content: Control
+var summary_essential_content: Control
+var summary_key_values: Array[Label] = []
+var summary_loss_note: Label
+var summary_boss_note: Label
 var performance_list: VBoxContainer
 var performance_rows: Array[Dictionary] = []
 var report_button: Button
@@ -296,6 +300,7 @@ func _ready() -> void:
 		_update_interface()
 		if capture_state in ["summary","defeat_summary"]: _show_run_summary()
 		if summary_open and "--capture-performance" in OS.get_cmdline_user_args(): _set_summary_tab(1)
+		if summary_open and "--capture-waves" in OS.get_cmdline_user_args(): _set_summary_tab(0)
 		if summary_open and "--capture-export-report" in OS.get_cmdline_user_args():
 			_export_run_report()
 			assert(not report_folder.is_empty(),"L’export de contrôle doit réussir.")
@@ -629,9 +634,9 @@ func _build_run_summary(screen: Control) -> void:
 	summary_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	screen.add_child(summary_panel)
 	var panel: Panel = _panel(summary_panel,Rect2(154,70,972,660))
-	summary_title = _label(panel,"",Vector2(24,18),Vector2(610,36),26,Color("e0dbbf"))
+	summary_title = _label(panel,"",Vector2(24,18),Vector2(466,36),26,Color("e0dbbf"))
 	summary_subtitle = _label(panel,"",Vector2(24,64),Vector2(924,48),14,Color("bbcbbf"))
-	for index in range(2): summary_tabs.append(_button(panel,["Vagues","Défenseurs"][index],Rect2(650+150*index,22,148,30),_set_summary_tab.bind(index)))
+	for index in range(3): summary_tabs.append(_button(panel,["Vagues","Défenseurs","Essentiel"][index],Rect2(510+150*[1,2,0][index],22,138,30),_set_summary_tab.bind(index)))
 	summary_wave_content = Control.new()
 	summary_wave_content.size = Vector2(972,600)
 	summary_wave_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -675,6 +680,20 @@ func _build_run_summary(screen: Control) -> void:
 	performance_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(performance_list)
 	_label(summary_performance_content,"PV réellement retirés aux ennemis, sans compter les dégâts excédentaires.\nLe total inclut le boss. Survolez un défenseur pour le détail de ses attaques.",Vector2(24,544),Vector2(924,46),13,Color("bbcbbf"))
+	summary_essential_content = Control.new()
+	summary_essential_content.size = Vector2(972,600)
+	summary_essential_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(summary_essential_content)
+	for index in range(3):
+		var card: Panel = _panel(summary_essential_content,Rect2(24+314*index,130,296,108))
+		_label(card,["Forteresse","Ennemis passés","Or gagné au combat"][index],Vector2(16,12),Vector2(264,24),16,Color("bbcbbf"))
+		summary_key_values.append(_label(card,"",Vector2(16,46),Vector2(264,44),30,Color("e6c987")))
+	_label(summary_essential_content,"Les pertes de la forteresse",Vector2(24,270),Vector2(924,30),20,Color("e0dbbf"))
+	summary_loss_note = _label(summary_essential_content,"",Vector2(24,314),Vector2(924,100),18,Color("bbcbbf"))
+	_label(summary_essential_content,"Consultez Vagues pour retrouver la défense et les bonus de ces moments.",Vector2(24,426),Vector2(924,26),15,Color("91a799"))
+	_label(summary_essential_content,"Boss final",Vector2(24,478),Vector2(924,30),20,Color("e0dbbf"))
+	summary_boss_note = _label(summary_essential_content,"",Vector2(24,518),Vector2(924,30),18,Color("bbcbbf"))
+	_label(summary_essential_content,"Vagues : déroulement complet · Défenseurs : contributions réelles, unités vendues incluses.",Vector2(24,562),Vector2(924,26),14,Color("91a799"))
 	report_status = _label(panel,"",Vector2(24,600),Vector2(924,18),12,Color("bbcbbf"))
 	report_status.mouse_filter = Control.MOUSE_FILTER_STOP
 	report_button = _button(panel,"Exporter le rapport",Rect2(24,622,240,30),_export_run_report)
@@ -683,12 +702,36 @@ func _build_run_summary(screen: Control) -> void:
 	summary_panel.visible = false
 
 func _set_summary_tab(index: int) -> void:
-	if not summary_open or index not in [0,1]: return
+	if not summary_open or index not in [0,1,2]: return
 	summary_tab = index
 	summary_subtitle.text = "Forteresse : %d/%d PV · %d or restants · %s\nCombat cumulé : %s s simulées, hors préparation et choix ; la vitesse réduit le temps réel." % [model.fortress_hp,model.max_hp,model.gold,"Survolez une ligne pour les unités et bonus de la vague." if index == 0 else "Survolez un défenseur pour ses contributions.",("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
 	summary_wave_content.visible = index == 0
 	summary_performance_content.visible = index == 1
-	for tab in range(2): summary_tabs[tab].disabled = index == tab
+	summary_essential_content.visible = index == 2
+	if index == 2:
+		summary_subtitle.text = "%s · %d or restants\nCombat : %s s simulées, hors préparation et choix." % ["Dix vagues terminées" if model.phase == "victory" else "Défaite à la vague %d" % model.wave,model.gold,("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
+	for tab in range(3): summary_tabs[tab].disabled = index == tab
+
+func _populate_essential_summary() -> void:
+	summary_key_values[0].text = "%d / %d PV" % [model.fortress_hp,model.max_hp]
+	summary_key_values[1].text = str(model.total_escaped)
+	summary_key_values[2].text = "%d or" % model.total_income
+	var lost: int = 0
+	var first: int = -1
+	var largest: int = 0
+	var waves: Array[String] = []
+	for record in model.wave_history:
+		lost += record.hp_lost
+		if record.hp_lost > 0 and first < 0: first = record.wave
+		if record.hp_lost > largest:
+			largest = record.hp_lost; waves.clear()
+		if record.hp_lost == largest and largest > 0: waves.append(str(record.wave))
+	if model.wave_history.is_empty(): summary_loss_note.text = "Aucun relevé de vague disponible."
+	elif lost == 0: summary_loss_note.text = "Aucun PV perdu dans les vagues relevées."
+	else:
+		summary_loss_note.text = "%d PV perdus au combat.\nPremière perte : vague %d.\nPlus forte perte : %s (%d PV%s)." % [lost,first,("vagues " if waves.size() > 1 else "vague ")+", ".join(waves),largest," chacune" if waves.size() > 1 else ""]
+	var boss: Dictionary = RunReport.boss_encounter(model)
+	summary_boss_note.text = {"not_reached":"Vague 10 non atteinte.","not_spawned":"Pas encore apparu à la fin de la partie.","killed":"Boss éliminé.","escaped":"Le boss a atteint la forteresse.","present":"Encore en chemin à la fin de la partie."}.get(boss.status,"Issue non déterminée par le relevé.")
 
 func _populate_performance() -> void:
 	performance_rows = RunReport.performance(model)
@@ -734,6 +777,7 @@ func _show_run_summary() -> void:
 	summary_open = true
 	_populate_run_summary()
 	_populate_performance()
+	_populate_essential_summary()
 	_set_summary_tab(summary_tab)
 	_update_interface()
 	summary_close.grab_focus()
@@ -752,7 +796,7 @@ func _army_description(army: Array) -> Array[String]:
 	return lines
 
 func _populate_run_summary() -> void:
-	summary_title.text = "Bilan de partie · " + ("Victoire" if model.phase == "victory" else "Défaite") + " · " + ("Alliance" if model.faction == 0 else "Horde")
+	summary_title.text = ("Victoire" if model.phase == "victory" else "Défaite") + " · " + ("Alliance" if model.faction == 0 else "Horde")
 	summary_subtitle.text = "Forteresse : %d/%d PV · %d or restants · Survolez une ligne pour les unités et bonus de la vague.\nCombat cumulé : %s s simulées, hors préparation et choix ; la vitesse réduit le temps réel." % [model.fortress_hp,model.max_hp,model.gold,("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
 	var lost: int = 0
 	for index in range(10):
@@ -1110,7 +1154,7 @@ func _reset() -> void:
 	bonus_view_context = ""
 	for scroll in bonus_impact_scrollers: scroll.scroll_vertical = 0
 	model.reset()
-	summary_tab = 0
+	summary_tab = 2
 	performance_rows.clear()
 	report_folder = ""
 	report_status.text = ""

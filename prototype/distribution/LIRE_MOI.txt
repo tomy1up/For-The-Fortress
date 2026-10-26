@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.57 — 26 octobre 2026
+Version : 0.58 — 26 octobre 2026
 
 JOUER
 
@@ -180,3 +180,7 @@ FICHES SIMPLIFIÉES
 Les fiches présentent le rôle, les dégâts utiles et le prix des recrues et améliorations.
 Voir les chiffres affiche les valeurs et règles complètes ; Vue simplifiée revient au résumé.
 Pour comparer une recrue, survolez son bouton après avoir choisi le mode de lecture.
+
+BILAN ESSENTIEL
+Le bilan s’ouvre sur le résultat, trois chiffres clés et les vagues où des PV ont été perdus.
+Vagues et Défenseurs conservent les détails ; le rapport local reste exportable.

@@ -109,14 +109,14 @@ func run_checks() -> void:
 		scene.model = m; scene.map_view.model = m; scene.choosing_faction = false
 		scene._update_interface(); scene._show_run_summary()
 		var before: String = JSON.stringify(Report.build(m))
-		check(scene.summary_wave_content.visible and not scene.summary_performance_content.visible,"Bilan ouvre les vagues par défaut")
+		check(scene.summary_essential_content.visible and not scene.summary_wave_content.visible and not scene.summary_performance_content.visible,"Bilan ouvre l’essentiel par défaut")
 		scene.summary_tabs[1].pressed.emit()
 		check(scene.summary_performance_content.visible and not scene.summary_wave_content.visible and scene.performance_rows.size() == 3,"Onglet défenseurs correctement renseigné")
 		check(scene.performance_list.get_child_count() == 3 and scene.summary_subtitle.text.contains("contributions"),"Tableau et aide adaptés au nouvel onglet")
 		scene.summary_tabs[0].pressed.emit(); scene.summary_tabs[1].pressed.emit(); scene._set_summary_tab(9)
 		check(JSON.stringify(Report.build(m)) == before and scene.summary_tab == 1,"Consultation sans mutation ni tirage, onglet invalide rejeté")
 		scene._close_run_summary(); scene._reset()
-		check(scene.summary_tab == 0 and scene.performance_rows.is_empty() and m.wave_history.is_empty(),"Nouvelle partie efface les compteurs")
+		check(scene.summary_tab == 2 and scene.performance_rows.is_empty() and m.wave_history.is_empty(),"Nouvelle partie efface les compteurs et revient au bilan essentiel")
 		scene.free()
 	# Historique imposé pour contrôler un tableau de 60 recrues, sans simuler une économie.
 	var scene = Main.new(); root.add_child(scene); scene.set_process(false); scene._choose_faction(0)

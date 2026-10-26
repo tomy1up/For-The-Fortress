@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.57 (26 octobre 2026)** : fiches de recrutement et d’amélioration simplifiées, chiffres complets à la demande. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.57).
+**Version v0.58 (26 octobre 2026)** : bilan essentiel, chiffres clés et vagues ayant coûté des PV. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.58).
 
 Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -181,3 +181,7 @@ Les six classes ont des projectiles distincts, des points de départ sur leur é
 ## Recrutement et amélioration — v0.57
 
 Les fiches mettent en avant le rôle, les dégâts utiles et le prix. Voir les chiffres affiche les cadences, portées et règles complètes. Les portées et partenaires restent prévisualisés dans les deux vues. [Présentation et contrôles](design/Lecture_recrutement_v057.md).
+
+## Bilan essentiel — v0.58
+
+Le premier bilan affiche le résultat, les chiffres clés et les moments où la forteresse a perdu des PV. Vagues et Défenseurs conservent les tableaux détaillés. [Présentation et contrôles](design/Bilan_essentiel_v058.md).

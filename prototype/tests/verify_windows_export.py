@@ -85,7 +85,9 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('projectile_sapper','effects','horde'),('projectile_shaman','effects','horde'),
        ('alliance_purchase_inspection_numbers','purchase','alliance'),('horde_purchase_inspection_numbers','purchase','horde'),
        ('alliance_upgrade_inspection_numbers','upgrade','alliance'),('horde_upgrade_inspection_numbers','upgrade','horde'),
-       ('horde_upgrade_compact','upgrade','horde')]
+       ('horde_upgrade_compact','upgrade','horde'),
+       ('alliance_waves_summary','summary','alliance'),('horde_waves_summary','summary','horde'),
+       ('defeat_waves_summary','defeat_summary','alliance')]
 for name,state,faction in cases:
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
@@ -95,6 +97,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if name.endswith('_waves_summary'): command+=['--capture-waves']
         if name.endswith('_inspection_numbers'):
             command+=['--capture-inspection-numbers','--capture-type='+('2' if faction=='alliance' else '5')]
         if name=='horde_upgrade_compact': command+=['--capture-type=5']
