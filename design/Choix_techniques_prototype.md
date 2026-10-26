@@ -228,3 +228,7 @@ Le texte de gauche suit les étapes de partie, sans instruction de première vag
 ## v0.50 — Relevé du boss, 26 octobre 2026
 
 Observation de l’issue du boss, de son temps de résolution et des PV retirés. Lecture dans le rapport et au survol de la vague 10 ; aucun changement du modèle de combat. Champ optionnel ajouté au format 2, anciens rapports acceptés par le rejeu. 29 suites, 14 339 contrôles Godot dont 26 dédiés, 15 tests Python réussis. [Détail](Releve_boss_v050.md).
+
+## v0.51 — Barre de préparation, 26 octobre 2026
+
+Barre proportionnelle au délai réel restant, sous le bouton de lancement. Lecture seule, sans clic ni focus ; teinte de pause et accent dans les cinq dernières secondes. 29 suites, 14 350 contrôles Godot, dont onze ajouts à la suite d’enchaînement, 15 tests Python réussis. [Détail](Barre_preparation_v051.md).

@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.50 (26 octobre 2026)** : sort et temps de résolution du boss conservés dans le rapport et consultables au survol de la vague 10. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.50).
+**Version v0.51 (26 octobre 2026)** : temps de préparation représenté par une barre sous le bouton de lancement. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.51).
 
 Jeu solo de Tower Defense roguelite dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -151,3 +151,7 @@ Le panneau de gauche indique quoi faire à chaque étape et cesse de parler de p
 ## Suivi du boss final — v0.50
 
 Le rapport et l’aide de la vague 10 distinguent boss éliminé, arrivé à la forteresse, encore en chemin ou non rencontré. Les temps mesurés restent des temps de simulation. [Détail et limites](design/Releve_boss_v050.md).
+
+## Voir le temps de préparation — v0.51
+
+Une barre suit les 30 secondes restantes, se fige pendant une lecture suspendue et disparaît au départ de la vague. Le texte du bouton reste disponible. [Détail](design/Barre_preparation_v051.md).

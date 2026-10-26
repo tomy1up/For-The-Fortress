@@ -57,6 +57,8 @@ var title_label: Label
 var version_label: Label
 var hint_label: Label
 var start_button: Button
+var countdown_bar: ProgressBar
+var countdown_fill: StyleBoxFlat
 var speed_button: Button
 var reset_button: Button
 var upgrade_button: Button
@@ -451,6 +453,22 @@ func _build_interface() -> void:
 	time_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	time_label.tooltip_text = "Temps passé dans les combats, hors préparations et choix.\nEn ×2 ou ×10, ce compteur avance plus vite que le temps réel."
 	start_button = _button(side, "Lancer la vague 1", Rect2(22, 428, 234, 44), _start)
+	countdown_bar = ProgressBar.new()
+	countdown_bar.position = Vector2(22,475)
+	countdown_bar.max_value = INTER_WAVE_SECONDS
+	countdown_bar.step = 0.0
+	countdown_bar.show_percentage = false
+	countdown_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	countdown_bar.focus_mode = Control.FOCUS_NONE
+	var countdown_background := StyleBoxFlat.new()
+	countdown_background.bg_color = Color("253a31")
+	countdown_background.set_corner_radius_all(2)
+	countdown_fill = StyleBoxFlat.new()
+	countdown_fill.set_corner_radius_all(2)
+	countdown_bar.add_theme_stylebox_override("background",countdown_background)
+	countdown_bar.add_theme_stylebox_override("fill",countdown_fill)
+	side.add_child(countdown_bar)
+	countdown_bar.size = Vector2(234,4)
 	speed_button = _button(side, "Vitesse ×1", Rect2(22, 482, 234, 40), _toggle_speed)
 	reset_button = _button(side, "Nouvel essai", Rect2(22, 532, 234, 40), _reset)
 	summary_button = _button(side,"Bilan",Rect2(144,532,112,40),_show_run_summary)
@@ -1137,6 +1155,9 @@ func _update_interface() -> void:
 	start_button.text = "Lancer la vague %d" % (model.wave+1 if model.phase == "finished" else model.wave) if model.phase in ["preparation","finished"] else "Vague %d en cours" % model.wave if model.active else "Partie gagnée" if model.phase == "victory" else "Choisissez un bonus" if model.phase == "bonus" else "Partie terminée"
 	if countdown_remaining >= 0.0:
 		start_button.text = "En pause · %d s" % ceili(countdown_remaining) if _countdown_paused() else "Vague %d dans %d s" % [model.wave+1,ceili(countdown_remaining)]
+	countdown_bar.visible = countdown_remaining >= 0.0
+	countdown_bar.value = maxf(0.0,countdown_remaining)
+	countdown_fill.bg_color = Color("77968e") if _countdown_paused() else Color("e49a7b") if countdown_remaining <= 5.0 else Color("d0b874")
 	var preview_wave: int = mini(10, model.wave+1 if model.phase == "finished" else model.wave)
 	var preview: Array[String] = []
 	for group in Model.Campaign.WAVES[preview_wave-1]:
