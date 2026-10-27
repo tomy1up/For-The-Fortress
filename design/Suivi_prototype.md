@@ -1,10 +1,10 @@
 # Suivi du prototype
 
-État du 27 octobre 2026 — prototype v0.66, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 27 octobre 2026 — prototype v0.67, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
-**Prochain lot cadré par le porteur du projet, le 26 octobre 2026** : présentation, lisibilité des encarts et fantasy cartoon. Aucune progression permanente pour l’instant ; parties exigeantes repartant à égalité. Proposition de premier chantier : hiérarchiser le choix des bonus, puis les spécialisations. [Décisions validées et proposition de réalisation](Orientation_presentation_2026-10-26.md).
+**Prochain lot cadré par le porteur du projet, le 26 octobre 2026** : présentation, lisibilité des encarts et fantasy cartoon. Décision historique : aucune progression permanente dans ce lot de présentation ; évolution demandée le 27 octobre et livrée à titre de prototype en v0.67. Proposition de premier chantier : hiérarchiser le choix des bonus, puis les spécialisations. [Décisions validées et proposition de réalisation](Orientation_presentation_2026-10-26.md).
 
 Les dix vagues sont jouables avec les deux factions, les niveaux, les douze spécialisations, les bonus roguelite et les douze synergies activables. Les deux campagnes de référence atteignent une victoire au budget normal ; la matrice comparative et les essais à trois types constants de L6 sont consignés. Un [premier retour humain Horde](Retours_joueurs.md) est recueilli ; les essais restent à compléter.
 
@@ -338,3 +338,7 @@ Trois neutres communs (loup, sanglier, ours), cinq attaquants Horde face à l’
 ## v0.66 — Palette des attaquants Horde, 27 octobre 2026
 
 À la demande du joueur, la planche Horde espacée retrouve les tons plus sobres de la grande référence. Nouvel atlas horde_v003, cadres et ancrages remesurés, silhouettes et hauteurs de rendu conservées. Alliance, faune, défenseurs et règles inchangés. [Détails](Palette_Horde_v066.md).
+
+## v0.67 — Progression et talents par faction, 27 octobre 2026
+
+Ressources, points, trois arbres et compteurs de respécialisation propres à chaque camp. Gains sauvegardés après les vagues, talents appliqués au début de la tentative, reset confirmé à coût croissant puis plafonné. Valeurs et effets provisoires ; difficulté sans talent conservée pour comparaison. [Règles et validation](Progression_factions_v067.md).

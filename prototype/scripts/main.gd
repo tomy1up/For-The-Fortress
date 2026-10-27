@@ -35,6 +35,15 @@ class LiveTooltipButton extends Button:
 const Model = preload("res://scripts/valley_model.gd")
 const RunReport = preload("res://scripts/run_report.gd")
 const MapView = preload("res://scripts/valley_view.gd")
+const MetaProfile = preload("res://scripts/meta_profile.gd")
+const MetaScreen = preload("res://scripts/meta_screen.gd")
+var meta_profile: RefCounted
+var meta_menu = MetaScreen.new()
+var meta_run_id: int = -1
+var meta_run_earned: int = 0
+var meta_income: Label
+var meta_progress_label: Label
+var meta_buttons: Array[Button] = []
 const INTER_WAVE_SECONDS: float = 30.0
 const BREACH_NOTICE_SECONDS: float = 2.5
 # Temporaire, demandé pour le débogage. Retirer 10.0 après les essais.
@@ -166,6 +175,10 @@ var keyboard_focus_context: String = ""
 var syncing_keyboard_focus: bool = false
 
 func _ready() -> void:
+	var isolated: bool = DisplayServer.get_name() == "headless" or "--script" in OS.get_cmdline_args() or "-s" in OS.get_cmdline_args()
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--capture="): isolated = true
+	if not isolated: meta_profile = MetaProfile.new()
 	get_window().title = "%s · v%s" % [ProjectSettings.get_setting("application/config/name"),ProjectSettings.get_setting("application/config/version")]
 	map_view.model = model
 	add_child(map_view)
@@ -189,7 +202,7 @@ func _ready() -> void:
 			capture_state = argument.trim_prefix("--capture-state=")
 	if not capture_path.is_empty():
 		print("UI_VERSION=",ProjectSettings.get_setting("application/config/version"))
-		if capture_state != "selection":
+		if capture_state not in ["selection","talents"]:
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
 			if capture_state in ["bonus", "campaign", "victory", "overview", "boss_inspection", "summary", "forecast", "forecast_boss"]:
 				_prepare_campaign_capture(capture_state)
@@ -342,6 +355,15 @@ func _ready() -> void:
 			if argument.begins_with("--capture-details="): _open_bonus_details(int(argument.trim_prefix("--capture-details=")))
 		if "--capture-specialisation-numbers" in OS.get_cmdline_user_args():
 			_toggle_specialisation_numbers()
+		if capture_state == "talents":
+			meta_profile = MetaProfile.new("")
+			meta_profile.data.banks[capture_faction].resource = 36
+			meta_profile.data.banks[capture_faction].points = 6
+			meta_profile.data.banks[capture_faction].ranks = [3,1,0,1,0,0,0,0,0]
+			meta_profile.data.banks[capture_faction].resets = 2
+			_open_meta(capture_faction)
+			if "--capture-meta-reset" in OS.get_cmdline_user_args(): meta_menu._request_reset()
+			print("META_CAPTURE_ISOLATED=",meta_profile.path.is_empty())
 			faction_label.text = "CONTRÔLE PROGRESSION · BUDGET IMPOSÉ"
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
@@ -356,6 +378,7 @@ func _process(delta: float) -> void:
 	var hp_before: int = model.fortress_hp
 	var escaped_before: int = model.total_escaped
 	model.advance(delta * speed)
+	_sync_meta_rewards()
 	var passed: int = model.total_escaped-escaped_before
 	var lost: int = hp_before-model.fortress_hp
 	if passed > 0 and lost > 0:
@@ -421,7 +444,7 @@ func _prepare_campaign_capture(state: String) -> void:
 		if wave < 10: model.prepare_next_wave()
 
 func _selection_blocked() -> bool:
-	return choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open or summary_open
+	return meta_menu.visible or choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open or summary_open
 
 func _select_slot(slot: int) -> bool:
 	if _selection_blocked() or slot < 0 or slot >= Model.SLOTS.size(): return false
@@ -433,6 +456,10 @@ func _select_slot(slot: int) -> bool:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo: return
+	if meta_menu.visible:
+		if event.keycode == KEY_ESCAPE:
+			meta_menu.close();get_viewport().set_input_as_handled()
+		return
 	if event.ctrl_pressed or event.alt_pressed or event.meta_pressed: return
 	if event.keycode == KEY_ESCAPE or event.physical_keycode == KEY_ESCAPE:
 		if bonus_panel.visible and bonus_detail_index >= 0:
@@ -494,6 +521,7 @@ func _build_interface() -> void:
 	status_label = _label(side, "", Vector2(22, 232), Vector2(238, 52), 16, Color("d0dfd1"))
 	tally_label = _label(side, "", Vector2(22, 300), Vector2(238, 72), 14, Color("aabbb0"))
 	time_label = _label(side, "", Vector2(22, 382), Vector2(238, 24), 14, Color("aabbb0"))
+	meta_progress_label = _label(side,"",Vector2(22,406),Vector2(238,18),12,Color("cdb47e"))
 	time_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	time_label.tooltip_text = "Temps passé dans les combats, hors préparations et choix.\nEn ×2 ou ×10, ce compteur avance plus vite que le temps réel."
 	start_button = _button(side, "Lancer la vague 1", Rect2(22, 428, 234, 44), _start)
@@ -553,6 +581,7 @@ func _build_interface() -> void:
 	_build_specialisation_selector(screen)
 	_build_bonus_selector(screen)
 	_build_run_summary(screen)
+	screen.add_child(meta_menu)
 
 func _build_boss_status(screen: Control) -> void:
 	boss_panel = _panel(screen,Rect2(340,82,580,72))
@@ -899,18 +928,40 @@ func _build_faction_selector(screen: Control) -> void:
 	faction_panel.color = Color(0.02, 0.04, 0.035, 0.94)
 	faction_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	screen.add_child(faction_panel)
-	var panel: Panel = _panel(faction_panel, Rect2(240, 220, 800, 350))
+	var panel: Panel = _panel(faction_panel, Rect2(240, 180, 800, 440))
 	_label(panel, "Choisissez votre faction", Vector2(30, 28), Vector2(740, 42), 28, Color("e0dbbf"))
 	_label(panel, "Chaque camp possède trois défenseurs pour les dix vagues.", Vector2(30, 88), Vector2(740, 30), 16, Color("aabbb0"))
 	faction_buttons.append(_button(panel, "Alliance des Royaumes", Rect2(30, 152, 350, 52), _choose_faction.bind(0)))
 	faction_buttons.append(_button(panel, "Horde des Cendres", Rect2(420, 152, 350, 52), _choose_faction.bind(1)))
 	_label(panel, "Archer, arbalétrier et mage.\nPrécision et attaque de groupe.", Vector2(30, 224), Vector2(350, 62), 15, Color("bbcbbf"))
 	_label(panel, "Troll, sapeur et chaman.\nRebonds, explosifs et malédictions.", Vector2(420, 224), Vector2(350, 62), 15, Color("bbcbbf"))
-	_label(panel, "La Vallée du Gué · 150 or · 20 PV", Vector2(30, 308), Vector2(740, 24), 13, Color("cdb47e"))
+	for camp in range(2):
+		meta_buttons.append(_button(panel,"Talents "+("Alliance" if camp == 0 else "Horde"),Rect2(30+390*camp,296,350,38),_open_meta.bind(camp)))
+		meta_buttons[-1].disabled = meta_profile == null
+	_label(panel, "La Vallée du Gué · 150 or · PV selon vos talents", Vector2(30,350), Vector2(740,24),13,Color("cdb47e"))
+	_label(panel,"Progression sauvegardée par faction · Barème de talents en phase d’essai",Vector2(30,386),Vector2(740,36),13,Color("aabbb0"))
+	meta_income = _label(panel,"",Vector2(30,114),Vector2(740,28),13,Color("cdb47e"))
+
+func _open_meta(camp: int) -> void:
+	if choosing_faction and meta_profile != null: meta_menu.open(meta_profile,camp)
+
+func _sync_meta_rewards() -> void:
+	if meta_profile == null or meta_run_id <= 0: return
+	var completed: int = 0
+	for record in model.wave_history:
+		if record.result == "cleared": completed = maxi(completed,int(record.wave))
+	var before: int = int(meta_profile.data.banks[model.faction].resource)
+	if meta_profile.credit(meta_run_id,model.faction,completed,model.phase == "victory"):
+		meta_run_earned += int(meta_profile.data.banks[model.faction].resource)-before
 
 func _choose_faction(choice: int) -> void:
+	if meta_menu.visible: return
 	forecast_wave = -1
+	if choosing_faction and meta_profile != null and choice in [0,1]:
+		model.meta_ranks = meta_profile.data.banks[choice].ranks.duplicate()
 	if choosing_faction and model.select_faction(choice):
+		meta_run_earned = 0
+		if meta_profile != null: meta_run_id = meta_profile.begin_run(choice)
 		choosing_faction = false
 		_update_interface()
 
@@ -1170,6 +1221,7 @@ func _reset() -> void:
 	bonus_view_context = ""
 	for scroll in bonus_impact_scrollers: scroll.scroll_vertical = 0
 	model.reset()
+	meta_run_id = -1;meta_run_earned = 0
 	summary_tab = 2
 	performance_rows.clear()
 	report_folder = ""
@@ -1306,7 +1358,12 @@ func _update_interface() -> void:
 	_sync_countdown()
 	guidance_label.text = _guidance_text()
 	map_view.preview_synergy_unit = {}
-	var modal: bool = choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
+	var modal: bool = meta_menu.visible or choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
+	if meta_profile != null:
+		meta_income.text = "Ressources : Alliance %d · Horde %d" % [meta_profile.data.banks[0].resource,meta_profile.data.banks[1].resource]
+		meta_progress_label.text = "Progression : sauvegarde à vérifier" if not meta_profile.error.is_empty() else "Talents : +%d ressources %s" % [meta_run_earned,"Alliance" if model.faction == 0 else "Horde"]
+		meta_progress_label.tooltip_text = meta_profile.error if not meta_profile.error.is_empty() else "Gains sauvegardés après chaque vague terminée, même en cas de défaite."
+		meta_progress_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	for control in [start_button,speed_button,reset_button,sell_button,upgrade_button,bonus_summary_button,summary_button,inspection_numbers_button]+buy_buttons:
 		control.set("tooltip_blocked",modal)
 		control.focus_mode = Control.FOCUS_NONE if modal else Control.FOCUS_ALL
@@ -1341,7 +1398,7 @@ func _update_interface() -> void:
 	speed_button.disabled = modal
 	speed_button.tooltip_text = "Alterner entre ×1, ×2 et ×10 (débogage temporaire).\nSeul le combat accélère ; les 30 secondes de préparation restent inchangées."
 	reset_button.disabled = model.active or modal
-	reset_button.tooltip_text = "Terminez la vague avant de recommencer." if model.active else "Repartir avec 150 or et 20 PV."
+	reset_button.tooltip_text = "Terminez la vague avant de recommencer." if model.active else "Revenir au choix de faction.\nVos ressources et vos talents permanents sont conservés."
 	match model.phase:
 		"preparation": status_label.text = "Préparation · Vague %d/10\n%d ennemis" % [model.wave,model.spawn_schedule.size()]
 		"combat": status_label.text = "Combat · Vague %d/10\nAchats et ventes bloqués" % model.wave
@@ -1445,6 +1502,7 @@ func _guidance_text() -> String:
 	return "Préparez votre défense.\nInspectez vos unités pour\ncomparer leurs améliorations."
 
 func _sync_keyboard_focus() -> void:
+	if meta_menu.visible: return
 	if syncing_keyboard_focus: return
 	var context: String = ""
 	var target: Button

@@ -55,6 +55,9 @@ static func verify(data: Variant) -> Dictionary:
 	if not actions is Array or actions.is_empty() or actions.size() > MAX_ACTIONS:
 		return _fail("Journal absent ou trop volumineux (maximum 4096 actions).")
 	var model = Model.new()
+	if data.has("meta_ranks"):
+		if not Model.MetaTalents.valid(data.meta_ranks): return _fail("Talents permanents invalides.")
+		model.meta_ranks = data.meta_ranks.duplicate()
 	model.rng.seed = int(data.initial_rng_seed); model.rng.state = int(data.initial_rng_state)
 	for index in range(actions.size()):
 		var action: Variant = actions[index]

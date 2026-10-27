@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.66 (27 octobre 2026)** : [palette des attaquants Horde corrigée](design/Palette_Horde_v066.md) pour retrouver les tons plus sobres de la grande planche de référence. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.66).
+**Version v0.67 (27 octobre 2026)** : [progression permanente et talents par faction](design/Progression_factions_v067.md). Ressources gagnées en jouant, points achetés et respécialisation à coût croissant puis plafonné. Barème de prototype à équilibrer. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.67).
 
 **Origine des ennemis — 27 octobre 2026** : la [règle et la répartition](design/Origine_ennemis_2026-10-27.md) sont mises en jeu dans la [v0.65](design/Catalogue_attaquants_v065.md). Loup, sanglier et ours restent communs. Les autres attaquants viennent du camp adverse ; le catalogue commun et les trois images humanoïdes v0.64 sont remplacés.
 

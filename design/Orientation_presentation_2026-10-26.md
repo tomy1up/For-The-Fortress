@@ -16,6 +16,8 @@ La variation des parties continue de venir des décisions prises pendant la part
 
 L’absence de progression permanente s’applique au périmètre actuel. Une éventuelle évolution ultérieure demanderait un nouveau choix de conception. Le mot roguelike employé par le porteur du projet exprime ici cette orientation de parties exigeantes repartant à égalité.
 
+**Évolution du 27 octobre 2026 :** le porteur du projet a demandé une progression permanente avec ressources et talents par faction, puis la poursuite de son développement. Le [prototype v0.67](Progression_factions_v067.md) réalise une première version de cette nouvelle orientation. La règle de départs à égalité ci-dessus reste l’historique du lot de présentation du 26 octobre ; elle ne décrit plus le comportement des profils ayant investi des talents en v0.67.
+
 ## Principes de lisibilité pour le prochain lot
 
 Présenter d’abord l’information qui permet de décider : effet principal, bénéficiaires, prix ou conséquence immédiate. Expliquer les conditions qui changent réellement la décision. Garder les chiffres précis consultables sans les imposer tous au premier regard.

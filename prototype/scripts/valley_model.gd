@@ -4,6 +4,7 @@ const Campaign = preload("res://scripts/campaign_data.gd")
 const Metrics = preload("res://scripts/combat_metrics.gd")
 const Progression = preload("res://scripts/progression_data.gd")
 const Enemies = preload("res://scripts/enemy_catalogue.gd")
+const MetaTalents = preload("res://scripts/meta_talents.gd")
 ## Distances dans le plan logique du GDD, avant projection isométrique.
 
 const PATH_POINTS: Array[Vector2] = [
@@ -50,6 +51,7 @@ var bonus_offer: Array[int] = []
 var rng := RandomNumberGenerator.new()
 var synergies_enabled: bool = true # Désactivé uniquement dans les références historiques de test.
 var faction: int = 0
+var meta_ranks: Array = [0,0,0,0,0,0,0,0,0]
 var next_instance_id: int = 0
 var curses: Array[Dictionary] = []
 var spawn_schedule: Array[Dictionary] = []
@@ -80,6 +82,7 @@ func _init(enable_synergies: bool = true) -> void:
 	reset()
 
 func reset() -> void:
+	meta_ranks = [0,0,0,0,0,0,0,0,0]
 	action_history.clear()
 	initial_rng_seed = ""
 	initial_rng_state = ""
@@ -122,6 +125,8 @@ func select_faction(choice: int) -> bool:
 		if not defender.is_empty():
 			return false
 	faction = choice
+	max_hp = INITIAL_HP+MetaTalents.extra_hp(faction,meta_ranks)
+	fortress_hp = max_hp
 	_record_action("faction",{"faction":choice})
 	return true
 
@@ -272,17 +277,18 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	var level: int = 4 if branch_override >= 0 else defender.get("level",1)
 	var stats: Dictionary = stats_for(defender.type,level,branch_override if branch_override >= 0 else defender.get("branch",-1))
 	var synergy: Dictionary = synergy_effects(slot,branch_override,candidate)
+	var meta: Dictionary = MetaTalents.effects(faction,meta_ranks,defender.type)
 	var common: float = (0.10 if 0 in active_bonuses else 0.0) + (0.15 if 6 in active_bonuses and level <= 2 else 0.0) + (0.12 if 7 in active_bonuses and level >= 3 else 0.0)
 	stats.reference_damage = stats.damage
 	stats.reference_secondary = stats.secondary_damage
 	stats.reference_curse = stats.curse_damage
-	stats.direct_bonus = common + synergy.direct + (0.15 if 5 in active_bonuses else 0.0)
-	stats.secondary_bonus = common + synergy.secondary + (0.20 if 3 in active_bonuses and defender.type in [2,3,4] else 0.0)
-	stats.curse_bonus = common + synergy.curse
+	stats.direct_bonus = common + synergy.direct + meta.direct + (0.15 if 5 in active_bonuses else 0.0)
+	stats.secondary_bonus = common + synergy.secondary + meta.secondary + (0.20 if 3 in active_bonuses and defender.type in [2,3,4] else 0.0)
+	stats.curse_bonus = common + synergy.curse + meta.curse
 	stats.damage = stats.reference_damage * (1.0+stats.direct_bonus)
 	stats.secondary_damage = stats.reference_secondary * (1.0+stats.secondary_bonus)
 	stats.curse_damage = stats.reference_curse * (1.0+stats.curse_bonus)
-	stats.range += synergy.range + (0.5 if 2 in active_bonuses else 0.0)
+	stats.range += synergy.range + meta.range + (0.5 if 2 in active_bonuses else 0.0)
 	if 1 in active_bonuses and defender.type != 5: stats.interval /= 1.12
 	if 4 in active_bonuses and defender.type in [2,3,4]: stats.radius += 0.2
 	stats.synergies = synergy.codes

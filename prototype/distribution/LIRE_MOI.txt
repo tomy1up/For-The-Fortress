@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.66 — 27 octobre 2026
+Version : 0.67 — 27 octobre 2026
 
 JOUER
 
@@ -222,3 +222,25 @@ L’inspection indique l’origine ; les détails du bonus donnent les noms exac
 Après un achat, les aides de la commande qui apparaît sous la souris attendent un nouveau survol.
 
 V0.66 : palette des attaquants Horde corrigée selon la grande planche de référence.
+
+PROGRESSION PERMANENTE — BARÈME D’ESSAI V0.67
+
+Au choix de faction, ouvrez Talents Alliance ou Talents Horde. La ressource de chaque
+camp est gagnée uniquement avec ce camp : une vague terminée rapporte son numéro
+(vague 1 : 1, vague 2 : 2, etc.). Une victoire ajoute 5 ressources. Les gains sont
+enregistrés après chaque vague terminée et conservés même en cas de défaite.
+
+Un point coûte 10 ressources. Trois rangs de base ouvrent deux spécialités exclusives
+dans chaque arbre. Les effets et prix sont des hypothèses de prototype, non équilibrées.
+Les talents sont figés pour la partie une fois la faction choisie. Pour les changer,
+repartez au choix de faction après un nouvel essai. Les points appartiennent à leur camp.
+
+Réinitialiser les trois arbres rend les points achetés. Prix successifs : 2, 4, 6, 8,
+puis 10 ressources au maximum. Chaque faction possède son propre compteur de resets.
+Le coût est confirmé avant paiement ; annuler ne coûte rien.
+
+Profil local : %APPDATA%\Godot\app_userdata\For the Fortress! — La Vallée du Gué\progression_factions_v1.json
+Un fichier .bak conserve le profil précédent valide. Ce profil ne sauvegarde pas une
+partie en cours. Les contrôles automatisés et captures ne modifient pas ce profil.
+En cas d’échec de sauvegarde, un message apparaît : les gains non écrits ne sont pas
+garantis à la fermeture. Ne pas supprimer les fichiers pour résoudre une erreur.

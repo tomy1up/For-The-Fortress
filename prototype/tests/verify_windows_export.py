@@ -49,6 +49,8 @@ startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW
 startup.wShowWindow=0
 results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
+       ('alliance_talents','talents','alliance'),('horde_talents','talents','horde'),
+       ('alliance_talents_reset','talents','alliance'),('horde_talents_reset','talents','horde'),
        ('fortress_breach','breach','horde'),
        ('bonus_alliance_comparison','bonus_preview','alliance'),('bonus_horde_comparison','bonus_preview','horde'),
        ('bonus_economy_comparison','bonus_preview','horde'),
@@ -101,6 +103,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if name.endswith('_talents_reset'): command+=['--capture-meta-reset']
         if name.endswith('_waves_summary'): command+=['--capture-waves']
         if name.endswith('_inspection_numbers'):
             command+=['--capture-inspection-numbers','--capture-type='+('2' if faction=='alliance' else '5')]
@@ -132,6 +135,7 @@ for name,state,faction in cases:
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
+    if state=='talents': assert 'META_CAPTURE_ISOLATED=true' in text,(name,'La capture doit rester isolée du vrai profil')
     if name.startswith('left_'): assert 'ATTACK_FACING=-1' in text,(name,'La fixture doit couvrir un vrai tir à gauche')
     if name=='periodic_damage': assert 'DAMAGE_TICK_VISIBLE=true' in text,(name,'Le contrôle doit montrer un dégât périodique réel')
     if name=='boss_without_hover': assert 'BOSS_STATUS_WITHOUT_HOVER=true' in text,(name,text)
