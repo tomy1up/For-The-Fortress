@@ -124,3 +124,7 @@ L’[orientation et les mouvements d’attaque](Animations_attaque_v062.md) rend
 ## Réaction des ennemis aux coups — v0.63, 27 octobre 2026
 
 La [réaction aux dégâts](Reaction_degats_v063.md) relie visuellement les pertes de PV aux impacts et aux dégâts périodiques existants : éclaircissement court du corps et portion perdue de la jauge qui s’efface. Aucun chiffre flottant ni changement d’équilibrage.
+
+## Premier lot d’ennemis illustrés — v0.64, 27 octobre 2026
+
+Les [trois profils courants](Assets_Ennemis_v064.md), Grouillant, Pillard et Sprinter, sont déclinés dans le style illustré des défenseurs. Les apparences individuelles restent ajustables après retour joueur. Brute, Maraudeur, Colosse, Élite et Seigneur de siège restent procéduraux dans ce lot. Aucun changement de règles ou d’équilibrage.

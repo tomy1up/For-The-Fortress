@@ -280,3 +280,7 @@ Les six défenseurs regardent vers le côté de leur dernier vrai tir, conservé
 ## v0.63 — Réaction aux dégâts, 27 octobre 2026
 
 Éclaircissement bref des ennemis touchés et extinction de la portion de PV perdue dans leur jauge. Lecture des pertes réelles, incluant les ticks du chaman, sans chiffre flottant ni modification de combat. 38 suites, 15 138 contrôles Godot dont 63 nouveaux, 16 tests Python et contrats du GDD réussis. [Détail](Reaction_degats_v063.md).
+
+## v0.64 — Trois ennemis illustrés, 27 octobre 2026
+
+Grouillant, Pillard et Sprinter reçoivent des PNG transparents dans le style cartoon retenu. Tailles relatives conservées, orientation selon le chemin, mouvement global de marche et survol adapté à la silhouette. Les cinq autres profils gardent leur dessin procédural. 39 suites, 15 184 contrôles Godot dont 46 nouveaux, 16 tests Python et contrats du GDD réussis. Les 31 sources de distribution incluent images et imports de ce lot. [Détail et prompts](Assets_Ennemis_v064.md).

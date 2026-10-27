@@ -3,6 +3,7 @@ extends Node2D
 const Model = preload("res://scripts/valley_model.gd")
 const HordeArt = preload("res://scripts/horde_art.gd")
 const AllianceArt = preload("res://scripts/alliance_art.gd")
+const EnemyArt = preload("res://scripts/enemy_art.gd")
 const ORIGIN := Vector2(658, 174)
 const AXIS := Vector2(27, 13.5)
 const INK := Color("d9e4d7")
@@ -180,7 +181,20 @@ static func enemy_bounds(enemy: Dictionary) -> Rect2:
 	var center: Vector2 = project(Model.position_at(enemy.distance))
 	var scale: float = _enemy_scale(enemy)
 	var width: float = maxf(28.0,32.0*scale)
-	return Rect2(center+Vector2(-width/2.0,-39.0*scale),Vector2(width,47.0*scale))
+	var bounds := Rect2(center+Vector2(-width/2.0,-39.0*scale),Vector2(width,47.0*scale))
+	if EnemyArt.TEXTURES.has(int(enemy.get("type",1))):
+		var image: Rect2 = EnemyArt.destination(int(enemy.get("type",1)))
+		if enemy_facing(enemy) < 0.0: image.position.x = -image.end.x
+		bounds = bounds.merge(Rect2(center+image.position*scale,image.size*scale).grow(1.0))
+	return bounds
+
+static func enemy_facing(enemy: Dictionary) -> float:
+	var distance: float = clampf(enemy.distance,0.0,Model.PATH_LENGTH)
+	var from: Vector2 = project(Model.position_at(distance))
+	var to: Vector2 = project(Model.position_at(minf(distance+0.01,Model.PATH_LENGTH)))
+	if distance == Model.PATH_LENGTH:
+		from = project(Model.position_at(maxf(0.0,distance-0.01)))
+	return -1.0 if to.x < from.x else 1.0
 
 func enemy_at(point: Vector2) -> int:
 	if model == null: return -1
@@ -469,6 +483,7 @@ static func enemy_color(type: int) -> Color:
 	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384")][type]
 
 func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.0) -> void:
+	var anchor: Vector2 = center
 	var type: int = enemy.get("type", 1)
 	var flash: float = clampf(hit_strength,0.0,1.0)*0.55
 	var armor: Color = enemy_color(type).lightened(flash)
@@ -484,38 +499,17 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 			break
 	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
 	var stride: float = sin(model.elapsed*10.0*enemy.get("speed",1.0)+enemy.id)*2.0 if model.active else 0.0
+	if EnemyArt.TEXTURES.has(type):
+		var scale: float = _enemy_scale(enemy)
+		draw_set_transform(anchor+Vector2(0,-absf(stride)*0.3*scale),0.0,Vector2(enemy_facing(enemy)*scale,scale))
+		draw_texture_rect_region(EnemyArt.TEXTURES[type],EnemyArt.destination(type),EnemyArt.FRAMES[type].source,EnemyArt.tint(hit_strength))
+		draw_set_transform(Vector2.ZERO)
+		return
 	var skin: Color = Color("dbb991").lightened(flash)
 	var metal: Color = Color("b5bfb8").lightened(flash)
 	_unit_stroke(Vector2(-4,-4),Vector2(-6+stride,4),Color("655043"),4)
 	_unit_stroke(Vector2(4,-4),Vector2(6-stride,4),Color("655043"),4)
 	match type:
-		0: # Petit couteau et capuche pointue, silhouette légère.
-			_unit_shape([Vector2(-6,-19),Vector2(6,-19),Vector2(8,-3),Vector2(-7,-3)],armor)
-			_unit_face(skin,6,-23)
-			_unit_shape([Vector2(-8,-23),Vector2(-4,-31),Vector2(4,-30),Vector2(8,-23),Vector2(3,-26),Vector2(-3,-26)],armor.darkened(0.2))
-			_unit_stroke(Vector2(-5,-16),Vector2(-9,-10),skin,3)
-			_unit_stroke(Vector2(5,-16),Vector2(10,-12),skin,3)
-			_unit_shape([Vector2(9,-11),Vector2(14,-20),Vector2(14,-11)],metal)
-		1: # Tunique rouge, calotte de métal et épée droite.
-			_unit_shape([Vector2(-8,-19),Vector2(8,-19),Vector2(9,-4),Vector2(-9,-4)],armor)
-			_unit_stroke(Vector2(-8,-6),Vector2(8,-6),Color("72533b"),3)
-			_unit_disk(Vector2(0,-6),2.5,Color("d5b96b"))
-			_unit_face(skin,7,-24)
-			_unit_shape([Vector2(-8,-25),Vector2(-5,-31),Vector2(5,-31),Vector2(8,-25)],metal.darkened(0.2))
-			_unit_stroke(Vector2(-7,-25),Vector2(8,-25),metal,2)
-			_unit_stroke(Vector2(-8,-17),Vector2(-11,-8),armor,4)
-			_unit_stroke(Vector2(8,-17),Vector2(12,-13),skin,3)
-			_unit_stroke(Vector2(12,-4),Vector2(12,-28),metal,2.5)
-			_unit_stroke(Vector2(8,-11),Vector2(16,-11),Color("d1b270"),2)
-		2: # Corps penché, foulard flottant et petites lames.
-			_unit_shape([Vector2(-6,-18),Vector2(7,-22),Vector2(9,-7),Vector2(-4,-4)],armor)
-			_unit_shape([Vector2(-3,-23),Vector2(-16,-22),Vector2(-12,-17),Vector2(-7,-20)],Color("bd6150"))
-			_unit_disk(Vector2(3,-25),6.5,skin)
-			draw_line(Vector2(3,-26),Vector2(6,-26),UNIT_INK,1.4,true)
-			_unit_shape([Vector2(-3,-28),Vector2(2,-32),Vector2(9,-29),Vector2(8,-26)],Color("5b4b3b"))
-			_unit_stroke(Vector2(-4,-17),Vector2(-11,-10),skin,3)
-			_unit_stroke(Vector2(7,-19),Vector2(12,-21),skin,3)
-			_unit_shape([Vector2(11,-20),Vector2(16,-28),Vector2(16,-20)],metal)
 		3: # Torse massif, bras nus et massue à gros nœuds.
 			_unit_shape([Vector2(-11,-21),Vector2(10,-21),Vector2(11,-5),Vector2(-11,-5)],armor)
 			_unit_stroke(Vector2(-11,-19),Vector2(-13,-8),skin,5)
