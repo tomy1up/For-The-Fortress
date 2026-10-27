@@ -100,3 +100,7 @@ Le [bilan essentiel v0.58](Bilan_essentiel_v058.md) présente une première lect
 ## Sixième lot réalisé — v0.59
 
 Les [huit silhouettes ennemies v0.59](Presentation_ennemis_v059.md) complètent les défenseurs cartoon, sans changement des caractéristiques ou règles.
+
+## Précision de style — 27 octobre 2026
+
+Le porteur du projet a précisé la direction avec une référence illustrée : formes compactes, grandes têtes et mains, contours épais, couleurs franches, ombres simples et peu de détails. Les races, rôles et équipements des unités existantes restent la référence. La [première planche Horde](concepts/Direction_cartoon_Horde_v001.md) est une proposition originale à examiner ; son rendu n’est pas encore validé ni intégré au jeu. Version jouable conservée : v0.59.

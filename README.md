@@ -2,6 +2,8 @@
 
 **Version v0.59 (26 octobre 2026)** : huit silhouettes d’ennemis cartoon, équipements distincts et jauges dégagées. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.59).
 
+**Direction artistique en préparation — 27 octobre 2026** : [première planche Horde](design/concepts/Direction_cartoon_Horde_v001.md), dans le style cartoon compact précisé par le porteur du projet. Proposition de concept ; version jouable inchangée.
+
 Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
 **Nom de travail : disponibilité juridique à confirmer.** Les noms des factions sont provisoires.
