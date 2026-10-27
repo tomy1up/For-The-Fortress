@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.67 (27 octobre 2026)** : [progression permanente et talents par faction](design/Progression_factions_v067.md). Ressources gagnées en jouant, points achetés et respécialisation à coût croissant puis plafonné. Barème de prototype à équilibrer. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.67).
+**Version v0.68 (27 octobre 2026)** : [arbres de talents verticaux](design/Arbres_verticaux_v068.md), trois lignes accessibles à 0, 5 et 10 points dans chaque arbre. Icônes, rangs et description au survol/clavier. Points v0.67 rendus gratuitement pour redistribution. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.68).
 
 **Origine des ennemis — 27 octobre 2026** : la [règle et la répartition](design/Origine_ennemis_2026-10-27.md) sont mises en jeu dans la [v0.65](design/Catalogue_attaquants_v065.md). Loup, sanglier et ours restent communs. Les autres attaquants viennent du camp adverse ; le catalogue commun et les trois images humanoïdes v0.64 sont remplacés.
 

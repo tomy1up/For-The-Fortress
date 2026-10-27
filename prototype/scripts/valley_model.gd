@@ -51,7 +51,7 @@ var bonus_offer: Array[int] = []
 var rng := RandomNumberGenerator.new()
 var synergies_enabled: bool = true # Désactivé uniquement dans les références historiques de test.
 var faction: int = 0
-var meta_ranks: Array = [0,0,0,0,0,0,0,0,0]
+var meta_ranks: Array = MetaTalents.empty_ranks()
 var next_instance_id: int = 0
 var curses: Array[Dictionary] = []
 var spawn_schedule: Array[Dictionary] = []
@@ -82,7 +82,7 @@ func _init(enable_synergies: bool = true) -> void:
 	reset()
 
 func reset() -> void:
-	meta_ranks = [0,0,0,0,0,0,0,0,0]
+	meta_ranks = MetaTalents.empty_ranks()
 	action_history.clear()
 	initial_rng_seed = ""
 	initial_rng_state = ""

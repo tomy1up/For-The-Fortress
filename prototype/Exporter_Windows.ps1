@@ -1,6 +1,6 @@
 param(
     [string]$EnginePath = '',
-    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.67',
+    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.68',
     [string]$OutputRoot = ''
 )
 $ErrorActionPreference = 'Stop'
@@ -42,7 +42,7 @@ $executable = Join-Path $artifactFolder 'For_the_Fortress.exe'
 $stdoutPath = Join-Path $OutputRoot "export_v${Version}.log"
 $stderrPath = Join-Path $OutputRoot "export_v${Version}.err"
 $arguments = @('--headless','--path',('"'+$PSScriptRoot+'"'),'--export-release','"Windows x86_64"',('"'+$executable+'"'))
-$sourcePaths = @('project.godot','export_presets.cfg','scenes\main.tscn','scripts\main.gd','scripts\valley_model.gd','scripts\valley_view.gd','scripts\campaign_data.gd','scripts\progression_data.gd','scripts\run_report.gd','scripts\combat_metrics.gd','scripts\horde_art.gd','assets\units\horde\troll_v001.png','assets\units\horde\gobelin_v001.png','assets\units\horde\chaman_v001.png','assets\units\horde\troll_v001.png.import','assets\units\horde\gobelin_v001.png.import','assets\units\horde\chaman_v001.png.import','scripts\alliance_art.gd','assets\units\alliance\archer_v001.png','assets\units\alliance\arbaletrier_v001.png','assets\units\alliance\mage_v001.png','assets\units\alliance\archer_v001.png.import','assets\units\alliance\arbaletrier_v001.png.import','assets\units\alliance\mage_v001.png.import','scripts\enemy_art.gd','assets\enemies\rosters\neutres_v001.png','assets\enemies\rosters\alliance_v002.png','assets\enemies\rosters\horde_v003.png','assets\enemies\rosters\neutres_v001.png.import','assets\enemies\rosters\alliance_v002.png.import','assets\enemies\rosters\horde_v003.png.import','scripts\enemy_catalogue.gd','scripts\meta_talents.gd','scripts\meta_profile.gd','scripts\meta_screen.gd')
+$sourcePaths = @('project.godot','export_presets.cfg','scenes\main.tscn','scripts\main.gd','scripts\valley_model.gd','scripts\valley_view.gd','scripts\campaign_data.gd','scripts\progression_data.gd','scripts\run_report.gd','scripts\combat_metrics.gd','scripts\horde_art.gd','assets\units\horde\troll_v001.png','assets\units\horde\gobelin_v001.png','assets\units\horde\chaman_v001.png','assets\units\horde\troll_v001.png.import','assets\units\horde\gobelin_v001.png.import','assets\units\horde\chaman_v001.png.import','scripts\alliance_art.gd','assets\units\alliance\archer_v001.png','assets\units\alliance\arbaletrier_v001.png','assets\units\alliance\mage_v001.png','assets\units\alliance\archer_v001.png.import','assets\units\alliance\arbaletrier_v001.png.import','assets\units\alliance\mage_v001.png.import','scripts\enemy_art.gd','assets\enemies\rosters\neutres_v001.png','assets\enemies\rosters\alliance_v002.png','assets\enemies\rosters\horde_v003.png','assets\enemies\rosters\neutres_v001.png.import','assets\enemies\rosters\alliance_v002.png.import','assets\enemies\rosters\horde_v003.png.import','scripts\enemy_catalogue.gd','scripts\meta_talents.gd','scripts\meta_profile.gd','scripts\meta_screen.gd','scripts\meta_talents_v067.gd')
 $sources = Get-FortressSourceSnapshot -ProjectRoot $PSScriptRoot -RelativePaths $sourcePaths
 if ([IO.File]::ReadAllText((Join-Path $PSScriptRoot 'project.godot')) -notmatch 'config/version="([^"]+)"' -or $Matches[1] -ne $Version) {
     throw 'La version du projet a change avant le lancement de la compilation.'

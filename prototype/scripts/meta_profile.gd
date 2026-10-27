@@ -5,26 +5,28 @@ const DEFAULT_PATH: String = "user://progression_factions_v1.json"
 var path: String
 var error: String = ""
 var blocked: bool = false
+var migration_notice: String = ""
 var data: Dictionary = fresh()
 
 static func fresh() -> Dictionary:
-	return {"schema":1,"serial":0,"banks":[bank(),bank()],"run":{"id":0,"faction":0,"completed":0,"victory":false}}
+	return {"schema":2,"serial":0,"banks":[bank(),bank()],"run":{"id":0,"faction":0,"completed":0,"victory":false}}
 
 static func bank() -> Dictionary:
-	return {"resource":0,"points":0,"resets":0,"ranks":[0,0,0,0,0,0,0,0,0]}
+	return {"resource":0,"points":0,"resets":0,"ranks":Talents.empty_ranks()}
 
 func _init(save_path: String = DEFAULT_PATH) -> void:
 	path = save_path
 	if not path.is_empty(): load_profile()
 
 static func valid(value: Variant) -> bool:
-	if not value is Dictionary or value.get("schema") != 1 or not Talents.integer(value.get("serial"),0,1000000000): return false
+	if not value is Dictionary or not Talents.integer(value.get("schema"),1,2) or not Talents.integer(value.get("serial"),0,1000000000): return false
 	if not value.get("banks") is Array or value.banks.size() != 2 or not value.get("run") is Dictionary: return false
 	for item in value.banks:
 		if not item is Dictionary: return false
 		for key in ["resource","points","resets"]:
 			if not Talents.integer(item.get(key),0,1000000000): return false
-		if not Talents.valid(item.get("ranks")) or Talents.spent(item.ranks) > item.points: return false
+		if not (Talents.Legacy.valid(item.get("ranks")) if value.schema == 1 else Talents.current_valid(item.get("ranks"))): return false
+		if Talents.spent(item.ranks) > item.points: return false
 	var run: Dictionary = value.run
 	return Talents.integer(run.get("id"),0,int(value.serial)) and Talents.integer(run.get("faction"),0,1) and Talents.integer(run.get("completed"),0,10) and run.get("victory") is bool and (not run.victory or run.completed == 10)
 
@@ -38,18 +40,39 @@ func _read(file_path: String) -> Variant:
 func load_profile() -> bool:
 	if not FileAccess.file_exists(path) and not FileAccess.file_exists(path+".bak"): return true
 	var value: Variant = _read(path)
-	if valid(value): data = value; return true
+	if valid(value): return _accept_loaded(value)
 	value = _read(path+".bak")
 	if valid(value):
-		data = value
+		if not _accept_loaded(value): return false
 		error = "Profil restauré depuis sa sauvegarde de secours."
 		return true
 	blocked = true
 	error = "Profil illisible : progression protégée. Aucun fichier n’a été remplacé."
 	return false
 
+func _accept_loaded(value: Dictionary) -> bool:
+	if value.schema == 2: data = value;return true
+	if not path.is_empty() and FileAccess.file_exists(path+".v067.bak"):
+		var previous_archive: Variant = _read(path+".v067.bak")
+		if not valid(previous_archive) or previous_archive.schema != 1:
+			blocked = true;error = "Migration annulée : copie du profil précédent à vérifier.";return false
+	if not path.is_empty() and not FileAccess.file_exists(path+".v067.bak"):
+		var archive := FileAccess.open(path+".v067.bak",FileAccess.WRITE)
+		if archive == null:
+			blocked = true;error = "Migration annulée : copie du profil précédent impossible.";return false
+		archive.store_string(JSON.stringify(value));archive.flush()
+		var archive_error: Error = archive.get_error();archive.close()
+		if archive_error != OK or not valid(_read(path+".v067.bak")):
+			blocked = true;error = "Migration annulée : copie de secours incomplète.";return false
+	var upgraded: Dictionary = value.duplicate(true);upgraded.schema = 2
+	for item in upgraded.banks: item.ranks = Talents.empty_ranks()
+	if not _commit(upgraded):
+		blocked = true;return false
+	migration_notice = "Arbres mis à jour : vos points investis ont été rendus gratuitement."
+	return true
+
 func _commit(candidate: Dictionary) -> bool:
-	if blocked or not valid(candidate):
+	if blocked or not valid(candidate) or candidate.schema != 2:
 		if not blocked: error = "Opération de progression invalide."
 		return false
 	if path.is_empty(): data = candidate;error = "";return true # Profil éphémère réservé aux tests/captures.
@@ -86,7 +109,7 @@ func credit(run_id: int, faction: int, completed: int, victory: bool) -> bool:
 	return _commit(next)
 
 func buy_point(faction: int) -> bool:
-	if faction not in [0,1] or data.banks[faction].resource < Talents.POINT_PRICE or data.banks[faction].points >= 12: return false
+	if faction not in [0,1] or data.banks[faction].resource < Talents.POINT_PRICE or data.banks[faction].points >= Talents.MAX_POINTS: return false
 	var next: Dictionary = data.duplicate(true)
 	next.banks[faction].resource -= Talents.POINT_PRICE;next.banks[faction].points += 1
 	return _commit(next)

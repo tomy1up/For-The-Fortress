@@ -358,8 +358,8 @@ func _ready() -> void:
 		if capture_state == "talents":
 			meta_profile = MetaProfile.new("")
 			meta_profile.data.banks[capture_faction].resource = 36
-			meta_profile.data.banks[capture_faction].points = 6
-			meta_profile.data.banks[capture_faction].ranks = [3,1,0,1,0,0,0,0,0]
+			meta_profile.data.banks[capture_faction].points = 14
+			meta_profile.data.banks[capture_faction].ranks = [5,3,2,1,0,1,0,0,0,0,0,0,0,0,0]
 			meta_profile.data.banks[capture_faction].resets = 2
 			_open_meta(capture_faction)
 			if "--capture-meta-reset" in OS.get_cmdline_user_args(): meta_menu._request_reset()

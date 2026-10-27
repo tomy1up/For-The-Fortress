@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 27 octobre 2026 — prototype v0.67, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 27 octobre 2026 — prototype v0.68, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -342,3 +342,7 @@ Trois neutres communs (loup, sanglier, ours), cinq attaquants Horde face à l’
 ## v0.67 — Progression et talents par faction, 27 octobre 2026
 
 Ressources, points, trois arbres et compteurs de respécialisation propres à chaque camp. Gains sauvegardés après les vagues, talents appliqués au début de la tentative, reset confirmé à coût croissant puis plafonné. Valeurs et effets provisoires ; difficulté sans talent conservée pour comparaison. [Règles et validation](Progression_factions_v067.md).
+
+## v0.68 — Arbres verticaux et paliers par colonne, 27 octobre 2026
+
+Trois colonnes à icônes, rangs visibles et lecture des effets au survol/clavier. Trois lignes par arbre : 0, 5 et 10 points investis dans ses lignes précédentes. Cinq talents par arbre, valeurs d’essai et deux spécialités finales exclusives. Profil v0.67 migré avec restitution gratuite des points investis ; ressources, points achetés, compteurs et parcours de gains préservés. [Détails et preuves](Arbres_verticaux_v068.md).

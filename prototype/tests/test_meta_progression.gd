@@ -33,18 +33,20 @@ func run_checks() -> void:
 	check(not p.credit(id,0,10,true) and p.credit(next_id,1,3,false) and p.data.banks[1].resource == 6,"Ancien identifiant refusé ; banque Horde indépendante")
 	# Paliers indépendants et plafond permanent après les premiers resets.
 	for faction in range(2):
-		var q = Profile.new("");q.data.banks[faction].resource = 1000;q.data.banks[faction].points = 12
+		var q = Profile.new("");q.data.banks[faction].resource = 1000;q.data.banks[faction].points = Talents.MAX_POINTS
 		for reset in range(9):
 			check(q.reset_price(faction) == [2,4,6,8,10,10,10,10,10][reset],"Prix croissant puis plafonné")
-			check(q.allocate(faction,0) and q.allocate(faction,0) and q.allocate(faction,0) and q.allocate(faction,1),"Base et spécialité achetées avec quatre points")
-			check(not q.allocate(faction,2),"Spécialités exclusives")
+			var built: bool = true
+			for index in [0,0,0,0,0,1,1,1,2,2,3]: built = q.allocate(faction,index) and built
+			check(built,"Lignes débloquées et spécialité acquise")
+			check(not q.allocate(faction,4),"Spécialités exclusives")
 			var before: int = q.data.banks[faction].resource
 			var price: int = q.reset_price(faction)
-			check(q.respec(faction) and q.data.banks[faction].resource == before-price and q.data.banks[faction].points == 12 and Talents.spent(q.data.banks[faction].ranks) == 0,"Reset paie exactement une fois et rend tous les points")
+			check(q.respec(faction) and q.data.banks[faction].resource == before-price and q.data.banks[faction].points == Talents.MAX_POINTS and Talents.spent(q.data.banks[faction].ranks) == 0,"Reset paie exactement une fois et rend tous les points")
 			check(q.data.banks[1-faction].resets == 0 and q.reset_price(1-faction) == 2,"Reset sans incidence sur l'autre faction")
 			check(not q.respec(faction) and q.data.banks[faction].resource == before-price,"Arbre vide : pas de nouveau prélèvement")
-		q.data.banks[faction].points = 12
-		check(not q.buy_point(faction),"Aucun achat de point inutile au-delà des douze rangs actifs possibles")
+		q.data.banks[faction].points = Talents.MAX_POINTS
+		check(not q.buy_point(faction),"Aucun achat de point inutile au-delà des rangs actifs possibles")
 	# Contenu mal formé : pas de création silencieuse d'un profil écrasant les données.
 	var broken: Dictionary = Profile.fresh();broken.banks[0].ranks[1] = 1
 	check(not Profile.valid(broken),"Sauvegarde incohérente : spécialité sans trois rangs refusée")

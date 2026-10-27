@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.67 — 27 octobre 2026
+Version : 0.68 — 27 octobre 2026
 
 JOUER
 
@@ -223,15 +223,15 @@ Après un achat, les aides de la commande qui apparaît sous la souris attendent
 
 V0.66 : palette des attaquants Horde corrigée selon la grande planche de référence.
 
-PROGRESSION PERMANENTE — BARÈME D’ESSAI V0.67
+PROGRESSION PERMANENTE — BARÈME D’ESSAI V0.68
 
 Au choix de faction, ouvrez Talents Alliance ou Talents Horde. La ressource de chaque
 camp est gagnée uniquement avec ce camp : une vague terminée rapporte son numéro
 (vague 1 : 1, vague 2 : 2, etc.). Une victoire ajoute 5 ressources. Les gains sont
 enregistrés après chaque vague terminée et conservés même en cas de défaite.
 
-Un point coûte 10 ressources. Trois rangs de base ouvrent deux spécialités exclusives
-dans chaque arbre. Les effets et prix sont des hypothèses de prototype, non équilibrées.
+Un point coûte 10 ressources. Les lignes de chaque arbre s’ouvrent après 0, 5 puis 10 points
+dépensés dans les lignes précédentes de ce même arbre. Les deux talents finaux sont exclusifs. Les effets et prix sont des hypothèses de prototype, non équilibrées.
 Les talents sont figés pour la partie une fois la faction choisie. Pour les changer,
 repartez au choix de faction après un nouvel essai. Les points appartiennent à leur camp.
 
@@ -244,3 +244,19 @@ Un fichier .bak conserve le profil précédent valide. Ce profil ne sauvegarde p
 partie en cours. Les contrôles automatisés et captures ne modifient pas ce profil.
 En cas d’échec de sauvegarde, un message apparaît : les gains non écrits ne sont pas
 garantis à la fermeture. Ne pas supprimer les fichiers pour résoudre une erreur.
+
+ARBRES VERTICAUX — V0.68
+
+Chaque colonne a son propre compteur de points investis. Dépenser dans une autre
+colonne ne débloque pas ses lignes. Survolez une icône ou sélectionnez-la au clavier
+pour lire son effet, son prix et le nombre de points encore nécessaires.
+
+Le premier talent possède cinq rangs, les deux talents intermédiaires trois rangs
+chacun, puis deux spécialités finales exclusives ont un rang chacune.
+Le contenu actuel permet d’investir jusqu’à 36 points par faction.
+
+À la première ouverture d’un profil v0.67, les affectations sont remises à zéro sans
+frais. Vos ressources, points achetés et compteurs de resets sont conservés. Une copie
+du profil original est gardée dans progression_factions_v1.json.v067.bak. Le nom du
+profil reste identique ; son format interne évolue vers le schéma 2.
+Les effets et seuils restent un barème de prototype à équilibrer.
