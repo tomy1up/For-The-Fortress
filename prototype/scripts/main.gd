@@ -47,6 +47,14 @@ var run_map_index: int = 0
 var run_map_rewards: Dictionary = {} # Gains provisoires, en mémoire uniquement, par carte du parcours.
 var meta_income: Label
 var meta_progress_label: Label
+var loadout_label: Label
+var loadout_key: String = ""
+var summary_loadout_content: Control
+var summary_loadout_names: Array[Label] = []
+var summary_loadout_points: Array[Label] = []
+var summary_loadout_nodes: Array[Label] = []
+var summary_loadout_hp: Label
+var summary_loadout_units: Array[Label] = []
 var meta_buttons: Array[Button] = []
 var summary_core_cards: Array[Panel] = []
 var summary_core_titles: Array[Label] = []
@@ -218,6 +226,10 @@ func _ready() -> void:
 			meta_profile.data.banks[capture_faction].resource = 6
 			if "--capture-meta-pending" in OS.get_cmdline_user_args():
 				meta_profile.blocked = true;meta_profile.error = "Échec d’enregistrement simulé pour cette capture."
+		if "--capture-meta-loadout" in OS.get_cmdline_user_args():
+			meta_profile = MetaProfile.new("")
+			meta_profile.data.banks[capture_faction].points = 33
+			meta_profile.data.banks[capture_faction].ranks = [5,3,2,1,0,5,3,2,1,0,5,3,2,1,0]
 		if capture_state not in ["selection","talents"]:
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
 			if "--capture-meta-intermediate" in OS.get_cmdline_user_args(): run_final_map = false
@@ -401,6 +413,11 @@ func _ready() -> void:
 		if "--capture-meta-rewards" in OS.get_cmdline_user_args():
 			_update_meta_summary()
 			print("META_REWARD_SNAPSHOT=",JSON.stringify({"faction":model.faction,"info":_meta_reward_summary(),"banks":[meta_profile.data.banks[0].resource,meta_profile.data.banks[1].resource],"isolated":meta_profile.path.is_empty(),"home":reset_button.visible,"talents":summary_talents_button.visible}))
+		if "--capture-meta-loadout" in OS.get_cmdline_user_args():
+			_refresh_loadout_label()
+			if summary_open: _set_summary_tab(3)
+			print("LOADOUT_SNAPSHOT=",JSON.stringify({"faction":model.faction,"points":Model.MetaTalents.spent(model.meta_ranks),"caption":loadout_label.text,"summary":summary_open,"tab":summary_tab,"readonly":not meta_menu.visible,"isolated":meta_profile.path.is_empty()}))
+		if "--capture-meta-rewards" in OS.get_cmdline_user_args() or "--capture-meta-loadout" in OS.get_cmdline_user_args():
 			faction_label.text = "CONTRÔLE PROGRESSION · BUDGET IMPOSÉ"
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
@@ -551,6 +568,8 @@ func _build_interface() -> void:
 	_label(screen, "FOR THE FORTRESS!", Vector2(32, 24), Vector2(720, 44), 29, Color("e0dbbf"))
 	_label(screen, "LA VALLÉE DU GUÉ", Vector2(34, 71), Vector2(600, 24), 14, Color("9fb5a5"))
 	faction_label = _label(screen, "CHOIX DE FACTION", Vector2(898, 33), Vector2(350, 25), 13, Color("cdb47e"))
+	loadout_label = _label(screen,"",Vector2(948,64),Vector2(300,26),12,Color("b6c3b7"))
+	loadout_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	var side := _panel(screen, Rect2(24, 122, 278, 632))
 	_label(side, "DÉFENDRE LE GUÉ", Vector2(22, 20), Vector2(240, 28), 18, Color("e0dbbf"))
 	guidance_label = _label(side, "", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
@@ -714,9 +733,9 @@ func _build_run_summary(screen: Control) -> void:
 	summary_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	screen.add_child(summary_panel)
 	var panel: Panel = _panel(summary_panel,Rect2(154,70,972,660))
-	summary_title = _label(panel,"",Vector2(24,18),Vector2(466,36),26,Color("e0dbbf"))
+	summary_title = _label(panel,"",Vector2(24,18),Vector2(376,36),26,Color("e0dbbf"))
 	summary_subtitle = _label(panel,"",Vector2(24,64),Vector2(924,48),14,Color("bbcbbf"))
-	for index in range(3): summary_tabs.append(_button(panel,["Vagues","Défenseurs","Essentiel"][index],Rect2(510+150*[1,2,0][index],22,138,30),_set_summary_tab.bind(index)))
+	for index in range(4): summary_tabs.append(_button(panel,["Vagues","Défenseurs","Essentiel","Talents"][index],Rect2(420+132*[1,2,0,3][index],22,120,30),_set_summary_tab.bind(index)))
 	summary_wave_content = Control.new()
 	summary_wave_content.size = Vector2(972,600)
 	summary_wave_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -780,6 +799,19 @@ func _build_run_summary(screen: Control) -> void:
 	_label(summary_essential_content,"Boss final",Vector2(24,478),Vector2(924,30),20,Color("e0dbbf"))
 	summary_boss_note = _label(summary_essential_content,"",Vector2(24,518),Vector2(924,30),18,Color("bbcbbf"))
 	_label(summary_essential_content,"Vagues : déroulement complet · Défenseurs : contributions réelles, unités vendues incluses.",Vector2(24,562),Vector2(924,26),14,Color("91a799"))
+	summary_loadout_content = Control.new();summary_loadout_content.size = Vector2(972,600)
+	summary_loadout_content.mouse_filter = Control.MOUSE_FILTER_IGNORE;panel.add_child(summary_loadout_content)
+	for tree in range(3):
+		var card: Panel = _panel(summary_loadout_content,Rect2(24+314*tree,130,296,250))
+		summary_loadout_names.append(_label(card,"",Vector2(16,12),Vector2(264,30),21,Color("e0dbbf")))
+		summary_loadout_points.append(_label(card,"",Vector2(16,46),Vector2(264,24),14,Color("e6c987")))
+		for node in range(4):
+			var label: Label = _label(card,"",Vector2(16,82+37*node),Vector2(264,34),14,Color("bbcbbf"))
+			label.mouse_filter = Control.MOUSE_FILTER_STOP;summary_loadout_nodes.append(label)
+	_label(summary_loadout_content,"Bonus permanents de cette partie",Vector2(24,396),Vector2(924,30),20,Color("e0dbbf"))
+	summary_loadout_hp = _label(summary_loadout_content,"",Vector2(24,432),Vector2(924,26),16,Color("e6c987"))
+	for unit in range(3): summary_loadout_units.append(_label(summary_loadout_content,"",Vector2(24,470+30*unit),Vector2(924,28),14,Color("bbcbbf")))
+	_label(summary_loadout_content,"Lecture seule · Les niveaux, synergies et bonus obtenus pendant la partie s’ajoutent séparément.",Vector2(24,568),Vector2(924,24),13,Color("91a799"))
 	report_status = _label(panel,"",Vector2(24,600),Vector2(924,18),12,Color("bbcbbf"))
 	report_status.mouse_filter = Control.MOUSE_FILTER_STOP
 	report_button = _button(panel,"Exporter le rapport",Rect2(24,622,240,30),_export_run_report)
@@ -790,15 +822,19 @@ func _build_run_summary(screen: Control) -> void:
 	summary_panel.visible = false
 
 func _set_summary_tab(index: int) -> void:
-	if not summary_open or index not in [0,1,2]: return
+	if not summary_open or index not in [0,1,2,3] or (index == 3 and not _run_finished()): return
 	summary_tab = index
 	summary_subtitle.text = "Forteresse : %d/%d PV · %d or restants · %s\nCombat cumulé : %s s simulées, hors préparation et choix ; la vitesse réduit le temps réel." % [model.fortress_hp,model.max_hp,model.gold,"Survolez une ligne pour les unités et bonus de la vague." if index == 0 else "Survolez un défenseur pour ses contributions.",("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
 	summary_wave_content.visible = index == 0
 	summary_performance_content.visible = index == 1
 	summary_essential_content.visible = index == 2
+	summary_loadout_content.visible = index == 3
 	if index == 2:
 		summary_subtitle.text = "%s · %d or restants\nCombat : %s s simulées, hors préparation et choix." % ["Dix vagues terminées" if model.phase == "victory" else "Défaite à la vague %d" % model.wave,model.gold,("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
-	for tab in range(3): summary_tabs[tab].disabled = index == tab
+	if index == 3:
+		summary_subtitle.text = "Talents fixés au départ · %d points actifs · Rangs et bonus permanents, sans les améliorations de cette tentative." % Model.MetaTalents.spent(model.meta_ranks)
+	for tab in range(summary_tabs.size()): summary_tabs[tab].disabled = index == tab
+	summary_tabs[3].visible = _run_finished()
 
 func _populate_essential_summary() -> void:
 	_update_meta_summary()
@@ -868,9 +904,48 @@ func _show_run_summary() -> void:
 	_populate_run_summary()
 	_populate_performance()
 	_populate_essential_summary()
+	_populate_loadout_summary()
+	if summary_tab == 3 and not _run_finished(): summary_tab = 2
 	_set_summary_tab(summary_tab)
 	_update_interface()
 	summary_close.grab_focus()
+
+func _refresh_loadout_label() -> void:
+	loadout_label.visible = not choosing_faction
+	var key: String = JSON.stringify([model.faction,model.meta_ranks])
+	if key == loadout_key: return
+	loadout_key = key
+	var data: Dictionary = Model.MetaTalents.loadout_summary(model.faction,model.meta_ranks)
+	if data.is_empty(): loadout_label.text = "Talents : configuration indisponible";loadout_label.tooltip_text = "";return
+	loadout_label.text = "Aucun talent permanent actif" if data.points == 0 else "Talents actifs · %d points (survol)" % data.points
+	var lines: Array[String] = ["Talents fixés au départ · Lecture seule"]
+	for tree in data.trees: lines.append("%s : %d point%s" % [tree.name,tree.points,"s" if tree.points > 1 else ""])
+	lines.append("PV supplémentaires au départ : +%d" % data.hp)
+	for unit in data.units: lines.append("%s : %s" % [Model.ROSTER[unit.type].get("short_name",Model.ROSTER[unit.type].name),Model.MetaTalents.bonus_line(unit)])
+	lines.append("Les bonus de cette tentative sont indiqués séparément dans Bonus acquis.")
+	loadout_label.tooltip_text = "\n".join(lines)
+
+func _populate_loadout_summary() -> void:
+	var data: Dictionary = Model.MetaTalents.loadout_summary(model.faction,model.meta_ranks)
+	if data.is_empty(): return
+	for tree in range(3):
+		var info: Dictionary = data.trees[tree]
+		summary_loadout_names[tree].text = info.name
+		summary_loadout_points[tree].text = "%d point%s actif%s" % [info.points,"s" if info.points > 1 else "","s" if info.points > 1 else ""]
+		for index in range(4):
+			var row: Label = summary_loadout_nodes[tree*4+index]
+			row.visible = index < info.nodes.size() or (index == 0 and info.nodes.is_empty())
+			row.tooltip_text = ""
+			if index < info.nodes.size():
+				var node: Dictionary = info.nodes[index]
+				row.text = "%s · %d/%d" % [node.name,node.rank,node.maximum]
+				row.tooltip_text = node.description
+			elif index == 0: row.text = "Aucun point dans cet arbre."
+			else: row.text = ""
+	summary_loadout_hp.text = "Forteresse au départ : %d PV (+%d par les talents)" % [Model.INITIAL_HP+data.hp,data.hp]
+	for index in range(3):
+		var unit: Dictionary = data.units[index]
+		summary_loadout_units[index].text = "%s · %s" % [Model.ROSTER[unit.type].name,Model.MetaTalents.bonus_line(unit)]
 
 func _close_run_summary() -> void:
 	summary_open = false
@@ -1358,6 +1433,7 @@ func _reset() -> void:
 	for scroll in bonus_impact_scrollers: scroll.scroll_vertical = 0
 	model.reset()
 	meta_run_id = -1;meta_run_earned = 0;meta_retry_remaining = 0.0
+	loadout_key = ""
 	run_final_map = true;run_map_index = 0;run_map_rewards.clear()
 	summary_tab = 2
 	performance_rows.clear()
@@ -1491,6 +1567,7 @@ func _sell() -> void:
 	map_view.queue_redraw()
 
 func _update_interface() -> void:
+	_refresh_loadout_label()
 	_refresh_purchase_quiet(get_global_mouse_position())
 	_sync_countdown()
 	guidance_label.text = _guidance_text()

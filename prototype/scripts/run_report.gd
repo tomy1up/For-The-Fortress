@@ -107,6 +107,19 @@ static func markdown(report: Dictionary) -> String:
 		lines.append("| --- | --- | --- |")
 		for enemy in report.enemy_catalog:
 			lines.append("| %s | %s | %s |" % [enemy.name,Model.Enemies.origin_label(enemy.origin),Model.ENEMY_TYPES[int(enemy.profile)].name])
+	if report.has("meta_ranks"):
+		var loadout: Dictionary = Model.MetaTalents.loadout_summary(int(report.faction),report.meta_ranks)
+		if not loadout.is_empty():
+			lines.append("\n## Talents permanents de la partie\n")
+			lines.append("%d points actifs · Configuration figée au départ · Règles %s.\n" % [loadout.points,loadout.rules])
+			for tree in loadout.trees:
+				lines.append("### %s — %d points\n" % [tree.name,tree.points])
+				for node in tree.nodes: lines.append("- %s : %d/%d." % [node.name,node.rank,node.maximum])
+				if tree.nodes.is_empty(): lines.append("Aucun point investi.")
+				lines.append("")
+			lines.append("PV supplémentaires au départ : +%d.\n" % loadout.hp)
+			for unit in loadout.units: lines.append("- %s : %s." % [Model.ROSTER[unit.type].name,Model.MetaTalents.bonus_line(unit)])
+			lines.append("\nLes bonus de partie, synergies et niveaux des unités ne sont pas inclus dans ces seuls bonus permanents.\n")
 	lines.append("\n## Activité des défenseurs\n")
 	lines.append("PV réellement retirés, sans excédent sur les morts. Les tirs simultanés partagent ces PV proportionnellement à leurs dégâts. Les dégâts contre le boss sont inclus dans le total. Aucun décompte d’éliminations individuelles n’est attribué.\n")
 	lines.append("| Recrue | Emplacement | Vagues jouées | Attaques | Coups directs (PV) | Rebonds / explosions (PV) | Malédiction (PV) | Dont boss (PV) | État final |")

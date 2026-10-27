@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.69 (27 octobre 2026)** : [gains de progression au bilan et aperçu du prochain rang](design/Lecture_progression_v069.md). Versement à la fin de la partie complète, progression conservée après fermeture et accès aux talents hors parcours. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.69).
+**Version v0.70 (28 octobre 2026)** : [rappel des talents actifs et onglet Talents du bilan](design/Resume_talents_v070.md). Les rangs et bonus permanents sont ceux fixés au départ de la partie. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.70).
 
 **Origine des ennemis — 27 octobre 2026** : la [règle et la répartition](design/Origine_ennemis_2026-10-27.md) sont mises en jeu dans la [v0.65](design/Catalogue_attaquants_v065.md). Loup, sanglier et ours restent communs. Les autres attaquants viennent du camp adverse ; le catalogue commun et les trois images humanoïdes v0.64 sont remplacés.
 
@@ -10,7 +10,7 @@ Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantas
 
 **Nom de travail : disponibilité juridique à confirmer.** Les noms des factions sont provisoires.
 
-**Orientation validée le 26 octobre 2026** : priorité à la présentation et à la compréhension des écrans, fantasy cartoon avec unités reconnaissables, aucune progression permanente pour l’instant, difficulté exigeante où plusieurs défaites avant la première victoire sont attendues. [Décisions et proposition du prochain lot](design/Orientation_presentation_2026-10-26.md).
+**Orientation validée le 26 octobre 2026** : priorité à la présentation et à la compréhension des écrans, fantasy cartoon avec unités reconnaissables, aucune progression permanente dans ce lot de présentation (décision ensuite remplacée par les arbres persistants des v0.67 à v0.69), difficulté exigeante où plusieurs défaites avant la première victoire sont attendues. [Décisions et proposition du prochain lot](design/Orientation_presentation_2026-10-26.md).
 
 ## Documents
 

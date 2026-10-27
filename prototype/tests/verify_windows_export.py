@@ -57,6 +57,8 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('progression_pending','summary','horde'),
        ('horde_progression_intermediate','summary','horde'),
        ('profile_protection','talents','horde'),
+       ('alliance_loadout_preparation','preparation','alliance'),('horde_loadout_preparation','preparation','horde'),
+       ('alliance_loadout_summary','summary','alliance'),('horde_loadout_summary','summary','horde'),
        ('fortress_breach','breach','horde'),
        ('bonus_alliance_comparison','bonus_preview','alliance'),('bonus_horde_comparison','bonus_preview','horde'),
        ('bonus_economy_comparison','bonus_preview','horde'),
@@ -115,6 +117,7 @@ for name,state,faction in cases:
         if name=='progression_pending': command+=['--capture-meta-pending']
         if name.endswith('_progression_intermediate'): command+=['--capture-meta-intermediate']
         if name=='profile_protection': command+=['--capture-profile-protection']
+        if '_loadout_' in name: command+=['--capture-meta-loadout']
         if name.endswith('_waves_summary'): command+=['--capture-waves']
         if name.endswith('_inspection_numbers'):
             command+=['--capture-inspection-numbers','--capture-type='+('2' if faction=='alliance' else '5')]
@@ -122,7 +125,7 @@ for name,state,faction in cases:
         if name=='boss_without_hover': command+=['--capture-boss-only']
         if name.endswith('_defender_summary'): command+=['--capture-performance']
         if name in ['alliance_synergy_purchase','horde_synergy_purchase','alliance_synergy_branch','horde_synergy_branch']: command+=['--capture-synergy-preview']
-        if name in ['alliance_run_report','horde_run_report','horde_defender_summary']: command+=['--capture-export-report']
+        if name in ['alliance_run_report','horde_run_report','horde_defender_summary'] or name.endswith('_loadout_summary'): command+=['--capture-export-report']
         if state=='effects':
             effect_types={'effects_mage':2,'effects_troll':3,'effects_sapper':4,'effects_shaman':5,
                           'attack_archer':0,'attack_crossbow':1,'attack_mage':2,'attack_troll':3,'attack_sapper':4,'attack_shaman':5}
@@ -149,6 +152,10 @@ for name,state,faction in cases:
     if state=='talents': assert 'META_CAPTURE_ISOLATED=true' in text,(name,'La capture doit rester isolée du vrai profil')
     if name.endswith('_rank_preview'): assert 'META_RANK_PREVIEW=true' in text,(name,'Le gain du prochain rang doit être affiché')
     if name=='profile_protection': assert 'PROFILE_PROTECTION=true' in text,(name,'Le paquet doit chiffrer et relire un profil de contrôle')
+    if '_loadout_' in name:
+        snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('LOADOUT_SNAPSHOT=')))
+        assert snapshot['faction']==(0 if faction=='alliance' else 1) and snapshot['points']==33 and snapshot['readonly'] and snapshot['isolated'] and '33 points' in snapshot['caption']
+        if name.endswith('_summary'): assert snapshot['summary'] and snapshot['tab']==3
     if '_progression_' in name or name=='progression_pending':
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('META_REWARD_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
@@ -161,7 +168,7 @@ for name,state,faction in cases:
     if name.startswith('left_'): assert 'ATTACK_FACING=-1' in text,(name,'La fixture doit couvrir un vrai tir à gauche')
     if name=='periodic_damage': assert 'DAMAGE_TICK_VISIBLE=true' in text,(name,'Le contrôle doit montrer un dégât périodique réel')
     if name=='boss_without_hover': assert 'BOSS_STATUS_WITHOUT_HOVER=true' in text,(name,text)
-    if name in ['alliance_run_report','horde_run_report','horde_defender_summary']:
+    if name in ['alliance_run_report','horde_run_report','horde_defender_summary'] or name.endswith('_loadout_summary'):
         report_folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))
         run_report=json.loads((report_folder/'rapport.json').read_text(encoding='utf-8'))
         assert run_report['game_version']==manifest['version'],(name,'Version du rapport différente du paquet')
@@ -173,6 +180,10 @@ for name,state,faction in cases:
             assert enemy['origin']==('neutral' if enemy['profile'] in [0,2,3] else 'horde' if faction=='alliance' else 'alliance')
         assert run_report['boss_encounter']['name']==('Chef de guerre orc' if faction=='alliance' else 'Maréchal de l’Alliance')
         assert run_report['schema_version']==2 and len(run_report['performance'])==3
+        if name.endswith('_loadout_summary'):
+            assert len(run_report['meta_ranks'])==15 and sum(run_report['meta_ranks'])==33
+            markdown=(report_folder/'rapport.md').read_text(encoding='utf-8')
+            assert '## Talents permanents de la partie' in markdown and ('Bastion' if faction=='alliance' else 'Fureur de guerre') in markdown
         assert run_report['boss_encounter']['status']=='killed' and abs(run_report['boss_encounter']['removed_hp']-600)<0.000001
         assert 0<run_report['boss_encounter']['resolved_seconds']<=run_report['waves'][-1]['seconds']
         assert abs(sum(unit['boss_hp'] for unit in run_report['performance'])-600)<0.000001

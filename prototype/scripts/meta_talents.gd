@@ -103,3 +103,33 @@ static func rank_preview(faction: int, ranks: Array, index: int) -> Dictionary:
 		var after: Dictionary = effects(faction,candidate,type)
 		if before != after: units.append({"type":type,"before":before,"after":after})
 	return {"hp_before":extra_hp(faction,ranks),"hp_after":extra_hp(faction,candidate),"units":units}
+
+static func loadout_summary(faction: int, ranks: Array) -> Dictionary:
+	if faction not in [0,1] or not valid(ranks): return {}
+	var current: bool = current_valid(ranks)
+	var definitions: Array = TREES[faction] if current else Legacy.TREES[faction]
+	var stride: int = 5 if current else 3
+	var trees: Array[Dictionary] = []
+	for tree in range(3):
+		var nodes: Array[Dictionary] = [];var invested: int = 0
+		for node in range(stride):
+			var rank: int = int(ranks[tree*stride+node]);invested += rank
+			if rank > 0:
+				nodes.append({"name":definitions[tree][node+1][0],"rank":rank,"maximum":MAX_RANKS[node] if current else 3 if node == 0 else 1,"description":definitions[tree][node+1][1]})
+		trees.append({"name":definitions[tree][0],"points":invested,"nodes":nodes})
+	var units: Array[Dictionary] = []
+	for type in ([0,1,2] if faction == 0 else [3,4,5]):
+		units.append({"type":type,"bonuses":effects(faction,ranks,type)})
+	return {"points":spent(ranks),"hp":extra_hp(faction,ranks),"trees":trees,"units":units,"rules":"v0.68" if current else "v0.67"}
+
+static func number(value: float) -> String:
+	return ("%.2f" % value).trim_suffix("0").trim_suffix("0").trim_suffix(".").replace(".",",")
+
+static func bonus_line(unit: Dictionary) -> String:
+	var changes: Array[String] = []
+	for component in ["direct","secondary","curse","range"]:
+		var value: float = unit.bonuses[component]
+		if is_zero_approx(value): continue
+		var name: String = {"direct":"Tirs","secondary":"Rebonds" if unit.type == 3 else "Explosions","curse":"Malédictions","range":"Portée"}[component]
+		changes.append("%s +%s%s" % [name,number(value if component == "range" else value*100),"" if component == "range" else " %"])
+	return ", ".join(changes) if not changes.is_empty() else "Aucun bonus permanent"

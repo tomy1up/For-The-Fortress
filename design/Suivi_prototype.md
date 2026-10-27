@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 27 octobre 2026 — prototype v0.69, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 28 octobre 2026 — prototype v0.70, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -350,3 +350,7 @@ Trois colonnes à icônes, rangs visibles et lecture des effets au survol/clavie
 ## v0.69 — Lire les gains et préparer la partie suivante, 27 octobre 2026
 
 Carte de ressources au bilan, détail des gains sauvegardés, solde du camp et points achetables. Accès aux talents uniquement après le résultat global ; gains provisoires non versés entre les vagues/cartes et progression acquise conservée après fermeture. Aperçu du prochain rang sans dépense. Enregistrement en attente distingué d’un gain sauvegardé, reprise explicite et tentatives automatiques espacées. Progression conservée après fermeture, fichier chiffré et authentifié par Windows, anciens JSON non importés automatiquement. Montants et effets inchangés. [Détails et validation](Lecture_progression_v069.md).
+
+## v0.70 — Retrouver les talents actifs de la partie, 28 octobre 2026
+
+Rappel discret avant et pendant la partie ; survol avec les bonus permanents de la faction. Quatrième onglet Talents au bilan global : trois arbres, noms et rangs retenus, PV initiaux et effets par défenseur. Lecture seule de la configuration fixée au départ, sans accès aux arbres pendant le parcours. Le rapport Markdown reprend ces informations. Prix, effets, sauvegarde protégée et frontière de versement inchangés. [Détails et validation](Resume_talents_v070.md).
