@@ -6,7 +6,11 @@ import re
 SOURCE_PATHS = ('project.godot', 'export_presets.cfg', 'scenes/main.tscn',
                 'scripts/main.gd', 'scripts/valley_model.gd', 'scripts/valley_view.gd',
                 'scripts/campaign_data.gd', 'scripts/progression_data.gd',
-                'scripts/run_report.gd', 'scripts/combat_metrics.gd')
+                'scripts/run_report.gd', 'scripts/combat_metrics.gd', 'scripts/horde_art.gd',
+                'assets/units/horde/troll_v001.png', 'assets/units/horde/gobelin_v001.png',
+                'assets/units/horde/chaman_v001.png',
+                'assets/units/horde/troll_v001.png.import', 'assets/units/horde/gobelin_v001.png.import',
+                'assets/units/horde/chaman_v001.png.import')
 
 
 def verify_sources(manifest, source_project=None):

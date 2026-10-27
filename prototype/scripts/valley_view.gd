@@ -1,6 +1,7 @@
 extends Node2D
 
 const Model = preload("res://scripts/valley_model.gd")
+const HordeArt = preload("res://scripts/horde_art.gd")
 const ORIGIN := Vector2(658, 174)
 const AXIS := Vector2(27, 13.5)
 const INK := Color("d9e4d7")
@@ -14,6 +15,9 @@ var preview_synergy_unit: Dictionary = {}
 var inspected_enemy_id: int = -1
 var breach_feedback: Dictionary = {}
 var font: Font = ThemeDB.fallback_font
+
+func _init() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 
 static func project(point: Vector2) -> Vector2:
 	return ORIGIN + Vector2((point.x - point.y) * AXIS.x, (point.x + point.y) * AXIS.y)
@@ -40,6 +44,7 @@ const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune atten
 
 static func shot_origin(shot: Dictionary) -> Vector2:
 	# Points d'équipement des silhouettes, distincts du centre logique de portée.
+	if HordeArt.MUZZLES.has(int(shot.type)): return project(shot.from)+HordeArt.MUZZLES[int(shot.type)]
 	var offset: Vector2 = [Vector2(12,-21),Vector2(3,-22),Vector2(15,-41),Vector2(12,-34),Vector2(15,-12),Vector2(17,-40)][int(shot.type)]
 	return project(shot.from)+offset
 
@@ -357,6 +362,10 @@ func _unit_face(skin: Color, wide: float, y: float, tusks: bool = false) -> void
 			_unit_shape([Vector2(side*4,y+5),Vector2(side*5,y),Vector2(side*2,y+4)],Color("fff0c9"),0.8)
 
 func _draw_defender(center: Vector2, type: int, level: int = 1, branch: int = -1, pose: Dictionary = {}) -> void:
+	if HordeArt.TEXTURES.has(type):
+		_draw_horde_defender(center,type,pose)
+		_draw_level_badge(center,level,branch)
+		return
 	var pulse: float = pose.get("pulse",0.0)
 	var direction: float = pose.get("direction",1.0)
 	var trim := Color("f1ce79") if level == 4 else Color("b7c7b7")
@@ -410,55 +419,22 @@ func _draw_defender(center: Vector2, type: int, level: int = 1, branch: int = -1
 			_unit_stroke(Vector2(15,-1),Vector2(15+pulse*3,-39),Color("b7935d"),3)
 			_unit_shape([Vector2(15+pulse*3,-48),Vector2(21+pulse*3,-41),Vector2(15+pulse*3,-34),Vector2(10+pulse*3,-41)],Color("84d9e8"))
 			draw_line(Vector2(15+pulse*3,-46),Vector2(15+pulse*3,-38),Color("e4ffff"),1.5,true)
-		3: # Troll : grand et voûté, peau turquoise, crête et hache à large lame.
-			_unit_stroke(Vector2(-4,-7),Vector2(-7,1),Color("755743"),4)
-			_unit_stroke(Vector2(5,-7),Vector2(8,1),Color("755743"),4)
-			_unit_shape([Vector2(-7,-28),Vector2(6,-29),Vector2(8,-8),Vector2(-8,-8)],Color("458d96"))
-			_unit_shape([Vector2(-8,-12),Vector2(8,-12),Vector2(10,-5),Vector2(-9,-5)],Color("a46d46"))
-			_unit_shape([Vector2(-5,-35),Vector2(-15,-39),Vector2(-6,-28)],Color("60b2ae"))
-			_unit_shape([Vector2(6,-35),Vector2(13,-40),Vector2(7,-29)],Color("60b2ae"))
-			_unit_face(Color("60b2ae"),7,-33,true)
-			_unit_shape([Vector2(-4,-39),Vector2(-3,-46),Vector2(1,-43),Vector2(4,-48),Vector2(6,-38)],Color("c47559"))
-			_unit_stroke(Vector2(-7,-25),Vector2(-12,-15),Color("60b2ae"),4)
-			_unit_stroke(Vector2(6,-25),Vector2(13,-23+pulse*3),Color("60b2ae"),4)
-			_unit_stroke(Vector2(12,-5),Vector2(12+pulse*4,-39),Color("ad8c5d"),3)
-			_unit_shape([Vector2(12+pulse*4,-40),Vector2(24+pulse*4,-36),Vector2(26+pulse*4,-29),Vector2(13+pulse*4,-26)],Color("b4d1c4"))
-			_unit_stroke(Vector2(18+pulse*4,-36),Vector2(23+pulse*4,-31),Color("e6f1dc"),1)
-		4: # Gobelin : petit, oreilles larges, lunettes, sac et bombe.
-			_unit_stroke(Vector2(-5,-4),Vector2(-6,1),Color("64513e"),4)
-			_unit_stroke(Vector2(5,-4),Vector2(6,1),Color("64513e"),4)
-			_unit_disk(Vector2(-9,-14),8,Color("926d44"))
-			_unit_shape([Vector2(-7,-22),Vector2(7,-22),Vector2(8,-5),Vector2(-8,-5)],Color("bc7942"))
-			_unit_shape([Vector2(-5,-30),Vector2(-17,-34),Vector2(-11,-24),Vector2(-4,-24)],Color("a4c762"))
-			_unit_shape([Vector2(5,-30),Vector2(17,-34),Vector2(11,-24),Vector2(4,-24)],Color("a4c762"))
-			_unit_face(Color("a4c762"),8,-28)
-			_unit_stroke(Vector2(-7,-33),Vector2(7,-33),Color("6d5137"),3)
-			for side in [-1,1]: _unit_disk(Vector2(side*4,-32),4,Color("a6d6ce"))
-			_unit_stroke(Vector2(-5,-23),Vector2(6,-8),Color("604a36"),3)
-			_unit_stroke(Vector2(7,-18),Vector2(13+pulse*3,-13),Color("a4c762"),3)
-			_unit_disk(Vector2(15+pulse*3,-12),8,Color("455253"))
-			draw_arc(Vector2(15+pulse*3,-12),5,3.6,4.6,8,Color("96a39a"),1.5,true)
-			_unit_stroke(Vector2(15+pulse*3,-20),Vector2(18+pulse*3,-25),Color("d8b16b"),2)
-			draw_circle(Vector2(18+pulse*3,-25),2.2,Color("f5cf73"),true,-1,true)
-		5: # Orc : épaules massives, défenses, fourrure et totem de chaman.
-			_unit_stroke(Vector2(-6,-5),Vector2(-7,1),Color("6e4b3e"),5)
-			_unit_stroke(Vector2(6,-5),Vector2(7,1),Color("6e4b3e"),5)
-			_unit_shape([Vector2(-10,-25),Vector2(10,-25),Vector2(12,-2),Vector2(-11,-2)],Color("7f577f"))
-			_unit_shape([Vector2(-13,-27),Vector2(-8,-31),Vector2(0,-25),Vector2(8,-31),Vector2(13,-27),Vector2(12,-19),Vector2(6,-21),Vector2(0,-18),Vector2(-6,-21),Vector2(-12,-19)],Color("b8b8a5"))
-			_unit_face(Color("789c62"),9,-34,true)
-			_unit_shape([Vector2(-8,-37),Vector2(-6,-43),Vector2(4,-44),Vector2(9,-37),Vector2(2,-39)],Color("3e4740"))
-			_unit_stroke(Vector2(-9,-20),Vector2(-13,-11),Color("789c62"),5)
-			_unit_stroke(Vector2(9,-21),Vector2(17,-19),Color("789c62"),4)
-			_unit_stroke(Vector2(17,0),Vector2(17+pulse*3,-39),Color("a18258"),3)
-			_unit_shape([Vector2(10+pulse*3,-44),Vector2(24+pulse*3,-44),Vector2(22+pulse*3,-34),Vector2(12+pulse*3,-34)],Color("d7c9a6"))
-			for x in [14,20]: draw_circle(Vector2(x+pulse*3,-40),1.7,UNIT_INK,true,-1,true)
-			_unit_shape([Vector2(10+pulse*3,-44),Vector2(7+pulse*3,-50),Vector2(15+pulse*3,-45)],Color("d7c9a6"),0.8)
-			_unit_shape([Vector2(24+pulse*3,-44),Vector2(27+pulse*3,-50),Vector2(19+pulse*3,-45)],Color("d7c9a6"),0.8)
-			draw_circle(Vector2(17+pulse*3,-35),2,Color("c194df"),true,-1,true)
 	if level == 4:
 		# Emblème de spécialisation, sans suggérer une nouvelle mécanique.
 		_unit_shape([Vector2(-2,-14),Vector2(1,-17),Vector2(4,-14),Vector2(1,-11)],trim,0.8)
 	draw_set_transform(Vector2.ZERO)
+	_draw_level_badge(center,level,branch)
+
+func _draw_horde_defender(center: Vector2, type: int, pose: Dictionary) -> void:
+	var pulse: float = pose.get("pulse",0.0)
+	var direction: float = pose.get("direction",1.0)
+	draw_set_transform(center+Vector2(0,2),0,Vector2(1,0.45))
+	draw_circle(Vector2.ZERO,12,Color(0,0,0,0.25),true,-1,true)
+	draw_set_transform(center+Vector2(-direction*pulse*1.8,-pulse*1.5))
+	draw_texture_rect_region(HordeArt.TEXTURES[type],HordeArt.destination(type),HordeArt.FRAMES[type].source)
+	draw_set_transform(Vector2.ZERO)
+
+func _draw_level_badge(center: Vector2, level: int, branch: int) -> void:
 	if level > 1:
 		var badge: Vector2 = center + Vector2(16,6)
 		_unit_disk(badge,11 if level == 4 else 9,Color("7b6c41") if level == 4 else Color("304d42"))

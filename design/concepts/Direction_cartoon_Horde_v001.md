@@ -22,9 +22,9 @@ Le style de la planche est validé. Le détail des ombres, les proportions et la
 
 ## État d’intégration
 
-PNG de concept sur fond clair, conservé comme référence artistique validée. Ce n’est pas une feuille de sprites d’animation et ce fichier n’est pas consommé par le prototype. La version jouable reste v0.59. Les silhouettes et animations existantes restent en place pendant cette préparation.
+PNG de concept sur fond clair, conservé comme référence artistique validée. Ce n’est pas une feuille de sprites d’animation et ce fichier n’est pas consommé par le prototype. La planche elle-même reste une référence ; ses trois personnages disposent désormais d’[assets transparents individuels intégrés dans la v0.60](../Assets_Horde_v060.md).
 
-La prochaine passe produira les assets individuels dans ce style et vérifiera leur lisibilité à la taille de jeu. Les personnages des autres factions devront partager ce langage de formes tout en conservant leurs races, rôles et équipements. Le GDD principal conserve sa version v0.14 ; For the Fortress! demeure un nom de travail dont la disponibilité juridique est à confirmer.
+Les premiers assets individuels dans ce style sont intégrés dans la v0.60 ; leur lisibilité sera affinée avec les retours du joueur. Les personnages des autres factions devront partager ce langage de formes tout en conservant leurs races, rôles et équipements. Le GDD principal conserve sa version v0.14 ; For the Fortress! demeure un nom de travail dont la disponibilité juridique est à confirmer.
 
 ## Provenance et consigne de génération
 

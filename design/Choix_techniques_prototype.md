@@ -264,3 +264,7 @@ Une première vue courte présente résultat, PV, passés, or gagné, premières
 ## v0.59 — Silhouettes des ennemis, 26 octobre 2026
 
 Les huit profils reçoivent des corps et équipements cartoon plus distincts. Les jauges sont légèrement relevées pour dégager les casques. Échelles, ordre de dessin, détection au survol, déplacements et caractéristiques conservés. 34 suites, 14 855 contrôles Godot, 15 tests Python et contrats du GDD réussis. [Détail](Presentation_ennemis_v059.md).
+
+## v0.60 — Assets Horde transparents, 27 octobre 2026
+
+Trois PNG individuels intégrés au plateau dans le style validé, proportions conservées, ancrage des pieds, mipmaps et badges existants. Une pose par classe avec recul au tir ; armes non animées indépendamment. 35 suites, 14 876 contrôles Godot et 16 tests Python réussis. Les 17 sources contrôlées incluent désormais les images et leurs paramètres d’import. [Détail et prompts](Assets_Horde_v060.md).

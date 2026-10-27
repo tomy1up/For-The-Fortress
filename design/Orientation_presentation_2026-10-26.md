@@ -108,3 +108,7 @@ Le porteur du projet a précisé la direction avec une référence illustrée : 
 ### Validation de la planche Horde — 27 octobre 2026
 
 Le porteur du projet a explicitement choisi le style de cette planche. Elle devient la référence artistique validée pour les prochains personnages : contours épais, couleurs franches, silhouettes expressives, formes compactes et équipements immédiatement reconnaissables. Les assets individuels et leur lisibilité à la taille du plateau restent à réaliser et à vérifier. La planche n’est pas encore intégrée au jeu ; version jouable conservée : v0.59.
+
+## Première adaptation de la planche validée — v0.60, 27 octobre 2026
+
+Les [trois assets individuels Horde](Assets_Horde_v060.md) sont intégrés au plateau avec transparence et tailles distinctes. Une pose illustrée par classe avec recul bref ; badges de niveau et de branche conservés. Les caractéristiques de combat ne changent pas.

@@ -23,7 +23,7 @@ class PackageSourcesTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='fortress-package-') as directory:
             root = Path(directory)
             manifest = self.fixture(root)
-            self.assertEqual(verify_sources(manifest, root), 10)
+            self.assertEqual(verify_sources(manifest, root), len(SOURCE_PATHS))
             (root / 'scripts/main.gd').write_text('changed', encoding='utf-8')
             with self.assertRaisesRegex(ValueError, 'différente'):
                 verify_sources(manifest, root)
@@ -36,9 +36,18 @@ class PackageSourcesTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'absente'):
                 verify_sources(manifest, root)
 
+    def test_changed_artwork_or_import_settings(self):
+        for relative in ['assets/units/horde/troll_v001.png', 'assets/units/horde/troll_v001.png.import']:
+            with self.subTest(relative=relative), tempfile.TemporaryDirectory(prefix='fortress-art-') as directory:
+                root = Path(directory)
+                manifest = self.fixture(root)
+                (root / relative).write_bytes(b'changed asset or import')
+                with self.assertRaisesRegex(ValueError, 'différente'):
+                    verify_sources(manifest, root)
+
     def test_manifest_rejects_unexpected_paths_and_bad_hashes(self):
         manifest = {'source_sha256': {key: 'a' * 64 for key in SOURCE_PATHS}}
-        self.assertEqual(verify_sources(manifest), 10)
+        self.assertEqual(verify_sources(manifest), len(SOURCE_PATHS))
         for invalid in [None, {}, {'../outside.gd': 'a' * 64}, dict(manifest['source_sha256'], **{'scripts/main.gd': 'bad'})]:
             with self.subTest(invalid=invalid), self.assertRaises(ValueError):
                 verify_sources({'source_sha256': invalid})

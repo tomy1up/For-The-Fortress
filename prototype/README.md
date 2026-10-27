@@ -1,14 +1,14 @@
 # Dix vagues jouables sur La Vallée du Gué
 
-**Version v0.59 (26 octobre 2026)** : huit silhouettes d’ennemis cartoon, équipements distincts et jauges dégagées. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.59).
+**Version v0.60 (27 octobre 2026)** : trois personnages Horde illustrés sur fond transparent, intégrés au plateau. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.60).
 
-**Prototype v0.59 — 26 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
+**Prototype v0.60 — 26 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
 
 Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.59](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.59) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.60](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.60) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
 Sur ce PC : dist/For_the_Fortress_v0.35_Windows_x64 depuis la racine du dépôt. Le ZIP local pèse environ 39 Mo. Voir [le relevé d’export](../design/Distribution_Windows_v035.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
@@ -316,3 +316,7 @@ Le premier bilan affiche le résultat, les chiffres clés et les moments où la 
 ## Ennemis reconnaissables — v0.59
 
 Les huit profils ont des silhouettes, visages et équipements distincts dans la même direction cartoon que les défenseurs. Statistiques et règles inchangées. [Présentation et contrôles](../design/Presentation_ennemis_v059.md).
+
+## Personnages Horde illustrés — v0.60
+
+Le troll, le gobelin et le chaman utilisent les PNG transparents issus de la planche validée. Leur ancrage, leurs tailles et le filtrage sont adaptés au plateau. [Assets, limites et consignes de génération](../design/Assets_Horde_v060.md).

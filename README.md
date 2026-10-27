@@ -1,8 +1,8 @@
 # For the Fortress!
 
-**Version v0.59 (26 octobre 2026)** : huit silhouettes d’ennemis cartoon, équipements distincts et jauges dégagées. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.59).
+**Version v0.60 (27 octobre 2026)** : trois personnages Horde illustrés sur fond transparent, intégrés au plateau. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.60).
 
-**Direction artistique validée — 27 octobre 2026** : la [planche Horde](design/concepts/Direction_cartoon_Horde_v001.md) devient la référence cartoon des prochains personnages. Adaptation en assets de jeu à réaliser ; version jouable inchangée.
+**Direction artistique validée — 27 octobre 2026** : la [planche Horde](design/concepts/Direction_cartoon_Horde_v001.md) devient la référence cartoon des prochains personnages. Trois assets individuels Horde intégrés dans la v0.60.
 
 Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 
@@ -191,3 +191,7 @@ Le premier bilan affiche le résultat, les chiffres clés et les moments où la 
 ## Ennemis reconnaissables — v0.59
 
 Les huit profils ont des silhouettes, visages et équipements distincts dans la même direction cartoon que les défenseurs. Statistiques et règles inchangées. [Présentation et contrôles](design/Presentation_ennemis_v059.md).
+
+## Personnages Horde illustrés — v0.60
+
+Le troll, le gobelin et le chaman utilisent les PNG transparents issus de la planche validée. Leur ancrage, leurs tailles et le filtrage sont adaptés au plateau. [Assets, limites et consignes de génération](design/Assets_Horde_v060.md).

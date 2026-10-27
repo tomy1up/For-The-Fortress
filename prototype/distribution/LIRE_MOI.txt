@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.59 — 26 octobre 2026
+Version : 0.60 — 27 octobre 2026
 
 JOUER
 
@@ -188,3 +188,7 @@ Vagues et Défenseurs conservent les détails ; le rapport local reste exportabl
 ENNEMIS PLUS RECONNAISSABLES
 Les huit profils ont des silhouettes et équipements cartoon distincts.
 Leurs statistiques, déplacements, récompenses et dégâts à la forteresse restent identiques.
+
+PERSONNAGES HORDE ILLUSTRÉS
+Le troll, le gobelin et le chaman utilisent les images transparentes issues du style validé.
+Leurs niveaux et spécialisations restent indiqués par les badges. Une pose par classe, avec recul bref au tir.
