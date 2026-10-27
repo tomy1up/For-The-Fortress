@@ -1,8 +1,8 @@
 # For the Fortress!
 
-**Version v0.64 (27 octobre 2026)** : Grouillant, Pillard et Sprinter rejoignent le style illustré des défenseurs, avec orientation selon le chemin. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.64).
+**Version v0.65 (27 octobre 2026)** : faune neutre commune et cinq attaquants du camp adverse par campagne, avec treize identités illustrées distinctes des défenseurs construits. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.65).
 
-**Correction de conception — 27 octobre 2026** : les attaquants combinent des neutres communs et des unités propres au camp adverse, distinctes des défenseurs construits. [Règle confirmée et proposition de répartition à valider](design/Origine_ennemis_2026-10-27.md). Le paquet v0.64 utilise encore un catalogue commun et reste à adapter ; ses trois images d’ennemis sont provisoires.
+**Origine des ennemis — 27 octobre 2026** : la [règle et la répartition](design/Origine_ennemis_2026-10-27.md) sont mises en jeu dans la [v0.65](design/Catalogue_attaquants_v065.md). Loup, sanglier et ours restent communs. Les autres attaquants viennent du camp adverse ; le catalogue commun et les trois images humanoïdes v0.64 sont remplacés.
 
 **Direction artistique validée — 27 octobre 2026** : la [planche Horde](design/concepts/Direction_cartoon_Horde_v001.md) devient la référence cartoon des prochains personnages. Les six défenseurs sont désormais illustrés sur fond transparent : [Horde v0.60](design/Assets_Horde_v060.md), [Alliance v0.61](design/Assets_Alliance_v061.md).
 

@@ -40,7 +40,12 @@ func run_checks() -> void:
 		for code in range(12):
 			scene.model.bonuses.clear(); scene.model.phase = "bonus"; scene.model.bonus_offer.assign([code]); scene._update_interface()
 			check(scene.bonus_descriptions[0].text == Model.Campaign.bonus_description(code,faction) and coherent(scene.bonus_descriptions[0].text,faction),"Offre affichée avec la description centrale de faction")
-			check(coherent(scene.bonus_impacts[0].text,faction),"Projection chiffrée sans unité ou effet de l'autre camp")
+			var impact_text: String = scene.bonus_impacts[0].text
+			if code == 11:
+				var target_line: String = "Cibles uniquement : " + Model.Enemies.robust_names(faction) + "."
+				check(impact_text.begins_with(target_line),"R-12 nomme seulement ses cibles ennemies effectives")
+				impact_text = impact_text.trim_prefix(target_line)
+			check(coherent(impact_text,faction),"Les bénéficiaires des dégâts restent limités au camp joué")
 			scene.model.bonuses.assign([code]); scene.model.phase = "finished"; scene._show_bonuses()
 			check(scene.bonus_descriptions[0].text == Model.Campaign.bonus_description(code,faction),"Même cloisonnement dans le récapitulatif acquis")
 			scene._close_bonuses()

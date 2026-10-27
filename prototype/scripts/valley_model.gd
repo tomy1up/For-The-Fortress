@@ -3,6 +3,7 @@ extends RefCounted
 const Campaign = preload("res://scripts/campaign_data.gd")
 const Metrics = preload("res://scripts/combat_metrics.gd")
 const Progression = preload("res://scripts/progression_data.gd")
+const Enemies = preload("res://scripts/enemy_catalogue.gd")
 ## Distances dans le plan logique du GDD, avant projection isométrique.
 
 const PATH_POINTS: Array[Vector2] = [
@@ -130,14 +131,20 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	entry.merge(details.duplicate(true))
 	action_history.append(entry)
 
-static func make_enemy(id: int, type: int, spawn_time: float) -> Dictionary:
+static func make_enemy(id: int, type: int, spawn_time: float, defending_faction: int = -1) -> Dictionary:
 	var definition: Dictionary = ENEMY_TYPES[type]
-	return {"id": id, "type": type, "spawn_time": spawn_time, "distance": 0.0,
+	var enemy: Dictionary = {"id": id, "type": type, "spawn_time": spawn_time, "distance": 0.0,
 		"hp": definition.hp, "max_hp": definition.hp, "speed": definition.speed,
 		"fortress_damage": definition.fortress_damage, "reward": definition.reward}
+	if defending_faction != -1:
+		var identity: Dictionary = Enemies.for_profile(type,defending_faction)
+		if identity.is_empty(): return {}
+		enemy.merge({"identity_id":identity.id,"name":identity.name,"origin":identity.origin})
+	return enemy
 
-static func wave_forecast(number: int) -> Dictionary:
+static func wave_forecast(number: int, defending_faction: int = -1) -> Dictionary:
 	if number < 1 or number > Campaign.WAVES.size(): return {}
+	if defending_faction != -1 and defending_faction not in [0,1]: return {}
 	var schedule: Array[Dictionary] = Campaign.schedule(number)
 	var groups: Array[Dictionary] = []
 	var offset: int = 0
@@ -147,6 +154,9 @@ static func wave_forecast(number: int) -> Dictionary:
 		var count: int = source[1]
 		var enemy: Dictionary = ENEMY_TYPES[type]
 		groups.append({"type":type,"count":count,"name":enemy.name,"hp":enemy.hp,"fortress_damage":enemy.fortress_damage,"reward":enemy.reward,"interval":source[2],"first_at":schedule[offset].time,"last_at":schedule[offset+count-1].time})
+		if defending_faction != -1:
+			var identity: Dictionary = Enemies.for_profile(type,defending_faction)
+			groups[-1].merge({"name":identity.name,"identity_id":identity.id,"origin":identity.origin},true)
 		income += count*enemy.reward
 		offset += count
 	return {"wave":number,"groups":groups,"total":schedule.size(),"income":income}
@@ -484,7 +494,7 @@ func _resolve_instant() -> void:
 	# 1. Apparitions et positions ; les arrivants restent ciblables jusqu'à la phase 4.
 	while spawned < spawn_schedule.size() and spawn_schedule[spawned].time <= elapsed + EPS:
 		var entry: Dictionary = spawn_schedule[spawned]
-		enemies.append(make_enemy(spawned, entry.type, entry.time))
+		enemies.append(make_enemy(spawned, entry.type, entry.time,faction))
 		spawned += 1
 	_update_positions()
 	# 2. Anciens ticks additionnés, puis morts retirés avant le choix des nouveaux tirs.

@@ -54,7 +54,7 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('bonus_economy_comparison','bonus_preview','horde'),
        ('alliance_faction_bonuses','bonus_preview','alliance'),('horde_faction_bonuses','bonus_preview','horde'),
        ('alliance_defender_catalogue','defender_catalogue','alliance'),('horde_defender_catalogue','defender_catalogue','horde'),
-       ('enemy_silhouettes','catalogue',None),
+       ('enemy_silhouettes','catalogue','alliance'),('enemy_silhouettes_horde','catalogue','horde'),
        ('debug_combat_speed','debug_speed','horde'),
        ('alliance_synergy_purchase','purchase','alliance'),('horde_synergy_purchase','purchase','horde'),
        ('alliance_synergy_branch','specialisation','alliance'),('horde_synergy_branch','specialisation','horde'),
@@ -141,6 +141,11 @@ for name,state,faction in cases:
         assert run_report['game_version']==manifest['version'],(name,'Version du rapport différente du paquet')
         assert run_report['result']=='victory' and len(run_report['waves'])==10
         assert run_report['faction']==(0 if faction=='alliance' else 1)
+        catalog=run_report['enemy_catalog']
+        assert len(catalog)==8 and len({enemy['id'] for enemy in catalog})==8
+        for enemy in catalog:
+            assert enemy['origin']==('neutral' if enemy['profile'] in [0,2,3] else 'horde' if faction=='alliance' else 'alliance')
+        assert run_report['boss_encounter']['name']==('Chef de guerre orc' if faction=='alliance' else 'Maréchal de l’Alliance')
         assert run_report['schema_version']==2 and len(run_report['performance'])==3
         assert run_report['boss_encounter']['status']=='killed' and abs(run_report['boss_encounter']['removed_hp']-600)<0.000001
         assert 0<run_report['boss_encounter']['resolved_seconds']<=run_report['waves'][-1]['seconds']

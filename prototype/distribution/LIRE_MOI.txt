@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.64 — 27 octobre 2026
+Version : 0.65 — 27 octobre 2026
 
 JOUER
 
@@ -211,3 +211,12 @@ TROIS ENNEMIS ILLUSTRÉS
 Grouillant : capuche verte et couteau. Pillard : tunique rouge, casque et épée.
 Sprinter : foulard rouge et course penchée. Les images suivent le sens du chemin.
 Les cinq autres profils gardent leur dessin actuel. Les règles de combat restent identiques.
+
+ORIGINE DES ATTAQUANTS
+Les loups, sangliers et ours sont neutres et communs aux deux campagnes.
+Si vous jouez Horde, les autres attaquants appartiennent à l’Alliance ; inversement pour l’Alliance.
+Ces ennemis ont leurs propres noms et illustrations, distincts des défenseurs à construire.
+R-12 vise les ours, les unités lourdes, les gardes d’élite et le boss de votre campagne.
+L’inspection indique l’origine ; les détails du bonus donnent les noms exacts de ses cibles.
+
+Après un achat, les aides de la commande qui apparaît sous la souris attendent un nouveau survol.

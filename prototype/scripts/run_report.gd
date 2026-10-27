@@ -6,7 +6,7 @@ static func _hp(value: float) -> String:
 	return ("%.2f" % value).replace(".",",")
 
 static func boss_encounter(model: RefCounted) -> Dictionary:
-	var result: Dictionary = {"status":"not_reached","wave":10,"name":Model.ENEMY_TYPES[7].name}
+	var result: Dictionary = {"status":"not_reached","wave":10,"name":Model.Enemies.for_profile(7,model.faction).name}
 	if model.wave != 10: return result
 	var boss_id: int = -1
 	for index in range(model.spawn_schedule.size()):
@@ -81,6 +81,7 @@ static func build(model: RefCounted) -> Dictionary:
 		bonuses.append({"index":code,"code":Model.Campaign.BONUSES[code].code,"name":Model.Campaign.BONUSES[code].name,"description":Model.Campaign.bonus_description(code,model.faction)})
 	return {"schema_version":2,"game_version":str(ProjectSettings.get_setting("application/config/version","")),"engine_version":Engine.get_version_info().string,
 		"faction":model.faction,"faction_name":"Alliance" if model.faction == 0 else "Horde","result":model.phase,"wave":model.wave,
+		"enemy_catalog":Model.Enemies.available(model.faction),
 		"fortress_hp":model.fortress_hp,"max_hp":model.max_hp,"gold":model.gold,"total_income":model.total_income,"total_killed":model.total_killed,"total_escaped":model.total_escaped,
 		"combat_seconds":model.completed_time+model.elapsed,"initial_rng_seed":model.initial_rng_seed,"initial_rng_state":model.initial_rng_state,
 		"army":army,"bonuses":bonuses,"waves":model.wave_history.duplicate(true),"actions":model.action_history.duplicate(true),"performance":performance(model),"boss_encounter":boss_encounter(model)}
@@ -93,8 +94,15 @@ static func markdown(report: Dictionary) -> String:
 		lines.append("| %d | %d | %d | %d | %d | %s |" % [wave.wave,wave.killed,wave.escaped,wave.hp_lost,wave.income,"Défaite" if wave.result == "defeat" else "Terminée"])
 	if report.has("boss_encounter"):
 		lines.append("\n## Boss final\n")
+		lines.append("**%s**\n" % report.boss_encounter.name)
 		lines.append(boss_description(report.boss_encounter).replace("\n","  \n"))
 		lines.append("\nTemps de simulation depuis le début de la vague, indépendamment de la vitesse d’affichage.")
+	if report.has("enemy_catalog"):
+		lines.append("\n## Catalogue des attaquants\n")
+		lines.append("| Attaquant | Origine | Profil de combat |")
+		lines.append("| --- | --- | --- |")
+		for enemy in report.enemy_catalog:
+			lines.append("| %s | %s | %s |" % [enemy.name,Model.Enemies.origin_label(enemy.origin),Model.ENEMY_TYPES[int(enemy.profile)].name])
 	lines.append("\n## Activité des défenseurs\n")
 	lines.append("PV réellement retirés, sans excédent sur les morts. Les tirs simultanés partagent ces PV proportionnellement à leurs dégâts. Les dégâts contre le boss sont inclus dans le total. Aucun décompte d’éliminations individuelles n’est attribué.\n")
 	lines.append("| Recrue | Emplacement | Vagues jouées | Attaques | Coups directs (PV) | Rebonds / explosions (PV) | Malédiction (PV) | Dont boss (PV) | État final |")

@@ -1,0 +1,36 @@
+[
+  {
+    "faction": "alliance",
+    "source_sha256": "1951e403bf90ae31e25de2e112b5d00e4d0d4bce695e4c0ac4dc815184646734",
+    "source_unchanged": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.65",
+      "faction": 0,
+      "fortress_hp": 14,
+      "gold": 192,
+      "ok": true,
+      "result": "victory",
+      "same_version": false,
+      "source_version": "0.64",
+      "wave": 10
+    }
+  },
+  {
+    "faction": "horde",
+    "source_sha256": "25bebbe2cab97bcd71b20e60c1ca9f1bd8f25b4cb1ca001e5067f168b627ae63",
+    "source_unchanged": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.65",
+      "faction": 1,
+      "fortress_hp": 12,
+      "gold": 189,
+      "ok": true,
+      "result": "victory",
+      "same_version": false,
+      "source_version": "0.64",
+      "wave": 10
+    }
+  }
+]

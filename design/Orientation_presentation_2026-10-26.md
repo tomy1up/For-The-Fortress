@@ -132,3 +132,7 @@ Les [trois profils courants](Assets_Ennemis_v064.md), Grouillant, Pillard et Spr
 ## Correction prioritaire : origine des attaquants — 27 octobre 2026
 
 Le porteur du projet rappelle que seuls les ennemis neutres sont communs aux deux campagnes. Les attaquants spécifiques viennent du camp adverse : Alliance contre un joueur Horde et Horde contre un joueur Alliance. Leur catalogue doit rester distinct des défenseurs à construire. Cette règle est confirmée ; la [répartition proposée à sa demande](Origine_ennemis_2026-10-27.md) reste à valider. Le paquet v0.64 ne l’implémente pas encore et ses trois images d’ennemis sont provisoires. La définition du catalogue précède la suite des illustrations.
+
+## Catalogue d’attaquants intégré — v0.65, 27 octobre 2026
+
+Après la proposition de répartition, le porteur du projet demande de poursuivre le développement sans interruption. Cette base de réalisation est intégrée dans la [v0.65](Catalogue_attaquants_v065.md) : faune commune et attaquants adverses distincts des défenseurs construits, avec treize illustrations. Les identités restent ajustables après retour joueur ; aucune nouvelle capacité ou révision des valeurs d’équilibrage n’est ajoutée.

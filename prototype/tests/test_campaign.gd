@@ -231,7 +231,7 @@ func run_checks() -> void:
 	check(scene.model.phase == "bonus" and scene.model.gold == gold_before,"Commandes derrière l'offre sans effet")
 	scene.bonus_buttons[0].pressed.emit()
 	check(scene.model.bonuses.size() == 1 and not scene.bonus_panel.visible and not scene.start_button.disabled,"Choix rend la préparation disponible")
-	check(scene.start_button.tooltip_text.contains("Brute") and scene.start_button.tooltip_text.contains("4 s"),"Aperçu des prochains groupes accessible au survol")
+	check(scene.start_button.tooltip_text.contains("Ours sauvage") and scene.start_button.tooltip_text.contains("4 s"),"Aperçu des prochains groupes accessible au survol")
 	check(scene.hint_label.mouse_filter != Control.MOUSE_FILTER_IGNORE,"Infobulles de synergies accessibles à la souris")
 	scene._show_bonuses()
 	check(scene.bonus_panel.visible and scene.bonus_close.visible and not scene.bonus_buttons[0].visible,"Récapitulatif sans nouveau choix")

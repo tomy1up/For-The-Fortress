@@ -81,9 +81,15 @@ static func verify(data: Variant) -> Dictionary:
 		var detail: String = _difference(action,JSON.parse_string(JSON.stringify(model.action_history[index])),"actions[%d]" % index)
 		if not detail.is_empty(): return _fail(detail)
 	var observed: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
+	if not data.has("enemy_catalog"):
+		# Les rapports historiques gardent les noms de profils et le libellé R-12.
+		observed.boss_encounter.name = Model.ENEMY_TYPES[7].name
+		for bonus in observed.bonuses:
+			bonus.description = bonus.description.replace("ours, unités lourdes, gardes d’élite et boss","Brutes, Colosses, Élites et boss")
 	for field in observed:
 		if field in ["game_version","engine_version"]: continue
 		if field == "boss_encounter" and not data.has(field): continue # Champ ajouté en v0.50 ; rapports historiques au format 2.
+		if field == "enemy_catalog" and not data.has(field): continue # Champ facultatif ajouté en v0.65.
 		if not data.has(field): return _fail("Champ absent : " + field)
 		var detail: String = _difference(data[field],observed[field],field)
 		if not detail.is_empty(): return _fail(detail)

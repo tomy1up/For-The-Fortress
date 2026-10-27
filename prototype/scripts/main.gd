@@ -82,6 +82,7 @@ var buy_buttons: Array[Button] = []
 var hovered_purchase: int = -1
 var focused_purchase: int = -1
 var hovered_upgrade: bool = false
+var purchase_quiet_rect: Rect2 = Rect2()
 var focused_upgrade: bool = false
 var hovered_branch: int = -1
 var focused_branch: int = -1
@@ -222,7 +223,7 @@ func _ready() -> void:
 				model.spawn_schedule.clear()
 				for type in range(Model.ENEMY_TYPES.size()):
 					model.spawn_schedule.append({"time": 0.0, "type": type})
-					var enemy: Dictionary = Model.make_enemy(type, type, 0.0)
+					var enemy: Dictionary = Model.make_enemy(type,type,0.0,model.faction)
 					var progress: float = 2.0 + type * 3.5
 					enemy.spawn_time = -progress / enemy.speed
 					enemy.distance = progress
@@ -579,7 +580,7 @@ func _update_boss_status() -> void:
 	for enemy in model.enemies:
 		if enemy.type != 7 or enemy.hp <= 0.0: continue
 		boss_panel.visible = true
-		boss_name.text = "BOSS · " + Model.ENEMY_TYPES[enemy.type].name
+		boss_name.text = "BOSS · " + Model.Enemies.for_profile(enemy.type,model.faction).name
 		boss_health.text = "PV : %d / %d" % [ceili(enemy.hp),enemy.max_hp]
 		boss_bar.max_value = enemy.max_hp
 		boss_bar.value = enemy.hp
@@ -618,7 +619,7 @@ func _update_wave_forecast() -> void:
 	if number < 1 or number > Model.Campaign.WAVES.size(): return
 	if forecast_wave != number:
 		forecast_wave = number
-		forecast_data = Model.wave_forecast(number)
+		forecast_data = Model.wave_forecast(number,model.faction)
 	if forecast_data.is_empty(): return
 	forecast_panel.visible = true
 	forecast_title.text = "Prochaine vague · %d/10" % number
@@ -877,7 +878,7 @@ func _update_enemy_inspector() -> void:
 		map_view.inspected_enemy_id = id
 		enemy_inspector.visible = true
 		enemy_prompt.visible = false
-		enemy_name.text = Model.ENEMY_TYPES[enemy.type].name + (" · BOSS" if enemy.type == 7 else "")
+		enemy_name.text = Model.Enemies.for_profile(enemy.type,model.faction).name + (" · BOSS" if enemy.type == 7 else "")
 		enemy_health.text = "PV : %d / %d" % [ceili(enemy.hp),enemy.max_hp]
 		enemy_health_bar.max_value = enemy.max_hp
 		enemy_health_bar.value = enemy.hp
@@ -888,7 +889,8 @@ func _update_enemy_inspector() -> void:
 		var cursed: bool = false
 		for curse in model.curses:
 			if curse.enemy_id == id: cursed = true; break
-		enemy_status.text = "Malédiction active · Combat en cours" if cursed else "Le combat continue pendant la lecture."
+		var origin: String = Model.Enemies.origin_label(Model.Enemies.for_profile(enemy.type,model.faction).origin)
+		enemy_status.text = origin + (" · Malédiction active" if cursed else " · Lecture sans pause")
 		enemy_status.add_theme_color_override("font_color",Color("d3afe4") if cursed else Color("aabbb0"))
 		return
 
@@ -907,6 +909,7 @@ func _build_faction_selector(screen: Control) -> void:
 	_label(panel, "La Vallée du Gué · 150 or · 20 PV", Vector2(30, 308), Vector2(740, 24), 13, Color("cdb47e"))
 
 func _choose_faction(choice: int) -> void:
+	forecast_wave = -1
 	if choosing_faction and model.select_faction(choice):
 		choosing_faction = false
 		_update_interface()
@@ -1158,6 +1161,7 @@ func _reset() -> void:
 	countdown_wave = -1
 	countdown_remaining = -1.0
 	start_button.tooltip_quiet = false
+	purchase_quiet_rect = Rect2()
 	breach_remaining = 0.0
 	map_view.breach_feedback = {}
 	bonus_contexts.assign(["","",""])
@@ -1183,9 +1187,18 @@ func _reset() -> void:
 func _buy(type: int) -> void:
 	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open:
 		return
-	model.buy(selected, model.available_types()[type])
+	var purchase_rect: Rect2 = buy_buttons[type].get_global_rect()
+	if model.buy(selected, model.available_types()[type]) and purchase_rect.has_point(get_global_mouse_position()):
+		purchase_quiet_rect = purchase_rect
 	_update_interface()
 	map_view.queue_redraw()
+
+func _refresh_purchase_quiet(pointer: Vector2) -> void:
+	if purchase_quiet_rect.has_area() and not purchase_quiet_rect.has_point(pointer):
+		purchase_quiet_rect = Rect2()
+	var quiet: bool = purchase_quiet_rect.has_area()
+	sell_button.tooltip_quiet = quiet
+	upgrade_button.tooltip_quiet = quiet
 
 func _purchase_hover(type: int, entered: bool) -> void:
 	if entered: hovered_purchase = type
@@ -1199,6 +1212,7 @@ func _upgrade_hover(entered: bool) -> void:
 	map_view.queue_redraw()
 
 func _upgrade_focus(entered: bool) -> void:
+	if entered: purchase_quiet_rect = Rect2()
 	focused_upgrade = entered
 	_update_interface()
 	map_view.queue_redraw()
@@ -1230,7 +1244,7 @@ func _refresh_upgrade_preview() -> void:
 		if pending_slot != selected or model.defenders[selected].instance_id != pending_instance: return
 		branch = hovered_branch if hovered_branch >= 0 else focused_branch
 		if branch < 0: return
-	elif not hovered_upgrade and not focused_upgrade: return
+	elif (not hovered_upgrade or purchase_quiet_rect.has_area()) and not focused_upgrade: return
 	var future: Dictionary = model.upgrade_preview_stats(selected,branch)
 	if future.is_empty(): return
 	map_view.upgrade_preview = future
@@ -1288,6 +1302,7 @@ func _sell() -> void:
 	map_view.queue_redraw()
 
 func _update_interface() -> void:
+	_refresh_purchase_quiet(get_global_mouse_position())
 	_sync_countdown()
 	guidance_label.text = _guidance_text()
 	map_view.preview_synergy_unit = {}
@@ -1318,7 +1333,7 @@ func _update_interface() -> void:
 	var preview_wave: int = mini(10, model.wave+1 if model.phase == "finished" else model.wave)
 	var preview: Array[String] = []
 	for group in Model.Campaign.WAVES[preview_wave-1]:
-		preview.append("%d %s · %s" % [group[1],Model.ENEMY_TYPES[group[0]].name,"ennemi unique" if group[1] == 1 else "intervalle %s s" % _number(group[2])])
+		preview.append("%d %s · %s" % [group[1],Model.Enemies.for_profile(group[0],model.faction).name,"ennemi unique" if group[1] == 1 else "intervalle %s s" % _number(group[2])])
 	start_button.tooltip_text = "Vague %d\n%s\n4 s entre la dernière apparition d’un groupe et la première du suivant.\nHoraires et intervalles à vitesse ×1 ; divisés par 2 en ×2 et par 10 en ×10 debug." % [preview_wave,"\n".join(preview)]
 	if countdown_remaining >= 0.0:
 		start_button.tooltip_text += "\nDépart automatique après le décompte. Cliquez pour lancer maintenant."
@@ -1698,7 +1713,7 @@ func _bonus_card_content(code: int) -> Dictionary:
 		8: return {"effect":"+4 PV actuels et maximum","scope":"Votre forteresse.","note":"Sans régénération automatique."}
 		9: return {"effect":"Améliorations −10 %","scope":"Prochaines améliorations et spécialisations.","note":"Achats passés inchangés."}
 		10: return {"effect":"Recrutement −10 %","scope":"Vos prochaines recrues.","note":"Achats passés inchangés."}
-		11: return {"effect":"Dégâts +20 %","scope":"Contre Brutes, Colosses, Élites et boss.","note":"Priorité des cibles inchangée."}
+		11: return {"effect":"Dégâts +20 %","scope":"Ours, unités lourdes, gardes d’élite et boss.","note":"Priorité des cibles inchangée."}
 	return {"effect":"","scope":"","note":""}
 
 func _bonus_impact_text(code: int) -> String:
@@ -1718,7 +1733,7 @@ func _bonus_impact_text(code: int) -> String:
 			lines.append("%s :\n%d → %d or" % [Model.ROSTER[purchase.type].get("short_name",Model.ROSTER[purchase.type].name),purchase.before,purchase.after])
 		lines.append("Prochaines recrues uniquement.")
 		return "\n".join(lines)
-	if code == 11: lines.append("Contre Brutes, Colosses, Élites et boss uniquement :")
+	if code == 11: lines.append("Cibles uniquement : " + Model.Enemies.robust_names(model.faction) + ".")
 	var affected: int = 0
 	for unit in preview.units:
 		var changes: Array[String] = []

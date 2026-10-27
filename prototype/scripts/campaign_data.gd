@@ -24,7 +24,7 @@ const BONUSES: Array[Dictionary] = [
 	{"code":"R-09","name":"Maçonnerie renforcée","description":"+4 PV actuels et maximum de forteresse. Aucun soin automatique ultérieur."},
 	{"code":"R-10","name":"Ateliers efficaces","description":"Réduit de 10 % le coût des prochaines améliorations et spécialisations. Le prix final est arrondi à la pièce d’or supérieure."},
 	{"code":"R-11","name":"Recrutement organisé","description":"−10 % au prix des achats futurs. Aucun effet rétroactif. Arrondi supérieur."},
-	{"code":"R-12","name":"Chasse aux colosses","description":"+20 % à tous les dégâts contre Brutes, Colosses, Élites et boss : coups directs, explosions, rebonds et malédictions. Priorité des cibles inchangée.","faction_descriptions":["+20 % aux dégâts des tirs et explosions contre Brutes, Colosses, Élites et boss. Priorité des cibles inchangée.","+20 % aux dégâts des impacts, explosions, rebonds et malédictions contre Brutes, Colosses, Élites et boss. Priorité des cibles inchangée."]}
+	{"code":"R-12","name":"Chasse aux colosses","description":"+20 % à tous les dégâts contre ours, unités lourdes, gardes d’élite et boss : coups directs, explosions, rebonds et malédictions. Priorité des cibles inchangée.","faction_descriptions":["+20 % aux dégâts des tirs et explosions contre ours, unités lourdes, gardes d’élite et boss. Priorité des cibles inchangée.","+20 % aux dégâts des impacts, explosions, rebonds et malédictions contre ours, unités lourdes, gardes d’élite et boss. Priorité des cibles inchangée."]}
 ]
 # Chaque côté décrit ses gains propres [direct, secondaire, périodique, portée].
 const PROXIMITY: Array[Dictionary] = [

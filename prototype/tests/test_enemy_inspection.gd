@@ -30,7 +30,7 @@ func run_checks() -> void:
 		var before: Array = snapshot(scene)
 		hover(scene,MapView.enemy_bounds(enemy).get_center())
 		check(scene.enemy_inspector.visible and scene.map_view.inspected_enemy_id == enemy.id,"Le survol détecte chaque profil à son échelle réelle")
-		check(scene.enemy_name.text.contains(Model.ENEMY_TYPES[type].name) and scene.enemy_health.text == "PV : %d / %d" % [ceili(enemy.hp),enemy.max_hp],"Nom et PV lus depuis l'ennemi actuel")
+		check(scene.enemy_name.text.contains(Model.Enemies.for_profile(type,scene.model.faction).name) and scene.enemy_health.text == "PV : %d / %d" % [ceili(enemy.hp),enemy.max_hp],"Nom et PV lus depuis l'ennemi actuel")
 		check(scene.enemy_health_bar.value == enemy.hp and scene.enemy_health_bar.max_value == enemy.max_hp,"La jauge conserve la précision réelle des PV")
 		check(scene.enemy_reward.text == "Éliminé : vous gagnez %d or." % enemy.reward and scene.enemy_threat.text.contains("elle perd %d PV" % enemy.fortress_damage) and scene.enemy_threat.text.begins_with("S’il atteint la forteresse"),"Récompense et dégâts à la forteresse explicités depuis le modèle")
 		check(scene.enemy_threat.get_rect().end.y < scene.enemy_reward.position.y and scene.enemy_reward.get_rect().end.y < scene.enemy_status.position.y,"Les deux lignes de danger restent séparées de la récompense et du statut")

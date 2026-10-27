@@ -119,6 +119,23 @@ func run_checks() -> void:
 			check(help_scene.buy_buttons[0].disabled and help_scene.buy_buttons[0].tooltip_text.contains("Or insuffisant") and not help_scene.buy_buttons[0].tooltip_text.contains("Cliquez pour acheter"),"Aide d'un achat impossible sans invitation contradictoire")
 			help_scene.free()
 	var scene = Main.new(); root.add_child(scene); scene.set_process(false); scene._choose_faction(0)
+	# Un achat remplace les commandes sous le pointeur : ne pas présenter immédiatement la nouvelle action.
+	for faction in range(2):
+		var bought = Main.new(); root.add_child(bought); bought.set_process(false); bought._choose_faction(faction)
+		bought.selected = 0; bought.map_view.selected = 0; bought._buy(1)
+		check(bought.model.gold == 75 and bought.model.defenders[0].type == faction*3+1,"Achat réel au prix normal dans chaque faction")
+		var rect: Rect2 = bought.buy_buttons[1].get_global_rect()
+		bought.purchase_quiet_rect = rect
+		bought._refresh_purchase_quiet(rect.get_center())
+		bought.hovered_upgrade = true; bought.focused_upgrade = false; bought._refresh_upgrade_preview()
+		check(bought.map_view.upgrade_preview.is_empty() and bought.sell_button._get_tooltip(Vector2.ZERO).is_empty() and bought.upgrade_button._get_tooltip(Vector2.ZERO).is_empty(),"Pointeur immobile : ni aperçu d'amélioration ni aide de vente parasite")
+		bought._refresh_purchase_quiet(rect.end+Vector2.ONE); bought._refresh_upgrade_preview()
+		check(not bought.map_view.upgrade_preview.is_empty() and not bought.sell_button._get_tooltip(Vector2.ZERO).is_empty(),"Sortie puis nouveau survol : les aides et aperçus redeviennent accessibles")
+		bought.purchase_quiet_rect = rect; bought._upgrade_focus(true)
+		check(bought.purchase_quiet_rect == Rect2() and not bought.map_view.upgrade_preview.is_empty(),"Navigation clavier : l'amélioration reste consultable")
+		bought.purchase_quiet_rect = rect; bought._reset()
+		check(bought.purchase_quiet_rect == Rect2() and not bought.sell_button.tooltip_quiet,"Nouvel essai : aucun état de survol bloqué conservé")
+		bought.free()
 	scene.selected = 3; scene.map_view.selected = 3; scene.model.phase = "finished"; scene.autoplay_started = true
 	scene.buy_buttons[0].mouse_entered.emit(); scene._process(1)
 	check(scene.countdown_remaining == 29 and not scene.map_view.purchase_preview.is_empty(),"Comparer les portées ne suspend pas les 30 secondes")

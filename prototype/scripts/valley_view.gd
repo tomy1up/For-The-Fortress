@@ -177,13 +177,18 @@ func _draw_impact(shot: Dictionary, age: float) -> void:
 		_draw_hit_marker(secondary,alpha,false,type,age)
 
 
-static func enemy_bounds(enemy: Dictionary) -> Rect2:
+static func enemy_art_id(enemy: Dictionary, defending_faction: int = -1) -> String:
+	if defending_faction in [0,1]: return Model.Enemies.for_profile(int(enemy.get("type",1)),defending_faction).id
+	if EnemyArt.TEXTURES.has(enemy.get("identity_id","")): return enemy.identity_id
+	return Model.Enemies.for_profile(int(enemy.get("type",1)),0).id
+
+static func enemy_bounds(enemy: Dictionary, defending_faction: int = -1) -> Rect2:
 	var center: Vector2 = project(Model.position_at(enemy.distance))
 	var scale: float = _enemy_scale(enemy)
 	var width: float = maxf(28.0,32.0*scale)
 	var bounds := Rect2(center+Vector2(-width/2.0,-39.0*scale),Vector2(width,47.0*scale))
-	if EnemyArt.TEXTURES.has(int(enemy.get("type",1))):
-		var image: Rect2 = EnemyArt.destination(int(enemy.get("type",1)))
+	if EnemyArt.TEXTURES.has(enemy_art_id(enemy,defending_faction)):
+		var image: Rect2 = EnemyArt.destination(enemy_art_id(enemy,defending_faction))
 		if enemy_facing(enemy) < 0.0: image.position.x = -image.end.x
 		bounds = bounds.merge(Rect2(center+image.position*scale,image.size*scale).grow(1.0))
 	return bounds
@@ -201,7 +206,7 @@ func enemy_at(point: Vector2) -> int:
 	var found: int = -1
 	var front_y: float = -INF
 	for enemy in model.enemies:
-		if enemy.hp <= 0.0 or not enemy_bounds(enemy).has_point(point): continue
+		if enemy.hp <= 0.0 or not enemy_bounds(enemy,model.faction).has_point(point): continue
 		var y: float = project(Model.position_at(enemy.distance)).y
 		if y >= front_y: # Même priorité visuelle que le dessin, dernier acteur en cas d'égalité.
 			front_y = y
@@ -483,81 +488,19 @@ static func enemy_color(type: int) -> Color:
 	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384")][type]
 
 func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.0) -> void:
-	var anchor: Vector2 = center
-	var type: int = enemy.get("type", 1)
-	var flash: float = clampf(hit_strength,0.0,1.0)*0.55
-	var armor: Color = enemy_color(type).lightened(flash)
-	draw_set_transform(center, 0.0, Vector2.ONE * _enemy_scale(enemy))
-	center = Vector2.ZERO
+	var id: String = enemy_art_id(enemy,model.faction)
+	var scale: float = _enemy_scale(enemy)
+	draw_set_transform(center,0.0,Vector2.ONE*scale)
 	if enemy.id == inspected_enemy_id:
-		draw_arc(center+Vector2(0,3),14,0,TAU,32,Color("edcc80"),2,true)
+		draw_arc(Vector2(0,3),14,0,TAU,32,Color("edcc80"),2,true)
 	for curse in model.curses:
-		if curse.enemy_id == enemy.id:
-			draw_arc(center + Vector2(0, -13), 19, 0, TAU, 24, Color("be83d3"), 1.5, true)
-			var mark: Vector2 = center + Vector2(0, -45)
-			draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]), Color("d6a1ef"))
-			break
+		if curse.enemy_id != enemy.id: continue
+		draw_arc(Vector2(0,-13),19,0,TAU,24,Color("be83d3"),1.5,true)
+		var mark := Vector2(0,-45)
+		draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]),Color("d6a1ef"))
+		break
 	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
 	var stride: float = sin(model.elapsed*10.0*enemy.get("speed",1.0)+enemy.id)*2.0 if model.active else 0.0
-	if EnemyArt.TEXTURES.has(type):
-		var scale: float = _enemy_scale(enemy)
-		draw_set_transform(anchor+Vector2(0,-absf(stride)*0.3*scale),0.0,Vector2(enemy_facing(enemy)*scale,scale))
-		draw_texture_rect_region(EnemyArt.TEXTURES[type],EnemyArt.destination(type),EnemyArt.FRAMES[type].source,EnemyArt.tint(hit_strength))
-		draw_set_transform(Vector2.ZERO)
-		return
-	var skin: Color = Color("dbb991").lightened(flash)
-	var metal: Color = Color("b5bfb8").lightened(flash)
-	_unit_stroke(Vector2(-4,-4),Vector2(-6+stride,4),Color("655043"),4)
-	_unit_stroke(Vector2(4,-4),Vector2(6-stride,4),Color("655043"),4)
-	match type:
-		3: # Torse massif, bras nus et massue à gros nœuds.
-			_unit_shape([Vector2(-11,-21),Vector2(10,-21),Vector2(11,-5),Vector2(-11,-5)],armor)
-			_unit_stroke(Vector2(-11,-19),Vector2(-13,-8),skin,5)
-			_unit_stroke(Vector2(10,-19),Vector2(14,-13),skin,5)
-			_unit_face(skin,7.5,-26)
-			_unit_stroke(Vector2(-6,-30),Vector2(5,-30),Color("76513d"),3)
-			_unit_stroke(Vector2(-10,-6),Vector2(10,-6),Color("564439"),3)
-			_unit_stroke(Vector2(13,-3),Vector2(13,-25),Color("a57a4f"),3)
-			_unit_shape([Vector2(9,-29),Vector2(17,-30),Vector2(18,-19),Vector2(10,-17)],Color("806044"))
-			for y in [-26,-21]: draw_line(Vector2(12,y),Vector2(16,y-1),Color("bd9561"),1.5,true)
-		4: # Harnais et deux haches, posture d’assaillant.
-			_unit_shape([Vector2(-8,-20),Vector2(8,-20),Vector2(10,-4),Vector2(-9,-4)],armor)
-			_unit_stroke(Vector2(-6,-20),Vector2(5,-5),Color("624535"),3)
-			_unit_stroke(Vector2(6,-20),Vector2(-5,-5),Color("624535"),3)
-			_unit_face(skin,7,-25)
-			_unit_shape([Vector2(-7,-28),Vector2(-5,-32),Vector2(5,-32),Vector2(8,-27),Vector2(1,-29)],Color("5c4940"))
-			for side in [-1,1]:
-				_unit_stroke(Vector2(side*7,-18),Vector2(side*12,-12),skin,3)
-				_unit_stroke(Vector2(side*12,-3),Vector2(side*12,-26),Color("ad8754"),2)
-				_unit_shape([Vector2(side*11,-26),Vector2(side*17,-23),Vector2(side*17,-17),Vector2(side*11,-18)],metal)
-		5: # Armure carrée et marteau lourd, silhouette la plus large hors boss.
-			_unit_shape([Vector2(-12,-21),Vector2(12,-21),Vector2(12,-4),Vector2(-12,-4)],armor)
-			_unit_shape([Vector2(-8,-20),Vector2(8,-20),Vector2(7,-10),Vector2(-7,-10)],armor.lightened(0.18))
-			_unit_stroke(Vector2(-11,-6),Vector2(11,-6),Color("455754"),3)
-			for side in [-1,1]: _unit_shape([Vector2(side*6,-25),Vector2(side*13,-25),Vector2(side*15,-17),Vector2(side*7,-17)],metal.darkened(0.12))
-			_unit_shape([Vector2(-7,-31),Vector2(7,-31),Vector2(8,-22),Vector2(-8,-22)],armor.lightened(0.1))
-			_unit_stroke(Vector2(-5,-26),Vector2(5,-26),UNIT_INK,1.5)
-			_unit_stroke(Vector2(13,-1),Vector2(13,-24),Color("ae8d5f"),3)
-			_unit_shape([Vector2(6,-30),Vector2(19,-30),Vector2(19,-22),Vector2(6,-22)],metal)
-			draw_line(Vector2(9,-28),Vector2(17,-28),Color("e0e4d3"),1.5,true)
-		6: # Casque à crête, bouclier pointu et lance.
-			_unit_shape([Vector2(-8,-20),Vector2(8,-20),Vector2(10,-3),Vector2(-10,-3)],armor)
-			_unit_face(skin,6.5,-25)
-			_unit_shape([Vector2(-7,-29),Vector2(6,-29),Vector2(8,-24),Vector2(-7,-24)],metal.darkened(0.1))
-			_unit_shape([Vector2(-3,-30),Vector2(-3,-34),Vector2(4,-34),Vector2(6,-30)],Color("c7a4ce"))
-			_unit_shape([Vector2(-15,-21),Vector2(-4,-21),Vector2(-4,-10),Vector2(-9,-3),Vector2(-15,-10)],armor.darkened(0.2))
-			_unit_shape([Vector2(-9,-18),Vector2(-6,-13),Vector2(-9,-8),Vector2(-12,-13)],Color("e7ce82"),0.8)
-			_unit_stroke(Vector2(12,1),Vector2(12,-29),Color("d2b77f"),2)
-			_unit_shape([Vector2(12,-34),Vector2(15,-27),Vector2(9,-27)],metal)
-		7: # Cape écarlate, grandes épaulières, couronne et épée de siège.
-			_unit_shape([Vector2(-8,-23),Vector2(8,-23),Vector2(14,4),Vector2(0,1),Vector2(-14,4)],Color("813e49"))
-			_unit_shape([Vector2(-9,-20),Vector2(9,-20),Vector2(10,-3),Vector2(-10,-3)],armor.darkened(0.25))
-			_unit_shape([Vector2(-5,-18),Vector2(5,-18),Vector2(7,-8),Vector2(0,-4),Vector2(-7,-8)],armor)
-			for side in [-1,1]: _unit_shape([Vector2(side*6,-24),Vector2(side*13,-24),Vector2(side*15,-18),Vector2(side*7,-17)],Color("c6a66a"))
-			_unit_face(skin,7,-25)
-			_unit_shape([Vector2(-7,-28),Vector2(-7,-33),Vector2(-3,-30),Vector2(0,-34),Vector2(3,-30),Vector2(7,-33),Vector2(7,-28)],Color("edce80"))
-			_unit_stroke(Vector2(-6,-4),Vector2(6,-4),Color("c6a66a"),2)
-			_unit_stroke(Vector2(13,1),Vector2(13,-27),Color("d7dacf"),3)
-			_unit_stroke(Vector2(8,-8),Vector2(17,-8),Color("edce80"),2)
-
+	draw_set_transform(center+Vector2(0,-absf(stride)*0.3*scale),0.0,Vector2(enemy_facing(enemy)*scale,scale))
+	draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,EnemyArt.tint(hit_strength))
 	draw_set_transform(Vector2.ZERO)

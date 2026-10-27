@@ -46,7 +46,7 @@ func run_checks() -> void:
 		scene.model.wave = number; scene.model.phase = "preparation"
 		var before: Array = snapshot(scene.model)
 		scene._update_interface()
-		data = Model.wave_forecast(number)
+		data = Model.wave_forecast(number,scene.model.faction)
 		check(scene.forecast_data == data and scene.forecast_reward.text.contains(str(incomes[number-1])),"Panneau de la vague attendue et gain conditionnel")
 		check(scene.forecast_reward.text.begins_with("Si tous éliminés"),"Aucune récompense de vague garantie annoncée")
 		for index in range(4):
@@ -57,7 +57,7 @@ func run_checks() -> void:
 		check(snapshot(scene.model) == before,"Consulter la prévision ne change ni ressources ni calendrier ni générateur")
 	scene.model.fortress_hp = 20; scene._update_interface()
 	check(scene.forecast_names[0].text.contains("BOSS") and scene.forecast_details[0].text.contains("Défaite"),"Boss et danger d'arrivée visibles avant lancement")
-	check(scene.start_button.tooltip_text.contains("Seigneur de siège · ennemi unique") and not scene.start_button.tooltip_text.contains("intervalle 0 s"),"Le bouton de lancement n'annonce pas une cadence nulle pour le boss unique")
+	check(scene.start_button.tooltip_text.contains(Model.Enemies.for_profile(7,scene.model.faction).name+" · ennemi unique") and not scene.start_button.tooltip_text.contains("intervalle 0 s"),"Le bouton de lancement nomme le boss adverse sans cadence nulle")
 	check(scene.forecast_rows[0].tooltip_text.contains("Ennemi unique") and scene.forecast_rows[0].tooltip_text.contains("0 s après le départ"),"L'ennemi unique n'annonce pas un intervalle nul trompeur")
 	scene.model.fortress_hp = 24; scene._update_interface()
 	check(not scene.forecast_details[0].text.contains("Défaite"),"Le danger est actualisé même si la vague en cache ne change pas")

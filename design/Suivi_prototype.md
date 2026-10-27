@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 27 octobre 2026 — prototype v0.64, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 27 octobre 2026 — prototype v0.65, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -330,3 +330,7 @@ Grouillant, Pillard et Sprinter reçoivent des PNG transparents dans le style ca
 ## Correction de conception après v0.64 — 27 octobre 2026
 
 Règle rappelée et confirmée : neutres communs, attaquants spécifiques du camp adverse uniquement, catalogue distinct des défenseurs construits. Le prototype possède encore un catalogue commun ; ses PNG d’ennemis restent provisoires. Une [proposition de répartition](Origine_ennemis_2026-10-27.md), demandée par le porteur du projet, distingue trois neutres et cinq identités par camp adverse. Cette répartition n’est pas encore approuvée et aucun changement de règles, de vagues ou d’exécutable n’est livré par cette note. Priorité à la validation du catalogue avant la suite des illustrations.
+
+## v0.65 — Neutres et attaquants adverses, 27 octobre 2026
+
+Trois neutres communs (loup, sanglier, ours), cinq attaquants Horde face à l’Alliance et cinq attaquants Alliance face à la Horde. Catalogue d’ennemis distinct des six défenseurs construits ; treize identités illustrées dans trois atlas transparents. Prévisions, inspection, boss, R-12 et rapports cohérents avec le camp joué. Profils statistiques et dix vagues conservés. 40 suites, 15 974 contrôles Godot, 16 tests Python et contrats du GDD réussis. 32 sources contrôlées pour la distribution. [Détail et prompts](Catalogue_attaquants_v065.md).

@@ -284,3 +284,7 @@ Les six défenseurs regardent vers le côté de leur dernier vrai tir, conservé
 ## v0.64 — Trois ennemis illustrés, 27 octobre 2026
 
 Grouillant, Pillard et Sprinter reçoivent des PNG transparents dans le style cartoon retenu. Tailles relatives conservées, orientation selon le chemin, mouvement global de marche et survol adapté à la silhouette. Les cinq autres profils gardent leur dessin procédural. 39 suites, 15 184 contrôles Godot dont 46 nouveaux, 16 tests Python et contrats du GDD réussis. Les 31 sources de distribution incluent images et imports de ce lot. [Détail et prompts](Assets_Ennemis_v064.md).
+
+## v0.65 — Neutres et attaquants adverses, 27 octobre 2026
+
+Trois neutres communs (loup, sanglier, ours), cinq attaquants Horde face à l’Alliance et cinq attaquants Alliance face à la Horde. Catalogue d’ennemis distinct des six défenseurs construits ; treize identités illustrées dans trois atlas transparents. Prévisions, inspection, boss, R-12 et rapports cohérents avec le camp joué. Profils statistiques et dix vagues conservés. 40 suites, 15 964 contrôles Godot, 16 tests Python et contrats du GDD réussis. 32 sources contrôlées pour la distribution. [Détail et prompts](Catalogue_attaquants_v065.md).

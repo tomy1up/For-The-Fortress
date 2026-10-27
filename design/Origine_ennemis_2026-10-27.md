@@ -12,7 +12,7 @@
 
 Cette règle est confirmée par le message du porteur du projet, même si sa répartition précise n’a pas été retrouvée dans les documents locaux consultés. Elle prime sur l’interprétation du lot artistique v0.64 qui présentait tous les attaquants comme communs aux deux camps.
 
-## Proposition à valider — aucune affectation implémentée
+## Répartition proposée puis utilisée comme base de réalisation v0.65
 
 Conserver les huit profils de combat actuels comme références de statistiques, puis leur associer trois identités neutres et cinq identités par camp adverse.
 
@@ -27,7 +27,7 @@ Conserver les huit profils de combat actuels comme références de statistiques,
 | Élite | Camp adverse | Garde royal humain — Alliance | Garde noir mort-vivant — Horde |
 | Seigneur de siège — boss | Camp adverse | Maréchal de l’Alliance | Chef de guerre orc de la Horde |
 
-**Tous les noms et toutes les affectations de ce tableau sont proposés, pas encore approuvés.** Les trois origines et l’exclusion des attaquants de sa propre faction sont, elles, validées.
+Après cette proposition, le porteur du projet a demandé de poursuivre le développement sans interruption. Cette répartition est utilisée comme base de réalisation de la v0.65, sans prétendre qu’il a validé individuellement chaque nom. Les identités restent révisables après essai ; la règle des trois origines et l’exclusion des attaquants de sa propre faction sont confirmées.
 
 Cette proposition représente treize identités au total : trois communes et cinq propres à chaque camp, dont un boss par camp. Chaque campagne en verrait huit, avec les mêmes huit profils de combat de référence. Les loups représentent la menace en groupes, les sangliers la vitesse et les ours l’endurance. Les attaquants spécifiques rendent le conflit entre factions visible dès la première vague.
 
@@ -50,3 +50,7 @@ Le paquet v0.64 utilise encore les mêmes huit profils et le même habillage d�
 Les trois PNG humanoïdes Grouillant, Pillard et Sprinter restent des **assets provisoires sans affectation d’origine validée**. Ils ne valident pas l’existence de trois bandits neutres communs. La répartition proposée demanderait d’autres apparences, notamment pour la faune ; ne pas poursuivre automatiquement les illustrations des cinq autres profils sur l’hypothèse d’un catalogue commun.
 
 Les GDD Word et Markdown v0.14 restent le socle historique des profils et chiffres. Ce complément consigne la règle d’origine rappelée et la proposition demandée. For the Fortress! reste un nom de travail dont la disponibilité juridique est à confirmer.
+
+## Mise en œuvre v0.65
+
+La [v0.65](Catalogue_attaquants_v065.md) remplace le catalogue commun du paquet v0.64 : trois neutres et cinq attaquants du camp adverse par campagne, avec leurs identifiants, noms et illustrations. Les trois PNG humanoïdes v0.64 ne sont plus utilisés en jeu. Les paragraphes précédents décrivant le paquet v0.64 restent historiques. Le boss Horde s’affiche sous le nom court Chef de guerre orc, son origine étant conservée dans le catalogue.

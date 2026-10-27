@@ -26,7 +26,7 @@ func run_checks() -> void:
 		var before: String = JSON.stringify([m.enemies,m.gold,m.fortress_hp,m.action_history,str(m.rng.state),m.elapsed])
 		scene._update_interface()
 		check(scene.boss_panel.visible and not scene.enemy_inspector.visible,"Jauge visible sans survol de l’ennemi")
-		check(scene.boss_name.text == "BOSS · Seigneur de siège" and scene.boss_health.text == "PV : 124 / 600","Nom et PV vivants lus dans le modèle")
+		check(scene.boss_name.text == "BOSS · " + Model.Enemies.for_profile(7,m.faction).name and scene.boss_health.text == "PV : 124 / 600","Nom et PV vivants lus dans le modèle")
 		check(scene.boss_bar.value == 123.125 and scene.boss_bar.max_value == 600 and scene.boss_bar.step == 0,"Jauge conservant la précision de la simulation")
 		check(scene.boss_threat.text.contains("elle perd 20 PV") and scene.boss_threat.text.ends_with("Défaite"),"Conséquence fatale explicite contre 20 PV")
 		check(JSON.stringify([m.enemies,m.gold,m.fortress_hp,m.action_history,str(m.rng.state),m.elapsed]) == before,"Affichage sans mutation, délai, attaque ou tirage")
