@@ -326,3 +326,7 @@ Les six défenseurs regardent vers le côté de leur dernier vrai tir, conservé
 ## v0.64 — Trois ennemis illustrés, 27 octobre 2026
 
 Grouillant, Pillard et Sprinter reçoivent des PNG transparents dans le style cartoon retenu. Tailles relatives conservées, orientation selon le chemin, mouvement global de marche et survol adapté à la silhouette. Les cinq autres profils gardent leur dessin procédural. 39 suites, 15 184 contrôles Godot dont 46 nouveaux, 16 tests Python et contrats du GDD réussis. Les 31 sources de distribution incluent images et imports de ce lot. [Détail et prompts](Assets_Ennemis_v064.md).
+
+## Correction de conception après v0.64 — 27 octobre 2026
+
+Règle rappelée et confirmée : neutres communs, attaquants spécifiques du camp adverse uniquement, catalogue distinct des défenseurs construits. Le prototype possède encore un catalogue commun ; ses PNG d’ennemis restent provisoires. Une [proposition de répartition](Origine_ennemis_2026-10-27.md), demandée par le porteur du projet, distingue trois neutres et cinq identités par camp adverse. Cette répartition n’est pas encore approuvée et aucun changement de règles, de vagues ou d’exécutable n’est livré par cette note. Priorité à la validation du catalogue avant la suite des illustrations.

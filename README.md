@@ -2,6 +2,8 @@
 
 **Version v0.64 (27 octobre 2026)** : Grouillant, Pillard et Sprinter rejoignent le style illustré des défenseurs, avec orientation selon le chemin. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.64).
 
+**Correction de conception — 27 octobre 2026** : les attaquants combinent des neutres communs et des unités propres au camp adverse, distinctes des défenseurs construits. [Règle confirmée et proposition de répartition à valider](design/Origine_ennemis_2026-10-27.md). Le paquet v0.64 utilise encore un catalogue commun et reste à adapter ; ses trois images d’ennemis sont provisoires.
+
 **Direction artistique validée — 27 octobre 2026** : la [planche Horde](design/concepts/Direction_cartoon_Horde_v001.md) devient la référence cartoon des prochains personnages. Les six défenseurs sont désormais illustrés sur fond transparent : [Horde v0.60](design/Assets_Horde_v060.md), [Alliance v0.61](design/Assets_Alliance_v061.md).
 
 Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.

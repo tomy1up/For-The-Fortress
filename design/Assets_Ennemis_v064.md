@@ -10,7 +10,7 @@
 | Pillard | [pillard_v001.png](../prototype/assets/enemies/pillard_v001.png) | 34 px |
 | Sprinter | [sprinter_v001.png](../prototype/assets/enemies/sprinter_v001.png) | 28,9 px |
 
-Capuche verte et couteau, tunique rouge et calotte métallique avec épée, puis posture penchée et foulard rouge : les signes distinctifs des profils de la v0.59 sont conservés. Ces ennemis sont les mêmes adversaires pour les deux factions ; aucune nouvelle race, unité jouable ou capacité n’est introduite. Les armes et équipements restent décoratifs, sans résistance ou protection nouvelle.
+Capuche verte et couteau, tunique rouge et calotte métallique avec épée, puis posture penchée et foulard rouge : les signes distinctifs des profils de la v0.59 sont conservés. Dans le paquet v0.64, ces images sont utilisées contre les deux factions : c’est une limitation de l’implémentation actuelle, pas une décision validant un catalogue commun. Le porteur du projet a rappelé ensuite la distinction entre neutres et attaquants du camp adverse : voir la [règle confirmée et la proposition à valider](Origine_ennemis_2026-10-27.md). Ces trois PNG restent provisoires et sans origine validée. Aucune nouvelle race, unité jouable ou capacité n’est introduite. Les armes et équipements restent décoratifs, sans résistance ou protection nouvelle.
 
 Les trois images ont été créées séparément avec l’outil intégré `image_gen`, en utilisant la planche Horde comme référence de style uniquement. Aucun recours à la CLI/API externe. Les PNG générés sont copiés dans le projet sans modification de leurs pixels et possèdent un vrai canal alpha. Les cadres de la zone visible (alpha > 8/255, marge de deux pixels) et les ancrages des pieds sont consignés dans `prototype/scripts/enemy_art.gd`.
 

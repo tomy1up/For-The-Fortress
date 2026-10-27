@@ -70,3 +70,7 @@ Après la livraison v0.53, le porteur du projet choisit d’améliorer la prése
 Il retient une direction cartoon s’appuyant sur les codes reconnaissables des unités, avec World of Warcraft comme exemple visuel ; aucune progression permanente pour l’instant, chaque partie repartant à égalité ; et une difficulté exigeante où plusieurs défaites avant la première victoire sont normales.
 
 Ce retour exprime des choix d’orientation. Il ne rapporte pas une nouvelle partie, ne valide pas un taux de victoire mesuré et ne demande aucune valeur numérique particulière. [Décisions et proposition du prochain lot](Orientation_presentation_2026-10-26.md).
+
+## RJ-005 — Origine des attaquants, 27 octobre 2026
+
+Après la v0.64, le porteur du projet rappelle que les ennemis comprennent des neutres communs (faune possible, dont ours et sangliers) et des attaquants spécifiques du camp adverse. Jouer Horde doit faire apparaître des attaquants Alliance, et inversement. Il précise que ceux-ci ne sont pas les défenseurs que le joueur place sur le plateau. La répartition précise n’étant pas retrouvée dans les fichiers locaux, il demande une proposition à valider. La [note de référence](Origine_ennemis_2026-10-27.md) distingue cette règle confirmée de la proposition d’identités. Le jeu v0.64 conserve pour l’instant son catalogue commun ; les trois nouvelles illustrations ne valident pas une origine neutre.

@@ -128,3 +128,7 @@ La [réaction aux dégâts](Reaction_degats_v063.md) relie visuellement les pert
 ## Premier lot d’ennemis illustrés — v0.64, 27 octobre 2026
 
 Les [trois profils courants](Assets_Ennemis_v064.md), Grouillant, Pillard et Sprinter, sont déclinés dans le style illustré des défenseurs. Les apparences individuelles restent ajustables après retour joueur. Brute, Maraudeur, Colosse, Élite et Seigneur de siège restent procéduraux dans ce lot. Aucun changement de règles ou d’équilibrage.
+
+## Correction prioritaire : origine des attaquants — 27 octobre 2026
+
+Le porteur du projet rappelle que seuls les ennemis neutres sont communs aux deux campagnes. Les attaquants spécifiques viennent du camp adverse : Alliance contre un joueur Horde et Horde contre un joueur Alliance. Leur catalogue doit rester distinct des défenseurs à construire. Cette règle est confirmée ; la [répartition proposée à sa demande](Origine_ennemis_2026-10-27.md) reste à valider. Le paquet v0.64 ne l’implémente pas encore et ses trois images d’ennemis sont provisoires. La définition du catalogue précède la suite des illustrations.
