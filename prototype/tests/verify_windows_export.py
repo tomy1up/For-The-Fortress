@@ -49,6 +49,7 @@ startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW
 startup.wShowWindow=0
 results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
+       ('home_prepared','selection',None),('home_maximum','selection',None),('home_blocked','selection',None),
        ('alliance_talents','talents','alliance'),('horde_talents','talents','horde'),
        ('alliance_talents_reset','talents','alliance'),('horde_talents_reset','talents','horde'),
        ('alliance_rank_preview','talents','alliance'),('horde_rank_preview','talents','horde'),
@@ -111,6 +112,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if name.startswith('home_'): command+=['--capture-home='+{'home_prepared':'prepared','home_maximum':'maximum','home_blocked':'blocked'}[name]]
         if name.endswith('_talents_reset'): command+=['--capture-meta-reset']
         if name.endswith('_rank_preview'): command+=['--capture-meta-preview']
         if '_progression_' in name or name=='progression_pending': command+=['--capture-meta-rewards']
@@ -149,6 +151,15 @@ for name,state,faction in cases:
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
+    if state=='selection':
+        home=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('HOME_SNAPSHOT=')))
+        assert home['isolated'] and home['readonly']
+        if name=='selection': assert home['resources']==['0 ressources Alliance','0 ressources Horde'] and all('encore 10' in hint for hint in home['hints'])
+        if name=='home_prepared':
+            assert home['resources']==['4 ressources Alliance','25 ressources Horde'] and home['points']==['5 points actifs · 3 à placer','3 points actifs · 0 à placer']
+            assert home['hp']==['Forteresse au départ : 25 PV','Forteresse au départ : 20 PV'] and 'acheter 2 points' in home['hints'][1]
+        if name=='home_maximum': assert all('36 points actifs' in line for line in home['points']) and all('Tous les points' in hint for hint in home['hints'])
+        if name=='home_blocked': assert home['resources']==['Ressources : à vérifier']*2 and 'Sauvegarde à vérifier' in home['notice']
     if state=='talents': assert 'META_CAPTURE_ISOLATED=true' in text,(name,'La capture doit rester isolée du vrai profil')
     if name.endswith('_rank_preview'): assert 'META_RANK_PREVIEW=true' in text,(name,'Le gain du prochain rang doit être affiché')
     if name=='profile_protection': assert 'PROFILE_PROTECTION=true' in text,(name,'Le paquet doit chiffrer et relire un profil de contrôle')

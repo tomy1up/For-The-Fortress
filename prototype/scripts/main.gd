@@ -56,6 +56,11 @@ var summary_loadout_nodes: Array[Label] = []
 var summary_loadout_hp: Label
 var summary_loadout_units: Array[Label] = []
 var meta_buttons: Array[Button] = []
+var home_resources: Array[Label] = []
+var home_points: Array[Label] = []
+var home_hp: Array[Label] = []
+var home_hints: Array[Label] = []
+var home_progress_key: String = ""
 var summary_core_cards: Array[Panel] = []
 var summary_core_titles: Array[Label] = []
 var summary_meta_card: Panel
@@ -221,6 +226,16 @@ func _ready() -> void:
 			capture_state = argument.trim_prefix("--capture-state=")
 	if not capture_path.is_empty():
 		print("UI_VERSION=",ProjectSettings.get_setting("application/config/version"))
+		if capture_state == "selection":
+			meta_profile = MetaProfile.new("")
+			if "--capture-home=prepared" in OS.get_cmdline_user_args():
+				meta_profile.data.banks[0].resource = 4;meta_profile.data.banks[0].points = 8;meta_profile.data.banks[0].ranks[0] = 5
+				meta_profile.data.banks[1].resource = 25;meta_profile.data.banks[1].points = 3;meta_profile.data.banks[1].ranks[0] = 3
+			if "--capture-home=maximum" in OS.get_cmdline_user_args():
+				for bank in meta_profile.data.banks:
+					bank.resource = 100;bank.points = 36;bank.ranks = [5,3,3,1,0,5,3,3,1,0,5,3,3,1,0]
+			if "--capture-home=blocked" in OS.get_cmdline_user_args():
+				meta_profile.blocked = true;meta_profile.error = "Sauvegarde illisible simulée pour le contrôle."
 		if "--capture-meta-rewards" in OS.get_cmdline_user_args():
 			meta_profile = MetaProfile.new("")
 			meta_profile.data.banks[capture_faction].resource = 6
@@ -419,6 +434,9 @@ func _ready() -> void:
 			print("LOADOUT_SNAPSHOT=",JSON.stringify({"faction":model.faction,"points":Model.MetaTalents.spent(model.meta_ranks),"caption":loadout_label.text,"summary":summary_open,"tab":summary_tab,"readonly":not meta_menu.visible,"isolated":meta_profile.path.is_empty()}))
 		if "--capture-meta-rewards" in OS.get_cmdline_user_args() or "--capture-meta-loadout" in OS.get_cmdline_user_args():
 			faction_label.text = "CONTRÔLE PROGRESSION · BUDGET IMPOSÉ"
+		if capture_state == "selection":
+			_refresh_home_progress()
+			print("HOME_SNAPSHOT=",JSON.stringify({"isolated":meta_profile.path.is_empty(),"resources":[home_resources[0].text,home_resources[1].text],"points":[home_points[0].text,home_points[1].text],"hints":[home_hints[0].text,home_hints[1].text],"hp":[home_hp[0].text,home_hp[1].text],"notice":meta_income.text,"readonly":meta_profile.data.serial == 0 and not meta_menu.visible}))
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
@@ -1051,19 +1069,68 @@ func _build_faction_selector(screen: Control) -> void:
 	faction_panel.color = Color(0.02, 0.04, 0.035, 0.94)
 	faction_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	screen.add_child(faction_panel)
-	var panel: Panel = _panel(faction_panel, Rect2(240, 180, 800, 440))
+	var panel: Panel = _panel(faction_panel, Rect2(240, 130, 800, 540))
 	_label(panel, "Choisissez votre faction", Vector2(30, 28), Vector2(740, 42), 28, Color("e0dbbf"))
 	_label(panel, "Chaque camp possède trois défenseurs pour les dix vagues.", Vector2(30, 88), Vector2(740, 30), 16, Color("aabbb0"))
-	faction_buttons.append(_button(panel, "Alliance des Royaumes", Rect2(30, 152, 350, 52), _choose_faction.bind(0)))
-	faction_buttons.append(_button(panel, "Horde des Cendres", Rect2(420, 152, 350, 52), _choose_faction.bind(1)))
-	_label(panel, "Archer, arbalétrier et mage.\nPrécision et attaque de groupe.", Vector2(30, 224), Vector2(350, 62), 15, Color("bbcbbf"))
-	_label(panel, "Troll, sapeur et chaman.\nRebonds, explosifs et malédictions.", Vector2(420, 224), Vector2(350, 62), 15, Color("bbcbbf"))
+	faction_buttons.append(_button(panel, "Alliance des Royaumes", Rect2(30, 138, 350, 52), _choose_faction.bind(0)))
+	faction_buttons.append(_button(panel, "Horde des Cendres", Rect2(420, 138, 350, 52), _choose_faction.bind(1)))
+	_label(panel, "Archer, arbalétrier et mage.\nPrécision et attaque de groupe.", Vector2(30, 204), Vector2(350, 52), 15, Color("bbcbbf"))
+	_label(panel, "Lanceur de haches, sapeur et chaman.\nRebonds, explosifs et malédictions.", Vector2(420, 204), Vector2(350, 52), 15, Color("bbcbbf"))
 	for camp in range(2):
-		meta_buttons.append(_button(panel,"Talents "+("Alliance" if camp == 0 else "Horde"),Rect2(30+390*camp,296,350,38),_open_meta.bind(camp)))
+		var x: float = 30+390*camp
+		home_resources.append(_label(panel,"",Vector2(x,268),Vector2(350,26),17,Color("e6c987")))
+		home_points.append(_label(panel,"",Vector2(x,300),Vector2(350,26),15,Color("bbcbbf")))
+		home_hp.append(_label(panel,"",Vector2(x,330),Vector2(350,24),14,Color("bbcbbf")))
+		home_hints.append(_label(panel,"",Vector2(x,362),Vector2(350,44),13,Color("aabbb0")))
+		meta_buttons.append(_button(panel,"Préparer les talents",Rect2(x,412,350,38),_open_meta.bind(camp)))
 		meta_buttons[-1].disabled = meta_profile == null
-	_label(panel, "La Vallée du Gué · 150 or · PV selon vos talents", Vector2(30,350), Vector2(740,24),13,Color("cdb47e"))
-	_label(panel,"Progression sauvegardée par faction · Barème de talents en phase d’essai",Vector2(30,386),Vector2(740,36),13,Color("aabbb0"))
-	meta_income = _label(panel,"",Vector2(30,114),Vector2(740,28),13,Color("cdb47e"))
+	meta_income = _label(panel,"",Vector2(30,468),Vector2(740,26),13,Color("cdb47e"))
+	meta_income.mouse_filter = Control.MOUSE_FILTER_STOP
+	_label(panel,"La Vallée du Gué · 150 or · Gains versés en fin de partie · Barème d’essai",Vector2(30,504),Vector2(740,24),13,Color("aabbb0"))
+
+func _refresh_home_progress() -> void:
+	if not choosing_faction: return
+	var key: String = "none" if meta_profile == null else JSON.stringify([meta_profile.data.banks,meta_profile.blocked,meta_profile.error])
+	if key == home_progress_key: return
+	home_progress_key = key
+	for camp in range(2):
+		meta_buttons[camp].disabled = meta_profile == null
+		meta_buttons[camp].text = "Préparer les talents"
+		meta_buttons[camp].tooltip_text = "Acheter des points et les affecter aux arbres de cette faction avant de partir."
+		if meta_profile == null:
+			home_resources[camp].text = "Ressources : indisponibles"
+			home_points[camp].text = "Talents non chargés"
+			home_hp[camp].text = ""
+			home_hints[camp].text = "Progression permanente indisponible."
+			continue
+		if meta_profile.blocked:
+			home_resources[camp].text = "Ressources : à vérifier"
+			home_points[camp].text = "Talents : à vérifier"
+			home_hp[camp].text = ""
+			home_hints[camp].text = "Consultez les talents pour le détail."
+			continue
+		var bank: Dictionary = meta_profile.data.banks[camp]
+		var active: int = Model.MetaTalents.spent(bank.ranks)
+		var free: int = int(bank.points)-active
+		home_resources[camp].text = "%d ressource%s %s" % [bank.resource,"s" if bank.resource != 1 else "","Alliance" if camp == 0 else "Horde"]
+		home_points[camp].text = "%d point%s actif%s · %d à placer" % [active,"s" if active != 1 else "","s" if active != 1 else "",free]
+		home_hp[camp].text = "Forteresse au départ : %d PV" % [Model.INITIAL_HP+Model.MetaTalents.extra_hp(camp,bank.ranks)]
+		var affordable: int = mini(int(bank.resource)/Model.MetaTalents.POINT_PRICE,Model.MetaTalents.MAX_POINTS-int(bank.points))
+		if free > 0:
+			meta_buttons[camp].text = "Talents · %d point%s à placer" % [free,"s" if free > 1 else ""]
+			home_hints[camp].text = "Points déjà achetés : affectez-les avant de partir."
+		elif int(bank.points) >= Model.MetaTalents.MAX_POINTS:
+			home_hints[camp].text = "Tous les points ont été achetés."
+		elif affordable > 0:
+			home_hints[camp].text = "Vous pouvez acheter %d point%s de talent." % [affordable,"s" if affordable > 1 else ""]
+		else:
+			home_hints[camp].text = "Prochain point : encore %d ressources." % (Model.MetaTalents.POINT_PRICE-int(bank.resource))
+	meta_income.text = "Chaque faction conserve ses ressources et ses talents."
+	meta_income.tooltip_text = "Les points d’une faction ne peuvent pas être utilisés par l’autre."
+	if meta_profile == null: meta_income.text = "Progression permanente indisponible."
+	elif meta_profile.blocked:
+		meta_income.text = "Sauvegarde à vérifier · Consultez les talents pour le détail."
+		meta_income.tooltip_text = meta_profile.error
 
 func _open_meta(camp: int) -> void:
 	if choosing_faction and meta_profile != null: meta_menu.open(meta_profile,camp)
@@ -1568,13 +1635,13 @@ func _sell() -> void:
 
 func _update_interface() -> void:
 	_refresh_loadout_label()
+	_refresh_home_progress()
 	_refresh_purchase_quiet(get_global_mouse_position())
 	_sync_countdown()
 	guidance_label.text = _guidance_text()
 	map_view.preview_synergy_unit = {}
 	var modal: bool = meta_menu.visible or choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
 	if meta_profile != null:
-		meta_income.text = "Ressources : Alliance %d · Horde %d" % [meta_profile.data.banks[0].resource,meta_profile.data.banks[1].resource]
 		var pending: int = MetaProfile.resource_total(_cleared_wave_count())+_previous_map_rewards()
 		meta_progress_label.text = "Gains provisoires : %d" % pending if not _run_finished() else "Progression : sauvegarde à vérifier" if not meta_profile.error.is_empty() else "Talents : +%d ressources %s" % [meta_run_earned,"Alliance" if model.faction == 0 else "Horde"]
 		meta_progress_label.tooltip_text = "Ressources versées uniquement à la fin de la partie complète : victoire finale ou défaite." if not _run_finished() else meta_profile.error if not meta_profile.error.is_empty() else "Gains de la partie enregistrés."

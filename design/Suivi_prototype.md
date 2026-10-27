@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 28 octobre 2026 — prototype v0.70, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 28 octobre 2026 — prototype v0.71, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -354,3 +354,7 @@ Carte de ressources au bilan, détail des gains sauvegardés, solde du camp et p
 ## v0.70 — Retrouver les talents actifs de la partie, 28 octobre 2026
 
 Rappel discret avant et pendant la partie ; survol avec les bonus permanents de la faction. Quatrième onglet Talents au bilan global : trois arbres, noms et rangs retenus, PV initiaux et effets par défenseur. Lecture seule de la configuration fixée au départ, sans accès aux arbres pendant le parcours. Le rapport Markdown reprend ces informations. Prix, effets, sauvegarde protégée et frontière de versement inchangés. [Détails et validation](Resume_talents_v070.md).
+
+## v0.71 — Préparer sa faction à l’accueil, 28 octobre 2026
+
+Deux colonnes présentent ressources, points actifs et à affecter, PV initiaux et conseil de préparation. Distinction entre points déjà possédés et achat possible ; plafond respecté. Rappels actualisés après affectation, erreur de profil signalée sans faux solde nul. Aucun achat ni changement automatique. [Détails et validation](Accueil_progression_v071.md).

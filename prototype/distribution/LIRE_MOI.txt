@@ -1,10 +1,10 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.70 — 28 octobre 2026
+Version : 0.71 — 28 octobre 2026
 
 JOUER
 
 1. Extraire tout le ZIP, puis lancer For_the_Fortress.exe.
-2. À l’accueil, consulter les talents puis choisir sa faction.
+2. À l’accueil, vérifier les ressources et points à placer, puis choisir sa faction.
 3. Installer sa défense et lancer la première vague manuellement.
 4. Les suivantes partent automatiquement après 30 secondes de préparation.
 5. Après les vagues 3, 6 et 9, choisir un bonus de la partie en cours.
@@ -45,6 +45,14 @@ Fermer le jeu pendant une partie ne supprime pas la progression permanente déj�
 Le prototype ne reprend toutefois pas la partie en cours : ses gains provisoires ne
 sont pas versés sans victoire finale ou défaite. Les gains finaux encore en attente
 d’écriture ne sont pas garantis si le jeu est fermé avant leur enregistrement.
+
+PRÉPARER SA FACTION
+
+L’accueil montre séparément les ressources, points actifs, points encore à placer et
+PV de départ de chaque camp. Les points à placer sont déjà achetés ; un achat possible
+est seulement une indication et ne dépense rien. Préparer les talents ouvre les arbres
+de la colonne choisie. Ces rappels se mettent à jour au retour des arbres.
+Un profil illisible est signalé sans présenter un solde nul comme une progression perdue.
 
 TALENTS ACTIFS DE LA PARTIE
 
