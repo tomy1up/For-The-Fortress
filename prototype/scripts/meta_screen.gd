@@ -6,6 +6,7 @@ class TalentButton extends Button:
 	var accent: Color = Color.WHITE
 	var lit: bool = false
 	var rank_text: String = ""
+	var state: String = "locked"
 	func _draw() -> void:
 		var font: Font = get_theme_font("font")
 		var width: float = font.get_string_size(rank_text,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x
@@ -31,10 +32,21 @@ class TalentButton extends Button:
 			5:
 				draw_circle(c+Vector2(0,3),9,ink)
 				draw_polyline(PackedVector2Array([c+Vector2(0,-6),c+Vector2(2,-11),c+Vector2(8,-10)]),ink,2,true)
+		var badge := Vector2(44,8)
+		var color: Color = Color("a9d48a") if state == "available" else Color("e5c779") if state in ["maximum","unfunded"] else Color("9ba89f")
+		draw_circle(badge,8,Color("101b16"));draw_arc(badge,8,0,TAU,24,color,1,true)
+		if state in ["locked","blocked"]:
+			draw_arc(badge+Vector2(0,-1),3,PI,TAU,10,color,1.5,true)
+			draw_rect(Rect2(badge+Vector2(-4,-1),Vector2(8,6)),color,false,1.5)
+		else:
+			var symbol: String = {"available":"+","maximum":"✓","exclusive":"×","unfunded":"!"}.get(state,"?")
+			var symbol_width: float = font.get_string_size(symbol,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x
+			draw_string(font,badge+Vector2(-symbol_width/2,4),symbol,HORIZONTAL_ALIGNMENT_LEFT,-1,13,color)
 
 class TreeBoard extends Control:
 	var accent: Color
 	var opened: Array[bool] = [true,false,false]
+	var progress: Array[int] = [0,0,0]
 	func _draw() -> void:
 		var box := StyleBoxFlat.new();box.bg_color = accent.darkened(0.83);box.border_color = accent.darkened(0.5)
 		box.set_border_width_all(1);box.set_corner_radius_all(8);draw_style_box(box,Rect2(Vector2.ZERO,size))
@@ -43,6 +55,8 @@ class TreeBoard extends Control:
 			var ink: Color = Color("d8b96d") if opened[row] else Color("48594f")
 			draw_circle(Vector2(18,y),4,ink)
 			if row > 0:
+				draw_rect(Rect2(40,102+117*row,328,3),Color("283c32"))
+				draw_rect(Rect2(40,102+117*row,328*float(progress[row])/Talents.THRESHOLDS[row],3),ink)
 				draw_line(Vector2(18,y-111),Vector2(18,y-8),ink,2,true)
 				draw_polyline(PackedVector2Array([Vector2(13,y-18),Vector2(18,y-12),Vector2(23,y-18)]),ink,2,true)
 
@@ -87,7 +101,7 @@ func _ready() -> void:
 	heading = label_at(self,"Talents",Rect2(32,18,900,40),28)
 	balance = label_at(self,"",Rect2(32,66,890,32),16)
 	buy = button_at(self,"",Rect2(940,58,308,42),_buy)
-	label_at(self,"BARÈME D’ESSAI · De haut en bas : 0, 5 puis 10 points dépensés dans le même arbre.",Rect2(32,112,1216,30),15)
+	label_at(self,"+ Investir un rang · ✓ Maximum · Cadenas : palier fermé · × Autre spécialité choisie · ! Point à acheter",Rect2(32,112,1216,30),14)
 	for tree in range(3):
 		var board := TreeBoard.new();board.position = Vector2(32+416*tree,158);board.size = Vector2(384,454)
 		board.mouse_filter = Control.MOUSE_FILTER_IGNORE;board.accent = Color("638c86");add_child(board);boards.append(board)
@@ -140,13 +154,16 @@ func refresh() -> void:
 		var invested: int = Talents.tree_spent(bank.ranks,tree)
 		point_labels[tree].text = "%d point%s investi%s dans cet arbre" % [invested,"s" if invested > 1 else "","s" if invested > 1 else ""]
 		for row in range(3):
-			var missing: int = maxi(0,Talents.THRESHOLDS[row]-Talents.lower_spent(bank.ranks,tree,row))
+			var invested_below: int = mini(Talents.THRESHOLDS[row],Talents.lower_spent(bank.ranks,tree,row))
+			var missing: int = Talents.THRESHOLDS[row]-invested_below
 			boards[tree].opened[row] = missing == 0
-			tier_labels[tree*3+row].text = "Ligne %d · %s" % [row+1,"Accessible" if missing == 0 else "Encore %d points dans cet arbre" % missing]
+			boards[tree].progress[row] = invested_below
+			tier_labels[tree*3+row].text = "Ligne %d · %s" % [row+1,"Débloquée" if missing == 0 else "%d/%d points requis dans cet arbre" % [invested_below,Talents.THRESHOLDS[row]]]
 		boards[tree].queue_redraw()
 		for node in range(5):
 			var index: int = tree*5+node
 			var available: bool = not profile.blocked and Talents.can_allocate(bank.ranks,index,int(bank.points))
+			nodes[index].state = _node_state(index)
 			var learned: bool = bank.ranks[index] > 0
 			nodes[index].rank_text = "%d/%d" % [bank.ranks[index],Talents.MAX_RANKS[node]]
 			nodes[index].glyph = faction*3+tree;nodes[index].accent = accent;nodes[index].lit = available or learned
@@ -159,15 +176,25 @@ func refresh() -> void:
 	reset_button.text = "Réinitialiser · %d ressources" % profile.reset_price(faction)
 	reset_button.disabled = profile.blocked or Talents.spent(bank.ranks) == 0 or bank.resource < profile.reset_price(faction)
 	reset_button.tooltip_text = "Respécialisation n°%d de %s.\n2, 4, 6, 8, puis 10 ressources maximum.\nTous les points de cette faction seront rendus." % [int(bank.resets)+1,camp]
-	notice.text = profile.error if not profile.error.is_empty() else profile.migration_notice if not profile.migration_notice.is_empty() else "Terminez des vagues pour gagner la ressource de cette faction. Talents appliqués à la prochaine partie."
+	notice.text = profile.error if not profile.error.is_empty() else profile.migration_notice if not profile.migration_notice.is_empty() else "Barème d’essai · Ressources versées en fin de partie. Talents appliqués au prochain départ."
 	_inspect(inspected)
+
+func _node_state(index: int) -> String:
+	if profile.blocked: return "blocked"
+	var bank: Dictionary = profile.data.banks[faction]
+	var tree: int = int(index/5);var node: int = index%5
+	if bank.ranks[index] >= Talents.MAX_RANKS[node]: return "maximum"
+	if Talents.lower_spent(bank.ranks,tree,Talents.ROWS[node]) < Talents.THRESHOLDS[Talents.ROWS[node]]: return "locked"
+	if node >= 3 and bank.ranks[tree*5+3]+bank.ranks[tree*5+4] > 0: return "exclusive"
+	return "available" if Talents.can_allocate(bank.ranks,index,int(bank.points)) else "unfunded"
 
 func _inspect(index: int) -> void:
 	if profile == null or index < 0 or index >= nodes.size(): return
 	inspected = index
 	var bank: Dictionary = profile.data.banks[faction];var tree: int = int(index/5);var node: int = index%5
 	var definition: Array = Talents.TREES[faction][tree][node+1]
-	detail_title.text = "%s · Rang %d/%d" % [definition[0],bank.ranks[index],Talents.MAX_RANKS[node]]
+	var state_text: String = {"available":"1 point pour ce rang","maximum":"Rang maximum","locked":"Palier fermé","exclusive":"Autre spécialité choisie","unfunded":"Point à acheter","blocked":"Sauvegarde à vérifier"}[_node_state(index)]
+	detail_title.text = "%s · Rang %d/%d · %s" % [definition[0],bank.ranks[index],Talents.MAX_RANKS[node],state_text]
 	var reason: String = Talents.allocation_error(bank.ranks,index,int(bank.points))
 	detail_text.text = definition[1]+(" Choix exclusif entre les deux spécialités." if node >= 3 else "")
 	var gain: String = _rank_gain(index)

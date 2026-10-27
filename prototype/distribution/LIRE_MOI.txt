@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.71 — 28 octobre 2026
+Version : 0.72 — 28 octobre 2026
 
 JOUER
 
@@ -61,6 +61,15 @@ les arbres et les bonus permanents appliqués à la forteresse et aux trois déf
 Après la victoire finale ou la défaite, l’onglet Talents du bilan présente les rangs
 et effets de la configuration fixée au départ. Il permet uniquement de les consulter.
 Le rapport Markdown conserve ces noms, rangs et bonus pour relire la partie.
+
+LIRE LES ARBRES
+
+Chaque icône porte un repère : + pour investir un rang, coche pour le maximum,
+cadenas pour un palier fermé, croix pour la spécialité exclue, ! si un point doit
+être acheté. Un profil bloqué porte aussi un cadenas ; le détail précise le problème.
+Les jauges indiquent les points requis dans les lignes précédentes du même arbre.
+Survol et clavier restent disponibles même pour un talent inaccessible. Le titre
+du détail explique son état. Les repères se mettent à jour après chaque transaction.
 
 TALENTS — BARÈME D’ESSAI
 

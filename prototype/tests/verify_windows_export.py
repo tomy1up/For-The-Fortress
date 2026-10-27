@@ -51,6 +51,7 @@ results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
        ('home_prepared','selection',None),('home_maximum','selection',None),('home_blocked','selection',None),
        ('alliance_talents','talents','alliance'),('horde_talents','talents','horde'),
+       ('alliance_talents_no_points','talents','alliance'),('horde_talents_no_points','talents','horde'),
        ('alliance_talents_reset','talents','alliance'),('horde_talents_reset','talents','horde'),
        ('alliance_rank_preview','talents','alliance'),('horde_rank_preview','talents','horde'),
        ('alliance_progression_victory','summary','alliance'),('horde_progression_victory','summary','horde'),
@@ -114,6 +115,7 @@ for name,state,faction in cases:
         if faction: command+=['--capture-faction='+faction]
         if name.startswith('home_'): command+=['--capture-home='+{'home_prepared':'prepared','home_maximum':'maximum','home_blocked':'blocked'}[name]]
         if name.endswith('_talents_reset'): command+=['--capture-meta-reset']
+        if name.endswith('_talents_no_points'): command+=['--capture-meta-no-points']
         if name.endswith('_rank_preview'): command+=['--capture-meta-preview']
         if '_progression_' in name or name=='progression_pending': command+=['--capture-meta-rewards']
         if name=='progression_pending': command+=['--capture-meta-pending']
@@ -161,6 +163,11 @@ for name,state,faction in cases:
         if name=='home_maximum': assert all('36 points actifs' in line for line in home['points']) and all('Tous les points' in hint for hint in home['hints'])
         if name=='home_blocked': assert home['resources']==['Ressources : à vérifier']*2 and 'Sauvegarde à vérifier' in home['notice']
     if state=='talents': assert 'META_CAPTURE_ISOLATED=true' in text,(name,'La capture doit rester isolée du vrai profil')
+    if name in ['alliance_talents','horde_talents','alliance_talents_no_points','horde_talents_no_points']:
+        talent=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('TALENT_STATES_SNAPSHOT=')))
+        assert talent['isolated'] and talent['progress']==[0,5,10] and len(talent['states'])==15
+        assert talent['states'][0]=='maximum' and talent['states'][4]=='exclusive' and talent['states'][6]=='locked'
+        assert talent['states'][2]==('unfunded' if name.endswith('_no_points') else 'available')
     if name.endswith('_rank_preview'): assert 'META_RANK_PREVIEW=true' in text,(name,'Le gain du prochain rang doit être affiché')
     if name=='profile_protection': assert 'PROFILE_PROTECTION=true' in text,(name,'Le paquet doit chiffrer et relire un profil de contrôle')
     if '_loadout_' in name:

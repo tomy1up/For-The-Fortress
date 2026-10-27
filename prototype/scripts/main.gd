@@ -405,6 +405,9 @@ func _ready() -> void:
 			meta_profile.data.banks[capture_faction].points = 14
 			meta_profile.data.banks[capture_faction].ranks = [5,3,2,1,0,1,0,0,0,0,0,0,0,0,0]
 			meta_profile.data.banks[capture_faction].resets = 2
+			if "--capture-meta-no-points" in OS.get_cmdline_user_args():
+				meta_profile.data.banks[capture_faction].points = Model.MetaTalents.spent(meta_profile.data.banks[capture_faction].ranks)
+				meta_profile.data.banks[capture_faction].resource = 0
 			_open_meta(capture_faction)
 			if "--capture-meta-preview" in OS.get_cmdline_user_args():
 				meta_menu._inspect(5)
@@ -437,6 +440,10 @@ func _ready() -> void:
 		if capture_state == "selection":
 			_refresh_home_progress()
 			print("HOME_SNAPSHOT=",JSON.stringify({"isolated":meta_profile.path.is_empty(),"resources":[home_resources[0].text,home_resources[1].text],"points":[home_points[0].text,home_points[1].text],"hints":[home_hints[0].text,home_hints[1].text],"hp":[home_hp[0].text,home_hp[1].text],"notice":meta_income.text,"readonly":meta_profile.data.serial == 0 and not meta_menu.visible}))
+		if capture_state == "talents":
+			var states: Array[String] = []
+			for button in meta_menu.nodes: states.append(button.state)
+			print("TALENT_STATES_SNAPSHOT=",JSON.stringify({"states":states,"isolated":meta_profile.path.is_empty(),"progress":meta_menu.boards[0].progress}))
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)

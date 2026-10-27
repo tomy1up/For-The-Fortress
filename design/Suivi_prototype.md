@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 28 octobre 2026 — prototype v0.71, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 28 octobre 2026 — prototype v0.72, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -358,3 +358,7 @@ Rappel discret avant et pendant la partie ; survol avec les bonus permanents de 
 ## v0.71 — Préparer sa faction à l’accueil, 28 octobre 2026
 
 Deux colonnes présentent ressources, points actifs et à affecter, PV initiaux et conseil de préparation. Distinction entre points déjà possédés et achat possible ; plafond respecté. Rappels actualisés après affectation, erreur de profil signalée sans faux solde nul. Aucun achat ni changement automatique. [Détails et validation](Accueil_progression_v071.md).
+
+## v0.72 — Repères de talents et progression des paliers, 28 octobre 2026
+
+Repères sur les icônes pour distinguer rang investissable, maximum, palier fermé, spécialité exclue et point à acheter. Progression chiffrée et jauges par palier ; état rappelé dans le détail au survol/clavier. Règles, prix, effets et sauvegarde inchangés. [Détails et validation](Reperes_talents_v072.md).
