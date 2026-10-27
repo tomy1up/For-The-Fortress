@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.61 (27 octobre 2026)** : l’archer elfe, l’arbalétrier nain et le mage humain rejoignent les trois personnages Horde dans le style cartoon retenu. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.61).
+**Version v0.62 (27 octobre 2026)** : les six défenseurs se tournent vers leurs tirs et possèdent un mouvement d’attaque propre à leur classe. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.62).
 
 **Direction artistique validée — 27 octobre 2026** : la [planche Horde](design/concepts/Direction_cartoon_Horde_v001.md) devient la référence cartoon des prochains personnages. Les six défenseurs sont désormais illustrés sur fond transparent : [Horde v0.60](design/Assets_Horde_v060.md), [Alliance v0.61](design/Assets_Alliance_v061.md).
 

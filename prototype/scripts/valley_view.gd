@@ -46,7 +46,11 @@ const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune atten
 static func shot_origin(shot: Dictionary) -> Vector2:
 	# Points d'équipement des silhouettes, distincts du centre logique de portée.
 	var art = AllianceArt if AllianceArt.MUZZLES.has(int(shot.type)) else HordeArt
-	return project(shot.from)+art.MUZZLES[int(shot.type)]
+	var muzzle: Vector2 = art.MUZZLES[int(shot.type)]
+	return project(shot.from)+Vector2(muzzle.x*shot_facing(shot),muzzle.y)
+
+static func shot_facing(shot: Dictionary) -> float:
+	return -1.0 if project(shot.to).x < project(shot.from).x else 1.0
 
 static func projectile_position(shot: Dictionary, age: float) -> Vector2:
 	var progress: float = clampf(age / PROJECTILE_FLIGHT,0.0,1.0)
@@ -319,6 +323,15 @@ func _draw_breach_feedback() -> void:
 
 const UNIT_INK := Color("192a2b")
 const ATTACK_POSE_DURATION := 0.26
+# Recul horizontal, inclinaison en radians, élévation : habillage des tirs résolus.
+const ATTACK_MOTIONS: Array[Vector3] = [
+	Vector3(2.8,-0.035,0.0), # Archer : traction et petit recul.
+	Vector3(4.0,-0.025,0.0), # Arbalétrier : recul plus sec.
+	Vector3(0.8,0.015,2.5), # Mage : légère élévation de l'incantation.
+	Vector3(2.0,0.070,1.0), # Troll : engagement du corps dans le lancer.
+	Vector3(1.6,0.055,2.0), # Sapeur : lancer avec petit bond.
+	Vector3(0.8,-0.025,2.5), # Chaman : élévation et bascule du totem.
+]
 
 # Animation issue des tirs réels, dans le temps simulé. Aucune horloge ni RNG de jeu modifiée.
 static func attack_pulse(age: float) -> float:
@@ -328,16 +341,21 @@ static func attack_pulse(age: float) -> float:
 func defender_pose(slot: int) -> Dictionary:
 	var pose: Dictionary = {"pulse":0.0,"direction":1.0}
 	if model == null or not model.active: return pose
-	# Les tirs sont chronologiques ; arrêter dès que l'historique est trop ancien.
+	# Garder le côté du dernier tir de cet emplacement après la fin du mouvement.
 	for index in range(model.shots.size()-1,-1,-1):
 		var shot: Dictionary = model.shots[index]
 		var age: float = model.elapsed-shot.time
-		if age >= ATTACK_POSE_DURATION: break
 		if shot.slot != slot or age < 0.0: continue
 		pose.pulse = attack_pulse(age)
-		pose.direction = -1.0 if project(shot.to).x < project(shot.from).x else 1.0
+		pose.direction = shot_facing(shot)
 		break
 	return pose
+
+static func attack_transform(type: int, pose: Dictionary) -> Transform2D:
+	var pulse: float = clampf(pose.get("pulse",0.0),0.0,1.0)
+	var direction: float = pose.get("direction",1.0)
+	var motion: Vector3 = ATTACK_MOTIONS[type]
+	return Transform2D(motion.y*pulse*direction,Vector2(direction,1.0),0.0,Vector2(-direction*motion.x*pulse,-motion.z*pulse))
 
 func _unit_shape(points: Array[Vector2], color: Color, width: float = 1.5) -> void:
 	var contour := PackedVector2Array(points)
@@ -368,11 +386,11 @@ func _draw_defender(center: Vector2, type: int, level: int = 1, branch: int = -1
 	_draw_level_badge(center,level,branch)
 
 func _draw_illustrated_defender(center: Vector2, type: int, pose: Dictionary, art: GDScript) -> void:
-	var pulse: float = pose.get("pulse",0.0)
-	var direction: float = pose.get("direction",1.0)
 	draw_set_transform(center+Vector2(0,2),0,Vector2(1,0.45))
 	draw_circle(Vector2.ZERO,12,Color(0,0,0,0.25),true,-1,true)
-	draw_set_transform(center+Vector2(-direction*pulse*1.8,-pulse*1.5))
+	var transform: Transform2D = attack_transform(type,pose)
+	transform.origin += center
+	draw_set_transform_matrix(transform)
 	draw_texture_rect_region(art.TEXTURES[type],art.destination(type),art.FRAMES[type].source)
 	draw_set_transform(Vector2.ZERO)
 

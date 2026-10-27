@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.61 — 27 octobre 2026
+Version : 0.62 — 27 octobre 2026
 
 JOUER
 
@@ -196,3 +196,8 @@ Leurs niveaux et spécialisations restent indiqués par les badges. Une pose par
 PERSONNAGES ALLIANCE ILLUSTRÉS
 L’archer elfe, l’arbalétrier nain et le mage humain rejoignent le même style cartoon.
 Une pose par classe avec recul au tir, niveaux et spécialisations indiqués par les badges.
+
+ATTAQUES ORIENTÉES
+Pendant le combat, chaque défenseur regarde du côté de son dernier tir.
+Recul, lancer ou légère élévation distinguent les classes. Les badges restent droits.
+Les mouvements accompagnent les vrais tirs et ne changent pas le moment des dégâts.

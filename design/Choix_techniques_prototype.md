@@ -272,3 +272,7 @@ Trois PNG individuels intégrés au plateau dans le style validé, proportions c
 ## v0.61 — Assets Alliance transparents, 27 octobre 2026
 
 Archer elfe, arbalétrier nain et mage humain illustrés dans le style cartoon retenu. Rendu commun aux six défenseurs, cadres et équipements propres à chaque faction, filtrage avec mipmaps et badges conservés. Une pose par classe avec recul au tir, sans animation indépendante des armes. 36 suites, 14 901 contrôles Godot dont 25 nouveaux, 16 tests Python et contrats du GDD réussis. Les 24 sources de distribution incluent désormais les trois images Alliance et leurs imports. [Détail et prompts](Assets_Alliance_v061.md).
+
+## v0.62 — Orientation et mouvements d’attaque, 27 octobre 2026
+
+Les six défenseurs regardent vers le côté de leur dernier vrai tir, conservé entre deux attaques pendant le combat. Mouvement propre à chaque classe, miroir des points de départ des projectiles, badges et ombres stables. 37 suites, 15 075 contrôles Godot dont 174 nouveaux, 16 tests Python et contrats du GDD réussis. Aucun changement de combat ou d’équilibrage. [Détail](Animations_attaque_v062.md).

@@ -116,3 +116,7 @@ Les [trois assets individuels Horde](Assets_Horde_v060.md) sont intégrés au pl
 ## Adaptation du style à l’Alliance — v0.61, 27 octobre 2026
 
 Les [trois assets individuels Alliance](Assets_Alliance_v061.md) complètent les trois personnages Horde. Cette déclinaison applique la direction artistique retenue ; les identités individuelles proposées restent ajustables après retour joueur. Aucun changement des règles ni des statistiques. Une pose par classe et recul bref au tir.
+
+## Animation des six illustrations — v0.62, 27 octobre 2026
+
+L’[orientation et les mouvements d’attaque](Animations_attaque_v062.md) rendent les tirs plus explicites : les défenseurs s’orientent à gauche ou à droite selon leur dernier tir et bougent selon leur classe. Les dégâts sont toujours immédiats, les bonus et règles restent identiques. Les armes ne sont pas encore articulées indépendamment.

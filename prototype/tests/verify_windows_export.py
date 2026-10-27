@@ -88,6 +88,9 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('horde_upgrade_compact','upgrade','horde'),
        ('alliance_waves_summary','summary','alliance'),('horde_waves_summary','summary','horde'),
        ('defeat_waves_summary','defeat_summary','alliance')]
+for index,unit in enumerate(['archer','crossbow','mage','troll','sapper','shaman']):
+    for prefix in ['left_attack_','left_projectile_']:
+        cases.append((prefix+unit,'effects','alliance' if index<3 else 'horde'))
 for name,state,faction in cases:
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
@@ -109,9 +112,12 @@ for name,state,faction in cases:
             effect_types={'effects_mage':2,'effects_troll':3,'effects_sapper':4,'effects_shaman':5,
                           'attack_archer':0,'attack_crossbow':1,'attack_mage':2,'attack_troll':3,'attack_sapper':4,'attack_shaman':5}
             effect_types.update({'projectile_'+unit:index for index,unit in enumerate(['archer','crossbow','mage','troll','sapper','shaman'])})
+            for prefix in ['left_attack_','left_projectile_']:
+                effect_types.update({prefix+unit:index for index,unit in enumerate(['archer','crossbow','mage','troll','sapper','shaman'])})
             command+=['--capture-type='+str(effect_types[name])]
-            if name.startswith('attack_'): command+=['--capture-attack-pose']
-            if name.startswith('projectile_'): command+=['--capture-projectile']
+            if name.startswith('left_'): command+=['--capture-slot=0']
+            if name.startswith(('attack_','left_attack_')): command+=['--capture-attack-pose']
+            if name.startswith(('projectile_','left_projectile_')): command+=['--capture-projectile']
         if name=='bonus_economy_comparison': command+=['--capture-type=1']
         if name.endswith('_bonus_other'): command+=['--capture-type=3']
         if name.endswith('_bonus_details'): command+=['--capture-details=0']
@@ -125,6 +131,7 @@ for name,state,faction in cases:
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
+    if name.startswith('left_'): assert 'ATTACK_FACING=-1' in text,(name,'La fixture doit couvrir un vrai tir à gauche')
     if name=='boss_without_hover': assert 'BOSS_STATUS_WITHOUT_HOVER=true' in text,(name,text)
     if name in ['alliance_run_report','horde_run_report','horde_defender_summary']:
         report_folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))

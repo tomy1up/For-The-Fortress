@@ -1,0 +1,452 @@
+{
+  "archive_sha256": "fd0f46725b59784cfa0d120e322cd47c94a23f30bca6b8d05e8685139e7a73a0",
+  "executable_sha256": "1c6d057397d4b146099a018cdcc5fe20574ccef6e7d6d0ba2383785f0925eafb",
+  "files": [
+    "For_the_Fortress_v0.62_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.62_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.62_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.62_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.62_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "fortress_breach",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_alliance_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_horde_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus_economy_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_faction_bonuses",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_faction_bonuses",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_defender_catalogue",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_defender_catalogue",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_silhouettes",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "debug_combat_speed",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergy_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergy_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergy_branch",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergy_branch",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_mage",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_troll",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_sapper",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_shaman",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "wave_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "victory_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "defeat_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_defender_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_defender_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "defeat_defender_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_without_hover",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "upgrade_comparison",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "specialisation_preview",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_crossbow_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_mage_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_sapper_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_shaman_purchase",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_synergies",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_bonus_other",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_bonus_other",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_bonus_details",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_bonus_details",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "acquired_bonus_cards",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "acquired_bonus_details",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "mage_specialisation_numbers",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "shaman_specialisation_numbers",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "attack_archer",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "attack_crossbow",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "attack_mage",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "attack_troll",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "attack_sapper",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "attack_shaman",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "projectile_archer",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "projectile_crossbow",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "projectile_mage",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "projectile_troll",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "projectile_sapper",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "projectile_shaman",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_purchase_inspection_numbers",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_purchase_inspection_numbers",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_upgrade_inspection_numbers",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_upgrade_inspection_numbers",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_upgrade_compact",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_waves_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_waves_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "defeat_waves_summary",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "left_attack_archer",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "left_projectile_archer",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "left_attack_crossbow",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "left_projectile_crossbow",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "left_attack_mage",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "left_projectile_mage",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "left_attack_troll",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "left_projectile_troll",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "left_attack_sapper",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "left_projectile_sapper",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "left_attack_shaman",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "left_projectile_shaman",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "source_checks": 24,
+  "local_sources_compared": true,
+  "visual_review": "86 lancements du paquet Windows sur écran 1 à droite, 85 captures et 24 empreintes locales concordantes. Six classes vérifiées dans leurs poses d’attaque à gauche et à droite, avec miroir des projectiles, badges et interface stables. Catalogue des deux factions et tirs inspectés. Scènes de contrôle à budget imposé, sans nouvelle validation générale d’équilibrage ni essai humain.",
+  "automated_checks": 15075,
+  "godot_suites": 37,
+  "python_tests": 16,
+  "attack_motion_checks": 174,
+  "test_screen": 1,
+  "regression_report": "essais/v062_regression.json"
+}

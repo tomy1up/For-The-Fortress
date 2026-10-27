@@ -25,7 +25,7 @@ func run_checks() -> void:
 		check(is_equal_approx(target.end.y,0.0) and target.has_area() and target.position.x < 0.0 and target.end.x > 0.0,"Pieds ancrés au sol sans décentrer le défenseur")
 		check(is_equal_approx(target.size.x/target.size.y,frame.source.size.x/frame.source.size.y),"Image affichée sans étirement")
 		check(target.grow(8).has_point(Art.MUZZLES[type]),"Départ des projectiles près de l’arme visible")
-		var shot: Dictionary = {"type":type,"from":Vector2(2,6)}
+		var shot: Dictionary = {"type":type,"from":Vector2(2,6),"to":Vector2(3,3)}
 		check(View.shot_origin(shot).is_equal_approx(View.project(shot.from)+Art.MUZZLES[type]),"Le rendu du tir utilise le point d’équipement de la bonne classe")
 	check(Art.destination(1).size.y < Art.destination(0).size.y and Art.destination(1).size.y < Art.destination(2).size.y,"Nain plus petit que l’elfe et le mage")
 	var scene = Main.new();root.add_child(scene);scene.set_process(false);scene._choose_faction(0);scene.model.gold = 10000

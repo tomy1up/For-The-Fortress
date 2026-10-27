@@ -174,6 +174,7 @@ func _ready() -> void:
 	var capture_state: String = "combat"
 	var capture_faction: int = 0
 	var capture_type: int = 0
+	var capture_slot: int = 1
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture="):
 			capture_path = argument.trim_prefix("--capture=")
@@ -181,6 +182,8 @@ func _ready() -> void:
 			capture_faction = 1
 		elif argument.begins_with("--capture-type="):
 			capture_type = clampi(int(argument.trim_prefix("--capture-type=")), 0, 5)
+		elif argument.begins_with("--capture-slot="):
+			capture_slot = clampi(int(argument.trim_prefix("--capture-slot=")), 0, 5)
 		elif argument.begins_with("--capture-state="):
 			capture_state = argument.trim_prefix("--capture-state=")
 	if not capture_path.is_empty():
@@ -233,7 +236,7 @@ func _ready() -> void:
 			model.reset()
 			model.select_faction(0 if capture_type < 3 else 1)
 			model.gold = 1000 # Fixture visuelle, pas une campagne jouée.
-			model.buy(1, capture_type)
+			model.buy(capture_slot, capture_type)
 			model.wave = 8
 			model.spawn_schedule = Model.Campaign.schedule(8)
 			model.start()
@@ -248,8 +251,9 @@ func _ready() -> void:
 			assert(found, "La capture doit montrer un effet réellement résolu.")
 			if "--capture-attack-pose" in OS.get_cmdline_user_args(): model.advance(MapView.ATTACK_POSE_DURATION/2)
 			if "--capture-projectile" in OS.get_cmdline_user_args(): model.advance(MapView.PROJECTILE_FLIGHT/2)
-			selected = 1
-			map_view.selected = 1
+			selected = capture_slot
+			map_view.selected = capture_slot
+			print("ATTACK_FACING=",int(map_view.defender_pose(capture_slot).direction))
 		if capture_state == "breach":
 			model.reset()
 			model.select_faction(capture_faction)
