@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.60 — 27 octobre 2026
+Version : 0.61 — 27 octobre 2026
 
 JOUER
 
@@ -192,3 +192,7 @@ Leurs statistiques, déplacements, récompenses et dégâts à la forteresse res
 PERSONNAGES HORDE ILLUSTRÉS
 Le troll, le gobelin et le chaman utilisent les images transparentes issues du style validé.
 Leurs niveaux et spécialisations restent indiqués par les badges. Une pose par classe, avec recul bref au tir.
+
+PERSONNAGES ALLIANCE ILLUSTRÉS
+L’archer elfe, l’arbalétrier nain et le mage humain rejoignent le même style cartoon.
+Une pose par classe avec recul au tir, niveaux et spécialisations indiqués par les badges.

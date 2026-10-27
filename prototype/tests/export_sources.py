@@ -10,7 +10,14 @@ SOURCE_PATHS = ('project.godot', 'export_presets.cfg', 'scenes/main.tscn',
                 'assets/units/horde/troll_v001.png', 'assets/units/horde/gobelin_v001.png',
                 'assets/units/horde/chaman_v001.png',
                 'assets/units/horde/troll_v001.png.import', 'assets/units/horde/gobelin_v001.png.import',
-                'assets/units/horde/chaman_v001.png.import')
+                'assets/units/horde/chaman_v001.png.import',
+                'scripts/alliance_art.gd',
+                'assets/units/alliance/archer_v001.png',
+                'assets/units/alliance/arbaletrier_v001.png',
+                'assets/units/alliance/mage_v001.png',
+                'assets/units/alliance/archer_v001.png.import',
+                'assets/units/alliance/arbaletrier_v001.png.import',
+                'assets/units/alliance/mage_v001.png.import')
 
 
 def verify_sources(manifest, source_project=None):

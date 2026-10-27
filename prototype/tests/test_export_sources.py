@@ -37,7 +37,8 @@ class PackageSourcesTests(unittest.TestCase):
                 verify_sources(manifest, root)
 
     def test_changed_artwork_or_import_settings(self):
-        for relative in ['assets/units/horde/troll_v001.png', 'assets/units/horde/troll_v001.png.import']:
+        for relative in ['assets/units/horde/troll_v001.png', 'assets/units/horde/troll_v001.png.import',
+                         'assets/units/alliance/archer_v001.png', 'assets/units/alliance/archer_v001.png.import']:
             with self.subTest(relative=relative), tempfile.TemporaryDirectory(prefix='fortress-art-') as directory:
                 root = Path(directory)
                 manifest = self.fixture(root)

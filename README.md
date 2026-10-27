@@ -1,8 +1,8 @@
 # For the Fortress!
 
-**Version v0.60 (27 octobre 2026)** : trois personnages Horde illustrés sur fond transparent, intégrés au plateau. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.60).
+**Version v0.61 (27 octobre 2026)** : l’archer elfe, l’arbalétrier nain et le mage humain rejoignent les trois personnages Horde dans le style cartoon retenu. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.61).
 
-**Direction artistique validée — 27 octobre 2026** : la [planche Horde](design/concepts/Direction_cartoon_Horde_v001.md) devient la référence cartoon des prochains personnages. Trois assets individuels Horde intégrés dans la v0.60.
+**Direction artistique validée — 27 octobre 2026** : la [planche Horde](design/concepts/Direction_cartoon_Horde_v001.md) devient la référence cartoon des prochains personnages. Les six défenseurs sont désormais illustrés sur fond transparent : [Horde v0.60](design/Assets_Horde_v060.md), [Alliance v0.61](design/Assets_Alliance_v061.md).
 
 Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantasy coloré. Le joueur choisit entre l’Alliance des Royaumes et la Horde des Cendres, installe ses défenseurs sur des emplacements fixes et protège sa forteresse contre des vagues d’ennemis.
 

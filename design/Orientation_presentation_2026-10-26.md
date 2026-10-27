@@ -112,3 +112,7 @@ Le porteur du projet a explicitement choisi le style de cette planche. Elle devi
 ## Première adaptation de la planche validée — v0.60, 27 octobre 2026
 
 Les [trois assets individuels Horde](Assets_Horde_v060.md) sont intégrés au plateau avec transparence et tailles distinctes. Une pose illustrée par classe avec recul bref ; badges de niveau et de branche conservés. Les caractéristiques de combat ne changent pas.
+
+## Adaptation du style à l’Alliance — v0.61, 27 octobre 2026
+
+Les [trois assets individuels Alliance](Assets_Alliance_v061.md) complètent les trois personnages Horde. Cette déclinaison applique la direction artistique retenue ; les identités individuelles proposées restent ajustables après retour joueur. Aucun changement des règles ni des statistiques. Une pose par classe et recul bref au tir.

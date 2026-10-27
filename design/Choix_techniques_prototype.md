@@ -268,3 +268,7 @@ Les huit profils reçoivent des corps et équipements cartoon plus distincts. Le
 ## v0.60 — Assets Horde transparents, 27 octobre 2026
 
 Trois PNG individuels intégrés au plateau dans le style validé, proportions conservées, ancrage des pieds, mipmaps et badges existants. Une pose par classe avec recul au tir ; armes non animées indépendamment. 35 suites, 14 876 contrôles Godot et 16 tests Python réussis. Les 17 sources contrôlées incluent désormais les images et leurs paramètres d’import. [Détail et prompts](Assets_Horde_v060.md).
+
+## v0.61 — Assets Alliance transparents, 27 octobre 2026
+
+Archer elfe, arbalétrier nain et mage humain illustrés dans le style cartoon retenu. Rendu commun aux six défenseurs, cadres et équipements propres à chaque faction, filtrage avec mipmaps et badges conservés. Une pose par classe avec recul au tir, sans animation indépendante des armes. 36 suites, 14 901 contrôles Godot dont 25 nouveaux, 16 tests Python et contrats du GDD réussis. Les 24 sources de distribution incluent désormais les trois images Alliance et leurs imports. [Détail et prompts](Assets_Alliance_v061.md).
