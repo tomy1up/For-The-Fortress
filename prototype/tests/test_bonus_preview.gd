@@ -72,7 +72,7 @@ func run_checks() -> void:
 		check(scene.model.bonuses == [8] and scene.model.max_hp == 24 and scene.countdown_remaining == -1,"Un seul bonus réellement acquis au clic ; premier départ reste manuel dans cette fixture")
 		scene._show_bonuses()
 		check(scene.bonus_close.visible and not scene.bonus_impact_scrollers[0].visible and scene.bonus_body.size.y == 468,"Récapitulatif compact sans nouvelle projection d'un bonus déjà actif")
-		scene._close_bonuses(); scene._reset()
+		scene._close_bonuses(); scene.model.phase = "defeat"; scene._reset()
 		check(not scene.bonus_panel.visible,"Nouvel essai sans ancienne comparaison")
 		scene.free()
 	print("BONUS_PREVIEW_TESTS checks=%d failures=%d" % [checks,failures])

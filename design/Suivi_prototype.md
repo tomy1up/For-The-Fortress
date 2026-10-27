@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 27 octobre 2026 — prototype v0.68, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 27 octobre 2026 — prototype v0.69, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -346,3 +346,7 @@ Ressources, points, trois arbres et compteurs de respécialisation propres à ch
 ## v0.68 — Arbres verticaux et paliers par colonne, 27 octobre 2026
 
 Trois colonnes à icônes, rangs visibles et lecture des effets au survol/clavier. Trois lignes par arbre : 0, 5 et 10 points investis dans ses lignes précédentes. Cinq talents par arbre, valeurs d’essai et deux spécialités finales exclusives. Profil v0.67 migré avec restitution gratuite des points investis ; ressources, points achetés, compteurs et parcours de gains préservés. [Détails et preuves](Arbres_verticaux_v068.md).
+
+## v0.69 — Lire les gains et préparer la partie suivante, 27 octobre 2026
+
+Carte de ressources au bilan, détail des gains sauvegardés, solde du camp et points achetables. Accès aux talents uniquement après le résultat global ; gains provisoires non versés entre les vagues/cartes et progression acquise conservée après fermeture. Aperçu du prochain rang sans dépense. Enregistrement en attente distingué d’un gain sauvegardé, reprise explicite et tentatives automatiques espacées. Progression conservée après fermeture, fichier chiffré et authentifié par Windows, anciens JSON non importés automatiquement. Montants et effets inchangés. [Détails et validation](Lecture_progression_v069.md).

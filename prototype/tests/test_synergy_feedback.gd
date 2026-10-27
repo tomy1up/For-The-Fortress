@@ -1,6 +1,7 @@
 extends SceneTree
 const Model = preload("res://scripts/valley_model.gd")
 const Main = preload("res://scripts/main.gd")
+# Les nettoyages de nouvelle partie sont testés après une défaite simulée ; les verrous de parcours sont couverts séparément.
 var checks: int = 0
 var failures: int = 0
 func check(ok: bool, message: String) -> void:
@@ -64,7 +65,7 @@ func run_checks() -> void:
 			check(not scene.hint_label.tooltip_text.contains("Mage") and not scene.hint_label.tooltip_text.contains("Archer"),"Aucune association de l'autre faction")
 		scene.model.sell(1); scene._update_interface()
 		check(scene.hint_label.text.contains("Aucune synergie active") and not scene.hint_label.tooltip_text.contains("Active avec"),"Interface actualisée après vente du partenaire")
-		scene._reset()
+		scene.model.phase = "defeat"; scene._reset()
 		check(scene.hint_label.tooltip_text.is_empty(),"Aucune ancienne association après réinitialisation")
 		scene.free()
 	print("SYNERGY_FEEDBACK_TESTS checks=%d failures=%d" % [checks,failures])

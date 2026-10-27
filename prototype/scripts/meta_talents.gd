@@ -91,3 +91,15 @@ static func effects(faction: int, ranks: Array, type: int) -> Dictionary:
 static func extra_hp(faction: int, ranks: Array) -> int:
 	if Legacy.valid(ranks): return Legacy.extra_hp(faction,ranks)
 	return int(ranks[0])+int(ranks[1])+3*int(ranks[3]) if faction == 0 and current_valid(ranks) else 0
+
+static func rank_preview(faction: int, ranks: Array, index: int) -> Dictionary:
+	if faction not in [0,1] or not current_valid(ranks) or index < 0 or index >= 15: return {}
+	if ranks[index] >= MAX_RANKS[index%5]: return {}
+	var candidate: Array = ranks.duplicate();candidate[index] += 1
+	if not current_valid(candidate): return {} # Aucun contournement d'un palier ou d'un choix exclusif.
+	var units: Array[Dictionary] = []
+	for type in ([0,1,2] if faction == 0 else [3,4,5]):
+		var before: Dictionary = effects(faction,ranks,type)
+		var after: Dictionary = effects(faction,candidate,type)
+		if before != after: units.append({"type":type,"before":before,"after":after})
+	return {"hp_before":extra_hp(faction,ranks),"hp_after":extra_hp(faction,candidate),"units":units}

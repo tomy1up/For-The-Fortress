@@ -2,6 +2,7 @@ extends SceneTree
 const Model = preload("res://scripts/valley_model.gd")
 const Main = preload("res://scripts/main.gd")
 const MapView = preload("res://scripts/valley_view.gd")
+# Les nettoyages de nouvelle partie sont testés après une défaite simulée ; les verrous de parcours sont couverts séparément.
 var checks: int = 0
 var failures: int = 0
 func check(ok: bool, message: String) -> void:
@@ -72,7 +73,7 @@ func run_checks() -> void:
 	check(not scene.enemy_inspector.visible,"Pas d'inspection à travers le récapitulatif modal")
 	scene._close_bonuses()
 	check(scene.enemy_inspector.visible,"Retour au survol après fermeture du récapitulatif")
-	scene.model.phase = "finished"; scene._reset()
+	scene.model.phase = "defeat"; scene._reset()
 	check(not scene.enemy_inspector.visible and scene.map_view.inspected_enemy_id == -1,"Nouvel essai sans ancienne fiche")
 	scene.free()
 	# Parcours normal : inspecter un ennemi n'arrête pas l'horloge de combat.

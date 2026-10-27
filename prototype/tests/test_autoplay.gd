@@ -1,5 +1,6 @@
 extends SceneTree
 const Main = preload("res://scripts/main.gd")
+# Les nettoyages de nouvelle partie sont testés après une défaite simulée ; les verrous de parcours sont couverts séparément.
 var checks: int = 0
 var failures: int = 0
 func check(ok: bool, message: String) -> void:
@@ -52,7 +53,7 @@ func run_checks() -> void:
 	scene._choose_bonus(0)
 	check(scene.model.phase == "finished" and scene.countdown_remaining == 30,"Après choix, trente secondes entières")
 	check(scene.countdown_bar.visible and scene.countdown_bar.value == 30,"Après choix : barre réarmée au délai complet")
-	scene._process(12); scene._reset(); scene._choose_faction(1); scene._process(1000)
+	scene._process(12); scene.model.phase = "defeat"; scene._reset(); scene._choose_faction(1); scene._process(1000)
 	check(scene.model.wave == 1 and scene.model.phase == "preparation" and not scene.autoplay_started and scene.countdown_remaining == -1,"Nouvel essai désarme l'automatisme et le délai")
 	check(not scene.countdown_bar.visible,"Nouvel essai retire la barre de l’ancienne partie")
 	scene.free()

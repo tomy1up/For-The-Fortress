@@ -1,6 +1,7 @@
 extends SceneTree
 const Main = preload("res://scripts/main.gd")
 const Report = preload("res://scripts/run_report.gd")
+# Les nettoyages de nouvelle partie sont testés après une défaite simulée ; les verrous de parcours sont couverts séparément.
 var checks: int = 0
 var failures: int = 0
 func check(ok: bool, message: String) -> void:
@@ -53,7 +54,7 @@ func run_checks() -> void:
 		check(scene.bonus_descriptions[0].visible and not scene.bonus_buttons[0].visible and scene.overview_open,"Bonus acquis consultable sans nouveau choix")
 		scene.model.phase = "bonus"; scene.model.wave = 6; scene.model.bonus_offer.assign([1,2,3]); scene._update_interface()
 		check(scene.bonus_detail_index == -1 and not scene.overview_open,"Une nouvelle offre remplace les anciens détails")
-		scene._choose_bonus(0); scene._reset()
+		scene._choose_bonus(0); scene.model.phase = "defeat"; scene._reset()
 		check(scene.bonus_detail_index == -1 and not scene.bonus_panel.visible,"Nouvel essai sans détails résiduels")
 		scene.free()
 	for type in range(6):

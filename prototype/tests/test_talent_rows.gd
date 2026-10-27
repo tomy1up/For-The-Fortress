@@ -37,23 +37,23 @@ func run_checks() -> void:
 	legacy.run = {"id":7,"faction":1,"completed":4,"victory":false}
 	for camp in range(2):
 		legacy.banks[camp] = {"resource":23+camp,"points":8+camp,"resets":3+camp,"ranks":[3,1,0,3,0,1,0,0,0]}
-	var file := FileAccess.open(path,FileAccess.WRITE);file.store_string(JSON.stringify(legacy));file.close()
+	var file := FileAccess.open(path,FileAccess.WRITE);file.store_buffer(Profile.Codec.encode(legacy));file.close()
 	var migrated = Profile.new(path)
 	check(not migrated.blocked and migrated.data.schema == 2 and not migrated.migration_notice.is_empty(),"Ancien profil reconnu et migré")
 	for camp in range(2):
 		check(migrated.data.banks[camp].resource == legacy.banks[camp].resource and migrated.data.banks[camp].points == legacy.banks[camp].points and migrated.data.banks[camp].resets == legacy.banks[camp].resets,"Ressources, points achetés et compteurs conservés")
 		check(Talents.spent(migrated.data.banks[camp].ranks) == 0,"Tous les points investis rendus gratuitement")
 	check(migrated.data.run == JSON.parse_string(JSON.stringify(legacy.run)) and migrated.data.serial == 7,"Parcours de gains conservé sans double crédit")
-	check(JSON.parse_string(FileAccess.get_file_as_string(path+".v067.bak")) == JSON.parse_string(JSON.stringify(legacy)),"Copie du profil d'origine conservée")
+	check(migrated._read(path+".v067.bak") == JSON.parse_string(JSON.stringify(legacy)),"Copie du profil d'origine conservée")
 	check(migrated.allocate(0,0),"Points rendus immédiatement réutilisables")
 	var reopened = Profile.new(path)
 	check(reopened.data.banks[0].ranks[0] == 1 and reopened.migration_notice.is_empty(),"Réouverture : pas de deuxième remboursement des talents")
 	# Une copie incomplète laissée par une première tentative ne doit pas être acceptée.
 	var bad_path: String = path+"_bad"
-	file = FileAccess.open(bad_path,FileAccess.WRITE);file.store_string(JSON.stringify(legacy));file.close()
+	file = FileAccess.open(bad_path,FileAccess.WRITE);file.store_buffer(Profile.Codec.encode(legacy));file.close()
 	file = FileAccess.open(bad_path+".v067.bak",FileAccess.WRITE);file.store_string("incomplet");file.close()
 	var protected = Profile.new(bad_path)
-	check(protected.blocked and JSON.parse_string(FileAccess.get_file_as_string(bad_path)) == JSON.parse_string(JSON.stringify(legacy)),"Copie de migration incomplète : ancien profil préservé, pas de migration silencieuse")
+	check(protected.blocked and protected._read(bad_path) == JSON.parse_string(JSON.stringify(legacy)),"Copie de migration incomplète : ancien profil préservé, pas de migration silencieuse")
 	# Conditions et effets du nouveau format ; l'ancien format reste couvert par les tests v0.67.
 	var ranks: Array = [5,3,2,1,0,5,3,2,1,0,5,3,2,1,0]
 	for faction in range(2):

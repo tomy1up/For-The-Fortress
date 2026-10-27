@@ -6,6 +6,7 @@ class CountingMain extends "res://scripts/main.gd":
 	func _bonus_impact_text(code: int) -> String:
 		impact_calls += 1
 		return super._bonus_impact_text(code)
+# Les nettoyages de nouvelle partie sont testés après une défaite simulée ; les verrous de parcours sont couverts séparément.
 var checks: int = 0
 var failures: int = 0
 func check(ok: bool, message: String) -> void:
@@ -50,7 +51,7 @@ func run_checks() -> void:
 			check(verify_texts(scene),"Aucun texte périmé après changement de "+field)
 			count = scene.impact_calls; scene._update_interface()
 			check(scene.impact_calls == count,"Nouvel état réutilisé sans recalcul ("+field+")")
-		scene.model.phase = "finished"; scene._update_interface(); scene._reset()
+		scene.model.phase = "defeat"; scene._update_interface(); scene._reset()
 		check(scene.bonus_impact_keys == ["","",""] and scene.bonus_contexts == ["","",""],"Nouvel essai vide le cache et le contexte de défilement")
 		scene.free()
 	print("BONUS_PANEL_CACHE_TESTS checks=%d failures=%d" % [checks,failures])

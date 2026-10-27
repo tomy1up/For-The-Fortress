@@ -41,9 +41,20 @@ var meta_profile: RefCounted
 var meta_menu = MetaScreen.new()
 var meta_run_id: int = -1
 var meta_run_earned: int = 0
+var meta_retry_remaining: float = 0.0
+var run_final_map: bool = true # Le prototype a une carte ; le futur pilote de campagne gérera cette frontière.
+var run_map_index: int = 0
+var run_map_rewards: Dictionary = {} # Gains provisoires, en mémoire uniquement, par carte du parcours.
 var meta_income: Label
 var meta_progress_label: Label
 var meta_buttons: Array[Button] = []
+var summary_core_cards: Array[Panel] = []
+var summary_core_titles: Array[Label] = []
+var summary_meta_card: Panel
+var summary_meta_value: Label
+var summary_meta_status: Label
+var summary_meta_note: Label
+var summary_talents_button: Button
 const INTER_WAVE_SECONDS: float = 30.0
 const BREACH_NOTICE_SECONDS: float = 2.5
 # Temporaire, demandé pour le débogage. Retirer 10.0 après les essais.
@@ -202,8 +213,14 @@ func _ready() -> void:
 			capture_state = argument.trim_prefix("--capture-state=")
 	if not capture_path.is_empty():
 		print("UI_VERSION=",ProjectSettings.get_setting("application/config/version"))
+		if "--capture-meta-rewards" in OS.get_cmdline_user_args():
+			meta_profile = MetaProfile.new("")
+			meta_profile.data.banks[capture_faction].resource = 6
+			if "--capture-meta-pending" in OS.get_cmdline_user_args():
+				meta_profile.blocked = true;meta_profile.error = "Échec d’enregistrement simulé pour cette capture."
 		if capture_state not in ["selection","talents"]:
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
+			if "--capture-meta-intermediate" in OS.get_cmdline_user_args(): run_final_map = false
 			if capture_state in ["bonus", "campaign", "victory", "overview", "boss_inspection", "summary", "forecast", "forecast_boss"]:
 				_prepare_campaign_capture(capture_state)
 			if capture_state == "defeat_summary":
@@ -362,8 +379,28 @@ func _ready() -> void:
 			meta_profile.data.banks[capture_faction].ranks = [5,3,2,1,0,1,0,0,0,0,0,0,0,0,0]
 			meta_profile.data.banks[capture_faction].resets = 2
 			_open_meta(capture_faction)
+			if "--capture-meta-preview" in OS.get_cmdline_user_args():
+				meta_menu._inspect(5)
+				print("META_RANK_PREVIEW=",meta_menu.detail_text.text.contains("Prochain rang"))
 			if "--capture-meta-reset" in OS.get_cmdline_user_args(): meta_menu._request_reset()
 			print("META_CAPTURE_ISOLATED=",meta_profile.path.is_empty())
+			if "--capture-profile-protection" in OS.get_cmdline_user_args():
+				var test_path: String = "user://test_packaged_protection_%d.json" % Time.get_ticks_usec()
+				var stored = MetaProfile.new(test_path)
+				var id: int = stored.begin_run(capture_faction)
+				var ok: bool = id > 0 and stored.credit(id,capture_faction,10,true) and stored.buy_point(capture_faction) and stored.allocate(capture_faction,0)
+				var sealed: PackedByteArray = FileAccess.get_file_as_bytes(test_path)
+				MetaProfile.Codec.cache.clear()
+				var reopened = MetaProfile.new(test_path)
+				ok = ok and not reopened.blocked and reopened.data.banks[capture_faction].resource == 50 and reopened.data.banks[capture_faction].ranks[0] == 1
+				ok = ok and sealed.slice(0,MetaProfile.Codec.MAGIC.length()) == MetaProfile.Codec.MAGIC.to_utf8_buffer()
+				meta_profile = MetaProfile.new("");meta_profile.data = reopened.data.duplicate(true);_open_meta(capture_faction)
+				for suffix in ["",".bak",".tmp"]:
+					if FileAccess.file_exists(test_path+suffix): DirAccess.remove_absolute(test_path+suffix)
+				print("PROFILE_PROTECTION=",ok)
+		if "--capture-meta-rewards" in OS.get_cmdline_user_args():
+			_update_meta_summary()
+			print("META_REWARD_SNAPSHOT=",JSON.stringify({"faction":model.faction,"info":_meta_reward_summary(),"banks":[meta_profile.data.banks[0].resource,meta_profile.data.banks[1].resource],"isolated":meta_profile.path.is_empty(),"home":reset_button.visible,"talents":summary_talents_button.visible}))
 			faction_label.text = "CONTRÔLE PROGRESSION · BUDGET IMPOSÉ"
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
@@ -372,6 +409,7 @@ func _ready() -> void:
 		get_tree().quit(error)
 
 func _process(delta: float) -> void:
+	meta_retry_remaining = maxf(0.0,meta_retry_remaining-delta)
 	breach_remaining = maxf(0.0,breach_remaining-delta)
 	if breach_remaining <= 0.0: map_view.breach_feedback = {}
 	var was_active: bool = model.active
@@ -728,8 +766,14 @@ func _build_run_summary(screen: Control) -> void:
 	panel.add_child(summary_essential_content)
 	for index in range(3):
 		var card: Panel = _panel(summary_essential_content,Rect2(24+314*index,130,296,108))
-		_label(card,["Forteresse","Ennemis passés","Or gagné au combat"][index],Vector2(16,12),Vector2(264,24),16,Color("bbcbbf"))
+		summary_core_cards.append(card)
+		summary_core_titles.append(_label(card,["Forteresse","Ennemis passés","Or gagné au combat"][index],Vector2(16,12),Vector2(264,24),16,Color("bbcbbf")))
 		summary_key_values.append(_label(card,"",Vector2(16,46),Vector2(264,44),30,Color("e6c987")))
+	summary_meta_card = _panel(summary_essential_content,Rect2(726,130,222,108))
+	_label(summary_meta_card,"Ressources de faction",Vector2(16,12),Vector2(190,24),16,Color("bbcbbf"))
+	summary_meta_value = _label(summary_meta_card,"",Vector2(16,40),Vector2(190,40),30,Color("e6c987"))
+	summary_meta_status = _label(summary_meta_card,"",Vector2(16,84),Vector2(190,18),12,Color("bbcbbf"))
+	summary_meta_note = _label(summary_essential_content,"",Vector2(24,246),Vector2(924,22),13,Color("cdb47e"))
 	_label(summary_essential_content,"Les pertes de la forteresse",Vector2(24,270),Vector2(924,30),20,Color("e0dbbf"))
 	summary_loss_note = _label(summary_essential_content,"",Vector2(24,314),Vector2(924,100),18,Color("bbcbbf"))
 	_label(summary_essential_content,"Consultez Vagues pour retrouver la défense et les bonus de ces moments.",Vector2(24,426),Vector2(924,26),15,Color("91a799"))
@@ -740,6 +784,8 @@ func _build_run_summary(screen: Control) -> void:
 	report_status.mouse_filter = Control.MOUSE_FILTER_STOP
 	report_button = _button(panel,"Exporter le rapport",Rect2(24,622,240,30),_export_run_report)
 	report_button.tooltip_text = "Enregistrer localement les vagues, bonus proposés et décisions de cette partie."
+	summary_talents_button = _button(panel,"Préparer mes talents",Rect2(284,622,240,30),_summary_to_talents)
+	summary_talents_button.tooltip_text = "Revenir au choix de faction et préparer les talents de la prochaine partie."
 	summary_close = _button(panel,"Fermer · Échap",Rect2(784,622,164,30),_close_run_summary)
 	summary_panel.visible = false
 
@@ -755,6 +801,7 @@ func _set_summary_tab(index: int) -> void:
 	for tab in range(3): summary_tabs[tab].disabled = index == tab
 
 func _populate_essential_summary() -> void:
+	_update_meta_summary()
 	summary_key_values[0].text = "%d / %d PV" % [model.fortress_hp,model.max_hp]
 	summary_key_values[1].text = str(model.total_escaped)
 	summary_key_values[2].text = "%d or" % model.total_income
@@ -816,6 +863,7 @@ func _export_run_report() -> void:
 
 func _show_run_summary() -> void:
 	if model.phase not in ["victory","defeat"] or overview_open or pending_slot >= 0: return
+	_sync_meta_rewards(true)
 	summary_open = true
 	_populate_run_summary()
 	_populate_performance()
@@ -838,7 +886,7 @@ func _army_description(army: Array) -> Array[String]:
 	return lines
 
 func _populate_run_summary() -> void:
-	summary_title.text = ("Victoire" if model.phase == "victory" else "Défaite") + " · " + ("Alliance" if model.faction == 0 else "Horde")
+	summary_title.text = ("Carte terminée" if model.phase == "victory" and not _run_finished() else "Victoire" if model.phase == "victory" else "Défaite") + " · " + ("Alliance" if model.faction == 0 else "Horde")
 	summary_subtitle.text = "Forteresse : %d/%d PV · %d or restants · Survolez une ligne pour les unités et bonus de la vague.\nCombat cumulé : %s s simulées, hors préparation et choix ; la vitesse réduit le temps réel." % [model.fortress_hp,model.max_hp,model.gold,("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
 	var lost: int = 0
 	for index in range(10):
@@ -945,14 +993,97 @@ func _build_faction_selector(screen: Control) -> void:
 func _open_meta(camp: int) -> void:
 	if choosing_faction and meta_profile != null: meta_menu.open(meta_profile,camp)
 
-func _sync_meta_rewards() -> void:
-	if meta_profile == null or meta_run_id <= 0: return
+func _sync_meta_rewards(force: bool = false) -> bool:
+	if meta_profile == null or choosing_faction: return false
+	_record_provisional_rewards()
+	if not _run_finished(): return false
+	if not force and meta_retry_remaining > 0.0: return false
+	if meta_run_id <= 0:
+		meta_run_id = meta_profile.begin_run(model.faction)
+		if meta_run_id <= 0:
+			meta_retry_remaining = 2.0;return false
 	var completed: int = 0
 	for record in model.wave_history:
 		if record.result == "cleared": completed = maxi(completed,int(record.wave))
 	var before: int = int(meta_profile.data.banks[model.faction].resource)
-	if meta_profile.credit(meta_run_id,model.faction,completed,model.phase == "victory"):
+	var previous: int = _previous_map_rewards()
+	if meta_profile.credit(meta_run_id,model.faction,completed,model.phase == "victory",previous):
 		meta_run_earned += int(meta_profile.data.banks[model.faction].resource)-before
+		meta_retry_remaining = 0.0;return true
+	meta_retry_remaining = 2.0
+	return false
+
+func _run_finished() -> bool:
+	return not choosing_faction and (model.phase == "defeat" or (model.phase == "victory" and run_final_map))
+
+func _cleared_wave_count() -> int:
+	var completed: int = 0
+	for record in model.wave_history:
+		if record.result == "cleared": completed = maxi(completed,int(record.wave))
+	return completed
+
+func _record_provisional_rewards() -> void:
+	if not choosing_faction: run_map_rewards[run_map_index] = MetaProfile.resource_total(_cleared_wave_count())
+
+func _previous_map_rewards() -> int:
+	var total: int = 0
+	for index in run_map_rewards:
+		if index != run_map_index: total += int(run_map_rewards[index])
+	return total
+
+func _meta_reward_summary() -> Dictionary:
+	if meta_profile == null: return {}
+	var completed: int = 0
+	for record in model.wave_history:
+		if record.result == "cleared": completed = maxi(completed,int(record.wave))
+	var waves: int = MetaProfile.resource_total(completed)+_previous_map_rewards()
+	var bonus: int = MetaProfile.WIN_REWARD if _run_finished() and model.phase == "victory" and completed == 10 else 0
+	var eligible: bool = meta_run_id > 0 and meta_profile.data.run.id == meta_run_id and meta_profile.data.run.faction == model.faction
+	var settled: bool = eligible and meta_profile.data.run.get("settled",false)
+	var saved: int = MetaProfile.resource_total(int(meta_profile.data.run.completed),meta_profile.data.run.victory)+int(meta_profile.data.run.get("previous_maps",0)) if settled else 0
+	var bank: Dictionary = meta_profile.data.banks[model.faction]
+	return {"waves":waves,"bonus":bonus,"expected":waves+bonus,"saved":saved,"pending":maxi(0,waves+bonus-saved),"finished":_run_finished(),"ready":_run_finished() and settled and saved == waves+bonus,"balance":int(bank.resource),"affordable":mini(int(bank.resource)/MetaProfile.Talents.POINT_PRICE,maxi(0,MetaProfile.Talents.MAX_POINTS-int(bank.points))),"at_cap":bank.points >= MetaProfile.Talents.MAX_POINTS}
+
+func _update_meta_summary() -> void:
+	var visible_meta: bool = meta_profile != null
+	summary_meta_card.visible = visible_meta;summary_meta_note.visible = visible_meta
+	summary_talents_button.visible = visible_meta
+	for index in range(3):
+		summary_core_cards[index].position.x = 24+(234 if visible_meta else 314)*index
+		summary_core_cards[index].size.x = 222 if visible_meta else 296
+		summary_core_titles[index].size.x = 190 if visible_meta else 264
+		summary_key_values[index].size.x = 190 if visible_meta else 264
+	if not visible_meta: return
+	var info: Dictionary = _meta_reward_summary()
+	var camp: String = "Alliance" if model.faction == 0 else "Horde"
+	if not info.finished:
+		summary_meta_value.text = "+%d" % info.expected
+		summary_meta_status.text = "Provisoires · Partie en cours"
+		summary_meta_note.text = "Ces ressources seront versées après la victoire finale ou la défaite, pas entre les cartes."
+		summary_talents_button.visible = false
+		return
+	summary_meta_value.text = "+%d" % info.saved if info.ready else "%d / %d" % [info.saved,info.expected]
+	summary_meta_status.text = "Sauvegardées · "+camp if info.ready else "Enregistrement en attente"
+	summary_meta_status.add_theme_color_override("font_color",Color("bbcbbf") if info.ready else Color("ef9b89"))
+	if info.ready:
+		var spending: String = "Tous les points actuels sont achetés" if info.at_cap else "%d point%s achetable%s" % [info.affordable,"s" if info.affordable > 1 else "","s" if info.affordable > 1 else ""] if info.affordable > 0 else "Encore %d ressources pour un point" % (MetaProfile.Talents.POINT_PRICE-info.balance)
+		summary_meta_note.text = "Vagues : %d · Victoire : %d · Solde %s : %d · %s" % [info.waves,info.bonus,camp,info.balance,spending]
+	else:
+		summary_meta_note.text = "%d ressources en attente · Réessayez la sauvegarde avant de préparer vos talents." % info.pending
+	summary_meta_note.tooltip_text = meta_profile.error
+	summary_meta_note.mouse_filter = Control.MOUSE_FILTER_STOP
+	summary_talents_button.text = "Préparer mes talents" if info.ready else "Réessayer la sauvegarde"
+	summary_talents_button.disabled = meta_profile.blocked
+
+func _summary_to_talents() -> void:
+	if not summary_open or meta_profile == null or not _run_finished(): return
+	var ready_before: bool = _meta_reward_summary().ready
+	if not _sync_meta_rewards(true):
+		_update_meta_summary();return
+	_update_meta_summary()
+	if not ready_before: return # Le premier clic de reprise confirme l'enregistrement ; le suivant quitte le bilan.
+	var camp: int = model.faction
+	_close_run_summary();_reset();_open_meta(camp)
 
 func _choose_faction(choice: int) -> void:
 	if meta_menu.visible: return
@@ -961,7 +1092,9 @@ func _choose_faction(choice: int) -> void:
 		model.meta_ranks = meta_profile.data.banks[choice].ranks.duplicate()
 	if choosing_faction and model.select_faction(choice):
 		meta_run_earned = 0
+		run_final_map = true;run_map_index = 0;run_map_rewards.clear()
 		if meta_profile != null: meta_run_id = meta_profile.begin_run(choice)
+		meta_retry_remaining = 2.0 if meta_run_id <= 0 and meta_profile != null else 0.0
 		choosing_faction = false
 		_update_interface()
 
@@ -1206,6 +1339,9 @@ func _toggle_speed() -> void:
 func _reset() -> void:
 	if model.active or _selection_blocked():
 		return
+	if not choosing_faction and not _run_finished(): return
+	if meta_profile != null and not choosing_faction and not _sync_meta_rewards(true):
+		_update_interface();return # Ne pas détruire un résultat dont le versement n'est pas enregistré.
 	inspection_numbers_visible = false
 	overview_open = false
 	autoplay_started = false
@@ -1221,7 +1357,8 @@ func _reset() -> void:
 	bonus_view_context = ""
 	for scroll in bonus_impact_scrollers: scroll.scroll_vertical = 0
 	model.reset()
-	meta_run_id = -1;meta_run_earned = 0
+	meta_run_id = -1;meta_run_earned = 0;meta_retry_remaining = 0.0
+	run_final_map = true;run_map_index = 0;run_map_rewards.clear()
 	summary_tab = 2
 	performance_rows.clear()
 	report_folder = ""
@@ -1361,9 +1498,11 @@ func _update_interface() -> void:
 	var modal: bool = meta_menu.visible or choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
 	if meta_profile != null:
 		meta_income.text = "Ressources : Alliance %d · Horde %d" % [meta_profile.data.banks[0].resource,meta_profile.data.banks[1].resource]
-		meta_progress_label.text = "Progression : sauvegarde à vérifier" if not meta_profile.error.is_empty() else "Talents : +%d ressources %s" % [meta_run_earned,"Alliance" if model.faction == 0 else "Horde"]
-		meta_progress_label.tooltip_text = meta_profile.error if not meta_profile.error.is_empty() else "Gains sauvegardés après chaque vague terminée, même en cas de défaite."
+		var pending: int = MetaProfile.resource_total(_cleared_wave_count())+_previous_map_rewards()
+		meta_progress_label.text = "Gains provisoires : %d" % pending if not _run_finished() else "Progression : sauvegarde à vérifier" if not meta_profile.error.is_empty() else "Talents : +%d ressources %s" % [meta_run_earned,"Alliance" if model.faction == 0 else "Horde"]
+		meta_progress_label.tooltip_text = "Ressources versées uniquement à la fin de la partie complète : victoire finale ou défaite." if not _run_finished() else meta_profile.error if not meta_profile.error.is_empty() else "Gains de la partie enregistrés."
 		meta_progress_label.mouse_filter = Control.MOUSE_FILTER_STOP
+	if summary_open: _update_meta_summary()
 	for control in [start_button,speed_button,reset_button,sell_button,upgrade_button,bonus_summary_button,summary_button,inspection_numbers_button]+buy_buttons:
 		control.set("tooltip_blocked",modal)
 		control.focus_mode = Control.FOCUS_NONE if modal else Control.FOCUS_ALL
@@ -1397,14 +1536,15 @@ func _update_interface() -> void:
 	speed_button.text = "Vitesse ×%d%s" % [int(speed)," · debug" if speed == 10.0 else ""]
 	speed_button.disabled = modal
 	speed_button.tooltip_text = "Alterner entre ×1, ×2 et ×10 (débogage temporaire).\nSeul le combat accélère ; les 30 secondes de préparation restent inchangées."
-	reset_button.disabled = model.active or modal
-	reset_button.tooltip_text = "Terminez la vague avant de recommencer." if model.active else "Revenir au choix de faction.\nVos ressources et vos talents permanents sont conservés."
+	reset_button.disabled = not _run_finished() or modal
+	reset_button.visible = _run_finished()
+	reset_button.tooltip_text = "Retour à l’accueil uniquement après la victoire finale ou la défaite. Vos ressources et vos talents permanents sont conservés."
 	match model.phase:
 		"preparation": status_label.text = "Préparation · Vague %d/10\n%d ennemis" % [model.wave,model.spawn_schedule.size()]
 		"combat": status_label.text = "Combat · Vague %d/10\nAchats et ventes bloqués" % model.wave
 		"finished": status_label.text = "Vague %d terminée\nPréparez la vague %d" % [model.wave,model.wave+1]
 		"bonus": status_label.text = "Vague %d terminée\nChoix roguelite obligatoire" % model.wave
-		"victory": status_label.text = "VICTOIRE · Dix vagues\nLa forteresse a survécu"
+		"victory": status_label.text = "VICTOIRE · Dix vagues\nLa forteresse a survécu" if _run_finished() else "Carte terminée\nLa partie continue"
 		"defeat": status_label.text = "Forteresse détruite\nRelancez un nouvel essai"
 	if countdown_remaining >= 0.0:
 		status_label.text = "Vague %d terminée\n%s" % [model.wave,"Décompte suspendu" if _countdown_paused() else "Préparation : %d s" % ceili(countdown_remaining)]
@@ -1478,6 +1618,7 @@ func _update_interface() -> void:
 	_sync_keyboard_focus()
 
 func _guidance_text() -> String:
+	if model.phase == "victory" and not _run_finished(): return "Carte remportée. La partie continue ; ressources et talents restent en attente."
 	if choosing_faction:
 		return "Choisissez votre faction.\nChaque camp a ses défenseurs.\nLa première vague attendra."
 	if pending_slot >= 0:

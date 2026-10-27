@@ -54,7 +54,7 @@ func run_checks() -> void:
 				var refund: int = scene.model.refund(0)
 				scene.sell_button.pressed.emit()
 				check(scene.model.gold == gold_before+refund and scene.model.defenders[0].is_empty(),"Vente réelle conforme au montant annoncé")
-				scene._reset(); scene._choose_faction(faction); scene.selected = 0; scene._buy(offer)
+				scene.model.phase = "defeat"; scene._reset(); scene._choose_faction(faction); scene.selected = 0; scene._buy(offer)
 				scene.model.gold = 0; scene._update_interface()
 				check(scene.upgrade_button.disabled and scene.upgrade_button.tooltip_text.contains("Or insuffisant") and not scene.upgrade_button.tooltip_text.contains("Or disponible après amélioration"),"Pas de solde négatif annoncé sur un achat impossible")
 				scene.free()

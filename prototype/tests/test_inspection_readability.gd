@@ -1,6 +1,7 @@
 extends SceneTree
 const Main = preload("res://scripts/main.gd")
 const Report = preload("res://scripts/run_report.gd")
+# Les nettoyages de nouvelle partie sont testés après une défaite simulée ; les verrous de parcours sont couverts séparément.
 var checks: int = 0
 var failures: int = 0
 func check(ok: bool, message: String) -> void:
@@ -55,7 +56,7 @@ func run_checks() -> void:
 			check(not scene.inspection_numbers_visible and scene.inspection_numbers_button.disabled and scene.inspection_numbers_button.focus_mode == Control.FOCUS_NONE,"La commande reste verrouillée derrière une fenêtre")
 			scene._close_bonuses();scene.inspection_numbers_button.pressed.emit()
 			check(scene.inspection_numbers_visible,"La commande redevient utilisable après fermeture")
-			scene._reset()
+			scene.model.phase = "defeat"; scene._reset()
 			check(not scene.inspection_numbers_visible and not scene.inspection_numbers_button.visible,"Nouvelle partie sans ancien mode de lecture")
 			scene.queue_free();await process_frame
 	print("INSPECTION_READABILITY_TESTS checks=%d failures=%d" % [checks,failures])

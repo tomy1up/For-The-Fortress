@@ -2,6 +2,7 @@ extends SceneTree
 const Model = preload("res://scripts/valley_model.gd")
 const Main = preload("res://scripts/main.gd")
 const MapView = preload("res://scripts/valley_view.gd")
+# Les nettoyages de nouvelle partie sont testés après une défaite simulée ; les verrous de parcours sont couverts séparément.
 var checks: int = 0
 var failures: int = 0
 func check(ok: bool, message: String) -> void:
@@ -133,13 +134,13 @@ func run_checks() -> void:
 		check(not bought.map_view.upgrade_preview.is_empty() and not bought.sell_button._get_tooltip(Vector2.ZERO).is_empty(),"Sortie puis nouveau survol : les aides et aperçus redeviennent accessibles")
 		bought.purchase_quiet_rect = rect; bought._upgrade_focus(true)
 		check(bought.purchase_quiet_rect == Rect2() and not bought.map_view.upgrade_preview.is_empty(),"Navigation clavier : l'amélioration reste consultable")
-		bought.purchase_quiet_rect = rect; bought._reset()
+		bought.purchase_quiet_rect = rect; bought.model.phase = "defeat"; bought._reset()
 		check(bought.purchase_quiet_rect == Rect2() and not bought.sell_button.tooltip_quiet,"Nouvel essai : aucun état de survol bloqué conservé")
 		bought.free()
 	scene.selected = 3; scene.map_view.selected = 3; scene.model.phase = "finished"; scene.autoplay_started = true
 	scene.buy_buttons[0].mouse_entered.emit(); scene._process(1)
 	check(scene.countdown_remaining == 29 and not scene.map_view.purchase_preview.is_empty(),"Comparer les portées ne suspend pas les 30 secondes")
-	scene._reset()
+	scene.model.phase = "defeat"; scene._reset()
 	check(scene.map_view.purchase_preview.is_empty() and scene.hovered_purchase == -1 and scene.focused_purchase == -1,"Nouvel essai efface tout aperçu")
 	scene.free()
 	print("PURCHASE_PREVIEW_TESTS checks=%d failures=%d" % [checks,failures])

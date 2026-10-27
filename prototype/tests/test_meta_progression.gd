@@ -27,8 +27,10 @@ func run_checks() -> void:
 	check(not p.respec(0) and p.data.banks[0].resets == 0,"Reset sans ressource refusé et non compté")
 	var reloaded = Profile.new(path)
 	check(reloaded.data == JSON.parse_string(JSON.stringify(p.data)),"Fermeture/réouverture : points et rangs persistés")
-	check(p.credit(id,0,10,true) and p.data.banks[0].resource == 50,"Suite et victoire : cinquante ressources supplémentaires")
-	check(p.credit(id,0,10,true) and p.data.banks[0].resource == 50,"Prime de victoire versée une seule fois")
+	check(not p.credit(id,0,10,true),"Une partie déjà liquidée ne peut pas être augmentée après coup")
+	id = p.begin_run(0)
+	check(p.credit(id,0,10,true) and p.data.banks[0].resource == 60,"Nouvelle victoire : soixante ressources versées à la fin")
+	check(p.credit(id,0,10,true) and p.data.banks[0].resource == 60,"Prime de victoire versée une seule fois")
 	var next_id: int = p.begin_run(1)
 	check(not p.credit(id,0,10,true) and p.credit(next_id,1,3,false) and p.data.banks[1].resource == 6,"Ancien identifiant refusé ; banque Horde indépendante")
 	# Paliers indépendants et plafond permanent après les premiers resets.
@@ -93,7 +95,9 @@ func run_checks() -> void:
 		check(scene.model.meta_ranks[0] == 1,"Configuration du combat indépendante des mutations ultérieures du profil")
 		scene._open_meta(faction);check(not scene.meta_menu.visible,"Édition des talents inaccessible en cours de tentative")
 		scene.model.wave_history.append({"wave":1,"result":"cleared"});scene._sync_meta_rewards();scene._sync_meta_rewards()
-		check(scene.meta_run_earned == 1,"Pont jeu/profil : crédit d'une vague une seule fois")
+		check(scene.meta_run_earned == 0,"Aucune ressource acquise pendant une partie en cours")
+		scene.model.phase = "defeat";scene._sync_meta_rewards();scene._sync_meta_rewards()
+		check(scene.meta_run_earned == 1,"Fin de partie : récompense des vagues terminées versée une seule fois")
 		scene.free()
 	# Rapport à talents réellement rejoué, sans accès au profil.
 	var replay_model = Model.new();replay_model.meta_ranks = [3,1,0,0,0,0,0,0,0];replay_model.select_faction(0);replay_model.start();replay_model.advance(10000)

@@ -24,7 +24,7 @@ SOURCE_PATHS = ('project.godot', 'export_presets.cfg', 'scenes/main.tscn',
                 'assets/enemies/rosters/horde_v003.png',
                 'assets/enemies/rosters/neutres_v001.png.import',
                 'assets/enemies/rosters/alliance_v002.png.import',
-                'assets/enemies/rosters/horde_v003.png.import', 'scripts/enemy_catalogue.gd','scripts/meta_talents.gd','scripts/meta_profile.gd','scripts/meta_screen.gd','scripts/meta_talents_v067.gd')
+                'assets/enemies/rosters/horde_v003.png.import', 'scripts/enemy_catalogue.gd','scripts/meta_talents.gd','scripts/meta_profile.gd','scripts/meta_screen.gd','scripts/meta_talents_v067.gd','scripts/profile_codec.gd')
 
 
 def verify_sources(manifest, source_project=None):

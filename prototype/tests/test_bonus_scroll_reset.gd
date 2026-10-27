@@ -30,7 +30,7 @@ func run_checks() -> void:
 		check(scroll.scroll_vertical == 0,"Un nouveau choix repart en haut même si les chiffres sont identiques")
 		scroll.scroll_vertical = 80; scene._reset()
 		check(scene.model.phase == "bonus" and scroll.scroll_vertical == 80,"Le choix obligatoire ne peut pas être effacé par une commande de fond")
-		scene._choose_bonus(0); scene._reset()
+		scene._choose_bonus(0); scene.model.phase = "defeat"; scene._reset()
 		check(scroll.scroll_vertical == 0 and not scene.bonus_panel.visible,"Nouvel essai efface aussi le défilement de l'ancienne partie")
 		prepare(scene,faction)
 		check(scroll.scroll_vertical == 0,"Rejouer la même faction ne conserve pas une position de lecture ancienne")

@@ -1,6 +1,7 @@
 extends SceneTree
 const Main = preload("res://scripts/main.gd")
 const Model = preload("res://scripts/valley_model.gd")
+# Les nettoyages de nouvelle partie sont testés après une défaite simulée ; les verrous de parcours sont couverts séparément.
 var checks: int = 0
 var failures: int = 0
 func check(ok: bool, message: String) -> void:
@@ -46,7 +47,7 @@ func run_checks() -> void:
 		for phase in ["finished","bonus","victory","defeat"]:
 			m.phase = phase; m.enemies.assign([boss]); scene._update_interface()
 			check(not scene.boss_panel.visible,"Hors combat : jauge masquée même en état de contrôle injecté")
-		m.phase = "finished"; scene._reset()
+		m.phase = "defeat"; scene._reset()
 		check(not scene.boss_panel.visible and m.enemies.is_empty(),"Nouvel essai efface le boss affiché")
 		check(scene.boss_panel.get_rect().end.x < scene.forecast_panel.position.x and scene.boss_panel.get_rect().end.y <= 154,"Jauge séparée de la fiche ennemie et des ennemis à l’entrée")
 		check(scene.boss_bar.mouse_filter == Control.MOUSE_FILTER_IGNORE and scene.boss_panel.mouse_filter == Control.MOUSE_FILTER_IGNORE,"Lecture sans capturer les commandes de la carte")

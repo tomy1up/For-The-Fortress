@@ -42,7 +42,7 @@ func run_checks() -> void:
 	check(scene.map_view.breach_feedback.is_empty() and scene.breach_remaining == 0.0,"Alerte expirée hors combat")
 	check(scene.hp_label.get_theme_color("font_color") == Color("e2d5ad"),"Couleur de PV normale après expiration")
 	check(before == [scene.model.gold,scene.model.fortress_hp,scene.model.rng.state,scene.model.elapsed,scene.model.wave_history],"Expiration sans mutation de la partie terminée")
-	scene._reset()
+	scene.model.phase = "defeat"; scene._reset()
 	check(scene.choosing_faction and scene.map_view.breach_feedback.is_empty(),"Nouvel essai sans ancien avertissement")
 	scene.free()
 	scene = scene_for(); scene._start(); scene._process(1000)

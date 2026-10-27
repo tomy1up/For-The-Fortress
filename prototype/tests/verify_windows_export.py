@@ -51,6 +51,12 @@ results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
        ('alliance_talents','talents','alliance'),('horde_talents','talents','horde'),
        ('alliance_talents_reset','talents','alliance'),('horde_talents_reset','talents','horde'),
+       ('alliance_rank_preview','talents','alliance'),('horde_rank_preview','talents','horde'),
+       ('alliance_progression_victory','summary','alliance'),('horde_progression_victory','summary','horde'),
+       ('alliance_progression_defeat','defeat_summary','alliance'),('horde_progression_defeat','defeat_summary','horde'),
+       ('progression_pending','summary','horde'),
+       ('horde_progression_intermediate','summary','horde'),
+       ('profile_protection','talents','horde'),
        ('fortress_breach','breach','horde'),
        ('bonus_alliance_comparison','bonus_preview','alliance'),('bonus_horde_comparison','bonus_preview','horde'),
        ('bonus_economy_comparison','bonus_preview','horde'),
@@ -104,6 +110,11 @@ for name,state,faction in cases:
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
         if name.endswith('_talents_reset'): command+=['--capture-meta-reset']
+        if name.endswith('_rank_preview'): command+=['--capture-meta-preview']
+        if '_progression_' in name or name=='progression_pending': command+=['--capture-meta-rewards']
+        if name=='progression_pending': command+=['--capture-meta-pending']
+        if name.endswith('_progression_intermediate'): command+=['--capture-meta-intermediate']
+        if name=='profile_protection': command+=['--capture-profile-protection']
         if name.endswith('_waves_summary'): command+=['--capture-waves']
         if name.endswith('_inspection_numbers'):
             command+=['--capture-inspection-numbers','--capture-type='+('2' if faction=='alliance' else '5')]
@@ -136,6 +147,17 @@ for name,state,faction in cases:
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
     if state=='talents': assert 'META_CAPTURE_ISOLATED=true' in text,(name,'La capture doit rester isolée du vrai profil')
+    if name.endswith('_rank_preview'): assert 'META_RANK_PREVIEW=true' in text,(name,'Le gain du prochain rang doit être affiché')
+    if name=='profile_protection': assert 'PROFILE_PROTECTION=true' in text,(name,'Le paquet doit chiffrer et relire un profil de contrôle')
+    if '_progression_' in name or name=='progression_pending':
+        snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('META_REWARD_SNAPSHOT=')))
+        camp=0 if faction=='alliance' else 1
+        assert snapshot['isolated'] and snapshot['faction']==camp and snapshot['banks'][1-camp]==0
+        info=snapshot['info']
+        if name=='progression_pending': assert not info['ready'] and info['saved']==0 and info['pending']==60 and info['balance']==6
+        elif name.endswith('_progression_intermediate'): assert not info['finished'] and not info['ready'] and info['saved']==0 and info['pending']==55 and info['balance']==6 and info['bonus']==0 and not snapshot['home'] and not snapshot['talents']
+        elif name.endswith('_victory'): assert info['ready'] and info['saved']==60 and info['waves']==55 and info['bonus']==5 and info['balance']==66 and info['affordable']==6
+        else: assert info['ready'] and info['saved']==1 and info['bonus']==0 and info['balance']==7
     if name.startswith('left_'): assert 'ATTACK_FACING=-1' in text,(name,'La fixture doit couvrir un vrai tir à gauche')
     if name=='periodic_damage': assert 'DAMAGE_TICK_VISIBLE=true' in text,(name,'Le contrôle doit montrer un dégât périodique réel')
     if name=='boss_without_hover': assert 'BOSS_STATUS_WITHOUT_HOVER=true' in text,(name,text)

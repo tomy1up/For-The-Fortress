@@ -1,262 +1,96 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.68 — 27 octobre 2026
+Version : 0.69 — 27 octobre 2026
 
 JOUER
 
-1. Si vous avez reçu une archive ZIP, extrayez tout son contenu.
-2. Ouvrez le dossier extrait, puis lancez For_the_Fortress.exe.
-3. Choisissez Alliance ou Horde, un emplacement E1 à E6 et vos défenseurs.
-4. Lancez la première vague. Les suivantes partent automatiquement après 30 secondes.
-5. Achetez, améliorez ou vendez pendant ce délai ; cliquez sur le bouton de lancement
-   pour partir plus tôt si vous êtes prêt.
-6. Après les vagues 3, 6 et 9, le jeu attend votre choix de bonus sans limite de temps,
-   puis vous accorde 30 secondes de préparation. Survivez aux dix vagues.
+1. Extraire tout le ZIP, puis lancer For_the_Fortress.exe.
+2. À l’accueil, consulter les talents puis choisir sa faction.
+3. Installer sa défense et lancer la première vague manuellement.
+4. Les suivantes partent automatiquement après 30 secondes de préparation.
+5. Après les vagues 3, 6 et 9, choisir un bonus de la partie en cours.
+6. Après la victoire finale ou la défaite, consulter le bilan puis préparer ses talents.
 
-Aucune installation de Godot ni connexion Internet n’est nécessaire pour jouer.
-Cette version est destinée à Windows 64 bits sur processeur Intel/AMD (x86_64).
-La fenêtre de référence est de 1280 × 800. Les visuels sont temporaires.
-Cette archive contient un prototype non signé, pas un installateur.
+UNE PARTIE COMPLÈTE
 
-COMMANDES ET INFORMATIONS
+Une fois la faction choisie, aucun retour à l’accueil et aucun accès aux arbres de
+talents permanents ne sont possibles avant la victoire finale ou la défaite.
+Les constructions, achats, ventes et améliorations d’unités entre les vagues restent
+possibles. Les choix de bonus de la partie ne sont pas les arbres de talents permanents.
 
-Clic sur la carte : choisir un emplacement ou inspecter une unité.
-Sur une place libre, survoler un bouton de recrutement pour voir la portée avant achat.
-Le cercle et les portions de route en bleu montrent les positions ennemies à portée.
-Le focus clavier montre aussi cet aperçu. Aucun or dépensé avant le clic d’achat.
-Améliorer : niveaux 2, 3, puis choix entre deux branches au niveau 4.
-Survoler Niveau 2 ou Niveau 3 : comparer les valeurs avant/après et la portée prévue.
-Spécialisation : panneau latéral ; survoler chaque bouton pour voir sa portée sur la carte.
-Comparer ne dépense rien. Cliquer valide et paie ; Annuler conserve le niveau actuel.
-Le choix de spécialisation suspend le compte à rebours. Le confirmer ou l’annuler reprend le temps
-restant ; annuler ne dépense rien et conserve le niveau 3.
-Vendre : le montant remboursé est affiché avant la vente.
-Survol d’un ennemi en combat : nom, PV, danger pour la forteresse et récompense.
-L’ennemi est marqué ; le combat continue et votre défenseur reste sélectionné.
-Vitesse ×1/×2 : change la durée réelle du combat, pas les 30 secondes de préparation.
-Bonus acquis : relire les effets sélectionnés ; le décompte de préparation est suspendu
-pendant la lecture. Pendant un combat, le combat continue.
-Synergies : sélectionner une unité pour voir ses partenaires reliés sur la carte.
-Traits dorés : proximité ; traits bleus : spécialisations.
-Survol de la ligne des synergies : partenaires, effets et conditions de chaque association.
-La lecture au survol ne suspend pas le combat ni le décompte.
-Préparation : la prochaine vague est affichée en haut à droite (groupes, PV et danger).
-Survoler un groupe : horaires d’apparition, intervalle et récompense individuelle.
-Le gain maximal affiché exige d’éliminer tous les ennemis ; la lecture ne suspend pas le délai.
-Survol du bouton de lancement : la composition reste aussi disponible.
-Nouvel essai / Rejouer : repartir sans défense ni bonus, avec 150 or et 20 PV.
-En fin de partie, Bilan affiche les résultats de chaque vague, votre défense et vos bonus.
-Survoler une ligne du bilan montre les unités et bonus au départ de la vague.
-Les temps sont ceux de la simulation, hors préparations et choix.
-Le bilan est effacé au nouvel essai ; il ne sauvegarde pas la partie.
-Fermer la fenêtre : quitter. Aucune sauvegarde de partie n’est prévue dans ce prototype.
+Le prototype contient actuellement une carte de dix vagues. Pour un futur parcours
+de plusieurs cartes, une carte remportée ne sera pas la fin de la partie : les gains
+resteront provisoires et les arbres inaccessibles jusqu’au résultat global.
 
-RETOUR DE TEST
+RESSOURCES ET PROGRESSION PERMANENTE
 
-La fiche Fiche_essai_joueur.md accompagne cette version ; elle peut être ouverte
-avec un éditeur de texte. Relevez votre faction, vos placements, vos choix,
-les passages difficiles et les éléments mal compris. Le temps de combat affiché
-ne mesure pas le temps passé à préparer ou à lire.
+Chaque vague terminée contribue son numéro aux gains provisoires du camp joué.
+Ces ressources ne sont pas disponibles pendant la partie. Le versement a lieu en une
+fois après la victoire finale ou la défaite ; une vague perdue ne rapporte rien.
+Une victoire finale ajoute 5 ressources. Une carte intermédiaire ne donne pas de prime.
 
-Le prototype enchaîne les vagues après le premier lancement manuel.
-Les choix d’améliorations attendent votre intervention. Aucun ajustement d’équilibrage
-des unités ou ennemis.
-Les prix et statistiques restent des hypothèses à tester.
+Une fois acquis et enregistrés, ressources, points achetés, talents affectés et compteurs
+de respécialisation sont conservés sur le PC après fermeture et relance du jeu.
+Ils sont indépendants du dossier contenant l’exécutable : changer de version du ZIP
+ne doit pas remettre cette progression à zéro.
 
-FICHIERS FOURNIS
+Le bilan Essentiel distingue les gains enregistrés des gains en attente d’écriture.
+Il montre le solde de la faction et les points achetables. Préparer mes talents quitte
+le bilan et ouvre les arbres de cette faction pour la prochaine partie.
 
-For_the_Fortress.exe : jeu et données intégrées.
-LIRE_MOI.txt : cette notice.
-Fiche_essai_joueur.md : relevé de test facultatif.
-LICENCES_GODOT.txt : licence du moteur et notices des composants intégrés.
-VERSION.json : version, sources et empreinte de l’exécutable.
+Si l’écriture échoue, Réessayer la sauvegarde relance l’enregistrement. Après réussite,
+un second clic ouvre les talents. Les reprises automatiques sont espacées de deux secondes.
+Un profil illisible est protégé contre l’écrasement ; son erreur reste consultable.
 
-Godot Engine : https://godotengine.org/
-For the Fortress! est un nom de travail ; sa disponibilité juridique reste à confirmer.
+Fermer le jeu pendant une partie ne supprime pas la progression permanente déjà acquise.
+Le prototype ne reprend toutefois pas la partie en cours : ses gains provisoires ne
+sont pas versés sans victoire finale ou défaite. Les gains finaux encore en attente
+d’écriture ne sont pas garantis si le jeu est fermé avant leur enregistrement.
 
-LIRE LES COMBATS
-Les explosions du mage sont bleues, celles du sapeur orange, avec un contour au sol.
-Les ricochets verts du lanceur de haches indiquent leur sens par une flèche.
-Un losange violet au-dessus de la tête signale une malédiction encore active.
+TALENTS — BARÈME D’ESSAI
 
-COMPARER LES RECRUES
-Avant achat, survolez une recrue pour voir son rôle, ses dégâts, sa cadence,
-sa portée et son prix. Ces valeurs incluent les bonus et synergies actuels.
-La seconde ligne explique son effet particulier. Attendez un instant pour
-lire l’infobulle complète. Le clic est nécessaire pour recruter.
+Alliance et Horde ont leurs propres ressources, points et trois arbres. Un point coûte
+10 ressources. Il ne peut pas être utilisé dans les deux factions à la fois.
+Les lignes s’ouvrent après 0, 5 puis 10 points dépensés dans les lignes précédentes
+du même arbre. Les points d’une autre colonne ne contribuent pas à ce seuil.
 
-PERCÉES ENNEMIES
-Quand des ennemis atteignent la forteresse, un signal indique les PV perdus
-et leur nombre. Le compteur de vie change brièvement de couleur.
-Ce signal reste visible 2,5 secondes, également à vitesse ×2.
+Survoler une icône ou la sélectionner au clavier montre son effet, ses conditions et
+le bonus permanent du prochain rang. Cet aperçu ne dépense rien. Les deux spécialités
+finales d’un arbre sont exclusives. Le contenu actuel accepte 36 points par faction.
 
-CHOISIR UN BONUS
-Chaque offre indique ses effets sur votre défense actuelle, avant/après.
-Faites défiler la liste dans sa colonne si plusieurs défenseurs sont concernés.
-PV, réductions de prix et dégâts contre les grandes cibles sont distingués.
-La lecture ne valide rien : cliquez sur Choisir ce bonus quand vous êtes prêt.
+Réinitialiser les trois arbres rend les points déjà achetés. Prix successifs :
+2, 4, 6, 8, puis 10 ressources au maximum. Compteurs propres à chaque faction.
+Une confirmation précède le paiement. Annuler ne prélève rien.
+Les talents sont figés pour toute la partie une fois la faction choisie.
+Effets, prix, paliers et rythme de progression restent à équilibrer.
 
-COHÉRENCE DES FACTIONS
-Les bonus parlent des unités et effets de votre camp, dans les offres comme
-dans le récapitulatif. Les deux camps conservent les douze bonus communs.
-Les améliorations et spécialisations concernent uniquement vos défenseurs.
+SAUVEGARDE LOCALE
 
-NOUVEAUTÉS DE LISIBILITÉ
-La fiche ennemie dit explicitement que la forteresse perd des PV si l’ennemi
-l’atteint, et que vous gagnez de l’or en l’éliminant. Les nombres sont arrondis
-à deux décimales au maximum pour la lecture, sans changer les calculs.
-Le chemin couvert par une unité sélectionnée est doré, les aperçus sont bleus.
-Les aides de vente et d’amélioration expliquent leurs montants et soldes futurs.
+Profil : %APPDATA%\Godot\app_userdata\For the Fortress! — La Vallée du Gué\progression_factions_v1.json
+Le profil est conservé dans le dossier de données de l’utilisateur, hors des exports du jeu.
+Son contenu est désormais chiffré et protégé par Windows pour le compte utilisateur.
+Malgré son extension historique .json, il ne se modifie pas dans un éditeur de texte.
+Modifier ses données le rend invalide ; un secours protégé valide peut être récupéré.
+Un ancien JSON en clair n’est pas importé automatiquement : il est conservé et signalé
+pour conversion contrôlée. Aucune progression existante n’est remise à zéro en silence.
+Un fichier .bak, lui aussi protégé, garde l’état valide précédent. La copie .v067.bak conserve le profil
+avant la migration des anciens arbres. La v0.69 ne réinitialise pas les profils v0.68.
+Les tests et captures utilisent des profils isolés et ne modifient pas le vrai profil.
 
-VITESSE ×10 TEMPORAIRE
-Le bouton alterne ×1, ×2 et ×10 debug. Le ×10 sert au débogage et sera retiré
-plus tard. Les 30 secondes de préparation restent réelles ; les choix de bonus
-attendent toujours votre décision.
+COMMANDES ET RÈGLES DU PROTOTYPE
 
-RAPPORT DE PARTIE
-Après une victoire ou une défaite, ouvrez Bilan puis Exporter le rapport.
-Le jeu écrit rapport.md et rapport.json sur ce PC. Cliquez ensuite sur
-Ouvrir le dossier du rapport pour les retrouver. Les fichiers contiennent
-les vagues, ressources, décisions et offres de bonus ; aucun envoi réseau.
-Ce rapport sert au débogage et ne permet pas de reprendre une partie.
+Cliquer sur E1 à E6 ou utiliser les touches 1 à 6 du clavier/pavé numérique.
+Les unités attaquent automatiquement. Deux exemplaires maximum par type de défenseur.
+Construire, améliorer et vendre uniquement entre les vagues.
+Quatre niveaux par unité ; deux spécialisations au dernier niveau.
+Vendre rend 70 % de l’or réellement investi, arrondi à l’inférieur.
+Vitesse : ×1, ×2 et ×10 de débogage. Le délai de préparation reste de 30 secondes réelles.
+Exporter le rapport depuis le bilan pour conserver le détail de la tentative.
 
-APERÇU DES SYNERGIES
-Avant un recrutement ou une spécialisation, les liens bleus pointillés
-montrent les partenaires prévus. Survolez le bouton pour lire les gains.
-Plusieurs partenaires ne multiplient pas un même bonus. Les statistiques
-de l’aperçu incluent déjà ces synergies. Aucun paiement avant confirmation.
+LIMITES
 
-BILAN DES DÉFENSEURS
-En fin de partie, ouvrez Bilan puis Défenseurs. Chaque recrue conserve ses
-attaques et les PV réellement retirés aux ennemis, avec la part contre le boss.
-Survolez une ligne pour distinguer impacts directs, rebonds ou explosions et
-malédictions selon son type. Les unités vendues restent dans ce bilan.
-Les tirs simultanés partagent les PV retirés proportionnellement à leurs dégâts.
-Les dégâts excédentaires ne sont pas comptés. Le rapport exporté inclut ces
-mesures ; elles ne suffisent pas à juger les synergies ou l’utilité d’une unité.
-
-SUIVRE LE BOSS
-Pendant le combat, sa jauge reste visible sans survol. Elle indique ses PV
-et la perte de vie de la forteresse s’il l’atteint, avec Défaite si nécessaire.
-La fiche au survol reste disponible pour la récompense et la malédiction.
-La jauge disparaît quand le boss n’est plus présent, sans annoncer à elle seule
-la fin de la vague : les autres ennemis doivent encore être arrêtés.
-
-SÉLECTION AU CLAVIER
-Les touches 1 à 6 de la rangée supérieure ou du pavé numérique sélectionnent
-E1 à E6, comme un clic sur la carte. Sur AZERTY, les touches physiques de
-la rangée supérieure fonctionnent aussi sans Maj. Ctrl, Alt et les raccourcis
-système restent ignorés. La sélection seule ne dépense pas d’or et ne suspend
-pas les 30 secondes de préparation. Les écrans de choix et le bilan la bloquent.
-
-DIALOGUES ET CLAVIER
-Pendant un choix ou la lecture du bilan, les commandes de fond sont
-verrouillées : Tab reste sur le panneau visible et ne peut pas atteindre
-Nouvel essai, les achats ou la vitesse derrière celui-ci. Fermez le panneau
-ou validez le choix pour retrouver les commandes normales.
-Un bouton du panneau reçoit le focus initial. Tab change de commande et
-Entrée l’active. Le choix de spécialisation commence sur Annuler.
-Échap ferme le récapitulatif ou le bilan et annule un choix de spécialisation
-sans dépense. Les choix de faction et de bonus obligatoire restent ouverts.
-Dans le bilan, survolez la vague 10 pour lire le sort du boss et son temps
-de résolution. Le rapport exporté conserve aussi ces observations.
-
-CHOISIR SANS TOUT LIRE
-Les cartes de bonus résument le gain et les défenseurs concernés.
-Voir les détails affiche la règle complète et les valeurs avant/après.
-Retour ou Échap ramène aux cartes ; seul Choisir ce bonus valide l’offre.
-Les bonus acquis peuvent aussi être détaillés depuis Bonus acquis.
-Dans les spécialisations, Voir les chiffres affiche les comparaisons exactes.
-Consulter ces informations ne dépense rien et conserve les pauses existantes.
-
-DÉFENSEURS PLUS RECONNAISSABLES
-Les six défenseurs possèdent des silhouettes cartoon et des équipements distincts.
-Un mouvement bref accompagne leurs vrais tirs, sans changer leur cadence ni leurs dégâts.
-
-ATTAQUES PLUS LISIBLES
-Flèches, carreaux, orbes, haches, bombes et sorts ont des formes distinctes.
-Les impacts et explosions montrent les touches réellement résolues. Les dégâts restent immédiats.
-
-FICHES SIMPLIFIÉES
-Les fiches présentent le rôle, les dégâts utiles et le prix des recrues et améliorations.
-Voir les chiffres affiche les valeurs et règles complètes ; Vue simplifiée revient au résumé.
-Pour comparer une recrue, survolez son bouton après avoir choisi le mode de lecture.
-
-BILAN ESSENTIEL
-Le bilan s’ouvre sur le résultat, trois chiffres clés et les vagues où des PV ont été perdus.
-Vagues et Défenseurs conservent les détails ; le rapport local reste exportable.
-
-ENNEMIS PLUS RECONNAISSABLES
-Les huit profils ont des silhouettes et équipements cartoon distincts.
-Leurs statistiques, déplacements, récompenses et dégâts à la forteresse restent identiques.
-
-PERSONNAGES HORDE ILLUSTRÉS
-Le troll, le gobelin et le chaman utilisent les images transparentes issues du style validé.
-Leurs niveaux et spécialisations restent indiqués par les badges. Une pose par classe, avec recul bref au tir.
-
-PERSONNAGES ALLIANCE ILLUSTRÉS
-L’archer elfe, l’arbalétrier nain et le mage humain rejoignent le même style cartoon.
-Une pose par classe avec recul au tir, niveaux et spécialisations indiqués par les badges.
-
-ATTAQUES ORIENTÉES
-Pendant le combat, chaque défenseur regarde du côté de son dernier tir.
-Recul, lancer ou légère élévation distinguent les classes. Les badges restent droits.
-Les mouvements accompagnent les vrais tirs et ne changent pas le moment des dégâts.
-
-RÉACTION AUX DÉGÂTS
-Un ennemi touché s’éclaircit brièvement. La portion de PV perdue s’efface dans sa jauge.
-Les dégâts périodiques du chaman déclenchent aussi ce retour visuel.
-Les dégâts et éliminations restent immédiats ; aucun chiffre flottant n’est ajouté.
-
-TROIS ENNEMIS ILLUSTRÉS
-Grouillant : capuche verte et couteau. Pillard : tunique rouge, casque et épée.
-Sprinter : foulard rouge et course penchée. Les images suivent le sens du chemin.
-Les cinq autres profils gardent leur dessin actuel. Les règles de combat restent identiques.
-
-ORIGINE DES ATTAQUANTS
-Les loups, sangliers et ours sont neutres et communs aux deux campagnes.
-Si vous jouez Horde, les autres attaquants appartiennent à l’Alliance ; inversement pour l’Alliance.
-Ces ennemis ont leurs propres noms et illustrations, distincts des défenseurs à construire.
-R-12 vise les ours, les unités lourdes, les gardes d’élite et le boss de votre campagne.
-L’inspection indique l’origine ; les détails du bonus donnent les noms exacts de ses cibles.
-
-Après un achat, les aides de la commande qui apparaît sous la souris attendent un nouveau survol.
-
-V0.66 : palette des attaquants Horde corrigée selon la grande planche de référence.
-
-PROGRESSION PERMANENTE — BARÈME D’ESSAI V0.68
-
-Au choix de faction, ouvrez Talents Alliance ou Talents Horde. La ressource de chaque
-camp est gagnée uniquement avec ce camp : une vague terminée rapporte son numéro
-(vague 1 : 1, vague 2 : 2, etc.). Une victoire ajoute 5 ressources. Les gains sont
-enregistrés après chaque vague terminée et conservés même en cas de défaite.
-
-Un point coûte 10 ressources. Les lignes de chaque arbre s’ouvrent après 0, 5 puis 10 points
-dépensés dans les lignes précédentes de ce même arbre. Les deux talents finaux sont exclusifs. Les effets et prix sont des hypothèses de prototype, non équilibrées.
-Les talents sont figés pour la partie une fois la faction choisie. Pour les changer,
-repartez au choix de faction après un nouvel essai. Les points appartiennent à leur camp.
-
-Réinitialiser les trois arbres rend les points achetés. Prix successifs : 2, 4, 6, 8,
-puis 10 ressources au maximum. Chaque faction possède son propre compteur de resets.
-Le coût est confirmé avant paiement ; annuler ne coûte rien.
-
-Profil local : %APPDATA%\Godot\app_userdata\For the Fortress! — La Vallée du Gué\progression_factions_v1.json
-Un fichier .bak conserve le profil précédent valide. Ce profil ne sauvegarde pas une
-partie en cours. Les contrôles automatisés et captures ne modifient pas ce profil.
-En cas d’échec de sauvegarde, un message apparaît : les gains non écrits ne sont pas
-garantis à la fermeture. Ne pas supprimer les fichiers pour résoudre une erreur.
-
-ARBRES VERTICAUX — V0.68
-
-Chaque colonne a son propre compteur de points investis. Dépenser dans une autre
-colonne ne débloque pas ses lignes. Survolez une icône ou sélectionnez-la au clavier
-pour lire son effet, son prix et le nombre de points encore nécessaires.
-
-Le premier talent possède cinq rangs, les deux talents intermédiaires trois rangs
-chacun, puis deux spécialités finales exclusives ont un rang chacune.
-Le contenu actuel permet d’investir jusqu’à 36 points par faction.
-
-À la première ouverture d’un profil v0.67, les affectations sont remises à zéro sans
-frais. Vos ressources, points achetés et compteurs de resets sont conservés. Une copie
-du profil original est gardée dans progression_factions_v1.json.v067.bak. Le nom du
-profil reste identique ; son format interne évolue vers le schéma 2.
-Les effets et seuils restent un barème de prototype à équilibrer.
+Windows x64, Godot 4.7.2 et Windows PowerShell pour la protection locale des sauvegardes.
+Visuels et icônes provisoires. La protection locale ne constitue pas un anti-triche serveur. Aucun Godot installé ni accès
+réseau requis pour jouer. Pas de sauvegarde de partie en cours ni de progression cloud.
+Les scénarios de contrôle de cartes successives ne constituent pas de nouvelles cartes.
+Licences du moteur : LICENCES_GODOT.txt.
+For the Fortress! reste un nom de travail dont la disponibilité juridique est à confirmer.

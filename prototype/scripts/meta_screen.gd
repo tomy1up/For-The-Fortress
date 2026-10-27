@@ -104,10 +104,10 @@ func _ready() -> void:
 			var label: Label = label_at(board,"",Rect2(pos+Vector2(-55,58),Vector2(162,38)),13)
 			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER;label.mouse_filter = Control.MOUSE_FILTER_STOP
 			label.mouse_entered.connect(_inspect.bind(index));descriptions.append(label)
-	var info := Panel.new();info.position = Vector2(32,628);info.size = Vector2(1216,84);add_child(info)
+	var info := Panel.new();info.position = Vector2(32,616);info.size = Vector2(1216,110);add_child(info)
 	var box := StyleBoxFlat.new();box.bg_color = Color("132820");box.set_corner_radius_all(6);info.add_theme_stylebox_override("panel",box)
-	detail_title = label_at(info,"",Rect2(16,6,1184,28),18)
-	detail_text = label_at(info,"",Rect2(16,36,1184,44),14)
+	detail_title = label_at(info,"",Rect2(16,4,1184,26),18)
+	detail_text = label_at(info,"",Rect2(16,32,1184,72),14)
 	reset_button = button_at(self,"",Rect2(32,730,320,42),_request_reset)
 	button_at(self,"Retour · Échap",Rect2(940,730,308,42),close)
 	notice = label_at(self,"",Rect2(370,730,550,58),12)
@@ -169,7 +169,33 @@ func _inspect(index: int) -> void:
 	var definition: Array = Talents.TREES[faction][tree][node+1]
 	detail_title.text = "%s · Rang %d/%d" % [definition[0],bank.ranks[index],Talents.MAX_RANKS[node]]
 	var reason: String = Talents.allocation_error(bank.ranks,index,int(bank.points))
-	detail_text.text = definition[1]+(" Choix exclusif entre les deux spécialités." if node >= 3 else "")+"\n"+("Profil protégé : enregistrement à vérifier." if profile.blocked else reason if not reason.is_empty() else "Coût : 1 point · Cliquez pour investir un rang.")
+	detail_text.text = definition[1]+(" Choix exclusif entre les deux spécialités." if node >= 3 else "")
+	var gain: String = _rank_gain(index)
+	if not gain.is_empty(): detail_text.text += "\nProchain rang · "+gain
+	detail_text.text += "\n"+("Profil protégé : enregistrement à vérifier." if profile.blocked else reason if not reason.is_empty() else "Coût : 1 point · Cliquez pour investir un rang.")
+
+func _number(value: float) -> String:
+	return ("%.2f" % value).trim_suffix("0").trim_suffix("0").trim_suffix(".").replace(".",",")
+
+func _rank_gain(index: int) -> String:
+	var preview: Dictionary = Talents.rank_preview(faction,profile.data.banks[faction].ranks,index)
+	if preview.is_empty(): return ""
+	var parts: Array[String] = []
+	if preview.hp_before != preview.hp_after:
+		parts.append("PV supplémentaires : +%d → +%d" % [preview.hp_before,preview.hp_after])
+	var groups: Dictionary = {}
+	for unit in preview.units:
+		var changes: Array[String] = []
+		for component in ["direct","secondary","curse","range"]:
+			if is_equal_approx(unit.before[component],unit.after[component]): continue
+			var name: String = {"direct":"tirs","secondary":"rebonds" if unit.type == 3 else "explosions","curse":"malédictions","range":"portée"}[component]
+			var scale: float = 1.0 if component == "range" else 100.0
+			changes.append("%s +%s → +%s%s" % [name,_number(unit.before[component]*scale),_number(unit.after[component]*scale),"" if component == "range" else " %"])
+		var key: String = ", ".join(changes)
+		if not groups.has(key): groups[key] = []
+		groups[key].append(["Archer","Arbalétrier","Mage","Lanceur de haches","Sapeur","Chaman"][unit.type])
+	for key in groups: parts.append("%s : %s" % [" / ".join(groups[key]),key])
+	return " · ".join(parts)
 
 func _buy() -> void:
 	profile.buy_point(faction);refresh()

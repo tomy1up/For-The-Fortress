@@ -1,6 +1,7 @@
 extends SceneTree
 const Model = preload("res://scripts/valley_model.gd")
 const Main = preload("res://scripts/main.gd")
+# Les nettoyages de nouvelle partie sont testés après une défaite simulée ; les verrous de parcours sont couverts séparément.
 var checks: int = 0
 var failures: int = 0
 func check(ok: bool, message: String) -> void:
@@ -86,7 +87,7 @@ func run_checks() -> void:
 		check(scene.model.defenders[0].level == 4 and scene.model.gold == gold-150 and scene.model.get_stats(0) == future and scene.map_view.upgrade_preview.is_empty(),"Confirmer applique exactement l'aperçu et paie une seule fois")
 		scene._choose_branch(0)
 		check(scene.model.gold == gold-150,"Seconde confirmation sans effet")
-		scene._reset()
+		scene.model.phase = "defeat"; scene._reset()
 		check(scene.map_view.upgrade_preview.is_empty() and scene.hovered_branch == -1 and scene.focused_branch == -1,"Réinitialisation sans aperçu résiduel")
 		scene.free()
 	var scene = Main.new(); root.add_child(scene); scene.set_process(false); scene._choose_faction(0)

@@ -1,7 +1,9 @@
 extends RefCounted
 ## Transactions persistées avant publication en mémoire. Deux banques indépendantes.
 const Talents = preload("res://scripts/meta_talents.gd")
+const Codec = preload("res://scripts/profile_codec.gd")
 const DEFAULT_PATH: String = "user://progression_factions_v1.json"
+const WIN_REWARD: int = 5
 var path: String
 var error: String = ""
 var blocked: bool = false
@@ -13,6 +15,10 @@ static func fresh() -> Dictionary:
 
 static func bank() -> Dictionary:
 	return {"resource":0,"points":0,"resets":0,"ranks":Talents.empty_ranks()}
+
+static func resource_total(completed: int, victory: bool = false) -> int:
+	if completed < 0 or completed > 10: return 0
+	return int(completed*(completed+1)/2)+(WIN_REWARD if victory and completed == 10 else 0)
 
 func _init(save_path: String = DEFAULT_PATH) -> void:
 	path = save_path
@@ -28,14 +34,17 @@ static func valid(value: Variant) -> bool:
 		if not (Talents.Legacy.valid(item.get("ranks")) if value.schema == 1 else Talents.current_valid(item.get("ranks"))): return false
 		if Talents.spent(item.ranks) > item.points: return false
 	var run: Dictionary = value.run
-	return Talents.integer(run.get("id"),0,int(value.serial)) and Talents.integer(run.get("faction"),0,1) and Talents.integer(run.get("completed"),0,10) and run.get("victory") is bool and (not run.victory or run.completed == 10)
+	if not (Talents.integer(run.get("id"),0,int(value.serial)) and Talents.integer(run.get("faction"),0,1) and Talents.integer(run.get("completed"),0,10) and run.get("victory") is bool and (not run.victory or run.completed == 10)): return false
+	if run.has("settled") or run.has("previous_maps"):
+		if not run.get("settled") is bool or not Talents.integer(run.get("previous_maps"),0,1000000000): return false
+		if not run.settled and (run.completed != 0 or run.victory or run.previous_maps != 0): return false
+	return true
 
 func _read(file_path: String) -> Variant:
 	if not FileAccess.file_exists(file_path): return null
 	var file := FileAccess.open(file_path,FileAccess.READ)
-	if file == null or file.get_length() > 65536: return null
-	var parser := JSON.new()
-	return parser.data if parser.parse(file.get_as_text()) == OK else null
+	if file == null or file.get_length() > 1048576: return null
+	return Codec.decode(file.get_buffer(file.get_length()))
 
 func load_profile() -> bool:
 	if not FileAccess.file_exists(path) and not FileAccess.file_exists(path+".bak"): return true
@@ -47,7 +56,17 @@ func load_profile() -> bool:
 		error = "Profil restauré depuis sa sauvegarde de secours."
 		return true
 	blocked = true
-	error = "Profil illisible : progression protégée. Aucun fichier n’a été remplacé."
+	error = "Profil illisible ou modifié : progression protégée. Aucun fichier n’a été remplacé."
+	if _legacy_json(path) or _legacy_json(path+".bak"):
+		error = "Ancien profil non protégé : conversion contrôlée nécessaire. Fichiers conservés."
+	return false
+
+func _legacy_json(file_path: String) -> bool:
+	var file := FileAccess.open(file_path,FileAccess.READ)
+	if file == null: return false
+	for byte in file.get_buffer(mini(64,file.get_length())):
+		if byte in [9,10,13,32]: continue
+		return byte == 123
 	return false
 
 func _accept_loaded(value: Dictionary) -> bool:
@@ -60,7 +79,9 @@ func _accept_loaded(value: Dictionary) -> bool:
 		var archive := FileAccess.open(path+".v067.bak",FileAccess.WRITE)
 		if archive == null:
 			blocked = true;error = "Migration annulée : copie du profil précédent impossible.";return false
-		archive.store_string(JSON.stringify(value));archive.flush()
+		var sealed: PackedByteArray = Codec.encode(value)
+		if sealed.is_empty(): archive.close();blocked = true;error = "Protection Windows indisponible : migration annulée.";return false
+		archive.store_buffer(sealed);archive.flush()
 		var archive_error: Error = archive.get_error();archive.close()
 		if archive_error != OK or not valid(_read(path+".v067.bak")):
 			blocked = true;error = "Migration annulée : copie de secours incomplète.";return false
@@ -76,9 +97,11 @@ func _commit(candidate: Dictionary) -> bool:
 		if not blocked: error = "Opération de progression invalide."
 		return false
 	if path.is_empty(): data = candidate;error = "";return true # Profil éphémère réservé aux tests/captures.
+	var sealed: PackedByteArray = Codec.encode(candidate)
+	if sealed.is_empty(): error = "Protection Windows indisponible : enregistrement annulé.";return false
 	var file := FileAccess.open(path+".tmp",FileAccess.WRITE)
 	if file == null: error = "Impossible d’enregistrer la progression."; return false
-	file.store_string(JSON.stringify(candidate));file.flush()
+	file.store_buffer(sealed);file.flush()
 	var failure: Error = file.get_error();file.close()
 	if failure != OK or not valid(_read(path+".tmp")):
 		error = "Enregistrement incomplet : opération annulée."; return false
@@ -96,16 +119,18 @@ func begin_run(faction: int) -> int:
 	if faction not in [0,1]: return -1
 	var next: Dictionary = data.duplicate(true)
 	next.serial += 1
-	next.run = {"id":next.serial,"faction":faction,"completed":0,"victory":false}
+	next.run = {"id":next.serial,"faction":faction,"completed":0,"victory":false,"settled":false,"previous_maps":0}
 	return int(next.serial) if _commit(next) else -1
 
-func credit(run_id: int, faction: int, completed: int, victory: bool) -> bool:
-	if blocked or run_id <= 0 or data.run.id != run_id or data.run.faction != faction or completed < data.run.completed or completed > 10 or (victory and completed != 10): return false
-	if completed == data.run.completed and (not victory or data.run.victory): return true
+func credit(run_id: int, faction: int, completed: int, victory: bool, previous_maps: int = 0) -> bool:
+	# Une seule liquidation de partie ; les vagues/cartes en cours ne sont pas des versements.
+	if blocked or run_id <= 0 or data.run.id != run_id or data.run.faction != faction or completed < 0 or completed > 10 or previous_maps < 0 or (victory and completed != 10): return false
+	if not data.run.has("settled"): return false # Ancien parcours déjà crédité : ne pas le rémunérer à nouveau.
+	if data.run.settled: return completed == data.run.completed and victory == data.run.victory and previous_maps == data.run.previous_maps
 	var next: Dictionary = data.duplicate(true)
-	for wave in range(int(next.run.completed)+1,completed+1): next.banks[faction].resource += wave
-	if victory and not next.run.victory: next.banks[faction].resource += 5
-	next.run.completed = completed;next.run.victory = next.run.victory or victory
+	next.banks[faction].resource += resource_total(completed,victory)+previous_maps
+	next.run.completed = completed;next.run.victory = victory
+	next.run.settled = true;next.run.previous_maps = previous_maps
 	return _commit(next)
 
 func buy_point(faction: int) -> bool:
