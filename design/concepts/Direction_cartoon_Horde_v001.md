@@ -6,7 +6,9 @@
 
 Le porteur du projet a fourni une illustration de référence puis demandé de continuer dans cette direction : cartoon minimaliste, formes compactes, grandes têtes et mains, armes lisibles, contours épais, couleurs franches et ombres simples. Les personnages du jeu doivent conserver leur race et leur rôle. La référence sert à définir un langage visuel ; elle n’est pas un asset du jeu.
 
-## Proposition à examiner
+## Référence artistique validée
+
+Le 27 octobre 2026, le porteur du projet a explicitement retenu cette planche : « j'aime vraiment bien ce que tu as proposé, on va partir sur ce style ». Elle devient la référence de style pour les prochains personnages et leur adaptation au plateau.
 
 ![Planche Horde](Horde_cartoon_v001.png)
 
@@ -16,13 +18,13 @@ Cette première planche originale présente, de gauche à droite :
 - Sapeur gobelin : petite taille, peau verte, lunettes, sacoche et bombe.
 - Chaman orc : corps massif, robe violette, fourrure claire et bâton à totem.
 
-La planche est une proposition visuelle, pas une nouvelle décision de mécanique ni une validation du rendu final par le joueur. Le détail des ombres et les proportions pourront encore être simplifiés à la taille du plateau. Ce document ne fixe pas de nouvelles statistiques, de nouvel équipement achetable ou de nouvelle capacité.
+Le style de la planche est validé. Le détail des ombres, les proportions et la lisibilité des assets à la taille du plateau restent à vérifier pendant leur adaptation. Ce document ne fixe pas de nouvelles statistiques, de nouvel équipement achetable ou de nouvelle capacité.
 
 ## État d’intégration
 
-PNG de concept sur fond clair, destiné à l’examen de la direction artistique. Ce n’est pas une feuille de sprites d’animation et ce fichier n’est pas consommé par le prototype. La version jouable reste v0.59. Les silhouettes et animations existantes restent en place pendant cette préparation.
+PNG de concept sur fond clair, conservé comme référence artistique validée. Ce n’est pas une feuille de sprites d’animation et ce fichier n’est pas consommé par le prototype. La version jouable reste v0.59. Les silhouettes et animations existantes restent en place pendant cette préparation.
 
-La prochaine passe pourra produire les assets individuels et vérifier leur lisibilité à la taille de jeu à partir des retours sur cette planche. Le GDD principal conserve sa version v0.14 ; For the Fortress! demeure un nom de travail dont la disponibilité juridique est à confirmer.
+La prochaine passe produira les assets individuels dans ce style et vérifiera leur lisibilité à la taille de jeu. Les personnages des autres factions devront partager ce langage de formes tout en conservant leurs races, rôles et équipements. Le GDD principal conserve sa version v0.14 ; For the Fortress! demeure un nom de travail dont la disponibilité juridique est à confirmer.
 
 ## Provenance et consigne de génération
 

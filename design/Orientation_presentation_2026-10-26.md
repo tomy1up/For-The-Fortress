@@ -103,4 +103,8 @@ Les [huit silhouettes ennemies v0.59](Presentation_ennemis_v059.md) complètent 
 
 ## Précision de style — 27 octobre 2026
 
-Le porteur du projet a précisé la direction avec une référence illustrée : formes compactes, grandes têtes et mains, contours épais, couleurs franches, ombres simples et peu de détails. Les races, rôles et équipements des unités existantes restent la référence. La [première planche Horde](concepts/Direction_cartoon_Horde_v001.md) est une proposition originale à examiner ; son rendu n’est pas encore validé ni intégré au jeu. Version jouable conservée : v0.59.
+Le porteur du projet a précisé la direction avec une référence illustrée : formes compactes, grandes têtes et mains, contours épais, couleurs franches, ombres simples et peu de détails. Les races, rôles et équipements des unités existantes restent la référence. La [première planche Horde](concepts/Direction_cartoon_Horde_v001.md), créée à partir de cette direction, a ensuite été retenue explicitement comme référence de style ; voir la validation ci-dessous. Elle n’est pas encore intégrée au jeu. Version jouable conservée : v0.59.
+
+### Validation de la planche Horde — 27 octobre 2026
+
+Le porteur du projet a explicitement choisi le style de cette planche. Elle devient la référence artistique validée pour les prochains personnages : contours épais, couleurs franches, silhouettes expressives, formes compactes et équipements immédiatement reconnaissables. Les assets individuels et leur lisibilité à la taille du plateau restent à réaliser et à vérifier. La planche n’est pas encore intégrée au jeu ; version jouable conservée : v0.59.
