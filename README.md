@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.72 (28 octobre 2026)** : [repères visuels dans les arbres de talents](design/Reperes_talents_v072.md). Rangs à investir, maximums, prérequis et choix exclusifs sont distingués ; les paliers montrent leur progression. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.72).
+**Version v0.73 (28 octobre 2026)** : [aperçu de la respécialisation](design/Apercu_respecialisation_v073.md). Avant paiement : solde restant, points récupérés et prochain tarif plafonné. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.73).
 
 **Origine des ennemis — 27 octobre 2026** : la [règle et la répartition](design/Origine_ennemis_2026-10-27.md) sont mises en jeu dans la [v0.65](design/Catalogue_attaquants_v065.md). Loup, sanglier et ours restent communs. Les autres attaquants viennent du camp adverse ; le catalogue commun et les trois images humanoïdes v0.64 sont remplacés.
 

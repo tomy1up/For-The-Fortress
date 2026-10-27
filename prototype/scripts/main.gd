@@ -405,6 +405,7 @@ func _ready() -> void:
 			meta_profile.data.banks[capture_faction].points = 14
 			meta_profile.data.banks[capture_faction].ranks = [5,3,2,1,0,1,0,0,0,0,0,0,0,0,0]
 			meta_profile.data.banks[capture_faction].resets = 2
+			if "--capture-reset-cap" in OS.get_cmdline_user_args(): meta_profile.data.banks[capture_faction].resets = 20
 			if "--capture-meta-no-points" in OS.get_cmdline_user_args():
 				meta_profile.data.banks[capture_faction].points = Model.MetaTalents.spent(meta_profile.data.banks[capture_faction].ranks)
 				meta_profile.data.banks[capture_faction].resource = 0
@@ -412,7 +413,10 @@ func _ready() -> void:
 			if "--capture-meta-preview" in OS.get_cmdline_user_args():
 				meta_menu._inspect(5)
 				print("META_RANK_PREVIEW=",meta_menu.detail_text.text.contains("Prochain rang"))
-			if "--capture-meta-reset" in OS.get_cmdline_user_args(): meta_menu._request_reset()
+			if "--capture-meta-reset" in OS.get_cmdline_user_args():
+				meta_menu._request_reset()
+				var quote: Dictionary = meta_menu.reset_quote
+				print("RESPEC_SNAPSHOT=",JSON.stringify({"isolated":meta_profile.path.is_empty(),"visible":meta_menu.confirm.visible,"price":quote.price,"balance_after":quote.balance_after,"free_before":quote.free_before,"free_after":quote.free_after,"next_price":quote.next_price,"dialog":meta_menu.confirm.dialog_text}))
 			print("META_CAPTURE_ISOLATED=",meta_profile.path.is_empty())
 			if "--capture-profile-protection" in OS.get_cmdline_user_args():
 				var test_path: String = "user://test_packaged_protection_%d.json" % Time.get_ticks_usec()

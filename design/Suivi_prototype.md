@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 28 octobre 2026 — prototype v0.72, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 28 octobre 2026 — prototype v0.73, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -362,3 +362,7 @@ Deux colonnes présentent ressources, points actifs et à affecter, PV initiaux 
 ## v0.72 — Repères de talents et progression des paliers, 28 octobre 2026
 
 Repères sur les icônes pour distinguer rang investissable, maximum, palier fermé, spécialité exclue et point à acheter. Progression chiffrée et jauges par palier ; état rappelé dans le détail au survol/clavier. Règles, prix, effets et sauvegarde inchangés. [Détails et validation](Reperes_talents_v072.md).
+
+## v0.73 — Comprendre la respécialisation avant paiement, 28 octobre 2026
+
+Confirmation avec coût, solde restant, points à placer après remboursement et prochain prix plafonné. Annulation sans prélèvement, devis périmé refusé, confirmation invalidée à la fermeture ou au changement de faction. Compteurs, montants et sauvegarde inchangés. [Détails et validation](Apercu_respecialisation_v073.md).

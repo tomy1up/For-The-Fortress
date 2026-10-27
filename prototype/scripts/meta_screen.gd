@@ -77,6 +77,7 @@ var detail_title: Label
 var detail_text: Label
 var inspected: int = 0
 var confirm: ConfirmationDialog
+var reset_quote: Dictionary = {}
 
 func label_at(parent: Control, text: String, rect: Rect2, font_size: int = 16) -> Label:
 	var label := Label.new();label.text = text;label.position = rect.position;label.size = rect.size
@@ -127,14 +128,15 @@ func _ready() -> void:
 	notice = label_at(self,"",Rect2(370,730,550,58),12)
 	confirm = ConfirmationDialog.new();confirm.title = "Réinitialiser les talents"
 	confirm.ok_button_text = "Payer et réinitialiser";confirm.cancel_button_text = "Annuler"
-	confirm.confirmed.connect(_reset);add_child(confirm);hide()
+	confirm.confirmed.connect(_reset);confirm.canceled.connect(_cancel_reset);add_child(confirm);hide()
 
 func open(for_profile: RefCounted, for_faction: int) -> void:
 	if for_profile == null or for_faction not in [0,1]: return
+	_cancel_reset()
 	profile = for_profile;faction = for_faction;inspected = 0;refresh();show();nodes[0].grab_focus()
 
 func close() -> void:
-	confirm.hide();hide()
+	_cancel_reset();hide()
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if visible and event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
@@ -233,9 +235,31 @@ func _allocate(index: int) -> void:
 		profile.allocate(faction,index)
 	refresh()
 
+func _respec_preview() -> Dictionary:
+	if profile == null or profile.blocked: return {}
+	var bank: Dictionary = profile.data.banks[faction]
+	var active: int = Talents.spent(bank.ranks)
+	var price: int = profile.reset_price(faction)
+	if active == 0 or bank.resource < price: return {}
+	return {"faction":faction,"before":bank.duplicate(true),"price":price,"balance_after":int(bank.resource)-price,"active":active,"free_before":int(bank.points)-active,"free_after":int(bank.points),"next_price":Talents.RESET_PRICES[mini(int(bank.resets)+1,Talents.RESET_PRICES.size()-1)]}
+
 func _request_reset() -> void:
-	confirm.dialog_text = "Payer %d ressources %s pour récupérer %d points ?\nLes trois arbres de cette faction seront réinitialisés.\nL’autre faction reste inchangée." % [profile.reset_price(faction),"Alliance" if faction == 0 else "Horde",Talents.spent(profile.data.banks[faction].ranks)]
-	confirm.popup_centered(Vector2i(610,190))
+	_cancel_reset()
+	reset_quote = _respec_preview()
+	if reset_quote.is_empty(): return
+	var camp: String = "Alliance" if faction == 0 else "Horde"
+	confirm.dialog_text = "%s · Réinitialiser les trois arbres\n\nCoût : %d ressources · Solde : %d → %d\nPoints à placer : %d → %d (+%d rendus)\nTous les talents seront retirés ; les points restent achetés.\nProchaine réinitialisation : %d ressources (plafond : %d).\n\nL’autre faction conserve sa progression." % [camp,reset_quote.price,reset_quote.before.resource,reset_quote.balance_after,reset_quote.free_before,reset_quote.free_after,reset_quote.active,reset_quote.next_price,Talents.RESET_PRICES[-1]]
+	confirm.popup_centered(Vector2i(650,300))
+
+func _cancel_reset() -> void:
+	reset_quote = {}
+	confirm.hide()
 
 func _reset() -> void:
-	profile.respec(faction);refresh()
+	if profile == null: return
+	var current: Dictionary = _respec_preview()
+	var matches: bool = not reset_quote.is_empty() and current == reset_quote and visible
+	_cancel_reset()
+	if matches: profile.respec(faction)
+	refresh()
+	if not matches: notice.text = "La préparation a changé. Vérifiez le nouvel aperçu avant de réinitialiser."
