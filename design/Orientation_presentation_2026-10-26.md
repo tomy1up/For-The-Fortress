@@ -120,3 +120,7 @@ Les [trois assets individuels Alliance](Assets_Alliance_v061.md) complètent les
 ## Animation des six illustrations — v0.62, 27 octobre 2026
 
 L’[orientation et les mouvements d’attaque](Animations_attaque_v062.md) rendent les tirs plus explicites : les défenseurs s’orientent à gauche ou à droite selon leur dernier tir et bougent selon leur classe. Les dégâts sont toujours immédiats, les bonus et règles restent identiques. Les armes ne sont pas encore articulées indépendamment.
+
+## Réaction des ennemis aux coups — v0.63, 27 octobre 2026
+
+La [réaction aux dégâts](Reaction_degats_v063.md) relie visuellement les pertes de PV aux impacts et aux dégâts périodiques existants : éclaircissement court du corps et portion perdue de la jauge qui s’efface. Aucun chiffre flottant ni changement d’équilibrage.

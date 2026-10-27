@@ -276,3 +276,7 @@ Archer elfe, arbalétrier nain et mage humain illustrés dans le style cartoon r
 ## v0.62 — Orientation et mouvements d’attaque, 27 octobre 2026
 
 Les six défenseurs regardent vers le côté de leur dernier vrai tir, conservé entre deux attaques pendant le combat. Mouvement propre à chaque classe, miroir des points de départ des projectiles, badges et ombres stables. 37 suites, 15 075 contrôles Godot dont 174 nouveaux, 16 tests Python et contrats du GDD réussis. Aucun changement de combat ou d’équilibrage. [Détail](Animations_attaque_v062.md).
+
+## v0.63 — Réaction aux dégâts, 27 octobre 2026
+
+Éclaircissement bref des ennemis touchés et extinction de la portion de PV perdue dans leur jauge. Lecture des pertes réelles, incluant les ticks du chaman, sans chiffre flottant ni modification de combat. 38 suites, 15 138 contrôles Godot dont 63 nouveaux, 16 tests Python et contrats du GDD réussis. [Détail](Reaction_degats_v063.md).

@@ -8,6 +8,8 @@ const AXIS := Vector2(27, 13.5)
 const INK := Color("d9e4d7")
 const SLOT_FILL := Color("213e3b")
 const IMPACT_DURATION := 0.32 # Secondes de simulation, comme les autres effets du combat.
+const DAMAGE_TRAIL_DURATION := 0.40
+const HIT_FLASH_DURATION := 0.16
 var model: RefCounted
 var selected: int = -1
 var purchase_preview: Dictionary = {}
@@ -32,6 +34,28 @@ static func range_outline(center: Vector2, radius: float) -> PackedVector2Array:
 
 static func impact_opacity(age: float) -> float:
 	return clampf(1.0 - age / IMPACT_DURATION, 0.0, 1.0) if age >= 0.0 else 0.0
+
+static func damage_opacity(age: float, duration: float = DAMAGE_TRAIL_DURATION) -> float:
+	return clampf(1.0-age/duration,0.0,1.0) if age >= 0.0 and duration > 0.0 else 0.0
+
+static func damage_span(event: Dictionary, maximum: float) -> Vector2:
+	if maximum <= 0.0: return Vector2.ZERO
+	return Vector2(clampf(event.hp_after/maximum,0.0,1.0),clampf(event.hp_before/maximum,0.0,1.0))
+
+func recent_enemy_damage(enemy_id: int) -> Array[Dictionary]:
+	var recent: Array[Dictionary] = []
+	if model == null or not model.active: return recent
+	for index in range(model.damage_events.size()-1,-1,-1):
+		var event: Dictionary = model.damage_events[index]
+		var age: float = model.elapsed-event.time
+		if age >= DAMAGE_TRAIL_DURATION: break
+		if event.enemy_id == enemy_id and age >= 0.0: recent.append(event)
+	return recent
+
+func enemy_hit_strength(events: Array[Dictionary]) -> float:
+	var strength: float = 0.0
+	for event in events: strength = maxf(strength,damage_opacity(model.elapsed-event.time,HIT_FLASH_DURATION))
+	return strength
 
 static func secondary_segments(shot: Dictionary) -> Array[PackedVector2Array]:
 	var segments: Array[PackedVector2Array] = []
@@ -297,11 +321,16 @@ func _draw() -> void:
 			if actor.has("defender"):
 				_draw_defender(actor.point, actor.defender.type, actor.defender.get("level", 1), actor.defender.get("branch", -1), defender_pose(actor.slot))
 			else:
-				_draw_pillager(actor.point, actor.enemy)
+				var feedback: Array[Dictionary] = recent_enemy_damage(actor.enemy.id)
+				_draw_pillager(actor.point, actor.enemy,enemy_hit_strength(feedback))
 				var ratio: float = clampf(actor.enemy.hp / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
 				var bar_position: Vector2 = actor.point + Vector2(-12, -39 * _enemy_scale(actor.enemy))
 				draw_rect(Rect2(bar_position, Vector2(24, 4)), Color("472f2a"))
 				draw_rect(Rect2(bar_position, Vector2(24 * ratio, 4)), Color("edcc80") if actor.enemy.id == inspected_enemy_id else Color("a1ba75"))
+				for event in feedback:
+					var span: Vector2 = damage_span(event,actor.enemy.get("max_hp",40.0))
+					if span.y > span.x:
+						draw_rect(Rect2(bar_position+Vector2(24*span.x,0),Vector2(24*(span.y-span.x),4)),Color(Color("f3dfba"),damage_opacity(model.elapsed-event.time)))
 		if model.active:
 			for shot in model.shots:
 				_draw_impact(shot, model.elapsed - shot.time)
@@ -439,9 +468,10 @@ static func _enemy_scale(enemy: Dictionary) -> float:
 static func enemy_color(type: int) -> Color:
 	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384")][type]
 
-func _draw_pillager(center: Vector2, enemy: Dictionary) -> void:
+func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.0) -> void:
 	var type: int = enemy.get("type", 1)
-	var armor: Color = enemy_color(type)
+	var flash: float = clampf(hit_strength,0.0,1.0)*0.55
+	var armor: Color = enemy_color(type).lightened(flash)
 	draw_set_transform(center, 0.0, Vector2.ONE * _enemy_scale(enemy))
 	center = Vector2.ZERO
 	if enemy.id == inspected_enemy_id:
@@ -454,8 +484,8 @@ func _draw_pillager(center: Vector2, enemy: Dictionary) -> void:
 			break
 	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
 	var stride: float = sin(model.elapsed*10.0*enemy.get("speed",1.0)+enemy.id)*2.0 if model.active else 0.0
-	var skin := Color("dbb991")
-	var metal := Color("b5bfb8")
+	var skin: Color = Color("dbb991").lightened(flash)
+	var metal: Color = Color("b5bfb8").lightened(flash)
 	_unit_stroke(Vector2(-4,-4),Vector2(-6+stride,4),Color("655043"),4)
 	_unit_stroke(Vector2(4,-4),Vector2(6-stride,4),Color("655043"),4)
 	match type:

@@ -65,6 +65,7 @@ var escaped: int = 0
 var enemies: Array[Dictionary] = []
 var defenders: Array[Dictionary] = []
 var shots: Array[Dictionary] = []
+var damage_events: Array[Dictionary] = [] # Observation des pertes réelles, réservée au rendu.
 var event_log: Array[String] = []
 var wave_history: Array[Dictionary] = []
 var _wave_record: Dictionary = {}
@@ -104,6 +105,7 @@ func reset() -> void:
 	escaped = 0
 	enemies.clear()
 	shots.clear()
+	damage_events.clear()
 	event_log.clear()
 	defenders.clear()
 	for index in range(SLOTS.size()):
@@ -333,6 +335,7 @@ func prepare_next_wave() -> bool:
 	killed = 0
 	escaped = 0
 	shots.clear()
+	damage_events.clear()
 	curses.clear()
 	event_log.clear()
 	spawn_schedule = Campaign.schedule(wave)
@@ -605,7 +608,10 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 	Metrics.credit(_wave_record.get("performance",[]),enemies,damage,hits)
 	var survivors: Array[Dictionary] = []
 	for enemy in enemies:
+		var hp_before: float = enemy.hp
 		enemy.hp -= damage.get(enemy.id, 0.0)
+		if enemy.hp < hp_before:
+			damage_events.append({"time":elapsed,"enemy_id":enemy.id,"hp_before":hp_before,"hp_after":maxf(0.0,enemy.hp)})
 		if enemy.hp <= 0.0:
 			killed += 1
 			total_killed += 1

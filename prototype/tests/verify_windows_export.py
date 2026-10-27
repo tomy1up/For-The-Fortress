@@ -91,6 +91,7 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
 for index,unit in enumerate(['archer','crossbow','mage','troll','sapper','shaman']):
     for prefix in ['left_attack_','left_projectile_']:
         cases.append((prefix+unit,'effects','alliance' if index<3 else 'horde'))
+cases.append(('periodic_damage','damage_tick','horde'))
 for name,state,faction in cases:
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
@@ -132,6 +133,7 @@ for name,state,faction in cases:
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
     if name.startswith('left_'): assert 'ATTACK_FACING=-1' in text,(name,'La fixture doit couvrir un vrai tir à gauche')
+    if name=='periodic_damage': assert 'DAMAGE_TICK_VISIBLE=true' in text,(name,'Le contrôle doit montrer un dégât périodique réel')
     if name=='boss_without_hover': assert 'BOSS_STATUS_WITHOUT_HOVER=true' in text,(name,text)
     if name in ['alliance_run_report','horde_run_report','horde_defender_summary']:
         report_folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))

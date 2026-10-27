@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.62 — 27 octobre 2026
+Version : 0.63 — 27 octobre 2026
 
 JOUER
 
@@ -201,3 +201,8 @@ ATTAQUES ORIENTÉES
 Pendant le combat, chaque défenseur regarde du côté de son dernier tir.
 Recul, lancer ou légère élévation distinguent les classes. Les badges restent droits.
 Les mouvements accompagnent les vrais tirs et ne changent pas le moment des dégâts.
+
+RÉACTION AUX DÉGÂTS
+Un ennemi touché s’éclaircit brièvement. La portion de PV perdue s’efface dans sa jauge.
+Les dégâts périodiques du chaman déclenchent aussi ce retour visuel.
+Les dégâts et éliminations restent immédiats ; aucun chiffre flottant n’est ajouté.
