@@ -21,10 +21,10 @@ SOURCE_PATHS = ('project.godot', 'export_presets.cfg', 'scenes/main.tscn',
                 'scripts/enemy_art.gd',
                 'assets/enemies/rosters/neutres_v001.png',
                 'assets/enemies/rosters/alliance_v002.png',
-                'assets/enemies/rosters/horde_v002.png',
+                'assets/enemies/rosters/horde_v003.png',
                 'assets/enemies/rosters/neutres_v001.png.import',
                 'assets/enemies/rosters/alliance_v002.png.import',
-                'assets/enemies/rosters/horde_v002.png.import', 'scripts/enemy_catalogue.gd')
+                'assets/enemies/rosters/horde_v003.png.import', 'scripts/enemy_catalogue.gd')
 
 
 def verify_sources(manifest, source_project=None):

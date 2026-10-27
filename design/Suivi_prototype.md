@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 27 octobre 2026 — prototype v0.65, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 27 octobre 2026 — prototype v0.66, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -334,3 +334,7 @@ Règle rappelée et confirmée : neutres communs, attaquants spécifiques du cam
 ## v0.65 — Neutres et attaquants adverses, 27 octobre 2026
 
 Trois neutres communs (loup, sanglier, ours), cinq attaquants Horde face à l’Alliance et cinq attaquants Alliance face à la Horde. Catalogue d’ennemis distinct des six défenseurs construits ; treize identités illustrées dans trois atlas transparents. Prévisions, inspection, boss, R-12 et rapports cohérents avec le camp joué. Profils statistiques et dix vagues conservés. 40 suites, 15 974 contrôles Godot, 16 tests Python et contrats du GDD réussis. 32 sources contrôlées pour la distribution. [Détail et prompts](Catalogue_attaquants_v065.md).
+
+## v0.66 — Palette des attaquants Horde, 27 octobre 2026
+
+À la demande du joueur, la planche Horde espacée retrouve les tons plus sobres de la grande référence. Nouvel atlas horde_v003, cadres et ancrages remesurés, silhouettes et hauteurs de rendu conservées. Alliance, faune, défenseurs et règles inchangés. [Détails](Palette_Horde_v066.md).

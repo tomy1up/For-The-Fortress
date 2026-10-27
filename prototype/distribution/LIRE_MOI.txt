@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.65 — 27 octobre 2026
+Version : 0.66 — 27 octobre 2026
 
 JOUER
 
@@ -220,3 +220,5 @@ R-12 vise les ours, les unités lourdes, les gardes d’élite et le boss de vot
 L’inspection indique l’origine ; les détails du bonus donnent les noms exacts de ses cibles.
 
 Après un achat, les aides de la commande qui apparaît sous la souris attendent un nouveau survol.
+
+V0.66 : palette des attaquants Horde corrigée selon la grande planche de référence.
