@@ -74,6 +74,8 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('effects_mage','effects','alliance'),('effects_troll','effects','horde'),
        ('effects_sapper','effects','horde'),('effects_shaman','effects','horde'),
        ('alliance_elimination','elimination','alliance'),('horde_elimination','elimination','horde'),
+       ('alliance_wave_start','wave_start','alliance'),('horde_wave_start','wave_start','horde'),
+       ('alliance_final_start','wave_start','alliance'),('horde_final_start','wave_start','horde'),
        ('wave_forecast','forecast','alliance'),('boss_forecast','forecast_boss','horde'),
        ('victory_summary','summary','horde'),('defeat_summary','defeat_summary','alliance'),
        ('alliance_run_report','summary','alliance'),('horde_run_report','summary','horde'),
@@ -116,6 +118,7 @@ for name,state,faction in cases:
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
         if state=='elimination': command+=['--capture-type='+('2' if faction=='alliance' else '4')]
+        if name.endswith('_final_start'): command+=['--capture-start-final']
         if name.startswith('home_'): command+=['--capture-home='+{'home_prepared':'prepared','home_maximum':'maximum','home_blocked':'blocked'}[name]]
         if name.endswith('_talents_reset'): command+=['--capture-meta-reset']
         if name.endswith('_reset_cap'): command+=['--capture-meta-reset','--capture-reset-cap']
@@ -195,6 +198,12 @@ for name,state,faction in cases:
     if name.startswith('left_'): assert 'ATTACK_FACING=-1' in text,(name,'La fixture doit couvrir un vrai tir à gauche')
     if name=='periodic_damage': assert 'DAMAGE_TICK_VISIBLE=true' in text,(name,'Le contrôle doit montrer un dégât périodique réel')
     if state=='elimination': assert 'ELIMINATION_VISIBLE=true' in text,(name,'La dissipation doit suivre une vraie élimination')
+    if state=='wave_start':
+        notice=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('WAVE_NOTICE_SNAPSHOT=')))
+        assert notice['visible'] and notice['active'] and abs(notice['elapsed']-0.2)<0.000001 and abs(notice['remaining']-1.8)<0.000001
+        assert notice['wave']==(10 if name.endswith('_final_start') else 1)
+        if name.endswith('_final_start'):
+            assert notice['title']=='VAGUE FINALE' and notice['boss'] and ('Chef de guerre orc' if faction=='alliance' else 'Maréchal de l’Alliance') in notice['detail']
     if name=='boss_without_hover': assert 'BOSS_STATUS_WITHOUT_HOVER=true' in text,(name,text)
     if name in ['alliance_run_report','horde_run_report','horde_defender_summary'] or name.endswith('_loadout_summary'):
         report_folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))

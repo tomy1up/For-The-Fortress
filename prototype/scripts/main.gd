@@ -36,6 +36,12 @@ const Model = preload("res://scripts/valley_model.gd")
 const RunReport = preload("res://scripts/run_report.gd")
 const MapView = preload("res://scripts/valley_view.gd")
 const MetaProfile = preload("res://scripts/meta_profile.gd")
+const WAVE_NOTICE_SECONDS: float = 2.0
+var wave_notice_remaining: float = 0.0
+var wave_notice_wave: int = -1
+var wave_notice: Panel
+var wave_notice_title: Label
+var wave_notice_detail: Label
 const MetaScreen = preload("res://scripts/meta_screen.gd")
 var meta_profile: RefCounted
 var meta_menu = MetaScreen.new()
@@ -325,6 +331,12 @@ func _ready() -> void:
 			selected = capture_slot
 			map_view.selected = capture_slot
 			print("ATTACK_FACING=",int(map_view.defender_pose(capture_slot).direction))
+		if capture_state == "wave_start":
+			model.reset();model.select_faction(capture_faction)
+			if "--capture-start-final" in OS.get_cmdline_user_args():
+				model.wave = 10;model.spawn_schedule = Model.Campaign.schedule(10)
+			_start();_process(0.2)
+			print("WAVE_NOTICE_SNAPSHOT=",JSON.stringify({"visible":wave_notice.visible,"wave":model.wave,"title":wave_notice_title.text,"detail":wave_notice_detail.text,"active":model.active,"elapsed":model.elapsed,"remaining":wave_notice_remaining,"boss":boss_panel.visible}))
 		if capture_state == "breach":
 			model.reset()
 			model.select_faction(capture_faction)
@@ -460,6 +472,7 @@ func _ready() -> void:
 		get_tree().quit(error)
 
 func _process(delta: float) -> void:
+	wave_notice_remaining = maxf(0.0,wave_notice_remaining-maxf(0.0,delta))
 	meta_retry_remaining = maxf(0.0,meta_retry_remaining-delta)
 	breach_remaining = maxf(0.0,breach_remaining-delta)
 	if breach_remaining <= 0.0: map_view.breach_feedback = {}
@@ -599,8 +612,12 @@ func _build_interface() -> void:
 	tooltip_theme.set_color("font_color", "TooltipLabel", Color("e0e7db"))
 	screen.theme = tooltip_theme
 	ui.add_child(screen)
-	_label(screen, "FOR THE FORTRESS!", Vector2(32, 24), Vector2(720, 44), 29, Color("e0dbbf"))
-	_label(screen, "LA VALLÉE DU GUÉ", Vector2(34, 71), Vector2(600, 24), 14, Color("9fb5a5"))
+	_label(screen, "FOR THE FORTRESS!", Vector2(32, 24), Vector2(300, 44), 29, Color("e0dbbf"))
+	_label(screen, "LA VALLÉE DU GUÉ", Vector2(34, 71), Vector2(300, 24), 14, Color("9fb5a5"))
+	wave_notice = _panel(screen,Rect2(350,24,520,54))
+	wave_notice_title = _label(wave_notice,"",Vector2(14,4),Vector2(492,24),18,Color("e5ca88"))
+	wave_notice_detail = _label(wave_notice,"",Vector2(14,30),Vector2(492,18),12,Color("bbcbbf"))
+	wave_notice.visible = false
 	faction_label = _label(screen, "CHOIX DE FACTION", Vector2(898, 33), Vector2(350, 25), 13, Color("cdb47e"))
 	loadout_label = _label(screen,"",Vector2(948,64),Vector2(300,26),12,Color("b6c3b7"))
 	loadout_label.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -1483,11 +1500,26 @@ func _start() -> void:
 		return
 	if model.phase == "finished": model.prepare_next_wave()
 	if model.start():
+		_announce_wave()
 		start_button.tooltip_quiet = start_button.is_hovered()
 		autoplay_started = true
 		breach_remaining = 0.0
 		map_view.breach_feedback = {}
 	_update_interface()
+
+func _announce_wave() -> void:
+	if not model.active or choosing_faction: return
+	wave_notice_remaining = WAVE_NOTICE_SECONDS;wave_notice_wave = model.wave
+	wave_notice_title.text = "VAGUE FINALE" if model.wave == 10 else "VAGUE %d / 10" % model.wave
+	wave_notice_detail.text = "Boss : %s · %d ennemis" % [Model.Enemies.for_profile(7,model.faction).name,model.spawn_schedule.size()] if model.wave == 10 else "%d ennemis · Défendez la forteresse." % model.spawn_schedule.size()
+	var style: StyleBoxFlat = wave_notice.get_theme_stylebox("panel").duplicate()
+	style.border_color = Color("c58272") if model.wave == 10 else Color("8a794f")
+	wave_notice.add_theme_stylebox_override("panel",style)
+
+func _update_wave_notice() -> void:
+	wave_notice.visible = wave_notice_remaining > 0.0 and wave_notice_wave == model.wave and model.active and not choosing_faction and not meta_menu.visible and not overview_open and not summary_open and pending_slot < 0
+	var age: float = WAVE_NOTICE_SECONDS-wave_notice_remaining
+	wave_notice.modulate.a = clampf(minf(age/0.12,wave_notice_remaining/0.4),0.0,1.0)
 
 func _toggle_speed() -> void:
 	if _selection_blocked(): return
@@ -1517,6 +1549,7 @@ func _reset() -> void:
 	model.reset()
 	meta_run_id = -1;meta_run_earned = 0;meta_retry_remaining = 0.0
 	loadout_key = ""
+	wave_notice_remaining = 0.0;wave_notice_wave = -1
 	run_final_map = true;run_map_index = 0;run_map_rewards.clear()
 	summary_tab = 2
 	performance_rows.clear()
@@ -1775,6 +1808,7 @@ func _update_interface() -> void:
 	_update_enemy_inspector()
 	_update_wave_forecast()
 	_update_boss_status()
+	_update_wave_notice()
 	_sync_keyboard_focus()
 
 func _guidance_text() -> String:

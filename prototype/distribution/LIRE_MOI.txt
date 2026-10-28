@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.74 — 28 octobre 2026
+Version : 0.75 — 28 octobre 2026
 
 JOUER
 
@@ -7,6 +7,8 @@ JOUER
 2. À l’accueil, vérifier les ressources et points à placer, puis choisir sa faction.
 3. Installer sa défense et lancer la première vague manuellement.
 4. Les suivantes partent automatiquement après 30 secondes de préparation.
+   Une annonce de deux secondes indique chaque départ, sans pause du combat.
+   La finale annonce le boss adverse ; sa jauge reste visible séparément.
 5. Après les vagues 3, 6 et 9, choisir un bonus de la partie en cours.
 6. Après la victoire finale ou la défaite, consulter le bilan puis préparer ses talents.
 

@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.74 (28 octobre 2026)** : [dissipation cartoon des ennemis éliminés](design/Dissipation_ennemis_v074.md). Un bref nuage accompagne les éliminations sans retarder les dégâts ni les récompenses. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.74).
+**Version v0.75 (28 octobre 2026)** : [annonces de début de vague](design/Annonce_vagues_v075.md). Un repère bref accompagne les départs manuels et automatiques, avec une annonce finale propre au camp adverse. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.75).
 
 **Origine des ennemis — 27 octobre 2026** : la [règle et la répartition](design/Origine_ennemis_2026-10-27.md) sont mises en jeu dans la [v0.65](design/Catalogue_attaquants_v065.md). Loup, sanglier et ours restent communs. Les autres attaquants viennent du camp adverse ; le catalogue commun et les trois images humanoïdes v0.64 sont remplacés.
 
