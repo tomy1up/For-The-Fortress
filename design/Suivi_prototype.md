@@ -392,3 +392,7 @@ Rappel dans l’en-tête pour les cinq dernières secondes de préparation ; ann
 512 scénarios de contrôle reproduits à l’identique : deux factions, quatre configurations de talents, deux placements, 32 graines. Budget vérifié pour chaque scénario, aucun profil chargé ni gain versé. La référence gagne sans talent dans ses 64 essais ; le placement réparti échoue sans talent et profite davantage de la progression. Taux limités à ces politiques, sans extrapolation aux joueurs humains. Données et scripts versionnés, coûts et difficulté inchangés. [Résultats et limites](Bilan_progression_v078.md).
 
 La destination existante et le dossier des données du joueur sont refusés par le script de mesure, sans écrasement. Les empreintes des sources de jeu concordent avec le paquet v0.78 ; seuls des outils de développement et documents sont ajoutés. Aucun nouvel exécutable nécessaire pour ce complément.
+
+## Complément v0.78 — Atelier de difficulté isolé, 28 octobre 2026
+
+2 048 scénarios comparent quatre coefficients de PV ennemis sur des copies temporaires. Référence reproduite, budgets vérifiés et projet intact. Un coefficient uniforme accentue fortement les écarts entre factions dans ces politiques ; aucune modification livrée au joueur. [Hypothèses, résultats et limites](Hypotheses_PV_ennemis_v078.md).

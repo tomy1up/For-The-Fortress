@@ -1,0 +1,671 @@
+{
+  "schema": 1,
+  "game_version": "0.78",
+  "scenarios": 2048,
+  "budget_checks": 2048,
+  "baseline_identical": true,
+  "project_unchanged": true,
+  "human_test": false,
+  "production_change": false,
+  "source_sha256": {
+    "alliance_art.gd": "57cf3d79191acb0d30d13d2e62c46d5d45ca7f4d3850c0922fe26b29dc9026e4",
+    "campaign_data.gd": "aeca310747f88c1dd1b2d8089552c7a8d4b520ad59d3e7ff619a773fee6cc3e4",
+    "combat_metrics.gd": "10a2a00aa85c0b430dbec33f3b457e66ce74b36e36b6fae91d4a26fff17ebf4b",
+    "enemy_art.gd": "230c9f000da994fdc66c1a22220e48e3d0c2d7177617c6e294fda52c6664d7d0",
+    "enemy_catalogue.gd": "30a17d859da5600d444b6da83795f5995525e45cbb4a49eb183933f2e7f06646",
+    "horde_art.gd": "48f4f70156974eb3b7a5d6d76a6588bce974986bc3a57d5a33bf2d9bcf5ccd16",
+    "main.gd": "8fdf8d3f9c31beda9f167cf5ba972f6d00729b704f8aa5e759876461052389ad",
+    "meta_profile.gd": "a16b8d3210bac910253e9b90d78a82733f4d4a1f2b0f762156fe291c74bb0505",
+    "meta_screen.gd": "c0ff3193323fcbefd330b5355ee6dcfb3930af506adbcb6235e7bd514f380991",
+    "meta_talents.gd": "700640a11d025cf328de5f74a7ef8cd9398f801a88fb6d31661bf5a595b93047",
+    "meta_talents_v067.gd": "58e0786de434ea3ad0cf9ce9fece3224807fdc5543be64fb09494e8278b53080",
+    "profile_codec.gd": "1b6227ad26ca9d69e8e02c9eeddd2ed90265aa6b76e5b991a4ac8964d7a0b3b6",
+    "progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755",
+    "run_report.gd": "ec5c69f5b3df6fc17730625b98bc3a57e50ff9ab3eeae427a9624f30610309ce",
+    "valley_model.gd": "5c28b104ca52ae58df097ca89daf01ecf214db93dfefd5c21de29586f44ad9f3",
+    "valley_view.gd": "f884f6b8185c6d7cba42c1192aaf56a4860040fcc3fb6357bbe91b4c2dc6b569"
+  },
+  "raw_sha256": "de3e3eacaf1a7f2a85187058311672852fea6c828db4b97fb0ae6fc9d117be00",
+  "groups": [
+    {
+      "factor": 1.0,
+      "faction": 0,
+      "build": "zero",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 18.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 0,
+      "build": "zero",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 15.375,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 0,
+      "build": "base_5",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 23.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 0,
+      "build": "base_5",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 1,
+      "resource_mean": 21.9375,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 0,
+      "build": "bases_15",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 23.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 0,
+      "build": "bases_15",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 24,
+      "resource_mean": 52.5,
+      "hp_median": 6.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 0,
+      "build": "impact_36",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 31.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 0,
+      "build": "impact_36",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 23.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 1,
+      "build": "zero",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 12.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 1,
+      "build": "zero",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 15.375,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 1,
+      "build": "base_5",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 15.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 1,
+      "build": "base_5",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 17.5,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 1,
+      "build": "bases_15",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 15.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 1,
+      "build": "bases_15",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 19,
+      "resource_mean": 44.59375,
+      "hp_median": 5.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 1,
+      "build": "impact_36",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 17.0
+    },
+    {
+      "factor": 1.0,
+      "faction": 1,
+      "build": "impact_36",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 31,
+      "resource_mean": 59.53125,
+      "hp_median": 10.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 0,
+      "build": "zero",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 8,
+      "resource_mean": 29.78125,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 0,
+      "build": "zero",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 6.625,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 0,
+      "build": "base_5",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 19,
+      "resource_mean": 44.9375,
+      "hp_median": 4.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 0,
+      "build": "base_5",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 10,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 0,
+      "build": "bases_15",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 23.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 0,
+      "build": "bases_15",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 1,
+      "resource_mean": 18.875,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 0,
+      "build": "impact_36",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 29.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 0,
+      "build": "impact_36",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 24,
+      "resource_mean": 52.625,
+      "hp_median": 8.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 1,
+      "build": "zero",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 1,
+      "build": "zero",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 1,
+      "build": "base_5",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 1,
+      "build": "base_5",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 1,
+      "build": "bases_15",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 1,
+      "build": "bases_15",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 1,
+      "build": "impact_36",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 15.0
+    },
+    {
+      "factor": 1.15,
+      "faction": 1,
+      "build": "impact_36",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 11,
+      "resource_mean": 35.6875,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 0,
+      "build": "zero",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 0,
+      "build": "zero",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 0,
+      "build": "base_5",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 6,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 0,
+      "build": "base_5",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 6,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 0,
+      "build": "bases_15",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 16,
+      "resource_mean": 40.6875,
+      "hp_median": 0.5
+    },
+    {
+      "factor": 1.3,
+      "faction": 0,
+      "build": "bases_15",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 10,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 0,
+      "build": "impact_36",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 29.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 0,
+      "build": "impact_36",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 14.375,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 1,
+      "build": "zero",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 1,
+      "build": "zero",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 1,
+      "build": "base_5",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 1,
+      "build": "base_5",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 1,
+      "build": "bases_15",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 1,
+      "build": "bases_15",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 1,
+      "build": "impact_36",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.3,
+      "faction": 1,
+      "build": "impact_36",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 0,
+      "build": "zero",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 0,
+      "build": "zero",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 0,
+      "build": "base_5",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 6,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 0,
+      "build": "base_5",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 0,
+      "build": "bases_15",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 15.28125,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 0,
+      "build": "bases_15",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 6,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 0,
+      "build": "impact_36",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 32,
+      "resource_mean": 60,
+      "hp_median": 10.5
+    },
+    {
+      "factor": 1.45,
+      "faction": 0,
+      "build": "impact_36",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 12.8125,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 1,
+      "build": "zero",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 1,
+      "build": "zero",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 1,
+      "build": "base_5",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 1,
+      "build": "base_5",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 1,
+      "build": "bases_15",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 1,
+      "build": "bases_15",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 1,
+      "build": "impact_36",
+      "layout": "reference",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    },
+    {
+      "factor": 1.45,
+      "faction": 1,
+      "build": "impact_36",
+      "layout": "reparti",
+      "runs": 32,
+      "wins": 0,
+      "resource_mean": 3,
+      "hp_median": 0.0
+    }
+  ]
+}
