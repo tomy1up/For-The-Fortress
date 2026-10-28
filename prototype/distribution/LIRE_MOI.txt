@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.76 — 28 octobre 2026
+Version : 0.77 — 28 octobre 2026
 
 JOUER
 
@@ -112,6 +112,9 @@ Cliquer sur E1 à E6 ou utiliser les touches 1 à 6 du clavier/pavé numérique.
 Les unités attaquent automatiquement. Deux exemplaires maximum par type de défenseur.
 La forteresse et sa bannière reflètent votre faction. Le bâtiment reste un décor :
 son aspect ne change pas les PV, le trajet ou les emplacements disponibles.
+À la moitié des PV ou moins, le bâtiment paraît endommagé ; au quart ou moins,
+il signale le danger. À zéro, la bannière est abaissée. Ce sont des repères visuels,
+sans nouvelle pénalité. Un soin ou une nouvelle partie actualise aussitôt cet aspect.
 Un bref nuage accompagne les éliminations. La cible est retirée et l’or attribué
 immédiatement ; cet effet ne retarde pas les tirs ni le passage à la vague suivante.
 Construire, améliorer et vendre uniquement entre les vagues.

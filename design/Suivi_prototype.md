@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 28 octobre 2026 — prototype v0.76, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 28 octobre 2026 — prototype v0.77, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -378,3 +378,7 @@ Annonce de deux secondes réelles dans l’en-tête après chaque départ réuss
 ## v0.76 — Identité des forteresses par faction, 28 octobre 2026
 
 Forteresse Alliance en pierre claire, toits bleus et liserés dorés ; forteresse Horde en bois renforcé, métal, rouge et défenses ivoire. Dessin natif avec contours cartoon et bannières animées. Même cour, point d’arrivée et emplacement E6 dégagé. [Détails et validation](Forteresses_factions_v076.md).
+
+## v0.77 — État visible de la forteresse, 28 octobre 2026
+
+Aspect endommagé à la moitié des PV, critique au quart, bannière abaissée à zéro. Fissures, fumée discrète, teinte et libellé explicite ; lecture relative au maximum actuel. Aucun malus ajouté. [Détails et validation](Etat_forteresse_v077.md).

@@ -381,6 +381,11 @@ func _ready() -> void:
 				for slot in [0,5]: model.upgrade(slot); model.upgrade(slot)
 				model.upgrade(5,1 if capture_faction == 0 else 0)
 				_upgrade(); hovered_branch = 0
+		for argument in OS.get_cmdline_user_args():
+			if argument.begins_with("--capture-fortress-health="):
+				var condition_name: String = argument.trim_prefix("--capture-fortress-health=")
+				model.fortress_hp = {"damaged":10,"critical":4,"destroyed":0}.get(condition_name,20)
+				if model.fortress_hp == 0: model.phase = "defeat"
 		set_process(false)
 		inspection_numbers_visible = "--capture-inspection-numbers" in OS.get_cmdline_user_args()
 		if capture_state in ["finished","forecast","forecast_boss"]: autoplay_started = true
@@ -467,7 +472,8 @@ func _ready() -> void:
 			print("TALENT_STATES_SNAPSHOT=",JSON.stringify({"states":states,"isolated":meta_profile.path.is_empty(),"progress":meta_menu.boards[0].progress}))
 		if "--capture-fortress" in OS.get_cmdline_user_args():
 			var style: Dictionary = MapView.fortress_style(model.faction)
-			print("FORTRESS_SNAPSHOT=",JSON.stringify({"faction":style.faction,"banner":style.flag.to_html(false),"e6_clear":not MapView.fortress_bounds(MapView.project(Model.PATH_POINTS[-1])).has_point(MapView.project(Model.SLOTS[5])),"hp":model.fortress_hp}))
+			var condition: int = MapView.fortress_condition(model.fortress_hp,model.max_hp)
+			print("FORTRESS_SNAPSHOT=",JSON.stringify({"faction":style.faction,"banner":style.flag.to_html(false),"e6_clear":not MapView.fortress_bounds(MapView.project(Model.PATH_POINTS[-1])).has_point(MapView.project(Model.SLOTS[5])),"hp":model.fortress_hp,"condition":condition,"caption":MapView.fortress_caption(condition)}))
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)

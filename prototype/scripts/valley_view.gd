@@ -510,6 +510,15 @@ static func fortress_center(anchor: Vector2) -> Vector2:
 static func fortress_bounds(anchor: Vector2) -> Rect2:
 	return Rect2(fortress_center(anchor)+Vector2(-37,-70),Vector2(74,91))
 
+static func fortress_condition(hp: int, maximum: int) -> int:
+	if hp <= 0: return 3
+	if maximum <= 0: return 0
+	var ratio: float = float(hp)/maximum
+	return 2 if ratio <= 0.25 else 1 if ratio <= 0.5 else 0
+
+static func fortress_caption(condition: int) -> String:
+	return ["FORTERESSE","FORTERESSE · ENDOMMAGÉE","FORTERESSE · EN DANGER","FORTERESSE DÉTRUITE"][clampi(condition,0,3)]
+
 func _fortress_shape(points: PackedVector2Array, color: Color) -> void:
 	draw_colored_polygon(points,color)
 	var outline: PackedVector2Array = points.duplicate();outline.append(points[0])
@@ -520,6 +529,8 @@ func _draw_fortress(anchor: Vector2) -> void:
 	var center: Vector2 = fortress_center(anchor)
 	var style: Dictionary = fortress_style(model.faction if model != null else 0)
 	var horde: bool = style.faction == 1
+	var condition: int = fortress_condition(model.fortress_hp,model.max_hp) if model != null else 0
+	for key in ["wall","shade","roof"]: style[key] = style[key].darkened(condition*0.12)
 	draw_colored_polygon(PackedVector2Array([anchor+Vector2(-12,0),anchor+Vector2(36,-5),center+Vector2(37,0),center+Vector2(0,21)]),Color("576650"))
 	_fortress_shape(PackedVector2Array([center+Vector2(-31,-8),center+Vector2(0,-23),center+Vector2(31,-8),center+Vector2(0,9)]),style.shade)
 	for offset in [-23, 23]:
@@ -546,12 +557,23 @@ func _draw_fortress(anchor: Vector2) -> void:
 		draw_arc(center+Vector2(0,-24),7,PI,TAU,16,style.trim,2,true)
 		draw_circle(center+Vector2(0,-24),6,Color("233c36"));draw_rect(Rect2(center+Vector2(-6,-24),Vector2(12,19)),Color("233c36"))
 	for x in [-3,3]: draw_line(center+Vector2(x,-24),center+Vector2(x,-5),style.shade,1)
-	var pole: Vector2 = center+Vector2(0,-68)
-	draw_line(center+Vector2(0,-36),pole,style.trim,2)
+	if condition > 0:
+		var crack := PackedVector2Array([center+Vector2(-13,-32),center+Vector2(-9,-24),center+Vector2(-13,-18),center+Vector2(-9,-10)])
+		draw_polyline(crack,Color("352f25"),2,true)
+		if condition >= 2: draw_polyline(PackedVector2Array([center+Vector2(13,-32),center+Vector2(9,-27),center+Vector2(13,-21)]),Color("352f25"),2,true)
+	var pole: Vector2 = center+Vector2(10,-22) if condition == 3 else center+Vector2(0,-68)
+	draw_line(center+Vector2(0,-14 if condition == 3 else -36),pole,style.trim.darkened(0.2 if condition == 3 else 0),2)
 	var flutter: float = sin(flag_phase)*2.0
 	_fortress_shape(PackedVector2Array([pole+Vector2(1,0),pole+Vector2(20,4+flutter),pole+Vector2(18,14+flutter),pole+Vector2(1,12)]),style.flag)
 	draw_line(pole+Vector2(5,3),pole+Vector2(5,10),style.trim,2)
-	draw_string(font,center+Vector2(-42,32),"FORTERESSE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,INK)
+	if condition >= 2:
+		for index in range(3):
+			var t: float = fmod(flag_phase/TAU+float(index)/3.0,1.0)
+			var point: Vector2 = center+Vector2(-10+index*9+sin(t*TAU)*2,-43-t*20)
+			draw_circle(point,3+3*t,Color(Color("6d7167"),0.28*(1-t)))
+	var caption: String = fortress_caption(condition)
+	var caption_width: float = font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x
+	draw_string(font,center+Vector2(-caption_width/2,32),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("ed9989") if condition >= 2 else Color("d7bd83") if condition == 1 else INK)
 
 static func _enemy_scale(enemy: Dictionary) -> float:
 	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7][enemy.get("type", 1)]
