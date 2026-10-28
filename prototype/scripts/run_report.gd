@@ -86,6 +86,7 @@ static func build(model: RefCounted) -> Dictionary:
 		"combat_seconds":model.completed_time+model.elapsed,"initial_rng_seed":model.initial_rng_seed,"initial_rng_state":model.initial_rng_state,
 		"army":army,"bonuses":bonuses,"waves":model.wave_history.duplicate(true),"actions":model.action_history.duplicate(true),"performance":performance(model),"boss_encounter":boss_encounter(model)}
 	if Model.MetaTalents.spent(model.meta_ranks) > 0: report.meta_ranks = model.meta_ranks.duplicate()
+	if model.map_definition != Model.Maps.valley(): report.map_definition = Model.Maps.to_data(model.map_definition)
 	return report
 
 static func markdown(report: Dictionary) -> String:

@@ -7,15 +7,16 @@ const Enemies = preload("res://scripts/enemy_catalogue.gd")
 const MetaTalents = preload("res://scripts/meta_talents.gd")
 ## Distances dans le plan logique du GDD, avant projection isométrique.
 
-const PATH_POINTS: Array[Vector2] = [
-	Vector2(0, 3), Vector2(4, 3), Vector2(4, 7), Vector2(9, 7),
-	Vector2(9, 3), Vector2(14, 3), Vector2(14, 6), Vector2(17, 6),
-]
-const SLOTS: Array[Vector2] = [
-	Vector2(3, 1.5), Vector2(2, 6), Vector2(6, 5),
-	Vector2(8, 9), Vector2(11, 4.5), Vector2(15.5, 4.5),
-]
-const PATH_LENGTH: float = 28.0
+const Maps = preload("res://scripts/map_definition.gd")
+# Alias conservés pour les outils et références historiques du Gué.
+const PATH_POINTS: Array[Vector2] = Maps.VALLEY_PATH
+const SLOTS: Array[Vector2] = Maps.VALLEY_SLOTS
+const PATH_LENGTH: float = Maps.VALLEY_LENGTH
+var map_definition: Dictionary
+var map_error: String = ""
+var path_points: Array[Vector2] = []
+var slots: Array[Vector2] = []
+var path_length: float
 const INITIAL_GOLD: int = 150
 const INITIAL_HP: int = 20
 
@@ -77,7 +78,13 @@ var action_history: Array[Dictionary] = []
 var initial_rng_seed: String = ""
 var initial_rng_state: String = ""
 
-func _init(enable_synergies: bool = true) -> void:
+func _init(enable_synergies: bool = true, definition: Dictionary = {}) -> void:
+	var source: Dictionary = Maps.valley() if definition.is_empty() else definition
+	map_error = Maps.validation_error(source)
+	map_definition = (source if map_error.is_empty() else Maps.valley()).duplicate(true)
+	path_points.assign(map_definition.path_points)
+	slots.assign(map_definition.slots)
+	path_length = map_definition.path_length
 	synergies_enabled = enable_synergies
 	rng.randomize()
 	reset()
@@ -114,8 +121,9 @@ func reset() -> void:
 	elimination_events.clear()
 	event_log.clear()
 	defenders.clear()
-	for index in range(SLOTS.size()):
+	for index in range(slots.size()):
 		defenders.append({})
+	if not map_error.is_empty(): phase = "invalid_map"
 
 func available_types() -> Array[int]:
 	return [0, 1, 2] if faction == 0 else [3, 4, 5]
@@ -181,7 +189,7 @@ func count_type(type: int) -> int:
 func purchase_error(slot: int, type: int) -> String:
 	if not can_build():
 		return "Achats possibles uniquement entre les vagues."
-	if slot < 0 or slot >= SLOTS.size():
+	if slot < 0 or slot >= slots.size():
 		return "Sélectionnez un emplacement."
 	if type < 0 or type >= ROSTER.size():
 		return "Défenseur inconnu."
@@ -200,7 +208,7 @@ func buy(slot: int, type: int) -> bool:
 		return false
 	var stats: Dictionary = ROSTER[type]
 	defenders[slot] = {"instance_id": next_instance_id, "type": type, "level": 1, "branch": -1, "paid": purchase_cost(type), "ready_at": 0.0,
-		"windows": coverage_windows(SLOTS[slot], stats.range)}
+		"windows": coverage_windows(slots[slot], stats.range, path_points)}
 	next_instance_id += 1
 	gold -= purchase_cost(type)
 	_refresh_windows()
@@ -241,7 +249,7 @@ func synergy_partners(slot: int, rule: Dictionary, branch_override: int = -1, ca
 		if other_slot == slot or partner.is_empty() or partner.type != rule.types[1-side]: continue
 		if specialised:
 			if partner.level != 4 or partner.branch != rule.branches[1-side]: continue
-		elif SLOTS[slot].distance_squared_to(SLOTS[other_slot]) > 25.0: continue
+		elif slots[slot].distance_squared_to(slots[other_slot]) > 25.0: continue
 		partners.append(other_slot)
 	return partners
 
@@ -307,7 +315,7 @@ func _damage_with_bonuses(stats: Dictionary, component: String, victim: Dictiona
 func _refresh_windows() -> void:
 	for slot in range(defenders.size()):
 		if not defenders[slot].is_empty():
-			defenders[slot].windows = coverage_windows(SLOTS[slot],get_stats(slot).range)
+			defenders[slot].windows = coverage_windows(slots[slot], get_stats(slot).range, path_points)
 
 func purchase_cost(type: int) -> int:
 	return _discounted_cost(ROSTER[type].price,10,bonuses)
@@ -483,7 +491,7 @@ func _next_event_time() -> float:
 	for curse in curses:
 		next_time = minf(next_time, curse.next_at)
 	for enemy in enemies:
-		next_time = minf(next_time, enemy.spawn_time + PATH_LENGTH / enemy.get("speed", 1.0))
+		next_time = minf(next_time, enemy.spawn_time + path_length / enemy.get("speed", 1.0))
 	for defender in defenders:
 		if defender.is_empty():
 			continue
@@ -497,7 +505,7 @@ func _next_event_time() -> float:
 
 func _update_positions() -> void:
 	for enemy in enemies:
-		enemy.distance = clampf((elapsed - enemy.spawn_time) * enemy.get("speed", 1.0), 0.0, PATH_LENGTH)
+		enemy.distance = clampf((elapsed - enemy.spawn_time) * enemy.get("speed", 1.0), 0.0, path_length)
 
 func _resolve_instant() -> void:
 	# 1. Apparitions et positions ; les arrivants restent ciblables jusqu'à la phase 4.
@@ -540,12 +548,12 @@ func _resolve_instant() -> void:
 			continue
 		targets.sort_custom(_progress_priority)
 		var primary: Dictionary = targets[0]
-		var impact: Vector2 = position_at(primary.distance)
+		var impact: Vector2 = point_on_path(primary.distance)
 		var direct_damage: float = damage_for(stats,"direct",primary)
 		_add_damage(damage, primary.id, direct_damage)
 		hits.append({"source_id":defender.instance_id,"enemy_id":primary.id,"component":"direct","amount":direct_damage})
 		var shot: Dictionary = {"time": elapsed, "slot": slot, "type": defender.type,
-			"target_id": primary.id, "from": SLOTS[slot], "to": impact, "secondary": [], "radius": stats.radius}
+			"target_id": primary.id, "from": slots[slot], "to": impact, "secondary": [], "radius": stats.radius}
 		event_log.append("%.9f tir E%d cible %d" % [elapsed, slot + 1, primary.id])
 		if defender.type in [2, 3, 4]:
 			var hit_ids: Array[int] = [primary.id]
@@ -553,7 +561,7 @@ func _resolve_instant() -> void:
 			for hit in range(stats.secondary_cap):
 				var candidates: Array[Dictionary] = []
 				for enemy in enemies:
-					var squared: float = separation_squared(origin.distance, enemy.distance)
+					var squared: float = separation_squared(origin.distance, enemy.distance, path_points, path_length)
 					if enemy.id not in hit_ids and squared < stats.radius * stats.radius:
 						candidates.append({"enemy": enemy, "squared": squared})
 				if candidates.is_empty():
@@ -564,7 +572,7 @@ func _resolve_instant() -> void:
 				_add_damage(damage, victim.id, secondary_damage)
 				hits.append({"source_id":defender.instance_id,"enemy_id":victim.id,"component":"secondary","amount":secondary_damage})
 				hit_ids.append(victim.id)
-				shot.secondary.append(position_at(victim.distance))
+				shot.secondary.append(point_on_path(victim.distance))
 				# Les explosions restent centrées sur l'impact ; les ricochets avancent.
 				if defender.type == 3:
 					origin = victim
@@ -580,7 +588,7 @@ func _resolve_instant() -> void:
 	var survivors: Array[Dictionary] = []
 	var arrival_damage: int = 0
 	for enemy in enemies:
-		if enemy.distance >= PATH_LENGTH - EPS:
+		if enemy.distance >= path_length - EPS:
 			escaped += 1
 			total_escaped += 1
 			arrival_damage += enemy.get("fortress_damage", 1)
@@ -632,7 +640,7 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 		if enemy.hp < hp_before:
 			damage_events.append({"time":elapsed,"enemy_id":enemy.id,"hp_before":hp_before,"hp_after":maxf(0.0,enemy.hp)})
 		if enemy.hp <= 0.0:
-			elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":position_at(enemy.distance)})
+			elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":point_on_path(enemy.distance)})
 			killed += 1
 			total_killed += 1
 			var reward: int = enemy.get("reward", 3)
@@ -666,13 +674,16 @@ static func _secondary_priority(a: Dictionary, b: Dictionary) -> bool:
 		return a.squared < b.squared
 	return _progress_priority(a.enemy, b.enemy)
 
-static func coverage_windows(center: Vector2, radius: float) -> Array[Dictionary]:
+func point_on_path(progress: float) -> Vector2:
+	return position_at(progress, path_points, path_length)
+
+static func coverage_windows(center: Vector2, radius: float, route_points: Array[Vector2] = PATH_POINTS) -> Array[Dictionary]:
 	# Les bornes restent des float 64 bits ; Vector2 réduirait leur précision.
 	var windows: Array[Dictionary] = []
 	var cumulative: float = 0.0
-	for index in range(PATH_POINTS.size() - 1):
-		var start_point: Vector2 = PATH_POINTS[index]
-		var vector: Vector2 = PATH_POINTS[index + 1] - start_point
+	for index in range(route_points.size() - 1):
+		var start_point: Vector2 = route_points[index]
+		var vector: Vector2 = route_points[index + 1] - start_point
 		var length: float = vector.length()
 		var direction: Vector2 = vector / length
 		var offset: Vector2 = center - start_point
@@ -692,23 +703,23 @@ static func coverage_windows(center: Vector2, radius: float) -> Array[Dictionary
 		cumulative += length
 	return windows
 
-static func position_components(progress: float) -> Dictionary:
-	var remaining: float = clampf(progress, 0.0, PATH_LENGTH)
-	for index in range(PATH_POINTS.size() - 1):
-		var a: Vector2 = PATH_POINTS[index]
-		var b: Vector2 = PATH_POINTS[index + 1]
+static func position_components(progress: float, route_points: Array[Vector2] = PATH_POINTS, route_length: float = PATH_LENGTH) -> Dictionary:
+	var remaining: float = clampf(progress, 0.0, route_length)
+	for index in range(route_points.size() - 1):
+		var a: Vector2 = route_points[index]
+		var b: Vector2 = route_points[index + 1]
 		var length: float = a.distance_to(b)
 		if remaining <= length:
 			var ratio: float = remaining / length
 			return {"x": float(a.x) + (float(b.x) - a.x) * ratio, "y": float(a.y) + (float(b.y) - a.y) * ratio}
 		remaining -= length
-	return {"x": float(PATH_POINTS[-1].x), "y": float(PATH_POINTS[-1].y)}
+	return {"x": float(route_points[-1].x), "y": float(route_points[-1].y)}
 
-static func separation_squared(first: float, second: float) -> float:
-	var a: Dictionary = position_components(first)
-	var b: Dictionary = position_components(second)
+static func separation_squared(first: float, second: float, route_points: Array[Vector2] = PATH_POINTS, route_length: float = PATH_LENGTH) -> float:
+	var a: Dictionary = position_components(first, route_points, route_length)
+	var b: Dictionary = position_components(second, route_points, route_length)
 	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)
 
-static func position_at(progress: float) -> Vector2:
-	var point: Dictionary = position_components(progress)
+static func position_at(progress: float, route_points: Array[Vector2] = PATH_POINTS, route_length: float = PATH_LENGTH) -> Vector2:
+	var point: Dictionary = position_components(progress, route_points, route_length)
 	return Vector2(point.x, point.y)

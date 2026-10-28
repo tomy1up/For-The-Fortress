@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 28 octobre 2026 — prototype v0.79, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 28 octobre 2026 — prototype v0.80, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -400,3 +400,11 @@ La destination existante et le dossier des données du joueur sont refusés par 
 ## v0.79 — Silhouette avant recrutement, 28 octobre 2026
 
 Projection translucide du défenseur sur l’emplacement libre, au survol ou au clavier. Cohérence des six classes et factions, profondeur de dessin, repère E1–E6 dégagé et disponibilité distinguée. Aucun achat ni instance simulée dans le modèle. [Détails et validation](Silhouette_achat_v079.md).
+
+## Vision long terme — demande du 28 octobre 2026
+
+La [feuille de route long terme](Feuille_de_route_long_terme.md) intègre le texte et la référence visuelle fournis : cible de 200 missions, PO uniques par première réussite, chapitres et infini après 100 missions. Les suggestions de l’ancienne réponse restent des propositions, notamment les récompenses cosmétiques et défis. La respécialisation payante est conservée ; l’articulation mission/partie et le budget de PO restent à cadrer. Le prototype ne change pas encore d’économie.
+
+## v0.80 — Données des cartes, 28 octobre 2026
+
+Le tracé, les emplacements et le décor du Gué sont regroupés dans une définition partagée entre le combat, le dessin et les interactions. Cartes incohérentes refusées ; rapports adaptés aux géométries de test. Une seule carte jouable, sans modification de la progression ou de l’économie. [Détails et validation](Donnees_cartes_v080.md). La [vision long terme](Feuille_de_route_long_terme.md) est consignée séparément, sans implémenter les règles encore ouvertes.

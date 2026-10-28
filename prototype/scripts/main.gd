@@ -210,7 +210,7 @@ func _ready() -> void:
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture="): isolated = true
 	if not isolated: meta_profile = MetaProfile.new()
-	get_window().title = "%s · v%s" % [ProjectSettings.get_setting("application/config/name"),ProjectSettings.get_setting("application/config/version")]
+	get_window().title = "%s · v%s" % ["For the Fortress! — "+model.map_definition.title,ProjectSettings.get_setting("application/config/version")]
 	map_view.model = model
 	add_child(map_view)
 	_build_interface()
@@ -409,7 +409,7 @@ func _ready() -> void:
 			for enemy in model.enemies:
 				if capture_state == "inspection" or enemy.type == 7: target = enemy; break
 			assert(not target.is_empty(),"La capture d'inspection requiert un ennemi vivant.")
-			inspection_pointer = MapView.enemy_bounds(target).get_center()
+			inspection_pointer = MapView.enemy_bounds(target,model.faction,model.path_points,model.path_length).get_center()
 			_update_enemy_inspector()
 		if "--capture-boss-only" in OS.get_cmdline_user_args():
 			inspection_pointer = Vector2(30,60)
@@ -480,7 +480,7 @@ func _ready() -> void:
 		if "--capture-fortress" in OS.get_cmdline_user_args():
 			var style: Dictionary = MapView.fortress_style(model.faction)
 			var condition: int = MapView.fortress_condition(model.fortress_hp,model.max_hp)
-			print("FORTRESS_SNAPSHOT=",JSON.stringify({"faction":style.faction,"banner":style.flag.to_html(false),"e6_clear":not MapView.fortress_bounds(MapView.project(Model.PATH_POINTS[-1])).has_point(MapView.project(Model.SLOTS[5])),"hp":model.fortress_hp,"condition":condition,"caption":MapView.fortress_caption(condition)}))
+			print("FORTRESS_SNAPSHOT=",JSON.stringify({"faction":style.faction,"banner":style.flag.to_html(false),"e6_clear":not MapView.fortress_bounds(MapView.project(model.path_points[-1])).has_point(MapView.project(model.slots[5])),"hp":model.fortress_hp,"condition":condition,"caption":MapView.fortress_caption(condition)}))
 		if capture_state == "purchase":
 			var ghost: Dictionary = map_view.purchase_ghost()
 			print("PURCHASE_GHOST_SNAPSHOT=",JSON.stringify({"visible":not ghost.is_empty(),"type":ghost.get("type",-1),"slot":ghost.get("slot",-1),"empty":model.defenders[selected].is_empty(),"gold":model.gold,"instances":model.next_instance_id}))
@@ -568,7 +568,7 @@ func _selection_blocked() -> bool:
 	return meta_menu.visible or choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open or summary_open
 
 func _select_slot(slot: int) -> bool:
-	if _selection_blocked() or slot < 0 or slot >= Model.SLOTS.size(): return false
+	if _selection_blocked() or slot < 0 or slot >= model.slots.size(): return false
 	selected = slot
 	map_view.selected = slot
 	_update_interface()
@@ -606,8 +606,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var closest: int = -1
 		var best: float = 27.0
-		for index in range(Model.SLOTS.size()):
-			var distance: float = MapView.project(Model.SLOTS[index]).distance_to(event.position)
+		for index in range(model.slots.size()):
+			var distance: float = MapView.project(model.slots[index]).distance_to(event.position)
 			if distance < best:
 				closest = index
 				best = distance
@@ -632,7 +632,7 @@ func _build_interface() -> void:
 	screen.theme = tooltip_theme
 	ui.add_child(screen)
 	_label(screen, "FOR THE FORTRESS!", Vector2(32, 24), Vector2(300, 44), 29, Color("e0dbbf"))
-	_label(screen, "LA VALLÉE DU GUÉ", Vector2(34, 71), Vector2(300, 24), 14, Color("9fb5a5"))
+	_label(screen, model.map_definition.title.to_upper(), Vector2(34, 71), Vector2(300, 24), 14, Color("9fb5a5"))
 	wave_notice = _panel(screen,Rect2(350,24,520,54))
 	wave_notice_title = _label(wave_notice,"",Vector2(14,4),Vector2(492,24),18,Color("e5ca88"))
 	wave_notice_detail = _label(wave_notice,"",Vector2(14,30),Vector2(492,18),12,Color("bbcbbf"))
@@ -1138,7 +1138,7 @@ func _build_faction_selector(screen: Control) -> void:
 		meta_buttons[-1].disabled = meta_profile == null
 	meta_income = _label(panel,"",Vector2(30,468),Vector2(740,26),13,Color("cdb47e"))
 	meta_income.mouse_filter = Control.MOUSE_FILTER_STOP
-	_label(panel,"La Vallée du Gué · 150 or · Gains versés en fin de partie · Barème d’essai",Vector2(30,504),Vector2(740,24),13,Color("aabbb0"))
+	_label(panel,model.map_definition.title+" · 150 or · Gains versés en fin de partie · Barème d’essai",Vector2(30,504),Vector2(740,24),13,Color("aabbb0"))
 
 func _refresh_home_progress() -> void:
 	if not choosing_faction: return
@@ -1938,8 +1938,8 @@ func _synergy_tooltip(slot: int) -> String:
 			descriptions.append("Votre spécialisation requise : " + Model.stats_for(type, 4, rule.branches[side]).branch_name + ".\nAucune limite de distance.")
 		else:
 			var compatible: Array[String] = []
-			for other_slot in range(Model.SLOTS.size()):
-				if other_slot != slot and Model.SLOTS[slot].distance_squared_to(Model.SLOTS[other_slot]) <= 25.0: compatible.append("E%d" % (other_slot+1))
+			for other_slot in range(model.slots.size()):
+				if other_slot != slot and model.slots[slot].distance_squared_to(model.slots[other_slot]) <= 25.0: compatible.append("E%d" % (other_slot+1))
 			descriptions.append("Emplacements du partenaire à proximité : " + ", ".join(compatible) + ".")
 	descriptions.append("\nUn même bonus ne se cumule pas avec plusieurs partenaires.\nLes statistiques affichées incluent déjà les synergies actives.")
 	return "\n".join(descriptions)

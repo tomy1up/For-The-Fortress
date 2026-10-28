@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.79 (28 octobre 2026)** : [silhouette avant recrutement](design/Silhouette_achat_v079.md). Le défenseur apparaît en transparence sur l’emplacement prévisualisé, avec sa portée et ses synergies, sans achat. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.79).
+**Version v0.80 (28 octobre 2026)** : [données de carte partagées](design/Donnees_cartes_v080.md). Le tracé, les emplacements et le décor du Gué sont séparés du combat pour préparer les futures cartes. Une seule carte jouable ; [vision long terme](design/Feuille_de_route_long_terme.md). [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.80).
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 
@@ -75,6 +75,8 @@ La [proposition de recrutement et de vente](design/Proposition_recrutement_vente
 ## Réalisation du prototype approuvée
 
 Le [cahier de réalisation du premier prototype](design/Proposition_realisation_prototype.md) décrit les panneaux de préparation et de combat, les étapes L0 à L6 et les critères de vérification. Le cadre est intégré au GDD v0.14. Les critères sont à exécuter ; ils ne constituent pas des résultats de test. Le premier essai utilise Godot avec GDScript, en 2D isométrique.
+
+La [feuille de route long terme](design/Feuille_de_route_long_terme.md) consigne la vision du 28 octobre 2026 : cible de 200 missions, chapitres, PO de première réussite et infini après les 100 premières missions. Décisions, propositions de l’ancienne réponse et questions ouvertes sont distinguées ; cette économie ne remplace pas encore celle du prototype.
 
 ## Statuts et suivi
 

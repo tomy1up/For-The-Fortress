@@ -67,7 +67,7 @@ func purchase_ghost() -> Dictionary:
 	if not model.defenders[selected].is_empty() or not purchase_preview.has("type"): return {}
 	var type: int = int(purchase_preview.type)
 	if type not in model.available_types(): return {}
-	return {"slot":selected,"type":type,"point":project(Model.SLOTS[selected]),"available":model.purchase_error(selected,type).is_empty()}
+	return {"slot":selected,"type":type,"point":project(_map_slots()[selected]),"available":model.purchase_error(selected,type).is_empty()}
 
 static func range_outline(center: Vector2, radius: float) -> PackedVector2Array:
 	var ring := PackedVector2Array()
@@ -225,49 +225,51 @@ static func enemy_art_id(enemy: Dictionary, defending_faction: int = -1) -> Stri
 	if EnemyArt.TEXTURES.has(enemy.get("identity_id","")): return enemy.identity_id
 	return Model.Enemies.for_profile(int(enemy.get("type",1)),0).id
 
-static func enemy_bounds(enemy: Dictionary, defending_faction: int = -1) -> Rect2:
-	var center: Vector2 = project(Model.position_at(enemy.distance))
+static func enemy_bounds(enemy: Dictionary, defending_faction: int = -1, route_points: Array[Vector2] = Model.PATH_POINTS, route_length: float = Model.PATH_LENGTH) -> Rect2:
+	var center: Vector2 = project(Model.position_at(enemy.distance,route_points,route_length))
 	var scale: float = _enemy_scale(enemy)
 	var width: float = maxf(28.0,32.0*scale)
 	var bounds := Rect2(center+Vector2(-width/2.0,-39.0*scale),Vector2(width,47.0*scale))
 	if EnemyArt.TEXTURES.has(enemy_art_id(enemy,defending_faction)):
 		var image: Rect2 = EnemyArt.destination(enemy_art_id(enemy,defending_faction))
-		if enemy_facing(enemy) < 0.0: image.position.x = -image.end.x
+		if enemy_facing(enemy,route_points,route_length) < 0.0: image.position.x = -image.end.x
 		bounds = bounds.merge(Rect2(center+image.position*scale,image.size*scale).grow(1.0))
 	return bounds
 
-static func enemy_facing(enemy: Dictionary) -> float:
-	var distance: float = clampf(enemy.distance,0.0,Model.PATH_LENGTH)
-	var from: Vector2 = project(Model.position_at(distance))
-	var to: Vector2 = project(Model.position_at(minf(distance+0.01,Model.PATH_LENGTH)))
-	if distance == Model.PATH_LENGTH:
-		from = project(Model.position_at(maxf(0.0,distance-0.01)))
+static func enemy_facing(enemy: Dictionary, route_points: Array[Vector2] = Model.PATH_POINTS, route_length: float = Model.PATH_LENGTH) -> float:
+	var distance: float = clampf(enemy.distance,0.0,route_length)
+	var from: Vector2 = project(Model.position_at(distance,route_points,route_length))
+	var to: Vector2 = project(Model.position_at(minf(distance+0.01,route_length),route_points,route_length))
+	if distance == route_length:
+		from = project(Model.position_at(maxf(0.0,distance-0.01),route_points,route_length))
 	return -1.0 if to.x < from.x else 1.0
+
 
 func enemy_at(point: Vector2) -> int:
 	if model == null: return -1
 	var found: int = -1
 	var front_y: float = -INF
 	for enemy in model.enemies:
-		if enemy.hp <= 0.0 or not enemy_bounds(enemy,model.faction).has_point(point): continue
-		var y: float = project(Model.position_at(enemy.distance)).y
+		if enemy.hp <= 0.0 or not enemy_bounds(enemy,model.faction,model.path_points,model.path_length).has_point(point): continue
+		var y: float = project(model.point_on_path(enemy.distance)).y
 		if y >= front_y: # Même priorité visuelle que le dessin, dernier acteur en cas d'égalité.
 			front_y = y
 			found = enemy.id
 	return found
 
-static func covered_route(center: Vector2, radius: float) -> Array[PackedVector2Array]:
+static func covered_route(center: Vector2, radius: float, route_points: Array[Vector2] = Model.PATH_POINTS, route_length: float = Model.PATH_LENGTH) -> Array[PackedVector2Array]:
 	var sections: Array[PackedVector2Array] = []
-	for window in Model.coverage_windows(center, radius):
-		var points := PackedVector2Array([project(Model.position_at(window.first))])
+	for window in Model.coverage_windows(center, radius, route_points):
+		var points := PackedVector2Array([project(Model.position_at(window.first,route_points,route_length))])
 		var distance: float = 0.0
-		for index in range(1, Model.PATH_POINTS.size()):
-			distance += Model.PATH_POINTS[index-1].distance_to(Model.PATH_POINTS[index])
+		for index in range(1, route_points.size()):
+			distance += route_points[index-1].distance_to(route_points[index])
 			if distance > window.first + Model.EPS and distance < window.last - Model.EPS:
-				points.append(project(Model.PATH_POINTS[index]))
-		points.append(project(Model.position_at(window.last)))
+				points.append(project(route_points[index]))
+		points.append(project(Model.position_at(window.last,route_points,route_length)))
 		sections.append(points)
 	return sections
+
 
 func synergy_links(candidate: Dictionary = {}) -> Array[Dictionary]:
 	var links: Array[Dictionary] = []
@@ -283,8 +285,8 @@ func _draw_synergy_links(candidate: Dictionary = {}) -> void:
 	var planned: bool = not candidate.is_empty()
 	for link in synergy_links(candidate):
 		var offset := Vector2(0,4 if link.specialised else 0)
-		var start: Vector2 = project(Model.SLOTS[selected]) + offset
-		var finish: Vector2 = project(Model.SLOTS[link.partner]) + offset
+		var start: Vector2 = project(_map_slots()[selected]) + offset
+		var finish: Vector2 = project(_map_slots()[link.partner]) + offset
 		var color := Color("8bd5e6") if planned else Color("8cbde0") if link.specialised else Color("e1bb70")
 		if planned:
 			var length: float = start.distance_to(finish)
@@ -301,9 +303,17 @@ func polygon(points: Array[Vector2], color: Color) -> void:
 		projected.append(project(point))
 	draw_colored_polygon(projected, color)
 
+func _map_slots() -> Array[Vector2]:
+	return model.slots if model != null else Model.SLOTS
+
+func _map_path() -> Array[Vector2]:
+	return model.path_points if model != null else Model.PATH_POINTS
+
 func _draw() -> void:
+	var definition: Dictionary = model.map_definition if model != null else Model.Maps.valley()
+	var board: Vector2i = definition.size
 	var ghost: Dictionary = purchase_ghost()
-	var corners: Array[Vector2] = [Vector2.ZERO, Vector2(18, 0), Vector2(18, 10), Vector2(0, 10)]
+	var corners: Array[Vector2] = [Vector2.ZERO, Vector2(board.x, 0), Vector2(board.x, board.y), Vector2(0, board.y)]
 	var base := PackedVector2Array()
 	for corner in corners:
 		base.append(project(corner) + Vector2(0, 16))
@@ -314,72 +324,58 @@ func _draw() -> void:
 		var last: Vector2 = project(edge[1])
 		draw_colored_polygon(PackedVector2Array([first,last,last+Vector2(0,16),first+Vector2(0,16)]),edge[2])
 	polygon(corners, Color("3a513e"))
-	for x in range(19):
-		draw_line(project(Vector2(x, 0)), project(Vector2(x, 10)), Color(0.75, 0.86, 0.7, 0.055), 1)
-	for y in range(11):
-		draw_line(project(Vector2(0, y)), project(Vector2(18, y)), Color(0.75, 0.86, 0.7, 0.055), 1)
-	# La rivière et le pont sont des éléments visuels, sans collision.
-	polygon([Vector2(5.86,0),Vector2(7.14,0),Vector2(7.14,10),Vector2(5.86,10)],Color("68755a"))
-	polygon([Vector2(6, 0), Vector2(7, 0), Vector2(7, 10), Vector2(6, 10)], Color("407b7d"))
-	polygon([Vector2(6.76,0),Vector2(7,0),Vector2(7,10),Vector2(6.76,10)],Color("315e67"))
-	for y in range(10):
-		draw_line(project(Vector2(6.16,y+0.24)),project(Vector2(6.52,y+0.28)),Color("83b7ab"),1.2,true)
-		draw_line(project(Vector2(6.45,y+0.65)),project(Vector2(6.82,y+0.68)),Color("659c9c"),1.2,true)
+	for x in range(board.x+1):
+		draw_line(project(Vector2(x, 0)), project(Vector2(x, board.y)), Color(0.75, 0.86, 0.7, 0.055), 1)
+	for y in range(board.y+1):
+		draw_line(project(Vector2(0, y)), project(Vector2(board.x, y)), Color(0.75, 0.86, 0.7, 0.055), 1)
+	if definition.decoration == "valley": _draw_valley_water()
 	var route := PackedVector2Array()
-	for point in Model.PATH_POINTS:
+	for point in _map_path():
 		route.append(project(point))
 	draw_polyline(route, Color("26372e"), 28, true)
 	draw_polyline(route, Color("b3a17b"), 20, true)
 	for point in route:
 		draw_circle(point, 10, Color("b3a17b"))
 	draw_polyline(route, Color("c7b58d"), 2, true)
-	polygon([Vector2(5.8, 6.55), Vector2(7.2, 6.55), Vector2(7.2, 7.45), Vector2(5.8, 7.45)], Color("77654c"))
-	for plank in range(8):
-		var x: float = 5.85 + plank * 0.18
-		draw_line(project(Vector2(x, 6.6)), project(Vector2(x, 7.4)), Color("b29a6b"), 2)
-	for bank in [6.55,7.45]:
-		var first: Vector2 = project(Vector2(5.8,bank))
-		var last: Vector2 = project(Vector2(7.2,bank))
-		draw_line(first+Vector2(0,-5),last+Vector2(0,-5),Color("c3aa78"),2,true)
-		for post in [first,last]: draw_line(post,post+Vector2(0,-8),Color("725c42"),3,true)
-	for tree in [Vector2(1, 1), Vector2(1.4, 8.5), Vector2(4.6, 9), Vector2(10, 1), Vector2(12, 8.7), Vector2(16.8, 2), Vector2(17, 8.7)]:
+	if definition.decoration == "valley": _draw_valley_bridge()
+	for tree in definition.trees:
 		_draw_tree(project(tree))
 	var preview: Dictionary = purchase_preview if not purchase_preview.is_empty() else upgrade_preview
 	if model != null and selected >= 0 and not preview.is_empty():
-		var preview_ring := range_outline(Model.SLOTS[selected], preview.range)
+		var preview_ring := range_outline(_map_slots()[selected], preview.range)
 		draw_colored_polygon(preview_ring, Color(0.35, 0.8, 0.95, 0.12))
 		draw_polyline(preview_ring, Color("8bd5e6"), 2.5, true)
-		for section in covered_route(Model.SLOTS[selected], preview.range):
+		for section in covered_route(_map_slots()[selected], preview.range,model.path_points,model.path_length):
 			draw_polyline(section, Color("8bd5e6"), 6, true)
 		if not preview_synergy_unit.is_empty(): _draw_synergy_links(preview_synergy_unit)
 	if model != null and selected >= 0 and not model.defenders[selected].is_empty():
 		var stats: Dictionary = model.get_stats(selected)
-		var ring := range_outline(Model.SLOTS[selected], stats.range)
+		var ring := range_outline(_map_slots()[selected], stats.range)
 		draw_colored_polygon(ring, Color(0.8, 0.85, 0.5, 0.05))
 		draw_polyline(ring, Color(0.8, 0.85, 0.5, 0.35), 1.5, true)
 		if preview.is_empty():
-			for section in covered_route(Model.SLOTS[selected],stats.range):
+			for section in covered_route(_map_slots()[selected],stats.range,model.path_points,model.path_length):
 				draw_polyline(section,Color(0.9,0.77,0.48,0.65),4,true)
 		if preview.is_empty(): _draw_synergy_links()
-	for index in range(Model.SLOTS.size()):
-		var center: Vector2 = project(Model.SLOTS[index])
+	for index in range(_map_slots().size()):
+		var center: Vector2 = project(_map_slots()[index])
 		var diamond := PackedVector2Array([center + Vector2(-26, 0), center + Vector2(0, -13), center + Vector2(26, 0), center + Vector2(0, 13)])
 		draw_colored_polygon(diamond, SLOT_FILL)
 		draw_polyline(PackedVector2Array([diamond[0], diamond[1], diamond[2], diamond[3], diamond[0]]), Color("ddbd78") if selected == index else Color("779b89"), 2, true)
 		var occupied: bool = model != null and not model.defenders[index].is_empty()
 		occupied = occupied or (not ghost.is_empty() and ghost.slot == index)
 		draw_string(font, center + Vector2(-9, 22 if occupied else 5), "E%d" % (index + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, INK)
-	_draw_fortress(project(Vector2(17, 6)))
-	var entrance: Vector2 = project(Model.PATH_POINTS[0])
+	_draw_fortress(project(_map_path()[-1]))
+	var entrance: Vector2 = project(_map_path()[0])
 	draw_circle(entrance, 5, Color("debd7f"))
 	draw_string(font, entrance + Vector2(-48, -20), "ENTRÉE", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("a7b8aa"))
 	if model != null:
 		var actors: Array[Dictionary] = []
 		for slot in range(model.defenders.size()):
 			if not model.defenders[slot].is_empty():
-				actors.append({"point": project(Model.SLOTS[slot]), "defender": model.defenders[slot],"slot":slot,"order":actors.size()})
+				actors.append({"point": project(_map_slots()[slot]), "defender": model.defenders[slot],"slot":slot,"order":actors.size()})
 		for enemy in model.enemies:
-			actors.append({"point": project(Model.position_at(enemy.distance)), "enemy": enemy,"order":actors.size()})
+			actors.append({"point": project(model.point_on_path(enemy.distance)), "enemy": enemy,"order":actors.size()})
 		if not ghost.is_empty(): actors.append({"point":ghost.point,"ghost":ghost,"order":actors.size()})
 		actors.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.order < b.order if a.point.y == b.point.y else a.point.y < b.point.y)
 		for actor in actors:
@@ -410,7 +406,7 @@ static func breach_text(count: int, damage: int) -> String:
 	return "−%d PV · %d ennemi%s passé%s" % [damage,count,"" if count == 1 else "s","" if count == 1 else "s"]
 
 func _draw_breach_feedback() -> void:
-	var center: Vector2 = project(Vector2(17,6)) + Vector2(52,26)
+	var center: Vector2 = project(_map_path()[-1]) + Vector2(52,26)
 	var warning := Color("ef9b89")
 	draw_rect(Rect2(center+Vector2(-42,-72),Vector2(84,92)),Color(warning,0.75),false,2)
 	var text: String = breach_text(breach_feedback.count,breach_feedback.damage)
@@ -617,6 +613,26 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		break
 	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
 	var stride: float = sin(model.elapsed*10.0*enemy.get("speed",1.0)+enemy.id)*2.0 if model.active else 0.0
-	draw_set_transform(center+Vector2(0,-absf(stride)*0.3*scale),0.0,Vector2(enemy_facing(enemy)*scale,scale))
+	draw_set_transform(center+Vector2(0,-absf(stride)*0.3*scale),0.0,Vector2(enemy_facing(enemy,model.path_points,model.path_length)*scale,scale))
 	draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,EnemyArt.tint(hit_strength))
 	draw_set_transform(Vector2.ZERO)
+
+func _draw_valley_water() -> void:
+	# La rivière et le pont sont des éléments visuels, sans collision.
+	polygon([Vector2(5.86,0),Vector2(7.14,0),Vector2(7.14,10),Vector2(5.86,10)],Color("68755a"))
+	polygon([Vector2(6, 0), Vector2(7, 0), Vector2(7, 10), Vector2(6, 10)], Color("407b7d"))
+	polygon([Vector2(6.76,0),Vector2(7,0),Vector2(7,10),Vector2(6.76,10)],Color("315e67"))
+	for y in range(10):
+		draw_line(project(Vector2(6.16,y+0.24)),project(Vector2(6.52,y+0.28)),Color("83b7ab"),1.2,true)
+		draw_line(project(Vector2(6.45,y+0.65)),project(Vector2(6.82,y+0.68)),Color("659c9c"),1.2,true)
+
+func _draw_valley_bridge() -> void:
+	polygon([Vector2(5.8, 6.55), Vector2(7.2, 6.55), Vector2(7.2, 7.45), Vector2(5.8, 7.45)], Color("77654c"))
+	for plank in range(8):
+		var x: float = 5.85 + plank * 0.18
+		draw_line(project(Vector2(x, 6.6)), project(Vector2(x, 7.4)), Color("b29a6b"), 2)
+	for bank in [6.55,7.45]:
+		var first: Vector2 = project(Vector2(5.8,bank))
+		var last: Vector2 = project(Vector2(7.2,bank))
+		draw_line(first+Vector2(0,-5),last+Vector2(0,-5),Color("c3aa78"),2,true)
+		for post in [first,last]: draw_line(post,post+Vector2(0,-8),Color("725c42"),3,true)

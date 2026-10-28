@@ -54,7 +54,11 @@ static func verify(data: Variant) -> Dictionary:
 	var actions: Variant = data.get("actions")
 	if not actions is Array or actions.is_empty() or actions.size() > MAX_ACTIONS:
 		return _fail("Journal absent ou trop volumineux (maximum 4096 actions).")
-	var model = Model.new()
+	var definition: Dictionary = {}
+	if data.has("map_definition"):
+		definition = Model.Maps.from_data(data.map_definition)
+		if definition.is_empty(): return _fail("Définition de carte invalide.")
+	var model = Model.new(true,definition)
 	if data.has("meta_ranks"):
 		if not Model.MetaTalents.valid(data.meta_ranks): return _fail("Talents permanents invalides.")
 		model.meta_ranks = data.meta_ranks.duplicate()
