@@ -1,0 +1,9528 @@
+{
+  "budget_checks": 512,
+  "game_version": "0.78",
+  "human_test": false,
+  "max_points": 36,
+  "point_price": 10,
+  "profile_loaded": false,
+  "rows": [
+    {
+      "bonuses": [
+        9,
+        3,
+        6
+      ],
+      "build": "zero",
+      "combat_seconds": 342.673342983604,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 1,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        1,
+        7
+      ],
+      "build": "zero",
+      "combat_seconds": 340.113825272715,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 2,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        6
+      ],
+      "build": "zero",
+      "combat_seconds": 329.149227163099,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 3,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 342.941200126461,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 4,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        9,
+        2
+      ],
+      "build": "zero",
+      "combat_seconds": 330.149736091955,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 5,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        4,
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 347.917396701286,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 6,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        6
+      ],
+      "build": "zero",
+      "combat_seconds": 373.009970528013,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 7,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        8,
+        11,
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 381.233577419662,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 16,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 8,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        5,
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 328.627312643379,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 9,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 342.673342983604,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 10,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        11,
+        3
+      ],
+      "build": "zero",
+      "combat_seconds": 335.013890938153,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 11,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        6
+      ],
+      "build": "zero",
+      "combat_seconds": 354.221199841217,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 16,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 12,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        0,
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 354.010797950833,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 16,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 13,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 352.171685789509,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 16,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 14,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        3
+      ],
+      "build": "zero",
+      "combat_seconds": 329.698741214808,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 15,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        3,
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 348.623828931895,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 16,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        4
+      ],
+      "build": "zero",
+      "combat_seconds": 332.873894597333,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 17,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        2,
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 336.228349285122,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 18,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        4,
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 349.92712314297,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 16,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 19,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        5,
+        6
+      ],
+      "build": "zero",
+      "combat_seconds": 355.689369379405,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 16,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 20,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        7,
+        3
+      ],
+      "build": "zero",
+      "combat_seconds": 335.369328291615,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 21,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        10,
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 358.032074548141,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 16,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 22,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        8
+      ],
+      "build": "zero",
+      "combat_seconds": 374.509970528013,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 16,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 23,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        9,
+        7
+      ],
+      "build": "zero",
+      "combat_seconds": 328.198741214808,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 24,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        2,
+        4
+      ],
+      "build": "zero",
+      "combat_seconds": 342.241573936389,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 25,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        7,
+        0,
+        2
+      ],
+      "build": "zero",
+      "combat_seconds": 339.79136579021,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 26,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        11,
+        6
+      ],
+      "build": "zero",
+      "combat_seconds": 335.149227163099,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 27,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "zero",
+      "combat_seconds": 331.330723650741,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 22,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        3
+      ],
+      "build": "zero",
+      "combat_seconds": 332.873894597333,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 29,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        4,
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 372.460456476304,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 30,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        7,
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 341.719102204967,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 18,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 31,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        3,
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 358.22712314297,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 16,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 32,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 288.167523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 1,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "zero",
+      "combat_seconds": 288.167523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 2,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 293.493415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 3,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 288.167523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 4,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 292.193415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 5,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "zero",
+      "combat_seconds": 288.167523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 6,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 288.493415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 7,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        8
+      ],
+      "build": "zero",
+      "combat_seconds": 292.567523056654,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 8,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        6,
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 338.98063777406,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 7,
+      "resource": 21,
+      "seed": 9,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 288.167523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 10,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 291.517840684984,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 11,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 292.193415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 12,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        3
+      ],
+      "build": "zero",
+      "combat_seconds": 292.567523056654,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 13,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 292.193415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 14,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 293.493415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 15,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "zero",
+      "combat_seconds": 288.167523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 16,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 291.517840684984,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 17,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 293.493415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 18,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 293.493415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 19,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        3
+      ],
+      "build": "zero",
+      "combat_seconds": 292.567523056654,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 20,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 291.517840684984,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 21,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        6,
+        10
+      ],
+      "build": "zero",
+      "combat_seconds": 337.38063777406,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 7,
+      "resource": 21,
+      "seed": 22,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 288.493415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 23,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 293.493415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 24,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 292.193415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 25,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        7
+      ],
+      "build": "zero",
+      "combat_seconds": 288.167523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 26,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 293.493415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 27,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 292.193415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 28,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 291.517840684984,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 29,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 288.493415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 30,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "zero",
+      "combat_seconds": 288.167523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 31,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 288.493415383824,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 32,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        9,
+        3,
+        6
+      ],
+      "build": "base_5",
+      "combat_seconds": 342.673342983604,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 1,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        1,
+        7
+      ],
+      "build": "base_5",
+      "combat_seconds": 340.113825272715,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 2,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        6
+      ],
+      "build": "base_5",
+      "combat_seconds": 329.149227163099,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 3,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 342.941200126461,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 4,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        9,
+        2
+      ],
+      "build": "base_5",
+      "combat_seconds": 330.149736091955,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 5,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        4,
+        11
+      ],
+      "build": "base_5",
+      "combat_seconds": 347.917396701286,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 6,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        6
+      ],
+      "build": "base_5",
+      "combat_seconds": 373.009970528013,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 7,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        8,
+        11,
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 381.233577419662,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 8,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        5,
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 328.627312643379,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 9,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        11
+      ],
+      "build": "base_5",
+      "combat_seconds": 342.673342983604,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 10,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        11,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 335.013890938153,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 11,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        6
+      ],
+      "build": "base_5",
+      "combat_seconds": 354.221199841217,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 12,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        0,
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 354.010797950833,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 13,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 352.171685789509,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 14,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 329.698741214808,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 15,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        3,
+        11
+      ],
+      "build": "base_5",
+      "combat_seconds": 348.623828931895,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 16,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        4
+      ],
+      "build": "base_5",
+      "combat_seconds": 332.873894597333,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 17,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        2,
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 336.228349285122,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 18,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        4,
+        11
+      ],
+      "build": "base_5",
+      "combat_seconds": 349.92712314297,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 19,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        5,
+        6
+      ],
+      "build": "base_5",
+      "combat_seconds": 355.689369379405,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 20,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        7,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 335.369328291615,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 21,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        10,
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 358.032074548141,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 22,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        8
+      ],
+      "build": "base_5",
+      "combat_seconds": 374.509970528013,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 23,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        9,
+        7
+      ],
+      "build": "base_5",
+      "combat_seconds": 328.198741214808,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 24,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        2,
+        4
+      ],
+      "build": "base_5",
+      "combat_seconds": 342.241573936389,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 25,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        7,
+        0,
+        2
+      ],
+      "build": "base_5",
+      "combat_seconds": 339.79136579021,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 26,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        11,
+        6
+      ],
+      "build": "base_5",
+      "combat_seconds": 335.149227163099,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 27,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "base_5",
+      "combat_seconds": 331.330723650741,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 27,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 332.873894597333,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 29,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        4,
+        0
+      ],
+      "build": "base_5",
+      "combat_seconds": 372.460456476304,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 30,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        7,
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 341.719102204967,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 31,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        3,
+        5
+      ],
+      "build": "base_5",
+      "combat_seconds": 358.22712314297,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 32,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.767523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 1,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.767523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 2,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0,
+        5
+      ],
+      "build": "base_5",
+      "combat_seconds": 393.942446090087,
+      "completed": 7,
+      "faction": 0,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 8,
+      "resource": 28,
+      "seed": 3,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.767523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 4,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 338.98063777406,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 5,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.767523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 6,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 335.026748717158,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 7,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        8
+      ],
+      "build": "base_5",
+      "combat_seconds": 295.767523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 8,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        6,
+        5
+      ],
+      "build": "base_5",
+      "combat_seconds": 466.439415787056,
+      "completed": 8,
+      "faction": 0,
+      "full_preparation_seconds": 240,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 9,
+      "resource": 36,
+      "seed": 9,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.767523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 10,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1,
+        11
+      ],
+      "build": "base_5",
+      "combat_seconds": 410.267133111034,
+      "completed": 7,
+      "faction": 0,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 8,
+      "resource": 28,
+      "seed": 11,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 338.98063777406,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 12,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 295.767523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 13,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 338.98063777406,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 14,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0,
+        5
+      ],
+      "build": "base_5",
+      "combat_seconds": 393.942446090087,
+      "completed": 7,
+      "faction": 0,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 8,
+      "resource": 28,
+      "seed": 15,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.767523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 16,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1,
+        0
+      ],
+      "build": "base_5",
+      "combat_seconds": 410.899275968177,
+      "completed": 7,
+      "faction": 0,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 8,
+      "resource": 28,
+      "seed": 17,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0,
+        2
+      ],
+      "build": "base_5",
+      "combat_seconds": 340.28063777406,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 18,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0,
+        4
+      ],
+      "build": "base_5",
+      "combat_seconds": 340.28063777406,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 19,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 295.767523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 20,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1,
+        7
+      ],
+      "build": "base_5",
+      "combat_seconds": 336.451174018318,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 21,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        6,
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 356.447304440727,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 22,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 335.026748717158,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 23,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0,
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 340.28063777406,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 24,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        2
+      ],
+      "build": "base_5",
+      "combat_seconds": 391.9602520408,
+      "completed": 7,
+      "faction": 0,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 8,
+      "resource": 28,
+      "seed": 25,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        7
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.767523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 26,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0,
+        11
+      ],
+      "build": "base_5",
+      "combat_seconds": 340.28063777406,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 27,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "base_5",
+      "combat_seconds": 510.555857782014,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 3,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0
+      ],
+      "build": "base_5",
+      "combat_seconds": 410.899275968177,
+      "completed": 7,
+      "faction": 0,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 8,
+      "resource": 28,
+      "seed": 29,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        4
+      ],
+      "build": "base_5",
+      "combat_seconds": 335.026748717158,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 30,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.767523056653,
+      "completed": 5,
+      "faction": 0,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 31,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 335.026748717158,
+      "completed": 6,
+      "faction": 0,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 32,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        9,
+        3,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 329.698741214808,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 1,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        1,
+        7
+      ],
+      "build": "bases_15",
+      "combat_seconds": 323.346164663384,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 2,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 320.894298738493,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 3,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        1
+      ],
+      "build": "bases_15",
+      "combat_seconds": 328.627312643379,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 4,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        9,
+        2
+      ],
+      "build": "bases_15",
+      "combat_seconds": 318.656168322564,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 5,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        4,
+        11
+      ],
+      "build": "bases_15",
+      "combat_seconds": 331.355659393708,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 6,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 329.100222040246,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 7,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        8,
+        11,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 335.405173445417,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 27,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 8,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        5,
+        1
+      ],
+      "build": "bases_15",
+      "combat_seconds": 321.322870167065,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 9,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        11
+      ],
+      "build": "bases_15",
+      "combat_seconds": 329.698741214808,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 10,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        11,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 321.047739298976,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 11,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 321.638352456175,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 12,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        0,
+        1
+      ],
+      "build": "bases_15",
+      "combat_seconds": 328.627312643379,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 13,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 322.187866507884,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 14,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 320.894298738493,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 15,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        3,
+        11
+      ],
+      "build": "bases_15",
+      "combat_seconds": 331.905173445417,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 16,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        4
+      ],
+      "build": "bases_15",
+      "combat_seconds": 315.690596441834,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 17,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        2,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 322.786160585712,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 18,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        4,
+        11
+      ],
+      "build": "bases_15",
+      "combat_seconds": 323.443303861346,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 19,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        5,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 327.393789809637,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 20,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        7,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 315.690596441834,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 21,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        10,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 324.943303861346,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 22,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        8
+      ],
+      "build": "bases_15",
+      "combat_seconds": 329.100222040246,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 27,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 23,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        9,
+        7
+      ],
+      "build": "bases_15",
+      "combat_seconds": 321.394298738493,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 24,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        2,
+        4
+      ],
+      "build": "bases_15",
+      "combat_seconds": 321.786160585712,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 25,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        7,
+        0,
+        2
+      ],
+      "build": "bases_15",
+      "combat_seconds": 323.894298738493,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 26,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        11,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 321.394298738493,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 27,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "bases_15",
+      "combat_seconds": 317.905013024208,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 27,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 315.690596441834,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 29,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        4,
+        0
+      ],
+      "build": "bases_15",
+      "combat_seconds": 328.149736091955,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 30,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        7,
+        1
+      ],
+      "build": "bases_15",
+      "combat_seconds": 325.239021806241,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 31,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        3,
+        5
+      ],
+      "build": "bases_15",
+      "combat_seconds": 328.149736091955,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 32,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 393.361214303381,
+      "completed": 7,
+      "faction": 0,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 8,
+      "resource": 28,
+      "seed": 1,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10,
+        1,
+        7
+      ],
+      "build": "bases_15",
+      "combat_seconds": 510.301968725112,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 1,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 2,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 502.032027082982,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 13,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 3,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10
+      ],
+      "build": "bases_15",
+      "combat_seconds": 393.361214303381,
+      "completed": 7,
+      "faction": 0,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 8,
+      "resource": 28,
+      "seed": 4,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        9,
+        2
+      ],
+      "build": "bases_15",
+      "combat_seconds": 502.254184403583,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 8,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 5,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        4
+      ],
+      "build": "bases_15",
+      "combat_seconds": 393.361214303381,
+      "completed": 7,
+      "faction": 0,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 8,
+      "resource": 28,
+      "seed": 6,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 507.983925133123,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 7,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        8,
+        11,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 517.123045573499,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 6,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 8,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        5,
+        1
+      ],
+      "build": "bases_15",
+      "combat_seconds": 510.360598511554,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 8,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 9,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10
+      ],
+      "build": "bases_15",
+      "combat_seconds": 393.361214303381,
+      "completed": 7,
+      "faction": 0,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 8,
+      "resource": 28,
+      "seed": 10,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1,
+        11,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 491.822522634493,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 11,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 508.932027082982,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 6,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 12,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        0
+      ],
+      "build": "bases_15",
+      "combat_seconds": 466.139415787056,
+      "completed": 8,
+      "faction": 0,
+      "full_preparation_seconds": 240,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 9,
+      "resource": 36,
+      "seed": 13,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 511.432027082982,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 6,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 14,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 502.032027082982,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 13,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 15,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 393.361214303381,
+      "completed": 7,
+      "faction": 0,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 8,
+      "resource": 28,
+      "seed": 16,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        4
+      ],
+      "build": "bases_15",
+      "combat_seconds": 495.445306956022,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 17,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        2,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 505.466916323364,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 6,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 18,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        4,
+        11
+      ],
+      "build": "bases_15",
+      "combat_seconds": 511.432027082982,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 2,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 19,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        5,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 514.185916139885,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 2,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 20,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        7,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 498.965248598151,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 21,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        10
+      ],
+      "build": "bases_15",
+      "combat_seconds": 461.185526730154,
+      "completed": 8,
+      "faction": 0,
+      "full_preparation_seconds": 240,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 9,
+      "resource": 36,
+      "seed": 22,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        8
+      ],
+      "build": "bases_15",
+      "combat_seconds": 507.983925133123,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 14,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 23,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        9,
+        7
+      ],
+      "build": "bases_15",
+      "combat_seconds": 513.932027082982,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 2,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 24,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        2,
+        4
+      ],
+      "build": "bases_15",
+      "combat_seconds": 502.966916323364,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 6,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 25,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        7,
+        0,
+        2
+      ],
+      "build": "bases_15",
+      "combat_seconds": 518.454184403583,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 3,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 26,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        11,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 507.983925133123,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 8,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 27,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "bases_15",
+      "combat_seconds": 494.353024512004,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 495.445306956022,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 29,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        4,
+        0
+      ],
+      "build": "bases_15",
+      "combat_seconds": 506.732027082982,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 30,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        7
+      ],
+      "build": "bases_15",
+      "combat_seconds": 392.388557033184,
+      "completed": 7,
+      "faction": 0,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 8,
+      "resource": 28,
+      "seed": 31,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        3,
+        5
+      ],
+      "build": "bases_15",
+      "combat_seconds": 507.983925133123,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 32,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        3,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 306.091495330687,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 1,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        1,
+        7
+      ],
+      "build": "impact_36",
+      "combat_seconds": 304.862745417014,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 2,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 301.605602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 3,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 305.734173988443,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 4,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        9,
+        2
+      ],
+      "build": "impact_36",
+      "combat_seconds": 300.605602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 5,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        4,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 305.305602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 6,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 307.805602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 7,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        8,
+        11,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 305.305602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 35,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 8,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        5,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 300.694888274157,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 9,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 305.305602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 10,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        11,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 300.280602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 11,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 301.605602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 12,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        0,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 303.394888274157,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 13,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 301.605602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 14,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 301.605602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 15,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        3,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 305.305602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 16,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        4
+      ],
+      "build": "impact_36",
+      "combat_seconds": 299.834173988443,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 17,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        2,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 301.319770360737,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 18,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        4,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 301.805602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 19,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        5,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 304.105602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 20,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        7,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 300.280602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 21,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        10,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 302.591495330687,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 22,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        8
+      ],
+      "build": "impact_36",
+      "combat_seconds": 307.805602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 35,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 23,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        9,
+        7
+      ],
+      "build": "impact_36",
+      "combat_seconds": 301.805602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 24,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        2,
+        4
+      ],
+      "build": "impact_36",
+      "combat_seconds": 301.119770360737,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 25,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        7,
+        0,
+        2
+      ],
+      "build": "impact_36",
+      "combat_seconds": 304.105602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 26,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        11,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 301.805602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 27,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "impact_36",
+      "combat_seconds": 300.5770311313,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 35,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 299.834173988443,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 29,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        4,
+        0
+      ],
+      "build": "impact_36",
+      "combat_seconds": 307.805602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 30,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        7,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 305.534173988443,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 31,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        3,
+        5
+      ],
+      "build": "impact_36",
+      "combat_seconds": 307.805602559871,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 32,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        3,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 494.520292698717,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 1,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        1,
+        7
+      ],
+      "build": "impact_36",
+      "combat_seconds": 481.78213741459,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 22,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 2,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 475.792093017694,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 3,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 489.25243555586,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 4,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        9,
+        2
+      ],
+      "build": "impact_36",
+      "combat_seconds": 475.044180981569,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 27,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 5,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        4,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 502.020292698717,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 19,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 6,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 492.253634638997,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 24,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 7,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        8,
+        11,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 498.420292698717,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 25,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 8,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        5,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 475.083708245276,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 25,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 9,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 492.020292698717,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 10,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        11,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 460.858274147529,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 25,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 11,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 488.266707456762,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 27,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 12,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        0,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 483.750366304996,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 22,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 13,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 485.766707456762,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 27,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 14,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 475.792093017694,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 15,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        3,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 502.020292698717,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 19,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 16,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        4
+      ],
+      "build": "impact_36",
+      "combat_seconds": 466.030136816705,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 25,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 17,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        2,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 483.148249370992,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 18,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        4,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 493.192093017694,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 19,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        5,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 496.892093017694,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 22,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 20,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        7,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 470.494422530991,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 25,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 21,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        10,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 493.790350140857,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 20,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 22,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        8
+      ],
+      "build": "impact_36",
+      "combat_seconds": 494.753634638997,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 28,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 23,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        9,
+        7
+      ],
+      "build": "impact_36",
+      "combat_seconds": 475.921210564164,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 24,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        2,
+        4
+      ],
+      "build": "impact_36",
+      "combat_seconds": 473.22286381006,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 27,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 25,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        7,
+        0,
+        2
+      ],
+      "build": "impact_36",
+      "combat_seconds": 481.269566542502,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 22,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 26,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        11,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 482.092093017694,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 23,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 27,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "impact_36",
+      "combat_seconds": 464.389542275971,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 31,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 466.030136816705,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 25,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 29,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        4,
+        0
+      ],
+      "build": "impact_36",
+      "combat_seconds": 492.253634638997,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 24,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 30,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        7,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 486.250366304996,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 20,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 31,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        3,
+        5
+      ],
+      "build": "impact_36",
+      "combat_seconds": 489.753634638997,
+      "completed": 10,
+      "faction": 0,
+      "full_preparation_seconds": 270,
+      "hp": 24,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 32,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        3,
+        6
+      ],
+      "build": "zero",
+      "combat_seconds": 409.172393190854,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 1,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        1,
+        7
+      ],
+      "build": "zero",
+      "combat_seconds": 421.074068151213,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 6,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 2,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        6
+      ],
+      "build": "zero",
+      "combat_seconds": 380.165714854274,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 3,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 411.011409736582,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 4,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        9,
+        2
+      ],
+      "build": "zero",
+      "combat_seconds": 382.524988916065,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 5,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        4,
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 424.080565023053,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 6,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 6,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        6
+      ],
+      "build": "zero",
+      "combat_seconds": 388.280848044602,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 7,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        8,
+        11,
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 429.080565023053,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 8,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        5,
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 380.540984022831,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 9,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 409.009245234418,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 10,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        11,
+        3
+      ],
+      "build": "zero",
+      "combat_seconds": 368.790129407729,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 11,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        6
+      ],
+      "build": "zero",
+      "combat_seconds": 386.540984022831,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 12,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        0,
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 376.119452212741,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 13,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 389.540984022831,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 14,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        3
+      ],
+      "build": "zero",
+      "combat_seconds": 381.052946383062,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 15,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        3,
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 426.592527383284,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 8,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 16,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        4
+      ],
+      "build": "zero",
+      "combat_seconds": 361.230932365088,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 17,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        2,
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 379.958549513403,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 18,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        4,
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 380.524988916065,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 19,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        5,
+        6
+      ],
+      "build": "zero",
+      "combat_seconds": 375.119452212741,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 20,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        7,
+        3
+      ],
+      "build": "zero",
+      "combat_seconds": 362.718970004857,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 21,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        10,
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 398.540984022831,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 22,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        8
+      ],
+      "build": "zero",
+      "combat_seconds": 390.768885684371,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 23,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        9,
+        7
+      ],
+      "build": "zero",
+      "combat_seconds": 384.412220444853,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 24,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        2,
+        4
+      ],
+      "build": "zero",
+      "combat_seconds": 373.464951181734,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 25,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        7,
+        0,
+        2
+      ],
+      "build": "zero",
+      "combat_seconds": 407.946955811283,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 26,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        11,
+        6
+      ],
+      "build": "zero",
+      "combat_seconds": 377.540984022831,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 27,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "zero",
+      "combat_seconds": 377.343554716226,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 16,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        3
+      ],
+      "build": "zero",
+      "combat_seconds": 362.718970004857,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 29,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        4,
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 379.393616515814,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 30,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        7,
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 421.172393190854,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 31,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        3,
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 386.768885684371,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 13,
+      "layout": "reference",
+      "points": 0,
+      "reached": 10,
+      "resource": 60,
+      "seed": 32,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 1,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "zero",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 2,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 292.731455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 3,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 4,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 5,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "zero",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 6,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 7,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        8
+      ],
+      "build": "zero",
+      "combat_seconds": 294.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 8,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        6,
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 336.135915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 7,
+      "resource": 21,
+      "seed": 9,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        9
+      ],
+      "build": "zero",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 10,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 292.731455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 11,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 12,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        3
+      ],
+      "build": "zero",
+      "combat_seconds": 292.731455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 13,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 14,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 292.731455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 15,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "zero",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 16,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 292.731455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 17,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 292.731455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 18,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 292.731455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 19,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        3
+      ],
+      "build": "zero",
+      "combat_seconds": 292.731455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 20,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 292.731455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 21,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        6,
+        10
+      ],
+      "build": "zero",
+      "combat_seconds": 336.135915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 7,
+      "resource": 21,
+      "seed": 22,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 23,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 292.731455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 24,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 25,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        7
+      ],
+      "build": "zero",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 26,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "zero",
+      "combat_seconds": 292.731455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 27,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5
+      ],
+      "build": "zero",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 28,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1
+      ],
+      "build": "zero",
+      "combat_seconds": 292.731455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 29,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 30,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "zero",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 31,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11
+      ],
+      "build": "zero",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 0,
+      "reached": 6,
+      "resource": 15,
+      "seed": 32,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        9,
+        3,
+        6
+      ],
+      "build": "base_5",
+      "combat_seconds": 382.540984022831,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 1,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        1,
+        7
+      ],
+      "build": "base_5",
+      "combat_seconds": 379.575697573369,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 2,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        6
+      ],
+      "build": "base_5",
+      "combat_seconds": 357.757376482538,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 3,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 382.540984022831,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 4,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        9,
+        2
+      ],
+      "build": "base_5",
+      "combat_seconds": 354.313900309665,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 5,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        4,
+        11
+      ],
+      "build": "base_5",
+      "combat_seconds": 388.540984022831,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 6,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        6
+      ],
+      "build": "base_5",
+      "combat_seconds": 363.860713852172,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 7,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        8,
+        11,
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 384.540984022831,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 8,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        5,
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 364.914016112187,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 9,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        11
+      ],
+      "build": "base_5",
+      "combat_seconds": 381.377836066395,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 10,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        11,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 363.766776128208,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 11,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        6
+      ],
+      "build": "base_5",
+      "combat_seconds": 363.271108497883,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 12,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        0,
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 387.540984022831,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 13,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 13,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 363.271108497883,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 14,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 357.920524438974,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 15,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        3,
+        11
+      ],
+      "build": "base_5",
+      "combat_seconds": 391.540984022831,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 16,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        4
+      ],
+      "build": "base_5",
+      "combat_seconds": 358.248789507945,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 17,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        2,
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 355.057803079678,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 18,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        4,
+        11
+      ],
+      "build": "base_5",
+      "combat_seconds": 361.462731167766,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 19,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        5,
+        6
+      ],
+      "build": "base_5",
+      "combat_seconds": 379.377836066395,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 13,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 20,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        7,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 359.736827147715,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 21,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        10,
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 373.860713852172,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 22,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        8
+      ],
+      "build": "base_5",
+      "combat_seconds": 363.860713852172,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 19,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 23,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        9,
+        7
+      ],
+      "build": "base_5",
+      "combat_seconds": 356.086300897503,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 24,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        2,
+        4
+      ],
+      "build": "base_5",
+      "combat_seconds": 359.776444717735,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 25,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        7,
+        0,
+        2
+      ],
+      "build": "base_5",
+      "combat_seconds": 380.315546643261,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 26,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        11,
+        6
+      ],
+      "build": "base_5",
+      "combat_seconds": 358.120231440065,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 27,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "base_5",
+      "combat_seconds": 361.248918985351,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 19,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 359.736827147715,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 29,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        4,
+        0
+      ],
+      "build": "base_5",
+      "combat_seconds": 359.485444683615,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 30,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        7,
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 389.540984022831,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 31,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        3,
+        5
+      ],
+      "build": "base_5",
+      "combat_seconds": 361.860713852172,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 5,
+      "reached": 10,
+      "resource": 60,
+      "seed": 32,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 1,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 2,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "base_5",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 3,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 4,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 337.735915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 5,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 6,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 337.846428572894,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 7,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        8
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 8,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        6,
+        5
+      ],
+      "build": "base_5",
+      "combat_seconds": 402.90063389454,
+      "completed": 7,
+      "faction": 1,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 8,
+      "resource": 28,
+      "seed": 9,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        9
+      ],
+      "build": "base_5",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 10,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.002581935445,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 11,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 337.735915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 12,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 13,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 337.735915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 14,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "base_5",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 15,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 16,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.002581935445,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 17,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "base_5",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 18,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "base_5",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 19,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 20,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.002581935445,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 21,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        6,
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 406.833714696179,
+      "completed": 7,
+      "faction": 1,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 8,
+      "resource": 28,
+      "seed": 22,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 337.846428572894,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 23,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "base_5",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 24,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        2
+      ],
+      "build": "base_5",
+      "combat_seconds": 340.935915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 25,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        7
+      ],
+      "build": "base_5",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 26,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0
+      ],
+      "build": "base_5",
+      "combat_seconds": 295.931455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 27,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 339.335915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 28,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1
+      ],
+      "build": "base_5",
+      "combat_seconds": 294.002581935445,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 29,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        4
+      ],
+      "build": "base_5",
+      "combat_seconds": 337.846428572894,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 30,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10
+      ],
+      "build": "base_5",
+      "combat_seconds": 290.531455079154,
+      "completed": 5,
+      "faction": 1,
+      "full_preparation_seconds": 150,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 6,
+      "resource": 15,
+      "seed": 31,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        3
+      ],
+      "build": "base_5",
+      "combat_seconds": 337.846428572894,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 5,
+      "reached": 7,
+      "resource": 21,
+      "seed": 32,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        9,
+        3,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 358.874179685382,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 1,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        1,
+        7
+      ],
+      "build": "bases_15",
+      "combat_seconds": 356.463786991153,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 2,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 342.139364060178,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 3,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        1
+      ],
+      "build": "bases_15",
+      "combat_seconds": 358.302751113954,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 4,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        9,
+        2
+      ],
+      "build": "bases_15",
+      "combat_seconds": 346.80506503343,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 5,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        4,
+        11
+      ],
+      "build": "bases_15",
+      "combat_seconds": 357.119800770373,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 6,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 354.339071061269,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 7,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        8,
+        11,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 360.744962271508,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 19,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 8,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        5,
+        1
+      ],
+      "build": "bases_15",
+      "combat_seconds": 343.120498075845,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 9,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        11
+      ],
+      "build": "bases_15",
+      "combat_seconds": 358.874179685382,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 10,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        11,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 346.762854482388,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 11,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 356.697565895736,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 12,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        0,
+        1
+      ],
+      "build": "bases_15",
+      "combat_seconds": 354.532028534547,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 13,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 356.697565895736,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 14,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 342.139364060178,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 15,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        3,
+        11
+      ],
+      "build": "bases_15",
+      "combat_seconds": 358.495069938931,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 16,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        4
+      ],
+      "build": "bases_15",
+      "combat_seconds": 348.580918121801,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 17,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        2,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 341.786068829942,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 18,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        4,
+        11
+      ],
+      "build": "bases_15",
+      "combat_seconds": 344.844718745406,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 19,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        5,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 354.315578318097,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 20,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        7,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 350.361575759599,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 21,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        10,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 350.485444683615,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 22,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        8
+      ],
+      "build": "bases_15",
+      "combat_seconds": 354.502219017705,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 19,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 23,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        9,
+        7
+      ],
+      "build": "bases_15",
+      "combat_seconds": 339.035121681346,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 24,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        2,
+        4
+      ],
+      "build": "bases_15",
+      "combat_seconds": 350.851278447572,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 25,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        7,
+        0,
+        2
+      ],
+      "build": "bases_15",
+      "combat_seconds": 356.695087059404,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 26,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        11,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 344.283852912218,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 27,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "bases_15",
+      "combat_seconds": 354.335929167784,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 19,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 348.580918121801,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 29,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        4,
+        0
+      ],
+      "build": "bases_15",
+      "combat_seconds": 351.486223910939,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 30,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        7,
+        1
+      ],
+      "build": "bases_15",
+      "combat_seconds": 358.21944778398,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 31,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        3,
+        5
+      ],
+      "build": "bases_15",
+      "combat_seconds": 354.339071061269,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 15,
+      "layout": "reference",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 32,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 335.135915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 7,
+      "resource": 21,
+      "seed": 1,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        10,
+        1
+      ],
+      "build": "bases_15",
+      "combat_seconds": 338.335915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 7,
+      "resource": 21,
+      "seed": 2,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 494.735425709897,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 7,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 3,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10
+      ],
+      "build": "bases_15",
+      "combat_seconds": 335.135915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 7,
+      "resource": 21,
+      "seed": 4,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        9,
+        2
+      ],
+      "build": "bases_15",
+      "combat_seconds": 505.432685283276,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 5,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 5,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        4
+      ],
+      "build": "bases_15",
+      "combat_seconds": 405.90063389454,
+      "completed": 7,
+      "faction": 1,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 8,
+      "resource": 28,
+      "seed": 6,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 499.224912405781,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 5,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 7,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        8,
+        11
+      ],
+      "build": "bases_15",
+      "combat_seconds": 406.033714696179,
+      "completed": 7,
+      "faction": 1,
+      "full_preparation_seconds": 210,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 8,
+      "resource": 28,
+      "seed": 8,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        6,
+        5,
+        1
+      ],
+      "build": "bases_15",
+      "combat_seconds": 499.302793263504,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 5,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 9,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10
+      ],
+      "build": "bases_15",
+      "combat_seconds": 335.135915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 7,
+      "resource": 21,
+      "seed": 10,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1,
+        11
+      ],
+      "build": "bases_15",
+      "combat_seconds": 334.935915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 7,
+      "resource": 21,
+      "seed": 11,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 506.135425709897,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 5,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 12,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        0,
+        1
+      ],
+      "build": "bases_15",
+      "combat_seconds": 508.392279959389,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 1,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 13,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 506.135425709897,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 5,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 14,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 496.735425709897,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 7,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 15,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        3
+      ],
+      "build": "bases_15",
+      "combat_seconds": 335.135915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 7,
+      "resource": 21,
+      "seed": 16,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        1,
+        0
+      ],
+      "build": "bases_15",
+      "combat_seconds": 336.535915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 7,
+      "resource": 21,
+      "seed": 17,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0,
+        2,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 502.739361876707,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 9,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 18,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        4,
+        11
+      ],
+      "build": "bases_15",
+      "combat_seconds": 497.135425709897,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 9,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 19,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        5,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 506.735425709897,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 5,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 20,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        7
+      ],
+      "build": "bases_15",
+      "combat_seconds": 334.935915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 7,
+      "resource": 21,
+      "seed": 21,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        6,
+        10,
+        9
+      ],
+      "build": "bases_15",
+      "combat_seconds": 503.579019815651,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 9,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 22,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        8
+      ],
+      "build": "bases_15",
+      "combat_seconds": 501.224912405781,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 9,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 23,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        9,
+        7
+      ],
+      "build": "bases_15",
+      "combat_seconds": 494.535425709897,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 7,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 24,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        2,
+        4
+      ],
+      "build": "bases_15",
+      "combat_seconds": 508.487340551639,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 7,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 25,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        7,
+        0
+      ],
+      "build": "bases_15",
+      "combat_seconds": 336.135915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 7,
+      "resource": 21,
+      "seed": 26,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        0,
+        11,
+        6
+      ],
+      "build": "bases_15",
+      "combat_seconds": 493.735425709897,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 7,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 27,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "bases_15",
+      "combat_seconds": 502.106746053456,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 9,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0
+      ],
+      "build": "bases_15",
+      "combat_seconds": 336.535915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 7,
+      "resource": 21,
+      "seed": 29,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        4,
+        0
+      ],
+      "build": "bases_15",
+      "combat_seconds": 497.624912405781,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 7,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 30,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        7
+      ],
+      "build": "bases_15",
+      "combat_seconds": 335.135915268778,
+      "completed": 6,
+      "faction": 1,
+      "full_preparation_seconds": 180,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 7,
+      "resource": 21,
+      "seed": 31,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        11,
+        3,
+        5
+      ],
+      "build": "bases_15",
+      "combat_seconds": 499.224912405781,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 5,
+      "layout": "reparti",
+      "points": 15,
+      "reached": 10,
+      "resource": 60,
+      "seed": 32,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        3,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 317.778634220386,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 1,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        1,
+        7
+      ],
+      "build": "impact_36",
+      "combat_seconds": 319.920250366732,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 2,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 314.422025984351,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 3,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 317.759768236053,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 4,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        9,
+        2
+      ],
+      "build": "impact_36",
+      "combat_seconds": 309.653825724879,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 5,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        4,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 318.877182298557,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 6,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 318.23301201838,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 7,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        8,
+        11,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 321.916083473178,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 8,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        5,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 314.909631699875,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 9,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 317.778634220386,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 10,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        11,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 314.858636003102,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 11,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 316.328497684208,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 12,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        0,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 319.697510487754,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 13,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 316.328497684208,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 14,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 314.440891968684,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 15,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        3,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 320.007238946474,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 16,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        4
+      ],
+      "build": "impact_36",
+      "combat_seconds": 314.306255050721,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 17,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        2,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 317.513080113095,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 18,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        4,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 314.340891968684,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 19,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        5,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 319.716376472087,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 20,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        7,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 312.944894779703,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 21,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        10,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 318.328497684208,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 22,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        8
+      ],
+      "build": "impact_36",
+      "combat_seconds": 318.23301201838,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 23,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        9,
+        7
+      ],
+      "build": "impact_36",
+      "combat_seconds": 317.281617906893,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 24,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        2,
+        4
+      ],
+      "build": "impact_36",
+      "combat_seconds": 312.727297212141,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 25,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        7,
+        0,
+        2
+      ],
+      "build": "impact_36",
+      "combat_seconds": 315.166513008265,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 26,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        11,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 316.110835320768,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 27,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "impact_36",
+      "combat_seconds": 313.423329672097,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 21,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 314.306255050721,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 29,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        4,
+        0
+      ],
+      "build": "impact_36",
+      "combat_seconds": 316.263361665206,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 30,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        7,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 317.782508115031,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 31,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        3,
+        5
+      ],
+      "build": "impact_36",
+      "combat_seconds": 318.23301201838,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 17,
+      "layout": "reference",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 32,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        3,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 485.091018341325,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 3,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 1,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        1,
+        7
+      ],
+      "build": "impact_36",
+      "combat_seconds": 484.605484435392,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 7,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 2,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 477.20153164544,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 3,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 487.747872590817,
+      "completed": 9,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 0,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 45,
+      "seed": 4,
+      "victory": false
+    },
+    {
+      "bonuses": [
+        5,
+        9,
+        2
+      ],
+      "build": "impact_36",
+      "combat_seconds": 475.76623864713,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 8,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 5,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        4,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 487.691018341325,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 5,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 6,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 478.7820780159,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 7,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        8,
+        11,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 485.291018341325,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 7,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 8,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        5,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 469.947061482728,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 14,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 9,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        9,
+        10,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 484.091018341325,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 3,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 10,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        11,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 470.644870883216,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 11,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 484.291018341325,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 12,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        0,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 475.712044949556,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 14,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 13,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        3,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 485.291018341325,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 14,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        5,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 476.20153164544,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 15,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        3,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 490.291018341325,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 3,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 16,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        4
+      ],
+      "build": "impact_36",
+      "combat_seconds": 476.644870883216,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 17,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        2,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 476.983428544676,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 18,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        4,
+        11
+      ],
+      "build": "impact_36",
+      "combat_seconds": 471.515997739508,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 12,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 19,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        3,
+        5,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 476.712044949556,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 14,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 20,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        7,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 476.644870883216,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 21,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        6,
+        10,
+        9
+      ],
+      "build": "impact_36",
+      "combat_seconds": 477.947061482728,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 14,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 22,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        10,
+        8
+      ],
+      "build": "impact_36",
+      "combat_seconds": 478.7820780159,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 16,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 23,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        9,
+        7
+      ],
+      "build": "impact_36",
+      "combat_seconds": 468.60153164544,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 24,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        2,
+        4
+      ],
+      "build": "impact_36",
+      "combat_seconds": 481.472915240561,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 25,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        7,
+        0,
+        2
+      ],
+      "build": "impact_36",
+      "combat_seconds": 480.36623864713,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 8,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 26,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        0,
+        11,
+        6
+      ],
+      "build": "impact_36",
+      "combat_seconds": 472.80153164544,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 10,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 27,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        5,
+        1,
+        8
+      ],
+      "build": "impact_36",
+      "combat_seconds": 479.005484435392,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 16,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 28,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        1,
+        0,
+        3
+      ],
+      "build": "impact_36",
+      "combat_seconds": 475.644870883216,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 11,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 29,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        4,
+        0
+      ],
+      "build": "impact_36",
+      "combat_seconds": 470.1820780159,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 14,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 30,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        10,
+        7,
+        1
+      ],
+      "build": "impact_36",
+      "combat_seconds": 487.291018341325,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 3,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 31,
+      "victory": true
+    },
+    {
+      "bonuses": [
+        11,
+        3,
+        5
+      ],
+      "build": "impact_36",
+      "combat_seconds": 473.7820780159,
+      "completed": 10,
+      "faction": 1,
+      "full_preparation_seconds": 270,
+      "hp": 14,
+      "layout": "reparti",
+      "points": 36,
+      "reached": 10,
+      "resource": 60,
+      "seed": 32,
+      "victory": true
+    }
+  ],
+  "scenarios": 512,
+  "schema": 1,
+  "seed_count": 32,
+  "victory_bonus": 5,
+  "provenance": {
+    "release_tag": "v0.78",
+    "repeated_scenarios": 512,
+    "identical_results": true,
+    "existing_output_preserved": true,
+    "user_data_output_refused": true,
+    "runtime_source_sha256": {
+      "scripts/main.gd": "8fdf8d3f9c31beda9f167cf5ba972f6d00729b704f8aa5e759876461052389ad",
+      "scripts/valley_model.gd": "5c28b104ca52ae58df097ca89daf01ecf214db93dfefd5c21de29586f44ad9f3",
+      "scripts/valley_view.gd": "f884f6b8185c6d7cba42c1192aaf56a4860040fcc3fb6357bbe91b4c2dc6b569",
+      "scripts/campaign_data.gd": "aeca310747f88c1dd1b2d8089552c7a8d4b520ad59d3e7ff619a773fee6cc3e4",
+      "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755",
+      "scripts/run_report.gd": "ec5c69f5b3df6fc17730625b98bc3a57e50ff9ab3eeae427a9624f30610309ce",
+      "scripts/combat_metrics.gd": "10a2a00aa85c0b430dbec33f3b457e66ce74b36e36b6fae91d4a26fff17ebf4b",
+      "scripts/horde_art.gd": "48f4f70156974eb3b7a5d6d76a6588bce974986bc3a57d5a33bf2d9bcf5ccd16",
+      "scripts/alliance_art.gd": "57cf3d79191acb0d30d13d2e62c46d5d45ca7f4d3850c0922fe26b29dc9026e4",
+      "scripts/enemy_art.gd": "230c9f000da994fdc66c1a22220e48e3d0c2d7177617c6e294fda52c6664d7d0",
+      "scripts/enemy_catalogue.gd": "30a17d859da5600d444b6da83795f5995525e45cbb4a49eb183933f2e7f06646",
+      "scripts/meta_talents.gd": "700640a11d025cf328de5f74a7ef8cd9398f801a88fb6d31661bf5a595b93047",
+      "scripts/meta_profile.gd": "a16b8d3210bac910253e9b90d78a82733f4d4a1f2b0f762156fe291c74bb0505",
+      "scripts/meta_screen.gd": "c0ff3193323fcbefd330b5355ee6dcfb3930af506adbcb6235e7bd514f380991",
+      "scripts/meta_talents_v067.gd": "58e0786de434ea3ad0cf9ce9fece3224807fdc5543be64fb09494e8278b53080",
+      "scripts/profile_codec.gd": "1b6227ad26ca9d69e8e02c9eeddd2ed90265aa6b76e5b991a4ac8964d7a0b3b6"
+    },
+    "survey_script_sha256": "4172e66fbb63a759079f742fa8eda833fa660ad5aacdb50d4ee3d71dbcd2a7be"
+  }
+}

@@ -386,3 +386,9 @@ Aspect endommagé à la moitié des PV, critique au quart, bannière abaissée �
 ## v0.78 — Avertissement avant départ automatique, 28 octobre 2026
 
 Rappel dans l’en-tête pour les cinq dernières secondes de préparation ; annonce du boss avant la finale. Caché pendant les lectures suspendant le délai, remplacé par l’annonce de départ à zéro. Même délai et mêmes pauses. [Détails et validation](Avertissement_depart_v078.md).
+
+## Complément v0.78 — Audit de la progression, 28 octobre 2026
+
+512 scénarios de contrôle reproduits à l’identique : deux factions, quatre configurations de talents, deux placements, 32 graines. Budget vérifié pour chaque scénario, aucun profil chargé ni gain versé. La référence gagne sans talent dans ses 64 essais ; le placement réparti échoue sans talent et profite davantage de la progression. Taux limités à ces politiques, sans extrapolation aux joueurs humains. Données et scripts versionnés, coûts et difficulté inchangés. [Résultats et limites](Bilan_progression_v078.md).
+
+La destination existante et le dossier des données du joueur sont refusés par le script de mesure, sans écrasement. Les empreintes des sources de jeu concordent avec le paquet v0.78 ; seuls des outils de développement et documents sont ajoutés. Aucun nouvel exécutable nécessaire pour ce complément.
