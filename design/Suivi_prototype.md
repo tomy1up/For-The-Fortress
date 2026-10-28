@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 28 octobre 2026 — prototype v0.75, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 28 octobre 2026 — prototype v0.76, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -374,3 +374,7 @@ Nuage cartoon bref au lieu de la mort, y compris pour une malédiction létale. 
 ## v0.75 — Annonces de début de vague, 28 octobre 2026
 
 Annonce de deux secondes réelles dans l’en-tête après chaque départ réussi, manuel ou automatique. Numéro, effectif et finale avec boss adverse. Apparition et extinction douces, aucun clic ou pause, jauge du boss dégagée. [Détails et validation](Annonce_vagues_v075.md).
+
+## v0.76 — Identité des forteresses par faction, 28 octobre 2026
+
+Forteresse Alliance en pierre claire, toits bleus et liserés dorés ; forteresse Horde en bois renforcé, métal, rouge et défenses ivoire. Dessin natif avec contours cartoon et bannières animées. Même cour, point d’arrivée et emplacement E6 dégagé. [Détails et validation](Forteresses_factions_v076.md).

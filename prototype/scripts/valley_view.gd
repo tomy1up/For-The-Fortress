@@ -14,6 +14,7 @@ const HIT_FLASH_DURATION := 0.16
 const ELIMINATION_DURATION := 0.45
 const MAX_ELIMINATION_EFFECTS := 24
 var elimination_tail: float = 0.0
+var flag_phase: float = 0.0
 var model: RefCounted
 var selected: int = -1
 var purchase_preview: Dictionary = {}
@@ -27,6 +28,7 @@ func _init() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 
 func _process(delta: float) -> void:
+	flag_phase = fmod(flag_phase+maxf(0.0,delta),TAU)
 	if model == null or model.active or model.phase not in ["finished","bonus","victory","defeat"]:
 		elimination_tail = 0.0
 	elif elimination_tail < ELIMINATION_DURATION:
@@ -497,26 +499,59 @@ func _draw_tree(center: Vector2) -> void:
 		draw_colored_polygon(PackedVector2Array([left,tip,right]),Color("2b5140"))
 		draw_colored_polygon(PackedVector2Array([tip,right,center+Vector2(0,crown[1])]),Color("496e50"))
 
+static func fortress_style(faction: int) -> Dictionary:
+	if faction == 1:
+		return {"faction":1,"wall":Color("956746"),"shade":Color("624c3c"),"roof":Color("a63f31"),"flag":Color("bd4936"),"trim":Color("c5bda7")}
+	return {"faction":0,"wall":Color("c2c8b6"),"shade":Color("84958a"),"roof":Color("356582"),"flag":Color("376b99"),"trim":Color("d9b968")}
+
+static func fortress_center(anchor: Vector2) -> Vector2:
+	return anchor+Vector2(52,26)
+
+static func fortress_bounds(anchor: Vector2) -> Rect2:
+	return Rect2(fortress_center(anchor)+Vector2(-37,-70),Vector2(74,91))
+
+func _fortress_shape(points: PackedVector2Array, color: Color) -> void:
+	draw_colored_polygon(points,color)
+	var outline: PackedVector2Array = points.duplicate();outline.append(points[0])
+	draw_polyline(outline,Color("26342e"),2.0,true)
+
 func _draw_fortress(anchor: Vector2) -> void:
-	# Décaler le bâtiment dans sa cour pour laisser le repère E6 visible.
-	# Le point d'arrivée logique demeure H (17 ; 6).
-	var center: Vector2 = anchor + Vector2(52, 26)
-	draw_colored_polygon(PackedVector2Array([anchor + Vector2(-12, 0), anchor + Vector2(36, -5), center + Vector2(37, 0), center + Vector2(0, 21)]), Color("576650"))
-	draw_colored_polygon(PackedVector2Array([center + Vector2(-31, -8), center + Vector2(0, -23), center + Vector2(31, -8), center + Vector2(0, 9)]), Color("64766a"))
+	# Même cour et même arrivée logique pour les deux camps ; E6 reste dégagé.
+	var center: Vector2 = fortress_center(anchor)
+	var style: Dictionary = fortress_style(model.faction if model != null else 0)
+	var horde: bool = style.faction == 1
+	draw_colored_polygon(PackedVector2Array([anchor+Vector2(-12,0),anchor+Vector2(36,-5),center+Vector2(37,0),center+Vector2(0,21)]),Color("576650"))
+	_fortress_shape(PackedVector2Array([center+Vector2(-31,-8),center+Vector2(0,-23),center+Vector2(31,-8),center+Vector2(0,9)]),style.shade)
 	for offset in [-23, 23]:
 		var tower: Vector2 = center + Vector2(offset, -8)
-		draw_rect(Rect2(tower + Vector2(-9, -39), Vector2(18, 39)), Color("a9b5a4"))
-		draw_rect(Rect2(tower + Vector2(1, -39), Vector2(8, 39)), Color("7e9285"))
-		draw_colored_polygon(PackedVector2Array([tower + Vector2(-13, -39), tower + Vector2(0, -57), tower + Vector2(13, -39)]), Color("315b68"))
-	draw_rect(Rect2(center + Vector2(-17, -34), Vector2(34, 29)), Color("8b9e8e"))
-	for height in [-28,-19,-10]:
-		draw_line(center+Vector2(-16,height),center+Vector2(16,height),Color("7a9082"),1)
-	draw_circle(center+Vector2(0,-24),6,Color("233c36"))
-	draw_rect(Rect2(center + Vector2(-6, -24), Vector2(12, 19)), Color("233c36"))
-	for offset in [-3,3]:draw_line(center+Vector2(offset,-26),center+Vector2(offset,-5),Color("4f6858"),1)
-	draw_line(center + Vector2(0, -36), center + Vector2(0, -68), Color("d0bc8c"), 2)
-	draw_colored_polygon(PackedVector2Array([center + Vector2(1, -68), center + Vector2(20, -62), center + Vector2(1, -55)]), Color("d3b676"))
-	draw_string(font, center + Vector2(-42, 32), "FORTERESSE", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, INK)
+		var rect := Rect2(tower+Vector2(-9,-39),Vector2(18,39))
+		draw_rect(rect,style.wall);draw_rect(Rect2(tower+Vector2(1,-39),Vector2(8,39)),style.shade);draw_rect(rect,Color("26342e"),false,2)
+		_fortress_shape(PackedVector2Array([tower+Vector2(-13,-39),tower+Vector2(0,-49 if horde else -57),tower+Vector2(13,-39)]),style.roof)
+		if horde:
+			draw_line(tower+Vector2(-10,-28),tower+Vector2(10,-28),Color("3b4140"),4)
+			draw_line(tower+Vector2(-10,-8),tower+Vector2(10,-8),Color("3b4140"),4)
+		else:
+			draw_line(tower+Vector2(-11,-39),tower+Vector2(11,-39),style.trim,2)
+			draw_rect(Rect2(tower+Vector2(-3,-31),Vector2(4,9)),Color("304840"))
+	var wall := Rect2(center+Vector2(-17,-34),Vector2(34,29))
+	draw_rect(wall,style.wall);draw_rect(wall,Color("26342e"),false,2)
+	if horde:
+		for x in [-12,-6,0,6,12]: draw_line(center+Vector2(x,-32),center+Vector2(x,-7),style.shade,1)
+		for side in [-1,1]:
+			var tusk := PackedVector2Array([center+Vector2(side*26,-8),center+Vector2(side*33,-24),center+Vector2(side*31,-34)])
+			draw_polyline(tusk,Color("26342e"),7,true);draw_polyline(tusk,style.trim,4,true)
+		draw_rect(Rect2(center+Vector2(-7,-24),Vector2(14,19)),Color("293832"))
+	else:
+		for height in [-28,-19,-10]: draw_line(center+Vector2(-16,height),center+Vector2(16,height),style.shade,1)
+		draw_arc(center+Vector2(0,-24),7,PI,TAU,16,style.trim,2,true)
+		draw_circle(center+Vector2(0,-24),6,Color("233c36"));draw_rect(Rect2(center+Vector2(-6,-24),Vector2(12,19)),Color("233c36"))
+	for x in [-3,3]: draw_line(center+Vector2(x,-24),center+Vector2(x,-5),style.shade,1)
+	var pole: Vector2 = center+Vector2(0,-68)
+	draw_line(center+Vector2(0,-36),pole,style.trim,2)
+	var flutter: float = sin(flag_phase)*2.0
+	_fortress_shape(PackedVector2Array([pole+Vector2(1,0),pole+Vector2(20,4+flutter),pole+Vector2(18,14+flutter),pole+Vector2(1,12)]),style.flag)
+	draw_line(pole+Vector2(5,3),pole+Vector2(5,10),style.trim,2)
+	draw_string(font,center+Vector2(-42,32),"FORTERESSE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,INK)
 
 static func _enemy_scale(enemy: Dictionary) -> float:
 	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7][enemy.get("type", 1)]

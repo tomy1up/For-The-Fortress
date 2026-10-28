@@ -465,6 +465,9 @@ func _ready() -> void:
 			var states: Array[String] = []
 			for button in meta_menu.nodes: states.append(button.state)
 			print("TALENT_STATES_SNAPSHOT=",JSON.stringify({"states":states,"isolated":meta_profile.path.is_empty(),"progress":meta_menu.boards[0].progress}))
+		if "--capture-fortress" in OS.get_cmdline_user_args():
+			var style: Dictionary = MapView.fortress_style(model.faction)
+			print("FORTRESS_SNAPSHOT=",JSON.stringify({"faction":style.faction,"banner":style.flag.to_html(false),"e6_clear":not MapView.fortress_bounds(MapView.project(Model.PATH_POINTS[-1])).has_point(MapView.project(Model.SLOTS[5])),"hp":model.fortress_hp}))
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)

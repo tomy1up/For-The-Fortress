@@ -50,6 +50,7 @@ startup.wShowWindow=0
 results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
        ('home_prepared','selection',None),('home_maximum','selection',None),('home_blocked','selection',None),
+       ('alliance_fortress','preparation','alliance'),('horde_fortress','preparation','horde'),
        ('alliance_talents','talents','alliance'),('horde_talents','talents','horde'),
        ('alliance_talents_no_points','talents','alliance'),('horde_talents_no_points','talents','horde'),
        ('alliance_talents_reset','talents','alliance'),('horde_talents_reset','talents','horde'),
@@ -117,6 +118,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if name.endswith('_fortress'): command+=['--capture-fortress']
         if state=='elimination': command+=['--capture-type='+('2' if faction=='alliance' else '4')]
         if name.endswith('_final_start'): command+=['--capture-start-final']
         if name.startswith('home_'): command+=['--capture-home='+{'home_prepared':'prepared','home_maximum':'maximum','home_blocked':'blocked'}[name]]
@@ -160,6 +162,11 @@ for name,state,faction in cases:
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
+    if name.endswith('_fortress'):
+        fortress=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('FORTRESS_SNAPSHOT=')))
+        assert fortress['faction']==(0 if faction=='alliance' else 1) and fortress['e6_clear'] and fortress['hp']==20
+        color=int(fortress['banner'],16);red=(color>>16)&255;blue=color&255
+        assert (blue>red) if faction=='alliance' else (red>blue)
     if state=='selection':
         home=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('HOME_SNAPSHOT=')))
         assert home['isolated'] and home['readonly']
