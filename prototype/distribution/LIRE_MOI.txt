@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.73 — 28 octobre 2026
+Version : 0.74 — 28 octobre 2026
 
 JOUER
 
@@ -108,6 +108,8 @@ COMMANDES ET RÈGLES DU PROTOTYPE
 
 Cliquer sur E1 à E6 ou utiliser les touches 1 à 6 du clavier/pavé numérique.
 Les unités attaquent automatiquement. Deux exemplaires maximum par type de défenseur.
+Un bref nuage accompagne les éliminations. La cible est retirée et l’or attribué
+immédiatement ; cet effet ne retarde pas les tirs ni le passage à la vague suivante.
 Construire, améliorer et vendre uniquement entre les vagues.
 Quatre niveaux par unité ; deux spécialisations au dernier niveau.
 Vendre rend 70 % de l’or réellement investi, arrondi à l’inférieur.

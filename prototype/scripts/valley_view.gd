@@ -11,6 +11,9 @@ const SLOT_FILL := Color("213e3b")
 const IMPACT_DURATION := 0.32 # Secondes de simulation, comme les autres effets du combat.
 const DAMAGE_TRAIL_DURATION := 0.40
 const HIT_FLASH_DURATION := 0.16
+const ELIMINATION_DURATION := 0.45
+const MAX_ELIMINATION_EFFECTS := 24
+var elimination_tail: float = 0.0
 var model: RefCounted
 var selected: int = -1
 var purchase_preview: Dictionary = {}
@@ -22,6 +25,37 @@ var font: Font = ThemeDB.fallback_font
 
 func _init() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+
+func _process(delta: float) -> void:
+	if model == null or model.active or model.phase not in ["finished","bonus","victory","defeat"]:
+		elimination_tail = 0.0
+	elif elimination_tail < ELIMINATION_DURATION:
+		elimination_tail = minf(ELIMINATION_DURATION,elimination_tail+maxf(0.0,delta))
+		queue_redraw()
+
+func recent_eliminations() -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	if model == null or model.phase not in ["combat","finished","bonus","victory","defeat"]: return result
+	for index in range(model.elimination_events.size()-1,-1,-1):
+		var event: Dictionary = model.elimination_events[index]
+		var age: float = model.elapsed-event.time+(0.0 if model.active else elimination_tail)
+		if age >= ELIMINATION_DURATION: break
+		if age >= 0.0:
+			result.append({"event":event,"age":age})
+			if result.size() >= MAX_ELIMINATION_EFFECTS: break
+	return result
+
+static func elimination_particles(event: Dictionary, age: float) -> Array[Dictionary]:
+	var particles: Array[Dictionary] = []
+	if age < 0.0 or age >= ELIMINATION_DURATION: return particles
+	var t: float = age/ELIMINATION_DURATION
+	var scale: float = 1.5 if event.type == 7 else 1.0
+	var center: Vector2 = project(event.point)+Vector2(0,-10*scale)
+	for index in range(5):
+		var angle: float = index*TAU/5+fmod(float(event.enemy_id)*0.61,TAU)
+		var offset := Vector2(cos(angle)*(4+14*t),sin(angle)*(2+5*t)-12*t)*scale
+		particles.append({"point":center+offset,"radius":(4.0+1.4*(index%2))*(1.0-0.55*t)*scale,"alpha":0.65*(1.0-t)})
+	return particles
 
 static func project(point: Vector2) -> Vector2:
 	return ORIGIN + Vector2((point.x - point.y) * AXIS.x, (point.x + point.y) * AXIS.y)
@@ -353,6 +387,9 @@ func _draw() -> void:
 		if model.active:
 			for shot in model.shots:
 				_draw_impact(shot, model.elapsed - shot.time)
+		for effect in recent_eliminations():
+			for particle in elimination_particles(effect.event,effect.age):
+				draw_circle(particle.point,particle.radius,Color(Color("d6c7a6"),particle.alpha))
 	if not breach_feedback.is_empty(): _draw_breach_feedback()
 
 static func breach_text(count: int, damage: int) -> String:

@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 28 octobre 2026 — prototype v0.73, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 28 octobre 2026 — prototype v0.74, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -366,3 +366,7 @@ Repères sur les icônes pour distinguer rang investissable, maximum, palier fer
 ## v0.73 — Comprendre la respécialisation avant paiement, 28 octobre 2026
 
 Confirmation avec coût, solde restant, points à placer après remboursement et prochain prix plafonné. Annulation sans prélèvement, devis périmé refusé, confirmation invalidée à la fermeture ou au changement de faction. Compteurs, montants et sauvegarde inchangés. [Détails et validation](Apercu_respecialisation_v073.md).
+
+## v0.74 — Dissipation des ennemis éliminés, 28 octobre 2026
+
+Nuage cartoon bref au lieu de la mort, y compris pour une malédiction létale. Dernier effet terminé après la vague, sans cible conservée, attente ni récompense différée. Animation déterministe et nombre d’effets affichés borné. [Détails et validation](Dissipation_ennemis_v074.md).

@@ -290,19 +290,21 @@ func _ready() -> void:
 			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection", "summary", "defeat_summary", "forecast", "forecast_boss"]:
 				model.start()
 				model.advance(1.0 if capture_state == "curse" else 7.5 if capture_state in ["combat","inspection"] else 100.0)
-		if capture_state in ["effects","damage_tick"]:
+		if capture_state in ["effects","damage_tick","elimination"]:
 			if capture_state == "damage_tick": capture_type = 5
 			model.reset()
 			model.select_faction(0 if capture_type < 3 else 1)
 			model.gold = 1000 # Fixture visuelle, pas une campagne jouée.
 			model.buy(capture_slot, capture_type)
-			model.wave = 8
-			model.spawn_schedule = Model.Campaign.schedule(8)
+			model.wave = 1 if capture_state == "elimination" else 8
+			model.spawn_schedule = Model.Campaign.schedule(model.wave)
 			model.start()
 			var found: bool = false
 			for step in range(6000):
 				model.advance(0.01)
-				if capture_state == "damage_tick":
+				if capture_state == "elimination":
+					found = not model.elimination_events.is_empty() and model.elapsed-model.elimination_events[-1].time < 0.01
+				elif capture_state == "damage_tick":
 					if not model.damage_events.is_empty() and not model.shots.is_empty():
 						var event: Dictionary = model.damage_events[-1]
 						found = event.hp_after > 0.0 and model.elapsed-event.time < 0.01 and model.elapsed-model.shots[-1].time > 0.5
@@ -315,6 +317,9 @@ func _ready() -> void:
 			if capture_state == "damage_tick":
 				model.advance(0.04)
 				print("DAMAGE_TICK_VISIBLE=true")
+			if capture_state == "elimination":
+				model.advance(0.12)
+				print("ELIMINATION_VISIBLE=",not map_view.recent_eliminations().is_empty())
 			if "--capture-attack-pose" in OS.get_cmdline_user_args(): model.advance(MapView.ATTACK_POSE_DURATION/2)
 			if "--capture-projectile" in OS.get_cmdline_user_args(): model.advance(MapView.PROJECTILE_FLIGHT/2)
 			selected = capture_slot
@@ -391,7 +396,7 @@ func _ready() -> void:
 		if capture_state == "catalogue":
 			faction_label.text = "CATALOGUE ENNEMI · CONTRÔLE"
 			status_label.text = "Profils de référence\nVue de contrôle"
-		if capture_state in ["effects","damage_tick"]: faction_label.text = "CONTRÔLE EFFETS · BUDGET IMPOSÉ"
+		if capture_state in ["effects","damage_tick","elimination"]: faction_label.text = "CONTRÔLE EFFETS · BUDGET IMPOSÉ"
 		if capture_state == "bonus_preview": bonus_title.text = "CONTRÔLE BONUS · BUDGET IMPOSÉ"
 		if capture_state == "defender_catalogue": faction_label.text = "DÉFENSEURS · BUDGET IMPOSÉ"
 		if "--capture-synergy-preview" in OS.get_cmdline_user_args() and capture_state == "specialisation": faction_label.text = "APERÇU SYNERGIES · BUDGET IMPOSÉ"

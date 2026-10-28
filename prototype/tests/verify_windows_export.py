@@ -73,6 +73,7 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('alliance_synergy_branch','specialisation','alliance'),('horde_synergy_branch','specialisation','horde'),
        ('effects_mage','effects','alliance'),('effects_troll','effects','horde'),
        ('effects_sapper','effects','horde'),('effects_shaman','effects','horde'),
+       ('alliance_elimination','elimination','alliance'),('horde_elimination','elimination','horde'),
        ('wave_forecast','forecast','alliance'),('boss_forecast','forecast_boss','horde'),
        ('victory_summary','summary','horde'),('defeat_summary','defeat_summary','alliance'),
        ('alliance_run_report','summary','alliance'),('horde_run_report','summary','horde'),
@@ -114,6 +115,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if state=='elimination': command+=['--capture-type='+('2' if faction=='alliance' else '4')]
         if name.startswith('home_'): command+=['--capture-home='+{'home_prepared':'prepared','home_maximum':'maximum','home_blocked':'blocked'}[name]]
         if name.endswith('_talents_reset'): command+=['--capture-meta-reset']
         if name.endswith('_reset_cap'): command+=['--capture-meta-reset','--capture-reset-cap']
@@ -192,6 +194,7 @@ for name,state,faction in cases:
         else: assert info['ready'] and info['saved']==1 and info['bonus']==0 and info['balance']==7
     if name.startswith('left_'): assert 'ATTACK_FACING=-1' in text,(name,'La fixture doit couvrir un vrai tir à gauche')
     if name=='periodic_damage': assert 'DAMAGE_TICK_VISIBLE=true' in text,(name,'Le contrôle doit montrer un dégât périodique réel')
+    if state=='elimination': assert 'ELIMINATION_VISIBLE=true' in text,(name,'La dissipation doit suivre une vraie élimination')
     if name=='boss_without_hover': assert 'BOSS_STATUS_WITHOUT_HOVER=true' in text,(name,text)
     if name in ['alliance_run_report','horde_run_report','horde_defender_summary'] or name.endswith('_loadout_summary'):
         report_folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))
