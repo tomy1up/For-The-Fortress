@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.80 — 28 octobre 2026
+Version : 0.81 — 28 octobre 2026
 
 JOUER
 
@@ -114,6 +114,16 @@ la silhouette translucide de cette classe, sa portée et ses synergies prévues.
 La silhouette ne représente pas une recrue déjà achetée. Elle reste consultable
 si l’or manque, avec une teinte plus discrète ; le bouton reste indisponible.
 Un achat remplace l’aperçu par une seule vraie unité. Aucun aperçu pendant le combat.
+
+LECTURE DU COMBAT
+
+Le panneau de gauche résume les ennemis restants, y compris ceux qui ne sont pas
+encore apparus, et les ennemis ayant atteint la forteresse pendant cette vague.
+En fin de vague, il résume les éliminations et les arrivées.
+Le bouton « Chiffres du combat » affiche les compteurs complets et le temps
+simulé ; « Réduire les détails » revient au résumé. Cette lecture ne suspend
+ni les combats ni le départ automatique. La jauge sous les PV suit la santé
+actuelle de la forteresse ; les valeurs chiffrées restent visibles.
 
 COMMANDES ET RÈGLES DU PROTOTYPE
 

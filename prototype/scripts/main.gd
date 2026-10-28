@@ -93,6 +93,10 @@ var time_label: Label
 var hp_label: Label
 var gold_label: Label
 var tally_label: Label
+var combat_numbers_button: Button
+var combat_numbers_visible: bool = false
+var fortress_bar: ProgressBar
+var fortress_fill: StyleBoxFlat
 var details_label: Label
 var inspection_numbers_button: Button
 var inspection_numbers_visible: bool = false
@@ -481,6 +485,9 @@ func _ready() -> void:
 			var style: Dictionary = MapView.fortress_style(model.faction)
 			var condition: int = MapView.fortress_condition(model.fortress_hp,model.max_hp)
 			print("FORTRESS_SNAPSHOT=",JSON.stringify({"faction":style.faction,"banner":style.flag.to_html(false),"e6_clear":not MapView.fortress_bounds(MapView.project(model.path_points[-1])).has_point(MapView.project(model.slots[5])),"hp":model.fortress_hp,"condition":condition,"caption":MapView.fortress_caption(condition)}))
+		if "--capture-hud" in OS.get_cmdline_user_args():
+			if "--capture-combat-details" in OS.get_cmdline_user_args(): _toggle_combat_numbers()
+			print("HUD_SNAPSHOT=",JSON.stringify({"details":combat_numbers_visible,"time_visible":time_label.visible,"tally":tally_label.text,"hp":fortress_bar.value,"max_hp":fortress_bar.max_value}))
 		if capture_state == "purchase":
 			var ghost: Dictionary = map_view.purchase_ghost()
 			print("PURCHASE_GHOST_SNAPSHOT=",JSON.stringify({"visible":not ghost.is_empty(),"type":ghost.get("type",-1),"slot":ghost.get("slot",-1),"empty":model.defenders[selected].is_empty(),"gold":model.gold,"instances":model.next_instance_id}))
@@ -644,9 +651,30 @@ func _build_interface() -> void:
 	_label(side, "DÉFENDRE LE GUÉ", Vector2(22, 20), Vector2(240, 28), 18, Color("e0dbbf"))
 	guidance_label = _label(side, "", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
 	hp_label = _label(side, "", Vector2(22, 144), Vector2(238, 28), 21, Color("e2d5ad"))
+	fortress_bar = ProgressBar.new()
+	fortress_bar.position = Vector2(22,176)
+	fortress_bar.max_value = Model.INITIAL_HP
+	fortress_bar.step = 0.0
+	fortress_bar.show_percentage = false
+	fortress_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fortress_bar.focus_mode = Control.FOCUS_NONE
+	var fortress_background := StyleBoxFlat.new()
+	fortress_background.bg_color = Color("253a31")
+	fortress_background.set_corner_radius_all(2)
+	fortress_fill = StyleBoxFlat.new()
+	fortress_fill.set_corner_radius_all(2)
+	fortress_bar.add_theme_stylebox_override("background",fortress_background)
+	fortress_bar.add_theme_stylebox_override("fill",fortress_fill)
+	side.add_child(fortress_bar)
+	fortress_bar.size = Vector2(234,4)
 	gold_label = _label(side, "", Vector2(22, 184), Vector2(238, 24), 16, Color("cdb47e"))
 	status_label = _label(side, "", Vector2(22, 232), Vector2(238, 52), 16, Color("d0dfd1"))
-	tally_label = _label(side, "", Vector2(22, 300), Vector2(238, 72), 14, Color("aabbb0"))
+	tally_label = _label(side, "", Vector2(22, 290), Vector2(238, 64), 14, Color("aabbb0"))
+	combat_numbers_button = _button(side,"Chiffres du combat",Rect2(22,356,234,24),_toggle_combat_numbers)
+	combat_numbers_button.add_theme_font_size_override("font_size",12)
+	combat_numbers_button.size = Vector2(234,24)
+	combat_numbers_button.tooltip_text = "Afficher les apparitions, éliminations, arrivées et le temps simulé.
+Cette lecture ne suspend pas le combat ni le départ automatique."
 	time_label = _label(side, "", Vector2(22, 382), Vector2(238, 24), 14, Color("aabbb0"))
 	meta_progress_label = _label(side,"",Vector2(22,406),Vector2(238,18),12,Color("cdb47e"))
 	time_label.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -1561,6 +1589,7 @@ func _reset() -> void:
 	if meta_profile != null and not choosing_faction and not _sync_meta_rewards(true):
 		_update_interface();return # Ne pas détruire un résultat dont le versement n'est pas enregistré.
 	inspection_numbers_visible = false
+	combat_numbers_visible = false
 	overview_open = false
 	autoplay_started = false
 	countdown_wave = -1
@@ -1711,6 +1740,17 @@ func _sell() -> void:
 	_update_interface()
 	map_view.queue_redraw()
 
+func _toggle_combat_numbers() -> void:
+	if _selection_blocked(): return
+	combat_numbers_visible = not combat_numbers_visible
+	_update_interface()
+
+func _combat_tally_text() -> String:
+	if combat_numbers_visible:
+		return "Apparus : %d / %d\nÉliminés : %d · Passés : %d\nEn chemin : %d" % [model.spawned,model.spawn_schedule.size(),model.killed,model.escaped,model.enemies.size()]
+	var first: String = "Éliminés : %d sur %d" % [model.killed,model.spawn_schedule.size()] if model.phase in ["finished","bonus","victory","defeat"] else "Ennemis restants : %d" % maxi(0,model.spawn_schedule.size()-model.killed-model.escaped)
+	return first+"\nOnt atteint la forteresse : %d" % model.escaped
+
 func _update_interface() -> void:
 	_refresh_loadout_label()
 	_refresh_home_progress()
@@ -1725,7 +1765,7 @@ func _update_interface() -> void:
 		meta_progress_label.tooltip_text = "Ressources versées uniquement à la fin de la partie complète : victoire finale ou défaite." if not _run_finished() else meta_profile.error if not meta_profile.error.is_empty() else "Gains de la partie enregistrés."
 		meta_progress_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	if summary_open: _update_meta_summary()
-	for control in [start_button,speed_button,reset_button,sell_button,upgrade_button,bonus_summary_button,summary_button,inspection_numbers_button]+buy_buttons:
+	for control in [start_button,speed_button,reset_button,sell_button,upgrade_button,bonus_summary_button,summary_button,inspection_numbers_button,combat_numbers_button]+buy_buttons:
 		control.set("tooltip_blocked",modal)
 		control.focus_mode = Control.FOCUS_NONE if modal else Control.FOCUS_ALL
 		if modal and control.has_focus(): control.release_focus()
@@ -1735,6 +1775,13 @@ func _update_interface() -> void:
 	summary_panel.visible = summary_open
 	reset_button.size.x = 112 if terminal else 234
 	reset_button.text = "Rejouer" if terminal else "Nouvel essai"
+	combat_numbers_button.disabled = modal
+	combat_numbers_button.text = "Réduire les détails" if combat_numbers_visible else "Chiffres du combat"
+	time_label.visible = combat_numbers_visible
+	fortress_bar.max_value = model.max_hp
+	fortress_bar.value = model.fortress_hp
+	var fortress_condition: int = MapView.fortress_condition(model.fortress_hp,model.max_hp)
+	fortress_fill.bg_color = Color("c58272") if fortress_condition >= 2 else Color("d0b874") if fortress_condition == 1 else Color("a1ba75")
 	hp_label.text = "FORTERESSE   %d / %d PV" % [model.fortress_hp,model.max_hp]
 	hp_label.add_theme_color_override("font_color",Color("ef9b89") if breach_remaining > 0.0 else Color("e2d5ad"))
 	gold_label.text = "OR DISPONIBLE     %d" % model.gold
@@ -1773,7 +1820,9 @@ func _update_interface() -> void:
 	bonus_summary_button.text = "Bonus acquis · %d/3" % model.bonuses.size()
 	bonus_summary_button.disabled = modal
 	_update_bonus_panel()
-	tally_label.text = "Apparus : %d / %d\nÉliminés : %d · Passés : %d\nEn chemin : %d" % [model.spawned, model.spawn_schedule.size(), model.killed, model.escaped, model.enemies.size()]
+	tally_label.text = _combat_tally_text()
+	tally_label.tooltip_text = "Les ennemis restants comprennent ceux sur la route et ceux qui ne sont pas encore apparus.\nLes ennemis ayant atteint la forteresse sont comptés pour cette vague."
+	tally_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	time_label.text = ("Combat simulé : %.1f s" % (model.completed_time+model.elapsed)).replace(".", ",")
 	hint_label.text = "Sélectionnez E1 à E6 (clic ou touches 1–6) pour construire ou inspecter."
 	var occupied: bool = selected >= 0 and not model.defenders[selected].is_empty()

@@ -114,6 +114,9 @@ for index,unit in enumerate(['archer','crossbow','mage','troll','sapper','shaman
     for prefix in ['left_attack_','left_projectile_']:
         cases.append((prefix+unit,'effects','alliance' if index<3 else 'horde'))
 cases.append(('periodic_damage','damage_tick','horde'))
+for faction in ['alliance','horde']:
+    for detail in ['compact','details']:
+        cases.append((faction+'_hud_'+detail,'combat',faction))
 for name,state,faction in cases:
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
@@ -123,6 +126,9 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if '_hud_' in name:
+            command+=['--capture-hud']
+            if name.endswith('_details'): command+=['--capture-combat-details']
         if '_fortress' in name:
             command+=['--capture-fortress']
             if not name.endswith('_fortress'): command+=['--capture-fortress-health='+name.rsplit('_',1)[1]]
@@ -180,6 +186,13 @@ for name,state,faction in cases:
         assert fortress['faction']==(0 if faction=='alliance' else 1) and fortress['e6_clear'] and (fortress['hp'],fortress['condition'])==expected
         color=int(fortress['banner'],16);red=(color>>16)&255;blue=color&255
         assert (blue>red) if faction=='alliance' else (red>blue)
+    if '_hud_' in name:
+        hud=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('HUD_SNAPSHOT=')))
+        detailed=name.endswith('_details')
+        assert hud['details']==detailed and hud['time_visible']==detailed
+        assert hud['max_hp']==20 and 0<=hud['hp']<=hud['max_hp']
+        assert hud['tally'].startswith('Apparus :' if detailed else 'Ennemis restants :')
+        assert len(hud['tally'].splitlines())==(3 if detailed else 2)
     if state=='selection':
         home=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('HOME_SNAPSHOT=')))
         assert home['isolated'] and home['readonly']

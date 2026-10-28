@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 28 octobre 2026 — prototype v0.80, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 28 octobre 2026 — prototype v0.81, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -408,3 +408,7 @@ La [feuille de route long terme](Feuille_de_route_long_terme.md) intègre le tex
 ## v0.80 — Données des cartes, 28 octobre 2026
 
 Le tracé, les emplacements et le décor du Gué sont regroupés dans une définition partagée entre le combat, le dessin et les interactions. Cartes incohérentes refusées ; rapports adaptés aux géométries de test. Une seule carte jouable, sans modification de la progression ou de l’économie. [Détails et validation](Donnees_cartes_v080.md). La [vision long terme](Feuille_de_route_long_terme.md) est consignée séparément, sans implémenter les règles encore ouvertes.
+
+## v0.81 — Panneau de combat simplifié, 28 octobre 2026
+
+Résumé des ennemis restants et des arrivées à la forteresse, compteurs complets et temps simulé accessibles à la demande. Jauge de PV relative au maximum actuel, avec les seuils visuels déjà utilisés sur la forteresse. Aucun changement de règle ou de décompte. [Détails et validation](Combat_lisible_v081.md).

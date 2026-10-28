@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.80 (28 octobre 2026)** : [données de carte partagées](design/Donnees_cartes_v080.md). Le tracé, les emplacements et le décor du Gué sont séparés du combat pour préparer les futures cartes. Une seule carte jouable ; [vision long terme](design/Feuille_de_route_long_terme.md). [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.80).
+**Version v0.81 (28 octobre 2026)** : [panneau de combat simplifié](design/Combat_lisible_v081.md). Ennemis restants et arrivées à la forteresse au premier plan, chiffres complets à la demande et jauge de PV. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.81).
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 
