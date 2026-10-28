@@ -62,6 +62,13 @@ static func elimination_particles(event: Dictionary, age: float) -> Array[Dictio
 static func project(point: Vector2) -> Vector2:
 	return ORIGIN + Vector2((point.x - point.y) * AXIS.x, (point.x + point.y) * AXIS.y)
 
+func purchase_ghost() -> Dictionary:
+	if model == null or not model.can_build() or selected < 0 or selected >= model.defenders.size(): return {}
+	if not model.defenders[selected].is_empty() or not purchase_preview.has("type"): return {}
+	var type: int = int(purchase_preview.type)
+	if type not in model.available_types(): return {}
+	return {"slot":selected,"type":type,"point":project(Model.SLOTS[selected]),"available":model.purchase_error(selected,type).is_empty()}
+
 static func range_outline(center: Vector2, radius: float) -> PackedVector2Array:
 	var ring := PackedVector2Array()
 	for step in range(65):
@@ -295,6 +302,7 @@ func polygon(points: Array[Vector2], color: Color) -> void:
 	draw_colored_polygon(projected, color)
 
 func _draw() -> void:
+	var ghost: Dictionary = purchase_ghost()
 	var corners: Array[Vector2] = [Vector2.ZERO, Vector2(18, 0), Vector2(18, 10), Vector2(0, 10)]
 	var base := PackedVector2Array()
 	for corner in corners:
@@ -359,6 +367,7 @@ func _draw() -> void:
 		draw_colored_polygon(diamond, SLOT_FILL)
 		draw_polyline(PackedVector2Array([diamond[0], diamond[1], diamond[2], diamond[3], diamond[0]]), Color("ddbd78") if selected == index else Color("779b89"), 2, true)
 		var occupied: bool = model != null and not model.defenders[index].is_empty()
+		occupied = occupied or (not ghost.is_empty() and ghost.slot == index)
 		draw_string(font, center + Vector2(-9, 22 if occupied else 5), "E%d" % (index + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, INK)
 	_draw_fortress(project(Vector2(17, 6)))
 	var entrance: Vector2 = project(Model.PATH_POINTS[0])
@@ -371,9 +380,12 @@ func _draw() -> void:
 				actors.append({"point": project(Model.SLOTS[slot]), "defender": model.defenders[slot],"slot":slot,"order":actors.size()})
 		for enemy in model.enemies:
 			actors.append({"point": project(Model.position_at(enemy.distance)), "enemy": enemy,"order":actors.size()})
+		if not ghost.is_empty(): actors.append({"point":ghost.point,"ghost":ghost,"order":actors.size()})
 		actors.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.order < b.order if a.point.y == b.point.y else a.point.y < b.point.y)
 		for actor in actors:
-			if actor.has("defender"):
+			if actor.has("ghost"):
+				_draw_purchase_ghost(actor.ghost)
+			elif actor.has("defender"):
 				_draw_defender(actor.point, actor.defender.type, actor.defender.get("level", 1), actor.defender.get("branch", -1), defender_pose(actor.slot))
 			else:
 				var feedback: Array[Dictionary] = recent_enemy_damage(actor.enemy.id)
@@ -465,6 +477,16 @@ func _unit_face(skin: Color, wide: float, y: float, tusks: bool = false) -> void
 	if tusks:
 		for side in [-1,1]:
 			_unit_shape([Vector2(side*4,y+5),Vector2(side*5,y),Vector2(side*2,y+4)],Color("fff0c9"),0.8)
+
+func _draw_purchase_ghost(ghost: Dictionary) -> void:
+	var art = AllianceArt if AllianceArt.TEXTURES.has(ghost.type) else HordeArt
+	if not art.TEXTURES.has(ghost.type): return
+	var alpha: float = 0.52 if ghost.available else 0.34
+	draw_set_transform(ghost.point+Vector2(0,2),0,Vector2(1,0.45))
+	draw_arc(Vector2.ZERO,13,0,TAU,32,Color(Color("8bd5e6"),alpha),1.5,true)
+	draw_set_transform(ghost.point)
+	draw_texture_rect_region(art.TEXTURES[ghost.type],art.destination(ghost.type),art.FRAMES[ghost.type].source,Color(0.76,0.97,1.0,alpha))
+	draw_set_transform(Vector2.ZERO)
 
 func _draw_defender(center: Vector2, type: int, level: int = 1, branch: int = -1, pose: Dictionary = {}) -> void:
 	var art = AllianceArt if AllianceArt.TEXTURES.has(type) else HordeArt

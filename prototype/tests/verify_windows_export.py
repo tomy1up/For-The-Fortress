@@ -170,6 +170,10 @@ for name,state,faction in cases:
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
+    if name in ['alliance_purchase','horde_purchase','alliance_crossbow_purchase','alliance_mage_purchase','horde_sapper_purchase','horde_shaman_purchase']:
+        ghost=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('PURCHASE_GHOST_SNAPSHOT=')))
+        expected_type={'alliance_purchase':0,'horde_purchase':3,'alliance_crossbow_purchase':1,'alliance_mage_purchase':2,'horde_sapper_purchase':4,'horde_shaman_purchase':5}[name]
+        assert ghost['visible'] and ghost['type']==expected_type and ghost['slot']==3 and ghost['empty'] and ghost['gold']==150 and ghost['instances']==0
     if '_fortress' in name:
         fortress=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('FORTRESS_SNAPSHOT=')))
         expected={'damaged':(10,1),'critical':(4,2),'destroyed':(0,3)}.get(name.rsplit('_',1)[1],(20,0))

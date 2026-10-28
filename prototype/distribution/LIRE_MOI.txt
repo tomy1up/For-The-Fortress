@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.78 — 28 octobre 2026
+Version : 0.79 — 28 octobre 2026
 
 JOUER
 
@@ -106,6 +106,14 @@ pour conversion contrôlée. Aucune progression existante n’est remise à zér
 Un fichier .bak, lui aussi protégé, garde l’état valide précédent. La copie .v067.bak conserve le profil
 avant la migration des anciens arbres. La v0.69 ne réinitialise pas les profils v0.68.
 Les tests et captures utilisent des profils isolés et ne modifient pas le vrai profil.
+
+SILHOUETTE AVANT ACHAT
+
+Sur un emplacement libre, survoler une offre ou la sélectionner au clavier affiche
+la silhouette translucide de cette classe, sa portée et ses synergies prévues.
+La silhouette ne représente pas une recrue déjà achetée. Elle reste consultable
+si l’or manque, avec une teinte plus discrète ; le bouton reste indisponible.
+Un achat remplace l’aperçu par une seule vraie unité. Aucun aperçu pendant le combat.
 
 COMMANDES ET RÈGLES DU PROTOTYPE
 

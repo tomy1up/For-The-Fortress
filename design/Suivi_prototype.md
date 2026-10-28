@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 28 octobre 2026 — prototype v0.78, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 28 octobre 2026 — prototype v0.79, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -396,3 +396,7 @@ La destination existante et le dossier des données du joueur sont refusés par 
 ## Complément v0.78 — Atelier de difficulté isolé, 28 octobre 2026
 
 2 048 scénarios comparent quatre coefficients de PV ennemis sur des copies temporaires. Référence reproduite, budgets vérifiés et projet intact. Un coefficient uniforme accentue fortement les écarts entre factions dans ces politiques ; aucune modification livrée au joueur. [Hypothèses, résultats et limites](Hypotheses_PV_ennemis_v078.md).
+
+## v0.79 — Silhouette avant recrutement, 28 octobre 2026
+
+Projection translucide du défenseur sur l’emplacement libre, au survol ou au clavier. Cohérence des six classes et factions, profondeur de dessin, repère E1–E6 dégagé et disponibilité distinguée. Aucun achat ni instance simulée dans le modèle. [Détails et validation](Silhouette_achat_v079.md).

@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.78 (28 octobre 2026)** : [avertissement avant départ automatique](design/Avertissement_depart_v078.md). Les cinq dernières secondes se lisent dans l’en-tête, avec le boss adverse avant la finale. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.78).
+**Version v0.79 (28 octobre 2026)** : [silhouette avant recrutement](design/Silhouette_achat_v079.md). Le défenseur apparaît en transparence sur l’emplacement prévisualisé, avec sa portée et ses synergies, sans achat. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.79).
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 

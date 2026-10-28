@@ -481,6 +481,9 @@ func _ready() -> void:
 			var style: Dictionary = MapView.fortress_style(model.faction)
 			var condition: int = MapView.fortress_condition(model.fortress_hp,model.max_hp)
 			print("FORTRESS_SNAPSHOT=",JSON.stringify({"faction":style.faction,"banner":style.flag.to_html(false),"e6_clear":not MapView.fortress_bounds(MapView.project(Model.PATH_POINTS[-1])).has_point(MapView.project(Model.SLOTS[5])),"hp":model.fortress_hp,"condition":condition,"caption":MapView.fortress_caption(condition)}))
+		if capture_state == "purchase":
+			var ghost: Dictionary = map_view.purchase_ghost()
+			print("PURCHASE_GHOST_SNAPSHOT=",JSON.stringify({"visible":not ghost.is_empty(),"type":ghost.get("type",-1),"slot":ghost.get("slot",-1),"empty":model.defenders[selected].is_empty(),"gold":model.gold,"instances":model.next_instance_id}))
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
@@ -1690,6 +1693,7 @@ func _refresh_purchase_preview() -> void:
 	map_view.purchase_preview = model.purchase_preview_stats(selected, type)
 	var stats: Dictionary = map_view.purchase_preview
 	if stats.is_empty(): return
+	stats["type"] = type # Métadonnée de rendu pour la silhouette avant achat.
 	var candidate: Dictionary = {"type":type,"level":1,"branch":-1}
 	map_view.preview_synergy_unit = candidate
 	title_label.text = "E%d · APERÇU AVANT ACHAT · %s · NIVEAU 1" % [selected+1, stats.name.to_upper()]
