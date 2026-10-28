@@ -37,6 +37,7 @@ const RunReport = preload("res://scripts/run_report.gd")
 const MapView = preload("res://scripts/valley_view.gd")
 const MetaProfile = preload("res://scripts/meta_profile.gd")
 const WAVE_NOTICE_SECONDS: float = 2.0
+const WAVE_COUNTDOWN_NOTICE_SECONDS: float = 5.0
 var wave_notice_remaining: float = 0.0
 var wave_notice_wave: int = -1
 var wave_notice: Panel
@@ -337,6 +338,12 @@ func _ready() -> void:
 				model.wave = 10;model.spawn_schedule = Model.Campaign.schedule(10)
 			_start();_process(0.2)
 			print("WAVE_NOTICE_SNAPSHOT=",JSON.stringify({"visible":wave_notice.visible,"wave":model.wave,"title":wave_notice_title.text,"detail":wave_notice_detail.text,"active":model.active,"elapsed":model.elapsed,"remaining":wave_notice_remaining,"boss":boss_panel.visible}))
+		if capture_state == "countdown_warning":
+			model.reset();model.select_faction(capture_faction)
+			if "--capture-countdown-final" in OS.get_cmdline_user_args(): model.wave = 9;model.spawn_schedule = Model.Campaign.schedule(9)
+			model.phase = "finished";autoplay_started = true;countdown_wave = model.wave;countdown_remaining = 3.2
+			_update_interface()
+			print("COUNTDOWN_NOTICE_SNAPSHOT=",JSON.stringify({"visible":wave_notice.visible,"wave":model.wave,"title":wave_notice_title.text,"detail":wave_notice_detail.text,"remaining":countdown_remaining,"active":model.active}))
 		if capture_state == "breach":
 			model.reset()
 			model.select_faction(capture_faction)
@@ -1526,7 +1533,16 @@ func _announce_wave() -> void:
 	wave_notice.add_theme_stylebox_override("panel",style)
 
 func _update_wave_notice() -> void:
-	wave_notice.visible = wave_notice_remaining > 0.0 and wave_notice_wave == model.wave and model.active and not choosing_faction and not meta_menu.visible and not overview_open and not summary_open and pending_slot < 0
+	var permitted: bool = not choosing_faction and not meta_menu.visible and not overview_open and not summary_open and pending_slot < 0
+	if permitted and autoplay_started and model.phase == "finished" and model.wave < 10 and countdown_remaining > 0.0 and countdown_remaining <= WAVE_COUNTDOWN_NOTICE_SECONDS and not _countdown_paused():
+		wave_notice.visible = true;wave_notice.modulate.a = 1.0
+		var warning_style: StyleBoxFlat = wave_notice.get_theme_stylebox("panel")
+		if warning_style.border_color != Color("b99b59"):
+			warning_style = warning_style.duplicate();warning_style.border_color = Color("b99b59");wave_notice.add_theme_stylebox_override("panel",warning_style)
+		wave_notice_title.text = "FINALE DANS %d S" % ceili(countdown_remaining) if model.wave == 9 else "VAGUE %d DANS %d S" % [model.wave+1,ceili(countdown_remaining)]
+		wave_notice_detail.text = "Boss : "+Model.Enemies.for_profile(7,model.faction).name if model.wave == 9 else "Départ automatique · Préparez votre défense."
+		return
+	wave_notice.visible = permitted and wave_notice_remaining > 0.0 and wave_notice_wave == model.wave and model.active
 	var age: float = WAVE_NOTICE_SECONDS-wave_notice_remaining
 	wave_notice.modulate.a = clampf(minf(age/0.12,wave_notice_remaining/0.4),0.0,1.0)
 
@@ -1727,7 +1743,7 @@ func _update_interface() -> void:
 		start_button.text = "En pause · %d s" % ceili(countdown_remaining) if _countdown_paused() else "Vague %d dans %d s" % [model.wave+1,ceili(countdown_remaining)]
 	countdown_bar.visible = countdown_remaining >= 0.0
 	countdown_bar.value = maxf(0.0,countdown_remaining)
-	countdown_fill.bg_color = Color("77968e") if _countdown_paused() else Color("e49a7b") if countdown_remaining <= 5.0 else Color("d0b874")
+	countdown_fill.bg_color = Color("77968e") if _countdown_paused() else Color("e49a7b") if countdown_remaining <= WAVE_COUNTDOWN_NOTICE_SECONDS else Color("d0b874")
 	var preview_wave: int = mini(10, model.wave+1 if model.phase == "finished" else model.wave)
 	var preview: Array[String] = []
 	for group in Model.Campaign.WAVES[preview_wave-1]:

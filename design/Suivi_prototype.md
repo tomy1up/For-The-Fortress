@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 28 octobre 2026 — prototype v0.77, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 28 octobre 2026 — prototype v0.78, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -382,3 +382,7 @@ Forteresse Alliance en pierre claire, toits bleus et liserés dorés ; forteress
 ## v0.77 — État visible de la forteresse, 28 octobre 2026
 
 Aspect endommagé à la moitié des PV, critique au quart, bannière abaissée à zéro. Fissures, fumée discrète, teinte et libellé explicite ; lecture relative au maximum actuel. Aucun malus ajouté. [Détails et validation](Etat_forteresse_v077.md).
+
+## v0.78 — Avertissement avant départ automatique, 28 octobre 2026
+
+Rappel dans l’en-tête pour les cinq dernières secondes de préparation ; annonce du boss avant la finale. Caché pendant les lectures suspendant le délai, remplacé par l’annonce de départ à zéro. Même délai et mêmes pauses. [Détails et validation](Avertissement_depart_v078.md).

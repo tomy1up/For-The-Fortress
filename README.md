@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.77 (28 octobre 2026)** : [état visible de la forteresse](design/Etat_forteresse_v077.md). Marquages de dégâts, fumée discrète et libellé explicite selon les PV restants. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.77).
+**Version v0.78 (28 octobre 2026)** : [avertissement avant départ automatique](design/Avertissement_depart_v078.md). Les cinq dernières secondes se lisent dans l’en-tête, avec le boss adverse avant la finale. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.78).
 
 **Origine des ennemis — 27 octobre 2026** : la [règle et la répartition](design/Origine_ennemis_2026-10-27.md) sont mises en jeu dans la [v0.65](design/Catalogue_attaquants_v065.md). Loup, sanglier et ours restent communs. Les autres attaquants viennent du camp adverse ; le catalogue commun et les trois images humanoïdes v0.64 sont remplacés.
 
