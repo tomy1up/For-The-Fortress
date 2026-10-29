@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.86 (29 octobre 2026)** : [monnaies clairement distinguées](design/Monnaies_lisibles_v086.md). PO persistantes par faction pour les talents ; or de combat pour recruter pendant la partie. Arbres à 51 points conservés. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.86).
+**Version v0.87 (29 octobre 2026)** : [points de talent débloqués par l’XP](design/Experience_talents_2026-10-29.md). Première victoire du Gué : 60 PO et 100 XP par faction, sans second gain en rejouant. Les PO sont réservées à la future boutique. Ancien investissement conservé. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.87).
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 

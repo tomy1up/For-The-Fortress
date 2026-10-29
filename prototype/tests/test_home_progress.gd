@@ -15,7 +15,7 @@ func run_checks() -> void:
 	scene.meta_profile = Profile.new("");scene._update_interface()
 	for camp in range(2):
 		check(not scene.meta_buttons[camp].disabled and scene.home_resources[camp].text.begins_with("0 PO"),"Profil neuf accessible et solde réel affiché")
-		check(scene.home_hints[camp].text == "Prochain point : encore 10 PO.","Premier achat expliqué sans donner de point")
+		check(scene.home_hints[camp].text == "XP : 0 / 197 pour le prochain point.","Premier achat expliqué sans donner de point")
 	var bank: Dictionary = scene.meta_profile.data.banks[0]
 	bank.resource = 25;bank.points = 8;bank.ranks[0] = 5
 	scene.meta_profile.data.banks[1].resource = 1
@@ -24,20 +24,20 @@ func run_checks() -> void:
 	scene._update_interface();scene._refresh_home_progress()
 	check(scene.home_points[0].text == "5 points actifs · 3 à placer" and scene.meta_buttons[0].text.contains("3 points à placer"),"Points déjà achetés mais non affectés mis en avant")
 	check(scene.home_hp[0].text == "Forteresse au départ : 25 PV" and scene.home_hp[1].text == "Forteresse au départ : 20 PV","PV initiaux calculés séparément par faction")
-	check(scene.home_resources[1].text == "1 PO Horde" and scene.home_hints[1].text.contains("encore 9"),"Solde et coût manquant propres à l'autre camp")
+	check(scene.home_resources[1].text == "1 PO Horde" and scene.home_hints[1].text.contains("XP :"),"Solde et coût manquant propres à l'autre camp")
 	check(before == JSON.stringify(scene.meta_profile.data) and combat == JSON.stringify([Report.build(scene.model),str(scene.model.rng.state)]),"Accueil en lecture seule sans dépense ni mutation du combat")
 	scene._open_meta(0);scene.meta_menu._allocate(5);scene.meta_menu.close();scene._update_interface()
 	check(scene.home_points[0].text == "6 points actifs · 2 à placer","Retour des arbres : rappel immédiatement actualisé")
 	check(scene.meta_profile.data.banks[1].resource == 1 and scene.meta_profile.data.banks[1].points == 0,"Affectation sans effet sur l'autre faction")
 	bank = scene.meta_profile.data.banks[0];bank.ranks = Talents.empty_ranks();bank.points = 0;bank.resource = 25
 	scene._update_interface()
-	check(scene.home_hints[0].text == "Vous pouvez acheter 2 points de talent." and scene.meta_buttons[0].text == "Préparer les talents","Achat possible annoncé sans confondre points possédés et achetables")
+	check(scene.home_hints[0].text == "XP : 0 / 197 pour le prochain point." and scene.meta_buttons[0].text == "Préparer les talents","Achat possible annoncé sans confondre points possédés et achetables")
 	bank.points = Talents.MAX_POINTS-1;bank.ranks = scene._capture_expanded_ranks(0);bank.ranks[Talents.Expanded.index_for(0,18)] = 0;bank.resource = 100
 	scene._update_interface()
-	check(scene.home_hints[0].text == "Vous pouvez acheter 1 point de talent.","Achat possible borné au plafond de points")
+	check(scene.home_hints[0].text == "XP : 0 / 10000 pour le prochain point.","Achat possible borné au plafond de points")
 	bank.points = Talents.MAX_POINTS;bank.ranks = scene._capture_expanded_ranks(0)
 	scene._update_interface()
-	check(scene.home_hints[0].text == "Tous les points ont été achetés.","Plafond atteint sans encouragement à un achat impossible")
+	check(scene.home_hints[0].text == "51 points de talent débloqués.","Plafond atteint sans encouragement à un achat impossible")
 	for camp in range(2):
 		for labels in [scene.home_resources,scene.home_points,scene.home_hp,scene.home_hints]:
 			var label: Label = labels[camp]

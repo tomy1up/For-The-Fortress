@@ -1,4 +1,5 @@
 extends SceneTree
+const XPFixture = preload("res://tests/xp_fixture.gd")
 const Profile = preload("res://scripts/meta_profile.gd")
 var checks: int = 0
 var failures: int = 0
@@ -8,17 +9,17 @@ func check(value: bool, message: String) -> void:
 func _initialize() -> void:
 	var path: String = "user://test_integrity_%d.json" % Time.get_ticks_usec()
 	var p = Profile.new(path);var id: int = p.begin_run(0)
-	check(id > 0 and p.credit(id,0,10,true) and p.buy_point(0) and p.allocate(0,0),"Profil protégé créé et progression enregistrée")
+	check(id > 0 and p.credit(id,0,10,true) and XPFixture.unlock(p,0,1) and p.allocate(0,0),"Profil protégé créé et progression enregistrée")
 	var bytes: PackedByteArray = FileAccess.get_file_as_bytes(path)
 	var good_backup: PackedByteArray = FileAccess.get_file_as_bytes(path+".bak")
 	check(bytes.slice(0,Profile.Codec.MAGIC.length()) == Profile.Codec.MAGIC.to_utf8_buffer(),"Format de sauvegarde protégé explicite")
 	check(not bytes.hex_encode().contains(JSON.stringify(p.data).to_utf8_buffer().hex_encode()),"Progression absente en clair du fichier")
 	Profile.Codec.cache.clear();var reopened = Profile.new(path)
-	check(not reopened.blocked and reopened.data.banks[0].resource == 50 and reopened.data.banks[0].ranks[0] == 1,"Déchiffrement Windows et reprise du profil après suppression du cache")
+	check(not reopened.blocked and reopened.data.banks[0].resource == 60 and reopened.data.banks[0].ranks[0] == 1,"Déchiffrement Windows et reprise du profil après suppression du cache")
 	bytes[bytes.size()-8] = bytes[bytes.size()-8] ^ 1
 	var file := FileAccess.open(path,FileAccess.WRITE);file.store_buffer(bytes);file.close()
 	Profile.Codec.cache.clear();var recovered = Profile.new(path)
-	check(not recovered.blocked and recovered.error.contains("secours") and recovered.data.banks[0].resource == 50,"Octet modifié : principal rejeté, secours valide utilisé")
+	check(not recovered.blocked and recovered.error.contains("secours") and recovered.data.banks[0].resource == 60,"Octet modifié : principal rejeté, secours valide utilisé")
 	file = FileAccess.open(path+".bak",FileAccess.WRITE);file.store_buffer(bytes);file.close()
 	Profile.Codec.cache.clear();var both_bad = Profile.new(path)
 	check(both_bad.blocked and FileAccess.get_file_as_bytes(path) == bytes,"Deux fichiers binaires altérés : refus sans écrasement ni décodage texte")

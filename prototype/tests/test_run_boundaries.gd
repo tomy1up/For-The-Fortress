@@ -11,6 +11,7 @@ func run_checks() -> void:
 	for faction in range(2):
 		var path: String = "user://test_boundary_%d_%d.json" % [Time.get_ticks_usec(),faction]
 		var scene = Main.new();root.add_child(scene);scene.set_process(false);scene.meta_profile = Profile.new(path)
+		scene.mission_definition = {} # Ancien parcours multi-cartes couvert uniquement pour sa compatibilité.
 		scene._choose_faction(faction)
 		var disk_before: String = FileAccess.get_file_as_string(path)
 		scene.model.start();scene.model.advance(10000);scene._process(0)
@@ -49,7 +50,7 @@ func run_checks() -> void:
 		for suffix in ["",".bak",".tmp"]:
 			if FileAccess.file_exists(path+suffix): DirAccess.remove_absolute(path+suffix)
 	# Deux cartes remportées : une seule prime de victoire finale, jamais une prime par carte.
-	var scene = Main.new();root.add_child(scene);scene.set_process(false);scene.meta_profile = Profile.new("");scene._choose_faction(0)
+	var scene = Main.new();root.add_child(scene);scene.set_process(false);scene.meta_profile = Profile.new("");scene.mission_definition = {};scene._choose_faction(0)
 	scene.run_final_map = false;scene._prepare_campaign_capture("victory");scene._sync_meta_rewards()
 	check(scene.meta_profile.data.banks[0].resource == 0,"Première carte gagnée : aucune prime ni versement")
 	scene.run_map_index = 1;scene.run_final_map = true;scene.model.reset();scene.model.select_faction(0)

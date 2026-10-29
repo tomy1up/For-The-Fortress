@@ -1,5 +1,7 @@
 # Talents et financement — orientation du 29 octobre 2026
 
+**Révision la plus récente :** les points de talent proviennent désormais de l’XP des missions ; les PO sont destinées à la boutique. La référence de 510 PO pour les talents ci-dessous est historique et remplacée. [Décision et courbe XP](Experience_talents_2026-10-29.md).
+
 Complément à la [feuille de route](Feuille_de_route_long_terme.md). Les principes ci-dessous sont explicitement demandés par le porteur du projet ; le plafond de prototype demandé est désormais de 51 points ; le contenu commercial détaillé reste ouvert. For the Fortress! reste un nom de travail dont la disponibilité juridique reste à confirmer.
 
 ## Décisions acquises

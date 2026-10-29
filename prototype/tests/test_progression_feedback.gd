@@ -1,4 +1,5 @@
 extends SceneTree
+const XPFixture = preload("res://tests/xp_fixture.gd")
 const Main = preload("res://scripts/main.gd")
 const Profile = preload("res://scripts/meta_profile.gd")
 const Talents = preload("res://scripts/meta_talents.gd")
@@ -10,6 +11,10 @@ class FlakyProfile extends "res://scripts/meta_profile.gd":
 		attempts += 1
 		if failing: error = "Écriture momentanément indisponible.";return false
 		return super.credit(run_id,faction,completed,victory,previous_maps)
+	func credit_mission(run_id: int, faction: int, completed: int, victory: bool) -> bool:
+		attempts += 1
+		if failing: error = "Écriture momentanément indisponible.";return false
+		return super.credit_mission(run_id,faction,completed,victory)
 var checks: int = 0
 var failures: int = 0
 func check(value: bool, message: String) -> void:
@@ -43,17 +48,17 @@ func run_checks() -> void:
 		scene.meta_menu.close();scene._choose_faction(faction)
 		scene._prepare_campaign_capture("victory");scene._show_run_summary()
 		var info: Dictionary = scene._meta_reward_summary()
-		check(info.saved == 60 and info.waves == 55 and info.bonus == 5 and info.balance == 60 and info.affordable == 6,"Bilan victoire : vagues et prime enregistrées au montant exact")
-		check(scene.summary_meta_value.text == "+60" and scene.summary_meta_status.text.begins_with("Sauvegardées") and scene.summary_meta_note.text.contains("6 points achetables"),"Bilan annonce les ressources sauvées et les points achetables")
+		check(info.saved == 60 and info.waves == 0 and info.bonus == 0 and info.balance == 60 and info.affordable == 0,"Bilan victoire : vagues et prime enregistrées au montant exact")
+		check(scene.summary_meta_value.text == "+60" and scene.summary_meta_status.text.begins_with("Sauvegardées") and scene.summary_meta_note.text.contains("XP : +100"),"Bilan annonce les ressources sauvées et les points achetables")
 		var before_read: String = JSON.stringify([scene.meta_profile.data,Report.build(scene.model)])
 		scene._show_run_summary();scene._update_meta_summary();scene._show_run_summary()
 		check(before_read == JSON.stringify([scene.meta_profile.data,Report.build(scene.model)]),"Relire le bilan ne crédite pas à nouveau les gains et ne modifie pas le combat")
 		scene.summary_talents_button.pressed.emit()
 		check(scene.choosing_faction and scene.meta_menu.visible and scene.meta_menu.faction == faction and not scene.summary_open,"Accès aux talents de la faction jouée pour la partie suivante")
-		scene.meta_menu._buy();scene.meta_menu._allocate(0)
-		check(scene.meta_profile.data.banks[faction].resource == 50 and scene.meta_profile.data.banks[faction].points == 1,"Un gain de victoire finance un vrai point")
+		XPFixture.unlock(scene.meta_profile,faction,1);scene.meta_menu.refresh();scene.meta_menu._allocate(0)
+		check(scene.meta_profile.data.banks[faction].resource == 60 and scene.meta_profile.data.banks[faction].points == 1,"Un gain de victoire finance un vrai point")
 		scene.meta_menu.close();scene.meta_profile = Profile.new(path)
-		check(scene.meta_profile.data.banks[faction].resource == 50 and scene.meta_profile.data.banks[faction].ranks[0] == 1,"Réouverture du fichier : solde et affectation conservés")
+		check(scene.meta_profile.data.banks[faction].resource == 60 and scene.meta_profile.data.banks[faction].ranks[0] == 1,"Réouverture du fichier : solde et affectation conservés")
 		scene._choose_faction(faction)
 		check(scene.model.meta_ranks[0] == 1 and scene.meta_profile.data.banks[1-faction].resource == 0,"Point actif à la tentative suivante, sans bénéfice pour l'autre camp")
 		scene.free()
@@ -66,9 +71,9 @@ func run_checks() -> void:
 			if scene.model.phase == "finished": scene.model.prepare_next_wave()
 			scene.model.start();scene.model.advance(10000)
 		scene._show_run_summary();info = scene._meta_reward_summary()
-		check(info.saved == 1 and info.bonus == 0 and info.affordable == 0 and scene.summary_meta_note.text.contains("Encore 9"),"Défaite sans défense : première vague seule rémunérée, neuf ressources avant un point")
+		check(info.saved == 0 and info.bonus == 0 and info.affordable == 0 and scene.summary_meta_note.text.contains("XP : +0"),"Défaite sans défense : première vague seule rémunérée, neuf ressources avant un point")
 		scene.meta_profile.data.banks[faction].points = Talents.MAX_POINTS;scene._update_meta_summary()
-		check(scene._meta_reward_summary().affordable == 0 and scene.summary_meta_note.text.contains("Tous les points"),"Plafond de contenu : aucun achat supplémentaire annoncé")
+		check(scene._meta_reward_summary().affordable == 0 and scene.summary_meta_note.text.contains("51/51 points"),"Plafond de contenu : aucun achat supplémentaire annoncé")
 		scene.free()
 	# Échec d'écriture : pas de faux message de sauvegarde, reprise sans double gain.
 	var scene = Main.new();root.add_child(scene);scene.set_process(false);scene.meta_profile = FlakyProfile.new("");scene._choose_faction(0)

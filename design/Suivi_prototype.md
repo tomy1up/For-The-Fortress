@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 29 octobre 2026 — prototype v0.86, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 29 octobre 2026 — prototype v0.87, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -452,3 +452,7 @@ Décision explicite : les resets entre les missions sont gratuits, les talents r
 ## Version v0.86 — vocabulaire des monnaies
 
 [PO persistantes et or de combat](Monnaies_lisibles_v086.md) : accueil, arbres et résultats utilisent le nom demandé pour la progression ; le plateau distingue son or temporaire. Aucun changement de gains, coûts, format de profil ou règle de combat.
+
+## Version v0.87 — XP des talents
+
+[XP de première victoire](Experience_talents_2026-10-29.md) : Gué à 60 PO + 100 XP une seule fois par faction, attribution automatique de points par XP, sauvegarde au schéma 5 et conversion des anciens points sans perte. Le prix des points en PO est retiré. La campagne au-delà du Gué, la boutique et la refonte en talents liés restent à développer.

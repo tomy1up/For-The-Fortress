@@ -120,6 +120,7 @@ for faction in ['alliance','horde']:
     for detail in ['compact','details']:
         cases.append((faction+'_hud_'+detail,'combat',faction))
 for camp in ['alliance','horde']:
+    cases.append((camp+'_progression_repeat','summary',camp))
     for tree in range(3): cases.append((camp+'_expanded_tree_'+str(tree),'talents',camp))
     cases.append((camp+'_expanded_summary','summary',camp))
 for name,state,faction in cases:
@@ -151,6 +152,7 @@ for name,state,faction in cases:
         if name.endswith('_rank_preview'): command+=['--capture-meta-preview']
         if '_progression_' in name or name=='progression_pending': command+=['--capture-meta-rewards']
         if name=='progression_pending': command+=['--capture-meta-pending']
+        if name.endswith('_progression_repeat'): command+=['--capture-repeat-mission']
         if name.endswith('_progression_intermediate'): command+=['--capture-meta-intermediate']
         if name=='profile_protection': command+=['--capture-profile-protection']
         if '_loadout_' in name: command+=['--capture-meta-loadout']
@@ -214,13 +216,16 @@ for name,state,faction in cases:
     if state=='selection':
         home=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('HOME_SNAPSHOT=')))
         assert home['isolated'] and home['readonly']
-        if name=='selection': assert home['resources']==['0 PO Alliance','0 PO Horde'] and all('encore 10' in hint for hint in home['hints'])
+        if name=='selection': assert home['resources']==['0 PO Alliance','0 PO Horde'] and all('XP : 0 / 197' in hint for hint in home['hints'])
         if name=='home_prepared':
             assert home['resources']==['4 PO Alliance','25 PO Horde'] and home['points']==['5 points actifs · 3 à placer','3 points actifs · 0 à placer']
-            assert home['hp']==['Forteresse au départ : 25 PV','Forteresse au départ : 20 PV'] and 'acheter 2 points' in home['hints'][1]
-        if name=='home_maximum': assert all('51 points actifs' in line for line in home['points']) and all('Tous les points' in hint for hint in home['hints'])
+            assert home['hp']==['Forteresse au départ : 25 PV','Forteresse au départ : 20 PV'] and 'XP :' in home['hints'][1]
+        if name=='home_maximum': assert all('51 points actifs' in line for line in home['points']) and all('51 points de talent débloqués' in hint for hint in home['hints'])
         if name=='home_blocked': assert home['resources']==['PO : à vérifier']*2 and 'Sauvegarde à vérifier' in home['notice']
-    if state=='talents': assert 'META_CAPTURE_ISOLATED=true' in text,(name,'La capture doit rester isolée du vrai profil')
+    if state=='talents':
+        assert 'META_CAPTURE_ISOLATED=true' in text,(name,'La capture doit rester isolée du vrai profil')
+        xp_snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('TALENT_STATES_SNAPSHOT=')))
+        assert xp_snapshot['buy_hidden'] and ('XP' in xp_snapshot['xp_label'] or '51 points' in xp_snapshot['xp_label'])
     if '_expanded_tree_' in name:
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('EXPANDED_SNAPSHOT=')))
         assert snapshot['isolated'] and snapshot['points']==51 and snapshot['nodes']==63 and snapshot['scroll']>0 and snapshot['tree']==int(name[-1]) and '★' in snapshot['title']
@@ -235,7 +240,7 @@ for name,state,faction in cases:
         quote=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RESPEC_SNAPSHOT=')))
         assert quote['isolated'] and quote['visible'] and quote['free_before']==2 and quote['free_after']==14
         assert quote['price']==0 and quote['next_price']==0 and 'Réinitialisation gratuite' in quote['dialog']
-        assert quote['balance_after']==36-quote['price'] and 'les points restent achetés' in quote['dialog']
+        assert quote['balance_after']==36-quote['price'] and 'les points débloqués sont conservés' in quote['dialog']
     if name in ['alliance_talents','horde_talents','alliance_talents_no_points','horde_talents_no_points']:
         talent=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('TALENT_STATES_SNAPSHOT=')))
         assert talent['isolated'] and talent['progress']==[0,5,10,11,11,11,11] and len(talent['states'])==63
@@ -254,8 +259,9 @@ for name,state,faction in cases:
         info=snapshot['info']
         if name=='progression_pending': assert not info['ready'] and info['saved']==0 and info['pending']==60 and info['balance']==6
         elif name.endswith('_progression_intermediate'): assert not info['finished'] and not info['ready'] and info['saved']==0 and info['pending']==55 and info['balance']==6 and info['bonus']==0 and not snapshot['home'] and not snapshot['talents']
-        elif name.endswith('_victory'): assert info['ready'] and info['saved']==60 and info['waves']==55 and info['bonus']==5 and info['balance']==66 and info['affordable']==6
-        else: assert info['ready'] and info['saved']==1 and info['bonus']==0 and info['balance']==7
+        elif name.endswith('_repeat'): assert info['ready'] and not info['first'] and info['saved']==0 and info['xp_earned']==0 and info['xp']==100 and info['balance']==66
+        elif name.endswith('_victory'): assert info['ready'] and info['saved']==60 and info['waves']==0 and info['bonus']==0 and info['xp_earned']==100 and info['balance']==66 and info['affordable']==0
+        else: assert info['ready'] and info['saved']==0 and info['bonus']==0 and info['balance']==6 and info['xp_earned']==0
     if name.startswith('left_'): assert 'ATTACK_FACING=-1' in text,(name,'La fixture doit couvrir un vrai tir à gauche')
     if name=='periodic_damage': assert 'DAMAGE_TICK_VISIBLE=true' in text,(name,'Le contrôle doit montrer un dégât périodique réel')
     if state=='elimination': assert 'ELIMINATION_VISIBLE=true' in text,(name,'La dissipation doit suivre une vraie élimination')

@@ -1,5 +1,7 @@
 # Feuille de route — vision long terme
 
+**Dernière orientation économique :** l’XP des missions doit débloquer les 51 points de talent sur les cent premières missions ; les PO des missions 1–200 servent à la boutique. Cette décision remplace le financement des talents par les PO. [Détail et hypothèses](Experience_talents_2026-10-29.md).
+
 Vision du 28 octobre 2026, clarifiée puis révisée le 29 octobre 2026. Référence de conception évolutive liée au [suivi du prototype](Suivi_prototype.md). Aucun calendrier ni engagement commercial n’est déduit des cibles. For the Fortress! reste un nom de travail dont la disponibilité juridique reste à confirmer.
 
 ## Sources et statuts
@@ -83,7 +85,7 @@ Le nom PO pour la progression peut prêter à confusion avec l’or temporaire s
 3. Combien de vagues de combat comporte une mission ? Chaque mission redémarre-t-elle l’or temporaire, les défenseurs, les PV et les bonus, ou une poursuite facultative en conserve-t-elle certains ? Le rythme des nouveautés 11–20, 31–40, etc. est fixé ; les dix vagues actuelles ne deviennent pas automatiquement dix missions.
 4. Le +1 % est-il additif ou composé, avec quelle mission de référence, et agit-il sur les PV, quantités, vitesses ou un autre budget de difficulté ? Comment intégrer les sauts dus aux nouvelles mécaniques ?
 5. Le plafond de prototype est de 51 points partagés ; la v0.85 propose 21 talents par arbre et des majeurs aux seuils 15 et 30. Prix et équilibre restent à éprouver.
-6. Quel barème de premières victoires jusqu’à la mission 100 couvre le coût cumulé des points sans autres dépenses ? Comment équilibrer les achats facultatifs en boutique pour retarder éventuellement ce maximum sans provoquer d’impasse de progression ? Les resets gratuits ne consomment plus ce budget.
+6. Quel barème d’XP débloque les 51 points sur les cent premières missions ? La première victoire seule est désormais retenue pour l’XP. Comment équilibrer les PO et achats de boutique, désormais séparés des points de talent ?
 7. Les premières victoires des missions suivantes continuent de donner des PO : comment tarifer les dépenses durables et quelles sources de gains retenir après toutes les missions récompensées ? Aucun gain de mission à la défaite ni farm répétable supplémentaire n’est supposé.
 8. Quel rôle pour les missions 101–200 et quelles récompenses éventuelles en plus de leurs PO de première victoire ? Quel objectif et quelle économie pour l’infini ?
 9. Rejouer une mission déjà achevée reste-t-il possible pour s’entraîner, sans sa récompense initiale ? Comment distinguer missions disponibles, terminées et verrouillées à l’écran ?
@@ -116,3 +118,7 @@ Prototype de 51 points par faction, deux talents majeurs facultatifs aux seuils 
 ## Parcours indépendants — décision complémentaire
 
 CAMP-010 : l’Alliance et la Horde ont chacune leurs missions réussies et leur propre ouverture du mode infini après leurs 100 premières missions. Aucun succès d’un camp ne valide celui de l’autre. Les PO et les talents restent eux aussi séparés.
+
+## Architecture des talents liés — nouvelle précision
+
+Le porteur du projet demande des positions vides et une répartition irrégulière des talents, avec des flèches de dépendance. Un talent enfant lié à un parent exige le rang maximal du parent en plus du seuil de points de son arbre. Cette règle s’ajoute à la progression par paliers. La disposition et les liens précis restent à concevoir ; ce changement fera suite au lot XP v0.87.

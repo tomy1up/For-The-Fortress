@@ -27,7 +27,7 @@ func campaign(faction: int, ranks: Array) -> RefCounted:
 		if wave < 10: model.prepare_next_wave()
 	return model
 func run_checks() -> void:
-	check(Profile.fresh().schema == 4 and Profile.bank().ranks.size() == 63,"Nouveaux profils au format enrichi")
+	check(Profile.fresh().schema == 5 and Profile.bank().ranks.size() == 63,"Nouveaux profils au format enrichi")
 	check(Talents.MAX_POINTS == Expanded.MAX_POINTS,"Plafond unique cohérent avec le prototype d’arbres enrichis")
 	for faction in range(2):
 		var old: Array = [5,3,2,1,0,5,3,2,1,0,5,3,2,1,0]
@@ -51,7 +51,7 @@ func run_checks() -> void:
 		legacy.banks[faction].mission_rewards["test.old"] = {"reward":17,"run_id":1}
 		var file := FileAccess.open(path,FileAccess.WRITE);file.store_buffer(Profile.Codec.encode(legacy));file.close()
 		var p = Profile.new(path)
-		check(not p.blocked and p.data.schema == 4 and p.data.run == JSON.parse_string(JSON.stringify(legacy.run)),"Migration schéma 3 : reçu de tentative intact")
+		check(not p.blocked and p.data.schema == 5 and p.data.run == JSON.parse_string(JSON.stringify(legacy.run)),"Migration schéma 3 : reçu de tentative intact")
 		for camp in range(2):
 			check(p.data.banks[camp].resource == legacy.banks[camp].resource and p.data.banks[camp].points == 36 and p.data.banks[camp].resets == legacy.banks[camp].resets and p.data.banks[camp].mission_rewards == JSON.parse_string(JSON.stringify(legacy.banks[camp].mission_rewards)),"Soldes, points, compteurs et missions récompensées conservés")
 			check(p.data.banks[camp].ranks == Expanded.normalize(JSON.parse_string(JSON.stringify(old))),"Investissements historiques conservés aux bons emplacements")

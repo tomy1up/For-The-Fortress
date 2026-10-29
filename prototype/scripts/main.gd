@@ -48,6 +48,8 @@ var meta_profile: RefCounted
 var meta_menu = MetaScreen.new()
 var meta_run_id: int = -1
 var meta_run_earned: int = 0
+## Mission jouable de référence. Récompenses de prototype, pas barème des 200 missions.
+var mission_definition: Dictionary = {"id":"campaign.001","po":60,"xp":100,"waves":10}
 var meta_retry_remaining: float = 0.0
 var run_final_map: bool = true # Le prototype a une carte ; le futur pilote de campagne gérera cette frontière.
 var run_map_index: int = 0
@@ -250,11 +252,16 @@ func _ready() -> void:
 			if "--capture-home=maximum" in OS.get_cmdline_user_args():
 				for bank in meta_profile.data.banks:
 					bank.resource = 100;bank.points = 51;bank.ranks = _capture_expanded_ranks(0)
+			for bank in meta_profile.data.banks: bank.xp = MetaProfile.Experience.xp_for_points(int(bank.points))
 			if "--capture-home=blocked" in OS.get_cmdline_user_args():
 				meta_profile.blocked = true;meta_profile.error = "Sauvegarde illisible simulée pour le contrôle."
 		if "--capture-meta-rewards" in OS.get_cmdline_user_args():
 			meta_profile = MetaProfile.new("")
 			meta_profile.data.banks[capture_faction].resource = 6
+			if "--capture-repeat-mission" in OS.get_cmdline_user_args():
+				var first_id: int = meta_profile.begin_mission(capture_faction,mission_definition.id,60,10,100)
+				var seeded: bool = meta_profile.credit_mission(first_id,capture_faction,10,true)
+				assert(first_id > 0 and seeded)
 			if "--capture-meta-pending" in OS.get_cmdline_user_args():
 				meta_profile.blocked = true;meta_profile.error = "Échec d’enregistrement simulé pour cette capture."
 		if "--capture-meta-loadout" in OS.get_cmdline_user_args():
@@ -266,6 +273,7 @@ func _ready() -> void:
 			meta_profile.data.banks[capture_faction].points = 51
 			meta_profile.data.banks[capture_faction].ranks = _capture_expanded_ranks(0)
 		if capture_state not in ["selection","talents"]:
+			if "--capture-meta-intermediate" in OS.get_cmdline_user_args(): mission_definition = {}
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
 			if "--capture-meta-intermediate" in OS.get_cmdline_user_args(): run_final_map = false
 			if capture_state in ["bonus", "campaign", "victory", "overview", "boss_inspection", "summary", "forecast", "forecast_boss"]:
@@ -446,17 +454,20 @@ func _ready() -> void:
 			meta_profile.data.banks[capture_faction].resource = 36
 			meta_profile.data.banks[capture_faction].points = 14
 			meta_profile.data.banks[capture_faction].ranks = [5,3,2,1,0,1,0,0,0,0,0,0,0,0,0]
+			meta_profile.data.banks[capture_faction].xp = MetaProfile.Experience.xp_for_points(14)
 			meta_profile.data.banks[capture_faction].resets = 2
 			if "--capture-reset-cap" in OS.get_cmdline_user_args(): meta_profile.data.banks[capture_faction].resets = 20
 			if "--capture-meta-no-points" in OS.get_cmdline_user_args():
 				meta_profile.data.banks[capture_faction].points = Model.MetaTalents.spent(meta_profile.data.banks[capture_faction].ranks)
 				meta_profile.data.banks[capture_faction].resource = 0
+				meta_profile.data.banks[capture_faction].xp = MetaProfile.Experience.xp_for_points(int(meta_profile.data.banks[capture_faction].points))
 			_open_meta(capture_faction)
 			for argument in OS.get_cmdline_user_args():
 				if argument.begins_with("--capture-expanded-tree="):
 					var tree: int = clampi(int(argument.trim_prefix("--capture-expanded-tree=")),0,2)
 					meta_profile.data.banks[capture_faction].points = 51
 					meta_profile.data.banks[capture_faction].ranks = _capture_expanded_ranks(tree)
+					meta_profile.data.banks[capture_faction].xp = MetaProfile.Experience.TARGET_XP
 					meta_menu.refresh()
 					await get_tree().process_frame
 					await get_tree().process_frame
@@ -479,21 +490,23 @@ func _ready() -> void:
 				legacy_file.store_buffer(MetaProfile.Codec.encode(legacy));legacy_file.close()
 				var stored = MetaProfile.new(test_path)
 				var id: int = stored.begin_run(capture_faction)
-				var ok: bool = id > 0 and stored.credit(id,capture_faction,10,true) and stored.buy_point(capture_faction) and stored.allocate(capture_faction,0)
+				var ok: bool = id > 0 and stored.credit(id,capture_faction,10,true)
+				var xp_id: int = stored.begin_mission(capture_faction,"capture.xp",0,10,197)
+				ok = ok and xp_id > 0 and stored.credit_mission(xp_id,capture_faction,10,true) and stored.allocate(capture_faction,0)
 				var sealed: PackedByteArray = FileAccess.get_file_as_bytes(test_path)
 				MetaProfile.Codec.cache.clear()
 				var reopened = MetaProfile.new(test_path)
-				ok = ok and not reopened.blocked and reopened.data.banks[capture_faction].resource == 50 and reopened.data.banks[capture_faction].ranks[0] == 1
+				ok = ok and not reopened.blocked and reopened.data.banks[capture_faction].resource == 60 and reopened.data.banks[capture_faction].ranks[0] == 1 and reopened.data.banks[capture_faction].xp == 197
 				ok = ok and sealed.slice(0,MetaProfile.Codec.MAGIC.length()) == MetaProfile.Codec.MAGIC.to_utf8_buffer()
 				var mission_id: int = reopened.begin_mission(capture_faction,"capture.mission",9)
-				ok = ok and reopened.data.schema == 4 and mission_id > 0 and reopened.credit_mission(mission_id,capture_faction,10,true)
+				ok = ok and reopened.data.schema == 5 and mission_id > 0 and reopened.credit_mission(mission_id,capture_faction,10,true)
 				MetaProfile.Codec.cache.clear();reopened = MetaProfile.new(test_path)
-				ok = ok and reopened.data.banks[capture_faction].resource == 59 and reopened.data.banks[capture_faction].mission_rewards.has("capture.mission")
+				ok = ok and reopened.data.banks[capture_faction].resource == 69 and reopened.data.banks[capture_faction].mission_rewards.has("capture.mission")
 				mission_id = reopened.begin_mission(capture_faction,"capture.mission",999)
-				ok = ok and reopened.credit_mission(mission_id,capture_faction,10,true) and reopened.data.banks[capture_faction].resource == 59 and reopened.data.run.mission_earned == 0
+				ok = ok and reopened.credit_mission(mission_id,capture_faction,10,true) and reopened.data.banks[capture_faction].resource == 69 and reopened.data.run.mission_earned == 0
 				print("MISSION_LEDGER_PROTECTION=",ok)
 				meta_profile = MetaProfile.new("");meta_profile.data = reopened.data.duplicate(true);_open_meta(capture_faction)
-				for suffix in ["",".bak",".tmp",".v082.bak",".v084.bak"]:
+				for suffix in ["",".bak",".tmp",".v082.bak",".v084.bak",".v086.bak"]:
 					if FileAccess.file_exists(test_path+suffix): DirAccess.remove_absolute(test_path+suffix)
 				print("PROFILE_PROTECTION=",ok)
 		if "--capture-meta-rewards" in OS.get_cmdline_user_args():
@@ -514,7 +527,7 @@ func _ready() -> void:
 		if capture_state == "talents":
 			var states: Array[String] = []
 			for button in meta_menu.nodes: states.append(button.state)
-			print("TALENT_STATES_SNAPSHOT=",JSON.stringify({"states":states,"isolated":meta_profile.path.is_empty(),"progress":meta_menu.boards[0].progress}))
+			print("TALENT_STATES_SNAPSHOT=",JSON.stringify({"states":states,"isolated":meta_profile.path.is_empty(),"progress":meta_menu.boards[0].progress,"buy_hidden":not meta_menu.buy.visible and meta_menu.buy.disabled,"xp":meta_profile.data.banks[capture_faction].xp,"xp_label":meta_menu.xp_label.text}))
 		if "--capture-fortress" in OS.get_cmdline_user_args():
 			var style: Dictionary = MapView.fortress_style(model.faction)
 			var condition: int = MapView.fortress_condition(model.fortress_hp,model.max_hp)
@@ -974,7 +987,7 @@ func _build_run_summary(screen: Control) -> void:
 	summary_meta_card = _panel(summary_essential_content,Rect2(726,130,222,108))
 	var po_heading: Label = _label(summary_meta_card,"PO de faction",Vector2(16,12),Vector2(190,24),16,Color("bbcbbf"))
 	po_heading.mouse_filter = Control.MOUSE_FILTER_STOP
-	po_heading.tooltip_text = "Pièces d’or persistantes : conservées pour préparer les talents de cette faction. Aucun transfert depuis l’or de combat."
+	po_heading.tooltip_text = "Pièces d’or persistantes pour la future boutique. Les talents viennent de l’XP de mission ; aucun transfert depuis l’or de combat."
 	summary_meta_value = _label(summary_meta_card,"",Vector2(16,40),Vector2(190,40),30,Color("e6c987"))
 	summary_meta_status = _label(summary_meta_card,"",Vector2(16,84),Vector2(190,18),12,Color("bbcbbf"))
 	summary_meta_note = _label(summary_essential_content,"",Vector2(24,246),Vector2(924,22),13,Color("cdb47e"))
@@ -1261,7 +1274,7 @@ func _build_faction_selector(screen: Control) -> void:
 		meta_buttons[-1].disabled = meta_profile == null
 	meta_income = _label(panel,"",Vector2(30,468),Vector2(740,26),13,Color("cdb47e"))
 	meta_income.mouse_filter = Control.MOUSE_FILTER_STOP
-	_label(panel,model.map_definition.title+" · 150 or · Gains versés en fin de partie · Barème d’essai",Vector2(30,504),Vector2(740,24),13,Color("aabbb0"))
+	_label(panel,model.map_definition.title+" · Première victoire : 60 PO + 100 XP · Barème d’essai",Vector2(30,504),Vector2(740,24),13,Color("aabbb0"))
 
 func _refresh_home_progress() -> void:
 	if not choosing_faction: return
@@ -1271,7 +1284,7 @@ func _refresh_home_progress() -> void:
 	for camp in range(2):
 		meta_buttons[camp].disabled = meta_profile == null
 		meta_buttons[camp].text = "Préparer les talents"
-		meta_buttons[camp].tooltip_text = "Acheter des points et les affecter aux arbres de cette faction avant de partir."
+		meta_buttons[camp].tooltip_text = "Répartir les points débloqués par l’XP dans les trois arbres de cette faction."
 		if meta_profile == null:
 			home_resources[camp].text = "PO : indisponibles"
 			home_points[camp].text = "Talents non chargés"
@@ -1288,22 +1301,20 @@ func _refresh_home_progress() -> void:
 		var active: int = Model.MetaTalents.spent(bank.ranks)
 		var free: int = int(bank.points)-active
 		home_resources[camp].text = "%d PO %s" % [bank.resource,"Alliance" if camp == 0 else "Horde"]
-		home_resources[camp].tooltip_text = "Pièces d’or persistantes de cette faction, conservées après fermeture du jeu. L’or de combat sert uniquement pendant la partie."
+		home_resources[camp].tooltip_text = "Pièces d’or persistantes de cette faction, destinées à la future boutique. Les points de talent se débloquent par l’XP, sans dépenser ces PO."
 		home_resources[camp].mouse_filter = Control.MOUSE_FILTER_STOP
 		home_points[camp].text = "%d point%s actif%s · %d à placer" % [active,"s" if active != 1 else "","s" if active != 1 else "",free]
 		home_hp[camp].text = "Forteresse au départ : %d PV" % [Model.INITIAL_HP+Model.MetaTalents.extra_hp(camp,bank.ranks)]
-		var affordable: int = mini(int(bank.resource)/Model.MetaTalents.POINT_PRICE,Model.MetaTalents.MAX_POINTS-int(bank.points))
+		var next_xp: int = MetaProfile.Experience.xp_for_points(int(bank.points)+1)
 		if free > 0:
 			meta_buttons[camp].text = "Talents · %d point%s à placer" % [free,"s" if free > 1 else ""]
-			home_hints[camp].text = "Points déjà achetés : affectez-les avant de partir."
+			home_hints[camp].text = "Points débloqués : affectez-les avant de partir."
 		elif int(bank.points) >= Model.MetaTalents.MAX_POINTS:
-			home_hints[camp].text = "Tous les points ont été achetés."
-		elif affordable > 0:
-			home_hints[camp].text = "Vous pouvez acheter %d point%s de talent." % [affordable,"s" if affordable > 1 else ""]
+			home_hints[camp].text = "51 points de talent débloqués."
 		else:
-			home_hints[camp].text = "Prochain point : encore %d PO." % (Model.MetaTalents.POINT_PRICE-int(bank.resource))
-	meta_income.text = "Les PO et les talents sont conservés, séparément pour chaque faction."
-	meta_income.tooltip_text = "PO = pièces d’or persistantes pour acheter des points de talent. Elles sont séparées par faction et distinctes de l’or de combat utilisé pour recruter pendant la partie."
+			home_hints[camp].text = "XP : %d / %d pour le prochain point." % [bank.get("xp",0),next_xp]
+	meta_income.text = "L’XP débloque les talents · Les PO serviront à la boutique."
+	meta_income.tooltip_text = "PO = pièces d’or persistantes destinées à la boutique. L’XP, les PO et les points sont séparés par faction. L’or de combat sert au recrutement pendant la partie."
 	if meta_profile == null: meta_income.text = "Progression permanente indisponible."
 	elif meta_profile.blocked:
 		meta_income.text = "Sauvegarde à vérifier · Consultez les talents pour le détail."
@@ -1318,7 +1329,7 @@ func _sync_meta_rewards(force: bool = false) -> bool:
 	if not _run_finished(): return false
 	if not force and meta_retry_remaining > 0.0: return false
 	if meta_run_id <= 0:
-		meta_run_id = meta_profile.begin_run(model.faction)
+		meta_run_id = _begin_meta_run(model.faction)
 		if meta_run_id <= 0:
 			meta_retry_remaining = 2.0;return false
 	var completed: int = 0
@@ -1326,14 +1337,15 @@ func _sync_meta_rewards(force: bool = false) -> bool:
 		if record.result == "cleared": completed = maxi(completed,int(record.wave))
 	var before: int = int(meta_profile.data.banks[model.faction].resource)
 	var previous: int = _previous_map_rewards()
-	if meta_profile.credit(meta_run_id,model.faction,completed,model.phase == "victory",previous):
+	var committed: bool = meta_profile.credit_mission(meta_run_id,model.faction,completed,model.phase == "victory") if meta_profile.data.run.has("mission_id") else meta_profile.credit(meta_run_id,model.faction,completed,model.phase == "victory",previous)
+	if committed:
 		meta_run_earned += int(meta_profile.data.banks[model.faction].resource)-before
 		meta_retry_remaining = 0.0;return true
 	meta_retry_remaining = 2.0
 	return false
 
 func _run_finished() -> bool:
-	return not choosing_faction and (model.phase == "defeat" or (model.phase == "victory" and run_final_map))
+	return not choosing_faction and (model.phase == "defeat" or (model.phase == "victory" and (not mission_definition.is_empty() or run_final_map)))
 
 func _cleared_wave_count() -> int:
 	var completed: int = 0
@@ -1352,6 +1364,18 @@ func _previous_map_rewards() -> int:
 
 func _meta_reward_summary() -> Dictionary:
 	if meta_profile == null: return {}
+	if not mission_definition.is_empty():
+		var bank: Dictionary = meta_profile.data.banks[model.faction]
+		var run: Dictionary = meta_profile.data.run
+		var eligible: bool = meta_run_id > 0 and run.id == meta_run_id and run.faction == model.faction and run.get("mission_id","") == mission_definition.id
+		var settled: bool = eligible and run.get("settled",false)
+		var receipt: Dictionary = bank.mission_rewards.get(mission_definition.id,{})
+		var first: bool = receipt.is_empty() or (eligible and receipt.get("run_id",-1) == meta_run_id)
+		var can_reward: bool = first and (not _run_finished() or model.phase == "victory")
+		var expected: int = int(run.get("mission_reward",mission_definition.po)) if can_reward else 0
+		var saved: int = int(run.get("mission_earned",0)) if settled else 0
+		var xp_expected: int = int(run.get("mission_xp_reward",mission_definition.xp)) if can_reward else 0
+		return {"mission":true,"first":first,"waves":0,"bonus":0,"expected":expected,"saved":saved,"pending":maxi(0,expected-saved),"finished":_run_finished(),"ready":_run_finished() and settled,"balance":int(bank.resource),"affordable":0,"xp":int(bank.xp),"points":int(bank.points),"at_cap":bank.points >= MetaProfile.Experience.MAX_POINTS,"xp_expected":xp_expected,"xp_earned":int(run.get("mission_xp_earned",0)) if settled else 0}
 	var completed: int = 0
 	for record in model.wave_history:
 		if record.result == "cleared": completed = maxi(completed,int(record.wave))
@@ -1361,7 +1385,7 @@ func _meta_reward_summary() -> Dictionary:
 	var settled: bool = eligible and meta_profile.data.run.get("settled",false)
 	var saved: int = MetaProfile.resource_total(int(meta_profile.data.run.completed),meta_profile.data.run.victory)+int(meta_profile.data.run.get("previous_maps",0)) if settled else 0
 	var bank: Dictionary = meta_profile.data.banks[model.faction]
-	return {"waves":waves,"bonus":bonus,"expected":waves+bonus,"saved":saved,"pending":maxi(0,waves+bonus-saved),"finished":_run_finished(),"ready":_run_finished() and settled and saved == waves+bonus,"balance":int(bank.resource),"affordable":mini(int(bank.resource)/MetaProfile.Talents.POINT_PRICE,maxi(0,MetaProfile.Talents.MAX_POINTS-int(bank.points))),"at_cap":bank.points >= MetaProfile.Talents.MAX_POINTS}
+	return {"waves":waves,"bonus":bonus,"expected":waves+bonus,"saved":saved,"pending":maxi(0,waves+bonus-saved),"finished":_run_finished(),"ready":_run_finished() and settled and saved == waves+bonus,"balance":int(bank.resource),"affordable":0,"xp":int(bank.get("xp",0)),"points":int(bank.points),"at_cap":bank.points >= MetaProfile.Talents.MAX_POINTS}
 
 func _update_meta_summary() -> void:
 	var visible_meta: bool = meta_profile != null
@@ -1375,6 +1399,16 @@ func _update_meta_summary() -> void:
 	if not visible_meta: return
 	var info: Dictionary = _meta_reward_summary()
 	var camp: String = "Alliance" if model.faction == 0 else "Horde"
+	if info.get("mission",false):
+		summary_meta_value.text = "+%d" % info.saved if info.ready else "%d / %d" % [info.saved,info.expected]
+		summary_meta_status.text = "Sauvegardées · "+camp if info.ready else "En attente du résultat" if not info.finished else "Enregistrement en attente"
+		summary_meta_note.text = "Première victoire : %d PO · %d XP. Les talents restent fixés pendant la mission." % [info.expected,info.xp_expected] if not info.finished else "PO : +%d · XP : +%d · Total : %d XP · Talents : %d/51 points · Solde : %d PO" % [info.saved,info.xp_earned,info.xp,info.points,info.balance] if info.ready else "Gains non enregistrés : réessayez la sauvegarde avant de quitter ce résultat."
+		if not info.first: summary_meta_note.text = "Mission déjà réussie : aucun nouveau gain. Total : %d XP · Talents : %d/51 points · Solde : %d PO" % [info.xp,info.points,info.balance]
+		summary_meta_note.tooltip_text = meta_profile.error
+		summary_talents_button.visible = info.finished
+		summary_talents_button.text = "Préparer mes talents" if info.ready else "Réessayer la sauvegarde"
+		summary_talents_button.disabled = meta_profile.blocked
+		return
 	if not info.finished:
 		summary_meta_value.text = "+%d" % info.expected
 		summary_meta_status.text = "Provisoires · Partie en cours"
@@ -1385,8 +1419,7 @@ func _update_meta_summary() -> void:
 	summary_meta_status.text = "Sauvegardées · "+camp if info.ready else "Enregistrement en attente"
 	summary_meta_status.add_theme_color_override("font_color",Color("bbcbbf") if info.ready else Color("ef9b89"))
 	if info.ready:
-		var spending: String = "Tous les points actuels sont achetés" if info.at_cap else "%d point%s achetable%s" % [info.affordable,"s" if info.affordable > 1 else "","s" if info.affordable > 1 else ""] if info.affordable > 0 else "Encore %d PO pour un point" % (MetaProfile.Talents.POINT_PRICE-info.balance)
-		summary_meta_note.text = "Vagues : %d PO · Victoire : %d PO · Solde %s : %d PO · %s" % [info.waves,info.bonus,camp,info.balance,spending]
+		summary_meta_note.text = "Vagues : %d PO · Victoire : %d PO · Solde %s : %d PO · XP : %d · Talents : %d/51 points" % [info.waves,info.bonus,camp,info.balance,info.xp,info.points]
 	else:
 		summary_meta_note.text = "%d PO en attente · Réessayez la sauvegarde avant de préparer vos talents." % info.pending
 	summary_meta_note.tooltip_text = meta_profile.error
@@ -1404,6 +1437,10 @@ func _summary_to_talents() -> void:
 	var camp: int = model.faction
 	_close_run_summary();_reset();_open_meta(camp)
 
+func _begin_meta_run(faction: int) -> int:
+	if mission_definition.is_empty(): return meta_profile.begin_run(faction) # Compatibilité des anciens parcours et de leurs tests.
+	return meta_profile.begin_mission(faction,mission_definition.id,int(mission_definition.po),int(mission_definition.waves),int(mission_definition.xp))
+
 func _choose_faction(choice: int) -> void:
 	if meta_menu.visible: return
 	forecast_wave = -1
@@ -1412,7 +1449,7 @@ func _choose_faction(choice: int) -> void:
 	if choosing_faction and model.select_faction(choice):
 		meta_run_earned = 0
 		run_final_map = true;run_map_index = 0;run_map_rewards.clear()
-		if meta_profile != null: meta_run_id = meta_profile.begin_run(choice)
+		if meta_profile != null: meta_run_id = _begin_meta_run(choice)
 		meta_retry_remaining = 2.0 if meta_run_id <= 0 and meta_profile != null else 0.0
 		choosing_faction = false
 		_update_interface()
@@ -1860,6 +1897,10 @@ func _update_interface() -> void:
 		var pending: int = MetaProfile.resource_total(_cleared_wave_count())+_previous_map_rewards()
 		meta_progress_label.text = "PO en attente : %d" % pending if not _run_finished() else "Progression : sauvegarde à vérifier" if not meta_profile.error.is_empty() else "Progression : +%d PO %s" % [meta_run_earned,"Alliance" if model.faction == 0 else "Horde"]
 		meta_progress_label.tooltip_text = "PO persistantes versées au résultat de cette partie. Elles sont distinctes de l’or de combat, utilisé pour recruter et améliorer vos défenseurs." if not _run_finished() else meta_profile.error if not meta_profile.error.is_empty() else "PO de cette faction enregistrées et conservées après fermeture du jeu."
+		if not mission_definition.is_empty():
+			var mission_info: Dictionary = _meta_reward_summary()
+			meta_progress_label.text = "Gains : +%d PO · +%d XP" % [mission_info.saved,mission_info.xp_earned] if mission_info.ready else "Première victoire : %d PO · %d XP" % [mission_info.expected,mission_info.xp_expected]
+			meta_progress_label.tooltip_text = "PO et XP versées uniquement à la première victoire de cette mission pour cette faction. Rejouer ou perdre ne donne pas cette récompense. Les points de talent se débloquent par l’XP."
 		meta_progress_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	if summary_open: _update_meta_summary()
 	for control in [start_button,speed_button,reset_button,sell_button,upgrade_button,bonus_summary_button,summary_button,inspection_numbers_button,combat_numbers_button]+buy_buttons:

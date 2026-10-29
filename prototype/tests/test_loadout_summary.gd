@@ -50,6 +50,7 @@ func run_checks() -> void:
 			scene.free()
 	# Le bilan décrit le cliché de la partie, jamais les changements ultérieurs du profil.
 	var scene = Main.new();root.add_child(scene);scene.set_process(false);scene.meta_profile = Profile.new("")
+	scene.mission_definition = {} # Consultation du format historique multi-cartes, hors campagne actuelle.
 	scene.meta_profile.data.banks[0].points = 33;scene.meta_profile.data.banks[0].ranks = configurations[1].duplicate()
 	scene._choose_faction(0);var tooltip: String = scene.loadout_label.tooltip_text
 	scene.meta_profile.data.banks[0].ranks = Talents.empty_ranks();scene._update_interface()

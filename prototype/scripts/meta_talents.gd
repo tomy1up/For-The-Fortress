@@ -2,7 +2,7 @@ extends RefCounted
 ## Barème de prototype. Les rangs historiques restent lisibles pour le rejeu v0.67.
 const Legacy = preload("res://scripts/meta_talents_v067.gd")
 const Expanded = preload("res://scripts/meta_talents_expanded.gd")
-const POINT_PRICE: int = 10
+const POINT_PRICE: int = 10 # Historique uniquement ; les points ne sont plus achetables en PO.
 const RESET_PRICES: Array[int] = [0] # Gratuité validée le 29 octobre 2026.
 const NODES_PER_TREE: int = 5
 const MAX_POINTS: int = 51
@@ -66,7 +66,7 @@ static func allocation_error(ranks: Array, index: int, points: int) -> String:
 	var missing: int = THRESHOLDS[ROWS[node]]-lower_spent(ranks,tree,ROWS[node])
 	if missing > 0: return "Encore %d points à dépenser dans les lignes précédentes de cet arbre." % missing
 	if node >= 3 and ranks[tree*NODES_PER_TREE+3]+ranks[tree*NODES_PER_TREE+4] > 0: return "L’autre spécialité de cet arbre est déjà choisie."
-	if spent(ranks) >= points: return "Aucun point disponible : achetez un point avec les PO de cette faction."
+	if spent(ranks) >= points: return "Aucun point disponible : gagnez de l’XP en réussissant des missions avec cette faction."
 	return ""
 
 static func can_allocate(ranks: Array, index: int, points: int) -> bool:

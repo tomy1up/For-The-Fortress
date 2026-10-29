@@ -1,5 +1,7 @@
 # Économie de campagne — cadrage du 29 octobre 2026
 
+**Révision la plus récente :** les points de talent proviennent désormais de l’XP des missions ; les PO sont destinées à la boutique. La référence de 510 PO pour les talents ci-dessous est historique et remplacée. [Décision et courbe XP](Experience_talents_2026-10-29.md).
+
 Ce document consigne les dernières précisions du porteur du projet et sépare les contraintes acquises des pistes à tester. For the Fortress! reste un nom de travail dont la disponibilité juridique reste à confirmer.
 
 ## Règles acquises

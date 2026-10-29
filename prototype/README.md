@@ -1,16 +1,16 @@
 # Dix vagues jouables sur La Vallée du Gué
 
-**Version v0.86 (29 octobre 2026)** : [monnaies clairement distinguées](../design/Monnaies_lisibles_v086.md). PO persistantes par faction pour les talents ; or de combat pour recruter pendant la partie. Arbres à 51 points conservés. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.86).
+**Version v0.87 (29 octobre 2026)** : [points de talent débloqués par l’XP](../design/Experience_talents_2026-10-29.md). Première victoire du Gué : 60 PO et 100 XP par faction, sans second gain en rejouant. Les PO sont réservées à la future boutique. Ancien investissement conservé. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.87).
 
-**Prototype v0.86 — 29 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
+**Prototype v0.87 — 29 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
 
 Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.86](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.86) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.87](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.87) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
-Sur ce PC : dist/For_the_Fortress_v0.86_Windows_x64 depuis la racine du dépôt. Voir [le relevé d’export](../design/Distribution_Windows_v086.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
+Sur ce PC : dist/For_the_Fortress_v0.87_Windows_x64 depuis la racine du dépôt. Voir [le relevé d’export](../design/Distribution_Windows_v087.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
 ## Jouer depuis le projet source
 

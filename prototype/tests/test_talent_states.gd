@@ -1,4 +1,5 @@
 extends SceneTree
+const XPFixture = preload("res://tests/xp_fixture.gd")
 const Screen = preload("res://scripts/meta_screen.gd")
 const Talents = preload("res://scripts/meta_talents.gd")
 const Profile = preload("res://scripts/meta_profile.gd")
@@ -29,8 +30,9 @@ func run_checks() -> void:
 		check(ui.nodes[2].state == "unfunded" and ui.nodes[5].state == "unfunded" and ui.nodes[6].state == "locked","Absence de point séparée des prérequis de ligne")
 		before = JSON.stringify(p.data);ui._allocate(2)
 		check(before == JSON.stringify(p.data),"Clic sans point disponible ne dépense rien")
-		ui._inspect(2);check(ui.detail_title.text.contains("Point à acheter") and ui.detail_text.text.contains("Prochain rang"),"Prochain effet consultable malgré l'absence de point")
-		ui._buy();check(ui.nodes[2].state == "available" and p.data.banks[faction].resource == 26,"Achat réel actualise immédiatement les états")
+		ui._inspect(2);check(ui.detail_title.text.contains("XP à gagner") and ui.detail_text.text.contains("Prochain rang"),"Prochain effet consultable malgré l'absence de point")
+		ui._buy();check(p.data.banks[faction].resource == 36 and ui.buy.disabled,"Aucun achat de point contre des PO")
+		XPFixture.unlock(p,faction,13);ui.refresh();check(ui.nodes[2].state == "available" and p.data.banks[faction].resource == 36,"Gain XP réel actualise les états sans dépense de PO")
 		ui._allocate(2);check(ui.nodes[2].state == "maximum" and p.data.banks[faction].ranks[2] == 3,"Dernier rang investi marqué comme maximum")
 		check(p.data.banks[1-faction] == Profile.bank(),"Achat et affectation limités au camp choisi")
 		p.blocked = true;ui.refresh()

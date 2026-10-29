@@ -14,7 +14,7 @@ func _initialize() -> void:
 		check(code == 0 and not log.contains("ERROR:"),"Processus de jeu séparé terminé proprement : "+mode)
 		check(log.contains("PROFILE_RELAUNCH_"+mode.to_upper()+"=true"),"Progression intacte après ouverture/fermeture : "+mode)
 	var saved: Variant = Profile.new(path).data
-	check(saved is Dictionary and saved.banks[0].resource == 50 and saved.banks[1].resource == 40,"Deux réserves permanentes conservées sur disque après quatre processus")
+	check(saved is Dictionary and saved.banks[0].resource == 60 and saved.banks[1].resource == 60,"Deux réserves permanentes conservées sur disque après quatre processus")
 	check(saved is Dictionary and not saved.run.settled,"Fermer une nouvelle partie sans résultat ne détruit pas la progression acquise")
 	for suffix in ["",".bak",".tmp"]:
 		if FileAccess.file_exists(path+suffix): DirAccess.remove_absolute(path+suffix)

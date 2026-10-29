@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.86 — 29 octobre 2026
+Version : 0.87 — 29 octobre 2026
 
 JOUER
 
@@ -20,77 +20,48 @@ talents permanents ne sont possibles avant la victoire finale ou la défaite.
 Les constructions, achats, ventes et améliorations d’unités entre les vagues restent
 possibles. Les choix de bonus de la partie ne sont pas les arbres de talents permanents.
 
-Le prototype contient actuellement une carte de dix vagues. Pour un futur parcours
-de plusieurs cartes, une carte remportée ne sera pas la fin de la partie : les gains
-resteront provisoires et les arbres inaccessibles jusqu’au résultat global.
+Le prototype contient une mission de dix vagues : La Vallée du Gué.
+Une mission est une session complète : retour possible à l’accueil après victoire
+ou défaite. Le futur parcours de 200 missions reste à construire.
 
-RESSOURCES ET PROGRESSION PERMANENTE
+PO, XP ET PROGRESSION PERMANENTE
 
-Chaque vague terminée contribue son numéro aux gains provisoires du camp joué.
-Ces ressources ne sont pas disponibles pendant la partie. Le versement a lieu en une
-fois après la victoire finale ou la défaite ; une vague perdue ne rapporte rien.
-Une victoire finale ajoute 5 ressources. Une carte intermédiaire ne donne pas de prime.
+Première victoire du Gué dans une faction : 60 PO et 100 XP (barème de prototype).
+Rejouer et gagner la même mission ne redonne ni PO ni XP. Une défaite ne donne
+pas sa récompense de première victoire. Les deux factions ont leur propre suivi.
 
-Une fois acquis et enregistrés, ressources, points achetés, talents affectés et compteurs
-de respécialisation sont conservés sur le PC après fermeture et relance du jeu.
-Ils sont indépendants du dossier contenant l’exécutable : changer de version du ZIP
-ne doit pas remettre cette progression à zéro.
+L’XP débloque automatiquement les points de talent, sans dépense de PO.
+Courbe de référence : 100 XP par mission, 10 000 XP pour obtenir les 51 points.
+Premier point à 197 XP, soit après deux missions distinctes. Le seul Gué disponible
+ne permet pas de farmer le complément : les autres missions sont à développer.
+Les PO sont destinées à la future boutique, qui n’est pas encore jouable.
+L’or de combat sert au recrutement et aux améliorations pendant la mission.
 
-Le bilan Essentiel distingue les gains enregistrés des gains en attente d’écriture.
-Il montre le solde de la faction et les points achetables. Préparer mes talents quitte
-le bilan et ouvre les arbres de cette faction pour la prochaine partie.
-
-Si l’écriture échoue, Réessayer la sauvegarde relance l’enregistrement. Après réussite,
-un second clic ouvre les talents. Les reprises automatiques sont espacées de deux secondes.
-Un profil illisible est protégé contre l’écrasement ; son erreur reste consultable.
-
-Fermer le jeu pendant une partie ne supprime pas la progression permanente déjà acquise.
-Le prototype ne reprend toutefois pas la partie en cours : ses gains provisoires ne
-sont pas versés sans victoire finale ou défaite. Les gains finaux encore en attente
-d’écriture ne sont pas garantis si le jeu est fermé avant leur enregistrement.
+Le bilan indique les gains réellement enregistrés et l’XP totale. Si l’écriture échoue,
+réessayer la sauvegarde avant de quitter le résultat. Fermer une partie non terminée
+ne donne aucun gain ; les PO, XP, points et talents déjà enregistrés sont conservés.
 
 PRÉPARER SA FACTION
 
-L’accueil montre séparément les ressources, points actifs, points encore à placer et
-PV de départ de chaque camp. Les points à placer sont déjà achetés ; un achat possible
-est seulement une indication et ne dépense rien. Préparer les talents ouvre les arbres
-de la colonne choisie. Ces rappels se mettent à jour au retour des arbres.
-Un profil illisible est signalé sans présenter un solde nul comme une progression perdue.
-
-TALENTS ACTIFS DE LA PARTIE
-
-Le rappel en haut à droite indique le nombre de points actifs. Le survol détaille
-les arbres et les bonus permanents appliqués à la forteresse et aux trois défenseurs.
-Après la victoire finale ou la défaite, l’onglet Talents du bilan présente les rangs
-et effets de la configuration fixée au départ. Il permet uniquement de les consulter.
-Le rapport Markdown conserve ces noms, rangs et bonus pour relire la partie.
-
-LIRE LES ARBRES
-
-Chaque icône porte un repère : + pour investir un rang, coche pour le maximum,
-cadenas pour un palier fermé, croix pour la spécialité exclue, ! si un point doit
-être acheté. Un profil bloqué porte aussi un cadenas ; le détail précise le problème.
-Les jauges indiquent les points requis dans les lignes précédentes du même arbre.
-Survol et clavier restent disponibles même pour un talent inaccessible. Le titre
-du détail explique son état. Les repères se mettent à jour après chaque transaction.
+L’accueil montre PO, points actifs, points encore à placer et XP du prochain point.
+Préparer les talents ouvre les arbres de la faction. Aucun achat de point en PO.
+La barre d’XP des arbres montre la progression entre les deux seuils du prochain point.
 
 TALENTS — BARÈME D’ESSAI
 
-Alliance et Horde ont leurs propres ressources, points et trois arbres. Un point coûte
-10 ressources. Il ne peut pas être utilisé dans les deux factions à la fois.
-Les lignes s’ouvrent après 0, 5 puis 10 points dépensés dans les lignes précédentes
-du même arbre. Les points d’une autre colonne ne contribuent pas à ce seuil.
+Trois arbres de 21 talents sur sept lignes, 51 points partagés par faction.
+Seuils de ligne : 0, 5, 10, 15, 20, 25 et 30 points dans les lignes précédentes du même
+arbre. Deux majeurs par arbre sont indiqués par une étoile, aux seuils 15 et 30.
+Défilez dans chaque colonne pour voir les lignes profondes. Survol et clavier permettent
+d’inspecter effets, prochain rang et conditions, même si le talent est verrouillé.
++ permet d’investir, la coche indique le maximum, le cadenas un verrou, la croix un
+choix exclusif déjà pris et ! l’absence de point ou le plafond atteint.
 
-Survoler une icône ou la sélectionner au clavier montre son effet, ses conditions et
-le bonus permanent du prochain rang. Cet aperçu ne dépense rien. Les deux spécialités
-finales d’un arbre sont exclusives. Le contenu actuel accepte 36 points par faction.
-
-Réinitialiser les trois arbres est gratuit, même sans PO. La confirmation montre
-les points rendus et rappelle que les PO et les points achetés sont conservés.
-Annuler ne modifie rien. Un aperçu devenu périmé doit être rouvert avant validation.
-Les anciens compteurs sont conservés dans le profil, sans effet sur la gratuité.
-Les talents sont figés pour toute la partie une fois la faction choisie.
-Effets, prix, paliers et rythme de progression restent à équilibrer.
+Réinitialiser les trois arbres est gratuit : PO, XP et points débloqués sont conservés.
+Les points rendus peuvent être répartis autrement avant la prochaine mission.
+Les talents sont figés pendant la mission ; l’onglet Talents du bilan les consulte.
+Noms, effets et courbe d’XP restent des hypothèses d’équilibrage du prototype.
+La nouvelle disposition avec positions vides et liens entre talents est à venir.
 
 SAUVEGARDE LOCALE
 
@@ -125,12 +96,12 @@ actuelle de la forteresse ; les valeurs chiffrées restent visibles.
 
 PRÉPARATION DE LA CAMPAGNE
 
-Cette version prépare le registre protégé des premières victoires par mission.
-La sauvegarde précédente est migrée en conservant ressources, points, talents
-et compteurs. Une copie chiffrée du profil précédent est gardée.
-Le Gué conserve encore les gains du prototype : la nouvelle économie de PO par
-première victoire et les arbres de talents enrichis ne sont pas encore activés.
-Le plafond de points, leurs prix et les récompenses restent à définir.
+Le Gué utilise le registre des premières victoires. Les cent premières missions de
+référence doivent débloquer 51 points par XP. Les missions 1 à 200 donneront aussi
+leurs PO de première victoire, pour les achats de boutique. Seul le Gué est jouable.
+La progression, les succès et l’ouverture de l’infini sont indépendants par faction.
+La sauvegarde passe au schéma 5, avec une archive chiffrée du profil v0.86.
+Les anciens points et investissements sont conservés avec un crédit XP équivalent.
 
 COMMANDES ET RÈGLES DU PROTOTYPE
 
@@ -157,12 +128,3 @@ réseau requis pour jouer. Pas de sauvegarde de partie en cours ni de progressio
 Les scénarios de contrôle de cartes successives ne constituent pas de nouvelles cartes.
 Licences du moteur : LICENCES_GODOT.txt.
 For the Fortress! reste un nom de travail dont la disponibilité juridique est à confirmer.
-
-Arbres enrichis : 21 talents par arbre, sept lignes, 51 points par faction.
-Une étoile distingue les deux talents majeurs aux seuils de 15 et 30 points.
-Défilez dans chaque colonne pour voir les talents profonds. Les effets chiffrés
-sont des hypothèses de prototype ; la campagne de 200 missions reste à réaliser.
-
-Monnaies : les PO (pièces d’or) Alliance/Horde sont persistantes et servent aux
-points de talent. L’or de combat sert au recrutement et aux améliorations pendant
-la partie. Ces deux soldes sont distincts ; aucun transfert n’est ajouté.

@@ -79,6 +79,8 @@ var heading: Label
 var balance: Label
 var notice: Label
 var buy: Button
+var xp_label: Label
+var xp_bar: ProgressBar
 var reset_button: Button
 var names: Array[Label] = []
 var nodes: Array[Button] = []
@@ -117,7 +119,15 @@ func _ready() -> void:
 	heading = label_at(self,"Talents",Rect2(32,18,900,40),28)
 	balance = label_at(self,"",Rect2(32,66,890,32),16)
 	buy = button_at(self,"",Rect2(940,58,308,42),_buy)
-	label_at(self,"+ Investir un rang · ✓ Maximum · Cadenas : palier fermé · × Autre spécialité choisie · ! Point à acheter ou plafond atteint · ★ Talent majeur",Rect2(32,112,1216,30),14)
+	buy.hide();buy.disabled = true
+	xp_label = label_at(self,"",Rect2(940,58,308,25),14)
+	xp_bar = ProgressBar.new();xp_bar.position = Vector2(940,88);xp_bar.size = Vector2(308,10)
+	xp_bar.show_percentage = false;add_child(xp_bar)
+	for part in ["background","fill"]:
+		var xp_style := StyleBoxFlat.new();xp_style.bg_color = Color("8aa4ba") if part == "fill" else Color("1c302a")
+		xp_style.set_corner_radius_all(4);xp_style.set_content_margin_all(0)
+		xp_bar.add_theme_stylebox_override(part,xp_style)
+	label_at(self,"+ Investir un rang · ✓ Maximum · Cadenas : palier fermé · × Autre spécialité choisie · ! XP à gagner ou plafond atteint · ★ Talent majeur",Rect2(32,112,1216,30),14)
 	nodes.resize(Expanded.NODE_COUNT);descriptions.resize(Expanded.NODE_COUNT)
 	for tree in range(3):
 		var board := TreeBoard.new();board.position = Vector2(32+416*tree,158);board.size = Vector2(384,454)
@@ -178,11 +188,17 @@ func refresh() -> void:
 		return
 	var camp: String = "Alliance" if faction == 0 else "Horde"
 	heading.text = "Talents · "+camp
-	balance.text = "PO %s : %d · Points disponibles : %d / %d achetés · Plafond : %d" % [camp,bank.resource,maxi(0,mini(int(bank.points),Expanded.MAX_POINTS)-Expanded.spent(ranks)),bank.points,Expanded.MAX_POINTS]
-	balance.tooltip_text = "Pièces d’or persistantes de cette faction : conservées après fermeture et utilisées pour les points de talent. L’or de combat sert au recrutement pendant la partie."
-	buy.text = "Acheter 1 point · %d PO" % Talents.POINT_PRICE
-	buy.tooltip_text = "Dépenser les PO de cette faction pour acheter un point à répartir entre ses trois arbres. L’or de combat reste inchangé."
-	buy.disabled = profile.blocked or bank.resource < Talents.POINT_PRICE or bank.points >= Talents.MAX_POINTS
+	balance.text = "PO %s : %d · XP : %d · Points à placer : %d / %d débloqués · Plafond : %d" % [camp,bank.resource,bank.get("xp",0),maxi(0,mini(int(bank.points),Expanded.MAX_POINTS)-Expanded.spent(ranks)),bank.points,Expanded.MAX_POINTS]
+	balance.tooltip_text = "Les PO sont réservées à la future boutique. Les points de talent se débloquent avec l’XP des missions de cette faction. L’or de combat sert au recrutement pendant la partie."
+	var experience: Dictionary = profile.Experience.progress(int(bank.get("xp",0)))
+	var at_cap: bool = bank.points >= Expanded.MAX_POINTS
+	var lower_xp: int = profile.Experience.xp_for_points(mini(int(bank.points),Expanded.MAX_POINTS))
+	var next_xp: int = 0 if at_cap else profile.Experience.xp_for_points(int(bank.points)+1)
+	xp_label.text = "51 points de talent débloqués" if at_cap else "Prochain point : encore %d XP" % maxi(0,next_xp-experience.xp)
+	xp_label.tooltip_text = "Expérience persistante de cette faction. Les 100 premières missions doivent débloquer les 51 points de talent. Échelle de prototype : 10 000 XP."
+	xp_bar.max_value = 1 if at_cap else next_xp-lower_xp
+	xp_bar.value = 1 if at_cap else maxi(0,experience.xp-lower_xp)
+	buy.disabled = true;buy.hide()
 	for tree in range(3):
 		names[tree].text = Talents.TREES[faction][tree][0]
 		var accent: Color = ([Color("8aa4ba"),Color("8fb675"),Color("b69bda")] if faction == 0 else [Color("d28c70"),Color("b398d4"),Color("d4b078")])[tree]
@@ -210,7 +226,7 @@ func refresh() -> void:
 			nodes[index].tooltip_text = tooltip;descriptions[index].tooltip_text = tooltip
 	reset_button.text = "Réinitialiser · Gratuit"
 	reset_button.disabled = profile.blocked or Expanded.spent(ranks) == 0
-	reset_button.tooltip_text = "Gratuit entre les missions.\nTous les points de cette faction sont rendus.\nLes PO et les points achetés restent conservés."
+	reset_button.tooltip_text = "Gratuit entre les missions.\nTous les points de cette faction sont rendus.\nLes PO, l’XP et les points débloqués restent conservés."
 	notice.text = profile.error if not profile.error.is_empty() else profile.migration_notice if not profile.migration_notice.is_empty() else "Barème d’essai · 51 points maximum partagés. Défilez dans chaque arbre pour voir les sept lignes."
 	_inspect(inspected)
 
@@ -243,7 +259,7 @@ func _inspect(index: int) -> void:
 	inspected = index
 	var bank: Dictionary = profile.data.banks[faction]
 	var definition: Dictionary = Expanded.node(faction,index)
-	var state_text: String = {"available":"1 point pour ce rang","maximum":"Rang maximum","locked":"Palier fermé","exclusive":"Autre spécialité choisie","unfunded":"Point à acheter","capped":"Plafond atteint","blocked":"Sauvegarde à vérifier"}[_node_state(index,ranks)]
+	var state_text: String = {"available":"1 point pour ce rang","maximum":"Rang maximum","locked":"Palier fermé","exclusive":"Autre spécialité choisie","unfunded":"XP à gagner","capped":"Plafond atteint","blocked":"Sauvegarde à vérifier"}[_node_state(index,ranks)]
 	detail_title.text = "%s · Rang %d/%d · %s" % [("★ " if definition.major else "")+definition.name,ranks[index],definition.maximum,state_text]
 	var reason: String = Expanded.allocation_error(ranks,index,int(bank.points))
 	detail_text.text = definition.description.replace("\n"," ")+(" Choix exclusif entre les spécialités de cette ligne." if definition.local in [3,4,15,16,17,18,19,20] else "")
@@ -299,7 +315,7 @@ func _request_reset() -> void:
 	reset_quote = _respec_preview()
 	if reset_quote.is_empty(): return
 	var camp: String = "Alliance" if faction == 0 else "Horde"
-	confirm.dialog_text = "%s · Réinitialisation gratuite\n\nPoints à placer : %d → %d (+%d rendus)\nTous les talents seront retirés ; les points restent achetés.\nAucune PO n’est débitée. Répartissez ensuite vos points autrement.\n\nL’autre faction conserve sa progression." % [camp,reset_quote.free_before,reset_quote.free_after,reset_quote.active]
+	confirm.dialog_text = "%s · Réinitialisation gratuite\n\nPoints à placer : %d → %d (+%d rendus)\nTous les talents seront retirés ; les points débloqués sont conservés.\nAucune PO n’est débitée. Répartissez ensuite vos points autrement.\n\nL’autre faction conserve sa progression." % [camp,reset_quote.free_before,reset_quote.free_after,reset_quote.active]
 	confirm.popup_centered(Vector2i(650,300))
 
 func _cancel_reset() -> void:
