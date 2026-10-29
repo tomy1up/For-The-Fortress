@@ -416,3 +416,7 @@ Résumé des ennemis restants et des arrivées à la forteresse, compteurs compl
 ## v0.82 — Portraits dans la prévision, 29 octobre 2026
 
 Illustration de chaque groupe avant le départ, tirée des mêmes atlas que les ennemis du combat. Faune neutre commune et attaquants du camp adverse, noms et avertissements conservés sans agrandir le panneau. [Détails et validation](Portraits_prevision_v082.md).
+
+## Clarifications de campagne — 29 octobre 2026
+
+Plusieurs missions composent une partie complète, sans accès aux talents ni crédit de PO intermédiaire. Les nouveautés persistantes arrivent aux missions 11–20, 31–40, 51–60, etc., puis peuvent réapparaître ponctuellement. Les limites de la partie et le sort des gains provisoires en cas de défaite restent à préciser. [Décisions de cadrage](Cadrage_campagne_2026-10-29.md) et [feuille de route actualisée](Feuille_de_route_long_terme.md). Aucun changement du jeu v0.82 pour cette mise à jour documentaire.
