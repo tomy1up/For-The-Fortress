@@ -2,7 +2,7 @@ extends RefCounted
 ## Barème de prototype. Les rangs historiques restent lisibles pour le rejeu v0.67.
 const Legacy = preload("res://scripts/meta_talents_v067.gd")
 const POINT_PRICE: int = 10
-const RESET_PRICES: Array[int] = [2,4,6,8,10]
+const RESET_PRICES: Array[int] = [0] # Gratuité validée le 29 octobre 2026.
 const NODES_PER_TREE: int = 5
 const MAX_POINTS: int = 36
 const MAX_RANKS: Array[int] = [5,3,3,1,1]

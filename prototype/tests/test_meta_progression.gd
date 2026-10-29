@@ -24,7 +24,7 @@ func run_checks() -> void:
 	check(p.buy_point(0) and p.data.banks[0].points == 1 and p.data.banks[0].resource == 0,"Achat du premier point au prix exact")
 	check(not p.buy_point(1) and not p.allocate(1,0) and not p.allocate(0,1),"Pas de partage de points ni spécialité sans prérequis")
 	check(p.allocate(0,0) and not p.allocate(0,0),"Un point ne peut être dépensé deux fois")
-	check(not p.respec(0) and p.data.banks[0].resets == 0,"Reset sans ressource refusé et non compté")
+	check(p.respec(0) and p.data.banks[0].resets == 1 and p.data.banks[0].resource == 0 and Talents.spent(p.data.banks[0].ranks) == 0,"Reset gratuit même sans ressource, point conservé et rendu")
 	var reloaded = Profile.new(path)
 	check(reloaded.data == JSON.parse_string(JSON.stringify(p.data)),"Fermeture/réouverture : points et rangs persistés")
 	check(not p.credit(id,0,10,true),"Une partie déjà liquidée ne peut pas être augmentée après coup")
@@ -37,15 +37,15 @@ func run_checks() -> void:
 	for faction in range(2):
 		var q = Profile.new("");q.data.banks[faction].resource = 1000;q.data.banks[faction].points = Talents.MAX_POINTS
 		for reset in range(9):
-			check(q.reset_price(faction) == [2,4,6,8,10,10,10,10,10][reset],"Prix croissant puis plafonné")
+			check(q.reset_price(faction) == 0,"Gratuité conservée après toutes les réinitialisations")
 			var built: bool = true
 			for index in [0,0,0,0,0,1,1,1,2,2,3]: built = q.allocate(faction,index) and built
 			check(built,"Lignes débloquées et spécialité acquise")
 			check(not q.allocate(faction,4),"Spécialités exclusives")
 			var before: int = q.data.banks[faction].resource
 			var price: int = q.reset_price(faction)
-			check(q.respec(faction) and q.data.banks[faction].resource == before-price and q.data.banks[faction].points == Talents.MAX_POINTS and Talents.spent(q.data.banks[faction].ranks) == 0,"Reset paie exactement une fois et rend tous les points")
-			check(q.data.banks[1-faction].resets == 0 and q.reset_price(1-faction) == 2,"Reset sans incidence sur l'autre faction")
+			check(q.respec(faction) and q.data.banks[faction].resource == before-price and q.data.banks[faction].points == Talents.MAX_POINTS and Talents.spent(q.data.banks[faction].ranks) == 0,"Reset ne débite rien et rend tous les points")
+			check(q.data.banks[1-faction].resets == 0 and q.reset_price(1-faction) == 0,"Reset sans incidence sur l'autre faction")
 			check(not q.respec(faction) and q.data.banks[faction].resource == before-price,"Arbre vide : pas de nouveau prélèvement")
 		q.data.banks[faction].points = Talents.MAX_POINTS
 		check(not q.buy_point(faction),"Aucun achat de point inutile au-delà des rangs actifs possibles")

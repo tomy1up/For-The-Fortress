@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.83 — 29 octobre 2026
+Version : 0.84 — 29 octobre 2026
 
 JOUER
 
@@ -85,12 +85,10 @@ Survoler une icône ou la sélectionner au clavier montre son effet, ses conditi
 le bonus permanent du prochain rang. Cet aperçu ne dépense rien. Les deux spécialités
 finales d’un arbre sont exclusives. Le contenu actuel accepte 36 points par faction.
 
-Réinitialiser les trois arbres rend les points déjà achetés. Prix successifs :
-2, 4, 6, 8, puis 10 ressources au maximum. Compteurs propres à chaque faction.
-Avant paiement, la confirmation montre le solde restant, les points à placer après
-remboursement et le prix de la prochaine réinitialisation, plafonné à 10.
-Les points restent achetés : seuls leurs rangs sont retirés. Annuler ne prélève rien.
-Un aperçu devenu périmé doit être rouvert ; aucun autre tarif n’est appliqué en silence.
+Réinitialiser les trois arbres est gratuit, même sans PO. La confirmation montre
+les points rendus et rappelle que les PO et les points achetés sont conservés.
+Annuler ne modifie rien. Un aperçu devenu périmé doit être rouvert avant validation.
+Les anciens compteurs sont conservés dans le profil, sans effet sur la gratuité.
 Les talents sont figés pour toute la partie une fois la faction choisie.
 Effets, prix, paliers et rythme de progression restent à équilibrer.
 

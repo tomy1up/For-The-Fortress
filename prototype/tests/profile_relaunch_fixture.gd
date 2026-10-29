@@ -18,7 +18,7 @@ func _initialize() -> void:
 	elif mode != "verify": ok = false
 	for camp in range(2):
 		var bank: Dictionary = profile.data.banks[camp]
-		ok = ok and bank.resource == [48,38][camp] and bank.points == camp+1 and bank.resets == 1 and bank.ranks[0] == camp+1
+		ok = ok and bank.resource == [50,40][camp] and bank.points == camp+1 and bank.resets == 1 and bank.ranks[0] == camp+1
 	if not ok: push_error("Échec du scénario de persistance "+mode)
 	print("PROFILE_RELAUNCH_",mode.to_upper(),"=",ok)
 	quit(0 if ok else 1)

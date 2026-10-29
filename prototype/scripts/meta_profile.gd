@@ -208,13 +208,12 @@ func allocate(faction: int, index: int) -> bool:
 	var next: Dictionary = data.duplicate(true);next.banks[faction].ranks[index] += 1
 	return _commit(next)
 
-func reset_price(faction: int) -> int:
-	if faction not in [0,1]: return 0
-	return Talents.RESET_PRICES[mini(int(data.banks[faction].resets),Talents.RESET_PRICES.size()-1)]
+func reset_price(_faction: int) -> int:
+	return 0
 
 func respec(faction: int) -> bool:
-	if faction not in [0,1] or Talents.spent(data.banks[faction].ranks) == 0 or data.banks[faction].resource < reset_price(faction): return false
+	if faction not in [0,1] or Talents.spent(data.banks[faction].ranks) == 0: return false
 	var next: Dictionary = data.duplicate(true)
-	next.banks[faction].resource -= reset_price(faction);next.banks[faction].resets += 1
+	next.banks[faction].resets = mini(int(next.banks[faction].resets)+1,1000000000)
 	next.banks[faction].ranks = bank().ranks
 	return _commit(next)

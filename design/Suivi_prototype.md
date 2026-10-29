@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 29 octobre 2026 — prototype v0.83, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 29 octobre 2026 — prototype v0.84, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -432,3 +432,15 @@ Les trois arbres par faction doivent être nettement enrichis et partager un pla
 ## v0.83 — Registre des premières récompenses, 29 octobre 2026
 
 Fondation persistante pour les premières victoires par mission : reçu et gain atomiques, séparation des factions, reprise sans doublon et migration conservant les acquis. Répartition budgétaire paramétrable sans montant final. La nouvelle économie n’est pas encore raccordée au Gué jouable ; les arbres enrichis et leur plafond restent à concevoir. [Réalisation et validation](Registre_missions_v083.md).
+
+## Économie et boutique — précisions du 29 octobre 2026
+
+Chaque mission, également après la 100e, verse ses PO à la première victoire. Le financement du maximum de points à 100 missions est un repère sans dépenses facultatives ; les achats en boutique peuvent le retarder. La boutique ouvre des stratégies avec des unités ayant forces et faiblesses, sans remplaçantes systématiquement supérieures. Les trajectoires talents, boutique et mixtes devront être testées pour éviter impasses et trivialisation. [Cadre économique](Economie_campagne_2026-10-29.md). Aucun nouveau barème ou mécanisme de réserve imposée.
+
+## Étude des arbres enrichis et du reset — 29 octobre 2026
+
+[Proposition concrète](Proposition_talents_enrichis_2026-10-29.md) : 18 talents par arbre sur six lignes, module de calcul avec paliers, plafond partagé et exclusions, sans raccordement au jeu. Le coût du reset est rouvert : gratuité ou PO renouvelables à définir ; aucune option appliquée. [Cadre économique actualisé](Economie_campagne_2026-10-29.md).
+
+## v0.84 — Reset gratuit, 29 octobre 2026
+
+Décision explicite : les resets entre les missions sont gratuits, les talents restent fixés pendant la mission. Confirmation sans paiement, aucun débit de PO, point acheté conservé, anciens compteurs sans effet sur le coût. Les gains de chaque première victoire continuent après la mission 100 ; le repère budgétaire à 100 exclut les dépenses facultatives en boutique. La boutique ouvre des stratégies sans remplaçantes systématiquement supérieures. [Réalisation et validation](Reset_gratuit_v084.md), [cadre économique](Economie_campagne_2026-10-29.md). La proposition de 18 talents par arbre reste en cours d’intégration, hors jeu jouable.

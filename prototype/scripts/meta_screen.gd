@@ -127,7 +127,7 @@ func _ready() -> void:
 	button_at(self,"Retour · Échap",Rect2(940,730,308,42),close)
 	notice = label_at(self,"",Rect2(370,730,550,58),12)
 	confirm = ConfirmationDialog.new();confirm.title = "Réinitialiser les talents"
-	confirm.ok_button_text = "Payer et réinitialiser";confirm.cancel_button_text = "Annuler"
+	confirm.ok_button_text = "Réinitialiser gratuitement";confirm.cancel_button_text = "Annuler"
 	confirm.confirmed.connect(_reset);confirm.canceled.connect(_cancel_reset);add_child(confirm);hide()
 
 func open(for_profile: RefCounted, for_faction: int) -> void:
@@ -175,9 +175,9 @@ func refresh() -> void:
 			descriptions[index].text = definition[node+1][0]
 			var tooltip: String = definition[node+1][0]+"\n"+definition[node+1][1]+"\n"+Talents.allocation_error(bank.ranks,index,int(bank.points))
 			nodes[index].tooltip_text = tooltip;descriptions[index].tooltip_text = tooltip
-	reset_button.text = "Réinitialiser · %d ressources" % profile.reset_price(faction)
-	reset_button.disabled = profile.blocked or Talents.spent(bank.ranks) == 0 or bank.resource < profile.reset_price(faction)
-	reset_button.tooltip_text = "Respécialisation n°%d de %s.\n2, 4, 6, 8, puis 10 ressources maximum.\nTous les points de cette faction seront rendus." % [int(bank.resets)+1,camp]
+	reset_button.text = "Réinitialiser · Gratuit"
+	reset_button.disabled = profile.blocked or Talents.spent(bank.ranks) == 0
+	reset_button.tooltip_text = "Gratuit entre les missions.\nTous les points de cette faction sont rendus pour les répartir à nouveau.\nLes PO et les points achetés restent conservés."
 	notice.text = profile.error if not profile.error.is_empty() else profile.migration_notice if not profile.migration_notice.is_empty() else "Barème d’essai · Ressources versées en fin de partie. Talents appliqués au prochain départ."
 	_inspect(inspected)
 
@@ -240,15 +240,16 @@ func _respec_preview() -> Dictionary:
 	var bank: Dictionary = profile.data.banks[faction]
 	var active: int = Talents.spent(bank.ranks)
 	var price: int = profile.reset_price(faction)
-	if active == 0 or bank.resource < price: return {}
+	if active == 0: return {}
 	return {"faction":faction,"before":bank.duplicate(true),"price":price,"balance_after":int(bank.resource)-price,"active":active,"free_before":int(bank.points)-active,"free_after":int(bank.points),"next_price":Talents.RESET_PRICES[mini(int(bank.resets)+1,Talents.RESET_PRICES.size()-1)]}
 
 func _request_reset() -> void:
+	if not visible: return
 	_cancel_reset()
 	reset_quote = _respec_preview()
 	if reset_quote.is_empty(): return
 	var camp: String = "Alliance" if faction == 0 else "Horde"
-	confirm.dialog_text = "%s · Réinitialiser les trois arbres\n\nCoût : %d ressources · Solde : %d → %d\nPoints à placer : %d → %d (+%d rendus)\nTous les talents seront retirés ; les points restent achetés.\nProchaine réinitialisation : %d ressources (plafond : %d).\n\nL’autre faction conserve sa progression." % [camp,reset_quote.price,reset_quote.before.resource,reset_quote.balance_after,reset_quote.free_before,reset_quote.free_after,reset_quote.active,reset_quote.next_price,Talents.RESET_PRICES[-1]]
+	confirm.dialog_text = "%s · Réinitialisation gratuite\n\nPoints à placer : %d → %d (+%d rendus)\nTous les talents seront retirés ; les points restent achetés.\nAucune PO n’est débitée. Répartissez ensuite vos points autrement.\n\nL’autre faction conserve sa progression." % [camp,reset_quote.free_before,reset_quote.free_after,reset_quote.active]
 	confirm.popup_centered(Vector2i(650,300))
 
 func _cancel_reset() -> void:
