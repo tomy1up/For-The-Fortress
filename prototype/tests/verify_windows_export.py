@@ -119,6 +119,7 @@ cases.append(('periodic_damage','damage_tick','horde'))
 for faction in ['alliance','horde']:
     for detail in ['compact','details']:
         cases.append((faction+'_hud_'+detail,'combat',faction))
+cases.append(('alliance_profile_protection','talents','alliance'))
 for camp in ['alliance','horde']:
     cases.append((camp+'_progression_repeat','summary',camp))
     for tree in range(3): cases.append((camp+'_expanded_tree_'+str(tree),'talents',camp))
@@ -154,7 +155,7 @@ for name,state,faction in cases:
         if name=='progression_pending': command+=['--capture-meta-pending']
         if name.endswith('_progression_repeat'): command+=['--capture-repeat-mission']
         if name.endswith('_progression_intermediate'): command+=['--capture-meta-intermediate']
-        if name=='profile_protection': command+=['--capture-profile-protection']
+        if name.endswith('profile_protection'): command+=['--capture-profile-protection']
         if '_loadout_' in name: command+=['--capture-meta-loadout']
         if name.endswith('_waves_summary'): command+=['--capture-waves']
         if name.endswith('_inspection_numbers'):
@@ -226,9 +227,11 @@ for name,state,faction in cases:
         assert 'META_CAPTURE_ISOLATED=true' in text,(name,'La capture doit rester isolée du vrai profil')
         xp_snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('TALENT_STATES_SNAPSHOT=')))
         assert xp_snapshot['buy_hidden'] and ('XP' in xp_snapshot['xp_label'] or '51 points' in xp_snapshot['xp_label'])
+        graph=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('LINKED_SNAPSHOT=')))
+        assert graph['all_visible'] and graph['valid'] and graph['links_per_tree']==4 and graph['prerequisites']>0
     if '_expanded_tree_' in name:
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('EXPANDED_SNAPSHOT=')))
-        assert snapshot['isolated'] and snapshot['points']==51 and snapshot['nodes']==63 and snapshot['scroll']>0 and snapshot['tree']==int(name[-1]) and '★' in snapshot['title']
+        assert snapshot['isolated'] and snapshot['points']==51 and snapshot['nodes']==63 and snapshot['scroll']==0 and snapshot['tree']==int(name[-1]) and '★' in snapshot['title']
     if name.endswith('_expanded_summary'):
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('EXPANDED_SUMMARY=')))
         assert snapshot['isolated'] and snapshot['points']==51 and snapshot['visible'] and snapshot['text']
@@ -247,7 +250,7 @@ for name,state,faction in cases:
         assert talent['states'][0]=='maximum' and talent['states'][4]=='exclusive' and talent['states'][6]=='locked'
         assert talent['states'][2]==('unfunded' if name.endswith('_no_points') else 'available')
     if name.endswith('_rank_preview'): assert 'META_RANK_PREVIEW=true' in text,(name,'Le gain du prochain rang doit être affiché')
-    if name=='profile_protection': assert 'PROFILE_PROTECTION=true' in text and 'MISSION_LEDGER_PROTECTION=true' in text,(name,'Le paquet doit chiffrer et relire un profil de contrôle')
+    if name.endswith('profile_protection'): assert 'PROFILE_PROTECTION=true' in text and 'MISSION_LEDGER_PROTECTION=true' in text and 'PARENT_PROTECTION=true' in text,(name,'Le paquet doit chiffrer et relire un profil de contrôle')
     if '_loadout_' in name:
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('LOADOUT_SNAPSHOT=')))
         assert snapshot['faction']==(0 if faction=='alliance' else 1) and snapshot['points']==33 and snapshot['readonly'] and snapshot['isolated'] and '33 points' in snapshot['caption']

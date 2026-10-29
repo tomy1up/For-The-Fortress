@@ -121,4 +121,4 @@ CAMP-010 : l’Alliance et la Horde ont chacune leurs missions réussies et leur
 
 ## Architecture des talents liés — nouvelle précision
 
-Le porteur du projet demande des positions vides et une répartition irrégulière des talents, avec des flèches de dépendance. Un talent enfant lié à un parent exige le rang maximal du parent en plus du seuil de points de son arbre. Cette règle s’ajoute à la progression par paliers. La disposition et les liens précis restent à concevoir ; ce changement fera suite au lot XP v0.87.
+Le porteur du projet demande des positions vides et une répartition irrégulière des talents, avec des flèches de dépendance. Un talent enfant lié à un parent exige le rang maximal du parent en plus du seuil de points de son arbre. Cette règle s’ajoute à la progression par paliers. La [v0.88](Arbres_lies_v088.md) propose cette disposition et ces liens ; leurs choix précis restent des hypothèses à éprouver.

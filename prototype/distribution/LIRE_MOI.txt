@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.87 — 29 octobre 2026
+Version : 0.88 — 29 octobre 2026
 
 JOUER
 
@@ -52,7 +52,7 @@ TALENTS — BARÈME D’ESSAI
 Trois arbres de 21 talents sur sept lignes, 51 points partagés par faction.
 Seuils de ligne : 0, 5, 10, 15, 20, 25 et 30 points dans les lignes précédentes du même
 arbre. Deux majeurs par arbre sont indiqués par une étoile, aux seuils 15 et 30.
-Défilez dans chaque colonne pour voir les lignes profondes. Survol et clavier permettent
+Les sept lignes sont visibles. Survol et clavier permettent
 d’inspecter effets, prochain rang et conditions, même si le talent est verrouillé.
 + permet d’investir, la coche indique le maximum, le cadenas un verrou, la croix un
 choix exclusif déjà pris et ! l’absence de point ou le plafond atteint.
@@ -61,7 +61,10 @@ Réinitialiser les trois arbres est gratuit : PO, XP et points débloqués sont 
 Les points rendus peuvent être répartis autrement avant la prochaine mission.
 Les talents sont figés pendant la mission ; l’onglet Talents du bilan les consulte.
 Noms, effets et courbe d’XP restent des hypothèses d’équilibrage du prototype.
-La nouvelle disposition avec positions vides et liens entre talents est à venir.
+Les positions sont irrégulières, sur quatre colonnes. Les flèches relient certains
+talents : un enfant exige le rang maximal de son parent ET le seuil de sa ligne.
+Flèche grise : parent à terminer ; dorée : prérequis rempli. Les effets et noms
+sont consultables en sélectionnant une icône, sans texte répété sous chaque case.
 
 SAUVEGARDE LOCALE
 
@@ -100,8 +103,10 @@ Le Gué utilise le registre des premières victoires. Les cent premières missio
 référence doivent débloquer 51 points par XP. Les missions 1 à 200 donneront aussi
 leurs PO de première victoire, pour les achats de boutique. Seul le Gué est jouable.
 La progression, les succès et l’ouverture de l’infini sont indépendants par faction.
-La sauvegarde passe au schéma 5, avec une archive chiffrée du profil v0.86.
-Les anciens points et investissements sont conservés avec un crédit XP équivalent.
+La sauvegarde passe au schéma 6, avec une archive chiffrée du profil v0.87.
+PO, XP et points sont conservés. Une ancienne répartition incompatible avec les
+nouveaux liens est remise à zéro gratuitement : tous ses points restent disponibles.
+Une répartition déjà compatible est conservée. Les anciens rapports restent rejouables.
 
 COMMANDES ET RÈGLES DU PROTOTYPE
 

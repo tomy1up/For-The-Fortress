@@ -36,6 +36,7 @@ const Model = preload("res://scripts/valley_model.gd")
 const RunReport = preload("res://scripts/run_report.gd")
 const MapView = preload("res://scripts/valley_view.gd")
 const MetaProfile = preload("res://scripts/meta_profile.gd")
+const Linked = Model.MetaTalents.Linked
 const WAVE_NOTICE_SECONDS: float = 2.0
 const WAVE_COUNTDOWN_NOTICE_SECONDS: float = 5.0
 var wave_notice_remaining: float = 0.0
@@ -499,14 +500,26 @@ func _ready() -> void:
 				ok = ok and not reopened.blocked and reopened.data.banks[capture_faction].resource == 60 and reopened.data.banks[capture_faction].ranks[0] == 1 and reopened.data.banks[capture_faction].xp == 197
 				ok = ok and sealed.slice(0,MetaProfile.Codec.MAGIC.length()) == MetaProfile.Codec.MAGIC.to_utf8_buffer()
 				var mission_id: int = reopened.begin_mission(capture_faction,"capture.mission",9)
-				ok = ok and reopened.data.schema == 5 and mission_id > 0 and reopened.credit_mission(mission_id,capture_faction,10,true)
+				ok = ok and reopened.data.schema == 6 and mission_id > 0 and reopened.credit_mission(mission_id,capture_faction,10,true)
 				MetaProfile.Codec.cache.clear();reopened = MetaProfile.new(test_path)
 				ok = ok and reopened.data.banks[capture_faction].resource == 69 and reopened.data.banks[capture_faction].mission_rewards.has("capture.mission")
 				mission_id = reopened.begin_mission(capture_faction,"capture.mission",999)
 				ok = ok and reopened.credit_mission(mission_id,capture_faction,10,true) and reopened.data.banks[capture_faction].resource == 69 and reopened.data.run.mission_earned == 0
 				print("MISSION_LEDGER_PROTECTION=",ok)
+				var parent_run: int = reopened.begin_mission(capture_faction,"capture.parent",0,10,10000)
+				var parent_ok: bool = parent_run > 0 and reopened.credit_mission(parent_run,capture_faction,10,true)
+				var parent_node: int = Linked.index_for(0,5);var child_node: int = Linked.index_for(0,7)
+				for index in [0,0,parent_node,parent_node]: parent_ok = reopened.allocate(capture_faction,index) and parent_ok
+				var unchanged: String = JSON.stringify(reopened.data)
+				parent_ok = parent_ok and not reopened.allocate(capture_faction,child_node) and JSON.stringify(reopened.data) == unchanged
+				parent_ok = reopened.allocate(capture_faction,parent_node) and parent_ok
+				parent_ok = reopened.allocate(capture_faction,child_node) and parent_ok
+				MetaProfile.Codec.cache.clear();reopened = MetaProfile.new(test_path)
+				parent_ok = parent_ok and not reopened.blocked and reopened.data.banks[capture_faction].ranks[parent_node] == 3 and reopened.data.banks[capture_faction].ranks[child_node] == 1
+				print("PARENT_PROTECTION=",parent_ok);ok = ok and parent_ok
 				meta_profile = MetaProfile.new("");meta_profile.data = reopened.data.duplicate(true);_open_meta(capture_faction)
-				for suffix in ["",".bak",".tmp",".v082.bak",".v084.bak",".v086.bak"]:
+				meta_menu._inspect(child_node)
+				for suffix in ["",".bak",".tmp",".v082.bak",".v084.bak",".v086.bak",".v087.bak"]:
 					if FileAccess.file_exists(test_path+suffix): DirAccess.remove_absolute(test_path+suffix)
 				print("PROFILE_PROTECTION=",ok)
 		if "--capture-meta-rewards" in OS.get_cmdline_user_args():
@@ -527,6 +540,10 @@ func _ready() -> void:
 		if capture_state == "talents":
 			var states: Array[String] = []
 			for button in meta_menu.nodes: states.append(button.state)
+			var all_visible: bool = true
+			for index in range(meta_menu.nodes.size()):
+				all_visible = all_visible and meta_menu.boards[Linked.coordinates(index).x].get_global_rect().encloses(meta_menu.nodes[index].get_global_rect())
+			print("LINKED_SNAPSHOT=",JSON.stringify({"all_visible":all_visible,"links_per_tree":Linked.PARENTS.size(),"valid":Linked.valid(meta_menu._current_ranks()),"prerequisites":states.count("prerequisite")}))
 			print("TALENT_STATES_SNAPSHOT=",JSON.stringify({"states":states,"isolated":meta_profile.path.is_empty(),"progress":meta_menu.boards[0].progress,"buy_hidden":not meta_menu.buy.visible and meta_menu.buy.disabled,"xp":meta_profile.data.banks[capture_faction].xp,"xp_label":meta_menu.xp_label.text}))
 		if "--capture-fortress" in OS.get_cmdline_user_args():
 			var style: Dictionary = MapView.fortress_style(model.faction)
@@ -551,26 +568,33 @@ func _ready() -> void:
 		print("CAPTURE_RESULT=", error)
 		get_tree().quit(error)
 
+func _capture_linked_spend_to(ranks: Array, tree: int, target: int) -> bool:
+	while Linked.tree_spent(ranks,tree) < target:
+		var advanced: bool = false
+		for local in range(21):
+			if local in [9,18]: continue
+			var index: int = Linked.index_for(tree,local)
+			if Linked.allocation_error(ranks,index,51).is_empty():
+				ranks[index] += 1;advanced = true;break
+		if not advanced: return false
+	return true
+func _capture_linked_invest(ranks: Array, tree: int, local: int, target: int) -> bool:
+	var index: int = Linked.index_for(tree,local)
+	while ranks[index] < target:
+		if not Linked.allocation_error(ranks,index,51).is_empty(): return false
+		ranks[index] += 1
+	return true
 func _capture_expanded_ranks(tree: int) -> Array:
-	# Profil éphémère réservé aux captures : aucun accès à la sauvegarde du joueur.
-	var expanded = Model.MetaTalents.Expanded
-	var ranks: Array = expanded.empty_ranks()
+	var ranks: Array = Linked.empty_ranks()
 	for target_tree in [tree,(tree+1)%3]:
-		for target in [15,30 if target_tree == tree else 20]:
-			while expanded.tree_spent(ranks,target_tree) < target:
-				var advanced: bool = false
-				for local in range(expanded.NODES_PER_TREE):
-					var index: int = expanded.index_for(target_tree,local)
-					if expanded.allocation_error(ranks,index,51).is_empty():
-						ranks[index] += 1;advanced = true;break
-				assert(advanced)
-			if target == 15 or target == 30:
-				var major: int = expanded.index_for(target_tree,9 if target == 15 else 18)
-				assert(expanded.allocation_error(ranks,major,51).is_empty())
-				ranks[major] += 1
-	assert(expanded.valid(ranks) and expanded.spent(ranks) == 51)
+		if not _capture_linked_invest(ranks,target_tree,5,3) or not _capture_linked_invest(ranks,target_tree,0,2) or not _capture_linked_invest(ranks,target_tree,7,3): return []
+		if not _capture_linked_spend_to(ranks,target_tree,15) or not _capture_linked_invest(ranks,target_tree,9,1): return []
+		if target_tree != tree:
+			if not _capture_linked_spend_to(ranks,target_tree,20): return []
+			continue
+		if not _capture_linked_invest(ranks,tree,11,3) or not _capture_linked_spend_to(ranks,tree,25) or not _capture_linked_invest(ranks,tree,16,3): return []
+		if not _capture_linked_spend_to(ranks,tree,30) or not _capture_linked_invest(ranks,tree,18,1): return []
 	return ranks
-
 func _process(delta: float) -> void:
 	wave_notice_remaining = maxf(0.0,wave_notice_remaining-maxf(0.0,delta))
 	meta_retry_remaining = maxf(0.0,meta_retry_remaining-delta)

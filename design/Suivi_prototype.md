@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 29 octobre 2026 — prototype v0.87, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 29 octobre 2026 — prototype v0.88, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -456,3 +456,7 @@ Décision explicite : les resets entre les missions sont gratuits, les talents r
 ## Version v0.87 — XP des talents
 
 [XP de première victoire](Experience_talents_2026-10-29.md) : Gué à 60 PO + 100 XP une seule fois par faction, attribution automatique de points par XP, sauvegarde au schéma 5 et conversion des anciens points sans perte. Le prix des points en PO est retiré. La campagne au-delà du Gué, la boutique et la refonte en talents liés restent à développer.
+
+## Version v0.88 — architecture des talents
+
+[Arbres liés](Arbres_lies_v088.md) : quatre colonnes avec cases vides, sept lignes visibles, flèches et exigence du rang maximal du parent en plus du palier. Noms et détails à la sélection. Migration au schéma 6 avec gains conservés et restitution gratuite des points si une ancienne répartition est incompatible ; anciens rapports rejouables. Les liens et positions précis restent provisoires.

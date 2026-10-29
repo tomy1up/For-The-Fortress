@@ -1,0 +1,10 @@
+{
+  "baseline": "v0.87",
+  "candidate": "v0.88",
+  "scenarios": 40,
+  "same_reports_rng_events_and_damage": true,
+  "metadata_normalization": "project version 0.88 in both isolated projects",
+  "canonical_sha256": "b71adbb2ba105ca82959f290885e9e2f1d6bfe6d969f338df85b201258ef2821",
+  "scope": "2 factions, zero, 33 or three historical 51-point loadouts, 2 seeds, 0.05 s or 300 s simulation steps",
+  "human_balance_test": false
+}

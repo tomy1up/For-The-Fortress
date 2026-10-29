@@ -8,4 +8,4 @@ La refonte devra afficher les flèches, le prérequis et le nombre de rangs manq
 
 Les positions, les liens précis et les éventuelles modifications de contenu sont à concevoir comme hypothèses de prototype. Aucun lien particulier de la capture de World of Warcraft n’est copié comme une règle déjà approuvée pour une unité du projet. Les gains et points existants doivent être conservés lors d’une éventuelle redistribution de talents incompatibles ; les rapports historiques doivent rester lisibles et rejouables.
 
-Cette précision succède à la grille régulière de v0.85–v0.87. Elle est enregistrée pendant la finalisation de l’XP v0.87 et n’est pas encore présentée comme une refonte livrée.
+Cette précision succède à la grille régulière de v0.85–v0.87. Elle est enregistrée pendant la finalisation de l’XP v0.87, puis réalisée dans le [prototype v0.88](Arbres_lies_v088.md). Les liens et positions précis restent des hypothèses de contenu.

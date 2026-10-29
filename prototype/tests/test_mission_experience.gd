@@ -44,7 +44,7 @@ func run_checks() -> void:
 	old.banks[1].points = 51;old.banks[1].resource = 19
 	var file := FileAccess.open(path,FileAccess.WRITE);file.store_buffer(Profile.Codec.encode(old));file.close()
 	var migrated = Profile.new(path)
-	check(not migrated.blocked and migrated.data.schema == 5 and migrated.data.banks[0].resource == 37 and migrated.data.banks[0].points == 5 and migrated.data.banks[0].ranks == JSON.parse_string(JSON.stringify(old.banks[0].ranks)),"Migration : points, talents et PO acquis intacts")
+	check(not migrated.blocked and migrated.data.schema == 6 and migrated.data.banks[0].resource == 37 and migrated.data.banks[0].points == 5 and migrated.data.banks[0].ranks == JSON.parse_string(JSON.stringify(old.banks[0].ranks)),"Migration : points, talents et PO acquis intacts")
 	check(migrated.data.banks[0].xp == Experience.xp_for_points(5) and migrated.data.banks[1].xp == Experience.TARGET_XP,"Crédit XP de compatibilité correspondant aux anciens points")
 	check(migrated._read(path+".v086.bak") == JSON.parse_string(JSON.stringify(old)),"Ancien profil protégé archivé avant migration")
 	id = migrated.begin_mission(0,"test.persisted_xp",7,10,200)

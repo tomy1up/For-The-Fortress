@@ -13,10 +13,10 @@ var migration_notice: String = ""
 var data: Dictionary = fresh()
 
 static func fresh() -> Dictionary:
-	return {"schema":5,"serial":0,"banks":[bank(),bank()],"run":{"id":0,"faction":0,"completed":0,"victory":false}}
+	return {"schema":6,"serial":0,"banks":[bank(),bank()],"run":{"id":0,"faction":0,"completed":0,"victory":false}}
 
 static func bank() -> Dictionary:
-	return {"resource":0,"xp":0,"points":0,"resets":0,"ranks":Talents.Expanded.empty_ranks(),"mission_rewards":{}}
+	return {"resource":0,"xp":0,"points":0,"resets":0,"ranks":Talents.Linked.empty_ranks(),"mission_rewards":{}}
 
 static func resource_total(completed: int, victory: bool = false) -> int:
 	if completed < 0 or completed > 10: return 0
@@ -27,14 +27,14 @@ func _init(save_path: String = DEFAULT_PATH) -> void:
 	if not path.is_empty(): load_profile()
 
 static func valid(value: Variant) -> bool:
-	if not value is Dictionary or not Talents.integer(value.get("schema"),1,5) or not Talents.integer(value.get("serial"),0,1000000000): return false
+	if not value is Dictionary or not Talents.integer(value.get("schema"),1,6) or not Talents.integer(value.get("serial"),0,1000000000): return false
 	if not value.get("banks") is Array or value.banks.size() != 2 or not value.get("run") is Dictionary: return false
 	for item in value.banks:
 		if not item is Dictionary: return false
 		for key in ["resource","points","resets"]:
 			if not Talents.integer(item.get(key),0,1000000000): return false
-		if not (Talents.Legacy.valid(item.get("ranks")) if value.schema == 1 else Talents.Expanded.valid(item.get("ranks")) if value.schema >= 4 else Talents.current_valid(item.get("ranks"))): return false
-		if value.schema == 5:
+		if not (Talents.Legacy.valid(item.get("ranks")) if value.schema == 1 else Talents.Linked.valid(item.get("ranks")) if value.schema >= 6 else Talents.Expanded.valid(item.get("ranks")) if value.schema >= 4 else Talents.current_valid(item.get("ranks"))): return false
+		if value.schema >= 5:
 			if not Talents.integer(item.get("xp"),0,1000000000) or item.points < Experience.points_for_xp(int(item.xp)): return false
 		if Talents.spent(item.ranks) > item.points: return false
 		if value.schema >= 3:
@@ -43,14 +43,14 @@ static func valid(value: Variant) -> bool:
 				var receipt: Variant = item.mission_rewards[id]
 				if not Missions.valid_id(id) or not receipt is Dictionary: return false
 				if not Talents.integer(receipt.get("reward"),0,1000000000) or not Talents.integer(receipt.get("run_id"),1,int(value.serial)): return false
-				if receipt.has("xp") and (value.schema != 5 or not Talents.integer(receipt.xp,0,1000000000)): return false
+				if receipt.has("xp") and (value.schema < 5 or not Talents.integer(receipt.xp,0,1000000000)): return false
 
 	var run: Dictionary = value.run
 	var mission: bool = run.has("mission_id") or run.has("mission_reward") or run.has("mission_waves") or run.has("mission_earned")
 	var wave_limit: int = 10
 	var with_xp: bool = run.has("mission_xp_reward") or run.has("mission_xp_earned")
 	if with_xp:
-		if value.schema != 5 or not mission or not Talents.integer(run.get("mission_xp_reward"),0,1000000000) or not Talents.integer(run.get("mission_xp_earned"),0,int(run.mission_xp_reward)): return false
+		if value.schema < 5 or not mission or not Talents.integer(run.get("mission_xp_reward"),0,1000000000) or not Talents.integer(run.get("mission_xp_earned"),0,int(run.mission_xp_reward)): return false
 		if (not run.get("settled",false) or not run.get("victory",false)) and run.mission_xp_earned != 0: return false
 	if mission:
 		if value.schema < 3 or not Missions.valid_id(run.get("mission_id")) or not Talents.integer(run.get("mission_reward"),0,1000000000) or not Talents.integer(run.get("mission_waves"),1,10000): return false
@@ -100,27 +100,37 @@ func _legacy_json(file_path: String) -> bool:
 	return false
 
 func _accept_loaded(value: Dictionary) -> bool:
-	if value.schema == 5: data = value;return true
+	if value.schema == 6: data = value;return true
+	if value.schema == 5:
+		if not _archive_previous(value,".v087.bak",5): return false
+		var upgraded: Dictionary = value.duplicate(true);upgraded.schema = 6
+		var refunded: bool = _convert_linked_ranks(upgraded)
+		if not _commit(upgraded): blocked = true;return false
+		migration_notice = "Arbres liés : points rendus gratuitement pour adapter vos talents. PO et XP conservées." if refunded else "Arbres liés : points, investissements, PO et XP conservés."
+		return true
 	if value.schema == 4:
 		if not _archive_previous(value,".v086.bak",4): return false
-		var upgraded: Dictionary = value.duplicate(true);upgraded.schema = 5
+		var upgraded: Dictionary = value.duplicate(true);upgraded.schema = 6
 		for item in upgraded.banks: item.xp = Experience.xp_for_points(mini(int(item.points),Experience.MAX_POINTS))
+		var refunded: bool = _convert_linked_ranks(upgraded)
 		if not _commit(upgraded): blocked = true;return false
-		migration_notice = "Progression XP préparée : points, talents et PO conservés."
+		migration_notice = "Arbres liés : points rendus gratuitement pour adapter vos talents. PO et XP conservées." if refunded else "Progression XP et arbres liés : points, talents et PO conservés."
 		return true
 	if value.schema == 3:
 		if not _archive_previous(value,".v084.bak",3): return false
-		var upgraded: Dictionary = value.duplicate(true);upgraded.schema = 5
+		var upgraded: Dictionary = value.duplicate(true);upgraded.schema = 6
 		for item in upgraded.banks:
 			item.ranks = Talents.Expanded.normalize(item.ranks);item.xp = Experience.xp_for_points(mini(int(item.points),Experience.MAX_POINTS))
+		_convert_linked_ranks(upgraded)
 		if not _commit(upgraded): blocked = true;return false
 		migration_notice = "Arbres enrichis : points, talents investis et acquis conservés."
 		return true
 	if value.schema == 2:
 		if not _archive_previous(value,".v082.bak",2): return false
-		var upgraded: Dictionary = value.duplicate(true);upgraded.schema = 5
+		var upgraded: Dictionary = value.duplicate(true);upgraded.schema = 6
 		for item in upgraded.banks:
 			item.mission_rewards = {};item.ranks = Talents.Expanded.normalize(item.ranks);item.xp = Experience.xp_for_points(mini(int(item.points),Experience.MAX_POINTS))
+		_convert_linked_ranks(upgraded)
 		if not _commit(upgraded): blocked = true;return false
 		migration_notice = "Sauvegarde préparée pour les premières victoires : acquis conservés."
 		return true
@@ -138,13 +148,23 @@ func _accept_loaded(value: Dictionary) -> bool:
 		var archive_error: Error = archive.get_error();archive.close()
 		if archive_error != OK or not valid(_read(path+".v067.bak")):
 			blocked = true;error = "Migration annulée : copie de secours incomplète.";return false
-	var upgraded: Dictionary = value.duplicate(true);upgraded.schema = 5
+	var upgraded: Dictionary = value.duplicate(true);upgraded.schema = 6
 	for item in upgraded.banks:
 		item.ranks = Talents.Expanded.empty_ranks();item.mission_rewards = {};item.xp = Experience.xp_for_points(mini(int(item.points),Experience.MAX_POINTS))
+	_convert_linked_ranks(upgraded)
 	if not _commit(upgraded):
 		blocked = true;return false
 	migration_notice = "Arbres mis à jour : vos points investis ont été rendus gratuitement."
 	return true
+
+static func _convert_linked_ranks(value: Dictionary) -> bool:
+	var refunded: bool = false
+	for item in value.banks:
+		var converted: Array = Talents.Linked.normalize(item.ranks)
+		if converted.is_empty():
+			item.ranks = Talents.Linked.empty_ranks();refunded = true
+		else: item.ranks = converted
+	return refunded
 
 func _archive_previous(value: Dictionary, suffix: String, schema: int) -> bool:
 	if path.is_empty(): return true
@@ -164,11 +184,11 @@ func _archive_previous(value: Dictionary, suffix: String, schema: int) -> bool:
 
 func _commit(candidate: Dictionary) -> bool:
 	# Les transactions sur un ancien cliché à quinze rangs sont canonisées avant validation.
-	if candidate.get("schema") == 5 and candidate.get("banks") is Array:
+	if candidate.get("schema") == 6 and candidate.get("banks") is Array:
 		for item in candidate.banks:
 			if item is Dictionary and Talents.current_valid(item.get("ranks")):
-				item.ranks = Talents.Expanded.normalize(item.ranks)
-	if blocked or not valid(candidate) or candidate.schema != 5:
+				item.ranks = Talents.Linked.normalize(item.ranks)
+	if blocked or not valid(candidate) or candidate.schema != 6:
 		if not blocked: error = "Opération de progression invalide."
 		return false
 	if path.is_empty(): data = candidate;error = "";return true # Profil éphémère réservé aux tests/captures.
@@ -244,8 +264,8 @@ func buy_point(_faction: int) -> bool:
 
 func allocate(faction: int, index: int) -> bool:
 	if faction not in [0,1]: return false
-	var ranks: Array = Talents.Expanded.normalize(data.banks[faction].ranks)
-	if not Talents.Expanded.allocation_error(ranks,index,int(data.banks[faction].points)).is_empty(): return false
+	var ranks: Array = Talents.Linked.normalize(data.banks[faction].ranks)
+	if not Talents.Linked.allocation_error(ranks,index,int(data.banks[faction].points),faction).is_empty(): return false
 	var next: Dictionary = data.duplicate(true);next.banks[faction].ranks = ranks
 	next.banks[faction].ranks[index] += 1
 	return _commit(next)
