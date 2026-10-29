@@ -196,6 +196,8 @@ var forecast_rows: Array[Control] = []
 var forecast_names: Array[Label] = []
 var forecast_details: Array[Label] = []
 var forecast_marks: Array[ColorRect] = []
+var forecast_portraits: Array[TextureRect] = []
+var forecast_textures: Dictionary = {}
 var forecast_reward: Label
 var forecast_note: Label
 var forecast_wave: int = -1
@@ -485,6 +487,13 @@ func _ready() -> void:
 			var style: Dictionary = MapView.fortress_style(model.faction)
 			var condition: int = MapView.fortress_condition(model.fortress_hp,model.max_hp)
 			print("FORTRESS_SNAPSHOT=",JSON.stringify({"faction":style.faction,"banner":style.flag.to_html(false),"e6_clear":not MapView.fortress_bounds(MapView.project(model.path_points[-1])).has_point(MapView.project(model.slots[5])),"hp":model.fortress_hp,"condition":condition,"caption":MapView.fortress_caption(condition)}))
+		if "--capture-forecast-portraits" in OS.get_cmdline_user_args():
+			var portraits: Array = []
+			for index in range(forecast_data.groups.size()):
+				var id: String = Model.Enemies.for_profile(forecast_data.groups[index].type,model.faction).id
+				var texture: AtlasTexture = forecast_portraits[index].texture
+				portraits.append({"id":id,"profile":forecast_data.groups[index].type,"same_source":texture.atlas == MapView.EnemyArt.TEXTURES[id] and texture.region == MapView.EnemyArt.FRAMES[id].source})
+			print("FORECAST_PORTRAITS_SNAPSHOT=",JSON.stringify({"faction":model.faction,"wave":forecast_wave,"portraits":portraits,"visible":forecast_panel.visible}))
 		if "--capture-hud" in OS.get_cmdline_user_args():
 			if "--capture-combat-details" in OS.get_cmdline_user_args(): _toggle_combat_numbers()
 			print("HUD_SNAPSHOT=",JSON.stringify({"details":combat_numbers_visible,"time_visible":time_label.visible,"tally":tally_label.text,"hp":fortress_bar.value,"max_hp":fortress_bar.max_value}))
@@ -790,11 +799,32 @@ func _build_wave_forecast(screen: Control) -> void:
 		mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row.add_child(mark)
 		forecast_marks.append(mark)
-		forecast_names.append(_label(row,"",Vector2(18,0),Vector2(264,20),14,Color("e0dbbf")))
-		forecast_details.append(_label(row,"",Vector2(18,22),Vector2(264,18),12,Color("bbcbbf")))
+		var portrait := TextureRect.new()
+		portrait.position = Vector2(12,2)
+		portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		portrait.focus_mode = Control.FOCUS_NONE
+		row.add_child(portrait)
+		portrait.size = Vector2(32,36)
+		forecast_portraits.append(portrait)
+		forecast_names.append(_label(row,"",Vector2(50,0),Vector2(232,20),14,Color("e0dbbf")))
+		forecast_details.append(_label(row,"",Vector2(50,22),Vector2(232,18),12,Color("bbcbbf")))
 	forecast_reward = _label(forecast_panel,"",Vector2(14,106),Vector2(282,22),13,Color("cdb47e"))
 	forecast_note = _label(forecast_panel,"Survolez les groupes pour les détails.",Vector2(14,128),Vector2(282,18),11,Color("aabbb0"))
 	forecast_panel.visible = false
+
+func _forecast_portrait(profile: int) -> AtlasTexture:
+	var identity: Dictionary = Model.Enemies.for_profile(profile,model.faction)
+	if identity.is_empty(): return null
+	var id: String = identity.id
+	if not forecast_textures.has(id):
+		var texture := AtlasTexture.new()
+		texture.atlas = MapView.EnemyArt.TEXTURES[id]
+		texture.region = MapView.EnemyArt.FRAMES[id].source
+		texture.filter_clip = true
+		forecast_textures[id] = texture
+	return forecast_textures[id]
 
 func _update_wave_forecast() -> void:
 	forecast_panel.visible = false
@@ -810,8 +840,11 @@ func _update_wave_forecast() -> void:
 	forecast_timing.text = "%d ennemis · %s" % [forecast_data.total,"Départ manuel" if countdown_remaining < 0 else "Décompte en pause" if _countdown_paused() else "Dans %d s" % ceili(countdown_remaining)]
 	for index in range(forecast_rows.size()):
 		forecast_rows[index].visible = index < forecast_data.groups.size()
-		if index >= forecast_data.groups.size(): continue
+		if index >= forecast_data.groups.size():
+			forecast_portraits[index].texture = null
+			continue
 		var group: Dictionary = forecast_data.groups[index]
+		forecast_portraits[index].texture = _forecast_portrait(group.type)
 		forecast_marks[index].color = MapView.enemy_color(group.type)
 		forecast_names[index].text = "%d × %s%s" % [group.count,group.name," · BOSS" if group.type == 7 else ""]
 		var fatal: bool = group.fortress_damage >= model.fortress_hp

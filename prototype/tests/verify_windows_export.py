@@ -83,6 +83,7 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('alliance_countdown_warning','countdown_warning','alliance'),('horde_countdown_warning','countdown_warning','horde'),
        ('alliance_countdown_final','countdown_warning','alliance'),('horde_countdown_final','countdown_warning','horde'),
        ('wave_forecast','forecast','alliance'),('boss_forecast','forecast_boss','horde'),
+       ('horde_wave_forecast','forecast','horde'),('alliance_boss_forecast','forecast_boss','alliance'),
        ('victory_summary','summary','horde'),('defeat_summary','defeat_summary','alliance'),
        ('alliance_run_report','summary','alliance'),('horde_run_report','summary','horde'),
        ('alliance_defender_summary','summary','alliance'),('horde_defender_summary','summary','horde'),
@@ -126,6 +127,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if state in ['forecast','forecast_boss']: command+=['--capture-forecast-portraits']
         if '_hud_' in name:
             command+=['--capture-hud']
             if name.endswith('_details'): command+=['--capture-combat-details']
@@ -186,6 +188,15 @@ for name,state,faction in cases:
         assert fortress['faction']==(0 if faction=='alliance' else 1) and fortress['e6_clear'] and (fortress['hp'],fortress['condition'])==expected
         color=int(fortress['banner'],16);red=(color>>16)&255;blue=color&255
         assert (blue>red) if faction=='alliance' else (red>blue)
+    if state in ['forecast','forecast_boss']:
+        forecast=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('FORECAST_PORTRAITS_SNAPSHOT=')))
+        assert forecast['visible'] and forecast['wave']==(9 if state=='forecast' else 10)
+        assert len(forecast['portraits']) in [3,4]
+        for portrait in forecast['portraits']:
+            assert portrait['same_source']
+            expected='enemy.neutral.' if portrait['profile'] in [0,2,3] else 'enemy.horde.' if faction=='alliance' else 'enemy.alliance.'
+            assert portrait['id'].startswith(expected)
+
     if '_hud_' in name:
         hud=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('HUD_SNAPSHOT=')))
         detailed=name.endswith('_details')

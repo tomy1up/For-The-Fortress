@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.81 (28 octobre 2026)** : [panneau de combat simplifié](design/Combat_lisible_v081.md). Ennemis restants et arrivées à la forteresse au premier plan, chiffres complets à la demande et jauge de PV. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.81).
+**Version v0.82 (29 octobre 2026)** : [portraits dans la prévision des vagues](design/Portraits_prevision_v082.md). Reconnaître les ennemis neutres et ceux du camp adverse avant le départ, avec les noms et avertissements conservés. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.82).
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 

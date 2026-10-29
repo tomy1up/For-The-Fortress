@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 28 octobre 2026 — prototype v0.81, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 29 octobre 2026 — prototype v0.82, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -412,3 +412,7 @@ Le tracé, les emplacements et le décor du Gué sont regroupés dans une défin
 ## v0.81 — Panneau de combat simplifié, 28 octobre 2026
 
 Résumé des ennemis restants et des arrivées à la forteresse, compteurs complets et temps simulé accessibles à la demande. Jauge de PV relative au maximum actuel, avec les seuils visuels déjà utilisés sur la forteresse. Aucun changement de règle ou de décompte. [Détails et validation](Combat_lisible_v081.md).
+
+## v0.82 — Portraits dans la prévision, 29 octobre 2026
+
+Illustration de chaque groupe avant le départ, tirée des mêmes atlas que les ennemis du combat. Faune neutre commune et attaquants du camp adverse, noms et avertissements conservés sans agrandir le panneau. [Détails et validation](Portraits_prevision_v082.md).
