@@ -1,5 +1,6 @@
 extends ColorRect
 const Talents = preload("res://scripts/meta_talents.gd")
+const Expanded = Talents.Expanded
 
 class TalentButton extends Button:
 	var glyph: int = 0
@@ -7,6 +8,7 @@ class TalentButton extends Button:
 	var lit: bool = false
 	var rank_text: String = ""
 	var state: String = "locked"
+	var major: bool = false
 	func _draw() -> void:
 		var font: Font = get_theme_font("font")
 		var width: float = font.get_string_size(rank_text,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x
@@ -29,35 +31,46 @@ class TalentButton extends Button:
 			4:
 				draw_polyline(PackedVector2Array([c+Vector2(0,-12),c+Vector2(9,0),c+Vector2(0,12),c+Vector2(-9,0),c+Vector2(0,-12)]),ink,2,true)
 				draw_circle(c,3,ink)
+			6:
+				draw_arc(c,11,0,PI,16,ink,2,true)
+				draw_arc(c,11,PI,TAU,16,ink,2,true)
+				draw_circle(c,4,ink)
 			5:
 				draw_circle(c+Vector2(0,3),9,ink)
 				draw_polyline(PackedVector2Array([c+Vector2(0,-6),c+Vector2(2,-11),c+Vector2(8,-10)]),ink,2,true)
+		if major:
+			var star := Vector2(9,9)
+			draw_colored_polygon(PackedVector2Array([star+Vector2(0,-6),star+Vector2(2,-2),star+Vector2(6,0),star+Vector2(2,2),star+Vector2(0,6),star+Vector2(-2,2),star+Vector2(-6,0),star+Vector2(-2,-2)]),Color("f0d38b") if lit else Color("84734e"))
 		var badge := Vector2(44,8)
-		var color: Color = Color("a9d48a") if state == "available" else Color("e5c779") if state in ["maximum","unfunded"] else Color("9ba89f")
+		var color: Color = Color("a9d48a") if state == "available" else Color("e5c779") if state in ["maximum","unfunded","capped"] else Color("9ba89f")
 		draw_circle(badge,8,Color("101b16"));draw_arc(badge,8,0,TAU,24,color,1,true)
 		if state in ["locked","blocked"]:
 			draw_arc(badge+Vector2(0,-1),3,PI,TAU,10,color,1.5,true)
 			draw_rect(Rect2(badge+Vector2(-4,-1),Vector2(8,6)),color,false,1.5)
 		else:
-			var symbol: String = {"available":"+","maximum":"✓","exclusive":"×","unfunded":"!"}.get(state,"?")
+			var symbol: String = {"available":"+","maximum":"✓","exclusive":"×","unfunded":"!","capped":"!"}.get(state,"?")
 			var symbol_width: float = font.get_string_size(symbol,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x
 			draw_string(font,badge+Vector2(-symbol_width/2,4),symbol,HORIZONTAL_ALIGNMENT_LEFT,-1,13,color)
 
 class TreeBoard extends Control:
 	var accent: Color
-	var opened: Array[bool] = [true,false,false]
-	var progress: Array[int] = [0,0,0]
+	var opened: Array[bool] = [true,false,false,false,false,false,false]
+	var progress: Array[int] = [0,0,0,0,0,0,0]
 	func _draw() -> void:
 		var box := StyleBoxFlat.new();box.bg_color = accent.darkened(0.83);box.border_color = accent.darkened(0.5)
 		box.set_border_width_all(1);box.set_corner_radius_all(8);draw_style_box(box,Rect2(Vector2.ZERO,size))
-		for row in range(3):
-			var y: float = 132+117*row
-			var ink: Color = Color("d8b96d") if opened[row] else Color("48594f")
+
+class TreeTracks extends Control:
+	var board: TreeBoard
+	func _draw() -> void:
+		for row in range(7):
+			var y: float = 52+128*row
+			var ink: Color = Color("d8b96d") if board.opened[row] else Color("48594f")
 			draw_circle(Vector2(18,y),4,ink)
 			if row > 0:
-				draw_rect(Rect2(40,102+117*row,328,3),Color("283c32"))
-				draw_rect(Rect2(40,102+117*row,328*float(progress[row])/Talents.THRESHOLDS[row],3),ink)
-				draw_line(Vector2(18,y-111),Vector2(18,y-8),ink,2,true)
+				draw_rect(Rect2(40,22+128*row,308,3),Color("283c32"))
+				draw_rect(Rect2(40,22+128*row,308*float(board.progress[row])/Expanded.THRESHOLDS[row],3),ink)
+				draw_line(Vector2(18,y-122),Vector2(18,y-8),ink,2,true)
 				draw_polyline(PackedVector2Array([Vector2(13,y-18),Vector2(18,y-12),Vector2(23,y-18)]),ink,2,true)
 
 var profile: RefCounted
@@ -71,6 +84,8 @@ var names: Array[Label] = []
 var nodes: Array[Button] = []
 var descriptions: Array[Label] = [] # Noms courts ; les effets sont dans l'encart de lecture.
 var boards: Array[Control] = []
+var scrollers: Array[ScrollContainer] = []
+var tracks: Array[Control] = []
 var point_labels: Array[Label] = []
 var tier_labels: Array[Label] = []
 var detail_title: Label
@@ -102,23 +117,31 @@ func _ready() -> void:
 	heading = label_at(self,"Talents",Rect2(32,18,900,40),28)
 	balance = label_at(self,"",Rect2(32,66,890,32),16)
 	buy = button_at(self,"",Rect2(940,58,308,42),_buy)
-	label_at(self,"+ Investir un rang · ✓ Maximum · Cadenas : palier fermé · × Autre spécialité choisie · ! Point à acheter",Rect2(32,112,1216,30),14)
+	label_at(self,"+ Investir un rang · ✓ Maximum · Cadenas : palier fermé · × Autre spécialité choisie · ! Point à acheter ou plafond atteint · ★ Talent majeur",Rect2(32,112,1216,30),14)
+	nodes.resize(Expanded.NODE_COUNT);descriptions.resize(Expanded.NODE_COUNT)
 	for tree in range(3):
 		var board := TreeBoard.new();board.position = Vector2(32+416*tree,158);board.size = Vector2(384,454)
 		board.mouse_filter = Control.MOUSE_FILTER_IGNORE;board.accent = Color("638c86");add_child(board);boards.append(board)
 		names.append(label_at(board,"",Rect2(40,12,328,32),22))
 		point_labels.append(label_at(board,"",Rect2(40,48,328,24),14))
-		for row in range(3): tier_labels.append(label_at(board,"",Rect2(40,80+117*row,330,22),12))
-		for node in range(5):
-			var index: int = tree*5+node
-			var pos: Vector2 = [Vector2(166,106),Vector2(86,223),Vector2(246,223),Vector2(86,340),Vector2(246,340)][node]
+		var scroll := ScrollContainer.new();scroll.position = Vector2(0,80);scroll.size = Vector2(384,374)
+		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED;scroll.follow_focus = true
+		board.add_child(scroll);scrollers.append(scroll)
+		var content := TreeTracks.new();content.board = board;content.custom_minimum_size = Vector2(368,896)
+		content.mouse_filter = Control.MOUSE_FILTER_IGNORE;scroll.add_child(content);tracks.append(content)
+		for row in range(7): tier_labels.append(label_at(content,"",Rect2(40,128*row,310,22),12))
+		for local in range(21):
+			var index: int = Expanded.index_for(tree,local)
+			var row: int = Expanded.ROWS[local]
+			var columns: Array = [[5,0,6],[1,2,7],[3,4,8],[9,10,11],[12,13,14],[15,16,17],[19,18,20]][row]
+			var pos := Vector2(62+104*columns.find(local),26+128*row)
 			var button := TalentButton.new();button.position = pos;button.size = Vector2(52,52)
 			button.add_theme_font_size_override("font_size",14)
 			button.pressed.connect(_allocate.bind(index));button.mouse_entered.connect(_inspect.bind(index));button.focus_entered.connect(_inspect.bind(index))
-			board.add_child(button);nodes.append(button)
-			var label: Label = label_at(board,"",Rect2(pos+Vector2(-55,58),Vector2(162,38)),13)
+			content.add_child(button);nodes[index] = button
+			var label: Label = label_at(content,"",Rect2(pos+Vector2(-22,58),Vector2(96,44)),12)
 			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER;label.mouse_filter = Control.MOUSE_FILTER_STOP
-			label.mouse_entered.connect(_inspect.bind(index));descriptions.append(label)
+			label.mouse_entered.connect(_inspect.bind(index));descriptions[index] = label
 	var info := Panel.new();info.position = Vector2(32,616);info.size = Vector2(1216,110);add_child(info)
 	var box := StyleBoxFlat.new();box.bg_color = Color("132820");box.set_corner_radius_all(6);info.add_theme_stylebox_override("panel",box)
 	detail_title = label_at(info,"",Rect2(16,4,1184,26),18)
@@ -133,7 +156,9 @@ func _ready() -> void:
 func open(for_profile: RefCounted, for_faction: int) -> void:
 	if for_profile == null or for_faction not in [0,1]: return
 	_cancel_reset()
-	profile = for_profile;faction = for_faction;inspected = 0;refresh();show();nodes[0].grab_focus()
+	profile = for_profile;faction = for_faction;inspected = 0
+	for scroll in scrollers: scroll.scroll_vertical = 0
+	refresh();show();nodes[0].grab_focus()
 
 func close() -> void:
 	_cancel_reset();hide()
@@ -142,72 +167,95 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if visible and event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		close();get_viewport().set_input_as_handled()
 
+func _current_ranks() -> Array:
+	return Expanded.normalize(profile.data.banks[faction].ranks) if profile != null else []
+
 func refresh() -> void:
 	var bank: Dictionary = profile.data.banks[faction]
+	var ranks: Array = _current_ranks()
+	if ranks.is_empty():
+		notice.text = "Configuration de talents à vérifier.";buy.disabled = true;reset_button.disabled = true
+		return
 	var camp: String = "Alliance" if faction == 0 else "Horde"
 	heading.text = "Talents · "+camp
-	balance.text = "Ressource %s : %d · Points disponibles : %d / %d achetés" % [camp,bank.resource,int(bank.points)-Talents.spent(bank.ranks),bank.points]
+	balance.text = "Ressource %s : %d · Points disponibles : %d / %d achetés · Plafond : %d" % [camp,bank.resource,maxi(0,mini(int(bank.points),Expanded.MAX_POINTS)-Expanded.spent(ranks)),bank.points,Expanded.MAX_POINTS]
 	buy.text = "Acheter 1 point · %d ressources" % Talents.POINT_PRICE
 	buy.disabled = profile.blocked or bank.resource < Talents.POINT_PRICE or bank.points >= Talents.MAX_POINTS
 	for tree in range(3):
-		var definition: Array = Talents.TREES[faction][tree];names[tree].text = definition[0]
+		names[tree].text = Talents.TREES[faction][tree][0]
 		var accent: Color = ([Color("8aa4ba"),Color("8fb675"),Color("b69bda")] if faction == 0 else [Color("d28c70"),Color("b398d4"),Color("d4b078")])[tree]
 		boards[tree].accent = accent
-		var invested: int = Talents.tree_spent(bank.ranks,tree)
-		point_labels[tree].text = "%d point%s investi%s dans cet arbre" % [invested,"s" if invested > 1 else "","s" if invested > 1 else ""]
-		for row in range(3):
-			var invested_below: int = mini(Talents.THRESHOLDS[row],Talents.lower_spent(bank.ranks,tree,row))
-			var missing: int = Talents.THRESHOLDS[row]-invested_below
-			boards[tree].opened[row] = missing == 0
-			boards[tree].progress[row] = invested_below
-			tier_labels[tree*3+row].text = "Ligne %d · %s" % [row+1,"Débloquée" if missing == 0 else "%d/%d points requis dans cet arbre" % [invested_below,Talents.THRESHOLDS[row]]]
-		boards[tree].queue_redraw()
-		for node in range(5):
-			var index: int = tree*5+node
-			var available: bool = not profile.blocked and Talents.can_allocate(bank.ranks,index,int(bank.points))
-			nodes[index].state = _node_state(index)
-			var learned: bool = bank.ranks[index] > 0
-			nodes[index].rank_text = "%d/%d" % [bank.ranks[index],Talents.MAX_RANKS[node]]
-			nodes[index].glyph = faction*3+tree;nodes[index].accent = accent;nodes[index].lit = available or learned
-			style_for(nodes[index],accent.darkened(0.77) if available or learned else Color("141c19"),Color("dab868") if learned else accent if available else Color("3c4b43"))
-			nodes[index].add_theme_color_override("font_color",Color("f1d286") if learned else Color("c1cbc3"))
-			nodes[index].queue_redraw()
-			descriptions[index].text = definition[node+1][0]
-			var tooltip: String = definition[node+1][0]+"\n"+definition[node+1][1]+"\n"+Talents.allocation_error(bank.ranks,index,int(bank.points))
+		var invested: int = Expanded.tree_spent(ranks,tree)
+		point_labels[tree].text = "%d point%s investi%s · 21 talents" % [invested,"s" if invested > 1 else "","s" if invested > 1 else ""]
+		for row in range(7):
+			var invested_below: int = mini(Expanded.THRESHOLDS[row],Expanded.lower_spent(ranks,tree,row))
+			var missing: int = Expanded.THRESHOLDS[row]-invested_below
+			boards[tree].opened[row] = missing == 0;boards[tree].progress[row] = invested_below
+			tier_labels[tree*7+row].text = "Ligne %d · %s" % [row+1,"Débloquée" if missing == 0 else "%d/%d points requis dans cet arbre" % [invested_below,Expanded.THRESHOLDS[row]]]
+		boards[tree].queue_redraw();tracks[tree].queue_redraw()
+		for local in range(21):
+			var index: int = Expanded.index_for(tree,local)
+			var definition: Dictionary = Expanded.node(faction,index)
+			var available: bool = not profile.blocked and Expanded.allocation_error(ranks,index,int(bank.points)).is_empty()
+			nodes[index].state = _node_state(index,ranks)
+			var learned: bool = ranks[index] > 0
+			nodes[index].rank_text = "%d/%d" % [ranks[index],definition.maximum]
+			nodes[index].major = definition.major
+			nodes[index].glyph = _glyph_for(definition.effect);nodes[index].accent = accent;nodes[index].lit = available or learned
+			style_for(nodes[index],accent.darkened(0.77) if available or learned else Color("141c19"),Color("dab868") if learned or (definition.major and available) else accent if available else Color("3c4b43"))
+			nodes[index].queue_redraw();descriptions[index].text = definition.name
+			var tooltip: String = definition.name+(" · Talent majeur" if definition.major else "")+"\n"+definition.description+"\n"+Expanded.allocation_error(ranks,index,int(bank.points))
 			nodes[index].tooltip_text = tooltip;descriptions[index].tooltip_text = tooltip
 	reset_button.text = "Réinitialiser · Gratuit"
-	reset_button.disabled = profile.blocked or Talents.spent(bank.ranks) == 0
-	reset_button.tooltip_text = "Gratuit entre les missions.\nTous les points de cette faction sont rendus pour les répartir à nouveau.\nLes PO et les points achetés restent conservés."
-	notice.text = profile.error if not profile.error.is_empty() else profile.migration_notice if not profile.migration_notice.is_empty() else "Barème d’essai · Ressources versées en fin de partie. Talents appliqués au prochain départ."
+	reset_button.disabled = profile.blocked or Expanded.spent(ranks) == 0
+	reset_button.tooltip_text = "Gratuit entre les missions.\nTous les points de cette faction sont rendus.\nLes PO et les points achetés restent conservés."
+	notice.text = profile.error if not profile.error.is_empty() else profile.migration_notice if not profile.migration_notice.is_empty() else "Barème d’essai · 51 points maximum partagés. Défilez dans chaque arbre pour voir les sept lignes."
 	_inspect(inspected)
 
-func _node_state(index: int) -> String:
+static func _glyph_for(effect: Dictionary) -> int:
+	if effect.has("hp"): return 0
+	if effect.has("range"): return 6
+	if effect.has("curse"): return 4
+	if effect.has("secondary"): return 3 if effect.get("types",[]) == [3] else 5
+	return 1
+
+func _node_state(index: int, supplied: Array = []) -> String:
 	if profile.blocked: return "blocked"
+	var ranks: Array = _current_ranks() if supplied.is_empty() else supplied
+	if ranks.is_empty(): return "blocked"
 	var bank: Dictionary = profile.data.banks[faction]
-	var tree: int = int(index/5);var node: int = index%5
-	if bank.ranks[index] >= Talents.MAX_RANKS[node]: return "maximum"
-	if Talents.lower_spent(bank.ranks,tree,Talents.ROWS[node]) < Talents.THRESHOLDS[Talents.ROWS[node]]: return "locked"
-	if node >= 3 and bank.ranks[tree*5+3]+bank.ranks[tree*5+4] > 0: return "exclusive"
-	return "available" if Talents.can_allocate(bank.ranks,index,int(bank.points)) else "unfunded"
+	var position: Vector2i = Expanded.coordinates(index);var tree: int = position.x;var local: int = position.y
+	if ranks[index] >= Expanded.MAX_RANKS[local]: return "maximum"
+	if Expanded.lower_spent(ranks,tree,Expanded.ROWS[local]) < Expanded.THRESHOLDS[Expanded.ROWS[local]]: return "locked"
+	for group in Expanded.EXCLUSIONS:
+		if local not in group: continue
+		for other in group:
+			if other != local and ranks[Expanded.index_for(tree,other)] > 0: return "exclusive"
+	if Expanded.spent(ranks) >= Expanded.MAX_POINTS: return "capped"
+	return "available" if Expanded.allocation_error(ranks,index,int(bank.points)).is_empty() else "unfunded"
 
 func _inspect(index: int) -> void:
 	if profile == null or index < 0 or index >= nodes.size(): return
+	var ranks: Array = _current_ranks()
+	if ranks.is_empty(): return
 	inspected = index
-	var bank: Dictionary = profile.data.banks[faction];var tree: int = int(index/5);var node: int = index%5
-	var definition: Array = Talents.TREES[faction][tree][node+1]
-	var state_text: String = {"available":"1 point pour ce rang","maximum":"Rang maximum","locked":"Palier fermé","exclusive":"Autre spécialité choisie","unfunded":"Point à acheter","blocked":"Sauvegarde à vérifier"}[_node_state(index)]
-	detail_title.text = "%s · Rang %d/%d · %s" % [definition[0],bank.ranks[index],Talents.MAX_RANKS[node],state_text]
-	var reason: String = Talents.allocation_error(bank.ranks,index,int(bank.points))
-	detail_text.text = definition[1]+(" Choix exclusif entre les deux spécialités." if node >= 3 else "")
+	var bank: Dictionary = profile.data.banks[faction]
+	var definition: Dictionary = Expanded.node(faction,index)
+	var state_text: String = {"available":"1 point pour ce rang","maximum":"Rang maximum","locked":"Palier fermé","exclusive":"Autre spécialité choisie","unfunded":"Point à acheter","capped":"Plafond atteint","blocked":"Sauvegarde à vérifier"}[_node_state(index,ranks)]
+	detail_title.text = "%s · Rang %d/%d · %s" % [("★ " if definition.major else "")+definition.name,ranks[index],definition.maximum,state_text]
+	var reason: String = Expanded.allocation_error(ranks,index,int(bank.points))
+	detail_text.text = definition.description.replace("\n"," ")+(" Choix exclusif entre les spécialités de cette ligne." if definition.local in [3,4,15,16,17,18,19,20] else "")
 	var gain: String = _rank_gain(index)
 	if not gain.is_empty(): detail_text.text += "\nProchain rang · "+gain
 	detail_text.text += "\n"+("Profil protégé : enregistrement à vérifier." if profile.blocked else reason if not reason.is_empty() else "Coût : 1 point · Cliquez pour investir un rang.")
+	scrollers[definition.tree].ensure_control_visible(nodes[index])
+	scrollers[definition.tree].ensure_control_visible(descriptions[index])
 
 func _number(value: float) -> String:
 	return ("%.2f" % value).trim_suffix("0").trim_suffix("0").trim_suffix(".").replace(".",",")
 
 func _rank_gain(index: int) -> String:
-	var preview: Dictionary = Talents.rank_preview(faction,profile.data.banks[faction].ranks,index)
+	var preview: Dictionary = Expanded.rank_preview(faction,_current_ranks(),index)
 	if preview.is_empty(): return ""
 	var parts: Array[String] = []
 	if preview.hp_before != preview.hp_after:
@@ -231,7 +279,7 @@ func _buy() -> void:
 
 func _allocate(index: int) -> void:
 	inspected = index
-	if not profile.blocked and Talents.can_allocate(profile.data.banks[faction].ranks,index,int(profile.data.banks[faction].points)):
+	if not profile.blocked and Expanded.allocation_error(_current_ranks(),index,int(profile.data.banks[faction].points)).is_empty():
 		profile.allocate(faction,index)
 	refresh()
 

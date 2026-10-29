@@ -1,0 +1,10 @@
+{
+  "baseline": "v0.84",
+  "candidate": "v0.85",
+  "scenarios": 16,
+  "same_reports_rng_events_and_damage": true,
+  "metadata_normalization": "project version 0.85 in both isolated projects",
+  "canonical_sha256": "b1746586154a7fc26a3219de13bbc5582413b117a2e7b42ecac0e6c07ad6e52f",
+  "scope": "2 factions, zero or 33 talent points, 2 seeds, 0.05 s or 300 s simulation steps",
+  "human_balance_test": false
+}

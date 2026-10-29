@@ -59,3 +59,7 @@ Les montants, formules de difficulté et seuils de puissance restent des hypoth�
 Après avoir comparé reset payant avec revenu renouvelable et reset gratuit, le porteur du projet a choisi le **reset gratuit entre les missions**. La réinitialisation restitue les points sans débiter les PO ; les talents restent fixés pendant la mission. Cette décision remplace le tarif progressif plafonné auparavant retenu.
 
 Elle est réalisée dans la [v0.84](Reset_gratuit_v084.md). Les points restent limités et les talents demandent des arbitrages ; la gratuité ne permet pas de tout remplir simultanément. Les PO restent destinées aux points et aux achats de boutique selon l’économie à définir. Un éventuel revenu répétable pour un futur mode infini reste une question distincte, sans obligation de l’ajouter pour financer les resets.
+
+## Hypothèse de chiffrage à 51 points
+
+Le plafond de prototype demandé est de 51 points par faction. Au prix provisoire de 10 PO, la cible de financement hors boutique est de 510 PO sur les missions 1–100. Exemple non activé : 5 PO par première victoire et +1 PO aux missions multiples de 10. Les prix et récompenses restent à valider ; la gratuité des resets est acquise. [Détail](Orientation_talents_2026-10-29.md).

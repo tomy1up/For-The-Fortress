@@ -108,3 +108,7 @@ Aucune valeur de difficulté, récompense, génération ou quantité commerciale
 ## Précisions économiques — 29 octobre 2026
 
 Chaque mission réussie une première fois donne des PO, également après la mission 100. Le repère de financement des talents à 100 missions suppose de ne pas avoir dépensé ces gains en boutique ou ailleurs ; aucune compensation ni réserve forcée n’est approuvée. La boutique ouvre des stratégies avec des unités ayant forces et faiblesses, sans remplaçantes systématiquement supérieures. L’équilibrage doit éviter à la fois l’impasse après des achats et l’effacement de la difficulté. [Cadre économique](Economie_campagne_2026-10-29.md).
+
+## Actualisation du 29 octobre — plafond et arbres
+
+Prototype de 51 points par faction, deux talents majeurs facultatifs aux seuils 15 et 30, sept lignes : [v0.85](Arbres_enrichis_v085.md). Les noms et valeurs du catalogue enrichi sont des hypothèses. Le budget de première victoire des missions 1–100 doit couvrir les 51 points hors boutique ; à prix provisoire de 10 PO, cela représente 510 PO. Le barème exact reste à valider et ne change pas encore les gains du Gué.

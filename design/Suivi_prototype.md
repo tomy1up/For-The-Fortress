@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 29 octobre 2026 — prototype v0.84, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 29 octobre 2026 — prototype v0.85, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -444,3 +444,7 @@ Chaque mission, également après la 100e, verse ses PO à la première victoire
 ## v0.84 — Reset gratuit, 29 octobre 2026
 
 Décision explicite : les resets entre les missions sont gratuits, les talents restent fixés pendant la mission. Confirmation sans paiement, aucun débit de PO, point acheté conservé, anciens compteurs sans effet sur le coût. Les gains de chaque première victoire continuent après la mission 100 ; le repère budgétaire à 100 exclut les dépenses facultatives en boutique. La boutique ouvre des stratégies sans remplaçantes systématiquement supérieures. [Réalisation et validation](Reset_gratuit_v084.md), [cadre économique](Economie_campagne_2026-10-29.md). La proposition de 18 talents par arbre reste en cours d’intégration, hors jeu jouable.
+
+## Version v0.85 — arbres enrichis
+
+[Lot détaillé](Arbres_enrichis_v085.md) : trois arbres de 21 talents, sept lignes, plafond 51 par faction, majeurs aux seuils 15 et 30, migration sans perte des gains et bilan complet avec défilement. Prix, nouveaux effets et équilibre restent provisoires. Le barème de campagne de 510 PO est une proposition non activée.

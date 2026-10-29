@@ -22,7 +22,7 @@ func run_checks() -> void:
 		for tree in range(3):
 			for row in range(3):
 				check(ui.boards[tree].progress[row] == mini(Talents.THRESHOLDS[row],Talents.lower_spent(p.data.banks[faction].ranks,tree,row)),"Jauge de palier fondée sur les seules lignes précédentes du même arbre")
-		check(ui.boards[0].progress == [0,5,10] and ui.boards[1].progress == [0,1,1],"Seuils atteints ou partiels explicités sans dépasser le maximum")
+		check(ui.boards[0].progress == [0,5,10,11,11,11,11] and ui.boards[1].progress == [0,1,1,1,1,1,1],"Seuils atteints ou partiels explicités sans dépasser le maximum")
 		ui._inspect(4);check(ui.detail_title.text.contains("Autre spécialité choisie") and ui.detail_text.text.contains("exclusif"),"Exclusion de spécialité expliquée sans confondre manque de point et palier fermé")
 		check(before == JSON.stringify(p.data),"Parcourir les états et jauges ne modifie pas le profil")
 		p.data.banks[faction].points = 12;ui.refresh()

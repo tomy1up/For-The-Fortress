@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.84 (29 octobre 2026)** : [reset gratuit des talents](design/Reset_gratuit_v084.md). Tous les points sont rendus sans débiter les PO, même à solde nul. Les talents restent fixés pendant la mission. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.84).
+**Version v0.85 (29 octobre 2026)** : [arbres de talents enrichis](design/Arbres_enrichis_v085.md). Trois arbres de 21 talents par faction, sept lignes, plafond partagé de 51 points et deux talents majeurs par arbre. Les anciens gains sont conservés, le reset reste gratuit. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.85).
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 

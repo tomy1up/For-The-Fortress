@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.84 — 29 octobre 2026
+Version : 0.85 — 29 octobre 2026
 
 JOUER
 
@@ -157,3 +157,8 @@ réseau requis pour jouer. Pas de sauvegarde de partie en cours ni de progressio
 Les scénarios de contrôle de cartes successives ne constituent pas de nouvelles cartes.
 Licences du moteur : LICENCES_GODOT.txt.
 For the Fortress! reste un nom de travail dont la disponibilité juridique est à confirmer.
+
+Arbres enrichis : 21 talents par arbre, sept lignes, 51 points par faction.
+Une étoile distingue les deux talents majeurs aux seuils de 15 et 30 points.
+Défilez dans chaque colonne pour voir les talents profonds. Les effets chiffrés
+sont des hypothèses de prototype ; la campagne de 200 missions reste à réaliser.

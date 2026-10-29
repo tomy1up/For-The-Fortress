@@ -1,13 +1,13 @@
 extends RefCounted
-## Prototype enrichi : contenu et valeurs H, plafond provisoire 36, aucun prix définitif.
+## Prototype enrichi : contenu et valeurs H, plafond provisoire 51, aucun prix définitif.
 const Previous = preload("res://scripts/meta_talents_v068.gd")
-const NODE_COUNT: int = 54
-const NODES_PER_TREE: int = 18
-const MAX_POINTS: int = 36
-const ROWS: Array[int] = [0,1,1,2,2,0,0,1,2,3,3,3,4,4,4,5,5,5]
-const MAX_RANKS: Array[int] = [5,3,3,1,1,3,3,3,3,3,3,3,2,2,2,1,1,1]
-const THRESHOLDS: Array[int] = [0,5,10,15,20,25]
-const EXCLUSIONS: Array = [[3,4],[15,16,17]]
+const NODE_COUNT: int = 63
+const NODES_PER_TREE: int = 21
+const MAX_POINTS: int = 51
+const ROWS: Array[int] = [0,1,1,2,2,0,0,1,2,3,3,3,4,4,4,5,5,5,6,6,6]
+const MAX_RANKS: Array[int] = [5,3,3,1,1,3,3,3,3,1,3,3,2,2,2,3,3,3,1,3,3]
+const THRESHOLDS: Array[int] = [0,5,10,15,20,25,30]
+const EXCLUSIONS: Array = [[3,4],[15,16,17],[18,19,20]]
 const UNIT_NAMES: Array[String] = ["Archer elfe","Arbalétrier nain","Mage humain","Lanceur de haches","Sapeur gobelin","Chaman orc"]
 const CORE: Array = [
 	[
@@ -252,9 +252,15 @@ const EXTRAS: Array = [
 				}
 			},
 			{
-				"name": "Protection du gué",
+				"name": "Remparts sacrés",
 				"effect": {
-					"hp": 1
+					"hp": 5,
+					"range": 0.1,
+					"types": [
+						0,
+						1,
+						2
+					]
 				}
 			},
 			{
@@ -304,13 +310,13 @@ const EXTRAS: Array = [
 			{
 				"name": "Forteresse vivante",
 				"effect": {
-					"hp": 6
+					"hp": 2
 				}
 			},
 			{
 				"name": "Vigie du royaume",
 				"effect": {
-					"range": 0.4,
+					"range": 0.1,
 					"types": [
 						0,
 						1,
@@ -321,7 +327,36 @@ const EXTRAS: Array = [
 			{
 				"name": "Garnison d’élite",
 				"effect": {
-					"direct": 0.1,
+					"direct": 0.025,
+					"types": [
+						0,
+						1,
+						2
+					]
+				}
+			},
+			{
+				"name": "Citadelle éveillée",
+				"effect": {
+					"hp": 5,
+					"range": 0.3,
+					"types": [
+						0,
+						1,
+						2
+					]
+				}
+			},
+			{
+				"name": "Murs inébranlables",
+				"effect": {
+					"hp": 3
+				}
+			},
+			{
+				"name": "Horizon du royaume",
+				"effect": {
+					"range": 0.15,
 					"types": [
 						0,
 						1,
@@ -368,9 +403,10 @@ const EXTRAS: Array = [
 				}
 			},
 			{
-				"name": "Tirs d’escorte",
+				"name": "Discipline de garnison",
 				"effect": {
-					"direct": 0.02,
+					"direct": 0.1,
+					"range": 0.1,
 					"types": [
 						0,
 						1
@@ -426,7 +462,7 @@ const EXTRAS: Array = [
 			{
 				"name": "Discipline elfique",
 				"effect": {
-					"direct": 0.15,
+					"direct": 0.03,
 					"types": [
 						0
 					]
@@ -435,7 +471,7 @@ const EXTRAS: Array = [
 			{
 				"name": "Maître arbalétrier",
 				"effect": {
-					"direct": 0.15,
+					"direct": 0.03,
 					"types": [
 						1
 					]
@@ -444,9 +480,38 @@ const EXTRAS: Array = [
 			{
 				"name": "Réseau de tireurs",
 				"effect": {
-					"range": 0.5,
+					"range": 0.1,
 					"types": [
 						0,
+						1
+					]
+				}
+			},
+			{
+				"name": "Maîtrise balistique",
+				"effect": {
+					"direct": 0.12,
+					"range": 0.2,
+					"types": [
+						0,
+						1
+					]
+				}
+			},
+			{
+				"name": "Précision elfique",
+				"effect": {
+					"direct": 0.07,
+					"types": [
+						0
+					]
+				}
+			},
+			{
+				"name": "Artillerie naine",
+				"effect": {
+					"direct": 0.07,
+					"types": [
 						1
 					]
 				}
@@ -487,9 +552,10 @@ const EXTRAS: Array = [
 				}
 			},
 			{
-				"name": "Concentration intense",
+				"name": "Convergence arcanique",
 				"effect": {
-					"direct": 0.025,
+					"direct": 0.08,
+					"secondary": 0.08,
 					"types": [
 						2
 					]
@@ -540,28 +606,53 @@ const EXTRAS: Array = [
 			{
 				"name": "Maître du trait",
 				"effect": {
-					"direct": 0.15,
 					"types": [
 						2
-					]
+					],
+					"direct": 0.03
 				}
 			},
 			{
 				"name": "Maître des explosions",
 				"effect": {
-					"secondary": 0.22,
+					"types": [
+						2
+					],
+					"secondary": 0.04
+				}
+			},
+			{
+				"name": "Vigie arcanique",
+				"effect": {
+					"types": [
+						2
+					],
+					"range": 0.1
+				}
+			},
+			{
+				"name": "Archimage du gué",
+				"effect": {
+					"direct": 0.12,
+					"secondary": 0.16,
 					"types": [
 						2
 					]
 				}
 			},
 			{
-				"name": "Vigie arcanique",
+				"name": "Veille supérieure",
 				"effect": {
-					"range": 0.55,
+					"range": 0.15,
 					"types": [
 						2
 					]
+				}
+			},
+			{
+				"name": "Protection arcanique",
+				"effect": {
+					"hp": 2
 				}
 			}
 		]
@@ -602,9 +693,10 @@ const EXTRAS: Array = [
 				}
 			},
 			{
-				"name": "Impact brutal",
+				"name": "Furie des Cendres",
 				"effect": {
-					"direct": 0.025,
+					"direct": 0.08,
+					"secondary": 0.08,
 					"types": [
 						3
 					]
@@ -655,28 +747,53 @@ const EXTRAS: Array = [
 			{
 				"name": "Briseur de lignes",
 				"effect": {
-					"direct": 0.15,
 					"types": [
 						3
-					]
+					],
+					"direct": 0.03
 				}
 			},
 			{
 				"name": "Tempête de haches",
 				"effect": {
-					"secondary": 0.22,
+					"types": [
+						3
+					],
+					"secondary": 0.04
+				}
+			},
+			{
+				"name": "Vigie des Cendres",
+				"effect": {
+					"types": [
+						3
+					],
+					"range": 0.1
+				}
+			},
+			{
+				"name": "Seigneur des haches",
+				"effect": {
+					"direct": 0.12,
+					"secondary": 0.16,
 					"types": [
 						3
 					]
 				}
 			},
 			{
-				"name": "Vigie des Cendres",
+				"name": "Chasse lointaine",
 				"effect": {
-					"range": 0.55,
+					"range": 0.15,
 					"types": [
 						3
 					]
+				}
+			},
+			{
+				"name": "Remparts des Cendres",
+				"effect": {
+					"hp": 2
 				}
 			}
 		],
@@ -715,9 +832,10 @@ const EXTRAS: Array = [
 				}
 			},
 			{
-				"name": "Frappe spirituelle",
+				"name": "Pacte des esprits",
 				"effect": {
-					"direct": 0.025,
+					"direct": 0.08,
+					"curse": 0.08,
 					"types": [
 						5
 					]
@@ -768,28 +886,53 @@ const EXTRAS: Array = [
 			{
 				"name": "Maître du choc",
 				"effect": {
-					"direct": 0.15,
 					"types": [
 						5
-					]
+					],
+					"direct": 0.03
 				}
 			},
 			{
 				"name": "Maître des maléfices",
 				"effect": {
-					"curse": 0.22,
+					"types": [
+						5
+					],
+					"curse": 0.04
+				}
+			},
+			{
+				"name": "Veille des esprits",
+				"effect": {
+					"types": [
+						5
+					],
+					"range": 0.1
+				}
+			},
+			{
+				"name": "Voix des ancêtres",
+				"effect": {
+					"direct": 0.12,
+					"curse": 0.16,
 					"types": [
 						5
 					]
 				}
 			},
 			{
-				"name": "Veille des esprits",
+				"name": "Horizon des esprits",
 				"effect": {
-					"range": 0.55,
+					"range": 0.15,
 					"types": [
 						5
 					]
+				}
+			},
+			{
+				"name": "Protection des ancêtres",
+				"effect": {
+					"hp": 2
 				}
 			}
 		],
@@ -828,9 +971,10 @@ const EXTRAS: Array = [
 				}
 			},
 			{
-				"name": "Charge de rupture",
+				"name": "Charge magistrale",
 				"effect": {
-					"direct": 0.025,
+					"direct": 0.08,
+					"secondary": 0.08,
 					"types": [
 						4
 					]
@@ -881,28 +1025,53 @@ const EXTRAS: Array = [
 			{
 				"name": "Briseur de cuirasses",
 				"effect": {
-					"direct": 0.15,
 					"types": [
 						4
-					]
+					],
+					"direct": 0.03
 				}
 			},
 			{
 				"name": "Maître artificier",
 				"effect": {
-					"secondary": 0.22,
+					"types": [
+						4
+					],
+					"secondary": 0.04
+				}
+			},
+			{
+				"name": "Artillerie lointaine",
+				"effect": {
+					"types": [
+						4
+					],
+					"range": 0.1
+				}
+			},
+			{
+				"name": "Génie de démolition",
+				"effect": {
+					"direct": 0.12,
+					"secondary": 0.16,
 					"types": [
 						4
 					]
 				}
 			},
 			{
-				"name": "Artillerie lointaine",
+				"name": "Tirs lointains",
 				"effect": {
-					"range": 0.55,
+					"range": 0.15,
 					"types": [
 						4
 					]
+				}
+			},
+			{
+				"name": "Abris fortifiés",
+				"effect": {
+					"hp": 2
 				}
 			}
 		]
@@ -910,10 +1079,10 @@ const EXTRAS: Array = [
 ]
 
 static func index_for(tree: int, local: int) -> int:
-	return tree*5+local if local < 5 else 15+tree*13+local-5
+	return tree*5+local if local < 5 else 15+tree*16+local-5
 
 static func coordinates(index: int) -> Vector2i:
-	return Vector2i(int(index/5),index%5) if index < 15 else Vector2i(int((index-15)/13),5+(index-15)%13)
+	return Vector2i(int(index/5),index%5) if index < 15 else Vector2i(int((index-15)/16),5+(index-15)%16)
 
 static func tree_capacity() -> int:
 	var total: int = 0
@@ -957,7 +1126,8 @@ static func valid(ranks: Variant) -> bool:
 	for tree in range(3):
 		for group in EXCLUSIONS:
 			var total: int = 0
-			for local in group: total += int(ranks[index_for(tree,local)])
+			for local in group:
+				if ranks[index_for(tree,local)] > 0: total += 1
 			if total > 1: return false
 		for local in range(NODES_PER_TREE):
 			if ranks[index_for(tree,local)] > 0 and lower_spent(ranks,tree,ROWS[local]) < THRESHOLDS[ROWS[local]]: return false
@@ -1032,7 +1202,7 @@ static func node(faction: int, index: int) -> Dictionary:
 		if not effect.has(component): continue
 		var title: String = {"direct":"tirs directs","secondary":"rebonds" if effect.get("types",[]) == [3] else "explosions","curse":"malédictions","range":"portée"}[component]
 		lines.append("%s : %s +%s%s par rang." % [" / ".join(units),title,Previous.number(effect[component]*(1 if component == "range" else 100)),"" if component == "range" else " %"])
-	return {"index":index,"tree":position.x,"local":local,"name":name,"description":"\n".join(lines),"row":ROWS[local],"maximum":MAX_RANKS[local],"effect":effect}
+	return {"index":index,"tree":position.x,"local":local,"major":local in [9,18],"name":name,"description":"\n".join(lines),"row":ROWS[local],"maximum":MAX_RANKS[local],"effect":effect}
 
 static func rank_preview(faction: int, ranks: Array, index: int) -> Dictionary:
 	if faction not in [0,1] or not valid(ranks) or index < 0 or index >= NODE_COUNT: return {}
@@ -1057,4 +1227,4 @@ static func loadout_summary(faction: int, ranks: Array) -> Dictionary:
 		trees.append({"name":Previous.TREES[faction][tree][0],"points":tree_spent(ranks,tree),"nodes":nodes})
 	var units: Array[Dictionary] = []
 	for type in ([0,1,2] if faction == 0 else [3,4,5]): units.append({"type":type,"bonuses":effects(faction,ranks,type)})
-	return {"points":spent(ranks),"hp":extra_hp(faction,ranks),"trees":trees,"units":units,"rules":"expanded_prototype"}
+	return {"points":spent(ranks),"hp":extra_hp(faction,ranks),"trees":trees,"units":units,"rules":"expanded_51_prototype"}

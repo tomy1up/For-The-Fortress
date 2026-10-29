@@ -32,10 +32,10 @@ func run_checks() -> void:
 	bank = scene.meta_profile.data.banks[0];bank.ranks = Talents.empty_ranks();bank.points = 0;bank.resource = 25
 	scene._update_interface()
 	check(scene.home_hints[0].text == "Vous pouvez acheter 2 points de talent." and scene.meta_buttons[0].text == "Préparer les talents","Achat possible annoncé sans confondre points possédés et achetables")
-	bank.points = 35;bank.ranks = [5,3,3,1,0,5,3,3,1,0,5,3,2,1,0];bank.resource = 100
+	bank.points = Talents.MAX_POINTS-1;bank.ranks = scene._capture_expanded_ranks(0);bank.ranks[Talents.Expanded.index_for(0,18)] = 0;bank.resource = 100
 	scene._update_interface()
 	check(scene.home_hints[0].text == "Vous pouvez acheter 1 point de talent.","Achat possible borné au plafond de points")
-	bank.points = 36;bank.ranks = [5,3,3,1,0,5,3,3,1,0,5,3,3,1,0]
+	bank.points = Talents.MAX_POINTS;bank.ranks = scene._capture_expanded_ranks(0)
 	scene._update_interface()
 	check(scene.home_hints[0].text == "Tous les points ont été achetés.","Plafond atteint sans encouragement à un achat impossible")
 	for camp in range(2):

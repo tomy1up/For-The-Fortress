@@ -60,6 +60,9 @@ var summary_loadout_content: Control
 var summary_loadout_names: Array[Label] = []
 var summary_loadout_points: Array[Label] = []
 var summary_loadout_nodes: Array[Label] = []
+var summary_loadout_extra: Array[Label] = []
+var summary_loadout_scrollers: Array[ScrollContainer] = []
+var summary_loadout_lists: Array[Control] = []
 var summary_loadout_hp: Label
 var summary_loadout_units: Array[Label] = []
 var meta_buttons: Array[Button] = []
@@ -246,7 +249,7 @@ func _ready() -> void:
 				meta_profile.data.banks[1].resource = 25;meta_profile.data.banks[1].points = 3;meta_profile.data.banks[1].ranks[0] = 3
 			if "--capture-home=maximum" in OS.get_cmdline_user_args():
 				for bank in meta_profile.data.banks:
-					bank.resource = 100;bank.points = 36;bank.ranks = [5,3,3,1,0,5,3,3,1,0,5,3,3,1,0]
+					bank.resource = 100;bank.points = 51;bank.ranks = _capture_expanded_ranks(0)
 			if "--capture-home=blocked" in OS.get_cmdline_user_args():
 				meta_profile.blocked = true;meta_profile.error = "Sauvegarde illisible simulée pour le contrôle."
 		if "--capture-meta-rewards" in OS.get_cmdline_user_args():
@@ -258,6 +261,10 @@ func _ready() -> void:
 			meta_profile = MetaProfile.new("")
 			meta_profile.data.banks[capture_faction].points = 33
 			meta_profile.data.banks[capture_faction].ranks = [5,3,2,1,0,5,3,2,1,0,5,3,2,1,0]
+		if "--capture-expanded-summary" in OS.get_cmdline_user_args():
+			meta_profile = MetaProfile.new("")
+			meta_profile.data.banks[capture_faction].points = 51
+			meta_profile.data.banks[capture_faction].ranks = _capture_expanded_ranks(0)
 		if capture_state not in ["selection","talents"]:
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
 			if "--capture-meta-intermediate" in OS.get_cmdline_user_args(): run_final_map = false
@@ -445,6 +452,16 @@ func _ready() -> void:
 				meta_profile.data.banks[capture_faction].points = Model.MetaTalents.spent(meta_profile.data.banks[capture_faction].ranks)
 				meta_profile.data.banks[capture_faction].resource = 0
 			_open_meta(capture_faction)
+			for argument in OS.get_cmdline_user_args():
+				if argument.begins_with("--capture-expanded-tree="):
+					var tree: int = clampi(int(argument.trim_prefix("--capture-expanded-tree=")),0,2)
+					meta_profile.data.banks[capture_faction].points = 51
+					meta_profile.data.banks[capture_faction].ranks = _capture_expanded_ranks(tree)
+					meta_menu.refresh()
+					await get_tree().process_frame
+					await get_tree().process_frame
+					meta_menu._inspect(Model.MetaTalents.Expanded.index_for(tree,18))
+					print("EXPANDED_SNAPSHOT=",JSON.stringify({"points":Model.MetaTalents.spent(meta_profile.data.banks[capture_faction].ranks),"tree":tree,"nodes":meta_menu.nodes.size(),"scroll":meta_menu.scrollers[tree].scroll_vertical,"title":meta_menu.detail_title.text,"isolated":meta_profile.path.is_empty()}))
 			if "--capture-meta-preview" in OS.get_cmdline_user_args():
 				meta_menu._inspect(5)
 				print("META_RANK_PREVIEW=",meta_menu.detail_text.text.contains("Prochain rang"))
@@ -456,7 +473,8 @@ func _ready() -> void:
 			if "--capture-profile-protection" in OS.get_cmdline_user_args():
 				var test_path: String = "user://test_packaged_protection_%d.json" % Time.get_ticks_usec()
 				var legacy: Dictionary = MetaProfile.fresh();legacy.schema = 2
-				for bank in legacy.banks: bank.erase("mission_rewards")
+				for bank in legacy.banks:
+					bank.erase("mission_rewards");bank.ranks = Model.MetaTalents.empty_ranks()
 				var legacy_file := FileAccess.open(test_path,FileAccess.WRITE)
 				legacy_file.store_buffer(MetaProfile.Codec.encode(legacy));legacy_file.close()
 				var stored = MetaProfile.new(test_path)
@@ -468,14 +486,14 @@ func _ready() -> void:
 				ok = ok and not reopened.blocked and reopened.data.banks[capture_faction].resource == 50 and reopened.data.banks[capture_faction].ranks[0] == 1
 				ok = ok and sealed.slice(0,MetaProfile.Codec.MAGIC.length()) == MetaProfile.Codec.MAGIC.to_utf8_buffer()
 				var mission_id: int = reopened.begin_mission(capture_faction,"capture.mission",9)
-				ok = ok and reopened.data.schema == 3 and mission_id > 0 and reopened.credit_mission(mission_id,capture_faction,10,true)
+				ok = ok and reopened.data.schema == 4 and mission_id > 0 and reopened.credit_mission(mission_id,capture_faction,10,true)
 				MetaProfile.Codec.cache.clear();reopened = MetaProfile.new(test_path)
 				ok = ok and reopened.data.banks[capture_faction].resource == 59 and reopened.data.banks[capture_faction].mission_rewards.has("capture.mission")
 				mission_id = reopened.begin_mission(capture_faction,"capture.mission",999)
 				ok = ok and reopened.credit_mission(mission_id,capture_faction,10,true) and reopened.data.banks[capture_faction].resource == 59 and reopened.data.run.mission_earned == 0
 				print("MISSION_LEDGER_PROTECTION=",ok)
 				meta_profile = MetaProfile.new("");meta_profile.data = reopened.data.duplicate(true);_open_meta(capture_faction)
-				for suffix in ["",".bak",".tmp",".v082.bak"]:
+				for suffix in ["",".bak",".tmp",".v082.bak",".v084.bak"]:
 					if FileAccess.file_exists(test_path+suffix): DirAccess.remove_absolute(test_path+suffix)
 				print("PROFILE_PROTECTION=",ok)
 		if "--capture-meta-rewards" in OS.get_cmdline_user_args():
@@ -485,6 +503,9 @@ func _ready() -> void:
 			_refresh_loadout_label()
 			if summary_open: _set_summary_tab(3)
 			print("LOADOUT_SNAPSHOT=",JSON.stringify({"faction":model.faction,"points":Model.MetaTalents.spent(model.meta_ranks),"caption":loadout_label.text,"summary":summary_open,"tab":summary_tab,"readonly":not meta_menu.visible,"isolated":meta_profile.path.is_empty()}))
+		if "--capture-expanded-summary" in OS.get_cmdline_user_args():
+			_set_summary_tab(3)
+			print("EXPANDED_SUMMARY=",JSON.stringify({"points":Model.MetaTalents.spent(model.meta_ranks),"visible":summary_loadout_extra[0].visible,"text":summary_loadout_extra[0].text,"isolated":meta_profile.path.is_empty()}))
 		if "--capture-meta-rewards" in OS.get_cmdline_user_args() or "--capture-meta-loadout" in OS.get_cmdline_user_args():
 			faction_label.text = "CONTRÔLE PROGRESSION · BUDGET IMPOSÉ"
 		if capture_state == "selection":
@@ -516,6 +537,26 @@ func _ready() -> void:
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
 		print("CAPTURE_RESULT=", error)
 		get_tree().quit(error)
+
+func _capture_expanded_ranks(tree: int) -> Array:
+	# Profil éphémère réservé aux captures : aucun accès à la sauvegarde du joueur.
+	var expanded = Model.MetaTalents.Expanded
+	var ranks: Array = expanded.empty_ranks()
+	for target_tree in [tree,(tree+1)%3]:
+		for target in [15,30 if target_tree == tree else 20]:
+			while expanded.tree_spent(ranks,target_tree) < target:
+				var advanced: bool = false
+				for local in range(expanded.NODES_PER_TREE):
+					var index: int = expanded.index_for(target_tree,local)
+					if expanded.allocation_error(ranks,index,51).is_empty():
+						ranks[index] += 1;advanced = true;break
+				assert(advanced)
+			if target == 15 or target == 30:
+				var major: int = expanded.index_for(target_tree,9 if target == 15 else 18)
+				assert(expanded.allocation_error(ranks,major,51).is_empty())
+				ranks[major] += 1
+	assert(expanded.valid(ranks) and expanded.spent(ranks) == 51)
+	return ranks
 
 func _process(delta: float) -> void:
 	wave_notice_remaining = maxf(0.0,wave_notice_remaining-maxf(0.0,delta))
@@ -947,9 +988,16 @@ func _build_run_summary(screen: Control) -> void:
 		var card: Panel = _panel(summary_loadout_content,Rect2(24+314*tree,130,296,250))
 		summary_loadout_names.append(_label(card,"",Vector2(16,12),Vector2(264,30),21,Color("e0dbbf")))
 		summary_loadout_points.append(_label(card,"",Vector2(16,46),Vector2(264,24),14,Color("e6c987")))
-		for node in range(4):
-			var label: Label = _label(card,"",Vector2(16,82+37*node),Vector2(264,34),14,Color("bbcbbf"))
-			label.mouse_filter = Control.MOUSE_FILTER_STOP;summary_loadout_nodes.append(label)
+		var talent_scroll := ScrollContainer.new();talent_scroll.position = Vector2(12,78);talent_scroll.size = Vector2(272,164)
+		talent_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		card.add_child(talent_scroll);summary_loadout_scrollers.append(talent_scroll)
+		var list := Control.new();list.custom_minimum_size = Vector2(252,148)
+		talent_scroll.add_child(list);summary_loadout_lists.append(list)
+		for node in range(Model.MetaTalents.Expanded.NODES_PER_TREE):
+			var label: Label = _label(list,"",Vector2(4,4+37*node),Vector2(248,34),14,Color("bbcbbf"))
+			label.mouse_filter = Control.MOUSE_FILTER_STOP
+			if node < 4: summary_loadout_nodes.append(label)
+			else: summary_loadout_extra.append(label)
 	_label(summary_loadout_content,"Bonus permanents de cette partie",Vector2(24,396),Vector2(924,30),20,Color("e0dbbf"))
 	summary_loadout_hp = _label(summary_loadout_content,"",Vector2(24,432),Vector2(924,26),16,Color("e6c987"))
 	for unit in range(3): summary_loadout_units.append(_label(summary_loadout_content,"",Vector2(24,470+30*unit),Vector2(924,28),14,Color("bbcbbf")))
@@ -1074,8 +1122,9 @@ func _populate_loadout_summary() -> void:
 		var info: Dictionary = data.trees[tree]
 		summary_loadout_names[tree].text = info.name
 		summary_loadout_points[tree].text = "%d point%s actif%s" % [info.points,"s" if info.points > 1 else "","s" if info.points > 1 else ""]
-		for index in range(4):
-			var row: Label = summary_loadout_nodes[tree*4+index]
+		summary_loadout_lists[tree].custom_minimum_size.y = maxf(148,8+37*info.nodes.size())
+		for index in range(Model.MetaTalents.Expanded.NODES_PER_TREE):
+			var row: Label = summary_loadout_nodes[tree*4+index] if index < 4 else summary_loadout_extra[tree*(Model.MetaTalents.Expanded.NODES_PER_TREE-4)+index-4]
 			row.visible = index < info.nodes.size() or (index == 0 and info.nodes.is_empty())
 			row.tooltip_text = ""
 			if index < info.nodes.size():

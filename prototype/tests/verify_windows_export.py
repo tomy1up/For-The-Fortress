@@ -119,6 +119,9 @@ cases.append(('periodic_damage','damage_tick','horde'))
 for faction in ['alliance','horde']:
     for detail in ['compact','details']:
         cases.append((faction+'_hud_'+detail,'combat',faction))
+for camp in ['alliance','horde']:
+    for tree in range(3): cases.append((camp+'_expanded_tree_'+str(tree),'talents',camp))
+    cases.append((camp+'_expanded_summary','summary',camp))
 for name,state,faction in cases:
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
@@ -138,6 +141,8 @@ for name,state,faction in cases:
         if state=='elimination': command+=['--capture-type='+('2' if faction=='alliance' else '4')]
         if name.endswith('_final_start'): command+=['--capture-start-final']
         if name.endswith('_countdown_final'): command+=['--capture-countdown-final']
+        if '_expanded_tree_' in name: command+=['--capture-expanded-tree='+name[-1]]
+        if name.endswith('_expanded_summary'): command+=['--capture-expanded-summary']
         if name.startswith('home_'): command+=['--capture-home='+{'home_prepared':'prepared','home_maximum':'maximum','home_blocked':'blocked'}[name]]
         if name.endswith('_talents_reset'): command+=['--capture-meta-reset']
         if name.endswith('_reset_cap'): command+=['--capture-meta-reset','--capture-reset-cap']
@@ -213,9 +218,15 @@ for name,state,faction in cases:
         if name=='home_prepared':
             assert home['resources']==['4 ressources Alliance','25 ressources Horde'] and home['points']==['5 points actifs · 3 à placer','3 points actifs · 0 à placer']
             assert home['hp']==['Forteresse au départ : 25 PV','Forteresse au départ : 20 PV'] and 'acheter 2 points' in home['hints'][1]
-        if name=='home_maximum': assert all('36 points actifs' in line for line in home['points']) and all('Tous les points' in hint for hint in home['hints'])
+        if name=='home_maximum': assert all('51 points actifs' in line for line in home['points']) and all('Tous les points' in hint for hint in home['hints'])
         if name=='home_blocked': assert home['resources']==['Ressources : à vérifier']*2 and 'Sauvegarde à vérifier' in home['notice']
     if state=='talents': assert 'META_CAPTURE_ISOLATED=true' in text,(name,'La capture doit rester isolée du vrai profil')
+    if '_expanded_tree_' in name:
+        snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('EXPANDED_SNAPSHOT=')))
+        assert snapshot['isolated'] and snapshot['points']==51 and snapshot['nodes']==63 and snapshot['scroll']>0 and snapshot['tree']==int(name[-1]) and '★' in snapshot['title']
+    if name.endswith('_expanded_summary'):
+        snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('EXPANDED_SUMMARY=')))
+        assert snapshot['isolated'] and snapshot['points']==51 and snapshot['visible'] and snapshot['text']
     if name.endswith('_zero_reset'):
         quote=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RESPEC_SNAPSHOT=')))
         assert quote['isolated'] and quote['visible'] and quote['price']==0 and quote['balance_after']==0
@@ -227,7 +238,7 @@ for name,state,faction in cases:
         assert quote['balance_after']==36-quote['price'] and 'les points restent achetés' in quote['dialog']
     if name in ['alliance_talents','horde_talents','alliance_talents_no_points','horde_talents_no_points']:
         talent=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('TALENT_STATES_SNAPSHOT=')))
-        assert talent['isolated'] and talent['progress']==[0,5,10] and len(talent['states'])==15
+        assert talent['isolated'] and talent['progress']==[0,5,10,11,11,11,11] and len(talent['states'])==63
         assert talent['states'][0]=='maximum' and talent['states'][4]=='exclusive' and talent['states'][6]=='locked'
         assert talent['states'][2]==('unfunded' if name.endswith('_no_points') else 'available')
     if name.endswith('_rank_preview'): assert 'META_RANK_PREVIEW=true' in text,(name,'Le gain du prochain rang doit être affiché')

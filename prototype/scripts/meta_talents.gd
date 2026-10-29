@@ -1,10 +1,11 @@
 extends RefCounted
 ## Barème de prototype. Les rangs historiques restent lisibles pour le rejeu v0.67.
 const Legacy = preload("res://scripts/meta_talents_v067.gd")
+const Expanded = preload("res://scripts/meta_talents_expanded.gd")
 const POINT_PRICE: int = 10
 const RESET_PRICES: Array[int] = [0] # Gratuité validée le 29 octobre 2026.
 const NODES_PER_TREE: int = 5
-const MAX_POINTS: int = 36
+const MAX_POINTS: int = 51
 const MAX_RANKS: Array[int] = [5,3,3,1,1]
 const ROWS: Array[int] = [0,1,1,2,2]
 const THRESHOLDS: Array[int] = [0,5,10]
@@ -31,11 +32,13 @@ static func spent(ranks: Array) -> int:
 	return Legacy.spent(ranks)
 
 static func tree_spent(ranks: Array, tree: int) -> int:
+	if ranks.size() == Expanded.NODE_COUNT: return Expanded.tree_spent(ranks,tree)
 	var total: int = 0
 	for node in range(NODES_PER_TREE): total += int(ranks[tree*NODES_PER_TREE+node])
 	return total
 
 static func lower_spent(ranks: Array, tree: int, row: int) -> int:
+	if ranks.size() == Expanded.NODE_COUNT: return Expanded.lower_spent(ranks,tree,row)
 	var total: int = 0
 	for node in range(NODES_PER_TREE):
 		if ROWS[node] < row: total += int(ranks[tree*NODES_PER_TREE+node])
@@ -53,9 +56,10 @@ static func current_valid(ranks: Variant) -> bool:
 	return true
 
 static func valid(ranks: Variant) -> bool:
-	return current_valid(ranks) or Legacy.valid(ranks)
+	return Expanded.valid(ranks) or current_valid(ranks) or Legacy.valid(ranks)
 
 static func allocation_error(ranks: Array, index: int, points: int) -> String:
+	if ranks.size() == Expanded.NODE_COUNT: return Expanded.allocation_error(ranks,index,points)
 	if not current_valid(ranks) or index < 0 or index >= 15: return "Configuration de talents invalide."
 	var tree: int = int(index/NODES_PER_TREE);var node: int = index%NODES_PER_TREE
 	if ranks[index] >= MAX_RANKS[node]: return "Talent au rang maximum."
@@ -69,6 +73,7 @@ static func can_allocate(ranks: Array, index: int, points: int) -> bool:
 	return allocation_error(ranks,index,points).is_empty()
 
 static func effects(faction: int, ranks: Array, type: int) -> Dictionary:
+	if ranks.size() == Expanded.NODE_COUNT: return Expanded.effects(faction,ranks,type)
 	if Legacy.valid(ranks): return Legacy.effects(faction,ranks,type)
 	var result: Dictionary = {"direct":0.0,"secondary":0.0,"curse":0.0,"range":0.0}
 	if not current_valid(ranks) or type not in ([0,1,2] if faction == 0 else [3,4,5]): return result
@@ -89,10 +94,12 @@ static func effects(faction: int, ranks: Array, type: int) -> Dictionary:
 	return result
 
 static func extra_hp(faction: int, ranks: Array) -> int:
+	if ranks.size() == Expanded.NODE_COUNT: return Expanded.extra_hp(faction,ranks)
 	if Legacy.valid(ranks): return Legacy.extra_hp(faction,ranks)
 	return int(ranks[0])+int(ranks[1])+3*int(ranks[3]) if faction == 0 and current_valid(ranks) else 0
 
 static func rank_preview(faction: int, ranks: Array, index: int) -> Dictionary:
+	if ranks.size() == Expanded.NODE_COUNT: return Expanded.rank_preview(faction,ranks,index)
 	if faction not in [0,1] or not current_valid(ranks) or index < 0 or index >= 15: return {}
 	if ranks[index] >= MAX_RANKS[index%5]: return {}
 	var candidate: Array = ranks.duplicate();candidate[index] += 1
@@ -105,6 +112,7 @@ static func rank_preview(faction: int, ranks: Array, index: int) -> Dictionary:
 	return {"hp_before":extra_hp(faction,ranks),"hp_after":extra_hp(faction,candidate),"units":units}
 
 static func loadout_summary(faction: int, ranks: Array) -> Dictionary:
+	if ranks.size() == Expanded.NODE_COUNT: return Expanded.loadout_summary(faction,ranks)
 	if faction not in [0,1] or not valid(ranks): return {}
 	var current: bool = current_valid(ranks)
 	var definitions: Array = TREES[faction] if current else Legacy.TREES[faction]
