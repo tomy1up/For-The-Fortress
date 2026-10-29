@@ -1,28 +1,34 @@
 # Cadrage de campagne — décisions du 29 octobre 2026
 
-Complément à la [vision long terme](Feuille_de_route_long_terme.md), fondé sur les deux réponses explicites du porteur du projet dans ce tchat. Aucune règle nouvelle n’est appliquée au prototype par ce document. For the Fortress! reste un nom de travail dont la disponibilité juridique reste à confirmer.
+Complément à la [vision long terme](Feuille_de_route_long_terme.md), révisé à partir des dernières réponses explicites du porteur du projet. Les règles ci-dessous cadrent la future campagne ; le prototype v0.82 n’est pas modifié par ce document. For the Fortress! reste un nom de travail dont la disponibilité juridique reste à confirmer.
 
-## Décisions confirmées
+## Règles actuellement retenues
 
 | Identifiant | Décision | Conséquence |
 | --- | --- | --- |
-| CAMP-001 | Plusieurs missions composent une partie complète | Une réussite de mission intermédiaire n’ouvre ni l’accueil ni les talents. La fin globale reste la victoire finale ou la défaite de la partie. Les PO ne sont pas créditées au profil entre deux missions. |
-| CAMP-002 | Le palier désigne des missions, pas des vagues | Les missions 11–20, 31–40, 51–60, etc. introduisent chacune une nouveauté ou difficulté maintenue pendant les dix missions du bloc, puis susceptible de revenir ponctuellement. |
+| CAMP-002 | Les nouveautés concernent les missions 11–20, 31–40, 51–60, etc. | Chaque nouveauté ou difficulté persiste durant les dix missions de son bloc, puis peut revenir ponctuellement. Il s’agit de missions, pas de vagues de combat. |
+| CAMP-003 | Le joueur peut faire une seule mission et s’arrêter | Aucun enchaînement obligatoire de plusieurs missions avant d’obtenir les PO. Les chapitres organisent le contenu, sans imposer une session de dix missions. |
+| CAMP-004 | Les PO sont versées à la fin de la première victoire de chaque mission | Crédit définitif lié à cette mission ; rejouer et gagner une mission déjà récompensée ne redonne pas son gain initial. Une défaite ne déclenche pas cette récompense. |
+| CAMP-005 | Les gains déjà acquis sont persistants | Arrêter le jeu ou perdre une mission ultérieure ne retire pas les PO déjà versées pour les premières victoires antérieures. La future migration conserve les acquis existants. |
 
-Les exemples explicites font foi sur le terme « impaires » employé dans la formulation initiale. L’ancienne suggestion d’introduction aux missions 1–10, 21–30 et 41–50 est écartée. Le découpage proposé de dix missions par chapitre placerait les nouveaux paliers aux chapitres 2, 4, 6, etc. ; il ne détermine pas les limites d’une partie.
+Les exemples explicites des paliers font foi sur le terme « impaires » de la formulation initiale. L’ancienne suggestion d’introduction aux missions 1–10, 21–30 et 41–50 est écartée. Avec dix missions par chapitre, les nouveaux paliers correspondraient aux chapitres 2, 4, 6, etc. ; le découpage en chapitres reste une cible de contenu.
+
+## Décision remplacée, conservée pour traçabilité
+
+**CAMP-001 — Remplacée par CAMP-003 et CAMP-004 :** plusieurs missions composaient initialement une partie complète, avec gains provisoires jusqu’à la fin globale et absence de retour à l’accueil ou aux talents entre elles. Après avoir relié la durée de session à l’acquisition des PO, le porteur du projet a précisé que le joueur peut s’arrêter après une mission et reçoit ses PO dès sa première victoire. L’ancien regroupement obligatoire ne doit donc plus servir de règle de campagne.
 
 ## Questions encore ouvertes
 
-- Nombre de missions par partie, lieu de départ et condition de victoire finale.
-- Versement ou perte des PO provisoires des missions réussies si une défaite survient plus tard dans la partie ; moment où une première réussite est marquée comme définitivement récompensée.
-- Conservation ou réinitialisation de l’or temporaire, des défenseurs, des PV et des bonus au passage entre deux missions.
-- Nombre de vagues par mission et contenu du début de campagne 1–10.
-- Registre des missions réussies et verrou du mode infini par faction, règle du +1 %, budgets de PO et coût maximal des points de talents.
+- Nombre de vagues et condition de victoire d’une mission ; présentation du retour au parcours et de la poursuite facultative.
+- Réinitialisation ou conservation de l’or de combat, des défenseurs, des PV et des bonus lorsqu’on choisit une nouvelle mission.
+- Registre des premières victoires et verrou du mode infini par faction ; les monnaies et talents restent séparés entre les camps.
+- Montants des récompenses, coût maximal des points et budget garanti jusqu’à la mission 100 ; financement de la respécialisation après les récompenses uniques.
+- Calcul du +1 %, contenu des missions 1–10 et des nouveautés introduites par blocs.
 
-Les deux premières questions ont été soumises au porteur du projet. Aucun exemple de longueur de partie n’est adopté en attendant sa réponse. Les décisions acquises de séparation des factions, protection du profil et respécialisation payante restent en vigueur.
+La question du nombre obligatoire de missions par partie est close par la liberté de n’en jouer qu’une. La question du sort des gains provisoires de missions déjà gagnées est remplacée par le crédit définitif à chaque première victoire. Aucun mode de farm supplémentaire, montant ou conversion de monnaies n’est déduit de ces réponses.
 
-## État de réalisation
+## État de réalisation et prochaine intégration
 
-Le prototype v0.82 conserve une carte du Gué et ses dix vagues. Il comporte déjà des verrous de fin globale et des gains provisoires pour la future architecture multi-cartes, mais ne livre pas une campagne multi-missions. Il ne faut pas présenter un simple changement de libellé de « vague » en « mission » comme cette réalisation.
+Le prototype v0.82 conserve une carte du Gué et ses dix vagues. Son versement de ressources de fin de partie et ses anciens verrous multi-cartes appartiennent à l’architecture précédente ; ils devront être adaptés à la nouvelle limite de victoire de mission. Il ne livre pas encore le parcours de campagne ni le registre de premières récompenses.
 
-La suite de développement dépendante devra définir et tester les transitions de mission, la victoire finale, la défaite après une ou plusieurs réussites et le versement unique des récompenses à la limite retenue, avec conservation des acquis antérieurs au relancement du jeu.
+L’intégration devra enregistrer atomiquement le gain et le statut « récompense déjà versée » pour la mission et le compte concernés. Elle devra vérifier : premier succès crédité une fois, victoire rejouée sans second gain, défaite sans récompense de première victoire, relancement sans perte ni doublon, isolation des factions et conservation des acquis lors de la migration. Cette liste exprime des critères de réalisation à venir, pas des tests déjà exécutés.

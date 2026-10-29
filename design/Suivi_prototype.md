@@ -419,4 +419,8 @@ Illustration de chaque groupe avant le départ, tirée des mêmes atlas que les 
 
 ## Clarifications de campagne — 29 octobre 2026
 
-Plusieurs missions composent une partie complète, sans accès aux talents ni crédit de PO intermédiaire. Les nouveautés persistantes arrivent aux missions 11–20, 31–40, 51–60, etc., puis peuvent réapparaître ponctuellement. Les limites de la partie et le sort des gains provisoires en cas de défaite restent à préciser. [Décisions de cadrage](Cadrage_campagne_2026-10-29.md) et [feuille de route actualisée](Feuille_de_route_long_terme.md). Aucun changement du jeu v0.82 pour cette mise à jour documentaire.
+Première clarification, ensuite révisée : plusieurs missions devaient composer une partie complète. La réponse suivante fixe finalement la possibilité de ne jouer qu’une mission et le versement des PO dès sa première victoire. Les nouveautés persistantes restent aux missions 11–20, 31–40, 51–60, etc., puis peuvent réapparaître ponctuellement. [Décisions de cadrage](Cadrage_campagne_2026-10-29.md) et [feuille de route actualisée](Feuille_de_route_long_terme.md). Aucun changement du jeu v0.82 pour cette mise à jour documentaire.
+
+## Révision des récompenses de mission — 29 octobre 2026
+
+Le joueur peut s’arrêter après une seule mission. Ses PO sont versées dès la première victoire sur cette mission ; aucune récompense initiale répétée aux victoires suivantes, ni versée à la défaite. Les PO antérieures restent acquises. Cette décision remplace l’attente d’une fin globale multi-missions pour la future campagne. [Cadrage révisé](Cadrage_campagne_2026-10-29.md) et [feuille de route](Feuille_de_route_long_terme.md). Le jeu v0.82 garde son économie actuelle jusqu’à l’intégration et à la migration contrôlée.
