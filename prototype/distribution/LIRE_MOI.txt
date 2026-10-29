@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.82 — 29 octobre 2026
+Version : 0.83 — 29 octobre 2026
 
 JOUER
 
@@ -124,6 +124,15 @@ Le bouton « Chiffres du combat » affiche les compteurs complets et le temps
 simulé ; « Réduire les détails » revient au résumé. Cette lecture ne suspend
 ni les combats ni le départ automatique. La jauge sous les PV suit la santé
 actuelle de la forteresse ; les valeurs chiffrées restent visibles.
+
+PRÉPARATION DE LA CAMPAGNE
+
+Cette version prépare le registre protégé des premières victoires par mission.
+La sauvegarde précédente est migrée en conservant ressources, points, talents
+et compteurs. Une copie chiffrée du profil précédent est gardée.
+Le Gué conserve encore les gains du prototype : la nouvelle économie de PO par
+première victoire et les arbres de talents enrichis ne sont pas encore activés.
+Le plafond de points, leurs prix et les récompenses restent à définir.
 
 COMMANDES ET RÈGLES DU PROTOTYPE
 

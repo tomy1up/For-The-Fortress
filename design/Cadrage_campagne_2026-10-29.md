@@ -10,6 +10,7 @@ Complément à la [vision long terme](Feuille_de_route_long_terme.md), révisé 
 | CAMP-003 | Le joueur peut faire une seule mission et s’arrêter | Aucun enchaînement obligatoire de plusieurs missions avant d’obtenir les PO. Les chapitres organisent le contenu, sans imposer une session de dix missions. |
 | CAMP-004 | Les PO sont versées à la fin de la première victoire de chaque mission | Crédit définitif lié à cette mission ; rejouer et gagner une mission déjà récompensée ne redonne pas son gain initial. Une défaite ne déclenche pas cette récompense. |
 | CAMP-005 | Les gains déjà acquis sont persistants | Arrêter le jeu ou perdre une mission ultérieure ne retire pas les PO déjà versées pour les premières victoires antérieures. La future migration conserve les acquis existants. |
+| CAMP-006 | Les récompenses des 100 premières missions doivent couvrir le maximum de points autorisés | Le plafond de points et son prix restent à confirmer ; ce maximum ne permet pas de remplir tous les talents des trois arbres enrichis. Voir l’[orientation des talents](Orientation_talents_2026-10-29.md). |
 
 Les exemples explicites des paliers font foi sur le terme « impaires » de la formulation initiale. L’ancienne suggestion d’introduction aux missions 1–10, 21–30 et 41–50 est écartée. Avec dix missions par chapitre, les nouveaux paliers correspondraient aux chapitres 2, 4, 6, etc. ; le découpage en chapitres reste une cible de contenu.
 
@@ -29,6 +30,6 @@ La question du nombre obligatoire de missions par partie est close par la libert
 
 ## État de réalisation et prochaine intégration
 
-Le prototype v0.82 conserve une carte du Gué et ses dix vagues. Son versement de ressources de fin de partie et ses anciens verrous multi-cartes appartiennent à l’architecture précédente ; ils devront être adaptés à la nouvelle limite de victoire de mission. Il ne livre pas encore le parcours de campagne ni le registre de premières récompenses.
+Le prototype v0.82 conserve une carte du Gué et ses dix vagues. Son versement de ressources de fin de partie et ses anciens verrous multi-cartes appartiennent à l’architecture précédente ; ils devront être adaptés à la nouvelle limite de victoire de mission. Il ne livre pas encore le parcours de campagne ni le registre de premières récompenses. La v0.83 ajoute ensuite la [fondation persistante du registre](Registre_missions_v083.md), sans raccorder la nouvelle économie à la mission jouable ; le parcours et ses montants restent à définir.
 
 L’intégration devra enregistrer atomiquement le gain et le statut « récompense déjà versée » pour la mission et le compte concernés. Elle devra vérifier : premier succès crédité une fois, victoire rejouée sans second gain, défaite sans récompense de première victoire, relancement sans perte ni doublon, isolation des factions et conservation des acquis lors de la migration. Cette liste exprime des critères de réalisation à venir, pas des tests déjà exécutés.

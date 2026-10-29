@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 29 octobre 2026 — prototype v0.82, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 29 octobre 2026 — prototype v0.83, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -424,3 +424,11 @@ Première clarification, ensuite révisée : plusieurs missions devaient compose
 ## Révision des récompenses de mission — 29 octobre 2026
 
 Le joueur peut s’arrêter après une seule mission. Ses PO sont versées dès la première victoire sur cette mission ; aucune récompense initiale répétée aux victoires suivantes, ni versée à la défaite. Les PO antérieures restent acquises. Cette décision remplace l’attente d’une fin globale multi-missions pour la future campagne. [Cadrage révisé](Cadrage_campagne_2026-10-29.md) et [feuille de route](Feuille_de_route_long_terme.md). Le jeu v0.82 garde son économie actuelle jusqu’à l’intégration et à la migration contrôlée.
+
+## Richesse et plafond des talents — 29 octobre 2026
+
+Les trois arbres par faction doivent être nettement enrichis et partager un plafond imposant des arbitrages : acheter tous les points autorisés ne signifie pas remplir tous les talents. Les premières victoires des 100 premières missions doivent financer ce plafond, dont le nombre et le prix restent à définir. Le prototype actuel peut encore saturer ses trois petits arbres ; ce n’est pas la cible validée. [Orientation et constat chiffré](Orientation_talents_2026-10-29.md).
+
+## v0.83 — Registre des premières récompenses, 29 octobre 2026
+
+Fondation persistante pour les premières victoires par mission : reçu et gain atomiques, séparation des factions, reprise sans doublon et migration conservant les acquis. Répartition budgétaire paramétrable sans montant final. La nouvelle économie n’est pas encore raccordée au Gué jouable ; les arbres enrichis et leur plafond restent à concevoir. [Réalisation et validation](Registre_missions_v083.md).

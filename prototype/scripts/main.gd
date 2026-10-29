@@ -455,6 +455,10 @@ func _ready() -> void:
 			print("META_CAPTURE_ISOLATED=",meta_profile.path.is_empty())
 			if "--capture-profile-protection" in OS.get_cmdline_user_args():
 				var test_path: String = "user://test_packaged_protection_%d.json" % Time.get_ticks_usec()
+				var legacy: Dictionary = MetaProfile.fresh();legacy.schema = 2
+				for bank in legacy.banks: bank.erase("mission_rewards")
+				var legacy_file := FileAccess.open(test_path,FileAccess.WRITE)
+				legacy_file.store_buffer(MetaProfile.Codec.encode(legacy));legacy_file.close()
 				var stored = MetaProfile.new(test_path)
 				var id: int = stored.begin_run(capture_faction)
 				var ok: bool = id > 0 and stored.credit(id,capture_faction,10,true) and stored.buy_point(capture_faction) and stored.allocate(capture_faction,0)
@@ -463,8 +467,15 @@ func _ready() -> void:
 				var reopened = MetaProfile.new(test_path)
 				ok = ok and not reopened.blocked and reopened.data.banks[capture_faction].resource == 50 and reopened.data.banks[capture_faction].ranks[0] == 1
 				ok = ok and sealed.slice(0,MetaProfile.Codec.MAGIC.length()) == MetaProfile.Codec.MAGIC.to_utf8_buffer()
+				var mission_id: int = reopened.begin_mission(capture_faction,"capture.mission",9)
+				ok = ok and reopened.data.schema == 3 and mission_id > 0 and reopened.credit_mission(mission_id,capture_faction,10,true)
+				MetaProfile.Codec.cache.clear();reopened = MetaProfile.new(test_path)
+				ok = ok and reopened.data.banks[capture_faction].resource == 59 and reopened.data.banks[capture_faction].mission_rewards.has("capture.mission")
+				mission_id = reopened.begin_mission(capture_faction,"capture.mission",999)
+				ok = ok and reopened.credit_mission(mission_id,capture_faction,10,true) and reopened.data.banks[capture_faction].resource == 59 and reopened.data.run.mission_earned == 0
+				print("MISSION_LEDGER_PROTECTION=",ok)
 				meta_profile = MetaProfile.new("");meta_profile.data = reopened.data.duplicate(true);_open_meta(capture_faction)
-				for suffix in ["",".bak",".tmp"]:
+				for suffix in ["",".bak",".tmp",".v082.bak"]:
 					if FileAccess.file_exists(test_path+suffix): DirAccess.remove_absolute(test_path+suffix)
 				print("PROFILE_PROTECTION=",ok)
 		if "--capture-meta-rewards" in OS.get_cmdline_user_args():

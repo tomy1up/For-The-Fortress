@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.82 (29 octobre 2026)** : [portraits dans la prévision des vagues](design/Portraits_prevision_v082.md). Reconnaître les ennemis neutres et ceux du camp adverse avant le départ, avec les noms et avertissements conservés. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.82).
+**Version v0.83 (29 octobre 2026)** : [préparation des premières récompenses de mission](design/Registre_missions_v083.md). Registre persistant et migration conservant les acquis, sans activation de la nouvelle économie dans la mission jouable. Points, prix et arbres enrichis restent à définir. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.83).
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 

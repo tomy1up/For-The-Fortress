@@ -21,7 +21,8 @@ Le porteur du projet a fourni le texte de sa vision, une capture de parcours Duo
 | Chapitres | Première idée : 10 missions par chapitre | C/H, découpage à confirmer avant production du contenu |
 | Environnements | Changement de thème tous les deux chapitres | C ; identité et quantité d’assets non définies |
 | Introduction des mécaniques | Une nouveauté ou difficulté persiste aux missions 11–20, puis une autre aux missions 31–40, 51–60, etc. ; chacune peut ensuite réapparaître ponctuellement | V, précision explicite du 29 octobre ; contenu des nouveautés et fréquence des réapparitions à définir |
-| Mission 100 | Avoir obtenu assez de PO pour acheter le maximum de points de talents disponibles | C ; maximum, prix cumulés et budget hors talents à définir |
+| Mission 100 | Le cumul des PO des premières victoires des 100 premières missions doit couvrir le coût cumulé du maximum de points de talents autorisés | V pour la contrainte de financement, reconfirmée le 29 octobre ; nombre maximal de points et prix à confirmer |
+| Choix de talents | Trois arbres nettement plus fournis que le prototype ; le plafond de points commun aux trois arbres doit empêcher d’en acheter ou remplir tous les talents | V, précision du 29 octobre ; contenu, rangs et plafond à concevoir |
 | Mode infini | Débloqué après avoir terminé les 100 premières missions ; vagues sans fin | V pour le principe et le verrou ; réalisation après validation de la campagne |
 | Génération en infini | Carte complexe potentiellement générée aléatoirement | P du porteur du projet, formulée comme question ; méthode non arrêtée |
 | Finalité de l’infini | À déterminer | O ; aucun score, classement ou service en ligne implicitement approuvé |
@@ -57,7 +58,7 @@ Ces blocs fixent un rythme de contenu, pas une obligation d’enchaîner leurs d
 | Chapitres impairs de découverte, pairs de combinaison ; introduction aux missions 1–10, 21–30, 41–50, etc. | Interprétation écartée par la précision du 29 octobre : les nouvelles introductions visées sont 11–20, 31–40, 51–60, etc. ; aucun rôle de « combinaison » systématique n’est approuvé pour les blocs intermédiaires |
 | Réserver d’abord les PO aux talents | P ; autres dépenses à décider, avec maintien de la respécialisation payante déjà demandée |
 | Réattribution gratuite des talents | Non retenue : contredit la décision explicite de respécialisation payante, croissante puis plafonnée, compteur séparé par faction |
-| Maximum de points achetables distinct du total des rangs de talents ; choix de builds conservés | P à confirmer pour la cible commerciale ; conserver les règles du prototype tant qu’elles ne sont pas révisées |
+| Maximum de points achetables distinct du total des rangs de talents ; choix de builds conservés | Principe désormais V : le porteur du projet exige des arbres bien plus fournis et des choix stratégiques entre les trois ; nombres et contenu restent à définir |
 | Apparences, titres ou personnalisation de forteresse pour les missions 101–200 | P ; aucun cosmétique ni récompense supplémentaire implémenté ou approuvé |
 | Records personnels de vagues ou score ; records par configuration ; défi hebdomadaire commun | P ; aucune infrastructure réseau ou calendrier d’évènement engagé |
 | Structures de cartes validées avec variations aléatoires plutôt que génération entièrement libre | P ; méthode à comparer et valider |
@@ -65,7 +66,7 @@ Ces blocs fixent un rythme de contenu, pas une obligation d’enchaîner leurs d
 ## Cohérence avec les décisions déjà acquises
 
 - **Factions séparées :** monnaies, points, arbres et compteurs de respécialisation distincts Alliance/Horde. Un point dépensé dans un camp n’incrémente pas l’autre.
-- **Talents :** trois arbres par faction, progression verticale avec seuils de points investis dans le même arbre. Le contenu et les valeurs actuels sont un prototype d’équilibrage.
+- **Talents :** trois arbres par faction, progression verticale avec seuils de points investis dans le même arbre. Ils devront être nettement enrichis et partager un plafond d’investissement suffisamment inférieur à leur capacité totale pour imposer des choix de style. Le contenu actuel ne satisfait pas encore cette richesse ; ses 36 points et son prix de 10 ne sont pas des valeurs définitives. Voir l’[orientation des talents](Orientation_talents_2026-10-29.md).
 - **Respécialisation :** coût légèrement croissant pendant quelques réinitialisations, puis fixe au plafond ; compteur propre à chaque faction. Cette règle reste en vigueur.
 - **Limite de récompense révisée :** les PO de première victoire sont versées à la fin de la mission gagnée, avec possibilité de s’arrêter après une seule mission. L’ancien verrou imposant plusieurs missions avant le versement est remplacé pour la future campagne. Les talents ne se modifient pas pendant un combat ; aucun achat de talents en pleine mission n’est ajouté.
 - **Persistance :** conserver les acquis après fermeture et protéger la progression locale. La sauvegarde en ligne Steam reste une piste, sans service en ligne livré.
@@ -80,7 +81,7 @@ Le nom PO pour la progression peut prêter à confusion avec l’or temporaire s
 2. Les 200 missions, les premières réussites et le verrou des 100 missions sont-ils suivis séparément par faction ? À quelle faction revient chaque récompense ?
 3. Combien de vagues de combat comporte une mission ? Chaque mission redémarre-t-elle l’or temporaire, les défenseurs, les PV et les bonus, ou une poursuite facultative en conserve-t-elle certains ? Le rythme des nouveautés 11–20, 31–40, etc. est fixé ; les dix vagues actuelles ne deviennent pas automatiquement dix missions.
 4. Le +1 % est-il additif ou composé, avec quelle mission de référence, et agit-il sur les PV, quantités, vitesses ou un autre budget de difficulté ? Comment intégrer les sauts dus aux nouvelles mécaniques ?
-5. Combien de points peut-on acheter et combien peut-on investir simultanément ? Coûts fixes ou progressifs ? Quelles limites de répartition entre les trois arbres ?
+5. Quel plafond de points partagé entre les trois arbres, quels coûts d’achat et quelle richesse de talents par arbre ? L’impossibilité de tout remplir et l’exigence de choix stratégiques sont confirmées ; les nombres restent à définir.
 6. Pour chaque faction concernée, quelles récompenses garanties jusqu’à la mission 100 couvrent le coût cumulé des points ? Comment éviter qu’une dépense en respécialisation rende cet objectif inaccessible ?
 7. Les PO de mission exigent une première victoire et ne sont pas répétables : quelle source éventuelle finance les respécialisations une fois ces récompenses obtenues ? Aucun gain de PO de mission à la défaite ni farm supplémentaire n’est supposé.
 8. Quel rôle et quelles récompenses pour les missions 101–200 et l’infini une fois le maximum de points acheté ?

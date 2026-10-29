@@ -225,7 +225,7 @@ for name,state,faction in cases:
         assert talent['states'][0]=='maximum' and talent['states'][4]=='exclusive' and talent['states'][6]=='locked'
         assert talent['states'][2]==('unfunded' if name.endswith('_no_points') else 'available')
     if name.endswith('_rank_preview'): assert 'META_RANK_PREVIEW=true' in text,(name,'Le gain du prochain rang doit être affiché')
-    if name=='profile_protection': assert 'PROFILE_PROTECTION=true' in text,(name,'Le paquet doit chiffrer et relire un profil de contrôle')
+    if name=='profile_protection': assert 'PROFILE_PROTECTION=true' in text and 'MISSION_LEDGER_PROTECTION=true' in text,(name,'Le paquet doit chiffrer et relire un profil de contrôle')
     if '_loadout_' in name:
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('LOADOUT_SNAPSHOT=')))
         assert snapshot['faction']==(0 if faction=='alliance' else 1) and snapshot['points']==33 and snapshot['readonly'] and snapshot['isolated'] and '33 points' in snapshot['caption']
