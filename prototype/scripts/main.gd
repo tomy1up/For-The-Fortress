@@ -972,7 +972,9 @@ func _build_run_summary(screen: Control) -> void:
 		summary_core_titles.append(_label(card,["Forteresse","Ennemis passés","Or gagné au combat"][index],Vector2(16,12),Vector2(264,24),16,Color("bbcbbf")))
 		summary_key_values.append(_label(card,"",Vector2(16,46),Vector2(264,44),30,Color("e6c987")))
 	summary_meta_card = _panel(summary_essential_content,Rect2(726,130,222,108))
-	_label(summary_meta_card,"Ressources de faction",Vector2(16,12),Vector2(190,24),16,Color("bbcbbf"))
+	var po_heading: Label = _label(summary_meta_card,"PO de faction",Vector2(16,12),Vector2(190,24),16,Color("bbcbbf"))
+	po_heading.mouse_filter = Control.MOUSE_FILTER_STOP
+	po_heading.tooltip_text = "Pièces d’or persistantes : conservées pour préparer les talents de cette faction. Aucun transfert depuis l’or de combat."
 	summary_meta_value = _label(summary_meta_card,"",Vector2(16,40),Vector2(190,40),30,Color("e6c987"))
 	summary_meta_status = _label(summary_meta_card,"",Vector2(16,84),Vector2(190,18),12,Color("bbcbbf"))
 	summary_meta_note = _label(summary_essential_content,"",Vector2(24,246),Vector2(924,22),13,Color("cdb47e"))
@@ -1271,13 +1273,13 @@ func _refresh_home_progress() -> void:
 		meta_buttons[camp].text = "Préparer les talents"
 		meta_buttons[camp].tooltip_text = "Acheter des points et les affecter aux arbres de cette faction avant de partir."
 		if meta_profile == null:
-			home_resources[camp].text = "Ressources : indisponibles"
+			home_resources[camp].text = "PO : indisponibles"
 			home_points[camp].text = "Talents non chargés"
 			home_hp[camp].text = ""
 			home_hints[camp].text = "Progression permanente indisponible."
 			continue
 		if meta_profile.blocked:
-			home_resources[camp].text = "Ressources : à vérifier"
+			home_resources[camp].text = "PO : à vérifier"
 			home_points[camp].text = "Talents : à vérifier"
 			home_hp[camp].text = ""
 			home_hints[camp].text = "Consultez les talents pour le détail."
@@ -1285,7 +1287,9 @@ func _refresh_home_progress() -> void:
 		var bank: Dictionary = meta_profile.data.banks[camp]
 		var active: int = Model.MetaTalents.spent(bank.ranks)
 		var free: int = int(bank.points)-active
-		home_resources[camp].text = "%d ressource%s %s" % [bank.resource,"s" if bank.resource != 1 else "","Alliance" if camp == 0 else "Horde"]
+		home_resources[camp].text = "%d PO %s" % [bank.resource,"Alliance" if camp == 0 else "Horde"]
+		home_resources[camp].tooltip_text = "Pièces d’or persistantes de cette faction, conservées après fermeture du jeu. L’or de combat sert uniquement pendant la partie."
+		home_resources[camp].mouse_filter = Control.MOUSE_FILTER_STOP
 		home_points[camp].text = "%d point%s actif%s · %d à placer" % [active,"s" if active != 1 else "","s" if active != 1 else "",free]
 		home_hp[camp].text = "Forteresse au départ : %d PV" % [Model.INITIAL_HP+Model.MetaTalents.extra_hp(camp,bank.ranks)]
 		var affordable: int = mini(int(bank.resource)/Model.MetaTalents.POINT_PRICE,Model.MetaTalents.MAX_POINTS-int(bank.points))
@@ -1297,9 +1301,9 @@ func _refresh_home_progress() -> void:
 		elif affordable > 0:
 			home_hints[camp].text = "Vous pouvez acheter %d point%s de talent." % [affordable,"s" if affordable > 1 else ""]
 		else:
-			home_hints[camp].text = "Prochain point : encore %d ressources." % (Model.MetaTalents.POINT_PRICE-int(bank.resource))
-	meta_income.text = "Chaque faction conserve ses ressources et ses talents."
-	meta_income.tooltip_text = "Les points d’une faction ne peuvent pas être utilisés par l’autre."
+			home_hints[camp].text = "Prochain point : encore %d PO." % (Model.MetaTalents.POINT_PRICE-int(bank.resource))
+	meta_income.text = "Les PO et les talents sont conservés, séparément pour chaque faction."
+	meta_income.tooltip_text = "PO = pièces d’or persistantes pour acheter des points de talent. Elles sont séparées par faction et distinctes de l’or de combat utilisé pour recruter pendant la partie."
 	if meta_profile == null: meta_income.text = "Progression permanente indisponible."
 	elif meta_profile.blocked:
 		meta_income.text = "Sauvegarde à vérifier · Consultez les talents pour le détail."
@@ -1374,17 +1378,17 @@ func _update_meta_summary() -> void:
 	if not info.finished:
 		summary_meta_value.text = "+%d" % info.expected
 		summary_meta_status.text = "Provisoires · Partie en cours"
-		summary_meta_note.text = "Ces ressources seront versées après la victoire finale ou la défaite, pas entre les cartes."
+		summary_meta_note.text = "Ces PO seront versées au résultat final de cette partie, pas entre les cartes."
 		summary_talents_button.visible = false
 		return
 	summary_meta_value.text = "+%d" % info.saved if info.ready else "%d / %d" % [info.saved,info.expected]
 	summary_meta_status.text = "Sauvegardées · "+camp if info.ready else "Enregistrement en attente"
 	summary_meta_status.add_theme_color_override("font_color",Color("bbcbbf") if info.ready else Color("ef9b89"))
 	if info.ready:
-		var spending: String = "Tous les points actuels sont achetés" if info.at_cap else "%d point%s achetable%s" % [info.affordable,"s" if info.affordable > 1 else "","s" if info.affordable > 1 else ""] if info.affordable > 0 else "Encore %d ressources pour un point" % (MetaProfile.Talents.POINT_PRICE-info.balance)
-		summary_meta_note.text = "Vagues : %d · Victoire : %d · Solde %s : %d · %s" % [info.waves,info.bonus,camp,info.balance,spending]
+		var spending: String = "Tous les points actuels sont achetés" if info.at_cap else "%d point%s achetable%s" % [info.affordable,"s" if info.affordable > 1 else "","s" if info.affordable > 1 else ""] if info.affordable > 0 else "Encore %d PO pour un point" % (MetaProfile.Talents.POINT_PRICE-info.balance)
+		summary_meta_note.text = "Vagues : %d PO · Victoire : %d PO · Solde %s : %d PO · %s" % [info.waves,info.bonus,camp,info.balance,spending]
 	else:
-		summary_meta_note.text = "%d ressources en attente · Réessayez la sauvegarde avant de préparer vos talents." % info.pending
+		summary_meta_note.text = "%d PO en attente · Réessayez la sauvegarde avant de préparer vos talents." % info.pending
 	summary_meta_note.tooltip_text = meta_profile.error
 	summary_meta_note.mouse_filter = Control.MOUSE_FILTER_STOP
 	summary_talents_button.text = "Préparer mes talents" if info.ready else "Réessayer la sauvegarde"
@@ -1854,8 +1858,8 @@ func _update_interface() -> void:
 	var modal: bool = meta_menu.visible or choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
 	if meta_profile != null:
 		var pending: int = MetaProfile.resource_total(_cleared_wave_count())+_previous_map_rewards()
-		meta_progress_label.text = "Gains provisoires : %d" % pending if not _run_finished() else "Progression : sauvegarde à vérifier" if not meta_profile.error.is_empty() else "Talents : +%d ressources %s" % [meta_run_earned,"Alliance" if model.faction == 0 else "Horde"]
-		meta_progress_label.tooltip_text = "Ressources versées uniquement à la fin de la partie complète : victoire finale ou défaite." if not _run_finished() else meta_profile.error if not meta_profile.error.is_empty() else "Gains de la partie enregistrés."
+		meta_progress_label.text = "PO en attente : %d" % pending if not _run_finished() else "Progression : sauvegarde à vérifier" if not meta_profile.error.is_empty() else "Progression : +%d PO %s" % [meta_run_earned,"Alliance" if model.faction == 0 else "Horde"]
+		meta_progress_label.tooltip_text = "PO persistantes versées au résultat de cette partie. Elles sont distinctes de l’or de combat, utilisé pour recruter et améliorer vos défenseurs." if not _run_finished() else meta_profile.error if not meta_profile.error.is_empty() else "PO de cette faction enregistrées et conservées après fermeture du jeu."
 		meta_progress_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	if summary_open: _update_meta_summary()
 	for control in [start_button,speed_button,reset_button,sell_button,upgrade_button,bonus_summary_button,summary_button,inspection_numbers_button,combat_numbers_button]+buy_buttons:
@@ -1877,7 +1881,9 @@ func _update_interface() -> void:
 	fortress_fill.bg_color = Color("c58272") if fortress_condition >= 2 else Color("d0b874") if fortress_condition == 1 else Color("a1ba75")
 	hp_label.text = "FORTERESSE   %d / %d PV" % [model.fortress_hp,model.max_hp]
 	hp_label.add_theme_color_override("font_color",Color("ef9b89") if breach_remaining > 0.0 else Color("e2d5ad"))
-	gold_label.text = "OR DISPONIBLE     %d" % model.gold
+	gold_label.text = "OR DE COMBAT     %d" % model.gold
+	gold_label.tooltip_text = "Or temporaire de cette partie : recrutement, améliorations et ventes de défenseurs. Il est distinct des PO persistantes de votre faction."
+	gold_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	faction_panel.visible = choosing_faction
 	faction_label.text = "CHOIX DE FACTION" if choosing_faction else ("ALLIANCE" if model.faction == 0 else "HORDE") + "  /  VAGUE %d SUR 10" % model.wave
 	specialisation_panel.visible = pending_slot >= 0
@@ -1900,7 +1906,7 @@ func _update_interface() -> void:
 	speed_button.tooltip_text = "Alterner entre ×1, ×2 et ×10 (débogage temporaire).\nSeul le combat accélère ; les 30 secondes de préparation restent inchangées."
 	reset_button.disabled = not _run_finished() or modal
 	reset_button.visible = _run_finished()
-	reset_button.tooltip_text = "Retour à l’accueil uniquement après la victoire finale ou la défaite. Vos ressources et vos talents permanents sont conservés."
+	reset_button.tooltip_text = "Retour à l’accueil uniquement après la victoire finale ou la défaite. Vos PO et vos talents permanents sont conservés."
 	match model.phase:
 		"preparation": status_label.text = "Préparation · Vague %d/10\n%d ennemis" % [model.wave,model.spawn_schedule.size()]
 		"combat": status_label.text = "Combat · Vague %d/10\nAchats et ventes bloqués" % model.wave
@@ -1983,7 +1989,7 @@ func _update_interface() -> void:
 	_sync_keyboard_focus()
 
 func _guidance_text() -> String:
-	if model.phase == "victory" and not _run_finished(): return "Carte remportée. La partie continue ; ressources et talents restent en attente."
+	if model.phase == "victory" and not _run_finished(): return "Carte remportée. La partie continue ; PO et talents restent en attente."
 	if choosing_faction:
 		return "Choisissez votre faction.\nChaque camp a ses défenseurs.\nLa première vague attendra."
 	if pending_slot >= 0:

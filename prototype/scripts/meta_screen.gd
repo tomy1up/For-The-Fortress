@@ -178,8 +178,10 @@ func refresh() -> void:
 		return
 	var camp: String = "Alliance" if faction == 0 else "Horde"
 	heading.text = "Talents · "+camp
-	balance.text = "Ressource %s : %d · Points disponibles : %d / %d achetés · Plafond : %d" % [camp,bank.resource,maxi(0,mini(int(bank.points),Expanded.MAX_POINTS)-Expanded.spent(ranks)),bank.points,Expanded.MAX_POINTS]
-	buy.text = "Acheter 1 point · %d ressources" % Talents.POINT_PRICE
+	balance.text = "PO %s : %d · Points disponibles : %d / %d achetés · Plafond : %d" % [camp,bank.resource,maxi(0,mini(int(bank.points),Expanded.MAX_POINTS)-Expanded.spent(ranks)),bank.points,Expanded.MAX_POINTS]
+	balance.tooltip_text = "Pièces d’or persistantes de cette faction : conservées après fermeture et utilisées pour les points de talent. L’or de combat sert au recrutement pendant la partie."
+	buy.text = "Acheter 1 point · %d PO" % Talents.POINT_PRICE
+	buy.tooltip_text = "Dépenser les PO de cette faction pour acheter un point à répartir entre ses trois arbres. L’or de combat reste inchangé."
 	buy.disabled = profile.blocked or bank.resource < Talents.POINT_PRICE or bank.points >= Talents.MAX_POINTS
 	for tree in range(3):
 		names[tree].text = Talents.TREES[faction][tree][0]

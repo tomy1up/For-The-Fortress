@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 29 octobre 2026 — prototype v0.85, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 29 octobre 2026 — prototype v0.86, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -448,3 +448,7 @@ Décision explicite : les resets entre les missions sont gratuits, les talents r
 ## Version v0.85 — arbres enrichis
 
 [Lot détaillé](Arbres_enrichis_v085.md) : trois arbres de 21 talents, sept lignes, plafond 51 par faction, majeurs aux seuils 15 et 30, migration sans perte des gains et bilan complet avec défilement. Prix, nouveaux effets et équilibre restent provisoires. Le barème de campagne de 510 PO est une proposition non activée.
+
+## Version v0.86 — vocabulaire des monnaies
+
+[PO persistantes et or de combat](Monnaies_lisibles_v086.md) : accueil, arbres et résultats utilisent le nom demandé pour la progression ; le plateau distingue son or temporaire. Aucun changement de gains, coûts, format de profil ou règle de combat.

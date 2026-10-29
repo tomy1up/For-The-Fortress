@@ -14,6 +14,7 @@ Complément à la [vision long terme](Feuille_de_route_long_terme.md), révisé 
 | CAMP-007 | Chaque mission après la 100e donne aussi des PO à sa première victoire | La mission 100 est un repère budgétaire, pas la fin des gains de campagne. |
 | CAMP-008 | La boutique ouvre des stratégies grâce à des unités ayant forces et faiblesses | Aucune nouvelle unité ne doit être une remplaçante systématiquement supérieure. Catalogue et tarifs à définir. |
 | CAMP-009 | Reset gratuit des talents entre les missions | Tous les points sont rendus sans débit de PO ; la configuration reste fixée pendant la mission. Cette décision remplace la respécialisation payante. |
+| CAMP-010 | Un parcours indépendant par faction | Missions réussies et accès au mode infini suivis séparément pour l’Alliance et la Horde. Les 100 premières missions doivent être réussies dans la faction concernée pour y ouvrir l’infini. |
 
 Les exemples explicites des paliers font foi sur le terme « impaires » de la formulation initiale. L’ancienne suggestion d’introduction aux missions 1–10, 21–30 et 41–50 est écartée. Avec dix missions par chapitre, les nouveaux paliers correspondraient aux chapitres 2, 4, 6, etc. ; le découpage en chapitres reste une cible de contenu.
 
@@ -25,7 +26,7 @@ Les exemples explicites des paliers font foi sur le terme « impaires » de la f
 
 - Nombre de vagues et condition de victoire d’une mission ; présentation du retour au parcours et de la poursuite facultative.
 - Réinitialisation ou conservation de l’or de combat, des défenseurs, des PV et des bonus lorsqu’on choisit une nouvelle mission.
-- Registre des premières victoires et verrou du mode infini par faction ; les monnaies et talents restent séparés entre les camps.
+- Présentation du parcours et des missions verrouillées ; le suivi des réussites et le déblocage du mode infini sont désormais fixés comme indépendants par faction (CAMP-010).
 - Montants des récompenses, coût maximal des points et repère de financement jusqu’à la mission 100 hors dépenses facultatives ; équilibre des achats sur toute la campagne.
 - Calcul du +1 %, contenu des missions 1–10 et des nouveautés introduites par blocs.
 

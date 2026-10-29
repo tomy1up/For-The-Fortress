@@ -1144,7 +1144,7 @@ static func allocation_error(ranks: Array, index: int, points: int) -> String:
 		for other in group:
 			if other != local and ranks[index_for(tree,other)] > 0: return "L’autre spécialité de cette ligne est déjà choisie."
 	if spent(ranks) >= MAX_POINTS: return "Plafond provisoire de %d points investis atteint." % MAX_POINTS
-	if spent(ranks) >= points: return "Aucun point disponible : achetez un point avec la ressource de cette faction."
+	if spent(ranks) >= points: return "Aucun point disponible : achetez un point avec les PO de cette faction."
 	return ""
 
 static func effect_for(faction: int, index: int) -> Dictionary:

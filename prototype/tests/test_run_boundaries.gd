@@ -15,7 +15,7 @@ func run_checks() -> void:
 		var disk_before: String = FileAccess.get_file_as_string(path)
 		scene.model.start();scene.model.advance(10000);scene._process(0)
 		check(scene.model.phase == "finished" and scene.meta_profile.data.banks[faction].resource == 0,"Fin de vague : aucune acquisition de ressource")
-		check(scene._meta_reward_summary().pending == 1 and scene.meta_progress_label.text.contains("provisoires"),"Gain annoncé comme provisoire pendant le parcours")
+		check(scene._meta_reward_summary().pending == 1 and scene.meta_progress_label.text.contains("PO en attente"),"Gain annoncé comme provisoire pendant le parcours")
 		check(disk_before == FileAccess.get_file_as_string(path),"Pas de sauvegarde d'un versement entre les vagues")
 		var phase_before: String = scene.model.phase
 		scene._reset();scene._open_meta(faction)

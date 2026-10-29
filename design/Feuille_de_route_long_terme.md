@@ -67,7 +67,7 @@ Ces blocs fixent un rythme de contenu, pas une obligation d’enchaîner leurs d
 ## Cohérence avec les décisions déjà acquises
 
 - **Factions séparées :** monnaies, points, arbres et compteurs de respécialisation distincts Alliance/Horde. Un point dépensé dans un camp n’incrémente pas l’autre.
-- **Talents :** trois arbres par faction, progression verticale avec seuils de points investis dans le même arbre. Ils devront être nettement enrichis et partager un plafond d’investissement suffisamment inférieur à leur capacité totale pour imposer des choix de style. Le contenu actuel ne satisfait pas encore cette richesse ; ses 36 points et son prix de 10 ne sont pas des valeurs définitives. Voir l’[orientation des talents](Orientation_talents_2026-10-29.md).
+- **Talents :** trois arbres par faction, progression verticale avec seuils de points investis dans le même arbre. Ils devront être nettement enrichis et partager un plafond d’investissement suffisamment inférieur à leur capacité totale pour imposer des choix de style. La v0.85 propose désormais 21 talents par arbre et un plafond de prototype de 51 points ; effets et prix de 10 PO restent provisoires. Voir l’[orientation des talents](Orientation_talents_2026-10-29.md).
 - **Respécialisation :** gratuite entre les missions, talents fixés pendant la mission. Cette décision du 29 octobre remplace le tarif progressif plafonné. Les anciens compteurs restent des données historiques du profil, sans effet sur le coût nul.
 - **Limite de récompense révisée :** les PO de première victoire sont versées à la fin de la mission gagnée, avec possibilité de s’arrêter après une seule mission. L’ancien verrou imposant plusieurs missions avant le versement est remplacé pour la future campagne. Les talents ne se modifient pas pendant un combat ; aucun achat de talents en pleine mission n’est ajouté.
 - **Persistance :** conserver les acquis après fermeture et protéger la progression locale. La sauvegarde en ligne Steam reste une piste, sans service en ligne livré.
@@ -79,10 +79,10 @@ Le nom PO pour la progression peut prêter à confusion avec l’or temporaire s
 ## Questions de cadrage avant implémentation
 
 1. Comment présenter le résultat, le retour au parcours et la poursuite facultative après une mission ? La possibilité de s’arrêter après une seule mission et le versement des PO à sa première victoire sont fixés.
-2. Les 200 missions, les premières réussites et le verrou des 100 missions sont-ils suivis séparément par faction ? À quelle faction revient chaque récompense ?
+2. Décision acquise (CAMP-010) : parcours, missions réussies et mode infini sont indépendants par faction. Les gains reviennent au compte de la faction jouée. Leur présentation dans le parcours reste à réaliser.
 3. Combien de vagues de combat comporte une mission ? Chaque mission redémarre-t-elle l’or temporaire, les défenseurs, les PV et les bonus, ou une poursuite facultative en conserve-t-elle certains ? Le rythme des nouveautés 11–20, 31–40, etc. est fixé ; les dix vagues actuelles ne deviennent pas automatiquement dix missions.
 4. Le +1 % est-il additif ou composé, avec quelle mission de référence, et agit-il sur les PV, quantités, vitesses ou un autre budget de difficulté ? Comment intégrer les sauts dus aux nouvelles mécaniques ?
-5. Quel plafond de points partagé entre les trois arbres, quels coûts d’achat et quelle richesse de talents par arbre ? L’impossibilité de tout remplir et l’exigence de choix stratégiques sont confirmées ; les nombres restent à définir.
+5. Le plafond de prototype est de 51 points partagés ; la v0.85 propose 21 talents par arbre et des majeurs aux seuils 15 et 30. Prix et équilibre restent à éprouver.
 6. Quel barème de premières victoires jusqu’à la mission 100 couvre le coût cumulé des points sans autres dépenses ? Comment équilibrer les achats facultatifs en boutique pour retarder éventuellement ce maximum sans provoquer d’impasse de progression ? Les resets gratuits ne consomment plus ce budget.
 7. Les premières victoires des missions suivantes continuent de donner des PO : comment tarifer les dépenses durables et quelles sources de gains retenir après toutes les missions récompensées ? Aucun gain de mission à la défaite ni farm répétable supplémentaire n’est supposé.
 8. Quel rôle pour les missions 101–200 et quelles récompenses éventuelles en plus de leurs PO de première victoire ? Quel objectif et quelle économie pour l’infini ?
@@ -112,3 +112,7 @@ Chaque mission réussie une première fois donne des PO, également après la mi
 ## Actualisation du 29 octobre — plafond et arbres
 
 Prototype de 51 points par faction, deux talents majeurs facultatifs aux seuils 15 et 30, sept lignes : [v0.85](Arbres_enrichis_v085.md). Les noms et valeurs du catalogue enrichi sont des hypothèses. Le budget de première victoire des missions 1–100 doit couvrir les 51 points hors boutique ; à prix provisoire de 10 PO, cela représente 510 PO. Le barème exact reste à valider et ne change pas encore les gains du Gué.
+
+## Parcours indépendants — décision complémentaire
+
+CAMP-010 : l’Alliance et la Horde ont chacune leurs missions réussies et leur propre ouverture du mode infini après leurs 100 premières missions. Aucun succès d’un camp ne valide celui de l’autre. Les PO et les talents restent eux aussi séparés.

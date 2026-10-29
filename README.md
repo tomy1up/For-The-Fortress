@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.85 (29 octobre 2026)** : [arbres de talents enrichis](design/Arbres_enrichis_v085.md). Trois arbres de 21 talents par faction, sept lignes, plafond partagé de 51 points et deux talents majeurs par arbre. Les anciens gains sont conservés, le reset reste gratuit. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.85).
+**Version v0.86 (29 octobre 2026)** : [monnaies clairement distinguées](design/Monnaies_lisibles_v086.md). PO persistantes par faction pour les talents ; or de combat pour recruter pendant la partie. Arbres à 51 points conservés. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.86).
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 

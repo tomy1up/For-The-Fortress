@@ -214,12 +214,12 @@ for name,state,faction in cases:
     if state=='selection':
         home=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('HOME_SNAPSHOT=')))
         assert home['isolated'] and home['readonly']
-        if name=='selection': assert home['resources']==['0 ressources Alliance','0 ressources Horde'] and all('encore 10' in hint for hint in home['hints'])
+        if name=='selection': assert home['resources']==['0 PO Alliance','0 PO Horde'] and all('encore 10' in hint for hint in home['hints'])
         if name=='home_prepared':
-            assert home['resources']==['4 ressources Alliance','25 ressources Horde'] and home['points']==['5 points actifs · 3 à placer','3 points actifs · 0 à placer']
+            assert home['resources']==['4 PO Alliance','25 PO Horde'] and home['points']==['5 points actifs · 3 à placer','3 points actifs · 0 à placer']
             assert home['hp']==['Forteresse au départ : 25 PV','Forteresse au départ : 20 PV'] and 'acheter 2 points' in home['hints'][1]
         if name=='home_maximum': assert all('51 points actifs' in line for line in home['points']) and all('Tous les points' in hint for hint in home['hints'])
-        if name=='home_blocked': assert home['resources']==['Ressources : à vérifier']*2 and 'Sauvegarde à vérifier' in home['notice']
+        if name=='home_blocked': assert home['resources']==['PO : à vérifier']*2 and 'Sauvegarde à vérifier' in home['notice']
     if state=='talents': assert 'META_CAPTURE_ISOLATED=true' in text,(name,'La capture doit rester isolée du vrai profil')
     if '_expanded_tree_' in name:
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('EXPANDED_SNAPSHOT=')))
