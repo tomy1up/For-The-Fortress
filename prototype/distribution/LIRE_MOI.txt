@@ -1,10 +1,11 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.92 — 30 octobre 2026
+Version : 0.93 — 30 octobre 2026
 
 JOUER
 
 1. Extraire tout le ZIP, puis lancer For_the_Fortress.exe.
 2. Choisir sa faction, puis sa mission dans son parcours de campagne.
+   Son aperçu montre le tracé, la forteresse et les six emplacements.
    Trois missions de dix vagues sont jouables : le Gué, le Bois du Gué, les Hauts
    du Gué. Gagner la précédente les débloque dans la faction concernée.
 3. Préparer les talents avant la mission, puis jouer et installer sa défense.

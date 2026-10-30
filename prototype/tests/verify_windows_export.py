@@ -125,7 +125,7 @@ for camp in ['alliance','horde']:
     for tree in range(3): cases.append((camp+'_expanded_tree_'+str(tree),'talents',camp))
     cases.append((camp+'_expanded_summary','summary',camp))
 for camp in ["alliance","horde"]:
-    for variant in ["fresh","completed","future","blocked","talents","returned"]: cases.append((camp+"_campaign_menu_"+variant,"campaign_menu",camp))
+    for variant in ["fresh","completed","future","blocked","talents","returned","terrain2","terrain3","locked2"]: cases.append((camp+"_campaign_menu_"+variant,"campaign_menu",camp))
 for camp in ["alliance","horde"]:
     for mission in [2,3]:
         for stage in ["preparation","inspection","summary"]: cases.append((camp+"_sample_"+str(mission)+"_"+stage,"campaign_sample",camp))
@@ -221,11 +221,16 @@ for name,state,faction in cases:
         variant=name.rsplit('_',1)[1]
         assert snap['isolated'] and snap['faction']==(0 if faction=='alliance' else 1) and snap['menu'] and snap['choosing']
         assert snap['nodes']==10 and snap['chapters']==20 and snap['fresh']
-        assert snap['talents']==(variant=='talents') and snap['disabled']==(variant in ['future','blocked'])
-        assert snap['completed']==(-1 if variant=='blocked' else 1 if variant in ['completed','returned'] else 0)
+        assert snap['talents']==(variant=='talents') and snap['disabled']==(variant in ['future','blocked','locked2'])
+        successes = 2 if variant=='terrain3' else 1 if variant in ['completed','returned','terrain2'] else 0
+        assert snap['completed']==(-1 if variant=='blocked' else successes)
         assert snap['other_completed']==(-1 if variant=='blocked' else 0)
-        assert (snap['chapter'],snap['selected'])==((20,200) if variant=='future' else (1,2) if variant=='returned' else (1,1))
-        assert snap['po']==(60 if variant in ['completed','returned'] else 0) and snap['xp']==(10100 if variant=='returned' else 100 if variant=='completed' else 0)
+        selection = 3 if variant=='terrain3' else 2 if variant in ['returned','terrain2','locked2'] else 1
+        assert (snap['chapter'],snap['selected'])==((20,200) if variant=='future' else (1,selection))
+        assert snap['po']==60*successes and snap['xp']==(10100 if variant=='returned' else 100*successes)
+        assert snap['preview_map']==('' if variant=='future' else ['valley_ford','ford_woods','ford_heights'][selection-1])
+        assert snap['preview_slots']==(0 if variant=='future' else 6)
+        assert snap['preview_segments']==(0 if variant=='future' else 7)
     if name in ['alliance_purchase','horde_purchase','alliance_crossbow_purchase','alliance_mage_purchase','horde_sapper_purchase','horde_shaman_purchase']:
         ghost=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('PURCHASE_GHOST_SNAPSHOT=')))
         expected_type={'alliance_purchase':0,'horde_purchase':3,'alliance_crossbow_purchase':1,'alliance_mage_purchase':2,'horde_sapper_purchase':4,'horde_shaman_purchase':5}[name]

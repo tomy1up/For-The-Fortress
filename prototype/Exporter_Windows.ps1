@@ -1,6 +1,6 @@
 param(
     [string]$EnginePath = '',
-    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.92',
+    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.93',
     [string]$OutputRoot = ''
 )
 $ErrorActionPreference = 'Stop'
@@ -59,7 +59,7 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'distribution\LICENCES_GODOT.txt
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot '..\design\Fiche_essai_joueur.md') -Destination $artifactFolder
 $manifest = [ordered]@{
     version = $Version
-    date = '2026-10-28'
+    date = (Get-Date -Format 'yyyy-MM-dd')
     platform = 'Windows x86_64'
     engine = $engineVersion
     executable = 'For_the_Fortress.exe'

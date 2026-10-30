@@ -586,9 +586,18 @@ func _capture_campaign_menu(camp: int) -> void:
 		var id: int = meta_profile.begin_mission(camp,"campaign.001",60,10,100)
 		var credited: bool = meta_profile.credit_mission(id,camp,10,true)
 		if not credited: push_error("Échec du profil de contrôle de campagne.");return
+	if variant in ["terrain2","terrain3"]:
+		for number in range(1,2 if variant == "terrain2" else 3):
+			var entry: Dictionary = CampaignCatalogue.definition(number)
+			var id: int = meta_profile.begin_mission(camp,entry.id,entry.po,entry.waves,entry.xp)
+			var credited: bool = meta_profile.credit_mission(id,camp,entry.waves,true)
+			if not credited: push_error("Échec du profil isolé des aperçus de terrain.");return
 	if variant == "blocked":
 		meta_profile.blocked = true;meta_profile.error = "Sauvegarde indisponible simulée pour le contrôle."
 	_open_campaign(camp,20 if variant == "future" else 1)
+	if variant in ["terrain2","terrain3","locked2"]:
+		campaign_menu._select(2 if variant == "terrain3" else 1)
+		campaign_menu.initial_focus().grab_focus()
 	if variant == "future":
 		campaign_menu._select(9);campaign_menu.nodes[9].grab_focus()
 	if variant == "talents": campaign_menu._talents()
@@ -601,7 +610,8 @@ func _capture_campaign_menu(camp: int) -> void:
 	var status: Dictionary = meta_profile.campaign_status(camp)
 	var other: Dictionary = meta_profile.campaign_status(1-camp)
 	var bank: Dictionary = meta_profile.data.banks[camp]
-	print("CAMPAIGN_SNAPSHOT=",JSON.stringify({"variant":variant,"faction":camp,"isolated":meta_profile.path.is_empty(),"menu":campaign_menu.visible,"talents":meta_menu.visible,"chapter":campaign_menu.chapter,"selected":(campaign_menu.chapter-1)*10+campaign_menu.selected+1,"completed":status.get("completed",-1),"other_completed":other.get("completed",-1),"disabled":campaign_menu.start_button.disabled,"po":bank.resource,"xp":bank.xp,"nodes":campaign_menu.nodes.size(),"chapters":campaign_menu.chapter_buttons.size(),"fresh":model.gold == 150 and model.bonuses.is_empty() and model.defenders.all(func(unit): return unit.is_empty()),"choosing":choosing_faction}))
+	var preview: Dictionary = campaign_menu.terrain_preview.geometry()
+	print("CAMPAIGN_SNAPSHOT=",JSON.stringify({"preview_map":preview.get("id",""),"preview_slots":preview.get("slots",[]).size(),"preview_segments":maxi(0,preview.get("path",[]).size()-1),"variant":variant,"faction":camp,"isolated":meta_profile.path.is_empty(),"menu":campaign_menu.visible,"talents":meta_menu.visible,"chapter":campaign_menu.chapter,"selected":(campaign_menu.chapter-1)*10+campaign_menu.selected+1,"completed":status.get("completed",-1),"other_completed":other.get("completed",-1),"disabled":campaign_menu.start_button.disabled,"po":bank.resource,"xp":bank.xp,"nodes":campaign_menu.nodes.size(),"chapters":campaign_menu.chapter_buttons.size(),"fresh":model.gold == 150 and model.bonuses.is_empty() and model.defenders.all(func(unit): return unit.is_empty()),"choosing":choosing_faction}))
 
 func _capture_sample_combat() -> void:
 	model.rng.seed = 42

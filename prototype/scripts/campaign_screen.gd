@@ -1,8 +1,60 @@
 extends ColorRect
 const Catalogue = preload("res://scripts/campaign_catalogue.gd")
+const Maps = preload("res://scripts/map_definition.gd")
 signal mission_requested(id: String)
 signal talents_requested(faction: int)
 signal closed
+
+class TerrainPreview extends Control:
+	var definition: Dictionary = {}
+	func _init() -> void:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+	func show_map(id: String) -> void:
+		definition = Maps.for_id(id) if not id.is_empty() else {}
+		queue_redraw()
+	static func project(point: Vector2) -> Vector2:
+		return Vector2((point.x-point.y)*2,point.x+point.y)
+	func geometry() -> Dictionary:
+		if definition.is_empty() or size.x < 32 or size.y < 48: return {}
+		var dimensions: Vector2 = Vector2(definition.size)
+		var logical_board: Array[Vector2] = [Vector2.ZERO,Vector2(dimensions.x,0),dimensions,Vector2(0,dimensions.y)]
+		var minimum: Vector2 = project(logical_board[0]);var maximum: Vector2 = minimum
+		for point in logical_board:
+			minimum = minimum.min(project(point));maximum = maximum.max(project(point))
+		var extent: Vector2 = maximum-minimum
+		var available: Vector2 = size-Vector2(24,38)
+		var factor: float = minf(available.x/extent.x,available.y/extent.y)
+		var origin: Vector2 = Vector2(12,6)+(available-extent*factor)/2-minimum*factor
+		var board := PackedVector2Array();var path := PackedVector2Array();var slots := PackedVector2Array()
+		for point in logical_board: board.append(origin+project(point)*factor)
+		for point in definition.path_points: path.append(origin+project(point)*factor)
+		for point in definition.slots: slots.append(origin+project(point)*factor)
+		return {"id":definition.id,"board":board,"path":path,"slots":slots}
+	func _draw() -> void:
+		var font: Font = ThemeDB.fallback_font
+		draw_style_box(_background(),Rect2(Vector2.ZERO,size))
+		var layout: Dictionary = geometry()
+		if layout.is_empty():
+			var message: String = "Carte à venir"
+			draw_string(font,Vector2((size.x-font.get_string_size(message,HORIZONTAL_ALIGNMENT_LEFT,-1,15).x)/2,size.y/2+5),message,HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("91a799"))
+			return
+		draw_colored_polygon(layout.board,Color("294536"))
+		var outline: PackedVector2Array = layout.board.duplicate();outline.append(outline[0])
+		draw_polyline(outline,Color("48634e"),1,true)
+		draw_polyline(layout.path,Color("645b3b"),9,true)
+		draw_polyline(layout.path,Color("d6c18a"),5,true)
+		for point in layout.slots:
+			var diamond := PackedVector2Array([point+Vector2(0,-4),point+Vector2(7,0),point+Vector2(0,4),point+Vector2(-7,0)])
+			draw_colored_polygon(diamond,Color("142d28"));diamond.append(diamond[0]);draw_polyline(diamond,Color("bdd0c3"),1.5,true)
+		var entry: Vector2 = layout.path[0];var fortress: Vector2 = layout.path[-1]
+		draw_circle(entry,4,Color("e9c46a"))
+		draw_rect(Rect2(fortress-Vector2(5,7),Vector2(10,10)),Color("a5c8c1"))
+		draw_line(fortress+Vector2(0,-7),fortress+Vector2(0,-16),Color("d9e4d7"),1.5,true)
+		draw_colored_polygon(PackedVector2Array([fortress+Vector2(0,-16),fortress+Vector2(8,-13),fortress+Vector2(0,-10)]),Color("e9c46a"))
+		var legend: String = "Entrée → Forteresse · %d emplacements" % layout.slots.size()
+		draw_string(font,Vector2((size.x-font.get_string_size(legend,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x)/2,size.y-8),legend,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("bbcbbf"))
+	func _background() -> StyleBoxFlat:
+		var box := StyleBoxFlat.new();box.bg_color = Color("0c1d17");box.set_corner_radius_all(6);return box
 
 class PathDrawing extends Control:
 	var points: Array[Vector2] = []
@@ -40,6 +92,7 @@ var nodes: Array[MissionNode] = []
 var path_drawing: PathDrawing
 var mission_heading: Label
 var mission_title: Label
+var terrain_preview: TerrainPreview
 var mission_detail: Label
 var rewards: Label
 var infinite_label: Label
@@ -99,13 +152,14 @@ func _ready() -> void:
 		path_drawing.add_child(node);nodes.append(node)
 		path_drawing.points.append(node.position+Vector2(21,21))
 	mission_heading = label_at(self,"",Rect2(870,136,358,28),17,Color("e5c779"))
-	mission_title = label_at(self,"",Rect2(870,172,358,64),24)
-	mission_detail = label_at(self,"",Rect2(870,244,358,64),16,Color("bbcbbf"))
-	rewards = label_at(self,"",Rect2(870,316,358,68),16,Color("e5c779"))
-	start_button = button_at("Jouer",Rect2(870,400,358,44),_launch)
-	talents_button = button_at("Préparer les talents",Rect2(870,456,358,42),_talents)
-	label_at(self,"Mode infini",Rect2(870,534,358,28),20)
-	infinite_label = label_at(self,"",Rect2(870,574,358,94),15,Color("aabeb0"))
+	mission_title = label_at(self,"",Rect2(870,172,358,48),24)
+	terrain_preview = TerrainPreview.new();terrain_preview.position = Vector2(870,232);terrain_preview.size = Vector2(358,144);add_child(terrain_preview)
+	mission_detail = label_at(self,"",Rect2(870,384,358,44),14,Color("bbcbbf"))
+	rewards = label_at(self,"",Rect2(870,436,358,50),16,Color("e5c779"))
+	start_button = button_at("Jouer",Rect2(870,500,358,44),_launch)
+	talents_button = button_at("Préparer les talents",Rect2(870,556,358,42),_talents)
+	label_at(self,"Mode infini",Rect2(870,608,358,24),16)
+	infinite_label = label_at(self,"",Rect2(870,636,358,40),13,Color("aabeb0"))
 	label_at(self,"Une mission à la fois · XP et PO de première victoire · Parcours propre à la faction",Rect2(32,704,1216,28),14,Color("9eb3a4"))
 	back_button = button_at("Changer de faction · Échap",Rect2(32,744,240,38),close)
 	footer = label_at(self,"",Rect2(292,748,956,36),13,Color("91a799"))
@@ -191,6 +245,7 @@ func _refresh_detail() -> void:
 	var done: bool = not status.is_empty() and status.missions[number-1]
 	mission_heading.text = "Mission %d" % number
 	mission_title.text = definition.title
+	terrain_preview.show_map(definition.get("map_id","") if definition.available else "")
 	if not definition.available:
 		mission_detail.text = "Contenu à venir."
 		rewards.text = "Vagues et récompenses à définir."
