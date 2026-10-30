@@ -1,14 +1,15 @@
 # For the Fortress!
 
-Game Design Document — Version 0.14 — 20 octobre 2026
+Game Design Document — Version 0.15 — 30 octobre 2026
 
-Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cette version consolide le GDD v0.1 fourni, ses cinq captures et les règles de combat des deux factions, les ennemis, les récompenses, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat, les bonus roguelite, les synergies, le recrutement, la vente et le cahier de réalisation approuvés ensuite. Elle conserve les choix établis, les valeurs provisoires et les questions ouvertes, tout en ajoutant des outils de suivi explicitement proposés.
+Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide les règles de combat détaillées, la progression persistante par faction, la campagne et les trois missions jouables de la version Windows 0.92. Elle conserve les tableaux techniques du socle et distingue décisions validées, valeurs de prototype et questions ouvertes.
+
+**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié. Les calculs de combat du socle sont établis sans talents persistants, sauf indication contraire. Les spécialisations de niveau 4 d’un défenseur et les trois arbres persistants d’une faction sont deux systèmes distincts.
+
+**Version documentaire 0.15 ; jeu de référence 0.92.** Une publication de jeu n’implique pas l’approbation définitive de ses réglages. Les anciennes décisions remplacées sont explicitées en section 48. Les documents datés restent des sources historiques ; les présentes règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
-**Complément du 29 octobre 2026 :** les points de talent proviennent désormais de l’XP de première victoire, avec 51 points sur les cent premières missions ; les PO servent à la boutique. Parcours indépendants par faction, reset gratuit. Voir la [décision XP et sa réalisation v0.87](design/Experience_talents_2026-10-29.md) et la [nouvelle architecture de talents liés](design/Arbres_lies_v088.md), avec [flèches droites en v0.89](design/Fleches_droites_v089.md). Les règles historiques ci-dessous sont à lire avec ces révisions.
-
-**Complément du 30 octobre 2026 :** chaque mission repart à neuf (CAMP-013). Après le [parcours v0.90](design/Parcours_campagne_v090.md), la [v0.91](design/Echantillon_campagne_v091.md) propose l’échantillon retenu de trois missions de dix vagues, à 100/101/102 % de PV ennemis (CAMP-014 et CAMP-015). Leurs noms, géométries et gains sont des propositions de prototype ; 197 missions restent à réaliser. La [v0.92](design/Lisibilite_progression_v092.md) clarifie le bilan et la préparation de la prochaine mission sans changer ces règles.
 ## Sommaire
 
 1. [1 Vision et cadre de conception](#s1)
@@ -62,6 +63,11 @@ Nom de travail — disponibilité juridique à confirmer.
 49. [49 Questions ouvertes et suivi](#s49)
 50. [50 Sources et historique du GDD](#s50)
 51. [51 Maintenance du GDD](#s51)
+52. [52 Campagne et récompenses de mission](#s52)
+53. [53 Talents persistants et courbe XP](#s53)
+54. [54 Sauvegarde et continuité de progression](#s54)
+55. [55 Catalogue des talents du prototype](#s55)
+56. [56 État vérifié et prochaines décisions](#s56)
 
 <a id="s1"></a>
 
@@ -124,10 +130,10 @@ La carte initiale est une scène médiévale-fantasy en vue isométrique. Elle c
 
 | Paramètre du prototype | Valeur de référence | Statut |
 | --- | --- | --- |
-| Cartes | 1 | C |
+| Cartes jouables | 3 dans le même thème ; détails en section 52 | V pour la taille de l’essai ; H pour les nouvelles géométries |
 | Emplacements de construction | 6 | C |
 | Vagues | 10 | C |
-| Or initial | 150 pièces d’or | H — valeur de départ à tester |
+| Or initial de combat | 150 or, distinct des PO persistantes | H — valeur de départ à tester |
 | Points de vie de la forteresse | 20 PV | H — valeur de départ à tester |
 | Choix roguelite | Après les vagues 3, 6 et 9 | V — calendrier du prototype |
 
@@ -241,7 +247,7 @@ Le DPS total théorique du mage atteint (27 + 10,8 + 10,8) ÷ 2,5 = 19,44 lorsqu
 - Commencer une attaque uniquement avec une cible valide à portée ; recalculer sa priorité avant chaque tir selon la section 21.
 - Tester sans réduction de dégâts liée aux résistances, sans bonus raciaux et sans spécialisations, afin de comparer les niveaux 1.
 
-Les victimes secondaires les plus proches du point d’impact sont prioritaires — V. Le premier tir, les égalités et les impacts instantanés sont précisés en sections 21 à 23. Le premier test comparera des ennemis isolés puis regroupés sur le même tronçon de route ; aucun test jouable n’est encore réalisé.
+Les victimes secondaires les plus proches du point d’impact sont prioritaires — V. Le premier tir, les égalités et les impacts instantanés sont précisés en sections 21 à 23. Les tests de combat couvrent les cibles isolées et regroupées ; leurs résultats ne remplacent pas l’évaluation humaine de l’équilibre.
 
 <a id="s6"></a>
 
@@ -284,7 +290,7 @@ La cible principale reste l’ennemi à portée le plus avancé. Pour les rebond
 ## 7 Économie et calculs de référence
 
 ### Règles et paramètres
-L’or finance les achats et les améliorations — V. Pour le premier essai, chaque élimination rapporte immédiatement une récompense unique, selon le tableau de la section 9. Les montants sont H. Le capital initial de référence est de 150 or — H. Aucun revenu passif ni monnaie supplémentaire n’est validé.
+L’or finance les achats et les améliorations — V. Pour le premier essai, chaque élimination rapporte immédiatement une récompense unique, selon le tableau de la section 9. Les montants sont H. Le capital initial de référence est de 150 or — H. Aucun revenu passif de combat n’est validé. Les PO persistantes et l’XP sont distinctes de cet or et décrites en section 52.
 
 ### Récompenses validées pour le premier essai
 - Créditer l’or immédiatement à la mort d’un ennemi, une seule fois, y compris après des dégâts de malédiction.
@@ -349,7 +355,7 @@ La diversité compte les types de défenseurs de base, pas les copies, niveaux o
 Le socle illustre une interaction possible par un archer elfe placé près d’un druide qui pourrait recevoir des flèches empoisonnées. Cet exemple n’approuve ni le druide comme défenseur, ni une valeur de poison, ni une portée de voisinage. Il sert uniquement à expliquer le principe.
 
 ### Recalcul et progression persistante
-Recalculer conditions et valeurs après construction, amélioration, choix de branche, vente et sélection d’un bonus, depuis les références sans cumul répété — V. La progression entre les parties demeure ouverte : aucune monnaie persistante, arbre de talents ou amélioration permanente n’est approuvé.
+Recalculer conditions et valeurs après construction, amélioration, choix de branche, vente et sélection d’un bonus, depuis les références sans cumul répété — V. La progression persistante est validée : XP, PO, points et arbres propres à chaque faction. Les règles actuelles figurent en sections 52 à 54. Les bonus de vagues et les unités déployées restent propres à la mission.
 
 <a id="s9"></a>
 
@@ -357,6 +363,9 @@ Recalculer conditions et valeurs après construction, amélioration, choix de br
 
 ### Périmètre et statut des valeurs
 Sept archétypes ordinaires et un boss distinct sont retenus pour le prototype — V. Leurs noms restent provisoires. Les PV, vitesses, dégâts à la forteresse et récompenses sont des réglages initiaux — H. Les premiers essais distinguent les ennemis par leur endurance, leur vitesse et leur nombre, sans résistances ni capacités spéciales supplémentaires.
+
+### Origine des attaquants
+Les intitulés Grouillant, Pillard et suivants désignent les profils de combat utilisés dans les tableaux et les dix vagues. En jeu, le loup, le sanglier et l’ours sont neutres et communs aux deux camps. Les autres identités proviennent de la faction adverse : jouer Horde fait affronter des attaquants Alliance, et inversement. Ces attaquants ne sont pas les défenseurs recrutables de l’autre faction. La répartition et les identités actuelles sont documentées dans `design/Catalogue_attaquants_v065.md` ; les noms et représentations restent évolutifs. Les descriptions de bonus, talents et inspection doivent respecter la faction jouée.
 
 ### Statistiques initiales
 Les vitesses utilisent l’unité de carte commune aux portées des défenseurs, selon le plan logique approuvé, avec dimensions H. La récompense est exprimée en pièces d’or et créditée uniquement à l’élimination. Tous les nombres de ce tableau sont H.
@@ -384,7 +393,7 @@ Le maraudeur combine endurance et vitesse pour éprouver les défenses concentr�
 ### Seigneur de siège
 Le boss est prévu à la vague 10 — V. Les essais initiaux lui attribuent 600 PV, une vitesse de 0,45 et 20 dégâts à la forteresse — H. Avec la forteresse initiale à 20 PV, son arrivée est fatale. Il rapporte 40 or s’il est éliminé ; cette récompense ne présume pas d’une utilisation après la dernière vague.
 
-Le premier essai ne comporte ni phases ni invocations. Rebonds, explosions et malédictions s’appliquent normalement au boss. Ses éventuelles capacités ultérieures restent ouvertes ; la victoire est définie en section 10. Aucun résultat d’équilibrage ni test jouable n’est encore établi.
+Le premier essai ne comporte ni phases ni invocations. Rebonds, explosions et malédictions s’appliquent normalement au boss. Ses éventuelles capacités ultérieures restent ouvertes ; la victoire est définie en section 10. Le prototype est jouable et testé ; ces réglages restent H. Les validations de fonctionnement ne prouvent pas un équilibre final ni une difficulté uniforme entre compositions.
 
 <a id="s10"></a>
 
@@ -543,7 +552,7 @@ Sans résistance ni bonus et aux PV ennemis actuels :
 - Mage N2 : 16,2 dégâts secondaires et sapeur N2 : 14,4 ; chacun suffit contre un Grouillant.
 - Chaman N3 : 27 dégâts immédiats, suffisants contre un Sprinter sans attendre sa malédiction.
 
-Ces seuils peuvent produire des sauts de difficulté, notamment sur la vague 8. Aucun essai jouable ne les a encore vérifiés.
+Ces seuils peuvent produire des sauts de difficulté, notamment sur la vague 8. Ces calculs restent des références sans talents ; les essais jouables et automatisés sont archivés séparément, sans validation définitive de l’équilibre.
 
 ### Achats et concentration de puissance
 Pour l’archer, les améliorations coûtent 50 or pour +4 DPS, 100 or pour +6 et 150 or pour +8 et le choix de spécialisation. Le rendement marginal diminue ; les six emplacements et les branches doivent rendre la concentration de puissance intéressante. Deux exemplaires par type peuvent être déployés ; le seuil reste H.
@@ -557,7 +566,7 @@ Le scénario de la section 11 investit 350 + 225 + 150 = 725 or avant le boss, a
 ### Choix validé au niveau 4
 Choisir une des deux branches pendant le passage N3 vers N4, entre les vagues — V. Le choix est inclus dans les 150 or provisoires de l’amélioration : aucun surcoût pour le prototype. Une seule branche par unité, fixée jusqu’à la vente. Une nouvelle unité repart au N1 ; le recrutement est limité à deux exemplaires par type (H).
 
-Les deux branches sont accessibles dès les essais, sans déblocage persistant ni prérequis racial ajouté. Terminer le choix avant de lancer la vague suivante. Aucun effet n’est rétroactif sur une attaque ou malédiction déjà appliquée. La présentation de cette interaction reste à concevoir.
+Les deux branches sont accessibles dès les essais, sans déblocage persistant ni prérequis racial ajouté. Terminer le choix avant de lancer la vague suivante. Aucun effet n’est rétroactif sur une attaque ou malédiction déjà appliquée. Le prototype présente les deux branches et leur coût avant confirmation.
 
 Les noms sont provisoires. Les rôles et comportements des douze branches sont approuvés — V ; toutes les statistiques sont des hypothèses H. La fiche design/Proposition_specialisations.md conserve les détails et le plan d’essais.
 
@@ -872,7 +881,7 @@ Un ennemi déjà éliminé en phase 2 n’est pas candidat en phase 3. Une victi
 Les dégâts d’arrivée simultanés sont additionnés avant le contrôle de défaite ; les PV de forteresse affichés sont bornés à zéro. La défaite est prioritaire si les PV sont nuls, même si la dernière vague vient d’être entièrement résolue. Les récompenses des autres ennemis réellement éliminés dans les phases précédentes restent uniques ; elles ne permettent toujours aucun achat en combat.
 
 ### Fractions et fin de vague
-Conserver les fractions de dégâts et de PV pendant les calculs de référence, sans arrondi à chaque impact. Une cible meurt dès que ses PV deviennent inférieurs ou égaux à zéro. L’affichage peut être arrondi sans modifier le calcul ; son format reste à concevoir.
+Conserver les fractions de dégâts et de PV pendant les calculs de référence, sans arrondi à chaque impact. Une cible meurt dès que ses PV deviennent inférieurs ou égaux à zéro. L’affichage peut être arrondi sans modifier le calcul ; le prototype distingue PV fractionnaires de simulation et valeurs affichées.
 
 Exemple : quatre dégâts de rebond à 16,25 totalisent 65. Quatre valeurs arrondies à 16 ne seraient pas équivalentes. Le choix technique de représentation numérique et les tolérances de calcul sont à documenter lors de l’implémentation ; cette fiche définit les résultats mathématiques attendus.
 
@@ -900,7 +909,7 @@ L’or reste attribué uniquement aux éliminations, une seule fois, y compris p
 | C-11 | Dernier ennemi éliminé après la dernière apparition ; animations encore visibles | Fin de vague sans attendre les animations ; effets futurs annulés sur l’ennemi mort |
 | C-12 | Plus aucun ennemi en vague 10 ; forteresse à 0 PV après les arrivées | Défaite, aucune victoire simultanée |
 
-Ces cas décrivent des vérifications futures. Aucun prototype jouable ni test automatisé de combat n’est réputé avoir été exécuté par cette fiche.
+Ces cas sont des références du contrat de combat, désormais couvert par les tests du prototype. L’état vérifié et ses limites figurent en section 56.
 
 <a id="s25"></a>
 
@@ -1242,9 +1251,9 @@ Les attaques simultanées conservent le choix des cibles sur un état commun : d
 ### Vente et nouvelle construction
 Une vente retire cet exemplaire et son niveau. Un achat ultérieur, sur cet emplacement ou un autre emplacement libre, repart au N1. Il ne récupère ni les améliorations ni la branche de l’exemplaire vendu.
 
-Le prototype ne propose pas de déplacement gratuit ou d’échange de positions. Changer l’emplacement d’une unité passe par la vente et un nouvel achat, entre les vagues. La perte économique doit être visible dans le montant de remboursement avant la vente ; la présentation exacte reste à concevoir.
+Le prototype ne propose pas de déplacement gratuit ou d’échange de positions. Changer l’emplacement d’une unité passe par la vente et un nouvel achat, entre les vagues. La perte économique doit être visible dans le montant de remboursement avant la vente ; le montant exact de vente est affiché avant confirmation.
 
-Exemple sans bonus : vendre un archer N4 acheté et amélioré pour 350 rend 245. Reconstituer un archer N4 coûte 350 : il faut 105 or nets supplémentaires. Cela permet de changer sa branche après une vente, en payant les coûts normaux et sans réinitialisation gratuite.
+Exemple sans bonus : vendre un archer N4 acheté et amélioré pour 350 rend 245. Reconstituer un archer N4 coûte 350 : il faut 105 or nets supplémentaires. Cela permet de changer la branche de ce défenseur après une vente, en payant les coûts normaux. Cette règle concerne la spécialisation de niveau 4, distincte des arbres persistants dont le reset est gratuit.
 
 La vente recalcule les synergies pendant la préparation. Les bonus roguelite sélectionnés restent acquis pour la partie et s’appliquent aux nouvelles unités selon leurs règles. La forteresse ne perd pas les PV maximum de R-09 lorsqu’une unité est vendue.
 
@@ -1329,7 +1338,7 @@ Les six emplacements donnent une capacité de composition, pas la promesse de si
 | Vente pendant une vague | Interdite selon le GDD |
 | Tentative de troisième copie après achat des deux premières branches | Toujours interdite : la limite compte le type de base |
 
-Ces cas sont des vérifications futures. Aucun prototype jouable n’a encore mesuré le rendement des copies, la difficulté ou l’équilibre des ventes.
+Ces cas constituent des références de vérification du recrutement et des ventes. Le fonctionnement est testé ; rendement comparé des copies et équilibre économique restent à évaluer en essais humains.
 
 <a id="s40"></a>
 
@@ -1338,10 +1347,10 @@ Ces cas sont des vérifications futures. Aucun prototype jouable n’a encore me
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
 
-Les détails de production graphique, d’animation, de musique et de son ne sont pas définis. Le premier essai utilise une représentation 2D isométrique, comme choix initial de réalisation.
+La direction retenue est un cartoon fantasy minimaliste : silhouettes et attributs reconnaissables, lecture rapide à petite taille, couleurs cohérentes entre grandes illustrations et petites unités. Les références World of Warcraft inspirent les codes de rôle et l’organisation des talents ; elles ne constituent pas des assets autorisés à réutiliser. Les six défenseurs disposent d’illustrations originales dans le prototype. Les spécifications finales d’animation, musique et son restent à définir.
 
 ### Interface et lisibilité
-Observer les combats, inspecter ses unités et accélérer le déroulement sont des interactions validées. Les panneaux et le parcours sont approuvés en section 41 ; leur mise en forme reste à réaliser. Les besoins suivants sont retenus — V — pour rendre les systèmes compréhensibles.
+Observer les combats, inspecter ses unités et accélérer le déroulement sont des interactions validées. Les panneaux et le parcours sont approuvés en section 41 ; leur mise en forme évolue dans le prototype jouable. Le joueur doit voir la portée avant de recruter, comprendre les effets sans jargon de calcul et ne lire que les unités de sa faction. Les besoins suivants sont retenus — V — pour rendre les systèmes compréhensibles.
 
 | Situation | Information à rendre compréhensible |
 | --- | --- |
@@ -1350,7 +1359,7 @@ Observer les combats, inspecter ses unités et accélérer le déroulement sont 
 | Choix roguelite | Trois propositions et effet de chacune |
 | Composition | Race, classe, spécialisation et conditions de synergie |
 
-Les vitesses ×1 et ×2 sont retenues pour les essais (H). Les raccourcis, commandes exactes, options d’accessibilité, pause et modalités de sauvegarde restent ouverts. Ces sujets ne sont pas des fonctionnalités approuvées par défaut.
+Les vitesses ×1 et ×2 sont disponibles ; ×10 est une aide temporaire de débogage demandée par le porteur du projet. L’attente entre vagues dure 30 secondes réelles après lancement manuel de la première vague ; un choix de bonus obligatoire attend le joueur. La sauvegarde de progression est décrite en section 54. Les options finales d’accessibilité et la reprise d’une mission interrompue restent ouvertes.
 
 ### Cadre technique
 Godot avec GDScript est retenu pour la réalisation initiale, en 2D isométrique ; voir section 46. PC sur Steam reste la plateforme commerciale prioritaire. L’organisation du projet et le format des données sont documentés pendant la réalisation. Aucun support multijoueur, mobile, console ou intégration de service supplémentaire n’est ajouté.
@@ -1377,13 +1386,13 @@ Ces vérifications constituent le cadre de validation approuvé ; les critères 
 | Choix de branche N4 | Deux descriptions avec statistiques finales et coût total du passage | Une seule branche est choisie ; aucune branche n’est attribuée silencieusement |
 | Carte en combat | Vague en cours, or et PV actualisés ; inspection des unités ; commande d’accélération | Les commandes d’achat, d’amélioration et de vente sont indisponibles |
 | Choix roguelite | Trois offres distinctes, description et effet ; sélection d’un seul bonus | Le bonus sélectionné est identifiable et reste consultable pendant la partie |
-| Résultat de partie | Victoire ou défaite, vague atteinte et PV restants ; recommencer ou revenir au choix de faction | Une nouvelle partie repart de l’état initial, sans progression persistante |
+| Résultat de partie | Victoire ou défaite, vague atteinte et PV restants ; recommencer ou revenir au choix de faction | Une mission repart à neuf ; XP, PO, talents et premières victoires restent conservés |
 
 Ces vues peuvent être des panneaux sur une même scène ; leur nombre ne prescrit pas une architecture. Les informations chiffrées sont reliées aux valeurs réellement utilisées par la simulation. L’affichage peut arrondir les dégâts, mais ne doit pas modifier les calculs.
 
 Transaction N4 approuvée : ouvrir le choix après demande d’amélioration, puis confirmer branche et paiement ensemble. Fermer sans choisir conserve l’unité au N3 et ne débite rien. Cette transaction d’interface est approuvée ; le choix exclusif et son coût inclus sont déjà V.
 
-Vitesses retenues pour les essais : deux vitesses, ×1 et ×2, fondées sur le même temps de jeu. Le principe d’accélération est V ; les deux vitesses sont retenues pour les essais, valeurs H. La pause, les raccourcis et la sauvegarde restent ouverts. Aucune reprise de partie enregistrée n’est requise par ce cahier.
+Vitesses de combat : ×1 et ×2 ; ×10 temporaire pour le débogage. Les 30 secondes réelles de préparation ne sont pas accélérées. Les choix après les vagues 3, 6 et 9 bloquent le déroulement jusqu’à sélection. La progression est sauvegardée ; la reprise d’une mission en cours n’est pas annoncée comme réalisée.
 
 <a id="s42"></a>
 
@@ -1397,7 +1406,7 @@ Pendant un combat, aucune construction, amélioration, vente, modification de br
 
 La vague se termine seulement quand toutes les apparitions ont eu lieu et que tous ses ennemis ont été éliminés ou retirés à l’arrivée. La forteresse à zéro PV provoque la défaite ; la défaite est prioritaire si plusieurs événements de fin surviennent ensemble. La victoire exige la résolution de la vague 10 avec une forteresse survivante.
 
-Un nouvel essai réinitialise or, PV, unités, investissements, branches, bonus, synergies, vague et événements de combat. Aucun gain permanent n’est introduit.
+Un nouvel essai réinitialise or, PV, unités, investissements, branches, bonus, synergies, vague et événements de combat. Les acquis persistants de la faction sont conservés ; seules les premières victoires versent XP et PO de mission.
 
 ### Contrats de réalisation
 | Domaine | Référence à respecter | Vérification attendue |
@@ -1484,43 +1493,48 @@ Après la demande de recommandation du porteur du projet, Godot avec GDScript et
 | Moteur et langage | Godot 4.7.2 stable standard, GDScript | Choix de réalisation initial, révisable |
 | Présentation | 2D isométrique, visuels temporaires | Choix de réalisation initial |
 | Rendu | Compatibility | Choix de réalisation initial, à vérifier sur le PC cible |
-| Livraison initiale | Scène locale de traversée du Gué | Lot L1 réalisé ; les combats viennent ensuite |
-| Temps de combat complet | Ordonnanceur conforme aux sections 21 à 24 | À réaliser au lot L3 |
-| Publication | Essai local PC | Aucune publication commerciale engagée |
+| Livraison actuelle | Prototype Windows 0.92, trois missions | Publication de test, non version commerciale |
+| Temps de combat complet | Ordonnanceur conforme aux sections 21 à 24 | Réalisé et couvert par les régressions |
+| Publication | Versions Windows sur dépôt GitHub privé | Aucune publication commerciale engagée |
 
 Le cahier et les critères sont approuvés ; l’approbation ne prouve ni la jouabilité complète ni l’équilibre. Les valeurs H restent à tester. Les tolérances numériques et le format de données seront documentés à mesure de l’implémentation.
 
-Les raccourcis, la pause, la sauvegarde, la configuration matérielle minimale et les objectifs de performance restent ouverts. Le choix d’un rendu 2D ne définit pas la direction artistique finale.
+La configuration matérielle minimale, les objectifs de performance et les options finales d’accessibilité restent ouverts. La progression persistante est sauvegardée localement ; la direction cartoon est retenue, avec production artistique encore évolutive.
 
 <a id="s47"></a>
 
 ## 47 Périmètre commercial et feuille de route
 
-### Comparaison des périmètres envisagés
-| Élément | Prototype | Objectif commercial |
+### Contenu actuel et cibles
+| Élément | Prototype Windows 0.92 | Orientation long terme |
 | --- | --- | --- |
-| Factions | 2 | 2 |
-| Défenseurs | 6, soit 3 par faction | 16, soit 8 par faction |
-| Spécialisations | Deux branches débloquées au niveau 4 | Deux par défenseur |
-| Cartes | 1 | 6 |
-| Vagues | 10 | À définir par carte |
-| Bonus roguelite | Douze, valeurs H | Environ 60 |
-| Ennemis ordinaires | 7 archétypes, hors boss | Environ 12 familles |
-| Boss | 1 | Environ 6 |
-| Mode infini | Absent du prototype | Envisagé |
+| Factions | 2, parcours indépendants | 2 — V |
+| Défenseurs | 6, soit 3 par faction | 16, soit 8 par faction — ancienne cible C à réexaminer avec la boutique |
+| Missions | 3 missions de 10 vagues | 200 missions — C, pas un contenu déjà livré |
+| Chapitres et thèmes | Parcours préparé, 197 missions à venir | 20 chapitres de 10 missions, thème tous les 2 chapitres — C |
+| Bonus de mission | 12, valeurs H | Environ 60 — ancienne cible C à réévaluer |
+| Talents persistants | 3 arbres et 63 talents par faction ; plafond 51 points | Choix de builds — V ; contenu et puissance H |
+| Ennemis | 7 profils ordinaires et 1 boss ; identités neutres ou adverses | Environ 12 familles et 6 boss — anciennes cibles C |
+| Boutique | Non réalisée | Unités ouvrant des possibilités, avec forces et faiblesses — V pour l’orientation |
+| Infini | Non jouable | Après les 100 premières missions de la faction — V pour le verrou |
+| Évènements | Absents | Idée à examiner — O |
 
-Ces objectifs sont des cibles de contenu — C — et non des engagements de production. Ils seront ajustés selon le temps de développement et les tests. Le modèle premium et le prix de 7,99 € sont envisagés ; la commercialisation, le budget, les ventes attendues et le calendrier ne sont pas arrêtés.
+La campagne de 200 missions remplace la première cible de six cartes comme structure de référence. Une mission n’exige pas un environnement graphique unique ; nombre de tracés distincts, réutilisation des décors et charge artistique restent à définir. PC sur Steam demeure prioritaire. Premium et prix de travail 7,99 € restent des intentions, sans étude de vente, budget, date de sortie ni disponibilité juridique présumés.
 
-### Feuille de route de référence
-| Jalon | Travail à effectuer | Condition de passage proposée |
+### Feuille de route actualisée
+| Étape | État ou prochain travail | Condition de passage |
 | --- | --- | --- |
-| J0 — Préparer | Cahier approuvé ; préparer le socle technique | Projet de test démarrable |
-| J1 — Construire | Carte du Gué, six emplacements, deux factions, six défenseurs | Boucle de préparation et combat jouable |
-| J2 — Compléter | Dix vagues, économie, niveaux, spécialisations et bonus | Partie jouable du début à la fin |
-| J3 — Tester | Lisibilité, factions, économie et durée | Résultats consignés et corrections priorisées |
-| J4 — Réviser le périmètre | Examiner la cible commerciale selon les essais | Contenu, charge et priorités explicitement confirmés |
+| Socle de combat | Réalisé : deux factions, dix vagues, économie, branches, bonus et synergies | Régressions et paquet Windows vérifiés à chaque version |
+| Présentation | Cartoon et lisibilité en cours ; portée avant achat, inspection et bilans présents | Essais humains sur la compréhension et la lecture à petite taille |
+| Progression | XP, 51 points, trois arbres, reset gratuit, sauvegarde protégée réalisés | Préserver les gains, contrôler les seuils et l’absence de double récompense |
+| Premier échantillon | Trois missions jouables ; 100/101/102 % de PV, récompenses H | Comparer les deux factions et plusieurs compositions sans conclure sur quelques parties |
+| Économie et talents | Réviser courbe XP, gains de PO, puissance et variété des talents | Une difficulté exigeante, sans achat obligatoire ni build écrasant toutes les situations |
+| Campagne étendue | Concevoir le prochain lot après bilan des trois missions | Contenu, charge, courbe et nouvelles mécaniques explicitement définis |
+| Boutique | Proposer un premier catalogue d’unités alternatives et ses tarifs | Effets, contraintes de recrutement et équilibre validés avant réalisation |
+| Infini et évènements | À concevoir après les fondations de campagne | But durable, génération, records et récompenses à décider |
+| Préparation commerciale | Performances, accessibilité, droits, distribution Steam et sauvegarde en ligne | Vérifications dédiées ; aucun calendrier supposé |
 
-L’ordre détaillé L0 à L6 est approuvé en section 43 ; les jalons ci-dessus le résument. Aucun délai, budget, responsable ou engagement de livraison n’est supposé. L’extension vers six cartes et seize défenseurs dépend de la validation du prototype.
+L’introduction de nouveautés vise les blocs 11–20, 31–40, 51–60, etc., puis des réapparitions ponctuelles. Aucune mécanique nouvelle n’est déjà approuvée pour ces blocs. Les premières missions doivent rester jouables sans talents ; la fréquence souhaitée des défaites et la difficulté après acquisition des talents sont à mesurer. Les essais automatiques vérifient le fonctionnement et explorent des stratégies, ils ne mesurent pas le taux de victoire humain.
 
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
@@ -1566,6 +1580,20 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | DEC-032 | Lots L0 à L6 et critères de conformité du prototype | V |
 | DEC-033 | Accélération ×1 et ×2 pour les essais, facteurs H | V / H |
 
+### Évolutions désormais applicables
+| Référence | Décision actuelle | Décision remplacée ou limite |
+| --- | --- | --- |
+| MAJ-01 | Progression persistante propre à chaque faction — V | L’intention initiale sans progression permanente est remplacée |
+| MAJ-02 | Talents obtenus par XP de première victoire — V | Aucun achat de point de talent en PO |
+| MAJ-03 | 51 points maximum partagés entre les trois arbres de la faction — V | Ne permet pas de remplir tous les talents ; aucun partage entre factions |
+| MAJ-04 | Réinitialisation gratuite entre missions — V | Coût croissant puis plafonné et compteur de resets abandonnés |
+| MAJ-05 | Gain de PO et XP dès la victoire de la mission — V | Aucun enchaînement de plusieurs missions obligatoire avant versement |
+| CAMP-013 | Chaque mission repart à neuf — V | Acquis persistants conservés ; état tactique non transféré |
+| CAMP-014 | Premier essai sur trois missions de dix vagues — V | Noms, géométries et déblocage séquentiel H |
+| CAMP-015 | Tester 100/101/102 % de PV ennemis — V pour l’essai | Vitesse, dégâts d’arrivée et gains de combat identiques |
+| MAJ-06 | Exactement quatre colonnes, flèches droites, parents au maximum — V | Disposition et effets actuels des talents H |
+| MAJ-07 | Première vague manuelle puis attente de 30 secondes — V | Ancien délai de 60 secondes remplacé |
+
 <a id="s49"></a>
 
 ## 49 Questions ouvertes et suivi
@@ -1576,7 +1604,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-002 | Équilibrage des récompenses et de la limite de deux copies | Économie et recrutement |
 | O-003 | Noms définitifs, interface du choix et équilibre des branches | Niveau 4 et synergies |
 | O-006 | Équilibrage des vagues et capacités futures du boss | Partie complète |
-| O-007 | Progression entre les parties, ergonomie et accessibilité | Expérience globale |
+| O-007 | Équilibre des talents persistants, ergonomie finale et accessibilité | Expérience globale ; persistance déjà validée |
 | O-008 | Prix final, périmètre commercial et nom | Plan de production |
 
 <a id="s50"></a>
@@ -1613,6 +1641,8 @@ Version 0.13 — 20 octobre 2026 : copies indépendantes, limite H de deux par t
 
 Version 0.14 — 20 octobre 2026 : cahier de réalisation, parcours, lots et critères intégrés après validation S15 ; choix technique de réalisation documenté séparément.
 
+Version 0.15 — 30 octobre 2026 : consolidation de la campagne, des trois missions, de l’XP, des 51 points, des arbres liés à quatre colonnes, du reset gratuit, de la persistance et de l’état vérifié du jeu 0.92. Conservation du socle et de ses tableaux numériques.
+
 <a id="s51"></a>
 
 ## 51 Maintenance du GDD
@@ -1630,3 +1660,270 @@ Le Markdown est la référence éditoriale ; le Word en est la présentation. Ac
 | Vérification | Essai prévu, résultat observé et ajustement éventuel |
 
 Conserver le statut H jusqu’aux essais d’équilibrage. Une validation de principe confirme le comportement, pas sa puissance. Consigner carte, vagues, unités, réglages et résultats pour comparer les essais.
+
+<a id="s52"></a>
+
+## 52 Campagne et récompenses de mission
+
+### Parcours indépendant et remise à zéro
+Chaque faction conserve ses propres missions gagnées, PO, XP et talents. Une mission gagnée ne débloque rien pour l’autre faction. Le joueur peut terminer une seule mission puis quitter ; poursuivre est facultatif. Le versement intervient à la victoire de la mission, après enregistrement de sa première réussite, et ne dépend pas d’une victoire ultérieure.
+
+Chaque nouvelle mission commence avec une forteresse intacte, son maximum de PV tenant compte des talents actifs, l’or de combat initial, aucun défenseur, aucune branche ni bonus de la mission précédente. Les talents sont fixés au lancement ; les arbres sont consultables et modifiables entre missions, après résolution de la précédente. La ressource de combat ne se transforme pas en PO persistantes.
+
+### Trois missions de comparaison
+| Mission | Carte proposée | Trajet logique | Emplacements | PV ennemis | Première victoire proposée |
+| --- | --- | --- | --- | --- | --- |
+| 1 | La Vallée du Gué | 28 unités | 6 | 100 % | 60 PO et 100 XP |
+| 2 | Le Bois du Gué | 29 unités | 6 | 101 % | 60 PO et 100 XP |
+| 3 | Les Hauts du Gué | 29 unités | 6 | 102 % | 60 PO et 100 XP |
+
+Les trois missions et les pourcentages sont retenus pour l’essai. Noms, tracés des missions 2 et 3, positions, déblocage séquentiel et récompenses sont H. Dix compositions et espacements de vagues identiques permettent de comparer les cartes. Le pourcentage s’applique aux PV de référence sans arrondir la simulation : un pillard à 40 PV en possède 40,4 puis 40,8 ; le boss à 600 en possède 606 puis 612. Vitesse, dégâts à la forteresse et or par élimination restent identiques. La formule définitive sur 100 ou 200 missions reste ouverte.
+
+Une défaite ou une nouvelle victoire sur une mission déjà gagnée ne donne ni XP ni PO de première victoire. Après trois premières victoires, un profil neuf a 300 XP, 180 PO hors dépenses et un point de talent débloqué selon la courbe H ci-dessous. Les missions 4 à 200 sont affichées à venir, sans contenu jouable ni récompenses définitives inventés.
+
+### Architecture cible
+La cible est de 200 missions, par chapitres de 10 et thèmes de 20 missions. Les blocs de découverte sont 11–20, 31–40, 51–60, etc. ; leurs nouveautés pourront réapparaître ensuite. L’infini se débloquera après les 100 premières missions gagnées dans la faction concernée. Sa génération, ses buts et récompenses restent O. Les propositions de défis hebdomadaires, titres et apparences de l’ancien échange restent des propositions, pas des fonctionnalités validées.
+
+### Deux économies distinctes
+| Ressource | Obtention | Usage | Durée |
+| --- | --- | --- | --- |
+| Or de combat | Capital initial H et éliminations | Défenseurs, niveaux et spécialisations de mission | Remis à zéro à chaque mission |
+| PO de faction | Première victoire de chaque mission ; barème H | Future boutique et unités alternatives | Persistantes, non partagées entre factions |
+| XP de faction | Première victoire uniquement | Débloque automatiquement des points de talent | Persistante ; aucune conversion en PO |
+| Points de talent | Seuils d’XP, plafond 51 | Investissement de rangs dans trois arbres | Persistants ; redistribution gratuite hors mission |
+
+La boutique doit ouvrir des styles de jeu, sans remplacer systématiquement les unités par des versions plus fortes. Son catalogue, ses prix et les autres usages des PO restent à concevoir. La séparation XP/PO supprime la concurrence directe entre achat en boutique et achat de points ; elle ne garantit pas à elle seule l’équilibre. Aucun farm de PO ni coût de respécialisation n’est ajouté.
+
+<a id="s53"></a>
+
+## 53 Talents persistants et courbe XP
+
+### Règles validées
+Chaque faction possède trois arbres. Les 51 points débloqués sont un plafond commun à ses arbres ; un point investi dans l’un ne peut pas être investi simultanément ailleurs. Le catalogue doit offrir plus de rangs que le budget afin de créer des choix stratégiques. L’Alliance et la Horde ne partagent ni points ni dépenses. Réinitialiser rembourse les points à répartir sans coût en PO et sans perdre l’XP.
+
+Les paliers nécessitent 0, 5, 10, 15, 20, 25 puis 30 points dans les paliers précédents du même arbre. Les points des autres arbres ne comptent pas. Un talent lié exige aussi que son parent soit au rang maximum ; débloquer la ligne ne suffit pas. Deux talents majeurs sont prévus par arbre aux seuils de 15 et 30 points, forts mais pas obligatoires. Le majeur final peut être le 31e point de cet arbre : il ne nécessite pas 35 points dépensés. Une répartition 31/20/0 est possible sans être imposée.
+
+### Disposition et contenu du prototype
+Exactement quatre colonnes par spécialisation, cases vides assumées, liens verticaux droits et flèches lisibles. Les sept paliers logiques occupent huit rangées visuelles : le palier 20 est réparti sur deux rangées regroupées, sans coût de déblocage supplémentaire. Chaque arbre propose 21 talents ; 63 par faction, 126 pour les deux factions. Les noms, rangs, exclusions, liens précis et effets du catalogue en section 55 restent H. Le majeur intermédiaire ne conditionne pas le majeur final. Les deux choix historiques exclusifs du troisième palier restent exclusifs dans le prototype.
+
+| Faction | Arbre 1 | Arbre 2 | Arbre 3 |
+| --- | --- | --- | --- |
+| Alliance | Bastion | Maîtrise du tir | Arts arcaniques |
+| Horde | Fureur de guerre | Voie des maléfices | Démolition |
+
+Les effets doivent rester cohérents avec les défenseurs de la faction. Les valeurs de base des sections 5 à 39 sont calculées sans talents ; un talent ne change que ses paramètres explicitement indiqués. La lisibilité d’un build et son intérêt face aux cartes restent à évaluer.
+
+### Courbe de référence à équilibrer
+L’objectif validé est d’acquérir les 51 points en gagnant les 100 premières missions. L’échelle H actuelle donne 100 XP par première victoire : 10 000 XP au total. Points débloqués = minimum de 51 et de la partie entière de 51 × XP / 10 000. Le point k se débloque à l’arrondi supérieur de 10 000 × k / 51 XP. L’XP n’est pas dépensée.
+
+| Missions distinctes réussies | XP de référence | Points débloqués |
+| --- | --- | --- |
+| 0 | 0 | 0 |
+| 1 | 100 | 0 |
+| 2 | 200 | 1 |
+| 3 | 300 | 1 |
+| 10 | 1 000 | 5 |
+| 25 | 2 500 | 12 |
+| 50 | 5 000 | 25 |
+| 75 | 7 500 | 38 |
+| 99 | 9 900 | 50 |
+| 100 | 10 000 | 51 |
+
+Premier seuil : 197 XP ; deuxième : 393 XP. Le premier point est donc disponible après la mission 2 de l’essai. Ce barème n’approuve pas les montants des 197 missions non réalisées ni une progression au-delà du plafond. Les PO continuent à être prévues sur les missions 101–200 ; usages et montants restent ouverts.
+
+<a id="s54"></a>
+
+## 54 Sauvegarde et continuité de progression
+
+### Comportement attendu et réalisation actuelle
+Fermer puis rouvrir le jeu doit conserver les gains et investissements. Le profil local réunit les deux factions tout en séparant leurs comptes, XP, rangs et reçus de première victoire. Le prototype utilise le schéma 6 et une protection Windows DPAPI liée à l’utilisateur, avec écriture atomique et sauvegardes de secours. Les migrations préservent les acquis compatibles ; les anciens rangs devenus incompatibles sont remboursés en points disponibles.
+
+Le fichier se trouve dans le dossier utilisateur Godot de l’application, sous `%APPDATA%/Godot/app_userdata/For the Fortress! — La Vallée du Gué/progression_factions_v1.json`. Malgré son extension, son contenu protégé n’est pas un simple profil JSON modifiable en clair. Ne pas déplacer ou renommer arbitrairement l’identité du dossier utilisateur lors d’une publication.
+
+La transaction de première victoire enregistre ensemble le reçu, les PO et l’XP. En cas d’échec d’enregistrement, le bilan indique le résultat en attente et permet de réessayer ; il ne doit ni annoncer un gain définitivement enregistré ni le verser deux fois. Les tests utilisent des profils isolés et ne remplacent pas le profil du joueur.
+
+### Limites et sujets ouverts
+Cette protection empêche l’édition triviale du fichier ; elle ne garantit pas une progression locale inviolable face à une personne contrôlant son ordinateur. La récupération après changement de compte ou de machine doit être conçue. Steam Cloud est une possibilité future, pas une sauvegarde en ligne déjà intégrée ; le lien avec DPAPI, les conflits de synchronisation et les migrations seront à traiter avant distribution Steam. Les rapports de débogage ne constituent pas une sauvegarde permettant de reprendre une mission en cours.
+
+<a id="s55"></a>
+
+## 55 Catalogue des talents du prototype
+
+Les tableaux suivants reprennent le catalogue de référence v0.89, toujours utilisé par le jeu 0.92. Les effets sont indiqués par rang. Toutes les valeurs, positions précises, noms et chaînes proposés restent H. Les numéros de ligne désignent les sept paliers logiques ; le palier 20 occupe deux rangées visuelles. Un parent indiqué doit être entièrement amélioré, en plus du seuil de points. Ces tableaux ne sont pas une validation définitive de l’équilibrage.
+
+### Alliance Bastion
+
+| Ligne / seuil | Colonne | Talent | Rangs max. | Parent requis au maximum | Effet par rang |
+| --- | --- | --- | --- | --- | --- |
+| 1 / 0 pts | 1 | Remparts renforcés | 5 | — | Forteresse : +1 PV maximum par rang. |
+| 1 / 0 pts | 2 | Postes de garde | 3 | — | Archer elfe / Arbalétrier nain / Mage humain : portée +0,04 par rang. |
+| 1 / 0 pts | 4 | Réserves royales | 3 | — | Forteresse : +1 PV maximum par rang. |
+| 2 / 5 pts | 1 | Fondations | 3 | — | Forteresse : +1 PV maximum par rang. |
+| 2 / 5 pts | 2 | Garnison vigilante | 3 | Postes de garde (3/3) | Archer elfe / Arbalétrier nain : tirs directs +1 % par rang. |
+| 2 / 5 pts | 4 | Veille | 3 | — | Archer elfe / Arbalétrier nain / Mage humain : portée +0,05 par rang. |
+| 3 / 10 pts | 1 | Résistance | 1 | — | Forteresse : +3 PV maximum par rang. |
+| 3 / 10 pts | 3 | Vigilance | 1 | — | Archer elfe / Arbalétrier nain / Mage humain : portée +0,15 par rang. |
+| 3 / 10 pts | 4 | Réseau de veille | 3 | — | Archer elfe / Arbalétrier nain / Mage humain : portée +0,05 par rang. |
+| 4 / 15 pts | 1 | Arbalètes de rempart | 3 | — | Arbalétrier nain : tirs directs +2,5 % par rang. |
+| 4 / 15 pts | 2 | Remparts sacrés ★ majeur | 1 | Garnison vigilante (3/3) | Forteresse : +5 PV maximum par rang.<br>Archer elfe / Arbalétrier nain / Mage humain : portée +0,1 par rang. |
+| 4 / 15 pts | 3 | Gardiens arcanistes | 3 | — | Mage humain : portée +0,08 par rang. |
+| 4 / 15 pts | 4 | Horizon du royaume | 3 | — | Archer elfe / Arbalétrier nain / Mage humain : portée +0,15 par rang. |
+| 5 / 20 pts | 1 | Tours de guet | 2 | — | Archer elfe / Arbalétrier nain / Mage humain : portée +0,1 par rang. |
+| 5 / 20 pts | 2 | Défense tenace | 2 | — | Forteresse : +2 PV maximum par rang. |
+| 5 / 20 pts | 4 | Soutien de la garnison | 2 | — | Archer elfe : tirs directs +3,5 % par rang. |
+| 5 / 20 pts | 1 | Murs inébranlables | 3 | — | Forteresse : +3 PV maximum par rang. |
+| 6 / 25 pts | 1 | Forteresse vivante | 3 | — | Forteresse : +2 PV maximum par rang. |
+| 6 / 25 pts | 3 | Vigie du royaume | 3 | Gardiens arcanistes (3/3) | Archer elfe / Arbalétrier nain / Mage humain : portée +0,1 par rang. |
+| 6 / 25 pts | 4 | Garnison d’élite | 3 | — | Archer elfe / Arbalétrier nain / Mage humain : tirs directs +2,5 % par rang. |
+| 7 / 30 pts | 3 | Citadelle éveillée ★ majeur | 1 | Vigie du royaume (3/3) | Forteresse : +5 PV maximum par rang.<br>Archer elfe / Arbalétrier nain / Mage humain : portée +0,3 par rang. |
+
+### Alliance Maîtrise du tir
+
+| Ligne / seuil | Colonne | Talent | Rangs max. | Parent requis au maximum | Effet par rang |
+| --- | --- | --- | --- | --- | --- |
+| 1 / 0 pts | 1 | Visée naine | 3 | — | Arbalétrier nain : tirs directs +2 % par rang. |
+| 1 / 0 pts | 3 | Archers appliqués | 3 | — | Archer elfe : tirs directs +2 % par rang. |
+| 1 / 0 pts | 4 | Entraînement | 5 | — | Archer elfe / Arbalétrier nain : tirs directs +3 % par rang. |
+| 2 / 5 pts | 1 | Ligne de mire | 3 | — | Archer elfe / Arbalétrier nain : portée +0,1 par rang. |
+| 2 / 5 pts | 3 | Observateurs elfes | 3 | Archers appliqués (3/3) | Archer elfe : portée +0,07 par rang. |
+| 2 / 5 pts | 4 | Pointes affûtées | 3 | — | Archer elfe / Arbalétrier nain : tirs directs +2 % par rang. |
+| 3 / 10 pts | 1 | Trait perforant | 3 | — | Arbalétrier nain : tirs directs +2,5 % par rang. |
+| 3 / 10 pts | 2 | Couverture | 1 | — | Archer elfe / Arbalétrier nain : portée +0,3 par rang. |
+| 3 / 10 pts | 4 | Tirs concentrés | 1 | — | Archer elfe / Arbalétrier nain : tirs directs +8 % par rang. |
+| 4 / 15 pts | 1 | Artillerie naine | 3 | — | Arbalétrier nain : tirs directs +7 % par rang. |
+| 4 / 15 pts | 2 | Volées du gué | 3 | — | Archer elfe : tirs directs +2,5 % par rang. |
+| 4 / 15 pts | 3 | Discipline de garnison ★ majeur | 1 | Observateurs elfes (3/3) | Archer elfe / Arbalétrier nain : tirs directs +10 % par rang.<br>Archer elfe / Arbalétrier nain : portée +0,1 par rang. |
+| 4 / 15 pts | 4 | Longue-vue naine | 3 | — | Arbalétrier nain : portée +0,1 par rang. |
+| 5 / 20 pts | 1 | Mécanique de siège | 2 | — | Arbalétrier nain : tirs directs +4 % par rang. |
+| 5 / 20 pts | 3 | Flèches précises | 2 | — | Archer elfe : tirs directs +4 % par rang. |
+| 5 / 20 pts | 4 | Posture du tireur | 2 | — | Archer elfe / Arbalétrier nain : portée +0,1 par rang. |
+| 5 / 20 pts | 4 | Précision elfique | 3 | — | Archer elfe : tirs directs +7 % par rang. |
+| 6 / 25 pts | 1 | Réseau de tireurs | 3 | — | Archer elfe / Arbalétrier nain : portée +0,1 par rang. |
+| 6 / 25 pts | 2 | Maître arbalétrier | 3 | Volées du gué (3/3) | Arbalétrier nain : tirs directs +3 % par rang. |
+| 6 / 25 pts | 4 | Discipline elfique | 3 | — | Archer elfe : tirs directs +3 % par rang. |
+| 7 / 30 pts | 2 | Maîtrise balistique ★ majeur | 1 | Maître arbalétrier (3/3) | Archer elfe / Arbalétrier nain : tirs directs +12 % par rang.<br>Archer elfe / Arbalétrier nain : portée +0,2 par rang. |
+
+### Alliance Arts arcaniques
+
+| Ligne / seuil | Colonne | Talent | Rangs max. | Parent requis au maximum | Effet par rang |
+| --- | --- | --- | --- | --- | --- |
+| 1 / 0 pts | 2 | Fragments d’arcane | 3 | — | Mage humain : explosions +3 % par rang. |
+| 1 / 0 pts | 3 | Formules incisives | 3 | — | Mage humain : tirs directs +2 % par rang. |
+| 1 / 0 pts | 4 | Étude des arcanes | 5 | — | Mage humain : tirs directs +3 % par rang.<br>Mage humain : explosions +3 % par rang. |
+| 2 / 5 pts | 2 | Étincelles | 3 | — | Mage humain : explosions +3 % par rang. |
+| 2 / 5 pts | 3 | Cristaux de veille | 3 | Formules incisives (3/3) | Mage humain : portée +0,07 par rang. |
+| 2 / 5 pts | 4 | Concentration | 3 | — | Mage humain : tirs directs +2 % par rang. |
+| 3 / 10 pts | 1 | Déflagration | 1 | — | Mage humain : explosions +15 % par rang. |
+| 3 / 10 pts | 2 | Sceaux protecteurs | 3 | — | Forteresse : +1 PV maximum par rang. |
+| 3 / 10 pts | 4 | Puissance directe | 1 | — | Mage humain : tirs directs +8 % par rang. |
+| 4 / 15 pts | 1 | Observatoire arcanique | 3 | — | Mage humain : portée +0,08 par rang. |
+| 4 / 15 pts | 2 | Protection arcanique | 3 | — | Forteresse : +2 PV maximum par rang. |
+| 4 / 15 pts | 3 | Convergence arcanique ★ majeur | 1 | Cristaux de veille (3/3) | Mage humain : tirs directs +8 % par rang.<br>Mage humain : explosions +8 % par rang. |
+| 4 / 15 pts | 4 | Gerbes d’étincelles | 3 | — | Mage humain : explosions +4 % par rang. |
+| 5 / 20 pts | 2 | Barrière du royaume | 2 | — | Forteresse : +2 PV maximum par rang. |
+| 5 / 20 pts | 3 | Échos de déflagration | 2 | — | Mage humain : explosions +6 % par rang. |
+| 5 / 20 pts | 4 | Rayon concentré | 2 | — | Mage humain : tirs directs +4 % par rang. |
+| 5 / 20 pts | 4 | Veille supérieure | 3 | — | Mage humain : portée +0,15 par rang. |
+| 6 / 25 pts | 1 | Maître des explosions | 3 | Observatoire arcanique (3/3) | Mage humain : explosions +4 % par rang. |
+| 6 / 25 pts | 2 | Vigie arcanique | 3 | — | Mage humain : portée +0,1 par rang. |
+| 6 / 25 pts | 4 | Maître du trait | 3 | — | Mage humain : tirs directs +3 % par rang. |
+| 7 / 30 pts | 1 | Archimage du gué ★ majeur | 1 | Maître des explosions (3/3) | Mage humain : tirs directs +12 % par rang.<br>Mage humain : explosions +16 % par rang. |
+
+
+### Horde Fureur de guerre
+
+| Ligne / seuil | Colonne | Talent | Rangs max. | Parent requis au maximum | Effet par rang |
+| --- | --- | --- | --- | --- | --- |
+| 1 / 0 pts | 1 | Entraînement | 5 | — | Lanceur de haches : tirs directs +3 % par rang. |
+| 1 / 0 pts | 2 | Poigne troll | 3 | — | Lanceur de haches : tirs directs +2 % par rang. |
+| 1 / 0 pts | 4 | Haches jumelles | 3 | — | Lanceur de haches : rebonds +3 % par rang. |
+| 2 / 5 pts | 1 | Haches affûtées | 3 | — | Lanceur de haches : tirs directs +2 % par rang. |
+| 2 / 5 pts | 2 | Éclaireurs de guerre | 3 | Poigne troll (3/3) | Lanceur de haches : portée +0,07 par rang. |
+| 2 / 5 pts | 4 | Rebonds précis | 3 | — | Lanceur de haches : rebonds +3 % par rang. |
+| 3 / 10 pts | 1 | Frappe précise | 1 | — | Lanceur de haches : tirs directs +8 % par rang. |
+| 3 / 10 pts | 3 | Ricochets | 1 | — | Lanceur de haches : rebonds +15 % par rang. |
+| 3 / 10 pts | 4 | Palisades de guerre | 3 | — | Forteresse : +1 PV maximum par rang. |
+| 4 / 15 pts | 1 | Rebonds sauvages | 3 | — | Lanceur de haches : rebonds +4 % par rang. |
+| 4 / 15 pts | 2 | Furie des Cendres ★ majeur | 1 | Éclaireurs de guerre (3/3) | Lanceur de haches : tirs directs +8 % par rang.<br>Lanceur de haches : rebonds +8 % par rang. |
+| 4 / 15 pts | 3 | Postes avancés | 3 | — | Lanceur de haches : portée +0,08 par rang. |
+| 4 / 15 pts | 4 | Remparts des Cendres | 3 | — | Forteresse : +2 PV maximum par rang. |
+| 5 / 20 pts | 1 | Tranchant d’acier | 2 | — | Lanceur de haches : tirs directs +4 % par rang. |
+| 5 / 20 pts | 2 | Chaînes de haches | 2 | — | Lanceur de haches : rebonds +6 % par rang. |
+| 5 / 20 pts | 4 | Bannière de guerre | 2 | — | Forteresse : +2 PV maximum par rang. |
+| 5 / 20 pts | 1 | Chasse lointaine | 3 | — | Lanceur de haches : portée +0,15 par rang. |
+| 6 / 25 pts | 1 | Briseur de lignes | 3 | — | Lanceur de haches : tirs directs +3 % par rang. |
+| 6 / 25 pts | 3 | Tempête de haches | 3 | Postes avancés (3/3) | Lanceur de haches : rebonds +4 % par rang. |
+| 6 / 25 pts | 4 | Vigie des Cendres | 3 | — | Lanceur de haches : portée +0,1 par rang. |
+| 7 / 30 pts | 3 | Seigneur des haches ★ majeur | 1 | Tempête de haches (3/3) | Lanceur de haches : tirs directs +12 % par rang.<br>Lanceur de haches : rebonds +16 % par rang. |
+
+### Horde Voie des maléfices
+
+| Ligne / seuil | Colonne | Talent | Rangs max. | Parent requis au maximum | Effet par rang |
+| --- | --- | --- | --- | --- | --- |
+| 1 / 0 pts | 1 | Présages persistants | 3 | — | Chaman orc : malédictions +3 % par rang. |
+| 1 / 0 pts | 3 | Choc rituel | 3 | — | Chaman orc : tirs directs +2 % par rang. |
+| 1 / 0 pts | 4 | Rituels | 5 | — | Chaman orc : tirs directs +3 % par rang.<br>Chaman orc : malédictions +3 % par rang. |
+| 2 / 5 pts | 1 | Mauvais présage | 3 | — | Chaman orc : malédictions +3 % par rang. |
+| 2 / 5 pts | 3 | Totems de veille | 3 | Choc rituel (3/3) | Chaman orc : portée +0,07 par rang. |
+| 2 / 5 pts | 4 | Focalisation | 3 | — | Chaman orc : tirs directs +2 % par rang. |
+| 3 / 10 pts | 1 | Protection des esprits | 3 | — | Forteresse : +1 PV maximum par rang. |
+| 3 / 10 pts | 2 | Usure | 1 | — | Chaman orc : malédictions +15 % par rang. |
+| 3 / 10 pts | 4 | Choc initial | 1 | — | Chaman orc : tirs directs +8 % par rang. |
+| 4 / 15 pts | 1 | Protection des ancêtres | 3 | — | Forteresse : +2 PV maximum par rang. |
+| 4 / 15 pts | 2 | Rituels lointains | 3 | — | Chaman orc : portée +0,08 par rang. |
+| 4 / 15 pts | 3 | Pacte des esprits ★ majeur | 1 | Totems de veille (3/3) | Chaman orc : tirs directs +8 % par rang.<br>Chaman orc : malédictions +8 % par rang. |
+| 4 / 15 pts | 4 | Malédiction profonde | 3 | — | Chaman orc : malédictions +4 % par rang. |
+| 5 / 20 pts | 1 | Gardien des ancêtres | 2 | — | Forteresse : +2 PV maximum par rang. |
+| 5 / 20 pts | 3 | Liens funestes | 2 | — | Chaman orc : malédictions +6 % par rang. |
+| 5 / 20 pts | 4 | Volonté du chaman | 2 | — | Chaman orc : tirs directs +4 % par rang. |
+| 5 / 20 pts | 4 | Horizon des esprits | 3 | — | Chaman orc : portée +0,15 par rang. |
+| 6 / 25 pts | 1 | Veille des esprits | 3 | — | Chaman orc : portée +0,1 par rang. |
+| 6 / 25 pts | 2 | Maître des maléfices | 3 | Rituels lointains (3/3) | Chaman orc : malédictions +4 % par rang. |
+| 6 / 25 pts | 4 | Maître du choc | 3 | — | Chaman orc : tirs directs +3 % par rang. |
+| 7 / 30 pts | 2 | Voix des ancêtres ★ majeur | 1 | Maître des maléfices (3/3) | Chaman orc : tirs directs +12 % par rang.<br>Chaman orc : malédictions +16 % par rang. |
+
+### Horde Démolition
+
+| Ligne / seuil | Colonne | Talent | Rangs max. | Parent requis au maximum | Effet par rang |
+| --- | --- | --- | --- | --- | --- |
+| 1 / 0 pts | 2 | Éclats acérés | 3 | — | Sapeur gobelin : explosions +3 % par rang. |
+| 1 / 0 pts | 3 | Mèche concentrée | 3 | — | Sapeur gobelin : tirs directs +2 % par rang. |
+| 1 / 0 pts | 4 | Explosifs | 5 | — | Sapeur gobelin : tirs directs +3 % par rang.<br>Sapeur gobelin : explosions +3 % par rang. |
+| 2 / 5 pts | 2 | Éclats renforcés | 3 | — | Sapeur gobelin : explosions +3 % par rang. |
+| 2 / 5 pts | 3 | Calcul balistique | 3 | Mèche concentrée (3/3) | Sapeur gobelin : portée +0,07 par rang. |
+| 2 / 5 pts | 4 | Charge concentrée | 3 | — | Sapeur gobelin : tirs directs +2 % par rang. |
+| 3 / 10 pts | 1 | Détonation | 1 | — | Sapeur gobelin : explosions +15 % par rang. |
+| 3 / 10 pts | 2 | Renforts gobelins | 3 | — | Forteresse : +1 PV maximum par rang. |
+| 3 / 10 pts | 4 | Impact | 1 | — | Sapeur gobelin : tirs directs +8 % par rang. |
+| 4 / 15 pts | 1 | Tables de tir | 3 | — | Sapeur gobelin : portée +0,08 par rang. |
+| 4 / 15 pts | 2 | Abris fortifiés | 3 | — | Forteresse : +2 PV maximum par rang. |
+| 4 / 15 pts | 3 | Charge magistrale ★ majeur | 1 | Calcul balistique (3/3) | Sapeur gobelin : tirs directs +8 % par rang.<br>Sapeur gobelin : explosions +8 % par rang. |
+| 4 / 15 pts | 4 | Shrapnels | 3 | — | Sapeur gobelin : explosions +4 % par rang. |
+| 5 / 20 pts | 2 | Abri des sapeurs | 2 | — | Forteresse : +2 PV maximum par rang. |
+| 5 / 20 pts | 3 | Pluie d’éclats | 2 | — | Sapeur gobelin : explosions +6 % par rang. |
+| 5 / 20 pts | 4 | Impact renforcé | 2 | — | Sapeur gobelin : tirs directs +4 % par rang. |
+| 5 / 20 pts | 4 | Tirs lointains | 3 | — | Sapeur gobelin : portée +0,15 par rang. |
+| 6 / 25 pts | 1 | Maître artificier | 3 | Tables de tir (3/3) | Sapeur gobelin : explosions +4 % par rang. |
+| 6 / 25 pts | 2 | Artillerie lointaine | 3 | — | Sapeur gobelin : portée +0,1 par rang. |
+| 6 / 25 pts | 4 | Briseur de cuirasses | 3 | — | Sapeur gobelin : tirs directs +3 % par rang. |
+| 7 / 30 pts | 1 | Génie de démolition ★ majeur | 1 | Maître artificier (3/3) | Sapeur gobelin : tirs directs +12 % par rang.<br>Sapeur gobelin : explosions +16 % par rang. |
+
+
+<a id="s56"></a>
+
+## 56 État vérifié et prochaines décisions
+
+### Référence de publication
+Le jeu Windows 0.92 est publié comme version de prototype sur le dépôt privé du projet. La régression archivée compte 71 suites et 23 892 contrôles Godot, 16 tests Python, ainsi que les contrats numériques du GDD. La vérification du paquet Windows compte 175 lancements, 174 captures et 45 sources de réalisation comparées. Les scénarios du Gué restent identiques à la version 0.91 ; cette version améliore le parcours et les bilans sans changement d’équilibrage.
+
+La prochaine mission non gagnée est proposée au retour au parcours, sans lancement automatique. Le numéro et le nom de mission restent visibles dans les onglets du bilan ; l’action de placement du premier point de talent est explicite. Ce sont des comportements réalisés, sans présumer leur compréhension par tous les joueurs.
+
+### Essais d’équilibrage à poursuivre
+Les deux factions peuvent réussir les trois cartes sans talents avec certaines compositions. L’exploration automatique de 144 stratégies Horde trouve des réussites sur les deux nouvelles cartes, mais n’est pas un taux de victoire humain. Un faible supplément de PV peut franchir un seuil de tirs nécessaires : 16 + 24 dégâts suffisent à 40 PV, mais plus à 40,4 PV. La courbe doit donc être étudiée avec la géométrie, le placement, les choix de bonus et les talents.
+
+Priorités de décision : difficulté et durée des trois missions ; variété des builds et puissance des talents majeurs ; barème de PO et première offre de boutique ; contenu des prochaines missions ; reprise après interruption et portabilité de la sauvegarde. Aucun nouveau contenu n’est réputé approuvé par cette liste.
+
+### Sources de consolidation
+Décisions explicites du porteur du projet dans ce tchat, puis confrontation aux documents suivants : `design/Cadrage_campagne_2026-10-29.md`, `design/Experience_talents_2026-10-29.md`, `design/Arbres_lies_v088.md`, `design/Fleches_droites_v089.md`, `design/Catalogue_talents_lies_v089.md`, `design/Parcours_campagne_v090.md`, `design/Echantillon_campagne_v091.md` et `design/Lisibilite_progression_v092.md`. Les sources anciennes décrivent leur version historique ; les règles révisées de ce GDD prévalent.
+
+Les preuves sont archivées dans `design/essais/v092_regression.json`, `design/Distribution_Windows_v092.json`, `design/essais/v092_comparaison_combat.json` et `design/essais/v092_rejeux_natifs.json`. La documentation est versionnée séparément du binaire : GDD 0.15, jeu 0.92. La consolidation documentaire ne constitue pas un nouvel essai de jeu humain.

@@ -18,7 +18,7 @@ Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantas
 
 - [GDD Word](For_the_Fortress_GDD.docx) : présentation structurée avec sommaire et tableaux.
 - [GDD Markdown](For_the_Fortress_GDD.md) : référence éditoriale adaptée au versionnement Git.
-- Version documentaire : **0.14 — 20 octobre 2026**, intégrant le socle, les combats, les ennemis, les dix vagues, la progression par niveau, les spécialisations, la géométrie du Gué, la résolution du combat, les bonus roguelite, les synergies, le recrutement, la vente et le cahier de réalisation approuvés.
+- Version documentaire : **0.15 — 30 octobre 2026**, consolidée pour le jeu **0.92** : socle de combat conservé, campagne, XP, 51 points par faction, arbres liés à quatre colonnes, reset gratuit et sauvegarde persistante. Les décisions validées, valeurs de prototype et questions ouvertes sont distinguées. Le catalogue des 126 talents est inclus.
 
 ## Mécaniques établies
 
@@ -32,13 +32,17 @@ Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantas
 
 ## Prototype de référence
 
-La Vallée du Gué : une carte isométrique, six emplacements et dix vagues. Six défenseurs, trois par faction. Capital initial de travail : 150 or ; forteresse : 20 PV. Choix roguelite après les vagues 3, 6 et 9. Durée ciblée : 8 à 12 minutes. Sept archétypes ordinaires sont retenus : Grouillant, Pillard, Sprinter, Brute, Maraudeur, Colosse et Élite. Le boss provisoire Seigneur de siège est prévu en vague 10. Leurs statistiques figurent dans le GDD comme réglages à tester.
+Trois cartes isométriques du même thème : La Vallée du Gué, Le Bois du Gué et Les Hauts du Gué, avec six emplacements et dix vagues chacune. PV ennemis à 100 %, 101 % puis 102 % ; vitesse, dégâts à la forteresse et gains de combat identiques. Six défenseurs, trois par faction. Capital initial de travail : 150 or de combat ; forteresse : 20 PV avant talents. Choix roguelite après les vagues 3, 6 et 9. Première vague manuelle, puis 30 secondes de préparation entre vagues ; les choix de bonus attendent le joueur.
+
+Chaque mission repart à neuf. La première victoire rapporte actuellement 60 PO et 100 XP par faction, valeurs de prototype. L’XP débloque les points de talent ; les PO sont réservées à une future boutique. Rejouer ou perdre ne redonne pas ces gains. Les deux parcours, XP, PO et talents sont indépendants et sauvegardés. La courbe de référence vise 51 points après 100 premières victoires ; les 197 autres missions restent à réaliser.
+
+Durée ciblée : 8 à 12 minutes, à mesurer. Les sept profils ordinaires et le boss déterminent les statistiques ; leurs identités en jeu sont des animaux neutres ou des attaquants du camp adverse. Les réglages figurent dans le GDD avec le statut d’hypothèses.
 
 Les coûts d’achat de 50, 75 et 100 or, les DPS de 8, 9,6 et 10,8 et les améliorations de 50, 100 et 150 or restent des **hypothèses non équilibrées**.
 
 ## Intentions commerciales
 
-PC sur Steam en priorité ; Godot retenu pour le premier essai ; modèle premium avec prix de travail de 7,99 €. Cibles envisagées : deux factions, seize défenseurs, six cartes, environ soixante bonus, douze familles d’ennemis et six boss. Le mode infini est seulement envisagé. Ces cibles ne constituent pas des engagements de production.
+PC sur Steam en priorité ; Godot avec GDScript ; modèle premium et prix de travail de 7,99 €. La cible de campagne est de 200 missions, organisées en chapitres et thèmes. Les nouveautés sont prévues aux blocs 11–20, 31–40, etc. L’infini se débloquera après les 100 premières missions de la faction ; il n’est pas encore jouable. Boutique d’unités alternatives, contenu étendu et objectifs commerciaux restent à préciser. Aucun calendrier ni engagement de production n’est déduit de ces cibles.
 
 ## Séquence de référence des dix vagues
 

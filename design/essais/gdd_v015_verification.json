@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "gdd_version": "0.15",
+  "game_version": "0.92",
+  "sections": 56,
+  "tables_identical_md_docx": 72,
+  "catalogue_talents": 126,
+  "toc_anchors": 56,
+  "gdd_contracts": {
+    "defender_values": 24,
+    "enemy_values": 32,
+    "branch_values": 42,
+    "wave_groups": 26
+  },
+  "xp_thresholds_checked": 51,
+  "runtime_changes": false,
+  "sha256": {
+    "For_the_Fortress_GDD.md": "c6d2f0b41c41121019446ec5f49662eaa1ca0bb9fab28488cbb70a6f2f9507a6",
+    "For_the_Fortress_GDD.docx": "4e9b1c11d287fefa4ee4265e7340ae7b8f62e97b1e9265e271526ed72356993a"
+  },
+  "date": "2026-10-30",
+  "rendered_pages": 62,
+  "renderer": "documents/render_docx.py avec LibreOffice 26.8.2 et Poppler",
+  "toc_page_numbers_verified": 56,
+  "visual_review": "Planches des 62 pages examinées ; zoom sur tableaux de combat, campagne et talents. Correction des pages vides, de la pagination et de la largeur de colonne du catalogue.",
+  "scope": "Documentation uniquement ; aucune modification de la réalisation du jeu ni recompilation nécessaire."
+}
