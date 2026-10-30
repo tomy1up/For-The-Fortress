@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.88 — 29 octobre 2026
+Version : 0.89 — 30 octobre 2026
 
 JOUER
 
@@ -61,7 +61,9 @@ Réinitialiser les trois arbres est gratuit : PO, XP et points débloqués sont 
 Les points rendus peuvent être répartis autrement avant la prochaine mission.
 Les talents sont figés pendant la mission ; l’onglet Talents du bilan les consulte.
 Noms, effets et courbe d’XP restent des hypothèses d’équilibrage du prototype.
-Les positions sont irrégulières, sur quatre colonnes. Les flèches relient certains
+Quatre colonnes par spécialisation. Le palier 20 partage deux rangées accolées.
+Parents et enfants sont alignés verticalement. Des cases restent vides entre les
+talents reliés pour garder des flèches droites. Les flèches relient certains
 talents : un enfant exige le rang maximal de son parent ET le seuil de sa ligne.
 Flèche grise : parent à terminer ; dorée : prérequis rempli. Les effets et noms
 sont consultables en sélectionnant une icône, sans texte répété sous chaque case.

@@ -35,14 +35,18 @@ static func build(tree: int) -> Array:
 	return ranks
 func run_checks() -> void:
 	for tree in range(3):
-		var cells: Dictionary = {};var counts: Array = [0,0,0,0,0,0,0]
+		var cells: Dictionary = {};var counts: Array = [0,0,0,0,0,0,0,0];var columns: Dictionary = {}
 		for local in range(21):
 			var index: int = Linked.index_for(tree,local);var cell: Vector2i = Linked.layout(index)
-			check(cell.x >= 0 and cell.x < 4 and cell.y >= 0 and cell.y < 7 and not cells.has(cell),"Chaque talent occupe une cellule unique dans les quatre colonnes")
-			cells[cell] = true;counts[cell.y] += 1
+			check(cell.x >= 0 and cell.x < Linked.COLUMN_COUNT and cell.y >= 0 and cell.y < 8 and not cells.has(cell),"Chaque talent occupe une cellule unique dans la grille aérée")
+			cells[cell] = true;columns[cell.x] = true;counts[cell.y] += 1
 			var parent: int = Linked.parent_index(index)
-			if parent >= 0: check(Linked.coordinates(parent).x == tree and Linked.layout(parent).y < cell.y,"Dépendance dans le même arbre, strictement descendante, sans cycle")
-		check(counts == [3,3,3,4,4,3,1] and cells.size() < 28,"Lignes irrégulières et cellules réellement vides, dernier majeur isolé")
+			if parent >= 0:
+				check(Linked.coordinates(parent).x == tree and Linked.layout(parent).y < cell.y,"Dépendance dans le même arbre, strictement descendante, sans cycle")
+				check(Linked.layout(parent).x == cell.x,"Parent et enfant alignés dans la même colonne pour une flèche strictement verticale")
+		check(counts == [3,3,3,4,3,1,3,1] and cells.size() < 8*Linked.COLUMN_COUNT,"Lignes irrégulières et cellules réellement vides, dernier majeur isolé")
+		check(Linked.COLUMN_COUNT == 4 and columns.size() == 4,"Exactement quatre colonnes par spécialisation")
+		check(Linked.ROWS[19] == 4 and Linked.layout(Linked.index_for(tree,19)).y == 5 and Linked.node(0,Linked.index_for(tree,19)).row == 4,"La seconde rangée du palier 20 conserve strictement son seuil de déblocage")
 		var partial: Array = Linked.empty_ranks()
 		partial[Linked.index_for(tree,5)] = 2;partial[Linked.index_for(tree,0)] = 3
 		var child: int = Linked.index_for(tree,7)

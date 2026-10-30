@@ -29,6 +29,7 @@ func run_checks() -> void:
 		for local in Linked.PARENTS:
 			var child: int = Linked.index_for(tree,local);var parent: int = Linked.parent_index(child)
 			var route: PackedVector2Array = Screen.TreeTracks.link_route(child)
+			check(route.size() == 2 and is_equal_approx(route[0].x,route[1].x) and route[0].y < route[1].y,"Une seule ligne verticale entre le parent et son enfant, sans coude ni détour")
 			var clear: bool = true
 			for other in range(21):
 				var index: int = Linked.index_for(tree,other)
@@ -41,6 +42,7 @@ func run_checks() -> void:
 		var ui = Screen.new();root.add_child(ui);ui.open(p,faction)
 		await process_frame;await process_frame
 		for index in range(63): check(ui.boards[Linked.coordinates(index).x].get_global_rect().encloses(ui.nodes[index].get_global_rect()),"Les sept lignes sont toutes visibles dans leur colonne")
+		for index in range(63): check(ui.scrollers[Linked.coordinates(index).x].get_global_rect().encloses(ui.nodes[index].get_global_rect()),"Chaque talent tient dans la zone visible sans défilement ni rognage")
 		var parent: int = Linked.index_for(0,5);var child: int = Linked.index_for(0,7)
 		for index in [parent,parent,0,0,0]: check(p.allocate(faction,index),"Préparation du palier avec un parent partiellement amélioré")
 		ui.refresh();ui.nodes[child].grab_focus();await process_frame

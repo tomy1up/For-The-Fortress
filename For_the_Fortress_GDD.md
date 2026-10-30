@@ -6,7 +6,7 @@ Document de référence pour concevoir, prototyper et faire évoluer le jeu. Cet
 
 Nom de travail — disponibilité juridique à confirmer.
 
-**Complément du 29 octobre 2026 :** les points de talent proviennent désormais de l’XP de première victoire, avec 51 points sur les cent premières missions ; les PO servent à la boutique. Parcours indépendants par faction, reset gratuit. Voir la [décision XP et sa réalisation v0.87](design/Experience_talents_2026-10-29.md) et la [nouvelle architecture de talents liés](design/Arbres_lies_v088.md). Les règles historiques ci-dessous sont à lire avec ces révisions.
+**Complément du 29 octobre 2026 :** les points de talent proviennent désormais de l’XP de première victoire, avec 51 points sur les cent premières missions ; les PO servent à la boutique. Parcours indépendants par faction, reset gratuit. Voir la [décision XP et sa réalisation v0.87](design/Experience_talents_2026-10-29.md) et la [nouvelle architecture de talents liés](design/Arbres_lies_v088.md), avec [flèches droites en v0.89](design/Fleches_droites_v089.md). Les règles historiques ci-dessous sont à lire avec ces révisions.
 
 ## Sommaire
 

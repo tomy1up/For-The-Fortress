@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 29 octobre 2026 — prototype v0.88, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 29 octobre 2026 — prototype v0.89, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -460,3 +460,7 @@ Décision explicite : les resets entre les missions sont gratuits, les talents r
 ## Version v0.88 — architecture des talents
 
 [Arbres liés](Arbres_lies_v088.md) : quatre colonnes avec cases vides, sept lignes visibles, flèches et exigence du rang maximal du parent en plus du palier. Noms et détails à la sélection. Migration au schéma 6 avec gains conservés et restitution gratuite des points si une ancienne répartition est incompatible ; anciens rapports rejouables. Les liens et positions précis restent provisoires.
+
+## Version v0.89 — flèches de talents droites
+
+[Parents et enfants alignés verticalement](Fleches_droites_v089.md), avec des cases libres sur le trajet et sans coude ni traversée d’icône. Présentation corrigée dans les six arbres ; règles, rangs, statistiques et sauvegardes v0.88 conservés.

@@ -67,30 +67,26 @@ class TreeTracks extends Control:
 	var board: TreeBoard
 	static func button_position(index: int) -> Vector2:
 		var cell: Vector2i = Expanded.layout(index)
-		return Vector2(47+78*cell.x,6+52*cell.y)
+		return Vector2(47+78*cell.x,6+48*cell.y)
 	static func link_route(child: int) -> PackedVector2Array:
 		var parent: int = Expanded.parent_index(child)
 		if parent < 0: return PackedVector2Array()
-		var from_cell: Vector2i = Expanded.layout(parent);var to_cell: Vector2i = Expanded.layout(child)
 		var start: Vector2 = button_position(parent)+Vector2(21,42)
 		var end: Vector2 = button_position(child)+Vector2(21,-2)
-		var route: PackedVector2Array = PackedVector2Array([start])
-		if from_cell.x == to_cell.x and to_cell.y == from_cell.y+1:
-			route.append(end)
-		else:
-			var gutter: float = button_position(parent).x+54
-			route.append(start+Vector2(0,4));route.append(Vector2(gutter,start.y+4))
-			route.append(Vector2(gutter,end.y-4));route.append(end+Vector2(0,-4));route.append(end)
-		return route
+		return PackedVector2Array([start,end])
+
 	func _draw() -> void:
 		if board.ranks.size() != Expanded.NODE_COUNT: return
+		# Le palier 20 partage deux rangées, reliées par une accolade de lecture.
+		var bracket := PackedVector2Array([Vector2(36,198),Vector2(30,198),Vector2(30,282),Vector2(36,282)])
+		draw_polyline(bracket,Color("536159"),1,true)
 		for local in Expanded.PARENTS:
 			var child: int = Expanded.index_for(board.tree,local)
 			var route: PackedVector2Array = link_route(child)
 			var end: Vector2 = route[-1]
 			var ink: Color = Color("dab868") if Expanded.parent_complete(board.ranks,child) else Color("536159")
 			draw_polyline(route,ink,2,true)
-			draw_colored_polygon(PackedVector2Array([end+Vector2(0,1),end+Vector2(-4,-5),end+Vector2(4,-5)]),ink)
+			draw_colored_polygon(PackedVector2Array([end+Vector2(0,1),end+Vector2(-4,-4),end+Vector2(4,-4)]),ink)
 
 var profile: RefCounted
 var faction: int = 0
@@ -149,16 +145,16 @@ func _ready() -> void:
 	label_at(self,"+ Investir un rang · ✓ Maximum · Cadenas : palier fermé · × Autre spécialité choisie · ! XP à gagner ou plafond atteint · ★ Talent majeur",Rect2(32,112,1216,30),14)
 	nodes.resize(Expanded.NODE_COUNT);descriptions.resize(Expanded.NODE_COUNT)
 	for tree in range(3):
-		var board := TreeBoard.new();board.position = Vector2(32+416*tree,158);board.size = Vector2(384,454)
+		var board := TreeBoard.new();board.position = Vector2(32+416*tree,144);board.size = Vector2(384,468)
 		board.tree = tree;board.mouse_filter = Control.MOUSE_FILTER_IGNORE;board.accent = Color("638c86");add_child(board);boards.append(board)
 		names.append(label_at(board,"",Rect2(40,12,328,32),22))
 		point_labels.append(label_at(board,"",Rect2(40,48,328,24),14))
-		var scroll := ScrollContainer.new();scroll.position = Vector2(0,80);scroll.size = Vector2(384,374)
+		var scroll := ScrollContainer.new();scroll.position = Vector2(0,80);scroll.size = Vector2(384,388)
 		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED;scroll.follow_focus = true
 		board.add_child(scroll);scrollers.append(scroll)
-		var content := TreeTracks.new();content.board = board;content.custom_minimum_size = Vector2(368,374)
+		var content := TreeTracks.new();content.board = board;content.custom_minimum_size = Vector2(368,388)
 		content.mouse_filter = Control.MOUSE_FILTER_IGNORE;scroll.add_child(content);tracks.append(content)
-		for row in range(7): tier_labels.append(label_at(content,"",Rect2(2,15+52*row,34,20),11))
+		for row in range(7): tier_labels.append(label_at(content,"",Rect2(2,15+48*Expanded.TIER_VISUAL_ROWS[row]+(24 if row == 4 else 0),34,20),11))
 		for local in range(21):
 			var index: int = Expanded.index_for(tree,local)
 			var pos: Vector2 = TreeTracks.button_position(index)
@@ -227,7 +223,7 @@ func refresh() -> void:
 			var missing: int = Expanded.THRESHOLDS[row]-invested_below
 			boards[tree].opened[row] = missing == 0;boards[tree].progress[row] = invested_below
 			tier_labels[tree*7+row].text = str(Expanded.THRESHOLDS[row])
-			tier_labels[tree*7+row].tooltip_text = "Palier : %d/%d points dans les lignes précédentes de cet arbre." % [invested_below,Expanded.THRESHOLDS[row]]
+			tier_labels[tree*7+row].tooltip_text = ("Palier : %d/%d points dans les lignes précédentes de cet arbre." % [invested_below,Expanded.THRESHOLDS[row]])+(" Les deux rangées accolées appartiennent au même palier de 20 points." if row == 4 else "")
 			tier_labels[tree*7+row].mouse_filter = Control.MOUSE_FILTER_STOP
 			tier_labels[tree*7+row].add_theme_color_override("font_color",Color("dab868") if missing == 0 else Color("7c8c82"))
 		boards[tree].queue_redraw();tracks[tree].queue_redraw()

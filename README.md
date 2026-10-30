@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.88 (29 octobre 2026)** : [arbres irréguliers avec talents liés](design/Arbres_lies_v088.md). Cases vides, flèches et parent requis au rang maximum ; sept lignes visibles. XP, PO et points conservés lors de la migration. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.88).
+**Version v0.89 (30 octobre 2026)** : [flèches de talents droites](design/Fleches_droites_v089.md). Exactement quatre colonnes par spécialisation, parents et enfants alignés verticalement, espaces libres sur le trajet. Règles, rangs et progression conservés. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.89).
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 

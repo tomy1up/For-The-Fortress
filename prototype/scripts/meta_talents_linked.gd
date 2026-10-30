@@ -3,6 +3,7 @@ extends RefCounted
 const Base = preload("res://scripts/meta_talents_expanded.gd")
 const NODE_COUNT: int = Base.NODE_COUNT
 const NODES_PER_TREE: int = Base.NODES_PER_TREE
+const COLUMN_COUNT: int = 4
 const MAX_POINTS: int = Base.MAX_POINTS
 const MAX_RANKS: Array[int] = Base.MAX_RANKS
 const THRESHOLDS: Array[int] = Base.THRESHOLDS
@@ -10,10 +11,12 @@ const ROWS: Array[int] = [0,1,1,2,2,0,0,1,2,3,3,3,4,4,4,5,5,5,6,4,3]
 const PARENTS: Dictionary = {7:5,9:7,16:11,18:16}
 const EXCLUSIONS: Array = [[3,4]]
 const COLUMNS: Array = [
-	[1,1,2,0,1,0,3,3,3,1,0,2,0,1,3,0,2,3,2,2,3],
-	[2,2,1,3,2,3,0,0,0,2,3,1,3,2,0,3,1,0,1,1,0],
-	[3,3,0,1,3,1,2,2,2,3,1,0,1,3,2,1,0,2,0,0,2]
+	[0,0,3,0,2,1,3,1,3,1,0,2,0,1,3,0,2,3,2,0,3],
+	[3,3,0,3,1,2,0,2,0,2,3,1,3,2,0,3,1,0,1,3,0],
+	[3,3,1,3,0,2,1,2,1,2,3,0,3,2,1,3,0,1,0,3,1]
 ]
+const VISUAL_ROWS: Array[int] = [0,1,1,2,2,0,0,1,2,3,3,3,4,4,4,6,6,6,7,5,3]
+const TIER_VISUAL_ROWS: Array[int] = [0,1,2,3,4,6,7]
 
 static func index_for(tree: int, local: int) -> int: return Base.index_for(tree,local)
 static func coordinates(index: int) -> Vector2i: return Base.coordinates(index)
@@ -27,7 +30,7 @@ static func tree_capacity() -> int:
 
 static func layout(index: int) -> Vector2i:
 	var position: Vector2i = coordinates(index)
-	return Vector2i(COLUMNS[position.x][position.y],ROWS[position.y])
+	return Vector2i(COLUMNS[position.x][position.y],VISUAL_ROWS[position.y])
 
 static func parent_index(index: int) -> int:
 	var position: Vector2i = coordinates(index)
