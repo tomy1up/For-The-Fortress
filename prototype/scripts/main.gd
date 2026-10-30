@@ -468,6 +468,22 @@ func _ready() -> void:
 				meta_profile.data.banks[capture_faction].points = Model.MetaTalents.spent(meta_profile.data.banks[capture_faction].ranks)
 				meta_profile.data.banks[capture_faction].resource = 0
 				meta_profile.data.banks[capture_faction].xp = MetaProfile.Experience.xp_for_points(int(meta_profile.data.banks[capture_faction].points))
+			var talent_start: String = ""
+			for argument in OS.get_cmdline_user_args():
+				if argument.begins_with("--capture-talent-start="): talent_start = argument.trim_prefix("--capture-talent-start=")
+			if talent_start in ["fresh","first","invested","blocked"]:
+				meta_profile = MetaProfile.new("")
+				if talent_start in ["first","invested"]:
+					for number in [1,2]:
+						var entry: Dictionary = CampaignCatalogue.definition(number)
+						var id: int = meta_profile.begin_mission(capture_faction,entry.id,entry.po,entry.waves,entry.xp)
+						var credited: bool = meta_profile.credit_mission(id,capture_faction,entry.waves,true)
+						if not credited: push_error("Échec du premier point dans le profil isolé.");return
+					if talent_start == "invested":
+						var allocated: bool = meta_profile.allocate(capture_faction,0)
+						if not allocated: push_error("Affectation du point de contrôle refusée.");return
+				if talent_start == "blocked":
+					meta_profile.blocked = true;meta_profile.error = "Sauvegarde indisponible simulée pour le contrôle."
 			_open_meta(capture_faction)
 			for argument in OS.get_cmdline_user_args():
 				if argument.begins_with("--capture-expanded-tree="):
@@ -550,7 +566,7 @@ func _ready() -> void:
 			for index in range(meta_menu.nodes.size()):
 				all_visible = all_visible and meta_menu.boards[Linked.coordinates(index).x].get_global_rect().encloses(meta_menu.nodes[index].get_global_rect())
 			print("LINKED_SNAPSHOT=",JSON.stringify({"all_visible":all_visible,"links_per_tree":Linked.PARENTS.size(),"valid":Linked.valid(meta_menu._current_ranks()),"prerequisites":states.count("prerequisite")}))
-			print("TALENT_STATES_SNAPSHOT=",JSON.stringify({"states":states,"isolated":meta_profile.path.is_empty(),"progress":meta_menu.boards[0].progress,"buy_hidden":not meta_menu.buy.visible and meta_menu.buy.disabled,"xp":meta_profile.data.banks[capture_faction].xp,"xp_label":meta_menu.xp_label.text}))
+			print("TALENT_STATES_SNAPSHOT=",JSON.stringify({"heading":meta_menu.balance.text,"roles":meta_menu.point_labels.map(func(label): return label.text),"highlighted":meta_menu.nodes.filter(func(node): return node.highlighted).size(),"inspected":meta_menu.inspected,"hint":meta_menu.notice.text,"states":states,"isolated":meta_profile.path.is_empty(),"progress":meta_menu.boards[0].progress,"buy_hidden":not meta_menu.buy.visible and meta_menu.buy.disabled,"xp":meta_profile.data.banks[capture_faction].xp,"xp_label":meta_menu.xp_label.text}))
 		if "--capture-fortress" in OS.get_cmdline_user_args():
 			var style: Dictionary = MapView.fortress_style(model.faction)
 			var condition: int = MapView.fortress_condition(model.fortress_hp,model.max_hp)

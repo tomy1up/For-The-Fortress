@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.94 — 30 octobre 2026
+Version : 0.95 — 30 octobre 2026
 
 JOUER
 
@@ -10,6 +10,8 @@ JOUER
    Trois missions de dix vagues sont jouables : le Gué, le Bois du Gué, les Hauts
    du Gué. Gagner la précédente les débloque dans la faction concernée.
 3. Préparer les talents avant la mission, puis jouer et installer sa défense.
+   Les points disponibles sont indiqués en haut ; le rôle de chaque arbre
+   accompagne son compteur. Les coins clairs repèrent le talent décrit.
    Lancer la première vague manuellement.
 4. Les suivantes partent automatiquement après 30 secondes de préparation.
    Les cinq dernières secondes sont rappelées dans l’en-tête avant le départ.

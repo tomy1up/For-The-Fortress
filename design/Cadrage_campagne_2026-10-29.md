@@ -20,6 +20,7 @@ Complément à la [vision long terme](Feuille_de_route_long_terme.md), révisé 
 | CAMP-013 | Chaque mission repart à neuf | Forteresse intacte à son maximum, or initial, aucun défenseur ni bonus temporaire ; XP, PO, talents et futurs déblocages de boutique restent persistants. Réponse explicite du porteur du projet. |
 | CAMP-014 | Premier échantillon de trois missions de dix vagues, dans le même thème | Configurations différentes pour comparer les situations ; récompenses et difficulté restent des valeurs de prototype à équilibrer. Choix explicite du 30 octobre 2026. |
 | CAMP-015 | Tester une hausse de PV ennemis de 1 % par mission sur cet échantillon | Missions 1/2/3 à 100/101/102 % de PV, mêmes vitesses, dégâts et récompenses de combat. Choix explicite du 30 octobre 2026 ; l’équilibrage et l’extension au parcours complet restent à éprouver. |
+| CAMP-016 | Étendre l’essai aux missions 4–10 dans le prochain lot de contenu | Choix explicite du porteur du projet le 30 octobre 2026, après le lot de lisibilité des talents. Les nouvelles valeurs restent des réglages de prototype ; ne pas présenter les sept missions comme livrées avant leur réalisation et leurs essais. |
 
 Les exemples explicites des paliers font foi sur le terme « impaires » de la formulation initiale. L’ancienne suggestion d’introduction aux missions 1–10, 21–30 et 41–50 est écartée. Avec dix missions par chapitre, les nouveaux paliers correspondraient aux chapitres 2, 4, 6, etc. ; le découpage en chapitres reste une cible de contenu.
 

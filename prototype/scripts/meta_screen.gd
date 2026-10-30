@@ -1,6 +1,7 @@
 extends ColorRect
 const Talents = preload("res://scripts/meta_talents.gd")
 const Expanded = Talents.Linked
+const TREE_ROLES: Array = [["Forteresse et portée","Tirs à distance","Magie et explosions"],["Haches et rebonds","Malédictions","Explosifs"]]
 signal closed
 
 class TalentButton extends Button:
@@ -10,6 +11,7 @@ class TalentButton extends Button:
 	var rank_text: String = ""
 	var state: String = "locked"
 	var major: bool = false
+	var highlighted: bool = false
 	func _draw() -> void:
 		draw_set_transform(Vector2.ZERO,0,Vector2(42.0/52.0,42.0/52.0))
 		var font: Font = get_theme_font("font")
@@ -53,6 +55,10 @@ class TalentButton extends Button:
 			var symbol: String = {"available":"+","maximum":"✓","exclusive":"×","unfunded":"!","capped":"!"}.get(state,"?")
 			var symbol_width: float = font.get_string_size(symbol,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x
 			draw_string(font,badge+Vector2(-symbol_width/2,4),symbol,HORIZONTAL_ALIGNMENT_LEFT,-1,13,color)
+		if highlighted:
+			for pair in [[Vector2(-3,-3),Vector2(1,1)],[Vector2(55,-3),Vector2(-1,1)],[Vector2(55,55),Vector2(-1,-1)],[Vector2(-3,55),Vector2(1,-1)]]:
+				draw_line(pair[0],pair[0]+Vector2(pair[1].x*7,0),Color("f0e6bf"),2,true)
+				draw_line(pair[0],pair[0]+Vector2(0,pair[1].y*7),Color("f0e6bf"),2,true)
 
 class TreeBoard extends Control:
 	var tree: int = 0
@@ -143,7 +149,9 @@ func _ready() -> void:
 		var xp_style := StyleBoxFlat.new();xp_style.bg_color = Color("8aa4ba") if part == "fill" else Color("1c302a")
 		xp_style.set_corner_radius_all(4);xp_style.set_content_margin_all(0)
 		xp_bar.add_theme_stylebox_override(part,xp_style)
-	label_at(self,"+ Investir un rang · ✓ Maximum · Cadenas : palier fermé · × Autre spécialité choisie · ! XP à gagner ou plafond atteint · ★ Talent majeur",Rect2(32,112,1216,30),14)
+	var help := label_at(self,"Survol ou clavier : lire un talent · + Rang disponible · ✓ Rang maximum · ★ Talent majeur",Rect2(32,112,1216,30),14)
+	help.tooltip_text = "Cadenas : palier ou parent à terminer. Croix : autre spécialité choisie.\nFlèche grise : parent à terminer ; dorée : prérequis rempli.\nLa description du talent indique la condition exacte."
+	help.mouse_filter = Control.MOUSE_FILTER_STOP
 	nodes.resize(Expanded.NODE_COUNT);descriptions.resize(Expanded.NODE_COUNT)
 	for tree in range(3):
 		var board := TreeBoard.new();board.position = Vector2(32+416*tree,144);board.size = Vector2(384,468)
@@ -204,23 +212,37 @@ func refresh() -> void:
 		return
 	var camp: String = "Alliance" if faction == 0 else "Horde"
 	heading.text = "Talents · "+camp
-	balance.text = "PO %s : %d · XP : %d · Points à placer : %d / %d débloqués · Plafond : %d" % [camp,bank.resource,bank.get("xp",0),maxi(0,mini(int(bank.points),Expanded.MAX_POINTS)-Expanded.spent(ranks)),bank.points,Expanded.MAX_POINTS]
-	balance.tooltip_text = "Les PO sont réservées à la future boutique. Les points de talent se débloquent avec l’XP des missions de cette faction. L’or de combat sert au recrutement pendant la partie."
+	var free: int = maxi(0,mini(int(bank.points),Expanded.MAX_POINTS)-Expanded.spent(ranks))
+	var available_text: String = "Progression à vérifier" if profile.blocked else "Aucun point à placer" if free == 0 else "%d point%s à placer" % [free,"s" if free > 1 else ""]
+	balance.text = "%s · %d/51 débloqués · %d XP" % [available_text,bank.points,bank.get("xp",0)]
+	if profile.blocked: balance.text = "Progression à vérifier · Points et XP indisponibles"
+	balance.add_theme_color_override("font_color",Color("e5c779") if free > 0 and not profile.blocked else Color("e0dbbf"))
+	balance.tooltip_text = "51 points maximum à répartir entre les trois arbres de cette faction. Un point augmente un rang de talent.\nPO %s : %d, réservées à la future boutique ; elles ne servent pas à acheter des talents." % [camp,bank.resource]
+	if profile.blocked: balance.tooltip_text = "Progression indisponible. Vérifiez la sauvegarde avant de modifier les talents."
+	balance.mouse_filter = Control.MOUSE_FILTER_STOP
 	var experience: Dictionary = profile.Experience.progress(int(bank.get("xp",0)))
 	var at_cap: bool = bank.points >= Expanded.MAX_POINTS
 	var lower_xp: int = profile.Experience.xp_for_points(mini(int(bank.points),Expanded.MAX_POINTS))
 	var next_xp: int = 0 if at_cap else profile.Experience.xp_for_points(int(bank.points)+1)
 	xp_label.text = "51 points de talent débloqués" if at_cap else "Prochain point : encore %d XP" % maxi(0,next_xp-experience.xp)
-	xp_label.tooltip_text = "Expérience persistante de cette faction. Les 100 premières missions doivent débloquer les 51 points de talent. Échelle de prototype : 10 000 XP."
+	xp_label.tooltip_text = "L’XP est conservée dans cette faction. Seule la première victoire d’une mission rapporte de l’XP.\nObjectif de campagne : 51 points sur les 100 premières missions."
+	xp_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	xp_bar.max_value = 1 if at_cap else next_xp-lower_xp
 	xp_bar.value = 1 if at_cap else maxi(0,experience.xp-lower_xp)
+	if profile.blocked:
+		xp_label.text = "XP indisponible";xp_bar.max_value = 1;xp_bar.value = 0
 	buy.disabled = true;buy.hide()
 	for tree in range(3):
 		names[tree].text = Talents.TREES[faction][tree][0]
 		var accent: Color = ([Color("8aa4ba"),Color("8fb675"),Color("b69bda")] if faction == 0 else [Color("d28c70"),Color("b398d4"),Color("d4b078")])[tree]
 		boards[tree].accent = accent;boards[tree].ranks = ranks.duplicate()
 		var invested: int = Expanded.tree_spent(ranks,tree)
-		point_labels[tree].text = "%d point%s investi%s · 21 talents" % [invested,"s" if invested > 1 else "","s" if invested > 1 else ""]
+		point_labels[tree].text = "%d point%s · %s" % [invested,"s" if invested > 1 else "",TREE_ROLES[faction][tree]]
+		point_labels[tree].tooltip_text = "%d point%s investi%s dans cet arbre. Les 51 points sont partagés entre les trois arbres de %s." % [invested,"s" if invested > 1 else "","s" if invested > 1 else "",camp]
+		if profile.blocked:
+			point_labels[tree].text = "Points indisponibles · "+TREE_ROLES[faction][tree]
+			point_labels[tree].tooltip_text = "Progression indisponible. Le nombre de points investis ne peut pas être confirmé."
+		point_labels[tree].mouse_filter = Control.MOUSE_FILTER_STOP
 		for row in range(7):
 			var invested_below: int = mini(Expanded.THRESHOLDS[row],Expanded.lower_spent(ranks,tree,row))
 			var missing: int = Expanded.THRESHOLDS[row]-invested_below
@@ -236,8 +258,9 @@ func refresh() -> void:
 			var available: bool = not profile.blocked and Expanded.allocation_error(ranks,index,int(bank.points),faction).is_empty()
 			nodes[index].state = _node_state(index,ranks)
 			var learned: bool = ranks[index] > 0
-			nodes[index].rank_text = "%d/%d" % [ranks[index],definition.maximum]
+			nodes[index].rank_text = ("—/%d" % definition.maximum) if profile.blocked else "%d/%d" % [ranks[index],definition.maximum]
 			nodes[index].major = definition.major
+			nodes[index].highlighted = index == inspected
 			nodes[index].glyph = _glyph_for(definition.effect);nodes[index].accent = accent;nodes[index].lit = available or learned
 			style_for(nodes[index],accent.darkened(0.77) if available or learned else Color("141c19"),Color("dab868") if learned or (definition.major and available) else accent if available else Color("3c4b43"))
 			nodes[index].queue_redraw();descriptions[index].text = definition.name
@@ -246,7 +269,9 @@ func refresh() -> void:
 	reset_button.text = "Réinitialiser · Gratuit"
 	reset_button.disabled = profile.blocked or Expanded.spent(ranks) == 0
 	reset_button.tooltip_text = "Gratuit entre les missions.\nTous les points de cette faction sont rendus.\nLes PO, l’XP et les points débloqués restent conservés."
-	notice.text = profile.error if not profile.error.is_empty() else profile.migration_notice if not profile.migration_notice.is_empty() else "51 points partagés · Paliers de 5 points par arbre. Flèche grise : parent à terminer ; dorée : prérequis rempli."
+	var guidance: String = "Choisissez un talent marqué +. Un point augmente un rang. Réinitialisation gratuite entre les missions." if free > 0 else "51 points répartis entre les trois arbres. Réinitialisez gratuitement pour essayer une autre répartition." if at_cap else "De nouveaux points se débloquent à la première victoire des missions. Rejouer ne rapporte pas d’XP."
+	if profile.blocked: guidance = "Progression indisponible : vérifiez la sauvegarde avant de modifier les talents."
+	notice.text = profile.error if not profile.error.is_empty() else profile.migration_notice if not profile.migration_notice.is_empty() else guidance
 	_inspect(inspected)
 
 static func _glyph_for(effect: Dictionary) -> int:
@@ -276,17 +301,21 @@ func _inspect(index: int) -> void:
 	if profile == null or index < 0 or index >= nodes.size(): return
 	var ranks: Array = _current_ranks()
 	if ranks.is_empty(): return
+	var previous: int = inspected
 	inspected = index
+	for selected in [previous,index]:
+		nodes[selected].highlighted = selected == index;nodes[selected].queue_redraw()
 	var bank: Dictionary = profile.data.banks[faction]
 	var definition: Dictionary = Expanded.node(faction,index)
 	var state_text: String = {"available":"1 point pour ce rang","maximum":"Rang maximum","locked":"Palier fermé","prerequisite":"Parent à terminer","exclusive":"Autre spécialité choisie","unfunded":"XP à gagner","capped":"Plafond atteint","blocked":"Sauvegarde à vérifier"}[_node_state(index,ranks)]
 	detail_title.text = "%s · Rang %d/%d · %s" % [("★ " if definition.major else "")+definition.name,ranks[index],definition.maximum,state_text]
+	if profile.blocked: detail_title.text = "%s · Rang inconnu · %s" % [definition.name,state_text]
 	var reason: String = Expanded.allocation_error(ranks,index,int(bank.points),faction)
 	detail_text.text = definition.description.replace("\n"," ")+(" Choix exclusif entre les spécialités de cette ligne." if definition.local in [3,4] else "")
 	if definition.parent >= 0:
 		var parent: Dictionary = Expanded.node(faction,definition.parent)
 		detail_text.text += " Prérequis : %s au rang %d/%d." % [parent.name,parent.maximum,parent.maximum]
-	var gain: String = _rank_gain(index)
+	var gain: String = "" if profile.blocked else _rank_gain(index)
 	if not gain.is_empty(): detail_text.text += "\nProchain rang · "+gain
 	detail_text.text += "\n"+("Profil protégé : enregistrement à vérifier." if profile.blocked else reason if not reason.is_empty() else "Coût : 1 point · Cliquez pour investir un rang.")
 	scrollers[definition.tree].ensure_control_visible(nodes[index])

@@ -488,3 +488,11 @@ Décision explicite : les resets entre les missions sont gratuits, les talents r
 ## Version v0.94 — états et repérage dans le parcours
 
 [Missions futures et chapitre visible](Etats_parcours_v094.md) : cercle en pointillés pour le contenu à venir, cadenas pour le succès requis, coche pour la réussite. Les chapitres sans contenu jouable l’annoncent explicitement. Une progression indisponible n’est plus présentée comme une simple mission verrouillée. La liste défile pour révéler le chapitre sélectionné après mise en page, sans voler le focus ni déplacer le parcours fermé ou recouvert par les talents. Trois cartes, combat, économie, sauvegardes et talents conservés.
+
+## Version v0.95 — points et rôles des arbres
+
+[Lecture des talents](Lecture_talents_v095.md) : les points disponibles, leur plafond partagé et l’XP remplacent l’ancien en-tête chargé. Les PO restent accessibles au survol. Le rôle de chaque arbre accompagne son compteur ; des coins clairs repèrent le talent décrit au survol et au clavier. L’aide s’adapte à la disponibilité des points, avec les erreurs et migrations prioritaires. Géométrie des arbres, règles et données de progression conservées.
+
+## Prochain lot retenu — 30 octobre 2026
+
+Le porteur du projet choisit **d’étendre l’essai aux missions 4–10**, après ce lot de lisibilité. Les nouvelles valeurs resteront des réglages de prototype. Le contenu de ces sept missions est à préparer et à tester ; il n’est pas réputé livré par la v0.95. Les nouveautés de chapitre restent prévues à partir du bloc 11–20.

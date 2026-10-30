@@ -126,6 +126,7 @@ for camp in ['alliance','horde']:
     cases.append((camp+'_expanded_summary','summary',camp))
 for camp in ["alliance","horde"]:
     for variant in ["fresh","completed","future","blocked","talents","returned","terrain2","terrain3","locked2"]: cases.append((camp+"_campaign_menu_"+variant,"campaign_menu",camp))
+    for variant in ['fresh','first','invested','blocked']: cases.append((camp+'_talent_start_'+variant,'talents',camp))
 for camp in ["alliance","horde"]:
     for mission in [2,3]:
         for stage in ["preparation","inspection","summary"]: cases.append((camp+"_sample_"+str(mission)+"_"+stage,"campaign_sample",camp))
@@ -140,6 +141,7 @@ for name,state,faction in cases:
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
         if state=="campaign_menu": command += ["--capture-campaign="+name.rsplit("_",1)[1]]
+        if '_talent_start_' in name: command += ['--capture-talent-start='+name.rsplit('_',1)[1]]
         if state=="campaign_sample": command += ["--capture-mission="+name.split("_")[2],"--capture-sample-state="+name.rsplit("_",1)[1]]
         if state in ['forecast','forecast_boss']: command+=['--capture-forecast-portraits']
         if '_hud_' in name:
@@ -275,7 +277,16 @@ for name,state,faction in cases:
         xp_snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('TALENT_STATES_SNAPSHOT=')))
         assert xp_snapshot['buy_hidden'] and ('XP' in xp_snapshot['xp_label'] or '51 points' in xp_snapshot['xp_label'])
         graph=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('LINKED_SNAPSHOT=')))
-        assert graph['all_visible'] and graph['valid'] and graph['links_per_tree']==4 and graph['prerequisites']>0
+        assert graph['all_visible'] and graph['valid'] and graph['links_per_tree']==4
+        assert graph['prerequisites']==0 if name.endswith('_talent_start_blocked') else graph['prerequisites']>0
+        assert xp_snapshot['highlighted']==1 and len(xp_snapshot['roles'])==3 and 'PO' not in xp_snapshot['heading']
+        if '_talent_start_' in name:
+            variant=name.rsplit('_',1)[1]
+            assert xp_snapshot['xp']==(200 if variant in ['first','invested'] else 0)
+            assert xp_snapshot['heading'].startswith('1 point à placer' if variant=='first' else 'Progression à vérifier' if variant=='blocked' else 'Aucun point à placer')
+            assert xp_snapshot['roles'][0].startswith('Points indisponibles' if variant=='blocked' else '1 point' if variant=='invested' else '0 point')
+            if variant=='blocked': assert '/51' not in xp_snapshot['heading'] and xp_snapshot['xp_label']=='XP indisponible'
+            assert ('première victoire' in xp_snapshot['hint']) if variant in ['fresh','invested'] else ('Sauvegarde indisponible' in xp_snapshot['hint']) if variant=='blocked' else ('marqué +' in xp_snapshot['hint'])
     if '_expanded_tree_' in name:
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('EXPANDED_SNAPSHOT=')))
         assert snapshot['isolated'] and snapshot['points']==51 and snapshot['nodes']==63 and snapshot['scroll']==0 and snapshot['tree']==int(name[-1]) and '★' in snapshot['title']
