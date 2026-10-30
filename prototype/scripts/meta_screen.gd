@@ -1,6 +1,7 @@
 extends ColorRect
 const Talents = preload("res://scripts/meta_talents.gd")
 const Expanded = Talents.Linked
+signal closed
 
 class TalentButton extends Button:
 	var glyph: int = 0
@@ -184,7 +185,9 @@ func open(for_profile: RefCounted, for_faction: int) -> void:
 	refresh();show();nodes[0].grab_focus()
 
 func close() -> void:
+	var was_visible: bool = visible
 	_cancel_reset();hide()
+	if was_visible: closed.emit()
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if visible and event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:

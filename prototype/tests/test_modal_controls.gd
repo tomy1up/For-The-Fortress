@@ -1,5 +1,6 @@
 extends SceneTree
 const Main = preload("res://scripts/main.gd")
+const Profile = preload("res://scripts/meta_profile.gd")
 const Report = preload("res://scripts/run_report.gd")
 var checks: int = 0
 var failures: int = 0
@@ -74,10 +75,13 @@ func run_checks() -> void:
 		scene.free()
 	# Les touches passent par le viewport et le système GUI, sans appel au gestionnaire de choix.
 	var scene = Main.new(); root.add_child(scene); scene.set_process(false)
+	scene.meta_profile = Profile.new("")
 	await process_frame
 	check(scene.faction_buttons[0].has_focus(),"Le panneau possède un focus initial pour amorcer Tab")
 	inject(KEY_TAB); await process_frame
 	check(scene.faction_buttons[1].has_focus(),"Tab atteint la seconde faction, pas une commande de fond")
+	inject(KEY_ENTER); await process_frame
+	check(scene.choosing_faction and scene.campaign_menu.visible and scene.campaign_menu.faction == 1,"Entrée ouvre le parcours de la faction sans lancer de mission")
 	inject(KEY_ENTER); await process_frame
 	check(not scene.choosing_faction and scene.model.faction == 1 and scene.model.gold == 150,"Entrée choisit la faction ciblée, sans lancer de vague")
 	scene._show_bonuses()

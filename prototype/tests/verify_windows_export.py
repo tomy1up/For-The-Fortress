@@ -124,6 +124,8 @@ for camp in ['alliance','horde']:
     cases.append((camp+'_progression_repeat','summary',camp))
     for tree in range(3): cases.append((camp+'_expanded_tree_'+str(tree),'talents',camp))
     cases.append((camp+'_expanded_summary','summary',camp))
+for camp in ["alliance","horde"]:
+    for variant in ["fresh","completed","future","blocked","talents","returned"]: cases.append((camp+"_campaign_menu_"+variant,"campaign_menu",camp))
 for name,state,faction in cases:
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
@@ -133,6 +135,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if state=="campaign_menu": command += ["--capture-campaign="+name.rsplit("_",1)[1]]
         if state in ['forecast','forecast_boss']: command+=['--capture-forecast-portraits']
         if '_hud_' in name:
             command+=['--capture-hud']
@@ -188,6 +191,16 @@ for name,state,faction in cases:
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
+    if state=="campaign_menu":
+        snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
+        variant=name.rsplit('_',1)[1]
+        assert snap['isolated'] and snap['faction']==(0 if faction=='alliance' else 1) and snap['menu'] and snap['choosing']
+        assert snap['nodes']==10 and snap['chapters']==20 and snap['fresh']
+        assert snap['talents']==(variant=='talents') and snap['disabled']==(variant in ['future','blocked'])
+        assert snap['completed']==(-1 if variant=='blocked' else 1 if variant in ['completed','returned'] else 0)
+        assert snap['other_completed']==(-1 if variant=='blocked' else 0)
+        assert (snap['chapter'],snap['selected'])==((20,200) if variant=='future' else (1,1))
+        assert snap['po']==(60 if variant in ['completed','returned'] else 0) and snap['xp']==(10100 if variant=='returned' else 100 if variant=='completed' else 0)
     if name in ['alliance_purchase','horde_purchase','alliance_crossbow_purchase','alliance_mage_purchase','horde_sapper_purchase','horde_shaman_purchase']:
         ghost=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('PURCHASE_GHOST_SNAPSHOT=')))
         expected_type={'alliance_purchase':0,'horde_purchase':3,'alliance_crossbow_purchase':1,'alliance_mage_purchase':2,'horde_sapper_purchase':4,'horde_shaman_purchase':5}[name]

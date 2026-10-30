@@ -82,7 +82,7 @@ Le nom PO pour la progression peut prêter à confusion avec l’or temporaire s
 
 1. Comment présenter le résultat, le retour au parcours et la poursuite facultative après une mission ? La possibilité de s’arrêter après une seule mission et le versement des PO à sa première victoire sont fixés.
 2. Décision acquise (CAMP-010) : parcours, missions réussies et mode infini sont indépendants par faction. Les gains reviennent au compte de la faction jouée. Leur présentation dans le parcours reste à réaliser.
-3. Combien de vagues de combat comporte une mission ? Chaque mission redémarre-t-elle l’or temporaire, les défenseurs, les PV et les bonus, ou une poursuite facultative en conserve-t-elle certains ? Le rythme des nouveautés 11–20, 31–40, etc. est fixé ; les dix vagues actuelles ne deviennent pas automatiquement dix missions.
+3. Combien de vagues de combat comporte une mission ? CAMP-013 fixe la remise à neuf de l’or temporaire, des défenseurs, des PV et des bonus à chaque mission. Le rythme des nouveautés 11–20, 31–40, etc. est fixé ; les dix vagues actuelles ne deviennent pas automatiquement dix missions.
 4. Le +1 % est-il additif ou composé, avec quelle mission de référence, et agit-il sur les PV, quantités, vitesses ou un autre budget de difficulté ? Comment intégrer les sauts dus aux nouvelles mécaniques ?
 5. Le plafond de prototype est de 51 points partagés ; la v0.85 propose 21 talents par arbre et des majeurs aux seuils 15 et 30. Prix et équilibre restent à éprouver.
 6. Quel barème d’XP débloque les 51 points sur les cent premières missions ? La première victoire seule est désormais retenue pour l’XP. Comment équilibrer les PO et achats de boutique, désormais séparés des points de talent ?
@@ -124,3 +124,13 @@ CAMP-010 : l’Alliance et la Horde ont chacune leurs missions réussies et leur
 Le porteur du projet demande des positions vides et une répartition irrégulière des talents, avec des flèches de dépendance. Un talent enfant lié à un parent exige le rang maximal du parent en plus du seuil de points de son arbre. Cette règle s’ajoute à la progression par paliers. La [v0.88](Arbres_lies_v088.md) propose cette disposition et ces liens ; leurs choix précis restent des hypothèses à éprouver.
 
 Correction de présentation livrée en [v0.89](Fleches_droites_v089.md) : flèches de prérequis verticales et droites, avec des cases libres entre les talents concernés.
+
+## Parcours de prototype — v0.90
+
+Le parcours par faction est raccordé au Gué : choix d’une mission, première récompense, état déjà réussi, retour facultatif et préparation des talents. Vingt chapitres et 200 positions rendent visible l’organisation cible, avec 199 contenus à venir et non lançables. CAMP-013 confirme le départ à neuf de chaque mission. La prochaine étape du lot C reste la conception puis l’essai d’un échantillon de missions supplémentaires ; cet écran ne remplace pas leur production. [Réalisation et limites](Parcours_campagne_v090.md).
+
+### Échantillon retenu — 30 octobre 2026
+
+Le porteur du projet choisit **trois missions de dix vagues dans le même thème**, avec des configurations différentes, pour comparer plusieurs situations avant l’extension de la campagne. Le Gué en constitue la première ; les deux suivantes restent à produire après la validation du parcours v0.90. Leurs récompenses et leur difficulté seront des valeurs de prototype à éprouver, pas un barème commercial approuvé.
+
+Pour cet essai, le porteur du projet retient **100 %, 101 % puis 102 % de PV ennemis**, sans modifier leur vitesse, leurs dégâts ni leurs récompenses de combat (CAMP-015). Ce réglage sera évalué sur les trois missions avant toute projection à la campagne complète.

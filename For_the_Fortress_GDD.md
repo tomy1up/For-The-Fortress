@@ -8,6 +8,7 @@ Nom de travail — disponibilité juridique à confirmer.
 
 **Complément du 29 octobre 2026 :** les points de talent proviennent désormais de l’XP de première victoire, avec 51 points sur les cent premières missions ; les PO servent à la boutique. Parcours indépendants par faction, reset gratuit. Voir la [décision XP et sa réalisation v0.87](design/Experience_talents_2026-10-29.md) et la [nouvelle architecture de talents liés](design/Arbres_lies_v088.md), avec [flèches droites en v0.89](design/Fleches_droites_v089.md). Les règles historiques ci-dessous sont à lire avec ces révisions.
 
+**Complément du 30 octobre 2026 :** chaque mission repart à neuf (CAMP-013). Le [parcours v0.90](design/Parcours_campagne_v090.md) présente les chapitres et les premières réussites de chaque faction ; seule la mission du Gué est actuellement jouable.
 ## Sommaire
 
 1. [1 Vision et cadre de conception](#s1)

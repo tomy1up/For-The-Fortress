@@ -3,6 +3,7 @@ extends SceneTree
 const Main = preload("res://scripts/main.gd")
 const MapView = preload("res://scripts/valley_view.gd")
 const Model = preload("res://scripts/valley_model.gd")
+const Profile = preload("res://scripts/meta_profile.gd")
 var failures: int = 0
 var checks: int = 0
 
@@ -19,6 +20,11 @@ func select_slot(scene: Node, slot: int) -> void:
 	event.position = MapView.project(Model.SLOTS[slot])
 	scene._unhandled_input(event)
 
+func choose(scene: Node, faction: int) -> void:
+	if scene.campaign_menu.visible and scene.campaign_menu.faction != faction: scene.campaign_menu.close()
+	if not scene.campaign_menu.visible: scene.faction_buttons[faction].pressed.emit()
+	scene.campaign_menu.start_button.pressed.emit()
+
 func _initialize() -> void:
 	call_deferred("run_checks")
 
@@ -26,9 +32,10 @@ func run_checks() -> void:
 	var scene = Main.new()
 	root.add_child(scene)
 	scene.set_process(false)
+	scene.meta_profile = Profile.new("")
 	scene.model.synergies_enabled = false
 	check(scene.choosing_faction and scene.faction_panel.visible and scene.start_button.disabled, "Choix de faction obligatoire")
-	scene.faction_buttons[0].pressed.emit()
+	choose(scene,0)
 	check(scene.model.fortress_hp == 20 and scene.model.gold == 150 and not scene.start_button.disabled, "Préparation initiale")
 	check(scene.buy_buttons.size() == 3 and scene.buy_buttons[0].disabled, "Choix d'emplacement obligatoire")
 	for i in range(Model.SLOTS.size()):
@@ -75,13 +82,13 @@ func run_checks() -> void:
 	scene.reset_button.pressed.emit()
 	check(scene.speed == 1 and scene.model.phase == "preparation" and scene.model.gold == 150 and scene.model.fortress_hp == 20, "Nouvel essai propre")
 	check(scene.selected == -1 and scene.model.count_type(0) == 0 and scene.model.count_type(1) == 0, "Défense et sélection réinitialisées")
-	scene.faction_buttons[0].pressed.emit()
+	choose(scene,0)
 	select_slot(scene, 5)
 	scene.buy_buttons[2].pressed.emit()
 	check(scene.details_label.text.contains("10,8") and scene.model.gold == 50, "Description des dégâts secondaires du mage")
 	scene.model.phase = "defeat";scene._reset()
 	check(scene.choosing_faction and scene.faction_panel.visible, "Nouvel essai après fin de partie : retour au choix de faction")
-	scene.faction_buttons[1].pressed.emit()
+	choose(scene,1)
 	check(scene.model.faction == 1 and not scene.choosing_faction and scene.faction_label.text.contains("HORDE"), "Sélection de la Horde")
 	select_slot(scene, 0)
 	check(scene.buy_buttons[0].text.contains("haches") and scene.buy_buttons[2].text.contains("Chaman"), "Boutique propre à la faction")

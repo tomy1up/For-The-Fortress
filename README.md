@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.89 (30 octobre 2026)** : [flèches de talents droites](design/Fleches_droites_v089.md). Exactement quatre colonnes par spécialisation, parents et enfants alignés verticalement, espaces libres sur le trajet. Règles, rangs et progression conservés. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.89).
+**Version v0.90 (30 octobre 2026)** : [parcours de campagne par faction](design/Parcours_campagne_v090.md). Choisir une mission, consulter les premières récompenses et revenir au parcours après le résultat. Le Gué reste la seule mission jouable ; les 200 positions montrent la structure cible. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.90).
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 

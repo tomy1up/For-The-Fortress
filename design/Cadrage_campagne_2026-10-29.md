@@ -17,6 +17,9 @@ Complément à la [vision long terme](Feuille_de_route_long_terme.md), révisé 
 | CAMP-010 | Un parcours indépendant par faction | Missions réussies et accès au mode infini suivis séparément pour l’Alliance et la Horde. Les 100 premières missions doivent être réussies dans la faction concernée pour y ouvrir l’infini. |
 | CAMP-011 | L’XP des missions débloque les points de talent | Les 100 premières missions doivent donner accès aux 51 points maximum. XP versée uniquement à la première victoire de chaque mission, séparément par faction. Les PO ne financent plus les talents. |
 | CAMP-012 | Les PO des missions 1–200 servent à la boutique | Dépenses pour les nouvelles unités et autres contenus à définir ; acquisition des points découplée des achats de boutique. |
+| CAMP-013 | Chaque mission repart à neuf | Forteresse intacte à son maximum, or initial, aucun défenseur ni bonus temporaire ; XP, PO, talents et futurs déblocages de boutique restent persistants. Réponse explicite du porteur du projet. |
+| CAMP-014 | Premier échantillon de trois missions de dix vagues, dans le même thème | Configurations différentes pour comparer les situations ; récompenses et difficulté restent des valeurs de prototype à équilibrer. Choix explicite du 30 octobre 2026. |
+| CAMP-015 | Tester une hausse de PV ennemis de 1 % par mission sur cet échantillon | Missions 1/2/3 à 100/101/102 % de PV, mêmes vitesses, dégâts et récompenses de combat. Choix explicite du 30 octobre 2026 ; l’équilibrage et l’extension au parcours complet restent à éprouver. |
 
 Les exemples explicites des paliers font foi sur le terme « impaires » de la formulation initiale. L’ancienne suggestion d’introduction aux missions 1–10, 21–30 et 41–50 est écartée. Avec dix missions par chapitre, les nouveaux paliers correspondraient aux chapitres 2, 4, 6, etc. ; le découpage en chapitres reste une cible de contenu.
 
@@ -27,7 +30,7 @@ Les exemples explicites des paliers font foi sur le terme « impaires » de la f
 ## Questions encore ouvertes
 
 - Nombre de vagues et condition de victoire d’une mission ; présentation du retour au parcours et de la poursuite facultative.
-- Réinitialisation ou conservation de l’or de combat, des défenseurs, des PV et des bonus lorsqu’on choisit une nouvelle mission.
+- Réinitialisation acquise par CAMP-013 ; valeurs initiales et difficulté de chaque future mission encore à concevoir.
 - Présentation du parcours et des missions verrouillées ; le suivi des réussites et le déblocage du mode infini sont désormais fixés comme indépendants par faction (CAMP-010).
 - Montants des récompenses, coût maximal des points et repère de financement jusqu’à la mission 100 hors dépenses facultatives ; équilibre des achats sur toute la campagne.
 - Calcul du +1 %, contenu des missions 1–10 et des nouveautés introduites par blocs.
@@ -43,3 +46,7 @@ L’intégration devra enregistrer atomiquement le gain et le statut « récompe
 ## Révision économique : XP et talents
 
 La décision du 29 octobre remplace le financement de 51 points par 510 PO : les points viennent désormais de l’XP. Le barème précis reste provisoire ; l’XP de première victoire uniquement est validée. Voir la [courbe de prototype et les règles acquises](Experience_talents_2026-10-29.md).
+
+## Réalisation du parcours — 30 octobre 2026
+
+La [v0.90](Parcours_campagne_v090.md) raccorde le choix de faction au parcours et la fin de mission au retour facultatif. Les succès sont dérivés du registre existant, sans nouveau schéma de sauvegarde. Seul le Gué est jouable ; les autres positions restent indiquées à venir. Le détail des vagues et des montants futurs reste à définir.

@@ -1,17 +1,20 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.89 — 30 octobre 2026
+Version : 0.90 — 30 octobre 2026
 
 JOUER
 
 1. Extraire tout le ZIP, puis lancer For_the_Fortress.exe.
-2. À l’accueil, vérifier les ressources et points à placer, puis choisir sa faction.
-3. Installer sa défense et lancer la première vague manuellement.
+2. Choisir sa faction, puis sa mission dans son parcours de campagne.
+   Le Gué est la seule mission disponible ; les autres positions sont à venir.
+3. Préparer les talents avant la mission, puis jouer et installer sa défense.
+   Lancer la première vague manuellement.
 4. Les suivantes partent automatiquement après 30 secondes de préparation.
    Les cinq dernières secondes sont rappelées dans l’en-tête avant le départ.
    Une annonce de deux secondes indique ensuite chaque départ, sans pause du combat.
    La finale annonce le boss adverse ; sa jauge reste visible séparément.
 5. Après les vagues 3, 6 et 9, choisir un bonus de la partie en cours.
-6. Après la victoire finale ou la défaite, consulter le bilan puis préparer ses talents.
+6. Après la victoire finale ou la défaite, consulter le bilan puis revenir au parcours.
+   Les premières récompenses sont enregistrées avant ce retour.
 
 UNE PARTIE COMPLÈTE
 
@@ -21,8 +24,10 @@ Les constructions, achats, ventes et améliorations d’unités entre les vagues
 possibles. Les choix de bonus de la partie ne sont pas les arbres de talents permanents.
 
 Le prototype contient une mission de dix vagues : La Vallée du Gué.
-Une mission est une session complète : retour possible à l’accueil après victoire
-ou défaite. Le futur parcours de 200 missions reste à construire.
+Une mission est une session complète : retour au parcours après victoire ou défaite.
+Chaque mission repart avec ses PV maximum, 150 or de combat, aucun défenseur
+et aucun bonus temporaire. PO, XP et talents restent persistants. Le parcours
+présente vingt chapitres de dix positions ; 199 missions restent à développer.
 
 PO, XP ET PROGRESSION PERMANENTE
 
@@ -105,7 +110,8 @@ Le Gué utilise le registre des premières victoires. Les cent premières missio
 référence doivent débloquer 51 points par XP. Les missions 1 à 200 donneront aussi
 leurs PO de première victoire, pour les achats de boutique. Seul le Gué est jouable.
 La progression, les succès et l’ouverture de l’infini sont indépendants par faction.
-La sauvegarde passe au schéma 6, avec une archive chiffrée du profil v0.87.
+Le schéma 6 introduit en v0.88 est conservé. Les premières réussites déjà enregistrées
+apparaissent dans le parcours ; aucune migration supplémentaire ni gain rétroactif.
 PO, XP et points sont conservés. Une ancienne répartition incompatible avec les
 nouveaux liens est remise à zéro gratuitement : tous ses points restent disponibles.
 Une répartition déjà compatible est conservée. Les anciens rapports restent rejouables.

@@ -37,6 +37,8 @@ const RunReport = preload("res://scripts/run_report.gd")
 const MapView = preload("res://scripts/valley_view.gd")
 const MetaProfile = preload("res://scripts/meta_profile.gd")
 const Linked = Model.MetaTalents.Linked
+const CampaignCatalogue = preload("res://scripts/campaign_catalogue.gd")
+const CampaignScreen = preload("res://scripts/campaign_screen.gd")
 const WAVE_NOTICE_SECONDS: float = 2.0
 const WAVE_COUNTDOWN_NOTICE_SECONDS: float = 5.0
 var wave_notice_remaining: float = 0.0
@@ -47,10 +49,12 @@ var wave_notice_detail: Label
 const MetaScreen = preload("res://scripts/meta_screen.gd")
 var meta_profile: RefCounted
 var meta_menu = MetaScreen.new()
+var campaign_menu = CampaignScreen.new()
+var campaign_navigation: bool = false
 var meta_run_id: int = -1
 var meta_run_earned: int = 0
 ## Mission jouable de référence. Récompenses de prototype, pas barème des 200 missions.
-var mission_definition: Dictionary = {"id":"campaign.001","po":60,"xp":100,"waves":10}
+var mission_definition: Dictionary = CampaignCatalogue.runtime("campaign.001")
 var meta_retry_remaining: float = 0.0
 var run_final_map: bool = true # Le prototype a une carte ; le futur pilote de campagne gérera cette frontière.
 var run_map_index: int = 0
@@ -81,6 +85,7 @@ var summary_meta_value: Label
 var summary_meta_status: Label
 var summary_meta_note: Label
 var summary_talents_button: Button
+var summary_campaign_button: Button
 const INTER_WAVE_SECONDS: float = 30.0
 const BREACH_NOTICE_SECONDS: float = 2.5
 # Temporaire, demandé pour le débogage. Retirer 10.0 après les essais.
@@ -263,8 +268,6 @@ func _ready() -> void:
 				var first_id: int = meta_profile.begin_mission(capture_faction,mission_definition.id,60,10,100)
 				var seeded: bool = meta_profile.credit_mission(first_id,capture_faction,10,true)
 				assert(first_id > 0 and seeded)
-			if "--capture-meta-pending" in OS.get_cmdline_user_args():
-				meta_profile.blocked = true;meta_profile.error = "Échec d’enregistrement simulé pour cette capture."
 		if "--capture-meta-loadout" in OS.get_cmdline_user_args():
 			meta_profile = MetaProfile.new("")
 			meta_profile.data.banks[capture_faction].points = 33
@@ -273,9 +276,11 @@ func _ready() -> void:
 			meta_profile = MetaProfile.new("")
 			meta_profile.data.banks[capture_faction].points = 51
 			meta_profile.data.banks[capture_faction].ranks = _capture_expanded_ranks(0)
-		if capture_state not in ["selection","talents"]:
+		if capture_state not in ["selection","talents","campaign_menu"]:
 			if "--capture-meta-intermediate" in OS.get_cmdline_user_args(): mission_definition = {}
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
+			if "--capture-meta-pending" in OS.get_cmdline_user_args():
+				meta_profile.blocked = true;meta_profile.error = "Échec d’enregistrement simulé pour cette capture."
 			if "--capture-meta-intermediate" in OS.get_cmdline_user_args(): run_final_map = false
 			if capture_state in ["bonus", "campaign", "victory", "overview", "boss_inspection", "summary", "forecast", "forecast_boss"]:
 				_prepare_campaign_capture(capture_state)
@@ -562,11 +567,38 @@ func _ready() -> void:
 		if capture_state == "purchase":
 			var ghost: Dictionary = map_view.purchase_ghost()
 			print("PURCHASE_GHOST_SNAPSHOT=",JSON.stringify({"visible":not ghost.is_empty(),"type":ghost.get("type",-1),"slot":ghost.get("slot",-1),"empty":model.defenders[selected].is_empty(),"gold":model.gold,"instances":model.next_instance_id}))
+		if capture_state == "campaign_menu": _capture_campaign_menu(capture_faction)
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
 		print("CAPTURE_RESULT=", error)
 		get_tree().quit(error)
+
+func _capture_campaign_menu(camp: int) -> void:
+	# Profils de contrôle isolés ; aucun accès à la progression du joueur.
+	meta_profile = MetaProfile.new("")
+	var variant: String = "fresh"
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--capture-campaign="): variant = argument.trim_prefix("--capture-campaign=")
+	if variant == "completed":
+		var id: int = meta_profile.begin_mission(camp,"campaign.001",60,10,100)
+		var credited: bool = meta_profile.credit_mission(id,camp,10,true)
+		if not credited: push_error("Échec du profil de contrôle de campagne.");return
+	if variant == "blocked":
+		meta_profile.blocked = true;meta_profile.error = "Sauvegarde indisponible simulée pour le contrôle."
+	_open_campaign(camp,20 if variant == "future" else 1)
+	if variant == "future": campaign_menu._select(9)
+	if variant == "talents": campaign_menu._talents()
+	if variant == "returned":
+		meta_profile.data.banks[camp].points = 51;meta_profile.data.banks[camp].xp = 10000
+		meta_profile.data.banks[camp].ranks = _capture_expanded_ranks(0)
+		campaign_menu.refresh();campaign_menu._launch()
+		_prepare_campaign_capture("victory");_sync_meta_rewards(true);_update_interface();_show_run_summary()
+		_summary_to_campaign()
+	var status: Dictionary = meta_profile.campaign_status(camp)
+	var other: Dictionary = meta_profile.campaign_status(1-camp)
+	var bank: Dictionary = meta_profile.data.banks[camp]
+	print("CAMPAIGN_SNAPSHOT=",JSON.stringify({"variant":variant,"faction":camp,"isolated":meta_profile.path.is_empty(),"menu":campaign_menu.visible,"talents":meta_menu.visible,"chapter":campaign_menu.chapter,"selected":(campaign_menu.chapter-1)*10+campaign_menu.selected+1,"completed":status.get("completed",-1),"other_completed":other.get("completed",-1),"disabled":campaign_menu.start_button.disabled,"po":bank.resource,"xp":bank.xp,"nodes":campaign_menu.nodes.size(),"chapters":campaign_menu.chapter_buttons.size(),"fresh":model.gold == 150 and model.bonuses.is_empty() and model.defenders.all(func(unit): return unit.is_empty()),"choosing":choosing_faction}))
 
 func _capture_linked_spend_to(ranks: Array, tree: int, target: int) -> bool:
 	while Linked.tree_spent(ranks,tree) < target:
@@ -685,6 +717,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if meta_menu.visible:
 		if event.keycode == KEY_ESCAPE:
 			meta_menu.close();get_viewport().set_input_as_handled()
+		return
+	if campaign_menu.visible:
+		if event.keycode == KEY_ESCAPE:
+			campaign_menu.close();get_viewport().set_input_as_handled()
 		return
 	if event.ctrl_pressed or event.alt_pressed or event.meta_pressed: return
 	if event.keycode == KEY_ESCAPE or event.physical_keycode == KEY_ESCAPE:
@@ -834,7 +870,12 @@ Cette lecture ne suspend pas le combat ni le départ automatique."
 	_build_specialisation_selector(screen)
 	_build_bonus_selector(screen)
 	_build_run_summary(screen)
+	screen.add_child(campaign_menu)
+	campaign_menu.mission_requested.connect(_launch_campaign_mission)
+	campaign_menu.talents_requested.connect(_open_meta)
+	campaign_menu.closed.connect(_campaign_closed)
 	screen.add_child(meta_menu)
+	meta_menu.closed.connect(_meta_closed)
 
 func _build_boss_status(screen: Control) -> void:
 	boss_panel = _panel(screen,Rect2(340,82,580,72))
@@ -1046,6 +1087,8 @@ func _build_run_summary(screen: Control) -> void:
 	report_button = _button(panel,"Exporter le rapport",Rect2(24,622,240,30),_export_run_report)
 	report_button.tooltip_text = "Enregistrer localement les vagues, bonus proposés et décisions de cette partie."
 	summary_talents_button = _button(panel,"Préparer mes talents",Rect2(284,622,240,30),_summary_to_talents)
+	summary_campaign_button = _button(panel,"Retour au parcours",Rect2(548,622,212,30),_summary_to_campaign)
+	summary_campaign_button.hide()
 	summary_talents_button.tooltip_text = "Revenir au choix de faction et préparer les talents de la prochaine partie."
 	summary_close = _button(panel,"Fermer · Échap",Rect2(784,622,164,30),_close_run_summary)
 	summary_panel.visible = false
@@ -1284,8 +1327,8 @@ func _build_faction_selector(screen: Control) -> void:
 	var panel: Panel = _panel(faction_panel, Rect2(240, 130, 800, 540))
 	_label(panel, "Choisissez votre faction", Vector2(30, 28), Vector2(740, 42), 28, Color("e0dbbf"))
 	_label(panel, "Chaque camp possède trois défenseurs pour les dix vagues.", Vector2(30, 88), Vector2(740, 30), 16, Color("aabbb0"))
-	faction_buttons.append(_button(panel, "Alliance des Royaumes", Rect2(30, 138, 350, 52), _choose_faction.bind(0)))
-	faction_buttons.append(_button(panel, "Horde des Cendres", Rect2(420, 138, 350, 52), _choose_faction.bind(1)))
+	faction_buttons.append(_button(panel, "Alliance des Royaumes", Rect2(30, 138, 350, 52), _open_campaign.bind(0)))
+	faction_buttons.append(_button(panel, "Horde des Cendres", Rect2(420, 138, 350, 52), _open_campaign.bind(1)))
 	_label(panel, "Archer, arbalétrier et mage.\nPrécision et attaque de groupe.", Vector2(30, 204), Vector2(350, 52), 15, Color("bbcbbf"))
 	_label(panel, "Lanceur de haches, sapeur et chaman.\nRebonds, explosifs et malédictions.", Vector2(420, 204), Vector2(350, 52), 15, Color("bbcbbf"))
 	for camp in range(2):
@@ -1345,7 +1388,9 @@ func _refresh_home_progress() -> void:
 		meta_income.tooltip_text = meta_profile.error
 
 func _open_meta(camp: int) -> void:
-	if choosing_faction and meta_profile != null: meta_menu.open(meta_profile,camp)
+	if choosing_faction and meta_profile != null:
+		meta_menu.open(meta_profile,camp)
+		_update_interface()
 
 func _sync_meta_rewards(force: bool = false) -> bool:
 	if meta_profile == null or choosing_faction: return false
@@ -1413,6 +1458,7 @@ func _meta_reward_summary() -> Dictionary:
 
 func _update_meta_summary() -> void:
 	var visible_meta: bool = meta_profile != null
+	summary_campaign_button.visible = visible_meta and campaign_navigation and _run_finished()
 	summary_meta_card.visible = visible_meta;summary_meta_note.visible = visible_meta
 	summary_talents_button.visible = visible_meta
 	for index in range(3):
@@ -1422,6 +1468,7 @@ func _update_meta_summary() -> void:
 		summary_key_values[index].size.x = 190 if visible_meta else 264
 	if not visible_meta: return
 	var info: Dictionary = _meta_reward_summary()
+	summary_campaign_button.disabled = not info.ready or meta_profile.blocked
 	var camp: String = "Alliance" if model.faction == 0 else "Horde"
 	if info.get("mission",false):
 		summary_meta_value.text = "+%d" % info.saved if info.ready else "%d / %d" % [info.saved,info.expected]
@@ -1451,6 +1498,11 @@ func _update_meta_summary() -> void:
 	summary_talents_button.text = "Préparer mes talents" if info.ready else "Réessayer la sauvegarde"
 	summary_talents_button.disabled = meta_profile.blocked
 
+func _summary_to_campaign() -> void:
+	if not summary_open or not campaign_navigation or not _run_finished() or meta_profile == null: return
+	if not _sync_meta_rewards(true): _update_meta_summary();return
+	_close_run_summary();_reset()
+
 func _summary_to_talents() -> void:
 	if not summary_open or meta_profile == null or not _run_finished(): return
 	var ready_before: bool = _meta_reward_summary().ready
@@ -1465,15 +1517,48 @@ func _begin_meta_run(faction: int) -> int:
 	if mission_definition.is_empty(): return meta_profile.begin_run(faction) # Compatibilité des anciens parcours et de leurs tests.
 	return meta_profile.begin_mission(faction,mission_definition.id,int(mission_definition.po),int(mission_definition.waves),int(mission_definition.xp))
 
+func _open_campaign(faction: int, chapter: int = 1) -> void:
+	if not choosing_faction or meta_menu.visible or faction not in [0,1]: return
+	campaign_menu.open(meta_profile,faction,chapter)
+	keyboard_focus_context = ""
+	_update_interface()
+
+func _campaign_closed() -> void:
+	campaign_navigation = false;keyboard_focus_context = ""
+	_update_interface()
+
+func _meta_closed() -> void:
+	if campaign_menu.visible:
+		campaign_menu.set_overlay_blocked(false)
+		campaign_menu.refresh();campaign_menu.initial_focus().grab_focus()
+	keyboard_focus_context = ""
+	_update_interface()
+
+func _launch_campaign_mission(id: String) -> void:
+	if not choosing_faction or not campaign_menu.visible or meta_menu.visible or meta_profile == null or meta_profile.blocked: return
+	var candidate: Dictionary = CampaignCatalogue.runtime(id)
+	if candidate.is_empty(): return
+	mission_definition = candidate
+	_choose_faction(campaign_menu.faction)
+	if choosing_faction:
+		campaign_menu.refresh();return # Échec d’enregistrement : aucun combat lancé.
+	campaign_navigation = true;campaign_menu.hide();keyboard_focus_context = ""
+	_update_interface()
+
 func _choose_faction(choice: int) -> void:
-	if meta_menu.visible: return
+	if meta_menu.visible or not choosing_faction or choice not in [0,1]: return
 	forecast_wave = -1
-	if choosing_faction and meta_profile != null and choice in [0,1]:
-		model.meta_ranks = meta_profile.data.banks[choice].ranks.duplicate()
+	var prepared_run: int = -1
+	if meta_profile != null:
+		var prepared_ranks: Array = meta_profile.data.banks[choice].ranks.duplicate()
+		prepared_run = _begin_meta_run(choice)
+		if prepared_run <= 0:
+			_update_interface();return
+		model.meta_ranks = prepared_ranks
 	if choosing_faction and model.select_faction(choice):
 		meta_run_earned = 0
 		run_final_map = true;run_map_index = 0;run_map_rewards.clear()
-		if meta_profile != null: meta_run_id = _begin_meta_run(choice)
+		meta_run_id = prepared_run
 		meta_retry_remaining = 2.0 if meta_run_id <= 0 and meta_profile != null else 0.0
 		choosing_faction = false
 		_update_interface()
@@ -1746,6 +1831,7 @@ func _reset() -> void:
 	if not choosing_faction and not _run_finished(): return
 	if meta_profile != null and not choosing_faction and not _sync_meta_rewards(true):
 		_update_interface();return # Ne pas détruire un résultat dont le versement n'est pas enregistré.
+	var previous_faction: int = model.faction
 	inspection_numbers_visible = false
 	combat_numbers_visible = false
 	overview_open = false
@@ -1779,6 +1865,8 @@ func _reset() -> void:
 	map_view.selected = -1
 	_update_interface()
 	map_view.queue_redraw()
+	if campaign_navigation:
+		_open_campaign(previous_faction)
 
 func _buy(type: int) -> void:
 	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open:
@@ -1917,6 +2005,9 @@ func _update_interface() -> void:
 	guidance_label.text = _guidance_text()
 	map_view.preview_synergy_unit = {}
 	var modal: bool = meta_menu.visible or choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
+	campaign_menu.set_overlay_blocked(meta_menu.visible or not campaign_menu.visible)
+	for control in faction_buttons+meta_buttons:
+		control.focus_mode = Control.FOCUS_NONE if meta_menu.visible or campaign_menu.visible else Control.FOCUS_ALL
 	if meta_profile != null:
 		var pending: int = MetaProfile.resource_total(_cleared_wave_count())+_previous_map_rewards()
 		meta_progress_label.text = "PO en attente : %d" % pending if not _run_finished() else "Progression : sauvegarde à vérifier" if not meta_profile.error.is_empty() else "Progression : +%d PO %s" % [meta_run_earned,"Alliance" if model.faction == 0 else "Horde"]
@@ -1936,7 +2027,7 @@ func _update_interface() -> void:
 	summary_button.disabled = modal
 	summary_panel.visible = summary_open
 	reset_button.size.x = 112 if terminal else 234
-	reset_button.text = "Rejouer" if terminal else "Nouvel essai"
+	reset_button.text = ("Parcours" if campaign_navigation else "Rejouer") if terminal else "Nouvel essai"
 	combat_numbers_button.disabled = modal
 	combat_numbers_button.text = "Réduire les détails" if combat_numbers_visible else "Chiffres du combat"
 	time_label.visible = combat_numbers_visible
@@ -1971,7 +2062,7 @@ func _update_interface() -> void:
 	speed_button.tooltip_text = "Alterner entre ×1, ×2 et ×10 (débogage temporaire).\nSeul le combat accélère ; les 30 secondes de préparation restent inchangées."
 	reset_button.disabled = not _run_finished() or modal
 	reset_button.visible = _run_finished()
-	reset_button.tooltip_text = "Retour à l’accueil uniquement après la victoire finale ou la défaite. Vos PO et vos talents permanents sont conservés."
+	reset_button.tooltip_text = "Retour au parcours après le résultat de la mission. Vos PO, XP et talents sont conservés." if campaign_navigation else "Retour à l’accueil uniquement après la victoire finale ou la défaite. Vos PO et vos talents permanents sont conservés."
 	match model.phase:
 		"preparation": status_label.text = "Préparation · Vague %d/10\n%d ennemis" % [model.wave,model.spawn_schedule.size()]
 		"combat": status_label.text = "Combat · Vague %d/10\nAchats et ventes bloqués" % model.wave
@@ -2083,7 +2174,9 @@ func _sync_keyboard_focus() -> void:
 	if syncing_keyboard_focus: return
 	var context: String = ""
 	var target: Button
-	if choosing_faction:
+	if campaign_menu.visible:
+		context = "campaign:%d:%d" % [campaign_menu.faction,campaign_menu.chapter];target = campaign_menu.initial_focus()
+	elif choosing_faction:
 		context = "faction"; target = faction_buttons[0]
 	elif pending_slot >= 0:
 		context = "specialisation:%d:%d" % [pending_slot,pending_instance]; target = specialisation_cancel
