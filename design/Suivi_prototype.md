@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 30 octobre 2026 — prototype v0.97, GDD principal v0.15 et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 31 octobre 2026 — prototype v0.98, GDD principal v0.15 et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -504,3 +504,11 @@ Le porteur du projet choisit **d’étendre l’essai aux missions 4–10**, apr
 ## Version v0.97 — décor des nouveaux terrains
 
 [Habillage du plateau](Decor_terrains_v097.md) : buissons, rochers et sapins sur les missions 4–10. Disposition stable, zones libres autour du chemin, des défenseurs et de la forteresse. Décor calculé au changement de terrain ; données des cartes, combats, tirages et progression conservés. Les couleurs et formes restent une proposition artistique de prototype.
+
+## Version v0.98 — relecture des vagues
+
+[Contexte historique dans le bilan](Analyse_vagues_v098.md) : sélectionner une vague affiche sa défense au départ et ses bonus actifs. Le résumé des pertes ouvre une vague à examiner, sans inventer la cause d’une défaite. Retour explicite à la défense finale, sélection au clavier et vagues absentes désactivées. Dix missions, combats et progression persistante conservés.
+
+## Prochain lot retenu — 31 octobre 2026
+
+Le porteur du projet choisit **la boutique et ses premières unités alternatives** avant le bloc de missions 11–20, puis précise la composition : **trois types habituels de la mission plus un quatrième type choisi parmi les unités achetées**, utilisable pendant toute la mission. La [préparation de la boutique](Preparation_boutique_2026-10-31.md) distingue les règles validées des propositions de périmètre et des modalités ouvertes. La v0.98 ne contient pas encore de boutique.

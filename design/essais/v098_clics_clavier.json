@@ -1,0 +1,23 @@
+{
+	"actual_viewport_input": true,
+	"results": [
+		{
+			"click_final": true,
+			"click_wave_1": true,
+			"faction": 0,
+			"isolated_profile": true,
+			"keyboard_down_to_wave_2": true,
+			"readonly": true
+		},
+		{
+			"click_final": true,
+			"click_wave_1": true,
+			"faction": 1,
+			"isolated_profile": true,
+			"keyboard_down_to_wave_2": true,
+			"readonly": true
+		}
+	],
+	"screen": 1,
+	"version": "0.98"
+}

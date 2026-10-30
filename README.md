@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.97 (30 octobre 2026)** : [décor des nouveaux terrains](design/Decor_terrains_v097.md). Buissons, rochers et sapins complètent les missions 4–10, avec des zones libres autour des chemins, défenseurs et forteresse. Les dix missions et leurs règles sont conservées. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.97).
+**Version v0.98 (31 octobre 2026)** : [relecture des vagues](design/Analyse_vagues_v098.md). Sélectionner une vague affiche sa défense de départ et ses bonus actifs. Le résumé des pertes mène directement à une vague à examiner ; la composition finale reste accessible. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.98).
 
 **Comparaison des trois missions — 2 592 simulations** : [résultats et limites](design/Comparaison_trois_missions_v092.md). Deux factions, trois tirages, six placements, quatre compositions et comparaison du premier point en mission 3. Des stratégies sans talent gagnent chaque carte ; géométrie et composition pèsent sur la difficulté. Ces simulations ne mesurent pas le taux de victoire humain et n’entraînent aucun changement d’équilibrage ou de binaire.
 

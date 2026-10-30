@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.97 — 30 octobre 2026
+Version : 0.98 — 31 octobre 2026
 
 JOUER
 
@@ -20,6 +20,9 @@ JOUER
 5. Après les vagues 3, 6 et 9, choisir un bonus de la partie en cours.
 6. Après la victoire finale ou la défaite, consulter le bilan puis revenir au parcours.
    Le nom de la mission reste visible dans chaque onglet du bilan.
+   Dans Vagues, cliquer une ligne affiche la défense et les bonus de son départ.
+   Le résumé des pertes donne un accès direct à la plus forte perte de PV.
+   « Voir la défense finale » retrouve la composition de fin de mission.
    Le premier point disponible propose directement « Placer mon point de talent ».
    Les premières récompenses sont enregistrées avant ce retour.
 

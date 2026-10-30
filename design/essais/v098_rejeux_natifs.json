@@ -1,0 +1,326 @@
+[
+  {
+    "case": "alliance_sample_2_summary",
+    "baseline": "essais\\v096_alliance_mission2_rapport.json",
+    "candidate_sha256": "8852643641c98640db3c1317f697db577fc6965d71bf83cd41b5ad38752f54e6",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.98",
+      "faction": 0,
+      "fortress_hp": 18,
+      "gold": 193,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_3_summary",
+    "baseline": "essais\\v096_alliance_mission3_rapport.json",
+    "candidate_sha256": "0e2a122018c753d32732ba23f31628d7588035dc92225f07d12603f33d1f89ce",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.98",
+      "faction": 0,
+      "fortress_hp": 21,
+      "gold": 110,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_4_summary",
+    "baseline": "essais\\v096_alliance_mission4_rapport.json",
+    "candidate_sha256": "6b839f5a038cd0d39819bab256a30538d620c7e055eb621944cbe0e901f04a7a",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.98",
+      "faction": 0,
+      "fortress_hp": 21,
+      "gold": 110,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_5_summary",
+    "baseline": "essais\\v096_alliance_mission5_rapport.json",
+    "candidate_sha256": "920c27cd231c83ed67f3b219dcccf6b4711e4039777eb3bf5cf63bb58eaeac8c",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.98",
+      "faction": 0,
+      "fortress_hp": 19,
+      "gold": 113,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_6_summary",
+    "baseline": "essais\\v096_alliance_mission6_rapport.json",
+    "candidate_sha256": "56028ea9d2000ce58fba0ce201e5e061b98d0632569996a7687f01484152db43",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.98",
+      "faction": 0,
+      "fortress_hp": 20,
+      "gold": 109,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_7_summary",
+    "baseline": "essais\\v096_alliance_mission7_rapport.json",
+    "candidate_sha256": "8ffbfd35f344fcc37a8883c420b5e2fe8849a1af829e11d72fb64e49fd21e513",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.98",
+      "faction": 0,
+      "fortress_hp": 20,
+      "gold": 109,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_8_summary",
+    "baseline": "essais\\v096_alliance_mission8_rapport.json",
+    "candidate_sha256": "76ccdf022e856a0180ea84ae791923bec3d20f1f026ffc1c33e9b6ff501b6090",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.98",
+      "faction": 0,
+      "fortress_hp": 21,
+      "gold": 110,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_9_summary",
+    "baseline": "essais\\v096_alliance_mission9_rapport.json",
+    "candidate_sha256": "be576c009dc67c70300f7165fda01ef34812857e96248c0e3e88f7032a4700cd",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.98",
+      "faction": 0,
+      "fortress_hp": 20,
+      "gold": 109,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_10_summary",
+    "baseline": "essais\\v096_alliance_mission10_rapport.json",
+    "candidate_sha256": "26b2c3ef764dac70ed0f5966b9d757ec24cf66ed57c3c6dfe8c326aa0d93606d",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.98",
+      "faction": 0,
+      "fortress_hp": 21,
+      "gold": 110,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_2_summary",
+    "baseline": "essais\\v096_horde_mission2_rapport.json",
+    "candidate_sha256": "cd01ce21350c51ab1fafe2c0e3e758f6aae48c8d19ca1c36f9b681be21102b96",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.98",
+      "faction": 1,
+      "fortress_hp": 16,
+      "gold": 108,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_3_summary",
+    "baseline": "essais\\v096_horde_mission3_rapport.json",
+    "candidate_sha256": "8d410b8d63b1c6303175d1cca5e9db7c1d442d366583f82e736af822591ccca0",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.98",
+      "faction": 1,
+      "fortress_hp": 16,
+      "gold": 108,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_4_summary",
+    "baseline": "essais\\v096_horde_mission4_rapport.json",
+    "candidate_sha256": "f389a1fb792054caf0aa82ad17fb97a6e107729144626ab3559c78f922c29a23",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.98",
+      "faction": 1,
+      "fortress_hp": 15,
+      "gold": 107,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_5_summary",
+    "baseline": "essais\\v096_horde_mission5_rapport.json",
+    "candidate_sha256": "e7fcaad3fccfe73eff5abeb701edc306496baa1912f30a90ebfc2bf3232d0d54",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.98",
+      "faction": 1,
+      "fortress_hp": 6,
+      "gold": 176,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_6_summary",
+    "baseline": "essais\\v096_horde_mission6_rapport.json",
+    "candidate_sha256": "06c1aa1adb904f4eb4e121961dfdfc094f6bad7eca5551ff5f3ce634cc72d106",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.98",
+      "faction": 1,
+      "fortress_hp": 7,
+      "gold": 166,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_7_summary",
+    "baseline": "essais\\v096_horde_mission7_rapport.json",
+    "candidate_sha256": "b815b5444dbf79e04dcf5ce543c02c3c49e83e106475b910f25bc57dd2162af3",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.98",
+      "faction": 1,
+      "fortress_hp": 17,
+      "gold": 191,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_8_summary",
+    "baseline": "essais\\v096_horde_mission8_rapport.json",
+    "candidate_sha256": "daa20629d214b3b58115ee9f80c0d799e1bab0fad24645d799d6789347c87089",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.98",
+      "faction": 1,
+      "fortress_hp": 9,
+      "gold": 184,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_9_summary",
+    "baseline": "essais\\v096_horde_mission9_rapport.json",
+    "candidate_sha256": "2c03edbd606acb08337670e4a5b50737fe93d748eeb3fd559a98453ec7b7f9bf",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.98",
+      "faction": 1,
+      "fortress_hp": 3,
+      "gold": 162,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_10_summary",
+    "baseline": "essais\\v096_horde_mission10_rapport.json",
+    "candidate_sha256": "b92b0856a4fd4111570ef6ac4ee07355de50e4ddbac9e5ff06e8b8aa22a35844",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.98",
+      "faction": 1,
+      "fortress_hp": 10,
+      "gold": 181,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.98",
+      "wave": 10
+    }
+  }
+]

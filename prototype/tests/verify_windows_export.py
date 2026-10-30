@@ -133,6 +133,8 @@ for camp in ["alliance","horde"]:
     cases.append((camp+"_sample_3_journey","campaign_sample",camp))
     cases.append((camp+"_sample_10_journey","campaign_sample",camp))
     for mission in range(4,11): cases.append((camp+"_campaign_menu_terrain"+str(mission),"campaign_menu",camp))
+for camp in ["alliance","horde"]:
+    for context in ["1","4","final","losses","defeat"]: cases.append((camp+"_wave_context_"+context,"defeat_summary" if context=="defeat" else "summary",camp))
 for name,state,faction in cases:
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
@@ -170,6 +172,7 @@ for name,state,faction in cases:
         if name.endswith('profile_protection'): command+=['--capture-profile-protection']
         if '_loadout_' in name: command+=['--capture-meta-loadout']
         if name.endswith('_waves_summary'): command+=['--capture-waves']
+        if '_wave_context_' in name: command+=['--capture-summary-wave='+('losses' if name.endswith('_defeat') else name.rsplit('_',1)[1])]
         if name.endswith('_inspection_numbers'):
             command+=['--capture-inspection-numbers','--capture-type='+('2' if faction=='alliance' else '5')]
         if name=='horde_upgrade_compact': command+=['--capture-type=5']
@@ -200,6 +203,20 @@ for name,state,faction in cases:
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
+    if '_wave_context_' in name:
+        snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('WAVE_CONTEXT_SNAPSHOT=')))
+        context=name.rsplit('_',1)[1]
+        assert snap['readonly'] and snap['isolated'] and snap['faction']==(0 if faction=='alliance' else 1)
+        assert snap['enabled']==snap['record_count'] and snap['record_count']>0
+        if context in ['1','4','final']:
+            assert snap['tab']==0 and snap['selected']==(0 if context=='final' else int(context))
+        if snap['selected']:
+            assert snap['marked']==1 and not snap['final_disabled'] and snap['heading']=='Défense au départ · Vague '+str(snap['selected'])
+        else: assert snap['marked']==0 and snap['final_disabled']
+        if context=='1': assert snap['bonuses']==['Aucun bonus'] and all('Niveau 1' in line for line in snap['army'])
+        if context=='4': assert len(snap['bonuses'])==1 and snap['bonuses']!=['Aucun bonus']
+        if context=='final': assert len(snap['bonuses'])==3 and snap['heading']=='Défense finale'
+        if context=='defeat': assert snap['tab']==0 and snap['selected']==1 and snap['army']==['Aucun défenseur']
     if state=="campaign_sample":
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SAMPLE_SNAPSHOT=')))
         mission=int(name.split('_')[2]);stage=name.rsplit('_',1)[1]

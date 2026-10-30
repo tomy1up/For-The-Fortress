@@ -1,0 +1,9 @@
+{
+  "baseline": "v0.97",
+  "candidate": "v0.98",
+  "scenarios": 40,
+  "ten_maps_reports_rng_events_damage_identical": true,
+  "metadata_normalization": "project version 0.98 in both isolated projects",
+  "canonical_sha256": "98fb22c646f570a0f945703f279c110667979da6374dfebe2b0d3d531a2431b9",
+  "human_balance_test": false
+}
