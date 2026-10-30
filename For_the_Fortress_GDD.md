@@ -8,6 +8,8 @@ Document de référence pour concevoir et développer For the Fortress!, destin�
 
 **Version documentaire 0.15 ; jeu de référence 0.92.** Une publication de jeu n’implique pas l’approbation définitive de ses réglages. Les anciennes décisions remplacées sont explicitées en section 48. Les documents datés restent des sources historiques ; les présentes règles consolidées prévalent en cas de contradiction.
 
+**Complément de conception validé le 31 octobre 2026 :** [biomes et cumul de difficulté](design/Biomes_cumul_2026-10-31.md). Un biome couvre deux chapitres ; le second introduit de nouveaux attaquants ou un affixe agissant sur la défense ou les attaquants. Après la mission 100, les nouveautés se combinent avec le contenu antérieur tout en continuant d’arriver. Le mode infini permet aussi une accumulation progressive de ces attaquants et affixes. Cette décision complète les sections de campagne et de mode infini du socle ; elle ne désigne pas un contenu déjà réalisé. Le détail des règles de cumul reste ouvert. Ce lien est ajouté à la version Markdown en attendant la prochaine consolidation du document Word.
+
 Nom de travail — disponibilité juridique à confirmer.
 
 ## Sommaire

@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Design long terme — 31 octobre 2026** : [biomes et difficulté cumulative](design/Biomes_cumul_2026-10-31.md). Deux chapitres par biome, nouveaux attaquants ou affixes au second chapitre, combinaisons après la mission 100 et accumulation progressive en mode infini. Ces contenus restent à développer.
+
 **Version v0.98 (31 octobre 2026)** : [relecture des vagues](design/Analyse_vagues_v098.md). Sélectionner une vague affiche sa défense de départ et ses bonus actifs. Le résumé des pertes mène directement à une vague à examiner ; la composition finale reste accessible. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.98).
 
 **Comparaison des trois missions — 2 592 simulations** : [résultats et limites](design/Comparaison_trois_missions_v092.md). Deux factions, trois tirages, six placements, quatre compositions et comparaison du premier point en mission 3. Des stratégies sans talent gagnent chaque carte ; géométrie et composition pèsent sur la difficulté. Ces simulations ne mesurent pas le taux de victoire humain et n’entraînent aucun changement d’équilibrage ou de binaire.

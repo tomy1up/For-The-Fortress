@@ -512,3 +512,7 @@ Le porteur du projet choisit **d’étendre l’essai aux missions 4–10**, apr
 ## Prochain lot retenu — 31 octobre 2026
 
 Le porteur du projet choisit **la boutique et ses premières unités alternatives** avant le bloc de missions 11–20, puis précise la composition : **trois types habituels de la mission plus un quatrième type choisi parmi les unités achetées**, utilisable pendant toute la mission. La [préparation de la boutique](Preparation_boutique_2026-10-31.md) distingue les règles validées des propositions de périmètre et des modalités ouvertes. La v0.98 ne contient pas encore de boutique.
+
+## Orientation long terme — biomes et cumuls, 31 octobre 2026
+
+[Décisions sur les biomes](Biomes_cumul_2026-10-31.md) : un biome pour deux chapitres, avec nouveaux attaquants ou affixe au second chapitre. L’affixe peut affaiblir la défense ou renforcer les attaquants. Après la mission 100, cumuler le contenu précédent tout en poursuivant les nouveautés. Le mode infini réutilisera aussi les attaquants et affixes dans une accumulation progressive. Biomes, paramètres et règles exactes de cumul restent à concevoir ; aucun de ces contenus n’est annoncé comme déjà jouable.
