@@ -484,3 +484,7 @@ Décision explicite : les resets entre les missions sont gratuits, les talents r
 ## Version v0.93 — aperçu du terrain
 
 [Tracé et emplacements avant mission](Apercus_cartes_v093.md) : le panneau de la mission sélectionnée dessine les données réelles du terrain, l’entrée, la forteresse et les six emplacements. Une carte verrouillée reste consultable, sans devenir jouable avant le succès requis. Les missions à venir restent sans terrain inventé. Présentation du panneau ajustée sans modifier les trois missions, leur difficulté ou les acquis persistants.
+
+## Version v0.94 — états et repérage dans le parcours
+
+[Missions futures et chapitre visible](Etats_parcours_v094.md) : cercle en pointillés pour le contenu à venir, cadenas pour le succès requis, coche pour la réussite. Les chapitres sans contenu jouable l’annoncent explicitement. Une progression indisponible n’est plus présentée comme une simple mission verrouillée. La liste défile pour révéler le chapitre sélectionné après mise en page, sans voler le focus ni déplacer le parcours fermé ou recouvert par les talents. Trois cartes, combat, économie, sauvegardes et talents conservés.

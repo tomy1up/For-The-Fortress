@@ -1,0 +1,66 @@
+[
+  {
+    "case": "alliance_sample_2_summary",
+    "report": "essais/v094_alliance_mission2_rapport.json",
+    "result": {
+      "actions": 45,
+      "current_version": "0.94",
+      "faction": 0,
+      "fortress_hp": 18,
+      "gold": 193,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.94",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_3_summary",
+    "report": "essais/v094_alliance_mission3_rapport.json",
+    "result": {
+      "actions": 46,
+      "current_version": "0.94",
+      "faction": 0,
+      "fortress_hp": 21,
+      "gold": 110,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.94",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_2_summary",
+    "report": "essais/v094_horde_mission2_rapport.json",
+    "result": {
+      "actions": 46,
+      "current_version": "0.94",
+      "faction": 1,
+      "fortress_hp": 16,
+      "gold": 108,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.94",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_3_summary",
+    "report": "essais/v094_horde_mission3_rapport.json",
+    "result": {
+      "actions": 46,
+      "current_version": "0.94",
+      "faction": 1,
+      "fortress_hp": 16,
+      "gold": 108,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.94",
+      "wave": 10
+    }
+  }
+]

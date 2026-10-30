@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.93 (30 octobre 2026)** : [aperçus des terrains](design/Apercus_cartes_v093.md). Le parcours montre le tracé réel, la forteresse et les six emplacements avant le lancement. Carte verrouillée consultable, contenu futur sans terrain inventé. Trois missions et équilibrage conservés. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.93).
+**Version v0.94 (30 octobre 2026)** : [états et navigation du parcours](design/Etats_parcours_v094.md). Missions à venir en pointillés, cadenas réservé aux succès requis, erreur de progression explicitée et chapitre sélectionné maintenu dans la liste visible. Aperçus, trois missions et équilibrage conservés. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.94).
 
 **Comparaison des trois missions — 2 592 simulations** : [résultats et limites](design/Comparaison_trois_missions_v092.md). Deux factions, trois tirages, six placements, quatre compositions et comparaison du premier point en mission 3. Des stratégies sans talent gagnent chaque carte ; géométrie et composition pèsent sur la difficulté. Ces simulations ne mesurent pas le taux de victoire humain et n’entraînent aucun changement d’équilibrage ou de binaire.
 

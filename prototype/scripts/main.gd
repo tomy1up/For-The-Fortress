@@ -568,7 +568,7 @@ func _ready() -> void:
 		if capture_state == "purchase":
 			var ghost: Dictionary = map_view.purchase_ghost()
 			print("PURCHASE_GHOST_SNAPSHOT=",JSON.stringify({"visible":not ghost.is_empty(),"type":ghost.get("type",-1),"slot":ghost.get("slot",-1),"empty":model.defenders[selected].is_empty(),"gold":model.gold,"instances":model.next_instance_id}))
-		if capture_state == "campaign_menu": _capture_campaign_menu(capture_faction)
+		if capture_state == "campaign_menu": await _capture_campaign_menu(capture_faction)
 		if capture_state == "campaign_sample": _capture_campaign_sample(capture_faction)
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
@@ -607,11 +607,13 @@ func _capture_campaign_menu(camp: int) -> void:
 		campaign_menu.refresh();campaign_menu._launch()
 		_prepare_campaign_capture("victory");_sync_meta_rewards(true);_update_interface();_show_run_summary()
 		_summary_to_campaign()
+	await get_tree().process_frame
+	await get_tree().process_frame
 	var status: Dictionary = meta_profile.campaign_status(camp)
 	var other: Dictionary = meta_profile.campaign_status(1-camp)
 	var bank: Dictionary = meta_profile.data.banks[camp]
 	var preview: Dictionary = campaign_menu.terrain_preview.geometry()
-	print("CAMPAIGN_SNAPSHOT=",JSON.stringify({"preview_map":preview.get("id",""),"preview_slots":preview.get("slots",[]).size(),"preview_segments":maxi(0,preview.get("path",[]).size()-1),"variant":variant,"faction":camp,"isolated":meta_profile.path.is_empty(),"menu":campaign_menu.visible,"talents":meta_menu.visible,"chapter":campaign_menu.chapter,"selected":(campaign_menu.chapter-1)*10+campaign_menu.selected+1,"completed":status.get("completed",-1),"other_completed":other.get("completed",-1),"disabled":campaign_menu.start_button.disabled,"po":bank.resource,"xp":bank.xp,"nodes":campaign_menu.nodes.size(),"chapters":campaign_menu.chapter_buttons.size(),"fresh":model.gold == 150 and model.bonuses.is_empty() and model.defenders.all(func(unit): return unit.is_empty()),"choosing":choosing_faction}))
+	print("CAMPAIGN_SNAPSHOT=",JSON.stringify({"mission_states":campaign_menu.nodes.map(func(node): return node.state),"chapter_visible":campaign_menu.chapter_in_view(),"start_label":campaign_menu.start_button.text,"preview_map":preview.get("id",""),"preview_slots":preview.get("slots",[]).size(),"preview_segments":maxi(0,preview.get("path",[]).size()-1),"variant":variant,"faction":camp,"isolated":meta_profile.path.is_empty(),"menu":campaign_menu.visible,"talents":meta_menu.visible,"chapter":campaign_menu.chapter,"selected":(campaign_menu.chapter-1)*10+campaign_menu.selected+1,"completed":status.get("completed",-1),"other_completed":other.get("completed",-1),"disabled":campaign_menu.start_button.disabled,"po":bank.resource,"xp":bank.xp,"nodes":campaign_menu.nodes.size(),"chapters":campaign_menu.chapter_buttons.size(),"fresh":model.gold == 150 and model.bonuses.is_empty() and model.defenders.all(func(unit): return unit.is_empty()),"choosing":choosing_faction}))
 
 func _capture_sample_combat() -> void:
 	model.rng.seed = 42

@@ -231,6 +231,10 @@ for name,state,faction in cases:
         assert snap['preview_map']==('' if variant=='future' else ['valley_ford','ford_woods','ford_heights'][selection-1])
         assert snap['preview_slots']==(0 if variant=='future' else 6)
         assert snap['preview_segments']==(0 if variant=='future' else 7)
+        assert snap['chapter_visible'], (name, 'Le chapitre sélectionné doit rester dans la liste visible')
+        current_states = ['completed','completed','available'] if variant=='terrain3' else ['completed','available','locked'] if variant in ['completed','returned','terrain2'] else ['unavailable']*3 if variant=='blocked' else ['available','locked','locked']
+        assert snap['mission_states']==(['future']*10 if variant=='future' else current_states+['future']*7)
+        if variant=='blocked': assert snap['start_label']=='Progression indisponible'
     if name in ['alliance_purchase','horde_purchase','alliance_crossbow_purchase','alliance_mage_purchase','horde_sapper_purchase','horde_shaman_purchase']:
         ghost=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('PURCHASE_GHOST_SNAPSHOT=')))
         expected_type={'alliance_purchase':0,'horde_purchase':3,'alliance_crossbow_purchase':1,'alliance_mage_purchase':2,'horde_sapper_purchase':4,'horde_shaman_purchase':5}[name]

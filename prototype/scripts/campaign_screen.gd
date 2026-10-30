@@ -67,8 +67,17 @@ class PathDrawing extends Control:
 class MissionNode extends Button:
 	var completed: bool = false
 	var locked: bool = false
+	var state: String = "future"
 	func _draw() -> void:
-		if completed:
+		if state == "future":
+			for segment in range(12):
+				draw_arc(Vector2(21,21),20,TAU*segment/12,TAU*(segment+0.55)/12,5,Color("8fa397"),1.5,true)
+			draw_circle(Vector2(38,4),8,Color("24352b"))
+			for x in [35,38,41]: draw_circle(Vector2(x,4),1,Color("bcc9bf"))
+		elif state == "unavailable":
+			draw_circle(Vector2(38,4),8,Color("3c3421"))
+			draw_string(ThemeDB.fallback_font,Vector2(35,8),"!",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("e5cd91"))
+		elif completed:
 			draw_circle(Vector2(38,4),8,Color("203c29"))
 			draw_polyline(PackedVector2Array([Vector2(34,4),Vector2(37,7),Vector2(42,0)]),Color("b1d39b"),2,true)
 		elif locked:
@@ -88,6 +97,8 @@ var balance: Label
 var points_label: Label
 var chapter_label: Label
 var chapter_buttons: Array[Button] = []
+var chapter_scroll: ScrollContainer
+var chapter_reveal_pending: bool = false
 var nodes: Array[MissionNode] = []
 var path_drawing: PathDrawing
 var mission_heading: Label
@@ -134,15 +145,16 @@ func _ready() -> void:
 	points_label = label_at(self,"",Rect2(900,68,348,28),14,Color("aabeb0"))
 	panel(Rect2(32,116,220,572));panel(Rect2(272,116,558,572));panel(Rect2(850,116,398,572))
 	label_at(self,"Chapitres",Rect2(48,132,188,30),21)
-	var scroll := ScrollContainer.new();scroll.position = Vector2(48,174);scroll.size = Vector2(188,498)
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED;scroll.follow_focus = true;add_child(scroll)
-	var list := VBoxContainer.new();list.custom_minimum_size.x = 172;list.add_theme_constant_override("separation",6);scroll.add_child(list)
+	chapter_scroll = ScrollContainer.new();chapter_scroll.position = Vector2(48,174);chapter_scroll.size = Vector2(188,498)
+	chapter_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED;chapter_scroll.follow_focus = true;add_child(chapter_scroll)
+	var list := VBoxContainer.new();list.custom_minimum_size.x = 172;list.add_theme_constant_override("separation",6);chapter_scroll.add_child(list)
 	for number in range(1,Catalogue.CHAPTER_COUNT+1):
 		var button := Button.new();button.custom_minimum_size = Vector2(172,34);button.add_theme_font_size_override("font_size",14)
 		style(button,Color("142f24"),Color("394e40"));button.pressed.connect(_chapter.bind(number))
 		list.add_child(button);chapter_buttons.append(button)
 	chapter_label = label_at(self,"",Rect2(292,132,508,32),22)
-	path_drawing = PathDrawing.new();path_drawing.position = Vector2(292,178);path_drawing.size = Vector2(508,490)
+	label_at(self,"✓ Réussie · Cadenas : verrouillée · Pointillés : à venir",Rect2(292,170,508,22),12,Color("aabeb0"))
+	path_drawing = PathDrawing.new();path_drawing.position = Vector2(292,200);path_drawing.size = Vector2(508,478)
 	path_drawing.mouse_filter = Control.MOUSE_FILTER_IGNORE;add_child(path_drawing)
 	var columns: Array[int] = [200,270,200,130,200,270,200,130,200,270]
 	for index in range(10):
@@ -198,6 +210,24 @@ func _select(index: int) -> void:
 	if overlay_blocked or index < 0 or index >= 10: return
 	selected = index;_refresh_nodes();_refresh_detail()
 
+func chapter_in_view() -> bool:
+	return chapter_scroll.get_global_rect().encloses(chapter_buttons[chapter-1].get_global_rect())
+
+func _reveal_chapter() -> void:
+	chapter_reveal_pending = false
+	if visible and not overlay_blocked: chapter_scroll.ensure_control_visible(chapter_buttons[chapter-1])
+
+func _chapter_has_content(number: int) -> bool:
+	for mission in range((number-1)*Catalogue.CHAPTER_SIZE+1,number*Catalogue.CHAPTER_SIZE+1):
+		if Catalogue.definition(mission).available: return true
+	return false
+
+func _mission_state(number: int) -> String:
+	if not Catalogue.definition(number).available: return "future"
+	if status.is_empty(): return "unavailable"
+	if status.missions[number-1]: return "completed"
+	return "available" if Catalogue.unlocked(number,status) else "locked"
+
 func refresh() -> void:
 	status = profile.campaign_status(faction) if profile != null else {}
 	var camp: String = "Alliance" if faction == 0 else "Horde"
@@ -215,7 +245,8 @@ func refresh() -> void:
 		talents_button.text = "Talents · %d point%s à placer" % [free,"s" if free > 1 else ""] if free > 0 else "Préparer les talents"
 		infinite_label.text = "Condition remplie pour cette faction.\nMode infini à venir." if status.infinite_eligible else "%d / 100 premières missions réussies\nMode infini à venir." % status.first_hundred
 	for index in range(Catalogue.CHAPTER_COUNT):
-		chapter_buttons[index].text = "Chapitre %d · %s/10" % [index+1,"—" if status.is_empty() else str(status.chapters[index])]
+		var detail: String = ("—" if status.is_empty() else str(status.chapters[index]))+"/10" if _chapter_has_content(index+1) else "À venir"
+		chapter_buttons[index].text = "Chapitre %d · %s" % [index+1,detail]
 		style(chapter_buttons[index],Color("254434") if chapter == index+1 else Color("142f24"),Color("d8c481") if chapter == index+1 else Color("394e40"))
 	chapter_label.text = "Chapitre %d · Missions %d–%d" % [chapter,(chapter-1)*10+1,chapter*10]
 	talents_button.disabled = profile == null
@@ -224,6 +255,8 @@ func refresh() -> void:
 		if not profile.error.is_empty(): footer.text = profile.error
 		elif not profile.migration_notice.is_empty(): footer.text = profile.migration_notice
 	_refresh_nodes();_refresh_detail()
+	if not chapter_reveal_pending:
+		chapter_reveal_pending = true;_reveal_chapter.call_deferred()
 
 func _refresh_nodes() -> void:
 	path_drawing.completed.clear()
@@ -231,11 +264,15 @@ func _refresh_nodes() -> void:
 		var number: int = (chapter-1)*10+index+1
 		var definition: Dictionary = Catalogue.definition(number)
 		var done: bool = not status.is_empty() and status.missions[number-1]
+		var state: String = _mission_state(number)
 		var border: Color = Color("a7ca8b") if done else Color("d8c481") if Catalogue.unlocked(number,status) else Color("42574a")
+		if state == "future": border = Color.TRANSPARENT
 		if index == selected: border = Color("e5cd91")
-		style(nodes[index],Color("254934") if done else Color("1b3027"),border,21)
-		nodes[index].text = str(number);nodes[index].completed = done;nodes[index].locked = definition.available and not Catalogue.unlocked(number,status);nodes[index].queue_redraw()
-		nodes[index].tooltip_text = "%s · %s" % [definition.title,"Déjà réussie" if done else "Disponible" if Catalogue.unlocked(number,status) else "Terminez la mission précédente" if definition.available else "À venir"]
+		style(nodes[index],Color("14241c") if state == "future" else Color("254934") if done else Color("1b3027"),border,21)
+		nodes[index].add_theme_color_override("font_color",Color("aabeb0") if state == "future" else Color("e0dbbf"))
+		nodes[index].text = str(number);nodes[index].completed = done;nodes[index].locked = state == "locked";nodes[index].state = state;nodes[index].queue_redraw()
+		var description: String = {"future":"À venir","unavailable":"Progression indisponible","completed":"Déjà réussie","available":"Disponible","locked":"Terminez la mission précédente"}[state]
+		nodes[index].tooltip_text = "%s · %s" % [definition.title,description]
 		path_drawing.completed.append(done)
 	path_drawing.queue_redraw()
 
@@ -267,6 +304,7 @@ func _refresh_detail() -> void:
 	if status.is_empty():
 		mission_detail.text = "La progression n’est pas disponible."
 		rewards.text = profile.error if profile != null and not profile.error.is_empty() else "Revenez au choix de faction pour vérifier votre progression."
+		start_button.text = "Progression indisponible"
 
 func _launch() -> void:
 	if overlay_blocked or not visible or start_button.disabled or profile == null or profile.blocked: return
