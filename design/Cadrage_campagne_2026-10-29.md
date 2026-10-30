@@ -24,6 +24,7 @@ Complément à la [vision long terme](Feuille_de_route_long_terme.md), révisé 
 | CAMP-017 | Un biome couvre deux chapitres ; nouveauté au second | Précision du 31 octobre : chapitres 1–2, 3–4, 5–6, etc. Nouveaux attaquants liés au biome ou affixe affaiblissant la défense ou renforçant les attaquants, aux chapitres 2, 4, 6, etc. |
 | CAMP-018 | Cumuler les nouveautés après la mission 100 en continuant les introductions | Attaquants déjà rencontrés et affixes peuvent se combiner dans la campagne avancée. Règles et valeurs de cumul encore à concevoir. |
 | CAMP-019 | Accumuler également les attaquants et affixes en mode infini | Les nouveautés des biomes peuvent s’accumuler au fil de la progression du mode infini pour accroître le défi. Rythme, limites, calculs et récompenses non définis. |
+| CAMP-020 | Trois difficultés de campagne : Normal, Héroïque, Mythique | La campagne actuellement proposée est le mode Normal. Réussir les 100 premières missions normales ouvre l’Héroïque ; la même règle appliquée à l’Héroïque ouvre le Mythique. Missions débloquées successivement dans chaque difficulté, parcours de faction conservés. Réglages et récompenses encore à définir. |
 
 Les exemples explicites des paliers font foi sur le terme « impaires » de la formulation initiale. L’ancienne suggestion d’introduction aux missions 1–10, 21–30 et 41–50 est écartée. Avec dix missions par chapitre, les nouveaux paliers correspondraient aux chapitres 2, 4, 6, etc. ; le découpage en chapitres reste une cible de contenu.
 

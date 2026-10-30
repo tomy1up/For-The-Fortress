@@ -10,6 +10,8 @@ Document de référence pour concevoir et développer For the Fortress!, destin�
 
 **Complément de conception validé le 31 octobre 2026 :** [biomes et cumul de difficulté](design/Biomes_cumul_2026-10-31.md). Un biome couvre deux chapitres ; le second introduit de nouveaux attaquants ou un affixe agissant sur la défense ou les attaquants. Après la mission 100, les nouveautés se combinent avec le contenu antérieur tout en continuant d’arriver. Le mode infini permet aussi une accumulation progressive de ces attaquants et affixes. Cette décision complète les sections de campagne et de mode infini du socle ; elle ne désigne pas un contenu déjà réalisé. Le détail des règles de cumul reste ouvert. Ce lien est ajouté à la version Markdown en attendant la prochaine consolidation du document Word.
 
+**Difficultés de campagne validées le 31 octobre 2026 :** [Normal, Héroïque et Mythique](design/Difficultes_campagne_2026-10-31.md). La campagne actuelle correspond au Normal. Réussir ses 100 premières missions ouvre l’Héroïque, puis réussir les 100 premières en Héroïque ouvre le Mythique. Chaque difficulté débloque ses missions successivement, avec les parcours indépendants par faction déjà retenus. Réglages, récompenses et articulation avec l’infini restent à définir ; aucun de ces modes avancés n’est annoncé comme réalisé.
+
 Nom de travail — disponibilité juridique à confirmer.
 
 ## Sommaire

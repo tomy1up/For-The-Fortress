@@ -516,3 +516,7 @@ Le porteur du projet choisit **la boutique et ses premières unités alternative
 ## Orientation long terme — biomes et cumuls, 31 octobre 2026
 
 [Décisions sur les biomes](Biomes_cumul_2026-10-31.md) : un biome pour deux chapitres, avec nouveaux attaquants ou affixe au second chapitre. L’affixe peut affaiblir la défense ou renforcer les attaquants. Après la mission 100, cumuler le contenu précédent tout en poursuivant les nouveautés. Le mode infini réutilisera aussi les attaquants et affixes dans une accumulation progressive. Biomes, paramètres et règles exactes de cumul restent à concevoir ; aucun de ces contenus n’est annoncé comme déjà jouable.
+
+## Difficultés de campagne — 31 octobre 2026
+
+[Normal, Héroïque et Mythique](Difficultes_campagne_2026-10-31.md) : la campagne actuelle correspond au Normal. Les 100 premières victoires normales ouvrent l’Héroïque ; les 100 premières victoires héroïques ouvrent le Mythique. Chaque difficulté progresse mission par mission, par faction, sans effacer les acquis normaux. Paramètres, récompenses et articulation avec l’infini restent ouverts. Ces modes ne sont pas encore implémentés.
