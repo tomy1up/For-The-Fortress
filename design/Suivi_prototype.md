@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 30 octobre 2026 — prototype v0.92, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 30 octobre 2026 — prototype v0.96, GDD principal v0.15 et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -496,3 +496,7 @@ Décision explicite : les resets entre les missions sont gratuits, les talents r
 ## Prochain lot retenu — 30 octobre 2026
 
 Le porteur du projet choisit **d’étendre l’essai aux missions 4–10**, après ce lot de lisibilité. Les nouvelles valeurs resteront des réglages de prototype. Le contenu de ces sept missions est à préparer et à tester ; il n’est pas réputé livré par la v0.95. Les nouveautés de chapitre restent prévues à partir du bloc 11–20.
+
+## Version v0.96 — premier chapitre jouable
+
+[Missions 4 à 10](Missions_4_10_v096.md) : sept terrains supplémentaires, dix vagues et six emplacements chacun, PV de prototype à 103–109 %. Dix premières victoires donnent 600 PO, 1 000 XP et cinq points de talent par faction avec le barème actuel. Le dernier point est obtenu après la mission 10. Anciens profils conservés, mission 4 accessible après les trois premiers succès ; les missions 11–200 restent à venir. Les tracés et les valeurs restent à équilibrer par des essais humains.

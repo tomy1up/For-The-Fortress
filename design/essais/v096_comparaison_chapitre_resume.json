@@ -1,0 +1,139 @@
+{
+  "game_version": "0.96",
+  "cases": 1008,
+  "human_balance_test": false,
+  "profile_loaded": false,
+  "smoke_reports_replayed": 14,
+  "output_guards_checked": 5,
+  "all_game_sources_unchanged": true,
+  "policy": "Six triplets de positions, quatre compositions, trois graines, amélioration à la vague 2, aucun talent. Les choix sont fixes et ne représentent pas des joueurs.",
+  "raw_sha256": "7cabbe993831e89eb7d46c3b238b0ba6004b5e6c6b473b351edf5e34bb81de25",
+  "results": [
+    {
+      "faction": 0,
+      "mission": 4,
+      "trials": 72,
+      "wins": 46,
+      "stable_policies_out_of_24": 12,
+      "minimum_winning_hp": 1,
+      "maximum_winning_hp": 20
+    },
+    {
+      "faction": 0,
+      "mission": 5,
+      "trials": 72,
+      "wins": 50,
+      "stable_policies_out_of_24": 12,
+      "minimum_winning_hp": 1,
+      "maximum_winning_hp": 20
+    },
+    {
+      "faction": 0,
+      "mission": 6,
+      "trials": 72,
+      "wins": 70,
+      "stable_policies_out_of_24": 22,
+      "minimum_winning_hp": 2,
+      "maximum_winning_hp": 20
+    },
+    {
+      "faction": 0,
+      "mission": 7,
+      "trials": 72,
+      "wins": 62,
+      "stable_policies_out_of_24": 18,
+      "minimum_winning_hp": 1,
+      "maximum_winning_hp": 20
+    },
+    {
+      "faction": 0,
+      "mission": 8,
+      "trials": 72,
+      "wins": 69,
+      "stable_policies_out_of_24": 21,
+      "minimum_winning_hp": 2,
+      "maximum_winning_hp": 20
+    },
+    {
+      "faction": 0,
+      "mission": 9,
+      "trials": 72,
+      "wins": 58,
+      "stable_policies_out_of_24": 16,
+      "minimum_winning_hp": 1,
+      "maximum_winning_hp": 20
+    },
+    {
+      "faction": 0,
+      "mission": 10,
+      "trials": 72,
+      "wins": 62,
+      "stable_policies_out_of_24": 16,
+      "minimum_winning_hp": 2,
+      "maximum_winning_hp": 20
+    },
+    {
+      "faction": 1,
+      "mission": 4,
+      "trials": 72,
+      "wins": 16,
+      "stable_policies_out_of_24": 4,
+      "minimum_winning_hp": 2,
+      "maximum_winning_hp": 15
+    },
+    {
+      "faction": 1,
+      "mission": 5,
+      "trials": 72,
+      "wins": 34,
+      "stable_policies_out_of_24": 7,
+      "minimum_winning_hp": 1,
+      "maximum_winning_hp": 18
+    },
+    {
+      "faction": 1,
+      "mission": 6,
+      "trials": 72,
+      "wins": 41,
+      "stable_policies_out_of_24": 13,
+      "minimum_winning_hp": 1,
+      "maximum_winning_hp": 18
+    },
+    {
+      "faction": 1,
+      "mission": 7,
+      "trials": 72,
+      "wins": 46,
+      "stable_policies_out_of_24": 11,
+      "minimum_winning_hp": 1,
+      "maximum_winning_hp": 18
+    },
+    {
+      "faction": 1,
+      "mission": 8,
+      "trials": 72,
+      "wins": 46,
+      "stable_policies_out_of_24": 10,
+      "minimum_winning_hp": 1,
+      "maximum_winning_hp": 17
+    },
+    {
+      "faction": 1,
+      "mission": 9,
+      "trials": 72,
+      "wins": 34,
+      "stable_policies_out_of_24": 7,
+      "minimum_winning_hp": 1,
+      "maximum_winning_hp": 14
+    },
+    {
+      "faction": 1,
+      "mission": 10,
+      "trials": 72,
+      "wins": 38,
+      "stable_policies_out_of_24": 11,
+      "minimum_winning_hp": 1,
+      "maximum_winning_hp": 15
+    }
+  ]
+}

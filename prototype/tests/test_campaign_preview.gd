@@ -13,7 +13,7 @@ func run_checks() -> void:
 		var p = Profile.new("")
 		var screen = Screen.new();root.add_child(screen);screen.open(p,faction)
 		var before: String = JSON.stringify(p.data)
-		for number in range(1,4):
+		for number in range(1,11):
 			screen._select(number-1)
 			var preview = screen.terrain_preview
 			var source: Dictionary = Maps.for_id(screen.Catalogue.definition(number).map_id)
@@ -37,7 +37,7 @@ func run_checks() -> void:
 		screen.refresh();screen._select(1)
 		check(screen.terrain_preview.definition.id == "ford_woods" and not screen.start_button.disabled,"La même carte devient jouable après le succès requis")
 		before = JSON.stringify(p.data)
-		screen._select(9)
+		screen._chapter(2);screen._select(0)
 		check(screen.terrain_preview.definition.is_empty() and screen.terrain_preview.geometry().is_empty() and screen.start_button.disabled,"Un contenu à venir n’emprunte pas le terrain du Gué ni celui précédemment consulté")
 		screen._chapter(20);screen._select(9)
 		check(screen.terrain_preview.geometry().is_empty() and JSON.stringify(p.data) == before,"Les chapitres futurs restent sans terrain inventé et sans effet sur les acquis")

@@ -128,9 +128,11 @@ for camp in ["alliance","horde"]:
     for variant in ["fresh","completed","future","blocked","talents","returned","terrain2","terrain3","locked2"]: cases.append((camp+"_campaign_menu_"+variant,"campaign_menu",camp))
     for variant in ['fresh','first','invested','blocked']: cases.append((camp+'_talent_start_'+variant,'talents',camp))
 for camp in ["alliance","horde"]:
-    for mission in [2,3]:
-        for stage in ["preparation","inspection","summary"]: cases.append((camp+"_sample_"+str(mission)+"_"+stage,"campaign_sample",camp))
+    for mission in range(2,11):
+        for stage in (["preparation","inspection","summary"] if mission <= 3 else ["preparation","summary"]): cases.append((camp+"_sample_"+str(mission)+"_"+stage,"campaign_sample",camp))
     cases.append((camp+"_sample_3_journey","campaign_sample",camp))
+    cases.append((camp+"_sample_10_journey","campaign_sample",camp))
+    for mission in range(4,11): cases.append((camp+"_campaign_menu_terrain"+str(mission),"campaign_menu",camp))
 for name,state,faction in cases:
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
@@ -203,17 +205,18 @@ for name,state,faction in cases:
         mission=int(name.split('_')[2]);stage=name.rsplit('_',1)[1]
         completed_missions=mission if stage in ['summary','journey'] else mission-1
         assert snap['faction']==(0 if faction=='alliance' else 1) and snap['isolated'] and snap['mission']==mission and snap['stage']==stage
-        assert snap['map']==('ford_woods' if mission==2 else 'ford_heights') and snap['hp_percent']==99+mission
+        assert snap['map']==['valley_ford','ford_woods','ford_heights','ford_turns','ford_glade','ford_pass','ford_switchbacks','ford_trail','ford_approach','ford_ramparts'][mission-1] and snap['hp_percent']==99+mission
         assert snap['completed']==completed_missions and snap['other']==0 and snap['xp']==100*completed_missions and snap['po']==60*completed_missions
-        assert snap['points']==(1 if completed_missions>=2 else 0) and snap['rank']==(1 if mission==3 else 0)
+        assert snap['points']==51*completed_missions//100 and snap['rank']==(1 if mission>=3 else 0)
         assert snap['summary']==(stage=='summary') and snap['menu']==(stage=='journey')
         if stage=='inspection': assert ('40,4' if mission==2 else '40,8') in snap['enemy_health'],snap
-        if stage=='journey': assert snap['selection']==3
+        if stage=='journey': assert snap['selection']==min(mission+1,10)
         if stage=='summary':
-            assert ('Mission '+str(mission)) in snap['summary_mission'] and ('Le Bois du Gué' if mission==2 else 'Les Hauts du Gué') in snap['summary_mission']
+            assert ('Mission '+str(mission)) in snap['summary_mission'] and snap['title'].lower() in snap['summary_mission'].lower()
             assert 'XP : +100' in snap['reward_note']
-            assert snap['talent_action']==('Placer mon point de talent' if mission==2 else 'Consulter mes talents')
-            assert ('1 point de talent à placer' if mission==2 else 'encore 93 XP') in snap['reward_note']
+            free=snap['points']-snap['rank']
+            assert snap['talent_action']==('Placer mon point de talent' if free==1 else 'Placer mes '+str(free)+' points' if free>1 else 'Consulter mes talents')
+            if mission<=3: assert ('1 point de talent à placer' if mission==2 else 'encore 93 XP') in snap['reward_note']
             report_folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))
             report=json.loads((report_folder/'rapport.json').read_text(encoding='utf-8'))
             assert report['result']=='victory' and len(report['waves'])==10 and report['enemy_hp_percent']==99+mission and report['map_definition']['id']==snap['map']
@@ -224,18 +227,18 @@ for name,state,faction in cases:
         assert snap['isolated'] and snap['faction']==(0 if faction=='alliance' else 1) and snap['menu'] and snap['choosing']
         assert snap['nodes']==10 and snap['chapters']==20 and snap['fresh']
         assert snap['talents']==(variant=='talents') and snap['disabled']==(variant in ['future','blocked','locked2'])
-        successes = 2 if variant=='terrain3' else 1 if variant in ['completed','returned','terrain2'] else 0
+        successes = int(variant[7:])-1 if variant.startswith('terrain') else 1 if variant in ['completed','returned','terrain2'] else 0
         assert snap['completed']==(-1 if variant=='blocked' else successes)
         assert snap['other_completed']==(-1 if variant=='blocked' else 0)
-        selection = 3 if variant=='terrain3' else 2 if variant in ['returned','terrain2','locked2'] else 1
+        selection = int(variant[7:]) if variant.startswith('terrain') else 2 if variant in ['returned','terrain2','locked2'] else 1
         assert (snap['chapter'],snap['selected'])==((20,200) if variant=='future' else (1,selection))
         assert snap['po']==60*successes and snap['xp']==(10100 if variant=='returned' else 100*successes)
-        assert snap['preview_map']==('' if variant=='future' else ['valley_ford','ford_woods','ford_heights'][selection-1])
+        assert snap['preview_map']==('' if variant=='future' else ['valley_ford','ford_woods','ford_heights','ford_turns','ford_glade','ford_pass','ford_switchbacks','ford_trail','ford_approach','ford_ramparts'][selection-1])
         assert snap['preview_slots']==(0 if variant=='future' else 6)
-        assert snap['preview_segments']==(0 if variant=='future' else 7)
+        assert snap['preview_segments']==(0 if variant=='future' else [7,7,7,7,8,8,7,8,8,8][selection-1])
         assert snap['chapter_visible'], (name, 'Le chapitre sélectionné doit rester dans la liste visible')
-        current_states = ['completed','completed','available'] if variant=='terrain3' else ['completed','available','locked'] if variant in ['completed','returned','terrain2'] else ['unavailable']*3 if variant=='blocked' else ['available','locked','locked']
-        assert snap['mission_states']==(['future']*10 if variant=='future' else current_states+['future']*7)
+        expected_states=['completed']*successes+['available']+['locked']*(9-successes)
+        assert snap['mission_states']==(['future']*10 if variant=='future' else ['unavailable']*10 if variant=='blocked' else expected_states)
         if variant=='blocked': assert snap['start_label']=='Progression indisponible'
     if name in ['alliance_purchase','horde_purchase','alliance_crossbow_purchase','alliance_mage_purchase','horde_sapper_purchase','horde_shaman_purchase']:
         ghost=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('PURCHASE_GHOST_SNAPSHOT=')))

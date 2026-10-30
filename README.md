@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.95 (30 octobre 2026)** : [lecture des talents](design/Lecture_talents_v095.md). Points disponibles au premier plan, rôle des trois arbres, talent lu repéré par des coins clairs et aide adaptée à la situation. Trois missions et règles conservées ; l’extension aux missions 4–10 est le prochain lot retenu. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.95).
+**Version v0.96 (30 octobre 2026)** : [premier chapitre jouable](design/Missions_4_10_v096.md). Sept nouveaux tracés portent le prototype à dix missions par faction. Dix vagues et six emplacements par terrain, premières récompenses persistantes et réglages de difficulté à éprouver. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.96).
 
 **Comparaison des trois missions — 2 592 simulations** : [résultats et limites](design/Comparaison_trois_missions_v092.md). Deux factions, trois tirages, six placements, quatre compositions et comparaison du premier point en mission 3. Des stratégies sans talent gagnent chaque carte ; géométrie et composition pèsent sur la difficulté. Ces simulations ne mesurent pas le taux de victoire humain et n’entraînent aucun changement d’équilibrage ou de binaire.
 

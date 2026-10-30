@@ -17,7 +17,7 @@ func run_checks() -> void:
 		check(menu.chapter_in_view(),"Le chapitre de départ est visible")
 		var before: String = JSON.stringify(p.data)
 		check(menu.nodes[0].state == "available" and menu.nodes[1].state == "locked" and menu.nodes[2].state == "locked","Une mission jouable et deux verrouillées sont distinguées sur un profil neuf")
-		for index in range(3,10): check(menu.nodes[index].state == "future" and menu.nodes[index].tooltip_text.contains("À venir"),"Les missions non réalisées sont annoncées à venir, sans prérequis inventé")
+		for index in range(3,10): check(menu.nodes[index].state == "locked" and menu.nodes[index].locked,"Les sept missions supplémentaires sont verrouillées avant la réussite précédente")
 		for chapter in range(1,21):
 			menu._chapter(chapter);await settled()
 			check(menu.chapter == chapter and menu.chapter_in_view(),"Chaque chapitre sélectionné devient visible dans la liste après mise en page")
@@ -46,6 +46,6 @@ func run_checks() -> void:
 		menu.refresh();menu._select(0);await settled()
 		check(menu.nodes[0].state == "unavailable" and not menu.nodes[0].locked and menu.start_button.text == "Progression indisponible" and menu.start_button.disabled,"Un problème de profil est présenté comme tel, sans faux verrou de mission")
 		menu._launch();check(JSON.stringify(p.data) == before,"L’erreur de profil ne lance ni ne crédite de tentative")
-		check(menu.nodes[3].state == "future","Le contenu futur reste identifié même si la progression est indisponible")
+		check(menu.nodes[3].state == "unavailable","Les missions existantes ne prétendent pas être à venir quand le profil est indisponible")
 		menu.free()
 	print("CAMPAIGN_STATES_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

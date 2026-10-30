@@ -1,16 +1,16 @@
-# Trois missions de dix vagues jouables
+# Dix missions de dix vagues jouables
 
-**Version v0.95 (30 octobre 2026)** : [lecture des talents](../design/Lecture_talents_v095.md). Points disponibles au premier plan, rôle des trois arbres, talent lu repéré par des coins clairs et aide adaptée à la situation. Trois missions et règles conservées ; l’extension aux missions 4–10 est le prochain lot retenu. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.95).
+**Version v0.96 (30 octobre 2026)** : [premier chapitre jouable](../design/Missions_4_10_v096.md). Sept nouveaux tracés portent le prototype à dix missions par faction. Dix vagues et six emplacements par terrain, premières récompenses persistantes et réglages de difficulté à éprouver. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.96).
 
-**Prototype v0.95 — 30 octobre 2026.** Référence : GDD v0.15 et décisions de campagne. For the Fortress! reste un nom de travail.
+**Prototype v0.96 — 30 octobre 2026.** Référence : GDD v0.15 et décisions de campagne. For the Fortress! reste un nom de travail.
 
-Le jeu propose trois missions de dix vagues pour les deux factions, avec trois choix de bonus par mission et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
+Le jeu propose dix missions de dix vagues pour les deux factions, avec trois choix de bonus par mission et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.95](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.95) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.96](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.96) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
-Sur ce PC : dist/For_the_Fortress_v0.95_Windows_x64 depuis la racine du dépôt. Voir [le relevé d’export](../design/Distribution_Windows_v095.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
+Sur ce PC : dist/For_the_Fortress_v0.96_Windows_x64 depuis la racine du dépôt. Voir [le relevé d’export](../design/Distribution_Windows_v096.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
 ## Jouer depuis le projet source
 

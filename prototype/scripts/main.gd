@@ -602,8 +602,8 @@ func _capture_campaign_menu(camp: int) -> void:
 		var id: int = meta_profile.begin_mission(camp,"campaign.001",60,10,100)
 		var credited: bool = meta_profile.credit_mission(id,camp,10,true)
 		if not credited: push_error("Échec du profil de contrôle de campagne.");return
-	if variant in ["terrain2","terrain3"]:
-		for number in range(1,2 if variant == "terrain2" else 3):
+	if variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int():
+		for number in range(1,clampi(int(variant.trim_prefix("terrain")),2,10)):
 			var entry: Dictionary = CampaignCatalogue.definition(number)
 			var id: int = meta_profile.begin_mission(camp,entry.id,entry.po,entry.waves,entry.xp)
 			var credited: bool = meta_profile.credit_mission(id,camp,entry.waves,true)
@@ -611,8 +611,8 @@ func _capture_campaign_menu(camp: int) -> void:
 	if variant == "blocked":
 		meta_profile.blocked = true;meta_profile.error = "Sauvegarde indisponible simulée pour le contrôle."
 	_open_campaign(camp,20 if variant == "future" else 1)
-	if variant in ["terrain2","terrain3","locked2"]:
-		campaign_menu._select(2 if variant == "terrain3" else 1)
+	if variant.begins_with("terrain") or variant == "locked2":
+		campaign_menu._select(clampi(int(variant.trim_prefix("terrain")),2,10)-1 if variant != "locked2" else 1)
 		campaign_menu.initial_focus().grab_focus()
 	if variant == "future":
 		campaign_menu._select(9);campaign_menu.nodes[9].grab_focus()
@@ -633,11 +633,12 @@ func _capture_campaign_menu(camp: int) -> void:
 
 func _capture_sample_combat() -> void:
 	model.rng.seed = 42
-	var positions: Array = [[1,2,4],[1,3,4],[1,2,4]][model.enemy_hp_percent-100]
+	var positions: Array = [[1,2,4],[1,3,4],[1,2,4]][model.enemy_hp_percent-100] if model.enemy_hp_percent <= 102 else [0,1,2]
 	var types: Array = [0,2,1] if model.faction == 1 and model.enemy_hp_percent > 100 else [0,1,2]
+	if model.enemy_hp_percent in [104,107,108]: types = [0,1,2]
 	model.buy(positions[0],model.faction*3+types[0]);model.buy(positions[1],model.faction*3+types[1])
 	for wave in range(1,11):
-		if wave == 2 and model.faction == 1: model.upgrade(positions[0])
+		if wave == 2 and (model.faction == 1 or model.enemy_hp_percent > 102): model.upgrade(positions[0])
 		if wave >= 4 and model.defenders[positions[2]].is_empty(): model.buy(positions[2],model.faction*3+types[2])
 		if wave >= 5:
 			for slot in positions:
@@ -651,7 +652,7 @@ func _capture_campaign_sample(camp: int) -> void:
 	meta_profile = MetaProfile.new("")
 	var target: int = 3;var stage: String = "journey"
 	for argument in OS.get_cmdline_user_args():
-		if argument.begins_with("--capture-mission="): target = clampi(int(argument.trim_prefix("--capture-mission=")),2,3)
+		if argument.begins_with("--capture-mission="): target = clampi(int(argument.trim_prefix("--capture-mission=")),2,10)
 		if argument.begins_with("--capture-sample-state="): stage = argument.trim_prefix("--capture-sample-state=")
 	for number in range(1,target+1):
 		_open_campaign(camp);campaign_menu._select(number-1);campaign_menu._launch()

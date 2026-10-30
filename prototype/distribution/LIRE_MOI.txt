@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.95 — 30 octobre 2026
+Version : 0.96 — 30 octobre 2026
 
 JOUER
 
@@ -7,8 +7,7 @@ JOUER
 2. Choisir sa faction, puis sa mission dans son parcours de campagne.
    Son aperçu montre le tracé, la forteresse et les six emplacements.
    Les pointillés signalent les missions à venir, le cadenas un succès requis.
-   Trois missions de dix vagues sont jouables : le Gué, le Bois du Gué, les Hauts
-   du Gué. Gagner la précédente les débloque dans la faction concernée.
+   Dix missions de dix vagues sont jouables dans le thème du Gué. Gagner la précédente les débloque dans la faction concernée.
 3. Préparer les talents avant la mission, puis jouer et installer sa défense.
    Les points disponibles sont indiqués en haut ; le rôle de chaque arbre
    accompagne son compteur. Les coins clairs repèrent le talent décrit.
@@ -30,17 +29,17 @@ talents permanents ne sont possibles avant la victoire finale ou la défaite.
 Les constructions, achats, ventes et améliorations d’unités entre les vagues restent
 possibles. Les choix de bonus de la partie ne sont pas les arbres de talents permanents.
 
-Le prototype contient trois missions de dix vagues dans le même thème.
-Les PV ennemis sont à 100 %, 101 % puis 102 % de la référence. Leur vitesse,
+Le prototype contient dix missions de dix vagues dans le même thème.
+Les PV ennemis sont de 100 % à 109 % de la référence. Leur vitesse,
 leurs dégâts à la forteresse et leurs récompenses de combat restent identiques.
 Une mission est une session complète : retour au parcours après victoire ou défaite.
 Chaque mission repart avec ses PV maximum, 150 or de combat, aucun défenseur
 et aucun bonus temporaire. PO, XP et talents restent persistants. Le parcours
-présente vingt chapitres de dix positions ; 197 missions restent à développer.
+présente vingt chapitres de dix positions ; 190 missions restent à développer.
 
 PO, XP ET PROGRESSION PERMANENTE
 
-Première victoire de chacune des trois missions dans une faction : 60 PO et
+Première victoire de chacune des dix missions dans une faction : 60 PO et
 100 XP (barème de prototype).
 Rejouer et gagner la même mission ne redonne ni PO ni XP. Une défaite ne donne
 pas sa récompense de première victoire. Les deux factions ont leur propre suivi.
@@ -48,8 +47,9 @@ pas sa récompense de première victoire. Les deux factions ont leur propre suiv
 L’XP débloque automatiquement les points de talent, sans dépense de PO.
 Courbe de référence : 100 XP par mission, 10 000 XP pour obtenir les 51 points.
 Premier point à 197 XP, donc après deux premières victoires distinctes. Après les
-trois missions, un profil neuf a 300 XP et un point. Le rejeu ne donne aucun
-nouveau gain ; les missions suivantes restent à développer.
+dix missions, un profil neuf a 1 000 XP, cinq points et 600 PO hors dépenses.
+Le cinquième point arrive après la mission 10 et ne facilite pas sa première victoire.
+Le rejeu ne donne aucun nouveau gain ; les missions 11 à 200 restent à développer.
 Les PO sont destinées à la future boutique, qui n’est pas encore jouable.
 L’or de combat sert au recrutement et aux améliorations pendant la mission.
 

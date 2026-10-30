@@ -19,9 +19,9 @@ static func definition(number: int) -> Dictionary:
 	if number < 1 or number > TOTAL_MISSIONS: return {}
 	var chapter: int = (number-1)/CHAPTER_SIZE+1
 	var result: Dictionary = {"id":id_for(number),"number":number,"chapter":chapter,"theme_pair":(chapter-1)/2+1,"introduces_rule":chapter%2 == 0,"title":"Mission %d" % number,"available":false}
-	if number <= 3:
-		var maps: Array[String] = ["valley_ford","ford_woods","ford_heights"]
-		var titles: Array[String] = ["La Vallée du Gué","Le Bois du Gué","Les Hauts du Gué"]
+	if number <= 10:
+		var maps: Array[String] = ["valley_ford","ford_woods","ford_heights","ford_turns","ford_glade","ford_pass","ford_switchbacks","ford_trail","ford_approach","ford_ramparts"]
+		var titles: Array[String] = ["La Vallée du Gué","Le Bois du Gué","Les Hauts du Gué","Les Détours du Gué","La Clairière du Gué","Le Défilé du Gué","Les Lacets du Gué","Le Sentier du Gué","Les Abords du Gué","Les Remparts du Gué"]
 		result.merge({"title":titles[number-1],"available":true,"map_id":maps[number-1],"hp_percent":99+number,"po":60,"xp":100,"waves":10},true)
 	return result
 

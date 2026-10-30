@@ -1,5 +1,525 @@
 extends RefCounted
-## Données géométriques. Échantillon de trois cartes ; géométries proposées pour les essais de campagne.
+## Dix terrains de prototype du premier chapitre. Géométries à éprouver en jeu.
+const CHAPTER_ONE_MAPS: Dictionary = {
+	"ford_turns": {
+		"id": "ford_turns",
+		"title": "Les Détours du Gué",
+		"size": [
+			18,
+			10
+		],
+		"path_points": [
+			[
+				0,
+				2
+			],
+			[
+				4,
+				2
+			],
+			[
+				4,
+				8
+			],
+			[
+				10,
+				8
+			],
+			[
+				10,
+				3
+			],
+			[
+				15,
+				3
+			],
+			[
+				15,
+				6
+			],
+			[
+				17,
+				6
+			]
+		],
+		"slots": [
+			[
+				2,
+				3.5
+			],
+			[
+				5.5,
+				3.5
+			],
+			[
+				6,
+				6
+			],
+			[
+				8.5,
+				6
+			],
+			[
+				12,
+				4.5
+			],
+			[
+				16.5,
+				7.5
+			]
+		],
+		"path_length": 31.0,
+		"trees": [],
+		"decoration": "none"
+	},
+	"ford_glade": {
+		"id": "ford_glade",
+		"title": "La Clairière du Gué",
+		"size": [
+			18,
+			10
+		],
+		"path_points": [
+			[
+				0,
+				4
+			],
+			[
+				5,
+				4
+			],
+			[
+				5,
+				1
+			],
+			[
+				10,
+				1
+			],
+			[
+				10,
+				7
+			],
+			[
+				14,
+				7
+			],
+			[
+				14,
+				3
+			],
+			[
+				17,
+				3
+			],
+			[
+				17,
+				6
+			]
+		],
+		"slots": [
+			[
+				2.5,
+				2.5
+			],
+			[
+				6.5,
+				2.5
+			],
+			[
+				7.5,
+				5.8
+			],
+			[
+				11.5,
+				5
+			],
+			[
+				12.5,
+				8.5
+			],
+			[
+				15.5,
+				4.2
+			]
+		],
+		"path_length": 33.0,
+		"trees": [],
+		"decoration": "none"
+	},
+	"ford_pass": {
+		"id": "ford_pass",
+		"title": "Le Défilé du Gué",
+		"size": [
+			18,
+			10
+		],
+		"path_points": [
+			[
+				0,
+				7
+			],
+			[
+				4,
+				7
+			],
+			[
+				4,
+				2
+			],
+			[
+				9,
+				2
+			],
+			[
+				9,
+				8
+			],
+			[
+				14,
+				8
+			],
+			[
+				14,
+				4
+			],
+			[
+				17,
+				4
+			],
+			[
+				17,
+				6
+			]
+		],
+		"slots": [
+			[
+				2,
+				5
+			],
+			[
+				5.5,
+				4
+			],
+			[
+				7.5,
+				6
+			],
+			[
+				10.5,
+				5
+			],
+			[
+				12.5,
+				6
+			],
+			[
+				15.5,
+				6
+			]
+		],
+		"path_length": 34.0,
+		"trees": [],
+		"decoration": "none"
+	},
+	"ford_switchbacks": {
+		"id": "ford_switchbacks",
+		"title": "Les Lacets du Gué",
+		"size": [
+			18,
+			10
+		],
+		"path_points": [
+			[
+				0,
+				3
+			],
+			[
+				6,
+				3
+			],
+			[
+				6,
+				8
+			],
+			[
+				11,
+				8
+			],
+			[
+				11,
+				2
+			],
+			[
+				15,
+				2
+			],
+			[
+				15,
+				6
+			],
+			[
+				17,
+				6
+			]
+		],
+		"slots": [
+			[
+				3.5,
+				4.5
+			],
+			[
+				7.5,
+				4.5
+			],
+			[
+				8.5,
+				6
+			],
+			[
+				12.5,
+				4.5
+			],
+			[
+				13.5,
+				7.5
+			],
+			[
+				16.5,
+				7.5
+			]
+		],
+		"path_length": 32.0,
+		"trees": [],
+		"decoration": "none"
+	},
+	"ford_trail": {
+		"id": "ford_trail",
+		"title": "Le Sentier du Gué",
+		"size": [
+			18,
+			10
+		],
+		"path_points": [
+			[
+				0,
+				2
+			],
+			[
+				3,
+				2
+			],
+			[
+				3,
+				7
+			],
+			[
+				8,
+				7
+			],
+			[
+				8,
+				2
+			],
+			[
+				13,
+				2
+			],
+			[
+				13,
+				7
+			],
+			[
+				17,
+				7
+			],
+			[
+				17,
+				6
+			]
+		],
+		"slots": [
+			[
+				1.5,
+				4
+			],
+			[
+				4.5,
+				4.5
+			],
+			[
+				6.5,
+				5
+			],
+			[
+				9.5,
+				4.5
+			],
+			[
+				11.5,
+				5
+			],
+			[
+				15.5,
+				5
+			]
+		],
+		"path_length": 33.0,
+		"trees": [],
+		"decoration": "none"
+	},
+	"ford_approach": {
+		"id": "ford_approach",
+		"title": "Les Abords du Gué",
+		"size": [
+			18,
+			10
+		],
+		"path_points": [
+			[
+				0,
+				6
+			],
+			[
+				5,
+				6
+			],
+			[
+				5,
+				2
+			],
+			[
+				11,
+				2
+			],
+			[
+				11,
+				8
+			],
+			[
+				15,
+				8
+			],
+			[
+				15,
+				4
+			],
+			[
+				17,
+				4
+			],
+			[
+				17,
+				6
+			]
+		],
+		"slots": [
+			[
+				2.5,
+				4.5
+			],
+			[
+				6.5,
+				4.5
+			],
+			[
+				8.5,
+				3.5
+			],
+			[
+				9.5,
+				6
+			],
+			[
+				13,
+				6
+			],
+			[
+				16.5,
+				8
+			]
+		],
+		"path_length": 33.0,
+		"trees": [],
+		"decoration": "none"
+	},
+	"ford_ramparts": {
+		"id": "ford_ramparts",
+		"title": "Les Remparts du Gué",
+		"size": [
+			18,
+			10
+		],
+		"path_points": [
+			[
+				0,
+				3
+			],
+			[
+				4,
+				3
+			],
+			[
+				4,
+				8
+			],
+			[
+				9,
+				8
+			],
+			[
+				9,
+				2
+			],
+			[
+				14,
+				2
+			],
+			[
+				14,
+				7
+			],
+			[
+				17,
+				7
+			],
+			[
+				17,
+				6
+			]
+		],
+		"slots": [
+			[
+				2,
+				5
+			],
+			[
+				5.5,
+				5
+			],
+			[
+				7.5,
+				6
+			],
+			[
+				10.5,
+				5
+			],
+			[
+				12.5,
+				4
+			],
+			[
+				15.5,
+				5
+			]
+		],
+		"path_length": 34.0,
+		"trees": [],
+		"decoration": "none"
+	}
+}
+
 const VALLEY_PATH: Array[Vector2] = [
 	Vector2(0,3),Vector2(4,3),Vector2(4,7),Vector2(9,7),
 	Vector2(9,3),Vector2(14,3),Vector2(14,6),Vector2(17,6)
@@ -16,6 +536,7 @@ static func valley() -> Dictionary:
 
 static func for_id(id: String) -> Dictionary:
 	if id == "valley_ford": return valley()
+	if CHAPTER_ONE_MAPS.has(id): return from_data(CHAPTER_ONE_MAPS[id])
 	var result: Dictionary = valley()
 	if id == "ford_woods":
 		result.merge({"id":id,"title":"Le Bois du Gué","path_points":[Vector2(0,2),Vector2(5,2),Vector2(5,7),Vector2(11,7),Vector2(11,3),Vector2(15,3),Vector2(15,6),Vector2(17,6)],"slots":[Vector2(3,3.8),Vector2(6.5,3.7),Vector2(3.5,6),Vector2(8,5),Vector2(12.8,5.4),Vector2(15.7,4.2)],"trees":[Vector2(1,1),Vector2(2,8.5),Vector2(7,1),Vector2(9,9),Vector2(12,1),Vector2(17,2),Vector2(16,8.8)],"decoration":"none"},true)
