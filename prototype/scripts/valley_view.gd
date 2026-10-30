@@ -15,7 +15,11 @@ const ELIMINATION_DURATION := 0.45
 const MAX_ELIMINATION_EFFECTS := 24
 var elimination_tail: float = 0.0
 var flag_phase: float = 0.0
-var model: RefCounted
+var model: RefCounted:
+	set(value):
+		model = value
+		terrain_details.assign(scenery_for(model.map_definition) if model != null else [])
+var terrain_details: Array[Dictionary] = []
 var selected: int = -1
 var purchase_preview: Dictionary = {}
 var upgrade_preview: Dictionary = {}
@@ -309,6 +313,66 @@ func _map_slots() -> Array[Vector2]:
 func _map_path() -> Array[Vector2]:
 	return model.path_points if model != null else Model.PATH_POINTS
 
+static func _segment_in_rect(first: Vector2, last: Vector2, area: Rect2) -> bool:
+	if area.has_point(first) or area.has_point(last): return true
+	var corners: Array[Vector2] = [area.position,Vector2(area.end.x,area.position.y),area.end,Vector2(area.position.x,area.end.y)]
+	for index in range(4):
+		if Geometry2D.segment_intersects_segment(first,last,corners[index],corners[(index+1)%4]) != null: return true
+	return false
+
+static func scenery_bounds(item: Dictionary) -> Rect2:
+	var center: Vector2 = project(item.point)
+	return Rect2(center+Vector2(-16,-46),Vector2(32,60)) if item.kind == "pine" else Rect2(center+Vector2(-13,-14),Vector2(26,23))
+
+static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
+	# Habillage des nouveaux terrains uniquement. Aucun tirage du générateur de combat.
+	var result: Array[Dictionary] = []
+	if definition.get("id","") not in Model.Maps.CHAPTER_ONE_MAPS: return result
+	if not Model.Maps.validation_error(definition).is_empty(): return result
+	var board := PackedVector2Array([project(Vector2.ZERO),project(Vector2(definition.size.x,0)),project(Vector2(definition.size)),project(Vector2(0,definition.size.y))])
+	var reserved: Array[Rect2] = [fortress_bounds(project(definition.path_points[-1])).grow(12),Rect2(project(definition.path_points[0])+Vector2(-60,-43),Vector2(116,65))]
+	for slot in definition.slots: reserved.append(Rect2(project(slot)+Vector2(-44,-78),Vector2(88,110)))
+	var candidates: Array[Dictionary] = []
+	var seed_value: int = absi(String(definition.id).hash())
+	for x in range(12):
+		for y in range(7):
+			var order: int = (x*29+y*47+seed_value)%101
+			candidates.append({"point":Vector2(0.8+x*1.45,0.8+y*1.35),"kind":["pine","shrub","rock"][order%3],"order":order})
+	candidates.sort_custom(func(a: Dictionary,b: Dictionary) -> bool: return a.order < b.order)
+	for candidate in candidates:
+		var area: Rect2 = scenery_bounds(candidate)
+		var clear: bool = true
+		for corner in [area.position,Vector2(area.end.x,area.position.y),area.end,Vector2(area.position.x,area.end.y)]:
+			if not Geometry2D.is_point_in_polygon(corner,board): clear = false;break
+		if not clear: continue
+		for exclusion in reserved:
+			if area.intersects(exclusion): clear = false;break
+		if not clear: continue
+		for segment in range(1,definition.path_points.size()):
+			if _segment_in_rect(project(definition.path_points[segment-1]),project(definition.path_points[segment]),area.grow(20)): clear = false;break
+		if not clear: continue
+		for placed in result:
+			if area.grow(7).intersects(scenery_bounds(placed)): clear = false;break
+		if clear: result.append(candidate)
+		if result.size() >= 22: break
+	result.sort_custom(func(a: Dictionary,b: Dictionary) -> bool: return project(a.point).y < project(b.point).y)
+	return result
+
+func _draw_terrain_detail(item: Dictionary) -> void:
+	var center: Vector2 = project(item.point)
+	if item.kind == "pine": _draw_tree(center);return
+	if item.kind == "rock":
+		draw_colored_polygon(PackedVector2Array([center+Vector2(-12,2),center+Vector2(-7,-9),center+Vector2(3,-13),center+Vector2(12,-3),center+Vector2(10,4),center+Vector2(-2,7)]),Color("697765"))
+		draw_colored_polygon(PackedVector2Array([center+Vector2(-7,-9),center+Vector2(3,-13),center+Vector2(12,-3),center]),Color("95a08a"))
+		draw_line(center+Vector2(3,-13),center,Color("52634f"),2,true)
+	else:
+		draw_circle(center+Vector2(-6,-2),6,Color("2b5140"))
+		draw_circle(center+Vector2(5,-4),7,Color("496e50"))
+		draw_circle(center+Vector2(0,-8),5,Color("5f8154"))
+		if item.order%2 == 0:
+			draw_circle(center+Vector2(-4,-6),1.5,Color("d6be78"))
+			draw_circle(center+Vector2(6,-8),1.5,Color("d6be78"))
+
 func _draw() -> void:
 	var definition: Dictionary = model.map_definition if model != null else Model.Maps.valley()
 	var board: Vector2i = definition.size
@@ -340,6 +404,7 @@ func _draw() -> void:
 	if definition.decoration == "valley": _draw_valley_bridge()
 	for tree in definition.trees:
 		_draw_tree(project(tree))
+	for item in terrain_details: _draw_terrain_detail(item)
 	var preview: Dictionary = purchase_preview if not purchase_preview.is_empty() else upgrade_preview
 	if model != null and selected >= 0 and not preview.is_empty():
 		var preview_ring := range_outline(_map_slots()[selected], preview.range)

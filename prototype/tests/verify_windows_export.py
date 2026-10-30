@@ -208,6 +208,7 @@ for name,state,faction in cases:
         assert snap['map']==['valley_ford','ford_woods','ford_heights','ford_turns','ford_glade','ford_pass','ford_switchbacks','ford_trail','ford_approach','ford_ramparts'][mission-1] and snap['hp_percent']==99+mission
         assert snap['completed']==completed_missions and snap['other']==0 and snap['xp']==100*completed_missions and snap['po']==60*completed_missions
         assert snap['points']==51*completed_missions//100 and snap['rank']==(1 if mission>=3 else 0)
+        assert (6<=snap['scenery_count']<=22) if mission>=4 else snap['scenery_count']==0
         assert snap['summary']==(stage=='summary') and snap['menu']==(stage=='journey')
         if stage=='inspection': assert ('40,4' if mission==2 else '40,8') in snap['enemy_health'],snap
         if stage=='journey': assert snap['selection']==min(mission+1,10)

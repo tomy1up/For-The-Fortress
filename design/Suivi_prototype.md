@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 30 octobre 2026 — prototype v0.96, GDD principal v0.15 et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 30 octobre 2026 — prototype v0.97, GDD principal v0.15 et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -500,3 +500,7 @@ Le porteur du projet choisit **d’étendre l’essai aux missions 4–10**, apr
 ## Version v0.96 — premier chapitre jouable
 
 [Missions 4 à 10](Missions_4_10_v096.md) : sept terrains supplémentaires, dix vagues et six emplacements chacun, PV de prototype à 103–109 %. Dix premières victoires donnent 600 PO, 1 000 XP et cinq points de talent par faction avec le barème actuel. Le dernier point est obtenu après la mission 10. Anciens profils conservés, mission 4 accessible après les trois premiers succès ; les missions 11–200 restent à venir. Les tracés et les valeurs restent à équilibrer par des essais humains.
+
+## Version v0.97 — décor des nouveaux terrains
+
+[Habillage du plateau](Decor_terrains_v097.md) : buissons, rochers et sapins sur les missions 4–10. Disposition stable, zones libres autour du chemin, des défenseurs et de la forteresse. Décor calculé au changement de terrain ; données des cartes, combats, tirages et progression conservés. Les couleurs et formes restent une proposition artistique de prototype.

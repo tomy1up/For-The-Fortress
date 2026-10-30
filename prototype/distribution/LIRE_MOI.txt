@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.96 — 30 octobre 2026
+Version : 0.97 — 30 octobre 2026
 
 JOUER
 
@@ -7,7 +7,8 @@ JOUER
 2. Choisir sa faction, puis sa mission dans son parcours de campagne.
    Son aperçu montre le tracé, la forteresse et les six emplacements.
    Les pointillés signalent les missions à venir, le cadenas un succès requis.
-   Dix missions de dix vagues sont jouables dans le thème du Gué. Gagner la précédente les débloque dans la faction concernée.
+   Dix missions de dix vagues sont jouables dans le thème du Gué.
+   Les missions 4–10 sont habillées de végétation et de rochers, sans effet de jeu. Gagner la précédente les débloque dans la faction concernée.
 3. Préparer les talents avant la mission, puis jouer et installer sa défense.
    Les points disponibles sont indiqués en haut ; le rôle de chaque arbre
    accompagne son compteur. Les coins clairs repèrent le talent décrit.
