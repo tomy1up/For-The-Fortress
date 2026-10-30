@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.90 (30 octobre 2026)** : [parcours de campagne par faction](design/Parcours_campagne_v090.md). Choisir une mission, consulter les premières récompenses et revenir au parcours après le résultat. Le Gué reste la seule mission jouable ; les 200 positions montrent la structure cible. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.90).
+**Version v0.91 (30 octobre 2026)** : [trois missions jouables](design/Echantillon_campagne_v091.md), dix vagues chacune, avec nouveaux tracés et PV ennemis à 100/101/102 %. Première victoire : PO et XP propres à la faction ; premier point de talent accessible après deux missions. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.91).
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 

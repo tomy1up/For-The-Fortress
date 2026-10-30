@@ -126,6 +126,10 @@ for camp in ['alliance','horde']:
     cases.append((camp+'_expanded_summary','summary',camp))
 for camp in ["alliance","horde"]:
     for variant in ["fresh","completed","future","blocked","talents","returned"]: cases.append((camp+"_campaign_menu_"+variant,"campaign_menu",camp))
+for camp in ["alliance","horde"]:
+    for mission in [2,3]:
+        for stage in ["preparation","inspection","summary"]: cases.append((camp+"_sample_"+str(mission)+"_"+stage,"campaign_sample",camp))
+    cases.append((camp+"_sample_3_journey","campaign_sample",camp))
 for name,state,faction in cases:
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
@@ -136,6 +140,7 @@ for name,state,faction in cases:
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
         if state=="campaign_menu": command += ["--capture-campaign="+name.rsplit("_",1)[1]]
+        if state=="campaign_sample": command += ["--capture-mission="+name.split("_")[2],"--capture-sample-state="+name.rsplit("_",1)[1]]
         if state in ['forecast','forecast_boss']: command+=['--capture-forecast-portraits']
         if '_hud_' in name:
             command+=['--capture-hud']
@@ -191,6 +196,21 @@ for name,state,faction in cases:
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
+    if state=="campaign_sample":
+        snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SAMPLE_SNAPSHOT=')))
+        mission=int(name.split('_')[2]);stage=name.rsplit('_',1)[1]
+        completed_missions=mission if stage in ['summary','journey'] else mission-1
+        assert snap['faction']==(0 if faction=='alliance' else 1) and snap['isolated'] and snap['mission']==mission and snap['stage']==stage
+        assert snap['map']==('ford_woods' if mission==2 else 'ford_heights') and snap['hp_percent']==99+mission
+        assert snap['completed']==completed_missions and snap['other']==0 and snap['xp']==100*completed_missions and snap['po']==60*completed_missions
+        assert snap['points']==(1 if completed_missions>=2 else 0) and snap['rank']==(1 if mission==3 else 0)
+        assert snap['summary']==(stage=='summary') and snap['menu']==(stage=='journey')
+        if stage=='inspection': assert ('40,4' if mission==2 else '40,8') in snap['enemy_health'],snap
+        if stage=='summary':
+            report_folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))
+            report=json.loads((report_folder/'rapport.json').read_text(encoding='utf-8'))
+            assert report['result']=='victory' and len(report['waves'])==10 and report['enemy_hp_percent']==99+mission and report['map_definition']['id']==snap['map']
+            assert abs(report['boss_encounter']['max_hp']-600*(99+mission)/100)<0.000001
     if state=="campaign_menu":
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         variant=name.rsplit('_',1)[1]

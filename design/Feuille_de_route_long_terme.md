@@ -134,3 +134,7 @@ Le parcours par faction est raccordé au Gué : choix d’une mission, première
 Le porteur du projet choisit **trois missions de dix vagues dans le même thème**, avec des configurations différentes, pour comparer plusieurs situations avant l’extension de la campagne. Le Gué en constitue la première ; les deux suivantes restent à produire après la validation du parcours v0.90. Leurs récompenses et leur difficulté seront des valeurs de prototype à éprouver, pas un barème commercial approuvé.
 
 Pour cet essai, le porteur du projet retient **100 %, 101 % puis 102 % de PV ennemis**, sans modifier leur vitesse, leurs dégâts ni leurs récompenses de combat (CAMP-015). Ce réglage sera évalué sur les trois missions avant toute projection à la campagne complète.
+
+### Réalisation de l’échantillon — v0.91
+
+Les [trois missions de dix vagues](Echantillon_campagne_v091.md) raccordent désormais nouvelles géométries, réglage de PV, parcours, gains et premier point de talent. Les noms, tracés, déblocages séquentiels et montants sont proposés pour ce prototype ; les trois missions et la hausse de PV sont les orientations retenues. Le lot C doit encore être éprouvé par des joueurs avant toute extension de contenu.

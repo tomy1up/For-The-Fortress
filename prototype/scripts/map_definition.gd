@@ -1,5 +1,5 @@
 extends RefCounted
-## Données géométriques. La seule carte de production reste La Vallée du Gué.
+## Données géométriques. Échantillon de trois cartes ; géométries proposées pour les essais de campagne.
 const VALLEY_PATH: Array[Vector2] = [
 	Vector2(0,3),Vector2(4,3),Vector2(4,7),Vector2(9,7),
 	Vector2(9,3),Vector2(14,3),Vector2(14,6),Vector2(17,6)
@@ -13,6 +13,17 @@ const VALLEY_TREES: Array[Vector2] = [Vector2(1,1),Vector2(1.4,8.5),Vector2(4.6,
 
 static func valley() -> Dictionary:
 	return {"id":"valley_ford","title":"La Vallée du Gué","size":Vector2i(18,10),"path_points":VALLEY_PATH.duplicate(),"slots":VALLEY_SLOTS.duplicate(),"path_length":VALLEY_LENGTH,"trees":VALLEY_TREES.duplicate(),"decoration":"valley"}
+
+static func for_id(id: String) -> Dictionary:
+	if id == "valley_ford": return valley()
+	var result: Dictionary = valley()
+	if id == "ford_woods":
+		result.merge({"id":id,"title":"Le Bois du Gué","path_points":[Vector2(0,2),Vector2(5,2),Vector2(5,7),Vector2(11,7),Vector2(11,3),Vector2(15,3),Vector2(15,6),Vector2(17,6)],"slots":[Vector2(3,3.8),Vector2(6.5,3.7),Vector2(3.5,6),Vector2(8,5),Vector2(12.8,5.4),Vector2(15.7,4.2)],"trees":[Vector2(1,1),Vector2(2,8.5),Vector2(7,1),Vector2(9,9),Vector2(12,1),Vector2(17,2),Vector2(16,8.8)],"decoration":"none"},true)
+	elif id == "ford_heights":
+		result.merge({"id":id,"title":"Les Hauts du Gué","path_points":[Vector2(0,5),Vector2(3,5),Vector2(3,2),Vector2(8,2),Vector2(8,8),Vector2(13,8),Vector2(13,5),Vector2(17,5)],"slots":[Vector2(1.5,3),Vector2(4.5,3.8),Vector2(6.5,5.3),Vector2(9.5,4.7),Vector2(11,6.2),Vector2(15,6.5)],"trees":[Vector2(1,1),Vector2(1,8),Vector2(6,9),Vector2(10,1),Vector2(15,2),Vector2(17,8)],"decoration":"none"},true)
+	else: return {}
+	result.path_length = measured_length(result.path_points)
+	return result
 
 static func measured_length(points: Array) -> float:
 	var total: float = 0.0

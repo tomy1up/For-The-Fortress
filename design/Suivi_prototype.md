@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 30 octobre 2026 — prototype v0.90, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 30 octobre 2026 — prototype v0.91, GDD principal v0.14, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Périmètre réalisé
 
@@ -468,3 +468,7 @@ Décision explicite : les resets entre les missions sont gratuits, les talents r
 ## Version v0.90 — parcours par faction
 
 [Parcours de campagne](Parcours_campagne_v090.md) : vingt chapitres de dix positions, choix de mission, récompenses de première victoire affichées, succès conservés par faction, retour après résultat et accès aux talents. Une seule mission jouable, les autres à venir. Lancement refusé si la tentative ne peut pas être sauvegardée ; résultat conservé tant que son crédit échoue. Chaque mission repart à neuf, avec les talents persistants de sa faction. Arbres à quatre colonnes de v0.89 conservés.
+
+## Version v0.91 — trois missions jouables
+
+[Échantillon de campagne](Echantillon_campagne_v091.md) : Gué, Bois du Gué et Hauts du Gué, dix vagues chacun, PV ennemis à 100/101/102 %, autres paramètres de combat inchangés. Déblocage séquentiel dans chaque faction, gains uniques de prototype à 60 PO et 100 XP, premier point réellement accessible après deux victoires. Géométrie, titres, aperçus et rapports suivent la mission ; les anciens rapports du Gué restent rejouables. Les difficultés et la lisibilité demandent encore des essais humains.

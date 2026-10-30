@@ -59,6 +59,7 @@ static func verify(data: Variant) -> Dictionary:
 		definition = Model.Maps.from_data(data.map_definition)
 		if definition.is_empty(): return _fail("Définition de carte invalide.")
 	var model = Model.new(true,definition)
+	if data.has("enemy_hp_percent") and not model.configure_enemy_hp(data.enemy_hp_percent): return _fail("Pourcentage de PV ennemis invalide.")
 	if data.has("meta_ranks"):
 		if not Model.MetaTalents.valid(data.meta_ranks): return _fail("Talents permanents invalides.")
 		model.meta_ranks = data.meta_ranks.duplicate()

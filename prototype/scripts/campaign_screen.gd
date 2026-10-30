@@ -14,10 +14,15 @@ class PathDrawing extends Control:
 
 class MissionNode extends Button:
 	var completed: bool = false
+	var locked: bool = false
 	func _draw() -> void:
 		if completed:
 			draw_circle(Vector2(38,4),8,Color("203c29"))
 			draw_polyline(PackedVector2Array([Vector2(34,4),Vector2(37,7),Vector2(42,0)]),Color("b1d39b"),2,true)
+		elif locked:
+			draw_circle(Vector2(38,4),8,Color("182a22"))
+			draw_arc(Vector2(38,2),3,PI,TAU,12,Color("9ba89f"),1.5,true)
+			draw_rect(Rect2(34,2,8,6),Color("9ba89f"),false,1.5)
 
 var profile: RefCounted
 var faction: int = 0
@@ -146,7 +151,7 @@ func refresh() -> void:
 		talents_button.text = "Consulter les talents"
 	else:
 		var bank: Dictionary = profile.data.banks[faction]
-		progress_label.text = "%d / %d missions réussies · %d mission disponible" % [status.completed,Catalogue.TOTAL_MISSIONS,Catalogue.available_count()]
+		progress_label.text = "%d / %d missions réussies · %d missions dans l’échantillon" % [status.completed,Catalogue.TOTAL_MISSIONS,Catalogue.available_count()]
 		balance.text = "PO %s : %d · XP : %d" % [camp,bank.resource,bank.xp]
 		var free: int = maxi(0,mini(int(bank.points),51)-profile.Talents.spent(bank.ranks))
 		points_label.text = "%d/51 points débloqués · %d à placer" % [bank.points,free]
@@ -157,7 +162,7 @@ func refresh() -> void:
 		style(chapter_buttons[index],Color("254434") if chapter == index+1 else Color("142f24"),Color("d8c481") if chapter == index+1 else Color("394e40"))
 	chapter_label.text = "Chapitre %d · Missions %d–%d" % [chapter,(chapter-1)*10+1,chapter*10]
 	talents_button.disabled = profile == null
-	footer.text = "Prototype · %d mission jouable sur %d prévues. Les autres contenus sont à venir." % [Catalogue.available_count(),Catalogue.TOTAL_MISSIONS]
+	footer.text = "Prototype · %d missions jouables sur %d prévues. Les autres contenus sont à venir." % [Catalogue.available_count(),Catalogue.TOTAL_MISSIONS]
 	if profile != null:
 		if not profile.error.is_empty(): footer.text = profile.error
 		elif not profile.migration_notice.is_empty(): footer.text = profile.migration_notice
@@ -169,11 +174,11 @@ func _refresh_nodes() -> void:
 		var number: int = (chapter-1)*10+index+1
 		var definition: Dictionary = Catalogue.definition(number)
 		var done: bool = not status.is_empty() and status.missions[number-1]
-		var border: Color = Color("a7ca8b") if done else Color("d8c481") if definition.available else Color("42574a")
+		var border: Color = Color("a7ca8b") if done else Color("d8c481") if Catalogue.unlocked(number,status) else Color("42574a")
 		if index == selected: border = Color("e5cd91")
 		style(nodes[index],Color("254934") if done else Color("1b3027"),border,21)
-		nodes[index].text = str(number);nodes[index].completed = done;nodes[index].queue_redraw()
-		nodes[index].tooltip_text = "%s · %s" % [definition.title,"Déjà réussie" if done else "Disponible" if definition.available else "À venir"]
+		nodes[index].text = str(number);nodes[index].completed = done;nodes[index].locked = definition.available and not Catalogue.unlocked(number,status);nodes[index].queue_redraw()
+		nodes[index].tooltip_text = "%s · %s" % [definition.title,"Déjà réussie" if done else "Disponible" if Catalogue.unlocked(number,status) else "Terminez la mission précédente" if definition.available else "À venir"]
 		path_drawing.completed.append(done)
 	path_drawing.queue_redraw()
 
@@ -187,6 +192,10 @@ func _refresh_detail() -> void:
 		mission_detail.text = "Contenu à venir."
 		rewards.text = "Vagues et récompenses à définir."
 		start_button.text = "Mission à venir"
+	elif not Catalogue.unlocked(number,status):
+		mission_detail.text = "Terminez la mission %d avec cette faction." % (number-1)
+		rewards.text = "+%d PO · +%d XP\nPremière victoire uniquement." % [definition.po,definition.xp]
+		start_button.text = "Mission verrouillée"
 	elif done:
 		mission_detail.text = "%d vagues · Mission déjà réussie" % definition.waves
 		rewards.text = "Récompenses déjà perçues.\nRejouer ne donne ni PO ni XP."
@@ -195,7 +204,8 @@ func _refresh_detail() -> void:
 		mission_detail.text = "%d vagues · Première victoire" % definition.waves
 		rewards.text = "+%d PO · +%d XP\nUne seule fois pour cette faction." % [definition.po,definition.xp]
 		start_button.text = "Jouer la mission %d" % number
-	start_button.disabled = status.is_empty() or not definition.available
+	start_button.disabled = not Catalogue.unlocked(number,status)
+	if definition.available and not status.is_empty(): mission_detail.text += "\nPV ennemis : %d %% · Barème d’essai" % definition.hp_percent
 	if status.is_empty():
 		mission_detail.text = "La progression n’est pas disponible."
 		rewards.text = profile.error if profile != null and not profile.error.is_empty() else "Revenez au choix de faction pour vérifier votre progression."
@@ -203,7 +213,7 @@ func _refresh_detail() -> void:
 func _launch() -> void:
 	if overlay_blocked or not visible or start_button.disabled or profile == null or profile.blocked: return
 	var id: String = Catalogue.id_for((chapter-1)*10+selected+1)
-	if Catalogue.runtime(id).is_empty(): return
+	if Catalogue.runtime(id).is_empty() or not Catalogue.unlocked(Catalogue.number_for(id),profile.campaign_status(faction)): return
 	mission_requested.emit(id)
 
 func _talents() -> void:

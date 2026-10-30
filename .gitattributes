@@ -3,3 +3,6 @@
 *.docx binary
 # Notices générées conservées telles que fournies par le moteur.
 prototype/distribution/LICENCES_GODOT.txt whitespace=-blank-at-eof
+
+# Rapports générés : deux espaces finaux forment un saut de ligne Markdown.
+design/essais/*_rapport.md whitespace=-blank-at-eol

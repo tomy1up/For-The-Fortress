@@ -96,6 +96,7 @@ var speed: float = 1.0
 var selected: int = -1
 var choosing_faction: bool = true
 var faction_panel: ColorRect
+var map_caption: Label
 var faction_label: Label
 var faction_buttons: Array[Button] = []
 var status_label: Label
@@ -276,7 +277,7 @@ func _ready() -> void:
 			meta_profile = MetaProfile.new("")
 			meta_profile.data.banks[capture_faction].points = 51
 			meta_profile.data.banks[capture_faction].ranks = _capture_expanded_ranks(0)
-		if capture_state not in ["selection","talents","campaign_menu"]:
+		if capture_state not in ["selection","talents","campaign_menu","campaign_sample"]:
 			if "--capture-meta-intermediate" in OS.get_cmdline_user_args(): mission_definition = {}
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
 			if "--capture-meta-pending" in OS.get_cmdline_user_args():
@@ -568,6 +569,7 @@ func _ready() -> void:
 			var ghost: Dictionary = map_view.purchase_ghost()
 			print("PURCHASE_GHOST_SNAPSHOT=",JSON.stringify({"visible":not ghost.is_empty(),"type":ghost.get("type",-1),"slot":ghost.get("slot",-1),"empty":model.defenders[selected].is_empty(),"gold":model.gold,"instances":model.next_instance_id}))
 		if capture_state == "campaign_menu": _capture_campaign_menu(capture_faction)
+		if capture_state == "campaign_sample": _capture_campaign_sample(capture_faction)
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
@@ -587,7 +589,8 @@ func _capture_campaign_menu(camp: int) -> void:
 	if variant == "blocked":
 		meta_profile.blocked = true;meta_profile.error = "Sauvegarde indisponible simulée pour le contrôle."
 	_open_campaign(camp,20 if variant == "future" else 1)
-	if variant == "future": campaign_menu._select(9)
+	if variant == "future":
+		campaign_menu._select(9);campaign_menu.nodes[9].grab_focus()
 	if variant == "talents": campaign_menu._talents()
 	if variant == "returned":
 		meta_profile.data.banks[camp].points = 51;meta_profile.data.banks[camp].xp = 10000
@@ -599,6 +602,50 @@ func _capture_campaign_menu(camp: int) -> void:
 	var other: Dictionary = meta_profile.campaign_status(1-camp)
 	var bank: Dictionary = meta_profile.data.banks[camp]
 	print("CAMPAIGN_SNAPSHOT=",JSON.stringify({"variant":variant,"faction":camp,"isolated":meta_profile.path.is_empty(),"menu":campaign_menu.visible,"talents":meta_menu.visible,"chapter":campaign_menu.chapter,"selected":(campaign_menu.chapter-1)*10+campaign_menu.selected+1,"completed":status.get("completed",-1),"other_completed":other.get("completed",-1),"disabled":campaign_menu.start_button.disabled,"po":bank.resource,"xp":bank.xp,"nodes":campaign_menu.nodes.size(),"chapters":campaign_menu.chapter_buttons.size(),"fresh":model.gold == 150 and model.bonuses.is_empty() and model.defenders.all(func(unit): return unit.is_empty()),"choosing":choosing_faction}))
+
+func _capture_sample_combat() -> void:
+	model.rng.seed = 42
+	var positions: Array = [[1,2,4],[1,3,4],[1,2,4]][model.enemy_hp_percent-100]
+	var types: Array = [0,2,1] if model.faction == 1 and model.enemy_hp_percent > 100 else [0,1,2]
+	model.buy(positions[0],model.faction*3+types[0]);model.buy(positions[1],model.faction*3+types[1])
+	for wave in range(1,11):
+		if wave == 2 and model.faction == 1: model.upgrade(positions[0])
+		if wave >= 4 and model.defenders[positions[2]].is_empty(): model.buy(positions[2],model.faction*3+types[2])
+		if wave >= 5:
+			for slot in positions:
+				if not model.defenders[slot].is_empty(): model.upgrade(slot,0 if model.defenders[slot].level == 3 else -1)
+		model.start();model.advance(300)
+		if model.phase == "defeat": return
+		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+		if wave < 10: model.prepare_next_wave()
+
+func _capture_campaign_sample(camp: int) -> void:
+	meta_profile = MetaProfile.new("")
+	var target: int = 3;var stage: String = "journey"
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--capture-mission="): target = clampi(int(argument.trim_prefix("--capture-mission=")),2,3)
+		if argument.begins_with("--capture-sample-state="): stage = argument.trim_prefix("--capture-sample-state=")
+	for number in range(1,target+1):
+		_open_campaign(camp);campaign_menu._select(number-1);campaign_menu._launch()
+		if choosing_faction: push_error("Mission de contrôle non lancée.");return
+		if number == target and stage == "preparation": break
+		if number == target and stage == "inspection":
+			model.start();model.advance(1)
+			var enemy: Dictionary = model.enemies[0]
+			inspection_pointer = MapView.enemy_bounds(enemy,camp,model.path_points,model.path_length).get_center()
+			break
+		_capture_sample_combat();_sync_meta_rewards(true);_update_interface();_show_run_summary()
+		if model.phase != "victory": push_error("Mission de contrôle non remportée.");return
+		if number == target and stage == "summary":
+			_export_run_report();print("RUN_REPORT_FOLDER=",report_folder);break
+		_summary_to_campaign()
+		if number == 2:
+			var allocated: bool = meta_profile.allocate(camp,0)
+			if not allocated: push_error("Premier point de contrôle non investi.");return
+			campaign_menu.refresh()
+	_update_interface()
+	var bank: Dictionary = meta_profile.data.banks[camp]
+	print("SAMPLE_SNAPSHOT=",JSON.stringify({"faction":camp,"mission":target,"stage":stage,"map":model.map_definition.id,"hp_percent":model.enemy_hp_percent,"xp":bank.xp,"po":bank.resource,"points":bank.points,"rank":bank.ranks[0],"completed":meta_profile.campaign_status(camp).completed,"other":meta_profile.campaign_status(1-camp).completed,"isolated":meta_profile.path.is_empty(),"summary":summary_open,"menu":campaign_menu.visible,"enemy_health":enemy_health.text,"title":map_caption.text}))
 
 func _capture_linked_spend_to(ranks: Array, tree: int, target: int) -> bool:
 	while Linked.tree_spent(ranks,tree) < target:
@@ -773,7 +820,7 @@ func _build_interface() -> void:
 	screen.theme = tooltip_theme
 	ui.add_child(screen)
 	_label(screen, "FOR THE FORTRESS!", Vector2(32, 24), Vector2(300, 44), 29, Color("e0dbbf"))
-	_label(screen, model.map_definition.title.to_upper(), Vector2(34, 71), Vector2(300, 24), 14, Color("9fb5a5"))
+	map_caption = _label(screen, model.map_definition.title.to_upper(), Vector2(34, 71), Vector2(300, 24), 14, Color("9fb5a5"))
 	wave_notice = _panel(screen,Rect2(350,24,520,54))
 	wave_notice_title = _label(wave_notice,"",Vector2(14,4),Vector2(492,24),18,Color("e5ca88"))
 	wave_notice_detail = _label(wave_notice,"",Vector2(14,30),Vector2(492,18),12,Color("bbcbbf"))
@@ -904,7 +951,7 @@ func _update_boss_status() -> void:
 		if enemy.type != 7 or enemy.hp <= 0.0: continue
 		boss_panel.visible = true
 		boss_name.text = "BOSS · " + Model.Enemies.for_profile(enemy.type,model.faction).name
-		boss_health.text = "PV : %d / %d" % [ceili(enemy.hp),enemy.max_hp]
+		boss_health.text = _enemy_health_text(enemy)
 		boss_bar.max_value = enemy.max_hp
 		boss_bar.value = enemy.hp
 		var fatal: bool = enemy.fortress_damage >= model.fortress_hp
@@ -963,7 +1010,7 @@ func _update_wave_forecast() -> void:
 	if number < 1 or number > Model.Campaign.WAVES.size(): return
 	if forecast_wave != number:
 		forecast_wave = number
-		forecast_data = Model.wave_forecast(number,model.faction)
+		forecast_data = Model.wave_forecast(number,model.faction,model.enemy_hp_percent)
 	if forecast_data.is_empty(): return
 	forecast_panel.visible = true
 	forecast_title.text = "Prochaine vague · %d/10" % number
@@ -978,9 +1025,9 @@ func _update_wave_forecast() -> void:
 		forecast_marks[index].color = MapView.enemy_color(group.type)
 		forecast_names[index].text = "%d × %s%s" % [group.count,group.name," · BOSS" if group.type == 7 else ""]
 		var fatal: bool = group.fortress_damage >= model.fortress_hp
-		forecast_details[index].text = "%d PV · Forteresse : −%d PV%s" % [group.hp,group.fortress_damage," · Défaite" if fatal else ""]
+		forecast_details[index].text = "%s PV · Forteresse : −%d PV%s" % [_number(group.hp),group.fortress_damage," · Défaite" if fatal else ""]
 		forecast_details[index].add_theme_color_override("font_color",Color("ed9989") if fatal else Color("bbcbbf"))
-		forecast_rows[index].tooltip_text = "Groupe %d · %d × %s\n%d PV par ennemi\nPremière apparition : %s s après le départ\nDernière apparition : %s s après le départ\n%s\nSi un ennemi atteint la forteresse, elle perd %d PV.\nÉlimination : +%d or par ennemi" % [index+1,group.count,group.name,group.hp,_number(group.first_at),_number(group.last_at),"Ennemi unique." if group.count == 1 else "Un ennemi toutes les %s s." % _number(group.interval),group.fortress_damage,group.reward]
+		forecast_rows[index].tooltip_text = "Groupe %d · %d × %s\n%s PV par ennemi\nPremière apparition : %s s après le départ\nDernière apparition : %s s après le départ\n%s\nSi un ennemi atteint la forteresse, elle perd %d PV.\nÉlimination : +%d or par ennemi" % [index+1,group.count,group.name,_number(group.hp),_number(group.first_at),_number(group.last_at),"Ennemi unique." if group.count == 1 else "Un ennemi toutes les %s s." % _number(group.interval),group.fortress_damage,group.reward]
 		forecast_rows[index].tooltip_text += "\nHoraires et intervalles à vitesse ×1 ; divisés par 2 en ×2 et par 10 en ×10 debug."
 	var footer: int = 62+forecast_data.groups.size()*44
 	forecast_reward.position.y = footer
@@ -1189,7 +1236,7 @@ func _refresh_loadout_label() -> void:
 	loadout_key = key
 	var data: Dictionary = Model.MetaTalents.loadout_summary(model.faction,model.meta_ranks)
 	if data.is_empty(): loadout_label.text = "Talents : configuration indisponible";loadout_label.tooltip_text = "";return
-	loadout_label.text = "Aucun talent permanent actif" if data.points == 0 else "Talents actifs · %d points (survol)" % data.points
+	loadout_label.text = "Aucun talent permanent actif" if data.points == 0 else "Talents actifs · %d point%s (survol)" % [data.points,"s" if data.points > 1 else ""]
 	var lines: Array[String] = ["Talents fixés au départ · Lecture seule"]
 	for tree in data.trees: lines.append("%s : %d point%s" % [tree.name,tree.points,"s" if tree.points > 1 else ""])
 	lines.append("PV supplémentaires au départ : +%d" % data.hp)
@@ -1304,7 +1351,7 @@ func _update_enemy_inspector() -> void:
 		enemy_inspector.visible = true
 		enemy_prompt.visible = false
 		enemy_name.text = Model.Enemies.for_profile(enemy.type,model.faction).name + (" · BOSS" if enemy.type == 7 else "")
-		enemy_health.text = "PV : %d / %d" % [ceili(enemy.hp),enemy.max_hp]
+		enemy_health.text = _enemy_health_text(enemy)
 		enemy_health_bar.max_value = enemy.max_hp
 		enemy_health_bar.value = enemy.hp
 		var fatal: bool = enemy.fortress_damage >= model.fortress_hp
@@ -1537,25 +1584,34 @@ func _meta_closed() -> void:
 func _launch_campaign_mission(id: String) -> void:
 	if not choosing_faction or not campaign_menu.visible or meta_menu.visible or meta_profile == null or meta_profile.blocked: return
 	var candidate: Dictionary = CampaignCatalogue.runtime(id)
-	if candidate.is_empty(): return
+	if candidate.is_empty() or not CampaignCatalogue.unlocked(CampaignCatalogue.number_for(id),meta_profile.campaign_status(campaign_menu.faction)): return
+	var definition: Dictionary = Model.Maps.for_id(candidate.map_id)
+	if definition.is_empty(): return
+	var prepared = Model.new(true,definition)
+	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(candidate.hp_percent): return
 	mission_definition = candidate
-	_choose_faction(campaign_menu.faction)
+	_choose_faction(campaign_menu.faction,prepared)
 	if choosing_faction:
-		campaign_menu.refresh();return # Échec d’enregistrement : aucun combat lancé.
+		campaign_menu.refresh();return
 	campaign_navigation = true;campaign_menu.hide();keyboard_focus_context = ""
 	_update_interface()
 
-func _choose_faction(choice: int) -> void:
+func _choose_faction(choice: int, replacement: RefCounted = null) -> void:
 	if meta_menu.visible or not choosing_faction or choice not in [0,1]: return
 	forecast_wave = -1
 	var prepared_run: int = -1
+	var prepared_ranks: Array = []
 	if meta_profile != null:
-		var prepared_ranks: Array = meta_profile.data.banks[choice].ranks.duplicate()
+		prepared_ranks = meta_profile.data.banks[choice].ranks.duplicate()
 		prepared_run = _begin_meta_run(choice)
 		if prepared_run <= 0:
 			_update_interface();return
-		model.meta_ranks = prepared_ranks
-	if choosing_faction and model.select_faction(choice):
+	if replacement != null:
+		model = replacement;map_view.model = model
+		map_caption.text = model.map_definition.title.to_upper()
+		get_window().title = "%s · v%s" % ["For the Fortress! — "+model.map_definition.title,ProjectSettings.get_setting("application/config/version")]
+	if meta_profile != null: model.meta_ranks = prepared_ranks
+	if model.select_faction(choice):
 		meta_run_earned = 0
 		run_final_map = true;run_map_index = 0;run_map_rewards.clear()
 		meta_run_id = prepared_run
@@ -2249,6 +2305,10 @@ func _synergy_tooltip(slot: int) -> String:
 			descriptions.append("Emplacements du partenaire à proximité : " + ", ".join(compatible) + ".")
 	descriptions.append("\nUn même bonus ne se cumule pas avec plusieurs partenaires.\nLes statistiques affichées incluent déjà les synergies actives.")
 	return "\n".join(descriptions)
+
+func _enemy_health_text(enemy: Dictionary) -> String:
+	if model.enemy_hp_percent == 100: return "PV : %d / %d" % [ceili(enemy.hp),ceili(enemy.max_hp)]
+	return "PV : %s / %s" % [_number(maxf(0,enemy.hp)),_number(enemy.max_hp)]
 
 func _number(value: float) -> String:
 	return ("%.2f" % value).trim_suffix("0").trim_suffix("0").trim_suffix(".").replace(".", ",")

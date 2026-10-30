@@ -1,16 +1,16 @@
-# Dix vagues jouables sur La Vallée du Gué
+# Trois missions de dix vagues jouables
 
-**Version v0.90 (30 octobre 2026)** : [parcours de campagne par faction](../design/Parcours_campagne_v090.md). Choisir une mission, consulter les premières récompenses et revenir au parcours après le résultat. Le Gué reste la seule mission jouable ; les 200 positions montrent la structure cible. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.90).
+**Version v0.91 (30 octobre 2026)** : [trois missions jouables](../design/Echantillon_campagne_v091.md), dix vagues chacune, avec nouveaux tracés et PV ennemis à 100/101/102 %. Première victoire : PO et XP propres à la faction ; premier point de talent accessible après deux missions. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.91).
 
-**Prototype v0.90 — 30 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
+**Prototype v0.91 — 30 octobre 2026.** Référence : GDD v0.14 complété par la décision d’enchaînement automatique du 23 octobre 2026. For the Fortress! reste un nom de travail.
 
-Le jeu conserve le périmètre L5 : une campagne complète de dix vagues pour les deux factions, trois choix roguelite et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
+Le jeu propose trois missions de dix vagues pour les deux factions, avec trois choix de bonus par mission et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.90](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.90) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.91](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.91) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
-Sur ce PC : dist/For_the_Fortress_v0.90_Windows_x64 depuis la racine du dépôt. Voir [le relevé d’export](../design/Distribution_Windows_v090.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
+Sur ce PC : dist/For_the_Fortress_v0.91_Windows_x64 depuis la racine du dépôt. Voir [le relevé d’export](../design/Distribution_Windows_v091.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
 ## Jouer depuis le projet source
 
@@ -21,15 +21,15 @@ Autre possibilité : ouvrir project.godot dans Godot 4.7.2 standard, puis lancer
 
 ## Prise en main
 
-1. Choisir Alliance des Royaumes ou Horde des Cendres. La faction reste fixe pendant cet essai.
+1. Choisir Alliance des Royaumes ou Horde des Cendres. Choisir ensuite une mission de son parcours. La faction reste fixe pendant la mission.
 2. Cliquer sur E1 à E6, puis acheter un défenseur de sa faction : 50, 75 ou 100 or. Deux exemplaires maximum par type.
 3. Cliquer sur une unité pour lire ses statistiques, afficher sa portée, améliorer son niveau ou consulter son remboursement avant une vente.
-4. Lancer la vague 1 : dix Pillards de 40 PV, apparitions à t = 0 puis toutes les 2,5 s. Les tirs sont automatiques.
+4. Lancer la vague 1 : dix attaquants de 40 / 40,4 / 40,8 PV selon la mission, apparitions à t = 0 puis toutes les 2,5 s. Les tirs sont automatiques.
 5. Observer les éliminations, l’or et les arrivées ; alterner ×1, ×2 et ×10 debug. Le ×10 est temporaire pour les essais.
 6. Entre les vagues, acheter, améliorer ou vendre pendant les 30 secondes avant le départ automatique. Cliquer sur le bouton pour partir plus tôt. Survoler le bouton de lancement pour voir sa composition et ses intervalles.
 7. Après les vagues 3, 6 et 9, choisir un bonus parmi trois offres distinctes, sans limite de temps. Le délai complet de 30 secondes commence après le choix.
 8. Consulter « Bonus acquis » et les synergies de l’unité sélectionnée ; survoler leurs codes pour lire les effets.
-9. Survivre jusqu’à la résolution complète de la vague 10. « Nouvel essai » repart avec 150 or et 20 PV, sans bonus ni défense.
+9. Survivre jusqu’à la résolution complète de la vague 10. Revenir au parcours puis lancer une mission repart avec 150 or, les PV maximum selon les talents, aucun bonus ni défenseur.
 
 Les achats, améliorations, ventes et la relance d’un essai sont bloqués pendant le combat. Le bouton de lancement passe à la vague suivante ; il ne répète pas la précédente. La victoire et la défaite bloquent toute nouvelle dépense. Consulter les bonus acquis pendant un combat ne met pas le jeu en pause. Pendant la préparation, leur lecture suspend le décompte ; le choix de spécialisation le suspend également. Fermer ou résoudre ces fenêtres reprend le temps restant. Ni ×2 ni ×10 ne modifient les 30 secondes.
 

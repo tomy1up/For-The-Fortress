@@ -14,6 +14,7 @@ const SLOTS: Array[Vector2] = Maps.VALLEY_SLOTS
 const PATH_LENGTH: float = Maps.VALLEY_LENGTH
 var map_definition: Dictionary
 var map_error: String = ""
+var enemy_hp_percent: int = 100
 var path_points: Array[Vector2] = []
 var slots: Array[Vector2] = []
 var path_length: float
@@ -146,10 +147,20 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	entry.merge(details.duplicate(true))
 	action_history.append(entry)
 
-static func make_enemy(id: int, type: int, spawn_time: float, defending_faction: int = -1) -> Dictionary:
+static func valid_enemy_hp_percent(value: Variant) -> bool:
+	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 102
+
+func configure_enemy_hp(value: Variant) -> bool:
+	if not valid_enemy_hp_percent(value) or not action_history.is_empty() or phase != "preparation" or gold != INITIAL_GOLD: return false
+	enemy_hp_percent = int(value);return true
+
+static func scaled_enemy_hp(type: int, percent: int = 100) -> float:
+	return float(ENEMY_TYPES[type].hp) if percent == 100 else float(ENEMY_TYPES[type].hp)*(float(percent)/100.0)
+
+static func make_enemy(id: int, type: int, spawn_time: float, defending_faction: int = -1, hp_percent: int = 100) -> Dictionary:
 	var definition: Dictionary = ENEMY_TYPES[type]
 	var enemy: Dictionary = {"id": id, "type": type, "spawn_time": spawn_time, "distance": 0.0,
-		"hp": definition.hp, "max_hp": definition.hp, "speed": definition.speed,
+		"hp": scaled_enemy_hp(type,hp_percent), "max_hp": scaled_enemy_hp(type,hp_percent), "speed": definition.speed,
 		"fortress_damage": definition.fortress_damage, "reward": definition.reward}
 	if defending_faction != -1:
 		var identity: Dictionary = Enemies.for_profile(type,defending_faction)
@@ -157,8 +168,8 @@ static func make_enemy(id: int, type: int, spawn_time: float, defending_faction:
 		enemy.merge({"identity_id":identity.id,"name":identity.name,"origin":identity.origin})
 	return enemy
 
-static func wave_forecast(number: int, defending_faction: int = -1) -> Dictionary:
-	if number < 1 or number > Campaign.WAVES.size(): return {}
+static func wave_forecast(number: int, defending_faction: int = -1, hp_percent: int = 100) -> Dictionary:
+	if number < 1 or number > Campaign.WAVES.size() or not valid_enemy_hp_percent(hp_percent): return {}
 	if defending_faction != -1 and defending_faction not in [0,1]: return {}
 	var schedule: Array[Dictionary] = Campaign.schedule(number)
 	var groups: Array[Dictionary] = []
@@ -168,7 +179,7 @@ static func wave_forecast(number: int, defending_faction: int = -1) -> Dictionar
 		var type: int = source[0]
 		var count: int = source[1]
 		var enemy: Dictionary = ENEMY_TYPES[type]
-		groups.append({"type":type,"count":count,"name":enemy.name,"hp":enemy.hp,"fortress_damage":enemy.fortress_damage,"reward":enemy.reward,"interval":source[2],"first_at":schedule[offset].time,"last_at":schedule[offset+count-1].time})
+		groups.append({"type":type,"count":count,"name":enemy.name,"hp":scaled_enemy_hp(type,hp_percent),"fortress_damage":enemy.fortress_damage,"reward":enemy.reward,"interval":source[2],"first_at":schedule[offset].time,"last_at":schedule[offset+count-1].time})
 		if defending_faction != -1:
 			var identity: Dictionary = Enemies.for_profile(type,defending_faction)
 			groups[-1].merge({"name":identity.name,"identity_id":identity.id,"origin":identity.origin},true)
@@ -511,7 +522,7 @@ func _resolve_instant() -> void:
 	# 1. Apparitions et positions ; les arrivants restent ciblables jusqu'à la phase 4.
 	while spawned < spawn_schedule.size() and spawn_schedule[spawned].time <= elapsed + EPS:
 		var entry: Dictionary = spawn_schedule[spawned]
-		enemies.append(make_enemy(spawned, entry.type, entry.time,faction))
+		enemies.append(make_enemy(spawned, entry.type, entry.time,faction,enemy_hp_percent))
 		spawned += 1
 	_update_positions()
 	# 2. Anciens ticks additionnés, puis morts retirés avant le choix des nouveaux tirs.

@@ -16,13 +16,13 @@ static func boss_encounter(model: RefCounted) -> Dictionary:
 	if boss_id < 0:
 		result.status = "unknown"
 		return result
-	result.merge({"id":boss_id,"max_hp":Model.ENEMY_TYPES[7].hp,"spawn_seconds":model.spawn_schedule[boss_id].time,
+	result.merge({"id":boss_id,"max_hp":Model.scaled_enemy_hp(7,model.enemy_hp_percent),"spawn_seconds":model.spawn_schedule[boss_id].time,
 		"observed_seconds":model.elapsed,"phase":model.phase})
 	if boss_id >= model.spawned:
 		result.status = "not_spawned"
 		return result
 	result.removed_hp = 0.0
-	result.remaining_hp = float(Model.ENEMY_TYPES[7].hp)
+	result.remaining_hp = Model.scaled_enemy_hp(7,model.enemy_hp_percent)
 	var contributions: Array = model._wave_record.get("performance",[])
 	for record in model.wave_history:
 		if record.wave != 10: continue
@@ -87,12 +87,14 @@ static func build(model: RefCounted) -> Dictionary:
 		"army":army,"bonuses":bonuses,"waves":model.wave_history.duplicate(true),"actions":model.action_history.duplicate(true),"performance":performance(model),"boss_encounter":boss_encounter(model)}
 	if Model.MetaTalents.spent(model.meta_ranks) > 0: report.meta_ranks = model.meta_ranks.duplicate()
 	if model.map_definition != Model.Maps.valley(): report.map_definition = Model.Maps.to_data(model.map_definition)
+	if model.enemy_hp_percent != 100: report.enemy_hp_percent = model.enemy_hp_percent
 	return report
 
 static func markdown(report: Dictionary) -> String:
 	var lines: Array[String] = ["# For the Fortress! — Rapport de partie", "", "Version : %s · %s · %s" % [report.game_version,report.faction_name,"Victoire" if report.result == "victory" else "Défaite"],
 		"Forteresse : %d/%d PV · Or restant : %d · Combat : %.2f s simulées" % [report.fortress_hp,report.max_hp,report.gold,report.combat_seconds],
 		"", "Rapport de débogage local, sans fonction de reprise de partie.", "", "## Vagues", "", "| Vague | Éliminés | Passés | PV perdus | Or gagné | Résultat |", "| --- | --- | --- | --- | --- | --- |"]
+	if report.has("enemy_hp_percent"): lines.insert(5,"PV ennemis : %d %% de la référence. Vitesse, dégâts et récompenses de combat inchangés." % report.enemy_hp_percent)
 	if report.has("meta_ranks"):
 		lines.insert(5,"Talents permanents actifs (rangs par arbre) : "+str(report.meta_ranks)+". Barème de prototype "+("v0.67" if report.meta_ranks.size() == 9 else "v0.68" if report.meta_ranks.size() == 15 else "arbres enrichis")+".")
 	for wave in report.waves:

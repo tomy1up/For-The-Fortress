@@ -1,11 +1,12 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.90 — 30 octobre 2026
+Version : 0.91 — 30 octobre 2026
 
 JOUER
 
 1. Extraire tout le ZIP, puis lancer For_the_Fortress.exe.
 2. Choisir sa faction, puis sa mission dans son parcours de campagne.
-   Le Gué est la seule mission disponible ; les autres positions sont à venir.
+   Trois missions de dix vagues sont jouables : le Gué, le Bois du Gué, les Hauts
+   du Gué. Gagner la précédente les débloque dans la faction concernée.
 3. Préparer les talents avant la mission, puis jouer et installer sa défense.
    Lancer la première vague manuellement.
 4. Les suivantes partent automatiquement après 30 secondes de préparation.
@@ -23,22 +24,26 @@ talents permanents ne sont possibles avant la victoire finale ou la défaite.
 Les constructions, achats, ventes et améliorations d’unités entre les vagues restent
 possibles. Les choix de bonus de la partie ne sont pas les arbres de talents permanents.
 
-Le prototype contient une mission de dix vagues : La Vallée du Gué.
+Le prototype contient trois missions de dix vagues dans le même thème.
+Les PV ennemis sont à 100 %, 101 % puis 102 % de la référence. Leur vitesse,
+leurs dégâts à la forteresse et leurs récompenses de combat restent identiques.
 Une mission est une session complète : retour au parcours après victoire ou défaite.
 Chaque mission repart avec ses PV maximum, 150 or de combat, aucun défenseur
 et aucun bonus temporaire. PO, XP et talents restent persistants. Le parcours
-présente vingt chapitres de dix positions ; 199 missions restent à développer.
+présente vingt chapitres de dix positions ; 197 missions restent à développer.
 
 PO, XP ET PROGRESSION PERMANENTE
 
-Première victoire du Gué dans une faction : 60 PO et 100 XP (barème de prototype).
+Première victoire de chacune des trois missions dans une faction : 60 PO et
+100 XP (barème de prototype).
 Rejouer et gagner la même mission ne redonne ni PO ni XP. Une défaite ne donne
 pas sa récompense de première victoire. Les deux factions ont leur propre suivi.
 
 L’XP débloque automatiquement les points de talent, sans dépense de PO.
 Courbe de référence : 100 XP par mission, 10 000 XP pour obtenir les 51 points.
-Premier point à 197 XP, soit après deux missions distinctes. Le seul Gué disponible
-ne permet pas de farmer le complément : les autres missions sont à développer.
+Premier point à 197 XP, donc après deux premières victoires distinctes. Après les
+trois missions, un profil neuf a 300 XP et un point. Le rejeu ne donne aucun
+nouveau gain ; les missions suivantes restent à développer.
 Les PO sont destinées à la future boutique, qui n’est pas encore jouable.
 L’or de combat sert au recrutement et aux améliorations pendant la mission.
 
