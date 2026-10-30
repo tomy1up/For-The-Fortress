@@ -2,6 +2,8 @@
 
 **Version v0.92 (30 octobre 2026)** : [parcours et gains plus lisibles](design/Lisibilite_progression_v092.md). Prochaine mission proposée au retour, nom de carte dans chaque onglet du bilan et action explicite pour placer le premier point de talent. Trois missions et règles de v0.91 conservées. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.92).
 
+**Comparaison des trois missions — 2 592 simulations** : [résultats et limites](design/Comparaison_trois_missions_v092.md). Deux factions, trois tirages, six placements, quatre compositions et comparaison du premier point en mission 3. Des stratégies sans talent gagnent chaque carte ; géométrie et composition pèsent sur la difficulté. Ces simulations ne mesurent pas le taux de victoire humain et n’entraînent aucun changement d’équilibrage ou de binaire.
+
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 
 **Origine des ennemis — 27 octobre 2026** : la [règle et la répartition](design/Origine_ennemis_2026-10-27.md) sont mises en jeu dans la [v0.65](design/Catalogue_attaquants_v065.md). Loup, sanglier et ours restent communs. Les autres attaquants viennent du camp adverse ; le catalogue commun et les trois images humanoïdes v0.64 sont remplacés.

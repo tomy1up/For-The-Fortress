@@ -476,3 +476,7 @@ Décision explicite : les resets entre les missions sont gratuits, les talents r
 ## Version v0.92 — lisibilité de la progression
 
 [Parcours et bilan](Lisibilite_progression_v092.md) : suggestion de la prochaine mission jouable, dernier contenu réussi proposé à la fin de l’échantillon, sélection manuelle préservée lors de la consultation des talents. Nom de mission dans chaque onglet du bilan, message de point disponible et bouton pour le placer, XP du prochain point et détails du solde au survol. L’avertissement de résultat non enregistré reste prioritaire même lors d’un rejeu sans récompense. Trois missions, règles de combat et progression persistante conservées.
+
+## Comparaison des trois missions — 30 octobre 2026
+
+[Relevé de 2 592 simulations](Comparaison_trois_missions_v092.md) : deux factions, trois cartes, trois graines, six triplets d’emplacements, quatre compositions et trois moments d’amélioration. Aucun talent dans les deux premières missions ; mission 3 comparée sans talent puis avec un seul point dans chacun des trois arbres. Budget normal vérifié dans chaque cas, douze témoins identiques à petits et grands pas, 24 rejeux complets et 144 résultats Horde historiques identiques. Les 45 sources du paquet Windows correspondent toujours au projet ; le binaire v0.92 et l’équilibrage sont conservés. La variété des résultats et le poids de la géométrie invitent à améliorer la lecture des cartes avant de modifier les statistiques. Aucun taux de victoire humain n’est déduit de ces politiques fixes.

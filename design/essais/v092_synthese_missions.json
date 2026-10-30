@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "game_version": "0.92",
+  "case_count": 2592,
+  "human_balance_test": false,
+  "zero_points": [
+    {
+      "faction": 0,
+      "mission": 1,
+      "wins": 190,
+      "cases": 216,
+      "policies_all_seeds_won": 59,
+      "policies_variable": 9,
+      "defeat_waves": {
+        "7": 12,
+        "8": 3,
+        "9": 11
+      }
+    },
+    {
+      "faction": 0,
+      "mission": 2,
+      "wins": 168,
+      "cases": 216,
+      "policies_all_seeds_won": 45,
+      "policies_variable": 20,
+      "defeat_waves": {
+        "4": 7,
+        "5": 5,
+        "6": 5,
+        "7": 11,
+        "8": 15,
+        "9": 5
+      }
+    },
+    {
+      "faction": 0,
+      "mission": 3,
+      "wins": 212,
+      "cases": 216,
+      "policies_all_seeds_won": 68,
+      "policies_variable": 4,
+      "defeat_waves": {
+        "8": 4
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 1,
+      "wins": 164,
+      "cases": 216,
+      "policies_all_seeds_won": 50,
+      "policies_variable": 9,
+      "defeat_waves": {
+        "4": 9,
+        "5": 7,
+        "6": 14,
+        "7": 8,
+        "8": 10,
+        "9": 4
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 2,
+      "wins": 77,
+      "cases": 216,
+      "policies_all_seeds_won": 17,
+      "policies_variable": 14,
+      "defeat_waves": {
+        "4": 46,
+        "5": 17,
+        "6": 49,
+        "7": 19,
+        "8": 7,
+        "10": 1
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 3,
+      "wins": 106,
+      "cases": 216,
+      "policies_all_seeds_won": 30,
+      "policies_variable": 12,
+      "defeat_waves": {
+        "3": 18,
+        "4": 26,
+        "5": 17,
+        "6": 14,
+        "7": 16,
+        "8": 13,
+        "9": 6
+      }
+    }
+  ],
+  "first_point_pairs": [
+    {
+      "faction": 0,
+      "talent": 0,
+      "name": "Remparts renforcés",
+      "cases": 216,
+      "wins": 212,
+      "defeat_to_victory": 0,
+      "victory_to_defeat": 0
+    },
+    {
+      "faction": 0,
+      "talent": 5,
+      "name": "Entraînement",
+      "cases": 216,
+      "wins": 216,
+      "defeat_to_victory": 4,
+      "victory_to_defeat": 0
+    },
+    {
+      "faction": 0,
+      "talent": 10,
+      "name": "Étude des arcanes",
+      "cases": 216,
+      "wins": 212,
+      "defeat_to_victory": 0,
+      "victory_to_defeat": 0
+    },
+    {
+      "faction": 1,
+      "talent": 0,
+      "name": "Entraînement",
+      "cases": 216,
+      "wins": 134,
+      "defeat_to_victory": 28,
+      "victory_to_defeat": 0
+    },
+    {
+      "faction": 1,
+      "talent": 5,
+      "name": "Rituels",
+      "cases": 216,
+      "wins": 111,
+      "defeat_to_victory": 5,
+      "victory_to_defeat": 0
+    },
+    {
+      "faction": 1,
+      "talent": 10,
+      "name": "Explosifs",
+      "cases": 216,
+      "wins": 129,
+      "defeat_to_victory": 23,
+      "victory_to_defeat": 0
+    }
+  ]
+}

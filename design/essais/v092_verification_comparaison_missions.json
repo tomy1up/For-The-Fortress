@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "invalid_reports_rejected": 7,
+  "smoke_cases": 12,
+  "complete_smoke_replays": 24,
+  "small_large_step_rows_identical": true,
+  "runtime_sources_match_published_binary": 45,
+  "surveyed_scripts_match_binary": 24,
+  "archive_sha256": "d7f55ba13e49d555051cc6adf43dba816f35ce4c0118c91934eb91bdd42fcc0b",
+  "full_cases": 2592,
+  "historical_horde_cases_identical": 144,
+  "source_fingerprints_unchanged": true,
+  "guard_checks": 5,
+  "game_runtime_changed": false,
+  "new_game_version_created": false,
+  "analysis_reproduced_from_archived_data": true,
+  "analysis_guards_checked": 2,
+  "tool_sources_sha256": {
+    "prototype/tools/survey_campaign_sample.gd": "b423a34b30c23861bb6ce26ef05422c583327e39885d84feb8a030ee2e9069c2",
+    "prototype/tools/analyse_campaign_sample.py": "a54ce8a91fdf223d0c07ac9f8fdd4b1ed850b9971ae398e699ccf879d7dbebf2"
+  }
+}
