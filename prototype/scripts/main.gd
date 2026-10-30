@@ -645,7 +645,7 @@ func _capture_campaign_sample(camp: int) -> void:
 			campaign_menu.refresh()
 	_update_interface()
 	var bank: Dictionary = meta_profile.data.banks[camp]
-	print("SAMPLE_SNAPSHOT=",JSON.stringify({"faction":camp,"mission":target,"stage":stage,"map":model.map_definition.id,"hp_percent":model.enemy_hp_percent,"xp":bank.xp,"po":bank.resource,"points":bank.points,"rank":bank.ranks[0],"completed":meta_profile.campaign_status(camp).completed,"other":meta_profile.campaign_status(1-camp).completed,"isolated":meta_profile.path.is_empty(),"summary":summary_open,"menu":campaign_menu.visible,"enemy_health":enemy_health.text,"title":map_caption.text}))
+	print("SAMPLE_SNAPSHOT=",JSON.stringify({"faction":camp,"mission":target,"stage":stage,"map":model.map_definition.id,"hp_percent":model.enemy_hp_percent,"xp":bank.xp,"po":bank.resource,"points":bank.points,"rank":bank.ranks[0],"completed":meta_profile.campaign_status(camp).completed,"other":meta_profile.campaign_status(1-camp).completed,"isolated":meta_profile.path.is_empty(),"summary":summary_open,"menu":campaign_menu.visible,"enemy_health":enemy_health.text,"title":map_caption.text,"selection":(campaign_menu.chapter-1)*10+campaign_menu.selected+1,"reward_note":summary_meta_note.text if summary_open else "","talent_action":summary_talents_button.text if summary_open else "","summary_mission":summary_subtitle.text if summary_open else ""}))
 
 func _capture_linked_spend_to(ranks: Array, tree: int, target: int) -> bool:
 	while Linked.tree_spent(ranks,tree) < target:
@@ -1140,18 +1140,22 @@ func _build_run_summary(screen: Control) -> void:
 	summary_close = _button(panel,"Fermer · Échap",Rect2(784,622,164,30),_close_run_summary)
 	summary_panel.visible = false
 
+func _summary_mission_caption() -> String:
+	var number: int = CampaignCatalogue.number_for(mission_definition.get("id",""))
+	return "Mission %d · %s" % [number,model.map_definition.title] if number > 0 else model.map_definition.title
+
 func _set_summary_tab(index: int) -> void:
 	if not summary_open or index not in [0,1,2,3] or (index == 3 and not _run_finished()): return
 	summary_tab = index
-	summary_subtitle.text = "Forteresse : %d/%d PV · %d or restants · %s\nCombat cumulé : %s s simulées, hors préparation et choix ; la vitesse réduit le temps réel." % [model.fortress_hp,model.max_hp,model.gold,"Survolez une ligne pour les unités et bonus de la vague." if index == 0 else "Survolez un défenseur pour ses contributions.",("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
+	summary_subtitle.text = "%s · %d/%d PV · %d or restants\nCombat : %s s simulées · %s" % [_summary_mission_caption(),model.fortress_hp,model.max_hp,model.gold,("%.1f" % (model.completed_time+model.elapsed)).replace(".",","),"Survolez une ligne pour les unités et bonus de la vague." if index == 0 else "Survolez un défenseur pour ses contributions."]
 	summary_wave_content.visible = index == 0
 	summary_performance_content.visible = index == 1
 	summary_essential_content.visible = index == 2
 	summary_loadout_content.visible = index == 3
 	if index == 2:
-		summary_subtitle.text = "%s · %d or restants\nCombat : %s s simulées, hors préparation et choix." % ["Dix vagues terminées" if model.phase == "victory" else "Défaite à la vague %d" % model.wave,model.gold,("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
+		summary_subtitle.text = "%s · %s\n%d or restants · Combat : %s s simulées, hors préparation et choix." % [_summary_mission_caption(),"Dix vagues terminées" if model.phase == "victory" else "Défaite à la vague %d" % model.wave,model.gold,("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
 	if index == 3:
-		summary_subtitle.text = "Talents fixés au départ · %d points actifs · Rangs et bonus permanents, sans les améliorations de cette tentative." % Model.MetaTalents.spent(model.meta_ranks)
+		summary_subtitle.text = "%s\nTalents fixés au départ · %d point%s actif%s · Rangs et bonus permanents de cette mission." % [_summary_mission_caption(),Model.MetaTalents.spent(model.meta_ranks),"s" if Model.MetaTalents.spent(model.meta_ranks) != 1 else "","s" if Model.MetaTalents.spent(model.meta_ranks) != 1 else ""]
 	for tab in range(summary_tabs.size()): summary_tabs[tab].disabled = index == tab
 	summary_tabs[3].visible = _run_finished()
 
@@ -1520,11 +1524,23 @@ func _update_meta_summary() -> void:
 	if info.get("mission",false):
 		summary_meta_value.text = "+%d" % info.saved if info.ready else "%d / %d" % [info.saved,info.expected]
 		summary_meta_status.text = "Sauvegardées · "+camp if info.ready else "En attente du résultat" if not info.finished else "Enregistrement en attente"
-		summary_meta_note.text = "Première victoire : %d PO · %d XP. Les talents restent fixés pendant la mission." % [info.expected,info.xp_expected] if not info.finished else "PO : +%d · XP : +%d · Total : %d XP · Talents : %d/51 points · Solde : %d PO" % [info.saved,info.xp_earned,info.xp,info.points,info.balance] if info.ready else "Gains non enregistrés : réessayez la sauvegarde avant de quitter ce résultat."
-		if not info.first: summary_meta_note.text = "Mission déjà réussie : aucun nouveau gain. Total : %d XP · Talents : %d/51 points · Solde : %d PO" % [info.xp,info.points,info.balance]
-		summary_meta_note.tooltip_text = meta_profile.error
+		var bank: Dictionary = meta_profile.data.banks[model.faction]
+		var invested: int = MetaProfile.Talents.spent(bank.ranks)
+		var available: int = maxi(0,int(bank.points)-invested)
+		var progress: String
+		if available > 0:
+			progress = "%d point%s de talent à placer" % [available,"s" if available > 1 else ""]
+			if info.at_cap: progress += " · Plafond : 51/51 points"
+		elif info.at_cap: progress = "Plafond : 51/51 points"
+		else: progress = "Prochain point : encore %d XP" % maxi(0,MetaProfile.Experience.xp_for_points(int(bank.points)+1)-int(bank.xp))
+		if not info.finished: summary_meta_note.text = "Première victoire : %d PO · %d XP. Talents fixés pendant la mission." % [info.expected,info.xp_expected]
+		elif not info.ready: summary_meta_note.text = "Gains non enregistrés : réessayez la sauvegarde avant de quitter ce résultat."
+		elif not info.first: summary_meta_note.text = "Mission déjà réussie : aucun nouveau gain · "+progress
+		else: summary_meta_note.text = "XP : +%d · Total : %d XP · %s" % [info.xp_earned,info.xp,progress]
+		summary_meta_note.mouse_filter = Control.MOUSE_FILTER_STOP
+		summary_meta_note.tooltip_text = meta_profile.error if not meta_profile.error.is_empty() else "Solde : %d PO %s · %d/51 points débloqués · %d investis · %d à placer." % [info.balance,camp,info.points,invested,available]
 		summary_talents_button.visible = info.finished
-		summary_talents_button.text = "Préparer mes talents" if info.ready else "Réessayer la sauvegarde"
+		summary_talents_button.text = "Réessayer la sauvegarde" if not info.ready else "Placer mon point de talent" if available == 1 else "Placer mes %d points" % available if available > 1 else "Consulter mes talents"
 		summary_talents_button.disabled = meta_profile.blocked
 		return
 	if not info.finished:
@@ -1564,7 +1580,7 @@ func _begin_meta_run(faction: int) -> int:
 	if mission_definition.is_empty(): return meta_profile.begin_run(faction) # Compatibilité des anciens parcours et de leurs tests.
 	return meta_profile.begin_mission(faction,mission_definition.id,int(mission_definition.po),int(mission_definition.waves),int(mission_definition.xp))
 
-func _open_campaign(faction: int, chapter: int = 1) -> void:
+func _open_campaign(faction: int, chapter: int = 0) -> void:
 	if not choosing_faction or meta_menu.visible or faction not in [0,1]: return
 	campaign_menu.open(meta_profile,faction,chapter)
 	keyboard_focus_context = ""

@@ -35,6 +35,15 @@ static func unlocked(number: int, status: Dictionary) -> bool:
 	if entry.is_empty() or not entry.available or status.is_empty(): return false
 	return number == 1 or status.missions[number-1] or status.missions[number-2]
 
+static func suggested_mission(status: Dictionary) -> int:
+	if status.is_empty(): return 1
+	var last_available: int = 1
+	for number in range(1,TOTAL_MISSIONS+1):
+		if not unlocked(number,status): continue
+		last_available = number
+		if not status.missions[number-1]: return number
+	return last_available
+
 static func available_count() -> int:
 	var total: int = 0
 	for number in range(1,TOTAL_MISSIONS+1):

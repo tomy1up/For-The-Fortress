@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.91 — 30 octobre 2026
+Version : 0.92 — 30 octobre 2026
 
 JOUER
 
@@ -15,6 +15,8 @@ JOUER
    La finale annonce le boss adverse ; sa jauge reste visible séparément.
 5. Après les vagues 3, 6 et 9, choisir un bonus de la partie en cours.
 6. Après la victoire finale ou la défaite, consulter le bilan puis revenir au parcours.
+   Le nom de la mission reste visible dans chaque onglet du bilan.
+   Le premier point disponible propose directement « Placer mon point de talent ».
    Les premières récompenses sont enregistrées avant ce retour.
 
 UNE PARTIE COMPLÈTE
@@ -146,3 +148,12 @@ réseau requis pour jouer. Pas de sauvegarde de partie en cours ni de progressio
 Les scénarios de contrôle de cartes successives ne constituent pas de nouvelles cartes.
 Licences du moteur : LICENCES_GODOT.txt.
 For the Fortress! reste un nom de travail dont la disponibilité juridique est à confirmer.
+
+PARCOURS ET BILAN
+
+Le retour au parcours propose la prochaine mission jouable encore à réussir.
+Après les trois réussites, la dernière mission reste proposée en rejeu sans gain.
+Le joueur clique toujours pour lancer la mission et peut choisir une autre position.
+Une sélection manuelle reste conservée quand on consulte puis ferme les talents.
+Le bilan montre l’XP gagnée, son total et les points à placer ou l’XP du prochain point.
+Survoler ce texte permet de retrouver le solde de PO et le détail des points.

@@ -111,9 +111,12 @@ func _ready() -> void:
 	footer = label_at(self,"",Rect2(292,748,956,36),13,Color("91a799"))
 	hide()
 
-func open(for_profile: RefCounted, for_faction: int, for_chapter: int = 1) -> void:
+func open(for_profile: RefCounted, for_faction: int, for_chapter: int = 0) -> void:
 	if for_faction not in [0,1]: return
 	profile = for_profile;faction = for_faction;chapter = clampi(for_chapter,1,Catalogue.CHAPTER_COUNT);selected = 0
+	if for_chapter == 0:
+		var number: int = Catalogue.suggested_mission(profile.campaign_status(faction) if profile != null else {})
+		chapter = (number-1)/Catalogue.CHAPTER_SIZE+1;selected = (number-1)%Catalogue.CHAPTER_SIZE
 	set_overlay_blocked(false);show();refresh();initial_focus().grab_focus()
 
 func close() -> void:

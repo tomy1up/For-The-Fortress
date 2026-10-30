@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Version v0.91 (30 octobre 2026)** : [trois missions jouables](design/Echantillon_campagne_v091.md), dix vagues chacune, avec nouveaux tracés et PV ennemis à 100/101/102 %. Première victoire : PO et XP propres à la faction ; premier point de talent accessible après deux missions. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.91).
+**Version v0.92 (30 octobre 2026)** : [parcours et gains plus lisibles](design/Lisibilite_progression_v092.md). Prochaine mission proposée au retour, nom de carte dans chaque onglet du bilan et action explicite pour placer le premier point de talent. Trois missions et règles de v0.91 conservées. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.92).
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.
 

@@ -67,7 +67,9 @@ func run_checks() -> void:
 		check(p.data.banks[faction].resource == 77 and p.data.banks[faction].xp == 10100 and p.campaign_status(faction).completed == 1,"Première victoire créditée et mission marquée réussie immédiatement")
 		check(p.data.banks[1-faction].resource == 17 and p.data.banks[1-faction].xp == 10000 and p.campaign_status(1-faction).completed == 0,"Aucun gain ni succès transféré à l’autre faction")
 		scene.summary_campaign_button.pressed.emit();await process_frame
-		check(menu.visible and scene.choosing_faction and menu.status.completed == 1 and menu.nodes[0].completed and menu.rewards.text.contains("déjà perçues"),"Le retour montre la réussite et annonce clairement le rejeu sans gain")
+		check(menu.visible and scene.choosing_faction and menu.status.completed == 1 and menu.nodes[0].completed and menu.selected == 1 and not menu.start_button.disabled,"Le retour montre la réussite et propose la prochaine mission disponible")
+		menu._select(0)
+		check(menu.rewards.text.contains("déjà perçues"),"Le joueur peut toujours sélectionner un rejeu sans gain")
 		menu._launch()
 		check(scene.model.gold == 150 and scene.model.fortress_hp == scene.model.max_hp and scene.model.bonuses.is_empty() and scene.model.defenders.all(func(unit): return unit.is_empty()),"Une nouvelle mission efface tous les acquis temporaires de la précédente")
 		scene._prepare_campaign_capture("victory");scene._sync_meta_rewards(true)

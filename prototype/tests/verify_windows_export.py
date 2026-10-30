@@ -206,7 +206,12 @@ for name,state,faction in cases:
         assert snap['points']==(1 if completed_missions>=2 else 0) and snap['rank']==(1 if mission==3 else 0)
         assert snap['summary']==(stage=='summary') and snap['menu']==(stage=='journey')
         if stage=='inspection': assert ('40,4' if mission==2 else '40,8') in snap['enemy_health'],snap
+        if stage=='journey': assert snap['selection']==3
         if stage=='summary':
+            assert ('Mission '+str(mission)) in snap['summary_mission'] and ('Le Bois du Gué' if mission==2 else 'Les Hauts du Gué') in snap['summary_mission']
+            assert 'XP : +100' in snap['reward_note']
+            assert snap['talent_action']==('Placer mon point de talent' if mission==2 else 'Consulter mes talents')
+            assert ('1 point de talent à placer' if mission==2 else 'encore 93 XP') in snap['reward_note']
             report_folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))
             report=json.loads((report_folder/'rapport.json').read_text(encoding='utf-8'))
             assert report['result']=='victory' and len(report['waves'])==10 and report['enemy_hp_percent']==99+mission and report['map_definition']['id']==snap['map']
@@ -219,7 +224,7 @@ for name,state,faction in cases:
         assert snap['talents']==(variant=='talents') and snap['disabled']==(variant in ['future','blocked'])
         assert snap['completed']==(-1 if variant=='blocked' else 1 if variant in ['completed','returned'] else 0)
         assert snap['other_completed']==(-1 if variant=='blocked' else 0)
-        assert (snap['chapter'],snap['selected'])==((20,200) if variant=='future' else (1,1))
+        assert (snap['chapter'],snap['selected'])==((20,200) if variant=='future' else (1,2) if variant=='returned' else (1,1))
         assert snap['po']==(60 if variant in ['completed','returned'] else 0) and snap['xp']==(10100 if variant=='returned' else 100 if variant=='completed' else 0)
     if name in ['alliance_purchase','horde_purchase','alliance_crossbow_purchase','alliance_mage_purchase','horde_sapper_purchase','horde_shaman_purchase']:
         ghost=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('PURCHASE_GHOST_SNAPSHOT=')))

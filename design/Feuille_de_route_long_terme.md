@@ -138,3 +138,7 @@ Pour cet essai, le porteur du projet retient **100 %, 101 % puis 102 % de PV enn
 ### Réalisation de l’échantillon — v0.91
 
 Les [trois missions de dix vagues](Echantillon_campagne_v091.md) raccordent désormais nouvelles géométries, réglage de PV, parcours, gains et premier point de talent. Les noms, tracés, déblocages séquentiels et montants sont proposés pour ce prototype ; les trois missions et la hausse de PV sont les orientations retenues. Le lot C doit encore être éprouvé par des joueurs avant toute extension de contenu.
+
+### Lisibilité du premier point — v0.92
+
+Le [bilan et la reprise du parcours](Lisibilite_progression_v092.md) explicitent le premier point disponible et proposent la prochaine mission jouable, sans lancement automatique. Cette amélioration de présentation accompagne l’essai des trois missions ; elle n’étend pas le contenu ni son équilibrage.
