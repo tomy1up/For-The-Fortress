@@ -26,7 +26,7 @@ La manière de renforcer ou de réorganiser les rencontres et les affixes en Hé
 
 La progression persistante, les banques de faction et la limite de 51 points de talent restent le socle actuel. La demande de nouvelles difficultés ne crée pas automatiquement des points de talent supplémentaires ou un nouveau plafond. Il faudra équilibrer les difficultés avancées avec les configurations auxquelles le joueur peut réellement accéder après ses premières cent victoires.
 
-Les critères déjà retenus pour ouvrir le mode infini ne sont pas remplacés par cette décision. Son articulation avec les difficultés de campagne et ses propres paramètres de difficulté restent à préciser.
+Complément du même jour : le mode infini comporte lui aussi Normal, Héroïque et Mythique. Chaque version s’ouvre après les dix premiers chapitres de la campagne dans la difficulté correspondante, pour la faction concernée. Les détails figurent dans [Difficultés du mode infini](Infini_difficultes_2026-10-31.md) ; ses paramètres de combat restent à préciser.
 
 ## Questions ouvertes
 
@@ -35,7 +35,7 @@ Les critères déjà retenus pour ouvrir le mode infini ne sont pas remplacés p
 - Réutilisation du contenu des 200 missions et présentation des parcours entre les difficultés.
 - Distribution des nouveautés et des cumuls dans les difficultés avancées, notamment après leur propre mission 100.
 - Interface de choix de difficulté, lecture des réussites et retour au parcours approprié.
-- Articulation exacte avec le mode infini, ses défis et ses récompenses.
+- Paramètres, défis et récompenses de chaque difficulté du mode infini ; conditions d’accès désormais définies dans le complément ci-dessus.
 
 ## État de réalisation
 

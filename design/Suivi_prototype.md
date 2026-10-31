@@ -542,3 +542,7 @@ Le porteur du projet retient la version sombre pour sa cohérence avec les autre
 ## Prototype v0.101 — coût du grenadier
 
 [Essais isolés et réglage](Grenadier_prix_v0101.md) : 7 776 simulations comparent prix et portée. Le recrutement passe de 90 à 75 or de combat ; le déblocage reste à 240 PO. Réglage provisoire, statistiques de combat conservées. Les anciens rapports du grenadier gardent leur tarif historique dans le vérificateur de diagnostic. Régression complète : 85 suites, 33 103 contrôles Godot, 16 tests Python ; paquet Windows : 243 cas, 56 sources comparées.
+
+## GDD 0.16 et décisions du 31 octobre 2026
+
+Consolidation Word et Markdown sur le jeu 0.101 : dix missions, quatre alternatives, prix et branches H, talents partagés par famille et schéma 7. Biomes, difficultés et succès séparés du contenu réalisé. [Succès](Succes_2026-10-31.md) : liste ouverte, unités envisagées après vingt chapitres dans chaque difficulté. [Infini](Infini_difficultes_2026-10-31.md) : trois difficultés, accès après les dix premiers chapitres de campagne correspondants, par faction. Vérification documentaire : 65 pages examinées, 75 tableaux identiques, 58 entrées de sommaire contrôlées, socle numérique préservé. Aucun changement de binaire ou de profil.

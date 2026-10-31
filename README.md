@@ -1,5 +1,11 @@
 # For the Fortress!
 
+**GDD 0.16 — référence jeu 0.101** : documents Word et Markdown synchronisés, dix missions, boutique, talents par famille et sauvegarde au schéma 7. Les règles futures de biomes, difficultés et succès sont distinguées du contenu jouable.
+
+**Mode infini** : [Normal, Héroïque et Mythique](design/Infini_difficultes_2026-10-31.md), chacun ouvert après les dix premiers chapitres de campagne dans la difficulté correspondante, par faction. À développer.
+
+**Succès** : [principe et premières pistes](design/Succes_2026-10-31.md), dont une unité envisagée après les vingt chapitres de chaque difficulté. Liste, critères et récompenses à définir.
+
 **Design long terme — 31 octobre 2026** : [biomes et difficulté cumulative](design/Biomes_cumul_2026-10-31.md). Deux chapitres par biome, nouveaux attaquants ou affixes au second chapitre, combinaisons après la mission 100 et accumulation progressive en mode infini. Ces contenus restent à développer.
 
 **Difficultés de campagne** : [Normal, Héroïque, Mythique](design/Difficultes_campagne_2026-10-31.md). La campagne actuelle correspond au Normal ; 100 premières missions réussies ouvrent la difficulté suivante, avec un parcours successif propre à chaque difficulté et faction. Les modes avancés restent à développer.

@@ -1,16 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.15 — 30 octobre 2026
+Game Design Document — Version 0.16 — 31 octobre 2026
 
-Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide les règles de combat détaillées, la progression persistante par faction, la campagne et les trois missions jouables de la version Windows 0.92. Elle conserve les tableaux techniques du socle et distingue décisions validées, valeurs de prototype et questions ouvertes.
+Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, les dix missions jouables, la progression persistante par faction et la boutique du prototype Windows 0.101. Les biomes et les difficultés avancées décrivent la conception à long terme, encore à réaliser.
 
-**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié. Les calculs de combat du socle sont établis sans talents persistants, sauf indication contraire. Les spécialisations de niveau 4 d’un défenseur et les trois arbres persistants d’une faction sont deux systèmes distincts.
+**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès. Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.15 ; jeu de référence 0.92.** Une publication de jeu n’implique pas l’approbation définitive de ses réglages. Les anciennes décisions remplacées sont explicitées en section 48. Les documents datés restent des sources historiques ; les présentes règles consolidées prévalent en cas de contradiction.
-
-**Complément de conception validé le 31 octobre 2026 :** [biomes et cumul de difficulté](design/Biomes_cumul_2026-10-31.md). Un biome couvre deux chapitres ; le second introduit de nouveaux attaquants ou un affixe agissant sur la défense ou les attaquants. Après la mission 100, les nouveautés se combinent avec le contenu antérieur tout en continuant d’arriver. Le mode infini permet aussi une accumulation progressive de ces attaquants et affixes. Cette décision complète les sections de campagne et de mode infini du socle ; elle ne désigne pas un contenu déjà réalisé. Le détail des règles de cumul reste ouvert. Ce lien est ajouté à la version Markdown en attendant la prochaine consolidation du document Word.
-
-**Difficultés de campagne validées le 31 octobre 2026 :** [Normal, Héroïque et Mythique](design/Difficultes_campagne_2026-10-31.md). La campagne actuelle correspond au Normal. Réussir ses 100 premières missions ouvre l’Héroïque, puis réussir les 100 premières en Héroïque ouvre le Mythique. Chaque difficulté débloque ses missions successivement, avec les parcours indépendants par faction déjà retenus. Réglages, récompenses et articulation avec l’infini restent à définir ; aucun de ces modes avancés n’est annoncé comme réalisé.
+**Version documentaire 0.16 ; jeu de référence 0.101.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -72,6 +68,8 @@ Nom de travail — disponibilité juridique à confirmer.
 54. [54 Sauvegarde et continuité de progression](#s54)
 55. [55 Catalogue des talents du prototype](#s55)
 56. [56 État vérifié et prochaines décisions](#s56)
+57. [57 Boutique et unités alternatives](#s57)
+58. [58 Succès et récompenses de campagne](#s58)
 
 <a id="s1"></a>
 
@@ -125,7 +123,7 @@ Les calculs dérivés sont signalés comme tels. Ils illustrent les valeurs de r
 | Construire ou acheter un défenseur | Autorisé — V | Non autorisé — V |
 | Améliorer un défenseur | Autorisé — V | Non autorisé — V |
 | Vendre un défenseur | Autorisé — V | Non autorisé — V |
-| Observer et inspecter les unités | Ergonomie à préciser — O | Autorisé — V |
+| Observer et inspecter les unités | Disponible ; ergonomie finale O | Autorisé — V |
 | Accélérer le déroulement | Sans objet | Autorisé — V ; ×1 / ×2 pour les essais (H) |
 | Choisir un bonus roguelite | Après les vagues prévues — V | Pas de choix en combat dans le socle |
 
@@ -134,7 +132,7 @@ La carte initiale est une scène médiévale-fantasy en vue isométrique. Elle c
 
 | Paramètre du prototype | Valeur de référence | Statut |
 | --- | --- | --- |
-| Cartes jouables | 3 dans le même thème ; détails en section 52 | V pour la taille de l’essai ; H pour les nouvelles géométries |
+| Cartes jouables | 10 dans le même thème ; détails en section 52 | V pour l’extension de l’essai ; H pour les géométries |
 | Emplacements de construction | 6 | C |
 | Vagues | 10 | C |
 | Or initial de combat | 150 or, distinct des PO persistantes | H — valeur de départ à tester |
@@ -173,7 +171,7 @@ Les six défenseurs sont issus du socle validé. Les identifiants ci-dessus sont
 ### Limites du contenu défini
 Les Morts-vivants appartiennent à la Horde, mais aucun défenseur mort-vivant n’est nommé dans le prototype. Aucun rôle supplémentaire ne doit être créé pour compléter artificiellement la liste. Le druide est cité uniquement dans un exemple de synergie ; sa présence dans le jeu et son appartenance de faction ne sont pas validées.
 
-La version commerciale envisage huit défenseurs par faction, chacun doté de deux spécialisations — C. Les dix défenseurs supplémentaires, leurs races, leurs classes et leurs branches restent à définir. Le recrutement est limité au roster de la faction choisie pour le prototype — V.
+La version commerciale envisage huit défenseurs par faction, chacun doté de deux spécialisations — C. Quatre alternatives sont déjà jouables en section 57. Le reste du catalogue commercial, les races, classes et branches supplémentaires restent à définir. Le recrutement est limité au roster de la faction choisie pour le prototype — V.
 
 ### Fiche évolutive de défenseur
 Chaque fiche pourra réunir : identifiant, nom, faction, race, classe, coût d’achat, statistiques par niveau, ciblage, spécialisation A, spécialisation B, interactions de synergie, statut des valeurs et source de validation. Tout champ non documenté conserve la valeur « À définir » ; cette absence ne signifie jamais zéro.
@@ -349,11 +347,11 @@ Le prototype utilise douze bonus approuvés, détaillés en sections 25 à 29. L
 ### Les trois mécanismes de synergie
 | Mécanisme validé | Intention | Règle du prototype |
 | --- | --- | --- |
-| Diversité de défenseurs d’une même race | Récompenser une composition raciale diversifiée | Deux types distincts par race ; +8 % H ; non activable avec le roster actuel |
+| Diversité de défenseurs d’une même race | Récompenser une composition raciale diversifiée | Deux types distincts par race ; +8 % H ; différé dans le prototype ; socle à six types de départ |
 | Spécialisations | Créer des interactions entre choix de branches | Six associations N4 ; cumul par composante |
 | Proximité entre certaines unités | Valoriser la disposition des défenseurs | Six associations ; centres à 5 unités H au maximum |
 
-La diversité compte les types de défenseurs de base, pas les copies, niveaux ou branches. Chaque race n’ayant qu’un type dans le prototype, le volet racial est conservé sans activation. Les sections 30 à 34 précisent les synergies ; le recrutement est limité à deux exemplaires par type (H).
+La diversité compte les types de défenseurs de base, pas les copies, niveaux ou branches. Le socle ne propose qu’un type par race ; le volet racial reste différé, y compris avec les alternatives actuelles. Les sections 30 à 34 précisent les synergies ; le recrutement est limité à deux exemplaires par type (H).
 
 ### Exemple non contractuel
 Le socle illustre une interaction possible par un archer elfe placé près d’un druide qui pourrait recevoir des flèches empoisonnées. Cet exemple n’approuve ni le druide comme défenseur, ni une valeur de poison, ni une portée de voisinage. Il sert uniquement à expliquer le principe.
@@ -570,7 +568,7 @@ Le scénario de la section 11 investit 350 + 225 + 150 = 725 or avant le boss, a
 ### Choix validé au niveau 4
 Choisir une des deux branches pendant le passage N3 vers N4, entre les vagues — V. Le choix est inclus dans les 150 or provisoires de l’amélioration : aucun surcoût pour le prototype. Une seule branche par unité, fixée jusqu’à la vente. Une nouvelle unité repart au N1 ; le recrutement est limité à deux exemplaires par type (H).
 
-Les deux branches sont accessibles dès les essais, sans déblocage persistant ni prérequis racial ajouté. Terminer le choix avant de lancer la vague suivante. Aucun effet n’est rétroactif sur une attaque ou malédiction déjà appliquée. Le prototype présente les deux branches et leur coût avant confirmation.
+Les deux branches du socle sont accessibles dès les essais, sans prérequis racial ajouté ; les branches des alternatives suivent leur déblocage en boutique. Terminer le choix avant de lancer la vague suivante. Aucun effet n’est rétroactif sur une attaque ou malédiction déjà appliquée. Le prototype présente les deux branches et leur coût avant confirmation.
 
 Les noms sont provisoires. Les rôles et comportements des douze branches sont approuvés — V ; toutes les statistiques sont des hypothèses H. La fiche design/Proposition_specialisations.md conserve les détails et le plan d’essais.
 
@@ -1075,7 +1073,7 @@ Les conditions, associations et règles de cumul sont approuvées — V ; noms p
 ### Les trois mécanismes
 Le socle valide trois axes : diversité de défenseurs d’une même race, choix de spécialisations et proximité entre certaines unités. La proposition les distingue :
 
-| Axe | Condition de référence | Situation avec le roster actuel |
+| Axe | Condition de référence | Situation avec les six types de départ |
 | --- | --- | --- |
 | Diversité raciale | Au moins deux types de défenseurs distincts de la même race, déployés | Non activable : un seul type par race dans chaque faction |
 | Proximité | Deux types partenaires dont les centres sont distants d’au plus 5 unités | Activable avec les défenseurs et emplacements existants |
@@ -1084,7 +1082,7 @@ Le socle valide trois axes : diversité de défenseurs d’une même race, choix
 Les synergies s’activent automatiquement, sans coût ou choix supplémentaire. Elles ne permettent pas de mélanger les factions. Leurs effets restent actifs tant que leurs conditions sont réunies.
 
 ### Diversité raciale et prototype
-Dans l’Alliance, les types actuels sont Archer elfe, Arbalétrier nain et Mage humain. Dans la Horde : Lanceur de haches troll, Sapeur gobelin et Chaman orc. Chaque race n’a donc qu’un type disponible.
+Dans le socle de départ de l’Alliance, les types sont Archer elfe, Arbalétrier nain et Mage humain. Dans la Horde : Lanceur de haches troll, Sapeur gobelin et Chaman orc. Chaque race n’a donc qu’un type de départ. Les alternatives de boutique partagent une famille de combat et les associations de proximité et de branches de leur type de départ ; elles n’activent pas le bonus racial différé.
 
 Cadrage approuvé : conserver le volet racial, mais différer son activation jusqu’à l’approbation de plusieurs types d’une même race. Il ne fait pas partie des synergies activables à vérifier dans le premier prototype à six défenseurs. Cela n’approuve pas de nouvelles unités pour le rendre artificiellement accessible.
 
@@ -1497,7 +1495,7 @@ Après la demande de recommandation du porteur du projet, Godot avec GDScript et
 | Moteur et langage | Godot 4.7.2 stable standard, GDScript | Choix de réalisation initial, révisable |
 | Présentation | 2D isométrique, visuels temporaires | Choix de réalisation initial |
 | Rendu | Compatibility | Choix de réalisation initial, à vérifier sur le PC cible |
-| Livraison actuelle | Prototype Windows 0.92, trois missions | Publication de test, non version commerciale |
+| Livraison actuelle | Prototype Windows 0.101, dix missions | Publication de test, non version commerciale |
 | Temps de combat complet | Ordonnanceur conforme aux sections 21 à 24 | Réalisé et couvert par les régressions |
 | Publication | Versions Windows sur dépôt GitHub privé | Aucune publication commerciale engagée |
 
@@ -1510,17 +1508,17 @@ La configuration matérielle minimale, les objectifs de performance et les optio
 ## 47 Périmètre commercial et feuille de route
 
 ### Contenu actuel et cibles
-| Élément | Prototype Windows 0.92 | Orientation long terme |
+| Élément | Prototype Windows 0.101 | Orientation long terme |
 | --- | --- | --- |
 | Factions | 2, parcours indépendants | 2 — V |
-| Défenseurs | 6, soit 3 par faction | 16, soit 8 par faction — ancienne cible C à réexaminer avec la boutique |
-| Missions | 3 missions de 10 vagues | 200 missions — C, pas un contenu déjà livré |
-| Chapitres et thèmes | Parcours préparé, 197 missions à venir | 20 chapitres de 10 missions, thème tous les 2 chapitres — C |
+| Défenseurs | 6 de départ et 4 alternatives de boutique ; 3 types de départ et 1 alternative optionnelle par mission | 16, soit 8 par faction — ancienne cible C à réexaminer avec la boutique |
+| Missions | 10 missions de 10 vagues | 200 missions — C, pas un contenu déjà livré |
+| Chapitres et thèmes | Parcours préparé, 190 missions à venir | 20 chapitres de 10 missions, thème tous les 2 chapitres — C |
 | Bonus de mission | 12, valeurs H | Environ 60 — ancienne cible C à réévaluer |
 | Talents persistants | 3 arbres et 63 talents par faction ; plafond 51 points | Choix de builds — V ; contenu et puissance H |
 | Ennemis | 7 profils ordinaires et 1 boss ; identités neutres ou adverses | Environ 12 familles et 6 boss — anciennes cibles C |
-| Boutique | Non réalisée | Unités ouvrant des possibilités, avec forces et faiblesses — V pour l’orientation |
-| Infini | Non jouable | Après les 100 premières missions de la faction — V pour le verrou |
+| Boutique | Deux alternatives par faction, choix de la quatrième unité avant mission | Unités ouvrant des possibilités, avec forces et faiblesses — V pour l’orientation |
+| Infini | Non jouable | Normal, Héroïque et Mythique ; accès après les 10 premiers chapitres de campagne correspondants, par faction — V |
 | Évènements | Absents | Idée à examiner — O |
 
 La campagne de 200 missions remplace la première cible de six cartes comme structure de référence. Une mission n’exige pas un environnement graphique unique ; nombre de tracés distincts, réutilisation des décors et charge artistique restent à définir. PC sur Steam demeure prioritaire. Premium et prix de travail 7,99 € restent des intentions, sans étude de vente, budget, date de sortie ni disponibilité juridique présumés.
@@ -1531,14 +1529,15 @@ La campagne de 200 missions remplace la première cible de six cartes comme stru
 | Socle de combat | Réalisé : deux factions, dix vagues, économie, branches, bonus et synergies | Régressions et paquet Windows vérifiés à chaque version |
 | Présentation | Cartoon et lisibilité en cours ; portée avant achat, inspection et bilans présents | Essais humains sur la compréhension et la lecture à petite taille |
 | Progression | XP, 51 points, trois arbres, reset gratuit, sauvegarde protégée réalisés | Préserver les gains, contrôler les seuils et l’absence de double récompense |
-| Premier échantillon | Trois missions jouables ; 100/101/102 % de PV, récompenses H | Comparer les deux factions et plusieurs compositions sans conclure sur quelques parties |
+| Premier échantillon | Dix missions jouables ; 100 à 109 % de PV, récompenses H | Comparer les deux factions et plusieurs compositions sans conclure sur quelques parties |
 | Économie et talents | Réviser courbe XP, gains de PO, puissance et variété des talents | Une difficulté exigeante, sans achat obligatoire ni build écrasant toutes les situations |
-| Campagne étendue | Concevoir le prochain lot après bilan des trois missions | Contenu, charge, courbe et nouvelles mécaniques explicitement définis |
-| Boutique | Proposer un premier catalogue d’unités alternatives et ses tarifs | Effets, contraintes de recrutement et équilibre validés avant réalisation |
+| Campagne étendue | Préparer le second chapitre et sa première nouveauté après bilan du premier | Contenu, charge, courbe et nouvelles mécaniques explicitement définis |
+| Boutique | Premier catalogue réalisé ; mesurer les compromis, les prix et le partage des talents | Effets, contraintes de recrutement et équilibre validés avant réalisation |
+| Succès | Prévoir le système et définir sa liste ; unités envisagées après les 20 chapitres de chaque difficulté | Critères, portée par faction et récompenses précisés avant attribution persistante |
 | Infini et évènements | À concevoir après les fondations de campagne | But durable, génération, records et récompenses à décider |
 | Préparation commerciale | Performances, accessibilité, droits, distribution Steam et sauvegarde en ligne | Vérifications dédiées ; aucun calendrier supposé |
 
-L’introduction de nouveautés vise les blocs 11–20, 31–40, 51–60, etc., puis des réapparitions ponctuelles. Aucune mécanique nouvelle n’est déjà approuvée pour ces blocs. Les premières missions doivent rester jouables sans talents ; la fréquence souhaitée des défaites et la difficulté après acquisition des talents sont à mesurer. Les essais automatiques vérifient le fonctionnement et explorent des stratégies, ils ne mesurent pas le taux de victoire humain.
+L’introduction de nouveautés vise les blocs 11–20, 31–40, 51–60, etc., puis des réapparitions ponctuelles. Le principe de nouveaux attaquants ou d’un affixe de biome est validé ; leurs effets précis restent ouverts. Les premières missions doivent rester jouables sans talents ; la fréquence souhaitée des défaites et la difficulté après acquisition des talents sont à mesurer. Les essais automatiques vérifient le fonctionnement et explorent des stratégies, ils ne mesurent pas le taux de victoire humain.
 
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
@@ -1597,6 +1596,14 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | CAMP-015 | Tester 100/101/102 % de PV ennemis — V pour l’essai | Vitesse, dégâts d’arrivée et gains de combat identiques |
 | MAJ-06 | Exactement quatre colonnes, flèches droites, parents au maximum — V | Disposition et effets actuels des talents H |
 | MAJ-07 | Première vague manuelle puis attente de 30 secondes — V | Ancien délai de 60 secondes remplacé |
+| MAJ-08 | Trois types de départ plus une alternative possédée, choisie avant mission — V | Aucun accès simultané à toutes les alternatives ; sélection fixe pendant la mission |
+| MAJ-09 | Talents partagés par famille avec bénéficiaires explicités — V | Aucun effet destiné à l’autre faction |
+| MAJ-10 | Un biome pour deux chapitres ; nouveauté au second — V | Contenu des nouveaux attaquants et affixes O |
+| MAJ-11 | Après la mission 100, cumuler le contenu antérieur tout en introduisant des nouveautés — V | Règles de cumul et limites O ; principe également retenu pour l’infini |
+| MAJ-12 | Normal puis Héroïque après 100 victoires Normal, puis Mythique après 100 victoires Héroïque — V | Progression séquentielle indépendante par faction ; modes avancés non réalisés |
+| CAMP-016 | Extension jouable aux missions 4 à 10 — V pour l’essai | Géométries, récompenses et courbe restent H |
+| MAJ-13 | Prévoir un système de succès — V pour le principe | Liste O ; unités de fin des 20 chapitres Normal, Héroïque et Mythique proposées par le porteur du projet |
+| MAJ-14 | Infini Normal, Héroïque et Mythique — V | Chaque accès exige les 10 premiers chapitres de campagne dans la même difficulté et la même faction ; règles de combat O |
 
 <a id="s49"></a>
 
@@ -1647,6 +1654,8 @@ Version 0.14 — 20 octobre 2026 : cahier de réalisation, parcours, lots et cri
 
 Version 0.15 — 30 octobre 2026 : consolidation de la campagne, des trois missions, de l’XP, des 51 points, des arbres liés à quatre colonnes, du reset gratuit, de la persistance et de l’état vérifié du jeu 0.92. Conservation du socle et de ses tableaux numériques.
 
+Version 0.16 — 31 octobre 2026 : dix missions, boutique et alternatives, talents partagés par famille, sauvegarde au schéma 7, prix du grenadier à 75 or en hypothèse et décisions long terme sur les biomes et les difficultés. Référence jouable 0.101 ; principe des succès et premières pistes de récompenses ajoutés.
+
 <a id="s51"></a>
 
 ## 51 Maintenance du GDD
@@ -1674,29 +1683,41 @@ Chaque faction conserve ses propres missions gagnées, PO, XP et talents. Une mi
 
 Chaque nouvelle mission commence avec une forteresse intacte, son maximum de PV tenant compte des talents actifs, l’or de combat initial, aucun défenseur, aucune branche ni bonus de la mission précédente. Les talents sont fixés au lancement ; les arbres sont consultables et modifiables entre missions, après résolution de la précédente. La ressource de combat ne se transforme pas en PO persistantes.
 
-### Trois missions de comparaison
-| Mission | Carte proposée | Trajet logique | Emplacements | PV ennemis | Première victoire proposée |
-| --- | --- | --- | --- | --- | --- |
-| 1 | La Vallée du Gué | 28 unités | 6 | 100 % | 60 PO et 100 XP |
-| 2 | Le Bois du Gué | 29 unités | 6 | 101 % | 60 PO et 100 XP |
-| 3 | Les Hauts du Gué | 29 unités | 6 | 102 % | 60 PO et 100 XP |
+### Dix missions du premier chapitre
+| Mission | Carte du prototype | Emplacements | PV ennemis | Première victoire proposée |
+| --- | --- | --- | --- | --- |
+| 1 | La Vallée du Gué | 6 | 100 % | 60 PO et 100 XP |
+| 2 | Le Bois du Gué | 6 | 101 % | 60 PO et 100 XP |
+| 3 | Les Hauts du Gué | 6 | 102 % | 60 PO et 100 XP |
+| 4 | Les Détours du Gué | 6 | 103 % | 60 PO et 100 XP |
+| 5 | La Clairière du Gué | 6 | 104 % | 60 PO et 100 XP |
+| 6 | Le Défilé du Gué | 6 | 105 % | 60 PO et 100 XP |
+| 7 | Les Lacets du Gué | 6 | 106 % | 60 PO et 100 XP |
+| 8 | Le Sentier du Gué | 6 | 107 % | 60 PO et 100 XP |
+| 9 | Les Abords du Gué | 6 | 108 % | 60 PO et 100 XP |
+| 10 | Les Remparts du Gué | 6 | 109 % | 60 PO et 100 XP |
 
-Les trois missions et les pourcentages sont retenus pour l’essai. Noms, tracés des missions 2 et 3, positions, déblocage séquentiel et récompenses sont H. Dix compositions et espacements de vagues identiques permettent de comparer les cartes. Le pourcentage s’applique aux PV de référence sans arrondir la simulation : un pillard à 40 PV en possède 40,4 puis 40,8 ; le boss à 600 en possède 606 puis 612. Vitesse, dégâts à la forteresse et or par élimination restent identiques. La formule définitive sur 100 ou 200 missions reste ouverte.
+L’extension aux missions 4 à 10 est retenue pour l’essai. Noms, géométries, positions, déblocage séquentiel et récompenses sont H. Les dix compositions et espacements de vagues sont conservés pour comparer les cartes. Seuls les PV ennemis suivent ici 100 à 109 % ; vitesse, dégâts à la forteresse et or par élimination restent identiques. La simulation ne tronque pas les PV : un ennemi à 40 PV passe à 40,4 dans la mission 2. Le +1 % est une règle d’essai, pas une preuve de difficulté graduelle à chaque carte.
 
-Une défaite ou une nouvelle victoire sur une mission déjà gagnée ne donne ni XP ni PO de première victoire. Après trois premières victoires, un profil neuf a 300 XP, 180 PO hors dépenses et un point de talent débloqué selon la courbe H ci-dessous. Les missions 4 à 200 sont affichées à venir, sans contenu jouable ni récompenses définitives inventés.
+Une défaite ou une nouvelle victoire sur une mission déjà gagnée ne donne ni XP ni PO de première victoire. Après dix premières victoires, un profil neuf totalise 1 000 XP, cinq points de talent et 600 PO hors achats. Les missions 11 à 200 restent à venir ; leurs tracés et récompenses ne sont pas livrés.
 
-### Architecture cible
-La cible est de 200 missions, par chapitres de 10 et thèmes de 20 missions. Les blocs de découverte sont 11–20, 31–40, 51–60, etc. ; leurs nouveautés pourront réapparaître ensuite. L’infini se débloquera après les 100 premières missions gagnées dans la faction concernée. Sa génération, ses buts et récompenses restent O. Les propositions de défis hebdomadaires, titres et apparences de l’ancien échange restent des propositions, pas des fonctionnalités validées.
+### Biomes et accumulation
+La cible est de 200 missions, 20 chapitres de 10 missions, avec un biome par paire de chapitres : 1–2, 3–4, 5–6, etc. Les chapitres pairs introduisent une nouveauté sur leur bloc : missions 11–20, 31–40, 51–60, etc. Elle peut prendre la forme de nouveaux attaquants propres au biome ou d’un affixe affaiblissant certains défenseurs ou renforçant certains attaquants. Les effets, cibles, intensités et combinaisons restent O.
+
+Au-delà de la mission 100, le contenu antérieur se combine tout en continuant d’introduire des nouveautés. L’infini pourra accumuler ces attaquants et affixes au fil de sa progression. Le mode infini prévoit Normal, Héroïque et Mythique. Chacun s’ouvre après les dix premiers chapitres, soit les 100 premières missions gagnées dans la difficulté de campagne correspondante et dans la faction concernée. Génération, buts, récompenses et limites de cumul restent O. Les défis hebdomadaires, titres et apparences de l’ancien échange ne sont pas des fonctionnalités validées.
+
+### Difficultés de campagne
+La difficulté actuelle est le Normal. Réussir les 100 premières missions en Normal ouvre l’Héroïque ; réussir les 100 premières en Héroïque ouvre le Mythique. Chaque difficulté débloque successivement ses missions, avec parcours indépendants par faction. Ces difficultés sont des décisions de conception, pas des modes déjà jouables. Multiplicateurs, nouvelles règles et récompenses de première victoire entre difficultés restent à définir. Les accès aux trois difficultés de l’infini suivent désormais la campagne correspondante comme indiqué ci-dessus.
 
 ### Deux économies distinctes
 | Ressource | Obtention | Usage | Durée |
 | --- | --- | --- | --- |
 | Or de combat | Capital initial H et éliminations | Défenseurs, niveaux et spécialisations de mission | Remis à zéro à chaque mission |
-| PO de faction | Première victoire de chaque mission ; barème H | Future boutique et unités alternatives | Persistantes, non partagées entre factions |
+| PO de faction | Première victoire de chaque mission ; barème H | Boutique et unités alternatives | Persistantes, non partagées entre factions |
 | XP de faction | Première victoire uniquement | Débloque automatiquement des points de talent | Persistante ; aucune conversion en PO |
 | Points de talent | Seuils d’XP, plafond 51 | Investissement de rangs dans trois arbres | Persistants ; redistribution gratuite hors mission |
 
-La boutique doit ouvrir des styles de jeu, sans remplacer systématiquement les unités par des versions plus fortes. Son catalogue, ses prix et les autres usages des PO restent à concevoir. La séparation XP/PO supprime la concurrence directe entre achat en boutique et achat de points ; elle ne garantit pas à elle seule l’équilibre. Aucun farm de PO ni coût de respécialisation n’est ajouté.
+La boutique doit ouvrir des styles de jeu, sans remplacer systématiquement les unités par des versions plus fortes. Le premier catalogue et ses prix H sont décrits en section 57 ; les autres usages des PO restent ouverts. La séparation XP/PO supprime la concurrence directe entre achat en boutique et achat de points ; elle ne garantit pas à elle seule l’équilibre. Aucun farm de PO ni coût de respécialisation n’est ajouté.
 
 <a id="s53"></a>
 
@@ -1733,14 +1754,14 @@ L’objectif validé est d’acquérir les 51 points en gagnant les 100 premièr
 | 99 | 9 900 | 50 |
 | 100 | 10 000 | 51 |
 
-Premier seuil : 197 XP ; deuxième : 393 XP. Le premier point est donc disponible après la mission 2 de l’essai. Ce barème n’approuve pas les montants des 197 missions non réalisées ni une progression au-delà du plafond. Les PO continuent à être prévues sur les missions 101–200 ; usages et montants restent ouverts.
+Premier seuil : 197 XP ; deuxième : 393 XP. Le premier point est donc disponible après la mission 2 de l’essai. Ce barème n’approuve pas les montants des 190 missions non réalisées ni une progression au-delà du plafond. Les PO continuent à être prévues sur les missions 101–200 ; usages et montants restent ouverts.
 
 <a id="s54"></a>
 
 ## 54 Sauvegarde et continuité de progression
 
 ### Comportement attendu et réalisation actuelle
-Fermer puis rouvrir le jeu doit conserver les gains et investissements. Le profil local réunit les deux factions tout en séparant leurs comptes, XP, rangs et reçus de première victoire. Le prototype utilise le schéma 6 et une protection Windows DPAPI liée à l’utilisateur, avec écriture atomique et sauvegardes de secours. Les migrations préservent les acquis compatibles ; les anciens rangs devenus incompatibles sont remboursés en points disponibles.
+Fermer puis rouvrir le jeu doit conserver les gains et investissements. Le profil local réunit les deux factions tout en séparant leurs comptes, XP, rangs et reçus de première victoire. Le prototype utilise le schéma 7, qui ajoute les achats et la sélection de boutique, et une protection Windows DPAPI liée à l’utilisateur, avec écriture atomique et sauvegardes de secours. Les migrations préservent les acquis compatibles ; les anciens rangs devenus incompatibles sont remboursés en points disponibles.
 
 Le fichier se trouve dans le dossier utilisateur Godot de l’application, sous `%APPDATA%/Godot/app_userdata/For the Fortress! — La Vallée du Gué/progression_factions_v1.json`. Malgré son extension, son contenu protégé n’est pas un simple profil JSON modifiable en clair. Ne pas déplacer ou renommer arbitrairement l’identité du dossier utilisateur lors d’une publication.
 
@@ -1753,7 +1774,7 @@ Cette protection empêche l’édition triviale du fichier ; elle ne garantit pa
 
 ## 55 Catalogue des talents du prototype
 
-Les tableaux suivants reprennent le catalogue de référence v0.89, toujours utilisé par le jeu 0.92. Les effets sont indiqués par rang. Toutes les valeurs, positions précises, noms et chaînes proposés restent H. Les numéros de ligne désignent les sept paliers logiques ; le palier 20 occupe deux rangées visuelles. Un parent indiqué doit être entièrement amélioré, en plus du seuil de points. Ces tableaux ne sont pas une validation définitive de l’équilibrage.
+Les tableaux suivants reprennent le catalogue de référence v0.89, toujours utilisé comme socle par le jeu 0.101 ; les bénéficiaires de famille sont étendus aux alternatives selon la section 57. Les effets sont indiqués par rang. Toutes les valeurs, positions précises, noms et chaînes proposés restent H. Les numéros de ligne désignent les sept paliers logiques ; le palier 20 occupe deux rangées visuelles. Un parent indiqué doit être entièrement amélioré, en plus du seuil de points. Ces tableaux ne sont pas une validation définitive de l’équilibrage.
 
 ### Alliance Bastion
 
@@ -1918,16 +1939,77 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 ## 56 État vérifié et prochaines décisions
 
 ### Référence de publication
-Le jeu Windows 0.92 est publié comme version de prototype sur le dépôt privé du projet. La régression archivée compte 71 suites et 23 892 contrôles Godot, 16 tests Python, ainsi que les contrats numériques du GDD. La vérification du paquet Windows compte 175 lancements, 174 captures et 45 sources de réalisation comparées. Les scénarios du Gué restent identiques à la version 0.91 ; cette version améliore le parcours et les bilans sans changement d’équilibrage.
+Le prototype Windows 0.101 est publié sur le dépôt privé. La régression complète archivée passe 85 suites, 33 103 contrôles Godot et 16 tests Python. Le paquet exporté passe 243 cas, produit 242 captures et compare 56 sources. Les 242 captures ne sont pas toutes examinées visuellement. Trois vues supplémentaires ont été inspectées : boutique Horde, aperçu du grenadier et mousquetaire sombre. Des clics d’achat, sélection et recrutement passent 24 contrôles avec le moteur complet chargé sur les ressources du paquet.
 
-La prochaine mission non gagnée est proposée au retour au parcours, sans lancement automatique. Le numéro et le nom de mission restent visibles dans les onglets du bilan ; l’action de placement du premier point de talent est explicite. Ce sont des comportements réalisés, sans présumer leur compréhension par tous les joueurs.
+Ces vérifications portent sur le fonctionnement, pas sur la compréhension de tous les joueurs ou l’équilibrage définitif. Elles n’annoncent ni les 200 missions complètes, ni les difficultés avancées, ni l’infini comme réalisés.
 
-### Essais d’équilibrage à poursuivre
-Les deux factions peuvent réussir les trois cartes sans talents avec certaines compositions. L’exploration automatique de 144 stratégies Horde trouve des réussites sur les deux nouvelles cartes, mais n’est pas un taux de victoire humain. Un faible supplément de PV peut franchir un seuil de tirs nécessaires : 16 + 24 dégâts suffisent à 40 PV, mais plus à 40,4 PV. La courbe doit donc être étudiée avec la géométrie, le placement, les choix de bonus et les talents.
+### Essais et prochaines décisions
+Les simulations de boutique comparent des politiques fixes, des cartes, des talents et des bonus déterminés. Les 7 776 parties de l’essai isolé du grenadier motivent un recrutement à 75 or au lieu de 90, en hypothèse. Elles ne sont pas un taux de victoire humain. Le calendrier de la première amélioration favorise notamment le tarif bas dans une politique : ce biais et les résultats contradictoires selon les stratégies sont conservés dans le compte rendu.
 
-Priorités de décision : difficulté et durée des trois missions ; variété des builds et puissance des talents majeurs ; barème de PO et première offre de boutique ; contenu des prochaines missions ; reprise après interruption et portabilité de la sauvegarde. Aucun nouveau contenu n’est réputé approuvé par cette liste.
+Priorités : compréhension et intérêt des alternatives, puissance des talents majeurs, difficulté des dix missions, barème de PO et XP sur 100 missions, première nouveauté du chapitre 2, reprise d’une mission interrompue et portabilité des sauvegardes. Chaque ajout de contenu exige des règles précises et un essai ; aucune solution à ces questions n’est réputée approuvée par cette liste.
 
-### Sources de consolidation
-Décisions explicites du porteur du projet dans ce tchat, puis confrontation aux documents suivants : `design/Cadrage_campagne_2026-10-29.md`, `design/Experience_talents_2026-10-29.md`, `design/Arbres_lies_v088.md`, `design/Fleches_droites_v089.md`, `design/Catalogue_talents_lies_v089.md`, `design/Parcours_campagne_v090.md`, `design/Echantillon_campagne_v091.md` et `design/Lisibilite_progression_v092.md`. Les sources anciennes décrivent leur version historique ; les règles révisées de ce GDD prévalent.
+### Sources et preuves
+Les décisions du porteur du projet sont confrontées aux sources historiques de la version 0.15 et aux compléments : `design/Biomes_cumul_2026-10-31.md`, `design/Difficultes_campagne_2026-10-31.md`, `design/Grenadier_prix_v0101.md`, aux scripts `campaign_catalogue.gd`, `shop_catalogue.gd`, `meta_profile.gd` et aux rapports `design/essais/v0101_regression.json` et `design/Distribution_Windows_v0101.json`. Les documents datés décrivent leur version ; les règles actuelles consolidées prévalent.
 
-Les preuves sont archivées dans `design/essais/v092_regression.json`, `design/Distribution_Windows_v092.json`, `design/essais/v092_comparaison_combat.json` et `design/essais/v092_rejeux_natifs.json`. La documentation est versionnée séparément du binaire : GDD 0.15, jeu 0.92. La consolidation documentaire ne constitue pas un nouvel essai de jeu humain.
+La documentation est versionnée séparément du binaire : GDD 0.16, jeu 0.101. Cette consolidation ne constitue pas un nouvel essai humain.
+
+<a id="s57"></a>
+
+## 57 Boutique et unités alternatives
+
+### Acquisition et choix de mission
+La boutique est accessible entre missions depuis le parcours de la faction. Débloquer une unité dépense ses PO persistantes ; les achats et la sélection sont conservés après fermeture du jeu. Les comptes et inventaires restent indépendants. Le joueur garde les trois types de départ et choisit au plus une alternative possédée, utilisable durant toute la mission. Ce choix devient fixe au lancement ; l’accès à toutes les alternatives simultanément n’est pas prévu.
+
+Le déblocage permanent ne déploie pas gratuitement une unité : chaque exemplaire se recrute ensuite en or de combat sur un emplacement libre, dans les mêmes phases que les unités de départ. La limite de deux exemplaires par type, les quatre niveaux, les coûts d’amélioration 50/100/150 et la vente à 70 % du total réellement payé s’appliquent aussi. Le prix du grenadier change en v0.101 ; les rapports historiques peuvent être rejoués par le diagnostic avec leur ancien prix, sans modifier le profil joueur.
+
+### Catalogue initial et coûts
+Tous les prix et statistiques de ce catalogue sont H. Les dégâts sont des valeurs de niveau 1 sans talent, bonus ou synergie.
+
+| Faction et unité | Déblocage PO | Recrutement or | Dégâts directs | Intervalle | Portée |
+| --- | --- | --- | --- | --- | --- |
+| Alliance Rôdeur elfe | 180 | 60 | 6 | 0,7 s | 3,5 |
+| Alliance Mousquetaire nain | 240 | 90 | 38 | 4 s | 6 |
+| Horde Traqueur troll | 180 | 65 | 10 | 1,25 s | 4 |
+| Horde Grenadier gobelin | 240 | 75 | 18 | 2 s | 2,7 |
+
+Le rôdeur tire plus vite que l’archer, avec moins de portée et un recrutement plus coûteux. Le mousquetaire porte plus loin que l’arbalétrier, mais recharge lentement et coûte davantage. Le traqueur tire plus vite et plus loin que le lanceur de haches ; ses impacts et son unique rebond sont plus faibles. Son rebond inflige 4 dégâts, à moins d’une unité de distance. Le grenadier touche jusqu’à quatre voisins à 6 dégâts dans un rayon de 1,15 ; il frappe moins fort et porte moins loin que le sapeur. Les distances sont logiques et se projettent en ellipse dans la vue isométrique.
+
+### Spécialisations au niveau 4
+Ces valeurs sont H. Les champs non mentionnés conservent les valeurs ordinaires du niveau 4, avant talents et bonus. Pour le traqueur et le grenadier, la cadence et la portée restent celles du niveau 1.
+
+| Unité et branche | Dégâts directs | Intervalle ou portée modifiés | Effet secondaire |
+| --- | --- | --- | --- |
+| Rôdeur Tir fulgurant | 29,25 | 1 s et portée 4,5 | Aucun |
+| Rôdeur Éclaireur de volée | 14,625 | 0,42 s et portée 3 | Aucun |
+| Mousquetaire Tireur de précision | 180 | 4,8 s et portée 6 | Aucun |
+| Mousquetaire Guetteur des crêtes | 123,5 | 4 s et portée 7,5 | Aucun |
+| Traqueur Chasseur de têtes | 42,5 | Inchangés | 1 rebond à 6,5 dégâts |
+| Traqueur Pisteur des ricochets | 30 | Inchangés | 3 rebonds à 9,2 dégâts chacun |
+| Grenadier Bombardier de siège | 78 | Inchangés | 4 voisins à 16,9 dégâts, rayon 1,15 |
+| Grenadier Éclats dispersés | 48,75 | Inchangés | 6 voisins à 19,5 dégâts, rayon 1,4 |
+
+### Talents bonus et cohérence de faction
+Les talents sont partagés entre Archer et Rôdeur, Arbalétrier et Mousquetaire, Lanceur de haches et Traqueur, Sapeur et Grenadier. Mage et Chaman n’ont pas encore d’alternative. Le texte doit nommer explicitement les bénéficiaires. Les effets s’appliquent au type d’attaque prévu : tirs directs, rebonds ou explosions ; aucun gain secondaire n’est inventé pour une unité dépourvue de ce mécanisme. Le catalogue de la section 55 décrit la famille à travers son défenseur de départ.
+
+Les bonus de mission, aperçus d’achat et inspections utilisent uniquement les bénéficiaires de la faction jouée. La portée et les effets de l’alternative sont consultables avant recrutement. Les visuels restent originaux, dans la direction cartoon retenue ; la version sombre du mousquetaire est la référence, la variante claire reste une source historique inutilisée.
+
+
+<a id="s58"></a>
+
+## 58 Succès et récompenses de campagne
+
+### Principe et premiers objectifs
+Un système de succès est à prévoir ; sa liste complète reste ouverte. Certains succès pourront débloquer des unités, en complément des achats en PO. Les premières pistes du porteur du projet sont les suivantes ; les conditions précises et les unités offertes restent à définir.
+
+| Objectif proposé | Récompense envisagée | État |
+| --- | --- | --- |
+| Terminer les 20 chapitres du Normal | Une nouvelle unité débloquée | Piste à préciser |
+| Terminer les 20 chapitres de l’Héroïque | Une nouvelle unité débloquée | Piste à préciser |
+| Terminer les 20 chapitres du Mythique | Une nouvelle unité débloquée | Piste à préciser |
+
+Vingt chapitres de dix missions représentent 200 missions par difficulté. Ces objectifs de fin de campagne sont distincts du seuil de 100 premières victoires qui ouvre la difficulté suivante. Les dix missions actuelles ne suffisent donc pas à satisfaire ces objectifs.
+
+### Conditions avant réalisation
+Définir si les succès sont propres à chaque faction ou au compte, et quelle faction reçoit chaque unité. Les parcours, banques et talents restent indépendants ; cette proposition n’autorise aucun transfert de contenu entre les camps. Préciser les critères de réussite, les unités et leurs compromis, les éventuels doublons avec la boutique et leur provenance affichée. Le choix actuel de trois types de départ plus une alternative n’est pas automatiquement élargi par une récompense.
+
+Les récompenses devront être persistantes, attribuées une seule fois et préservées lors des migrations. La présentation des succès et l’intégration éventuelle à Steam restent O. Aucun système de succès dédié n’est livré dans le jeu de référence 0.101. Source : `design/Succes_2026-10-31.md`. Les accès à l’infini sont distincts : dix premiers chapitres de campagne dans la difficulté correspondante, selon `design/Infini_difficultes_2026-10-31.md`.

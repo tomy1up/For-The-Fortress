@@ -1,0 +1,31 @@
+{
+  "ok": true,
+  "gdd_version": "0.16",
+  "game_version": "0.101",
+  "sections": 58,
+  "tables_identical_md_docx": 75,
+  "catalogue_talents": 126,
+  "toc_anchors": 58,
+  "gdd_contracts": {
+    "defender_values": 24,
+    "enemy_values": 32,
+    "branch_values": 42,
+    "wave_groups": 26
+  },
+  "xp_thresholds_checked": 51,
+  "runtime_changes": false,
+  "sha256": {
+    "For_the_Fortress_GDD.md": "a4efca75aef20d9ffb9ce3f94edbb0eaac9f8e4ced5004f132b4dfd98018d88c",
+    "For_the_Fortress_GDD.docx": "80dd2d90fcbbad4363d215cba009935d8f2e8c3a34e1e1e3470fa649cb604063"
+  },
+  "pages": 65,
+  "toc_page_numbers_verified": 58,
+  "shop_catalogue_numeric_values": 20,
+  "shop_branch_direct_damage_values": 8,
+  "visual_review": "65 pages examinées. Les pages inchangées entre render_2 et render_4 ont été comparées par empreinte ; toutes les pages modifiées ont été réexaminées. Aucun débordement ou texte tronqué observé.",
+  "game_binary_unchanged": true,
+  "decisions_added": [
+    "succès et premières pistes de récompenses",
+    "infini Normal Héroïque Mythique après dix chapitres correspondants"
+  ]
+}
