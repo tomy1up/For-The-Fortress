@@ -6,6 +6,8 @@
 
 **Version v0.99.1 (31 octobre 2026)** : [teinte du mousquetaire](design/Mousquetaire_v0991.md). La version sombre retenue remplace l’illustration claire dans la boutique et sur le plateau. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.99.1).
 
+**Comparaison des unités de boutique — 7 488 simulations** : [résultats et limites](design/Comparaison_boutique_v0991.md). Les rôles d’ouverture et de renfort donnent des résultats différents ; traqueur et grenadier demandent une attention particulière. Ces politiques fixes ne mesurent pas le taux de victoire humain et ne modifient aucun réglage.
+
 **Comparaison des trois missions — 2 592 simulations** : [résultats et limites](design/Comparaison_trois_missions_v092.md). Deux factions, trois tirages, six placements, quatre compositions et comparaison du premier point en mission 3. Des stratégies sans talent gagnent chaque carte ; géométrie et composition pèsent sur la difficulté. Ces simulations ne mesurent pas le taux de victoire humain et n’entraînent aucun changement d’équilibrage ou de binaire.
 
 **Audit de progression — 512 scénarios** : [résultats et limites](design/Bilan_progression_v078.md). Budget normal, deux placements et quatre configurations de talents ; aucune modification d’équilibrage.

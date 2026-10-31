@@ -530,3 +530,7 @@ La [boutique](Boutique_v099.md) livre deux alternatives proposées par faction, 
 ## Correction v0.99.1 — teinte du mousquetaire
 
 Le porteur du projet retient la version sombre pour sa cohérence avec les autres unités. [Correction et vérifications ciblées](Mousquetaire_v0991.md). Les règles et acquis du prototype v0.99 sont conservés.
+
+## Audit des alternatives — 31 octobre 2026
+
+[3 744 comparaisons appariées, 7 488 simulations](Comparaison_boutique_v0991.md), 475 155 contrôles sans anomalie. Les politiques de substitution et de renfort montrent des écarts importants pour traqueur et grenadier. Aucun réglage modifié : avant équilibrage, comparer aussi un quatrième type prioritaire, car la politique de renfort actuelle ne spécialise jamais cette quatrième unité. Le jeu publié reste v0.99.1.

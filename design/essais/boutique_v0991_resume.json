@@ -1,0 +1,813 @@
+{
+  "schema": 1,
+  "game_version": "0.99.1",
+  "engine": "4.7.2-stable (official)",
+  "pairs": 3744,
+  "runs": 7488,
+  "audit_checks": 475155,
+  "failures": [],
+  "human_win_rate": false,
+  "source_sha256": {
+    "prototype/project.godot": "ded3d4a6ac7730e9ca916cd5cd7fd99fd912f79f12601825caf231afb2a9fbf3",
+    "prototype/scripts/alliance_art.gd": "57cf3d79191acb0d30d13d2e62c46d5d45ca7f4d3850c0922fe26b29dc9026e4",
+    "prototype/scripts/campaign_catalogue.gd": "3e7cebf31676730399f2eb6a5f3eb9b0ee0752695673b6f7f7f4197e093db58c",
+    "prototype/scripts/campaign_data.gd": "a7a5158d7596f3579c921a0ac6656455f4a70468f581e497d608be08e8ebdd32",
+    "prototype/scripts/campaign_screen.gd": "d277a69615b52ebc26d409dd310eae8044192eb34449670d70a3ba5df2adb56b",
+    "prototype/scripts/combat_metrics.gd": "10a2a00aa85c0b430dbec33f3b457e66ce74b36e36b6fae91d4a26fff17ebf4b",
+    "prototype/scripts/enemy_art.gd": "230c9f000da994fdc66c1a22220e48e3d0c2d7177617c6e294fda52c6664d7d0",
+    "prototype/scripts/enemy_catalogue.gd": "30a17d859da5600d444b6da83795f5995525e45cbb4a49eb183933f2e7f06646",
+    "prototype/scripts/horde_art.gd": "48f4f70156974eb3b7a5d6d76a6588bce974986bc3a57d5a33bf2d9bcf5ccd16",
+    "prototype/scripts/main.gd": "bc4dfcc820c818e840a2aa7ce97ad2d26a33952ec49fd94f35bc83867ae067ba",
+    "prototype/scripts/map_definition.gd": "56fdf18eb6146d8d653df86b9f3d264b52402f920c3a2b7af9ad242c7d4cb21d",
+    "prototype/scripts/meta_profile.gd": "b2b2068a06ca4cccba0f0f07f8e6c7bbf25ea5ddedf72040f50e3437a84607d3",
+    "prototype/scripts/meta_screen.gd": "32cab78fdc4560f0a4df042f3cc2ff77225bdfaaa2c58aeae694e3758580f8a5",
+    "prototype/scripts/meta_talents.gd": "f8c865ff3e34c88f7fac254a9f30642d2d7337f32de066904ea113a4ee44f723",
+    "prototype/scripts/meta_talents_expanded.gd": "d40e49cc31fa06ed567ca20c11b2ea435d3611e67e67de2f83036ea2335b5d1f",
+    "prototype/scripts/meta_talents_linked.gd": "e3b27997702989601ff1a96f8e4f94ae29dc130add01d5a9bd709d8264d04f96",
+    "prototype/scripts/meta_talents_v067.gd": "58e0786de434ea3ad0cf9ce9fece3224807fdc5543be64fb09494e8278b53080",
+    "prototype/scripts/meta_talents_v068.gd": "700640a11d025cf328de5f74a7ef8cd9398f801a88fb6d31661bf5a595b93047",
+    "prototype/scripts/mission_progress.gd": "06bdc89e7258687865026c53492d640ebc009b840f868eb55256c8633d25e4fd",
+    "prototype/scripts/profile_codec.gd": "1b6227ad26ca9d69e8e02c9eeddd2ed90265aa6b76e5b991a4ac8964d7a0b3b6",
+    "prototype/scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755",
+    "prototype/scripts/run_report.gd": "9a362bb193165083b99840633a0344ece8ff9eb5fa34f0de9e4da3414c9229c1",
+    "prototype/scripts/shop_art.gd": "28ef4501e7ae9ba0ddb7e59a648c5ac8e81dc2a840cdd83518d7c8ec131cd95f",
+    "prototype/scripts/shop_catalogue.gd": "999a5de4754595ad9221e36636cb62ab29bea1af60a12ce18b8fe73f63a4d831",
+    "prototype/scripts/shop_screen.gd": "52896f9176fc6f0527688b8cdfdfe527c380695caa20cdfd45b080d99f627add",
+    "prototype/scripts/talent_experience.gd": "41deb488348374da2686f283790038b7eeff51c23b03dc0e7f12ae21f2c86e4a",
+    "prototype/scripts/valley_model.gd": "80a2092849030a0f2c10a5beea25ee9a84af9558089338f73d88adacbc23cf8a",
+    "prototype/scripts/valley_view.gd": "d4cd37947c50f0b68980829b8a997670d160d79eb75d3bf9c13d823ec26847fd",
+    "prototype/tests/survey_shop.gd": "b46f76918b9d05fb626d4ae199ddd6a8a1ce8592ee2d4089aebf3ea380a008dd",
+    "prototype/tests/analyse_shop.py": "e0a66f155dcb8c5aa4c04d906ac7a6b4be896e183ad86a29e590c9ba930ff401"
+  },
+  "groups": {
+    "alliance.musketeer / renfort": {
+      "pairs": 432,
+      "missions": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "base_wins": 426,
+      "alternative_wins": 420,
+      "loss_to_win": 6,
+      "win_to_loss": 12,
+      "alternative_not_recruited": 4,
+      "alternative_specialized": 0,
+      "both_won": 414,
+      "hp_delta_mean_both_won": -0.87,
+      "hp_delta_min_both_won": -12,
+      "hp_delta_max_both_won": 11,
+      "talent_points_available": [
+        2,
+        3,
+        4
+      ]
+    },
+    "alliance.musketeer / substitution": {
+      "pairs": 432,
+      "missions": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "base_wins": 360,
+      "alternative_wins": 280,
+      "loss_to_win": 6,
+      "win_to_loss": 86,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 282,
+      "both_won": 274,
+      "hp_delta_mean_both_won": -1.135,
+      "hp_delta_min_both_won": -11,
+      "hp_delta_max_both_won": 9,
+      "talent_points_available": [
+        2,
+        3,
+        4
+      ]
+    },
+    "alliance.scout / renfort": {
+      "pairs": 504,
+      "missions": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "base_wins": 492,
+      "alternative_wins": 486,
+      "loss_to_win": 2,
+      "win_to_loss": 8,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 0,
+      "both_won": 484,
+      "hp_delta_mean_both_won": -0.145,
+      "hp_delta_min_both_won": -11,
+      "hp_delta_max_both_won": 8,
+      "talent_points_available": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "alliance.scout / substitution": {
+      "pairs": 504,
+      "missions": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "base_wins": 446,
+      "alternative_wins": 436,
+      "loss_to_win": 12,
+      "win_to_loss": 22,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 436,
+      "both_won": 424,
+      "hp_delta_mean_both_won": -0.149,
+      "hp_delta_min_both_won": -13,
+      "hp_delta_max_both_won": 12,
+      "talent_points_available": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "horde.grenadier / renfort": {
+      "pairs": 432,
+      "missions": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "base_wins": 194,
+      "alternative_wins": 181,
+      "loss_to_win": 11,
+      "win_to_loss": 24,
+      "alternative_not_recruited": 140,
+      "alternative_specialized": 0,
+      "both_won": 170,
+      "hp_delta_mean_both_won": -4.506,
+      "hp_delta_min_both_won": -14,
+      "hp_delta_max_both_won": 7,
+      "talent_points_available": [
+        2,
+        3,
+        4
+      ]
+    },
+    "horde.grenadier / substitution": {
+      "pairs": 432,
+      "missions": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "base_wins": 345,
+      "alternative_wins": 150,
+      "loss_to_win": 0,
+      "win_to_loss": 195,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 150,
+      "both_won": 150,
+      "hp_delta_mean_both_won": -5.947,
+      "hp_delta_min_both_won": -14,
+      "hp_delta_max_both_won": 5,
+      "talent_points_available": [
+        2,
+        3,
+        4
+      ]
+    },
+    "horde.tracker / renfort": {
+      "pairs": 504,
+      "missions": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "base_wins": 226,
+      "alternative_wins": 228,
+      "loss_to_win": 23,
+      "win_to_loss": 21,
+      "alternative_not_recruited": 84,
+      "alternative_specialized": 0,
+      "both_won": 205,
+      "hp_delta_mean_both_won": -1.024,
+      "hp_delta_min_both_won": -13,
+      "hp_delta_max_both_won": 5,
+      "talent_points_available": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "horde.tracker / substitution": {
+      "pairs": 504,
+      "missions": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "base_wins": 149,
+      "alternative_wins": 334,
+      "loss_to_win": 195,
+      "win_to_loss": 10,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 334,
+      "both_won": 139,
+      "hp_delta_mean_both_won": 6.108,
+      "hp_delta_min_both_won": 0,
+      "hp_delta_max_both_won": 14,
+      "talent_points_available": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "by_mission": [
+    {
+      "card": "alliance.musketeer",
+      "mission": 5,
+      "pairs": 144,
+      "missions": [
+        5
+      ],
+      "base_wins": 117,
+      "alternative_wins": 109,
+      "loss_to_win": 2,
+      "win_to_loss": 10,
+      "alternative_not_recruited": 4,
+      "alternative_specialized": 42,
+      "both_won": 107,
+      "hp_delta_mean_both_won": -0.944,
+      "hp_delta_min_both_won": -12,
+      "hp_delta_max_both_won": 6,
+      "talent_points_available": [
+        2
+      ]
+    },
+    {
+      "card": "alliance.musketeer",
+      "mission": 6,
+      "pairs": 144,
+      "missions": [
+        6
+      ],
+      "base_wins": 144,
+      "alternative_wins": 144,
+      "loss_to_win": 0,
+      "win_to_loss": 0,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 72,
+      "both_won": 144,
+      "hp_delta_mean_both_won": -0.819,
+      "hp_delta_min_both_won": -9,
+      "hp_delta_max_both_won": 5,
+      "talent_points_available": [
+        2
+      ]
+    },
+    {
+      "card": "alliance.musketeer",
+      "mission": 7,
+      "pairs": 144,
+      "missions": [
+        7
+      ],
+      "base_wins": 128,
+      "alternative_wins": 113,
+      "loss_to_win": 4,
+      "win_to_loss": 19,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 42,
+      "both_won": 109,
+      "hp_delta_mean_both_won": -1.128,
+      "hp_delta_min_both_won": -12,
+      "hp_delta_max_both_won": 7,
+      "talent_points_available": [
+        3
+      ]
+    },
+    {
+      "card": "alliance.musketeer",
+      "mission": 8,
+      "pairs": 144,
+      "missions": [
+        8
+      ],
+      "base_wins": 142,
+      "alternative_wins": 130,
+      "loss_to_win": 0,
+      "win_to_loss": 12,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 58,
+      "both_won": 130,
+      "hp_delta_mean_both_won": -1.015,
+      "hp_delta_min_both_won": -9,
+      "hp_delta_max_both_won": 6,
+      "talent_points_available": [
+        3
+      ]
+    },
+    {
+      "card": "alliance.musketeer",
+      "mission": 9,
+      "pairs": 144,
+      "missions": [
+        9
+      ],
+      "base_wins": 116,
+      "alternative_wins": 102,
+      "loss_to_win": 6,
+      "win_to_loss": 20,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 30,
+      "both_won": 96,
+      "hp_delta_mean_both_won": -0.469,
+      "hp_delta_min_both_won": -11,
+      "hp_delta_max_both_won": 11,
+      "talent_points_available": [
+        4
+      ]
+    },
+    {
+      "card": "alliance.musketeer",
+      "mission": 10,
+      "pairs": 144,
+      "missions": [
+        10
+      ],
+      "base_wins": 139,
+      "alternative_wins": 102,
+      "loss_to_win": 0,
+      "win_to_loss": 37,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 38,
+      "both_won": 102,
+      "hp_delta_mean_both_won": -1.49,
+      "hp_delta_min_both_won": -11,
+      "hp_delta_max_both_won": 6,
+      "talent_points_available": [
+        4
+      ]
+    },
+    {
+      "card": "alliance.scout",
+      "mission": 4,
+      "pairs": 144,
+      "missions": [
+        4
+      ],
+      "base_wins": 124,
+      "alternative_wins": 116,
+      "loss_to_win": 2,
+      "win_to_loss": 10,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 52,
+      "both_won": 114,
+      "hp_delta_mean_both_won": 0.982,
+      "hp_delta_min_both_won": -10,
+      "hp_delta_max_both_won": 8,
+      "talent_points_available": [
+        1
+      ]
+    },
+    {
+      "card": "alliance.scout",
+      "mission": 5,
+      "pairs": 144,
+      "missions": [
+        5
+      ],
+      "base_wins": 124,
+      "alternative_wins": 120,
+      "loss_to_win": 2,
+      "win_to_loss": 6,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 52,
+      "both_won": 118,
+      "hp_delta_mean_both_won": -0.653,
+      "hp_delta_min_both_won": -13,
+      "hp_delta_max_both_won": 8,
+      "talent_points_available": [
+        2
+      ]
+    },
+    {
+      "card": "alliance.scout",
+      "mission": 6,
+      "pairs": 144,
+      "missions": [
+        6
+      ],
+      "base_wins": 144,
+      "alternative_wins": 144,
+      "loss_to_win": 0,
+      "win_to_loss": 0,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 72,
+      "both_won": 144,
+      "hp_delta_mean_both_won": 0.014,
+      "hp_delta_min_both_won": -12,
+      "hp_delta_max_both_won": 12,
+      "talent_points_available": [
+        2
+      ]
+    },
+    {
+      "card": "alliance.scout",
+      "mission": 7,
+      "pairs": 144,
+      "missions": [
+        7
+      ],
+      "base_wins": 132,
+      "alternative_wins": 126,
+      "loss_to_win": 2,
+      "win_to_loss": 8,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 58,
+      "both_won": 124,
+      "hp_delta_mean_both_won": -1.645,
+      "hp_delta_min_both_won": -11,
+      "hp_delta_max_both_won": 4,
+      "talent_points_available": [
+        3
+      ]
+    },
+    {
+      "card": "alliance.scout",
+      "mission": 8,
+      "pairs": 144,
+      "missions": [
+        8
+      ],
+      "base_wins": 140,
+      "alternative_wins": 144,
+      "loss_to_win": 4,
+      "win_to_loss": 0,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 72,
+      "both_won": 140,
+      "hp_delta_mean_both_won": 0.114,
+      "hp_delta_min_both_won": -5,
+      "hp_delta_max_both_won": 7,
+      "talent_points_available": [
+        3
+      ]
+    },
+    {
+      "card": "alliance.scout",
+      "mission": 9,
+      "pairs": 144,
+      "missions": [
+        9
+      ],
+      "base_wins": 138,
+      "alternative_wins": 132,
+      "loss_to_win": 0,
+      "win_to_loss": 6,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 62,
+      "both_won": 132,
+      "hp_delta_mean_both_won": -0.045,
+      "hp_delta_min_both_won": -9,
+      "hp_delta_max_both_won": 8,
+      "talent_points_available": [
+        4
+      ]
+    },
+    {
+      "card": "alliance.scout",
+      "mission": 10,
+      "pairs": 144,
+      "missions": [
+        10
+      ],
+      "base_wins": 136,
+      "alternative_wins": 140,
+      "loss_to_win": 4,
+      "win_to_loss": 0,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 68,
+      "both_won": 136,
+      "hp_delta_mean_both_won": 0.176,
+      "hp_delta_min_both_won": -11,
+      "hp_delta_max_both_won": 12,
+      "talent_points_available": [
+        4
+      ]
+    },
+    {
+      "card": "horde.grenadier",
+      "mission": 5,
+      "pairs": 144,
+      "missions": [
+        5
+      ],
+      "base_wins": 81,
+      "alternative_wins": 53,
+      "loss_to_win": 3,
+      "win_to_loss": 31,
+      "alternative_not_recruited": 32,
+      "alternative_specialized": 22,
+      "both_won": 50,
+      "hp_delta_mean_both_won": -5.36,
+      "hp_delta_min_both_won": -14,
+      "hp_delta_max_both_won": 3,
+      "talent_points_available": [
+        2
+      ]
+    },
+    {
+      "card": "horde.grenadier",
+      "mission": 6,
+      "pairs": 144,
+      "missions": [
+        6
+      ],
+      "base_wins": 78,
+      "alternative_wins": 64,
+      "loss_to_win": 0,
+      "win_to_loss": 14,
+      "alternative_not_recruited": 40,
+      "alternative_specialized": 40,
+      "both_won": 64,
+      "hp_delta_mean_both_won": -5.031,
+      "hp_delta_min_both_won": -14,
+      "hp_delta_max_both_won": 1,
+      "talent_points_available": [
+        2
+      ]
+    },
+    {
+      "card": "horde.grenadier",
+      "mission": 7,
+      "pairs": 144,
+      "missions": [
+        7
+      ],
+      "base_wins": 116,
+      "alternative_wins": 84,
+      "loss_to_win": 8,
+      "win_to_loss": 40,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 28,
+      "both_won": 76,
+      "hp_delta_mean_both_won": -4.5,
+      "hp_delta_min_both_won": -13,
+      "hp_delta_max_both_won": 7,
+      "talent_points_available": [
+        3
+      ]
+    },
+    {
+      "card": "horde.grenadier",
+      "mission": 8,
+      "pairs": 144,
+      "missions": [
+        8
+      ],
+      "base_wins": 102,
+      "alternative_wins": 70,
+      "loss_to_win": 0,
+      "win_to_loss": 32,
+      "alternative_not_recruited": 6,
+      "alternative_specialized": 42,
+      "both_won": 70,
+      "hp_delta_mean_both_won": -5.629,
+      "hp_delta_min_both_won": -13,
+      "hp_delta_max_both_won": 3,
+      "talent_points_available": [
+        3
+      ]
+    },
+    {
+      "card": "horde.grenadier",
+      "mission": 9,
+      "pairs": 144,
+      "missions": [
+        9
+      ],
+      "base_wins": 80,
+      "alternative_wins": 42,
+      "loss_to_win": 0,
+      "win_to_loss": 38,
+      "alternative_not_recruited": 36,
+      "alternative_specialized": 10,
+      "both_won": 42,
+      "hp_delta_mean_both_won": -4.429,
+      "hp_delta_min_both_won": -11,
+      "hp_delta_max_both_won": 0,
+      "talent_points_available": [
+        4
+      ]
+    },
+    {
+      "card": "horde.grenadier",
+      "mission": 10,
+      "pairs": 144,
+      "missions": [
+        10
+      ],
+      "base_wins": 82,
+      "alternative_wins": 18,
+      "loss_to_win": 0,
+      "win_to_loss": 64,
+      "alternative_not_recruited": 26,
+      "alternative_specialized": 8,
+      "both_won": 18,
+      "hp_delta_mean_both_won": -8.111,
+      "hp_delta_min_both_won": -11,
+      "hp_delta_max_both_won": -6,
+      "talent_points_available": [
+        4
+      ]
+    },
+    {
+      "card": "horde.tracker",
+      "mission": 4,
+      "pairs": 144,
+      "missions": [
+        4
+      ],
+      "base_wins": 10,
+      "alternative_wins": 41,
+      "loss_to_win": 31,
+      "win_to_loss": 0,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 30,
+      "both_won": 10,
+      "hp_delta_mean_both_won": -2,
+      "hp_delta_min_both_won": -6,
+      "hp_delta_max_both_won": 0,
+      "talent_points_available": [
+        1
+      ]
+    },
+    {
+      "card": "horde.tracker",
+      "mission": 5,
+      "pairs": 144,
+      "missions": [
+        5
+      ],
+      "base_wins": 64,
+      "alternative_wins": 72,
+      "loss_to_win": 8,
+      "win_to_loss": 0,
+      "alternative_not_recruited": 24,
+      "alternative_specialized": 36,
+      "both_won": 64,
+      "hp_delta_mean_both_won": 2.812,
+      "hp_delta_min_both_won": -5,
+      "hp_delta_max_both_won": 11,
+      "talent_points_available": [
+        2
+      ]
+    },
+    {
+      "card": "horde.tracker",
+      "mission": 6,
+      "pairs": 144,
+      "missions": [
+        6
+      ],
+      "base_wins": 38,
+      "alternative_wins": 84,
+      "loss_to_win": 50,
+      "win_to_loss": 4,
+      "alternative_not_recruited": 36,
+      "alternative_specialized": 50,
+      "both_won": 34,
+      "hp_delta_mean_both_won": 0.529,
+      "hp_delta_min_both_won": -8,
+      "hp_delta_max_both_won": 13,
+      "talent_points_available": [
+        2
+      ]
+    },
+    {
+      "card": "horde.tracker",
+      "mission": 7,
+      "pairs": 144,
+      "missions": [
+        7
+      ],
+      "base_wins": 106,
+      "alternative_wins": 114,
+      "loss_to_win": 22,
+      "win_to_loss": 14,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 62,
+      "both_won": 92,
+      "hp_delta_mean_both_won": 1.5,
+      "hp_delta_min_both_won": -13,
+      "hp_delta_max_both_won": 8,
+      "talent_points_available": [
+        3
+      ]
+    },
+    {
+      "card": "horde.tracker",
+      "mission": 8,
+      "pairs": 144,
+      "missions": [
+        8
+      ],
+      "base_wins": 68,
+      "alternative_wins": 90,
+      "loss_to_win": 28,
+      "win_to_loss": 6,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 54,
+      "both_won": 62,
+      "hp_delta_mean_both_won": 3.677,
+      "hp_delta_min_both_won": -7,
+      "hp_delta_max_both_won": 14,
+      "talent_points_available": [
+        3
+      ]
+    },
+    {
+      "card": "horde.tracker",
+      "mission": 9,
+      "pairs": 144,
+      "missions": [
+        9
+      ],
+      "base_wins": 55,
+      "alternative_wins": 80,
+      "loss_to_win": 27,
+      "win_to_loss": 2,
+      "alternative_not_recruited": 24,
+      "alternative_specialized": 48,
+      "both_won": 53,
+      "hp_delta_mean_both_won": 1.038,
+      "hp_delta_min_both_won": -5,
+      "hp_delta_max_both_won": 8,
+      "talent_points_available": [
+        4
+      ]
+    },
+    {
+      "card": "horde.tracker",
+      "mission": 10,
+      "pairs": 144,
+      "missions": [
+        10
+      ],
+      "base_wins": 34,
+      "alternative_wins": 81,
+      "loss_to_win": 52,
+      "win_to_loss": 5,
+      "alternative_not_recruited": 0,
+      "alternative_specialized": 54,
+      "both_won": 29,
+      "hp_delta_mean_both_won": 1.379,
+      "hp_delta_min_both_won": -12,
+      "hp_delta_max_both_won": 13,
+      "talent_points_available": [
+        4
+      ]
+    }
+  ],
+  "releves_sha256": "933833acaa7226f69b6a77f07a0ae660af6965a2ec1efcf547a4c911a7c8084b",
+  "unchanged_runtime_sources_from_v0991": 56,
+  "method_godot_checks": 90,
+  "method_python_tests": 16,
+  "method_report": "boutique_v0991_controle_methode.json"
+}
