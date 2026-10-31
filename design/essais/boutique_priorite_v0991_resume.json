@@ -1,0 +1,349 @@
+{
+  "schema": 1,
+  "game_version": "0.99.1",
+  "baseline_game_version": "0.99.1",
+  "engine": "4.7.2-stable (official)",
+  "pairs": 1872,
+  "runs": 3744,
+  "audit_checks": 245933,
+  "failures": [],
+  "human_win_rate": false,
+  "baseline_sha256": "933833acaa7226f69b6a77f07a0ae660af6965a2ec1efcf547a4c911a7c8084b",
+  "source_sha256": {
+    "prototype/project.godot": "ded3d4a6ac7730e9ca916cd5cd7fd99fd912f79f12601825caf231afb2a9fbf3",
+    "prototype/scripts/alliance_art.gd": "57cf3d79191acb0d30d13d2e62c46d5d45ca7f4d3850c0922fe26b29dc9026e4",
+    "prototype/scripts/campaign_catalogue.gd": "3e7cebf31676730399f2eb6a5f3eb9b0ee0752695673b6f7f7f4197e093db58c",
+    "prototype/scripts/campaign_data.gd": "a7a5158d7596f3579c921a0ac6656455f4a70468f581e497d608be08e8ebdd32",
+    "prototype/scripts/campaign_screen.gd": "d277a69615b52ebc26d409dd310eae8044192eb34449670d70a3ba5df2adb56b",
+    "prototype/scripts/combat_metrics.gd": "10a2a00aa85c0b430dbec33f3b457e66ce74b36e36b6fae91d4a26fff17ebf4b",
+    "prototype/scripts/enemy_art.gd": "230c9f000da994fdc66c1a22220e48e3d0c2d7177617c6e294fda52c6664d7d0",
+    "prototype/scripts/enemy_catalogue.gd": "30a17d859da5600d444b6da83795f5995525e45cbb4a49eb183933f2e7f06646",
+    "prototype/scripts/horde_art.gd": "48f4f70156974eb3b7a5d6d76a6588bce974986bc3a57d5a33bf2d9bcf5ccd16",
+    "prototype/scripts/main.gd": "bc4dfcc820c818e840a2aa7ce97ad2d26a33952ec49fd94f35bc83867ae067ba",
+    "prototype/scripts/map_definition.gd": "56fdf18eb6146d8d653df86b9f3d264b52402f920c3a2b7af9ad242c7d4cb21d",
+    "prototype/scripts/meta_profile.gd": "b2b2068a06ca4cccba0f0f07f8e6c7bbf25ea5ddedf72040f50e3437a84607d3",
+    "prototype/scripts/meta_screen.gd": "32cab78fdc4560f0a4df042f3cc2ff77225bdfaaa2c58aeae694e3758580f8a5",
+    "prototype/scripts/meta_talents.gd": "f8c865ff3e34c88f7fac254a9f30642d2d7337f32de066904ea113a4ee44f723",
+    "prototype/scripts/meta_talents_expanded.gd": "d40e49cc31fa06ed567ca20c11b2ea435d3611e67e67de2f83036ea2335b5d1f",
+    "prototype/scripts/meta_talents_linked.gd": "e3b27997702989601ff1a96f8e4f94ae29dc130add01d5a9bd709d8264d04f96",
+    "prototype/scripts/meta_talents_v067.gd": "58e0786de434ea3ad0cf9ce9fece3224807fdc5543be64fb09494e8278b53080",
+    "prototype/scripts/meta_talents_v068.gd": "700640a11d025cf328de5f74a7ef8cd9398f801a88fb6d31661bf5a595b93047",
+    "prototype/scripts/mission_progress.gd": "06bdc89e7258687865026c53492d640ebc009b840f868eb55256c8633d25e4fd",
+    "prototype/scripts/profile_codec.gd": "1b6227ad26ca9d69e8e02c9eeddd2ed90265aa6b76e5b991a4ac8964d7a0b3b6",
+    "prototype/scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755",
+    "prototype/scripts/run_report.gd": "9a362bb193165083b99840633a0344ece8ff9eb5fa34f0de9e4da3414c9229c1",
+    "prototype/scripts/shop_art.gd": "28ef4501e7ae9ba0ddb7e59a648c5ac8e81dc2a840cdd83518d7c8ec131cd95f",
+    "prototype/scripts/shop_catalogue.gd": "999a5de4754595ad9221e36636cb62ab29bea1af60a12ce18b8fe73f63a4d831",
+    "prototype/scripts/shop_screen.gd": "52896f9176fc6f0527688b8cdfdfe527c380695caa20cdfd45b080d99f627add",
+    "prototype/scripts/talent_experience.gd": "41deb488348374da2686f283790038b7eeff51c23b03dc0e7f12ae21f2c86e4a",
+    "prototype/scripts/valley_model.gd": "80a2092849030a0f2c10a5beea25ee9a84af9558089338f73d88adacbc23cf8a",
+    "prototype/scripts/valley_view.gd": "d4cd37947c50f0b68980829b8a997670d160d79eb75d3bf9c13d823ec26847fd",
+    "prototype/tests/survey_shop.gd": "726efa5c2d13fc7ed86224dd6f1ea2be014c100d9232740407d6461fb3658e23",
+    "prototype/tests/survey_shop_priority.gd": "ac7bef8ead3b371792fcfbcd4c5f5efd5a60d28406ef10756858cd53a28e00a7",
+    "prototype/tests/analyse_shop.py": "bcb9fdaee585a9f30e0903def13563844fd649456c91724481f9a0b6dbf21da4",
+    "prototype/tests/analyse_shop_priority.py": "37472c484d2f9051e99b3f7e8a71d9a5c0f324260808b686acee1bf18ebed4da"
+  },
+  "releves_sha256": "cc127eb894ad0a756e5645fba839eba4dea45859aa7c0d85d85315b3a34d8a77",
+  "groups": {
+    "alliance.musketeer": {
+      "previous": {
+        "pairs": 432,
+        "missions": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "base_wins": 426,
+        "alternative_wins": 420,
+        "loss_to_win": 6,
+        "win_to_loss": 12,
+        "alternative_not_recruited": 4,
+        "alternative_specialized": 0,
+        "both_won": 414,
+        "hp_delta_mean_both_won": -0.87,
+        "hp_delta_min_both_won": -12,
+        "hp_delta_max_both_won": 11,
+        "talent_points_available": [
+          2,
+          3,
+          4
+        ]
+      },
+      "priority": {
+        "pairs": 432,
+        "missions": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "base_wins": 418,
+        "alternative_wins": 406,
+        "loss_to_win": 4,
+        "win_to_loss": 16,
+        "alternative_not_recruited": 4,
+        "alternative_specialized": 408,
+        "both_won": 402,
+        "hp_delta_mean_both_won": -0.6,
+        "hp_delta_min_both_won": -19,
+        "hp_delta_max_both_won": 14,
+        "talent_points_available": [
+          2,
+          3,
+          4
+        ]
+      },
+      "allocation_effect": {
+        "base": {
+          "loss_to_win": 0,
+          "win_to_loss": 8,
+          "fourth_specialized_by_branch": {
+            "0": 209,
+            "1": 209
+          }
+        },
+        "alternative": {
+          "loss_to_win": 0,
+          "win_to_loss": 14,
+          "fourth_specialized_by_branch": {
+            "0": 204,
+            "1": 204
+          }
+        }
+      }
+    },
+    "alliance.scout": {
+      "previous": {
+        "pairs": 504,
+        "missions": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "base_wins": 492,
+        "alternative_wins": 486,
+        "loss_to_win": 2,
+        "win_to_loss": 8,
+        "alternative_not_recruited": 0,
+        "alternative_specialized": 0,
+        "both_won": 484,
+        "hp_delta_mean_both_won": -0.145,
+        "hp_delta_min_both_won": -11,
+        "hp_delta_max_both_won": 8,
+        "talent_points_available": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "priority": {
+        "pairs": 504,
+        "missions": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "base_wins": 490,
+        "alternative_wins": 465,
+        "loss_to_win": 2,
+        "win_to_loss": 27,
+        "alternative_not_recruited": 0,
+        "alternative_specialized": 466,
+        "both_won": 463,
+        "hp_delta_mean_both_won": -0.266,
+        "hp_delta_min_both_won": -11,
+        "hp_delta_max_both_won": 6,
+        "talent_points_available": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "allocation_effect": {
+        "base": {
+          "loss_to_win": 0,
+          "win_to_loss": 2,
+          "fourth_specialized_by_branch": {
+            "0": 246,
+            "1": 246
+          }
+        },
+        "alternative": {
+          "loss_to_win": 2,
+          "win_to_loss": 23,
+          "fourth_specialized_by_branch": {
+            "0": 233,
+            "1": 233
+          }
+        }
+      }
+    },
+    "horde.grenadier": {
+      "previous": {
+        "pairs": 432,
+        "missions": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "base_wins": 194,
+        "alternative_wins": 181,
+        "loss_to_win": 11,
+        "win_to_loss": 24,
+        "alternative_not_recruited": 140,
+        "alternative_specialized": 0,
+        "both_won": 170,
+        "hp_delta_mean_both_won": -4.506,
+        "hp_delta_min_both_won": -14,
+        "hp_delta_max_both_won": 7,
+        "talent_points_available": [
+          2,
+          3,
+          4
+        ]
+      },
+      "priority": {
+        "pairs": 432,
+        "missions": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "base_wins": 174,
+        "alternative_wins": 133,
+        "loss_to_win": 11,
+        "win_to_loss": 52,
+        "alternative_not_recruited": 154,
+        "alternative_specialized": 144,
+        "both_won": 122,
+        "hp_delta_mean_both_won": -3.582,
+        "hp_delta_min_both_won": -12,
+        "hp_delta_max_both_won": 11,
+        "talent_points_available": [
+          2,
+          3,
+          4
+        ]
+      },
+      "allocation_effect": {
+        "base": {
+          "loss_to_win": 6,
+          "win_to_loss": 26,
+          "fourth_specialized_by_branch": {
+            "0": 91,
+            "1": 91
+          }
+        },
+        "alternative": {
+          "loss_to_win": 0,
+          "win_to_loss": 48,
+          "fourth_specialized_by_branch": {
+            "0": 72,
+            "1": 72
+          }
+        }
+      }
+    },
+    "horde.tracker": {
+      "previous": {
+        "pairs": 504,
+        "missions": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "base_wins": 226,
+        "alternative_wins": 228,
+        "loss_to_win": 23,
+        "win_to_loss": 21,
+        "alternative_not_recruited": 84,
+        "alternative_specialized": 0,
+        "both_won": 205,
+        "hp_delta_mean_both_won": -1.024,
+        "hp_delta_min_both_won": -13,
+        "hp_delta_max_both_won": 5,
+        "talent_points_available": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "priority": {
+        "pairs": 504,
+        "missions": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "base_wins": 208,
+        "alternative_wins": 220,
+        "loss_to_win": 30,
+        "win_to_loss": 18,
+        "alternative_not_recruited": 84,
+        "alternative_specialized": 220,
+        "both_won": 190,
+        "hp_delta_mean_both_won": -1.889,
+        "hp_delta_min_both_won": -11,
+        "hp_delta_max_both_won": 9,
+        "talent_points_available": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "allocation_effect": {
+        "base": {
+          "loss_to_win": 6,
+          "win_to_loss": 24,
+          "fourth_specialized_by_branch": {
+            "0": 106,
+            "1": 106
+          }
+        },
+        "alternative": {
+          "loss_to_win": 24,
+          "win_to_loss": 32,
+          "fourth_specialized_by_branch": {
+            "0": 110,
+            "1": 110
+          }
+        }
+      }
+    }
+  },
+  "unchanged_runtime_sources_during_study": 56,
+  "method_godot_checks": 151,
+  "method_python_tests": 16,
+  "analysis_repeated_on_exact_experiment_sources": true
+}

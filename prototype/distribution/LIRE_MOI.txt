@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.99.1 — 31 octobre 2026
+Version : 0.100 — 31 octobre 2026
 
 JOUER
 
@@ -58,7 +58,7 @@ Premier point à 197 XP, donc après deux premières victoires distinctes. Aprè
 dix missions, un profil neuf a 1 000 XP, cinq points et 600 PO hors dépenses.
 Le cinquième point arrive après la mission 10 et ne facilite pas sa première victoire.
 Le rejeu ne donne aucun nouveau gain ; les missions 11 à 200 restent à développer.
-Les PO sont destinées à la future boutique, qui n’est pas encore jouable.
+Les PO débloquent des unités dans la boutique accessible depuis le parcours.
 L’or de combat sert au recrutement et aux améliorations pendant la mission.
 
 Le bilan indique les gains réellement enregistrés et l’XP totale. Si l’écriture échoue,
@@ -127,10 +127,11 @@ PRÉPARATION DE LA CAMPAGNE
 
 Le Gué utilise le registre des premières victoires. Les cent premières missions de
 référence doivent débloquer 51 points par XP. Les missions 1 à 200 donneront aussi
-leurs PO de première victoire, pour les achats de boutique. Seul le Gué est jouable.
+leurs PO de première victoire, pour les achats de boutique. Dix missions du Gué sont jouables.
 La progression, les succès et l’ouverture de l’infini sont indépendants par faction.
-Le schéma 6 introduit en v0.88 est conservé. Les premières réussites déjà enregistrées
-apparaissent dans le parcours ; aucune migration supplémentaire ni gain rétroactif.
+Le schéma 7 conserve les premières réussites déjà enregistrées et ajoute les achats
+et le choix d’unité de chaque faction. L’ancien schéma 6 est archivé avant conversion ;
+aucun gain rétroactif n’est ajouté.
 PO, XP et points sont conservés. Une ancienne répartition incompatible avec les
 nouveaux liens est remise à zéro gratuitement : tous ses points restent disponibles.
 Une répartition déjà compatible est conservée. Les anciens rapports restent rejouables.
@@ -164,7 +165,7 @@ For the Fortress! reste un nom de travail dont la disponibilité juridique est �
 PARCOURS ET BILAN
 
 Le retour au parcours propose la prochaine mission jouable encore à réussir.
-Après les trois réussites, la dernière mission reste proposée en rejeu sans gain.
+Après les dix réussites, la dernière mission reste proposée en rejeu sans gain.
 Le joueur clique toujours pour lancer la mission et peut choisir une autre position.
 Une sélection manuelle reste conservée quand on consulte puis ferme les talents.
 Le bilan montre l’XP gagnée, son total et les points à placer ou l’XP du prochain point.

@@ -15,7 +15,7 @@ CARDS = {'alliance.scout': (0, 6, 0, 180, 4),
 FIELDS = ['card', 'mission', 'layout', 'policy', 'branch', 'talent_mode', 'seed']
 
 
-def validate(data):
+def validate(data, policies=('substitution', 'renfort'), expected_pairs=3744):
     assert data['schema'] == 1 and not data['failures'], data.get('failures', [])[:5]
     assert data['seeds'] == [1, 42, 77] and len(data['layouts']) == 6
     for layout in data['layouts']:
@@ -23,10 +23,10 @@ def validate(data):
     expected = set()
     for card, (_, _, _, _, first) in CARDS.items():
         expected.update(itertools.product([card], range(first, 11), range(6),
-                                          ['substitution', 'renfort'], range(2),
+                                          policies, range(2),
                                           ['aucun', 'famille'], [1, 42, 77]))
     keys = [tuple(pair[f] for f in FIELDS) for pair in data['pairs']]
-    assert len(keys) == len(set(keys)) == len(expected) == 3744
+    assert len(keys) == len(set(keys)) == len(expected) == expected_pairs
     assert set(keys) == expected, 'Grille de comparaisons incomplète.'
     checks = 0
     for pair in data['pairs']:

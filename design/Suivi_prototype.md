@@ -534,3 +534,7 @@ Le porteur du projet retient la version sombre pour sa cohérence avec les autre
 ## Audit des alternatives — 31 octobre 2026
 
 [3 744 comparaisons appariées, 7 488 simulations](Comparaison_boutique_v0991.md), 475 155 contrôles sans anomalie. Les politiques de substitution et de renfort montrent des écarts importants pour traqueur et grenadier. Aucun réglage modifié : avant équilibrage, comparer aussi un quatrième type prioritaire, car la politique de renfort actuelle ne spécialise jamais cette quatrième unité. Le jeu publié reste v0.99.1.
+
+## Prototype v0.100 — repères de boutique et complément d’essai
+
+[Textes actualisés](Clarification_boutique_v0100.md) : boutique disponible, option de quatrième unité, dix missions et conservation des acquis au schéma 7. La [comparaison prioritaire](Comparaison_priorite_boutique_v0991.md) ajoute 3 744 simulations sans modifier l’équilibrage. Six suites ciblées, 911 contrôles Godot et 16 tests Python ; neuf cas Windows et 56 sources vérifiés, quatre vues inspectées. Le modèle et le profil sont inchangés depuis v0.99.1.

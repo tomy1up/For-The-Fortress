@@ -217,7 +217,7 @@ func refresh() -> void:
 	balance.text = "%s · %d/51 débloqués · %d XP" % [available_text,bank.points,bank.get("xp",0)]
 	if profile.blocked: balance.text = "Progression à vérifier · Points et XP indisponibles"
 	balance.add_theme_color_override("font_color",Color("e5c779") if free > 0 and not profile.blocked else Color("e0dbbf"))
-	balance.tooltip_text = "51 points maximum à répartir entre les trois arbres de cette faction. Un point augmente un rang de talent.\nPO %s : %d, réservées à la future boutique ; elles ne servent pas à acheter des talents." % [camp,bank.resource]
+	balance.tooltip_text = "51 points maximum à répartir entre les trois arbres de cette faction. Un point augmente un rang de talent.\nPO %s : %d, utilisables dans la boutique de cette faction ; elles ne servent pas à acheter des talents." % [camp,bank.resource]
 	if profile.blocked: balance.tooltip_text = "Progression indisponible. Vérifiez la sauvegarde avant de modifier les talents."
 	balance.mouse_filter = Control.MOUSE_FILTER_STOP
 	var experience: Dictionary = profile.Experience.progress(int(bank.get("xp",0)))

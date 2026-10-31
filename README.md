@@ -4,7 +4,9 @@
 
 **Difficultés de campagne** : [Normal, Héroïque, Mythique](design/Difficultes_campagne_2026-10-31.md). La campagne actuelle correspond au Normal ; 100 premières missions réussies ouvrent la difficulté suivante, avec un parcours successif propre à chaque difficulté et faction. Les modes avancés restent à développer.
 
-**Version v0.99.1 (31 octobre 2026)** : [teinte du mousquetaire](design/Mousquetaire_v0991.md). La version sombre retenue remplace l’illustration claire dans la boutique et sur le plateau. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.99.1).
+**Version v0.100 (31 octobre 2026)** : [repères de boutique actualisés](design/Clarification_boutique_v0100.md). L’accueil, les talents et la notice expliquent la boutique disponible, les dix missions et la conservation des acquis. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.100).
+
+**Quatrième défenseur prioritaire — 3 744 simulations complémentaires** : [résultats et limites](design/Comparaison_priorite_boutique_v0991.md). Les deux spécialisations sont atteintes pour chaque alternative ; cette priorité ne garantit pas davantage de victoires. Aucun réglage modifié.
 
 **Comparaison des unités de boutique — 7 488 simulations** : [résultats et limites](design/Comparaison_boutique_v0991.md). Les rôles d’ouverture et de renfort donnent des résultats différents ; traqueur et grenadier demandent une attention particulière. Ces politiques fixes ne mesurent pas le taux de victoire humain et ne modifient aucun réglage.
 
@@ -40,13 +42,13 @@ Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantas
 
 ## Prototype de référence
 
-Trois cartes isométriques du même thème : La Vallée du Gué, Le Bois du Gué et Les Hauts du Gué, avec six emplacements et dix vagues chacune. PV ennemis à 100 %, 101 % puis 102 % ; vitesse, dégâts à la forteresse et gains de combat identiques. Six défenseurs, trois par faction. Capital initial de travail : 150 or de combat ; forteresse : 20 PV avant talents. Choix roguelite après les vagues 3, 6 et 9. Première vague manuelle, puis 30 secondes de préparation entre vagues ; les choix de bonus attendent le joueur.
+Dix cartes isométriques du thème du Gué, avec six emplacements et dix vagues chacune. PV ennemis de 100 % à 109 % ; vitesse, dégâts à la forteresse et gains de combat identiques. Six défenseurs de départ, trois par faction, et quatre alternatives de boutique proposées. Le joueur choisit un seul quatrième type pour sa mission. Capital initial de travail : 150 or de combat ; forteresse : 20 PV avant talents. Choix roguelite après les vagues 3, 6 et 9. Première vague manuelle, puis 30 secondes de préparation entre vagues ; les choix de bonus attendent le joueur.
 
-Chaque mission repart à neuf. La première victoire rapporte actuellement 60 PO et 100 XP par faction, valeurs de prototype. L’XP débloque les points de talent ; les PO sont réservées à une future boutique. Rejouer ou perdre ne redonne pas ces gains. Les deux parcours, XP, PO et talents sont indépendants et sauvegardés. La courbe de référence vise 51 points après 100 premières victoires ; les 197 autres missions restent à réaliser.
+Chaque mission repart à neuf. La première victoire rapporte actuellement 60 PO et 100 XP par faction, valeurs de prototype. L’XP débloque les points de talent ; les PO débloquent des unités en boutique. Rejouer ou perdre ne redonne pas ces gains. Les deux parcours, XP, PO et talents sont indépendants et sauvegardés. La courbe de référence vise 51 points après 100 premières victoires ; les 190 autres missions restent à réaliser.
 
 Durée ciblée : 8 à 12 minutes, à mesurer. Les sept profils ordinaires et le boss déterminent les statistiques ; leurs identités en jeu sont des animaux neutres ou des attaquants du camp adverse. Les réglages figurent dans le GDD avec le statut d’hypothèses.
 
-Les coûts d’achat de 50, 75 et 100 or, les DPS de 8, 9,6 et 10,8 et les améliorations de 50, 100 et 150 or restent des **hypothèses non équilibrées**.
+Les coûts de recrutement des défenseurs de départ de 50, 75 et 100 or, les DPS de 8, 9,6 et 10,8 et les améliorations de 50, 100 et 150 or restent des **hypothèses non équilibrées**.
 
 ## Intentions commerciales
 

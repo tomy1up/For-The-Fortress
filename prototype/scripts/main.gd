@@ -1148,7 +1148,7 @@ func _build_run_summary(screen: Control) -> void:
 	summary_meta_card = _panel(summary_essential_content,Rect2(726,130,222,108))
 	var po_heading: Label = _label(summary_meta_card,"PO de faction",Vector2(16,12),Vector2(190,24),16,Color("bbcbbf"))
 	po_heading.mouse_filter = Control.MOUSE_FILTER_STOP
-	po_heading.tooltip_text = "Pièces d’or persistantes pour la future boutique. Les talents viennent de l’XP de mission ; aucun transfert depuis l’or de combat."
+	po_heading.tooltip_text = "Pièces d’or persistantes pour débloquer des unités dans la boutique. Les talents viennent de l’XP de mission ; aucun transfert depuis l’or de combat."
 	summary_meta_value = _label(summary_meta_card,"",Vector2(16,40),Vector2(190,40),30,Color("e6c987"))
 	summary_meta_status = _label(summary_meta_card,"",Vector2(16,84),Vector2(190,18),12,Color("bbcbbf"))
 	summary_meta_note = _label(summary_essential_content,"",Vector2(24,246),Vector2(924,22),13,Color("cdb47e"))
@@ -1479,7 +1479,7 @@ func _build_faction_selector(screen: Control) -> void:
 	screen.add_child(faction_panel)
 	var panel: Panel = _panel(faction_panel, Rect2(240, 130, 800, 540))
 	_label(panel, "Choisissez votre faction", Vector2(30, 28), Vector2(740, 42), 28, Color("e0dbbf"))
-	_label(panel, "Chaque camp possède trois défenseurs pour les dix vagues.", Vector2(30, 88), Vector2(740, 30), 16, Color("aabbb0"))
+	_label(panel, "Trois défenseurs de départ par camp ; une unité de boutique peut s’ajouter.", Vector2(30, 88), Vector2(740, 30), 16, Color("aabbb0"))
 	faction_buttons.append(_button(panel, "Alliance des Royaumes", Rect2(30, 138, 350, 52), _open_campaign.bind(0)))
 	faction_buttons.append(_button(panel, "Horde des Cendres", Rect2(420, 138, 350, 52), _open_campaign.bind(1)))
 	_label(panel, "Archer, arbalétrier et mage.\nPrécision et attaque de groupe.", Vector2(30, 204), Vector2(350, 52), 15, Color("bbcbbf"))
@@ -1521,7 +1521,7 @@ func _refresh_home_progress() -> void:
 		var active: int = Model.MetaTalents.spent(bank.ranks)
 		var free: int = int(bank.points)-active
 		home_resources[camp].text = "%d PO %s" % [bank.resource,"Alliance" if camp == 0 else "Horde"]
-		home_resources[camp].tooltip_text = "Pièces d’or persistantes de cette faction, destinées à la future boutique. Les points de talent se débloquent par l’XP, sans dépenser ces PO."
+		home_resources[camp].tooltip_text = "Pièces d’or persistantes utilisables dans la boutique de cette faction. Les points de talent se débloquent par l’XP, sans dépenser ces PO."
 		home_resources[camp].mouse_filter = Control.MOUSE_FILTER_STOP
 		home_points[camp].text = "%d point%s actif%s · %d à placer" % [active,"s" if active != 1 else "","s" if active != 1 else "",free]
 		home_hp[camp].text = "Forteresse au départ : %d PV" % [Model.INITIAL_HP+Model.MetaTalents.extra_hp(camp,bank.ranks)]
@@ -1533,8 +1533,8 @@ func _refresh_home_progress() -> void:
 			home_hints[camp].text = "51 points de talent débloqués."
 		else:
 			home_hints[camp].text = "XP : %d / %d pour le prochain point." % [bank.get("xp",0),next_xp]
-	meta_income.text = "L’XP débloque les talents · Les PO serviront à la boutique."
-	meta_income.tooltip_text = "PO = pièces d’or persistantes destinées à la boutique. L’XP, les PO et les points sont séparés par faction. L’or de combat sert au recrutement pendant la partie."
+	meta_income.text = "L’XP débloque les talents · Les PO débloquent des unités."
+	meta_income.tooltip_text = "PO = pièces d’or persistantes pour les déblocages de la boutique. L’XP, les PO et les points sont séparés par faction. L’or de combat sert au recrutement pendant la partie."
 	if meta_profile == null: meta_income.text = "Progression permanente indisponible."
 	elif meta_profile.blocked:
 		meta_income.text = "Sauvegarde à vérifier · Consultez les talents pour le détail."

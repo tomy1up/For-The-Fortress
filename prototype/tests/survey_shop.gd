@@ -46,7 +46,7 @@ static func _audit(ok: bool,message: String,state: Dictionary) -> void:
 	state.checks += 1
 	if not ok and state.failures.size() < 100: state.failures.append(message)
 
-static func run_case(card: Dictionary,mission: int,layout_index: int,policy: String,branch: int,talent_mode: String,seed_value: int,alternative: bool,step: float = 300.0,include_report: bool = false) -> Dictionary:
+static func run_case(card: Dictionary,mission: int,layout_index: int,policy: String,branch: int,talent_mode: String,seed_value: int,alternative: bool,step: float = 300.0,include_report: bool = false,priority_extra: bool = false) -> Dictionary:
 	var state: Dictionary = {"checks":0,"failures":[]}
 	var entry: Dictionary = Catalogue.definition(mission)
 	var budget: Dictionary = budget_before(mission)
@@ -58,6 +58,7 @@ static func run_case(card: Dictionary,mission: int,layout_index: int,policy: Str
 	m.meta_ranks = ranks.duplicate();_audit(m.select_faction(card.faction),"Faction cohérente",state);m.rng.seed = seed_value
 	var types: Array = plan(card,policy,alternative)
 	var slots: Array = LAYOUTS[layout_index]
+	if priority_extra: _audit(policy == "renfort" and types.size() == 4,"Politique de priorité réservée au quatrième défenseur",state)
 	var deployed_auxiliary: bool = false;var first_auxiliary_wave: int = 0
 	var waves: Array = []
 	for wave in range(1,11):
@@ -66,9 +67,14 @@ static func run_case(card: Dictionary,mission: int,layout_index: int,policy: Str
 			if wave >= threshold and m.defenders[slots[index]].is_empty(): m.buy(slots[index],types[index])
 		if wave == 2 and not m.defenders[slots[0]].is_empty(): m.upgrade(slots[0])
 		if wave >= 5:
-			for index in range(types.size()):
-				var unit: Dictionary = m.defenders[slots[index]]
-				if not unit.is_empty(): m.upgrade(slots[index],branch if unit.level == 3 else -1)
+			var target: Dictionary = m.defenders[slots[3]] if priority_extra else {}
+			if priority_extra and (target.is_empty() or target.level < 4):
+				# Garder l’or si le recrutement ou le prochain niveau n’est pas encore finançable.
+				if not target.is_empty(): m.upgrade(slots[3],branch if target.level == 3 else -1)
+			else:
+				for index in range(types.size()):
+					var unit: Dictionary = m.defenders[slots[index]]
+					if not unit.is_empty(): m.upgrade(slots[index],branch if unit.level == 3 else -1)
 		var paid: int = 0
 		for unit in m.defenders:
 			if unit.is_empty(): continue

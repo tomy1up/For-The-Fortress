@@ -106,3 +106,7 @@ Le générateur accepte aussi `--card=alliance.scout` et `--parity=0` ou `1` pou
 Les 56 sources du paquet v0.99.1 conservent leur empreinte. Cette livraison ajoute des outils et des résultats d’essai ; elle ne recompile pas un jeu identique et ne modifie aucun profil. Les noms, prix et statistiques des alternatives restent des hypothèses de prototype.
 
 Prochain lot d’équilibrage : comparer un renfort prioritaire, vérifier ses deux spécialisations réellement atteintes, puis isoler des variations de prix et de portée si l’écart persiste. Éviter d’ajuster plusieurs paramètres à la fois ou d’optimiser uniquement pour ces politiques fixes. Confronter ensuite les résultats aux essais humains.
+
+## Complément réalisé
+
+La [priorité d’investissement dans le quatrième défenseur](Comparaison_priorite_boutique_v0991.md) ajoute 3 744 simulations. Les deux branches sont effectivement atteintes pour chaque alternative ; cette priorité ne garantit pas davantage de victoires. Aucun réglage n’est modifié à l’issue de ces deux études.

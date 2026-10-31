@@ -1,0 +1,124 @@
+{
+  "archive_sha256": "81701d79bc180ae25f6803ce01ada0c9e9c09266183d95a61ab213271c2dad76",
+  "scope": "selected",
+  "available_cases": 243,
+  "executable_sha256": "f6270cb71a3e67d0132d9d0c2582680a6b90c2bd273271fe63088e8708016e1d",
+  "files": [
+    "For_the_Fortress_v0.100_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.100_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.100_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.100_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.100_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "home_prepared",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "home_maximum",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "home_blocked",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_talents",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_talents",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_campaign_menu_fresh",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_campaign_menu_fresh",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "source_checks": 56,
+  "local_sources_compared": true,
+  "visual_review": "Accueil neuf et préparé, talents Alliance et Horde examinés sur écran 1. Textes et compteurs lisibles. Quatre vues examinées parmi huit captures produites ; neuf cas sélectionnés parmi les 243 disponibles.",
+  "godot_suites": 6,
+  "automated_checks": 911,
+  "python_tests": 16,
+  "test_screen": 1,
+  "profile_schema": 7,
+  "full_regression_rerun": false,
+  "unchanged_sources_from_v0991": [
+    "scenes/main.tscn",
+    "scripts/valley_model.gd",
+    "scripts/valley_view.gd",
+    "scripts/campaign_data.gd",
+    "scripts/progression_data.gd",
+    "scripts/run_report.gd",
+    "scripts/combat_metrics.gd",
+    "scripts/horde_art.gd",
+    "assets/units/horde/troll_v001.png",
+    "assets/units/horde/gobelin_v001.png",
+    "assets/units/horde/chaman_v001.png",
+    "assets/units/horde/troll_v001.png.import",
+    "assets/units/horde/gobelin_v001.png.import",
+    "assets/units/horde/chaman_v001.png.import",
+    "scripts/alliance_art.gd",
+    "assets/units/alliance/archer_v001.png",
+    "assets/units/alliance/arbaletrier_v001.png",
+    "assets/units/alliance/mage_v001.png",
+    "assets/units/alliance/archer_v001.png.import",
+    "assets/units/alliance/arbaletrier_v001.png.import",
+    "assets/units/alliance/mage_v001.png.import",
+    "scripts/enemy_art.gd",
+    "assets/enemies/rosters/neutres_v001.png",
+    "assets/enemies/rosters/alliance_v002.png",
+    "assets/enemies/rosters/horde_v003.png",
+    "assets/enemies/rosters/neutres_v001.png.import",
+    "assets/enemies/rosters/alliance_v002.png.import",
+    "assets/enemies/rosters/horde_v003.png.import",
+    "scripts/enemy_catalogue.gd",
+    "scripts/meta_talents.gd",
+    "scripts/meta_profile.gd",
+    "scripts/meta_talents_v067.gd",
+    "scripts/profile_codec.gd",
+    "scripts/map_definition.gd",
+    "scripts/mission_progress.gd",
+    "scripts/meta_talents_expanded.gd",
+    "scripts/meta_talents_v068.gd",
+    "scripts/talent_experience.gd",
+    "scripts/meta_talents_linked.gd",
+    "scripts/campaign_catalogue.gd",
+    "scripts/campaign_screen.gd",
+    "scripts/shop_catalogue.gd",
+    "scripts/shop_screen.gd",
+    "scripts/shop_art.gd",
+    "assets/units/shop/rodeur_v001.png",
+    "assets/units/shop/rodeur_v001.png.import",
+    "assets/units/shop/mousquetaire_v002.png",
+    "assets/units/shop/mousquetaire_v002.png.import",
+    "assets/units/shop/traqueur_v001.png",
+    "assets/units/shop/traqueur_v001.png.import",
+    "assets/units/shop/grenadier_v001.png",
+    "assets/units/shop/grenadier_v001.png.import"
+  ],
+  "display_scripts_only_string_changes": true
+}
