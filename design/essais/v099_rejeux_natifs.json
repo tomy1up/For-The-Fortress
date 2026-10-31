@@ -1,0 +1,308 @@
+[
+  {
+    "case": "alliance_sample_2_summary",
+    "baseline": "essais\\v096_alliance_mission2_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.99",
+      "faction": 0,
+      "fortress_hp": 18,
+      "gold": 193,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_3_summary",
+    "baseline": "essais\\v096_alliance_mission3_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.99",
+      "faction": 0,
+      "fortress_hp": 21,
+      "gold": 110,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_4_summary",
+    "baseline": "essais\\v096_alliance_mission4_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.99",
+      "faction": 0,
+      "fortress_hp": 21,
+      "gold": 110,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_5_summary",
+    "baseline": "essais\\v096_alliance_mission5_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.99",
+      "faction": 0,
+      "fortress_hp": 19,
+      "gold": 113,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_6_summary",
+    "baseline": "essais\\v096_alliance_mission6_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.99",
+      "faction": 0,
+      "fortress_hp": 20,
+      "gold": 109,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_7_summary",
+    "baseline": "essais\\v096_alliance_mission7_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.99",
+      "faction": 0,
+      "fortress_hp": 20,
+      "gold": 109,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_8_summary",
+    "baseline": "essais\\v096_alliance_mission8_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.99",
+      "faction": 0,
+      "fortress_hp": 21,
+      "gold": 110,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_9_summary",
+    "baseline": "essais\\v096_alliance_mission9_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.99",
+      "faction": 0,
+      "fortress_hp": 20,
+      "gold": 109,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "alliance_sample_10_summary",
+    "baseline": "essais\\v096_alliance_mission10_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.99",
+      "faction": 0,
+      "fortress_hp": 21,
+      "gold": 110,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_2_summary",
+    "baseline": "essais\\v096_horde_mission2_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.99",
+      "faction": 1,
+      "fortress_hp": 16,
+      "gold": 108,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_3_summary",
+    "baseline": "essais\\v096_horde_mission3_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.99",
+      "faction": 1,
+      "fortress_hp": 16,
+      "gold": 108,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_4_summary",
+    "baseline": "essais\\v096_horde_mission4_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 46,
+      "current_version": "0.99",
+      "faction": 1,
+      "fortress_hp": 15,
+      "gold": 107,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_5_summary",
+    "baseline": "essais\\v096_horde_mission5_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.99",
+      "faction": 1,
+      "fortress_hp": 6,
+      "gold": 176,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_6_summary",
+    "baseline": "essais\\v096_horde_mission6_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.99",
+      "faction": 1,
+      "fortress_hp": 7,
+      "gold": 166,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_7_summary",
+    "baseline": "essais\\v096_horde_mission7_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.99",
+      "faction": 1,
+      "fortress_hp": 17,
+      "gold": 191,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_8_summary",
+    "baseline": "essais\\v096_horde_mission8_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.99",
+      "faction": 1,
+      "fortress_hp": 9,
+      "gold": 184,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_9_summary",
+    "baseline": "essais\\v096_horde_mission9_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.99",
+      "faction": 1,
+      "fortress_hp": 3,
+      "gold": 162,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  },
+  {
+    "case": "horde_sample_10_summary",
+    "baseline": "essais\\v096_horde_mission10_rapport.json",
+    "combat_identical_ignoring_version": true,
+    "result": {
+      "actions": 45,
+      "current_version": "0.99",
+      "faction": 1,
+      "fortress_hp": 10,
+      "gold": 181,
+      "ok": true,
+      "result": "victory",
+      "same_version": true,
+      "source_version": "0.99",
+      "wave": 10
+    }
+  }
+]

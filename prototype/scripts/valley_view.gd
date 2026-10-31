@@ -4,6 +4,7 @@ const Model = preload("res://scripts/valley_model.gd")
 const HordeArt = preload("res://scripts/horde_art.gd")
 const AllianceArt = preload("res://scripts/alliance_art.gd")
 const EnemyArt = preload("res://scripts/enemy_art.gd")
+const ShopArt = preload("res://scripts/shop_art.gd")
 const ORIGIN := Vector2(658, 174)
 const AXIS := Vector2(27, 13.5)
 const INK := Color("d9e4d7")
@@ -110,16 +111,19 @@ static func secondary_segments(shot: Dictionary) -> Array[PackedVector2Array]:
 	var origin: Vector2 = shot.to
 	for target in shot.get("secondary", []):
 		segments.append(PackedVector2Array([project(origin), project(target)]))
-		if shot.type == 3: origin = target
+		if Model.family(shot.type) == 3: origin = target
 	return segments
 
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 
 static func shot_origin(shot: Dictionary) -> Vector2:
 	# Points d'équipement des silhouettes, distincts du centre logique de portée.
-	var art = AllianceArt if AllianceArt.MUZZLES.has(int(shot.type)) else HordeArt
+	var art = defender_art(int(shot.type))
 	var muzzle: Vector2 = art.MUZZLES[int(shot.type)]
 	return project(shot.from)+Vector2(muzzle.x*shot_facing(shot),muzzle.y)
+
+static func defender_art(type: int) -> GDScript:
+	return ShopArt if ShopArt.TEXTURES.has(type) else AllianceArt if AllianceArt.TEXTURES.has(type) else HordeArt
 
 static func shot_facing(shot: Dictionary) -> float:
 	return -1.0 if project(shot.to).x < project(shot.from).x else 1.0
@@ -129,7 +133,7 @@ static func projectile_position(shot: Dictionary, age: float) -> Vector2:
 	var origin: Vector2 = shot_origin(shot)
 	var target: Vector2 = project(shot.to)+Vector2(0,-12)
 	var point: Vector2 = origin.lerp(target,progress)
-	if shot.type in [3,4]: point.y -= sin(PI*progress)*(15.0 if shot.type == 4 else 8.0)
+	if Model.family(shot.type) in [3,4]: point.y -= sin(PI*progress)*(15.0 if Model.family(shot.type) == 4 else 8.0)
 	return point
 
 func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
@@ -140,10 +144,10 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	var direction: Vector2 = (target-origin).normalized()
 	if direction.is_zero_approx(): direction = Vector2.RIGHT
 	var side: Vector2 = direction.orthogonal()
-	match int(shot.type):
+	match Model.family(int(shot.type)):
 		0,1:
-			var length: float = 13.0 if shot.type == 0 else 9.0
-			draw_line(point-direction*length,point,Color("ead9a8"),1.8 if shot.type == 0 else 3.0,true)
+			var length: float = 13.0 if Model.family(shot.type) == 0 else 9.0
+			draw_line(point-direction*length,point,Color("ead9a8"),1.8 if Model.family(shot.type) == 0 else 3.0,true)
 			draw_colored_polygon(PackedVector2Array([point+direction*3,point-direction*3+side*3,point-direction*3-side*3]),Color("e4f0e7"))
 			for sign in [-1,1]: draw_line(point-direction*(length-3),point-direction*length+side*sign*3,color,1.5,true)
 		2:
@@ -167,6 +171,7 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 			draw_line(point+Vector2(0,-3),point+Vector2(0,3),Color("f5def5"),1.5,true)
 
 func _draw_hit_marker(point: Vector2, alpha: float, primary: bool, type: int, age: float) -> void:
+	type = Model.family(type)
 	var color: Color = [Color("f0d796"),Color("e1e9dc"),Color("90dceb"),Color("a8ddbd"),Color("f2b269"),Color("d1a3ed")][type]
 	color.a = alpha
 	var spread: float = (5.0 if primary else 3.0)+minf(maxf(age,0.0)/IMPACT_DURATION,1.0)*4.0
@@ -184,7 +189,7 @@ func _draw_hit_marker(point: Vector2, alpha: float, primary: bool, type: int, ag
 func _draw_impact(shot: Dictionary, age: float) -> void:
 	var alpha: float = impact_opacity(age)
 	if alpha <= 0.0: return
-	var type: int = shot.type
+	var type: int = Model.family(shot.type)
 	var color: Color = [Color("f0d796"),Color("e1e9dc"),Color("90dceb"),Color("a8ddbd"),Color("f2b269"),Color("d1a3ed")][type]
 	color.a = alpha
 	var height := Vector2(0,-12)
@@ -512,6 +517,7 @@ func defender_pose(slot: int) -> Dictionary:
 	return pose
 
 static func attack_transform(type: int, pose: Dictionary) -> Transform2D:
+	type = Model.family(type)
 	var pulse: float = clampf(pose.get("pulse",0.0),0.0,1.0)
 	var direction: float = pose.get("direction",1.0)
 	var motion: Vector3 = ATTACK_MOTIONS[type]
@@ -540,7 +546,7 @@ func _unit_face(skin: Color, wide: float, y: float, tusks: bool = false) -> void
 			_unit_shape([Vector2(side*4,y+5),Vector2(side*5,y),Vector2(side*2,y+4)],Color("fff0c9"),0.8)
 
 func _draw_purchase_ghost(ghost: Dictionary) -> void:
-	var art = AllianceArt if AllianceArt.TEXTURES.has(ghost.type) else HordeArt
+	var art = defender_art(ghost.type)
 	if not art.TEXTURES.has(ghost.type): return
 	var alpha: float = 0.52 if ghost.available else 0.34
 	draw_set_transform(ghost.point+Vector2(0,2),0,Vector2(1,0.45))
@@ -550,7 +556,7 @@ func _draw_purchase_ghost(ghost: Dictionary) -> void:
 	draw_set_transform(Vector2.ZERO)
 
 func _draw_defender(center: Vector2, type: int, level: int = 1, branch: int = -1, pose: Dictionary = {}) -> void:
-	var art = AllianceArt if AllianceArt.TEXTURES.has(type) else HordeArt
+	var art = defender_art(type)
 	if not art.TEXTURES.has(type): return
 	_draw_illustrated_defender(center,type,pose,art)
 	_draw_level_badge(center,level,branch)

@@ -70,7 +70,7 @@ func run_checks() -> void:
 	check(Profile.valid(old) and not Linked.valid(old.banks[0].ranks),"Profil historique bien formé mais investissements incompatibles avec les nouveaux liens")
 	var file := FileAccess.open(path,FileAccess.WRITE);file.store_buffer(Profile.Codec.encode(old));file.close()
 	var migrated = Profile.new(path)
-	check(not migrated.blocked and migrated.data.schema == 6 and migrated.data.banks[0].ranks == Linked.empty_ranks() and migrated.migration_notice.contains("rendus gratuitement"),"Migration explicite avec restitution gratuite des points de la banque incompatible")
+	check(not migrated.blocked and migrated.data.schema == 7 and migrated.data.banks[0].ranks == Linked.empty_ranks() and migrated.migration_notice.contains("rendus gratuitement"),"Migration explicite avec restitution gratuite des points de la banque incompatible")
 	check(migrated.data.banks[0].resource == 81 and migrated.data.banks[0].xp == 10000 and migrated.data.banks[0].points == 51 and migrated.data.banks[0].resets == 7,"PO, XP, points disponibles et compteur conservés sans nouvelle récompense")
 	check(migrated.data.banks[1] == JSON.parse_string(JSON.stringify(old.banks[1])) and migrated.data.run == JSON.parse_string(JSON.stringify(old.run)),"Banque compatible et reçu de résultat strictement conservés")
 	check(migrated._read(path+".v087.bak") == JSON.parse_string(JSON.stringify(old)),"Archive chiffrée exacte du profil précédent")

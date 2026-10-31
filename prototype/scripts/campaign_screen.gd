@@ -3,6 +3,7 @@ const Catalogue = preload("res://scripts/campaign_catalogue.gd")
 const Maps = preload("res://scripts/map_definition.gd")
 signal mission_requested(id: String)
 signal talents_requested(faction: int)
+signal shop_requested(faction: int)
 signal closed
 
 class TerrainPreview extends Control:
@@ -85,6 +86,8 @@ class MissionNode extends Button:
 			draw_arc(Vector2(38,2),3,PI,TAU,12,Color("9ba89f"),1.5,true)
 			draw_rect(Rect2(34,2,8,6),Color("9ba89f"),false,1.5)
 
+var shop_button: Button
+var shop_note: Label
 var profile: RefCounted
 var faction: int = 0
 var chapter: int = 1
@@ -172,9 +175,10 @@ func _ready() -> void:
 	talents_button = button_at("Préparer les talents",Rect2(870,556,358,42),_talents)
 	label_at(self,"Mode infini",Rect2(870,608,358,24),16)
 	infinite_label = label_at(self,"",Rect2(870,636,358,40),13,Color("aabeb0"))
-	label_at(self,"Une mission à la fois · XP et PO de première victoire · Parcours propre à la faction",Rect2(32,704,1216,28),14,Color("9eb3a4"))
+	shop_note = label_at(self,"",Rect2(32,704,1216,28),14,Color("9eb3a4"))
+	shop_button = button_at("Boutique · Option supplémentaire",Rect2(292,744,330,38),_shop)
 	back_button = button_at("Changer de faction · Échap",Rect2(32,744,240,38),close)
-	footer = label_at(self,"",Rect2(292,748,956,36),13,Color("91a799"))
+	footer = label_at(self,"",Rect2(646,744,602,42),13,Color("91a799"))
 	hide()
 
 func open(for_profile: RefCounted, for_faction: int, for_chapter: int = 0) -> void:
@@ -195,7 +199,7 @@ func initial_focus() -> Button:
 func set_overlay_blocked(value: bool) -> void:
 	if overlay_blocked == value: return
 	overlay_blocked = value
-	for button in chapter_buttons+nodes+[start_button,talents_button,back_button]:
+	for button in chapter_buttons+nodes+[start_button,talents_button,shop_button,back_button]:
 		button.focus_mode = Control.FOCUS_NONE if value else Control.FOCUS_ALL
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -229,6 +233,9 @@ func _mission_state(number: int) -> String:
 	return "available" if Catalogue.unlocked(number,status) else "locked"
 
 func refresh() -> void:
+	if profile != null:
+		var extra: Dictionary = profile.Shop.card(profile.data.banks[faction].shop_selected)
+		shop_note.text = "Trois types habituels + option boutique : "+("indisponible" if profile.blocked else "aucune" if extra.is_empty() else extra.name)+" · Choix fixé pendant la mission."
 	status = profile.campaign_status(faction) if profile != null else {}
 	var camp: String = "Alliance" if faction == 0 else "Horde"
 	heading.text = "Campagne · "+camp
@@ -314,3 +321,6 @@ func _launch() -> void:
 
 func _talents() -> void:
 	if not overlay_blocked and visible and profile != null: talents_requested.emit(faction)
+
+func _shop() -> void:
+	if not overlay_blocked and visible and profile != null: shop_requested.emit(faction)

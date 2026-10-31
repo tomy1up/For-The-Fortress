@@ -25,6 +25,7 @@ def check_contracts(repo):
     roster = json.loads('[' + source.split('const ROSTER: Array[Dictionary] = [')[1].split(']')[0].rstrip().rstrip(',') + ']')
     enemies = json.loads('[' + source.split('const ENEMY_TYPES: Array[Dictionary] = [')[1].split(']')[0].rstrip().rstrip(',') + ']')
     md = (repo / 'For_the_Fortress_GDD.md').read_text(encoding='utf-8')
+    roster = roster[:6]  # Le GDD de référence porte sur le socle ; les alternatives ont leurs contrats dédiés.
     require(len(roster) == 6, 'Le contrat porte sur les six défenseurs du prototype.')
     for header, units in [('| Paramètre | Archer elfe | Arbalétrier nain | Mage humain |', roster[:3]),
                           ('| Paramètre | Lanceur de haches troll | Sapeur gobelin | Chaman orc |', roster[3:])]:

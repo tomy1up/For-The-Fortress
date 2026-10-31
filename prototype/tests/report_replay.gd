@@ -59,6 +59,7 @@ static func verify(data: Variant) -> Dictionary:
 		definition = Model.Maps.from_data(data.map_definition)
 		if definition.is_empty(): return _fail("Définition de carte invalide.")
 	var model = Model.new(true,definition)
+	if data.has("auxiliary_type") and not model.configure_auxiliary(data.auxiliary_type): return _fail("Alternative de boutique invalide.")
 	if data.has("enemy_hp_percent") and not model.configure_enemy_hp(data.enemy_hp_percent): return _fail("Pourcentage de PV ennemis invalide.")
 	if data.has("meta_ranks"):
 		if not Model.MetaTalents.valid(data.meta_ranks): return _fail("Talents permanents invalides.")
@@ -72,7 +73,7 @@ static func verify(data: Variant) -> Dictionary:
 		if index >= model.action_history.size():
 			var required: Array = {"faction":["faction"],"buy":["slot","type"],"upgrade":["slot","branch"],"sell":["slot"],"bonus_choice":["chosen"]}.get(action.kind,[])
 			for field in required:
-				var bounds: Array = {"faction":[0,1],"slot":[0,5],"type":[0,5],"branch":[-1,1],"chosen":[0,11]}[field]
+				var bounds: Array = {"faction":[0,1],"slot":[0,5],"type":[0,Model.ROSTER.size()-1],"branch":[-1,1],"chosen":[0,11]}[field]
 				if not _integer(action.get(field),bounds[0],bounds[1]): return _fail("Action %d : champ %s invalide." % [index+1,field])
 			var accepted: bool = false
 			match action.kind:

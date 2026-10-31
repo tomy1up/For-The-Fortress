@@ -14,6 +14,8 @@ Les parcours, PO et talents restent indépendants entre Alliance et Horde. Une u
 
 ## Proposition de premier lot
 
+**Talents par famille — décision validée le 31 octobre :** une alternative partage les talents de sa famille de combat. Les descriptions du talent et de son prochain rang doivent nommer explicitement toutes les unités bénéficiaires, sans mélange entre factions. Cette règle ne donne pas accès aux alternatives non acquises et ne change pas le choix d’un seul quatrième type pour la mission.
+
 Commencer par un déblocage permanent d’unité dans chaque faction, afin de vérifier le circuit complet : fiche de boutique, lecture du rôle et des compromis, achat en PO, sauvegarde, fermeture et réouverture, puis recrutement avec l’or de combat pendant une mission. Le nom, l’identité, le prix et les statistiques de ces alternatives restent à concevoir et à éprouver.
 
 Conserver les six unités de départ comme base jouable, sans rendre un nouvel achat obligatoire pour terminer les dix missions déjà proposées, constitue une proposition de garde-fou pour ce premier lot.
@@ -35,7 +37,7 @@ Les premiers essais doivent comparer l’unité à la base de départ dans plusi
 ## Choix encore ouverts
 
 - Identité et rôle des premières alternatives, prix en PO, statistiques et coûts en or de combat.
-- Articulation avec les trois arbres de talents et les bonus : bénéficiaires explicites, sans mélange entre factions.
+- Répartition précise des alternatives entre familles et équilibrage des interactions avec les talents et bonus, dans le cadre de la règle validée ci-dessus.
 - Présentation du recrutement quand le catalogue dépasse les trois types actuels.
 - Politique de remboursement d’un achat et autres dépenses futures de PO.
 

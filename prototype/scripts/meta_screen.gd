@@ -340,7 +340,7 @@ func _rank_gain(index: int) -> String:
 			changes.append("%s +%s → +%s%s" % [name,_number(unit.before[component]*scale),_number(unit.after[component]*scale),"" if component == "range" else " %"])
 		var key: String = ", ".join(changes)
 		if not groups.has(key): groups[key] = []
-		groups[key].append(["Archer","Arbalétrier","Mage","Lanceur de haches","Sapeur","Chaman"][unit.type])
+		groups[key].append(Expanded.Shop.family_label(unit.type))
 	for key in groups: parts.append("%s : %s" % [" / ".join(groups[key]),key])
 	return " · ".join(parts)
 

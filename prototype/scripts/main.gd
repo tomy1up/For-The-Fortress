@@ -50,6 +50,7 @@ const MetaScreen = preload("res://scripts/meta_screen.gd")
 var meta_profile: RefCounted
 var meta_menu = MetaScreen.new()
 var campaign_menu = CampaignScreen.new()
+var shop_menu = preload("res://scripts/shop_screen.gd").new()
 var campaign_navigation: bool = false
 var meta_run_id: int = -1
 var meta_run_earned: int = 0
@@ -529,7 +530,7 @@ func _ready() -> void:
 				ok = ok and not reopened.blocked and reopened.data.banks[capture_faction].resource == 60 and reopened.data.banks[capture_faction].ranks[0] == 1 and reopened.data.banks[capture_faction].xp == 197
 				ok = ok and sealed.slice(0,MetaProfile.Codec.MAGIC.length()) == MetaProfile.Codec.MAGIC.to_utf8_buffer()
 				var mission_id: int = reopened.begin_mission(capture_faction,"capture.mission",9)
-				ok = ok and reopened.data.schema == 6 and mission_id > 0 and reopened.credit_mission(mission_id,capture_faction,10,true)
+				ok = ok and reopened.data.schema == MetaProfile.SCHEMA_VERSION and mission_id > 0 and reopened.credit_mission(mission_id,capture_faction,10,true)
 				MetaProfile.Codec.cache.clear();reopened = MetaProfile.new(test_path)
 				ok = ok and reopened.data.banks[capture_faction].resource == 69 and reopened.data.banks[capture_faction].mission_rewards.has("capture.mission")
 				mission_id = reopened.begin_mission(capture_faction,"capture.mission",999)
@@ -927,7 +928,7 @@ Cette lecture ne suspend pas le combat ni le départ automatique."
 	inspection_numbers_button.add_theme_font_size_override("font_size",13)
 	inspection_numbers_button.tooltip_text = "Alterner les fiches et aides simplifiées ou chiffrées.\nPour comparer une recrue, survolez ensuite son bouton."
 	details_label = _label(info, "", Vector2(24, 41), Vector2(876, 44), 14, Color("bbcbbf"))
-	for type in range(3):
+	for type in range(4):
 		var button: Button = _button(info, "", Rect2(24 + type * 294, 96, 278, 40), _buy.bind(type))
 		button.add_theme_font_size_override("font_size", 14)
 		button.mouse_entered.connect(_purchase_hover.bind(type, true))
@@ -957,6 +958,9 @@ Cette lecture ne suspend pas le combat ni le départ automatique."
 	campaign_menu.mission_requested.connect(_launch_campaign_mission)
 	campaign_menu.talents_requested.connect(_open_meta)
 	campaign_menu.closed.connect(_campaign_closed)
+	campaign_menu.shop_requested.connect(_open_shop)
+	screen.add_child(shop_menu)
+	shop_menu.closed.connect(_shop_closed)
 	screen.add_child(meta_menu)
 	meta_menu.closed.connect(_meta_closed)
 
@@ -1289,8 +1293,8 @@ func _populate_performance() -> void:
 		var values: Array[String] = ["E%d · %s\nNiveau %d · %s" % [data.slot+1,data.name,data.level,"Présent à la fin" if data.present_at_end else "Vendu"],str(data.waves.size()),str(data.attacks),_number(total),_number(data.boss_hp)]
 		for column in range(5): _label(row,values[column],Vector2([0,360,455,550,720][column],8),Vector2(350 if column == 0 else 145,42),13,Color("bbcbbf"))
 		var detail: Array[String] = [data.name,"Vagues jouées : " + str(data.waves),"Attaques principales : %d · %s PV retirés" % [data.attacks,_number(data.direct_hp)]]
-		if data.type in [2,3,4]: detail.append("%s : %d impacts · %s PV retirés" % ["Rebonds" if data.type == 3 else "Explosions",data.secondary_hits,_number(data.secondary_hp)])
-		if data.type == 5: detail.append("Malédiction : %d déclenchements · %s PV retirés" % [data.curse_ticks,_number(data.curse_hp)])
+		if Model.family(data.type) in [2,3,4]: detail.append("%s : %d impacts · %s PV retirés" % ["Rebonds" if Model.family(data.type) == 3 else "Explosions",data.secondary_hits,_number(data.secondary_hp)])
+		if Model.family(data.type) == 5: detail.append("Malédiction : %d déclenchements · %s PV retirés" % [data.curse_ticks,_number(data.curse_hp)])
 		if data.level == 4: detail.append(Model.stats_for(data.type,4,data.branch).branch_name)
 		detail.append("Tirs simultanés : les PV retirés sont répartis proportionnellement aux dégâts.\nCes mesures ne suffisent pas à juger les synergies ou l’utilité d’une unité.")
 		row.tooltip_text = "\n".join(detail)
@@ -1336,7 +1340,7 @@ func _refresh_loadout_label() -> void:
 	var lines: Array[String] = ["Talents fixés au départ · Lecture seule"]
 	for tree in data.trees: lines.append("%s : %d point%s" % [tree.name,tree.points,"s" if tree.points > 1 else ""])
 	lines.append("PV supplémentaires au départ : +%d" % data.hp)
-	for unit in data.units: lines.append("%s : %s" % [Model.ROSTER[unit.type].get("short_name",Model.ROSTER[unit.type].name),Model.MetaTalents.bonus_line(unit)])
+	for unit in data.units: lines.append("%s : %s" % [Model.Shop.family_label(unit.type),Model.MetaTalents.bonus_line(unit)])
 	lines.append("Les bonus de cette tentative sont indiqués séparément dans Bonus acquis.")
 	loadout_label.tooltip_text = "\n".join(lines)
 
@@ -1361,7 +1365,7 @@ func _populate_loadout_summary() -> void:
 	summary_loadout_hp.text = "Forteresse au départ : %d PV (+%d par les talents)" % [Model.INITIAL_HP+data.hp,data.hp]
 	for index in range(3):
 		var unit: Dictionary = data.units[index]
-		summary_loadout_units[index].text = "%s · %s" % [Model.ROSTER[unit.type].name,Model.MetaTalents.bonus_line(unit)]
+		summary_loadout_units[index].text = "%s · %s" % [Model.Shop.family_label(unit.type),Model.MetaTalents.bonus_line(unit)]
 
 func _close_run_summary() -> void:
 	summary_open = false
@@ -1537,9 +1541,18 @@ func _refresh_home_progress() -> void:
 		meta_income.tooltip_text = meta_profile.error
 
 func _open_meta(camp: int) -> void:
-	if choosing_faction and meta_profile != null:
+	if choosing_faction and meta_profile != null and not shop_menu.visible:
 		meta_menu.open(meta_profile,camp)
 		_update_interface()
+
+func _open_shop(camp: int) -> void:
+	if not choosing_faction or meta_profile == null or meta_menu.visible or not campaign_menu.visible: return
+	shop_menu.open(meta_profile,camp);_update_interface()
+
+func _shop_closed() -> void:
+	_update_interface()
+	if campaign_menu.visible:
+		campaign_menu.refresh();campaign_menu.shop_button.grab_focus()
 
 func _sync_meta_rewards(force: bool = false) -> bool:
 	if meta_profile == null or choosing_faction: return false
@@ -1713,6 +1726,9 @@ func _launch_campaign_mission(id: String) -> void:
 func _choose_faction(choice: int, replacement: RefCounted = null) -> void:
 	if meta_menu.visible or not choosing_faction or choice not in [0,1]: return
 	forecast_wave = -1
+	var target: RefCounted = model if replacement == null else replacement
+	var chosen: int = meta_profile.selected_shop_type(choice) if meta_profile != null else -1
+	if not target.configure_auxiliary(chosen): return
 	var prepared_run: int = -1
 	var prepared_ranks: Array = []
 	if meta_profile != null:
@@ -1793,9 +1809,9 @@ func _update_specialisation_choices() -> void:
 		specialisation_descriptions[branch].add_theme_font_size_override("font_size",13 if specialisation_numbers_visible else 18)
 		specialisation_stats[branch].visible = specialisation_numbers_visible
 		specialisation_stats[branch].text = _comparison_text(current,stats,true)
-		if type in [2, 3, 4]:
-			specialisation_stats[branch].text += "\n%s : %s → %s dégâts\nCibles : %d → %d · %s : <%s → <%s" % ["Rebonds" if type == 3 else "Explosion",_number(current.secondary_damage),_number(stats.secondary_damage),current.secondary_cap,stats.secondary_cap,"Distance" if type == 3 else "Rayon",_number(current.radius),_number(stats.radius)]
-		elif type == 5:
+		if Model.family(type) in [2, 3, 4]:
+			specialisation_stats[branch].text += "\n%s : %s → %s dégâts\nCibles : %d → %d · %s : <%s → <%s" % ["Rebonds" if Model.family(type) == 3 else "Explosion",_number(current.secondary_damage),_number(stats.secondary_damage),current.secondary_cap,stats.secondary_cap,"Distance" if Model.family(type) == 3 else "Rayon",_number(current.radius),_number(stats.radius)]
+		elif Model.family(type) == 5:
 			specialisation_stats[branch].text += "\nMalédiction : %s → %s dégâts\nÀ +1 s puis +2 s, même hors portée." % [_number(current.curse_damage),_number(stats.curse_damage)]
 		specialisation_buttons[branch].disabled = not model.upgrade_error(pending_slot, branch).is_empty()
 		var candidate: Dictionary = defender.duplicate(true)
@@ -1814,6 +1830,7 @@ func _toggle_specialisation_numbers() -> void:
 	_update_interface()
 
 func _specialisation_pitch(type: int, branch: int) -> String:
+	if type >= 6: return Model.Shop.BRANCHES[type][branch].description
 	return [
 		"Des tirs puissants et lointains, mais moins fréquents.",
 		"Des volées rapides, avec une portée plus courte.",
@@ -1854,6 +1871,7 @@ func _cancel_specialisation() -> void:
 	map_view.queue_redraw()
 
 func _effect_text(stats: Dictionary, type: int) -> String:
+	type = Model.family(type)
 	if type == 3:
 		return "%s rebond%s : %s dégâts chacun, distance < %s." % [stats.secondary_cap, "" if stats.secondary_cap == 1 else "s successifs", _number(stats.secondary_damage), _number(stats.radius)]
 	if type in [2, 4]:
@@ -1863,9 +1881,11 @@ func _effect_text(stats: Dictionary, type: int) -> String:
 	return ""
 
 func _recruit_role(type: int) -> String:
+	type = Model.family(type)
 	return ["Tirs rapides sur une cible", "Longue portée, tirs espacés", "Explosion autour de la cible", "Rebonds entre ennemis proches", "Explosion contre les groupes", "Dégâts immédiats puis malédiction"][type]
 
 func _recruit_effect(stats: Dictionary, type: int) -> String:
+	type = Model.family(type)
 	if type in [2,4]:
 		return "Explosion : %s dégâts sur jusqu’à %d autres ennemis proches." % [_number(stats.secondary_damage), stats.secondary_cap]
 	if type == 3:
@@ -1883,8 +1903,8 @@ func _recruit_tooltip(type: int, error: String) -> String:
 		lines.append("Valeurs prévues à cet emplacement, bonus et synergies actuels inclus.")
 		lines.append("%s dégâts directs · Une attaque toutes les %s s · Portée : %s" % [_number(stats.damage),_number(stats.interval),_number(stats.range)])
 		lines.append(_recruit_effect(stats,type))
-		if type in [2,3,4]: lines.append("%s : strictement moins de %s sur la carte." % ["Distance de rebond" if type == 3 else "Rayon de l’explosion",_number(stats.radius)])
-		if type == 5: lines.append("Un nouveau tir de ce chaman renouvelle sa malédiction ; deux chamans conservent leurs effets séparés.")
+		if Model.family(type) in [2,3,4]: lines.append("%s : strictement moins de %s sur la carte." % ["Distance de rebond" if Model.family(type) == 3 else "Rayon de l’explosion",_number(stats.radius)])
+		if Model.family(type) == 5: lines.append("Un nouveau tir de ce chaman renouvelle sa malédiction ; deux chamans conservent leurs effets séparés.")
 		lines.append("La cible principale est l’ennemi à portée le plus avancé vers la forteresse.")
 		lines.append("%d or · %d/2 exemplaires recrutés" % [model.purchase_cost(type),model.count_type(type)])
 		if error.is_empty(): lines.append("Cliquez pour acheter.")
@@ -1893,6 +1913,7 @@ func _recruit_tooltip(type: int, error: String) -> String:
 	return "\n".join(lines)
 
 func _compact_damage(stats: Dictionary, type: int) -> String:
+	type = Model.family(type)
 	var result: String = "Dégâts : %s" % _number(stats.damage)
 	if type in [2,4]: result += " · Explosion : %s × %d autres max." % [_number(stats.secondary_damage),stats.secondary_cap]
 	elif type == 3: result += " · Rebond : %s × %d max." % [_number(stats.secondary_damage),stats.secondary_cap]
@@ -1900,8 +1921,9 @@ func _compact_damage(stats: Dictionary, type: int) -> String:
 	return result
 
 func _compact_upgrade(current: Dictionary, future: Dictionary, type: int) -> String:
+	type = Model.family(type)
 	var result: String = "Dégâts : %s → %s" % [_number(current.damage),_number(future.damage)]
-	if type in [2,3,4]: result += " · %s : %s → %s" % ["Rebond" if type == 3 else "Explosion",_number(current.secondary_damage),_number(future.secondary_damage)]
+	if Model.family(type) in [2,3,4]: result += " · %s : %s → %s" % ["Rebond" if Model.family(type) == 3 else "Explosion",_number(current.secondary_damage),_number(future.secondary_damage)]
 	elif type == 5: result += " · Malédiction : %s → %s" % [_number(current.curse_damage),_number(future.curse_damage)]
 	return result
 
@@ -2039,6 +2061,7 @@ func _reset() -> void:
 		_open_campaign(previous_faction)
 
 func _buy(type: int) -> void:
+	if type < 0 or type >= model.available_types().size(): return
 	if choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open:
 		return
 	var purchase_rect: Rect2 = buy_buttons[type].get_global_rect()
@@ -2133,7 +2156,7 @@ func _refresh_purchase_preview() -> void:
 		focused_purchase = -1
 		return
 	var offer: int = hovered_purchase if hovered_purchase >= 0 else focused_purchase
-	if offer < 0 or offer >= buy_buttons.size(): return
+	if offer < 0 or offer >= model.available_types().size(): return
 	var type: int = model.available_types()[offer]
 	map_view.purchase_preview = model.purchase_preview_stats(selected, type)
 	var stats: Dictionary = map_view.purchase_preview
@@ -2174,11 +2197,12 @@ func _update_interface() -> void:
 	_sync_countdown()
 	guidance_label.text = _guidance_text()
 	map_view.preview_synergy_unit = {}
-	var modal: bool = meta_menu.visible or choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
-	campaign_menu.set_overlay_blocked(meta_menu.visible or not campaign_menu.visible)
+	var modal: bool = meta_menu.visible or shop_menu.visible or choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
+	campaign_menu.set_overlay_blocked(meta_menu.visible or shop_menu.visible or not campaign_menu.visible)
 	for control in faction_buttons+meta_buttons:
 		control.focus_mode = Control.FOCUS_NONE if meta_menu.visible or campaign_menu.visible else Control.FOCUS_ALL
 	if meta_profile != null:
+		meta_profile.shop_locked = not choosing_faction and not _run_finished()
 		var pending: int = MetaProfile.resource_total(_cleared_wave_count())+_previous_map_rewards()
 		meta_progress_label.text = "PO en attente : %d" % pending if not _run_finished() else "Progression : sauvegarde à vérifier" if not meta_profile.error.is_empty() else "Progression : +%d PO %s" % [meta_run_earned,"Alliance" if model.faction == 0 else "Horde"]
 		meta_progress_label.tooltip_text = "PO persistantes versées au résultat de cette partie. Elles sont distinctes de l’or de combat, utilisé pour recruter et améliorer vos défenseurs." if not _run_finished() else meta_profile.error if not meta_profile.error.is_empty() else "PO de cette faction enregistrées et conservées après fermeture du jeu."
@@ -2260,10 +2284,17 @@ func _update_interface() -> void:
 	upgrade_button.visible = occupied
 	for type in range(buy_buttons.size()):
 		var button: Button = buy_buttons[type]
+		if type >= model.available_types().size():
+			button.hide();button.disabled = true;button.focus_mode = Control.FOCUS_NONE;continue
+		button.focus_mode = Control.FOCUS_NONE if modal else Control.FOCUS_ALL
+		var four: bool = model.available_types().size() == 4
+		button.position = Vector2(24+type*(221.5 if four else 294),88 if four else 96)
+		button.size = Vector2(211.5 if four else 278,48 if four else 40)
+		button.add_theme_font_size_override("font_size",13 if four else 14)
 		var actual_type: int = model.available_types()[type]
 		var offer: Dictionary = Model.ROSTER[actual_type]
 		button.visible = not occupied
-		button.text = "%s · %d or  (%d/2)" % [offer.get("short_name", offer.name), model.purchase_cost(actual_type), model.count_type(actual_type)]
+		button.text = ("%s\n%d or · %d/2" if four else "%s · %d or  (%d/2)") % [offer.get("short_name", offer.name), model.purchase_cost(actual_type), model.count_type(actual_type)]
 		var purchase_error: String = model.purchase_error(selected, actual_type)
 		button.tooltip_text = _recruit_tooltip(actual_type,purchase_error)
 		button.disabled = modal or not purchase_error.is_empty()
@@ -2374,7 +2405,7 @@ func _synergy_gain_text(type: int, rule: Dictionary, side: int) -> String:
 	for i in range(4):
 		var gain: float = rule.effects[side][i]
 		if gain > 0 and (i != 1 or Model.ROSTER[type].has("secondary_damage")) and (i != 2 or Model.ROSTER[type].has("curse_damage")):
-			gains.append("+%s %s" % [_number(gain if i == 3 else gain*100), ["% aux dégâts directs", "% aux dégâts des rebonds" if type == 3 else "% aux dégâts des explosions", "% aux dégâts de malédiction", "de portée"][i]])
+			gains.append("+%s %s" % [_number(gain if i == 3 else gain*100), ["% aux dégâts directs", "% aux dégâts des rebonds" if Model.family(type) == 3 else "% aux dégâts des explosions", "% aux dégâts de malédiction", "de portée"][i]])
 	return ", ".join(gains)
 
 func _preview_synergy_tooltip(slot: int, candidate: Dictionary) -> String:
@@ -2382,7 +2413,7 @@ func _preview_synergy_tooltip(slot: int, candidate: Dictionary) -> String:
 	var lines: Array[String] = ["SYNERGIES PRÉVUES · " + Model.ROSTER[type].name,"Liens bleus pointillés : partenaires après confirmation."]
 	var count: int = 0
 	for rule in Model.Campaign.PROXIMITY + Model.Campaign.SPECIALISATIONS:
-		var side: int = rule.types.find(type)
+		var side: int = rule.types.find(Model.family(type))
 		if side < 0: continue
 		var partners: Array[int] = model.synergy_partners(slot,rule,-1,candidate)
 		if partners.is_empty(): continue
@@ -2395,15 +2426,22 @@ func _preview_synergy_tooltip(slot: int, candidate: Dictionary) -> String:
 	lines.append("\nLes statistiques de l’aperçu incluent déjà ces effets.\nPlusieurs partenaires ne multiplient pas un même bonus.\nAucun achat ni changement avant confirmation.")
 	return "\n".join(lines)
 
+func _family_partner_name(type: int, branch: int = -1) -> String:
+	if branch < 0: return Model.Shop.family_label(type)
+	var names: Array[String] = [Model.ROSTER[type].name+" · "+Model.stats_for(type,4,branch).branch_name]
+	for card in Model.Shop.CARDS:
+		if card.family == type: names.append(card.name+" · "+Model.stats_for(card.type,4,branch).branch_name)
+	return " / ".join(names)
+
 func _synergy_tooltip(slot: int) -> String:
 	var type: int = model.defenders[slot].type
 	var descriptions: Array[String] = ["SYNERGIES · " + Model.ROSTER[type].name, "Traits dorés : proximité · Traits bleus : spécialisations"]
 	for rule in Model.Campaign.PROXIMITY + Model.Campaign.SPECIALISATIONS:
-		var side: int = rule.types.find(type)
+		var side: int = rule.types.find(Model.family(type))
 		if side < 0: continue
 		var specialised: bool = rule.has("branches")
 		var partner_type: int = rule.types[1-side]
-		var partner_name: String = Model.stats_for(partner_type, 4, rule.branches[1-side]).branch_name if specialised else Model.ROSTER[partner_type].name
+		var partner_name: String = _family_partner_name(partner_type,rule.branches[1-side] if specialised else -1)
 		var partners: Array[int] = model.synergy_partners(slot, rule)
 		var places: Array[String] = []
 		for other_slot in partners: places.append("E%d" % (other_slot+1))
@@ -2605,10 +2643,10 @@ func _bonus_card_content(code: int) -> Dictionary:
 	var alliance: bool = model.faction == 0
 	match code:
 		0: return {"effect":"+10 % à tous les dégâts","scope":"Tous vos défenseurs.","note":"Actuels et futurs."}
-		1: return {"effect":"Tirs 12 % plus rapides","scope":"Archers, arbalétriers et mages." if alliance else "Lanceurs de haches et sapeurs.","note":"Spécialisations incluses."}
+		1: return {"effect":"Tirs 12 % plus rapides","scope":"Tous vos défenseurs." if alliance else "Tous sauf les chamans.","note":"Spécialisations incluses."}
 		2: return {"effect":"Portée +0,5","scope":"Tous vos défenseurs.","note":"Le cercle d’attaque s’agrandit."}
-		3: return {"effect":"Dégâts d’explosion +20 %" if alliance else "Dégâts rebonds et\nexplosions +20 %","scope":"Vos mages." if alliance else "Lanceurs de haches et sapeurs.","note":"Tirs directs inchangés."}
-		4: return {"effect":"Rayon d’explosion +0,2" if alliance else "Explosions / rebonds\n+0,2 de distance","scope":"Vos mages." if alliance else "Lanceurs de haches et sapeurs.","note":"Maximum de cibles inchangé."}
+		3: return {"effect":"Dégâts d’explosion +20 %" if alliance else "Dégâts rebonds et\nexplosions +20 %","scope":"Vos mages." if alliance else "Trolls et gobelins, alternatives incluses.","note":"Tirs directs inchangés."}
+		4: return {"effect":"Rayon d’explosion +0,2" if alliance else "Explosions / rebonds\n+0,2 de distance","scope":"Vos mages." if alliance else "Trolls et gobelins, alternatives incluses.","note":"Maximum de cibles inchangé."}
 		5: return {"effect":"Dégâts des tirs +15 %","scope":"Tous vos défenseurs.","note":"Explosions inchangées." if alliance else "Rebonds, explosions et malédictions inchangés."}
 		6: return {"effect":"Dégâts +15 %","scope":"Défenseurs de niveau 1 ou 2.","note":"Le gain cesse au niveau 3."}
 		7: return {"effect":"Dégâts +12 %","scope":"Défenseurs de niveau 3 ou 4.","note":"Actuels et futurs."}
@@ -2642,11 +2680,11 @@ func _bonus_impact_text(code: int) -> String:
 		if code == 11:
 			for component in ["direct","secondary","curse"]:
 				if not is_equal_approx(unit.large_before[component],unit.large_after[component]):
-					changes.append("%s : %s → %s" % [{"direct":"Dégâts directs","secondary":"Rebonds" if unit.type == 3 else "Explosion","curse":"Malédiction"}[component],_number(unit.large_before[component]),_number(unit.large_after[component])])
+					changes.append("%s : %s → %s" % [{"direct":"Dégâts directs","secondary":"Rebonds" if Model.family(unit.type) == 3 else "Explosion","curse":"Malédiction"}[component],_number(unit.large_before[component]),_number(unit.large_after[component])])
 		else:
 			for field in ["damage","secondary_damage","curse_damage","interval","range","radius"]:
 				if not is_equal_approx(unit.before[field],unit.after[field]):
-					var label: String = {"damage":"Dégâts directs","secondary_damage":"Rebonds" if unit.type == 3 else "Explosion","curse_damage":"Malédiction","interval":"Intervalle (s)","range":"Portée","radius":"Distance de rebond" if unit.type == 3 else "Rayon d’explosion"}[field]
+					var label: String = {"damage":"Dégâts directs","secondary_damage":"Rebonds" if Model.family(unit.type) == 3 else "Explosion","curse_damage":"Malédiction","interval":"Intervalle (s)","range":"Portée","radius":"Distance de rebond" if Model.family(unit.type) == 3 else "Rayon d’explosion"}[field]
 					changes.append("%s : %s → %s" % [label,_number(unit.before[field]),_number(unit.after[field])])
 		if changes.is_empty(): continue
 		affected += 1

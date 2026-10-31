@@ -39,7 +39,7 @@ func run_checks() -> void:
 		legacy.banks[camp] = {"resource":23+camp,"points":8+camp,"resets":3+camp,"ranks":[3,1,0,3,0,1,0,0,0]}
 	var file := FileAccess.open(path,FileAccess.WRITE);file.store_buffer(Profile.Codec.encode(legacy));file.close()
 	var migrated = Profile.new(path)
-	check(not migrated.blocked and migrated.data.schema == 6 and not migrated.migration_notice.is_empty(),"Ancien profil reconnu et migré")
+	check(not migrated.blocked and migrated.data.schema == 7 and not migrated.migration_notice.is_empty(),"Ancien profil reconnu et migré")
 	for camp in range(2):
 		check(migrated.data.banks[camp].resource == legacy.banks[camp].resource and migrated.data.banks[camp].points == legacy.banks[camp].points and migrated.data.banks[camp].resets == legacy.banks[camp].resets,"Ressources, points achetés et compteurs conservés")
 		check(Talents.spent(migrated.data.banks[camp].ranks) == 0,"Tous les points investis rendus gratuitement")

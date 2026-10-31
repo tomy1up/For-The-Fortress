@@ -1,4 +1,5 @@
 extends RefCounted
+const Shop = preload("res://scripts/shop_catalogue.gd")
 ## Structure du prototype v0.88 ; liens et positions proposés, effets historiques conservés.
 const Base = preload("res://scripts/meta_talents_expanded.gd")
 const NODE_COUNT: int = Base.NODE_COUNT
@@ -82,12 +83,14 @@ static func allocation_error(ranks: Array, index: int, points: int, faction: int
 static func node(faction: int, index: int) -> Dictionary:
 	var definition: Dictionary = Base.node(faction,index)
 	if definition.is_empty(): return {}
+	definition.description = Shop.talent_description(definition.description,faction)
 	definition.row = ROWS[definition.local]
 	definition.column = COLUMNS[definition.tree][definition.local]
 	definition.parent = parent_index(index)
 	return definition
 
 static func effects(faction: int, ranks: Array, type: int) -> Dictionary:
+	type = Shop.family(type)
 	var result: Dictionary = {"direct":0.0,"secondary":0.0,"curse":0.0,"range":0.0}
 	if faction not in [0,1] or not valid(ranks) or type not in ([0,1,2] if faction == 0 else [3,4,5]): return result
 	result = Base._core_effects(faction,ranks.slice(0,15),type)

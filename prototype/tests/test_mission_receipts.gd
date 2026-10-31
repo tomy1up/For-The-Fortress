@@ -40,7 +40,7 @@ func run_checks() -> void:
 	legacy.banks[1].resource = 999
 	var file := FileAccess.open(path,FileAccess.WRITE);file.store_buffer(Profile.Codec.encode(legacy));file.close()
 	p = Profile.new(path)
-	check(not p.blocked and p.data.schema == 6 and p.data.banks[0].resource == 1234 and p.data.banks[0].points == 5 and p.data.banks[0].resets == 3 and p.data.banks[0].ranks[0] == 5 and p.data.banks[1].resource == 999,"Migration du profil précédent sans perte de ressource, point, talent ou compteur")
+	check(not p.blocked and p.data.schema == 7 and p.data.banks[0].resource == 1234 and p.data.banks[0].points == 5 and p.data.banks[0].resets == 3 and p.data.banks[0].ranks[0] == 5 and p.data.banks[1].resource == 999,"Migration du profil précédent sans perte de ressource, point, talent ou compteur")
 	check(p._read(path+".v082.bak") == JSON.parse_string(JSON.stringify(legacy)),"Archive chiffrée du profil précédent conservée")
 	var id: int = p.begin_mission(0,"test.mission_1",17)
 	check(p.credit_mission(id,0,10,true),"Crédit de mission sur disque")

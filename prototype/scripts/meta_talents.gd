@@ -74,6 +74,7 @@ static func can_allocate(ranks: Array, index: int, points: int) -> bool:
 	return allocation_error(ranks,index,points).is_empty()
 
 static func effects(faction: int, ranks: Array, type: int) -> Dictionary:
+	type = Linked.Shop.family(type)
 	if ranks.size() == Expanded.NODE_COUNT: return Linked.effects(faction,ranks,type) if Linked.valid(ranks) else Expanded.effects(faction,ranks,type)
 	if Legacy.valid(ranks): return Legacy.effects(faction,ranks,type)
 	var result: Dictionary = {"direct":0.0,"secondary":0.0,"curse":0.0,"range":0.0}

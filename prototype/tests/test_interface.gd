@@ -37,7 +37,7 @@ func run_checks() -> void:
 	check(scene.choosing_faction and scene.faction_panel.visible and scene.start_button.disabled, "Choix de faction obligatoire")
 	choose(scene,0)
 	check(scene.model.fortress_hp == 20 and scene.model.gold == 150 and not scene.start_button.disabled, "Préparation initiale")
-	check(scene.buy_buttons.size() == 3 and scene.buy_buttons[0].disabled, "Choix d'emplacement obligatoire")
+	check(scene.buy_buttons.filter(func(button): return button.visible).size() == 3 and scene.buy_buttons[0].disabled, "Choix d'emplacement obligatoire")
 	for i in range(Model.SLOTS.size()):
 		select_slot(scene, i)
 		check(scene.selected == i and scene.title_label.text.begins_with("E%d" % (i + 1)), "Inspection E%d" % (i + 1))

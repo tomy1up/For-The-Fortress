@@ -520,3 +520,9 @@ Le porteur du projet choisit **la boutique et ses premières unités alternative
 ## Difficultés de campagne — 31 octobre 2026
 
 [Normal, Héroïque et Mythique](Difficultes_campagne_2026-10-31.md) : la campagne actuelle correspond au Normal. Les 100 premières victoires normales ouvrent l’Héroïque ; les 100 premières victoires héroïques ouvrent le Mythique. Chaque difficulté progresse mission par mission, par faction, sans effacer les acquis normaux. Paramètres, récompenses et articulation avec l’infini restent ouverts. Ces modes ne sont pas encore implémentés.
+
+## Prototype v0.99 — boutique et familles, 31 octobre 2026
+
+La [boutique](Boutique_v099.md) livre deux alternatives proposées par faction, achetables en PO, et le choix d’un quatrième type pour la mission. Les trois types de base restent disponibles. Talents par famille avec bénéficiaires explicites, choix figé en mission et sauvegarde au schéma 7 conservant les acquis. Prix, statistiques, branches et héritage des synergies restent des hypothèses à équilibrer.
+
+82 suites, 32 913 contrôles Godot et 16 tests Python réussis ; 243 lancements du paquet Windows, 56 sources comparées, dix vues et 24 contrôles de clics supplémentaires sur ses ressources compilées. Les 40 scénarios sans alternative conservent les combats de v0.98. Les modes avancés et les missions 11–200 restent à développer.

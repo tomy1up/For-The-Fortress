@@ -4,6 +4,10 @@ const Talents = preload("res://scripts/meta_talents.gd")
 const Codec = preload("res://scripts/profile_codec.gd")
 const Missions = preload("res://scripts/mission_progress.gd")
 const Experience = preload("res://scripts/talent_experience.gd")
+const Shop = preload("res://scripts/shop_catalogue.gd")
+const SCHEMA_VERSION: int = 7
+var shop_locked: bool = false # État de la session, sans changement d’une mission déjà lancée.
+var shop_notice: String = ""
 const DEFAULT_PATH: String = "user://progression_factions_v1.json"
 const WIN_REWARD: int = 5
 var path: String
@@ -13,10 +17,10 @@ var migration_notice: String = ""
 var data: Dictionary = fresh()
 
 static func fresh() -> Dictionary:
-	return {"schema":6,"serial":0,"banks":[bank(),bank()],"run":{"id":0,"faction":0,"completed":0,"victory":false}}
+	return {"schema":SCHEMA_VERSION,"serial":0,"banks":[bank(),bank()],"run":{"id":0,"faction":0,"completed":0,"victory":false}}
 
 static func bank() -> Dictionary:
-	return {"resource":0,"xp":0,"points":0,"resets":0,"ranks":Talents.Linked.empty_ranks(),"mission_rewards":{}}
+	return {"resource":0,"xp":0,"points":0,"resets":0,"ranks":Talents.Linked.empty_ranks(),"mission_rewards":{},"shop_owned":{},"shop_selected":""}
 
 static func resource_total(completed: int, victory: bool = false) -> int:
 	if completed < 0 or completed > 10: return 0
@@ -27,10 +31,12 @@ func _init(save_path: String = DEFAULT_PATH) -> void:
 	if not path.is_empty(): load_profile()
 
 static func valid(value: Variant) -> bool:
-	if not value is Dictionary or not Talents.integer(value.get("schema"),1,6) or not Talents.integer(value.get("serial"),0,1000000000): return false
+	if not value is Dictionary or not Talents.integer(value.get("schema"),1,SCHEMA_VERSION) or not Talents.integer(value.get("serial"),0,1000000000): return false
 	if not value.get("banks") is Array or value.banks.size() != 2 or not value.get("run") is Dictionary: return false
-	for item in value.banks:
+	for faction_index in range(2):
+		var item: Variant = value.banks[faction_index]
 		if not item is Dictionary: return false
+		if value.schema >= 7 and not Shop.valid_inventory(faction_index,item.get("shop_owned"),item.get("shop_selected")): return false
 		for key in ["resource","points","resets"]:
 			if not Talents.integer(item.get(key),0,1000000000): return false
 		if not (Talents.Legacy.valid(item.get("ranks")) if value.schema == 1 else Talents.Linked.valid(item.get("ranks")) if value.schema >= 6 else Talents.Expanded.valid(item.get("ranks")) if value.schema >= 4 else Talents.current_valid(item.get("ranks"))): return false
@@ -100,7 +106,13 @@ func _legacy_json(file_path: String) -> bool:
 	return false
 
 func _accept_loaded(value: Dictionary) -> bool:
-	if value.schema == 6: data = value;return true
+	if value.schema == SCHEMA_VERSION: data = value;return true
+	if value.schema == 6:
+		if not _archive_previous(value,".v098.bak",6): return false
+		var upgraded: Dictionary = value.duplicate(true)
+		if not _commit(upgraded): blocked = true;return false
+		migration_notice = "Boutique préparée : PO, XP, talents et missions conservés."
+		return true
 	if value.schema == 5:
 		if not _archive_previous(value,".v087.bak",5): return false
 		var upgraded: Dictionary = value.duplicate(true);upgraded.schema = 6
@@ -183,12 +195,17 @@ func _archive_previous(value: Dictionary, suffix: String, schema: int) -> bool:
 	return true
 
 func _commit(candidate: Dictionary) -> bool:
-	# Les transactions sur un ancien cliché à quinze rangs sont canonisées avant validation.
+	# Les versions antérieures sont conservées en archive avant cette conversion.
 	if candidate.get("schema") == 6 and candidate.get("banks") is Array:
+		candidate = candidate.duplicate(true);candidate.schema = SCHEMA_VERSION
+		for item in candidate.banks:
+			if item is Dictionary: item.shop_owned = {};item.shop_selected = ""
+	# Les transactions sur un ancien cliché à quinze rangs sont canonisées avant validation.
+	if candidate.get("schema") in [6,SCHEMA_VERSION] and candidate.get("banks") is Array:
 		for item in candidate.banks:
 			if item is Dictionary and Talents.current_valid(item.get("ranks")):
 				item.ranks = Talents.Linked.normalize(item.ranks)
-	if blocked or not valid(candidate) or candidate.schema != 6:
+	if blocked or not valid(candidate) or candidate.schema != SCHEMA_VERSION:
 		if not blocked: error = "Opération de progression invalide."
 		return false
 	if path.is_empty(): data = candidate;error = "";return true # Profil éphémère réservé aux tests/captures.
@@ -283,3 +300,35 @@ func respec(faction: int) -> bool:
 	next.banks[faction].resets = mini(int(next.banks[faction].resets)+1,1000000000)
 	next.banks[faction].ranks = bank().ranks
 	return _commit(next)
+
+func shop_error(faction: int, id: String) -> String:
+	if blocked: return error if not error.is_empty() else "Progression indisponible."
+	if shop_locked: return "La boutique est accessible entre les missions."
+	if faction not in [0,1]: return "Faction inconnue."
+	var entry: Dictionary = Shop.card(id)
+	if entry.is_empty() or entry.faction != faction: return "Cette unité n’appartient pas à cette faction."
+	if data.banks[faction].shop_owned.has(id): return "Unité déjà acquise."
+	if data.banks[faction].resource < entry.po: return "PO insuffisantes : %d requises." % entry.po
+	return ""
+
+func buy_shop_unit(faction: int, id: String) -> bool:
+	var problem: String = shop_error(faction,id)
+	if not problem.is_empty(): shop_notice = problem;return false
+	var entry: Dictionary = Shop.card(id);var next: Dictionary = data.duplicate(true)
+	next.banks[faction].resource -= entry.po
+	next.banks[faction].shop_owned[id] = int(entry.po)
+	var saved: bool = _commit(next)
+	shop_notice = "" if saved else error
+	return saved
+
+func select_shop_unit(faction: int, id: String) -> bool:
+	if blocked or shop_locked or faction not in [0,1]: return false
+	if not id.is_empty() and not data.banks[faction].shop_owned.has(id): return false
+	if data.banks[faction].shop_selected == id: return true
+	var next: Dictionary = data.duplicate(true);next.banks[faction].shop_selected = id
+	return _commit(next)
+
+func selected_shop_type(faction: int) -> int:
+	if blocked or faction not in [0,1]: return -1
+	var entry: Dictionary = Shop.card(data.banks[faction].shop_selected)
+	return int(entry.type) if not entry.is_empty() and entry.faction == faction and data.banks[faction].shop_owned.has(entry.id) else -1

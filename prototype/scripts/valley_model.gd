@@ -7,6 +7,8 @@ const Enemies = preload("res://scripts/enemy_catalogue.gd")
 const MetaTalents = preload("res://scripts/meta_talents.gd")
 ## Distances dans le plan logique du GDD, avant projection isométrique.
 
+const Shop = preload("res://scripts/shop_catalogue.gd")
+var auxiliary_type: int = -1
 const Maps = preload("res://scripts/map_definition.gd")
 # Alias conservés pour les outils et références historiques du Gué.
 const PATH_POINTS: Array[Vector2] = Maps.VALLEY_PATH
@@ -29,6 +31,10 @@ const ROSTER: Array[Dictionary] = [
 	{"name": "Lanceur de haches troll", "short_name": "Lanceur de haches", "price": 50, "damage": 16.0, "interval": 2.0, "range": 3.5, "secondary_damage": 8.0, "secondary_cap": 1, "radius": 1.0},
 	{"name": "Sapeur gobelin", "price": 75, "damage": 24.0, "interval": 2.5, "range": 3.0, "secondary_damage": 9.6, "secondary_cap": 3, "radius": 1.0},
 	{"name": "Chaman orc", "price": 100, "damage": 12.0, "interval": 2.0, "range": 4.5, "curse_damage": 4.8},
+	{"name":"Rôdeur elfe","price":60,"damage":6.0,"interval":0.7,"range":3.5},
+	{"name":"Mousquetaire nain","price":90,"damage":38.0,"interval":4.0,"range":6.0},
+	{"name":"Traqueur troll","price":65,"damage":10.0,"interval":1.25,"range":4.0,"secondary_damage":4.0,"secondary_cap":1,"radius":1.0},
+	{"name":"Grenadier gobelin","price":90,"damage":18.0,"interval":2.0,"range":2.7,"secondary_damage":6.0,"secondary_cap":4,"radius":1.15},
 ]
 
 const ENEMY_TYPES: Array[Dictionary] = [
@@ -127,11 +133,25 @@ func reset() -> void:
 	if not map_error.is_empty(): phase = "invalid_map"
 
 func available_types() -> Array[int]:
-	return [0, 1, 2] if faction == 0 else [3, 4, 5]
+	var result: Array[int] = []
+	result.assign([0,1,2] if faction == 0 else [3,4,5])
+	var extra: Dictionary = Shop.for_type(auxiliary_type)
+	if not extra.is_empty() and extra.faction == faction: result.append(auxiliary_type)
+	return result
+
+static func family(type: int) -> int:
+	return Shop.family(type)
+
+func configure_auxiliary(value: Variant) -> bool:
+	if not (value is int or value is float) or not is_finite(float(value)) or value != floorf(float(value)): return false
+	if int(value) != -1 and Shop.for_type(int(value)).is_empty(): return false
+	if not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
+	auxiliary_type = int(value);return true
 
 func select_faction(choice: int) -> bool:
 	if choice not in [0, 1] or wave != 1 or not bonuses.is_empty() or phase != "preparation" or spawned != 0 or gold != INITIAL_GOLD:
 		return false
+	if auxiliary_type >= 0 and Shop.for_type(auxiliary_type).get("faction",-1) != choice: return false
 	for defender in defenders:
 		if not defender.is_empty():
 			return false
@@ -205,6 +225,7 @@ func purchase_error(slot: int, type: int) -> String:
 	if type < 0 or type >= ROSTER.size():
 		return "Défenseur inconnu."
 	if type not in available_types():
+		if Shop.for_type(type).get("faction",-1) == faction: return "Cette alternative n’a pas été choisie pour la mission."
 		return "Ce défenseur appartient à l’autre faction."
 	if not defenders[slot].is_empty():
 		return "Cet emplacement est occupé."
@@ -236,7 +257,7 @@ static func stats_for(type: int, level: int = 1, branch: int = -1) -> Dictionary
 	stats.radius = stats.get("radius", 1.0)
 	stats.branch_name = ""
 	if level == 4 and branch in [0, 1]:
-		var specialization: Dictionary = Progression.BRANCHES[type * 2 + branch]
+		var specialization: Dictionary = Progression.BRANCHES[type * 2 + branch] if type < 6 else Shop.BRANCHES[type][branch]
 		for key in specialization:
 			if key == "name":
 				stats.branch_name = specialization.name
@@ -249,7 +270,7 @@ func synergy_partners(slot: int, rule: Dictionary, branch_override: int = -1, ca
 	if not synergies_enabled or slot < 0 or slot >= defenders.size(): return partners
 	var unit: Dictionary = defenders[slot] if candidate.is_empty() else candidate
 	if unit.is_empty(): return partners
-	var side: int = rule.types.find(unit.type)
+	var side: int = rule.types.find(family(unit.type))
 	if side < 0: return partners
 	var specialised: bool = rule.has("branches")
 	var level: int = 4 if branch_override >= 0 else unit.level
@@ -257,7 +278,7 @@ func synergy_partners(slot: int, rule: Dictionary, branch_override: int = -1, ca
 	if specialised and (level != 4 or branch != rule.branches[side]): return partners
 	for other_slot in range(defenders.size()):
 		var partner: Dictionary = defenders[other_slot]
-		if other_slot == slot or partner.is_empty() or partner.type != rule.types[1-side]: continue
+		if other_slot == slot or partner.is_empty() or family(partner.type) != rule.types[1-side]: continue
 		if specialised:
 			if partner.level != 4 or partner.branch != rule.branches[1-side]: continue
 		elif slots[slot].distance_squared_to(slots[other_slot]) > 25.0: continue
@@ -268,7 +289,7 @@ func synergy_effects(slot: int, branch_override: int = -1, candidate: Dictionary
 	var result: Dictionary = {"direct":0.0,"secondary":0.0,"curse":0.0,"range":0.0,"codes":[]}
 	for rule in Campaign.PROXIMITY + Campaign.SPECIALISATIONS:
 		if synergy_partners(slot, rule, branch_override, candidate).is_empty(): continue
-		var side: int = rule.types.find((defenders[slot] if candidate.is_empty() else candidate).type)
+		var side: int = rule.types.find(family((defenders[slot] if candidate.is_empty() else candidate).type))
 		for i in range(4):
 			result[["direct","secondary","curse","range"][i]] += rule.effects[side][i]
 		result.codes.append(rule.code) # Un même code une seule fois, même avec plusieurs partenaires.
@@ -304,14 +325,14 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	stats.reference_secondary = stats.secondary_damage
 	stats.reference_curse = stats.curse_damage
 	stats.direct_bonus = common + synergy.direct + meta.direct + (0.15 if 5 in active_bonuses else 0.0)
-	stats.secondary_bonus = common + synergy.secondary + meta.secondary + (0.20 if 3 in active_bonuses and defender.type in [2,3,4] else 0.0)
+	stats.secondary_bonus = common + synergy.secondary + meta.secondary + (0.20 if 3 in active_bonuses and family(defender.type) in [2,3,4] else 0.0)
 	stats.curse_bonus = common + synergy.curse + meta.curse
 	stats.damage = stats.reference_damage * (1.0+stats.direct_bonus)
 	stats.secondary_damage = stats.reference_secondary * (1.0+stats.secondary_bonus)
 	stats.curse_damage = stats.reference_curse * (1.0+stats.curse_bonus)
 	stats.range += synergy.range + meta.range + (0.5 if 2 in active_bonuses else 0.0)
-	if 1 in active_bonuses and defender.type != 5: stats.interval /= 1.12
-	if 4 in active_bonuses and defender.type in [2,3,4]: stats.radius += 0.2
+	if 1 in active_bonuses and family(defender.type) != 5: stats.interval /= 1.12
+	if 4 in active_bonuses and family(defender.type) in [2,3,4]: stats.radius += 0.2
 	stats.synergies = synergy.codes
 	return stats
 
@@ -566,7 +587,7 @@ func _resolve_instant() -> void:
 		var shot: Dictionary = {"time": elapsed, "slot": slot, "type": defender.type,
 			"target_id": primary.id, "from": slots[slot], "to": impact, "secondary": [], "radius": stats.radius}
 		event_log.append("%.9f tir E%d cible %d" % [elapsed, slot + 1, primary.id])
-		if defender.type in [2, 3, 4]:
+		if family(defender.type) in [2, 3, 4]:
 			var hit_ids: Array[int] = [primary.id]
 			var origin: Dictionary = primary
 			for hit in range(stats.secondary_cap):
@@ -585,9 +606,9 @@ func _resolve_instant() -> void:
 				hit_ids.append(victim.id)
 				shot.secondary.append(point_on_path(victim.distance))
 				# Les explosions restent centrées sur l'impact ; les ricochets avancent.
-				if defender.type == 3:
+				if family(defender.type) == 3:
 					origin = victim
-		elif defender.type == 5:
+		elif family(defender.type) == 5:
 			applications.append({"source_id": defender.instance_id, "enemy_id": primary.id, "damage": damage_for(stats,"curse",primary)})
 		shots.append(shot)
 		defender.ready_at = elapsed + stats.interval
