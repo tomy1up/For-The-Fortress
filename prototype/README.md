@@ -1,16 +1,16 @@
 # Dix missions de dix vagues jouables
 
-**Version v0.99 (31 octobre 2026)** : [boutique et familles de talents](../design/Boutique_v099.md). Deux alternatives par faction, déblocage en PO et choix d’un quatrième type avant la mission. Les talents nomment et renforcent toute leur famille de combat. Prix et statistiques provisoires. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.99).
+**Version v0.99.1 (31 octobre 2026)** : [teinte du mousquetaire](../design/Mousquetaire_v0991.md). La version sombre retenue remplace l’illustration claire dans la boutique et sur le plateau. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.99.1).
 
-**Prototype v0.99 — 31 octobre 2026.** Référence : GDD v0.15 et décisions de campagne. For the Fortress! reste un nom de travail.
+**Prototype v0.99.1 — 31 octobre 2026.** Référence : GDD v0.15 et décisions de campagne. For the Fortress! reste un nom de travail.
 
 Le jeu propose dix missions de dix vagues pour les deux factions, avec trois choix de bonus par mission et les synergies approuvées. Les six défenseurs, leurs quatre niveaux et douze spécialisations sont conservés. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.99](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.99) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.99.1](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.99.1) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
-Sur ce PC : dist/For_the_Fortress_v0.99_Windows_x64 depuis la racine du dépôt. Voir [le relevé d’export](../design/Distribution_Windows_v099.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
+Sur ce PC : dist/For_the_Fortress_v0.99.1_Windows_x64 depuis la racine du dépôt. Voir [le relevé d’export](../design/Distribution_Windows_v0991.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
 ## Jouer depuis le projet source
 

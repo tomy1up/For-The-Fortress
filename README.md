@@ -4,7 +4,7 @@
 
 **Difficultés de campagne** : [Normal, Héroïque, Mythique](design/Difficultes_campagne_2026-10-31.md). La campagne actuelle correspond au Normal ; 100 premières missions réussies ouvrent la difficulté suivante, avec un parcours successif propre à chaque difficulté et faction. Les modes avancés restent à développer.
 
-**Version v0.99 (31 octobre 2026)** : [boutique et familles de talents](design/Boutique_v099.md). Deux alternatives par faction, déblocage en PO et choix d’un quatrième type avant la mission. Les talents nomment et renforcent toute leur famille de combat. Prix et statistiques provisoires. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.99).
+**Version v0.99.1 (31 octobre 2026)** : [teinte du mousquetaire](design/Mousquetaire_v0991.md). La version sombre retenue remplace l’illustration claire dans la boutique et sur le plateau. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.99.1).
 
 **Comparaison des trois missions — 2 592 simulations** : [résultats et limites](design/Comparaison_trois_missions_v092.md). Deux factions, trois tirages, six placements, quatre compositions et comparaison du premier point en mission 3. Des stratégies sans talent gagnent chaque carte ; géométrie et composition pèsent sur la difficulté. Ces simulations ne mesurent pas le taux de victoire humain et n’entraînent aucun changement d’équilibrage ou de binaire.
 

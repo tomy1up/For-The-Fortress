@@ -526,3 +526,7 @@ Le porteur du projet choisit **la boutique et ses premières unités alternative
 La [boutique](Boutique_v099.md) livre deux alternatives proposées par faction, achetables en PO, et le choix d’un quatrième type pour la mission. Les trois types de base restent disponibles. Talents par famille avec bénéficiaires explicites, choix figé en mission et sauvegarde au schéma 7 conservant les acquis. Prix, statistiques, branches et héritage des synergies restent des hypothèses à équilibrer.
 
 82 suites, 32 913 contrôles Godot et 16 tests Python réussis ; 243 lancements du paquet Windows, 56 sources comparées, dix vues et 24 contrôles de clics supplémentaires sur ses ressources compilées. Les 40 scénarios sans alternative conservent les combats de v0.98. Les modes avancés et les missions 11–200 restent à développer.
+
+## Correction v0.99.1 — teinte du mousquetaire
+
+Le porteur du projet retient la version sombre pour sa cohérence avec les autres unités. [Correction et vérifications ciblées](Mousquetaire_v0991.md). Les règles et acquis du prototype v0.99 sont conservés.

@@ -2,7 +2,7 @@ extends RefCounted
 ## Illustrations originales de boutique ; aucune donnée de combat.
 const TEXTURES: Dictionary = {
 	6: preload("res://assets/units/shop/rodeur_v001.png"),
-	7: preload("res://assets/units/shop/mousquetaire_v001.png"),
+	7: preload("res://assets/units/shop/mousquetaire_v002.png"),
 	8: preload("res://assets/units/shop/traqueur_v001.png"),
 	9: preload("res://assets/units/shop/grenadier_v001.png"),
 }

@@ -14,6 +14,7 @@ parser.add_argument('archive',type=Path)
 parser.add_argument('--destination',required=True,type=Path)
 parser.add_argument('--screen',type=int,help='Écran réservé aux essais graphiques (index Godot).')
 parser.add_argument('--source-project',type=Path,help='Comparer les sources déclarées aux fichiers de ce projet local.')
+parser.add_argument('--case',action='append',dest='selected_cases',help='Limiter la vérification aux cas nommés ; répétable. Sans option, tous les cas sont exécutés.')
 args=parser.parse_args()
 assert os.name=='nt','Ce contrôle lance le binaire Windows sur Windows.'
 archive=args.archive.resolve()
@@ -135,6 +136,11 @@ for camp in ["alliance","horde"]:
     for mission in range(4,11): cases.append((camp+"_campaign_menu_terrain"+str(mission),"campaign_menu",camp))
 for camp in ["alliance","horde"]:
     for context in ["1","4","final","losses","defeat"]: cases.append((camp+"_wave_context_"+context,"defeat_summary" if context=="defeat" else "summary",camp))
+available_case_count=len(cases)
+if args.selected_cases:
+    unknown=set(args.selected_cases)-{name for name,_,_ in cases}
+    assert not unknown,'Cas de vérification inconnus : '+', '.join(sorted(unknown))
+    cases=[case for case in cases if case[0] in args.selected_cases]
 for name,state,faction in cases:
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
@@ -387,6 +393,7 @@ for name,state,faction in cases:
         assert header[:8]==b'\x89PNG\r\n\x1a\n' and struct.unpack('>II',header[16:24])==(1280,800)
     results.append({'case':name,'exit_code':completed.returncode,'capture':state is not None})
 report={'archive_sha256':hashlib.file_digest(archive.open('rb'),'sha256').hexdigest(),
+        'scope':'selected' if args.selected_cases else 'all','available_cases':available_case_count,
         'executable_sha256':exe_hash,'files':members,'tests':results,
         'source_checks':source_count,'local_sources_compared':args.source_project is not None,
         'visual_review':'Captures produites ; inspection visuelle à consigner séparément.'}
