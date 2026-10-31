@@ -128,6 +128,8 @@ for camp in ['alliance','horde']:
     for tree in range(3): cases.append((camp+'_expanded_tree_'+str(tree),'talents',camp))
     cases.append((camp+'_expanded_summary','summary',camp))
 for camp in ["alliance","horde"]:
+    for variant in ['idle','rally','hurt','defeat']: cases.append((camp+'_royal_'+variant,'preparation',camp))
+for camp in ["alliance","horde"]:
     for variant in ["fresh","completed","future","blocked","talents","returned","terrain2","terrain3","locked2"]: cases.append((camp+"_campaign_menu_"+variant,"campaign_menu",camp))
     for variant in ['fresh','first','invested','blocked']: cases.append((camp+'_talent_start_'+variant,'talents',camp))
 for camp in ["alliance","horde"]:
@@ -152,6 +154,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if '_royal_' in name: command+=['--capture-royal-state='+name.rsplit('_',1)[1]]
         if name.endswith('_enemy_hit_motion'): command+=['--capture-hit-motion','--capture-type='+('2' if faction=='alliance' else '4')]
         if state=="campaign_menu": command += ["--capture-campaign="+name.rsplit("_",1)[1]]
         if '_talent_start_' in name: command += ['--capture-talent-start='+name.rsplit('_',1)[1]]
@@ -333,6 +336,12 @@ for name,state,faction in cases:
         assert quote['isolated'] and quote['visible'] and quote['free_before']==2 and quote['free_after']==14
         assert quote['price']==0 and quote['next_price']==0 and 'Réinitialisation gratuite' in quote['dialog']
         assert quote['balance_after']==36-quote['price'] and 'les points débloqués sont conservés' in quote['dialog']
+    if '_royal_' in name:
+        royal=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROYAL_SNAPSHOT=')))
+        variant=name.rsplit('_',1)[1]
+        assert royal['isolated'] and royal['faction']==(0 if faction=='alliance' else 1)
+        assert royal['hp']=={'idle':20,'rally':20,'hurt':10,'defeat':0}[variant] and royal['pose']=={'idle':0,'rally':1,'hurt':2,'defeat':3}[variant]
+        assert royal['castle'].endswith('forteresse_'+faction+'_v001.png') and royal['king'].endswith('roi_'+faction+'_v001.png')
     if name.endswith('_bank_guardian'):
         guardian=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('GUARDIAN_SNAPSHOT=')))
         assert guardian['isolated'] and guardian['faction']==(0 if faction=='alliance' else 1)

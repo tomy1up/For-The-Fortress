@@ -1,0 +1,42 @@
+{
+  "full_regression": {
+    "suites": 88,
+    "godot_checks": 36772,
+    "python_tests": 17,
+    "source_hashes_still_match": true
+  },
+  "native_scope": "21 cas sélectionnés sur 255, 20 captures et 68 sources ; pas de contrôle natif exhaustif.",
+  "visual_review": [
+    "Alliance au repos sur le plateau, depuis le projet",
+    "Horde après une perte réelle de PV, depuis le projet",
+    "Atelier agrandi du paquet : encouragement, blessure et défaite des deux factions inspectés"
+  ],
+  "preview": {
+    "samples": 150,
+    "fps": 30,
+    "factions": 2,
+    "states": 4,
+    "kind": "atelier contrôlé, pas une partie jouée",
+    "breaches": "vraies arrivées du modèle, séquence de vagues abrégée pour la présentation",
+    "encoding": "GIF, 150 images, palette commune, apercu agrandi"
+  },
+  "changed_existing_export_sources": [
+    "project.godot",
+    "export_presets.cfg",
+    "scripts/main.gd",
+    "scripts/valley_view.gd"
+  ],
+  "new_export_sources": [
+    "scripts/fortress_art.gd",
+    "assets/fortresses/forteresse_alliance_v001.png",
+    "assets/fortresses/forteresse_alliance_v001.png.import",
+    "assets/fortresses/forteresse_horde_v001.png",
+    "assets/fortresses/forteresse_horde_v001.png.import",
+    "assets/fortresses/roi_alliance_v001.png",
+    "assets/fortresses/roi_alliance_v001.png.import",
+    "assets/fortresses/roi_horde_v001.png",
+    "assets/fortresses/roi_horde_v001.png.import"
+  ],
+  "archive_sha256": "34d24fb9350d99b9ab59e8bd1c3cc5f786de9bb76779865716ce90768aa65d83",
+  "executable_sha256": "9ab14fab4b0ce2ca9c7f9a42f57136c99f0ce987e1ed7780cc284df8ce78ff70"
+}

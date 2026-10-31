@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 31 octobre 2026 — prototype v0.103, GDD principal v0.16 (référence jeu v0.101) et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 31 octobre 2026 — prototype v0.104, GDD principal v0.16 (référence jeu v0.101) et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Nouveau lot — chapitre 2 et Gardienne à l’essai
 
@@ -11,6 +11,10 @@ Demandes ajoutées à la [feuille de route](Feuille_de_route_long_terme.md) : an
 ## Réactions corporelles — v0.103
 
 Première réaction des attaquants survivants : inclinaison et recul visuel brefs, plus discrets sur les silhouettes lourdes, puis retour au repos. Aucun changement de combat ; survol stable couvrant les poses. 87 suites, 37 155 contrôles et 17 tests Python ; 16 cas Windows ciblés. [Règles, aperçu animé et limites](Reactions_corporelles_v0103.md). Les cycles de marche, membres séparés, nouvelles forteresses et souverains restent à développer.
+
+## Forteresses et souverains — v0.104
+
+Deux forteresses et deux rois illustrés, propres aux factions. Quatre poses liées aux événements : repos, encouragement, perte de PV, défaite. Cour de présentation allongée de 16 pixels vers la droite pour garder les placements dégagés ; aucun changement de route logique ou de combat. 88 suites, 36 772 contrôles, 17 tests Python ; 21 cas Windows ciblés. [Assets, aperçu animé et limites](Forteresses_souverains_v0104.md). Apparences et durées proposées, à affiner après retour artistique.
 
 ## Périmètre réalisé
 

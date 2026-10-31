@@ -1,0 +1,123 @@
+{
+  "archive_sha256": "34d24fb9350d99b9ab59e8bd1c3cc5f786de9bb76779865716ce90768aa65d83",
+  "scope": "selected",
+  "available_cases": 255,
+  "executable_sha256": "9ab14fab4b0ce2ca9c7f9a42f57136c99f0ce987e1ed7780cc284df8ce78ff70",
+  "files": [
+    "For_the_Fortress_v0.104_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.104_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.104_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.104_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.104_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "alliance_fortress",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_fortress",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_fortress_damaged",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_fortress_damaged",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_fortress_critical",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_fortress_critical",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_fortress_destroyed",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_fortress_destroyed",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "fortress_breach",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_royal_idle",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_royal_rally",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_royal_hurt",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_royal_defeat",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_royal_idle",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_royal_rally",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_royal_hurt",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_royal_defeat",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "source_checks": 68,
+  "local_sources_compared": true,
+  "visual_review": "Captures produites ; inspection visuelle à consigner séparément."
+}

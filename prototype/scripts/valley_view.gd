@@ -5,6 +5,7 @@ const HordeArt = preload("res://scripts/horde_art.gd")
 const AllianceArt = preload("res://scripts/alliance_art.gd")
 const EnemyArt = preload("res://scripts/enemy_art.gd")
 const ShopArt = preload("res://scripts/shop_art.gd")
+const FortressArt = preload("res://scripts/fortress_art.gd")
 const ORIGIN := Vector2(658, 174)
 const AXIS := Vector2(27, 13.5)
 const INK := Color("d9e4d7")
@@ -20,6 +21,7 @@ var flag_phase: float = 0.0
 var model: RefCounted:
 	set(value):
 		model = value
+		reset_royal_animation()
 		terrain_details.assign(scenery_for(model.map_definition) if model != null else [])
 var terrain_details: Array[Dictionary] = []
 var selected: int = -1
@@ -27,13 +29,27 @@ var purchase_preview: Dictionary = {}
 var upgrade_preview: Dictionary = {}
 var preview_synergy_unit: Dictionary = {}
 var inspected_enemy_id: int = -1
-var breach_feedback: Dictionary = {}
+var royal_hurt_age: float = 2.0
+var royal_rally_age: float = 2.0
+var breach_feedback: Dictionary = {}:
+	set(value):
+		breach_feedback = value
+		if int(value.get("damage",0)) > 0 and int(value.get("count",0)) > 0: royal_hurt_age = 0.0
+
+func reset_royal_animation() -> void:
+	royal_hurt_age = 2.0;royal_rally_age = 2.0
+
+func signal_wave_started() -> void:
+	royal_rally_age = 0.0
+
 var font: Font = ThemeDB.fallback_font
 
 func _init() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 
 func _process(delta: float) -> void:
+	royal_hurt_age = minf(2.0,royal_hurt_age+maxf(0.0,delta))
+	royal_rally_age = minf(2.0,royal_rally_age+maxf(0.0,delta))
 	flag_phase = fmod(flag_phase+maxf(0.0,delta),TAU)
 	if model == null or model.active or model.phase not in ["finished","bonus","victory","defeat"]:
 		elimination_tail = 0.0
@@ -519,12 +535,13 @@ static func breach_text(count: int, damage: int) -> String:
 	return "−%d PV · %d ennemi%s passé%s" % [damage,count,"" if count == 1 else "s","" if count == 1 else "s"]
 
 func _draw_breach_feedback() -> void:
-	var center: Vector2 = project(_map_path()[-1]) + Vector2(52,26)
+	var area: Rect2 = fortress_bounds(project(_map_path()[-1]))
+	var center: Vector2 = fortress_center(project(_map_path()[-1]))
 	var warning := Color("ef9b89")
-	draw_rect(Rect2(center+Vector2(-42,-72),Vector2(84,92)),Color(warning,0.75),false,2)
+	draw_rect(area.grow(3),Color(warning,0.75),false,2)
 	var text: String = breach_text(breach_feedback.count,breach_feedback.damage)
 	var width: float = font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,15).x+24
-	var box := Rect2(center+Vector2(-width/2.0,-110),Vector2(width,30))
+	var box := Rect2(Vector2(center.x-width/2.0,area.position.y-36),Vector2(width,30))
 	draw_rect(box,Color("35241f"))
 	draw_rect(box,warning,false,1)
 	draw_string(font,box.position+Vector2(12,21),text,HORIZONTAL_ALIGNMENT_LEFT,-1,15,warning)
@@ -637,10 +654,10 @@ static func fortress_style(faction: int) -> Dictionary:
 	return {"faction":0,"wall":Color("c2c8b6"),"shade":Color("84958a"),"roof":Color("356582"),"flag":Color("376b99"),"trim":Color("d9b968")}
 
 static func fortress_center(anchor: Vector2) -> Vector2:
-	return anchor+Vector2(52,26)
+	return anchor+Vector2(68,26) # Cour allongée pour dégager les placements des nouvelles silhouettes.
 
 static func fortress_bounds(anchor: Vector2) -> Rect2:
-	return Rect2(fortress_center(anchor)+Vector2(-37,-70),Vector2(74,91))
+	return Rect2(fortress_center(anchor)+Vector2(-50,-101),Vector2(106,124))
 
 static func fortress_condition(hp: int, maximum: int) -> int:
 	if hp <= 0: return 3
@@ -651,61 +668,41 @@ static func fortress_condition(hp: int, maximum: int) -> int:
 static func fortress_caption(condition: int) -> String:
 	return ["FORTERESSE","FORTERESSE · ENDOMMAGÉE","FORTERESSE · EN DANGER","FORTERESSE DÉTRUITE"][clampi(condition,0,3)]
 
-func _fortress_shape(points: PackedVector2Array, color: Color) -> void:
-	draw_colored_polygon(points,color)
-	var outline: PackedVector2Array = points.duplicate();outline.append(points[0])
-	draw_polyline(outline,Color("26342e"),2.0,true)
-
 func _draw_fortress(anchor: Vector2) -> void:
-	# Même cour et même arrivée logique pour les deux camps ; E6 reste dégagé.
 	var center: Vector2 = fortress_center(anchor)
-	var style: Dictionary = fortress_style(model.faction if model != null else 0)
-	var horde: bool = style.faction == 1
+	var faction: int = FortressArt.side(model.faction if model != null else 0)
+	var style: Dictionary = fortress_style(faction)
 	var condition: int = fortress_condition(model.fortress_hp,model.max_hp) if model != null else 0
-	for key in ["wall","shade","roof"]: style[key] = style[key].darkened(condition*0.12)
-	draw_colored_polygon(PackedVector2Array([anchor+Vector2(-12,0),anchor+Vector2(36,-5),center+Vector2(37,0),center+Vector2(0,21)]),Color("576650"))
-	_fortress_shape(PackedVector2Array([center+Vector2(-31,-8),center+Vector2(0,-23),center+Vector2(31,-8),center+Vector2(0,9)]),style.shade)
-	for offset in [-23, 23]:
-		var tower: Vector2 = center + Vector2(offset, -8)
-		var rect := Rect2(tower+Vector2(-9,-39),Vector2(18,39))
-		draw_rect(rect,style.wall);draw_rect(Rect2(tower+Vector2(1,-39),Vector2(8,39)),style.shade);draw_rect(rect,Color("26342e"),false,2)
-		_fortress_shape(PackedVector2Array([tower+Vector2(-13,-39),tower+Vector2(0,-49 if horde else -57),tower+Vector2(13,-39)]),style.roof)
-		if horde:
-			draw_line(tower+Vector2(-10,-28),tower+Vector2(10,-28),Color("3b4140"),4)
-			draw_line(tower+Vector2(-10,-8),tower+Vector2(10,-8),Color("3b4140"),4)
-		else:
-			draw_line(tower+Vector2(-11,-39),tower+Vector2(11,-39),style.trim,2)
-			draw_rect(Rect2(tower+Vector2(-3,-31),Vector2(4,9)),Color("304840"))
-	var wall := Rect2(center+Vector2(-17,-34),Vector2(34,29))
-	draw_rect(wall,style.wall);draw_rect(wall,Color("26342e"),false,2)
-	if horde:
-		for x in [-12,-6,0,6,12]: draw_line(center+Vector2(x,-32),center+Vector2(x,-7),style.shade,1)
-		for side in [-1,1]:
-			var tusk := PackedVector2Array([center+Vector2(side*26,-8),center+Vector2(side*33,-24),center+Vector2(side*31,-34)])
-			draw_polyline(tusk,Color("26342e"),7,true);draw_polyline(tusk,style.trim,4,true)
-		draw_rect(Rect2(center+Vector2(-7,-24),Vector2(14,19)),Color("293832"))
-	else:
-		for height in [-28,-19,-10]: draw_line(center+Vector2(-16,height),center+Vector2(16,height),style.shade,1)
-		draw_arc(center+Vector2(0,-24),7,PI,TAU,16,style.trim,2,true)
-		draw_circle(center+Vector2(0,-24),6,Color("233c36"));draw_rect(Rect2(center+Vector2(-6,-24),Vector2(12,19)),Color("233c36"))
-	for x in [-3,3]: draw_line(center+Vector2(x,-24),center+Vector2(x,-5),style.shade,1)
+	var offset: Vector2 = FortressArt.shake(royal_hurt_age)
+	var body: Rect2 = FortressArt.building_rect(faction)
+	body.position += center+offset
+	draw_colored_polygon(PackedVector2Array([anchor+Vector2(-12,0),anchor+Vector2(36,-5),center+Vector2(43,3),center+Vector2(0,23)]),Color("576650"))
+	var brightness: float = 1.0-condition*0.13
+	if royal_hurt_age < 0.15: brightness += 0.22*(1.0-royal_hurt_age/0.15)
+	draw_texture_rect_region(FortressArt.BUILDINGS[faction],body,FortressArt.SOURCES[faction],Color(brightness,brightness,brightness,1))
 	if condition > 0:
-		var crack := PackedVector2Array([center+Vector2(-13,-32),center+Vector2(-9,-24),center+Vector2(-13,-18),center+Vector2(-9,-10)])
-		draw_polyline(crack,Color("352f25"),2,true)
-		if condition >= 2: draw_polyline(PackedVector2Array([center+Vector2(13,-32),center+Vector2(9,-27),center+Vector2(13,-21)]),Color("352f25"),2,true)
-	var pole: Vector2 = center+Vector2(10,-22) if condition == 3 else center+Vector2(0,-68)
-	draw_line(center+Vector2(0,-14 if condition == 3 else -36),pole,style.trim.darkened(0.2 if condition == 3 else 0),2)
-	var flutter: float = sin(flag_phase)*2.0
-	_fortress_shape(PackedVector2Array([pole+Vector2(1,0),pole+Vector2(20,4+flutter),pole+Vector2(18,14+flutter),pole+Vector2(1,12)]),style.flag)
-	draw_line(pole+Vector2(5,3),pole+Vector2(5,10),style.trim,2)
+		var crack := PackedVector2Array([center+offset+Vector2(-12,-39),center+offset+Vector2(-8,-31),center+offset+Vector2(-11,-23),center+offset+Vector2(-6,-13)])
+		draw_polyline(crack,Color("352f25"),1.6,true)
 	if condition >= 2:
 		for index in range(3):
 			var t: float = fmod(flag_phase/TAU+float(index)/3.0,1.0)
-			var point: Vector2 = center+Vector2(-10+index*9+sin(t*TAU)*2,-43-t*20)
-			draw_circle(point,3+3*t,Color(Color("6d7167"),0.28*(1-t)))
+			draw_circle(center+Vector2(-12+index*11+sin(t*TAU)*2,-45-t*22),3+3*t,Color(Color("6d7167"),0.28*(1-t)))
+	var hp: int = model.fortress_hp if model != null else 20
+	var pose: int = FortressArt.king_pose(hp,royal_hurt_age,royal_rally_age)
+	var king_center: Vector2 = center+offset+FortressArt.king_anchor(faction)
+	var royal: Transform2D = FortressArt.king_transform(pose,flag_phase,royal_hurt_age)
+	royal.origin += king_center
+	draw_set_transform_matrix(royal)
+	draw_texture_rect_region(FortressArt.KINGS[faction],FortressArt.king_rect(faction,pose),FortressArt.KING_FRAMES[faction][pose].source)
+	draw_set_transform(Vector2.ZERO)
+	# Bannière décalée : elle ne traverse ni le visage ni la couronne du souverain.
+	var pole: Vector2 = center+Vector2(34,-25 if condition == 3 else -94)
+	draw_line(center+Vector2(34,-10 if condition == 3 else -45),pole,style.trim,1.8,true)
+	var flutter: float = sin(flag_phase)*1.5
+	draw_colored_polygon(PackedVector2Array([pole+Vector2(1,0),pole+Vector2(19,3+flutter),pole+Vector2(17,13+flutter),pole+Vector2(1,11)]),style.flag)
 	var caption: String = fortress_caption(condition)
-	var caption_width: float = font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x
-	draw_string(font,center+Vector2(-caption_width/2,32),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("ed9989") if condition >= 2 else Color("d7bd83") if condition == 1 else INK)
+	var width: float = font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x
+	draw_string(font,center+Vector2(-width/2,34),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("ed9989") if condition >= 2 else Color("d7bd83") if condition == 1 else INK)
 
 static func _enemy_scale(enemy: Dictionary) -> float:
 	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7, 1.4][enemy.get("type", 1)]

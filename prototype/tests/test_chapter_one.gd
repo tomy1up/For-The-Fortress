@@ -36,7 +36,7 @@ func run_checks() -> void:
 		ids[terrain.id] = true
 		var original: String = JSON.stringify(terrain)
 		for slot in terrain.slots:
-			check(not Main.MapView.fortress_bounds(Main.MapView.project(terrain.path_points[-1])+Vector2(52,26)).has_point(Main.MapView.project(slot)),"Les six positions restent visibles devant la forteresse réellement dessinée")
+			check(not Main.MapView.fortress_bounds(Main.MapView.project(terrain.path_points[-1])).has_point(Main.MapView.project(slot)),"Les six positions restent visibles devant la forteresse réellement dessinée")
 			var distance: float = INF
 			for segment in range(1,terrain.path_points.size()): distance = minf(distance,slot.distance_to(Geometry2D.get_closest_point_to_segment(slot,terrain.path_points[segment-1],terrain.path_points[segment])))
 			check(distance >= (0.75 if number >= 4 else 0.5),"Les nouveaux emplacements sont hors de la route, les anciens terrains restent inchangés")

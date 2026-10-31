@@ -451,6 +451,16 @@ func _ready() -> void:
 				model.fortress_hp = {"damaged":10,"critical":4,"destroyed":0}.get(condition_name,20)
 				if model.fortress_hp == 0: model.phase = "defeat"
 		set_process(false)
+		for argument in OS.get_cmdline_user_args():
+			if not argument.begins_with("--capture-royal-state="): continue
+			var royal_variant: String = argument.trim_prefix("--capture-royal-state=")
+			model.reset();model.select_faction(capture_faction);map_view.reset_royal_animation()
+			if royal_variant == "defeat": model.wave = 10;model.spawn_schedule = Model.Campaign.schedule(10)
+			if royal_variant != "idle": _start()
+			if royal_variant in ["hurt","defeat"]: _process(300 if royal_variant == "defeat" else 60)
+			map_view._process(0.8 if royal_variant == "defeat" else 0.12)
+			selected = -1;map_view.selected = -1
+			print("ROYAL_SNAPSHOT=",JSON.stringify({"variant":royal_variant,"faction":model.faction,"hp":model.fortress_hp,"pose":MapView.FortressArt.king_pose(model.fortress_hp,map_view.royal_hurt_age,map_view.royal_rally_age),"castle":MapView.FortressArt.BUILDINGS[model.faction].resource_path,"king":MapView.FortressArt.KINGS[model.faction].resource_path,"isolated":meta_profile == null or meta_profile.path.is_empty()}))
 		inspection_numbers_visible = "--capture-inspection-numbers" in OS.get_cmdline_user_args()
 		if capture_state in ["finished","forecast","forecast_boss"]: autoplay_started = true
 		_update_interface()
@@ -2006,6 +2016,7 @@ func _start() -> void:
 		return
 	if model.phase == "finished": model.prepare_next_wave()
 	if model.start():
+		map_view.signal_wave_started()
 		_announce_wave()
 		start_button.tooltip_quiet = start_button.is_hovered()
 		autoplay_started = true
@@ -2064,6 +2075,7 @@ func _reset() -> void:
 	bonus_view_context = ""
 	for scroll in bonus_impact_scrollers: scroll.scroll_vertical = 0
 	model.reset()
+	map_view.reset_royal_animation()
 	meta_run_id = -1;meta_run_earned = 0;meta_retry_remaining = 0.0
 	loadout_key = ""
 	wave_notice_remaining = 0.0;wave_notice_wave = -1

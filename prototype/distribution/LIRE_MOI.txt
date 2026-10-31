@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.103 — 31 octobre 2026
+Version : 0.104 — 31 octobre 2026
 
 JOUER
 
@@ -178,3 +178,11 @@ Le joueur clique toujours pour lancer la mission et peut choisir une autre posit
 Une sélection manuelle reste conservée quand on consulte puis ferme les talents.
 Le bilan montre l’XP gagnée, son total et les points à placer ou l’XP du prochain point.
 Survoler ce texte permet de retrouver le solde de PO et le détail des points.
+
+FORTERESSES ET SOUVERAINS
+
+Chaque faction dispose de sa forteresse et de son roi illustrés.
+Le roi encourage au départ d’une vague, réagit aux pertes de PV,
+puis adopte une pose de défaite si la forteresse est détruite.
+Les bâtiments et rois sont décoratifs : aucun changement de statistiques.
+Leur apparence et les durées d’animation restent des propositions de prototype.

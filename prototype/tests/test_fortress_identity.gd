@@ -16,7 +16,7 @@ func run_checks() -> void:
 	check(View.fortress_style(-1) == alliance,"Vue sans camp choisi : référence Alliance déterminée")
 	alliance.flag = Color.BLACK;check(View.fortress_style(0).flag != Color.BLACK,"Une palette lue n'altère pas la suivante")
 	var anchor: Vector2 = View.project(Model.PATH_POINTS[-1])
-	check(View.fortress_center(anchor) == anchor+Vector2(52,26),"Centre de dessin conservé dans la cour")
+	check(View.fortress_center(anchor) == anchor+Vector2(68,26),"Centre de dessin dans la cour allongée, arrivée logique inchangée")
 	check(not View.fortress_bounds(anchor).has_point(View.project(Model.SLOTS[5])),"Silhouette du bâtiment séparée du centre E6")
 	for faction in range(2):
 		var scene = Main.new();root.add_child(scene);scene.set_process(false);scene._choose_faction(faction)
