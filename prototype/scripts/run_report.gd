@@ -87,7 +87,9 @@ static func build(model: RefCounted) -> Dictionary:
 		"army":army,"bonuses":bonuses,"waves":model.wave_history.duplicate(true),"actions":model.action_history.duplicate(true),"performance":performance(model),"boss_encounter":boss_encounter(model)}
 	if Model.MetaTalents.spent(model.meta_ranks) > 0: report.meta_ranks = model.meta_ranks.duplicate()
 	if model.map_definition != Model.Maps.valley(): report.map_definition = Model.Maps.to_data(model.map_definition)
-	if model.auxiliary_type >= 0: report.auxiliary_type = model.auxiliary_type
+	if model.auxiliary_type >= 0:
+		report.auxiliary_type = model.auxiliary_type
+		report.auxiliary_base_cost = model.base_recruit_cost(model.auxiliary_type)
 	if model.enemy_hp_percent != 100: report.enemy_hp_percent = model.enemy_hp_percent
 	return report
 

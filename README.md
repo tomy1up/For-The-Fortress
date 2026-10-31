@@ -4,7 +4,7 @@
 
 **Difficultés de campagne** : [Normal, Héroïque, Mythique](design/Difficultes_campagne_2026-10-31.md). La campagne actuelle correspond au Normal ; 100 premières missions réussies ouvrent la difficulté suivante, avec un parcours successif propre à chaque difficulté et faction. Les modes avancés restent à développer.
 
-**Version v0.100 (31 octobre 2026)** : [repères de boutique actualisés](design/Clarification_boutique_v0100.md). L’accueil, les talents et la notice expliquent la boutique disponible, les dix missions et la conservation des acquis. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.100).
+**Version v0.101 (31 octobre 2026)** : [coût du grenadier ajusté](design/Grenadier_prix_v0101.md). Le recrutement passe de 90 à 75 or de combat ; le déblocage reste à 240 PO. Dégâts, portée et cadence conservés. Réglage de prototype à éprouver. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.101).
 
 **Quatrième défenseur prioritaire — 3 744 simulations complémentaires** : [résultats et limites](design/Comparaison_priorite_boutique_v0991.md). Les deux spécialisations sont atteintes pour chaque alternative ; cette priorité ne garantit pas davantage de victoires. Aucun réglage modifié.
 

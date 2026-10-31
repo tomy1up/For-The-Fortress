@@ -60,6 +60,10 @@ static func verify(data: Variant) -> Dictionary:
 		if definition.is_empty(): return _fail("Définition de carte invalide.")
 	var model = Model.new(true,definition)
 	if data.has("auxiliary_type") and not model.configure_auxiliary(data.auxiliary_type): return _fail("Alternative de boutique invalide.")
+	if data.has("auxiliary_base_cost"):
+		if not model.configure_auxiliary_cost(data.auxiliary_base_cost): return _fail("Coût historique d’alternative invalide.")
+	elif model.auxiliary_type == 9 and data.game_version in ["0.99","0.99.1","0.100"]:
+		if not model.configure_auxiliary_cost(90): return _fail("Coût du grenadier historique indisponible.")
 	if data.has("enemy_hp_percent") and not model.configure_enemy_hp(data.enemy_hp_percent): return _fail("Pourcentage de PV ennemis invalide.")
 	if data.has("meta_ranks"):
 		if not Model.MetaTalents.valid(data.meta_ranks): return _fail("Talents permanents invalides.")
@@ -99,6 +103,7 @@ static func verify(data: Variant) -> Dictionary:
 		if field in ["game_version","engine_version"]: continue
 		if field == "boss_encounter" and not data.has(field): continue # Champ ajouté en v0.50 ; rapports historiques au format 2.
 		if field == "enemy_catalog" and not data.has(field): continue # Champ facultatif ajouté en v0.65.
+		if field == "auxiliary_base_cost" and not data.has(field): continue # Les premiers rapports de boutique n’enregistraient pas le prix de base.
 		if not data.has(field): return _fail("Champ absent : " + field)
 		var detail: String = _difference(data[field],observed[field],field)
 		if not detail.is_empty(): return _fail(detail)

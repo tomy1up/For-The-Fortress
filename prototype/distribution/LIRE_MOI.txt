@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.100 — 31 octobre 2026
+Version : 0.101 — 31 octobre 2026
 
 JOUER
 
@@ -13,6 +13,8 @@ JOUER
    La boutique du parcours permet de débloquer deux alternatives par faction.
    Choisir une unité achetée ajoute un quatrième type au recrutement de la mission.
    PO, déblocages et choix sont conservés ; l’or de combat reste temporaire.
+   Le grenadier coûte 240 PO à débloquer et 75 or de combat à recruter.
+   Il touche davantage de voisins que le sapeur, mais frappe moins fort et moins loin.
    Les talents sont partagés par famille. Prix et statistiques sont provisoires.
    Les points disponibles sont indiqués en haut ; le rôle de chaque arbre
    accompagne son compteur. Les coins clairs repèrent le talent décrit.

@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "variants": {
+    "reference": {
+      "price": 90,
+      "range": 2.7
+    },
+    "prix_75": {
+      "price": 75,
+      "range": 2.7
+    },
+    "portee_3": {
+      "price": 90,
+      "range": 3.0
+    }
+  },
+  "canonical_source_sha256": {
+    "project.godot": "8e08165452d02c16cf6dbb36b97de1f2c5823e20797a69de9c921c885a6bdd51",
+    "scripts/alliance_art.gd": "57cf3d79191acb0d30d13d2e62c46d5d45ca7f4d3850c0922fe26b29dc9026e4",
+    "scripts/campaign_catalogue.gd": "3e7cebf31676730399f2eb6a5f3eb9b0ee0752695673b6f7f7f4197e093db58c",
+    "scripts/campaign_data.gd": "a7a5158d7596f3579c921a0ac6656455f4a70468f581e497d608be08e8ebdd32",
+    "scripts/campaign_screen.gd": "d277a69615b52ebc26d409dd310eae8044192eb34449670d70a3ba5df2adb56b",
+    "scripts/combat_metrics.gd": "10a2a00aa85c0b430dbec33f3b457e66ce74b36e36b6fae91d4a26fff17ebf4b",
+    "scripts/enemy_art.gd": "230c9f000da994fdc66c1a22220e48e3d0c2d7177617c6e294fda52c6664d7d0",
+    "scripts/enemy_catalogue.gd": "30a17d859da5600d444b6da83795f5995525e45cbb4a49eb183933f2e7f06646",
+    "scripts/horde_art.gd": "48f4f70156974eb3b7a5d6d76a6588bce974986bc3a57d5a33bf2d9bcf5ccd16",
+    "scripts/main.gd": "e4ef666f53a521ce5d0e24d1056378750350f7e7afa07cb11759238ff719790e",
+    "scripts/map_definition.gd": "56fdf18eb6146d8d653df86b9f3d264b52402f920c3a2b7af9ad242c7d4cb21d",
+    "scripts/meta_profile.gd": "b2b2068a06ca4cccba0f0f07f8e6c7bbf25ea5ddedf72040f50e3437a84607d3",
+    "scripts/meta_screen.gd": "5709797331343a1ceafdd2799050053f2446b2c615c50c4e77eb2583416045a6",
+    "scripts/meta_talents.gd": "f8c865ff3e34c88f7fac254a9f30642d2d7337f32de066904ea113a4ee44f723",
+    "scripts/meta_talents_expanded.gd": "d40e49cc31fa06ed567ca20c11b2ea435d3611e67e67de2f83036ea2335b5d1f",
+    "scripts/meta_talents_linked.gd": "e3b27997702989601ff1a96f8e4f94ae29dc130add01d5a9bd709d8264d04f96",
+    "scripts/meta_talents_v067.gd": "58e0786de434ea3ad0cf9ce9fece3224807fdc5543be64fb09494e8278b53080",
+    "scripts/meta_talents_v068.gd": "700640a11d025cf328de5f74a7ef8cd9398f801a88fb6d31661bf5a595b93047",
+    "scripts/mission_progress.gd": "06bdc89e7258687865026c53492d640ebc009b840f868eb55256c8633d25e4fd",
+    "scripts/profile_codec.gd": "1b6227ad26ca9d69e8e02c9eeddd2ed90265aa6b76e5b991a4ac8964d7a0b3b6",
+    "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755",
+    "scripts/run_report.gd": "9a362bb193165083b99840633a0344ece8ff9eb5fa34f0de9e4da3414c9229c1",
+    "scripts/shop_art.gd": "28ef4501e7ae9ba0ddb7e59a648c5ac8e81dc2a840cdd83518d7c8ec131cd95f",
+    "scripts/shop_catalogue.gd": "999a5de4754595ad9221e36636cb62ab29bea1af60a12ce18b8fe73f63a4d831",
+    "scripts/shop_screen.gd": "52896f9176fc6f0527688b8cdfdfe527c380695caa20cdfd45b080d99f627add",
+    "scripts/talent_experience.gd": "41deb488348374da2686f283790038b7eeff51c23b03dc0e7f12ae21f2c86e4a",
+    "scripts/valley_model.gd": "80a2092849030a0f2c10a5beea25ee9a84af9558089338f73d88adacbc23cf8a",
+    "scripts/valley_view.gd": "d4cd37947c50f0b68980829b8a997670d160d79eb75d3bf9c13d823ec26847fd",
+    "tests/survey_shop.gd": "726efa5c2d13fc7ed86224dd6f1ea2be014c100d9232740407d6461fb3658e23",
+    "tests/survey_grenadier_variants.gd": "ae42ca89372b7762511dc0842809bf1cbd0f94121843eb1f40224de27c866fed",
+    "tests/report_replay.gd": "932ee0fa620397c27944b4659629a685ed396f5b9d5bc7ed5c90941bfe97dd1e"
+  },
+  "variant_changes": {
+    "reference": {},
+    "prix_75": {
+      "scripts/shop_catalogue.gd": {
+        "before": "999a5de4754595ad9221e36636cb62ab29bea1af60a12ce18b8fe73f63a4d831",
+        "after": "2e22857ede2a32a230f410e0792d732b107e2d4a570b4c98505135022432e9f4"
+      },
+      "scripts/valley_model.gd": {
+        "before": "80a2092849030a0f2c10a5beea25ee9a84af9558089338f73d88adacbc23cf8a",
+        "after": "77a65baa23077a58d722eda6e0b801bef89d065ddbb71b4d1d63fda94f15d038"
+      }
+    },
+    "portee_3": {
+      "scripts/shop_catalogue.gd": {
+        "before": "999a5de4754595ad9221e36636cb62ab29bea1af60a12ce18b8fe73f63a4d831",
+        "after": "51291e9b7c878eef8199f81d313e7f204a114daa2a1b70bfd2ea8968dba02dd2"
+      },
+      "scripts/valley_model.gd": {
+        "before": "80a2092849030a0f2c10a5beea25ee9a84af9558089338f73d88adacbc23cf8a",
+        "after": "d181e2cb2839f76b245500de09e172e707a9efc6d4b33ab8c07d9eaaa988ac72"
+      }
+    }
+  },
+  "seconds": 298,
+  "quick_only": false,
+  "source_unchanged": true
+}

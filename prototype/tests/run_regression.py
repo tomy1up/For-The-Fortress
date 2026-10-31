@@ -77,7 +77,7 @@ def main(argv=None):
     sources = sorted(set([project / 'project.godot', project / 'export_presets.cfg', project / 'Exporter_Windows.ps1', repo / 'For_the_Fortress_GDD.md'] +
                          list((project / 'build').glob('*.ps1')) +
                          list((project / 'scripts').glob('*.gd')) + list((project / 'tests').glob('*.gd')) +
-                         list((project / 'tests').glob('*.py')) + list((project / 'assets').rglob('*.png')) +
+                         list((project / 'tests').glob('*.py')) + list((project / 'tests' / 'fixtures').glob('*.json')) + list((project / 'assets').rglob('*.png')) +
                          list((project / 'assets').rglob('*.import'))))
     report['source_sha256'] = {path.relative_to(repo).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest() for path in sources}
     logs = None

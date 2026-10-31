@@ -8,5 +8,5 @@ func _initialize() -> void:
 	var result: Dictionary = Replay.load_and_verify(arguments[0].trim_prefix("--report="))
 	print("REPLAY_RESULT=" + JSON.stringify(result))
 	if result.get("ok",false) and not result.same_version:
-		print("Version source différente : concordance avec les règles actuelles uniquement, pas preuve de reproduction de l’ancien programme.")
+		print("Version source différente : vérification par le simulateur actuel avec les paramètres historiques pris en charge ; ce n’est pas une exécution de l’ancien programme.")
 	quit(0 if result.get("ok",false) else 1)

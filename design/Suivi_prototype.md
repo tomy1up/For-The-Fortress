@@ -538,3 +538,7 @@ Le porteur du projet retient la version sombre pour sa cohérence avec les autre
 ## Prototype v0.100 — repères de boutique et complément d’essai
 
 [Textes actualisés](Clarification_boutique_v0100.md) : boutique disponible, option de quatrième unité, dix missions et conservation des acquis au schéma 7. La [comparaison prioritaire](Comparaison_priorite_boutique_v0991.md) ajoute 3 744 simulations sans modifier l’équilibrage. Six suites ciblées, 911 contrôles Godot et 16 tests Python ; neuf cas Windows et 56 sources vérifiés, quatre vues inspectées. Le modèle et le profil sont inchangés depuis v0.99.1.
+
+## Prototype v0.101 — coût du grenadier
+
+[Essais isolés et réglage](Grenadier_prix_v0101.md) : 7 776 simulations comparent prix et portée. Le recrutement passe de 90 à 75 or de combat ; le déblocage reste à 240 PO. Réglage provisoire, statistiques de combat conservées. Les anciens rapports du grenadier gardent leur tarif historique dans le vérificateur de diagnostic. Régression complète : 85 suites, 33 103 contrôles Godot, 16 tests Python ; paquet Windows : 243 cas, 56 sources comparées.

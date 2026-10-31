@@ -1,0 +1,399 @@
+{
+  "schema": 1,
+  "game_version": "0.100",
+  "reference_matches_prior_archives": true,
+  "canonical_source_unchanged": true,
+  "human_win_rate": false,
+  "variants": {
+    "reference": {
+      "settings": {
+        "price": 90,
+        "range": 2.7
+      },
+      "runs": 2592,
+      "audit_checks": 140618,
+      "quick_runs": 12,
+      "quick_replay_checks": 36,
+      "groups": {
+        "renfort": {
+          "pairs": 432,
+          "missions": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "base_wins": 194,
+          "alternative_wins": 181,
+          "loss_to_win": 11,
+          "win_to_loss": 24,
+          "alternative_not_recruited": 140,
+          "alternative_specialized": 0,
+          "both_won": 170,
+          "hp_delta_mean_both_won": -4.506,
+          "hp_delta_min_both_won": -14,
+          "hp_delta_max_both_won": 7,
+          "talent_points_available": [
+            2,
+            3,
+            4
+          ],
+          "loss_to_win_vs_reference_alternative": 0,
+          "win_to_loss_vs_reference_alternative": 0,
+          "specialized_by_branch": {
+            "0": 0,
+            "1": 0
+          }
+        },
+        "renfort_prioritaire": {
+          "pairs": 432,
+          "missions": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "base_wins": 174,
+          "alternative_wins": 133,
+          "loss_to_win": 11,
+          "win_to_loss": 52,
+          "alternative_not_recruited": 154,
+          "alternative_specialized": 144,
+          "both_won": 122,
+          "hp_delta_mean_both_won": -3.582,
+          "hp_delta_min_both_won": -12,
+          "hp_delta_max_both_won": 11,
+          "talent_points_available": [
+            2,
+            3,
+            4
+          ],
+          "loss_to_win_vs_reference_alternative": 0,
+          "win_to_loss_vs_reference_alternative": 0,
+          "specialized_by_branch": {
+            "0": 72,
+            "1": 72
+          }
+        },
+        "substitution": {
+          "pairs": 432,
+          "missions": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "base_wins": 345,
+          "alternative_wins": 150,
+          "loss_to_win": 0,
+          "win_to_loss": 195,
+          "alternative_not_recruited": 0,
+          "alternative_specialized": 150,
+          "both_won": 150,
+          "hp_delta_mean_both_won": -5.947,
+          "hp_delta_min_both_won": -14,
+          "hp_delta_max_both_won": 5,
+          "talent_points_available": [
+            2,
+            3,
+            4
+          ],
+          "loss_to_win_vs_reference_alternative": 0,
+          "win_to_loss_vs_reference_alternative": 0,
+          "specialized_by_branch": {
+            "0": 75,
+            "1": 75
+          }
+        }
+      },
+      "releves_sha256": "af5d0b16bbb650cc22a56e100d1d03d9e326bb49f2054ffd7bccddf5b59b634e"
+    },
+    "prix_75": {
+      "settings": {
+        "price": 75,
+        "range": 2.7
+      },
+      "runs": 2592,
+      "audit_checks": 147055,
+      "quick_runs": 12,
+      "quick_replay_checks": 36,
+      "groups": {
+        "renfort": {
+          "pairs": 432,
+          "missions": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "base_wins": 194,
+          "alternative_wins": 176,
+          "loss_to_win": 2,
+          "win_to_loss": 20,
+          "alternative_not_recruited": 76,
+          "alternative_specialized": 0,
+          "both_won": 174,
+          "hp_delta_mean_both_won": -0.828,
+          "hp_delta_min_both_won": -11,
+          "hp_delta_max_both_won": 5,
+          "talent_points_available": [
+            2,
+            3,
+            4
+          ],
+          "loss_to_win_vs_reference_alternative": 18,
+          "win_to_loss_vs_reference_alternative": 23,
+          "specialized_by_branch": {
+            "0": 0,
+            "1": 0
+          }
+        },
+        "renfort_prioritaire": {
+          "pairs": 432,
+          "missions": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "base_wins": 174,
+          "alternative_wins": 160,
+          "loss_to_win": 8,
+          "win_to_loss": 22,
+          "alternative_not_recruited": 76,
+          "alternative_specialized": 164,
+          "both_won": 152,
+          "hp_delta_mean_both_won": -1.421,
+          "hp_delta_min_both_won": -8,
+          "hp_delta_max_both_won": 4,
+          "talent_points_available": [
+            2,
+            3,
+            4
+          ],
+          "loss_to_win_vs_reference_alternative": 37,
+          "win_to_loss_vs_reference_alternative": 10,
+          "specialized_by_branch": {
+            "0": 82,
+            "1": 82
+          }
+        },
+        "substitution": {
+          "pairs": 432,
+          "missions": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "base_wins": 345,
+          "alternative_wins": 298,
+          "loss_to_win": 8,
+          "win_to_loss": 55,
+          "alternative_not_recruited": 0,
+          "alternative_specialized": 298,
+          "both_won": 290,
+          "hp_delta_mean_both_won": 0.507,
+          "hp_delta_min_both_won": -12,
+          "hp_delta_max_both_won": 12,
+          "talent_points_available": [
+            2,
+            3,
+            4
+          ],
+          "loss_to_win_vs_reference_alternative": 150,
+          "win_to_loss_vs_reference_alternative": 2,
+          "specialized_by_branch": {
+            "0": 149,
+            "1": 149
+          }
+        }
+      },
+      "releves_sha256": "3851685cb29c3dd7794dcb9436e896d6ec05843a06ce4739bcd636e109862d79"
+    },
+    "portee_3": {
+      "settings": {
+        "price": 90,
+        "range": 3.0
+      },
+      "runs": 2592,
+      "audit_checks": 142113,
+      "quick_runs": 12,
+      "quick_replay_checks": 36,
+      "groups": {
+        "renfort": {
+          "pairs": 432,
+          "missions": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "base_wins": 194,
+          "alternative_wins": 186,
+          "loss_to_win": 16,
+          "win_to_loss": 24,
+          "alternative_not_recruited": 140,
+          "alternative_specialized": 0,
+          "both_won": 170,
+          "hp_delta_mean_both_won": -4.141,
+          "hp_delta_min_both_won": -13,
+          "hp_delta_max_both_won": 7,
+          "talent_points_available": [
+            2,
+            3,
+            4
+          ],
+          "loss_to_win_vs_reference_alternative": 9,
+          "win_to_loss_vs_reference_alternative": 4,
+          "specialized_by_branch": {
+            "0": 0,
+            "1": 0
+          }
+        },
+        "renfort_prioritaire": {
+          "pairs": 432,
+          "missions": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "base_wins": 174,
+          "alternative_wins": 141,
+          "loss_to_win": 14,
+          "win_to_loss": 47,
+          "alternative_not_recruited": 154,
+          "alternative_specialized": 148,
+          "both_won": 127,
+          "hp_delta_mean_both_won": -3.118,
+          "hp_delta_min_both_won": -15,
+          "hp_delta_max_both_won": 13,
+          "talent_points_available": [
+            2,
+            3,
+            4
+          ],
+          "loss_to_win_vs_reference_alternative": 15,
+          "win_to_loss_vs_reference_alternative": 7,
+          "specialized_by_branch": {
+            "0": 74,
+            "1": 74
+          }
+        },
+        "substitution": {
+          "pairs": 432,
+          "missions": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "base_wins": 345,
+          "alternative_wins": 170,
+          "loss_to_win": 1,
+          "win_to_loss": 176,
+          "alternative_not_recruited": 0,
+          "alternative_specialized": 170,
+          "both_won": 169,
+          "hp_delta_mean_both_won": -5.515,
+          "hp_delta_min_both_won": -14,
+          "hp_delta_max_both_won": 2,
+          "talent_points_available": [
+            2,
+            3,
+            4
+          ],
+          "loss_to_win_vs_reference_alternative": 48,
+          "win_to_loss_vs_reference_alternative": 28,
+          "specialized_by_branch": {
+            "0": 85,
+            "1": 85
+          }
+        }
+      },
+      "releves_sha256": "58b58098e2816e2b40e3f5ea59ed51b7da467992156a203fdff0f2e0a4f6d781"
+    }
+  },
+  "audit_checks": 429786,
+  "runs": 7776,
+  "canonical_source_sha256": {
+    "project.godot": "8e08165452d02c16cf6dbb36b97de1f2c5823e20797a69de9c921c885a6bdd51",
+    "scripts/alliance_art.gd": "57cf3d79191acb0d30d13d2e62c46d5d45ca7f4d3850c0922fe26b29dc9026e4",
+    "scripts/campaign_catalogue.gd": "3e7cebf31676730399f2eb6a5f3eb9b0ee0752695673b6f7f7f4197e093db58c",
+    "scripts/campaign_data.gd": "a7a5158d7596f3579c921a0ac6656455f4a70468f581e497d608be08e8ebdd32",
+    "scripts/campaign_screen.gd": "d277a69615b52ebc26d409dd310eae8044192eb34449670d70a3ba5df2adb56b",
+    "scripts/combat_metrics.gd": "10a2a00aa85c0b430dbec33f3b457e66ce74b36e36b6fae91d4a26fff17ebf4b",
+    "scripts/enemy_art.gd": "230c9f000da994fdc66c1a22220e48e3d0c2d7177617c6e294fda52c6664d7d0",
+    "scripts/enemy_catalogue.gd": "30a17d859da5600d444b6da83795f5995525e45cbb4a49eb183933f2e7f06646",
+    "scripts/horde_art.gd": "48f4f70156974eb3b7a5d6d76a6588bce974986bc3a57d5a33bf2d9bcf5ccd16",
+    "scripts/main.gd": "e4ef666f53a521ce5d0e24d1056378750350f7e7afa07cb11759238ff719790e",
+    "scripts/map_definition.gd": "56fdf18eb6146d8d653df86b9f3d264b52402f920c3a2b7af9ad242c7d4cb21d",
+    "scripts/meta_profile.gd": "b2b2068a06ca4cccba0f0f07f8e6c7bbf25ea5ddedf72040f50e3437a84607d3",
+    "scripts/meta_screen.gd": "5709797331343a1ceafdd2799050053f2446b2c615c50c4e77eb2583416045a6",
+    "scripts/meta_talents.gd": "f8c865ff3e34c88f7fac254a9f30642d2d7337f32de066904ea113a4ee44f723",
+    "scripts/meta_talents_expanded.gd": "d40e49cc31fa06ed567ca20c11b2ea435d3611e67e67de2f83036ea2335b5d1f",
+    "scripts/meta_talents_linked.gd": "e3b27997702989601ff1a96f8e4f94ae29dc130add01d5a9bd709d8264d04f96",
+    "scripts/meta_talents_v067.gd": "58e0786de434ea3ad0cf9ce9fece3224807fdc5543be64fb09494e8278b53080",
+    "scripts/meta_talents_v068.gd": "700640a11d025cf328de5f74a7ef8cd9398f801a88fb6d31661bf5a595b93047",
+    "scripts/mission_progress.gd": "06bdc89e7258687865026c53492d640ebc009b840f868eb55256c8633d25e4fd",
+    "scripts/profile_codec.gd": "1b6227ad26ca9d69e8e02c9eeddd2ed90265aa6b76e5b991a4ac8964d7a0b3b6",
+    "scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755",
+    "scripts/run_report.gd": "9a362bb193165083b99840633a0344ece8ff9eb5fa34f0de9e4da3414c9229c1",
+    "scripts/shop_art.gd": "28ef4501e7ae9ba0ddb7e59a648c5ac8e81dc2a840cdd83518d7c8ec131cd95f",
+    "scripts/shop_catalogue.gd": "999a5de4754595ad9221e36636cb62ab29bea1af60a12ce18b8fe73f63a4d831",
+    "scripts/shop_screen.gd": "52896f9176fc6f0527688b8cdfdfe527c380695caa20cdfd45b080d99f627add",
+    "scripts/talent_experience.gd": "41deb488348374da2686f283790038b7eeff51c23b03dc0e7f12ae21f2c86e4a",
+    "scripts/valley_model.gd": "80a2092849030a0f2c10a5beea25ee9a84af9558089338f73d88adacbc23cf8a",
+    "scripts/valley_view.gd": "d4cd37947c50f0b68980829b8a997670d160d79eb75d3bf9c13d823ec26847fd",
+    "tests/survey_shop.gd": "726efa5c2d13fc7ed86224dd6f1ea2be014c100d9232740407d6461fb3658e23",
+    "tests/survey_grenadier_variants.gd": "ae42ca89372b7762511dc0842809bf1cbd0f94121843eb1f40224de27c866fed",
+    "tests/report_replay.gd": "932ee0fa620397c27944b4659629a685ed396f5b9d5bc7ed5c90941bfe97dd1e"
+  },
+  "variant_changes": {
+    "reference": {},
+    "prix_75": {
+      "scripts/shop_catalogue.gd": {
+        "before": "999a5de4754595ad9221e36636cb62ab29bea1af60a12ce18b8fe73f63a4d831",
+        "after": "2e22857ede2a32a230f410e0792d732b107e2d4a570b4c98505135022432e9f4"
+      },
+      "scripts/valley_model.gd": {
+        "before": "80a2092849030a0f2c10a5beea25ee9a84af9558089338f73d88adacbc23cf8a",
+        "after": "77a65baa23077a58d722eda6e0b801bef89d065ddbb71b4d1d63fda94f15d038"
+      }
+    },
+    "portee_3": {
+      "scripts/shop_catalogue.gd": {
+        "before": "999a5de4754595ad9221e36636cb62ab29bea1af60a12ce18b8fe73f63a4d831",
+        "after": "51291e9b7c878eef8199f81d313e7f204a114daa2a1b70bfd2ea8968dba02dd2"
+      },
+      "scripts/valley_model.gd": {
+        "before": "80a2092849030a0f2c10a5beea25ee9a84af9558089338f73d88adacbc23cf8a",
+        "after": "d181e2cb2839f76b245500de09e172e707a9efc6d4b33ab8c07d9eaaa988ac72"
+      }
+    }
+  },
+  "analysis_sources_sha256": {
+    "analyse_grenadier_variants.py": "e32bd07a5632b543f49c7447e588c0eaed9af2dfc557beb271c5a47ce4338dce",
+    "analyse_shop.py": "e69322f99bcc2a4a60c29e52b6b320a9f68e8e51f0fce5be9ed693a7c040a787",
+    "compare_grenadier_variants.py": "6f542e1c91d263c77a78489f8b6e05183b2bf32ee1762cd3313c430f7d06eedc"
+  }
+}

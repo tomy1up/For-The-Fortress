@@ -9,6 +9,7 @@ const MetaTalents = preload("res://scripts/meta_talents.gd")
 
 const Shop = preload("res://scripts/shop_catalogue.gd")
 var auxiliary_type: int = -1
+var auxiliary_base_cost: int = -1 # Coût historique de diagnostic ; jamais chargé depuis une sauvegarde joueur.
 const Maps = preload("res://scripts/map_definition.gd")
 # Alias conservés pour les outils et références historiques du Gué.
 const PATH_POINTS: Array[Vector2] = Maps.VALLEY_PATH
@@ -34,7 +35,7 @@ const ROSTER: Array[Dictionary] = [
 	{"name":"Rôdeur elfe","price":60,"damage":6.0,"interval":0.7,"range":3.5},
 	{"name":"Mousquetaire nain","price":90,"damage":38.0,"interval":4.0,"range":6.0},
 	{"name":"Traqueur troll","price":65,"damage":10.0,"interval":1.25,"range":4.0,"secondary_damage":4.0,"secondary_cap":1,"radius":1.0},
-	{"name":"Grenadier gobelin","price":90,"damage":18.0,"interval":2.0,"range":2.7,"secondary_damage":6.0,"secondary_cap":4,"radius":1.15},
+	{"name":"Grenadier gobelin","price":75,"damage":18.0,"interval":2.0,"range":2.7,"secondary_damage":6.0,"secondary_cap":4,"radius":1.15},
 ]
 
 const ENEMY_TYPES: Array[Dictionary] = [
@@ -97,6 +98,7 @@ func _init(enable_synergies: bool = true, definition: Dictionary = {}) -> void:
 	reset()
 
 func reset() -> void:
+	auxiliary_base_cost = -1
 	meta_ranks = MetaTalents.empty_ranks()
 	action_history.clear()
 	initial_rng_seed = ""
@@ -146,7 +148,15 @@ func configure_auxiliary(value: Variant) -> bool:
 	if not (value is int or value is float) or not is_finite(float(value)) or value != floorf(float(value)): return false
 	if int(value) != -1 and Shop.for_type(int(value)).is_empty(): return false
 	if not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
-	auxiliary_type = int(value);return true
+	auxiliary_type = int(value);auxiliary_base_cost = -1;return true
+
+func configure_auxiliary_cost(value: Variant) -> bool:
+	if not (value is int or value is float) or not is_finite(float(value)) or value != floorf(float(value)) or value < 1 or value > 1000000: return false
+	if auxiliary_type < 0 or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
+	auxiliary_base_cost = int(value);return true
+
+func base_recruit_cost(type: int) -> int:
+	return auxiliary_base_cost if type == auxiliary_type and auxiliary_base_cost > 0 else int(ROSTER[type].price)
 
 func select_faction(choice: int) -> bool:
 	if choice not in [0, 1] or wave != 1 or not bonuses.is_empty() or phase != "preparation" or spawned != 0 or gold != INITIAL_GOLD:
@@ -318,6 +328,7 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	if defender.is_empty(): return {}
 	var level: int = 4 if branch_override >= 0 else defender.get("level",1)
 	var stats: Dictionary = stats_for(defender.type,level,branch_override if branch_override >= 0 else defender.get("branch",-1))
+	stats.price = base_recruit_cost(defender.type)
 	var synergy: Dictionary = synergy_effects(slot,branch_override,candidate)
 	var meta: Dictionary = MetaTalents.effects(faction,meta_ranks,defender.type)
 	var common: float = (0.10 if 0 in active_bonuses else 0.0) + (0.15 if 6 in active_bonuses and level <= 2 else 0.0) + (0.12 if 7 in active_bonuses and level >= 3 else 0.0)
@@ -350,7 +361,7 @@ func _refresh_windows() -> void:
 			defenders[slot].windows = coverage_windows(slots[slot], get_stats(slot).range, path_points)
 
 func purchase_cost(type: int) -> int:
-	return _discounted_cost(ROSTER[type].price,10,bonuses)
+	return _discounted_cost(base_recruit_cost(type),10,bonuses)
 
 func _discounted_cost(base: float, discount_code: int, active_bonuses: Array) -> int:
 	return maxi(1,int(ceil(base * (0.9 if discount_code in active_bonuses else 1.0))))
@@ -376,7 +387,7 @@ func bonus_preview(code: int) -> Dictionary:
 			"upgrade_before":upgrade_cost(slot),"upgrade_after":_discounted_cost(Progression.UPGRADE_COSTS[level-1],9,projected) if level < 4 else 0})
 	var purchases: Array[Dictionary] = []
 	for type in available_types():
-		purchases.append({"type":type,"before":purchase_cost(type),"after":_discounted_cost(ROSTER[type].price,10,projected)})
+		purchases.append({"type":type,"before":purchase_cost(type),"after":_discounted_cost(base_recruit_cost(type),10,projected)})
 	var upgrades: Array[Dictionary] = []
 	for cost in Progression.UPGRADE_COSTS:
 		upgrades.append({"before":_discounted_cost(cost,9,bonuses),"after":_discounted_cost(cost,9,projected)})

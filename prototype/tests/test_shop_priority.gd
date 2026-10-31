@@ -19,7 +19,7 @@ func _initialize() -> void:
 			if pair.card == card.id and pair.mission == mission and pair.layout == 1 and pair.policy == "renfort" and pair.branch == 1 and pair.talent_mode == "famille" and pair.seed == 42: reference = pair;break
 		check(not reference.is_empty(),"Scénario de référence retrouvé dans le relevé validé")
 		for alternative in [false,true]:
-			var normal: Dictionary = Survey.run_case(card,mission,1,"renfort",1,"famille",42,alternative)
+			var normal: Dictionary = Survey.run_case(card,mission,1,"renfort",1,"famille",42,alternative,300.0,false,false,90 if card.type == 9 else -1)
 			check(Replay._difference(JSON.parse_string(JSON.stringify(normal)),reference["alternative" if alternative else "base"],"historique").is_empty(),"La politique historique reste exactement identique")
 			for branch in range(2):
 				var slow: Dictionary = Survey.run_case(card,mission,1,"renfort",branch,"famille",42,alternative,0.05,true,true)

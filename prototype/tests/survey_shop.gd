@@ -46,7 +46,7 @@ static func _audit(ok: bool,message: String,state: Dictionary) -> void:
 	state.checks += 1
 	if not ok and state.failures.size() < 100: state.failures.append(message)
 
-static func run_case(card: Dictionary,mission: int,layout_index: int,policy: String,branch: int,talent_mode: String,seed_value: int,alternative: bool,step: float = 300.0,include_report: bool = false,priority_extra: bool = false) -> Dictionary:
+static func run_case(card: Dictionary,mission: int,layout_index: int,policy: String,branch: int,talent_mode: String,seed_value: int,alternative: bool,step: float = 300.0,include_report: bool = false,priority_extra: bool = false,historical_cost: int = -1) -> Dictionary:
 	var state: Dictionary = {"checks":0,"failures":[]}
 	var entry: Dictionary = Catalogue.definition(mission)
 	var budget: Dictionary = budget_before(mission)
@@ -55,6 +55,7 @@ static func run_case(card: Dictionary,mission: int,layout_index: int,policy: Str
 	_audit(Talents.valid(ranks) and Talents.spent(ranks) <= budget.points,"Talents valides et accessibles avec les premières victoires antérieures",state)
 	var m = Model.new(true,Model.Maps.for_id(entry.map_id))
 	_audit(m.configure_enemy_hp(entry.hp_percent) and m.configure_auxiliary(card.type if alternative else -1),"Règles de mission et choix d’unité configurés",state)
+	if historical_cost > 0 and alternative: m.configure_auxiliary_cost(historical_cost)
 	m.meta_ranks = ranks.duplicate();_audit(m.select_faction(card.faction),"Faction cohérente",state);m.rng.seed = seed_value
 	var types: Array = plan(card,policy,alternative)
 	var slots: Array = LAYOUTS[layout_index]
