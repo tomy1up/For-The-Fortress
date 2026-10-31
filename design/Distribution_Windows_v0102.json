@@ -1,0 +1,98 @@
+{
+  "archive_sha256": "93a6786239d347348f69463be99be07b8232536027bbc623504902f616806b4e",
+  "scope": "selected",
+  "available_cases": 245,
+  "executable_sha256": "75e5b5f76e2eee2b7377c5ff0ecb5a145fd15bccc45fb25d5e38e87044d396da",
+  "files": [
+    "For_the_Fortress_v0.102_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.102_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.102_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.102_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.102_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "alliance_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_progression_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_progression_victory",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_campaign_menu_fresh",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_campaign_menu_future",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_campaign_menu_fresh",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_campaign_menu_future",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_sample_10_journey",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_campaign_menu_terrain10",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_sample_10_journey",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_campaign_menu_terrain10",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "source_checks": 59,
+  "local_sources_compared": true,
+  "visual_review": "Captures produites ; inspection visuelle à consigner séparément."
+}

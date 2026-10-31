@@ -17,6 +17,9 @@ const SLOTS: Array[Vector2] = Maps.VALLEY_SLOTS
 const PATH_LENGTH: float = Maps.VALLEY_LENGTH
 var map_definition: Dictionary
 var map_error: String = ""
+const Banks = preload("res://scripts/bank_encounters.gd")
+var wave_set_id: String = "ford"
+var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
 var enemy_hp_percent: int = 100
 var path_points: Array[Vector2] = []
 var slots: Array[Vector2] = []
@@ -117,7 +120,7 @@ func reset() -> void:
 	completed_time = 0.0
 	bonuses.clear()
 	bonus_offer.clear()
-	spawn_schedule = Campaign.schedule(wave)
+	spawn_schedule = Campaign.schedule(wave,wave_set_id)
 	fortress_hp = INITIAL_HP
 	elapsed = 0.0
 	phase = "preparation"
@@ -127,6 +130,7 @@ func reset() -> void:
 	enemies.clear()
 	shots.clear()
 	damage_events.clear()
+	protection_events.clear()
 	elimination_events.clear()
 	event_log.clear()
 	defenders.clear()
@@ -178,17 +182,24 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	action_history.append(entry)
 
 static func valid_enemy_hp_percent(value: Variant) -> bool:
-	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 109
+	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 119
 
 func configure_enemy_hp(value: Variant) -> bool:
 	if not valid_enemy_hp_percent(value) or not action_history.is_empty() or phase != "preparation" or gold != INITIAL_GOLD: return false
 	enemy_hp_percent = int(value);return true
 
+func configure_wave_set(value: Variant) -> bool:
+	if not Banks.valid_set(value) or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
+	wave_set_id = value;spawn_schedule = Campaign.schedule(wave,wave_set_id);return true
+
+static func enemy_definition(type: int) -> Dictionary:
+	return Banks.GUARD if type == Banks.GUARD_TYPE else ENEMY_TYPES[type]
+
 static func scaled_enemy_hp(type: int, percent: int = 100) -> float:
-	return float(ENEMY_TYPES[type].hp) if percent == 100 else float(ENEMY_TYPES[type].hp)*(float(percent)/100.0)
+	return float(enemy_definition(type).hp) if percent == 100 else float(enemy_definition(type).hp)*(float(percent)/100.0)
 
 static func make_enemy(id: int, type: int, spawn_time: float, defending_faction: int = -1, hp_percent: int = 100) -> Dictionary:
-	var definition: Dictionary = ENEMY_TYPES[type]
+	var definition: Dictionary = enemy_definition(type)
 	var enemy: Dictionary = {"id": id, "type": type, "spawn_time": spawn_time, "distance": 0.0,
 		"hp": scaled_enemy_hp(type,hp_percent), "max_hp": scaled_enemy_hp(type,hp_percent), "speed": definition.speed,
 		"fortress_damage": definition.fortress_damage, "reward": definition.reward}
@@ -198,17 +209,18 @@ static func make_enemy(id: int, type: int, spawn_time: float, defending_faction:
 		enemy.merge({"identity_id":identity.id,"name":identity.name,"origin":identity.origin})
 	return enemy
 
-static func wave_forecast(number: int, defending_faction: int = -1, hp_percent: int = 100) -> Dictionary:
+static func wave_forecast(number: int, defending_faction: int = -1, hp_percent: int = 100, set_id: String = "ford") -> Dictionary:
+	if not Banks.valid_set(set_id): return {}
 	if number < 1 or number > Campaign.WAVES.size() or not valid_enemy_hp_percent(hp_percent): return {}
 	if defending_faction != -1 and defending_faction not in [0,1]: return {}
-	var schedule: Array[Dictionary] = Campaign.schedule(number)
+	var schedule: Array[Dictionary] = Campaign.schedule(number,set_id)
 	var groups: Array[Dictionary] = []
 	var offset: int = 0
 	var income: int = 0
-	for source in Campaign.WAVES[number-1]:
+	for source in Campaign.waves_for(set_id)[number-1]:
 		var type: int = source[0]
 		var count: int = source[1]
-		var enemy: Dictionary = ENEMY_TYPES[type]
+		var enemy: Dictionary = enemy_definition(type)
 		groups.append({"type":type,"count":count,"name":enemy.name,"hp":scaled_enemy_hp(type,hp_percent),"fortress_damage":enemy.fortress_damage,"reward":enemy.reward,"interval":source[2],"first_at":schedule[offset].time,"last_at":schedule[offset+count-1].time})
 		if defending_faction != -1:
 			var identity: Dictionary = Enemies.for_profile(type,defending_faction)
@@ -405,10 +417,11 @@ func prepare_next_wave() -> bool:
 	escaped = 0
 	shots.clear()
 	damage_events.clear()
+	protection_events.clear()
 	elimination_events.clear()
 	curses.clear()
 	event_log.clear()
-	spawn_schedule = Campaign.schedule(wave)
+	spawn_schedule = Campaign.schedule(wave,wave_set_id)
 	phase = "preparation"
 	_record_action("wave_prepare")
 	return true
@@ -675,6 +688,15 @@ func _purge_curses() -> void:
 	curses = surviving
 
 func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
+	if enemies.any(func(enemy): return enemy.get("type",1) == Banks.GUARD_TYPE):
+		var positions: Dictionary = {}
+		for enemy in enemies: positions[enemy.id] = point_on_path(enemy.distance)
+		var redirected: Dictionary = Banks.redirect(enemies,damage,hits,positions)
+		damage = redirected.damage;hits = redirected.hits
+		for transfer in redirected.transfers:
+			if transfer.amount <= 0.0: continue
+			protection_events.append({"time":elapsed,"from":positions[transfer.protected_id],"to":positions[transfer.guardian_id],"amount":transfer.amount})
+		while protection_events.size() > 24: protection_events.pop_front()
 	Metrics.credit(_wave_record.get("performance",[]),enemies,damage,hits)
 	var survivors: Array[Dictionary] = []
 	for enemy in enemies:

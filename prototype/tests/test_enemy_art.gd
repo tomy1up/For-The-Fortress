@@ -13,7 +13,7 @@ func check(ok: bool, message: String) -> void:
 		push_error(message)
 func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
-	check(Art.TEXTURES.size() == 13,"Treize silhouettes distinctes : trois neutres et cinq par camp")
+	check(Art.TEXTURES.size() == 14,"Quatorze silhouettes distinctes : quatre neutres et cinq par camp")
 	for id in Art.TEXTURES:
 		var image: Image = Art.TEXTURES[id].get_image()
 		check(not image.is_empty() and image.detect_alpha() != Image.ALPHA_NONE,"Canal alpha réel pour chaque ennemi illustré")

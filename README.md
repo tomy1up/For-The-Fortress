@@ -1,5 +1,9 @@
 # For the Fortress!
 
+**Prototype v0.102 — chapitre 2 et Gardienne à l’essai** : [règles, chiffres provisoires et limites](design/Gardienne_des_berges_v0102.md). Vingt missions jouables ; les missions 11–20 reprennent les dix tracés du Gué avec de nouvelles rencontres. Une tortue neutre reçoit une partie des dégâts de ses voisins. Le choix Gardienne/Protectrice reste à confirmer après essai. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.102).
+
+**Chantiers visuels et futurs parcours** : animations des défenseurs synchronisées aux projectiles, réactions des attaquants aux dégâts, forteresse et roi propres à chaque faction, puis entrées multiples, routes convergentes et plusieurs forteresses. [TODO et questions ouvertes](design/Feuille_de_route_long_terme.md). À développer.
+
 **GDD 0.16 — référence jeu 0.101** : documents Word et Markdown synchronisés, dix missions, boutique, talents par famille et sauvegarde au schéma 7. Les règles futures de biomes, difficultés et succès sont distinguées du contenu jouable.
 
 **Mode infini** : [Normal, Héroïque et Mythique](design/Infini_difficultes_2026-10-31.md), chacun ouvert après les dix premiers chapitres de campagne dans la difficulté correspondante, par faction. À développer.
@@ -34,7 +38,7 @@ Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantas
 
 - [GDD Word](For_the_Fortress_GDD.docx) : présentation structurée avec sommaire et tableaux.
 - [GDD Markdown](For_the_Fortress_GDD.md) : référence éditoriale adaptée au versionnement Git.
-- Version documentaire : **0.15 — 30 octobre 2026**, consolidée pour le jeu **0.92** : socle de combat conservé, campagne, XP, 51 points par faction, arbres liés à quatre colonnes, reset gratuit et sauvegarde persistante. Les décisions validées, valeurs de prototype et questions ouvertes sont distinguées. Le catalogue des 126 talents est inclus.
+- Version documentaire : **0.16 — 31 octobre 2026**, consolidée pour le jeu **0.101** : socle de combat, dix premières missions, XP, 51 points par faction, arbres liés à quatre colonnes, reset gratuit, boutique et sauvegarde persistante. Le catalogue des 126 talents est inclus. Le chapitre 2 de la v0.102 et les nouvelles demandes visuelles sont décrits dans les fiches complémentaires ci-dessus, en attente de prochaine consolidation Word/Markdown.
 
 ## Mécaniques établies
 

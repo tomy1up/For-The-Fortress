@@ -1,0 +1,20 @@
+{
+  "full_regression": {
+    "suites": 86,
+    "godot_checks": 33837,
+    "python_tests": 17
+  },
+  "native_scope": "16 cas sélectionnés sur 245, 15 captures, 59 sources concordantes ; aucune affirmation de vérification native exhaustive.",
+  "visual_review": [
+    "Gardienne Alliance et Horde, encart de transfert, rayon et barres de vie",
+    "Parcours du chapitre 2 Alliance ; contrôles des 30 étiquettes de chacune des deux factions et lancement isolé de la mission 11 depuis les ressources du paquet"
+  ],
+  "verification_tool_after_regression": {
+    "path": "prototype/tests/verify_windows_export.py",
+    "sha256": "528916e10bfbf96b0c0454706339cd220721824b690b294101aac351c0121121",
+    "reason": "Attente du parcours après mission 10 : proposer mission 11 plutôt que rester à 10. Vérifiée ensuite dans les deux cas natifs *_sample_10_journey."
+  },
+  "archive_sha256": "93a6786239d347348f69463be99be07b8232536027bbc623504902f616806b4e",
+  "executable_sha256": "75e5b5f76e2eee2b7377c5ff0ecb5a145fd15bccc45fb25d5e38e87044d396da",
+  "balance": "40 simulations exploratoires avec placement fixe, puis 44 tentatives de placement pour trouver 20 victoires distinctes (10 missions x 2 factions), cinq points au premier talent, graine 42. Pas un taux de victoire humain."
+}

@@ -1,6 +1,7 @@
 extends RefCounted
 ## Treize silhouettes dans trois atlas transparents, sans données de combat.
 const TEXTURES: Dictionary = {
+	"enemy.neutral.turtle": preload("res://assets/enemies/rosters/tortue_gardienne_v001.png"),
 	"enemy.neutral.wolf": preload("res://assets/enemies/rosters/neutres_v001.png"),
 	"enemy.neutral.boar": preload("res://assets/enemies/rosters/neutres_v001.png"),
 	"enemy.neutral.bear": preload("res://assets/enemies/rosters/neutres_v001.png"),
@@ -16,6 +17,7 @@ const TEXTURES: Dictionary = {
 	"enemy.horde.warchief": preload("res://assets/enemies/rosters/horde_v003.png"),
 }
 const FRAMES: Dictionary = {
+	"enemy.neutral.turtle": {"source":Rect2(90,265,1075,732),"foot":Vector2(650,997),"height":34.0},
 	"enemy.neutral.wolf": {"source":Rect2(27,208,633,437),"foot":Vector2(354.164,645),"height":34.0},
 	"enemy.neutral.boar": {"source":Rect2(742,198,618,452),"foot":Vector2(1026.745,650),"height":34.0},
 	"enemy.neutral.bear": {"source":Rect2(1412,100,741,553),"foot":Vector2(1758.409,653),"height":34.0},

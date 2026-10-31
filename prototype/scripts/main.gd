@@ -331,6 +331,22 @@ func _ready() -> void:
 			elif capture_state not in ["preparation", "shop", "upgrade", "specialisation", "specialised", "bonus", "campaign", "victory", "overview", "purchase", "boss_inspection", "summary", "defeat_summary", "forecast", "forecast_boss"]:
 				model.start()
 				model.advance(1.0 if capture_state == "curse" else 7.5 if capture_state in ["combat","inspection"] else 100.0)
+		if capture_state == "bank_guardian":
+			# Scène de contrôle isolée : dégâts réels sur un groupe rapproché.
+			meta_profile = MetaProfile.new("")
+			model = Model.new();map_view.model = model
+			model.configure_wave_set(Model.Banks.ID);model.configure_enemy_hp(110);model.select_faction(capture_faction)
+			mission_definition = CampaignCatalogue.runtime("campaign.011")
+			model.buy(0,capture_faction*3);model.buy(1,capture_faction*3+1)
+			model.wave = 2;model.spawn_schedule = Model.Campaign.schedule(2,model.wave_set_id)
+			model.phase = "combat";model.spawned = 3
+			for type in [8,1,2]:
+				var enemy: Dictionary = Model.make_enemy(model.enemies.size(),type,0,capture_faction,110)
+				enemy.distance = 8.0+model.enemies.size()*0.7;model.enemies.append(enemy)
+			model._apply_damage({1:12.0,2:8.0});model.elapsed = 0.08
+			selected = -1;map_view.selected = -1
+			inspection_pointer = MapView.project(model.point_on_path(8.0))+Vector2(0,-24)
+			print("GUARDIAN_SNAPSHOT=",JSON.stringify({"isolated":meta_profile.path.is_empty(),"faction":model.faction,"hp":model.enemies[0].hp,"max_hp":model.enemies[0].max_hp,"victims":[model.enemies[1].hp,model.enemies[2].hp],"transfers":model.protection_events.size(),"wave_set_id":model.wave_set_id}))
 		if capture_state in ["effects","damage_tick","elimination"]:
 			if capture_state == "damage_tick": capture_type = 5
 			model.reset()
@@ -1050,7 +1066,7 @@ func _update_wave_forecast() -> void:
 	if number < 1 or number > Model.Campaign.WAVES.size(): return
 	if forecast_wave != number:
 		forecast_wave = number
-		forecast_data = Model.wave_forecast(number,model.faction,model.enemy_hp_percent)
+		forecast_data = Model.wave_forecast(number,model.faction,model.enemy_hp_percent,model.wave_set_id)
 	if forecast_data.is_empty(): return
 	forecast_panel.visible = true
 	forecast_title.text = "Prochaine vague · %d/10" % number
@@ -1068,6 +1084,7 @@ func _update_wave_forecast() -> void:
 		forecast_details[index].text = "%s PV · Forteresse : −%d PV%s" % [_number(group.hp),group.fortress_damage," · Défaite" if fatal else ""]
 		forecast_details[index].add_theme_color_override("font_color",Color("ed9989") if fatal else Color("bbcbbf"))
 		forecast_rows[index].tooltip_text = "Groupe %d · %d × %s\n%s PV par ennemi\nPremière apparition : %s s après le départ\nDernière apparition : %s s après le départ\n%s\nSi un ennemi atteint la forteresse, elle perd %d PV.\nÉlimination : +%d or par ennemi" % [index+1,group.count,group.name,_number(group.hp),_number(group.first_at),_number(group.last_at),"Ennemi unique." if group.count == 1 else "Un ennemi toutes les %s s." % _number(group.interval),group.fortress_damage,group.reward]
+		if group.type == Model.Banks.GUARD_TYPE: forecast_rows[index].tooltip_text += "\nGardienne : encaisse 25 % des dégâts de ses voisins proches. Ne protège ni les boss ni les autres tortues. La protection cesse à sa mort."
 		forecast_rows[index].tooltip_text += "\nHoraires et intervalles à vitesse ×1 ; divisés par 2 en ×2 et par 10 en ×10 debug."
 	var footer: int = 62+forecast_data.groups.size()*44
 	forecast_reward.position.y = footer
@@ -1468,7 +1485,7 @@ func _update_enemy_inspector() -> void:
 		for curse in model.curses:
 			if curse.enemy_id == id: cursed = true; break
 		var origin: String = Model.Enemies.origin_label(Model.Enemies.for_profile(enemy.type,model.faction).origin)
-		enemy_status.text = origin + (" · Malédiction active" if cursed else " · Lecture sans pause")
+		enemy_status.text = "Encaisse 25 % des dégâts des voisins" if enemy.type == Model.Banks.GUARD_TYPE else origin + (" · Malédiction active" if cursed else " · Lecture sans pause")
 		enemy_status.add_theme_color_override("font_color",Color("d3afe4") if cursed else Color("aabbb0"))
 		return
 
@@ -1715,7 +1732,7 @@ func _launch_campaign_mission(id: String) -> void:
 	var definition: Dictionary = Model.Maps.for_id(candidate.map_id)
 	if definition.is_empty(): return
 	var prepared = Model.new(true,definition)
-	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(candidate.hp_percent): return
+	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(candidate.hp_percent) or not prepared.configure_wave_set(candidate.get("wave_set_id","ford")): return
 	mission_definition = candidate
 	_choose_faction(campaign_menu.faction,prepared)
 	if choosing_faction:
@@ -2246,7 +2263,7 @@ func _update_interface() -> void:
 	countdown_fill.bg_color = Color("77968e") if _countdown_paused() else Color("e49a7b") if countdown_remaining <= WAVE_COUNTDOWN_NOTICE_SECONDS else Color("d0b874")
 	var preview_wave: int = mini(10, model.wave+1 if model.phase == "finished" else model.wave)
 	var preview: Array[String] = []
-	for group in Model.Campaign.WAVES[preview_wave-1]:
+	for group in Model.Campaign.waves_for(model.wave_set_id)[preview_wave-1]:
 		preview.append("%d %s · %s" % [group[1],Model.Enemies.for_profile(group[0],model.faction).name,"ennemi unique" if group[1] == 1 else "intervalle %s s" % _number(group[2])])
 	start_button.tooltip_text = "Vague %d\n%s\n4 s entre la dernière apparition d’un groupe et la première du suivant.\nHoraires et intervalles à vitesse ×1 ; divisés par 2 en ×2 et par 10 en ×10 debug." % [preview_wave,"\n".join(preview)]
 	if countdown_remaining >= 0.0:

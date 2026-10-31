@@ -81,7 +81,7 @@ static func build(model: RefCounted) -> Dictionary:
 		bonuses.append({"index":code,"code":Model.Campaign.BONUSES[code].code,"name":Model.Campaign.BONUSES[code].name,"description":Model.Campaign.bonus_description(code,model.faction)})
 	var report: Dictionary = {"schema_version":2,"game_version":str(ProjectSettings.get_setting("application/config/version","")),"engine_version":Engine.get_version_info().string,
 		"faction":model.faction,"faction_name":"Alliance" if model.faction == 0 else "Horde","result":model.phase,"wave":model.wave,
-		"enemy_catalog":Model.Enemies.available(model.faction),
+		"enemy_catalog":Model.Enemies.available(model.faction,model.wave_set_id),
 		"fortress_hp":model.fortress_hp,"max_hp":model.max_hp,"gold":model.gold,"total_income":model.total_income,"total_killed":model.total_killed,"total_escaped":model.total_escaped,
 		"combat_seconds":model.completed_time+model.elapsed,"initial_rng_seed":model.initial_rng_seed,"initial_rng_state":model.initial_rng_state,
 		"army":army,"bonuses":bonuses,"waves":model.wave_history.duplicate(true),"actions":model.action_history.duplicate(true),"performance":performance(model),"boss_encounter":boss_encounter(model)}
@@ -91,6 +91,7 @@ static func build(model: RefCounted) -> Dictionary:
 		report.auxiliary_type = model.auxiliary_type
 		report.auxiliary_base_cost = model.base_recruit_cost(model.auxiliary_type)
 	if model.enemy_hp_percent != 100: report.enemy_hp_percent = model.enemy_hp_percent
+	if model.wave_set_id != "ford": report.wave_set_id = model.wave_set_id
 	return report
 
 static func markdown(report: Dictionary) -> String:
@@ -112,7 +113,7 @@ static func markdown(report: Dictionary) -> String:
 		lines.append("| Attaquant | Origine | Profil de combat |")
 		lines.append("| --- | --- | --- |")
 		for enemy in report.enemy_catalog:
-			lines.append("| %s | %s | %s |" % [enemy.name,Model.Enemies.origin_label(enemy.origin),Model.ENEMY_TYPES[int(enemy.profile)].name])
+			lines.append("| %s | %s | %s |" % [enemy.name,Model.Enemies.origin_label(enemy.origin),Model.enemy_definition(int(enemy.profile)).name])
 	if report.has("meta_ranks"):
 		var loadout: Dictionary = Model.MetaTalents.loadout_summary(int(report.faction),report.meta_ranks)
 		if not loadout.is_empty():

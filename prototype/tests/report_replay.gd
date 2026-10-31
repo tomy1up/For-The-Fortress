@@ -59,6 +59,7 @@ static func verify(data: Variant) -> Dictionary:
 		definition = Model.Maps.from_data(data.map_definition)
 		if definition.is_empty(): return _fail("Définition de carte invalide.")
 	var model = Model.new(true,definition)
+	if data.has("wave_set_id") and not model.configure_wave_set(data.wave_set_id): return _fail("Rencontres de mission invalides.")
 	if data.has("auxiliary_type") and not model.configure_auxiliary(data.auxiliary_type): return _fail("Alternative de boutique invalide.")
 	if data.has("auxiliary_base_cost"):
 		if not model.configure_auxiliary_cost(data.auxiliary_base_cost): return _fail("Coût historique d’alternative invalide.")

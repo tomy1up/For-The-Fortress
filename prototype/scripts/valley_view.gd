@@ -440,6 +440,16 @@ func _draw() -> void:
 	draw_circle(entrance, 5, Color("debd7f"))
 	draw_string(font, entrance + Vector2(-48, -20), "ENTRÉE", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("a7b8aa"))
 	if model != null:
+		for enemy in model.enemies:
+			if enemy.type != Model.Banks.GUARD_TYPE: continue
+			var ring := PackedVector2Array()
+			var center: Vector2 = model.point_on_path(enemy.distance)
+			for step in range(49): ring.append(project(center+Vector2.from_angle(TAU*step/48)*Model.Banks.RADIUS))
+			draw_polyline(ring,Color(0.62,0.79,0.43,0.42),1.4,true)
+		for event in model.protection_events:
+			var age: float = model.elapsed-event.time
+			if age >= 0.0 and age < 0.4 and model.active:
+				draw_line(project(event.from)+Vector2(0,-12),project(event.to)+Vector2(0,-12),Color(0.83,0.96,0.52,(1.0-age/0.4)*0.85),2,true)
 		var actors: Array[Dictionary] = []
 		for slot in range(model.defenders.size()):
 			if not model.defenders[slot].is_empty():
@@ -665,10 +675,10 @@ func _draw_fortress(anchor: Vector2) -> void:
 	draw_string(font,center+Vector2(-caption_width/2,32),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("ed9989") if condition >= 2 else Color("d7bd83") if condition == 1 else INK)
 
 static func _enemy_scale(enemy: Dictionary) -> float:
-	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7][enemy.get("type", 1)]
+	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7, 1.4][enemy.get("type", 1)]
 
 static func enemy_color(type: int) -> Color:
-	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384")][type]
+	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384"),Color("91ab72")][type]
 
 func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.0) -> void:
 	var id: String = enemy_art_id(enemy,model.faction)

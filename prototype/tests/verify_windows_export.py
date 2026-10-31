@@ -50,6 +50,7 @@ startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW
 startup.wShowWindow=0
 results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
+       ('alliance_bank_guardian','bank_guardian','alliance'),('horde_bank_guardian','bank_guardian','horde'),
        ('home_prepared','selection',None),('home_maximum','selection',None),('home_blocked','selection',None),
        ('alliance_fortress','preparation','alliance'),('horde_fortress','preparation','horde'),
        ('alliance_fortress_damaged','preparation','alliance'),('horde_fortress_damaged','preparation','horde'),
@@ -234,7 +235,7 @@ for name,state,faction in cases:
         assert (6<=snap['scenery_count']<=22) if mission>=4 else snap['scenery_count']==0
         assert snap['summary']==(stage=='summary') and snap['menu']==(stage=='journey')
         if stage=='inspection': assert ('40,4' if mission==2 else '40,8') in snap['enemy_health'],snap
-        if stage=='journey': assert snap['selection']==min(mission+1,10)
+        if stage=='journey': assert snap['selection']==min(mission+1,20)
         if stage=='summary':
             assert ('Mission '+str(mission)) in snap['summary_mission'] and snap['title'].lower() in snap['summary_mission'].lower()
             assert 'XP : +100' in snap['reward_note']
@@ -329,6 +330,12 @@ for name,state,faction in cases:
         assert quote['isolated'] and quote['visible'] and quote['free_before']==2 and quote['free_after']==14
         assert quote['price']==0 and quote['next_price']==0 and 'Réinitialisation gratuite' in quote['dialog']
         assert quote['balance_after']==36-quote['price'] and 'les points débloqués sont conservés' in quote['dialog']
+    if name.endswith('_bank_guardian'):
+        guardian=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('GUARDIAN_SNAPSHOT=')))
+        assert guardian['isolated'] and guardian['faction']==(0 if faction=='alliance' else 1)
+        assert abs(guardian['hp']-193)<0.000001 and abs(guardian['max_hp']-198)<0.000001
+        assert guardian['transfers']==2 and guardian['wave_set_id']=='ford_banks'
+        assert all(abs(a-b)<0.000001 for a,b in zip(guardian['victims'],[35,20.4]))
     if name in ['alliance_talents','horde_talents','alliance_talents_no_points','horde_talents_no_points']:
         talent=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('TALENT_STATES_SNAPSHOT=')))
         assert talent['isolated'] and talent['progress']==[0,5,10,11,11,11,11] and len(talent['states'])==63

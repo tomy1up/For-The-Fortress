@@ -1,5 +1,28 @@
 # Feuille de route — vision long terme
 
+## Variantes de parcours demandées le 31 octobre 2026 — à réaliser
+
+Orientation validée pour les prochains chapitres : varier les tracés, introduire plusieurs chemins d’entrée, des routes doubles ou multiples qui se rejoignent, et des cartes possédant plusieurs forteresses avec plusieurs sorties possibles pour les attaquants. Ces variantes complètent les nouveautés de biome ; elles ne sont pas encore jouables dans le prototype à route unique.
+
+- [ ] Concevoir des cartes à plusieurs entrées, avec annonces de vague permettant de comprendre la provenance des groupes.
+- [ ] Concevoir des embranchements convergents et des sorties distinctes, sans rendre les trajets ni la couverture des défenseurs ambigus.
+- [ ] Préparer les cartes à plusieurs forteresses, chacune lisible, inspectable et visuellement propre à la faction.
+- [ ] Définir puis tester l’affectation des groupes aux routes et sorties, ainsi que la difficulté des attaques simultanées.
+
+Questions ouvertes : PV propres ou partagés entre forteresses, défaite à la perte d’une seule ou de toutes, comportement des attaquants si leur destination est déjà détruite, et chapitres d’introduction. Aucun de ces choix n’est déduit de la seule demande de variantes.
+
+## Chantier visuel demandé le 31 octobre 2026 — à réaliser
+
+Orientation validée par le porteur du projet ; ces éléments ne sont pas encore livrés.
+
+- [ ] Animer toutes les unités de défense, y compris les alternatives de boutique. Le geste d’attaque doit correspondre à l’arme et au projectile lancé, avec un départ de projectile synchronisé au geste.
+- [ ] Animer les déplacements des unités attaquantes et leur réaction aux dégâts. Prévoir une véritable réaction corporelle lisible ; le clignotement seul ne suffit pas.
+- [ ] Concevoir une forteresse cartoon cohérente avec les personnages actuels, propre à chaque faction : silhouettes, matériaux, couleurs et ornements Alliance et Horde.
+- [ ] Représenter un roi au sommet de chaque forteresse, lui aussi propre à sa faction. Prévoir ses animations, dont une réaction explicite quand la forteresse subit des dégâts ou perd des PV.
+- [ ] Vérifier en jeu la lisibilité des animations, leur synchronisation aux vrais événements et leur comportement aux vitesses ×1, ×2 et ×10 de débogage, sans modifier les règles de combat.
+
+À définir : apparence précise des deux souverains, liste des autres animations, technique de production et priorité des unités. Les effets déjà présents servent de base de prototype ; ils ne constituent pas l’achèvement de ce chantier. Ce lot est distinct de l’essai de la tortue gardienne du chapitre 2.
+
 **Dernière orientation économique :** l’XP des missions doit débloquer les 51 points de talent sur les cent premières missions ; les PO des missions 1–200 servent à la boutique. Cette décision remplace le financement des talents par les PO. [Détail et hypothèses](Experience_talents_2026-10-29.md).
 
 Vision du 28 octobre 2026, clarifiée puis révisée le 29 octobre 2026. Référence de conception évolutive liée au [suivi du prototype](Suivi_prototype.md). Aucun calendrier ni engagement commercial n’est déduit des cibles. For the Fortress! reste un nom de travail dont la disponibilité juridique reste à confirmer.

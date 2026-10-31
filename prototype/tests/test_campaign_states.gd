@@ -22,7 +22,7 @@ func run_checks() -> void:
 			menu._chapter(chapter);await settled()
 			check(menu.chapter == chapter and menu.chapter_in_view(),"Chaque chapitre sélectionné devient visible dans la liste après mise en page")
 			check(menu.get_viewport().gui_get_focus_owner() == menu.nodes[0],"Révéler le chapitre ne vole pas le focus de la mission sélectionnée")
-			if chapter > 1:
+			if chapter > 2:
 				check(menu.chapter_buttons[chapter-1].text.contains("À venir"),"Un chapitre sans contenu jouable ne prétend pas être prêt")
 				for node in menu.nodes: check(node.state == "future" and not node.locked,"Les nœuds d’un chapitre futur restent consultables, sans faux cadenas de progression")
 				check(menu.terrain_preview.geometry().is_empty() and menu.start_button.disabled,"Une mission future reste sans carte inventée et sans lancement")

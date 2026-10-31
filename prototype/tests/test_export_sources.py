@@ -1,6 +1,7 @@
 from pathlib import Path
 import hashlib
 import json
+import re
 import os
 import shutil
 import subprocess
@@ -10,6 +11,13 @@ from export_sources import SOURCE_PATHS, verify_sources
 
 
 class PackageSourcesTests(unittest.TestCase):
+    def test_runtime_resources_are_selected_for_export(self):
+        project = Path(__file__).resolve().parents[1]
+        preset = (project / 'export_presets.cfg').read_text(encoding='utf-8')
+        selected = set(re.findall(r'"res://([^"\n]+)"', preset.split('include_filter=')[0]))
+        required = {name for name in SOURCE_PATHS if Path(name).suffix in {'.gd', '.tscn', '.png'}}
+        self.assertFalse(required - selected, 'Ressources absentes du programme exporté : ' + str(required - selected))
+
     def fixture(self, root):
         sources = {}
         for relative in SOURCE_PATHS:

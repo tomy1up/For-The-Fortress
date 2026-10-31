@@ -1,0 +1,362 @@
+[
+	{
+		"faction": 0,
+		"hp": 4,
+		"income": 678,
+		"mission": 11,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 9,
+		"income": 678,
+		"mission": 11,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 78,
+		"mission": 11,
+		"points": 0,
+		"result": "defeat",
+		"wave": 4
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 78,
+		"mission": 11,
+		"points": 5,
+		"result": "defeat",
+		"wave": 4
+	},
+	{
+		"faction": 0,
+		"hp": 19,
+		"income": 711,
+		"mission": 12,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 24,
+		"income": 711,
+		"mission": 12,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 311,
+		"mission": 12,
+		"points": 0,
+		"result": "defeat",
+		"wave": 7
+	},
+	{
+		"faction": 1,
+		"hp": 1,
+		"income": 648,
+		"mission": 12,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 9,
+		"income": 684,
+		"mission": 13,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 14,
+		"income": 684,
+		"mission": 13,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 205,
+		"mission": 13,
+		"points": 0,
+		"result": "defeat",
+		"wave": 6
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 306,
+		"mission": 13,
+		"points": 5,
+		"result": "defeat",
+		"wave": 7
+	},
+	{
+		"faction": 0,
+		"hp": 17,
+		"income": 709,
+		"mission": 14,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 22,
+		"income": 709,
+		"mission": 14,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 206,
+		"mission": 14,
+		"points": 0,
+		"result": "defeat",
+		"wave": 6
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 407,
+		"mission": 14,
+		"points": 5,
+		"result": "defeat",
+		"wave": 8
+	},
+	{
+		"faction": 0,
+		"hp": 14,
+		"income": 704,
+		"mission": 15,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 19,
+		"income": 704,
+		"mission": 15,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 148,
+		"mission": 15,
+		"points": 0,
+		"result": "defeat",
+		"wave": 5
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 220,
+		"mission": 15,
+		"points": 5,
+		"result": "defeat",
+		"wave": 6
+	},
+	{
+		"faction": 0,
+		"hp": 14,
+		"income": 704,
+		"mission": 16,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 19,
+		"income": 704,
+		"mission": 16,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 393,
+		"mission": 16,
+		"points": 0,
+		"result": "defeat",
+		"wave": 8
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 638,
+		"mission": 16,
+		"points": 5,
+		"result": "defeat",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 17,
+		"income": 709,
+		"mission": 17,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 22,
+		"income": 709,
+		"mission": 17,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 14,
+		"income": 694,
+		"mission": 17,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 15,
+		"income": 697,
+		"mission": 17,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 15,
+		"income": 705,
+		"mission": 18,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 20,
+		"income": 705,
+		"mission": 18,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 4,
+		"income": 659,
+		"mission": 18,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 10,
+		"income": 677,
+		"mission": 18,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 11,
+		"income": 690,
+		"mission": 19,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 16,
+		"income": 690,
+		"mission": 19,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 209,
+		"mission": 19,
+		"points": 0,
+		"result": "defeat",
+		"wave": 6
+	},
+	{
+		"faction": 1,
+		"hp": 0,
+		"income": 311,
+		"mission": 19,
+		"points": 5,
+		"result": "defeat",
+		"wave": 7
+	},
+	{
+		"faction": 0,
+		"hp": 14,
+		"income": 702,
+		"mission": 20,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 0,
+		"hp": 19,
+		"income": 702,
+		"mission": 20,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 4,
+		"income": 657,
+		"mission": 20,
+		"points": 0,
+		"result": "victory",
+		"wave": 10
+	},
+	{
+		"faction": 1,
+		"hp": 4,
+		"income": 657,
+		"mission": 20,
+		"points": 5,
+		"result": "victory",
+		"wave": 10
+	}
+]

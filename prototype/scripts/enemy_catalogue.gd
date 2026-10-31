@@ -3,6 +3,7 @@ extends RefCounted
 const NEUTRALS: Dictionary = {
 	0: {"id":"enemy.neutral.wolf","name":"Loup de meute","origin":"neutral","profile":0},
 	2: {"id":"enemy.neutral.boar","name":"Sanglier sauvage","origin":"neutral","profile":2},
+	8: {"id":"enemy.neutral.turtle","name":"Tortue gardienne des berges","origin":"neutral","profile":8},
 	3: {"id":"enemy.neutral.bear","name":"Ours sauvage","origin":"neutral","profile":3},
 }
 const ALLIANCE: Dictionary = {
@@ -21,18 +22,18 @@ const HORDE: Dictionary = {
 }
 
 static func for_profile(profile: int, defending_faction: int) -> Dictionary:
-	if defending_faction not in [0,1] or profile < 0 or profile > 7: return {}
+	if defending_faction not in [0,1] or profile < 0 or profile > 8: return {}
 	if NEUTRALS.has(profile): return NEUTRALS[profile].duplicate(true)
 	return (HORDE if defending_faction == 0 else ALLIANCE)[profile].duplicate(true)
 
-static func available(defending_faction: int) -> Array[Dictionary]:
+static func available(defending_faction: int, wave_set: String = "ford") -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	if defending_faction not in [0,1]: return result
-	for profile in range(8): result.append(for_profile(profile,defending_faction))
+	for profile in range(9 if wave_set == "ford_banks" else 8): result.append(for_profile(profile,defending_faction))
 	return result
 
 static func by_id(id: String, defending_faction: int) -> Dictionary:
-	for identity in available(defending_faction):
+	for identity in available(defending_faction,"ford_banks"):
 		if identity.id == id: return identity
 	return {}
 
