@@ -51,6 +51,7 @@ startup.wShowWindow=0
 results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
        ('alliance_bank_guardian','bank_guardian','alliance'),('horde_bank_guardian','bank_guardian','horde'),
+       ('alliance_enemy_hit_motion','effects','alliance'),('horde_enemy_hit_motion','effects','horde'),
        ('home_prepared','selection',None),('home_maximum','selection',None),('home_blocked','selection',None),
        ('alliance_fortress','preparation','alliance'),('horde_fortress','preparation','horde'),
        ('alliance_fortress_damaged','preparation','alliance'),('horde_fortress_damaged','preparation','horde'),
@@ -151,6 +152,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if name.endswith('_enemy_hit_motion'): command+=['--capture-hit-motion','--capture-type='+('2' if faction=='alliance' else '4')]
         if state=="campaign_menu": command += ["--capture-campaign="+name.rsplit("_",1)[1]]
         if '_talent_start_' in name: command += ['--capture-talent-start='+name.rsplit('_',1)[1]]
         if state=="campaign_sample": command += ["--capture-mission="+name.split("_")[2],"--capture-sample-state="+name.rsplit("_",1)[1]]
@@ -189,6 +191,7 @@ for name,state,faction in cases:
         if name in ['alliance_run_report','horde_run_report','horde_defender_summary'] or name.endswith('_loadout_summary'): command+=['--capture-export-report']
         if state=='effects':
             effect_types={'effects_mage':2,'effects_troll':3,'effects_sapper':4,'effects_shaman':5,
+                          'alliance_enemy_hit_motion':2,'horde_enemy_hit_motion':4,
                           'attack_archer':0,'attack_crossbow':1,'attack_mage':2,'attack_troll':3,'attack_sapper':4,'attack_shaman':5}
             effect_types.update({'projectile_'+unit:index for index,unit in enumerate(['archer','crossbow','mage','troll','sapper','shaman'])})
             for prefix in ['left_attack_','left_projectile_']:
@@ -336,6 +339,10 @@ for name,state,faction in cases:
         assert abs(guardian['hp']-193)<0.000001 and abs(guardian['max_hp']-198)<0.000001
         assert guardian['transfers']==2 and guardian['wave_set_id']=='ford_banks'
         assert all(abs(a-b)<0.000001 for a,b in zip(guardian['victims'],[35,20.4]))
+    if name.endswith('_enemy_hit_motion'):
+        motion=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('HIT_MOTION_SNAPSHOT=')))
+        assert motion['faction']==(0 if faction=='alliance' else 1) and motion['moving'] and motion['observations']>0
+        assert motion['reacting'] and all(0<enemy['strength']<=1 and -0.105<=enemy['rotation']<0 for enemy in motion['reacting'])
     if name in ['alliance_talents','horde_talents','alliance_talents_no_points','horde_talents_no_points']:
         talent=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('TALENT_STATES_SNAPSHOT=')))
         assert talent['isolated'] and talent['progress']==[0,5,10,11,11,11,11] and len(talent['states'])==63

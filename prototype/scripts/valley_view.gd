@@ -12,6 +12,7 @@ const SLOT_FILL := Color("213e3b")
 const IMPACT_DURATION := 0.32 # Secondes de simulation, comme les autres effets du combat.
 const DAMAGE_TRAIL_DURATION := 0.40
 const HIT_FLASH_DURATION := 0.16
+const HIT_REACTION_DURATION := 0.28
 const ELIMINATION_DURATION := 0.45
 const MAX_ELIMINATION_EFFECTS := 24
 var elimination_tail: float = 0.0
@@ -105,6 +106,38 @@ func enemy_hit_strength(events: Array[Dictionary]) -> float:
 	var strength: float = 0.0
 	for event in events: strength = maxf(strength,damage_opacity(model.elapsed-event.time,HIT_FLASH_DURATION))
 	return strength
+
+static func hit_reaction_pulse(age: float) -> float:
+	if not is_finite(age) or age < 0.0 or age >= HIT_REACTION_DURATION: return 0.0
+	# Une brève prise d’impact suivie d’un retour progressif au repos.
+	if age < 0.045: return sin(age/0.045*PI/2.0)
+	return pow(cos((age-0.045)/(HIT_REACTION_DURATION-0.045)*PI/2.0),2)
+
+static func enemy_reaction_weight(type: int) -> float:
+	return {3:0.7,5:0.55,6:0.7,7:0.45,8:0.35}.get(type,1.0)
+
+static func enemy_reaction_pose(enemy: Dictionary, events: Array[Dictionary], now: float) -> Dictionary:
+	var strength: float = 0.0
+	for event in events:
+		if event.get("enemy_id",-1) != enemy.id: continue
+		var lost: float = maxf(0.0,float(event.hp_before)-float(event.hp_after))
+		if lost <= 0.0 or enemy.get("max_hp",0.0) <= 0.0: continue
+		var fraction: float = clampf(lost/float(enemy.max_hp),0.0,1.0)
+		var pulse: float = hit_reaction_pulse(now-event.time)*(0.35+0.65*sqrt(fraction))
+		strength = maxf(strength,pulse) # Les coups simultanés ne cumulent pas leur recul.
+	strength *= enemy_reaction_weight(int(enemy.get("type",1)))
+	return {"strength":strength,"offset":Vector2(-3.5*strength,0.7*strength),"rotation":-0.105*strength}
+
+static func enemy_body_transform(enemy: Dictionary, facing: float, pose: Dictionary, elapsed: float, moving: bool) -> Transform2D:
+	var scale: float = _enemy_scale(enemy)
+	var stride: float = sin(elapsed*10.0*enemy.get("speed",1.0)+enemy.id)*2.0 if moving else 0.0
+	# Les pieds restent proches de leur ancrage. Ni recul logique, ni ralentissement.
+	var offset: Vector2 = pose.get("offset",Vector2.ZERO)
+	var mirror := Transform2D(Vector2(facing*scale,0),Vector2(0,scale),Vector2.ZERO)
+	var reaction := Transform2D(float(pose.get("rotation",0.0)),Vector2.ONE,0.0,offset)
+	var result: Transform2D = mirror*reaction
+	result.origin.y -= absf(stride)*0.3*scale
+	return result
 
 static func secondary_segments(shot: Dictionary) -> Array[PackedVector2Array]:
 	var segments: Array[PackedVector2Array] = []
@@ -243,7 +276,7 @@ static func enemy_bounds(enemy: Dictionary, defending_faction: int = -1, route_p
 		var image: Rect2 = EnemyArt.destination(enemy_art_id(enemy,defending_faction))
 		if enemy_facing(enemy,route_points,route_length) < 0.0: image.position.x = -image.end.x
 		bounds = bounds.merge(Rect2(center+image.position*scale,image.size*scale).grow(1.0))
-	return bounds
+	return bounds.grow(8.0) # Marge fixe couvrant les poses, sans survol qui tremble avec le corps.
 
 static func enemy_facing(enemy: Dictionary, route_points: Array[Vector2] = Model.PATH_POINTS, route_length: float = Model.PATH_LENGTH) -> float:
 	var distance: float = clampf(enemy.distance,0.0,route_length)
@@ -465,7 +498,7 @@ func _draw() -> void:
 				_draw_defender(actor.point, actor.defender.type, actor.defender.get("level", 1), actor.defender.get("branch", -1), defender_pose(actor.slot))
 			else:
 				var feedback: Array[Dictionary] = recent_enemy_damage(actor.enemy.id)
-				_draw_pillager(actor.point, actor.enemy,enemy_hit_strength(feedback))
+				_draw_pillager(actor.point, actor.enemy,enemy_hit_strength(feedback),enemy_reaction_pose(actor.enemy,feedback,model.elapsed))
 				var ratio: float = clampf(actor.enemy.hp / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
 				var bar_position: Vector2 = actor.point + Vector2(-12, -39 * _enemy_scale(actor.enemy))
 				draw_rect(Rect2(bar_position, Vector2(24, 4)), Color("472f2a"))
@@ -680,7 +713,7 @@ static func _enemy_scale(enemy: Dictionary) -> float:
 static func enemy_color(type: int) -> Color:
 	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384"),Color("91ab72")][type]
 
-func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.0) -> void:
+func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.0, pose: Dictionary = {}) -> void:
 	var id: String = enemy_art_id(enemy,model.faction)
 	var scale: float = _enemy_scale(enemy)
 	draw_set_transform(center,0.0,Vector2.ONE*scale)
@@ -693,8 +726,9 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]),Color("d6a1ef"))
 		break
 	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
-	var stride: float = sin(model.elapsed*10.0*enemy.get("speed",1.0)+enemy.id)*2.0 if model.active else 0.0
-	draw_set_transform(center+Vector2(0,-absf(stride)*0.3*scale),0.0,Vector2(enemy_facing(enemy,model.path_points,model.path_length)*scale,scale))
+	var body: Transform2D = enemy_body_transform(enemy,enemy_facing(enemy,model.path_points,model.path_length),pose,model.elapsed,model.active)
+	body.origin += center
+	draw_set_transform_matrix(body)
 	draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,EnemyArt.tint(hit_strength))
 	draw_set_transform(Vector2.ZERO)
 

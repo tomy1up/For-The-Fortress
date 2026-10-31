@@ -379,6 +379,13 @@ func _ready() -> void:
 				print("ELIMINATION_VISIBLE=",not map_view.recent_eliminations().is_empty())
 			if "--capture-attack-pose" in OS.get_cmdline_user_args(): model.advance(MapView.ATTACK_POSE_DURATION/2)
 			if "--capture-projectile" in OS.get_cmdline_user_args(): model.advance(MapView.PROJECTILE_FLIGHT/2)
+			if "--capture-hit-motion" in OS.get_cmdline_user_args():
+				model.advance(0.045)
+				var reacting: Array[Dictionary] = []
+				for enemy in model.enemies:
+					var pose: Dictionary = MapView.enemy_reaction_pose(enemy,map_view.recent_enemy_damage(enemy.id),model.elapsed)
+					if pose.strength > 0.0: reacting.append({"id":enemy.id,"type":enemy.type,"strength":pose.strength,"offset":str(pose.offset),"rotation":pose.rotation})
+				print("HIT_MOTION_SNAPSHOT=",JSON.stringify({"faction":model.faction,"reacting":reacting,"observations":model.damage_events.size(),"moving":model.active}))
 			selected = capture_slot
 			map_view.selected = capture_slot
 			print("ATTACK_FACING=",int(map_view.defender_pose(capture_slot).direction))

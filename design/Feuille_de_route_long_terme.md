@@ -13,10 +13,11 @@ Questions ouvertes : PV propres ou partagés entre forteresses, défaite à la p
 
 ## Chantier visuel demandé le 31 octobre 2026 — à réaliser
 
-Orientation validée par le porteur du projet ; ces éléments ne sont pas encore livrés.
+Orientation validée par le porteur du projet ; l’état des premières réalisations est indiqué ci-dessous. Le chantier complet reste à réaliser.
 
 - [ ] Animer toutes les unités de défense, y compris les alternatives de boutique. Le geste d’attaque doit correspondre à l’arme et au projectile lancé, avec un départ de projectile synchronisé au geste.
-- [ ] Animer les déplacements des unités attaquantes et leur réaction aux dégâts. Prévoir une véritable réaction corporelle lisible ; le clignotement seul ne suffit pas.
+- [x] Première réaction corporelle des attaquants aux dégâts : inclinaison et recul visuel brefs, puis retour à la pose normale, en complément du clignotement. Prototype v0.103 ; silhouettes entières animées, sans animation séparée des membres.
+- [ ] Produire les cycles de marche des attaquants et enrichir leurs animations corporelles. Le mouvement actuel de l’illustration entière ne constitue pas un cycle de marche dessiné.
 - [ ] Concevoir une forteresse cartoon cohérente avec les personnages actuels, propre à chaque faction : silhouettes, matériaux, couleurs et ornements Alliance et Horde.
 - [ ] Représenter un roi au sommet de chaque forteresse, lui aussi propre à sa faction. Prévoir ses animations, dont une réaction explicite quand la forteresse subit des dégâts ou perd des PV.
 - [ ] Vérifier en jeu la lisibilité des animations, leur synchronisation aux vrais événements et leur comportement aux vitesses ×1, ×2 et ×10 de débogage, sans modifier les règles de combat.

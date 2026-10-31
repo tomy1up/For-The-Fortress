@@ -1,12 +1,16 @@
 # Suivi du prototype
 
-État du 31 octobre 2026 — prototype v0.102, GDD principal v0.16 (référence jeu v0.101) et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 31 octobre 2026 — prototype v0.103, GDD principal v0.16 (référence jeu v0.101) et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Nouveau lot — chapitre 2 et Gardienne à l’essai
 
 Vingt missions jouables, dont 11–20 sur les dix tracés existants avec un jeu de rencontres distinct. Tortue gardienne neutre, 180 PV de référence et transfert de 25 % dans un rayon de 2, plafonné à ses PV disponibles. Aucun cumul entre tortues, ni protection du boss. Présentation, séquences et chiffres restent des hypothèses, le choix définitif Gardienne/Protectrice étant ouvert. Les missions 1–10 et les anciennes relectures de rapports gardent leurs rencontres. [Règles et limites](Gardienne_des_berges_v0102.md).
 
 Demandes ajoutées à la [feuille de route](Feuille_de_route_long_terme.md) : animer toutes les unités, accorder les gestes des défenseurs aux projectiles, dépasser le clignotement pour les réactions aux dégâts, créer forteresse et roi animés propres à chaque faction ; préparer ensuite plusieurs entrées, des routes convergentes, des sorties distinctes et plusieurs forteresses. Ces chantiers ne sont pas annoncés comme livrés.
+
+## Réactions corporelles — v0.103
+
+Première réaction des attaquants survivants : inclinaison et recul visuel brefs, plus discrets sur les silhouettes lourdes, puis retour au repos. Aucun changement de combat ; survol stable couvrant les poses. 87 suites, 37 155 contrôles et 17 tests Python ; 16 cas Windows ciblés. [Règles, aperçu animé et limites](Reactions_corporelles_v0103.md). Les cycles de marche, membres séparés, nouvelles forteresses et souverains restent à développer.
 
 ## Périmètre réalisé
 

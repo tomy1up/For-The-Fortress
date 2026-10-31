@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.103 — réactions aux dégâts** : les attaquants s’inclinent et reculent brièvement lorsqu’ils perdent des PV, avec une réaction plus discrète pour les ennemis lourds. Ce mouvement reste visuel et n’arrête pas leur avancée. [Règles et limites](design/Reactions_corporelles_v0103.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.103). Les cycles de marche et les animations détaillées des membres restent à réaliser.
+
 **Prototype v0.102 — chapitre 2 et Gardienne à l’essai** : [règles, chiffres provisoires et limites](design/Gardienne_des_berges_v0102.md). Vingt missions jouables ; les missions 11–20 reprennent les dix tracés du Gué avec de nouvelles rencontres. Une tortue neutre reçoit une partie des dégâts de ses voisins. Le choix Gardienne/Protectrice reste à confirmer après essai. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.102).
 
 **Chantiers visuels et futurs parcours** : animations des défenseurs synchronisées aux projectiles, réactions des attaquants aux dégâts, forteresse et roi propres à chaque faction, puis entrées multiples, routes convergentes et plusieurs forteresses. [TODO et questions ouvertes](design/Feuille_de_route_long_terme.md). À développer.

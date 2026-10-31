@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.102 — 31 octobre 2026
+Version : 0.103 — 31 octobre 2026
 
 JOUER
 
@@ -11,6 +11,8 @@ JOUER
    Chapitre 2 : mêmes tracés, nouvelles rencontres avec une tortue gardienne.
    Elle encaisse 25 % des dégâts des voisins proches, dans la limite de ses PV.
    Cercle vert : rayon de protection ; traits : dégâts réellement transférés.
+   Les attaquants réagissent aux dégâts par une brève inclinaison et un recul visuel.
+   Leur position de combat et leur vitesse ne changent pas ; ce n’est pas un étourdissement.
    Le rôle, les chiffres et les compositions sont des essais à valider.
    Les missions 4–10 sont habillées de végétation et de rochers, sans effet de jeu. Gagner la précédente les débloque dans la faction concernée.
 3. Préparer les talents avant la mission, puis jouer et installer sa défense.

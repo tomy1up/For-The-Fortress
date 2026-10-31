@@ -1,0 +1,34 @@
+{
+  "full_regression": {
+    "suites": 87,
+    "godot_checks": 37155,
+    "python_tests": 17
+  },
+  "native_scope": "16 cas sélectionnés sur 247, 15 captures, 59 sources ; pas de contrôle natif exhaustif.",
+  "visual_review": [
+    "Impact Alliance depuis le projet source",
+    "Impact Horde depuis le programme exporté",
+    "Atelier agrandi depuis les ressources du paquet : repos et impact des quatorze silhouettes inspectés"
+  ],
+  "animation_preview": {
+    "rendered_samples": 45,
+    "fps": 30,
+    "silhouettes": 14,
+    "scale": 2,
+    "kind": "atelier contrôlé de poses, pas une partie jouée",
+    "file": "captures/QA-v0103_reactions_atelier.gif"
+  },
+  "source_changes_since_previous_export": [
+    "project.godot",
+    "export_presets.cfg",
+    "scripts/main.gd",
+    "scripts/valley_view.gd"
+  ],
+  "verification_tool_after_regression": {
+    "path": "prototype/tests/verify_windows_export.py",
+    "sha256": "0ad2625a8a5466d2e478ad71075889aaea20b41c262238122b402a27437290ae",
+    "reason": "Enregistrement des deux nouvelles captures dans la table des types de défenseurs du vérificateur. Ces deux cas ont ensuite été exécutés avec succès sur le programme Windows."
+  },
+  "archive_sha256": "4452f8839c54dcb8a7f4f2afc503e78c4b18e23bc28b8002aa4364a1aa1cfa6a",
+  "executable_sha256": "0d74fde6fa680bae35ccef6f44c384f05eb78a51ccdd2795353b22b46e7e24ec"
+}

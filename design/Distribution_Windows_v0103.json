@@ -1,0 +1,98 @@
+{
+  "archive_sha256": "4452f8839c54dcb8a7f4f2afc503e78c4b18e23bc28b8002aa4364a1aa1cfa6a",
+  "scope": "selected",
+  "available_cases": 247,
+  "executable_sha256": "0d74fde6fa680bae35ccef6f44c384f05eb78a51ccdd2795353b22b46e7e24ec",
+  "files": [
+    "For_the_Fortress_v0.103_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.103_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.103_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.103_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.103_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "alliance_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_enemy_hit_motion",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_enemy_hit_motion",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_silhouettes",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_silhouettes_horde",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_mage",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_troll",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_sapper",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "effects_shaman",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "enemy_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "boss_inspection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "periodic_damage",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "source_checks": 59,
+  "local_sources_compared": true,
+  "visual_review": "Captures produites ; inspection visuelle à consigner séparément."
+}
