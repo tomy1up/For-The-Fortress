@@ -2,6 +2,10 @@
 
 **Animation du loup à reprendre après retour visuel** : le cycle de la v0.105 est jugé trop saccadé. L’essai articulé suivant est rejeté et retiré du projet. [Critères d’autocontrôle et validation attendue](design/Validation_visuelle_animations.md). Le loup sera validé par le porteur avant toute extension aux autres unités. [Essai historique v0.105](design/Marche_loup_v0105.md), [version Windows historique](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.105).
 
+**Candidat de marche à 24 poses** : [aperçu et contrôles ciblés](design/essais/animation_loup_24_poses/README.md), hors production et en attente du retour artistique du porteur. Les contrôles techniques ne valident pas la démarche.
+
+**Routes convergentes en préparation** : [socle géométrique et travail restant](design/Preparation_routes_convergentes.md). Les positions et couvertures de deux entrées vers une sortie commune sont testées séparément ; le combat multitrajet n'est pas encore jouable.
+
 **Prototype v0.104 — forteresses et souverains** : deux bâtiments et deux rois propres aux factions, avec quatre poses liées aux départs de vagues, pertes de PV et défaites. Cour visuelle adaptée pour garder les emplacements dégagés ; aucun changement de combat ou de progression. [Illustrations, règles et limites](design/Forteresses_souverains_v0104.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.104). Les apparences sont des propositions de prototype.
 
 **Prototype v0.103 — réactions aux dégâts** : les attaquants s’inclinent et reculent brièvement lorsqu’ils perdent des PV, avec une réaction plus discrète pour les ennemis lourds. Ce mouvement reste visuel et n’arrête pas leur avancée. [Règles et limites](design/Reactions_corporelles_v0103.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.103). Les cycles de marche et les animations détaillées des membres restent à réaliser.

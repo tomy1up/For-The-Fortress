@@ -11,6 +11,7 @@ const Shop = preload("res://scripts/shop_catalogue.gd")
 var auxiliary_type: int = -1
 var auxiliary_base_cost: int = -1 # Coût historique de diagnostic ; jamais chargé depuis une sauvegarde joueur.
 const Maps = preload("res://scripts/map_definition.gd")
+const Routes = preload("res://scripts/route_geometry.gd")
 # Alias conservés pour les outils et références historiques du Gué.
 const PATH_POINTS: Array[Vector2] = Maps.VALLEY_PATH
 const SLOTS: Array[Vector2] = Maps.VALLEY_SLOTS
@@ -743,48 +744,13 @@ func point_on_path(progress: float) -> Vector2:
 	return position_at(progress, path_points, path_length)
 
 static func coverage_windows(center: Vector2, radius: float, route_points: Array[Vector2] = PATH_POINTS) -> Array[Dictionary]:
-	# Les bornes restent des float 64 bits ; Vector2 réduirait leur précision.
-	var windows: Array[Dictionary] = []
-	var cumulative: float = 0.0
-	for index in range(route_points.size() - 1):
-		var start_point: Vector2 = route_points[index]
-		var vector: Vector2 = route_points[index + 1] - start_point
-		var length: float = vector.length()
-		var direction: Vector2 = vector / length
-		var offset: Vector2 = center - start_point
-		var projected: float = offset.dot(direction)
-		var perpendicular_squared: float = maxf(0.0, offset.length_squared() - projected * projected)
-		var discriminant: float = radius * radius - perpendicular_squared
-		if discriminant >= 0.0:
-			var half_width: float = sqrt(discriminant)
-			var first: float = maxf(0.0, projected - half_width)
-			var last: float = minf(length, projected + half_width)
-			if first <= last:
-				var window: Dictionary = {"first": cumulative + first, "last": cumulative + last}
-				if not windows.is_empty() and window.first <= windows[-1].last + EPS:
-					windows[-1].last = maxf(windows[-1].last, window.last)
-				else:
-					windows.append(window)
-		cumulative += length
-	return windows
+	return Routes.coverage_windows(center,radius,route_points)
 
 static func position_components(progress: float, route_points: Array[Vector2] = PATH_POINTS, route_length: float = PATH_LENGTH) -> Dictionary:
-	var remaining: float = clampf(progress, 0.0, route_length)
-	for index in range(route_points.size() - 1):
-		var a: Vector2 = route_points[index]
-		var b: Vector2 = route_points[index + 1]
-		var length: float = a.distance_to(b)
-		if remaining <= length:
-			var ratio: float = remaining / length
-			return {"x": float(a.x) + (float(b.x) - a.x) * ratio, "y": float(a.y) + (float(b.y) - a.y) * ratio}
-		remaining -= length
-	return {"x": float(route_points[-1].x), "y": float(route_points[-1].y)}
+	return Routes.position_components(progress,route_points,route_length)
 
 static func separation_squared(first: float, second: float, route_points: Array[Vector2] = PATH_POINTS, route_length: float = PATH_LENGTH) -> float:
-	var a: Dictionary = position_components(first, route_points, route_length)
-	var b: Dictionary = position_components(second, route_points, route_length)
-	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)
+	return Routes.separation_squared(first,second,route_points,route_length)
 
 static func position_at(progress: float, route_points: Array[Vector2] = PATH_POINTS, route_length: float = PATH_LENGTH) -> Vector2:
-	var point: Dictionary = position_components(progress, route_points, route_length)
-	return Vector2(point.x, point.y)
+	return Routes.position_at(progress,route_points,route_length)

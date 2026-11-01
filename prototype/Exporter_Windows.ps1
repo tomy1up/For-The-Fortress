@@ -46,6 +46,7 @@ $sourcePaths = @('project.godot','export_presets.cfg','scenes\main.tscn','script
 $sourcePaths += @('scripts\bank_encounters.gd','assets\enemies\rosters\tortue_gardienne_v001.png','assets\enemies\rosters\tortue_gardienne_v001.png.import')
 $sourcePaths += @('scripts\fortress_art.gd','assets\fortresses\forteresse_alliance_v001.png','assets\fortresses\forteresse_alliance_v001.png.import','assets\fortresses\forteresse_horde_v001.png','assets\fortresses\forteresse_horde_v001.png.import','assets\fortresses\roi_alliance_v001.png','assets\fortresses\roi_alliance_v001.png.import','assets\fortresses\roi_horde_v001.png','assets\fortresses\roi_horde_v001.png.import')
 $sourcePaths += @('scripts\enemy_walk_art.gd','assets\enemies\animations\loup_marche_v001.png','assets\enemies\animations\loup_marche_v001.png.import')
+$sourcePaths += @('scripts\route_geometry.gd')
 $sources = Get-FortressSourceSnapshot -ProjectRoot $PSScriptRoot -RelativePaths $sourcePaths
 if ([IO.File]::ReadAllText((Join-Path $PSScriptRoot 'project.godot')) -notmatch 'config/version="([^"]+)"' -or $Matches[1] -ne $Version) {
     throw 'La version du projet a change avant le lancement de la compilation.'
