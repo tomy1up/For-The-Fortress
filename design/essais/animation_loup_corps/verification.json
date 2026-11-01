@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-01",
+  "status": "body_candidate_pending_user_visual_validation",
+  "paw_gait_approved_by_user": true,
+  "contacts": {
+    "max_attachment_shift_pixels": 3.62157885742187,
+    "max_difference_from_approved_paws_pixels": 0.0,
+    "max_ik_error_pixels": 2.41686883964576e-06,
+    "max_world_drift_pixels": 0.0,
+    "scope": "actual rig paw references across all turns, 16 phase offsets; all paws compared with approved gait including swing; artistic review separate",
+    "support_samples": 107584,
+    "worst": {}
+  },
+  "skin": {
+    "artistic_approval": false,
+    "checks": 110881,
+    "failures": 0,
+    "largest_triangle_area_ratio": 1.31698810435858,
+    "relative_shoulder_pelvis_motion_source_pixels": 29.9224243164063,
+    "smallest_triangle_area_ratio": 0.680275897227711
+  },
+  "controls": {
+    "pause": true,
+    "speed": true,
+    "zoom": true,
+    "restart": true,
+    "body_comparison": true
+  },
+  "capture": {
+    "frames": 1200,
+    "fps": 60,
+    "size": [
+      1280,
+      800
+    ],
+    "duration_seconds": 20,
+    "decoded_without_errors": true,
+    "is_realtime_performance_measurement": false
+  },
+  "poses_inspected": [
+    315,
+    324,
+    338,
+    510,
+    550,
+    1050
+  ],
+  "user_profile_loaded": false,
+  "production_integration": false,
+  "sha256": {
+    "wolf_rig.gd": "e3d3e4e91d07771908642d36eb9deee3d7da69f2b0100eceed24fc75b7633438",
+    "wolf_view.gd": "a940e431572bc0c81aefb649f5ed66d3ecccb181741168bec4812f4790f330cd",
+    "workshop.gd": "1d681c7cc8b2dc5f173d53319b2a298a28c3009e9a35c3071aa9071d4acd6e67",
+    "test_contacts.gd": "a807fbeeaf208b8d56ed261e0c71b692a3b2f11694587a9641723d37a9286a54",
+    "test_body_skin.gd": "3c5fd802c4762748045db584095312c90abaf2d7b239ee658a50b16fcdebe5f9",
+    "Loup_corps_essai.mp4": "42edd7e917eb24788b2a169f88a651eccf304a870310e1c8b9f821f8daa5ae2d",
+    "../animation_loup_appuis/wolf_rig.gd": "0e4fb526acc8de32dfee6614cfd6845f664d736703fa859aaaf959148e3cacea",
+    "../animation_loup_appuis/grounded_foot.gd": "63a4481b55487f537f94c9408e1fe37ffc24b9be93a96253f8c4ea808cc5640d",
+    "../animation_loup_appuis/loup_pieces_essai.png": "8f93bcd7edbb79568879d1e08cd2d9c090f344f1bfcbfa10b10d33c851e334f1"
+  }
+}

@@ -1,0 +1,9 @@
+{
+	"max_attachment_shift_pixels": 3.62157885742187,
+	"max_difference_from_approved_paws_pixels": 0.0,
+	"max_ik_error_pixels": 0.00000241686883964576,
+	"max_world_drift_pixels": 0.0,
+	"scope": "actual rig paw references across all turns, 16 phase offsets; all paws compared with approved gait including swing; artistic review separate",
+	"support_samples": 107584,
+	"worst": {}
+}

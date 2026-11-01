@@ -1,0 +1,8 @@
+{
+	"artistic_approval": false,
+	"checks": 110881,
+	"failures": 0,
+	"largest_triangle_area_ratio": 1.31698810435858,
+	"relative_shoulder_pelvis_motion_source_pixels": 29.9224243164063,
+	"smallest_triangle_area_ratio": 0.680275897227711
+}
