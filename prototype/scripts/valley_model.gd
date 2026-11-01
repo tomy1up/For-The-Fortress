@@ -20,6 +20,7 @@ var map_definition: Dictionary
 var map_error: String = ""
 const Banks = preload("res://scripts/bank_encounters.gd")
 var wave_set_id: String = "ford"
+var route_target_policy: String = "arrival_time"
 var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
 var enemy_hp_percent: int = 100
 var path_points: Array[Vector2] = []
@@ -231,6 +232,34 @@ static func wave_forecast(number: int, defending_faction: int = -1, hp_percent: 
 		income += count*enemy.reward
 		offset += count
 	return {"wave":number,"groups":groups,"total":schedule.size(),"income":income}
+
+func spawn_route_id(index: int, entry: Dictionary) -> String:
+	return "" if routes.is_empty() else str(entry.get("route_id",routes[index%routes.size()].id))
+
+func forecast_for_routes(number: int) -> Dictionary:
+	var data: Dictionary = wave_forecast(number,faction,enemy_hp_percent,wave_set_id)
+	if data.is_empty() or routes.is_empty(): return data
+	var indices: Dictionary = {}
+	data.entries = []
+	for index in range(routes.size()):
+		indices[routes[index].id] = index
+		data.entries.append({"route_id":routes[index].id,"number":index+1,"count":0,"first_at":-1.0,"last_at":-1.0})
+	var schedule: Array[Dictionary] = Campaign.schedule(number,wave_set_id)
+	var offset: int = 0
+	for group in data.groups:
+		var allocations: Array[Dictionary] = []
+		for entry in data.entries:
+			allocations.append({"route_id":entry.route_id,"number":entry.number,"count":0,"first_at":-1.0,"last_at":-1.0})
+		for index in range(offset,offset+group.count):
+			var route_id: String = spawn_route_id(index,schedule[index])
+			if not indices.has(route_id): return {}
+			for allocation in [data.entries[indices[route_id]],allocations[indices[route_id]]]:
+				if allocation.count==0: allocation.first_at=schedule[index].time
+				allocation.count+=1
+				allocation.last_at=schedule[index].time
+		group.entries=allocations.filter(func(entry: Dictionary)->bool:return entry.count>0)
+		offset+=group.count
+	return data
 
 func can_build() -> bool:
 	return phase == "preparation" or phase == "finished"
@@ -574,7 +603,7 @@ func _resolve_instant() -> void:
 	while spawned < spawn_schedule.size() and spawn_schedule[spawned].time <= elapsed + EPS:
 		var entry: Dictionary = spawn_schedule[spawned]
 		var enemy: Dictionary = make_enemy(spawned, entry.type, entry.time,faction,enemy_hp_percent)
-		if not routes.is_empty(): enemy.route_id = entry.get("route_id",routes[spawned%routes.size()].id)
+		if not routes.is_empty(): enemy.route_id = spawn_route_id(spawned,entry)
 		enemies.append(enemy)
 		spawned += 1
 	_update_positions()
@@ -739,11 +768,18 @@ static func _add_damage(damage: Dictionary, id: int, amount: float) -> void:
 
 func _target_priority(a: Dictionary, b: Dictionary) -> bool:
 	if not routes.is_empty():
-		var first: float = enemy_route_length(a)-a.distance
-		var second: float = enemy_route_length(b)-b.distance
+		var first: float = enemy_arrival_delay(a) if route_target_policy=="arrival_time" else enemy_route_length(a)-a.distance
+		var second: float = enemy_arrival_delay(b) if route_target_policy=="arrival_time" else enemy_route_length(b)-b.distance
 		if first != second: return first < second
 		return a.id < b.id
 	return _progress_priority(a,b)
+
+func configure_route_target_policy(value: Variant) -> bool:
+	# Historical diagnostics only; freeze the rule before any player decision.
+	if not value is String or value not in ["arrival_time","remaining_distance"] or routes.is_empty(): return false
+	if not action_history.is_empty() or phase!="preparation" or wave!=1 or gold!=INITIAL_GOLD: return false
+	route_target_policy=value
+	return true
 
 static func _progress_priority(a: Dictionary, b: Dictionary) -> bool:
 	if a.distance != b.distance:
@@ -773,6 +809,9 @@ func enemy_route(enemy: Dictionary) -> Dictionary:
 
 func enemy_route_length(enemy: Dictionary) -> float:
 	return path_length if routes.is_empty() else float(enemy_route(enemy).path_length)
+
+func enemy_arrival_delay(enemy: Dictionary) -> float:
+	return maxf(0.0,enemy_route_length(enemy)-enemy.distance)/float(enemy.get("speed",1.0))
 
 func enemy_route_points(enemy: Dictionary) -> Array[Vector2]:
 	if routes.is_empty(): return path_points

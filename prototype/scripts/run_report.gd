@@ -87,6 +87,7 @@ static func build(model: RefCounted) -> Dictionary:
 		"army":army,"bonuses":bonuses,"waves":model.wave_history.duplicate(true),"actions":model.action_history.duplicate(true),"performance":performance(model),"boss_encounter":boss_encounter(model)}
 	if Model.MetaTalents.spent(model.meta_ranks) > 0: report.meta_ranks = model.meta_ranks.duplicate()
 	if model.map_definition != Model.Maps.valley(): report.map_definition = Model.Maps.to_data(model.map_definition)
+	if not model.routes.is_empty(): report.route_target_policy=model.route_target_policy
 	if model.auxiliary_type >= 0:
 		report.auxiliary_type = model.auxiliary_type
 		report.auxiliary_base_cost = model.base_recruit_cost(model.auxiliary_type)
@@ -101,6 +102,7 @@ static func markdown(report: Dictionary) -> String:
 	if report.has("enemy_hp_percent"): lines.insert(5,"PV ennemis : %d %% de la référence. Vitesse, dégâts et récompenses de combat inchangés." % report.enemy_hp_percent)
 	if report.get("map_definition",{}).has("routes"):
 		lines.insert(5,"Atelier multitrajet : %d entrées vers une forteresse. Affectation alternée des apparitions ; règle de prototype."%report.map_definition.routes.size())
+		lines.insert(6,"Ciblage : "+("ennemi qui atteindra le plus tôt la forteresse, selon sa vitesse." if report.get("route_target_policy","remaining_distance")=="arrival_time" else "distance restante la plus courte (règle historique)."))
 	if report.has("meta_ranks"):
 		lines.insert(5,"Talents permanents actifs (rangs par arbre) : "+str(report.meta_ranks)+". Barème de prototype "+("v0.67" if report.meta_ranks.size() == 9 else "v0.68" if report.meta_ranks.size() == 15 else "arbres enrichis")+".")
 	for wave in report.waves:

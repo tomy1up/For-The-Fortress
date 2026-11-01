@@ -32,6 +32,27 @@ func run_checks() -> void:
 	check(Maps.from_data(JSON.parse_string(JSON.stringify(encoded)))==definition,"Aller-retour JSON des deux trajets")
 	check(definition.routes[0].path_points[0] is Vector2,"La sérialisation ne modifie pas la carte source")
 	check(Maps.validation_error(Maps.converging_workshop()).is_empty() and Maps.for_id("workshop_confluence").is_empty(),"Atelier valide sans nouvelle mission de campagne")
+	var historical:=Model.new(true,definition)
+	for invalid in [null,1,true,[],{},"unknown"]:
+		check(not historical.configure_route_target_policy(invalid),"Règle de ciblage mal formée refusée")
+	check(historical.configure_route_target_policy("remaining_distance"),"Sélection historique avant toute décision")
+	historical.select_faction(0);historical.buy(2,0)
+	check(not historical.configure_route_target_policy("arrival_time"),"Règle figée dès le choix de faction")
+	historical.phase="combat";historical.elapsed=10.0;historical.spawn_schedule=[]
+	historical.enemies.assign([enemy(0,1,"upper",8.0),enemy(1,2,"lower",8.0)])
+	historical._resolve_instant()
+	check(historical.shots[0].target_id==0,"Ancien diagnostic : le pillard plus proche garde la priorité malgré le sprinter")
+	historical.reset()
+	check(historical.route_target_policy=="remaining_distance","Reset conserve la configuration historique")
+	var single:=Model.new()
+	check(not single.configure_route_target_policy("remaining_distance") and not Report.build(single).has("route_target_policy"),"Rapport à trajet unique inchangé")
+	for camp in ["alliance","horde"]:
+		var source: String=FileAccess.get_file_as_string("res://tests/fixtures/routes_v0106/%s.json"%camp)
+		var old: Dictionary=JSON.parse_string(source)
+		check(Replay.verify(old).ok,"Rapport produit et vérifié par le paquet v0.106 rejouable : "+camp)
+		check(JSON.stringify(old)==JSON.stringify(JSON.parse_string(source)),"Relecture historique sans modification du rapport")
+		var changed:=old.duplicate(true);changed.route_target_policy="arrival_time"
+		check(not Replay.verify(changed).ok,"La fixture distingue effectivement les résultats des deux ciblages : "+camp)
 	for mutation in ["main_mismatch","outside","duplicate","different_exit","wrong_length","bad_coordinates"]:
 		var broken:=encoded.duplicate(true)
 		match mutation:
@@ -64,7 +85,17 @@ func run_checks() -> void:
 		var priority:=fighter(faction,0 if faction==0 else 3)
 		priority.enemies.assign([enemy(0,1,"upper",8.0),enemy(1,1,"lower",9.0)])
 		priority._resolve_instant()
-		check(priority.shots[0].target_id==0,"Proposition de ciblage : distance restante, pas distance depuis l'entrée")
+		check(priority.shots[0].target_id==0,"À vitesse égale : temps restant selon la longueur propre au trajet")
+		var urgent:=fighter(faction,0 if faction==0 else 3)
+		urgent.enemies.assign([enemy(0,1,"upper",8.0),enemy(1,2,"lower",8.0)])
+		urgent._resolve_instant()
+		check(urgent.shots[0].target_id==1,"Le sprinter plus éloigné passe devant le pillard plus proche s'il arrive avant lui")
+		check(urgent.enemy_arrival_delay(urgent.enemies[1])<urgent.enemy_arrival_delay(urgent.enemies[0]),"Urgence calculée avec la vitesse et la distance restante")
+		var tied:=Model.new(true,definition);tied.select_faction(faction);tied.buy(3,0 if faction==0 else 3)
+		tied.phase="combat";tied.elapsed=10.0;tied.spawn_schedule=[]
+		tied.enemies.assign([enemy(9,5,"upper",11.0),enemy(1,1,"lower",12.0)])
+		tied._resolve_instant()
+		check(tied.shots[0].target_id==1,"Arrivées à égalité : ancienneté, indépendamment de la route et de l'ordre du tableau")
 		var area:=fighter(faction,2 if faction==0 else 3)
 		area.enemies.assign([enemy(0,1,"upper",6.25),enemy(1,1,"lower",8.5)])
 		area._resolve_instant()
@@ -88,7 +119,11 @@ func run_checks() -> void:
 			if complete.phase=="finished": complete.prepare_next_wave()
 			complete.start();complete.advance(10000)
 		var report: Dictionary=JSON.parse_string(JSON.stringify(Report.build(complete)))
+		check(report.route_target_policy=="arrival_time","Nouveau rapport : règle de ciblage explicite")
 		check(Replay.verify(report).ok,"Rapport multitrajet rejouable avec affectation identique")
+		for invalid in [null,1,"unknown",{}]:
+			var malformed:=report.duplicate(true);malformed.route_target_policy=invalid
+			check(not Replay.verify(malformed).ok,"Règle de ciblage invalide rejetée avant relecture")
 		check(Report.markdown(report).contains("Atelier multitrajet : 2 entrées"),"Rapport lisible explicitant le contexte d'atelier")
 		var forged:=report.duplicate(true);forged.map_definition.routes[1].path_length=12.0
 		check(not Replay.verify(forged).ok,"Rapport multitrajet à longueur falsifiée rejeté")
@@ -116,10 +151,11 @@ func run_checks() -> void:
 	scene.model=Model.new(true,Maps.converging_workshop());scene.mission_definition={}
 	get_root().add_child(scene);scene.set_process(false)
 	check(scene.meta_profile==null and scene.model.routes.size()==2,"Interface d'atelier sans profil joueur")
-	scene._choose_faction(1)
-	check(not scene.choosing_faction and scene.model.faction==1 and scene.meta_run_id==-1,"Choix de faction sans lancer de progression persistante")
+	scene.faction_buttons[1].pressed.emit()
+	check(not scene.choosing_faction and not scene.campaign_menu.visible and scene.model.faction==1 and scene.meta_run_id==-1,"Bouton de faction : accès direct à l'atelier sans parcours indisponible")
 	check(scene._select_slot(1) and scene.model.buy(1,3),"Sélection et recrutement sur l'interface de l'atelier")
-	scene.model.start();scene.model.advance(3.0);scene._update_interface()
+	check(not scene.start_button.disabled,"Bouton de départ autorisé dans l'atelier")
+	scene.start_button.pressed.emit();scene.model.advance(3.0);scene._update_interface()
 	check(scene.model.spawned>=2 and scene.model.enemies.any(func(target):return target.route_id=="lower"),"Combat via l'interface avec la deuxième entrée active")
 	scene.free()
 	print("MULTI_ROUTE_MODEL_TESTS checks=%d failures=%d"%[checks,failures])

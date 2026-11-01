@@ -1,4 +1,5 @@
 extends Node2D
+var entry_forecast: Array[Dictionary] = []
 
 const Model = preload("res://scripts/valley_model.gd")
 const HordeArt = preload("res://scripts/horde_art.gd")
@@ -507,8 +508,8 @@ func _draw() -> void:
 	_draw_fortress(project(_map_path()[-1]))
 	for index in range(screen_routes.size()):
 		var entrance: Vector2 = screen_routes[index][0]
-		draw_circle(entrance,5,Color("debd7f"))
-		draw_string(font,entrance+Vector2(-48,-20),"ENTRÉE" if screen_routes.size()==1 else "ENTRÉE %d"%(index+1),HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("a7b8aa"))
+		draw_circle(entrance,5,Color("debd7f") if screen_routes.size()==1 else entry_color(index))
+		if screen_routes.size()==1: draw_string(font,entrance+Vector2(-48,-20),"ENTRÉE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("a7b8aa"))
 	if model != null:
 		for enemy in model.enemies:
 			if enemy.type != Model.Banks.GUARD_TYPE: continue
@@ -550,7 +551,31 @@ func _draw() -> void:
 		for effect in recent_eliminations():
 			for particle in elimination_particles(effect.event,effect.age):
 				draw_circle(particle.point,particle.radius,Color(Color("d6c7a6"),particle.alpha))
+	for entry in entry_label_layouts():
+		var box:=StyleBoxFlat.new();box.bg_color=Color("10271f");box.border_color=entry.color
+		box.set_border_width_all(1);box.set_corner_radius_all(5)
+		draw_style_box(box,entry.area)
+		draw_string(font,entry.area.position+Vector2(8,17),entry.title,HORIZONTAL_ALIGNMENT_LEFT,-1,12,entry.color)
+		if not entry.detail.is_empty(): draw_string(font,entry.area.position+Vector2(8,35),entry.detail,HORIZONTAL_ALIGNMENT_LEFT,-1,12,INK)
 	if not breach_feedback.is_empty(): _draw_breach_feedback()
+
+func entry_label_layouts() -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	if model==null or model.routes.size()<2: return result
+	var font: Font=ThemeDB.fallback_font
+	for index in range(model.routes.size()):
+		var title: String="ENTRÉE %d"%(index+1)
+		var detail: String=""
+		for entry in entry_forecast:
+			if entry.route_id==model.routes[index].id: detail="%d ennemi%s"%[entry.count,"" if entry.count==1 else "s"]
+		var width: float=maxf(92.0,maxf(font.get_string_size(title,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x,font.get_string_size(detail,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x)+16.0)
+		var height: float=24.0 if detail.is_empty() else 44.0
+		var origin: Vector2=project(model.routes[index].path_points[0])+Vector2(-width/2.0,-76.0-height)
+		result.append({"area":Rect2(origin,Vector2(width,height)),"title":title,"detail":detail,"color":entry_color(index)})
+	return result
+
+static func entry_color(index: int) -> Color:
+	return [Color("e5c779"),Color("83c4c6")][index%2]
 
 static func breach_text(count: int, damage: int) -> String:
 	return "−%d PV · %d ennemi%s passé%s" % [damage,count,"" if count == 1 else "s","" if count == 1 else "s"]

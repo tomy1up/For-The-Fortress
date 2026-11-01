@@ -1,5 +1,9 @@
 # For the Fortress!
 
+**Prototype v0.107 — annonces par entrée et ciblage à l’arrivée** : [règles, contrôles et limites](design/Atelier_routes_v0107.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.107). Dans l’atelier à deux entrées, les préparatifs annoncent les effectifs par trajet et les défenseurs privilégient la cible qui atteindra le plus tôt la forteresse, selon sa vitesse. Les anciens rapports gardent leur règle historique.
+
+**Loup : pattes validées, corps à valider** : [nouvel essai du corps et comparatif](design/essais/animation_loup_corps/README.md). Les trajectoires des pattes approuvées sont conservées ; épaules, bassin, dos, tête et queue sont animés. Cet essai reste séparé de la version publiée en attendant la validation visuelle du porteur.
+
 **Animation du loup à reprendre après retour visuel** : le cycle de la v0.105 est jugé trop saccadé. L’essai articulé suivant est rejeté et retiré du projet. [Critères d’autocontrôle et validation attendue](design/Validation_visuelle_animations.md). Le loup sera validé par le porteur avant toute extension aux autres unités. [Essai historique v0.105](design/Marche_loup_v0105.md), [version Windows historique](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.105).
 
 **Candidat de marche à 24 poses** : [aperçu et contrôles ciblés](design/essais/animation_loup_24_poses/README.md), hors production et en attente du retour artistique du porteur. Les contrôles techniques ne valident pas la démarche.

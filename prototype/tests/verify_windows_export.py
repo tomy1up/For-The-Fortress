@@ -13,6 +13,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('archive',type=Path)
 parser.add_argument('--destination',required=True,type=Path)
 parser.add_argument('--screen',type=int,help='Écran réservé aux essais graphiques (index Godot).')
+parser.add_argument('--background',action='store_true',help='Ouvrir les captures avec une fenêtre minimisée pour laisser la main au joueur.')
 parser.add_argument('--source-project',type=Path,help='Comparer les sources déclarées aux fichiers de ce projet local.')
 parser.add_argument('--case',action='append',dest='selected_cases',help='Limiter la vérification aux cas nommés ; répétable. Sans option, tous les cas sont exécutés.')
 args=parser.parse_args()
@@ -51,6 +52,7 @@ startup.wShowWindow=0
 results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
        ('alliance_routes','combat','alliance'),('horde_routes','combat','horde'),
+       ('alliance_routes_forecast','preparation','alliance'),('horde_routes_forecast','preparation','horde'),
        ('alliance_bank_guardian','bank_guardian','alliance'),('horde_bank_guardian','bank_guardian','horde'),
        ('alliance_enemy_hit_motion','effects','alliance'),('horde_enemy_hit_motion','effects','horde'),
        ('home_prepared','selection',None),('home_maximum','selection',None),('home_blocked','selection',None),
@@ -152,10 +154,11 @@ for name,state,faction in cases:
     if state is None: command+=['--headless','--quit-after','3']
     else:
         if args.screen is not None: command+=['--screen',str(args.screen)]
+        if args.background: command+=['--minimized']
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
-        if name.endswith('_routes'): command+=['--atelier-routes']
+        if '_routes' in name: command+=['--atelier-routes']
         if '_royal_' in name: command+=['--capture-royal-state='+name.rsplit('_',1)[1]]
         if name.endswith('_enemy_hit_motion'): command+=['--capture-hit-motion','--capture-type='+('2' if faction=='alliance' else '4')]
         if state=="campaign_menu": command += ["--capture-campaign="+name.rsplit("_",1)[1]]
@@ -218,9 +221,15 @@ for name,state,faction in cases:
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
-    if name.endswith('_routes'):
+    if '_routes' in name:
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_WORKSHOP=')))
         assert snapshot=={'isolated':True,'routes':2,'mission_empty':True,'map_id':'workshop_confluence'}
+        if name.endswith('_forecast'):
+            forecast=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_FORECAST_SNAPSHOT=')))
+            assert forecast['faction']==(0 if faction=='alliance' else 1) and forecast['visible']
+            assert [entry['count'] for entry in forecast['entries']]==[5,5]
+            assert forecast['labels']==[['ENTRÉE 1','5 ennemis'],['ENTRÉE 2','5 ennemis']]
+            assert forecast['note']=='Entrée 1 : 5 · Entrée 2 : 5'
     if '_wave_context_' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('WAVE_CONTEXT_SNAPSHOT=')))
         context=name.rsplit('_',1)[1]

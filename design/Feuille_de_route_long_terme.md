@@ -2,9 +2,10 @@
 
 ## Variantes de parcours demandées le 31 octobre 2026 — à réaliser
 
-Orientation validée pour les prochains chapitres : varier les tracés, introduire plusieurs chemins d’entrée, des routes doubles ou multiples qui se rejoignent, et des cartes possédant plusieurs forteresses avec plusieurs sorties possibles pour les attaquants. Premier atelier distinct de la campagne en [v0.106](Atelier_routes_v0106.md) : deux entrées convergentes, une forteresse et aucun profil joueur. Les annonces détaillées par entrée, l'intégration aux biomes et les forteresses multiples restent à réaliser.
+Orientation validée pour les prochains chapitres : varier les tracés, introduire plusieurs chemins d’entrée, des routes doubles ou multiples qui se rejoignent, et des cartes possédant plusieurs forteresses avec plusieurs sorties possibles pour les attaquants. Premier atelier distinct de la campagne en [v0.106](Atelier_routes_v0106.md) : deux entrées convergentes, une forteresse et aucun profil joueur. La [v0.107](Atelier_routes_v0107.md) ajoute les annonces par entrée et le ciblage au temps d’arrivée validé par le porteur. L’intégration aux biomes et les forteresses multiples restent à réaliser.
 
 - [ ] Concevoir des cartes à plusieurs entrées, avec annonces de vague permettant de comprendre la provenance des groupes.
+- [x] Prototyper deux entrées convergentes et annoncer les effectifs par entrée avant la vague (atelier distinct de la campagne, v0.107).
 - [ ] Concevoir des embranchements convergents et des sorties distinctes, sans rendre les trajets ni la couverture des défenseurs ambigus.
 - [ ] Préparer les cartes à plusieurs forteresses, chacune lisible, inspectable et visuellement propre à la faction.
 - [ ] Définir puis tester l’affectation des groupes aux routes et sorties, ainsi que la difficulté des attaques simultanées.

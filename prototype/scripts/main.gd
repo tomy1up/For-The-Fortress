@@ -220,6 +220,7 @@ var forecast_reward: Label
 var forecast_note: Label
 var forecast_wave: int = -1
 var forecast_data: Dictionary = {}
+var forecast_key: String = ""
 var breach_remaining: float = 0.0
 var boss_panel: Panel
 var boss_name: Label
@@ -635,6 +636,8 @@ func _ready() -> void:
 			print("PURCHASE_GHOST_SNAPSHOT=",JSON.stringify({"visible":not ghost.is_empty(),"type":ghost.get("type",-1),"slot":ghost.get("slot",-1),"empty":model.defenders[selected].is_empty(),"gold":model.gold,"instances":model.next_instance_id}))
 		if capture_state == "campaign_menu": await _capture_campaign_menu(capture_faction)
 		if capture_state == "campaign_sample": _capture_campaign_sample(capture_faction)
+		if route_workshop and capture_state=="preparation":
+			print("ROUTE_FORECAST_SNAPSHOT=",JSON.stringify({"faction":model.faction,"entries":map_view.entry_forecast,"note":forecast_note.text,"visible":forecast_panel.visible,"labels":map_view.entry_label_layouts().map(func(entry: Dictionary):return [entry.title,entry.detail])}))
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
@@ -1086,14 +1089,18 @@ func _forecast_portrait(profile: int) -> AtlasTexture:
 
 func _update_wave_forecast() -> void:
 	forecast_panel.visible = false
+	map_view.entry_forecast.clear()
 	if choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase not in ["preparation","finished"]: return
 	var number: int = model.wave+1 if model.phase == "finished" else model.wave
 	if number < 1 or number > Model.Campaign.WAVES.size(): return
-	if forecast_wave != number:
+	var key: String = JSON.stringify([number,model.faction,model.enemy_hp_percent,model.wave_set_id,model.routes.map(func(route: Dictionary):return route.id)])
+	if forecast_wave != number or forecast_key != key:
 		forecast_wave = number
-		forecast_data = Model.wave_forecast(number,model.faction,model.enemy_hp_percent,model.wave_set_id)
+		forecast_key = key
+		forecast_data = model.forecast_for_routes(number)
 	if forecast_data.is_empty(): return
 	forecast_panel.visible = true
+	map_view.entry_forecast.assign(forecast_data.get("entries",[]))
 	forecast_title.text = "Prochaine vague · %d/10" % number
 	forecast_timing.text = "%d ennemis · %s" % [forecast_data.total,"Départ manuel" if countdown_remaining < 0 else "Décompte en pause" if _countdown_paused() else "Dans %d s" % ceili(countdown_remaining)]
 	for index in range(forecast_rows.size()):
@@ -1110,11 +1117,16 @@ func _update_wave_forecast() -> void:
 		forecast_details[index].add_theme_color_override("font_color",Color("ed9989") if fatal else Color("bbcbbf"))
 		forecast_rows[index].tooltip_text = "Groupe %d · %d × %s\n%s PV par ennemi\nPremière apparition : %s s après le départ\nDernière apparition : %s s après le départ\n%s\nSi un ennemi atteint la forteresse, elle perd %d PV.\nÉlimination : +%d or par ennemi" % [index+1,group.count,group.name,_number(group.hp),_number(group.first_at),_number(group.last_at),"Ennemi unique." if group.count == 1 else "Un ennemi toutes les %s s." % _number(group.interval),group.fortress_damage,group.reward]
 		if group.type == Model.Banks.GUARD_TYPE: forecast_rows[index].tooltip_text += "\nGardienne : encaisse 25 % des dégâts de ses voisins proches. Ne protège ni les boss ni les autres tortues. La protection cesse à sa mort."
+		for entry in group.get("entries",[]):
+			forecast_rows[index].tooltip_text += "\nEntrée %d : %d ennemi%s · de %s à %s s après le départ."%[entry.number,entry.count,"" if entry.count==1 else "s",_number(entry.first_at),_number(entry.last_at)]
 		forecast_rows[index].tooltip_text += "\nHoraires et intervalles à vitesse ×1 ; divisés par 2 en ×2 et par 10 en ×10 debug."
 	var footer: int = 62+forecast_data.groups.size()*44
 	forecast_reward.position.y = footer
 	forecast_reward.text = "Si tous éliminés : +%d or" % forecast_data.income
 	forecast_note.position.y = footer+22
+	var entry_counts: Array[String] = []
+	for entry in forecast_data.get("entries",[]): entry_counts.append("Entrée %d : %d"%[entry.number,entry.count])
+	forecast_note.text = "Survolez les groupes pour les détails." if entry_counts.is_empty() else " · ".join(entry_counts)
 	forecast_panel.size.y = footer+50
 
 func _build_run_summary(screen: Control) -> void:
@@ -1735,6 +1747,9 @@ func _begin_meta_run(faction: int) -> int:
 
 func _open_campaign(faction: int, chapter: int = 0) -> void:
 	if not choosing_faction or meta_menu.visible or faction not in [0,1]: return
+	if meta_profile==null and not model.routes.is_empty():
+		_choose_faction(faction)
+		return
 	campaign_menu.open(meta_profile,faction,chapter)
 	keyboard_focus_context = ""
 	_update_interface()
@@ -1947,7 +1962,7 @@ func _recruit_tooltip(type: int, error: String) -> String:
 		lines.append(_recruit_effect(stats,type))
 		if Model.family(type) in [2,3,4]: lines.append("%s : strictement moins de %s sur la carte." % ["Distance de rebond" if Model.family(type) == 3 else "Rayon de l’explosion",_number(stats.radius)])
 		if Model.family(type) == 5: lines.append("Un nouveau tir de ce chaman renouvelle sa malédiction ; deux chamans conservent leurs effets séparés.")
-		lines.append("La cible principale est l’ennemi à portée le plus avancé vers la forteresse.")
+		lines.append("La cible principale est l’ennemi à portée qui atteindra la forteresse le plus tôt, selon sa vitesse et sa route." if not model.routes.is_empty() else "La cible principale est l’ennemi à portée le plus avancé vers la forteresse.")
 		lines.append("%d or · %d/2 exemplaires recrutés" % [model.purchase_cost(type),model.count_type(type)])
 		if error.is_empty(): lines.append("Cliquez pour acheter.")
 		if model.can_build(): lines.append("\n" + _preview_synergy_tooltip(selected,{"type":type,"level":1,"branch":-1}))

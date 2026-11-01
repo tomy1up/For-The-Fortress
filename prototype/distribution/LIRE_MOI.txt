@@ -1,14 +1,16 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.106 — 1 novembre 2026
+Version : 0.107 — 1 novembre 2026
 
 ATELIER A DEUX ENTREES
 
 Lancer Lancer_atelier_routes.cmd pour essayer deux chemins convergents.
 Choisir sa faction, puis recruter et jouer les dix vagues habituelles.
 Cet atelier ne lit pas le profil joueur et ne donne ni PO ni XP.
-Le trace, l'alternance des entrees et le ciblage sont des essais provisoires.
+Le trace et l'alternance des entrees sont des essais provisoires.
+Les defenseurs ciblent l'ennemi a portee qui arrivera le plus tot, selon sa vitesse.
+Avant chaque vague, les quantites sont annoncees par entree et par groupe au survol.
 Le lancement habituel conserve les vingt missions de campagne.
-Le candidat de marche du loup a 24 poses reste hors production, a valider.
+Les essais de marche du loup (24 poses et appuis articules) restent hors production, a valider.
 
 JOUER
 

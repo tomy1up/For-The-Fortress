@@ -59,6 +59,9 @@ static func verify(data: Variant) -> Dictionary:
 		definition = Model.Maps.from_data(data.map_definition)
 		if definition.is_empty(): return _fail("Définition de carte invalide.")
 	var model = Model.new(true,definition)
+	if not model.routes.is_empty():
+		if not model.configure_route_target_policy(data.get("route_target_policy","remaining_distance")): return _fail("Règle de ciblage multitrajet invalide.")
+	elif data.has("route_target_policy"): return _fail("Règle multitrajet sans réseau de routes.")
 	if data.has("wave_set_id") and not model.configure_wave_set(data.wave_set_id): return _fail("Rencontres de mission invalides.")
 	if data.has("auxiliary_type") and not model.configure_auxiliary(data.auxiliary_type): return _fail("Alternative de boutique invalide.")
 	if data.has("auxiliary_base_cost"):
@@ -102,6 +105,7 @@ static func verify(data: Variant) -> Dictionary:
 			bonus.description = bonus.description.replace("ours, unités lourdes, gardes d’élite et boss","Brutes, Colosses, Élites et boss")
 	for field in observed:
 		if field in ["game_version","engine_version"]: continue
+		if field=="route_target_policy" and not data.has(field): continue # v0.106 : distance restante, restaurée avant les actions.
 		if field == "boss_encounter" and not data.has(field): continue # Champ ajouté en v0.50 ; rapports historiques au format 2.
 		if field == "enemy_catalog" and not data.has(field): continue # Champ facultatif ajouté en v0.65.
 		if field == "auxiliary_base_cost" and not data.has(field): continue # Les premiers rapports de boutique n’enregistraient pas le prix de base.

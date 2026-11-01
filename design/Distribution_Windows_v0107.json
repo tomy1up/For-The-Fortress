@@ -1,0 +1,92 @@
+{
+  "archive_sha256": "33f4616ed347f44b5ea8c38f7ac7f4d6394918790ae1ef475dc0f1f9d000826e",
+  "scope": "selected",
+  "available_cases": 259,
+  "executable_sha256": "311ec5550bccbc35eb6a4e1dc1bcee1c47727271b765eac5eed02de7dfa5d86e",
+  "files": [
+    "For_the_Fortress_v0.107_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.107_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.107_Windows_x64/Lancer_atelier_routes.cmd",
+    "For_the_Fortress_v0.107_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.107_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.107_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "countdown",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "bonus",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_routes",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_routes",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_routes_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_routes_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_talents_reset",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_campaign_menu_fresh",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_campaign_menu_fresh",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "source_checks": 73,
+  "local_sources_compared": true,
+  "visual_review": "Six captures examined: readable entry counts before combat, hidden counts during combat, both fresh campaign menus accessible. Selected cases only; not a balancing test.",
+  "reviewed_captures": [
+    "alliance_routes_forecast",
+    "horde_routes_forecast",
+    "alliance_routes",
+    "horde_routes",
+    "alliance_campaign_menu_fresh",
+    "horde_campaign_menu_fresh"
+  ]
+}
