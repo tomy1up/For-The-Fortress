@@ -101,6 +101,29 @@ def area(points):
     ac=points[faces[:,2]]-points[faces[:,0]]
     return ab[:,0]*ac[:,1]-ab[:,1]*ac[:,0]
 
+def untangle(points,rest_area):
+    """Repair flipped geometry while preserving every hard target exactly.
+
+    This is a geometric feasibility projection, NOT an artistic correction.
+    Keep both pre/post reports so a clean mesh cannot stand in for art approval.
+    """
+    result=points.copy(); movable=np.ones(len(p));movable[fixed]=0.0
+    for iteration in range(300):
+        bad=np.flatnonzero(area(result)<rest_area*0.05)
+        if not len(bad):return result,iteration
+        for index in bad:
+            face=faces[index];a,b,c=result[face]
+            value=cross(b-a,c-a)
+            if value>=rest_area[index]*0.05:continue
+            gradient=np.array([[b[1]-c[1],c[0]-b[0]],
+                               [c[1]-a[1],a[0]-c[0]],
+                               [a[1]-b[1],b[0]-a[0]]])
+            gradient*=movable[face,None]
+            denominator=float(np.sum(gradient*gradient))
+            if denominator<1e-15:continue
+            result[face]+=gradient*((rest_area[index]*0.075-value)/denominator)
+    return result,300
+
 started=time.monotonic();rest_area=area(p);reports={}
 for layer,source_frames in [('near',data['frames']),('far',data['far_frames'])]:
     q=p.copy();first=np.asarray(source_frames[0])
@@ -110,21 +133,28 @@ for layer,source_frames in [('near',data['frames']),('far',data['far_frames'])]:
     for settle in range(3):
         for targets in source_frames:q=solve(q,np.asarray(targets),120)
         print('SETTLED_CYCLE',layer,settle+1,flush=True)
-    frames=[];ratios=[]
+    frames=[];ratios=[];raw_ratios=[];repairs=[]
     for frame,targets in enumerate(source_frames):
         q=solve(q,np.asarray(targets),120)
-        ratio=area(q)/rest_area
+        raw=area(q)/rest_area
+        raw_ratios.append({'frame':frame,'inverted':int(np.sum(raw<=0)),'minimum':float(np.min(raw))})
+        repaired,iterations=untangle(q,rest_area)
+        repairs.append({'iterations':iterations,'max_displacement_source_pixels':float(np.max(np.linalg.norm(repaired-q,axis=1)))})
+        # Do not feed a feasibility repair back into ARAP's cycle state.
+        rendered=repaired
+        ratio=area(rendered)/rest_area
         ratios.append({'frame':frame,'inverted':int(np.sum(ratio<=0)),'minimum':float(np.min(ratio)),'maximum':float(np.max(ratio))})
-        frames.append(q.round(6).tolist())
+        frames.append(rendered.round(6).tolist())
         if frame%16==0:print('CORRECTIVE_FRAME',layer,frame,ratios[-1],flush=True)
-    report={'schema':2,'method':'triangle ARAP local/global pose-space geometry corrections; no raster editing',
+    report={'schema':3,'method':'triangle ARAP with fixed-target feasibility projection; no raster editing',
             'input_sha256':hashlib.sha256(input_file.read_bytes()).hexdigest(),
             'vertices':len(p),'triangles':len(faces),'constraints':len(fixed),'frames':len(frames),'stride':data['stride'],
             'metrics':ratios,'seconds':round(time.monotonic()-started,2),'artistically_approved':False,
             'loop_seam_source_pixels':float(np.max(np.linalg.norm(np.asarray(frames[0])-np.asarray(frames[-1]),axis=1))),
+            'before_feasibility_repair':raw_ratios,'geometric_repairs':repairs,
             'status':'research_only_requires_drawn_pose_corrections'}
     reports[layer]=report
     suffix='' if layer=='near' else '_far'
     (folder/('correctives_walk'+suffix+'.json')).write_text(json.dumps({'points':data['points'],'triangles':data['triangles'],'frames':frames,'stride':data['stride']},separators=(',',':'))+'\n',encoding='utf8')
-    print('CORRECTIVES_FINISHED',layer,json.dumps({k:v for k,v in report.items() if k!='metrics'}),flush=True)
+    print('CORRECTIVES_FINISHED',layer,json.dumps({k:v for k,v in report.items() if k not in ('metrics','before_feasibility_repair','geometric_repairs')}),flush=True)
 (folder/'controle_correctifs.json').write_text(json.dumps(reports,indent=2)+'\n',encoding='utf8')

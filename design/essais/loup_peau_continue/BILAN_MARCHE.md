@@ -24,11 +24,16 @@ Cette adaptation 3D vers le dessin 2D reste une interprétation : les proportion
 | Preuve native de flexion à cinq os | Réussie : peau connectée, poids normalisés | Ancienne preuve technique, pas une marche |
 | Appuis des quatre extrémités d’os | Réussi sur 1 025 instants, deux cycles ; dérive maximale 0,000611 pixel source | Extrémités des os uniquement ; ne mesure pas les pixels de la patte |
 | Peau entraînée seulement par les poids du squelette | **Échec** : triangles inversés sur de nombreuses poses | La pondération automatique seule ne suffit pas |
-| Corrections géométriques ARAP | Amélioration visible, mais **échec du contrôle de volume** sur certaines poses | Plis et écrasements subsistent ; ce ne sont pas des corrections dessinées |
-| Fermeture du cycle corrigé | Écart inférieur à 0,005 pixel source après stabilisation sur trois cycles | Évite le saut entre la fin et le début ; ne prouve pas le naturel |
+| Corrections géométriques ARAP | Plis et écrasements subsistent ; la projection de faisabilité enlève les inversions aux 65 poses clés | Ce ne sont pas des corrections dessinées ; les transitions restent en échec |
+| Interpolation exacte entre poses | **Échec** : 26 occurrences d’inversion pour la couche proche, 31 pour la couche éloignée | Contrôle analytique du minimum de l’aire sur chaque intervalle, pas seulement quelques images intermédiaires |
+| Fermeture du cycle après projection | Écarts de 0,00616 et 0,03349 pixel source | La seconde couche dépasse le seuil numérique de 0,02 ; cela ne permet pas de valider la boucle |
 | Vérification visuelle | Douze poses exportées ; poses 0, 3 et 8 inspectées en détail | Pincement encore visible à la hanche ; pas de validation temporelle complète |
 
-Les rapports `controle_appuis_cycle.json`, `controle_marche.json` et `controle_correctifs.json` conservent aussi les échecs. Aucun seuil n’a été abaissé pour les faire passer. Les nombres de triangles inversés du test de peau brute sont des occurrences cumulées sur 128 poses, pas un nombre de triangles uniques.
+Les rapports `controle_appuis_cycle.json`, `controle_marche.json`, `controle_correctifs.json` et `controle_interpolation.json` conservent aussi les échecs. Aucun seuil n’a été abaissé pour les faire passer. Les nombres de triangles inversés du test de peau brute sont des occurrences cumulées sur 128 poses, pas un nombre de triangles uniques. Les occurrences d’interpolation concernent des couples intervalle/triangle ; une face peut apparaître plusieurs fois.
+
+La dernière préparation réduit les contraintes rigides de 503 à 348 : une trace d’influence de tête ou de queue ne doit pas immobiliser une racine de membre. Une projection géométrique supplémentaire répare les faces inversées sans déplacer les points contraints. Les rapports conservent les valeurs avant et après cette opération. **Son succès aux poses clés ne suffit pas** : le contrôle de transition découvre des inversions entre ces poses et échoue donc volontairement. Ne pas intégrer ce résultat au jeu.
+
+Une première retouche générée de la pose 8/12 et son inspection dans Godot sont conservées dans [POSE_DESSINEE.md](POSE_DESSINEE.md). Elle améliore la hanche mais change les proportions et le cadrage : elle sert de guide artistique, pas de frame enregistrée pour le cycle.
 
 ## Conclusion de fabrication
 
@@ -48,6 +53,8 @@ Les scripts sont autonomes et s’exécutent avec le Godot standard installé. P
 4. `export_corrections.gd` : export de géométrie et de contraintes dans `captures/correctives_input.json`.
 5. `bake_correctives.py` : calcul des géométries avec Python et NumPy ; ne modifie aucun pixel d’image. Le script conserve une triangulation de Delaunay contrainte et stabilise le cycle avant enregistrement.
 6. `render_walk.gd`, argument utilisateur `--corrected` : douze poses de diagnostic corrigées, dans le dossier local `captures`. Sans cet argument : peau brute.
+7. `check_correctives.py` : contrôle indépendant des images clés, du minimum exact de l’aire pendant chaque interpolation linéaire, des cibles contraintes et de la fermeture. Il retourne actuellement un échec, attendu et à conserver.
+8. `compare_drawn_pose.gd` : comparaison fixe dans Godot entre la déformation et le guide dessiné ; ne charge aucun profil.
 
 La méthode ARAP s’appuie sur le principe de préservation locale des formes de [Sorkine et Alexa, 2007](https://igl.ethz.ch/projects/ARAP/arap_web.pdf). Elle ne garantit pas l’absence d’inversion et ne remplace pas le travail artistique.
 

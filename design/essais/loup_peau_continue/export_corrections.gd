@@ -12,8 +12,9 @@ func export_data() -> void:
 		var point: Vector2=animal.points[index]
 		var weights: Dictionary=animal.weights_at(point,false)
 		if point.y>=880: fixed[index]="FrontNear2" if point.x>850 else "HindNear3"
-		elif weights.get("Head",0.0)>0.0 or weights.get("Tail",0.0)>0.0: fixed[index]="SurfaceBlend"
-		elif point.x>=1060 and point.y>=510 and point.y<=700: fixed[index]="SurfaceBlend"
+		# Pin only the solid head/tail masses. A trace influence at a limb root
+		# must not freeze that entire vertex to the body during a flexion.
+		elif weights.get("Head",0.0)>0.95 or weights.get("Tail",0.0)>0.95: fixed[index]="SurfaceBlend"
 		elif point.x>=650 and point.x<=900 and point.y>=300 and point.y<=550: fixed[index]="SurfaceBlend"
 	var fixed_indices: Array=fixed.keys();fixed_indices.sort()
 	var frames: Array=[]

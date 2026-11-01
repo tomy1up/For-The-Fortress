@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "scope": "baked geometry and exact linear interpolation; not anatomy, contact pixels, or animation approval",
+  "layers": {
+    "near": {
+      "frames": 65,
+      "triangles": 1255,
+      "inverted_key_triangles": 0,
+      "inverted_interpolation_intervals": 26,
+      "minimum_interpolated_area_ratio": -0.9286640560594777,
+      "maximum_hard_target_error_source_pixels": 0.00024543390401099977,
+      "loop_seam_source_pixels": 0.006158094266796916,
+      "artistically_approved": false,
+      "numerically_passed": false
+    },
+    "far": {
+      "frames": 65,
+      "triangles": 1255,
+      "inverted_key_triangles": 0,
+      "inverted_interpolation_intervals": 31,
+      "minimum_interpolated_area_ratio": -0.9243844502250984,
+      "maximum_hard_target_error_source_pixels": 0.00023580852314469266,
+      "loop_seam_source_pixels": 0.033484125746450565,
+      "artistically_approved": false,
+      "numerically_passed": false
+    }
+  },
+  "passed": false
+}
