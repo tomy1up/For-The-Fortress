@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-02",
+  "scope": "isolated before/after wolf animation study; not a game release",
+  "video": {
+    "path": "captures\\loup_comparaison_lissage_2026-11-02.mp4",
+    "sha256": "8851fcd48d9082379093a3537750c32e3467f9042c79f405c08d45f2a5c0d6bc",
+    "bytes": 1338506,
+    "width": 1280,
+    "height": 800,
+    "fps": 60,
+    "frames": 192,
+    "duration_seconds": 3.2,
+    "decoded_frames": 192,
+    "decode_exit_code": 0
+  },
+  "native_capture": {
+    "godot": "4.7.2",
+    "screen": 1,
+    "minimized": true,
+    "cycles": 3,
+    "inspected_frames": [
+      0,
+      24,
+      40,
+      56
+    ],
+    "nominal_board_height_pixels": 34
+  },
+  "input_sha256": {
+    "periodic_walk.json": "55ef3b5dbef7ad47abeda033db26b41172485497c575d039a116486ebbf85823",
+    "periodic_walk_far.json": "63c2a14274a0aea5898791db20e525c43d462b21323e038a20fc56def402bf58",
+    "smooth_walk.json": "7f8b16c1ed158847d795cff1a7737d7992ef2c2e0f0d7f2263377aba80c5048c",
+    "smooth_walk_far.json": "0249c249a290e1f1930b5134cffdd990f6edbd3cbebe3bcc82bd3e6cae0ea32e",
+    "render_walk.gd": "178bd4583c93b25a07f7584253e7f97fd25a475ce26b2968ab9d07041b25f608",
+    "compare_smooth_motion.gd": "e9f799c414cb780ced10f3d10a9e0ccfc46978d4405c309be5d4ae367cbeed44",
+    "check_native_smooth.gd": "87c565beea44ebabc44e8b22989c0b3b6c24a596d00ff1bec296d48cd1fc4e3f",
+    "check_smooth_motion.py": "2ef451bcf871ce1e394cc78b910c00310bc40354349637495806efd659b2845f",
+    "smooth_motion.py": "a4ec983d117b47e8879587c5fa941ed77b534c75c73f2c339b602528d277c018",
+    "controle_interpolation_lissee.json": "656405b3f575b840f188dc9dd2e228aa8eac9677828165612eb883ff586d9178",
+    "controle_lissage.json": "c011508557859131254953d9c4d45f8d28734575b3b61ee77657c3a6aeddf35d",
+    "loup_proche_source_v001.png": "b02af3243233536b8f34470d5cecfeaaade9f39f7d3a8bd9be69967f76085e6c"
+  },
+  "geometry_and_native_readback_passed": true,
+  "limitations": [
+    "free skin trajectories have shared cubic tangents; anchors remain piecewise linear",
+    "pose inspection is not perceptual video approval",
+    "fur joints and anatomical volumes still need art review",
+    "no mission performance or isometric route validation"
+  ],
+  "artistically_approved": false,
+  "game_integration": false
+}

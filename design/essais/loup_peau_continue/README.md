@@ -44,6 +44,10 @@ Le recours à l’image par image reste une alternative si les corrections du ri
 
 Une nouvelle boucle suit la déformation au cours du temps plutôt que de réparer les poses isolément. Elle passe désormais le contrôle indépendant de toutes les transitions et de la fermeture, tout en conservant les ancrages. Une vidéo native de travail de trois cycles est disponible localement. **Le naturel et les volumes restent à valider** ; ce succès numérique ne vaut pas approbation artistique. Voir [MARCHE_CONTINUE.md](MARCHE_CONTINUE.md) pour les mesures, l’aperçu et la reproduction.
 
+## Lissage des trajectoires — 2 novembre 2026
+
+Une variante lisse les trajectoires de peau et partage leurs tangentes entre les poses pour réduire les changements brusques de vitesse. Les ancrages restent conservés. La nouvelle variante a été contrôlée sur ses courbes cubiques et relue dans les maillages natifs de Godot ; une comparaison animée avant/après est disponible localement. **La validation artistique reste ouverte.** Voir [LISSAGE_TEMPOREL.md](LISSAGE_TEMPOREL.md).
+
 ## Références consultées
 
 - [Spine — influences des os sur les sommets](https://en.esotericsoftware.com/spine-weights) : principe des influences partagées ; la documentation ne garantit pas la qualité artistique d’un rig.

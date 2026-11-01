@@ -6,7 +6,11 @@ class Corrected extends Node2D:
 	var phase:=0.0
 	var far_layer:=false
 	var retained: ArrayMesh
-	func _draw() -> void:
+	var anchor_mask:=PackedByteArray()
+	func sampled_vertices() -> PackedVector3Array:
+		if anchor_mask.size()!=data.points.size():
+			anchor_mask.resize(data.points.size());anchor_mask.fill(0)
+			for index in data.get("fixed_indices",[]): anchor_mask[index]=1
 		var normalized: float=fposmod(phase,1.0)
 		var first: int
 		var t: float
@@ -20,10 +24,23 @@ class Corrected extends Node2D:
 		else:
 			var sample: float=normalized*64.0
 			first=int(floor(sample));t=sample-first
-		var vertices:=PackedVector3Array();var uv:=PackedVector2Array()
+		var vertices:=PackedVector3Array()
+		var t2: float=t*t;var t3: float=t2*t
+		var h00: float=2*t3-3*t2+1;var h01: float=-2*t3+3*t2
+		var h10: float=t3-2*t2+t;var h11: float=t3-t2
 		for index in range(data.points.size()):
 			var a: Array=data.frames[first][index];var b: Array=data.frames[first+1][index]
-			vertices.append(Vector3(lerpf(a[0],b[0],t),lerpf(a[1],b[1],t),0))
+			if data.has("tangents") and anchor_mask[index]==0:
+				var dt: float=data.phases[first+1]-data.phases[first]
+				var ma: Array=data.tangents[first][index];var mb: Array=data.tangents[first+1][index]
+				vertices.append(Vector3(h00*a[0]+h01*b[0]+dt*(h10*ma[0]+h11*mb[0]),h00*a[1]+h01*b[1]+dt*(h10*ma[1]+h11*mb[1]),0))
+			else:
+				vertices.append(Vector3(lerpf(a[0],b[0],t),lerpf(a[1],b[1],t),0))
+		return vertices
+	func _draw() -> void:
+		var vertices: PackedVector3Array=sampled_vertices()
+		var uv:=PackedVector2Array()
+		for index in range(data.points.size()):
 			uv.append(Vector2(data.points[index][0],data.points[index][1])/Vector2(texture.get_size()))
 		var indices:=PackedInt32Array()
 		for face in data.triangles:
@@ -53,21 +70,23 @@ func _initialize() -> void: call_deferred("capture")
 func capture() -> void:
 	root.size=Vector2i(1280,800)
 	var floor:=Floor.new();root.add_child(floor)
-	var periodic: bool=OS.get_cmdline_user_args().has("--periodic")
+	var smooth: bool=OS.get_cmdline_user_args().has("--smooth")
+	var periodic: bool=OS.get_cmdline_user_args().has("--periodic") or smooth
 	var movie: bool=OS.get_cmdline_user_args().has("--movie")
 	assert(not movie or periodic,"Movie capture requires the explicitly selected periodic study")
 	if periodic:
 		var base: String=get_script().resource_path.get_base_dir()
-		var audit: Variant=JSON.parse_string(FileAccess.get_file_as_string(base.path_join("controle_interpolation_periodique.json")))
-		assert(audit is Dictionary and audit.get("passed",false) and audit.get("variant","")=="periodic")
-		assert(FileAccess.get_sha256(base.path_join("periodic_walk.json"))==audit.layers.near.data_sha256)
-		assert(FileAccess.get_sha256(base.path_join("periodic_walk_far.json"))==audit.layers.far.data_sha256)
+		var audit: Variant=JSON.parse_string(FileAccess.get_file_as_string(base.path_join("controle_interpolation_lissee.json" if smooth else "controle_interpolation_periodique.json")))
+		assert(audit is Dictionary and audit.get("passed",false) and audit.get("variant","")==("smooth" if smooth else "periodic"))
+		var prefix: String="smooth_walk" if smooth else "periodic_walk"
+		assert(FileAccess.get_sha256(base.path_join(prefix+".json"))==audit.layers.near.data_sha256)
+		assert(FileAccess.get_sha256(base.path_join(prefix+"_far.json"))==audit.layers.far.data_sha256)
 	floor.periodic=periodic
 	var animal:=Walker.new();root.add_child(animal);animal.build()
 	var corrected: Corrected
 	var far_corrected: Corrected
 	if OS.get_cmdline_user_args().has("--corrected") or periodic:
-		var prefix: String="periodic_walk" if periodic else "correctives_walk"
+		var prefix: String="smooth_walk" if smooth else ("periodic_walk" if periodic else "correctives_walk")
 		for child in animal.get_children():
 			if child is Polygon2D: child.visible=false
 		far_corrected=Corrected.new();far_corrected.texture=animal.skin.texture;far_corrected.far_layer=true;far_corrected.modulate=Color(0.65,0.65,0.65,1)
@@ -94,7 +113,7 @@ func capture() -> void:
 			else: small_near=tiny
 			root.add_child(tiny)
 	var folder: String=get_script().resource_path.get_base_dir().path_join("captures")
-	if movie: folder=folder.path_join("periodic_movie")
+	if movie: folder=folder.path_join("smooth_movie" if smooth else "periodic_movie")
 	DirAccess.make_dir_recursive_absolute(folder)
 	var count: int=192 if movie else 12
 	for frame in range(count):
@@ -109,7 +128,7 @@ func capture() -> void:
 			small_near.phase=distance/Walker.STRIDE;small_near.queue_redraw()
 			small_far.phase=small_near.phase;small_far.queue_redraw()
 		await process_frame;await process_frame;await RenderingServer.frame_post_draw
-		var filename: String="pose_%04d.png"%frame if movie else (("periodic_%02d.png" if periodic else ("corrective_%02d.png" if corrected!=null else "marche_%02d.png"))%frame)
+		var filename: String="pose_%04d.png"%frame if movie else (("smooth_%02d.png" if smooth else ("periodic_%02d.png" if periodic else ("corrective_%02d.png" if corrected!=null else "marche_%02d.png")))%frame)
 		assert(root.get_texture().get_image().save_png(folder.path_join(filename))==OK)
-	print("CONTINUOUS_WALK_POSES=",count," periodic=",periodic," artistic_approval=false reach_error=",animal.reach_error)
+	print("CONTINUOUS_WALK_POSES=",count," periodic=",periodic," smooth=",smooth," artistic_approval=false reach_error=",animal.reach_error)
 	quit()
