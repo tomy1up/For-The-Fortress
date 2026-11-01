@@ -11,6 +11,18 @@ Orientation validée pour les prochains chapitres : varier les tracés, introdui
 
 Questions ouvertes : PV propres ou partagés entre forteresses, défaite à la perte d’une seule ou de toutes, comportement des attaquants si leur destination est déjà détruite, et chapitres d’introduction. Aucun de ces choix n’est déduit de la seule demande de variantes.
 
+### Configurations de parcours à explorer
+
+Ces configurations précisent la demande pour les prochains chapitres ; leur affectation aux missions et leur équilibrage restent à concevoir.
+
+| Configuration | Organisation des chemins | Point de lisibilité à vérifier |
+| --- | --- | --- |
+| Entrées multiples | Plusieurs entrées alimentent la défense d’une forteresse | Identifier l’origine de chaque groupe avant le lancement de la vague |
+| Routes convergentes | Deux routes, ou davantage, se rejoignent en une route commune | Montrer clairement la jonction et les zones couvertes avant et après celle-ci |
+| Forteresses multiples | Plusieurs destinations et chemins de sortie mènent aux forteresses à défendre | Associer sans ambiguïté chaque trajet à sa forteresse et à son état |
+
+Les tracés pourront varier au sein d’un même biome. Le nombre d’entrées et le nombre de forteresses seront définis carte par carte. Les règles de PV et de défaite restent à trancher avant toute implémentation de forteresses multiples.
+
 ## Chantier visuel demandé le 31 octobre 2026 — à réaliser
 
 Orientation validée par le porteur du projet ; l’état des premières réalisations est indiqué ci-dessous. Le chantier complet reste à réaliser.
