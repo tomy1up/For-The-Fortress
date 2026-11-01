@@ -4,6 +4,18 @@ Statut au 1 novembre 2026 : **essai à valider par le porteur du projet**, hors 
 
 ## Aperçu
 
+### Essai jouable local
+
+Sur le PC du projet, lancer `Jouer_essai_loup_24_poses.cmd`. La fenêtre s'ouvre sur l'écran de droite et porte le titre **For the Fortress! — Essai du loup à 24 poses**. Choisir Alliance ou Horde, puis jouer les dix vagues de la Vallée du Gué avec les règles de combat de la v0.106 et le candidat de marche à 24 poses.
+
+Ce lanceur utilise le moteur Godot déjà présent et les ressources du paquet v0.106 existant ; ce n'est pas une nouvelle compilation publiée. Les scripts d'essai remplacent uniquement le rendu du loup dans cette session. Ils ne chargent pas le profil joueur : aucun talent ou achat de boutique persistant importé et aucun gain de PO ou XP enregistré. Le programme habituel `For_the_Fortress.exe` conserve les huit anciennes poses tant que le candidat n'est pas approuvé.
+
+Vérification du lanceur : deux exécutions graphiques contrôlées, Alliance et Horde, avec cinq loups visibles de la vague 4 dans chaque cas ; aucune erreur de moteur dans les exécutions finales et `profile_loaded=false`. Une capture de combat du lanceur normal passe également. Le paquet v0.106 demeure inchangé, empreinte SHA256 de l'EXE `4444704fe447c9747a6c386dc7ac50d1fda8d4f20ab02b4ebdf58c8f9cf12cf6`. Ces contrôles techniques ne constituent pas une approbation de la démarche.
+
+Retour du porteur du 1 novembre : son GIF de mission v0.106 présente encore une marche saccadée. Ce retour porte sur l'ancien cycle à huit poses, et ne valide pas le candidat à 24 poses. L'essai jouable permet de juger ce candidat dans le contexte de la mission.
+
+### Vidéo contrôlée
+
 `Loup_24_poses_essai.mp4` montre huit secondes sur le trajet du plateau : quatre secondes à taille de jeu, puis quatre secondes agrandies ×3. La simulation avance à vitesse normale ; trois loups suivent le trajet et le premier change de direction. L'atelier ne charge aucun profil joueur. Le cadrage agrandi suit le premier loup ; le décor permet de lire le déplacement relatif.
 
 La capture comporte 480 images à 60 ips. Le sprite utilise 24 poses par cycle, un cycle par seconde à la vitesse normale du loup. Une vidéo à 60 ips ne transforme pas ces 24 poses en 60 dessins différents.
