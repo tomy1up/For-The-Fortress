@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 1 novembre 2026 — prototype v0.104, GDD principal v0.17 (référence jeu v0.104) et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 1 novembre 2026 — prototype v0.105, GDD principal v0.17 (référence jeu v0.104) et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Nouveau lot — chapitre 2 et Gardienne à l’essai
 
@@ -564,3 +564,7 @@ Consolidation Word et Markdown sur le jeu 0.101 : dix missions, quatre alternati
 ## GDD 0.17 — consolidation du 1 novembre 2026
 
 Word et Markdown consolidés sur le jeu 0.104 : vingt missions sur dix tracés, nouvelles rencontres du chapitre 2 et Gardienne à l’essai, réactions corporelles, forteresses et souverains propres aux factions. Les futures animations détaillées et variantes de routes, entrées et forteresses restent à réaliser ; leurs questions de PV et de défaite restent ouvertes. 70 pages relues, 79 tableaux identiques, 60 destinations de sommaire vérifiées, 126 talents conservés et 51 seuils XP comparés au moteur. Les vingt missions et les dix vagues du chapitre 2 concordent avec les données du jeu : 163 ennemis, dont 13 tortues, pour 712 or maximal. Les 17 tests Python passent. Aucun changement de source du prototype, de profil ou de binaire. [Vérification documentaire](essais/gdd_v017_verification.json).
+
+## Premier cycle de marche — v0.105
+
+Huit poses dessinées du loup neutre, cycle lié à la distance, miroir selon le trajet, échelle commune et enveloppe de survol fixe. Réactions aux dégâts conservées. Les autres cycles et les gestes détaillés restent à produire. 89 suites, 37 962 contrôles Godot et 17 tests Python ; dix cas natifs ciblés sur 255 et 71 sources comparées. Atelier des ressources exportées : 96 échantillons à 30 images/s, deux sens et deux factions, sans partie jouée. Modèle de combat et progression inchangés. [Détail, ressource originale, prompt et aperçu](Marche_loup_v0105.md).

@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.105 — marche du loup neutre** : huit poses dessinées animent ses pattes, avec un cycle lié à la distance parcourue, une échelle commune et un survol stable. Première unité du chantier de marche ; les autres cycles restent à réaliser. [Règles et aperçu animé](design/Marche_loup_v0105.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.105). Apparence et rythme proposés pour les essais.
+
 **Prototype v0.104 — forteresses et souverains** : deux bâtiments et deux rois propres aux factions, avec quatre poses liées aux départs de vagues, pertes de PV et défaites. Cour visuelle adaptée pour garder les emplacements dégagés ; aucun changement de combat ou de progression. [Illustrations, règles et limites](design/Forteresses_souverains_v0104.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.104). Les apparences sont des propositions de prototype.
 
 **Prototype v0.103 — réactions aux dégâts** : les attaquants s’inclinent et reculent brièvement lorsqu’ils perdent des PV, avec une réaction plus discrète pour les ennemis lourds. Ce mouvement reste visuel et n’arrête pas leur avancée. [Règles et limites](design/Reactions_corporelles_v0103.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.103). Les cycles de marche et les animations détaillées des membres restent à réaliser.

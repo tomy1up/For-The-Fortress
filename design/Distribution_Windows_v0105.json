@@ -1,0 +1,80 @@
+{
+  "archive_sha256": "3c7ce12cb20a32c1172068e3e46715984077f7f50ca8bf8b86426bd7f9fbb1a2",
+  "scope": "selected",
+  "available_cases": 255,
+  "executable_sha256": "368d80435b724be19f240c577863f35191cc0bf8debefcd8bb80e651ff532aa2",
+  "files": [
+    "For_the_Fortress_v0.105_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.105_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.105_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.105_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.105_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "alliance_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_enemy_hit_motion",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_enemy_hit_motion",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_royal_hurt",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_royal_hurt",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "source_checks": 71,
+  "local_sources_compared": true,
+  "visual_review": "Atelier des ressources exportées inspecté dans les deux sens et à taille normale/agrandie ; captures du plateau Alliance avec Gardienne et Horde avec réactions aux dégâts inspectées. Dix cas natifs ciblés, pas un contrôle exhaustif des 255 cas.",
+  "walk_workshop": {
+    "samples": 96,
+    "fps": 30,
+    "poses": 8,
+    "factions": 2,
+    "directions": 2,
+    "method": "Godot standard --main-pack EXE exporté --screen 1 --script atelier externe",
+    "played_run": false,
+    "gif_frames": 33,
+    "asset_sha256": "b176f126e08bdbcf55d143aa7487efb255f1e2a142cf93d7982dea93e937effa",
+    "original_png_unchanged": true
+  }
+}

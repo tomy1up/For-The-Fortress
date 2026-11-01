@@ -4,6 +4,7 @@ const Model = preload("res://scripts/valley_model.gd")
 const HordeArt = preload("res://scripts/horde_art.gd")
 const AllianceArt = preload("res://scripts/alliance_art.gd")
 const EnemyArt = preload("res://scripts/enemy_art.gd")
+const EnemyWalkArt = preload("res://scripts/enemy_walk_art.gd")
 const ShopArt = preload("res://scripts/shop_art.gd")
 const FortressArt = preload("res://scripts/fortress_art.gd")
 const ORIGIN := Vector2(658, 174)
@@ -290,6 +291,7 @@ static func enemy_bounds(enemy: Dictionary, defending_faction: int = -1, route_p
 	var bounds := Rect2(center+Vector2(-width/2.0,-39.0*scale),Vector2(width,47.0*scale))
 	if EnemyArt.TEXTURES.has(enemy_art_id(enemy,defending_faction)):
 		var image: Rect2 = EnemyArt.destination(enemy_art_id(enemy,defending_faction))
+		if EnemyWalkArt.supports(enemy_art_id(enemy,defending_faction)): image = image.merge(EnemyWalkArt.BOUNDS)
 		if enemy_facing(enemy,route_points,route_length) < 0.0: image.position.x = -image.end.x
 		bounds = bounds.merge(Rect2(center+image.position*scale,image.size*scale).grow(1.0))
 	return bounds.grow(8.0) # Marge fixe couvrant les poses, sans survol qui tremble avec le corps.
@@ -723,10 +725,15 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]),Color("d6a1ef"))
 		break
 	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
-	var body: Transform2D = enemy_body_transform(enemy,enemy_facing(enemy,model.path_points,model.path_length),pose,model.elapsed,model.active)
+	var walking: bool = EnemyWalkArt.supports(id)
+	var body: Transform2D = enemy_body_transform(enemy,enemy_facing(enemy,model.path_points,model.path_length),pose,model.elapsed,model.active and not walking)
 	body.origin += center
 	draw_set_transform_matrix(body)
-	draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,EnemyArt.tint(hit_strength))
+	if walking:
+		var frame: int = EnemyWalkArt.frame_index(enemy.distance,enemy.id)
+		draw_texture_rect_region(EnemyWalkArt.TEXTURE,EnemyWalkArt.destination(frame),EnemyWalkArt.FRAMES[frame],EnemyArt.tint(hit_strength))
+	else:
+		draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,EnemyArt.tint(hit_strength))
 	draw_set_transform(Vector2.ZERO)
 
 func _draw_valley_water() -> void:

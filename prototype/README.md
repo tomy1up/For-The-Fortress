@@ -1,16 +1,18 @@
-# Dix missions de dix vagues jouables
+# Vingt missions de dix vagues jouables
 
-**Version v0.101 (31 octobre 2026)** : [coût du grenadier ajusté](../design/Grenadier_prix_v0101.md). Le recrutement passe de 90 à 75 or de combat ; le déblocage reste à 240 PO. Dégâts, portée et cadence conservés. Réglage de prototype à éprouver. [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.101).
+La v0.105 ajoute le premier cycle de marche dessiné du loup neutre : huit poses, rythme lié à sa distance, même rendu face aux deux factions. [Règles, aperçu et limites](../design/Marche_loup_v0105.md). Le chapitre 2 réutilise les dix tracés avec ses rencontres et sa Gardienne à l’essai ; les autres cycles de marche restent à produire.
 
-**Prototype v0.101 — 31 octobre 2026.** Référence : GDD v0.15 et décisions de campagne. For the Fortress! reste un nom de travail.
+**Version v0.101 (31 octobre 2026)** : [coût du grenadier ajusté](../design/Grenadier_prix_v0101.md). Le recrutement passe de 90 à 75 or de combat ; le déblocage reste à 240 PO. Dégâts, portée et cadence conservés. Réglage de prototype à éprouver. [Version Windows historique](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.101).
 
-Le jeu propose dix missions de dix vagues pour les deux factions, avec trois choix de bonus par mission et les synergies approuvées. Les six défenseurs de départ, leurs quatre niveaux et douze spécialisations sont conservés. La boutique propose deux alternatives par faction ; une seule peut s’ajouter aux trois types habituels pour la mission. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
+**Prototype v0.105 — 1 novembre 2026.** Références : GDD v0.17 (jeu 0.104), fiche v0.105 et décisions de campagne. For the Fortress! reste un nom de travail.
+
+Le jeu propose vingt missions de dix vagues pour les deux factions, avec trois choix de bonus par mission et les synergies approuvées. Les six défenseurs de départ, leurs quatre niveaux et douze spécialisations sont conservés. La boutique propose deux alternatives par faction ; une seule peut s’ajouter aux trois types habituels pour la mission. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.101](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.101) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.105](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.105) contient le jeu Windows x86_64, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
-Sur ce PC : dist/For_the_Fortress_v0.101_Windows_x64 depuis la racine du dépôt. Voir [le relevé d’export](../design/Distribution_Windows_v0101.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
+Sur ce PC : dist/For_the_Fortress_v0.105_Windows_x64 depuis la racine du dépôt. Voir [le relevé d’export](../design/Distribution_Windows_v0105.json) pour les empreintes et les commandes de reconstruction. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
 ## Jouer depuis le projet source
 

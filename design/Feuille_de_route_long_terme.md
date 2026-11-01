@@ -29,6 +29,7 @@ Orientation validée par le porteur du projet ; l’état des premières réalis
 
 - [ ] Animer toutes les unités de défense, y compris les alternatives de boutique. Le geste d’attaque doit correspondre à l’arme et au projectile lancé, avec un départ de projectile synchronisé au geste.
 - [x] Première réaction corporelle des attaquants aux dégâts : inclinaison et recul visuel brefs, puis retour à la pose normale, en complément du clignotement. Prototype v0.103 ; silhouettes entières animées, sans animation séparée des membres.
+- [x] Premier cycle de marche dessiné pour le loup neutre, commun aux deux factions : huit poses, ancrage et échelle communs, survol fixe. Prototype v0.105 ; apparence et rythme H. [Aperçu et limites](Marche_loup_v0105.md).
 - [ ] Produire les cycles de marche des attaquants et enrichir leurs animations corporelles. Le mouvement actuel de l’illustration entière ne constitue pas un cycle de marche dessiné.
 - [x] Première intégration de forteresses cartoon propres à chaque faction : pierre et bleu/or pour l’Alliance, bois, métal et rouge pour la Horde. Prototype v0.104 ; apparences proposées, à ajuster après retour artistique.
 - [x] Roi distinct au sommet de chaque forteresse, avec quatre poses dessinées et réactions liées aux événements : repos, encouragement, perte de PV, défaite. Prototype v0.104 ; transitions et mouvements restent à enrichir, sans animation complète des membres.
