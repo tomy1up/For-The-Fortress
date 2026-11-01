@@ -9,6 +9,16 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	if enemy_art_id(enemy,model.faction) != "enemy.neutral.wolf":
 		super._draw_pillager(center,enemy,hit_strength,pose)
 		return
+	draw_set_transform(center,0.0,Vector2.ONE*_enemy_scale(enemy))
+	if enemy.id == inspected_enemy_id:
+		draw_arc(Vector2(0,3),14,0,TAU,32,Color("edcc80"),2,true)
+	for curse in model.curses:
+		if curse.enemy_id != enemy.id: continue
+		draw_arc(Vector2(0,-13),19,0,TAU,24,Color("be83d3"),1.5,true)
+		var mark := Vector2(0,-45)
+		draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]),Color("d6a1ef"))
+		break
+	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
 	var index := int(floor(fposmod(enemy.distance/1.15+enemy.id*0.137,1.0)*24.0))
 	var row := index/6
 	var width := 1774.0/6.0

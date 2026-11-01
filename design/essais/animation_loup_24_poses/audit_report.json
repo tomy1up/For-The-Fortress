@@ -1,0 +1,88 @@
+{
+	"checks": [
+		{
+			"name": "faction_0_selection",
+			"passed": true
+		},
+		{
+			"name": "faction_0_start",
+			"passed": true
+		},
+		{
+			"name": "faction_0_neutral_wolf_identity",
+			"passed": true
+		},
+		{
+			"name": "faction_0_pause_pixels_stable",
+			"passed": true
+		},
+		{
+			"name": "faction_0_inspection_visible",
+			"passed": true
+		},
+		{
+			"name": "faction_0_inspection_reversible",
+			"passed": true
+		},
+		{
+			"name": "faction_0_hit_visible_without_logical_displacement",
+			"passed": true
+		},
+		{
+			"name": "faction_0_hit_reversible",
+			"passed": true
+		},
+		{
+			"name": "faction_0_resume_changes_position_and_image",
+			"passed": true
+		},
+		{
+			"name": "faction_0_turn_left",
+			"passed": true
+		},
+		{
+			"name": "faction_1_selection",
+			"passed": true
+		},
+		{
+			"name": "faction_1_start",
+			"passed": true
+		},
+		{
+			"name": "faction_1_neutral_wolf_identity",
+			"passed": true
+		},
+		{
+			"name": "faction_1_pause_pixels_stable",
+			"passed": true
+		},
+		{
+			"name": "faction_1_inspection_visible",
+			"passed": true
+		},
+		{
+			"name": "faction_1_inspection_reversible",
+			"passed": true
+		},
+		{
+			"name": "faction_1_hit_visible_without_logical_displacement",
+			"passed": true
+		},
+		{
+			"name": "faction_1_hit_reversible",
+			"passed": true
+		},
+		{
+			"name": "faction_1_resume_changes_position_and_image",
+			"passed": true
+		},
+		{
+			"name": "faction_1_turn_left",
+			"passed": true
+		}
+	],
+	"failed": 0,
+	"passed": 20,
+	"profile_loaded": false,
+	"scope": "isolated visual workshop; two factions; pause, inspection, injected visual hit fixture, resume, left turn; not an artistic approval or full game regression"
+}

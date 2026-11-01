@@ -14,7 +14,11 @@ La planche `loup_24_poses_candidat.png` a été produite avec l'outil intégré 
 
 Référence de mouvement : [Ultimate Animated Animal Pack](https://quaternius.com/packs/ultimateanimatedanimals.html), auteur Quaternius, licence CC0 ; [conditions](https://quaternius.com/faq.html). Le guide rendu est conservé ici pour tracer la référence utilisée.
 
-Contrôle effectué : silhouette cartoon et raccords des quatre pattes examinés sur la planche ; rendu sur le trajet examiné sur plusieurs phases et au changement de direction ; capture exécutée sans erreur. Cela ne constitue pas une validation artistique définitive. La cadence, les appuis et la stabilité de la boucle restent à apprécier dans la vidéo. Le second contexte de faction et les interactions de combat devront être contrôlés avant intégration.
+Contrôle effectué : silhouette cartoon et raccords des quatre pattes examinés sur la planche ; rendu sur le trajet examiné sur plusieurs phases et au changement de direction ; capture exécutée sans erreur. Cela ne constitue pas une validation artistique définitive. La cadence, les appuis et la stabilité de la boucle restent à apprécier dans la vidéo.
+
+L'audit complémentaire `audit_candidate.gd` passe **20 contrôles sur 20**, dans les deux contextes de faction : identité neutre du loup, pixels stables pendant douze rendus sans avancer la simulation, sélection visible et réversible, réaction visuelle à un événement de dégâts injecté sans déplacement logique, retour au rendu normal, reprise du déplacement et virage à gauche. Le résultat est conservé dans `audit_report.json`. L'ombre, l'anneau de sélection et le marqueur de malédiction du rendu existant sont conservés dans l'atelier. Le marqueur de malédiction n'est pas couvert par cet audit.
+
+Les captures d'inspection, de réaction aux dégâts et de virage ont été examinées. L'événement de dégâts de l'audit est une donnée d'essai visuelle, pas un tir réellement joué : les interactions de combat complètes restent à tester avant intégration. Ce contrôle ciblé ne remplace ni les tests du jeu ni la validation de la démarche par le porteur.
 
 Les rangées générées ne sont pas parfaitement espacées. Le script utilise leurs limites effectives et un décalage d'enregistrement par rangée ; les PNG sont préservés sans retouche. Les statistiques, sauvegardes et fichiers de production ne sont pas modifiés.
 
