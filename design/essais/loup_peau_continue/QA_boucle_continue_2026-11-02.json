@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-02",
+  "scope": "isolated native animation study; not a game release or artistic approval",
+  "capture": {
+    "godot": "4.7.2",
+    "screen": 1,
+    "minimized": true,
+    "native_frames": 192,
+    "cycles": 3,
+    "fps": 60,
+    "width": 1280,
+    "height": 800,
+    "duration_seconds": 3.2,
+    "decoded_frames": 192,
+    "decode_exit_code": 0
+  },
+  "video": {
+    "path": "captures\\loup_peau_continue_cycle_travail_2026-11-02.mp4",
+    "sha256": "9e2bb0f00312725ea91cacfb946d682ac82260e1930062dab49133297cc688e1",
+    "bytes": 891560
+  },
+  "inputs_sha256": {
+    "periodic_walk.json": "55ef3b5dbef7ad47abeda033db26b41172485497c575d039a116486ebbf85823",
+    "periodic_walk_far.json": "63c2a14274a0aea5898791db20e525c43d462b21323e038a20fc56def402bf58",
+    "controle_interpolation_periodique.json": "fcb6a26576f325c4b99cf51d507e03ef018fed42c88153092c63d7a9f448875b",
+    "render_walk.gd": "b23915451b3119bf3615c6d811e216c5ba1f863b178d01991151a26b72fef600",
+    "loup_proche_source_v001.png": "b02af3243233536b8f34470d5cecfeaaade9f39f7d3a8bd9be69967f76085e6c"
+  },
+  "nominal_board_reference_height_pixels": 34,
+  "final_frames_visually_inspected": [
+    0,
+    40,
+    63,
+    64
+  ],
+  "earlier_pose_samples_inspected": [
+    0,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56
+  ],
+  "validation_limits": [
+    "pose sequence inspected, not a perceptual full-video approval",
+    "piecewise velocity discontinuities remain",
+    "fur junctions and volumes still need artistic correction",
+    "no isometric route validation"
+  ],
+  "artistically_approved": false,
+  "game_integration": false
+}

@@ -40,6 +40,10 @@ Le recours à l’image par image reste une alternative si les corrections du ri
 
 **Statut : recherche non validée, hors du jeu publié.** Voir [BILAN_MARCHE.md](BILAN_MARCHE.md) pour les résultats, les limites et la reproduction. Le nouveau cycle utilise 19 os et une peau proche continue. Les appuis calculés sont stables ; la déformation des volumes échoue encore sur certaines poses. Les corrections géométriques automatiques conservées ici sont des essais, pas des corrections dessinées abouties.
 
+## Boucle continue — 2 novembre 2026
+
+Une nouvelle boucle suit la déformation au cours du temps plutôt que de réparer les poses isolément. Elle passe désormais le contrôle indépendant de toutes les transitions et de la fermeture, tout en conservant les ancrages. Une vidéo native de travail de trois cycles est disponible localement. **Le naturel et les volumes restent à valider** ; ce succès numérique ne vaut pas approbation artistique. Voir [MARCHE_CONTINUE.md](MARCHE_CONTINUE.md) pour les mesures, l’aperçu et la reproduction.
+
 ## Références consultées
 
 - [Spine — influences des os sur les sommets](https://en.esotericsoftware.com/spine-weights) : principe des influences partagées ; la documentation ne garantit pas la qualité artistique d’un rig.

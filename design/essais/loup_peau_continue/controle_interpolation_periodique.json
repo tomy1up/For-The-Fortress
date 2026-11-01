@@ -1,0 +1,38 @@
+{
+  "schema": 2,
+  "variant": "periodic",
+  "scope": "baked geometry and exact linear interpolation; not anatomy, contact pixels, or animation approval",
+  "layers": {
+    "near": {
+      "frames": 133,
+      "triangles": 1255,
+      "inverted_key_triangles": 0,
+      "inverted_interpolation_intervals": 0,
+      "minimum_interpolated_area_ratio": 0.028269951067139795,
+      "maximum_interpolated_endpoint_area_ratio": 7.637361311744799,
+      "maximum_hard_target_error_source_pixels": 7.071068597900084e-07,
+      "loop_seam_source_pixels": 0.0,
+      "maximum_piecewise_velocity_jump_source_pixels_per_cycle": 2259.35125373074,
+      "loop_velocity_jump_source_pixels_per_cycle": 515.4009179982977,
+      "artistically_approved": false,
+      "data_sha256": "55ef3b5dbef7ad47abeda033db26b41172485497c575d039a116486ebbf85823",
+      "numerically_passed": true
+    },
+    "far": {
+      "frames": 143,
+      "triangles": 1255,
+      "inverted_key_triangles": 0,
+      "inverted_interpolation_intervals": 0,
+      "minimum_interpolated_area_ratio": 0.021729824220308155,
+      "maximum_interpolated_endpoint_area_ratio": 2.8684940533218777,
+      "maximum_hard_target_error_source_pixels": 3.09102451033881e-05,
+      "loop_seam_source_pixels": 0.0,
+      "maximum_piecewise_velocity_jump_source_pixels_per_cycle": 6533.488099915602,
+      "loop_velocity_jump_source_pixels_per_cycle": 441.85611185048106,
+      "artistically_approved": false,
+      "data_sha256": "63c2a14274a0aea5898791db20e525c43d462b21323e038a20fc56def402bf58",
+      "numerically_passed": true
+    }
+  },
+  "passed": true
+}

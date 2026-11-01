@@ -2,6 +2,8 @@
 
 Date : 1er novembre 2026. Statut : **non validée pour intégration**. Aucun changement de gameplay, de profil joueur ou de version distribuée.
 
+Ce bilan conserve les échecs du premier calcul. Une boucle ultérieure, décrite dans [MARCHE_CONTINUE.md](MARCHE_CONTINUE.md), passe le contrôle des transitions le 2 novembre. Le résultat artistique demeure expérimental.
+
 ## Ce qui change
 
 Le tronc et les membres proches partagent le même dessin, les mêmes sommets aux attaches et des influences d’os communes. Les membres éloignés passent derrière. La démarche entraîne aussi les épaules, le bassin, la tête et la queue. La phase suit la distance parcourue : accélérer le déplacement accélère les pas.

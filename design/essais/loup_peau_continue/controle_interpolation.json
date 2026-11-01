@@ -1,5 +1,6 @@
 {
-  "schema": 1,
+  "schema": 2,
+  "variant": "baseline",
   "scope": "baked geometry and exact linear interpolation; not anatomy, contact pixels, or animation approval",
   "layers": {
     "near": {
@@ -8,9 +9,13 @@
       "inverted_key_triangles": 0,
       "inverted_interpolation_intervals": 26,
       "minimum_interpolated_area_ratio": -0.9286640560594777,
+      "maximum_interpolated_endpoint_area_ratio": 6.056163981184726,
       "maximum_hard_target_error_source_pixels": 0.00024543390401099977,
       "loop_seam_source_pixels": 0.006158094266796916,
+      "maximum_piecewise_velocity_jump_source_pixels_per_cycle": 4944.763908331218,
+      "loop_velocity_jump_source_pixels_per_cycle": 108.08346800151166,
       "artistically_approved": false,
+      "data_sha256": "2241dd29656001366d09fd6472c7233021c830b265f6eeb4876a5400a0d5b7fd",
       "numerically_passed": false
     },
     "far": {
@@ -19,9 +24,13 @@
       "inverted_key_triangles": 0,
       "inverted_interpolation_intervals": 31,
       "minimum_interpolated_area_ratio": -0.9243844502250984,
+      "maximum_interpolated_endpoint_area_ratio": 5.212243792934926,
       "maximum_hard_target_error_source_pixels": 0.00023580852314469266,
       "loop_seam_source_pixels": 0.033484125746450565,
+      "maximum_piecewise_velocity_jump_source_pixels_per_cycle": 5724.1070082015785,
+      "loop_velocity_jump_source_pixels_per_cycle": 1053.5805723500666,
       "artistically_approved": false,
+      "data_sha256": "5dd271cd1fc7f7856152369c5de83d16125cb9062613ac4aaeefb991eeb236c0",
       "numerically_passed": false
     }
   },

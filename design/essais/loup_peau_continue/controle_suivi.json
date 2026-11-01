@@ -1,0 +1,106 @@
+{
+  "near": {
+    "complete_cycle": true,
+    "cycles": [
+      {
+        "cycle": 0,
+        "completed_phase": 1.0,
+        "keys": 132,
+        "shortened_steps": 5,
+        "seam_source_pixels": 7.455614885011594
+      },
+      {
+        "cycle": 1,
+        "completed_phase": 1.0,
+        "keys": 131,
+        "shortened_steps": 4,
+        "seam_source_pixels": 2.649565071237126
+      },
+      {
+        "cycle": 2,
+        "completed_phase": 1.0,
+        "keys": 131,
+        "shortened_steps": 3,
+        "seam_source_pixels": 3.6561397843872028
+      },
+      {
+        "cycle": 3,
+        "completed_phase": 1.0,
+        "keys": 132,
+        "shortened_steps": 5,
+        "seam_source_pixels": 4.103965551181718
+      },
+      {
+        "cycle": 4,
+        "completed_phase": 1.0,
+        "keys": 132,
+        "shortened_steps": 9,
+        "seam_source_pixels": 2.51885942802555
+      },
+      {
+        "cycle": 5,
+        "completed_phase": 1.0,
+        "keys": 133,
+        "shortened_steps": 5,
+        "seam_source_pixels": 2.9599108798233855
+      }
+    ],
+    "artistically_approved": false,
+    "seconds": 9.5,
+    "maximum_target_regularization_source_pixels": 0.0,
+    "method": "forward constrained ARAP with exact interval feasibility; adaptive time steps",
+    "output_sha256": "7d289521e72112370862f5f840f1e30a2c1fbb6f8f37282e632876e3516f4002"
+  },
+  "far": {
+    "complete_cycle": true,
+    "cycles": [
+      {
+        "cycle": 0,
+        "completed_phase": 1.0,
+        "keys": 142,
+        "shortened_steps": 23,
+        "seam_source_pixels": 29.561577656924182
+      },
+      {
+        "cycle": 1,
+        "completed_phase": 1.0,
+        "keys": 135,
+        "shortened_steps": 7,
+        "seam_source_pixels": 4.453018451004543
+      },
+      {
+        "cycle": 2,
+        "completed_phase": 1.0,
+        "keys": 143,
+        "shortened_steps": 30,
+        "seam_source_pixels": 1.40978040522736
+      },
+      {
+        "cycle": 3,
+        "completed_phase": 1.0,
+        "keys": 141,
+        "shortened_steps": 20,
+        "seam_source_pixels": 1.1620096153601431
+      },
+      {
+        "cycle": 4,
+        "completed_phase": 1.0,
+        "keys": 140,
+        "shortened_steps": 16,
+        "seam_source_pixels": 1.1249165281413336
+      },
+      {
+        "cycle": 5,
+        "completed_phase": 1.0,
+        "keys": 143,
+        "shortened_steps": 22,
+        "seam_source_pixels": 4.5758412102484955
+      }
+    ],
+    "artistically_approved": false,
+    "seconds": 20.24,
+    "maximum_target_regularization_source_pixels": 3.0517578011313162e-05,
+    "method": "forward constrained ARAP with exact interval feasibility; adaptive time steps",
+    "output_sha256": "0d53c84d47156083956fab64ca1deb1e70275b30aa2f16d48dd66f51ab7eb6de"
+  }
+}
