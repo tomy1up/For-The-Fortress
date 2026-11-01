@@ -1,0 +1,36 @@
+{
+  "max_attachment_shift_pixels": 3.30000033569336,
+  "max_ik_error_pixels": 2.41686883964576e-06,
+  "max_world_drift_pixels": 0.0,
+  "scope": "actual rig paw references across all turns, 16 phase offsets; artistic review separate",
+  "support_samples": 107584,
+  "worst": {},
+  "date": "2026-11-01",
+  "controls_check": {
+    "pause": true,
+    "speed": true,
+    "zoom": true,
+    "contacts": true,
+    "restart": true
+  },
+  "capture": {
+    "frames": 900,
+    "fps": 60,
+    "width": 1280,
+    "height": 800,
+    "sections": [
+      "native x1",
+      "zoom5 x1",
+      "zoom5 x2"
+    ],
+    "decoded_without_errors": true
+  },
+  "artistic_approval": false,
+  "production_integration": false,
+  "sha256": {
+    "wolf_rig.gd": "0e4fb526acc8de32dfee6614cfd6845f664d736703fa859aaaf959148e3cacea",
+    "grounded_foot.gd": "63a4481b55487f537f94c9408e1fe37ffc24b9be93a96253f8c4ea808cc5640d",
+    "loup_pieces_essai.png": "8f93bcd7edbb79568879d1e08cd2d9c090f344f1bfcbfa10b10d33c851e334f1",
+    "Loup_appuis_essai.mp4": "17466db55e293669c9ecb9670c2dbd31a5deb9127f5e4fee9fe3d5afdde9150e"
+  }
+}
