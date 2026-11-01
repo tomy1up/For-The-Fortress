@@ -1,5 +1,7 @@
 # Premier cycle de marche du loup
 
+**Retour visuel du 1 novembre 2026 : essai à reprendre.** Le porteur juge ce cycle trop saccadé et insuffisant pour donner l’impression de marcher. Les contrôles techniques ci-dessous n’établissent pas sa qualité artistique. L’essai articulé suivant est également rejeté et n’est pas publié. [Critères de reprise et validation](Validation_visuelle_animations.md).
+
 Prototype v0.105 — 1 novembre 2026. Première réalisation du chantier d’animation des attaquants. Le loup neutre dispose de huit poses dessinées, communes aux deux factions. Les autres attaquants conservent leur présentation actuelle ; ce lot ne termine pas le chantier d’animation de toutes les unités.
 
 ## Rendu

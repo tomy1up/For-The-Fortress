@@ -568,3 +568,7 @@ Word et Markdown consolidés sur le jeu 0.104 : vingt missions sur dix tracés, 
 ## Premier cycle de marche — v0.105
 
 Huit poses dessinées du loup neutre, cycle lié à la distance, miroir selon le trajet, échelle commune et enveloppe de survol fixe. Réactions aux dégâts conservées. Les autres cycles et les gestes détaillés restent à produire. 89 suites, 37 962 contrôles Godot et 17 tests Python ; dix cas natifs ciblés sur 255 et 71 sources comparées. Atelier des ressources exportées : 96 échantillons à 30 images/s, deux sens et deux factions, sans partie jouée. Modèle de combat et progression inchangés. [Détail, ressource originale, prompt et aperçu](Marche_loup_v0105.md).
+
+## Retour visuel et reprise du loup — 1 novembre 2026
+
+Le cycle v0.105 est jugé trop saccadé. L’essai articulé suivant est rejeté pour ses pattes et sa silhouette ; il est retiré du projet et archivé hors production, sans compilation ni publication v0.106. Le travail reste limité au loup jusqu’à validation du porteur. L’agent doit contrôler l’anatomie, les raccords, les appuis et la fluidité sur le déplacement réel avant de présenter un candidat. [Critères et statut](Validation_visuelle_animations.md). Les succès techniques des essais ne valent pas validation artistique.
