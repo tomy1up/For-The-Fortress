@@ -99,6 +99,8 @@ static func markdown(report: Dictionary) -> String:
 		"Forteresse : %d/%d PV · Or restant : %d · Combat : %.2f s simulées" % [report.fortress_hp,report.max_hp,report.gold,report.combat_seconds],
 		"", "Rapport de débogage local, sans fonction de reprise de partie.", "", "## Vagues", "", "| Vague | Éliminés | Passés | PV perdus | Or gagné | Résultat |", "| --- | --- | --- | --- | --- | --- |"]
 	if report.has("enemy_hp_percent"): lines.insert(5,"PV ennemis : %d %% de la référence. Vitesse, dégâts et récompenses de combat inchangés." % report.enemy_hp_percent)
+	if report.get("map_definition",{}).has("routes"):
+		lines.insert(5,"Atelier multitrajet : %d entrées vers une forteresse. Affectation alternée des apparitions ; règle de prototype."%report.map_definition.routes.size())
 	if report.has("meta_ranks"):
 		lines.insert(5,"Talents permanents actifs (rangs par arbre) : "+str(report.meta_ranks)+". Barème de prototype "+("v0.67" if report.meta_ranks.size() == 9 else "v0.68" if report.meta_ranks.size() == 15 else "arbres enrichis")+".")
 	for wave in report.waves:

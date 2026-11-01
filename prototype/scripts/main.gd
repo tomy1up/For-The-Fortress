@@ -231,6 +231,11 @@ var syncing_keyboard_focus: bool = false
 
 func _ready() -> void:
 	var isolated: bool = DisplayServer.get_name() == "headless" or "--script" in OS.get_cmdline_args() or "-s" in OS.get_cmdline_args()
+	var route_workshop: bool = "--atelier-routes" in OS.get_cmdline_user_args()
+	if route_workshop:
+		isolated = true
+		model = Model.new(true,Model.Maps.converging_workshop())
+		mission_definition = {}
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture="): isolated = true
 	if not isolated: meta_profile = MetaProfile.new()
@@ -238,6 +243,9 @@ func _ready() -> void:
 	map_view.model = model
 	add_child(map_view)
 	_build_interface()
+	if route_workshop:
+		version_label.text = "Atelier routes · Aucun gain de progression"
+		print("ROUTE_WORKSHOP=",JSON.stringify({"isolated":meta_profile==null,"routes":model.routes.size(),"mission_empty":mission_definition.is_empty(),"map_id":model.map_definition.id}))
 	_update_interface()
 	var capture_path: String = ""
 	var capture_state: String = "combat"

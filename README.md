@@ -4,7 +4,7 @@
 
 **Candidat de marche à 24 poses** : [aperçu et contrôles ciblés](design/essais/animation_loup_24_poses/README.md), hors production et en attente du retour artistique du porteur. Les contrôles techniques ne valident pas la démarche.
 
-**Routes convergentes en préparation** : [socle géométrique et travail restant](design/Preparation_routes_convergentes.md). Les positions et couvertures de deux entrées vers une sortie commune sont testées séparément ; le combat multitrajet n'est pas encore jouable.
+**Prototype v0.106 — atelier à deux entrées** : [La Confluence](design/Atelier_routes_v0106.md) permet de tester deux chemins vers une forteresse, avec recrutement, combat, portées et rapports. Lancer `Lancer_atelier_routes.cmd` dans le paquet Windows ; aucun profil joueur ni gain de progression. L'atelier reste distinct des vingt missions. Tracé, alternance et ciblage entre routes sont des propositions de prototype. [Socle géométrique](design/Preparation_routes_convergentes.md).
 
 **Prototype v0.104 — forteresses et souverains** : deux bâtiments et deux rois propres aux factions, avec quatre poses liées aux départs de vagues, pertes de PV et défaites. Cour visuelle adaptée pour garder les emplacements dégagés ; aucun changement de combat ou de progression. [Illustrations, règles et limites](design/Forteresses_souverains_v0104.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.104). Les apparences sont des propositions de prototype.
 

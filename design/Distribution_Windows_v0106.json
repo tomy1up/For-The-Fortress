@@ -1,0 +1,74 @@
+{
+  "archive_sha256": "9a8c38415dce1dc1c3526c95ecf12d945fe928ec2c1ec1e355f12b3a63f3652d",
+  "scope": "selected",
+  "available_cases": 257,
+  "executable_sha256": "4444704fe447c9747a6c386dc7ac50d1fda8d4f20ab02b4ebdf58c8f9cf12cf6",
+  "files": [
+    "For_the_Fortress_v0.106_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.106_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.106_Windows_x64/Lancer_atelier_routes.cmd",
+    "For_the_Fortress_v0.106_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.106_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.106_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_routes",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_routes",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_royal_hurt",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_royal_hurt",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "source_checks": 73,
+  "local_sources_compared": true,
+  "visual_review": "Captures produites ; inspection visuelle à consigner séparément."
+}

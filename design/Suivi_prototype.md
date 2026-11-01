@@ -1,6 +1,12 @@
 # Suivi du prototype
 
-État du 1 novembre 2026 — prototype v0.105, GDD principal v0.17 (référence jeu v0.104) et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 1 novembre 2026 — prototype v0.106, GDD principal v0.17 (référence jeu v0.104) et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+
+## Atelier à deux entrées — v0.106
+
+[La Confluence](Atelier_routes_v0106.md) permet d'essayer deux routes vers une forteresse avec le combat, le survol, les portées et les rapports déterministes. Lancement distinct via `Lancer_atelier_routes.cmd`, sans profil joueur ni gain de progression. Alternance et ciblage sont des propositions de prototype ; aucune nouvelle mission de campagne. Les forteresses multiples restent à définir. Le candidat du loup à 24 poses reste hors production en attente du retour du porteur.
+
+Validation : 91 suites Godot, 38 064 contrôles et 17 tests Python ; onze cas Windows ciblés sur 257, 73 sources comparées. Captures Alliance et Horde de l'atelier examinées, sans validation humaine de son équilibrage.
 
 ## Nouveau lot — chapitre 2 et Gardienne à l’essai
 

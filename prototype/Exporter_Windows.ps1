@@ -47,6 +47,7 @@ $sourcePaths += @('scripts\bank_encounters.gd','assets\enemies\rosters\tortue_ga
 $sourcePaths += @('scripts\fortress_art.gd','assets\fortresses\forteresse_alliance_v001.png','assets\fortresses\forteresse_alliance_v001.png.import','assets\fortresses\forteresse_horde_v001.png','assets\fortresses\forteresse_horde_v001.png.import','assets\fortresses\roi_alliance_v001.png','assets\fortresses\roi_alliance_v001.png.import','assets\fortresses\roi_horde_v001.png','assets\fortresses\roi_horde_v001.png.import')
 $sourcePaths += @('scripts\enemy_walk_art.gd','assets\enemies\animations\loup_marche_v001.png','assets\enemies\animations\loup_marche_v001.png.import')
 $sourcePaths += @('scripts\route_geometry.gd')
+$sourcePaths += @('distribution\Lancer_atelier_routes.cmd')
 $sources = Get-FortressSourceSnapshot -ProjectRoot $PSScriptRoot -RelativePaths $sourcePaths
 if ([IO.File]::ReadAllText((Join-Path $PSScriptRoot 'project.godot')) -notmatch 'config/version="([^"]+)"' -or $Matches[1] -ne $Version) {
     throw 'La version du projet a change avant le lancement de la compilation.'
@@ -59,6 +60,7 @@ if ($process.ExitCode -ne 0 -or $log -match 'ERROR:|SCRIPT ERROR') {
 if (-not (Test-Path -LiteralPath $executable -PathType Leaf)) { throw 'Executable non produit.' }
 Assert-FortressSourceSnapshot -Expected $sources -Actual (Get-FortressSourceSnapshot -ProjectRoot $PSScriptRoot -RelativePaths $sourcePaths)
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'distribution\LIRE_MOI.txt') -Destination $artifactFolder
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'distribution\Lancer_atelier_routes.cmd') -Destination $artifactFolder
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'distribution\LICENCES_GODOT.txt') -Destination $artifactFolder
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot '..\design\Fiche_essai_joueur.md') -Destination $artifactFolder
 $manifest = [ordered]@{

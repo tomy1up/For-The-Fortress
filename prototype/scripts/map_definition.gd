@@ -1,4 +1,5 @@
 extends RefCounted
+const Routes = preload("res://scripts/route_geometry.gd")
 ## Dix terrains de prototype du premier chapitre. Géométries à éprouver en jeu.
 const CHAPTER_ONE_MAPS: Dictionary = {
 	"ford_turns": {
@@ -534,6 +535,12 @@ const VALLEY_TREES: Array[Vector2] = [Vector2(1,1),Vector2(1.4,8.5),Vector2(4.6,
 static func valley() -> Dictionary:
 	return {"id":"valley_ford","title":"La Vallée du Gué","size":Vector2i(18,10),"path_points":VALLEY_PATH.duplicate(),"slots":VALLEY_SLOTS.duplicate(),"path_length":VALLEY_LENGTH,"trees":VALLEY_TREES.duplicate(),"decoration":"valley"}
 
+static func converging_workshop() -> Dictionary:
+	# Atelier isolé : tracé et alternance des entrées sont des propositions H.
+	var upper: Array[Vector2] = [Vector2(0,2),Vector2(5,2),Vector2(5,5),Vector2(10,5),Vector2(10,2),Vector2(14,2),Vector2(14,6),Vector2(17,6)]
+	var lower: Array[Vector2] = [Vector2(0,9),Vector2(3,9),Vector2(3,5),Vector2(5,5),Vector2(10,5),Vector2(10,2),Vector2(14,2),Vector2(14,6),Vector2(17,6)]
+	return {"id":"workshop_confluence","title":"La Confluence — Atelier","size":Vector2i(18,10),"path_points":upper,"path_length":measured_length(upper),"slots":[Vector2(2.5,3.5),Vector2(2,7),Vector2(6.8,3.5),Vector2(8,7),Vector2(11.8,3.5),Vector2(15.5,4.5)],"trees":[],"decoration":"none","routes":[{"id":"upper","path_points":upper,"path_length":measured_length(upper)},{"id":"lower","path_points":lower,"path_length":measured_length(lower)}]}
+
 static func for_id(id: String) -> Dictionary:
 	if id == "valley_ford": return valley()
 	if CHAPTER_ONE_MAPS.has(id): return from_data(CHAPTER_ONE_MAPS[id])
@@ -570,6 +577,13 @@ static func validation_error(data: Dictionary) -> String:
 			if data.slots[index] == data.slots[other]: return "Emplacements superposés."
 	if not (data.path_length is float or data.path_length is int) or not is_finite(float(data.path_length)) or float(data.path_length) <= 0.0 or absf(float(data.path_length)-measured_length(data.path_points)) > 0.000000001: return "Longueur de chemin incohérente."
 	if data.decoration not in ["valley","none"]: return "Décor de carte inconnu."
+	if data.has("routes"):
+		var error: String = Routes.common_exit_error(data.routes)
+		if not error.is_empty(): return error
+		if data.routes[0].path_points != data.path_points or data.routes[0].path_length != data.path_length: return "Le chemin principal doit correspondre au premier trajet."
+		for route in data.routes:
+			for point in route.path_points:
+				if point.x < 0 or point.y < 0 or point.x > data.size.x or point.y > data.size.y: return "Trajet hors de la carte."
 	return ""
 
 static func to_data(definition: Dictionary) -> Dictionary:
@@ -580,6 +594,11 @@ static func to_data(definition: Dictionary) -> Dictionary:
 		var coordinates: Array = []
 		for point in definition[key]: coordinates.append([point.x,point.y])
 		data[key] = coordinates
+	if definition.has("routes"):
+		for index in range(definition.routes.size()):
+			var coordinates: Array = []
+			for point in definition.routes[index].path_points: coordinates.append([point.x,point.y])
+			data.routes[index].path_points = coordinates
 	return data
 
 static func from_data(data: Variant) -> Dictionary:
@@ -600,4 +619,15 @@ static func from_data(data: Variant) -> Dictionary:
 				if not (value is int or value is float) or not is_finite(float(value)) or absf(value) > 64: return {}
 			points.append(Vector2(coordinate[0],coordinate[1]))
 		definition[key] = points
+	if data.has("routes"):
+		if not data.routes is Array or data.routes.is_empty(): return {}
+		for route in definition.routes:
+			if not route is Dictionary or not route.get("path_points") is Array or route.path_points.size()>512: return {}
+			var points: Array[Vector2] = []
+			for coordinate in route.path_points:
+				if not coordinate is Array or coordinate.size()!=2: return {}
+				for value in coordinate:
+					if not (value is int or value is float) or not is_finite(float(value)) or absf(value)>64: return {}
+				points.append(Vector2(coordinate[0],coordinate[1]))
+			route.path_points = points
 	return definition if validation_error(definition).is_empty() else {}

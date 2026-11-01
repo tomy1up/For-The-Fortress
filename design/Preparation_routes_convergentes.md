@@ -1,6 +1,6 @@
 # Préparation des routes convergentes
 
-État du 1 novembre 2026 : **socle géométrique en développement**, sans nouvelle mission et sans combat multitrajet encore jouable. La demande de varier les entrées, jonctions et sorties vient du porteur. Ce premier lot prépare plusieurs entrées vers **une seule forteresse** ; il ne décide pas les règles des futures cartes à plusieurs forteresses.
+État du lot géométrique préliminaire du 1 novembre 2026, commit c26b856 : **socle géométrique**, sans nouvelle mission. Ce lot est désormais prolongé par [l'atelier de combat v0.106](Atelier_routes_v0106.md) ; les étapes restantes ci-dessous décrivent le point de départ avant cet atelier. La demande de varier les entrées, jonctions et sorties vient du porteur. Le travail porte d'abord sur plusieurs entrées vers **une seule forteresse** ; il ne décide pas les règles des futures cartes à plusieurs forteresses.
 
 ## Première étape réalisée
 

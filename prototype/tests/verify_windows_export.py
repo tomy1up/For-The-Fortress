@@ -26,9 +26,9 @@ with zipfile.ZipFile(archive) as z:
         candidate=(destination/entry.filename).resolve()
         assert candidate.is_relative_to(destination),'Chemin ZIP hors dossier de contrôle'
         if not entry.is_dir(): members.append(entry.filename.replace('\\','/'))
-    assert len(members)==5,members
+    assert len(members)==6,members
     assert len({name.split('/')[0] for name in members})==1
-    assert {Path(name).name for name in members}=={'For_the_Fortress.exe','LIRE_MOI.txt','Fiche_essai_joueur.md','LICENCES_GODOT.txt','VERSION.json'}
+    assert {Path(name).name for name in members}=={'For_the_Fortress.exe','LIRE_MOI.txt','Fiche_essai_joueur.md','LICENCES_GODOT.txt','VERSION.json','Lancer_atelier_routes.cmd'}
     z.extractall(destination)
 folder=destination/members[0].split('/')[0]
 exe=folder/'For_the_Fortress.exe'
@@ -50,6 +50,7 @@ startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW
 startup.wShowWindow=0
 results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
+       ('alliance_routes','combat','alliance'),('horde_routes','combat','horde'),
        ('alliance_bank_guardian','bank_guardian','alliance'),('horde_bank_guardian','bank_guardian','horde'),
        ('alliance_enemy_hit_motion','effects','alliance'),('horde_enemy_hit_motion','effects','horde'),
        ('home_prepared','selection',None),('home_maximum','selection',None),('home_blocked','selection',None),
@@ -154,6 +155,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if name.endswith('_routes'): command+=['--atelier-routes']
         if '_royal_' in name: command+=['--capture-royal-state='+name.rsplit('_',1)[1]]
         if name.endswith('_enemy_hit_motion'): command+=['--capture-hit-motion','--capture-type='+('2' if faction=='alliance' else '4')]
         if state=="campaign_menu": command += ["--capture-campaign="+name.rsplit("_",1)[1]]
@@ -216,6 +218,9 @@ for name,state,faction in cases:
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
     assert completed.returncode==0,(name,completed.returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
+    if name.endswith('_routes'):
+        snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_WORKSHOP=')))
+        assert snapshot=={'isolated':True,'routes':2,'mission_empty':True,'map_id':'workshop_confluence'}
     if '_wave_context_' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('WAVE_CONTEXT_SNAPSHOT=')))
         context=name.rsplit('_',1)[1]

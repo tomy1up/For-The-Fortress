@@ -310,8 +310,8 @@ func enemy_at(point: Vector2) -> int:
 	var found: int = -1
 	var front_y: float = -INF
 	for enemy in model.enemies:
-		if enemy.hp <= 0.0 or not enemy_bounds(enemy,model.faction,model.path_points,model.path_length).has_point(point): continue
-		var y: float = project(model.point_on_path(enemy.distance)).y
+		if enemy.hp <= 0.0 or not enemy_bounds(enemy,model.faction,model.enemy_route_points(enemy),model.enemy_route_length(enemy)).has_point(point): continue
+		var y: float = project(model.enemy_position(enemy)).y
 		if y >= front_y: # Même priorité visuelle que le dessin, dernier acteur en cas d'égalité.
 			front_y = y
 			found = enemy.id
@@ -369,6 +369,19 @@ func _map_slots() -> Array[Vector2]:
 func _map_path() -> Array[Vector2]:
 	return model.path_points if model != null else Model.PATH_POINTS
 
+static func routes_for(definition: Dictionary) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	if definition.has("routes"): result.assign(definition.routes)
+	else: result.append({"id":"main","path_points":definition.path_points,"path_length":definition.path_length})
+	return result
+
+func map_covered_routes(center: Vector2, radius: float) -> Array[PackedVector2Array]:
+	var sections: Array[PackedVector2Array] = []
+	for route in routes_for(model.map_definition):
+		var points: Array[Vector2] = [];points.assign(route.path_points)
+		sections.append_array(covered_route(center,radius,points,route.path_length))
+	return sections
+
 static func _segment_in_rect(first: Vector2, last: Vector2, area: Rect2) -> bool:
 	if area.has_point(first) or area.has_point(last): return true
 	var corners: Array[Vector2] = [area.position,Vector2(area.end.x,area.position.y),area.end,Vector2(area.position.x,area.end.y)]
@@ -386,7 +399,8 @@ static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
 	if definition.get("id","") not in Model.Maps.CHAPTER_ONE_MAPS: return result
 	if not Model.Maps.validation_error(definition).is_empty(): return result
 	var board := PackedVector2Array([project(Vector2.ZERO),project(Vector2(definition.size.x,0)),project(Vector2(definition.size)),project(Vector2(0,definition.size.y))])
-	var reserved: Array[Rect2] = [fortress_bounds(project(definition.path_points[-1])).grow(12),Rect2(project(definition.path_points[0])+Vector2(-60,-43),Vector2(116,65))]
+	var reserved: Array[Rect2] = [fortress_bounds(project(definition.path_points[-1])).grow(12)]
+	for route in routes_for(definition): reserved.append(Rect2(project(route.path_points[0])+Vector2(-60,-43),Vector2(116,65)))
 	for slot in definition.slots: reserved.append(Rect2(project(slot)+Vector2(-44,-78),Vector2(88,110)))
 	var candidates: Array[Dictionary] = []
 	var seed_value: int = absi(String(definition.id).hash())
@@ -404,8 +418,10 @@ static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
 		for exclusion in reserved:
 			if area.intersects(exclusion): clear = false;break
 		if not clear: continue
-		for segment in range(1,definition.path_points.size()):
-			if _segment_in_rect(project(definition.path_points[segment-1]),project(definition.path_points[segment]),area.grow(20)): clear = false;break
+		for route in routes_for(definition):
+			for segment in range(1,route.path_points.size()):
+				if _segment_in_rect(project(route.path_points[segment-1]),project(route.path_points[segment]),area.grow(20)): clear = false;break
+			if not clear: break
 		if not clear: continue
 		for placed in result:
 			if area.grow(7).intersects(scenery_bounds(placed)): clear = false;break
@@ -449,14 +465,16 @@ func _draw() -> void:
 	for y in range(board.y+1):
 		draw_line(project(Vector2(0, y)), project(Vector2(board.x, y)), Color(0.75, 0.86, 0.7, 0.055), 1)
 	if definition.decoration == "valley": _draw_valley_water()
-	var route := PackedVector2Array()
-	for point in _map_path():
-		route.append(project(point))
-	draw_polyline(route, Color("26372e"), 28, true)
-	draw_polyline(route, Color("b3a17b"), 20, true)
-	for point in route:
-		draw_circle(point, 10, Color("b3a17b"))
-	draw_polyline(route, Color("c7b58d"), 2, true)
+	var screen_routes: Array[PackedVector2Array] = []
+	for entry in routes_for(definition):
+		var route := PackedVector2Array()
+		for point in entry.path_points: route.append(project(point))
+		screen_routes.append(route)
+	for route in screen_routes: draw_polyline(route,Color("26372e"),28,true)
+	for route in screen_routes:
+		draw_polyline(route,Color("b3a17b"),20,true)
+		for point in route: draw_circle(point,10,Color("b3a17b"))
+	for route in screen_routes: draw_polyline(route,Color("c7b58d"),2,true)
 	if definition.decoration == "valley": _draw_valley_bridge()
 	for tree in definition.trees:
 		_draw_tree(project(tree))
@@ -466,7 +484,7 @@ func _draw() -> void:
 		var preview_ring := range_outline(_map_slots()[selected], preview.range)
 		draw_colored_polygon(preview_ring, Color(0.35, 0.8, 0.95, 0.12))
 		draw_polyline(preview_ring, Color("8bd5e6"), 2.5, true)
-		for section in covered_route(_map_slots()[selected], preview.range,model.path_points,model.path_length):
+		for section in map_covered_routes(_map_slots()[selected],preview.range):
 			draw_polyline(section, Color("8bd5e6"), 6, true)
 		if not preview_synergy_unit.is_empty(): _draw_synergy_links(preview_synergy_unit)
 	if model != null and selected >= 0 and not model.defenders[selected].is_empty():
@@ -475,7 +493,7 @@ func _draw() -> void:
 		draw_colored_polygon(ring, Color(0.8, 0.85, 0.5, 0.05))
 		draw_polyline(ring, Color(0.8, 0.85, 0.5, 0.35), 1.5, true)
 		if preview.is_empty():
-			for section in covered_route(_map_slots()[selected],stats.range,model.path_points,model.path_length):
+			for section in map_covered_routes(_map_slots()[selected],stats.range):
 				draw_polyline(section,Color(0.9,0.77,0.48,0.65),4,true)
 		if preview.is_empty(): _draw_synergy_links()
 	for index in range(_map_slots().size()):
@@ -487,14 +505,15 @@ func _draw() -> void:
 		occupied = occupied or (not ghost.is_empty() and ghost.slot == index)
 		draw_string(font, center + Vector2(-9, 22 if occupied else 5), "E%d" % (index + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, INK)
 	_draw_fortress(project(_map_path()[-1]))
-	var entrance: Vector2 = project(_map_path()[0])
-	draw_circle(entrance, 5, Color("debd7f"))
-	draw_string(font, entrance + Vector2(-48, -20), "ENTRÉE", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("a7b8aa"))
+	for index in range(screen_routes.size()):
+		var entrance: Vector2 = screen_routes[index][0]
+		draw_circle(entrance,5,Color("debd7f"))
+		draw_string(font,entrance+Vector2(-48,-20),"ENTRÉE" if screen_routes.size()==1 else "ENTRÉE %d"%(index+1),HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("a7b8aa"))
 	if model != null:
 		for enemy in model.enemies:
 			if enemy.type != Model.Banks.GUARD_TYPE: continue
 			var ring := PackedVector2Array()
-			var center: Vector2 = model.point_on_path(enemy.distance)
+			var center: Vector2 = model.enemy_position(enemy)
 			for step in range(49): ring.append(project(center+Vector2.from_angle(TAU*step/48)*Model.Banks.RADIUS))
 			draw_polyline(ring,Color(0.62,0.79,0.43,0.42),1.4,true)
 		for event in model.protection_events:
@@ -506,7 +525,7 @@ func _draw() -> void:
 			if not model.defenders[slot].is_empty():
 				actors.append({"point": project(_map_slots()[slot]), "defender": model.defenders[slot],"slot":slot,"order":actors.size()})
 		for enemy in model.enemies:
-			actors.append({"point": project(model.point_on_path(enemy.distance)), "enemy": enemy,"order":actors.size()})
+			actors.append({"point": project(model.enemy_position(enemy)), "enemy": enemy,"order":actors.size()})
 		if not ghost.is_empty(): actors.append({"point":ghost.point,"ghost":ghost,"order":actors.size()})
 		actors.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.order < b.order if a.point.y == b.point.y else a.point.y < b.point.y)
 		for actor in actors:
@@ -726,7 +745,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		break
 	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
 	var walking: bool = EnemyWalkArt.supports(id)
-	var body: Transform2D = enemy_body_transform(enemy,enemy_facing(enemy,model.path_points,model.path_length),pose,model.elapsed,model.active and not walking)
+	var body: Transform2D = enemy_body_transform(enemy,enemy_facing(enemy,model.enemy_route_points(enemy),model.enemy_route_length(enemy)),pose,model.elapsed,model.active and not walking)
 	body.origin += center
 	draw_set_transform_matrix(body)
 	if walking:

@@ -25,6 +25,7 @@ var enemy_hp_percent: int = 100
 var path_points: Array[Vector2] = []
 var slots: Array[Vector2] = []
 var path_length: float
+var routes: Array[Dictionary] = []
 const INITIAL_GOLD: int = 150
 const INITIAL_HP: int = 20
 
@@ -97,6 +98,7 @@ func _init(enable_synergies: bool = true, definition: Dictionary = {}) -> void:
 	path_points.assign(map_definition.path_points)
 	slots.assign(map_definition.slots)
 	path_length = map_definition.path_length
+	if map_definition.has("routes"): routes = Routes.network_copy(map_definition.routes)
 	synergies_enabled = enable_synergies
 	rng.randomize()
 	reset()
@@ -372,6 +374,7 @@ func _refresh_windows() -> void:
 	for slot in range(defenders.size()):
 		if not defenders[slot].is_empty():
 			defenders[slot].windows = coverage_windows(slots[slot], get_stats(slot).range, path_points)
+			if not routes.is_empty(): defenders[slot].route_windows = Routes.network_coverage(slots[slot],get_stats(slot).range,routes)
 
 func purchase_cost(type: int) -> int:
 	return _discounted_cost(base_recruit_cost(type),10,bonuses)
@@ -510,6 +513,8 @@ func sell(slot: int) -> bool:
 func start() -> bool:
 	if phase != "preparation":
 		return false
+	for entry in spawn_schedule:
+		if entry.has("route_id") and route_by_id(entry.route_id).is_empty(): return false
 	if initial_rng_state.is_empty():
 		initial_rng_seed = str(rng.seed)
 		initial_rng_state = str(rng.state)
@@ -548,12 +553,12 @@ func _next_event_time() -> float:
 	for curse in curses:
 		next_time = minf(next_time, curse.next_at)
 	for enemy in enemies:
-		next_time = minf(next_time, enemy.spawn_time + path_length / enemy.get("speed", 1.0))
+		next_time = minf(next_time, enemy.spawn_time + enemy_route_length(enemy) / enemy.get("speed", 1.0))
 	for defender in defenders:
 		if defender.is_empty():
 			continue
 		for enemy in enemies:
-			for window in defender.windows:
+			for window in _windows_for(defender,enemy):
 				var first: float = maxf(defender.ready_at, enemy.spawn_time + window.first / enemy.get("speed", 1.0))
 				var last: float = enemy.spawn_time + window.last / enemy.get("speed", 1.0)
 				if first > elapsed + EPS and first <= last + EPS:
@@ -562,13 +567,15 @@ func _next_event_time() -> float:
 
 func _update_positions() -> void:
 	for enemy in enemies:
-		enemy.distance = clampf((elapsed - enemy.spawn_time) * enemy.get("speed", 1.0), 0.0, path_length)
+		enemy.distance = clampf((elapsed - enemy.spawn_time) * enemy.get("speed", 1.0), 0.0, enemy_route_length(enemy))
 
 func _resolve_instant() -> void:
 	# 1. Apparitions et positions ; les arrivants restent ciblables jusqu'à la phase 4.
 	while spawned < spawn_schedule.size() and spawn_schedule[spawned].time <= elapsed + EPS:
 		var entry: Dictionary = spawn_schedule[spawned]
-		enemies.append(make_enemy(spawned, entry.type, entry.time,faction,enemy_hp_percent))
+		var enemy: Dictionary = make_enemy(spawned, entry.type, entry.time,faction,enemy_hp_percent)
+		if not routes.is_empty(): enemy.route_id = entry.get("route_id",routes[spawned%routes.size()].id)
+		enemies.append(enemy)
 		spawned += 1
 	_update_positions()
 	# 2. Anciens ticks additionnés, puis morts retirés avant le choix des nouveaux tirs.
@@ -597,15 +604,15 @@ func _resolve_instant() -> void:
 		var stats: Dictionary = get_stats(slot)
 		var targets: Array[Dictionary] = []
 		for enemy in enemies:
-			for window in defender.windows:
+			for window in _windows_for(defender,enemy):
 				if enemy.distance >= window.first - EPS and enemy.distance <= window.last + EPS:
 					targets.append(enemy)
 					break
 		if targets.is_empty():
 			continue
-		targets.sort_custom(_progress_priority)
+		targets.sort_custom(_target_priority)
 		var primary: Dictionary = targets[0]
-		var impact: Vector2 = point_on_path(primary.distance)
+		var impact: Vector2 = enemy_position(primary)
 		var direct_damage: float = damage_for(stats,"direct",primary)
 		_add_damage(damage, primary.id, direct_damage)
 		hits.append({"source_id":defender.instance_id,"enemy_id":primary.id,"component":"direct","amount":direct_damage})
@@ -618,18 +625,18 @@ func _resolve_instant() -> void:
 			for hit in range(stats.secondary_cap):
 				var candidates: Array[Dictionary] = []
 				for enemy in enemies:
-					var squared: float = separation_squared(origin.distance, enemy.distance, path_points, path_length)
+					var squared: float = enemy_separation_squared(origin,enemy)
 					if enemy.id not in hit_ids and squared < stats.radius * stats.radius:
 						candidates.append({"enemy": enemy, "squared": squared})
 				if candidates.is_empty():
 					break
-				candidates.sort_custom(_secondary_priority)
+				candidates.sort_custom(_nearby_priority)
 				var victim: Dictionary = candidates[0].enemy
 				var secondary_damage: float = damage_for(stats,"secondary",victim)
 				_add_damage(damage, victim.id, secondary_damage)
 				hits.append({"source_id":defender.instance_id,"enemy_id":victim.id,"component":"secondary","amount":secondary_damage})
 				hit_ids.append(victim.id)
-				shot.secondary.append(point_on_path(victim.distance))
+				shot.secondary.append(enemy_position(victim))
 				# Les explosions restent centrées sur l'impact ; les ricochets avancent.
 				if family(defender.type) == 3:
 					origin = victim
@@ -645,7 +652,7 @@ func _resolve_instant() -> void:
 	var survivors: Array[Dictionary] = []
 	var arrival_damage: int = 0
 	for enemy in enemies:
-		if enemy.distance >= path_length - EPS:
+		if enemy.distance >= enemy_route_length(enemy) - EPS:
 			escaped += 1
 			total_escaped += 1
 			arrival_damage += enemy.get("fortress_damage", 1)
@@ -691,7 +698,7 @@ func _purge_curses() -> void:
 func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 	if enemies.any(func(enemy): return enemy.get("type",1) == Banks.GUARD_TYPE):
 		var positions: Dictionary = {}
-		for enemy in enemies: positions[enemy.id] = point_on_path(enemy.distance)
+		for enemy in enemies: positions[enemy.id] = enemy_position(enemy)
 		var redirected: Dictionary = Banks.redirect(enemies,damage,hits,positions)
 		damage = redirected.damage;hits = redirected.hits
 		for transfer in redirected.transfers:
@@ -706,7 +713,7 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 		if enemy.hp < hp_before:
 			damage_events.append({"time":elapsed,"enemy_id":enemy.id,"hp_before":hp_before,"hp_after":maxf(0.0,enemy.hp)})
 		if enemy.hp <= 0.0:
-			elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":point_on_path(enemy.distance)})
+			elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":enemy_position(enemy)})
 			killed += 1
 			total_killed += 1
 			var reward: int = enemy.get("reward", 3)
@@ -730,10 +737,22 @@ func _apply_curse(source_id: int, enemy_id: int, damage: float) -> void:
 static func _add_damage(damage: Dictionary, id: int, amount: float) -> void:
 	damage[id] = damage.get(id, 0.0) + amount
 
+func _target_priority(a: Dictionary, b: Dictionary) -> bool:
+	if not routes.is_empty():
+		var first: float = enemy_route_length(a)-a.distance
+		var second: float = enemy_route_length(b)-b.distance
+		if first != second: return first < second
+		return a.id < b.id
+	return _progress_priority(a,b)
+
 static func _progress_priority(a: Dictionary, b: Dictionary) -> bool:
 	if a.distance != b.distance:
 		return a.distance > b.distance
 	return a.id < b.id
+
+func _nearby_priority(a: Dictionary, b: Dictionary) -> bool:
+	if a.squared != b.squared: return a.squared < b.squared
+	return _target_priority(a.enemy,b.enemy)
 
 static func _secondary_priority(a: Dictionary, b: Dictionary) -> bool:
 	if a.squared != b.squared:
@@ -742,6 +761,32 @@ static func _secondary_priority(a: Dictionary, b: Dictionary) -> bool:
 
 func point_on_path(progress: float) -> Vector2:
 	return position_at(progress, path_points, path_length)
+
+func route_by_id(id: Variant) -> Dictionary:
+	if not id is String: return {}
+	for route in routes:
+		if route.id==id: return route
+	return {}
+
+func enemy_route(enemy: Dictionary) -> Dictionary:
+	return route_by_id(enemy.get("route_id",""))
+
+func enemy_route_length(enemy: Dictionary) -> float:
+	return path_length if routes.is_empty() else float(enemy_route(enemy).path_length)
+
+func enemy_route_points(enemy: Dictionary) -> Array[Vector2]:
+	if routes.is_empty(): return path_points
+	var route: Dictionary = enemy_route(enemy)
+	var points: Array[Vector2] = [];points.assign(route.path_points);return points
+
+func enemy_position(enemy: Dictionary) -> Vector2:
+	return position_at(enemy.distance,enemy_route_points(enemy),enemy_route_length(enemy))
+
+func enemy_separation_squared(first: Dictionary, second: Dictionary) -> float:
+	return Routes.cross_separation_squared(first.distance,enemy_route_points(first),enemy_route_length(first),second.distance,enemy_route_points(second),enemy_route_length(second))
+
+func _windows_for(defender: Dictionary, enemy: Dictionary) -> Array:
+	return defender.get("route_windows",{}).get(enemy.get("route_id",""),[]) if not routes.is_empty() else defender.windows
 
 static func coverage_windows(center: Vector2, radius: float, route_points: Array[Vector2] = PATH_POINTS) -> Array[Dictionary]:
 	return Routes.coverage_windows(center,radius,route_points)
