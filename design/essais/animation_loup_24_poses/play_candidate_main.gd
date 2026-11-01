@@ -4,8 +4,13 @@ func _ready() -> void:
 	map_view.free()
 	map_view = CandidateView.new()
 	mission_definition = {}
+	meta_profile = MetaProfile.new("")
 	super._ready()
-	assert(meta_profile==null,"L'essai du loup ne doit charger aucun profil joueur.")
-	version_label.text = "ESSAI LOUP · 24 POSES · Aucun gain de progression"
+	assert(meta_profile!=null and meta_profile.path.is_empty(),"L'essai du loup doit utiliser uniquement un profil éphémère.")
+	version_label.text = "ESSAI LOUP · 24 POSES · Profil temporaire non enregistré"
 	get_window().title = "For the Fortress! — Essai du loup à 24 poses"
-	print("WOLF24_PLAYABLE=",JSON.stringify({"poses":24,"profile_loaded":meta_profile!=null,"base_version":ProjectSettings.get_setting("application/config/version"),"candidate_texture":map_view.candidate!=null}))
+	print("WOLF24_PLAYABLE=",JSON.stringify({"poses":24,"player_profile_loaded":not meta_profile.path.is_empty(),"temporary_profile":true,"base_version":ProjectSettings.get_setting("application/config/version"),"candidate_texture":map_view.candidate!=null}))
+
+func _choose_faction(choice: int,replacement: RefCounted=null) -> void:
+	super._choose_faction(choice,replacement)
+	if not choosing_faction: get_window().title = "For the Fortress! — Essai du loup à 24 poses — "+model.map_definition.title
