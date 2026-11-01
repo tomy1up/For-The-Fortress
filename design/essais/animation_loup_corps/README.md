@@ -1,5 +1,7 @@
 # Loup — corps animé et pattes conservées
 
+**Retour suivant du porteur :** corps jugé bien meilleur, mais raccords des pattes toujours trop dissociés. Cette animation complète n’est donc pas validée. Une [étude de peau continue](../loup_peau_continue/README.md) reprend la construction des jonctions avant de produire un nouveau cycle.
+
 ## Retour du porteur et statut
 
 Le porteur juge les pattes du précédent essai « parfaites », mais le corps trop fixe : impression de tube porté par des pattes. **Les pattes sont validées ; cette nouvelle animation du corps reste une proposition à valider.** Aucune extension aux autres unités, ni remplacement du rendu du jeu publié, avant ce retour.

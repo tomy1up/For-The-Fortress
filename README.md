@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Animation : étude d’une peau continue** : [diagnostic, base graphique et premier essai natif](design/essais/loup_peau_continue/README.md). Après amélioration des appuis et du corps, les raccords des membres restent insatisfaisants. Le nouveau montage teste une surface commune aux épaules et aux hanches ; il ne constitue pas encore un cycle de marche.
+
 **Prototype v0.107 — annonces par entrée et ciblage à l’arrivée** : [règles, contrôles et limites](design/Atelier_routes_v0107.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.107). Dans l’atelier à deux entrées, les préparatifs annoncent les effectifs par trajet et les défenseurs privilégient la cible qui atteindra le plus tôt la forteresse, selon sa vitesse. Les anciens rapports gardent leur règle historique.
 
 **Loup : pattes validées, corps à valider** : [nouvel essai du corps et comparatif](design/essais/animation_loup_corps/README.md). Les trajectoires des pattes approuvées sont conservées ; épaules, bassin, dos, tête et queue sont animés. Cet essai reste séparé de la version publiée en attendant la validation visuelle du porteur.
