@@ -1,6 +1,6 @@
 # Suivi du prototype
 
-État du 31 octobre 2026 — prototype v0.104, GDD principal v0.16 (référence jeu v0.101) et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 1 novembre 2026 — prototype v0.104, GDD principal v0.17 (référence jeu v0.104) et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
 
 ## Nouveau lot — chapitre 2 et Gardienne à l’essai
 
@@ -560,3 +560,7 @@ Le porteur du projet retient la version sombre pour sa cohérence avec les autre
 ## GDD 0.16 et décisions du 31 octobre 2026
 
 Consolidation Word et Markdown sur le jeu 0.101 : dix missions, quatre alternatives, prix et branches H, talents partagés par famille et schéma 7. Biomes, difficultés et succès séparés du contenu réalisé. [Succès](Succes_2026-10-31.md) : liste ouverte, unités envisagées après vingt chapitres dans chaque difficulté. [Infini](Infini_difficultes_2026-10-31.md) : trois difficultés, accès après les dix premiers chapitres de campagne correspondants, par faction. Vérification documentaire : 65 pages examinées, 75 tableaux identiques, 58 entrées de sommaire contrôlées, socle numérique préservé. Aucun changement de binaire ou de profil.
+
+## GDD 0.17 — consolidation du 1 novembre 2026
+
+Word et Markdown consolidés sur le jeu 0.104 : vingt missions sur dix tracés, nouvelles rencontres du chapitre 2 et Gardienne à l’essai, réactions corporelles, forteresses et souverains propres aux factions. Les futures animations détaillées et variantes de routes, entrées et forteresses restent à réaliser ; leurs questions de PV et de défaite restent ouvertes. 70 pages relues, 79 tableaux identiques, 60 destinations de sommaire vérifiées, 126 talents conservés et 51 seuils XP comparés au moteur. Les vingt missions et les dix vagues du chapitre 2 concordent avec les données du jeu : 163 ennemis, dont 13 tortues, pour 712 or maximal. Les 17 tests Python passent. Aucun changement de source du prototype, de profil ou de binaire. [Vérification documentaire](essais/gdd_v017_verification.json).

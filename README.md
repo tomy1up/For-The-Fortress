@@ -8,7 +8,7 @@
 
 **Chantiers visuels et futurs parcours** : animations des défenseurs synchronisées aux projectiles, réactions des attaquants aux dégâts, forteresse et roi propres à chaque faction, puis entrées multiples, routes convergentes et plusieurs forteresses. [TODO et questions ouvertes](design/Feuille_de_route_long_terme.md). À développer.
 
-**GDD 0.16 — référence jeu 0.101** : documents Word et Markdown synchronisés, dix missions, boutique, talents par famille et sauvegarde au schéma 7. Les règles futures de biomes, difficultés et succès sont distinguées du contenu jouable.
+**GDD 0.17 — référence jeu 0.104** : documents Word et Markdown synchronisés, vingt missions sur dix tracés, Gardienne du chapitre 2 à l’essai, boutique, talents par famille et sauvegarde au schéma 7. Réactions aux dégâts, forteresses et souverains documentés ; animations détaillées, routes multiples, biomes, difficultés et succès restent des chantiers distincts.
 
 **Mode infini** : [Normal, Héroïque et Mythique](design/Infini_difficultes_2026-10-31.md), chacun ouvert après les dix premiers chapitres de campagne dans la difficulté correspondante, par faction. À développer.
 
@@ -42,7 +42,7 @@ Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantas
 
 - [GDD Word](For_the_Fortress_GDD.docx) : présentation structurée avec sommaire et tableaux.
 - [GDD Markdown](For_the_Fortress_GDD.md) : référence éditoriale adaptée au versionnement Git.
-- Version documentaire : **0.16 — 31 octobre 2026**, consolidée pour le jeu **0.101** : socle de combat, dix premières missions, XP, 51 points par faction, arbres liés à quatre colonnes, reset gratuit, boutique et sauvegarde persistante. Le catalogue des 126 talents est inclus. Le chapitre 2 de la v0.102 et les nouvelles demandes visuelles sont décrits dans les fiches complémentaires ci-dessus, en attente de prochaine consolidation Word/Markdown.
+- Version documentaire : **0.17 — 1 novembre 2026**, consolidée pour le jeu **0.104** : 70 pages, 60 sections et 79 tableaux identiques en Word et Markdown. Socle de combat conservé, vingt missions, XP, 51 points par faction, catalogue des 126 talents, arbres liés à quatre colonnes, reset gratuit, boutique et sauvegarde persistante. Le chapitre 2, la Gardienne à l’essai et les premières animations corporelles et royales sont intégrés. Les futurs tracés à plusieurs entrées, jonctions et forteresses sont distingués du contenu réalisé. [Contrôles documentaires](design/essais/gdd_v017_verification.json).
 
 ## Mécaniques établies
 

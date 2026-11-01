@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.16 — 31 octobre 2026
+Game Design Document — Version 0.17 — 1 novembre 2026
 
-Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, les dix missions jouables, la progression persistante par faction et la boutique du prototype Windows 0.101. Les biomes et les difficultés avancées décrivent la conception à long terme, encore à réaliser.
+Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, les vingt missions jouables, la progression persistante par faction, la boutique et la présentation du prototype Windows 0.104. Le chapitre 2 met une Gardienne à l’essai ; son rôle et ses chiffres restent provisoires. Les autres biomes, les difficultés avancées et les cartes à plusieurs routes décrivent la conception à long terme, encore à réaliser.
 
-**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès. Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
+**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains. Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.16 ; jeu de référence 0.101.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.17 ; jeu de référence 0.104.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -16,7 +16,7 @@ Nom de travail — disponibilité juridique à confirmer.
 2. [2 Boucle de jeu et carte du prototype](#s2)
 3. [3 Factions races et classes](#s3)
 4. [4 Statistiques niveaux et spécialisations](#s4)
-5. [5 Combat des défenseurs de l Alliance](#s5)
+5. [5 Combat des défenseurs Alliance](#s5)
 6. [6 Combat des défenseurs de la Horde](#s6)
 7. [7 Économie et calculs de référence](#s7)
 8. [8 Bonus roguelite et synergies](#s8)
@@ -26,7 +26,7 @@ Nom de travail — disponibilité juridique à confirmer.
 12. [12 Progression et dégâts par niveau](#s12)
 13. [13 Coûts et lecture de la progression](#s13)
 14. [14 Choix des spécialisations](#s14)
-15. [15 Spécialisations de l Alliance](#s15)
+15. [15 Spécialisations Alliance](#s15)
 16. [16 Rebonds et explosifs spécialisés](#s16)
 17. [17 Spécialisations du chaman](#s17)
 18. [18 Géométrie de La Vallée du Gué](#s18)
@@ -70,6 +70,8 @@ Nom de travail — disponibilité juridique à confirmer.
 56. [56 État vérifié et prochaines décisions](#s56)
 57. [57 Boutique et unités alternatives](#s57)
 58. [58 Succès et récompenses de campagne](#s58)
+59. [59 Chapitre deux et Gardienne des berges](#s59)
+60. [60 Présentation et animations du prototype](#s60)
 
 <a id="s1"></a>
 
@@ -132,7 +134,7 @@ La carte initiale est une scène médiévale-fantasy en vue isométrique. Elle c
 
 | Paramètre du prototype | Valeur de référence | Statut |
 | --- | --- | --- |
-| Cartes jouables | 10 dans le même thème ; détails en section 52 | V pour l’extension de l’essai ; H pour les géométries |
+| Tracés et missions | 10 tracés et 20 missions dans le même biome ; section 52 | V pour l’extension de l’essai ; H pour les géométries |
 | Emplacements de construction | 6 | C |
 | Vagues | 10 | C |
 | Or initial de combat | 150 or, distinct des PO persistantes | H — valeur de départ à tester |
@@ -205,10 +207,10 @@ Chaque défenseur peut être amélioré jusqu’au niveau 4 — V. Le niveau 4 d
 
 La lecture séquentielle des trois coûts correspond aux trois améliorations jusqu’au niveau 4. La progression approuvée augmente uniquement les dégâts : × 1,5 au N2, × 2,25 au N3 et × 3,25 au N4, relativement au N1 — valeurs H. Cadence, portée, rayons, plafonds de victimes et horaires des effets restent inchangés — V. Les tableaux complets figurent en sections 12 et 13. Les valeurs finales spécialisées sont détaillées en sections 15 à 17 ; elles restent H.
 
-### Paramètres manquants
-| Domaine | Données à définir — O |
+### Références et paramètres encore ouverts
+| Domaine | État actuel et questions restantes |
 | --- | --- |
-| Attaque | Comportements en sections 5 et 6 ; valeurs N1 à N4 en section 12 |
+| Attaque | Comportements et niveaux définis en sections 5, 6 et 12 ; équilibrage H |
 | Résolution des dégâts | Types et résistances futures ; cumul des bonus et synergies défini |
 | Spécialisations | Noms définitifs, interface et équilibre des branches |
 | Niveaux | Bonus et synergies définis en sections 27 et 33 |
@@ -217,7 +219,7 @@ Le choix de spécialisation est inclus dans le coût du passage au N4. Les effet
 
 <a id="s5"></a>
 
-## 5 Combat des défenseurs de l Alliance
+## 5 Combat des défenseurs Alliance
 
 ### Portée de la validation
 Les rôles, les comportements et les règles communes ci-dessous ont été approuvés pour le prototype dans l’échange suivant le GDD v0.2 — V. Les nombres sont retenus comme réglages initiaux à tester — H. Cette approbation ne les transforme pas en équilibre final et ne définit pas les spécialisations.
@@ -364,10 +366,10 @@ Recalculer conditions et valeurs après construction, amélioration, choix de br
 ## 9 Ennemis et boss du prototype
 
 ### Périmètre et statut des valeurs
-Sept archétypes ordinaires et un boss distinct sont retenus pour le prototype — V. Leurs noms restent provisoires. Les PV, vitesses, dégâts à la forteresse et récompenses sont des réglages initiaux — H. Les premiers essais distinguent les ennemis par leur endurance, leur vitesse et leur nombre, sans résistances ni capacités spéciales supplémentaires.
+Le socle du premier chapitre retient sept archétypes ordinaires et un boss distinct — V. Leurs noms restent provisoires. Le chapitre 2 ajoute un neuvième profil, la tortue gardienne, à l’essai en section 59 — H. Les PV, vitesses, dégâts à la forteresse et récompenses sont des réglages initiaux — H. Ces huit profils du socle se distinguent par leur endurance, leur vitesse et leur nombre, sans résistances ni capacités spéciales supplémentaires. Cette limite ne s’étend pas à la capacité de transfert de dégâts du chapitre 2.
 
 ### Origine des attaquants
-Les intitulés Grouillant, Pillard et suivants désignent les profils de combat utilisés dans les tableaux et les dix vagues. En jeu, le loup, le sanglier et l’ours sont neutres et communs aux deux camps. Les autres identités proviennent de la faction adverse : jouer Horde fait affronter des attaquants Alliance, et inversement. Ces attaquants ne sont pas les défenseurs recrutables de l’autre faction. La répartition et les identités actuelles sont documentées dans `design/Catalogue_attaquants_v065.md` ; les noms et représentations restent évolutifs. Les descriptions de bonus, talents et inspection doivent respecter la faction jouée.
+Les intitulés Grouillant, Pillard et suivants désignent les profils de combat utilisés dans les tableaux et les dix vagues du premier chapitre. En jeu, le loup, le sanglier et l’ours sont neutres et communs aux deux camps. Les autres identités proviennent de la faction adverse : jouer Horde fait affronter des attaquants Alliance, et inversement. Ces attaquants ne sont pas les défenseurs recrutables de l’autre faction. La répartition et les identités actuelles sont documentées dans `design/Catalogue_attaquants_v065.md` ; les noms et représentations restent évolutifs. Les descriptions de bonus, talents et inspection doivent respecter la faction jouée.
 
 ### Statistiques initiales
 Les vitesses utilisent l’unité de carte commune aux portées des défenseurs, selon le plan logique approuvé, avec dimensions H. La récompense est exprimée en pièces d’or et créditée uniquement à l’élimination. Tous les nombres de ce tableau sont H.
@@ -400,6 +402,8 @@ Le premier essai ne comporte ni phases ni invocations. Rebonds, explosions et ma
 <a id="s10"></a>
 
 ## 10 Composition des dix vagues
+
+Cette séquence est celle des missions 1 à 10. Les missions 11 à 20 utilisent la séquence distincte de la section 59. Les règles communes de lancement, de fin de vague et de choix de bonus restent applicables aux deux chapitres.
 
 ### Statut et lecture de la séquence
 La séquence et les règles d’apparition sont approuvées pour le prototype — V. Quantités, intervalles et pause de groupe sont des réglages initiaux — H. Les récompenses utilisent les valeurs H de la section 9 ; leurs cumuls sont des calculs dérivés, pas des gains garantis.
@@ -434,6 +438,8 @@ Les vagues 1 à 3 présentent le chemin, les groupes puis la vitesse. Les vagues
 <a id="s11"></a>
 
 ## 11 Calendrier et budget des vagues
+
+Les calendriers, revenus et budgets de cette section concernent la séquence du premier chapitre. Le chapitre 2 conserve la méthode de calendrier, mais possède les groupes et revenus de la section 59.
 
 ### Charge et horaires calculés
 Les horaires indiquent la dernière apparition depuis le lancement de chaque vague, avec les intervalles et séparations de la section 10. Les PV cumulés ne mesurent pas seuls la difficulté.
@@ -593,7 +599,7 @@ Dégâts secondaires exclus. Ces calculs ne garantissent pas la victoire. Tester
 
 <a id="s15"></a>
 
-## 15 Spécialisations de l Alliance
+## 15 Spécialisations Alliance
 
 ### Archer elfe portée ou cadence
 
@@ -873,6 +879,8 @@ Appliquer les événements selon leur instant de jeu. Lorsqu’ils partagent exa
 | 3 | Pour tous les défenseurs prêts, choisir les cibles sur le même état des survivants. Préparer les dégâts directs, explosions et chaînes, puis additionner et appliquer ces dégâts. Retirer les morts, verser leurs récompenses uniques et appliquer ou renouveler les malédictions sur les survivants visés. |
 | 4 | Additionner les dégâts de forteresse de tous les survivants ayant atteint H, puis les retirer sans récompense et annuler leurs effets. |
 | 5 | Vérifier la défaite, puis la fin de vague et la victoire selon les règles existantes. |
+
+Dans le chapitre 2, chaque application de dégâts des phases 2 et 3 intègre d’abord le transfert de la Gardienne sur l’état précédant ces dégâts, selon la section 59. Une Gardienne tuée par les malédictions de phase 2 ne protège plus les tirs de phase 3. L’ordre des phases du socle est conservé.
 
 Pour la phase 3, toutes les cibles et chaînes sont déterminées avant l’application des dégâts de cette phase. Plusieurs défenseurs peuvent donc tirer sur le même ennemi et gaspiller une partie de leurs dégâts. Aucun ne bénéficie d’un ordre arbitraire de traitement des emplacements. Chacun consomme normalement son délai de tir.
 
@@ -1349,7 +1357,7 @@ Ces cas constituent des références de vérification du recrutement et des vent
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
 
-La direction retenue est un cartoon fantasy minimaliste : silhouettes et attributs reconnaissables, lecture rapide à petite taille, couleurs cohérentes entre grandes illustrations et petites unités. Les références World of Warcraft inspirent les codes de rôle et l’organisation des talents ; elles ne constituent pas des assets autorisés à réutiliser. Les six défenseurs disposent d’illustrations originales dans le prototype. Les spécifications finales d’animation, musique et son restent à définir.
+La direction retenue est un cartoon fantasy minimaliste : silhouettes et attributs reconnaissables, lecture rapide à petite taille, couleurs cohérentes entre grandes illustrations et petites unités. Les références World of Warcraft inspirent les codes de rôle et l’organisation des talents ; elles ne constituent pas des assets autorisés à réutiliser. Les défenseurs, attaquants, forteresses et souverains disposent d’illustrations originales dans le prototype. Les premières réactions corporelles et poses royales sont réalisées en section 60 ; cycles de marche, gestes détaillés, musique et son restent à développer ou à préciser.
 
 ### Interface et lisibilité
 Observer les combats, inspecter ses unités et accélérer le déroulement sont des interactions validées. Les panneaux et le parcours sont approuvés en section 41 ; leur mise en forme évolue dans le prototype jouable. Le joueur doit voir la portée avant de recruter, comprendre les effets sans jargon de calcul et ne lire que les unités de sa faction. Les besoins suivants sont retenus — V — pour rendre les systèmes compréhensibles.
@@ -1495,7 +1503,7 @@ Après la demande de recommandation du porteur du projet, Godot avec GDScript et
 | Moteur et langage | Godot 4.7.2 stable standard, GDScript | Choix de réalisation initial, révisable |
 | Présentation | 2D isométrique, visuels temporaires | Choix de réalisation initial |
 | Rendu | Compatibility | Choix de réalisation initial, à vérifier sur le PC cible |
-| Livraison actuelle | Prototype Windows 0.101, dix missions | Publication de test, non version commerciale |
+| Livraison actuelle | Prototype Windows 0.104, vingt missions | Publication de test, non version commerciale |
 | Temps de combat complet | Ordonnanceur conforme aux sections 21 à 24 | Réalisé et couvert par les régressions |
 | Publication | Versions Windows sur dépôt GitHub privé | Aucune publication commerciale engagée |
 
@@ -1508,15 +1516,15 @@ La configuration matérielle minimale, les objectifs de performance et les optio
 ## 47 Périmètre commercial et feuille de route
 
 ### Contenu actuel et cibles
-| Élément | Prototype Windows 0.101 | Orientation long terme |
+| Élément | Prototype Windows 0.104 | Orientation long terme |
 | --- | --- | --- |
 | Factions | 2, parcours indépendants | 2 — V |
 | Défenseurs | 6 de départ et 4 alternatives de boutique ; 3 types de départ et 1 alternative optionnelle par mission | 16, soit 8 par faction — ancienne cible C à réexaminer avec la boutique |
-| Missions | 10 missions de 10 vagues | 200 missions — C, pas un contenu déjà livré |
-| Chapitres et thèmes | Parcours préparé, 190 missions à venir | 20 chapitres de 10 missions, thème tous les 2 chapitres — C |
+| Missions | 20 missions de 10 vagues sur 10 tracés, avec deux séquences de rencontres | 200 missions — C, pas un contenu déjà livré |
+| Chapitres et thèmes | 2 chapitres dans le thème du Gué, 180 missions à venir | 20 chapitres de 10 missions, thème tous les 2 chapitres — C |
 | Bonus de mission | 12, valeurs H | Environ 60 — ancienne cible C à réévaluer |
 | Talents persistants | 3 arbres et 63 talents par faction ; plafond 51 points | Choix de builds — V ; contenu et puissance H |
-| Ennemis | 7 profils ordinaires et 1 boss ; identités neutres ou adverses | Environ 12 familles et 6 boss — anciennes cibles C |
+| Ennemis | 8 profils du socle et 1 Gardienne à l’essai ; 14 identités neutres ou adverses | Environ 12 familles et 6 boss — anciennes cibles C |
 | Boutique | Deux alternatives par faction, choix de la quatrième unité avant mission | Unités ouvrant des possibilités, avec forces et faiblesses — V pour l’orientation |
 | Infini | Non jouable | Normal, Héroïque et Mythique ; accès après les 10 premiers chapitres de campagne correspondants, par faction — V |
 | Évènements | Absents | Idée à examiner — O |
@@ -1529,15 +1537,27 @@ La campagne de 200 missions remplace la première cible de six cartes comme stru
 | Socle de combat | Réalisé : deux factions, dix vagues, économie, branches, bonus et synergies | Régressions et paquet Windows vérifiés à chaque version |
 | Présentation | Cartoon et lisibilité en cours ; portée avant achat, inspection et bilans présents | Essais humains sur la compréhension et la lecture à petite taille |
 | Progression | XP, 51 points, trois arbres, reset gratuit, sauvegarde protégée réalisés | Préserver les gains, contrôler les seuils et l’absence de double récompense |
-| Premier échantillon | Dix missions jouables ; 100 à 109 % de PV, récompenses H | Comparer les deux factions et plusieurs compositions sans conclure sur quelques parties |
+| Deux premiers chapitres | Vingt missions jouables ; 100 à 119 % de PV, rencontres et récompenses H | Comparer les deux factions et plusieurs compositions sans conclure sur quelques parties |
 | Économie et talents | Réviser courbe XP, gains de PO, puissance et variété des talents | Une difficulté exigeante, sans achat obligatoire ni build écrasant toutes les situations |
-| Campagne étendue | Préparer le second chapitre et sa première nouveauté après bilan du premier | Contenu, charge, courbe et nouvelles mécaniques explicitement définis |
+| Campagne étendue | Évaluer la Gardienne du chapitre 2 puis préparer les prochains biomes et tracés | Contenu, charge, courbe et nouvelles mécaniques explicitement définis |
 | Boutique | Premier catalogue réalisé ; mesurer les compromis, les prix et le partage des talents | Effets, contraintes de recrutement et équilibre validés avant réalisation |
 | Succès | Prévoir le système et définir sa liste ; unités envisagées après les 20 chapitres de chaque difficulté | Critères, portée par faction et récompenses précisés avant attribution persistante |
 | Infini et évènements | À concevoir après les fondations de campagne | But durable, génération, records et récompenses à décider |
 | Préparation commerciale | Performances, accessibilité, droits, distribution Steam et sauvegarde en ligne | Vérifications dédiées ; aucun calendrier supposé |
 
 L’introduction de nouveautés vise les blocs 11–20, 31–40, 51–60, etc., puis des réapparitions ponctuelles. Le principe de nouveaux attaquants ou d’un affixe de biome est validé ; leurs effets précis restent ouverts. Les premières missions doivent rester jouables sans talents ; la fréquence souhaitée des défaites et la difficulté après acquisition des talents sont à mesurer. Les essais automatiques vérifient le fonctionnement et explorent des stratégies, ils ne mesurent pas le taux de victoire humain.
+
+
+### Variantes de routes et de forteresses
+Le porteur du projet demande de varier les prochains chapitres avec plusieurs entrées, des chemins doubles ou multiples qui se rejoignent, des sorties distinctes et des cartes à plusieurs forteresses — V pour ces orientations. Le prototype actuel garde une entrée, un trajet et une forteresse par mission. Ces variantes ne deviennent pas jouables par leur seule présence dans la feuille de route.
+
+| Variante demandée | Objectif de conception | Règles encore ouvertes |
+| --- | --- | --- |
+| Plusieurs entrées | Répartir les groupes et les zones de couverture | Annonce, calendrier et affectation des groupes |
+| Routes convergentes | Faire évoluer les choix avant et après une jonction | Géométries, priorités et attaques simultanées |
+| Sorties et forteresses multiples | Répartir la défense entre plusieurs destinations | PV propres ou partagés, défaite à la perte d’une seule ou de toutes, devenir d’une route dont la forteresse est détruite |
+
+Les animations demandées concernent tous les défenseurs et attaquants. Les gestes des défenseurs doivent correspondre à leurs projectiles. Les réactions aux dégâts doivent dépasser le seul clignotement. Forteresse et roi doivent porter les codes de leur faction. L’état de réalisation est décrit en section 60 ; une première animation de l’illustration entière ne remplace pas des cycles de marche ou de membres complets.
 
 ### Nom de travail
 For the Fortress! reste un nom de travail. Sa disponibilité juridique doit être confirmée avant de le retenir pour une commercialisation. Aucune recherche de marque, de titre de jeu ou de nom de domaine n’est réputée accomplie par ce GDD. Les noms de factions restent également provisoires.
@@ -1604,6 +1624,10 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | CAMP-016 | Extension jouable aux missions 4 à 10 — V pour l’essai | Géométries, récompenses et courbe restent H |
 | MAJ-13 | Prévoir un système de succès — V pour le principe | Liste O ; unités de fin des 20 chapitres Normal, Héroïque et Mythique proposées par le porteur du projet |
 | MAJ-14 | Infini Normal, Héroïque et Mythique — V | Chaque accès exige les 10 premiers chapitres de campagne dans la même difficulté et la même faction ; règles de combat O |
+| MAJ-15 | Premier nouvel attaquant de biome pour les missions 11 à 20 — V pour l’essai | Tortue et rôle Gardienne proposés ; hésitation Gardienne ou Protectrice non résolue, chiffres H |
+| MAJ-16 | Animer les unités ; gestes des défenseurs cohérents avec leurs projectiles, réactions corporelles des attaquants — V | Réactions v0.103 réalisées ; cycles de marche et gestes détaillés restent à développer |
+| MAJ-17 | Forteresse et roi au sommet propres à chaque faction, avec réaction aux pertes de PV — V | Première réalisation v0.104 ; apparences, poses et durées H |
+| MAJ-18 | Varier les entrées, jonctions, sorties et nombre de forteresses dans les prochains chapitres — V | Règles de circulation, PV et conditions de défaite O |
 
 <a id="s49"></a>
 
@@ -1617,6 +1641,9 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-006 | Équilibrage des vagues et capacités futures du boss | Partie complète |
 | O-007 | Équilibre des talents persistants, ergonomie finale et accessibilité | Expérience globale ; persistance déjà validée |
 | O-008 | Prix final, périmètre commercial et nom | Plan de production |
+| O-009 | Choix définitif Gardienne ou Protectrice, puis PV, rayon et transfert | Retours sur le chapitre 2 |
+| O-010 | PV et défaite des cartes à plusieurs forteresses, affectation et réorientation des routes | Conception des futurs tracés |
+| O-011 | Cycles de marche, animation des membres, gestes synchronisés et transitions royales | Production artistique et lisibilité à petite taille |
 
 <a id="s50"></a>
 
@@ -1656,6 +1683,8 @@ Version 0.15 — 30 octobre 2026 : consolidation de la campagne, des trois missi
 
 Version 0.16 — 31 octobre 2026 : dix missions, boutique et alternatives, talents partagés par famille, sauvegarde au schéma 7, prix du grenadier à 75 or en hypothèse et décisions long terme sur les biomes et les difficultés. Référence jouable 0.101 ; principe des succès et premières pistes de récompenses ajoutés.
 
+Version 0.17 — 1 novembre 2026 : consolidation du jeu 0.104, vingt missions, Gardienne à l’essai, réactions corporelles, forteresses et souverains ; demandes futures sur les animations et les routes multiples. Conservation des tableaux du socle, de la boutique et des 126 talents. Le choix Gardienne ou Protectrice et les nouvelles apparences restent ouverts ou H.
+
 <a id="s51"></a>
 
 ## 51 Maintenance du GDD
@@ -1683,7 +1712,7 @@ Chaque faction conserve ses propres missions gagnées, PO, XP et talents. Une mi
 
 Chaque nouvelle mission commence avec une forteresse intacte, son maximum de PV tenant compte des talents actifs, l’or de combat initial, aucun défenseur, aucune branche ni bonus de la mission précédente. Les talents sont fixés au lancement ; les arbres sont consultables et modifiables entre missions, après résolution de la précédente. La ressource de combat ne se transforme pas en PO persistantes.
 
-### Dix missions du premier chapitre
+### Vingt missions des deux premiers chapitres
 | Mission | Carte du prototype | Emplacements | PV ennemis | Première victoire proposée |
 | --- | --- | --- | --- | --- |
 | 1 | La Vallée du Gué | 6 | 100 % | 60 PO et 100 XP |
@@ -1696,10 +1725,20 @@ Chaque nouvelle mission commence avec une forteresse intacte, son maximum de PV 
 | 8 | Le Sentier du Gué | 6 | 107 % | 60 PO et 100 XP |
 | 9 | Les Abords du Gué | 6 | 108 % | 60 PO et 100 XP |
 | 10 | Les Remparts du Gué | 6 | 109 % | 60 PO et 100 XP |
+| 11 | La Vallée du Gué | 6 | 110 % | 60 PO et 100 XP |
+| 12 | Le Bois du Gué | 6 | 111 % | 60 PO et 100 XP |
+| 13 | Les Hauts du Gué | 6 | 112 % | 60 PO et 100 XP |
+| 14 | Les Détours du Gué | 6 | 113 % | 60 PO et 100 XP |
+| 15 | La Clairière du Gué | 6 | 114 % | 60 PO et 100 XP |
+| 16 | Le Défilé du Gué | 6 | 115 % | 60 PO et 100 XP |
+| 17 | Les Lacets du Gué | 6 | 116 % | 60 PO et 100 XP |
+| 18 | Le Sentier du Gué | 6 | 117 % | 60 PO et 100 XP |
+| 19 | Les Abords du Gué | 6 | 118 % | 60 PO et 100 XP |
+| 20 | Les Remparts du Gué | 6 | 119 % | 60 PO et 100 XP |
 
 L’extension aux missions 4 à 10 est retenue pour l’essai. Noms, géométries, positions, déblocage séquentiel et récompenses sont H. Les dix compositions et espacements de vagues sont conservés pour comparer les cartes. Seuls les PV ennemis suivent ici 100 à 109 % ; vitesse, dégâts à la forteresse et or par élimination restent identiques. La simulation ne tronque pas les PV : un ennemi à 40 PV passe à 40,4 dans la mission 2. Le +1 % est une règle d’essai, pas une preuve de difficulté graduelle à chaque carte.
 
-Une défaite ou une nouvelle victoire sur une mission déjà gagnée ne donne ni XP ni PO de première victoire. Après dix premières victoires, un profil neuf totalise 1 000 XP, cinq points de talent et 600 PO hors achats. Les missions 11 à 200 restent à venir ; leurs tracés et récompenses ne sont pas livrés.
+Une défaite ou une nouvelle victoire sur une mission déjà gagnée ne donne ni XP ni PO de première victoire. Après dix premières victoires, un profil neuf totalise 1 000 XP, cinq points de talent et 600 PO hors achats. Le chapitre 2 réutilise les dix tracés existants avec les nouvelles rencontres de la section 59 ; ce ne sont pas dix géométries supplémentaires. Après vingt premières victoires, un profil neuf totalise 2 000 XP, dix points de talent et 1 200 PO hors achats. Les missions 21 à 200 restent à venir ; leurs tracés et récompenses ne sont pas livrés.
 
 ### Biomes et accumulation
 La cible est de 200 missions, 20 chapitres de 10 missions, avec un biome par paire de chapitres : 1–2, 3–4, 5–6, etc. Les chapitres pairs introduisent une nouveauté sur leur bloc : missions 11–20, 31–40, 51–60, etc. Elle peut prendre la forme de nouveaux attaquants propres au biome ou d’un affixe affaiblissant certains défenseurs ou renforçant certains attaquants. Les effets, cibles, intensités et combinaisons restent O.
@@ -1754,7 +1793,7 @@ L’objectif validé est d’acquérir les 51 points en gagnant les 100 premièr
 | 99 | 9 900 | 50 |
 | 100 | 10 000 | 51 |
 
-Premier seuil : 197 XP ; deuxième : 393 XP. Le premier point est donc disponible après la mission 2 de l’essai. Ce barème n’approuve pas les montants des 190 missions non réalisées ni une progression au-delà du plafond. Les PO continuent à être prévues sur les missions 101–200 ; usages et montants restent ouverts.
+Premier seuil : 197 XP ; deuxième : 393 XP. Le premier point est donc disponible après la mission 2 de l’essai. Ce barème n’approuve pas les montants des 180 missions non réalisées ni une progression au-delà du plafond. Les PO continuent à être prévues sur les missions 101–200 ; usages et montants restent ouverts.
 
 <a id="s54"></a>
 
@@ -1774,7 +1813,7 @@ Cette protection empêche l’édition triviale du fichier ; elle ne garantit pa
 
 ## 55 Catalogue des talents du prototype
 
-Les tableaux suivants reprennent le catalogue de référence v0.89, toujours utilisé comme socle par le jeu 0.101 ; les bénéficiaires de famille sont étendus aux alternatives selon la section 57. Les effets sont indiqués par rang. Toutes les valeurs, positions précises, noms et chaînes proposés restent H. Les numéros de ligne désignent les sept paliers logiques ; le palier 20 occupe deux rangées visuelles. Un parent indiqué doit être entièrement amélioré, en plus du seuil de points. Ces tableaux ne sont pas une validation définitive de l’équilibrage.
+Les tableaux suivants reprennent le catalogue de référence v0.89, toujours utilisé comme socle par le jeu 0.104 ; les bénéficiaires de famille sont étendus aux alternatives selon la section 57. Les effets sont indiqués par rang. Toutes les valeurs, positions précises, noms et chaînes proposés restent H. Les numéros de ligne désignent les sept paliers logiques ; le palier 20 occupe deux rangées visuelles. Un parent indiqué doit être entièrement amélioré, en plus du seuil de points. Ces tableaux ne sont pas une validation définitive de l’équilibrage.
 
 ### Alliance Bastion
 
@@ -1939,19 +1978,19 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 ## 56 État vérifié et prochaines décisions
 
 ### Référence de publication
-Le prototype Windows 0.101 est publié sur le dépôt privé. La régression complète archivée passe 85 suites, 33 103 contrôles Godot et 16 tests Python. Le paquet exporté passe 243 cas, produit 242 captures et compare 56 sources. Les 242 captures ne sont pas toutes examinées visuellement. Trois vues supplémentaires ont été inspectées : boutique Horde, aperçu du grenadier et mousquetaire sombre. Des clics d’achat, sélection et recrutement passent 24 contrôles avec le moteur complet chargé sur les ressources du paquet.
+Le prototype Windows 0.104 est publié sur le dépôt privé. La régression complète archivée passe 88 suites, 36 772 contrôles Godot et 17 tests Python. Le paquet exporté passe 21 cas ciblés sur 255 disponibles, produit 20 captures et compare 68 sources. Il ne s’agit pas d’une vérification native exhaustive. Les quatre poses royales et les quatre états des bâtiments sont contrôlés dans les deux factions. Les centres des six placements sont dégagés sur les vingt missions.
 
-Ces vérifications portent sur le fonctionnement, pas sur la compréhension de tous les joueurs ou l’équilibrage définitif. Elles n’annoncent ni les 200 missions complètes, ni les difficultés avancées, ni l’infini comme réalisés.
+Un atelier agrandi des deux forteresses utilise les ressources du paquet, en 150 échantillons à 30 images par seconde. Les pertes de PV proviennent des arrivées du modèle avec une séquence abrégée ; cet atelier n’est pas une partie jouée. Les vues d’encouragement, de blessure et de défaite ont été inspectées, ainsi que des vues de plateau. Ces vérifications ne démontrent ni une compréhension universelle ni un équilibrage final.
 
 ### Essais et prochaines décisions
-Les simulations de boutique comparent des politiques fixes, des cartes, des talents et des bonus déterminés. Les 7 776 parties de l’essai isolé du grenadier motivent un recrutement à 75 or au lieu de 90, en hypothèse. Elles ne sont pas un taux de victoire humain. Le calendrier de la première amélioration favorise notamment le tarif bas dans une politique : ce biais et les résultats contradictoires selon les stratégies sont conservés dans le compte rendu.
+Les 7 776 simulations historiques du grenadier motivent un recrutement à 75 or au lieu de 90, en hypothèse. Le biais de calendrier de la première amélioration et les résultats variables selon les stratégies restent consignés. Le chapitre 2 a fait l’objet de 40 simulations à placement fixe, puis de 44 tentatives de placement permettant de trouver une victoire pour chacune de ses dix missions dans les deux factions, avec cinq points dans le premier talent et une graine déterminée. Ces politiques diffèrent par leur recrutement et leurs améliorations ; aucun taux de victoire humain n’est déduit de ces exemples.
 
-Priorités : compréhension et intérêt des alternatives, puissance des talents majeurs, difficulté des dix missions, barème de PO et XP sur 100 missions, première nouveauté du chapitre 2, reprise d’une mission interrompue et portabilité des sauvegardes. Chaque ajout de contenu exige des règles précises et un essai ; aucune solution à ces questions n’est réputée approuvée par cette liste.
+Priorités : recueillir un retour sur la Gardienne et les nouvelles apparences, ajuster les rencontres et l’économie, comparer les talents et alternatives, produire les cycles de marche et gestes détaillés, puis cadrer les variantes de routes. Le barème PO et XP des 100 premières missions, la reprise d’une mission interrompue et la portabilité des sauvegardes restent à préciser. Une réalisation technique ne transforme pas une hypothèse en décision approuvée.
 
 ### Sources et preuves
-Les décisions du porteur du projet sont confrontées aux sources historiques de la version 0.15 et aux compléments : `design/Biomes_cumul_2026-10-31.md`, `design/Difficultes_campagne_2026-10-31.md`, `design/Grenadier_prix_v0101.md`, aux scripts `campaign_catalogue.gd`, `shop_catalogue.gd`, `meta_profile.gd` et aux rapports `design/essais/v0101_regression.json` et `design/Distribution_Windows_v0101.json`. Les documents datés décrivent leur version ; les règles actuelles consolidées prévalent.
+Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée à `design/Gardienne_des_berges_v0102.md`, `design/Reactions_corporelles_v0103.md`, `design/Forteresses_souverains_v0104.md` et `design/Feuille_de_route_long_terme.md`, aux scripts de campagne, de combat, de talents et de présentation, ainsi qu’aux rapports `design/essais/v0104_regression.json` et `design/Distribution_Windows_v0104.json`. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.16, jeu 0.101. Cette consolidation ne constitue pas un nouvel essai humain.
+La documentation est versionnée séparément du binaire : GDD 0.17, jeu 0.104. Cette consolidation ne constitue pas un nouvel essai humain ni une nouvelle compilation du jeu.
 
 <a id="s57"></a>
 
@@ -2007,9 +2046,83 @@ Un système de succès est à prévoir ; sa liste complète reste ouverte. Certa
 | Terminer les 20 chapitres de l’Héroïque | Une nouvelle unité débloquée | Piste à préciser |
 | Terminer les 20 chapitres du Mythique | Une nouvelle unité débloquée | Piste à préciser |
 
-Vingt chapitres de dix missions représentent 200 missions par difficulté. Ces objectifs de fin de campagne sont distincts du seuil de 100 premières victoires qui ouvre la difficulté suivante. Les dix missions actuelles ne suffisent donc pas à satisfaire ces objectifs.
+Vingt chapitres de dix missions représentent 200 missions par difficulté. Ces objectifs de fin de campagne sont distincts du seuil de 100 premières victoires qui ouvre la difficulté suivante. Les vingt missions actuelles ne suffisent donc pas à satisfaire ces objectifs.
 
 ### Conditions avant réalisation
 Définir si les succès sont propres à chaque faction ou au compte, et quelle faction reçoit chaque unité. Les parcours, banques et talents restent indépendants ; cette proposition n’autorise aucun transfert de contenu entre les camps. Préciser les critères de réussite, les unités et leurs compromis, les éventuels doublons avec la boutique et leur provenance affichée. Le choix actuel de trois types de départ plus une alternative n’est pas automatiquement élargi par une récompense.
 
-Les récompenses devront être persistantes, attribuées une seule fois et préservées lors des migrations. La présentation des succès et l’intégration éventuelle à Steam restent O. Aucun système de succès dédié n’est livré dans le jeu de référence 0.101. Source : `design/Succes_2026-10-31.md`. Les accès à l’infini sont distincts : dix premiers chapitres de campagne dans la difficulté correspondante, selon `design/Infini_difficultes_2026-10-31.md`.
+Les récompenses devront être persistantes, attribuées une seule fois et préservées lors des migrations. La présentation des succès et l’intégration éventuelle à Steam restent O. Aucun système de succès dédié n’est livré dans le jeu de référence 0.104. Source : `design/Succes_2026-10-31.md`. Les accès à l’infini sont distincts : dix premiers chapitres de campagne dans la difficulté correspondante, selon `design/Infini_difficultes_2026-10-31.md`.
+
+
+<a id="s59"></a>
+
+## 59 Chapitre deux et Gardienne des berges
+
+### Essai et questions de rôle
+Introduire un attaquant de biome aux missions 11 à 20 est retenu pour l’essai. Le porteur hésite entre une tortue Gardienne, qui reçoit des dégâts à la place des voisins, et une Protectrice, qui réduirait ces dégâts sans les recevoir. La Gardienne est la recommandation réalisée en v0.102 ; ce choix n’est pas définitivement validé. Noms, apparence, statistiques et composition des vagues restent H. Les soigneurs, autres protecteurs et affixes sont des pistes de conception, pas des capacités déjà implémentées.
+
+La tortue est une créature neutre, commune aux deux factions. Les autres attaquants conservent leurs identités du camp adverse, sans se confondre avec ses défenseurs recrutables. Le chapitre 2 réutilise les dix tracés du premier chapitre dans le même biome, avec un jeu de rencontres distinct et 110 à 119 % des PV de référence.
+
+| Paramètre de la Gardienne | Réglage du prototype H |
+| --- | --- |
+| PV de référence | 180 ; 198 en mission 11 et 214,2 en mission 20 |
+| Vitesse | 0,8 unité logique par seconde |
+| Dégâts à la forteresse | 2 PV si elle l’atteint |
+| Élimination | 8 or de combat ; aucune PO ou XP supplémentaire |
+| Portée de protection | Rayon logique de 2, borne comprise |
+| Part transférée | 25 % des dégâts des voisins éligibles, dans la limite des PV disponibles |
+
+### Transfert et résolution
+Si un voisin doit recevoir 40 dégâts et que la Gardienne possède assez de PV disponibles, le voisin reçoit 30 et la tortue 10. S’il ne lui reste que 2 PV disponibles, elle reçoit 2 et le voisin 38. Les dégâts sont conservés ; il ne s’agit ni d’un soin ni d’une réduction gratuite.
+
+Les dégâts directement reçus par la tortue sont réservés avant les transferts. Si plusieurs voisins sont frappés simultanément, ses PV disponibles sont répartis proportionnellement aux demandes d’absorption. Une tortue déjà tuée par ses propres dégâts à cet instant ne protège personne. Une seule Gardienne protège une victime : la plus proche, puis le plus petit identifiant d’apparition en cas d’égalité.
+
+Ni autoprotection, ni protection d’une autre tortue, ni protection du boss. Les tortues ne se renvoient pas les dégâts et leurs effets ne se cumulent pas sur une victime. Directs, explosions, rebonds et dégâts périodiques suivent cette règle. Les bonus sont calculés pour la victime initiale avant partage, sans seconde application sur la tortue. Le bonus R-12 conserve ses profils cibles du socle, sans ajout automatique de la Gardienne. Une mort ne donne qu’une récompense ; les bilans conservent la source et la composante du coup, avec les pertes réelles de chaque cible.
+
+### Dix vagues du deuxième chapitre
+La première apparition est à zéro et les groupes sont séparés par quatre secondes selon la méthode du socle. La première vague sert d’échauffement ; les premières tortues arrivent à la deuxième. La nouveauté se retrouve dans chacune des dix missions, sans présence imposée dans chaque vague. Quantités, intervalles et revenus sont H ; le cumul ci-dessous suppose toutes les éliminations, avant dépenses.
+
+| Vague chapitre 2 | Groupes dans l’ordre d’apparition | Intervalles internes | Or maximal | Cumul maximal |
+| --- | --- | --- | --- | --- |
+| 1 | 10 Pillards | 2,5 s | 30 | 30 |
+| 2 | 1 Tortue gardienne → 8 Pillards → 6 Grouillants | unique / 2,0 s / 0,65 s | 38 | 68 |
+| 3 | 8 Pillards → 8 Sprinters | 1,8 s / 1,4 s | 48 | 116 |
+| 4 | 2 Tortues gardiennes → 16 Grouillants | 3,0 s / 0,5 s | 32 | 148 |
+| 5 | 6 Maraudeurs → 2 Tortues gardiennes → 8 Sprinters | 2,0 s / 3,0 s / 1,2 s | 76 | 224 |
+| 6 | 2 Colosses → 2 Tortues gardiennes → 12 Grouillants | 4,0 s / 2,2 s / 0,5 s | 56 | 280 |
+| 7 | 1 Élite → 2 Colosses → 8 Maraudeurs | unique / 4,0 s / 1,6 s | 96 | 376 |
+| 8 | 3 Tortues gardiennes → 20 Grouillants → 10 Sprinters → 6 Maraudeurs | 2,0 s / 0,35 s / 1,0 s / 1,2 s | 110 | 486 |
+| 9 | 2 Élites → 2 Colosses → 2 Tortues gardiennes → 6 Maraudeurs | 5,0 s / 4,0 s / 2,2 s / 1,4 s | 120 | 606 |
+| 10 | 1 Seigneur de siège → 2 Élites → 1 Tortue gardienne → 6 Sprinters | unique / 5,0 s / unique / 1,0 s | 106 | 712 |
+
+Les noms des groupes désignent les profils statistiques du socle ; l’interface utilise les identités neutres ou adverses de la faction jouée. Les dix vagues comptent 163 ennemis, dont 13 tortues. Le revenu maximal vaut 712 or de combat, contre 770 pour la séquence du premier chapitre ; avec les 150 de départ, le budget brut maximal est 862 avant dépenses. Ces différences font partie de l’équilibrage à éprouver, pas d’un objectif de difficulté déjà démontré.
+
+La vente, les améliorations, les trois choix de bonus et les récompenses persistantes de première victoire gardent leurs règles. Les rencontres de la mission sont inscrites dans son rapport de diagnostic ; un rapport historique sans ce champ garde les vagues du premier chapitre. Aucun schéma de sauvegarde joueur n’est modifié par cet essai.
+
+<a id="s60"></a>
+
+## 60 Présentation et animations du prototype
+
+### État réalisé et horloges visuelles
+Les gestes, silhouettes et animations doivent aider à lire les événements réels. Ils ne changent ni le calcul des dégâts, ni la route, ni le ciblage. Le porteur demande des gestes de défenseurs cohérents avec les projectiles, des réactions corporelles chez les attaquants et une forteresse avec roi propre à chaque faction. Les premières réalisations ci-dessous ne constituent pas des cycles complets des membres.
+
+| Élément visuel | Réalisation du prototype | Horloge | Limite actuelle |
+| --- | --- | --- | --- |
+| Attaquant survivant touché | Inclinaison et recul brefs, maximum à 0,045 s, retour au repos à 0,28 s ; mouvement plus discret sur les lourds | Temps simulé | Illustration entière ; aucun repoussement logique ou ralentissement |
+| Coups simultanés et périodiques | Réaction au plus fort signal visible, sans cumul de recul ; ticks et dégâts absorbés réels également observés | Temps simulé | Un coup létal conserve la dissipation existante ; animation corporelle de mort à produire |
+| Roi au repos | Pose debout et léger mouvement de respiration | Temps réel | Première animation, membres non séparés |
+| Départ réel de vague | Encouragement du souverain pendant 1,1 s | Temps réel | Une pose dessinée et mouvement de l’illustration |
+| Perte réelle de PV de forteresse | Roi crispé pendant 0,65 s, bref tremblement et éclaircissement du bâtiment | Temps réel | La blessure est prioritaire, y compris avant la pose de défaite |
+| Défaite et nouvelle tentative | Roi tête baissée après le dernier choc, puis retour au repos lors du nouvel essai | Temps réel | Bâtiment assombri et état explicite ; aucun effondrement complet livré |
+
+Un soin de forteresse ne produit pas une blessure. Les nouvelles missions effacent les anciens signaux visuels. Les réactions d’attaquants s’accélèrent avec le combat ; ×10 reste un outil de débogage qui ne garantit pas la lecture de chaque impact. Les durées royales réelles maintiennent leur lisibilité à cette vitesse, sans bloquer les vagues ni les choix de bonus.
+
+### Forteresses et souverains des deux factions
+Alliance : pierre claire, toitures bleues et touches d’or ; souverain à barbe grise, manteau bleu et couronne d’or. Horde : bois, ferrures, toitures rouges et défenses d’ivoire ; souverain orc à cape rouge et couronne de métal. Ces apparences sont des propositions H dans le style cartoon retenu. Le bâtiment et le roi disposent d’illustrations séparées ; quatre poses dessinées représentent repos, encouragement, blessure et défaite. Aucun rôle de défenseur, bonus ou cible supplémentaire n’est ajouté au souverain.
+
+Le centre de dessin de la cour est décalé de 16 pixels vers la droite pour dégager les placements : décalage visuel `(68 ; 26)` par rapport à la projection de la fin de route, au lieu de `(52 ; 26)`. Le point d’arrivée logique et les distances de combat restent inchangés. L’alerte de perte de PV se place au-dessus du roi. Le décor réserve la place des nouvelles silhouettes, et le survol des attaquants garde une marge fixe couvrant leurs poses.
+
+Les PNG originaux transparents et les prompts ImageGen sont conservés dans le projet. Les références de fantasy inspirent les codes de lecture, sans reprise d’un personnage ou emblème de franchise. Les vues agrandies archivées sont des ateliers contrôlés, pas des parties jouées. Voir `design/Forteresses_souverains_v0104.md` et son fichier de prompts pour la provenance des illustrations.
+
+### Prochains travaux artistiques
+Produire les cycles de marche des attaquants, enrichir leurs réactions et animations de mort, et préparer les gestes détaillés des défenseurs, y compris les alternatives de boutique. Le geste de tir et le départ du projectile doivent être cohérents. Affiner les poses, transitions et expressions royales après retour du porteur. La musique, le son et les options finales d’accessibilité restent à préciser. Les cartes à plusieurs entrées, jonctions et forteresses demeurent des chantiers de conception en section 47.
