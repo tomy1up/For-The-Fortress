@@ -26,7 +26,7 @@ Consigne de génération : conserver l’identité, les proportions trapues, les
 
 ## Suite de fabrication
 
-Une référence de démarche effectivement examinée doit guider les poses, en distinguant marche, trot et galop. La vidéo YouTube fournie n’ayant pas pu être visionnée, cette condition reste ouverte.
+Une référence de démarche effectivement examinée doit guider les poses, en distinguant marche, trot et galop. Le cycle 3D « Walk » du loup Quaternius a maintenant été examiné sur douze poses et mesuré sur 65 échantillons. La vidéo YouTube fournie n’a pas pu être visionnée ; aucune analyse de cette vidéo n’est revendiquée.
 
 1. Préparer une topologie anatomique et les membres éloignés, conserver le même personnage et ses proportions.
 2. Régler les influences communes épaules/tronc et hanches/tronc ; vérifier les grandes flexions sans pincement ni étirement artificiel.
@@ -35,6 +35,10 @@ Une référence de démarche effectivement examinée doit guider les poses, en d
 5. Contrôler le cycle en déplacement à taille réelle dans le jeu, puis obtenir la validation du porteur avant intégration et extension aux autres unités.
 
 Le recours à l’image par image reste une alternative si les corrections du rig deviennent plus compliquées que le dessin des poses. Le choix final doit suivre le résultat visuel, pas le seul nombre de contrôles réussis.
+
+## Résultat de l’étude de marche — 1er novembre 2026
+
+**Statut : recherche non validée, hors du jeu publié.** Voir [BILAN_MARCHE.md](BILAN_MARCHE.md) pour les résultats, les limites et la reproduction. Le nouveau cycle utilise 19 os et une peau proche continue. Les appuis calculés sont stables ; la déformation des volumes échoue encore sur certaines poses. Les corrections géométriques automatiques conservées ici sont des essais, pas des corrections dessinées abouties.
 
 ## Références consultées
 

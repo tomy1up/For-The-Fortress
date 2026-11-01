@@ -7,10 +7,7 @@ var skeleton:=Skeleton2D.new()
 var skin:=Polygon2D.new()
 var bones: Array[Bone2D]=[]
 func build() -> void:
-	points=PackedVector2Array([Vector2(120,220),Vector2(500,180),Vector2(800,120),Vector2(960,40),Vector2(1430,70),Vector2(1450,650),Vector2(1200,700),Vector2(1230,980),Vector2(900,980),Vector2(880,720),Vector2(720,690),Vector2(620,700),Vector2(620,980),Vector2(300,980),Vector2(300,740),Vector2(80,700)])
-	var indices:=Geometry2D.triangulate_polygon(points)
-	for index in range(0,indices.size(),3): triangles.append(PackedInt32Array([indices[index],indices[index+1],indices[index+2]]))
-	for level in range(3): subdivide()
+	build_topology()
 	skeleton.name="Skeleton";add_child(skeleton)
 	make_bone("Torso",skeleton,Vector2(750,500))
 	make_bone("Front",bones[0],Vector2(250,35))
@@ -27,6 +24,13 @@ func build() -> void:
 		var lower_hind: float=smoothstep(650,820,point.y)
 		var weights: Array[float]=[1.0-front-hind,front*(1.0-lower_front),front*lower_front,hind*(1.0-lower_hind),hind*lower_hind]
 		for index in range(5): influences[index].append(weights[index])
+	bind_skin()
+func build_topology() -> void:
+	points=PackedVector2Array([Vector2(120,220),Vector2(500,180),Vector2(800,120),Vector2(960,40),Vector2(1430,70),Vector2(1450,650),Vector2(1200,700),Vector2(1230,980),Vector2(900,980),Vector2(880,720),Vector2(720,690),Vector2(620,700),Vector2(620,980),Vector2(300,980),Vector2(300,740),Vector2(80,700)])
+	var indices:=Geometry2D.triangulate_polygon(points)
+	for index in range(0,indices.size(),3): triangles.append(PackedInt32Array([indices[index],indices[index+1],indices[index+2]]))
+	for level in range(3): subdivide()
+func bind_skin() -> void:
 	skin.name="ContinuousSkin";add_child(skin)
 	skin.polygon=points;skin.uv=points
 	var faces: Array=[]

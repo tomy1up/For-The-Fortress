@@ -1,0 +1,9 @@
+{
+	"actual_bone_support_drift_source_pixels": 0.0006103515625,
+	"actual_bone_target_error_source_pixels": 0.000409436266636476,
+	"artistic_approval": false,
+	"distance_frames": 1025,
+	"reach_error_source_pixels": 0.000030517578125,
+	"scope": "four actual native bone end-points, two cycles, horizontal test floor only",
+	"support_samples": 2395
+}

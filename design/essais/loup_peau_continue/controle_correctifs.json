@@ -1,0 +1,814 @@
+{
+  "near": {
+    "schema": 2,
+    "method": "triangle ARAP local/global pose-space geometry corrections; no raster editing",
+    "input_sha256": "0b1a2b025f4eb4fad433c0e157af7e6c15127c8a16a6ebe2a13334af1b02c2c3",
+    "vertices": 771,
+    "triangles": 1255,
+    "constraints": 503,
+    "frames": 65,
+    "stride": 0.8,
+    "metrics": [
+      {
+        "frame": 0,
+        "inverted": 0,
+        "minimum": 0.012896462860770673,
+        "maximum": 2.7028404703069286
+      },
+      {
+        "frame": 1,
+        "inverted": 1,
+        "minimum": -0.01762934453311448,
+        "maximum": 2.729465088518495
+      },
+      {
+        "frame": 2,
+        "inverted": 1,
+        "minimum": -0.16849954044908555,
+        "maximum": 2.6950776197772264
+      },
+      {
+        "frame": 3,
+        "inverted": 2,
+        "minimum": -0.3804870292106227,
+        "maximum": 2.5231248070468872
+      },
+      {
+        "frame": 4,
+        "inverted": 3,
+        "minimum": -0.5777525810859727,
+        "maximum": 2.377732725535496
+      },
+      {
+        "frame": 5,
+        "inverted": 2,
+        "minimum": -1.6895097267873074,
+        "maximum": 1.360209190286336
+      },
+      {
+        "frame": 6,
+        "inverted": 2,
+        "minimum": -1.6724766266259137,
+        "maximum": 1.3443143355120348
+      },
+      {
+        "frame": 7,
+        "inverted": 2,
+        "minimum": -1.6450404364482207,
+        "maximum": 1.3714506308099432
+      },
+      {
+        "frame": 8,
+        "inverted": 2,
+        "minimum": -1.597571710830768,
+        "maximum": 1.3997183804809308
+      },
+      {
+        "frame": 9,
+        "inverted": 1,
+        "minimum": -1.4562647418326324,
+        "maximum": 1.3867152555552489
+      },
+      {
+        "frame": 10,
+        "inverted": 1,
+        "minimum": -0.6101797664475883,
+        "maximum": 1.385830672551369
+      },
+      {
+        "frame": 11,
+        "inverted": 1,
+        "minimum": -0.1254053348796687,
+        "maximum": 1.395376416532543
+      },
+      {
+        "frame": 12,
+        "inverted": 0,
+        "minimum": 0.07452891298987396,
+        "maximum": 1.4047829753105705
+      },
+      {
+        "frame": 13,
+        "inverted": 0,
+        "minimum": 0.12430937788671297,
+        "maximum": 1.394894589220145
+      },
+      {
+        "frame": 14,
+        "inverted": 0,
+        "minimum": 0.1490400293021897,
+        "maximum": 1.384809930444686
+      },
+      {
+        "frame": 15,
+        "inverted": 0,
+        "minimum": 0.21320641032123908,
+        "maximum": 1.3584018915034584
+      },
+      {
+        "frame": 16,
+        "inverted": 0,
+        "minimum": 0.27711442567465383,
+        "maximum": 1.3606074795808163
+      },
+      {
+        "frame": 17,
+        "inverted": 0,
+        "minimum": 0.2944815232862834,
+        "maximum": 1.4156590275255772
+      },
+      {
+        "frame": 18,
+        "inverted": 0,
+        "minimum": 0.18170075195645125,
+        "maximum": 1.4828669652473152
+      },
+      {
+        "frame": 19,
+        "inverted": 0,
+        "minimum": 0.08981830932874808,
+        "maximum": 1.5616819007508373
+      },
+      {
+        "frame": 20,
+        "inverted": 0,
+        "minimum": 0.03677409454514602,
+        "maximum": 1.6455014997047872
+      },
+      {
+        "frame": 21,
+        "inverted": 0,
+        "minimum": 0.024268841886864425,
+        "maximum": 1.7304327538954563
+      },
+      {
+        "frame": 22,
+        "inverted": 0,
+        "minimum": 0.04419756605676823,
+        "maximum": 1.8120885012159882
+      },
+      {
+        "frame": 23,
+        "inverted": 0,
+        "minimum": 0.08497250187993738,
+        "maximum": 1.8853886123425248
+      },
+      {
+        "frame": 24,
+        "inverted": 0,
+        "minimum": 0.137856293015574,
+        "maximum": 1.9513697258510796
+      },
+      {
+        "frame": 25,
+        "inverted": 0,
+        "minimum": 0.19434203461306804,
+        "maximum": 2.005281999616013
+      },
+      {
+        "frame": 26,
+        "inverted": 0,
+        "minimum": 0.18848891307591467,
+        "maximum": 2.051445101995039
+      },
+      {
+        "frame": 27,
+        "inverted": 0,
+        "minimum": 0.14985780276479113,
+        "maximum": 2.0885889941858355
+      },
+      {
+        "frame": 28,
+        "inverted": 0,
+        "minimum": 0.11352300016104026,
+        "maximum": 2.1190982846597186
+      },
+      {
+        "frame": 29,
+        "inverted": 0,
+        "minimum": 0.08576799268801377,
+        "maximum": 2.137466648954933
+      },
+      {
+        "frame": 30,
+        "inverted": 0,
+        "minimum": 0.05932185729941463,
+        "maximum": 2.1510621974721724
+      },
+      {
+        "frame": 31,
+        "inverted": 0,
+        "minimum": 0.037400651878192054,
+        "maximum": 2.157480961535685
+      },
+      {
+        "frame": 32,
+        "inverted": 0,
+        "minimum": 0.016840561007968827,
+        "maximum": 2.1593507335633135
+      },
+      {
+        "frame": 33,
+        "inverted": 0,
+        "minimum": 0.002065237532323514,
+        "maximum": 2.1539633019513866
+      },
+      {
+        "frame": 34,
+        "inverted": 1,
+        "minimum": -0.009094451619120616,
+        "maximum": 2.205532817332462
+      },
+      {
+        "frame": 35,
+        "inverted": 1,
+        "minimum": -0.012911945247410605,
+        "maximum": 2.2682351759035337
+      },
+      {
+        "frame": 36,
+        "inverted": 1,
+        "minimum": -0.021376692758612734,
+        "maximum": 2.3291192822071243
+      },
+      {
+        "frame": 37,
+        "inverted": 1,
+        "minimum": -0.09216069478243791,
+        "maximum": 2.3822424476625095
+      },
+      {
+        "frame": 38,
+        "inverted": 2,
+        "minimum": -0.4017793063334558,
+        "maximum": 2.423713663032299
+      },
+      {
+        "frame": 39,
+        "inverted": 4,
+        "minimum": -1.6523106966886256,
+        "maximum": 2.442085032301152
+      },
+      {
+        "frame": 40,
+        "inverted": 8,
+        "minimum": -0.9170810474393346,
+        "maximum": 2.4268364046771302
+      },
+      {
+        "frame": 41,
+        "inverted": 7,
+        "minimum": -0.562579495825723,
+        "maximum": 2.573024870243823
+      },
+      {
+        "frame": 42,
+        "inverted": 7,
+        "minimum": -1.8238284172942496,
+        "maximum": 2.6749814495263378
+      },
+      {
+        "frame": 43,
+        "inverted": 7,
+        "minimum": -1.439410160392476,
+        "maximum": 2.6636059290962164
+      },
+      {
+        "frame": 44,
+        "inverted": 6,
+        "minimum": -0.7486607312037373,
+        "maximum": 2.641284790227453
+      },
+      {
+        "frame": 45,
+        "inverted": 6,
+        "minimum": -0.7094267553826512,
+        "maximum": 2.610820016583516
+      },
+      {
+        "frame": 46,
+        "inverted": 6,
+        "minimum": -0.6487365565167617,
+        "maximum": 2.5692787202668463
+      },
+      {
+        "frame": 47,
+        "inverted": 6,
+        "minimum": -0.5405313539131433,
+        "maximum": 2.52388950291161
+      },
+      {
+        "frame": 48,
+        "inverted": 5,
+        "minimum": -0.864241877223667,
+        "maximum": 2.483667827074239
+      },
+      {
+        "frame": 49,
+        "inverted": 7,
+        "minimum": -0.6983318300369443,
+        "maximum": 2.426211232720633
+      },
+      {
+        "frame": 50,
+        "inverted": 8,
+        "minimum": -0.5284050373868943,
+        "maximum": 2.373469244025703
+      },
+      {
+        "frame": 51,
+        "inverted": 8,
+        "minimum": -0.6303518734704867,
+        "maximum": 2.382874849441875
+      },
+      {
+        "frame": 52,
+        "inverted": 7,
+        "minimum": -0.5902614256568239,
+        "maximum": 2.422128076799404
+      },
+      {
+        "frame": 53,
+        "inverted": 9,
+        "minimum": -0.6232938806546929,
+        "maximum": 2.4738665066315484
+      },
+      {
+        "frame": 54,
+        "inverted": 7,
+        "minimum": -0.6799345298729506,
+        "maximum": 2.536408096242229
+      },
+      {
+        "frame": 55,
+        "inverted": 6,
+        "minimum": -0.5160164073061307,
+        "maximum": 2.6501270646156145
+      },
+      {
+        "frame": 56,
+        "inverted": 3,
+        "minimum": -0.37498273558769984,
+        "maximum": 2.698190242145271
+      },
+      {
+        "frame": 57,
+        "inverted": 3,
+        "minimum": -0.4254015491127936,
+        "maximum": 2.7217383888503877
+      },
+      {
+        "frame": 58,
+        "inverted": 3,
+        "minimum": -0.4191765818626325,
+        "maximum": 2.7182366979939765
+      },
+      {
+        "frame": 59,
+        "inverted": 1,
+        "minimum": -0.2619474089261144,
+        "maximum": 2.6900865959567994
+      },
+      {
+        "frame": 60,
+        "inverted": 1,
+        "minimum": -0.2123502725677627,
+        "maximum": 2.700661022888231
+      },
+      {
+        "frame": 61,
+        "inverted": 1,
+        "minimum": -0.13111220810237192,
+        "maximum": 2.700655352413082
+      },
+      {
+        "frame": 62,
+        "inverted": 1,
+        "minimum": -0.027235702292650366,
+        "maximum": 2.695385639080927
+      },
+      {
+        "frame": 63,
+        "inverted": 0,
+        "minimum": 0.003019033975358827,
+        "maximum": 2.6940468945805343
+      },
+      {
+        "frame": 64,
+        "inverted": 0,
+        "minimum": 0.013060657684293042,
+        "maximum": 2.7027924553882534
+      }
+    ],
+    "seconds": 6.16,
+    "artistically_approved": false,
+    "loop_seam_source_pixels": 0.004913249433971354,
+    "status": "research_only_requires_drawn_pose_corrections"
+  },
+  "far": {
+    "schema": 2,
+    "method": "triangle ARAP local/global pose-space geometry corrections; no raster editing",
+    "input_sha256": "0b1a2b025f4eb4fad433c0e157af7e6c15127c8a16a6ebe2a13334af1b02c2c3",
+    "vertices": 771,
+    "triangles": 1255,
+    "constraints": 503,
+    "frames": 65,
+    "stride": 0.8,
+    "metrics": [
+      {
+        "frame": 0,
+        "inverted": 0,
+        "minimum": 0.003702575805296462,
+        "maximum": 2.521341876150386
+      },
+      {
+        "frame": 1,
+        "inverted": 1,
+        "minimum": -0.03674179719971494,
+        "maximum": 2.5653212933079668
+      },
+      {
+        "frame": 2,
+        "inverted": 1,
+        "minimum": -0.10722234066846927,
+        "maximum": 2.609032366217877
+      },
+      {
+        "frame": 3,
+        "inverted": 1,
+        "minimum": -0.16276814636882203,
+        "maximum": 2.6524651831741286
+      },
+      {
+        "frame": 4,
+        "inverted": 1,
+        "minimum": -0.19889516152304948,
+        "maximum": 2.6943695960629923
+      },
+      {
+        "frame": 5,
+        "inverted": 1,
+        "minimum": -0.2062942470920224,
+        "maximum": 2.7340755270043875
+      },
+      {
+        "frame": 6,
+        "inverted": 2,
+        "minimum": -0.4114882944531385,
+        "maximum": 2.7701323405611955
+      },
+      {
+        "frame": 7,
+        "inverted": 4,
+        "minimum": -1.7153516799807935,
+        "maximum": 2.8020851945210445
+      },
+      {
+        "frame": 8,
+        "inverted": 6,
+        "minimum": -0.6285050523558237,
+        "maximum": 2.823660963601639
+      },
+      {
+        "frame": 9,
+        "inverted": 4,
+        "minimum": -0.6551184854321384,
+        "maximum": 2.8213409443393083
+      },
+      {
+        "frame": 10,
+        "inverted": 6,
+        "minimum": -1.8681938401909244,
+        "maximum": 2.7927298372347282
+      },
+      {
+        "frame": 11,
+        "inverted": 6,
+        "minimum": -1.477521282910124,
+        "maximum": 2.732921264589118
+      },
+      {
+        "frame": 12,
+        "inverted": 6,
+        "minimum": -0.3114285873861939,
+        "maximum": 2.696912353104918
+      },
+      {
+        "frame": 13,
+        "inverted": 6,
+        "minimum": -0.3140852799992239,
+        "maximum": 2.6767090139258074
+      },
+      {
+        "frame": 14,
+        "inverted": 6,
+        "minimum": -0.35202605669565146,
+        "maximum": 2.654335998207991
+      },
+      {
+        "frame": 15,
+        "inverted": 5,
+        "minimum": -0.4498895464541362,
+        "maximum": 2.626563850603237
+      },
+      {
+        "frame": 16,
+        "inverted": 5,
+        "minimum": -0.5483546714434436,
+        "maximum": 2.587562168713976
+      },
+      {
+        "frame": 17,
+        "inverted": 3,
+        "minimum": -0.6641359899396179,
+        "maximum": 2.5346350847683468
+      },
+      {
+        "frame": 18,
+        "inverted": 6,
+        "minimum": -0.9412855849379564,
+        "maximum": 2.438982327131444
+      },
+      {
+        "frame": 19,
+        "inverted": 6,
+        "minimum": -0.8225715764331085,
+        "maximum": 2.4181369145035485
+      },
+      {
+        "frame": 20,
+        "inverted": 6,
+        "minimum": -0.5758933977205459,
+        "maximum": 2.4228791192821038
+      },
+      {
+        "frame": 21,
+        "inverted": 7,
+        "minimum": -0.5144856204796294,
+        "maximum": 2.440632492850872
+      },
+      {
+        "frame": 22,
+        "inverted": 6,
+        "minimum": -0.5207427449931982,
+        "maximum": 2.4625676292205374
+      },
+      {
+        "frame": 23,
+        "inverted": 5,
+        "minimum": -0.5341363714125736,
+        "maximum": 2.487227411118184
+      },
+      {
+        "frame": 24,
+        "inverted": 8,
+        "minimum": -0.5468202150991539,
+        "maximum": 2.510578330582421
+      },
+      {
+        "frame": 25,
+        "inverted": 9,
+        "minimum": -0.5620629190728275,
+        "maximum": 2.534855785520006
+      },
+      {
+        "frame": 26,
+        "inverted": 10,
+        "minimum": -0.36754932564635445,
+        "maximum": 2.6403341392187536
+      },
+      {
+        "frame": 27,
+        "inverted": 8,
+        "minimum": -0.47207335120330857,
+        "maximum": 2.680106274198331
+      },
+      {
+        "frame": 28,
+        "inverted": 5,
+        "minimum": -0.6059731489587095,
+        "maximum": 2.7390357361041984
+      },
+      {
+        "frame": 29,
+        "inverted": 3,
+        "minimum": -0.7050865715510938,
+        "maximum": 2.8193032102979125
+      },
+      {
+        "frame": 30,
+        "inverted": 4,
+        "minimum": -0.7282572470459835,
+        "maximum": 2.848654613659016
+      },
+      {
+        "frame": 31,
+        "inverted": 5,
+        "minimum": -0.7217017041673045,
+        "maximum": 2.8208027420519652
+      },
+      {
+        "frame": 32,
+        "inverted": 6,
+        "minimum": -0.6541971724827288,
+        "maximum": 2.701910954288434
+      },
+      {
+        "frame": 33,
+        "inverted": 7,
+        "minimum": -0.8971396161149578,
+        "maximum": 2.589978355845658
+      },
+      {
+        "frame": 34,
+        "inverted": 7,
+        "minimum": -0.6985198179397655,
+        "maximum": 2.4439231425662213
+      },
+      {
+        "frame": 35,
+        "inverted": 5,
+        "minimum": -1.7124702888502954,
+        "maximum": 1.81056467799439
+      },
+      {
+        "frame": 36,
+        "inverted": 4,
+        "minimum": -1.694330909858921,
+        "maximum": 1.736731799442884
+      },
+      {
+        "frame": 37,
+        "inverted": 4,
+        "minimum": -1.668109488903105,
+        "maximum": 1.6647858010575831
+      },
+      {
+        "frame": 38,
+        "inverted": 3,
+        "minimum": -1.625493497402859,
+        "maximum": 1.5959742115005864
+      },
+      {
+        "frame": 39,
+        "inverted": 3,
+        "minimum": -1.52647023290567,
+        "maximum": 1.5274051622040876
+      },
+      {
+        "frame": 40,
+        "inverted": 3,
+        "minimum": -1.1195898252152199,
+        "maximum": 1.5162369175187436
+      },
+      {
+        "frame": 41,
+        "inverted": 6,
+        "minimum": -0.42679184963602285,
+        "maximum": 1.6076542820138497
+      },
+      {
+        "frame": 42,
+        "inverted": 5,
+        "minimum": -0.6196863123754307,
+        "maximum": 1.6773512772567165
+      },
+      {
+        "frame": 43,
+        "inverted": 4,
+        "minimum": -0.7084685187584606,
+        "maximum": 1.7086987582785125
+      },
+      {
+        "frame": 44,
+        "inverted": 1,
+        "minimum": -0.7486607312037373,
+        "maximum": 1.7227448788453958
+      },
+      {
+        "frame": 45,
+        "inverted": 1,
+        "minimum": -0.7094267553826512,
+        "maximum": 1.709034663475882
+      },
+      {
+        "frame": 46,
+        "inverted": 1,
+        "minimum": -0.6487365565167617,
+        "maximum": 1.687657908216918
+      },
+      {
+        "frame": 47,
+        "inverted": 1,
+        "minimum": -0.5380043651745913,
+        "maximum": 1.6481099258430256
+      },
+      {
+        "frame": 48,
+        "inverted": 1,
+        "minimum": -0.43022915364645087,
+        "maximum": 1.6089160680877939
+      },
+      {
+        "frame": 49,
+        "inverted": 1,
+        "minimum": -0.30361008916706095,
+        "maximum": 1.5619381746126715
+      },
+      {
+        "frame": 50,
+        "inverted": 1,
+        "minimum": -0.18617891279677679,
+        "maximum": 1.5174205955949012
+      },
+      {
+        "frame": 51,
+        "inverted": 1,
+        "minimum": -0.11001091168445025,
+        "maximum": 1.488032311150874
+      },
+      {
+        "frame": 52,
+        "inverted": 1,
+        "minimum": -0.06045596680617867,
+        "maximum": 1.5800321953494785
+      },
+      {
+        "frame": 53,
+        "inverted": 1,
+        "minimum": -0.007193322321427331,
+        "maximum": 1.713486178702074
+      },
+      {
+        "frame": 54,
+        "inverted": 0,
+        "minimum": 0.05035516623055022,
+        "maximum": 1.8433649386377604
+      },
+      {
+        "frame": 55,
+        "inverted": 0,
+        "minimum": 0.11582356281587636,
+        "maximum": 1.9611315151769464
+      },
+      {
+        "frame": 56,
+        "inverted": 0,
+        "minimum": 0.1848416813615851,
+        "maximum": 2.0618837076827314
+      },
+      {
+        "frame": 57,
+        "inverted": 0,
+        "minimum": 0.216531949958604,
+        "maximum": 2.145929230387996
+      },
+      {
+        "frame": 58,
+        "inverted": 0,
+        "minimum": 0.15384597203315906,
+        "maximum": 2.2136225250285673
+      },
+      {
+        "frame": 59,
+        "inverted": 0,
+        "minimum": 0.08513669160085127,
+        "maximum": 2.269255906724031
+      },
+      {
+        "frame": 60,
+        "inverted": 0,
+        "minimum": 0.03281323231001191,
+        "maximum": 2.3325759720936667
+      },
+      {
+        "frame": 61,
+        "inverted": 0,
+        "minimum": 0.006043784425107886,
+        "maximum": 2.39088485225459
+      },
+      {
+        "frame": 62,
+        "inverted": 1,
+        "minimum": -0.0034481210963506806,
+        "maximum": 2.435004156453156
+      },
+      {
+        "frame": 63,
+        "inverted": 1,
+        "minimum": -0.004087417929117957,
+        "maximum": 2.47781206662447
+      },
+      {
+        "frame": 64,
+        "inverted": 0,
+        "minimum": 0.0036670085263478714,
+        "maximum": 2.521342185144433
+      }
+    ],
+    "seconds": 12.56,
+    "artistically_approved": false,
+    "loop_seam_source_pixels": 0.004847027645947133,
+    "status": "research_only_requires_drawn_pose_corrections"
+  }
+}

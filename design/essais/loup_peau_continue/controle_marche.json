@@ -1,0 +1,20 @@
+{
+	"artistically_approved": false,
+	"frames": 128,
+	"largest_area_ratio": 390.35390625,
+	"opaque_inverted_triangles": 4623,
+	"reach_error_source_pixels": 0.000030517578125,
+	"smallest_area_ratio": -337.53525390625,
+	"support_drift_source_pixels": 0.0,
+	"worst_reach": {
+		"hip": "(520.2589, 503.4858)",
+		"leg": "HindFar",
+		"length": 332.952453613281,
+		"reach": 434.862258911133,
+		"target": "(292.3189, 746.1804)"
+	},
+	"worst_skin": {
+		"frame": 87,
+		"source": "(645.1667, 602.6667)"
+	}
+}
