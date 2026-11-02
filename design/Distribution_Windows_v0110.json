@@ -1,0 +1,133 @@
+{
+  "archive_sha256": "5fc6e6d0e9dbb725d3ce241e18d857c73958f9e7d4f4cf77e9e07b6bbf19f8ee",
+  "scope": "selected",
+  "available_cases": 267,
+  "executable_sha256": "9aa2884ba55846e3f4dd4d402de6ae8873af1d123ecc78ca62120b659b478d70",
+  "files": [
+    "For_the_Fortress_v0.110_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.110_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.110_Windows_x64/Lancer_atelier_routes.cmd",
+    "For_the_Fortress_v0.110_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.110_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.110_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_routes_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_routes_forecast",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_bank_guardian_protected",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_bank_guardian_protected",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_bank_guardian_cursed",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_bank_guardian_cursed",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_wolf_walk_0",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_wolf_walk_0",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "source_checks": 74,
+  "local_sources_compared": true,
+  "visual_review": "All 15 selected native captures examined at full size. Guardian, protected neighbour and cursed Guardian statuses fit without clipping in both factions; links are visible around eligible actors. Route forecasts, wolf poses, faction selector, talent screens and run summaries remain readable. Controlled fixtures and automated runs do not constitute a human campaign or artistic approval.",
+  "reviewed_captures": [
+    "selection",
+    "alliance_routes_forecast",
+    "horde_routes_forecast",
+    "alliance_bank_guardian",
+    "horde_bank_guardian",
+    "alliance_bank_guardian_protected",
+    "horde_bank_guardian_protected",
+    "alliance_bank_guardian_cursed",
+    "horde_bank_guardian_cursed",
+    "profile_protection",
+    "alliance_run_report",
+    "horde_run_report",
+    "alliance_profile_protection",
+    "alliance_wolf_walk_0",
+    "horde_wolf_walk_0"
+  ],
+  "capture_sha256": {
+    "design/essais/captures/QA-v0110_selection.png": "4b9434806d756bf2cc92cdd9df78bf4308b0b4ed529dac29c02d0b962be816ce",
+    "design/essais/captures/QA-v0110_alliance_routes_forecast.png": "7e75b67789e536e7beb21c0097935209da250f6d3f21702546947d6b0340415b",
+    "design/essais/captures/QA-v0110_horde_routes_forecast.png": "a0815e027c6c8490b4bb3c739506fd384cbe510272aea0d84c11c55de9b501e9",
+    "design/essais/captures/QA-v0110_alliance_bank_guardian.png": "bb884abdc9817655200a22a8fe69959ee27d6195efec27f2397cf7a8e0a80db8",
+    "design/essais/captures/QA-v0110_horde_bank_guardian.png": "23ad975b4b5c4687d77720ff349157351f93387e46c7067614b64f128dfcc084",
+    "design/essais/captures/QA-v0110_alliance_bank_guardian_protected.png": "acfddf56c0773e0709831209411ee7b2d51260ba0f2db59b03c8c57bb2d25711",
+    "design/essais/captures/QA-v0110_horde_bank_guardian_protected.png": "56402b5dfae5e65be5f8aecfc7d8c96666f2592857f5e8a5152dab09c3f4946d",
+    "design/essais/captures/QA-v0110_alliance_bank_guardian_cursed.png": "3c41c9d4ab5ed77570ef436ea9e6b5b93ad1819fd14cf668a4aefe6a1e9e59d9",
+    "design/essais/captures/QA-v0110_horde_bank_guardian_cursed.png": "a11c72b9be477ce916a33b2ffbe4353421a6b292de2e7cc71179d85aad825050",
+    "design/essais/captures/QA-v0110_profile_protection.png": "3916cad67783fdd210436c464a326969e6febe299fa023b970e1e88e0e5ba0ac",
+    "design/essais/captures/QA-v0110_alliance_run_report.png": "de87268d30f6bcc941df6ae1dc04c12410d7a4b64b42dc0812f40ab0997e9230",
+    "design/essais/captures/QA-v0110_horde_run_report.png": "a4b26ead871d029dd162eb59b6181351dba47fbda8eab670ae182b13aa4f631f",
+    "design/essais/captures/QA-v0110_alliance_profile_protection.png": "a72a76a19f2478fb3a5187a221c0cca11482738a7888020341e140efd321a583",
+    "design/essais/captures/QA-v0110_alliance_wolf_walk_0.png": "711947e6362e21dff2e4559b365835566cfa6e61668cc47467e37a16b23d9b26",
+    "design/essais/captures/QA-v0110_horde_wolf_walk_0.png": "fed71c79f96f49d1b4ab51da676a322407e30e70be63c9ebd24da958b896f9b8"
+  }
+}

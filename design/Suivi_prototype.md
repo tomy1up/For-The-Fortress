@@ -582,3 +582,7 @@ Le cycle v0.105 est jugé trop saccadé. L’essai articulé suivant est rejeté
 ## GDD 0.18 — consolidation du 2 novembre 2026
 
 Word et Markdown actualisés sur le jeu 0.109 : démarche du loup validée pour le prototype, correction du cisaillement diagonal encore à éprouver et étude du sanglier hors production. L’atelier à deux entrées, ses annonces et la priorité au temps d’arrivée sont décrits séparément des vingt missions à trajet unique. Aucun ajout artistique ou réglage n’est présenté comme approuvé par cette consolidation. 72 pages vérifiées, 79 tableaux identiques, 61 destinations de sommaire contrôlées, 126 talents conservés ; données des vingt missions, du chapitre 2, de la boutique et des 51 seuils XP comparées au jeu. Les 17 tests Python passent ; les 74 sources du paquet Windows et son binaire sont inchangés. [Vérification documentaire](essais/gdd_v018_verification.json).
+
+## Prototype v0.110 — inspection de la protection
+
+Le survol de la Gardienne indique ses voisins éligibles et les relie sur le plateau. Le survol d’un voisin signale la protection à proximité ; le statut de malédiction reste visible sur une Gardienne. Le choix du protecteur est partagé entre l’inspection et la répartition existante, sans changement de chiffres ou de règles. Régression : 93 suites Godot, 39 572 contrôles et 17 tests Python. Paquet Windows : 16 cas ciblés sur 267, 74 sources comparées et 15 captures examinées. Profils, identités de faction et cycle du loup inchangés ; sanglier expérimental hors production. [Détail et limites](Inspection_gardienne_v0110.md).

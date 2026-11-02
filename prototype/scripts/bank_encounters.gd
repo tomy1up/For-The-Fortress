@@ -21,6 +21,17 @@ const WAVES: Array = [
 static func valid_set(id: Variant) -> bool:
 	return id is String and id in ["ford",ID]
 
+static func guardian_for(enemy: Dictionary, guards: Array, positions: Dictionary, damage: Dictionary = {}) -> int:
+	if enemy.get("type",1) in [GUARD_TYPE,7] or enemy.hp <= 0.0: return -1
+	var chosen: int = -1
+	var nearest: float = INF
+	for guard in guards:
+		if guard.get("type",1) != GUARD_TYPE or guard.hp <= damage.get(guard.id,0.0): continue
+		var distance: float = positions[enemy.id].distance_squared_to(positions[guard.id])
+		if distance <= RADIUS*RADIUS and (distance < nearest or (distance == nearest and guard.id < chosen)):
+			chosen = guard.id;nearest = distance
+	return chosen
+
 static func redirect(enemies: Array, damage: Dictionary, hits: Array, positions: Dictionary) -> Dictionary:
 	# Une seule attribution sur l’état précédant les dégâts. Ni auto-protection,
 	# ni protection de gardienne ou boss ; aucun renvoi récursif.
@@ -31,13 +42,7 @@ static func redirect(enemies: Array, damage: Dictionary, hits: Array, positions:
 	var claims: Dictionary = {}
 	for enemy in enemies:
 		if enemy.get("type",1) in [GUARD_TYPE,7] or enemy.hp <= 0.0 or damage.get(enemy.id,0.0) <= 0.0: continue
-		var chosen: int = -1
-		var nearest: float = INF
-		for guard in guards:
-			if guard.hp <= damage.get(guard.id,0.0): continue
-			var distance: float = positions[enemy.id].distance_squared_to(positions[guard.id])
-			if distance <= RADIUS*RADIUS and (distance < nearest or (distance == nearest and guard.id < chosen)):
-				chosen = guard.id;nearest = distance
+		var chosen: int = guardian_for(enemy,guards,positions,damage)
 		if chosen >= 0: claims[enemy.id] = chosen
 	var demand: Dictionary = {}
 	for id in claims: demand[claims[id]] = demand.get(claims[id],0.0)+float(damage[id])*SHARE

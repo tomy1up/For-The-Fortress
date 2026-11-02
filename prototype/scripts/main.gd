@@ -354,7 +354,11 @@ func _ready() -> void:
 				enemy.distance = 8.0+model.enemies.size()*0.7;model.enemies.append(enemy)
 			model._apply_damage({1:12.0,2:8.0});model.elapsed = 0.08
 			selected = -1;map_view.selected = -1
-			inspection_pointer = MapView.project(model.point_on_path(8.0))+Vector2(0,-24)
+			inspection_pointer = MapView.project(model.point_on_path(8.0))+Vector2(0,-42)
+			if "--capture-guardian-inspection=protected" in OS.get_cmdline_user_args():
+				inspection_pointer = MapView.enemy_bounds(model.enemies[2],capture_faction).get_center()
+			if "--capture-guardian-inspection=cursed" in OS.get_cmdline_user_args():
+				model.curses.assign([{"enemy_id":0,"source_id":0,"damage":1.0}])
 			print("GUARDIAN_SNAPSHOT=",JSON.stringify({"isolated":meta_profile.path.is_empty(),"faction":model.faction,"hp":model.enemies[0].hp,"max_hp":model.enemies[0].max_hp,"victims":[model.enemies[1].hp,model.enemies[2].hp],"transfers":model.protection_events.size(),"wave_set_id":model.wave_set_id}))
 		if capture_state in ["effects","damage_tick","elimination"]:
 			if capture_state == "damage_tick": capture_type = 5
@@ -651,6 +655,8 @@ func _ready() -> void:
 			_update_interface()
 			print("WOLF_SNAPSHOT=",JSON.stringify({"isolated":meta_profile == null or meta_profile.path.is_empty(),"count":model.enemies.size(),"faction":model.faction,"motion_schema":MapView.EnemyWalkArt.DATA.schema}))
 		map_view.queue_redraw()
+		if capture_state == "bank_guardian":
+			print("GUARDIAN_INSPECTION_SNAPSHOT=",JSON.stringify({"inspected":map_view.inspected_enemy_id,"status":enemy_status.text,"links":map_view.inspected_protection_links().size(),"visible":enemy_inspector.visible}))
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
 		print("CAPTURE_RESULT=", error)
@@ -1534,7 +1540,14 @@ func _update_enemy_inspector() -> void:
 		for curse in model.curses:
 			if curse.enemy_id == id: cursed = true; break
 		var origin: String = Model.Enemies.origin_label(Model.Enemies.for_profile(enemy.type,model.faction).origin)
-		enemy_status.text = "Encaisse 25 % des dégâts des voisins" if enemy.type == Model.Banks.GUARD_TYPE else origin + (" · Malédiction active" if cursed else " · Lecture sans pause")
+		var links: Array[Dictionary] = map_view.inspected_protection_links()
+		if enemy.type == Model.Banks.GUARD_TYPE:
+			enemy_status.text = "Protège %d voisin%s" % [links.size(),"" if links.size()==1 else "s"]
+			if cursed: enemy_status.text += " · Malédiction active"
+		elif not links.is_empty():
+			enemy_status.text = "À portée d’une Gardienne" + (" · Maudit" if cursed else "")
+		else:
+			enemy_status.text = origin + (" · Malédiction active" if cursed else " · Lecture sans pause")
 		enemy_status.add_theme_color_override("font_color",Color("d3afe4") if cursed else Color("aabbb0"))
 		return
 

@@ -1,0 +1,15 @@
+{
+  "source_changes_between_packages": [
+    "project.godot",
+    "export_presets.cfg",
+    "scripts/main.gd",
+    "scripts/valley_view.gd",
+    "scripts/bank_encounters.gd"
+  ],
+  "unchanged_sources": 69,
+  "combat_model_unchanged": true,
+  "faction_catalogue_unchanged": true,
+  "profile_and_codec_unchanged": true,
+  "approved_wolf_texture_cycle_and_sampler_unchanged": true,
+  "boar_experiment_not_exported": true
+}

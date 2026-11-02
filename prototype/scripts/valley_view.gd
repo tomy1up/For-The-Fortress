@@ -135,6 +135,17 @@ static func hit_reaction_pulse(age: float) -> float:
 static func enemy_reaction_weight(type: int) -> float:
 	return {3:0.7,5:0.55,6:0.7,7:0.45,8:0.35}.get(type,1.0)
 
+func inspected_protection_links() -> Array[Dictionary]:
+	var links: Array[Dictionary] = []
+	if model == null or not model.active or inspected_enemy_id < 0: return links
+	var positions: Dictionary = {}
+	for enemy in model.enemies: positions[enemy.id] = model.enemy_position(enemy)
+	for enemy in model.enemies:
+		var guardian: int = Model.Banks.guardian_for(enemy,model.enemies,positions)
+		if guardian >= 0 and (enemy.id == inspected_enemy_id or guardian == inspected_enemy_id):
+			links.append({"enemy_id":enemy.id,"guardian_id":guardian,"from":positions[enemy.id],"to":positions[guardian]})
+	return links
+
 static func enemy_reaction_pose(enemy: Dictionary, events: Array[Dictionary], now: float) -> Dictionary:
 	var strength: float = 0.0
 	for event in events:
@@ -525,6 +536,9 @@ func _draw() -> void:
 			var age: float = model.elapsed-event.time
 			if age >= 0.0 and age < 0.4 and model.active:
 				draw_line(project(event.from)+Vector2(0,-12),project(event.to)+Vector2(0,-12),Color(0.83,0.96,0.52,(1.0-age/0.4)*0.85),2,true)
+		for link in inspected_protection_links():
+			draw_line(project(link.from)+Vector2(0,-12),project(link.to)+Vector2(0,-12),Color(0.72,0.89,0.56,0.65),1.5,true)
+			draw_arc(project(link.from)+Vector2(0,3),12,0,TAU,32,Color("b8d889"),1.5,true)
 		var actors: Array[Dictionary] = []
 		for slot in range(model.defenders.size()):
 			if not model.defenders[slot].is_empty():
