@@ -28,7 +28,7 @@ Les annonces d’animation suivantes retracent les essais précédents et leurs 
 
 **Chantiers visuels et futurs parcours** : animations des défenseurs synchronisées aux projectiles, réactions des attaquants aux dégâts, forteresse et roi propres à chaque faction, puis entrées multiples, routes convergentes et plusieurs forteresses. [TODO et questions ouvertes](design/Feuille_de_route_long_terme.md). À développer.
 
-**GDD 0.17 — référence jeu 0.104** : documents Word et Markdown synchronisés, vingt missions sur dix tracés, Gardienne du chapitre 2 à l’essai, boutique, talents par famille et sauvegarde au schéma 7. Réactions aux dégâts, forteresses et souverains documentés ; animations détaillées, routes multiples, biomes, difficultés et succès restent des chantiers distincts.
+**GDD 0.18 — référence jeu 0.109** : documents Word et Markdown synchronisés, vingt missions, boutique, talents par famille et sauvegarde au schéma 7. Démarche du loup approuvée pour le prototype ; placement diagonal corrigé à éprouver. Atelier à deux entrées et ciblage au temps d’arrivée documentés séparément de la campagne. Le sanglier reste un essai non intégré. [Vérification documentaire](design/essais/gdd_v018_verification.json).
 
 **Mode infini** : [Normal, Héroïque et Mythique](design/Infini_difficultes_2026-10-31.md), chacun ouvert après les dix premiers chapitres de campagne dans la difficulté correspondante, par faction. À développer.
 

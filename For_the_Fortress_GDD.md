@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.17 — 1 novembre 2026
+Game Design Document — Version 0.18 — 2 novembre 2026
 
-Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, les vingt missions jouables, la progression persistante par faction, la boutique et la présentation du prototype Windows 0.104. Le chapitre 2 met une Gardienne à l’essai ; son rôle et ses chiffres restent provisoires. Les autres biomes, les difficultés avancées et les cartes à plusieurs routes décrivent la conception à long terme, encore à réaliser.
+Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, les vingt missions jouables, la progression persistante par faction et le prototype Windows 0.109. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. Les prochains biomes, difficultés avancées et cartes à plusieurs forteresses restent à développer.
 
-**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains. Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
+**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage. Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.17 ; jeu de référence 0.104.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.18 ; jeu de référence 0.109.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -72,6 +72,7 @@ Nom de travail — disponibilité juridique à confirmer.
 58. [58 Succès et récompenses de campagne](#s58)
 59. [59 Chapitre deux et Gardienne des berges](#s59)
 60. [60 Présentation et animations du prototype](#s60)
+61. [61 Atelier des routes convergentes](#s61)
 
 <a id="s1"></a>
 
@@ -803,7 +804,7 @@ Calcul : 28 ÷ vitesse, sans élimination ni blocage. Le dernier Pillard de la v
 ## 21 Premier tir et ciblage
 
 ### Statut des règles
-Les règles de résolution sont approuvées pour le premier prototype — V. Les statistiques H du GDD ne changent pas. Elles s’appliquent au combat de référence hors bonus ; leur catalogue est défini en sections 25 à 29.
+Les règles de résolution sont approuvées pour le premier prototype — V. Les statistiques H du GDD ne changent pas. Elles s’appliquent au combat de référence à trajet unique, hors bonus ; leur catalogue est défini en sections 25 à 29. Le ciblage entre plusieurs routes suit la règle distincte de la section 61.
 
 ### Premier tir et cadence
 - Chaque défenseur est prêt à tirer au début d’une vague. Il ne tire que lorsqu’une cible admissible est présente à portée.
@@ -1357,7 +1358,7 @@ Ces cas constituent des références de vérification du recrutement et des vent
 ### Direction visuelle
 L’univers médiéval-fantasy coloré et la vue isométrique de La Vallée du Gué constituent les références établies. Les deux illustrations figurant dans l’ancien échange sont des références d’ambiance, pas des assets définitifs ni une validation de leurs droits d’exploitation.
 
-La direction retenue est un cartoon fantasy minimaliste : silhouettes et attributs reconnaissables, lecture rapide à petite taille, couleurs cohérentes entre grandes illustrations et petites unités. Les références World of Warcraft inspirent les codes de rôle et l’organisation des talents ; elles ne constituent pas des assets autorisés à réutiliser. Les défenseurs, attaquants, forteresses et souverains disposent d’illustrations originales dans le prototype. Les premières réactions corporelles et poses royales sont réalisées en section 60 ; cycles de marche, gestes détaillés, musique et son restent à développer ou à préciser.
+La direction retenue est un cartoon fantasy minimaliste : silhouettes et attributs reconnaissables, lecture rapide à petite taille, couleurs cohérentes entre grandes illustrations et petites unités. Les références World of Warcraft inspirent les codes de rôle et l’organisation des talents ; elles ne constituent pas des assets autorisés à réutiliser. Les défenseurs, attaquants, forteresses et souverains disposent d’illustrations originales dans le prototype. Les réactions corporelles, poses royales et la démarche du loup sont réalisées en section 60. Les cycles des autres attaquants, gestes détaillés, musique et son restent à développer ou à préciser.
 
 ### Interface et lisibilité
 Observer les combats, inspecter ses unités et accélérer le déroulement sont des interactions validées. Les panneaux et le parcours sont approuvés en section 41 ; leur mise en forme évolue dans le prototype jouable. Le joueur doit voir la portée avant de recruter, comprendre les effets sans jargon de calcul et ne lire que les unités de sa faction. Les besoins suivants sont retenus — V — pour rendre les systèmes compréhensibles.
@@ -1503,7 +1504,7 @@ Après la demande de recommandation du porteur du projet, Godot avec GDScript et
 | Moteur et langage | Godot 4.7.2 stable standard, GDScript | Choix de réalisation initial, révisable |
 | Présentation | 2D isométrique, visuels temporaires | Choix de réalisation initial |
 | Rendu | Compatibility | Choix de réalisation initial, à vérifier sur le PC cible |
-| Livraison actuelle | Prototype Windows 0.104, vingt missions | Publication de test, non version commerciale |
+| Livraison actuelle | Prototype Windows 0.109, vingt missions et atelier séparé | Publication de test, non version commerciale |
 | Temps de combat complet | Ordonnanceur conforme aux sections 21 à 24 | Réalisé et couvert par les régressions |
 | Publication | Versions Windows sur dépôt GitHub privé | Aucune publication commerciale engagée |
 
@@ -1516,7 +1517,7 @@ La configuration matérielle minimale, les objectifs de performance et les optio
 ## 47 Périmètre commercial et feuille de route
 
 ### Contenu actuel et cibles
-| Élément | Prototype Windows 0.104 | Orientation long terme |
+| Élément | Prototype Windows 0.109 | Orientation long terme |
 | --- | --- | --- |
 | Factions | 2, parcours indépendants | 2 — V |
 | Défenseurs | 6 de départ et 4 alternatives de boutique ; 3 types de départ et 1 alternative optionnelle par mission | 16, soit 8 par faction — ancienne cible C à réexaminer avec la boutique |
@@ -1549,12 +1550,12 @@ L’introduction de nouveautés vise les blocs 11–20, 31–40, 51–60, etc., 
 
 
 ### Variantes de routes et de forteresses
-Le porteur du projet demande de varier les prochains chapitres avec plusieurs entrées, des chemins doubles ou multiples qui se rejoignent, des sorties distinctes et des cartes à plusieurs forteresses — V pour ces orientations. Le prototype actuel garde une entrée, un trajet et une forteresse par mission. Ces variantes ne deviennent pas jouables par leur seule présence dans la feuille de route.
+Le porteur du projet demande de varier les prochains chapitres avec plusieurs entrées, des chemins doubles ou multiples qui se rejoignent, des sorties distinctes et des cartes à plusieurs forteresses — V pour ces orientations. Les vingt missions actuelles gardent une entrée, un trajet et une forteresse par mission. L’atelier de La Confluence teste deux entrées vers une forteresse, hors campagne et sans gain persistant, selon la section 61. Les autres variantes restent des cibles de conception.
 
 | Variante demandée | Objectif de conception | Règles encore ouvertes |
 | --- | --- | --- |
-| Plusieurs entrées | Répartir les groupes et les zones de couverture | Annonce, calendrier et affectation des groupes |
-| Routes convergentes | Faire évoluer les choix avant et après une jonction | Géométries, priorités et attaques simultanées |
+| Plusieurs entrées | Atelier à deux entrées avec annonces par trajet | Affectations et rencontres des futures missions à concevoir |
+| Routes convergentes | Atelier de jonction et ciblage au temps d’arrivée | Géométries, simultanéité et équilibrage des futurs chapitres |
 | Sorties et forteresses multiples | Répartir la défense entre plusieurs destinations | PV propres ou partagés, défaite à la perte d’une seule ou de toutes, devenir d’une route dont la forteresse est détruite |
 
 Les animations demandées concernent tous les défenseurs et attaquants. Les gestes des défenseurs doivent correspondre à leurs projectiles. Les réactions aux dégâts doivent dépasser le seul clignotement. Forteresse et roi doivent porter les codes de leur faction. L’état de réalisation est décrit en section 60 ; une première animation de l’illustration entière ne remplace pas des cycles de marche ou de membres complets.
@@ -1625,9 +1626,12 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-13 | Prévoir un système de succès — V pour le principe | Liste O ; unités de fin des 20 chapitres Normal, Héroïque et Mythique proposées par le porteur du projet |
 | MAJ-14 | Infini Normal, Héroïque et Mythique — V | Chaque accès exige les 10 premiers chapitres de campagne dans la même difficulté et la même faction ; règles de combat O |
 | MAJ-15 | Premier nouvel attaquant de biome pour les missions 11 à 20 — V pour l’essai | Tortue et rôle Gardienne proposés ; hésitation Gardienne ou Protectrice non résolue, chiffres H |
-| MAJ-16 | Animer les unités ; gestes des défenseurs cohérents avec leurs projectiles, réactions corporelles des attaquants — V | Réactions v0.103 réalisées ; cycles de marche et gestes détaillés restent à développer |
+| MAJ-16 | Animer les unités ; gestes des défenseurs cohérents avec leurs projectiles, réactions corporelles des attaquants — V | Réactions et démarche du loup réalisées ; autres cycles et gestes détaillés à développer |
 | MAJ-17 | Forteresse et roi au sommet propres à chaque faction, avec réaction aux pertes de PV — V | Première réalisation v0.104 ; apparences, poses et durées H |
 | MAJ-18 | Varier les entrées, jonctions, sorties et nombre de forteresses dans les prochains chapitres — V | Règles de circulation, PV et conditions de défaite O |
+| MAJ-19 | Entre plusieurs routes, cibler l’ennemi à portée qui arrivera le plus tôt selon sa vitesse — V | Règle réalisée dans l’atelier ; anciennes priorités conservées pour les rapports historiques |
+| MAJ-20 | Démarche du loup « thorax et bassin » approuvée pour le prototype — V | Cycle intégré en v0.108 ; cisaillement rejeté puis orientation corrigée en v0.109, encore à éprouver |
+| MAJ-21 | Allure du sanglier à examiner — P | Atelier isolé ; aucune intégration ou approbation artistique déduite des contrôles |
 
 <a id="s49"></a>
 
@@ -1643,7 +1647,8 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-008 | Prix final, périmètre commercial et nom | Plan de production |
 | O-009 | Choix définitif Gardienne ou Protectrice, puis PV, rayon et transfert | Retours sur le chapitre 2 |
 | O-010 | PV et défaite des cartes à plusieurs forteresses, affectation et réorientation des routes | Conception des futurs tracés |
-| O-011 | Cycles de marche, animation des membres, gestes synchronisés et transitions royales | Production artistique et lisibilité à petite taille |
+| O-011 | Autres cycles de marche, gestes synchronisés et transitions royales | Production artistique et lisibilité à petite taille |
+| O-012 | Placement corrigé du loup et allure expérimentale du sanglier | Retours visuels du porteur avant extension et intégration |
 
 <a id="s50"></a>
 
@@ -1684,6 +1689,8 @@ Version 0.15 — 30 octobre 2026 : consolidation de la campagne, des trois missi
 Version 0.16 — 31 octobre 2026 : dix missions, boutique et alternatives, talents partagés par famille, sauvegarde au schéma 7, prix du grenadier à 75 or en hypothèse et décisions long terme sur les biomes et les difficultés. Référence jouable 0.101 ; principe des succès et premières pistes de récompenses ajoutés.
 
 Version 0.17 — 1 novembre 2026 : consolidation du jeu 0.104, vingt missions, Gardienne à l’essai, réactions corporelles, forteresses et souverains ; demandes futures sur les animations et les routes multiples. Conservation des tableaux du socle, de la boutique et des 126 talents. Le choix Gardienne ou Protectrice et les nouvelles apparences restent ouverts ou H.
+
+Version 0.18 — 2 novembre 2026 : référence au jeu 0.109, atelier à deux entrées et priorité au temps d’arrivée, démarche du loup approuvée pour le prototype et correction du placement diagonal à éprouver. Le sanglier reste une proposition séparée. Aucun changement de statistiques, d’économie ou de progression n’est déduit de cette consolidation.
 
 <a id="s51"></a>
 
@@ -1813,7 +1820,7 @@ Cette protection empêche l’édition triviale du fichier ; elle ne garantit pa
 
 ## 55 Catalogue des talents du prototype
 
-Les tableaux suivants reprennent le catalogue de référence v0.89, toujours utilisé comme socle par le jeu 0.104 ; les bénéficiaires de famille sont étendus aux alternatives selon la section 57. Les effets sont indiqués par rang. Toutes les valeurs, positions précises, noms et chaînes proposés restent H. Les numéros de ligne désignent les sept paliers logiques ; le palier 20 occupe deux rangées visuelles. Un parent indiqué doit être entièrement amélioré, en plus du seuil de points. Ces tableaux ne sont pas une validation définitive de l’équilibrage.
+Les tableaux suivants reprennent le catalogue de référence v0.89, toujours utilisé comme socle par le jeu 0.109 ; les bénéficiaires de famille sont étendus aux alternatives selon la section 57. Les effets sont indiqués par rang. Toutes les valeurs, positions précises, noms et chaînes proposés restent H. Les numéros de ligne désignent les sept paliers logiques ; le palier 20 occupe deux rangées visuelles. Un parent indiqué doit être entièrement amélioré, en plus du seuil de points. Ces tableaux ne sont pas une validation définitive de l’équilibrage.
 
 ### Alliance Bastion
 
@@ -1978,19 +1985,19 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 ## 56 État vérifié et prochaines décisions
 
 ### Référence de publication
-Le prototype Windows 0.104 est publié sur le dépôt privé. La régression complète archivée passe 88 suites, 36 772 contrôles Godot et 17 tests Python. Le paquet exporté passe 21 cas ciblés sur 255 disponibles, produit 20 captures et compare 68 sources. Il ne s’agit pas d’une vérification native exhaustive. Les quatre poses royales et les quatre états des bâtiments sont contrôlés dans les deux factions. Les centres des six placements sont dégagés sur les vingt missions.
+Le prototype Windows 0.109 est publié sur le dépôt privé. Sa régression complète passe 92 suites, 39 536 contrôles Godot et 17 tests Python. Le paquet Windows passe 14 cas ciblés sur 263 disponibles, avec comparaison de 74 sources et examen de huit captures. Ce périmètre ciblé ne constitue pas une vérification native exhaustive ni une campagne humaine complète.
 
-Un atelier agrandi des deux forteresses utilise les ressources du paquet, en 150 échantillons à 30 images par seconde. Les pertes de PV proviennent des arrivées du modèle avec une séquence abrégée ; cet atelier n’est pas une partie jouée. Les vues d’encouragement, de blessure et de défaite ont été inspectées, ainsi que des vues de plateau. Ces vérifications ne démontrent ni une compréhension universelle ni un équilibrage final.
+La v0.109 conserve le dessin et les courbes de la démarche du loup approuvée pour le prototype. Elle remplace le cisaillement de la v0.108 par une rotation rigide sur les diagonales, afin de conserver les proportions et les angles. Les appuis restent liés à la distance parcourue. Le naturel du nouveau placement reste à éprouver avec le porteur. Les contrôles historiques des forteresses et souverains restent ceux de leur version de réalisation ; ils ne sont pas présentés comme de nouveaux essais complets en v0.109.
 
 ### Essais et prochaines décisions
 Les 7 776 simulations historiques du grenadier motivent un recrutement à 75 or au lieu de 90, en hypothèse. Le biais de calendrier de la première amélioration et les résultats variables selon les stratégies restent consignés. Le chapitre 2 a fait l’objet de 40 simulations à placement fixe, puis de 44 tentatives de placement permettant de trouver une victoire pour chacune de ses dix missions dans les deux factions, avec cinq points dans le premier talent et une graine déterminée. Ces politiques diffèrent par leur recrutement et leurs améliorations ; aucun taux de victoire humain n’est déduit de ces exemples.
 
-Priorités : recueillir un retour sur la Gardienne et les nouvelles apparences, ajuster les rencontres et l’économie, comparer les talents et alternatives, produire les cycles de marche et gestes détaillés, puis cadrer les variantes de routes. Le barème PO et XP des 100 premières missions, la reprise d’une mission interrompue et la portabilité des sauvegardes restent à préciser. Une réalisation technique ne transforme pas une hypothèse en décision approuvée.
+Priorités : recueillir les retours sur le placement du loup, le sanglier, la Gardienne et les apparences ; poursuivre les cycles et gestes détaillés ; éprouver les rencontres, l’économie et les choix de talents ; puis intégrer des variantes de routes aux futurs chapitres. Le barème PO et XP des 100 premières missions, la reprise d’une mission interrompue et la portabilité des sauvegardes restent à préciser. Une réalisation technique ne transforme pas une hypothèse en décision approuvée.
 
 ### Sources et preuves
-Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée à `design/Gardienne_des_berges_v0102.md`, `design/Reactions_corporelles_v0103.md`, `design/Forteresses_souverains_v0104.md` et `design/Feuille_de_route_long_terme.md`, aux scripts de campagne, de combat, de talents et de présentation, ainsi qu’aux rapports `design/essais/v0104_regression.json` et `design/Distribution_Windows_v0104.json`. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
+Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.17, jeu 0.104. Cette consolidation ne constitue pas un nouvel essai humain ni une nouvelle compilation du jeu.
+La documentation est versionnée séparément du binaire : GDD 0.18, jeu 0.109. Cette consolidation ne constitue pas un nouvel essai humain ni une nouvelle compilation du jeu.
 
 <a id="s57"></a>
 
@@ -2051,7 +2058,7 @@ Vingt chapitres de dix missions représentent 200 missions par difficulté. Ces 
 ### Conditions avant réalisation
 Définir si les succès sont propres à chaque faction ou au compte, et quelle faction reçoit chaque unité. Les parcours, banques et talents restent indépendants ; cette proposition n’autorise aucun transfert de contenu entre les camps. Préciser les critères de réussite, les unités et leurs compromis, les éventuels doublons avec la boutique et leur provenance affichée. Le choix actuel de trois types de départ plus une alternative n’est pas automatiquement élargi par une récompense.
 
-Les récompenses devront être persistantes, attribuées une seule fois et préservées lors des migrations. La présentation des succès et l’intégration éventuelle à Steam restent O. Aucun système de succès dédié n’est livré dans le jeu de référence 0.104. Source : `design/Succes_2026-10-31.md`. Les accès à l’infini sont distincts : dix premiers chapitres de campagne dans la difficulté correspondante, selon `design/Infini_difficultes_2026-10-31.md`.
+Les récompenses devront être persistantes, attribuées une seule fois et préservées lors des migrations. La présentation des succès et l’intégration éventuelle à Steam restent O. Aucun système de succès dédié n’est livré dans le jeu de référence 0.109. Source : `design/Succes_2026-10-31.md`. Les accès à l’infini sont distincts : dix premiers chapitres de campagne dans la difficulté correspondante, selon `design/Infini_difficultes_2026-10-31.md`.
 
 
 <a id="s59"></a>
@@ -2104,10 +2111,11 @@ La vente, les améliorations, les trois choix de bonus et les récompenses persi
 ## 60 Présentation et animations du prototype
 
 ### État réalisé et horloges visuelles
-Les gestes, silhouettes et animations doivent aider à lire les événements réels. Ils ne changent ni le calcul des dégâts, ni la route, ni le ciblage. Le porteur demande des gestes de défenseurs cohérents avec les projectiles, des réactions corporelles chez les attaquants et une forteresse avec roi propre à chaque faction. Les premières réalisations ci-dessous ne constituent pas des cycles complets des membres.
+Les gestes, silhouettes et animations doivent aider à lire les événements réels. Ils ne changent ni le calcul des dégâts, ni la route, ni le ciblage. Le porteur demande des gestes de défenseurs cohérents avec les projectiles, des réactions corporelles chez les attaquants et une forteresse avec roi propre à chaque faction. Les réactions et poses royales ci-dessous restent des premières réalisations. Le loup dispose désormais d’un cycle de déplacement propre ; les autres attaquants restent à traiter.
 
 | Élément visuel | Réalisation du prototype | Horloge | Limite actuelle |
 | --- | --- | --- | --- |
+| Loup neutre en déplacement | Peau continue aux attaches, mouvement du thorax et du bassin ; démarche approuvée pour le prototype | Distance parcourue et taille affichée | Orientation sans étirement en v0.109, encore à éprouver ; pas de nouvelle vue frontale dessinée |
 | Attaquant survivant touché | Inclinaison et recul brefs, maximum à 0,045 s, retour au repos à 0,28 s ; mouvement plus discret sur les lourds | Temps simulé | Illustration entière ; aucun repoussement logique ou ralentissement |
 | Coups simultanés et périodiques | Réaction au plus fort signal visible, sans cumul de recul ; ticks et dégâts absorbés réels également observés | Temps simulé | Un coup létal conserve la dissipation existante ; animation corporelle de mort à produire |
 | Roi au repos | Pose debout et léger mouvement de respiration | Temps réel | Première animation, membres non séparés |
@@ -2117,6 +2125,11 @@ Les gestes, silhouettes et animations doivent aider à lire les événements ré
 
 Un soin de forteresse ne produit pas une blessure. Les nouvelles missions effacent les anciens signaux visuels. Les réactions d’attaquants s’accélèrent avec le combat ; ×10 reste un outil de débogage qui ne garantit pas la lecture de chaque impact. Les durées royales réelles maintiennent leur lisibilité à cette vitesse, sans bloquer les vagues ni les choix de bonus.
 
+### Démarche du loup et essai du sanglier
+La phase de marche du loup dépend de la distance réellement parcourue à l’écran. Accélérer le déplacement accélère les pas ; une position immobile conserve sa pose. Les loups sont déphasés individuellement. Les membres proches et le corps partagent une peau continue ; le dessin et le cycle approuvés sont conservés. Le placement diagonal utilise une rotation rigide et un retournement selon le sens de marche. La correction préserve les proportions ; elle ne représente pas un nouveau dessin sous plusieurs angles de caméra. Les changements d’orientation aux angles restent immédiats.
+
+Le sanglier possède un premier atelier isolé à appuis alternés et à foulée adaptée à sa vitesse actuelle. La proposition utilise une nouvelle base graphique dans la direction cartoon et ne modifie pas le programme distribué. Les contrôles de contact, de géométrie et de cadence ne valent pas validation du naturel de cette allure. La présentation sur les chemins et les réactions aux dégâts restent à vérifier avant une éventuelle intégration.
+
 ### Forteresses et souverains des deux factions
 Alliance : pierre claire, toitures bleues et touches d’or ; souverain à barbe grise, manteau bleu et couronne d’or. Horde : bois, ferrures, toitures rouges et défenses d’ivoire ; souverain orc à cape rouge et couronne de métal. Ces apparences sont des propositions H dans le style cartoon retenu. Le bâtiment et le roi disposent d’illustrations séparées ; quatre poses dessinées représentent repos, encouragement, blessure et défaite. Aucun rôle de défenseur, bonus ou cible supplémentaire n’est ajouté au souverain.
 
@@ -2125,4 +2138,24 @@ Le centre de dessin de la cour est décalé de 16 pixels vers la droite pour dé
 Les PNG originaux transparents et les prompts ImageGen sont conservés dans le projet. Les références de fantasy inspirent les codes de lecture, sans reprise d’un personnage ou emblème de franchise. Les vues agrandies archivées sont des ateliers contrôlés, pas des parties jouées. Voir `design/Forteresses_souverains_v0104.md` et son fichier de prompts pour la provenance des illustrations.
 
 ### Prochains travaux artistiques
-Produire les cycles de marche des attaquants, enrichir leurs réactions et animations de mort, et préparer les gestes détaillés des défenseurs, y compris les alternatives de boutique. Le geste de tir et le départ du projectile doivent être cohérents. Affiner les poses, transitions et expressions royales après retour du porteur. La musique, le son et les options finales d’accessibilité restent à préciser. Les cartes à plusieurs entrées, jonctions et forteresses demeurent des chantiers de conception en section 47.
+Poursuivre les cycles des autres attaquants après retour sur les essais, enrichir leurs réactions et animations de mort, et préparer les gestes détaillés des défenseurs, y compris les alternatives de boutique. Le geste de tir et le départ du projectile doivent être cohérents. Affiner les poses, transitions et expressions royales après retour du porteur. La musique, le son et les options finales d’accessibilité restent à préciser. L’atelier à deux entrées est réalisé en section 61 ; son intégration aux chapitres et les cartes à plusieurs forteresses restent des chantiers de conception en section 47.
+
+<a id="s61"></a>
+
+## 61 Atelier des routes convergentes
+
+### Accès et périmètre
+Le paquet Windows fournit `Lancer_atelier_routes.cmd`. L’atelier de La Confluence permet de choisir sa faction puis de préparer une défense à deux entrées convergeant vers une forteresse. Il reste distinct des vingt missions de campagne. Il ne charge aucun profil joueur et ne crédite ni PO, ni XP, ni réussite de mission. Les talents et déblocages persistants de campagne ne sont pas importés dans cet essai.
+
+Les défenseurs, achats, portées, dix vagues et bonus utilisent les règles du prototype avec une carte d’essai. La géométrie, l’alternance des apparitions et la difficulté sont des propositions H, sans approbation d’un nouveau chapitre. Aucune forteresse supplémentaire n’est livrée.
+
+### Préparation et annonces
+Avant la vague, chaque entrée porte un repère distinct et annonce ses effectifs. Le survol des groupes détaille leur route et leur calendrier. L’affectation annoncée est celle que le combat utilisera ; l’alternance continue entre les groupes sans repartir à zéro pour chaque groupe. Les annonces se recalculent selon la vague, la faction et les rencontres, puis les effectifs annoncés disparaissent pendant le combat.
+
+### Ciblage validé entre routes
+Le porteur choisit de viser, parmi les ennemis à portée, celui qui arrivera le plus tôt selon sa vitesse. Le temps restant est la distance jusqu’à la forteresse sur la route propre à l’ennemi, divisée par sa vitesse. La plus petite valeur est prioritaire ; en cas d’égalité, l’ordre d’apparition départage les cibles. Ce choix ne permet pas d’attaquer une cible hors portée et ne change pas la cadence du défenseur.
+
+Cette règle concerne les combats multitrajets. Les cartes actuelles à trajet unique conservent leur priorité à la plus grande distance parcourue, décrite en section 21. Les nouveaux rapports multitrajets mémorisent la priorité au temps d’arrivée ; les rapports historiques de l’atelier v0.106 sans ce champ conservent leur priorité à la distance restante. La règle est fixée avant les actions afin de préserver leur relecture.
+
+### Suite de la conception
+Éprouver la lisibilité des entrées, les couvertures avant et après jonction et la difficulté des attaques simultanées. L’affectation des tracés aux chapitres et les rencontres doivent être conçues avant extension de la campagne. Les règles de PV, de défaite et de réorientation sur une carte à plusieurs forteresses restent O ; l’atelier à une forteresse ne les tranche pas.

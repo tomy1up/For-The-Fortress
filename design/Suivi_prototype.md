@@ -578,3 +578,7 @@ Huit poses dessinées du loup neutre, cycle lié à la distance, miroir selon le
 ## Retour visuel et reprise du loup — 1 novembre 2026
 
 Le cycle v0.105 est jugé trop saccadé. L’essai articulé suivant est rejeté pour ses pattes et sa silhouette ; il est retiré du projet et archivé hors production, sans compilation ni publication v0.106. Le travail reste limité au loup jusqu’à validation du porteur. L’agent doit contrôler l’anatomie, les raccords, les appuis et la fluidité sur le déplacement réel avant de présenter un candidat. [Critères et statut](Validation_visuelle_animations.md). Les succès techniques des essais ne valent pas validation artistique.
+
+## GDD 0.18 — consolidation du 2 novembre 2026
+
+Word et Markdown actualisés sur le jeu 0.109 : démarche du loup validée pour le prototype, correction du cisaillement diagonal encore à éprouver et étude du sanglier hors production. L’atelier à deux entrées, ses annonces et la priorité au temps d’arrivée sont décrits séparément des vingt missions à trajet unique. Aucun ajout artistique ou réglage n’est présenté comme approuvé par cette consolidation. 72 pages vérifiées, 79 tableaux identiques, 61 destinations de sommaire contrôlées, 126 talents conservés ; données des vingt missions, du chapitre 2, de la boutique et des 51 seuils XP comparées au jeu. Les 17 tests Python passent ; les 74 sources du paquet Windows et son binaire sont inchangés. [Vérification documentaire](essais/gdd_v018_verification.json).
