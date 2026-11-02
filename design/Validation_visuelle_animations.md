@@ -1,5 +1,9 @@
 # Validation visuelle des animations
 
+## État du loup au 2 novembre 2026
+
+Le porteur approuve la démarche « thorax et bassin » pour le prototype, puis confirme que l’animation lui convient en jeu. Il rejette cependant l’étirement diagonal de la v0.108. La [v0.109](Orientation_loup_v0109.md) corrige ce placement en conservant les courbes et le dessin approuvés : rotation rigide, appuis et cadence liés au déplacement. Les contrôles techniques ne valent pas approbation du nouveau placement par le porteur.
+
 Décision du porteur du projet, 1 novembre 2026 : l’animation doit donner une impression naturelle de marche. L’agent doit effectuer son propre contrôle visuel avant de présenter un résultat. La validation du porteur reste nécessaire avant d’étendre le travail du loup aux autres unités.
 
 ## Retour sur les essais du loup

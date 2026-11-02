@@ -1,0 +1,11 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FUNDED_OFFER faction=0 wave=3 indices=[5, 9, 0] selected=R-06
+FUNDED_OFFER faction=0 wave=6 indices=[10, 2, 0] selected=R-11
+FUNDED_OFFER faction=0 wave=9 indices=[9, 1, 2] selected=R-10
+FUNDED_CAMPAIGN faction=0 hp=14 gold=192 income=752 kills=178 escapes=4 combat_seconds=372.754533175
+FUNDED_OFFER faction=1 wave=3 indices=[5, 9, 0] selected=R-06
+FUNDED_OFFER faction=1 wave=6 indices=[10, 2, 0] selected=R-11
+FUNDED_OFFER faction=1 wave=9 indices=[9, 1, 2] selected=R-10
+FUNDED_CAMPAIGN faction=1 hp=12 gold=189 income=749 kills=175 escapes=7 combat_seconds=392.540984023
+CAMPAIGN_TESTS checks=362 failures=0

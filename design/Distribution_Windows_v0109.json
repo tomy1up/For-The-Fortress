@@ -1,0 +1,109 @@
+{
+  "archive_sha256": "2c01acffffecce89fe29368e4afc97d8832469a3454ee21f4f23753a7ff4499f",
+  "scope": "selected",
+  "available_cases": 263,
+  "executable_sha256": "342bd9a2ff47c28d9fb2859adade2b6780d0a1f44fc3dcb2195d977e4df7febd",
+  "files": [
+    "For_the_Fortress_v0.109_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.109_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.109_Windows_x64/Lancer_atelier_routes.cmd",
+    "For_the_Fortress_v0.109_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.109_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.109_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_routes",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_routes",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_campaign_menu_fresh",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_campaign_menu_fresh",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_wolf_walk_0",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_wolf_walk_1",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_wolf_walk_0",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_wolf_walk_1",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "source_checks": 74,
+  "local_sources_compared": true,
+  "visual_review": "Eight native package captures examined: wolf silhouettes retain proportions on opposing diagonals in both factions and two offsets, route workshop renders, fresh campaign menus remain accessible. Controlled wolf fixtures include live hit feedback. Separate enlarged same-pose four-direction comparison and four frames of imposed game-scene movement examined; no full campaign or artistic approval claim.",
+  "reviewed_captures": [
+    "alliance_wolf_walk_0",
+    "alliance_wolf_walk_1",
+    "horde_wolf_walk_0",
+    "horde_wolf_walk_1",
+    "alliance_routes",
+    "horde_routes",
+    "alliance_campaign_menu_fresh",
+    "horde_campaign_menu_fresh"
+  ],
+  "capture_sha256": {
+    "design/essais/captures/QA-v0109_alliance_wolf_walk_0.png": "5c8ac7f48d1f71fe36017e1fd94ddc1ed7b779a9d0068ac63dabaa6ed93deaf4",
+    "design/essais/captures/QA-v0109_alliance_wolf_walk_1.png": "4ecd153a0f5c57b05054ccff62d2152c7860b063534bdc8ccc5bf4351bebcfd5",
+    "design/essais/captures/QA-v0109_horde_wolf_walk_0.png": "af764251c91ff8b8a9fb67cfd5ee6140d21422f90e16645325a15f535392c935",
+    "design/essais/captures/QA-v0109_horde_wolf_walk_1.png": "6641a5fa89dec0d99a99d2871ddbf1c0101a3c5ea31376151b9b051ab60e0cc8",
+    "design/essais/captures/QA-v0109_alliance_routes.png": "bcf6aa349f1757c769243b7905ece3c16762982e73ee1eec8bfc6cd91795b92a",
+    "design/essais/captures/QA-v0109_horde_routes.png": "25a035e5988e1e8bee5ac9469d56f534d24d6b69d7cd804bb20973cdf1d0af21",
+    "design/essais/captures/QA-v0109_alliance_campaign_menu_fresh.png": "6efa4b2757a90305230b9c42d74d1906910b0d6ea826847d259df33f188436ef",
+    "design/essais/captures/QA-v0109_horde_campaign_menu_fresh.png": "7a0f308a1e572b3cfffe42d7bfae11520acc60ea3a5c05b3ee0bf7ac8740bc51"
+  }
+}

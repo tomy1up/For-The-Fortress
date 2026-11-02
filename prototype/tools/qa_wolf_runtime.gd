@@ -37,7 +37,7 @@ func probe() -> void:
 		cases.append({"wolves":count,"cpu_update_median_ms":timings[timings.size()/2],"cpu_update_p95_ms":timings[int(timings.size()*0.95)]})
 		print("WOLF_RENDER_CPU ",JSON.stringify(cases[-1]))
 	var directory:=ProjectSettings.globalize_path("res://../design/essais")
-	var output:=FileAccess.open(directory.path_join("v0108_wolf_cpu.json"),FileAccess.WRITE)
+	var output:=FileAccess.open(directory.path_join("v0109_wolf_cpu.json"),FileAccess.WRITE)
 	assert(readback_error<0.0001,"Native mesh buffers differ from sampled gait")
 	output.store_string(JSON.stringify({"scope":"CPU curve sampling and mesh upload in native renderer; not full game FPS","native_vertex_readback_max_error":readback_error,"cases":cases},"\t"));output.close()
 	quit()

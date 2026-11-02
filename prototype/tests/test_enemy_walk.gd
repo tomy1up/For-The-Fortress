@@ -21,6 +21,18 @@ func run_checks() -> void:
 	for direction in [Vector2(0.8944272,0.4472136),Vector2(-0.8944272,0.4472136),Vector2(0.8944272,-0.4472136),Vector2(-0.8944272,-0.4472136)]:
 		var ground:=Walk.ground_basis(direction)
 		var facing: float=-1.0 if direction.x<0 else 1.0
+		for phase in [0.0,0.17,0.43,0.79]:
+			var flat:=Walk.sample_vertices(phase)
+			var oriented:=Walk.sample_vertices(phase,direction)
+			var length_error:=0.0;var dot_error:=0.0
+			for triangle in range(0,Walk.DATA.indices.size(),3):
+				var a: int=Walk.DATA.indices[triangle];var b: int=Walk.DATA.indices[triangle+1];var c: int=Walk.DATA.indices[triangle+2]
+				var ab: Vector2=flat[b]-flat[a];var ac: Vector2=flat[c]-flat[a]
+				var rotated_ab: Vector2=oriented[b]-oriented[a];var rotated_ac: Vector2=oriented[c]-oriented[a]
+				length_error=maxf(length_error,absf(ab.length()-rotated_ab.length()))
+				dot_error=maxf(dot_error,absf(ab.dot(ac)-rotated_ab.dot(rotated_ac)))
+			check(length_error<0.00002,"Orientation sans étirement des arêtes de la silhouette")
+			check(dot_error<0.0002,"Orientation sans cisaillement ni changement d’angle")
 		for group in range(4):
 			var index: int=Walk.DATA.feet.find(group)
 			check(index>=0,"Coussinet représentatif de chaque patte")

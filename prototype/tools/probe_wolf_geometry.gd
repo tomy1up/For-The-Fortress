@@ -15,6 +15,6 @@ func _initialize() -> void:
 				if area<=0: inverted+=1
 		results.append({"direction":[direction.x,direction.y],"flat_profile_fallback":absf(direction.x)<0.05,"inverted":inverted,"min_area":minimum})
 	print("WOLF_PROJECTION_GEOMETRY ",JSON.stringify(results))
-	var output:=FileAccess.open("res://../design/essais/v0108_wolf_geometry.json",FileAccess.WRITE)
+	var output:=FileAccess.open("res://../design/essais/v0109_wolf_geometry.json",FileAccess.WRITE)
 	output.store_string(JSON.stringify({"phases":256,"triangles":Walk.DATA.indices.size()/3,"cases":results},"\t"));output.close()
 	quit()

@@ -1,0 +1,11 @@
+{
+  "source_changes_between_packages": [
+    "project.godot",
+    "export_presets.cfg",
+    "scripts/main.gd",
+    "scripts/enemy_walk_art.gd"
+  ],
+  "approved_wolf_texture_unchanged": true,
+  "approved_motion_data_unchanged": true,
+  "comparison_png_sha256": "6192a29a2a811cf3b87f82d752d1dbd1c76ca2031d3fdb18336bcd3dbe0067bb"
+}

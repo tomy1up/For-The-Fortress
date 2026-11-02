@@ -640,7 +640,7 @@ func _ready() -> void:
 			print("ROUTE_FORECAST_SNAPSHOT=",JSON.stringify({"faction":model.faction,"entries":map_view.entry_forecast,"note":forecast_note.text,"visible":forecast_panel.visible,"labels":map_view.entry_label_layouts().map(func(entry: Dictionary):return [entry.title,entry.detail])}))
 		if capture_state == "wolf_walk":
 			# Fixture visuelle isolée : quatre directions du trajet, sans profil joueur.
-			model.enemies.clear();model.spawn_schedule.clear();model.spawned=4
+			model.enemies.clear();model.spawn_schedule.clear();model.spawned=4;model.phase="combat"
 			var pose_offset:=0.0
 			for argument in OS.get_cmdline_user_args():
 				if argument.begins_with("--capture-wolf-offset="): pose_offset=float(argument.trim_prefix("--capture-wolf-offset="))
@@ -648,6 +648,7 @@ func _ready() -> void:
 				var enemy: Dictionary=Model.make_enemy(index,0,0.0,model.faction)
 				enemy.distance=[2.0,7.0,11.5,16.5][index]+pose_offset
 				model.enemies.append(enemy)
+			_update_interface()
 			print("WOLF_SNAPSHOT=",JSON.stringify({"isolated":meta_profile == null or meta_profile.path.is_empty(),"count":model.enemies.size(),"faction":model.faction,"motion_schema":MapView.EnemyWalkArt.DATA.schema}))
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw

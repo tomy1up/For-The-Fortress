@@ -37,11 +37,11 @@ static func phase_for(travel: float,enemy_id: int=0,actor_scale: float=1.0) -> f
 static func ground_basis(direction: Vector2) -> Vector2:
 	# Keep a visible profile for future frontal routes; the current playable
 	# routes all use the four isometric diagonal screen directions.
-	return Vector2.RIGHT if absf(direction.x)<0.05 else Vector2(absf(direction.x),direction.y)
+	return Vector2.RIGHT if absf(direction.x)<0.05 else Vector2(absf(direction.x),direction.y).normalized()
 
 static func projected_bounds(direction: Vector2) -> Rect2:
 	var ground:=ground_basis(direction)
-	return Transform2D(ground,Vector2.DOWN,Vector2.ZERO)*BOUNDS
+	return Transform2D(ground,Vector2(-ground.y,ground.x),Vector2.ZERO)*BOUNDS
 
 static func sample_vertices(phase: float,ground_direction: Vector2=Vector2.RIGHT) -> PackedVector2Array:
 	var at: float=fposmod(phase,1.0)*128.0
@@ -55,9 +55,9 @@ static func sample_vertices(phase: float,ground_direction: Vector2=Vector2.RIGHT
 	var result:=PackedVector2Array();result.resize(a.size())
 	for index in range(a.size()):
 		var point: Vector2=a[index].lerp(b[index],t) if fixed[index]==1 else a[index]*h00+b[index]*h01+ma[index]*h10+mb[index]*h11
-		# The whole profile uses one ground-plane projection. Vertical axes
-		# remain vertical, and an affine projection cannot fold the skin.
-		result[index]=Vector2(point.x*ground.x,point.y+point.x*ground.y)
+		# Rigid orientation preserves the approved silhouette, lengths and angles.
+		# A vertical second axis would shear the drawing on diagonal paths.
+		result[index]=Vector2(point.x*ground.x-point.y*ground.y,point.x*ground.y+point.y*ground.x)
 	return result
 
 func mesh_for(enemy_id: int,phase: float,ground_direction: Vector2=Vector2.RIGHT) -> ArrayMesh:

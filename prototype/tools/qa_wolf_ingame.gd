@@ -12,7 +12,7 @@ func record() -> void:
 		var enemy: Dictionary=Model.make_enemy(index,0,0.0,0)
 		enemy.distance=1.0+index*2.5;game.model.enemies.append(enemy)
 	game.model.spawned=8
-	var directory:=ProjectSettings.globalize_path("res://../design/essais/v0108_game_frames")
+	var directory:=ProjectSettings.globalize_path("res://../design/essais/v0109_game_frames")
 	DirAccess.make_dir_recursive_absolute(directory)
 	for frame in range(144):
 		for enemy in game.model.enemies: enemy.distance+=enemy.speed/60.0
