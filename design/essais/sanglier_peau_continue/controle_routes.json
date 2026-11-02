@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "scope": "Controlled straight projected lanes; not a mission or artistic approval",
+  "directions": 4,
+  "sizes": 2,
+  "native_trace_samples": 80,
+  "contact_vertices_compared": 2816,
+  "maximum_orthogonality_error": 6.318055020132496e-10,
+  "maximum_contact_error_pixels": 7.4952662003227825e-06,
+  "pause_checked": true,
+  "double_speed_checked": true,
+  "hit_pulse_and_recovery_checked": true,
+  "profile_loaded": false,
+  "artistically_approved": false,
+  "source_sha256": {
+    "render_routes.gd": "2209b8a2d22f864b9aba07af4f12ba472efe2f0011dca9682848731661b1cb9d",
+    "check_routes.py": "3c55161e7df5deef6b653d30960e23d0428249df83efc5459dc8c82d804ce7a6",
+    "smooth_walk.json": "d48f92c2aa360e796926fd9f63c360d49d5d83913d3db96e2d947c3ff60a7164",
+    "smooth_walk_far.json": "8aaae676461c8f6acd689e59084a69674b3dbf8f4ca0219353b1abc6fa6db2f4"
+  }
+}

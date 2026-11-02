@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "scope": "Isolated boar on straight diagnostic lanes; no campaign or profile access",
+  "steps": [
+    {
+      "step": "engine",
+      "exit_code": 0,
+      "seconds": 0.047
+    },
+    {
+      "step": "native",
+      "exit_code": 0,
+      "seconds": 13.984
+    },
+    {
+      "step": "audit",
+      "exit_code": 0,
+      "seconds": 0.469
+    },
+    {
+      "step": "encode",
+      "exit_code": 0,
+      "seconds": 0.531
+    },
+    {
+      "step": "decode",
+      "exit_code": 0,
+      "seconds": 0.109
+    }
+  ],
+  "frames": 240,
+  "fps": 60,
+  "seconds": 4,
+  "width": 1280,
+  "height": 840,
+  "decode_ok": true,
+  "video": "sanglier_routes_essai.mp4",
+  "video_sha256": "538cbc3a7d5c340ba2e8b88c7f12a7d71e37aa365bdf3055174de2f1f7794f5e",
+  "production_v0109_sources_unchanged": 74,
+  "executable_unchanged": true,
+  "artistically_approved": false,
+  "source_sha256": {
+    "design/essais/sanglier_peau_continue/build_routes.py": "571e2373e9687c6aa35641ea08896a18512872f86352928b4aa451a41c5015e4",
+    "design/essais/sanglier_peau_continue/render_routes.gd": "2209b8a2d22f864b9aba07af4f12ba472efe2f0011dca9682848731661b1cb9d",
+    "design/essais/sanglier_peau_continue/check_routes.py": "3c55161e7df5deef6b653d30960e23d0428249df83efc5459dc8c82d804ce7a6",
+    "design/essais/sanglier_peau_continue/render_study.gd": "f8bee92721b2d3e9c306ac9a4b6e129850daf7223dbb1904612bd79f5537e16f",
+    "design/essais/loup_peau_continue/render_walk.gd": "178bd4583c93b25a07f7584253e7f97fd25a475ce26b2968ab9d07041b25f608",
+    "prototype/scripts/valley_view.gd": "45ce02b78ca2f597f88500d47f83d36f76a58f9e8cdb53f3e53a735f1d69c906",
+    "prototype/scripts/enemy_walk_art.gd": "a8686305610275a5a07d61154c650608eafdcd04aaf1f1f6aebbb2e4d044603c"
+  }
+}

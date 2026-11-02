@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Atelier du sanglier — à examiner** : [dessin, aperçu et contrôles](design/essais/sanglier_peau_continue/README.md). Un premier cycle expérimental adapte la foulée à la vitesse actuelle du sanglier. Il reste séparé de la version jouable et n’est pas approuvé artistiquement.
+**Atelier du sanglier — à examiner** : [dessin, aperçu et contrôles](design/essais/sanglier_peau_continue/README.md). Un premier cycle expérimental adapte la foulée à la vitesse actuelle du sanglier. Un aperçu sur quatre diagonales vérifie proportions, appuis, pause et accélération. Il reste séparé de la version jouable et n’est pas approuvé artistiquement.
 
 **Prototype v0.109 — orientation du loup sans étirement** : [correction et contrôles](design/Orientation_loup_v0109.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.109). La démarche approuvée est conservée ; le placement diagonal utilise une rotation du personnage entier, avec conservation des proportions, des angles et des appuis. Cette correction remplace le placement de la v0.108 après le retour visuel du porteur.
 

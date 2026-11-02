@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-02",
+  "scope": "Four straight diagnostic lanes; no mission or player profile",
+  "artistically_approved": false,
+  "video": {
+    "path": "sanglier_routes_essai.mp4",
+    "sha256": "538cbc3a7d5c340ba2e8b88c7f12a7d71e37aa365bdf3055174de2f1f7794f5e",
+    "decoded_frames": 240,
+    "fps": 60,
+    "width": 1280,
+    "height": 840,
+    "decode_ok": true
+  },
+  "reviewed_native_frames_sha256": {
+    "Apercu_routes_0000.png": "61725047523e6a55bc81391e3a3edcfcfa48d3945ad45b0690aae3432e94cc81",
+    "Apercu_routes_0090.png": "068839a6de700ea18e19a6054caf49965a5e66aab28ecda267159d593bfe1b5f",
+    "Apercu_routes_0174.png": "c21b5e75adb2482d860638a454781c186620b0d7511abb9f1ad24f9228a5384b",
+    "Apercu_routes_0239.png": "154ac47502068182d7dcfdc4d433ec6c2335156797f94bce7ab4953bd5b3149d"
+  },
+  "observations": [
+    "The first framing clipped lower content; the final 1280x840 viewport and shorter nominal lanes correct it.",
+    "Four inspected native frames preserve the visible silhouette in all four directions and both sizes.",
+    "The impact temporarily offsets the body; stance anchoring is checked outside the impact.",
+    "Continuous perceived naturalness, corners, frontal views, hover and real mission context remain to validate."
+  ],
+  "production_unchanged": true
+}
