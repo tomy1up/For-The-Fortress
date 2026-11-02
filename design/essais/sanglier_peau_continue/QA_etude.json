@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-02",
+  "scope": "isolated animation candidate, not a playable game release",
+  "artistically_approved": false,
+  "video": {
+    "path": "sanglier_allure_rapide_essai.mp4",
+    "sha256": "abd300c6cf8f0ca69d228aa7ba57a0780957d8b1efeeae1e251eca755cf6e920",
+    "frames": 144,
+    "fps": 60,
+    "seconds": 2.4,
+    "decoded_frames": 144,
+    "width": 1280,
+    "height": 800,
+    "decode_ok": true
+  },
+  "source_image_matches_builtin_imagegen_original": true,
+  "reviewed_native_frames_sha256": {
+    "Apercu_pose_0000.png": "f508ea547d893223b9742a405cd59f6ebae7d0a2b150174ecc40273c14cf7a59",
+    "Apercu_pose_0007.png": "f36529c2a51a42227138209c5258d9692cf69b5c2847e73eabfd65531e47d5e0",
+    "Apercu_pose_0014.png": "7b2c5bf055d6fc171f730d6bcc8467d466334cef547e368f1c59009a7f29bd5e",
+    "Apercu_pose_0021.png": "524bfb3fab2a0e885f58d610055fa2ae7332a7415a89f3e53030d61ccb492c9a"
+  },
+  "observations": [
+    "Connected near-leg silhouette retained across the four examined poses.",
+    "Distinct hoof positions and folded return legs visible in both directions.",
+    "Body, head and tail movement is subtle; perceived weight and naturalness still require project-owner feedback.",
+    "Small-scale display uses mipmap filtering. No mission, isometric placement or hit response is shown."
+  ],
+  "production_v0109_sources_unchanged": true
+}

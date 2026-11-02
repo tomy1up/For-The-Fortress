@@ -1,0 +1,65 @@
+{
+  "near": {
+    "iterations": [
+      {
+        "iteration": 0,
+        "violating_interval_faces": 22
+      },
+      {
+        "iteration": 1,
+        "violating_interval_faces": 8
+      },
+      {
+        "iteration": 2,
+        "violating_interval_faces": 3
+      },
+      {
+        "iteration": 3,
+        "violating_interval_faces": 1
+      },
+      {
+        "iteration": 4,
+        "violating_interval_faces": 0
+      }
+    ],
+    "remaining_violations": 0,
+    "artistically_approved": false,
+    "maximum_free_position_change_source_pixels": 7.588085403103971,
+    "maximum_feasibility_position_change_source_pixels": 1.8947206091953481,
+    "free_second_difference_rms_before": 0.6909294329001978,
+    "free_second_difference_rms_after": 0.3891898718913932,
+    "visible_free_vertices": 793,
+    "visible_free_second_difference_rms_before": 0.6909294329001978,
+    "visible_free_second_difference_rms_after": 0.3891898718912628
+  },
+  "far": {
+    "iterations": [
+      {
+        "iteration": 0,
+        "violating_interval_faces": 30
+      },
+      {
+        "iteration": 1,
+        "violating_interval_faces": 8
+      },
+      {
+        "iteration": 2,
+        "violating_interval_faces": 5
+      },
+      {
+        "iteration": 3,
+        "violating_interval_faces": 0
+      }
+    ],
+    "remaining_violations": 0,
+    "artistically_approved": false,
+    "maximum_free_position_change_source_pixels": 9.941182762552007,
+    "maximum_feasibility_position_change_source_pixels": 2.148020187983013,
+    "free_second_difference_rms_before": 0.8665324884156536,
+    "free_second_difference_rms_after": 0.4352936511733724,
+    "visible_free_vertices": 244,
+    "visible_free_second_difference_rms_before": 1.5233721874403647,
+    "visible_free_second_difference_rms_after": 0.763604291507162
+  },
+  "visibility_scope": "Boar rendering mask; supersedes the shared wolf-specific visibility diagnostic. The all-face geometry certificate is independent."
+}

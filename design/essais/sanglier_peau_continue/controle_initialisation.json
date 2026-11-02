@@ -1,0 +1,23 @@
+{
+  "near": {
+    "steps": 20,
+    "shortened_steps": 0,
+    "relaxation_batches": 0,
+    "minimum_area_ratio": 0.28374868304197,
+    "anchor_error_source_pixels": 0.0,
+    "output_sha256": "5cd181cbe4b11f585cab5687cd42b0913d173e0eee3c73dc2b65397f93232323",
+    "starting_pose_feasibility_repair": null
+  },
+  "far": {
+    "steps": 22,
+    "shortened_steps": 3,
+    "relaxation_batches": 0,
+    "minimum_area_ratio": 0.1320317364465684,
+    "anchor_error_source_pixels": 0.0,
+    "output_sha256": "aac1759483cf8ad895d4234d9d344d549a044921427ce26318fb6f0ee6b513ab",
+    "starting_pose_feasibility_repair": null
+  },
+  "kernel_sha256": "58ca74ae5a93434b71d6602a3a55db2c756df51e0658d873bc0e5adf4c5b51df",
+  "topology_edge_flips": 1607,
+  "source_input_sha256": "75529b6ffbac2c78eb77ee68d7ab777923de8d47aa72aa2f725629b2b0ef4d6b"
+}

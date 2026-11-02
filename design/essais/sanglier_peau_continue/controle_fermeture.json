@@ -1,0 +1,47 @@
+{
+  "near": {
+    "raw_seam_source_pixels": 0.0,
+    "maximum_distributed_closing_displacement_source_pixels": 0.0,
+    "maximum_shared_feasibility_correction_source_pixels": 0.33813201179035335,
+    "iterations": [
+      {
+        "iteration": 0,
+        "interval_face_constraints": 9,
+        "minimum_ratio": 0.0068251345737206075
+      },
+      {
+        "iteration": 1,
+        "interval_face_constraints": 0,
+        "minimum_ratio": 0.02053927345053941
+      }
+    ],
+    "minimum_interpolated_area_ratio_before_rounding": 0.02053927345053941,
+    "artistically_approved": false,
+    "scope": "explicit periodic authoring with exact interval constraints; no raster changes"
+  },
+  "far": {
+    "raw_seam_source_pixels": 0.0,
+    "maximum_distributed_closing_displacement_source_pixels": 0.0,
+    "maximum_shared_feasibility_correction_source_pixels": 0.522649121109167,
+    "iterations": [
+      {
+        "iteration": 0,
+        "interval_face_constraints": 14,
+        "minimum_ratio": 0.002743220077688791
+      },
+      {
+        "iteration": 1,
+        "interval_face_constraints": 4,
+        "minimum_ratio": -0.4350987137719825
+      },
+      {
+        "iteration": 2,
+        "interval_face_constraints": 0,
+        "minimum_ratio": 0.022165295086941487
+      }
+    ],
+    "minimum_interpolated_area_ratio_before_rounding": 0.022165295086941487,
+    "artistically_approved": false,
+    "scope": "explicit periodic authoring with exact interval constraints; no raster changes"
+  }
+}

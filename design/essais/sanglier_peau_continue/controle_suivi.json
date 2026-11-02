@@ -1,0 +1,50 @@
+{
+  "near": {
+    "complete_cycle": true,
+    "cycles": [
+      {
+        "cycle": 0,
+        "completed_phase": 1.0,
+        "keys": 139,
+        "shortened_steps": 12,
+        "seam_source_pixels": 1.228907494696614
+      },
+      {
+        "cycle": 1,
+        "completed_phase": 1.0,
+        "keys": 139,
+        "shortened_steps": 12,
+        "seam_source_pixels": 3.950002082066904e-09
+      }
+    ],
+    "artistically_approved": false,
+    "seconds": 4.38,
+    "maximum_target_regularization_source_pixels": 0.0,
+    "method": "forward constrained ARAP with exact interval feasibility; adaptive time steps",
+    "output_sha256": "341a4c71681600a4f18f040891202ce1086dad4f6359b3c883cd1f5d7a7ce155"
+  },
+  "far": {
+    "complete_cycle": true,
+    "cycles": [
+      {
+        "cycle": 0,
+        "completed_phase": 1.0,
+        "keys": 142,
+        "shortened_steps": 14,
+        "seam_source_pixels": 4.232342554981094
+      },
+      {
+        "cycle": 1,
+        "completed_phase": 1.0,
+        "keys": 144,
+        "shortened_steps": 17,
+        "seam_source_pixels": 1.0255233348467665e-10
+      }
+    ],
+    "artistically_approved": false,
+    "seconds": 9.14,
+    "maximum_target_regularization_source_pixels": 0.0,
+    "method": "forward constrained ARAP with exact interval feasibility; adaptive time steps",
+    "output_sha256": "5b3403489168e3745af6509f7d3a31870d206d0639267c9bd723c1d7d147065b"
+  }
+}

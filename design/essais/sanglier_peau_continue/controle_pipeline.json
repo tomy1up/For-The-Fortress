@@ -1,0 +1,103 @@
+{
+  "scope": "isolated boar authoring, not a game release or artistic approval",
+  "passed": true,
+  "steps": [
+    {
+      "step": "engine_version",
+      "seconds": 0.047,
+      "exit_code": 0
+    },
+    {
+      "step": "export",
+      "seconds": 0.734,
+      "exit_code": 0
+    },
+    {
+      "step": "initial",
+      "seconds": 0.953,
+      "exit_code": 0
+    },
+    {
+      "step": "bake_followed_motion",
+      "seconds": 9.484,
+      "exit_code": 0
+    },
+    {
+      "step": "close_followed_motion",
+      "seconds": 1.047,
+      "exit_code": 0
+    },
+    {
+      "step": "smooth_motion",
+      "seconds": 2.641,
+      "exit_code": 0
+    },
+    {
+      "step": "visible_metrics",
+      "seconds": 0.625,
+      "exit_code": 0
+    },
+    {
+      "step": "geometry",
+      "seconds": 0.906,
+      "exit_code": 0
+    },
+    {
+      "step": "native_readback",
+      "seconds": 1.36,
+      "exit_code": 0
+    },
+    {
+      "step": "independent_audit",
+      "seconds": 1.218,
+      "exit_code": 0
+    },
+    {
+      "step": "movie",
+      "seconds": 7.547,
+      "exit_code": 0
+    },
+    {
+      "step": "contacts",
+      "seconds": 0.516,
+      "exit_code": 0
+    },
+    {
+      "step": "encode",
+      "seconds": 0.328,
+      "exit_code": 0
+    }
+  ],
+  "video": {
+    "path": "sanglier_allure_rapide_essai.mp4",
+    "sha256": "abd300c6cf8f0ca69d228aa7ba57a0780957d8b1efeeae1e251eca755cf6e920",
+    "frames": 144,
+    "fps": 60,
+    "seconds": 2.4
+  },
+  "production_v0109_sources_unchanged": true,
+  "artistically_approved": false,
+  "engine_version": "4.7.2.stable.official.ed1daf0bf",
+  "source_sha256": {
+    "design/essais/animation_loup_appuis/grounded_foot.gd": "63a4481b55487f537f94c9408e1fe37ffc24b9be93a96253f8c4ea808cc5640d",
+    "design/essais/loup_peau_continue/bake_followed_motion.py": "58ca74ae5a93434b71d6602a3a55db2c756df51e0658d873bc0e5adf4c5b51df",
+    "design/essais/loup_peau_continue/check_smooth_motion.py": "a6dfae24660610d49db126233eb8c5414ea88d89385f94d623e33fcf170707a0",
+    "design/essais/loup_peau_continue/close_followed_motion.py": "b974269ad8ae721405759242f85ec45fbe8c484121e2ecd5064c5dd925d47347",
+    "design/essais/loup_peau_continue/continuous_skin.gd": "19bfdb148b091d042131b2f6d1eb96667e46ad3d2b1a655bda001e659714a916",
+    "design/essais/loup_peau_continue/render_walk.gd": "178bd4583c93b25a07f7584253e7f97fd25a475ce26b2968ab9d07041b25f608",
+    "design/essais/loup_peau_continue/smooth_motion.py": "dffb95e26ab46cdb8e73948a1f948e6f2b61f772b3ea3451bdebaa49490b60df",
+    "design/essais/loup_peau_continue/walk_skin.gd": "35ee757d54d1bce1812517f0af252bdfff6e71fdb6b93afa3f870087a9fe4d70",
+    "design/essais/sanglier_peau_continue/audit_study.py": "488694675fccc1a19ff31499e0e2948f045184b83730ec9475442ab90c11b2d8",
+    "design/essais/sanglier_peau_continue/audit_visible_metrics.py": "d3985451b664095b31c493265a69dda801edeaffd0f8612d504aa00cc10d8958",
+    "design/essais/sanglier_peau_continue/boar_skin.gd": "09cf3ea6559549e9405e51b09f8d871b5bef79df895982d7faeaf6fa9e4c0ad6",
+    "design/essais/sanglier_peau_continue/build_study.py": "32e422562558487e3d777270873fac43742ff7fb9de4b636549280e78909c2e3",
+    "design/essais/sanglier_peau_continue/check_ground_motion.py": "438a33b8c941bbd600ddcd115527f37df07a6cbe884ef577227e425d89cab8a2",
+    "design/essais/sanglier_peau_continue/export_motion.gd": "00c29db2632204a173f891ec00028d94e627719ead128d0f78956b53144fc5f5",
+    "design/essais/sanglier_peau_continue/initialize_mesh.py": "e1c891d49ae88280fd3cd7c2df9f2c3bd802268b2baffdfb003928785c3e221d",
+    "design/essais/sanglier_peau_continue/readback_study.gd": "cb7e6398efe0f3d0725b10e913f2a0d4190cc946f445b8888a8dc95ce7184f54",
+    "design/essais/sanglier_peau_continue/render_study.gd": "f8bee92721b2d3e9c306ac9a4b6e129850daf7223dbb1904612bd79f5537e16f",
+    "design/essais/sanglier_peau_continue/sanglier_proche_source_v001.png": "01126996c0296e3b2a9e0b290629980c36e1feb5a4e9b0af9846cf3af32b2178",
+    "design/essais/sanglier_peau_continue/smooth_walk.json": "d48f92c2aa360e796926fd9f63c360d49d5d83913d3db96e2d947c3ff60a7164",
+    "design/essais/sanglier_peau_continue/smooth_walk_far.json": "8aaae676461c8f6acd689e59084a69674b3dbf8f4ca0219353b1abc6fa6db2f4"
+  }
+}

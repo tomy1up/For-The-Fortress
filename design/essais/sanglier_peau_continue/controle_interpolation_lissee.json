@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "variant": "smooth",
+  "scope": "cubic free trajectories and linear fixed anchors; not art approval",
+  "certificate_self_checks": 3,
+  "layers": {
+    "near": {
+      "keys": 129,
+      "triangles": 2280,
+      "cubic_intervals": 128,
+      "failed_interval_faces": 0,
+      "unresolved_interval_faces": 0,
+      "maximum_subdivision_depth": 0,
+      "certified_lower_area_ratio": 0.008638447685259577,
+      "maximum_anchor_error_source_pixels": 7.071067392069087e-07,
+      "loop_position_error_source_pixels": 0.0,
+      "free_loop_velocity_error_source_pixels_per_cycle": 0.0,
+      "free_knots_velocity_continuity": "shared cubic tangents at every knot",
+      "remaining_linear_anchor_velocity_jump_source_pixels_per_cycle": 385.16727571754836,
+      "data_sha256": "d48f92c2aa360e796926fd9f63c360d49d5d83913d3db96e2d947c3ff60a7164",
+      "artistically_approved": false,
+      "numerically_passed": true
+    },
+    "far": {
+      "keys": 129,
+      "triangles": 2280,
+      "cubic_intervals": 128,
+      "failed_interval_faces": 0,
+      "unresolved_interval_faces": 0,
+      "maximum_subdivision_depth": 1,
+      "certified_lower_area_ratio": 0.00451946970823584,
+      "maximum_anchor_error_source_pixels": 7.071068597900084e-07,
+      "loop_position_error_source_pixels": 0.0,
+      "free_loop_velocity_error_source_pixels_per_cycle": 0.0,
+      "free_knots_velocity_continuity": "shared cubic tangents at every knot",
+      "remaining_linear_anchor_velocity_jump_source_pixels_per_cycle": 385.15973317977,
+      "data_sha256": "8aaae676461c8f6acd689e59084a69674b3dbf8f4ca0219353b1abc6fa6db2f4",
+      "artistically_approved": false,
+      "numerically_passed": true
+    }
+  },
+  "passed": true,
+  "native_readback": {
+    "readback_sha256": "6056740597d40a87767d0e0886df588b29f2ba426446a18eae57a5cc38fbf8ba",
+    "renderer_sha256": "178bd4583c93b25a07f7584253e7f97fd25a475ce26b2968ab9d07041b25f608",
+    "layers": {
+      "near": {
+        "mesh_vertices_compared": 20944,
+        "phases": 16,
+        "maximum_rendered_coordinate_error_source_pixels": 6.815473722391183e-05,
+        "passed": true
+      },
+      "far": {
+        "mesh_vertices_compared": 20944,
+        "phases": 16,
+        "maximum_rendered_coordinate_error_source_pixels": 6.821405526918545e-05,
+        "passed": true
+      }
+    },
+    "passed": true
+  }
+}

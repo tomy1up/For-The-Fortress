@@ -32,6 +32,8 @@ Orientation validée par le porteur du projet ; l’état des premières réalis
 - [x] Première réaction corporelle des attaquants aux dégâts : inclinaison et recul visuel brefs, puis retour à la pose normale, en complément du clignotement. Prototype v0.103 ; silhouettes entières animées, sans animation séparée des membres.
 - [x] Faire approuver une marche du loup pour le prototype : peau continue, thorax et bassin entraînés par les appuis ; validation du porteur le 2 novembre 2026. [Intégration v0.108](Marche_loup_v0108.md).
 - [ ] Étendre cette démarche de travail aux autres attaquants, avec contrôle des volumes, des appuis et de la vitesse, puis validation visuelle.
+
+Premier travail séparé : [atelier du sanglier](essais/sanglier_peau_continue/README.md), avec peau continue et appuis alternés. Le cycle et sa présentation restent à faire approuver ; aucune intégration ni nouvelle version du jeu n’est déduite de cette étude.
 - [ ] Produire les cycles de marche des attaquants et enrichir leurs animations corporelles. Le mouvement actuel de l’illustration entière ne constitue pas un cycle de marche dessiné.
 - [x] Première intégration de forteresses cartoon propres à chaque faction : pierre et bleu/or pour l’Alliance, bois, métal et rouge pour la Horde. Prototype v0.104 ; apparences proposées, à ajuster après retour artistique.
 - [x] Roi distinct au sommet de chaque forteresse, avec quatre poses dessinées et réactions liées aux événements : repos, encouragement, perte de PV, défaite. Prototype v0.104 ; transitions et mouvements restent à enrichir, sans animation complète des membres.

@@ -1,0 +1,30 @@
+{
+  "scope": "2 cycles, actual linear hoof anchor paths and monotonic native preview ground trace; not artistic approval",
+  "passed": true,
+  "contacts": {
+    "near_FrontNear2": {
+      "hoof_vertices": 20,
+      "world_positions_compared": 24380,
+      "maximum_world_contact_error_source_pixels": 0.0
+    },
+    "near_HindNear3": {
+      "hoof_vertices": 12,
+      "world_positions_compared": 14628,
+      "maximum_world_contact_error_source_pixels": 0.0
+    },
+    "far_FrontNear2": {
+      "hoof_vertices": 20,
+      "world_positions_compared": 24380,
+      "maximum_world_contact_error_source_pixels": 0.0
+    },
+    "far_HindNear3": {
+      "hoof_vertices": 12,
+      "world_positions_compared": 14628,
+      "maximum_world_contact_error_source_pixels": 0.0
+    }
+  },
+  "screen_speed_pixels_per_second": 49.8084151268005,
+  "cycle_seconds": 0.4615412135702916,
+  "native_preview_frames": 144,
+  "renderer_sha256": "f8bee92721b2d3e9c306ac9a4b6e129850daf7223dbb1904612bd79f5537e16f"
+}
