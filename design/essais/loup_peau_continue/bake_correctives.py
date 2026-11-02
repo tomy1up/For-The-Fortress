@@ -2,10 +2,11 @@
 import os
 os.environ['OPENBLAS_NUM_THREADS']='2'
 from pathlib import Path
-import json,hashlib,time
+import json,hashlib,time,argparse
 import numpy as np
 
-folder=Path(__file__).resolve().parent
+parser=argparse.ArgumentParser();parser.add_argument('--folder',type=Path)
+folder=parser.parse_args().folder or Path(__file__).resolve().parent
 input_file=folder/'captures/correctives_input.json'
 data=json.loads(input_file.read_text(encoding='utf8'))
 p=np.asarray(data['points'],dtype=np.float64)

@@ -1,0 +1,44 @@
+{
+  "near": {
+    "iterations": [
+      {
+        "iteration": 0,
+        "violating_interval_faces": 0
+      }
+    ],
+    "remaining_violations": 0,
+    "artistically_approved": false,
+    "maximum_free_position_change_source_pixels": 4.5884458464345785,
+    "maximum_feasibility_position_change_source_pixels": 0.0,
+    "free_second_difference_rms_before": 0.6733106419642235,
+    "free_second_difference_rms_after": 0.3489668852325179,
+    "visible_free_vertices": 423,
+    "visible_free_second_difference_rms_before": 0.6733106419642235,
+    "visible_free_second_difference_rms_after": 0.3489668852325179
+  },
+  "far": {
+    "iterations": [
+      {
+        "iteration": 0,
+        "violating_interval_faces": 2
+      },
+      {
+        "iteration": 1,
+        "violating_interval_faces": 2
+      },
+      {
+        "iteration": 2,
+        "violating_interval_faces": 0
+      }
+    ],
+    "remaining_violations": 0,
+    "artistically_approved": false,
+    "maximum_free_position_change_source_pixels": 7.987002661999231,
+    "maximum_feasibility_position_change_source_pixels": 1.2591496725420472,
+    "free_second_difference_rms_before": 0.986963578742846,
+    "free_second_difference_rms_after": 0.41111087678085273,
+    "visible_free_vertices": 234,
+    "visible_free_second_difference_rms_before": 1.0703927369060307,
+    "visible_free_second_difference_rms_after": 0.521615019272972
+  }
+}

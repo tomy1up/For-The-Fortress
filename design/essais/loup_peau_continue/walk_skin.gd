@@ -10,6 +10,9 @@ var poses: Dictionary={}
 var contacts: Array[Dictionary]=[]
 var reach_error:=0.0
 var body_drop:=65.0
+var body_reference:=false
+var reference_means: Dictionary={}
+var reference_body_scale:=0.0
 var worst_reach: Dictionary={}
 var control_indices: Dictionary={}
 var legs: Array[Dictionary]=[
@@ -20,6 +23,14 @@ var legs: Array[Dictionary]=[
 func build() -> void:
 	build_topology()
 	reference=JSON.parse_string(FileAccess.get_file_as_string(get_script().resource_path.get_base_dir().path_join("reference_walk.json")))
+	if body_reference:
+		for label in ["FrontUpperLeg.L","FrontUpperLeg.R","BackLeg.L","BackLeg.R"]:
+			var mean:=Vector3.ZERO
+			for frame in range(64):
+				var value: Array=reference.samples[frame][label]
+				mean+=Vector3(value[0],value[1],value[2])/64.0
+			reference_means[label]=mean
+		reference_body_scale=500.0/(reference_means["FrontUpperLeg.L"].z-reference_means["BackLeg.L"].z)
 	skeleton.name="Skeleton";add_child(skeleton)
 	new_bone("Torso","",Vector2.ZERO)
 	new_bone("Shoulder","Torso",Vector2(1000,500));new_bone("Pelvis","Torso",Vector2(500,470))
@@ -175,6 +186,11 @@ func put(label: String,value: Transform2D) -> void:
 	var bone: Bone2D=named[label]
 	var parent_label: String=str(bone.get_parent().name)
 	bone.transform=poses[parent_label].affine_inverse()*value if poses.has(parent_label) else value
+func reference_attachment(front: bool,side: String,phase: float) -> Vector2:
+	var label: String=("FrontUpperLeg." if front else "BackLeg.")+side
+	var delta: Vector3=ref_point(label,phase)-reference_means[label]
+	var base:=Vector2(1000,500) if front else Vector2(500,470)
+	return base+Vector2(0,body_drop)+Vector2(delta.z,-delta.y)*reference_body_scale
 func update_distance(distance: float) -> void:
 	contacts.clear();poses.clear()
 	var phase: float=distance/STRIDE
@@ -183,9 +199,17 @@ func update_distance(distance: float) -> void:
 	var pivot:=Vector2(750,500)
 	var torso:=Transform2D(pitch,Vector2.ZERO)
 	torso.origin=pivot-torso*pivot+Vector2(0,body_drop-(back.y-1.86)*120.0)
+	var shoulder_origin: Vector2=torso*Vector2(1000,500)
+	var pelvis_origin: Vector2=torso*Vector2(500,470)
+	if body_reference:
+		shoulder_origin=reference_attachment(true,"L",phase)
+		pelvis_origin=reference_attachment(false,"L",phase)
+		pitch=(shoulder_origin-pelvis_origin).angle()-Vector2(500,30).angle()
+		torso=Transform2D(pitch,Vector2.ZERO)
+		torso.origin=(shoulder_origin+pelvis_origin)*0.5-torso*Vector2(750,485)
 	put("Torso",torso)
-	put("Shoulder",Transform2D(pitch,torso*Vector2(1000,500)))
-	put("Pelvis",Transform2D(pitch,torso*Vector2(500,470)))
+	put("Shoulder",Transform2D(pitch,shoulder_origin))
+	put("Pelvis",Transform2D(pitch,pelvis_origin))
 	var head: Vector3=ref_point("Head",phase)-ref_point("Neck3",phase)
 	put("Head",Transform2D(clampf(atan2(-head.y,head.z)+0.31,-0.07,0.07),torso*Vector2(1130,420)))
 	var tail: Vector3=ref_point("Tail8",phase)-ref_point("Tail1",phase)
@@ -193,6 +217,8 @@ func update_distance(distance: float) -> void:
 	for leg in legs:
 		var goal: Dictionary=foot_goal(leg,distance)
 		var hip: Vector2=torso*(leg.rest[0]+leg.offset)
+		if body_reference:
+			hip=reference_attachment(leg.front,leg.side,phase)+torso.basis_xform(leg.offset)
 		var target: Vector2=goal.local
 		if leg.front:
 			solve_pair(leg,hip,target,0,1,2)
@@ -219,8 +245,9 @@ func update_distance(distance: float) -> void:
 		contacts.append({"leg":leg.key,"support":goal.support,"cycle":goal.cycle,"world":actual,"desired":goal.world})
 	var shoulder_pose: Transform2D=poses.Shoulder
 	var pelvis_pose: Transform2D=poses.Pelvis
-	shoulder_pose=Transform2D(lerp_angle(pitch,poses.FrontNear0.get_rotation(),0.25),shoulder_pose.origin)
-	pelvis_pose=Transform2D(lerp_angle(pitch,poses.HindNear0.get_rotation(),0.2),pelvis_pose.origin)
+	if not body_reference:
+		shoulder_pose=Transform2D(lerp_angle(pitch,poses.FrontNear0.get_rotation(),0.25),shoulder_pose.origin)
+		pelvis_pose=Transform2D(lerp_angle(pitch,poses.HindNear0.get_rotation(),0.2),pelvis_pose.origin)
 	put("Shoulder",shoulder_pose);put("Pelvis",pelvis_pose)
 	for leg in legs:
 		for index in range(leg.rest.size()): put(leg.key+str(index),poses[leg.key+str(index)])

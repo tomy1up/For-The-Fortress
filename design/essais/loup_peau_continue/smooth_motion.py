@@ -5,7 +5,7 @@ that the entire skin is C1, nor does it approve the resulting anatomy.
 """
 from pathlib import Path
 from math import comb
-import json,hashlib
+import json,hashlib,argparse
 import numpy as np
 
 def cross(a,b):return a[...,0]*b[...,1]-a[...,1]*b[...,0]
@@ -43,8 +43,8 @@ def low_areas(q,u,fixed,faces,rest):
         if values[best]<rest[face]*0.025:bad.append((interval,face,times[best],float(values[best])))
     return bad
 
-def bake():
-    folder=Path(__file__).resolve().parent
+def bake(folder=None):
+    folder=folder or Path(__file__).resolve().parent
     source_path=folder/'captures/correctives_input.json'
     source=json.loads(source_path.read_text(encoding='utf8'))
     fixed=np.asarray(source['fixed_indices'],dtype=np.int32)
@@ -120,4 +120,6 @@ def bake():
         print('SMOOTH_FINISHED',layer,json.dumps({k:v for k,v in reports[layer].items() if k!='iterations'}),flush=True)
     (folder/'controle_lissage.json').write_text(json.dumps(reports,indent=2)+'\n',encoding='utf8')
 
-if __name__=='__main__':bake()
+if __name__=='__main__':
+    parser=argparse.ArgumentParser();parser.add_argument('--folder',type=Path)
+    bake(parser.parse_args().folder)

@@ -1,0 +1,78 @@
+{
+  "near": {
+    "complete_cycle": true,
+    "cycles": [
+      {
+        "cycle": 0,
+        "completed_phase": 1.0,
+        "keys": 135,
+        "shortened_steps": 14,
+        "seam_source_pixels": 8.672633510148378
+      },
+      {
+        "cycle": 1,
+        "completed_phase": 1.0,
+        "keys": 134,
+        "shortened_steps": 10,
+        "seam_source_pixels": 2.4471945034585253e-06
+      }
+    ],
+    "artistically_approved": false,
+    "seconds": 3.16,
+    "maximum_target_regularization_source_pixels": 0.0,
+    "method": "forward constrained ARAP with exact interval feasibility; adaptive time steps",
+    "output_sha256": "23cdd3e7c964138b20b052c30e089a6d9a691f8ee05f22cc77563ff4f03e4c10"
+  },
+  "far": {
+    "complete_cycle": true,
+    "cycles": [
+      {
+        "cycle": 0,
+        "completed_phase": 1.0,
+        "keys": 144,
+        "shortened_steps": 27,
+        "seam_source_pixels": 21.72027901573328
+      },
+      {
+        "cycle": 1,
+        "completed_phase": 1.0,
+        "keys": 140,
+        "shortened_steps": 18,
+        "seam_source_pixels": 0.8548880285590298
+      },
+      {
+        "cycle": 2,
+        "completed_phase": 1.0,
+        "keys": 142,
+        "shortened_steps": 18,
+        "seam_source_pixels": 0.012300920930940647
+      },
+      {
+        "cycle": 3,
+        "completed_phase": 1.0,
+        "keys": 139,
+        "shortened_steps": 14,
+        "seam_source_pixels": 3.6366593524725404
+      },
+      {
+        "cycle": 4,
+        "completed_phase": 1.0,
+        "keys": 139,
+        "shortened_steps": 17,
+        "seam_source_pixels": 3.275200431053214
+      },
+      {
+        "cycle": 5,
+        "completed_phase": 1.0,
+        "keys": 140,
+        "shortened_steps": 16,
+        "seam_source_pixels": 0.9235207095477623
+      }
+    ],
+    "artistically_approved": false,
+    "seconds": 13.86,
+    "maximum_target_regularization_source_pixels": 3.051757846606051e-05,
+    "method": "forward constrained ARAP with exact interval feasibility; adaptive time steps",
+    "output_sha256": "61ee0b189d6986191a2a73a35792b79517e7e97db223027cff3301c7077e3267"
+  }
+}

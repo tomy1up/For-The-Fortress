@@ -45,7 +45,7 @@ def self_check():
 def native_audit(folder):
     capture=folder/'captures/native_smooth_mesh.json'
     native=json.loads(capture.read_text(encoding='utf8'))
-    assert native['renderer_sha256']==hashlib.sha256((folder/'render_walk.gd').read_bytes()).hexdigest()
+    assert native['renderer_sha256']==hashlib.sha256((Path(__file__).resolve().parent/'render_walk.gd').read_bytes()).hexdigest()
     results={}
     for layer,suffix in [('near',''),('far','_far')]:
         path=folder/('smooth_walk'+suffix+'.json')
@@ -71,9 +71,9 @@ def native_audit(folder):
                         'maximum_rendered_coordinate_error_source_pixels':worst,'passed':worst<0.001}
     return {'readback_sha256':hashlib.sha256(capture.read_bytes()).hexdigest(),'renderer_sha256':native['renderer_sha256'],'layers':results,'passed':all(r['passed'] for r in results.values())}
 
-def check(with_native=False):
+def check(with_native=False,folder=None):
     self_check()
-    folder=Path(__file__).resolve().parent
+    folder=folder or Path(__file__).resolve().parent
     source_path=folder/'captures/correctives_input.json'
     source=json.loads(source_path.read_text(encoding='utf8'))
     fixed=np.asarray(source['fixed_indices'],dtype=int)
@@ -130,5 +130,6 @@ def check(with_native=False):
     return out['passed']
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--native',action='store_true')
-    raise SystemExit(0 if check(parser.parse_args().native) else 1)
+    parser=argparse.ArgumentParser();parser.add_argument('--native',action='store_true');parser.add_argument('--folder',type=Path)
+    arguments=parser.parse_args()
+    raise SystemExit(0 if check(arguments.native,arguments.folder) else 1)

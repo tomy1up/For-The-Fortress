@@ -10,8 +10,9 @@ import numpy as np
 
 parser=argparse.ArgumentParser()
 parser.add_argument('--variant',choices=['baseline','periodic'],default='baseline')
-variant=parser.parse_args().variant
-folder=Path(__file__).resolve().parent
+parser.add_argument('--folder',type=Path)
+arguments=parser.parse_args();variant=arguments.variant
+folder=arguments.folder or Path(__file__).resolve().parent
 source_path=folder/'captures/correctives_input.json'
 source=json.loads(source_path.read_text(encoding='utf8'))
 reports=json.loads((folder/'controle_correctifs.json').read_text(encoding='utf8'))

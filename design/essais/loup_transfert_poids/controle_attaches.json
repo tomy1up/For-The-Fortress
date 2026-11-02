@@ -1,0 +1,23 @@
+{
+	"actual_foot_difference_from_previous_source_pixels": 0.000772040453739464,
+	"actual_head_attachment_error_source_pixels": 0.00036748030106537,
+	"actual_near_root_attachment_error_source_pixels": 0.0,
+	"actual_support_drift_source_pixels": 0.000562716333661228,
+	"actual_tail_attachment_error_source_pixels": 0.0,
+	"artistically_approved": false,
+	"cycles": 2,
+	"frames": 1025,
+	"passed": true,
+	"pelvis_peak_to_peak_source_pixels": [
+		4.8134765625,
+		24.6558227539063
+	],
+	"reach_error_source_pixels": 0.000030517578125,
+	"reference_pixels_per_unit": 324.488704294622,
+	"scope": "actual Skeleton2D endpoints; isolated horizontal gait, not rendered skin or game validation",
+	"shoulder_peak_to_peak_source_pixels": [
+		25.7907104492188,
+		21.6447143554688
+	],
+	"support_samples": 2395
+}

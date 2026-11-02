@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-02",
+  "scope": "isolated body-reference comparison, not a game release",
+  "video": {
+    "path": "captures\\loup_comparaison_corps_2026-11-02.mp4",
+    "sha256": "c3c88bf2d4969f777c59f786dcb58c47bf2c3f736750102063263325737fd642",
+    "bytes": 1340255,
+    "width": 1280,
+    "height": 800,
+    "fps": 60,
+    "frames": 192,
+    "duration_seconds": 3.2,
+    "decode_exit_code": 0
+  },
+  "native_capture": {
+    "godot": "4.7.2",
+    "screen": 1,
+    "minimized": true,
+    "cycles": 3,
+    "common_scale": true,
+    "inspected_frames": [
+      0,
+      16,
+      32,
+      48
+    ]
+  },
+  "input_sha256": {
+    "smooth_walk.json": "dcda6ca15471d58508e97816bfaf9e0f97efeabf322cf772fa496a5d37c00b90",
+    "smooth_walk_far.json": "0fc0f2ab8eeb1fba2a6e1cb5062002b038b2401fdaf0f54043c514e51be6a17d",
+    "check_reference_body.gd": "d07544b68e2f522d4a2be075bfa014715a7b40f158e3b75d117286475f8cd5d1",
+    "compare_body_motion.gd": "0890c3d46d7c0c95d65f27af7297c711f01c0c1f7dad6e3a9ff7ad094bf60834",
+    "controle_attaches.json": "d8f05c18b7dcab2df1a77f524172cd2a2599ea80a9024875ec7b925a3cc65900",
+    "controle_interpolation_lissee.json": "ddb10be8c8a837855bc9ab62fd2c6a12d9ce806056a7c875d4b537835623bb34",
+    "controle_lissage.json": "c1330c88ef49e08cf48b72d00c96c5f3a114f877f5d0f006ded732e8587c322d",
+    "../loup_peau_continue/walk_skin.gd": "35ee757d54d1bce1812517f0af252bdfff6e71fdb6b93afa3f870087a9fe4d70",
+    "../loup_peau_continue/reference_walk.json": "26ffb50d5217cff274756cce742bdeaaf525a070cba5f70357c8c83bff85fc83",
+    "../loup_peau_continue/render_walk.gd": "178bd4583c93b25a07f7584253e7f97fd25a475ce26b2968ab9d07041b25f608",
+    "../loup_peau_continue/export_corrections.gd": "421ba562ee7dfed9c8ba065ec1cb8ab356de5a5bf306b407d6228d17cfe5dc0e",
+    "../loup_peau_continue/check_native_smooth.gd": "2ee78d52c6e07ec3f9dde730dde9c245f842560938ea815009618f31400d88e0",
+    "../loup_peau_continue/check_smooth_motion.py": "a6dfae24660610d49db126233eb8c5414ea88d89385f94d623e33fcf170707a0",
+    "../loup_peau_continue/smooth_motion.py": "dffb95e26ab46cdb8e73948a1f948e6f2b61f772b3ea3451bdebaa49490b60df",
+    "../loup_peau_continue/loup_proche_source_v001.png": "b02af3243233536b8f34470d5cecfeaaade9f39f7d3a8bd9be69967f76085e6c"
+  },
+  "attachment_check_passed": true,
+  "curve_and_readback_checks_passed": true,
+  "default_variant_regression": {
+    "ground_support_drift_source_pixels": 0.0006103515625,
+    "ground_target_error_source_pixels": 0.000409436266636476,
+    "original_smooth_native_audit_passed": true
+  },
+  "limitations": [
+    "reference retargeting is an artistic hypothesis",
+    "pose inspection is not perceptual video approval",
+    "no isometric mission contact or performance validation",
+    "fur junctions and volumes require visual review"
+  ],
+  "artistically_approved": false,
+  "game_integration": false
+}

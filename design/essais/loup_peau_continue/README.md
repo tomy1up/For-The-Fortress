@@ -48,6 +48,10 @@ Une nouvelle boucle suit la déformation au cours du temps plutôt que de répar
 
 Une variante lisse les trajectoires de peau et partage leurs tangentes entre les poses pour réduire les changements brusques de vitesse. Les ancrages restent conservés. La nouvelle variante a été contrôlée sur ses courbes cubiques et relue dans les maillages natifs de Godot ; une comparaison animée avant/après est disponible localement. **La validation artistique reste ouverte.** Voir [LISSAGE_TEMPOREL.md](LISSAGE_TEMPOREL.md).
 
+## Attaches du corps — variante séparée
+
+Une étude distincte reprend les mouvements du thorax et du bassin à partir des attaches de la référence de marche, avec les appuis précédents. Elle reste désactivée par défaut et ne remplace pas cette boucle. Voir [l’étude de mouvement du corps](../loup_transfert_poids/README.md).
+
 ## Références consultées
 
 - [Spine — influences des os sur les sommets](https://en.esotericsoftware.com/spine-weights) : principe des influences partagées ; la documentation ne garantit pas la qualité artistique d’un rig.

@@ -5,10 +5,11 @@ Adjacent phase keys share feasibility corrections; isolated pose repair is not
 used. This is geometry authoring, not a statement of artistic approval.
 """
 from pathlib import Path
-import json,hashlib
+import json,hashlib,argparse
 import numpy as np
 
-folder=Path(__file__).resolve().parent
+parser=argparse.ArgumentParser();parser.add_argument('--folder',type=Path)
+folder=parser.parse_args().folder or Path(__file__).resolve().parent
 input_path=folder/'captures/correctives_input.json'
 source=json.loads(input_path.read_text(encoding='utf8'))
 fixed=np.asarray(source['fixed_indices'],dtype=np.int32)
@@ -36,7 +37,7 @@ for layer,suffix in [('near',''),('far','_far')]:
     assert followed_report[layer]['output_sha256']==hashlib.sha256(path.read_bytes()).hexdigest()
     data=json.loads(path.read_text(encoding='utf8'))
     assert data['source_input_sha256']==hashlib.sha256(input_path.read_bytes()).hexdigest()
-    assert data['source_builder_sha256']==hashlib.sha256((folder/'bake_followed_motion.py').read_bytes()).hexdigest()
+    assert data['source_builder_sha256']==hashlib.sha256((Path(__file__).resolve().parent/'bake_followed_motion.py').read_bytes()).hexdigest()
     q=np.asarray(data['frames'],dtype=float);phases=np.asarray(data['phases'])
     baseline=q.copy();faces=np.asarray(data['triangles'],dtype=np.int32);p=np.asarray(data['points'])
     rest=cross(p[faces[:,1]]-p[faces[:,0]],p[faces[:,2]]-p[faces[:,0]])

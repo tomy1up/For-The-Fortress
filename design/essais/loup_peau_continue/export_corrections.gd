@@ -2,7 +2,9 @@ extends SceneTree
 const Walker=preload("walk_skin.gd")
 func _initialize() -> void: call_deferred("export_data")
 func export_data() -> void:
-	var animal:=Walker.new();root.add_child(animal);animal.build()
+	var animal:=Walker.new()
+	animal.body_reference=OS.get_cmdline_user_args().has("--body-reference")
+	root.add_child(animal);animal.build()
 	var fixed: Dictionary={}
 	for label in animal.control_indices:
 		var index: int=animal.control_indices[label]
@@ -61,8 +63,10 @@ func export_data() -> void:
 	for point in animal.points: source.append([point.x,point.y])
 	for face in animal.triangles: faces.append(Array(face))
 	var folder: String=get_script().resource_path.get_base_dir().path_join("captures")
+	if animal.body_reference: folder=get_script().resource_path.get_base_dir().path_join("../loup_transfert_poids/captures")
 	DirAccess.make_dir_recursive_absolute(folder)
 	var result: Dictionary={"points":source,"triangles":faces,"fixed_indices":fixed_indices,"fixed_specs":specs,"pose_matrices":matrices,"rest_matrices":rest_matrices,"frames":frames,"far_frames":far_frames,"stride":Walker.STRIDE,"reference":"Quaternius Walk CC0; adapted 2D geometry"}
+	if animal.body_reference: result["body_reference"]={"reference_body_scale":animal.reference_body_scale,"attachment_points":["FrontUpperLeg.L","FrontUpperLeg.R","BackLeg.L","BackLeg.R"]}
 	var file:=FileAccess.open(folder.path_join("correctives_input.json"),FileAccess.WRITE);file.store_string(JSON.stringify(result));file.close()
 	print("CORRECTIVES_INPUT vertices=",source.size()," triangles=",faces.size()," constraints=",fixed.size()," frames=65")
 	animal.free();quit()

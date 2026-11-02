@@ -5,10 +5,11 @@ Experimental geometry only. A feasible mesh is not an approved wolf walk.
 import os
 os.environ['OPENBLAS_NUM_THREADS']='2'
 from pathlib import Path
-import json,time,hashlib
+import json,time,hashlib,argparse
 import numpy as np
 
-folder=Path(__file__).resolve().parent
+parser=argparse.ArgumentParser();parser.add_argument('--folder',type=Path)
+folder=parser.parse_args().folder or Path(__file__).resolve().parent
 source=json.loads((folder/'captures/correctives_input.json').read_text(encoding='utf8'))
 fixed=np.asarray(source['fixed_indices'],dtype=np.int32)
 reports={}
