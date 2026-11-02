@@ -1,6 +1,6 @@
 # Loup — mouvement du thorax et du bassin
 
-Date : 2 novembre 2026. **Variante artistique à valider, hors de la version jouable.** Elle conserve le dessin et les appuis de l’étude précédente.
+Date : 2 novembre 2026. **Démarche approuvée par le porteur pour le prototype** : « La démarche me convient pour le prototype ». L’intégration jouable est documentée dans [la v0.108](../../Marche_loup_v0108.md). Elle conserve le dessin et les appuis de l’étude précédente. Les paragraphes ci-dessous décrivent l’atelier ayant précédé cette approbation.
 
 ## Problème et reprise
 

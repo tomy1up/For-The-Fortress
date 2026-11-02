@@ -11,25 +11,31 @@ func check(ok: bool, message: String) -> void:
 func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
 	var image: Image = Walk.TEXTURE.get_image()
-	check(image.detect_alpha() != Image.ALPHA_NONE,"Atlas avec transparence réelle")
-	check(Walk.FRAMES.size() == 8,"Huit poses dessinées")
+	check(image.detect_alpha() != Image.ALPHA_NONE,"Peau avec transparence réelle")
+	check(Walk.DATA.frames.size()==129 and Walk.DATA.tangents.size()==129,"Courbes continues validées pour le prototype")
 	check(not Walk.supports("enemy.neutral.boar") and not Walk.supports("enemy.horde.warrior"),"Aucune animation attribuée aux autres identités")
-	var hashes: Array = []
-	for frame in range(8):
-		var rect: Rect2 = Walk.FRAMES[frame]
-		check(Rect2(Vector2.ZERO,image.get_size()).encloses(rect),"Cadre contenu dans le PNG")
-		var target: Rect2 = Walk.destination(frame)
-		check(Walk.BOUNDS.encloses(target),"Enveloppe fixe contenant chaque pose")
-		check(is_equal_approx(target.size.x/rect.size.x,Walk.SCALE) and is_equal_approx(target.size.y/rect.size.y,Walk.SCALE),"Échelle commune sans étirement ni pompage")
-		hashes.append(hash(image.get_region(Rect2i(rect)).get_data()))
-	check(hashes.size() == 8 and hashes.all(func(value): return hashes.count(value) == 1),"Huit images distinctes")
-	for id in range(5):
-		for frame in range(8):
-			var distance: float = (frame+0.25)/8.0*Walk.STRIDE
-			check(Walk.frame_index(distance,id) == Walk.frame_index(distance+Walk.STRIDE,id),"Boucle continue à distance équivalente")
-			check(Walk.frame_index(distance,id) >= 0 and Walk.frame_index(distance,id) < 8,"Indice sûr")
-	check(Walk.frame_index(-2,-5) == 0,"Distance et identifiant négatifs bornés")
-	check(Walk.frame_index(0.0,0) != Walk.frame_index(0.0,1),"Meute désynchronisée")
+	check(Walk.sample_vertices(0)==Walk.sample_vertices(1),"Fermeture exacte de la boucle")
+	check(Walk.phase_for(-2,-5)==0,"Distance et identifiant négatifs bornés")
+	check(Walk.phase_for(0,0)!=Walk.phase_for(0,1),"Meute désynchronisée")
+	check(is_equal_approx(Walk.phase_for(7,2,0.7),Walk.phase_for(7+Walk.DATA.stride_pixels*0.7,2,0.7)),"Cadence liée à la distance et à la taille affichée")
+	for direction in [Vector2(0.8944272,0.4472136),Vector2(-0.8944272,0.4472136),Vector2(0.8944272,-0.4472136),Vector2(-0.8944272,-0.4472136)]:
+		var ground:=Walk.ground_basis(direction)
+		var facing: float=-1.0 if direction.x<0 else 1.0
+		for group in range(4):
+			var index: int=Walk.DATA.feet.find(group)
+			check(index>=0,"Coussinet représentatif de chaque patte")
+			var start: float=[62.0,52.0,34.0,20.0][group]/64.0
+			var duty: float=[37.0,39.0,34.0,39.0][group]/64.0
+			var first: float=start+duty*0.3;var last: float=start+duty*0.7
+			var a: Vector2=Walk.sample_vertices(first,ground)[index]*Vector2(facing*0.7,0.7)+direction*Walk.DATA.stride_pixels*0.7*first
+			var b: Vector2=Walk.sample_vertices(last,ground)[index]*Vector2(facing*0.7,0.7)+direction*Walk.DATA.stride_pixels*0.7*last
+			check(a.distance_to(b)<0.003,"Appui fixe dans le plan isométrique, dans les deux sens")
+	var renderer:=Walk.new()
+	var first_mesh: ArrayMesh=renderer.mesh_for(1,0.2)
+	check(renderer.mesh_for(1,0.2)==first_mesh,"La pause réutilise la pose sans l’animer")
+	check(renderer.mesh_for(2,0.4)!=first_mesh,"Maillages indépendants dans la meute")
+	renderer.begin_frame();renderer.mesh_for(2,0.5);renderer.end_frame()
+	check(renderer.meshes.size()==1 and renderer.meshes.has(2),"Libération des maillages des ennemis disparus")
 	for faction in [0,1]:
 		for number in range(1,21):
 			var mission: Dictionary = Catalogue.runtime(Catalogue.id_for(number))
@@ -39,11 +45,14 @@ func run_checks() -> void:
 				var before: Dictionary = enemy.duplicate(true)
 				var bounds: Rect2 = View.enemy_bounds(enemy,faction,model.path_points,model.path_length)
 				var facing: float = View.enemy_facing(enemy,model.path_points,model.path_length)
+				var motion: Dictionary=Walk.path_motion(distance,model.path_points,View.AXIS)
+				check(absf(motion.direction.x)>0.05,"Les vingt missions utilisent les vues isométriques disponibles")
 				for frame in range(8):
-					var target: Rect2 = Walk.destination(frame)
-					if facing < 0: target.position.x = -target.end.x
-					var scale: float = View._enemy_scale(enemy)
-					check(bounds.encloses(Rect2(View.project(model.point_on_path(distance))+target.position*scale,target.size*scale)),"Survol stable couvrant chaque pose dans les deux factions et sur vingt missions")
+					var vertices:=Walk.sample_vertices((frame+0.37)/8.0,Walk.ground_basis(motion.direction))
+					var enclosed:=true
+					for point in vertices:
+						if not bounds.has_point(View.project(model.point_on_path(distance))+point*Vector2(facing,1)*View._enemy_scale(enemy)): enclosed=false;break
+					check(enclosed,"Survol stable couvrant toute la peau dans les deux factions et sur vingt missions")
 				check(enemy == before,"Rendu sans changement de PV, position ou identité")
 	print("TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)

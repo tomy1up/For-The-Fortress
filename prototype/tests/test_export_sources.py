@@ -17,6 +17,10 @@ class PackageSourcesTests(unittest.TestCase):
         selected = set(re.findall(r'"res://([^"\n]+)"', preset.split('include_filter=')[0]))
         required = {name for name in SOURCE_PATHS if Path(name).suffix in {'.gd', '.tscn', '.png'}}
         self.assertFalse(required - selected, 'Ressources absentes du programme exporté : ' + str(required - selected))
+        included = re.search(r'include_filter="([^"]*)"', preset).group(1).split(',')
+        for name in SOURCE_PATHS:
+            if Path(name).suffix == '.bin':
+                self.assertIn(name, included, 'Données de marche absentes du paquet')
 
     def fixture(self, root):
         sources = {}

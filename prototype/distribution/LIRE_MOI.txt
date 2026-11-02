@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.107 — 1 novembre 2026
+Version : 0.108 — 2 novembre 2026
 
 ATELIER A DEUX ENTREES
 
@@ -10,7 +10,8 @@ Le trace et l'alternance des entrees sont des essais provisoires.
 Les defenseurs ciblent l'ennemi a portee qui arrivera le plus tot, selon sa vitesse.
 Avant chaque vague, les quantites sont annoncees par entree et par groupe au survol.
 Le lancement habituel conserve les vingt missions de campagne.
-Les essais de marche du loup (24 poses et appuis articules) restent hors production, a valider.
+La nouvelle marche du loup, approuvee pour le prototype, est integree aux missions et a cet atelier.
+Le corps accompagne les appuis ; la cadence suit la distance parcourue et la vitesse du jeu.
 
 JOUER
 

@@ -1,0 +1,26 @@
+{
+	"cases": [
+		{
+			"cpu_update_median_ms": 0.117,
+			"cpu_update_p95_ms": 0.193,
+			"wolves": 1
+		},
+		{
+			"cpu_update_median_ms": 1.556,
+			"cpu_update_p95_ms": 1.974,
+			"wolves": 16
+		},
+		{
+			"cpu_update_median_ms": 4.806,
+			"cpu_update_p95_ms": 5.706,
+			"wolves": 48
+		},
+		{
+			"cpu_update_median_ms": 9.41000000000001,
+			"cpu_update_p95_ms": 10.276,
+			"wolves": 96
+		}
+	],
+	"native_vertex_readback_max_error": 0.0,
+	"scope": "CPU curve sampling and mesh upload in native renderer; not full game FPS"
+}

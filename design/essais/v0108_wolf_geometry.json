@@ -1,0 +1,51 @@
+{
+	"cases": [
+		{
+			"direction": [
+				1.0,
+				0.0
+			],
+			"flat_profile_fallback": false,
+			"inverted": 0,
+			"min_area": 0.000902861356735229
+		},
+		{
+			"direction": [
+				0.894427180290222,
+				0.447213590145111
+			],
+			"flat_profile_fallback": false,
+			"inverted": 0,
+			"min_area": 0.000808894634246826
+		},
+		{
+			"direction": [
+				0.894427180290222,
+				-0.447213590145111
+			],
+			"flat_profile_fallback": false,
+			"inverted": 0,
+			"min_area": 0.000807523727416992
+		},
+		{
+			"direction": [
+				0.0,
+				1.0
+			],
+			"flat_profile_fallback": true,
+			"inverted": 0,
+			"min_area": 0.000902861356735229
+		},
+		{
+			"direction": [
+				0.0,
+				-1.0
+			],
+			"flat_profile_fallback": true,
+			"inverted": 0,
+			"min_area": 0.000902861356735229
+		}
+	],
+	"phases": 256,
+	"triangles": 1682
+}

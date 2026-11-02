@@ -6,6 +6,7 @@ const HordeArt = preload("res://scripts/horde_art.gd")
 const AllianceArt = preload("res://scripts/alliance_art.gd")
 const EnemyArt = preload("res://scripts/enemy_art.gd")
 const EnemyWalkArt = preload("res://scripts/enemy_walk_art.gd")
+var walking_meshes:=EnemyWalkArt.new()
 const ShopArt = preload("res://scripts/shop_art.gd")
 const FortressArt = preload("res://scripts/fortress_art.gd")
 const ORIGIN := Vector2(658, 174)
@@ -292,7 +293,9 @@ static func enemy_bounds(enemy: Dictionary, defending_faction: int = -1, route_p
 	var bounds := Rect2(center+Vector2(-width/2.0,-39.0*scale),Vector2(width,47.0*scale))
 	if EnemyArt.TEXTURES.has(enemy_art_id(enemy,defending_faction)):
 		var image: Rect2 = EnemyArt.destination(enemy_art_id(enemy,defending_faction))
-		if EnemyWalkArt.supports(enemy_art_id(enemy,defending_faction)): image = image.merge(EnemyWalkArt.BOUNDS)
+		if EnemyWalkArt.supports(enemy_art_id(enemy,defending_faction)):
+			var motion: Dictionary=EnemyWalkArt.path_motion(enemy.distance,route_points,AXIS)
+			image=image.merge(EnemyWalkArt.projected_bounds(motion.direction))
 		if enemy_facing(enemy,route_points,route_length) < 0.0: image.position.x = -image.end.x
 		bounds = bounds.merge(Rect2(center+image.position*scale,image.size*scale).grow(1.0))
 	return bounds.grow(8.0) # Marge fixe couvrant les poses, sans survol qui tremble avec le corps.
@@ -447,6 +450,7 @@ func _draw_terrain_detail(item: Dictionary) -> void:
 			draw_circle(center+Vector2(6,-8),1.5,Color("d6be78"))
 
 func _draw() -> void:
+	walking_meshes.begin_frame()
 	var definition: Dictionary = model.map_definition if model != null else Model.Maps.valley()
 	var board: Vector2i = definition.size
 	var ghost: Dictionary = purchase_ghost()
@@ -558,6 +562,7 @@ func _draw() -> void:
 		draw_string(font,entry.area.position+Vector2(8,17),entry.title,HORIZONTAL_ALIGNMENT_LEFT,-1,12,entry.color)
 		if not entry.detail.is_empty(): draw_string(font,entry.area.position+Vector2(8,35),entry.detail,HORIZONTAL_ALIGNMENT_LEFT,-1,12,INK)
 	if not breach_feedback.is_empty(): _draw_breach_feedback()
+	walking_meshes.end_frame()
 
 func entry_label_layouts() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
@@ -770,12 +775,15 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		break
 	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
 	var walking: bool = EnemyWalkArt.supports(id)
-	var body: Transform2D = enemy_body_transform(enemy,enemy_facing(enemy,model.enemy_route_points(enemy),model.enemy_route_length(enemy)),pose,model.elapsed,model.active and not walking)
+	var motion: Dictionary=EnemyWalkArt.path_motion(enemy.distance,model.enemy_route_points(enemy),AXIS) if walking else {}
+	var facing: float=(-1.0 if motion.direction.x<0 else 1.0) if walking else enemy_facing(enemy,model.enemy_route_points(enemy),model.enemy_route_length(enemy))
+	var body: Transform2D = enemy_body_transform(enemy,facing,pose,model.elapsed,model.active and not walking)
 	body.origin += center
 	draw_set_transform_matrix(body)
 	if walking:
-		var frame: int = EnemyWalkArt.frame_index(enemy.distance,enemy.id)
-		draw_texture_rect_region(EnemyWalkArt.TEXTURE,EnemyWalkArt.destination(frame),EnemyWalkArt.FRAMES[frame],EnemyArt.tint(hit_strength))
+		var phase: float=EnemyWalkArt.phase_for(motion.travel,enemy.id,scale)
+		var ground:=Vector2(absf(motion.direction.x),motion.direction.y)
+		draw_mesh(walking_meshes.mesh_for(enemy.id,phase,ground),EnemyWalkArt.TEXTURE,Transform2D.IDENTITY,EnemyArt.tint(hit_strength))
 	else:
 		draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,EnemyArt.tint(hit_strength))
 	draw_set_transform(Vector2.ZERO)

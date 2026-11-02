@@ -1,0 +1,974 @@
+{
+  "schema": 1,
+  "scope": "all",
+  "python_version": "3.12.14",
+  "game_version": "0.108",
+  "available_suites": 92,
+  "suites": [
+    {
+      "script": "test_alliance_art.gd",
+      "ok": true,
+      "checks": 25,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.391
+    },
+    {
+      "script": "test_attack_motion.gd",
+      "ok": true,
+      "checks": 174,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.734
+    },
+    {
+      "script": "test_autoplay.gd",
+      "ok": true,
+      "checks": 117,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.938
+    },
+    {
+      "script": "test_bank_guardian.gd",
+      "ok": true,
+      "checks": 699,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.031
+    },
+    {
+      "script": "test_bonus_panel_cache.gd",
+      "ok": true,
+      "checks": 70,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.844
+    },
+    {
+      "script": "test_bonus_preview.gd",
+      "ok": true,
+      "checks": 8752,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.765
+    },
+    {
+      "script": "test_bonus_scroll_reset.gd",
+      "ok": true,
+      "checks": 12,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.469
+    },
+    {
+      "script": "test_boss_report.gd",
+      "ok": true,
+      "checks": 26,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.031
+    },
+    {
+      "script": "test_boss_status.gd",
+      "ok": true,
+      "checks": 52,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.375
+    },
+    {
+      "script": "test_breach_feedback.gd",
+      "ok": true,
+      "checks": 41,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.657
+    },
+    {
+      "script": "test_campaign.gd",
+      "ok": true,
+      "checks": 362,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.75
+    },
+    {
+      "script": "test_campaign_guidance.gd",
+      "ok": true,
+      "checks": 170,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 3.796
+    },
+    {
+      "script": "test_campaign_navigation.gd",
+      "ok": true,
+      "checks": 914,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 4.547
+    },
+    {
+      "script": "test_campaign_preview.gd",
+      "ok": true,
+      "checks": 840,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.547
+    },
+    {
+      "script": "test_campaign_progress.gd",
+      "ok": true,
+      "checks": 433,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 3.625
+    },
+    {
+      "script": "test_campaign_sample.gd",
+      "ok": true,
+      "checks": 465,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 9.078
+    },
+    {
+      "script": "test_campaign_states.gd",
+      "ok": true,
+      "checks": 552,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.282
+    },
+    {
+      "script": "test_chapter_one.gd",
+      "ok": true,
+      "checks": 811,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 44.688
+    },
+    {
+      "script": "test_combat_feedback.gd",
+      "ok": true,
+      "checks": 46,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.032
+    },
+    {
+      "script": "test_combat_metrics.gd",
+      "ok": true,
+      "checks": 73,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.765
+    },
+    {
+      "script": "test_compact_choices.gd",
+      "ok": true,
+      "checks": 208,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.5
+    },
+    {
+      "script": "test_compact_combat_hud.gd",
+      "ok": true,
+      "checks": 152,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.578
+    },
+    {
+      "script": "test_countdown_notice.gd",
+      "ok": true,
+      "checks": 66,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.032
+    },
+    {
+      "script": "test_damage_reaction.gd",
+      "ok": true,
+      "checks": 63,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.953
+    },
+    {
+      "script": "test_debug_speed.gd",
+      "ok": true,
+      "checks": 59,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.531
+    },
+    {
+      "script": "test_defender_presentation.gd",
+      "ok": true,
+      "checks": 63,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.563
+    },
+    {
+      "script": "test_elimination_effects.gd",
+      "ok": true,
+      "checks": 52,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.765
+    },
+    {
+      "script": "test_enemy_art.gd",
+      "ok": true,
+      "checks": 163,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.375
+    },
+    {
+      "script": "test_enemy_catalogue.gd",
+      "ok": true,
+      "checks": 734,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.313
+    },
+    {
+      "script": "test_enemy_hit_motion.gd",
+      "ok": true,
+      "checks": 3318,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.562
+    },
+    {
+      "script": "test_enemy_inspection.gd",
+      "ok": true,
+      "checks": 86,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.485
+    },
+    {
+      "script": "test_enemy_walk.gd",
+      "ok": true,
+      "checks": 1242,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 3.031
+    },
+    {
+      "script": "test_escape_panels.gd",
+      "ok": true,
+      "checks": 30,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.562
+    },
+    {
+      "script": "test_essential_summary.gd",
+      "ok": true,
+      "checks": 36,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.657
+    },
+    {
+      "script": "test_expanded_integration.gd",
+      "ok": true,
+      "checks": 146,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 17.984
+    },
+    {
+      "script": "test_expanded_talents.gd",
+      "ok": true,
+      "checks": 557,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.734
+    },
+    {
+      "script": "test_faction_coherence.gd",
+      "ok": true,
+      "checks": 731,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.578
+    },
+    {
+      "script": "test_forecast_portraits.gd",
+      "ok": true,
+      "checks": 911,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.594
+    },
+    {
+      "script": "test_fortress_condition.gd",
+      "ok": true,
+      "checks": 36,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.578
+    },
+    {
+      "script": "test_fortress_identity.gd",
+      "ok": true,
+      "checks": 26,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.578
+    },
+    {
+      "script": "test_free_respec.gd",
+      "ok": true,
+      "checks": 164,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.86
+    },
+    {
+      "script": "test_grenadier_price.gd",
+      "ok": true,
+      "checks": 39,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.672
+    },
+    {
+      "script": "test_home_progress.gd",
+      "ok": true,
+      "checks": 29,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.578
+    },
+    {
+      "script": "test_horde.gd",
+      "ok": true,
+      "checks": 75,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.656
+    },
+    {
+      "script": "test_horde_art.gd",
+      "ok": true,
+      "checks": 21,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.5
+    },
+    {
+      "script": "test_inspection_readability.gd",
+      "ok": true,
+      "checks": 138,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.938
+    },
+    {
+      "script": "test_interface.gd",
+      "ok": true,
+      "checks": 38,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.5
+    },
+    {
+      "script": "test_linked_integration.gd",
+      "ok": true,
+      "checks": 322,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 11.968
+    },
+    {
+      "script": "test_linked_talents.gd",
+      "ok": true,
+      "checks": 195,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.469
+    },
+    {
+      "script": "test_loadout_summary.gd",
+      "ok": true,
+      "checks": 115,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 3.0
+    },
+    {
+      "script": "test_map_definition.gd",
+      "ok": true,
+      "checks": 126,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.578
+    },
+    {
+      "script": "test_meta_progression.gd",
+      "ok": true,
+      "checks": 176,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 8.078
+    },
+    {
+      "script": "test_mission_experience.gd",
+      "ok": true,
+      "checks": 1631,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 6.875
+    },
+    {
+      "script": "test_mission_receipts.gd",
+      "ok": true,
+      "checks": 56,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 7.594
+    },
+    {
+      "script": "test_modal_controls.gd",
+      "ok": true,
+      "checks": 89,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.875
+    },
+    {
+      "script": "test_multi_route_model.gd",
+      "ok": true,
+      "checks": 108,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.906
+    },
+    {
+      "script": "test_player_readability.gd",
+      "ok": true,
+      "checks": 203,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.36
+    },
+    {
+      "script": "test_profile_integrity.gd",
+      "ok": true,
+      "checks": 13,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 6.797
+    },
+    {
+      "script": "test_profile_relaunch.gd",
+      "ok": true,
+      "checks": 10,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 10.39
+    },
+    {
+      "script": "test_progression.gd",
+      "ok": true,
+      "checks": 408,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.906
+    },
+    {
+      "script": "test_progression_feedback.gd",
+      "ok": true,
+      "checks": 255,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 7.829
+    },
+    {
+      "script": "test_projectile_presentation.gd",
+      "ok": true,
+      "checks": 60,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.984
+    },
+    {
+      "script": "test_purchase_ghost.gd",
+      "ok": true,
+      "checks": 186,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.078
+    },
+    {
+      "script": "test_purchase_preview.gd",
+      "ok": true,
+      "checks": 514,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.25
+    },
+    {
+      "script": "test_report_replay.gd",
+      "ok": true,
+      "checks": 42,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.672
+    },
+    {
+      "script": "test_respec_preview.gd",
+      "ok": true,
+      "checks": 122,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 3.0
+    },
+    {
+      "script": "test_route_forecast.gd",
+      "ok": true,
+      "checks": 1352,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.687
+    },
+    {
+      "script": "test_route_geometry.gd",
+      "ok": true,
+      "checks": 30,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.5
+    },
+    {
+      "script": "test_royal_fortress.gd",
+      "ok": true,
+      "checks": 438,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.579
+    },
+    {
+      "script": "test_run_boundaries.gd",
+      "ok": true,
+      "checks": 33,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 3.921
+    },
+    {
+      "script": "test_run_report.gd",
+      "ok": true,
+      "checks": 142,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.766
+    },
+    {
+      "script": "test_run_summary.gd",
+      "ok": true,
+      "checks": 196,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.766
+    },
+    {
+      "script": "test_shop_art.gd",
+      "ok": true,
+      "checks": 20,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.031
+    },
+    {
+      "script": "test_shop_families.gd",
+      "ok": true,
+      "checks": 392,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.75
+    },
+    {
+      "script": "test_shop_interface.gd",
+      "ok": true,
+      "checks": 64,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.562
+    },
+    {
+      "script": "test_shop_model.gd",
+      "ok": true,
+      "checks": 118,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.313
+    },
+    {
+      "script": "test_shop_priority.gd",
+      "ok": true,
+      "checks": 61,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 20.75
+    },
+    {
+      "script": "test_shop_profile.gd",
+      "ok": true,
+      "checks": 59,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 17.797
+    },
+    {
+      "script": "test_shop_survey.gd",
+      "ok": true,
+      "checks": 90,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 15.656
+    },
+    {
+      "script": "test_slot_shortcuts.gd",
+      "ok": true,
+      "checks": 68,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.688
+    },
+    {
+      "script": "test_summary_wave_selection.gd",
+      "ok": true,
+      "checks": 321,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.125
+    },
+    {
+      "script": "test_synergy_feedback.gd",
+      "ok": true,
+      "checks": 123,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.968
+    },
+    {
+      "script": "test_synergy_preview.gd",
+      "ok": true,
+      "checks": 1162,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.313
+    },
+    {
+      "script": "test_talent_experience.gd",
+      "ok": true,
+      "checks": 306,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.484
+    },
+    {
+      "script": "test_talent_readability.gd",
+      "ok": true,
+      "checks": 552,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.172
+    },
+    {
+      "script": "test_talent_rows.gd",
+      "ok": true,
+      "checks": 148,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 4.141
+    },
+    {
+      "script": "test_talent_states.gd",
+      "ok": true,
+      "checks": 108,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.031
+    },
+    {
+      "script": "test_terrain_scenery.gd",
+      "ok": true,
+      "checks": 4348,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.687
+    },
+    {
+      "script": "test_upgrade_preview.gd",
+      "ok": true,
+      "checks": 357,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.735
+    },
+    {
+      "script": "test_valley.gd",
+      "ok": true,
+      "checks": 87,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 0.625
+    },
+    {
+      "script": "test_wave_forecast.gd",
+      "ok": true,
+      "checks": 403,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 1.937
+    },
+    {
+      "script": "test_wave_notice.gd",
+      "ok": true,
+      "checks": 78,
+      "error": "",
+      "exit_code": 0,
+      "seconds": 2.766
+    }
+  ],
+  "godot_checks": 39504,
+  "ok": true,
+  "source_sha256": {
+    "For_the_Fortress_GDD.md": "81c539a77e0a249633a8b24f907a90490604f5620fd342915ab9aa0ab26d97e0",
+    "prototype/assets/enemies/animations/loup_corps_v002.png": "b02af3243233536b8f34470d5cecfeaaade9f39f7d3a8bd9be69967f76085e6c",
+    "prototype/assets/enemies/animations/loup_corps_v002.png.import": "ca0ea67ea8657736e47b2fc989d42d501b8a5e75366ea0ed90a3f0f41272157e",
+    "prototype/assets/enemies/animations/loup_marche_v001.png": "b176f126e08bdbcf55d143aa7487efb255f1e2a142cf93d7982dea93e937effa",
+    "prototype/assets/enemies/animations/loup_marche_v001.png.import": "4182e06df23107303f0dd588617af3f0133eb9005d5f6da57b9fac1e3e2b5fbd",
+    "prototype/assets/enemies/animations/loup_marche_v002.bin": "4fd99e0c8d6ab9240aa162b8eb9c5d351bd106f2793fc9c93a828df4b0682a32",
+    "prototype/assets/enemies/grouillant_v001.png": "c04816e27568bce30092fd7918e41393593257eb60a918c1a532c0f7b319556b",
+    "prototype/assets/enemies/grouillant_v001.png.import": "b2f0dc7df3d486caa84c5956e68c2fa016ef0677ae9786afec38b365e12b0fe6",
+    "prototype/assets/enemies/pillard_v001.png": "d618dc72d36fbf21f1539e095eb6c759d3d0e900e9d6cb77cfaeaac661d4640a",
+    "prototype/assets/enemies/pillard_v001.png.import": "f674e19f993e24de226acbc513db003b92d9a479b4894a8e76c470aa1f09e896",
+    "prototype/assets/enemies/rosters/alliance_v002.png": "3f11d4f1125671b46cca86ecf0b6a8cc08440f8936e3fce569896d5e29ed530d",
+    "prototype/assets/enemies/rosters/alliance_v002.png.import": "777f723dffb7a61eb390ca466a98171b139d051cd9833044fa5f0b0f1d4e26df",
+    "prototype/assets/enemies/rosters/horde_v002.png": "ef330b81a66a0a546c4884861b700d51d5d0f5155c245a8adcb9789a7167781c",
+    "prototype/assets/enemies/rosters/horde_v002.png.import": "defaee06c7e3486aae8dec1522ca6b7570e362dd4c98e1e7ab84b66b6dc8f872",
+    "prototype/assets/enemies/rosters/horde_v003.png": "6379ec8e7bdfb6b77fa37fb2b1c42f99d09a8f0824e1204d31c51b7dd67e7bfc",
+    "prototype/assets/enemies/rosters/horde_v003.png.import": "ad5f40d19b827c165fb532c144af8911d41c30ebbef23d88c9142bec4e51b0a7",
+    "prototype/assets/enemies/rosters/neutres_v001.png": "30dfacab2f7e0ad6a3619d17c800aaf5f24719324708b2bbb8ad8ca5d9bee016",
+    "prototype/assets/enemies/rosters/neutres_v001.png.import": "0c8e9162e2f66f7382f2ca27f992b360b617a89a301625486c1fc03c9bc05019",
+    "prototype/assets/enemies/rosters/tortue_gardienne_v001.png": "a16229c7181d26870bd55c6c892c012f4f28a5dee3b3bf1febf59b52d7ef7cfa",
+    "prototype/assets/enemies/rosters/tortue_gardienne_v001.png.import": "b4930ba56b3e2fc4a8c70a59fa9ffa965eccee1bdee6c6cdf0a46f974aa0096f",
+    "prototype/assets/enemies/sprinter_v001.png": "341532123e66cf85eee9e173aae073e47dc56849cb90b2b106684fd98cf7cbae",
+    "prototype/assets/enemies/sprinter_v001.png.import": "e35fcef6539250dd6268097361e1f2846d5bd493d9a228ea7de1ce3aa8260b85",
+    "prototype/assets/fortresses/forteresse_alliance_v001.png": "be598abc780914bf2f02b456cd4e1d7d8d4a0226721925e5f208e96a342788cc",
+    "prototype/assets/fortresses/forteresse_alliance_v001.png.import": "b048579338de85c07c9051a04319a4fd7bf61ba4692cd7b740f616d9181af7d1",
+    "prototype/assets/fortresses/forteresse_horde_v001.png": "bbac2c90698a8c857320cc01de357af84f15ad1895b9c3b937f99f833bee0b0e",
+    "prototype/assets/fortresses/forteresse_horde_v001.png.import": "69d7a590c0524d0a1e2f40928a61a73cd0b8aa662ed2a3f13980293e008255fd",
+    "prototype/assets/fortresses/roi_alliance_v001.png": "325a1eaee2340821645d6bc36a8b897bb0b5d1b7abf3e28132e38de2e7ea0a36",
+    "prototype/assets/fortresses/roi_alliance_v001.png.import": "b79dbf768ce855d42f5a3ebb12c8538fc5481008f850d1327fd18ddebd623185",
+    "prototype/assets/fortresses/roi_horde_v001.png": "4d4c87b38d4ecc1b0b65c02a49d70d93eef5e7142d557bef2ea6c6204402713f",
+    "prototype/assets/fortresses/roi_horde_v001.png.import": "1534979f988e93fc37ae3cb6626e7f5f9dd41fd86556b2d06924a5f397b6ff14",
+    "prototype/assets/units/alliance/arbaletrier_v001.png": "1007846f7a24686a4102b6e125d1aa8907d4c9ec6bc9ab7be6a7e6aeb89d94db",
+    "prototype/assets/units/alliance/arbaletrier_v001.png.import": "f5ddd68d192fa987f51d78a2311a4728754474ff5f3f02a3592ba53d9ddae50a",
+    "prototype/assets/units/alliance/archer_v001.png": "9837694700764e3e00307d5a13bc2a6189300206b31d6a18576935f23410541e",
+    "prototype/assets/units/alliance/archer_v001.png.import": "71e4b609704e0bc406aaac42ffe240237b2361c941a3fd095f3eff72ed3d0b2e",
+    "prototype/assets/units/alliance/mage_v001.png": "79bad1dbb3110039bc44a47ac25f9bb46030e9580e5a65d6a14dbecda0f7aa24",
+    "prototype/assets/units/alliance/mage_v001.png.import": "e67dcaf17d50d4a791f7923e05ef57b97c1ce23c833f34aa4d80392862dfc598",
+    "prototype/assets/units/horde/chaman_v001.png": "8189c70b39b3562a0fe64164b2389d9c12aa4176c6d48a2828d7a560d62a5cd3",
+    "prototype/assets/units/horde/chaman_v001.png.import": "d28abf6188a85c653761a311a84347fba7a3997452ec151aed9b9a94cdeafba6",
+    "prototype/assets/units/horde/gobelin_v001.png": "02223ad191a39f20a1b04fe53dcf0911f20dffb007e419af80d1326dfbfd9135",
+    "prototype/assets/units/horde/gobelin_v001.png.import": "5c7d406e25c61e46550f7e3be2f3d756c0b9b26bec0eeeefa4573d4a57f20144",
+    "prototype/assets/units/horde/troll_v001.png": "da71304a65c43f4e0469340830210f56a2b3d48104bd7f6da52c2fe7b53c4dc6",
+    "prototype/assets/units/horde/troll_v001.png.import": "a6eaf9d67e4b01722498d2bcafa253eaa33a42aaacc9ce60265391475a2ef300",
+    "prototype/assets/units/shop/grenadier_v001.png": "aa62d1bdb9aadaeab6464cd0d55a3074332387b340a3418f2a33d97e832d5f2f",
+    "prototype/assets/units/shop/grenadier_v001.png.import": "7e2734ab946df649d7c44ecb0c91d06ef7663f19a91ba9e731732cdd864a11fe",
+    "prototype/assets/units/shop/mousquetaire_v001.png": "ff4b169eca9c999c29ca427ae142b55f63a015fb00e11ef7a1033a991b7a7a5e",
+    "prototype/assets/units/shop/mousquetaire_v001.png.import": "c62b7be5ada6d14c898e14ff1273912b958ed4b944e975337a93c9d5735a1d81",
+    "prototype/assets/units/shop/mousquetaire_v002.png": "ef4c91bf02d002aa5d55361d3ca4cded41e8d2ef504e2901fb0e537e23906b30",
+    "prototype/assets/units/shop/mousquetaire_v002.png.import": "cfce520a2291464cb328879c47211adf1a9c9d22b22d20b4dcf935c123b953d8",
+    "prototype/assets/units/shop/rodeur_v001.png": "f78a312ccdf7ade5e59144abcbf9b15fbacfc1f6f375c41aba511945ab755d23",
+    "prototype/assets/units/shop/rodeur_v001.png.import": "42343811b468f5183cca6b69c02c6b64761d69ea40a8a7e7c70e4b4f6ba05a53",
+    "prototype/assets/units/shop/traqueur_v001.png": "f057ddd5d90f88d68ddf041f86b8a24accf6ec50e646005274951111c7ca52d7",
+    "prototype/assets/units/shop/traqueur_v001.png.import": "c02b953204d9d1825a139dee168104d3b7565fcbd730fd3445cc8be0163fdd0e",
+    "prototype/build/SourceSnapshot.ps1": "8376c804d5520f32518ac18f9070436c135563cfaa7843c9dd03e7f905e44539",
+    "prototype/export_presets.cfg": "ec3c017b0dc970dc4477e5900eb23f5a5fde01825a554d727d19215934302431",
+    "prototype/Exporter_Windows.ps1": "3d9743f7d886380a68db3074b852a5c0ebb5dd80e41641d3dfb5691f1189a6f8",
+    "prototype/project.godot": "250203292c5bf2e1a9389e812833d7ceed2fe1f45f523b4769702c85aecb8f00",
+    "prototype/scripts/alliance_art.gd": "57cf3d79191acb0d30d13d2e62c46d5d45ca7f4d3850c0922fe26b29dc9026e4",
+    "prototype/scripts/bank_encounters.gd": "1fad04011a2eb5ed4ed6bc0666d4cc7d72b7433f2ebc7e337a5274cb369de899",
+    "prototype/scripts/campaign_catalogue.gd": "3d1b588910bf86783567db998e8cdf8a4a8d0d988a1d0fd40523d9508b9cd0b7",
+    "prototype/scripts/campaign_data.gd": "9c762008d2c5b9c176b1a8d0eb9f56caa79504a264096f29e2d4c91fc0e8b594",
+    "prototype/scripts/campaign_screen.gd": "a0e6e222862fefe07c946763b8ddf064847070fb3ea5fee7f55bf880bc9cca95",
+    "prototype/scripts/combat_metrics.gd": "10a2a00aa85c0b430dbec33f3b457e66ce74b36e36b6fae91d4a26fff17ebf4b",
+    "prototype/scripts/enemy_art.gd": "4d1ea3aa0d6522a8c490bef3c414a84c8ee4ddc97d81ba0ffd8900177342ea05",
+    "prototype/scripts/enemy_catalogue.gd": "d130d075ecc86063bdbfd7ee6a6962065bb4f71e69223a1221a22008b02351b4",
+    "prototype/scripts/enemy_walk_art.gd": "c9136b208acb395dd1832cd9b53cfa3ed2736accd29a24cca8b272414447b3e0",
+    "prototype/scripts/fortress_art.gd": "46827bc23c7e57fbe272be18c53d8ccbb07f7f4708a4da8acd02d93077f2d1d8",
+    "prototype/scripts/horde_art.gd": "48f4f70156974eb3b7a5d6d76a6588bce974986bc3a57d5a33bf2d9bcf5ccd16",
+    "prototype/scripts/main.gd": "c3305c1f4cbb24826be1269d489f947b7f116b7f76ddade8b6338d4147ce0c32",
+    "prototype/scripts/map_definition.gd": "56a0caeb3725f0e93914c7af29f8780825dac23e8ae8dc66540b1093ce3bacd0",
+    "prototype/scripts/meta_profile.gd": "b2b2068a06ca4cccba0f0f07f8e6c7bbf25ea5ddedf72040f50e3437a84607d3",
+    "prototype/scripts/meta_screen.gd": "5709797331343a1ceafdd2799050053f2446b2c615c50c4e77eb2583416045a6",
+    "prototype/scripts/meta_talents.gd": "f8c865ff3e34c88f7fac254a9f30642d2d7337f32de066904ea113a4ee44f723",
+    "prototype/scripts/meta_talents_expanded.gd": "d40e49cc31fa06ed567ca20c11b2ea435d3611e67e67de2f83036ea2335b5d1f",
+    "prototype/scripts/meta_talents_linked.gd": "e3b27997702989601ff1a96f8e4f94ae29dc130add01d5a9bd709d8264d04f96",
+    "prototype/scripts/meta_talents_v067.gd": "58e0786de434ea3ad0cf9ce9fece3224807fdc5543be64fb09494e8278b53080",
+    "prototype/scripts/meta_talents_v068.gd": "700640a11d025cf328de5f74a7ef8cd9398f801a88fb6d31661bf5a595b93047",
+    "prototype/scripts/mission_progress.gd": "06bdc89e7258687865026c53492d640ebc009b840f868eb55256c8633d25e4fd",
+    "prototype/scripts/profile_codec.gd": "1b6227ad26ca9d69e8e02c9eeddd2ed90265aa6b76e5b991a4ac8964d7a0b3b6",
+    "prototype/scripts/progression_data.gd": "cd446394d6c22412a82879b2a74dc4dfeddea34ab94e56b6f4829188cd0e8755",
+    "prototype/scripts/route_geometry.gd": "42a9a1ab128650e030d0a2eb2993e1a87f0579a0262e1d379c50ac1441f764bc",
+    "prototype/scripts/run_report.gd": "d7031a891c5c42892ba10fdf15464506c5437e789b99b36a0fb65a6a66249311",
+    "prototype/scripts/shop_art.gd": "28ef4501e7ae9ba0ddb7e59a648c5ac8e81dc2a840cdd83518d7c8ec131cd95f",
+    "prototype/scripts/shop_catalogue.gd": "03e1ca9fa18c4dbcde6d426721a0883199d1ca005779d3dda5fd3874703894e1",
+    "prototype/scripts/shop_screen.gd": "52896f9176fc6f0527688b8cdfdfe527c380695caa20cdfd45b080d99f627add",
+    "prototype/scripts/talent_experience.gd": "41deb488348374da2686f283790038b7eeff51c23b03dc0e7f12ae21f2c86e4a",
+    "prototype/scripts/valley_model.gd": "89ab8047112df7775dffe1f27e056a1483a730712d32c95fe8eb61001f204fc3",
+    "prototype/scripts/valley_view.gd": "45ce02b78ca2f597f88500d47f83d36f76a58f9e8cdb53f3e53a735f1d69c906",
+    "prototype/tests/analyse_balance.py": "7cc15442a45ba9e020d74c3ed2ef34c1a1dc45df00b2ea4513e72f81441d087e",
+    "prototype/tests/analyse_grenadier_variants.py": "e32bd07a5632b543f49c7447e588c0eaed9af2dfc557beb271c5a47ce4338dce",
+    "prototype/tests/analyse_metrics.py": "632b38ed0fd62f031587ea586cb6a01c0abc6ae4650e9d9d8dc81b23c3a7492f",
+    "prototype/tests/analyse_shop.py": "e69322f99bcc2a4a60c29e52b6b320a9f68e8e51f0fce5be9ed693a7c040a787",
+    "prototype/tests/analyse_shop_priority.py": "37472c484d2f9051e99b3f7e8a71d9a5c0f324260808b686acee1bf18ebed4da",
+    "prototype/tests/analyse_upgrades.py": "36bf3e7eff67b6e0f606d42d858faecf27e944ba00b1087a895345e96bd73748",
+    "prototype/tests/benchmark_bonus_panel.gd": "bf5b163c16473270be0d0d7de309dfb4d0c4a6db25463d736eacbae0852e959f",
+    "prototype/tests/capture_map_definition.gd": "9e3e03a5a3b577c23fa08366a8f43c82c11c77645db07a77b930185968d52857",
+    "prototype/tests/compare_grenadier_variants.py": "6f542e1c91d263c77a78489f8b6e05183b2bf32ee1762cd3313c430f7d06eedc",
+    "prototype/tests/export_licenses.gd": "d74ac621a4f5d8bf3bc39e17b0e87407393bd678d91866ff3c9ca952d4a01a07",
+    "prototype/tests/export_sources.py": "a0e4a5934c0269ba669ff473f9314b0e1d5236ae1b1fd60b9f39bc1bca58ff9d",
+    "prototype/tests/fixtures/grenadier_v0100_discount.json": "351b9c30fbd30b3010d143a60062d75d9cbd977ae9a6e83ad8ae08ffa7c88481",
+    "prototype/tests/fixtures/grenadier_v0100_normal.json": "5c8cf36420dfb1fb82619ac96468c7e339f14d5bc598845196fc278ba48e925a",
+    "prototype/tests/gdd_contracts.py": "1861470795ce198f1a7d4fadce86c7e6dc828e66264fb72ed4ad99cd8e9b1246",
+    "prototype/tests/mission_receipt_relaunch.gd": "efbe974200806568185d1b63f119188f85e0acbb8c830320f389c22abd22fe48",
+    "prototype/tests/profile_relaunch_fixture.gd": "46c69cd13b62044b30f3a7639135b6243337b7ac128c0b1391e839b73c6fdf7b",
+    "prototype/tests/replay_run.gd": "bad2d23907b08882a6e15c19b36864fa828d40b9f32cc4b0d3f96fa742a2dd74",
+    "prototype/tests/report_replay.gd": "28566bb51a4d97b3b61e83a3524e7dee060fa6bacde398637755226f4babb0e3",
+    "prototype/tests/run_regression.py": "6c4b0807458b2f81a1d50d8115d56cf79ef289d883d51b6678f4447e349bc934",
+    "prototype/tests/survey_balance.gd": "3d83f402113cd4fd6b563c73b753d072e3006aadb20478ebfdf7240c1b97a5bd",
+    "prototype/tests/survey_grenadier_variants.gd": "ae42ca89372b7762511dc0842809bf1cbd0f94121843eb1f40224de27c866fed",
+    "prototype/tests/survey_metrics.gd": "30104663818bfa7c080aa0089f995b51c7e04202851ffc17fb26cc47ba918b67",
+    "prototype/tests/survey_shop.gd": "dd36cd3da70b186483a7c2d5377cd129e1f3e7180e1e8f77533924f8a839098f",
+    "prototype/tests/survey_shop_priority.gd": "ac7bef8ead3b371792fcfbcd4c5f5efd5a60d28406ef10756858cd53a28e00a7",
+    "prototype/tests/survey_upgrades.gd": "98f83e10d345ef70ac5cb7071045277c79ef7bd36ac37c92e245714814127e45",
+    "prototype/tests/test_alliance_art.gd": "16446e81662ccfa103b62b22731cb3836a78ce4ac3c2da21026eb4898eadc179",
+    "prototype/tests/test_attack_motion.gd": "87b30d674a153548a312c9f0b3896e91793c6b941aeac963e0ea8d5f671be60d",
+    "prototype/tests/test_autoplay.gd": "3f93518816070353916ae65cfddd5f3003e71452206c7793df092a66fc1bbadd",
+    "prototype/tests/test_bank_guardian.gd": "55b1d2da1509155e03964013c8a3049371ba2084376641f04d4625951c7277ef",
+    "prototype/tests/test_bonus_panel_cache.gd": "dae3c8c4fdecebc8c5819543377c80b62d87d89f39b09cf2f95906f44447e619",
+    "prototype/tests/test_bonus_preview.gd": "31f58068e930275397897b82c2e6e3fb15b2028e9f6d16afd7e100a72ded7295",
+    "prototype/tests/test_bonus_scroll_reset.gd": "f1386d9db534b88496c26334fb0b5e4bd43306dc9c0e5e819deb4d65dc6e8ee7",
+    "prototype/tests/test_boss_report.gd": "58db98dff2f89e371f72e986ae6f864293428f00d08c63fd85a9d85bc8aef300",
+    "prototype/tests/test_boss_status.gd": "895cf01fb5e9e0460aa4134bf5e44d438ea9ff411becfc8b5359b8665dd3ea11",
+    "prototype/tests/test_breach_feedback.gd": "336ad90bcf402077bae73926211d383a016c915c285067cd61d705971b1ec04d",
+    "prototype/tests/test_campaign.gd": "b8aff47d2d41e6aa8a85133013b2ea2d35e8a9ce0c5c41dc3b91e86ae7b16d93",
+    "prototype/tests/test_campaign_guidance.gd": "693d44b7e8a476da233faff716396a9af5527c1d689f6284960cdad5a7fabea8",
+    "prototype/tests/test_campaign_navigation.gd": "3e711db07859f574c013d3db64b81fea17e490d2abedeebc1a9b2ccb83aba4a3",
+    "prototype/tests/test_campaign_preview.gd": "97ee5a9ba6b104381f48d469a65bcdd15bf7f9c8157f7873f7d89d22c207ccbc",
+    "prototype/tests/test_campaign_progress.gd": "54648603392e96cce4133d7d227e542b1522e9391065d0d09c10134f276e9ded",
+    "prototype/tests/test_campaign_sample.gd": "ac0a05ec65144f1b4435517c7b901de4263b49716deca414b91af4c2a3f09445",
+    "prototype/tests/test_campaign_states.gd": "40b5c8ad3fd4805a64d2b6fc2444035134bcd0369c617f56ea9a15f897f9a9c4",
+    "prototype/tests/test_chapter_one.gd": "9f4b3c5a706db47046ae21b7dd3c608c7d5023fbca638e8ec1f1396a1e74f4b5",
+    "prototype/tests/test_combat_feedback.gd": "4827611990ce20e13419002921a49f1386fced2a6ea3b08d5265e26d0eb4fd23",
+    "prototype/tests/test_combat_metrics.gd": "22fd378a38f7e850f40c53160dab81108582559ccb70f1c3556cab8ca92a52df",
+    "prototype/tests/test_compact_choices.gd": "1af0d951cd6c9086a5a1549c72cdb560c3ce9a8271b9b74f3e9528b32790ad7e",
+    "prototype/tests/test_compact_combat_hud.gd": "fa39aa48f28b6ec629a3974bfdcebfe862e103a37aac9591935f16d6b64b09f6",
+    "prototype/tests/test_countdown_notice.gd": "33bd50dd37b88ef866b1f1fe8b26092a2c81e03b43205361081a0ac298074d4f",
+    "prototype/tests/test_damage_reaction.gd": "55304b48418d208572947700e032e452ac22fe83303c53641cf051634e76a610",
+    "prototype/tests/test_debug_speed.gd": "06de52ea5ad88faba21f14db9e6f85312789a28400335093d2f02f3e47366f71",
+    "prototype/tests/test_defender_presentation.gd": "35a4e80420e09e22662de2659974b99f3f1ff7f570ce37760e7d104030a69bfc",
+    "prototype/tests/test_elimination_effects.gd": "2025f6cd87639a6a74ae6bdda83cf0a77e0012481df617df01eee42df2d7c334",
+    "prototype/tests/test_enemy_art.gd": "2de47f93b89702a6c64c02f6b2ceb45aa0c32c74d6a7e88259921d3e30d0d5b1",
+    "prototype/tests/test_enemy_catalogue.gd": "949c81e052f38413649c20121a0fcc6653daf2387928d8901434ce2fca4c9354",
+    "prototype/tests/test_enemy_hit_motion.gd": "58d87c8d0cab4f6ca2a683a83cb149080a19d82184a76cc94caa36c4a0fb824e",
+    "prototype/tests/test_enemy_inspection.gd": "55b4c2dbd19791b621ff84ad1d02772842bd1c8993637b86cb8140b3d7b01ea5",
+    "prototype/tests/test_enemy_walk.gd": "27569b9d3c0142fa68437f018a2935ca1a682bc5ef7cd01836a5688a2369f3df",
+    "prototype/tests/test_escape_panels.gd": "00b435d9ca3d176da3c780b5ea24911e7a12dfb740fb5866109a7af08aeb09eb",
+    "prototype/tests/test_essential_summary.gd": "ab610076d3f2cf59b5e0ed7b0f3cdcb7190555e618bd911db8b9e943a48ee5e3",
+    "prototype/tests/test_expanded_integration.gd": "3693e30bb579180649f28db8c62f50a486db74e3ebf1042f3e88cfe8f2dc0f29",
+    "prototype/tests/test_expanded_talents.gd": "bac779ab649aafd159e37d6e981a3082d6e98cce3a2f0c01293b271b22ee50e7",
+    "prototype/tests/test_export_sources.py": "9a49be81b24f9b281bb182e75d26bb2385c3cab8c40d89168f67a90b2d9cd95a",
+    "prototype/tests/test_faction_coherence.gd": "f438a560e7a5946138833dbfbbaea260287fbe9913c7c83454a7efeb666e6103",
+    "prototype/tests/test_forecast_portraits.gd": "d6b5ba104439b1a158f84579f007e43ca27139ca797dea876534472ed30e7809",
+    "prototype/tests/test_fortress_condition.gd": "6d1490965f47685a1096667efc0d5b4707db8b76413d21acb8f9c19257610974",
+    "prototype/tests/test_fortress_identity.gd": "18b8358df64e88ed5db72108d7c8e642e599367da565ba4f61c3a3224936ecfe",
+    "prototype/tests/test_free_respec.gd": "17eaf3082f73b1d3d1c8ca51ee9737274cbc62a67b031038ead66079abd8a4ca",
+    "prototype/tests/test_grenadier_price.gd": "dec48a14e57e647dc33aca22e5865d0836b117e1007d0281389ba2ca4d97d59f",
+    "prototype/tests/test_home_progress.gd": "41fc8e6e322018da623577b8aafe63d326475ad283ecedd60c0b736dba7c0782",
+    "prototype/tests/test_horde.gd": "905a3cf6144ffba290848be335380d7643bbcbd1192a662687334688866f1986",
+    "prototype/tests/test_horde_art.gd": "f50d8244562edbef07b4cc75580ab90bd1f53904389d9fec0b1cdc5c2ae57a43",
+    "prototype/tests/test_inspection_readability.gd": "7b9aa610aefaccaf8b0c8303ae49af9e98acd83deb0b074c1ccc8c2ed1ff984e",
+    "prototype/tests/test_interface.gd": "f871c37660cbc10b702b9a3e7c09e0fb2469c4ed0056cb276d3f1e75d3aae021",
+    "prototype/tests/test_linked_integration.gd": "64832f3a6c1b1d10d6014e71cd9a171d122de09a1a27faae155b1972b66dac67",
+    "prototype/tests/test_linked_talents.gd": "1b4649780d1066636891ee1fa7e86a996d7ad2ed04c71c9ecfe8daf97a8cb49d",
+    "prototype/tests/test_loadout_summary.gd": "6610d0afc4bbcae2261570fac8cc2b87c888a82d8cd1c5f6db8059d48546e0fd",
+    "prototype/tests/test_map_definition.gd": "15e6d012d544bac88d19efaa3a57aba53d0532e9044d6f7a56208bd9471b61cb",
+    "prototype/tests/test_meta_progression.gd": "ace252758f97fdd7173afded9405a8d19b8fac6692efe034bb63805a18243cec",
+    "prototype/tests/test_mission_experience.gd": "5a482ab8f67a60de184e872b43c1abb53822a34defa639f340c9374c513a4fad",
+    "prototype/tests/test_mission_receipts.gd": "28c18eceab1c31fb181467b498b3d2acaa5530f01f99e3e84f9deef6880eedd7",
+    "prototype/tests/test_modal_controls.gd": "ccee44ba5bd678e8dac12fbc689a028cc60bba9179e4ebe1fd0e15c51c859aef",
+    "prototype/tests/test_multi_route_model.gd": "29aa722b00ea16e38e42d75a38d60d47a931cc62000fe9f926e5ac20ab623cf8",
+    "prototype/tests/test_player_readability.gd": "f28e161fa4d3ddb6abf3933d29fa88e36585ce4737ea2efaf7608d3bcb76102a",
+    "prototype/tests/test_profile_integrity.gd": "17c4a43d0fc28923fa42efccd58c77b474d2634d587163f53743b0b697175b80",
+    "prototype/tests/test_profile_relaunch.gd": "8234ac4b32acbb9f872d99d788a888166f189bc15a122988859727092a234745",
+    "prototype/tests/test_progression.gd": "c14fad27a7e2fb77df233b4190808026f63dac53e8828f54f5931c668c026e60",
+    "prototype/tests/test_progression_feedback.gd": "604f3b750aa135f3ff6c4d34221c745109b04acb5dd8821a6e1be3afb0a09d50",
+    "prototype/tests/test_projectile_presentation.gd": "fd83cfb7e9fb09bfa044fa21bf72cb9acb3e6b68d20f87a4d479c4e23eaa878f",
+    "prototype/tests/test_purchase_ghost.gd": "bbd3c22ecd49c6b7004f24e4e00c04e64b07f8339deaa870e442dff061ea6e43",
+    "prototype/tests/test_purchase_preview.gd": "807e051c1b9bdf9c037d40ec2d457b21612b41fba5ca456568b57545764b7377",
+    "prototype/tests/test_regression_runner.py": "0e1ce579f246fb2cf567b24b0801116a4d58bd321014c14cf3d427525f02e03b",
+    "prototype/tests/test_report_replay.gd": "13f853b432e1fbd57c0b1e3417c0b3ba23b82b5b990b6ab4b18a0713ae17fd51",
+    "prototype/tests/test_respec_preview.gd": "a6aa87af54112ff94516db6ced55c038ea056ff5d0896f9302256f34e73e00c5",
+    "prototype/tests/test_route_forecast.gd": "e49a1bcfe5c1b5a4c752354a3dc7e43e3f44e43ea8333d0df7f26084f9950352",
+    "prototype/tests/test_route_geometry.gd": "3bb9787591b26abbb5cae1063295b9a0db2b45e9cb755dae6d19ea203f22e6b6",
+    "prototype/tests/test_royal_fortress.gd": "09178208a26d5fc6d334ac883f8508b7a2d7f0a173f286e16872428153530ffe",
+    "prototype/tests/test_run_boundaries.gd": "1f87e1c5339780f985984c9492931286c1dc95668c927c615202d89870a25a45",
+    "prototype/tests/test_run_report.gd": "89d653de9d947a8e8555a9e5cd616ae574cde88480dff8f1af27be182fec1745",
+    "prototype/tests/test_run_summary.gd": "4ffe13726cf627498267c566b4557e3c767b9dd5a31f6f9d0e6f40bccc7e256c",
+    "prototype/tests/test_shop_art.gd": "4a9250692c4762cc237502209bbcf7220ade2fd8425ca8657cb9582bad924f61",
+    "prototype/tests/test_shop_families.gd": "08ae937a15cbabb0cf2eb8e77aefc3c8b8de74a38027deaa54ed70bcb9cc0ad1",
+    "prototype/tests/test_shop_interface.gd": "4819bac2a468eef506ea84caf9ed656261a208f4bea4aafb7bd24d0c8aa51dcd",
+    "prototype/tests/test_shop_model.gd": "df648ddef345743b3d55b2e28537f63411c92b5988bba5e350b0a4b958144736",
+    "prototype/tests/test_shop_priority.gd": "5b2d47a85927996e7980a5a81144c8f7a5c21c3549f6878fd4bbd938ae45103d",
+    "prototype/tests/test_shop_profile.gd": "a81093b8ef65c54051d0055be7848f60a0149842c4aa614f62f49fbdfafc2b73",
+    "prototype/tests/test_shop_survey.gd": "f1d615d21eb01405841ee17338010c532cbe6ca2ef4b6cb9c6cd7173637e00e6",
+    "prototype/tests/test_slot_shortcuts.gd": "07015df14419e4854574d0885b7611ada428b14ad549bc87d8398834b79db6fe",
+    "prototype/tests/test_summary_wave_selection.gd": "2838047407352b605755732882854277845d4901f0c6d66339338ecd9c84edda",
+    "prototype/tests/test_synergy_feedback.gd": "91d4fd42a55c8aa608a1b71ede1f76029804e2dbe84e3c379fd3b788b9277cb8",
+    "prototype/tests/test_synergy_preview.gd": "08412abb6f01469ee404527f7862b4dcef83672dcd2418490a0c10f0b10ec32a",
+    "prototype/tests/test_talent_experience.gd": "460a73bbebb55f45d3f895cd5e229373e4fc8bf1feb329ba3db30cb433b47e28",
+    "prototype/tests/test_talent_readability.gd": "f22d68680bd7bc7882088899cd8ec63fcdb8ffda19e64d0880c64645ce172a86",
+    "prototype/tests/test_talent_rows.gd": "3106baf4471623fa3efbf296722f78508902aa73e08d1d007990c724535cf4a1",
+    "prototype/tests/test_talent_states.gd": "23ad9e55133f06bdf5ad0fbad528ec4755c0c6045c450490a0dd819d1bf2e262",
+    "prototype/tests/test_terrain_scenery.gd": "f2db82c162fa7430099d0b06636a3b49576b48e8e6f1007b152ce0b9996c8508",
+    "prototype/tests/test_upgrade_preview.gd": "bc3b1ba0e81b4429622cc2d3547fe42cd96fd83d6ef718d38266c57c8903452d",
+    "prototype/tests/test_valley.gd": "5fec81ed633bdc83e1bc27131b43611fa4ad509df9f4b02e9d8dde27fad6683c",
+    "prototype/tests/test_wave_forecast.gd": "fc3ba1f093a805f8169f78eb0d72ffd37259eb6b2516a2a211b0d63843cf324c",
+    "prototype/tests/test_wave_notice.gd": "26d253a62036cb034066466981a2ec9426472a757ea386f1f73a9ff260ecee9e",
+    "prototype/tests/verify_windows_export.py": "b187535ebb2b19dd520946a194cc120273ab872803f076fe707ffd0eeb6ca82f",
+    "prototype/tests/xp_fixture.gd": "28d10141c9bc7fe18a9c4fd7b58e009294048b3082df13b1127b951a664a78d4"
+  },
+  "engine_version": "4.7.2.stable.official.ed1daf0bf",
+  "python": {
+    "ok": true,
+    "tests": 17,
+    "exit_code": 0
+  },
+  "gdd_contracts": {
+    "defender_values": 24,
+    "enemy_values": 32,
+    "branch_values": 42,
+    "wave_groups": 26
+  },
+  "verification_method": "Consolidated results on identical source hashes: full initial run, then only the timed-out chapter suite rerun with a 120-second timeout. Original failed attempt and retry retained separately.",
+  "attempt_reports": [
+    "v0108_regression_initial.json",
+    "v0108_chapter_retry.json"
+  ]
+}

@@ -143,6 +143,8 @@ for camp in ["alliance","horde"]:
     for mission in range(4,11): cases.append((camp+"_campaign_menu_terrain"+str(mission),"campaign_menu",camp))
 for camp in ["alliance","horde"]:
     for context in ["1","4","final","losses","defeat"]: cases.append((camp+"_wave_context_"+context,"defeat_summary" if context=="defeat" else "summary",camp))
+for camp in ['alliance','horde']:
+    for pose in ['0','1']: cases.append((camp+'_wolf_walk_'+pose,'wolf_walk',camp))
 available_case_count=len(cases)
 if args.selected_cases:
     unknown=set(args.selected_cases)-{name for name,_,_ in cases}
@@ -158,6 +160,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if state=='wolf_walk': command+=['--capture-wolf-offset='+('0.0' if name.endswith('_0') else '0.35')]
         if '_routes' in name: command+=['--atelier-routes']
         if '_royal_' in name: command+=['--capture-royal-state='+name.rsplit('_',1)[1]]
         if name.endswith('_enemy_hit_motion'): command+=['--capture-hit-motion','--capture-type='+('2' if faction=='alliance' else '4')]
@@ -426,6 +429,9 @@ for name,state,faction in cases:
     if state:
         assert 'UI_VERSION='+manifest['version'] in text,(name,'Version embarquée différente du paquet')
         assert 'CAPTURE_RESULT=0' in text,(name,text)
+        if state=='wolf_walk':
+            snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('WOLF_SNAPSHOT=')))
+            assert snapshot=={'isolated':True,'count':4,'faction':0 if faction=='alliance' else 1,'motion_schema':3}
         header=image.read_bytes()[:24]
         assert header[:8]==b'\x89PNG\r\n\x1a\n' and struct.unpack('>II',header[16:24])==(1280,800)
     results.append({'case':name,'exit_code':completed.returncode,'capture':state is not None})
