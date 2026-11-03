@@ -41,3 +41,5 @@ Capture de 144 images sur le Gue. Les coordonnees sont celles du dessin source.
 | (745, 975) | 10,31 px | 15,24 px |
 
 Conserver le centre de reference. Au sixieme virage, la translation qui rapproche une patte de son point de contact eloigne l'autre. Reprendre la disposition relative des deux appuis.
+
+Une rotation autour du centre des appuis, ajustee sur les contacts et bornee a 12 degres, donne 11,25 px de derive maximale contre 11,21 px avec la correction precedente. Le maillage reste valide sur les 144 images. L'essai est ecarte.
