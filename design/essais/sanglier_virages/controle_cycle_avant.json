@@ -1,0 +1,7 @@
+{
+  "fps": 60,
+  "frames": 144,
+  "maximum_contact_drift_px": 0.0001220703125,
+  "minimum_triangle_ratio": 0.174868774414063,
+  "stride_px": 8.5
+}

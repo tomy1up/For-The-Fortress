@@ -51,3 +51,13 @@ python design/essais/sanglier_virages/build_comparison.py
 Le moteur Godot est lancé minimisé sur l’écran de droite (`--screen 1`). Le script réutilise les sources enregistrées ; aucun appel de génération n’est effectué. Le paquet v0.112 et ses 75 sources doivent correspondre au projet courant. Les copies originales sous le dossier personnel de génération sont comparées si elles existent ; leurs empreintes enregistrées restent contrôlées sur un autre ordinateur.
 
 For the Fortress! reste un nom de travail, disponibilité juridique à confirmer.
+
+## Cycle de trois quarts avant sur le Gué
+
+L’essai utilise le déplacement normal du sanglier sur la première diagonale. Les deux paires diagonales alternent leur appui et le corps monte légèrement pendant la reprise. J’ai retenu une foulée expérimentale de 8,5 pixels et une levée de 1,2 pixel. La cadence et la silhouette restent à juger en mouvement.
+
+Le rendu Godot sur l’écran de droite a produit 144 images à 60 images/s, toutes décodées dans la vidéo. L’interpolation initiale repliait des triangles entre les pattes. Avec les poids répartis entre sabots voisins, l’aire signée minimale échantillonnée représente 17,5 % de l’aire au repos. La dérive maximale des sommets servant de repères d’appui est de 0,00013 pixel. Cette mesure porte sur ces quatre repères. La forme du sabot peut encore varier autour d’eux.
+
+La vidéo couvre une diagonale et constitue un essai hors campagne. Le raccord au virage et les cycles des autres vues restent à construire.
+
+Depuis la racine du dépôt, lancer Godot avec `--screen 1 --minimized --path prototype --script` suivi du chemin absolu de `render_gait.gd`. Les images sont écrites dans `captures/gait/` et les mesures dans `controle_cycle_avant.json`. La vidéo `cycle_trois_quarts_avant.mp4` a été encodée à 60 images/s avec FFmpeg.
