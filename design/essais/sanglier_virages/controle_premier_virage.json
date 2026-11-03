@@ -1,0 +1,36 @@
+{
+  "fps": 60,
+  "frames": 240,
+  "maximum_contact_correction_px": 5.06824636459351,
+  "maximum_contact_drift_px": 0.000030517578125,
+  "maximum_visual_path_deviation_px": 5.7421875,
+  "minimum_triangle_ratio": 0.174864069620768,
+  "stance_samples": 436,
+  "stride_px": 8.5,
+  "view_changes": [
+    {
+      "distance": 3.79499999999999,
+      "from": 0,
+      "residual_gap_px": 0.0,
+      "shared_contacts": 2,
+      "to": 1,
+      "uncorrected_gap_px": 5.06824636459351
+    },
+    {
+      "distance": 4.23499999999999,
+      "from": 1,
+      "residual_gap_px": 0.0,
+      "shared_contacts": 2,
+      "to": 2,
+      "uncorrected_gap_px": 4.87490606307983
+    }
+  ],
+  "worst": {
+    "distance": 0.3025,
+    "view": 0,
+    "xy": [
+      581.0,
+      696.0
+    ]
+  }
+}

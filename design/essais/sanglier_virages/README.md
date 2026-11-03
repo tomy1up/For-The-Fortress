@@ -61,3 +61,11 @@ Le rendu Godot sur l’écran de droite a produit 144 images à 60 images/s, tou
 La vidéo couvre une diagonale et constitue un essai hors campagne. Le raccord au virage et les cycles des autres vues restent à construire.
 
 Depuis la racine du dépôt, lancer Godot avec `--screen 1 --minimized --path prototype --script` suivi du chemin absolu de `render_gait.gd`. Les images sont écrites dans `captures/gait/` et les mesures dans `controle_cycle_avant.json`. La vidéo `cycle_trois_quarts_avant.mp4` a été encodée à 60 images/s avec FFmpeg.
+
+## Premier virage
+
+Ajouter `-- --turn` à la commande de capture pour produire les 240 images de `premier_virage.mp4`. Le sanglier passe du trois quarts droit à la face, puis au trois quarts gauche. La phase suit la distance de simulation.
+
+Le centre du dessin suit un arrondi expérimental de 0,45 unité autour du sommet. L’écart maximal mesuré avec le centre logique est de 5,75 pixels à l’arrondi près. La correction locale conserve les deux repères d’appui communs à chaque changement de vue, puis se résorbe pendant le retour du sabot. Les deux sauts de repères mesurés avant correction atteignaient 5,07 et 4,87 pixels. Après correction, ils sont nuls sur les images échantillonnées. Le contrôle porte sur les sommets utilisés comme repères.
+
+Les triangles du maillage gardent leur orientation sur les 240 images. Les dessins changent encore par paliers et la silhouette peut paraître brusque. L’arrondi, la durée de la vue de face et le raccord des volumes restent des choix expérimentaux à évaluer avant intégration.

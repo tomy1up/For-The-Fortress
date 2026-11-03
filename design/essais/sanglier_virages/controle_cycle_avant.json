@@ -1,7 +1,19 @@
 {
   "fps": 60,
   "frames": 144,
-  "maximum_contact_drift_px": 0.0001220703125,
-  "minimum_triangle_ratio": 0.174868774414063,
-  "stride_px": 8.5
+  "maximum_contact_correction_px": 0.0,
+  "maximum_contact_drift_px": 0.000030517578125,
+  "maximum_visual_path_deviation_px": 0.0,
+  "minimum_triangle_ratio": 0.174864069620768,
+  "stance_samples": 264,
+  "stride_px": 8.5,
+  "view_changes": [],
+  "worst": {
+    "distance": 0.3025,
+    "view": 0,
+    "xy": [
+      581.0,
+      696.0
+    ]
+  }
 }
