@@ -250,11 +250,14 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 		if front_candidate != null and changes_side and absf(phase-0.5) < 0.14:
 			var towards := (b-a).y > 0.0
 			var source := Rect2(262, 19, 619, 1177) if towards else Rect2(389, 76, 391, 1095)
-			var size := source.size*(34.0/source.size.y)
+			var image_scale := 34.0/source.size.y
+			var size := source.size*image_scale
+			# Center on the visible diagonal support pair, independent of tail and ears.
+			var support := Vector2(525, 1000) if towards else Vector2(612, 895)
 			result["texture"] = front_candidate if towards else rear_candidate
 			result["facing"] = signf((middle-start).x) if towards else signf((finish-middle).x)
 			result["source"] = source
-			result["destination"] = Rect2(Vector2(-size.x/2.0, -size.y+4.0), size)
+			result["destination"] = Rect2((source.position-support)*image_scale, size)
 			result["towards"] = towards
 		return result
 	return {"travel": travel}
