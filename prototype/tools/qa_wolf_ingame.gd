@@ -15,6 +15,7 @@ var max_contact_step := 0.0
 var max_contact_switch := 0.0
 var worst_contact_switch := {}
 var use_quarters := true
+var front_half_window := 0.10
 var turn_meshes: Array[ArrayMesh] = []
 var rear_quarter_candidate: ImageTexture
 var quarter_candidate: ImageTexture
@@ -30,6 +31,9 @@ func record() -> void:
 	game.model.enemies.clear();game.model.spawn_schedule.clear()
 	var preview := "--wolf-pivot" in OS.get_cmdline_user_args()
 	use_quarters = not "--no-quarters" in OS.get_cmdline_user_args()
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--front-window="):
+			front_half_window = clampf(argument.trim_prefix("--front-window=").to_float(), 0.04, 0.20)
 	var start_distances: Array[float] = []
 	if preview:
 		var corner_distance := 0.0
@@ -271,7 +275,7 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 		var result := {"center": a.lerp(b, phase), "direction": direction, "travel": travel}
 		var towards := tangent.y > 0.0
 		var turn_center := absf(phase-0.5)
-		var quarter := use_quarters and turn_center >= 0.10
+		var quarter := use_quarters and turn_center >= (front_half_window if towards else 0.10)
 		if front_candidate != null and changes_side and turn_center < (0.26 if use_quarters else 0.14):
 			var source := Rect2(262, 19, 619, 1177) if towards else Rect2(389, 76, 391, 1095)
 			if quarter:

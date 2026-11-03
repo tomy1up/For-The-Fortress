@@ -49,3 +49,16 @@ Une rotation autour du centre des appuis, ajustee sur les contacts et bornee a 1
 Variante v002 dessinee avec ImageGen a partir du trois quarts v001 et de la face v002. Conserver la meme echelle uniforme que le trois quarts v001, afin que la queue plus basse ne grossisse pas le personnage.
 
 Redraw the first exact grey cream wolf from the same raised front three-quarter direction, keeping head, body, angle and palette. Change the stride to a SHORT compact passing step for turning, not a long running stride: tuck the leftmost rear foot forward under the hips, and bring the rightmost front foot back under the shoulder, reducing their screen-horizontal gap by roughly 35 percent and their vertical gap by roughly 25 percent. Keep normal leg lengths by flexing joints and adjusting posture, four distinct anatomically attached paws. Match the closer supports of the second reference, but preserve the first image's direction. Tail low, match angular fur outlines. Single full sprite with transparent background, no floor, shadow, text or glow.
+
+## Fenetre de la vue de face
+
+Mesure sur les memes six loups du Gue. La demi-fenetre est une fraction de la duree de la courbe.
+
+| Demi-fenetre | Saut entre vues | Derive maximale |
+| --- | --- | --- |
+| 0,07 | 6,54 px | 8,31 px |
+| 0,10, reference | 6,50 px | 7,84 px |
+| 0,13 | 6,47 px | 7,84 px |
+| 0,16 | 6,45 px | 7,84 px |
+
+Les gains ne justifient pas d'allonger la vue de face. Garder 0,10. Le parametre de capture --front-window permet de reproduire les mesures.
