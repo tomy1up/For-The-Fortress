@@ -81,15 +81,15 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 	var max_translation := 0.0
 	var inverted_triangles := 0
 	var anchors := {}
-	var remaining := distance-0.2
+	var remaining := distance-0.85
 	var segment := 0
 	while remaining >= points[segment].distance_to(points[segment+1]):
 		remaining -= points[segment].distance_to(points[segment+1])
 		segment += 1
 	var stance_starts := [62.0, 52.0, 34.0, 20.0]
 	var stance_lengths := [37.0, 39.0, 34.0, 39.0]
-	for step in range(40):
-		var sample_distance := distance-0.2+step*0.01
+	for step in range(171):
+		var sample_distance := distance-0.85+step*0.01
 		var offset := remaining+step*0.01
 		while offset >= points[segment].distance_to(points[segment+1]):
 			remaining -= points[segment].distance_to(points[segment+1])
