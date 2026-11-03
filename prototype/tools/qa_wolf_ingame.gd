@@ -10,6 +10,7 @@ var minimum_turn_triangle_area := INF
 var capture_frame := 0
 var turn_contacts := {}
 var max_turn_contact_drift := 0.0
+var max_uncorrected_contact_drift := 0.0
 var use_quarters := true
 var turn_meshes: Array[ArrayMesh] = []
 var rear_quarter_candidate: ImageTexture
@@ -64,7 +65,7 @@ func record() -> void:
 		assert(root.get_texture().get_image().save_png(directory.path_join("%04d.png"%frame))==OK)
 	if preview:
 		assert(is_finite(minimum_turn_triangle_area) and minimum_turn_triangle_area > 0.0)
-		print("WOLF_TURN_CONTACT max_drift_px=%.3f" % max_turn_contact_drift)
+		print("WOLF_TURN_CONTACT max_drift_px=%.3f before_translation_px=%.3f" % [max_turn_contact_drift, max_uncorrected_contact_drift])
 		print("WOLF_TURN_MESH min_triangle_double_area_px2=%.3f" % minimum_turn_triangle_area)
 	print("WOLF_GAME_RECORDING frames=144 isolated=",game.meta_profile==null," faction=",faction," directory=",directory)
 	quit()
@@ -336,6 +337,8 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 				var a := row*(GRID+1)+column
 				var b := a+GRID+1
 				indices.append_array([a, a+1, b, a+1, b+1, b])
+	var errors := PackedVector2Array()
+	var correction := Vector2.ZERO
 	for foot in range(paws.size()):
 		var group: int = groups[foot] ^ (2 if pose.facing < 0.0 else 0)
 		var phase := fposmod(gait-STANCE_STARTS[group]/64.0, 1.0)
@@ -357,9 +360,19 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 		var contact: Dictionary = turn_contacts.get(key, {})
 		if contact.get("frame", -2) < capture_frame-1:
 			contact = {"anchor": position}
-		max_turn_contact_drift = maxf(max_turn_contact_drift, position.distance_to(contact.anchor))
+		var error: Vector2 = position-contact.anchor
+		errors.append(error)
+		correction -= error
+		max_uncorrected_contact_drift = maxf(max_uncorrected_contact_drift, error.length())
 		contact["frame"] = capture_frame
 		turn_contacts[key] = contact
+	if not errors.is_empty():
+		correction = (correction/errors.size()).limit_length(2.0)
+		var local_shift := correction*Vector2(pose.facing, 1.0)/scale
+		for index in range(points.size()):
+			points[index] += local_shift
+		for error in errors:
+			max_turn_contact_drift = maxf(max_turn_contact_drift, (error+correction).length())
 	for triangle in range(0, indices.size(), 3):
 		var a := points[indices[triangle]]
 		var b := points[indices[triangle+1]]
