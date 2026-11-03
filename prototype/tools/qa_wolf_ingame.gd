@@ -341,6 +341,7 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 				var b := a+GRID+1
 				indices.append_array([a, a+1, b, a+1, b+1, b])
 	var errors := PackedVector2Array()
+	var contact_feet := PackedInt32Array()
 	var correction := Vector2.ZERO
 	for foot in range(paws.size()):
 		var group: int = groups[foot] ^ (2 if pose.facing < 0.0 else 0)
@@ -365,6 +366,7 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 			contact = {"anchor": position}
 		var error: Vector2 = position-contact.anchor
 		errors.append(error)
+		contact_feet.append(foot)
 		correction -= error
 		max_uncorrected_contact_drift = maxf(max_uncorrected_contact_drift, error.length())
 		if contact.get("frame", -2) == capture_frame-1:
@@ -380,10 +382,32 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 	if not errors.is_empty():
 		correction = (correction/errors.size()).limit_length(2.0)
 		var local_shift := correction*Vector2(pose.facing, 1.0)/scale
-		for index in range(points.size()):
-			points[index] += local_shift
+		var local_corrections := PackedVector2Array()
+		var facing := Vector2(pose.facing, 1.0)
 		for error in errors:
-			max_turn_contact_drift = maxf(max_turn_contact_drift, (error+correction).length())
+			local_corrections.append(-(error+correction).limit_length(0.28)*facing/scale)
+		for index in range(points.size()):
+			var pixel := uvs[index]*texture.get_size()
+			points[index] += local_shift
+			for contact_index in range(contact_feet.size()):
+				var delta: Vector2 = (pixel-paws[contact_feet[contact_index]])/Vector2(82, 140)
+				points[index] += local_corrections[contact_index]*exp(-delta.length_squared()*1.5)
+		for contact_index in range(errors.size()):
+			var cell: Vector2 = (paws[contact_feet[contact_index]]-source.position)/source.size*GRID
+			var column := clampi(floori(cell.x), 0, GRID-1)
+			var row := clampi(floori(cell.y), 0, GRID-1)
+			var u := cell.x-column
+			var v := cell.y-row
+			var a := row*(GRID+1)+column
+			var b := a+GRID+1
+			var point := points[a]*(1.0-u-v)+points[a+1]*u+points[b]*v
+			if u+v > 1.0:
+				point = points[b+1]*(u+v-1.0)+points[a+1]*(1.0-v)+points[b]*(1.0-u)
+			var group: int = groups[contact_feet[contact_index]] ^ (2 if pose.facing < 0.0 else 0)
+			var anchor: Vector2 = turn_contacts[Vector2i(enemy_id, group)].anchor
+			var world_point: Vector2 = pose.center+point*facing*scale
+			max_turn_contact_drift = maxf(max_turn_contact_drift, world_point.distance_to(anchor))
+
 	for triangle in range(0, indices.size(), 3):
 		var a := points[indices[triangle]]
 		var b := points[indices[triangle+1]]
