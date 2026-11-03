@@ -14,6 +14,9 @@ var max_uncorrected_contact_drift := 0.0
 var min_contact_correction_weight := 1.0
 var max_contact_step := 0.0
 var max_contact_switch := 0.0
+var corrected_contacts := {}
+var max_corrected_switch := 0.0
+var max_corrected_step := 0.0
 var worst_contact_switch := {}
 var use_quarters := true
 var front_half_window := 0.10
@@ -78,6 +81,7 @@ func record() -> void:
 		assert(is_finite(minimum_turn_triangle_area) and minimum_turn_triangle_area > 0.0)
 		print("WOLF_TURN_CONTACT max_drift_px=%.3f before_translation_px=%.3f" % [max_turn_contact_drift, max_uncorrected_contact_drift])
 		print("WOLF_TURN_STEPS same_pose_px=%.3f change_pose_px=%.3f" % [max_contact_step, max_contact_switch])
+		print("WOLF_CORRECTED_STEPS same_pose_px=%.3f change_pose_px=%.3f" % [max_corrected_step, max_corrected_switch])
 		print("WOLF_WORST_SWITCH ", JSON.stringify(worst_contact_switch))
 		print("WOLF_CORRECTION min_weight=%.3f" % min_contact_correction_weight)
 		print("WOLF_TURN_MESH min_triangle_double_area_px2=%.3f" % minimum_turn_triangle_area)
@@ -441,6 +445,15 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 			var anchor: Vector2 = turn_contacts[Vector2i(enemy_id, group)].anchor
 			var world_point: Vector2 = pose.center+point*facing*scale
 			max_turn_contact_drift = maxf(max_turn_contact_drift, world_point.distance_to(anchor))
+			var key := Vector2i(enemy_id, group)
+			var previous: Dictionary = corrected_contacts.get(key, {})
+			if previous.get("frame", -2) == capture_frame-1:
+				var step := world_point.distance_to(previous.position)
+				if previous.texture == texture:
+					max_corrected_step = maxf(max_corrected_step, step)
+				else:
+					max_corrected_switch = maxf(max_corrected_switch, step)
+			corrected_contacts[key] = {"frame": capture_frame, "texture": texture, "position": world_point}
 
 	for triangle in range(0, indices.size(), 3):
 		var a := points[indices[triangle]]
