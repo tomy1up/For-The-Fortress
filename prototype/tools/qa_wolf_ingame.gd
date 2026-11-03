@@ -203,40 +203,44 @@ func report_rounded_corner(corner: int, previous: Vector2, vertex: Vector2, next
 
 func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45) -> Dictionary:
 	var corner_distance := 0.0
+	var travel: float = Walk.path_motion(distance, points, View.AXIS).travel
 	for corner in range(1, points.size()-1):
 		var vertex := points[corner]
 		corner_distance += points[corner-1].distance_to(vertex)
 		var offset := distance-corner_distance
-		if absf(offset) < radius:
-			var start := View.project(vertex.move_toward(points[corner-1], radius))
-			var middle := View.project(vertex)
-			var finish := View.project(vertex.move_toward(points[corner+1], radius))
-			var phase := inverse_lerp(-radius, radius, offset)
-			var a := start.lerp(middle, phase)
-			var b := middle.lerp(finish, phase)
-			var direction := preview_direction(distance, points)
-			if (middle-start).x*(finish-middle).x > 0.0:
-				direction = (b-a).normalized()
-			var travel: float = Walk.path_motion(distance, points, View.AXIS).travel
-			var partial_arc := 0.0
-			var full_arc := 0.0
-			var previous := start
-			for step in range(1, 17):
-				var t := step/16.0
-				var position := start.lerp(middle, t).lerp(middle.lerp(finish, t), t)
-				var length := previous.distance_to(position)
-				full_arc += length
-				partial_arc += length*clampf((phase-(t-1.0/16.0))*16.0, 0.0, 1.0)
-				previous = position
-			travel += partial_arc-full_arc*phase
-			var result := {"center": a.lerp(b, phase), "direction": direction, "travel": travel}
-			if front_candidate != null and (middle-start).x*(finish-middle).x < 0.0 and absf(phase-0.5) < 0.14:
-				var towards := (b-a).y > 0.0
-				var source := Rect2(262, 19, 619, 1177) if towards else Rect2(389, 76, 391, 1095)
-				var size := source.size*(34.0/source.size.y)
-				result["texture"] = front_candidate if towards else rear_candidate
-				result["facing"] = signf((middle-start).x) if towards else signf((finish-middle).x)
-				result["source"] = source
-				result["destination"] = Rect2(Vector2(-size.x/2.0, -size.y+4.0), size)
-			return result
-	return {}
+		if offset < -radius:
+			break
+		var start := View.project(vertex.move_toward(points[corner-1], radius))
+		var middle := View.project(vertex)
+		var finish := View.project(vertex.move_toward(points[corner+1], radius))
+		var phase := clampf(inverse_lerp(-radius, radius, offset), 0.0, 1.0)
+		var a := start.lerp(middle, phase)
+		var b := middle.lerp(finish, phase)
+		var direction := preview_direction(distance, points)
+		if (middle-start).x*(finish-middle).x > 0.0:
+			direction = (b-a).normalized()
+		var partial_arc := 0.0
+		var previous := start
+		for step in range(1, 17):
+			var t := step/16.0
+			var position := start.lerp(middle, t).lerp(middle.lerp(finish, t), t)
+			var length := previous.distance_to(position)
+			partial_arc += length*clampf((phase-(t-1.0/16.0))*16.0, 0.0, 1.0)
+			previous = position
+		var incoming_length := start.distance_to(middle)
+		var outgoing_length := middle.distance_to(finish)
+		travel += partial_arc-incoming_length*minf(phase*2.0, 1.0)
+		travel -= outgoing_length*maxf(phase*2.0-1.0, 0.0)
+		if phase >= 1.0:
+			continue
+		var result := {"center": a.lerp(b, phase), "direction": direction, "travel": travel}
+		if front_candidate != null and (middle-start).x*(finish-middle).x < 0.0 and absf(phase-0.5) < 0.14:
+			var towards := (b-a).y > 0.0
+			var source := Rect2(262, 19, 619, 1177) if towards else Rect2(389, 76, 391, 1095)
+			var size := source.size*(34.0/source.size.y)
+			result["texture"] = front_candidate if towards else rear_candidate
+			result["facing"] = signf((middle-start).x) if towards else signf((finish-middle).x)
+			result["source"] = source
+			result["destination"] = Rect2(Vector2(-size.x/2.0, -size.y+4.0), size)
+		return result
+	return {"travel": travel}
