@@ -794,7 +794,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	var facing: float=(-1.0 if motion.direction.x<0 else 1.0) if walking else enemy_facing(enemy,model.enemy_route_points(enemy),model.enemy_route_length(enemy))
 	var preview: Dictionary = {}
 	if walking and wolf_turn_preview.is_valid():
-		preview = wolf_turn_preview.call(enemy.distance, model.enemy_route_points(enemy))
+		preview = wolf_turn_preview.call(enemy.distance, model.enemy_route_points(enemy), enemy.id, scale)
 	var body: Transform2D = enemy_body_transform(enemy,facing,pose,model.elapsed,model.active and not walking)
 	body.origin += preview.get("center", center)
 	draw_set_transform_matrix(body)

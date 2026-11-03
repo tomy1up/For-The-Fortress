@@ -4,6 +4,7 @@ const Main=preload("res://scripts/main.gd")
 const Model=preload("res://scripts/valley_model.gd")
 const Walk=preload("res://scripts/enemy_walk_art.gd")
 const View=preload("res://scripts/valley_view.gd")
+var minimum_turn_row_gap := INF
 var turn_meshes: Array[ArrayMesh] = []
 var front_candidate: ImageTexture
 var rear_candidate: ImageTexture
@@ -43,6 +44,9 @@ func record() -> void:
 		game.model.elapsed=frame/60.0;game._update_interface();game.map_view.queue_redraw()
 		await process_frame;await RenderingServer.frame_post_draw
 		assert(root.get_texture().get_image().save_png(directory.path_join("%04d.png"%frame))==OK)
+	if preview:
+		assert(is_finite(minimum_turn_row_gap) and minimum_turn_row_gap > 0.0)
+		print("WOLF_TURN_MESH min_vertical_edge_px=%.3f" % minimum_turn_row_gap)
 	print("WOLF_GAME_RECORDING frames=144 isolated=",game.meta_profile==null," directory=",directory)
 	quit()
 
@@ -248,19 +252,18 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 		return result
 	return {"travel": travel}
 
-func preview_enemy_pose(distance: float, points: Array[Vector2]) -> Dictionary:
+func preview_enemy_pose(distance: float, points: Array[Vector2], enemy_id: int, scale: float) -> Dictionary:
 	var pose := preview_pose(distance, points)
 	if pose.has("texture"):
-		var mesh := animated_turn_mesh(pose)
+		var mesh := animated_turn_mesh(pose, Walk.phase_for(pose.travel, enemy_id, scale))
 		turn_meshes.append(mesh)
 		pose["mesh"] = mesh
 	return pose
 
-func animated_turn_mesh(pose: Dictionary) -> ArrayMesh:
+func animated_turn_mesh(pose: Dictionary, gait: float) -> ArrayMesh:
 	var source: Rect2 = pose.source
 	var destination: Rect2 = pose.destination
 	var texture: Texture2D = pose.texture
-	var gait := Walk.phase_for(pose.travel, 0, 0.7)
 	var paws: Array = [Vector2(350, 789), Vector2(573, 974), Vector2(500, 911), Vector2(700, 1166)] if pose.towards else [Vector2(650, 950), Vector2(505, 1140), Vector2(720, 612), Vector2(424, 710)]
 	var points := PackedVector2Array()
 	var uvs := PackedVector2Array()
@@ -276,6 +279,8 @@ func animated_turn_mesh(pose: Dictionary) -> ArrayMesh:
 				var influence := exp(-delta.length_squared()*1.5)
 				var cycle := gait*TAU+index*PI/2.0
 				point.y -= maxf(0.0, sin(cycle))*influence*1.15
+			if row > 0:
+				minimum_turn_row_gap = minf(minimum_turn_row_gap, point.y-points[points.size()-GRID-1].y)
 			points.append(point)
 			uvs.append(pixel/texture.get_size())
 			if row < GRID and column < GRID:
