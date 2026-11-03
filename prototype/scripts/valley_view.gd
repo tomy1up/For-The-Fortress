@@ -7,7 +7,7 @@ const AllianceArt = preload("res://scripts/alliance_art.gd")
 const EnemyArt = preload("res://scripts/enemy_art.gd")
 const EnemyWalkArt = preload("res://scripts/enemy_walk_art.gd")
 var walking_meshes:=EnemyWalkArt.new()
-var wolf_orientation_preview := Callable()
+var wolf_turn_preview := Callable()
 const ShopArt = preload("res://scripts/shop_art.gd")
 const FortressArt = preload("res://scripts/fortress_art.gd")
 const ORIGIN := Vector2(658, 174)
@@ -792,14 +792,15 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	var walking: bool = EnemyWalkArt.supports(id)
 	var motion: Dictionary=EnemyWalkArt.path_motion(enemy.distance,model.enemy_route_points(enemy),AXIS) if walking else {}
 	var facing: float=(-1.0 if motion.direction.x<0 else 1.0) if walking else enemy_facing(enemy,model.enemy_route_points(enemy),model.enemy_route_length(enemy))
+	var preview: Dictionary = {}
+	if walking and wolf_turn_preview.is_valid():
+		preview = wolf_turn_preview.call(enemy.distance, model.enemy_route_points(enemy))
 	var body: Transform2D = enemy_body_transform(enemy,facing,pose,model.elapsed,model.active and not walking)
-	body.origin += center
+	body.origin += preview.get("center", center)
 	draw_set_transform_matrix(body)
 	if walking:
 		var phase: float=EnemyWalkArt.phase_for(motion.travel,enemy.id,scale)
-		var orientation: Vector2 = motion.direction
-		if wolf_orientation_preview.is_valid():
-			orientation = wolf_orientation_preview.call(enemy.distance, model.enemy_route_points(enemy))
+		var orientation: Vector2 = preview.get("direction", motion.direction)
 		var ground := Vector2(absf(orientation.x), orientation.y)
 		draw_mesh(walking_meshes.mesh_for(enemy.id,phase,ground),EnemyWalkArt.TEXTURE,Transform2D.IDENTITY,EnemyArt.tint(hit_strength))
 	else:

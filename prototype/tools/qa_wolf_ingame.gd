@@ -17,7 +17,7 @@ func record() -> void:
 	game.model.spawned=8
 	var preview := "--wolf-pivot" in OS.get_cmdline_user_args()
 	if preview:
-		game.map_view.wolf_orientation_preview = preview_direction
+		game.map_view.wolf_turn_preview = preview_pose
 	report_corner_displacement(game.model.path_points)
 	var directory:=ProjectSettings.globalize_path("user://qa_wolf_pivot" if preview else "user://qa_wolf_ingame")
 	DirAccess.make_dir_recursive_absolute(directory)
@@ -157,3 +157,22 @@ func report_rounded_corner(corner: int, previous: Vector2, vertex: Vector2, next
 		var on_outgoing := Geometry2D.get_closest_point_to_segment(point, control, finish)
 		maximum = maxf(maximum, minf(point.distance_to(on_incoming), point.distance_to(on_outgoing)))
 	print("WOLF_ROUNDED_ROUTE corner=%d max_centerline_offset_px=%.2f" % [corner, maximum])
+
+func preview_pose(distance: float, points: Array[Vector2]) -> Dictionary:
+	var corner_distance := 0.0
+	for corner in range(1, points.size()-1):
+		var vertex := points[corner]
+		corner_distance += points[corner-1].distance_to(vertex)
+		var offset := distance-corner_distance
+		if absf(offset) < 0.45:
+			var start := View.project(vertex.move_toward(points[corner-1], 0.45))
+			var middle := View.project(vertex)
+			var finish := View.project(vertex.move_toward(points[corner+1], 0.45))
+			var phase := inverse_lerp(-0.45, 0.45, offset)
+			var a := start.lerp(middle, phase)
+			var b := middle.lerp(finish, phase)
+			var direction := preview_direction(distance, points)
+			if (middle-start).x*(finish-middle).x > 0.0:
+				direction = (b-a).normalized()
+			return {"center": a.lerp(b, phase), "direction": direction}
+	return {}
