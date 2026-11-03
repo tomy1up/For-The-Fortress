@@ -30,7 +30,7 @@ func record() -> void:
 	game.model.spawned=start_distances.size()
 	if preview:
 		var folder := ProjectSettings.globalize_path("res://../design/essais/loup_virages")
-		front_candidate = ImageTexture.create_from_image(Image.load_from_file(folder.path_join("loup_face_candidat_v001.png")))
+		front_candidate = ImageTexture.create_from_image(Image.load_from_file(folder.path_join("loup_face_candidat_v002.png")))
 		rear_candidate = ImageTexture.create_from_image(Image.load_from_file(folder.path_join("loup_dos_candidat_v001.png")))
 		game.map_view.wolf_turn_preview = preview_pose
 	report_corner_displacement(game.model.path_points)
@@ -232,9 +232,10 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 			var result := {"center": a.lerp(b, phase), "direction": direction, "travel": travel}
 			if front_candidate != null and (middle-start).x*(finish-middle).x < 0.0 and absf(phase-0.5) < 0.14:
 				var towards := (b-a).y > 0.0
-				var source := Rect2(265, 23, 607, 1186) if towards else Rect2(389, 76, 391, 1095)
+				var source := Rect2(262, 19, 619, 1177) if towards else Rect2(389, 76, 391, 1095)
 				var size := source.size*(34.0/source.size.y)
 				result["texture"] = front_candidate if towards else rear_candidate
+				result["facing"] = signf((middle-start).x) if towards else signf((finish-middle).x)
 				result["source"] = source
 				result["destination"] = Rect2(Vector2(-size.x/2.0, -size.y+4.0), size)
 			return result
