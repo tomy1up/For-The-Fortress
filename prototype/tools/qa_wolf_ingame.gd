@@ -30,10 +30,13 @@ func record() -> void:
 	game._choose_faction(faction);game.model.buy(0,0);game.model.phase="combat"
 	game.model.enemies.clear();game.model.spawn_schedule.clear()
 	var preview := "--wolf-pivot" in OS.get_cmdline_user_args()
+	var id_offset := 0
 	use_quarters = not "--no-quarters" in OS.get_cmdline_user_args()
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--front-window="):
 			front_half_window = clampf(argument.trim_prefix("--front-window=").to_float(), 0.04, 0.20)
+		if argument.begins_with("--id-offset="):
+			id_offset = maxi(0, argument.trim_prefix("--id-offset=").to_int())
 	var start_distances: Array[float] = []
 	if preview:
 		var corner_distance := 0.0
@@ -44,7 +47,7 @@ func record() -> void:
 		for index in range(8):
 			start_distances.append(1.0+index*2.5)
 	for index in range(start_distances.size()):
-		var enemy: Dictionary=Model.make_enemy(index,0,0.0,faction)
+		var enemy: Dictionary=Model.make_enemy(index+id_offset,0,0.0,faction)
 		enemy.distance=start_distances[index]
 		game.model.enemies.append(enemy)
 	game.model.spawned=start_distances.size()
