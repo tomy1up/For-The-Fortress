@@ -62,3 +62,5 @@ Mesure sur les memes six loups du Gue. La demi-fenetre est une fraction de la du
 | 0,16 | 6,45 px | 7,84 px |
 
 Les gains ne justifient pas d'allonger la vue de face. Garder 0,10. Le parametre de capture --front-window permet de reproduire les mesures.
+
+Un essai de selection du raccord par phase de marche a privilegie les instants avec le moins de pattes au sol. Les pattes des groupes 1 et 2 comptaient davantage dans le choix. Sur la capture du Gue, le saut maximal passe de 6,502 a 6,465 px et la derive reste a 7,836 px. La variante est ecartee.
