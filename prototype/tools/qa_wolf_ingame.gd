@@ -101,9 +101,12 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 		var reference := Walk.sample_vertices(phase, motion.direction)
 		var pivot := Walk.sample_vertices(phase, preview_direction(sample_distance, points))
 		var rounded_positions: Array[PackedVector2Array] = []
+		var rounded_phases := PackedFloat32Array()
 		for radius in radii:
 			var rounded := preview_pose(sample_distance, points, radius)
-			var vertices := Walk.sample_vertices(phase, rounded.get("direction", motion.direction))
+			var rounded_phase := Walk.phase_for(rounded.get("travel", motion.travel), 0, 0.7)
+			rounded_phases.append(rounded_phase)
+			var vertices := Walk.sample_vertices(rounded_phase, rounded.get("direction", motion.direction))
 			var origin: Vector2 = rounded.get("center", center)
 			for index in range(vertices.size()):
 				vertices[index] = origin+vertices[index]*Vector2(signf(motion.direction.x), 1.0)*0.7
@@ -118,19 +121,23 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 				if not anchors.has(group):
 					anchors[group] = position
 				var error: Vector2 = position-anchors[group]
-				for trial in range(radii.size()):
-					var rounded_position := rounded_positions[trial][index]
-					if not rounded_anchors[trial].has(group):
-						rounded_anchors[trial][group] = rounded_position
-					rounded_slip[trial] = maxf(rounded_slip[trial], rounded_position.distance_to(rounded_anchors[trial][group]))
 				planted.append(error)
 				corrections[group] = -error*Vector2(signf(motion.direction.x), 1.0)/0.7
 				max_world_slip = maxf(max_world_slip, error.length())
 				max_slip = maxf(max_slip, reference[index].distance_to(pivot[index])*0.7)
 			else:
 				anchors.erase(group)
-				for trial_anchors in rounded_anchors:
-					trial_anchors.erase(group)
+			for trial in range(radii.size()):
+				var rounded_stance := fposmod(rounded_phases[trial]-stance_starts[group]/64.0, 1.0)
+				if rounded_stance >= stance_lengths[group]/64.0:
+					rounded_anchors[trial].erase(group)
+					continue
+				var foot: int = Walk.DATA.feet.find(group)
+				var rounded_position := rounded_positions[trial][foot]
+				if not rounded_anchors[trial].has(group):
+					rounded_anchors[trial][group] = rounded_position
+				rounded_slip[trial] = maxf(rounded_slip[trial], rounded_position.distance_to(rounded_anchors[trial][group]))
+
 		inverted_triangles += count_pivot_inversions(pivot, corrections)
 		if not planted.is_empty():
 			var translation := planted[0]
@@ -195,5 +202,17 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 			var direction := preview_direction(distance, points)
 			if (middle-start).x*(finish-middle).x > 0.0:
 				direction = (b-a).normalized()
-			return {"center": a.lerp(b, phase), "direction": direction}
+			var travel: float = Walk.path_motion(distance, points, View.AXIS).travel
+			var partial_arc := 0.0
+			var full_arc := 0.0
+			var previous := start
+			for step in range(1, 17):
+				var t := step/16.0
+				var position := start.lerp(middle, t).lerp(middle.lerp(finish, t), t)
+				var length := previous.distance_to(position)
+				full_arc += length
+				partial_arc += length*clampf((phase-(t-1.0/16.0))*16.0, 0.0, 1.0)
+				previous = position
+			travel += partial_arc-full_arc*phase
+			return {"center": a.lerp(b, phase), "direction": direction, "travel": travel}
 	return {}

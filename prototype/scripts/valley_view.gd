@@ -799,7 +799,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	body.origin += preview.get("center", center)
 	draw_set_transform_matrix(body)
 	if walking:
-		var phase: float=EnemyWalkArt.phase_for(motion.travel,enemy.id,scale)
+		var phase: float=EnemyWalkArt.phase_for(preview.get("travel", motion.travel),enemy.id,scale)
 		var orientation: Vector2 = preview.get("direction", motion.direction)
 		var ground := Vector2(absf(orientation.x), orientation.y)
 		draw_mesh(walking_meshes.mesh_for(enemy.id,phase,ground),EnemyWalkArt.TEXTURE,Transform2D.IDENTITY,EnemyArt.tint(hit_strength))
