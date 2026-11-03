@@ -74,8 +74,9 @@ func preview_direction(distance: float, points: Array[Vector2]) -> Vector2:
 func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> void:
 	var max_slip := 0.0
 	var max_world_slip := 0.0
-	var max_rounded_slip := 0.0
-	var rounded_anchors := {}
+	var radii := [0.3, 0.45, 0.6, 0.75]
+	var rounded_slip := [0.0, 0.0, 0.0, 0.0]
+	var rounded_anchors := [{}, {}, {}, {}]
 	var max_single_anchor_slip := 0.0
 	var max_translation := 0.0
 	var inverted_triangles := 0
@@ -99,9 +100,14 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 		var phase := Walk.phase_for(motion.travel, 0, 0.7)
 		var reference := Walk.sample_vertices(phase, motion.direction)
 		var pivot := Walk.sample_vertices(phase, preview_direction(sample_distance, points))
-		var rounded := preview_pose(sample_distance, points)
-		var rounded_vertices := Walk.sample_vertices(phase, rounded.get("direction", motion.direction))
-		var rounded_center: Vector2 = rounded.get("center", center)
+		var rounded_positions: Array[PackedVector2Array] = []
+		for radius in radii:
+			var rounded := preview_pose(sample_distance, points, radius)
+			var vertices := Walk.sample_vertices(phase, rounded.get("direction", motion.direction))
+			var origin: Vector2 = rounded.get("center", center)
+			for index in range(vertices.size()):
+				vertices[index] = origin+vertices[index]*Vector2(signf(motion.direction.x), 1.0)*0.7
+			rounded_positions.append(vertices)
 		var planted := PackedVector2Array()
 		var corrections := {}
 		for group in range(4):
@@ -112,24 +118,28 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 				if not anchors.has(group):
 					anchors[group] = position
 				var error: Vector2 = position-anchors[group]
-				var rounded_position := rounded_center+rounded_vertices[index]*Vector2(signf(motion.direction.x), 1.0)*0.7
-				if not rounded_anchors.has(group):
-					rounded_anchors[group] = rounded_position
-				max_rounded_slip = maxf(max_rounded_slip, rounded_position.distance_to(rounded_anchors[group]))
+				for trial in range(radii.size()):
+					var rounded_position := rounded_positions[trial][index]
+					if not rounded_anchors[trial].has(group):
+						rounded_anchors[trial][group] = rounded_position
+					rounded_slip[trial] = maxf(rounded_slip[trial], rounded_position.distance_to(rounded_anchors[trial][group]))
 				planted.append(error)
 				corrections[group] = -error*Vector2(signf(motion.direction.x), 1.0)/0.7
 				max_world_slip = maxf(max_world_slip, error.length())
 				max_slip = maxf(max_slip, reference[index].distance_to(pivot[index])*0.7)
 			else:
 				anchors.erase(group)
-				rounded_anchors.erase(group)
+				for trial_anchors in rounded_anchors:
+					trial_anchors.erase(group)
 		inverted_triangles += count_pivot_inversions(pivot, corrections)
 		if not planted.is_empty():
 			var translation := planted[0]
 			max_translation = maxf(max_translation, translation.length())
 			for error in planted:
 				max_single_anchor_slip = maxf(max_single_anchor_slip, (error-translation).length())
-	print("WOLF_ROUNDED_STANCE corner=%d max_world_drift_px=%.2f" % [corner, max_rounded_slip])
+	for trial in range(radii.size()):
+		print("WOLF_ROUNDED_STANCE corner=%d radius=%.2f max_world_drift_px=%.2f" % [
+			corner, radii[trial], rounded_slip[trial]])
 	print("WOLF_LOCAL_ANCHORS corner=%d inverted_triangle_samples=%d" % [corner, inverted_triangles])
 	print("WOLF_SINGLE_ANCHOR corner=%d other_paws_max_drift_px=%.2f max_body_shift_px=%.2f" % [
 		corner, max_single_anchor_slip, max_translation])
@@ -169,17 +179,17 @@ func report_rounded_corner(corner: int, previous: Vector2, vertex: Vector2, next
 		maximum = maxf(maximum, minf(point.distance_to(on_incoming), point.distance_to(on_outgoing)))
 	print("WOLF_ROUNDED_ROUTE corner=%d max_centerline_offset_px=%.2f" % [corner, maximum])
 
-func preview_pose(distance: float, points: Array[Vector2]) -> Dictionary:
+func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45) -> Dictionary:
 	var corner_distance := 0.0
 	for corner in range(1, points.size()-1):
 		var vertex := points[corner]
 		corner_distance += points[corner-1].distance_to(vertex)
 		var offset := distance-corner_distance
-		if absf(offset) < 0.45:
-			var start := View.project(vertex.move_toward(points[corner-1], 0.45))
+		if absf(offset) < radius:
+			var start := View.project(vertex.move_toward(points[corner-1], radius))
 			var middle := View.project(vertex)
-			var finish := View.project(vertex.move_toward(points[corner+1], 0.45))
-			var phase := inverse_lerp(-0.45, 0.45, offset)
+			var finish := View.project(vertex.move_toward(points[corner+1], radius))
+			var phase := inverse_lerp(-radius, radius, offset)
 			var a := start.lerp(middle, phase)
 			var b := middle.lerp(finish, phase)
 			var direction := preview_direction(distance, points)
