@@ -13,6 +13,7 @@ var max_turn_contact_drift := 0.0
 var max_uncorrected_contact_drift := 0.0
 var max_contact_step := 0.0
 var max_contact_switch := 0.0
+var worst_contact_switch := {}
 var use_quarters := true
 var turn_meshes: Array[ArrayMesh] = []
 var rear_quarter_candidate: ImageTexture
@@ -69,6 +70,7 @@ func record() -> void:
 		assert(is_finite(minimum_turn_triangle_area) and minimum_turn_triangle_area > 0.0)
 		print("WOLF_TURN_CONTACT max_drift_px=%.3f before_translation_px=%.3f" % [max_turn_contact_drift, max_uncorrected_contact_drift])
 		print("WOLF_TURN_STEPS same_pose_px=%.3f change_pose_px=%.3f" % [max_contact_step, max_contact_switch])
+		print("WOLF_WORST_SWITCH ", JSON.stringify(worst_contact_switch))
 		print("WOLF_TURN_MESH min_triangle_double_area_px2=%.3f" % minimum_turn_triangle_area)
 	print("WOLF_GAME_RECORDING frames=144 isolated=",game.meta_profile==null," faction=",faction," directory=",directory)
 	quit()
@@ -283,6 +285,7 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 				support = Vector2(620, 898) if towards else Vector2(837, 831)
 				result["texture"] = quarter_candidate if towards else rear_quarter_candidate
 			result["quarter"] = quarter
+			result["label"] = ("front" if towards else "rear") + ("_quarter" if quarter else "")
 			result["facing"] = signf((middle-start).x) if towards else signf((finish-middle).x)
 			if quarter:
 				result["facing"] = signf(tangent.x)
@@ -373,11 +376,15 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 			var step := position.distance_to(contact.position)
 			if contact.texture == texture:
 				max_contact_step = maxf(max_contact_step, step)
-			else:
-				max_contact_switch = maxf(max_contact_switch, step)
+			elif step > max_contact_switch:
+				max_contact_switch = step
+				worst_contact_switch = {"from": contact.label, "to": pose.label, "group": group,
+					"wolf": enemy_id, "frame": capture_frame, "dx": position.x-contact.position.x,
+					"dy": position.y-contact.position.y}
 		contact["frame"] = capture_frame
 		contact["position"] = position
 		contact["texture"] = texture
+		contact["label"] = pose.label
 		turn_contacts[key] = contact
 	if not errors.is_empty():
 		correction = (correction/errors.size()).limit_length(2.0)
