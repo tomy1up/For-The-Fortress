@@ -1139,6 +1139,7 @@ func _forecast_portrait(profile: int) -> AtlasTexture:
 func _update_wave_forecast() -> void:
 	forecast_panel.visible = false
 	map_view.entry_forecast.clear()
+	map_view.highlighted_entries.clear()
 	if choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase not in ["preparation","finished"]: return
 	var number: int = model.wave+1 if model.phase == "finished" else model.wave
 	if number < 1 or number > Model.Campaign.WAVES.size(): return
@@ -1158,6 +1159,9 @@ func _update_wave_forecast() -> void:
 			forecast_portraits[index].texture = null
 			continue
 		var group: Dictionary = forecast_data.groups[index]
+		if not model.routes.is_empty() and forecast_rows[index].get_global_rect().has_point(forecast_panel.get_global_mouse_position()):
+			for entry in group.get("entries", []):
+				map_view.highlighted_entries.append(int(entry.number)-1)
 		forecast_portraits[index].texture = _forecast_portrait(group.type)
 		forecast_marks[index].color = MapView.enemy_color(group.type)
 		forecast_names[index].text = "%d × %s%s" % [group.count,group.name," · BOSS" if group.type == 7 else ""]

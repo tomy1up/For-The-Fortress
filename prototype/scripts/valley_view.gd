@@ -1,5 +1,6 @@
 extends Node2D
 var entry_forecast: Array[Dictionary] = []
+var highlighted_entries: Array[int] = []
 
 const Model = preload("res://scripts/valley_model.gd")
 const HordeArt = preload("res://scripts/horde_art.gd")
@@ -492,6 +493,12 @@ func _draw() -> void:
 		draw_polyline(route,Color("b3a17b"),20,true)
 		for point in route: draw_circle(point,10,Color("b3a17b"))
 	for route in screen_routes: draw_polyline(route,Color("c7b58d"),2,true)
+	for index in highlighted_entries:
+		if index < 0 or index >= screen_routes.size():
+			continue
+		var tint := entry_color(index)
+		tint.a = 0.72 if highlighted_entries.size() == 1 else 0.45
+		draw_polyline(screen_routes[index], tint, 5.0, true)
 	if definition.decoration == "valley": _draw_valley_bridge()
 	for tree in definition.trees:
 		_draw_tree(project(tree))
@@ -524,6 +531,8 @@ func _draw() -> void:
 	_draw_fortress(project(_map_path()[-1]))
 	for index in range(screen_routes.size()):
 		var entrance: Vector2 = screen_routes[index][0]
+		if index in highlighted_entries:
+			draw_arc(entrance, 9.0, 0.0, TAU, 24, entry_color(index), 2.0, true)
 		draw_circle(entrance,5,Color("debd7f") if screen_routes.size()==1 else entry_color(index))
 		if screen_routes.size()==1: draw_string(font,entrance+Vector2(-48,-20),"ENTRÉE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("a7b8aa"))
 	if model != null:
