@@ -43,3 +43,9 @@ Capture de 144 images sur le Gue. Les coordonnees sont celles du dessin source.
 Conserver le centre de reference. Au sixieme virage, la translation qui rapproche une patte de son point de contact eloigne l'autre. Reprendre la disposition relative des deux appuis.
 
 Une rotation autour du centre des appuis, ajustee sur les contacts et bornee a 12 degres, donne 11,25 px de derive maximale contre 11,21 px avec la correction precedente. Le maillage reste valide sur les 144 images. L'essai est ecarte.
+
+## Trois quarts avant, pas court
+
+Variante v002 dessinee avec ImageGen a partir du trois quarts v001 et de la face v002. Conserver la meme echelle uniforme que le trois quarts v001, afin que la queue plus basse ne grossisse pas le personnage.
+
+Redraw the first exact grey cream wolf from the same raised front three-quarter direction, keeping head, body, angle and palette. Change the stride to a SHORT compact passing step for turning, not a long running stride: tuck the leftmost rear foot forward under the hips, and bring the rightmost front foot back under the shoulder, reducing their screen-horizontal gap by roughly 35 percent and their vertical gap by roughly 25 percent. Keep normal leg lengths by flexing joints and adjusting posture, four distinct anatomically attached paws. Match the closer supports of the second reference, but preserve the first image's direction. Tail low, match angular fur outlines. Single full sprite with transparent background, no floor, shadow, text or glow.

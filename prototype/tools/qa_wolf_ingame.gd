@@ -47,7 +47,7 @@ func record() -> void:
 	if preview:
 		var folder := ProjectSettings.globalize_path("res://../design/essais/loup_virages")
 		rear_quarter_candidate = load_turn_texture(folder.path_join("loup_trois_quarts_arriere_v001.png"))
-		quarter_candidate = load_turn_texture(folder.path_join("loup_trois_quarts_avant_v001.png"))
+		quarter_candidate = load_turn_texture(folder.path_join("loup_trois_quarts_avant_v002.png"))
 		front_candidate = load_turn_texture(folder.path_join("loup_face_candidat_v002.png"))
 		rear_candidate = load_turn_texture(folder.path_join("loup_dos_candidat_v001.png"))
 		game.map_view.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
@@ -275,14 +275,14 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 		if front_candidate != null and changes_side and turn_center < (0.26 if use_quarters else 0.14):
 			var source := Rect2(262, 19, 619, 1177) if towards else Rect2(389, 76, 391, 1095)
 			if quarter:
-				source = Rect2(109, 26, 984, 1055) if towards else Rect2(226, 61, 1092, 886)
-			var image_scale := 34.0/source.size.y
+				source = Rect2(141, 274, 942, 652) if towards else Rect2(226, 61, 1092, 886)
+			var image_scale := 34.0/1055.0 if quarter and towards else 34.0/source.size.y
 			var size := source.size*image_scale
 			# Center on the visible diagonal support pair, independent of tail and ears.
 			var support := Vector2(525, 1000) if towards else Vector2(612, 895)
 			result["texture"] = front_candidate if towards else rear_candidate
 			if quarter:
-				support = Vector2(620, 898) if towards else Vector2(837, 831)
+				support = Vector2(610, 880) if towards else Vector2(837, 831)
 				result["texture"] = quarter_candidate if towards else rear_quarter_candidate
 			result["quarter"] = quarter
 			result["label"] = ("front" if towards else "rear") + ("_quarter" if quarter else "")
@@ -309,7 +309,7 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 	var texture: Texture2D = pose.texture
 	var paws: Array = [Vector2(350, 789), Vector2(573, 974), Vector2(500, 911), Vector2(700, 1166)] if pose.towards else [Vector2(650, 950), Vector2(505, 1140), Vector2(720, 612), Vector2(424, 710)]
 	if pose.quarter:
-		paws = [Vector2(302, 715), Vector2(505, 701), Vector2(676, 900), Vector2(943, 1043)] if pose.towards else [Vector2(541, 915), Vector2(761, 786), Vector2(886, 687), Vector2(1134, 710)]
+		paws = [Vector2(420, 831), Vector2(497, 790), Vector2(643, 832), Vector2(798, 895)] if pose.towards else [Vector2(541, 915), Vector2(761, 786), Vector2(886, 687), Vector2(1134, 710)]
 	# The drawings list the rear pair first. Select anatomical groups in
 	# the same order as the side rig, accounting for the mirrored drawing.
 	var groups := [1, 3, 0, 2] if pose.towards else [3, 1, 2, 0]
