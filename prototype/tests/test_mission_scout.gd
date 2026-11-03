@@ -59,6 +59,10 @@ func run_checks() -> void:
 					check(visible_cards[index].get_node("Details").text.begins_with("%d " % groups[index].wave_counts[wave]),"La fiche affiche le nombre de cette vague")
 			scout.wave_filter.select(0)
 			scout.wave_filter.item_selected.emit(0)
+			scout.wave_filter.grab_focus()
+			scene._sync_keyboard_focus()
+			check(root.gui_get_focus_owner()==scout.wave_filter,"Le filtre conserve le focus pendant le rafraichissement")
+			scout.close_button.grab_focus()
 
 			check(scout.note.text.contains("25 %")== (number>10),"La protection n’est expliquée que dans les missions où elle apparaît")
 			check(Rect2(0,0,1280,800).encloses(scout.panel.get_global_rect()),"La fenêtre reste entièrement lisible")

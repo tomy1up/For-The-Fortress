@@ -201,7 +201,7 @@ func close() -> void:
 	if was_visible: closed.emit()
 
 func initial_focus() -> Button:
-	if scout.visible: return scout.close_button
+	if scout.visible: return scout.wave_filter if scout.wave_filter.has_focus() else scout.close_button
 	return start_button if not start_button.disabled else nodes[selected]
 
 func set_overlay_blocked(value: bool) -> void:

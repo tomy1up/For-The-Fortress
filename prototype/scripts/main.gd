@@ -667,11 +667,16 @@ func _ready() -> void:
 func _capture_mission_scout(camp: int) -> void:
 	meta_profile=MetaProfile.new("")
 	var number:=1
+	var wave := 0
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture-scout-mission="): number=clampi(int(argument.trim_prefix("--capture-scout-mission=")),1,20)
+		if argument.begins_with("--capture-scout-wave="): wave = maxi(0, int(argument.trim_prefix("--capture-scout-wave=")))
 	var before: String=JSON.stringify(meta_profile.data)
 	_open_campaign(camp,(number-1)/10+1);campaign_menu._select((number-1)%10);campaign_menu._scout()
 	var scout=campaign_menu.scout
+	if wave > 0 and wave < scout.wave_filter.item_count:
+		scout.wave_filter.select(wave)
+		scout.wave_filter.item_selected.emit(wave)
 	print("SCOUT_SNAPSHOT=",JSON.stringify({"isolated":meta_profile.path.is_empty(),"faction":camp,"mission":number,"visible":scout.visible,"blocked":campaign_menu.overlay_blocked,"unchanged":before==JSON.stringify(meta_profile.data),"heading":scout.heading.text,"subtitle":scout.subtitle.text,"entries":scout.entries,"names":scout.cards.filter(func(card):return card.visible).map(func(card):return card.get_node("Name").text),"details":scout.cards.filter(func(card):return card.visible).map(func(card):return card.get_node("Details").text),"note":scout.note.text}))
 
 func _capture_shop_menu(camp: int) -> void:
