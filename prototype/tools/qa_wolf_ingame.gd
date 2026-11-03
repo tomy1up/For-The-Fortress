@@ -33,6 +33,10 @@ func report_corner_displacement(points: Array[Vector2]) -> void:
 		distance += points[corner-1].distance_to(points[corner])
 		var incoming: Vector2 = Walk.path_motion(distance-0.0001, points, View.AXIS).direction
 		var outgoing: Vector2 = Walk.path_motion(distance+0.0001, points, View.AXIS).direction
+		var trial_incoming := trial_direction(-0.0001, incoming, outgoing)
+		var trial_outgoing := trial_direction(0.0001, incoming, outgoing)
+		print("WOLF_TRIAL corner=%d remaining_turn_deg=%.1f" % [
+			corner, absf(rad_to_deg(trial_incoming.angle_to(trial_outgoing)))])
 		var max_jump := 0.0
 		for step in range(16):
 			var before := Walk.sample_vertices(step/16.0, incoming)
@@ -43,3 +47,9 @@ func report_corner_displacement(points: Array[Vector2]) -> void:
 				max_jump = maxf(max_jump, a.distance_to(b))
 		print("WOLF_CORNER index=%d turn_deg=%.1f max_unscaled_vertex_jump_px=%.2f" % [
 			corner, absf(rad_to_deg(incoming.angle_to(outgoing))), max_jump])
+
+# Evaluate a rigid pivot over 0.4 route units around the corner.
+func trial_direction(offset: float, incoming: Vector2, outgoing: Vector2) -> Vector2:
+	if incoming.x*outgoing.x <= 0.0:
+		return incoming if offset < 0.0 else outgoing
+	return incoming.slerp(outgoing, smoothstep(-0.2, 0.2, offset))
