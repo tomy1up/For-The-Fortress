@@ -29,3 +29,15 @@ One isolated 2D game sprite, same exact grey and cream cartoon wolf from the ref
 Candidat ImageGen pour les virages vers le haut. La vue de dos et le profil du loup ont servi de references.
 
 Single transparent 2D game sprite of this exact grey and cream wolf. Rear three-quarter view, walking towards upper right, raised isometric camera. Rear and flank visible, head facing AWAY upper right, no eye visible. Four anatomically connected readable paws with staggered walk, weight on one rear and opposite front paw. Natural wolf proportions matching reference, angular gray cream fur and dark outline, medium tail held low with cream tip, no floor shadows glow text or other objects. Full body centered.
+
+## Recentrage du trois quarts avant
+
+Capture de 144 images sur le Gue. Les coordonnees sont celles du dessin source.
+
+| Centre | Saut maximal entre vues | Derive maximale sur un appui |
+| --- | --- | --- |
+| (620, 898), reference | 8,69 px | 11,21 px |
+| (655, 910) | 7,91 px | 11,70 px |
+| (745, 975) | 10,31 px | 15,24 px |
+
+Conserver le centre de reference. Au sixieme virage, la translation qui rapproche une patte de son point de contact eloigne l'autre. Reprendre la disposition relative des deux appuis.
