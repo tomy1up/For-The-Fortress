@@ -73,6 +73,8 @@ func preview_direction(distance: float, points: Array[Vector2]) -> Vector2:
 func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> void:
 	var max_slip := 0.0
 	var max_world_slip := 0.0
+	var max_single_anchor_slip := 0.0
+	var max_translation := 0.0
 	var anchors := {}
 	var remaining := distance-0.2
 	var segment := 0
@@ -93,6 +95,7 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 		var phase := Walk.phase_for(motion.travel, 0, 0.7)
 		var reference := Walk.sample_vertices(phase, motion.direction)
 		var pivot := Walk.sample_vertices(phase, preview_direction(sample_distance, points))
+		var planted := PackedVector2Array()
 		for group in range(4):
 			var stance_phase := fposmod(phase-stance_starts[group]/64.0, 1.0)
 			if stance_phase < stance_lengths[group]/64.0:
@@ -100,9 +103,18 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 				var position := center+pivot[index]*Vector2(signf(motion.direction.x), 1.0)*0.7
 				if not anchors.has(group):
 					anchors[group] = position
-				max_world_slip = maxf(max_world_slip, position.distance_to(anchors[group]))
+				var error: Vector2 = position-anchors[group]
+				planted.append(error)
+				max_world_slip = maxf(max_world_slip, error.length())
 				max_slip = maxf(max_slip, reference[index].distance_to(pivot[index])*0.7)
 			else:
 				anchors.erase(group)
+		if not planted.is_empty():
+			var translation := planted[0]
+			max_translation = maxf(max_translation, translation.length())
+			for error in planted:
+				max_single_anchor_slip = maxf(max_single_anchor_slip, (error-translation).length())
+	print("WOLF_SINGLE_ANCHOR corner=%d other_paws_max_drift_px=%.2f max_body_shift_px=%.2f" % [
+		corner, max_single_anchor_slip, max_translation])
 	print("WOLF_PIVOT_STANCE corner=%d max_offset_from_reference_px=%.2f max_world_drift_px=%.2f" % [
 		corner, max_slip, max_world_slip])
