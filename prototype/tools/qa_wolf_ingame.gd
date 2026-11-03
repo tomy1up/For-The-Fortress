@@ -32,8 +32,9 @@ func record() -> void:
 	game.model.spawned=start_distances.size()
 	if preview:
 		var folder := ProjectSettings.globalize_path("res://../design/essais/loup_virages")
-		front_candidate = ImageTexture.create_from_image(Image.load_from_file(folder.path_join("loup_face_candidat_v002.png")))
-		rear_candidate = ImageTexture.create_from_image(Image.load_from_file(folder.path_join("loup_dos_candidat_v001.png")))
+		front_candidate = load_turn_texture(folder.path_join("loup_face_candidat_v002.png"))
+		rear_candidate = load_turn_texture(folder.path_join("loup_dos_candidat_v001.png"))
+		game.map_view.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		game.map_view.wolf_turn_preview = preview_enemy_pose
 	report_corner_displacement(game.model.path_points)
 	var directory:=ProjectSettings.globalize_path("user://qa_wolf_pivot" if preview else "user://qa_wolf_ingame")
@@ -295,3 +296,10 @@ func animated_turn_mesh(pose: Dictionary, gait: float) -> ArrayMesh:
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	return mesh
+
+func load_turn_texture(path: String) -> ImageTexture:
+	var source := Image.load_from_file(path)
+	assert(source != null and not source.is_empty())
+	var status := source.generate_mipmaps()
+	assert(status == OK)
+	return ImageTexture.create_from_image(source)
