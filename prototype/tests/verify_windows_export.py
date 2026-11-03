@@ -147,6 +147,9 @@ for camp in ["alliance","horde"]:
     for context in ["1","4","final","losses","defeat"]: cases.append((camp+"_wave_context_"+context,"defeat_summary" if context=="defeat" else "summary",camp))
 for camp in ['alliance','horde']:
     for pose in ['0','1']: cases.append((camp+'_wolf_walk_'+pose,'wolf_walk',camp))
+for camp in ['alliance','horde']:
+    for variant in ['catalogue','owned','comparison_0','comparison_1']:
+        cases.append((camp+'_shop_'+variant,'shop_menu',camp))
 available_case_count=len(cases)
 if args.selected_cases:
     unknown=set(args.selected_cases)-{name for name,_,_ in cases}
@@ -163,6 +166,9 @@ for name,state,faction in cases:
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
         if state=='wolf_walk': command+=['--capture-wolf-offset='+('0.0' if name.endswith('_0') else '0.35')]
+        if state=='shop_menu':
+            if '_comparison_' in name: command+=['--capture-shop-comparison='+name.rsplit('_',1)[1]]
+            if name.endswith('_owned'): command+=['--capture-shop-owned']
         if '_routes' in name: command+=['--atelier-routes']
         if '_royal_' in name: command+=['--capture-royal-state='+name.rsplit('_',1)[1]]
         if name.endswith('_enemy_hit_motion'): command+=['--capture-hit-motion','--capture-type='+('2' if faction=='alliance' else '4')]
@@ -437,6 +443,23 @@ for name,state,faction in cases:
         assert 'Bonus proposés' in (report_folder/'rapport.md').read_text(encoding='utf-8')
     if state:
         assert 'UI_VERSION='+manifest['version'] in text,(name,'Version embarquée différente du paquet')
+        if state=='shop_menu':
+            snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SHOP_COMPARISON_SNAPSHOT=')))
+            camp=0 if faction=='alliance' else 1
+            assert snapshot['isolated'] and snapshot['faction']==camp and snapshot['profile_unchanged']
+            assert snapshot['balance']==(0 if name.endswith('_owned') else 420)
+            assert snapshot['selected']==(7 if camp==0 else 9) if name.endswith('_owned') else snapshot['selected']==-1
+            if '_comparison_' in name:
+                index=int(name[-1]);assert snapshot['comparison'] and snapshot['index']==index
+                base,alternative=[('Archer elfe','Rôdeur elfe'),('Arbalétrier nain','Mousquetaire nain'),('Lanceur de haches troll','Traqueur troll'),('Sapeur gobelin','Grenadier gobelin')][camp*2+index]
+                assert snapshot['headers']==['Au niveau 1',base,alternative]
+                expected=[
+                    [['50 or','60 or'],['8','6'],['1 s','0,7 s'],['4','3,5']],
+                    [['75 or','90 or'],['24','38'],['2,5 s','4 s'],['5','6']],
+                    [['50 or','65 or'],['16','10'],['2 s','1,25 s'],['3,5','4'],['8','4'],['1 maximum','1 maximum'],['1','1']],
+                    [['75 or','75 or'],['24','18'],['2,5 s','2 s'],['3','2,7'],['9,6','6'],['3 maximum','4 maximum'],['1','1,15']]][camp*2+index]
+                assert [row[1:] for row in snapshot['rows']]==expected,snapshot['rows']
+            else: assert not snapshot['comparison'] and snapshot['index']==-1
         assert 'CAPTURE_RESULT=0' in text,(name,text)
         if state=='wolf_walk':
             snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('WOLF_SNAPSHOT=')))

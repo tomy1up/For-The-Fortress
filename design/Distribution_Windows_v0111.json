@@ -1,0 +1,147 @@
+{
+  "archive_sha256": "4e223ae645e00c9b684c789cc8f69c2ccd6dec3954154b1d0c347b23d2ac5948",
+  "scope": "selected",
+  "available_cases": 275,
+  "executable_sha256": "cc762de4c226cfdaf0dc7d2b8f295b6735c3804487a12b57fa85128c8206a861",
+  "files": [
+    "For_the_Fortress_v0.111_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.111_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.111_Windows_x64/Lancer_atelier_routes.cmd",
+    "For_the_Fortress_v0.111_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.111_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.111_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_bank_guardian",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_wolf_walk_0",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_wolf_walk_0",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_shop_catalogue",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_shop_owned",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_shop_comparison_0",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_shop_comparison_1",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_shop_catalogue",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_shop_owned",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_shop_comparison_0",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_shop_comparison_1",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "source_checks": 74,
+  "local_sources_compared": true,
+  "visual_review": "All 17 selected native captures examined at full size. Both shop catalogues, acquired states and four comparisons fit without clipping. Faction-specific headers and numeric rows agree with the combat model. Guardian inspections, wolf poses, talents and run summaries remain readable. Controlled fixtures and automated runs do not constitute a human campaign or artistic approval.",
+  "reviewed_captures": [
+    "selection",
+    "alliance_bank_guardian",
+    "horde_bank_guardian",
+    "profile_protection",
+    "alliance_run_report",
+    "horde_run_report",
+    "alliance_profile_protection",
+    "alliance_wolf_walk_0",
+    "horde_wolf_walk_0",
+    "alliance_shop_catalogue",
+    "alliance_shop_owned",
+    "alliance_shop_comparison_0",
+    "alliance_shop_comparison_1",
+    "horde_shop_catalogue",
+    "horde_shop_owned",
+    "horde_shop_comparison_0",
+    "horde_shop_comparison_1"
+  ],
+  "capture_sha256": {
+    "design/essais/captures/QA-v0111_selection.png": "89f5599f1f140d26637a2dab526a4aafdf67e6ff2397191b57fff066e0f1a6cc",
+    "design/essais/captures/QA-v0111_alliance_bank_guardian.png": "efbabbe17df06d1b11920f52e29f84468e96d13b1b31eaddc84c3a1c3fef710d",
+    "design/essais/captures/QA-v0111_horde_bank_guardian.png": "e6b699b9a37d7c2c7ebdad9f9cd12d9a4388cfa3ef0661945b3c3695eefa4b4c",
+    "design/essais/captures/QA-v0111_profile_protection.png": "3916cad67783fdd210436c464a326969e6febe299fa023b970e1e88e0e5ba0ac",
+    "design/essais/captures/QA-v0111_alliance_run_report.png": "0d635c49001b989714df2ca8fc52392b7058bc51241f588790d809173ccd20a4",
+    "design/essais/captures/QA-v0111_horde_run_report.png": "8eb13cd1262ac0415895dc985938abbf05cacc7c4b9004ab5c51164699a8b0d5",
+    "design/essais/captures/QA-v0111_alliance_profile_protection.png": "a72a76a19f2478fb3a5187a221c0cca11482738a7888020341e140efd321a583",
+    "design/essais/captures/QA-v0111_alliance_wolf_walk_0.png": "78fbc5c843d222b6e8b262dc12417cc06fca1436746f0bab4b8e076135bd78e9",
+    "design/essais/captures/QA-v0111_horde_wolf_walk_0.png": "2b735fcc4574dff09e8911c2dc5a3751fd26d05c369b48786e1dc27e4ab7e0fd",
+    "design/essais/captures/QA-v0111_alliance_shop_catalogue.png": "57bc63604ca4b15f47312e6a4d9fed3655b9bf1c1852e9e0979b3bb812c07d7d",
+    "design/essais/captures/QA-v0111_alliance_shop_owned.png": "36967301f67b03079cb9df7982dd5f66efbcf8d24cda9ec7fbec9ec7fb5dbb16",
+    "design/essais/captures/QA-v0111_alliance_shop_comparison_0.png": "28d1b59317ee53f5f6992660660d11034b5fccfd4fb962fdff5f45640e2cd2ea",
+    "design/essais/captures/QA-v0111_alliance_shop_comparison_1.png": "148fdc8a332501a290ff3b879826c1228c9a50f3bbead1b3083936d63ba0a981",
+    "design/essais/captures/QA-v0111_horde_shop_catalogue.png": "078498906b606ed455cc8170d440e36dadc8ea2f95cd94b13ce2a53a80d3b5d0",
+    "design/essais/captures/QA-v0111_horde_shop_owned.png": "9db33cdb816692cf5314237871a26f7410b9f8b8c06302402ae3e58a4a376ed2",
+    "design/essais/captures/QA-v0111_horde_shop_comparison_0.png": "bf920247dd9b615f5d0a659b4b3ae5b8e7dc90128d3df8984b12cd24c72eb7c7",
+    "design/essais/captures/QA-v0111_horde_shop_comparison_1.png": "fa33bc0a17fa8e5b00e2d1491356e623665d2099a093e420d29f45874abacf0a"
+  }
+}

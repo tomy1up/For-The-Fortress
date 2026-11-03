@@ -1,5 +1,7 @@
 # Vingt missions de dix vagues jouables
 
+**v0.111 — comparaison en boutique** : chiffres de niveau 1 côte à côte, talents communs et distinction des deux monnaies. Le tableau reste facultatif et ne déclenche aucun achat. [Détail et contrôles](../design/Comparaison_boutique_v0111.md).
+
 **v0.110 — inspection de la protection** : le survol relie la Gardienne à ses voisins éligibles et indique leur nombre ; une malédiction reste visible dans son statut. [Détail et contrôles](../design/Inspection_gardienne_v0110.md).
 
 La v0.106 prépare les futurs parcours avec [un atelier à deux entrées](../design/Atelier_routes_v0106.md), distinct de la campagne et sans progression persistante. Dans le ZIP, lancer `Lancer_atelier_routes.cmd` ; depuis les sources : Godot avec `--screen 1 -- --atelier-routes`. Le lancement habituel conserve les vingt missions.
@@ -8,15 +10,15 @@ L'animation du loup de la v0.105 est à reprendre après rejet visuel. Le [candi
 
 **Version v0.101 (31 octobre 2026)** : [coût du grenadier ajusté](../design/Grenadier_prix_v0101.md). Le recrutement passe de 90 à 75 or de combat ; le déblocage reste à 240 PO. Dégâts, portée et cadence conservés. Réglage de prototype à éprouver. [Version Windows historique](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.101).
 
-**Prototype v0.110 — 2 novembre 2026.** Références : GDD v0.18 (jeu 0.109), fiches complémentaires et décisions de campagne. For the Fortress! reste un nom de travail.
+**Prototype v0.111 — 3 novembre 2026.** Références : GDD v0.18 (jeu 0.109), fiches complémentaires et décisions de campagne. For the Fortress! reste un nom de travail.
 
 Le jeu propose vingt missions de dix vagues pour les deux factions, avec trois choix de bonus par mission et les synergies approuvées. Les six défenseurs de départ, leurs quatre niveaux et douze spécialisations sont conservés. La boutique propose deux alternatives par faction ; une seule peut s’ajouter aux trois types habituels pour la mission. La v0.23 applique la [révision du délai et des libellés](../design/Decision_preparation_v023.md) et conserve la [décision validée d’enchaînement automatique](../design/Decision_enchainement_v022.md) : après le premier départ manuel, les vagues suivantes partent après 30 secondes (révision v0.23). Les choix d’amélioration attendent le joueur. Les nombres de combat restent H.
 
 ## Version Windows autonome
 
-Le [ZIP v0.110](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.110) contient le jeu Windows x86_64, le lanceur de l'atelier, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
+Le [ZIP v0.111](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.111) contient le jeu Windows x86_64, le lanceur de l'atelier, la notice, les licences et la fiche d’essai. Extraire tout le dossier, puis lancer For_the_Fortress.exe. Aucun Godot installé ni accès réseau requis pour jouer. Prototype non signé, visuels temporaires ; vérification sur le PC actuel, sans validation d’autres configurations matérielles.
 
-Sur ce PC : dist/For_the_Fortress_v0.110_Windows_x64 depuis la racine du dépôt. Voir [le relevé d’export](../design/Distribution_Windows_v0110.json) pour les empreintes. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
+Sur ce PC : dist/For_the_Fortress_v0.111_Windows_x64 depuis la racine du dépôt. Voir [le relevé d’export](../design/Distribution_Windows_v0111.json) pour les empreintes. Les exécutables générés sont exclus de Git et attachés à la version GitHub.
 
 ## Jouer depuis le projet source
 

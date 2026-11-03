@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.110 — 2 novembre 2026
+Version : 0.111 — 3 novembre 2026
 
 ATELIER A DEUX ENTREES
 
@@ -31,6 +31,8 @@ JOUER
    Les missions 4–10 sont habillées de végétation et de rochers, sans effet de jeu. Gagner la précédente les débloque dans la faction concernée.
 3. Préparer les talents avant la mission, puis jouer et installer sa défense.
    La boutique du parcours permet de débloquer deux alternatives par faction.
+   Comparer les chiffres ouvre un tableau de niveau 1, sans talents ni bonus.
+   La consultation ne declenche aucun achat ; Echap revient aux fiches.
    Choisir une unité achetée ajoute un quatrième type au recrutement de la mission.
    PO, déblocages et choix sont conservés ; l’or de combat reste temporaire.
    Le grenadier coûte 240 PO à débloquer et 75 or de combat à recruter.

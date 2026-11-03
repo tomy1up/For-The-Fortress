@@ -1,6 +1,14 @@
 # Suivi du prototype
 
-État du 1 novembre 2026 — prototype v0.106, GDD principal v0.17 (référence jeu v0.104) et fiches complémentaires, décisions d’enchaînement v0.22 et de préparation v0.23 (30 secondes).
+État du 3 novembre 2026 — prototype v0.111, GDD principal v0.18 (référence jeu v0.109) et fiches complémentaires. Préparation entre vagues : 30 secondes.
+
+## Comparaison en boutique — v0.111
+
+[Un tableau facultatif](Comparaison_boutique_v0111.md) compare chaque alternative à son défenseur de départ. Les prix et chiffres viennent du modèle ; consultation sans achat, retour au clavier et séparation des factions. Aucun changement de statistiques ou de progression. Les rapports dédiés précisent le périmètre de validation.
+
+## Orientation et protection — v0.109 et v0.110
+
+La [marche approuvée du loup](Marche_loup_v0108.md) est intégrée ; son [orientation rigide](Orientation_loup_v0109.md) supprime le cisaillement diagonal, avec naturel du placement à éprouver par le porteur. La [Gardienne](Inspection_gardienne_v0110.md) montre ses voisins éligibles au survol. Le sanglier reste un atelier non intégré.
 
 ## Atelier à deux entrées — v0.106
 

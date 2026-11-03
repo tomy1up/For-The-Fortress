@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.111 — comparer les unités de boutique** : [fiches et tableau facultatif](design/Comparaison_boutique_v0111.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.111). Les chiffres de niveau 1 sont présentés face à ceux du défenseur de départ, avec une distinction entre PO de déblocage et or de recrutement. Aucun changement de prix ou de combat.
+
 **Prototype v0.110 — protection lisible au survol** : [inspection de la Gardienne et des voisins](design/Inspection_gardienne_v0110.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.110). Les liens et le nombre de voisins éligibles apparaissent pendant l’inspection. Le statut de malédiction reste visible sur une Gardienne.
 
 **Atelier du sanglier — à examiner** : [dessin, aperçu et contrôles](design/essais/sanglier_peau_continue/README.md). Un premier cycle expérimental adapte la foulée à la vitesse actuelle du sanglier. Un aperçu sur quatre diagonales vérifie proportions, appuis, pause et accélération. Il reste séparé de la version jouable et n’est pas approuvé artistiquement.
@@ -64,7 +66,7 @@ Jeu solo de Tower Defense à parties roguelike dans un univers médiéval-fantas
 
 - [GDD Word](For_the_Fortress_GDD.docx) : présentation structurée avec sommaire et tableaux.
 - [GDD Markdown](For_the_Fortress_GDD.md) : référence éditoriale adaptée au versionnement Git.
-- Version documentaire : **0.17 — 1 novembre 2026**, consolidée pour le jeu **0.104** : 70 pages, 60 sections et 79 tableaux identiques en Word et Markdown. Socle de combat conservé, vingt missions, XP, 51 points par faction, catalogue des 126 talents, arbres liés à quatre colonnes, reset gratuit, boutique et sauvegarde persistante. Le chapitre 2, la Gardienne à l’essai et les premières animations corporelles et royales sont intégrés. Les futurs tracés à plusieurs entrées, jonctions et forteresses sont distingués du contenu réalisé. [Contrôles documentaires](design/essais/gdd_v017_verification.json).
+- Version documentaire : **0.18 — 2 novembre 2026**, référence jeu **0.109** : 72 pages, 61 sections et 79 tableaux synchronisés en Word et Markdown. Les versions suivantes sont décrites dans leurs fiches complémentaires. [Contrôles documentaires](design/essais/gdd_v018_verification.json).
 
 ## Mécaniques établies
 

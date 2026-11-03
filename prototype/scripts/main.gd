@@ -292,7 +292,7 @@ func _ready() -> void:
 			meta_profile = MetaProfile.new("")
 			meta_profile.data.banks[capture_faction].points = 51
 			meta_profile.data.banks[capture_faction].ranks = _capture_expanded_ranks(0)
-		if capture_state not in ["selection","talents","campaign_menu","campaign_sample"]:
+		if capture_state not in ["selection","talents","campaign_menu","campaign_sample","shop_menu"]:
 			if "--capture-meta-intermediate" in OS.get_cmdline_user_args(): mission_definition = {}
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
 			if "--capture-meta-pending" in OS.get_cmdline_user_args():
@@ -640,6 +640,7 @@ func _ready() -> void:
 			print("PURCHASE_GHOST_SNAPSHOT=",JSON.stringify({"visible":not ghost.is_empty(),"type":ghost.get("type",-1),"slot":ghost.get("slot",-1),"empty":model.defenders[selected].is_empty(),"gold":model.gold,"instances":model.next_instance_id}))
 		if capture_state == "campaign_menu": await _capture_campaign_menu(capture_faction)
 		if capture_state == "campaign_sample": _capture_campaign_sample(capture_faction)
+		if capture_state == "shop_menu": _capture_shop_menu(capture_faction)
 		if route_workshop and capture_state=="preparation":
 			print("ROUTE_FORECAST_SNAPSHOT=",JSON.stringify({"faction":model.faction,"entries":map_view.entry_forecast,"note":forecast_note.text,"visible":forecast_panel.visible,"labels":map_view.entry_label_layouts().map(func(entry: Dictionary):return [entry.title,entry.detail])}))
 		if capture_state == "wolf_walk":
@@ -661,6 +662,18 @@ func _ready() -> void:
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
 		print("CAPTURE_RESULT=", error)
 		get_tree().quit(error)
+
+func _capture_shop_menu(camp: int) -> void:
+	meta_profile=MetaProfile.new("");meta_profile.data.banks[camp].resource=420
+	_open_campaign(camp);_open_shop(camp)
+	var index: int=-1
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--capture-shop-comparison="): index=int(argument.trim_prefix("--capture-shop-comparison="))
+	if "--capture-shop-owned" in OS.get_cmdline_user_args():
+		shop_menu._buy(0);shop_menu._buy(1);shop_menu._select(1)
+	var before: String=JSON.stringify(meta_profile.data)
+	if index in [0,1]: shop_menu._compare(index)
+	print("SHOP_COMPARISON_SNAPSHOT=",JSON.stringify({"isolated":meta_profile.path.is_empty(),"faction":camp,"comparison":shop_menu.comparison_overlay.visible,"index":index,"title":shop_menu.comparison_title.text,"headers":shop_menu.comparison_headers.map(func(label: Label):return label.text),"rows":shop_menu.comparison_rows.filter(func(row: Array):return row[0].visible).map(func(row: Array):return row.map(func(label: Label):return label.text)),"profile_unchanged":before==JSON.stringify(meta_profile.data),"balance":meta_profile.data.banks[camp].resource,"selected":meta_profile.selected_shop_type(camp)}))
 
 func _capture_campaign_menu(camp: int) -> void:
 	# Profils de contrôle isolés ; aucun accès à la progression du joueur.
@@ -860,6 +873,9 @@ func _select_slot(slot: int) -> bool:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo: return
+	if shop_menu.visible:
+		shop_menu._unhandled_key_input(event)
+		return
 	if meta_menu.visible:
 		if event.keycode == KEY_ESCAPE:
 			meta_menu.close();get_viewport().set_input_as_handled()
