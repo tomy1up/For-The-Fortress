@@ -13,11 +13,21 @@ func record() -> void:
 	assert(game.meta_profile == null or game.meta_profile.path.is_empty())
 	game._choose_faction(0);game.model.buy(0,0);game.model.phase="combat"
 	game.model.enemies.clear();game.model.spawn_schedule.clear()
-	for index in range(8):
-		var enemy: Dictionary=Model.make_enemy(index,0,0.0,0)
-		enemy.distance=1.0+index*2.5;game.model.enemies.append(enemy)
-	game.model.spawned=8
 	var preview := "--wolf-pivot" in OS.get_cmdline_user_args()
+	var start_distances: Array[float] = []
+	if preview:
+		var corner_distance := 0.0
+		for corner in range(1, game.model.path_points.size()-1):
+			corner_distance += game.model.path_points[corner-1].distance_to(game.model.path_points[corner])
+			start_distances.append(corner_distance-1.0)
+	else:
+		for index in range(8):
+			start_distances.append(1.0+index*2.5)
+	for index in range(start_distances.size()):
+		var enemy: Dictionary=Model.make_enemy(index,0,0.0,0)
+		enemy.distance=start_distances[index]
+		game.model.enemies.append(enemy)
+	game.model.spawned=start_distances.size()
 	if preview:
 		var folder := ProjectSettings.globalize_path("res://../design/essais/loup_virages")
 		front_candidate = ImageTexture.create_from_image(Image.load_from_file(folder.path_join("loup_face_candidat_v001.png")))
