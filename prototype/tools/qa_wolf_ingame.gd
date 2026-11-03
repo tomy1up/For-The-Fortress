@@ -13,7 +13,8 @@ func record() -> void:
 	root.size=Vector2i(1280,800)
 	var game:=Main.new();root.add_child(game);game.set_process(false)
 	assert(game.meta_profile == null or game.meta_profile.path.is_empty())
-	game._choose_faction(0);game.model.buy(0,0);game.model.phase="combat"
+	var faction := 1 if "--horde" in OS.get_cmdline_user_args() else 0
+	game._choose_faction(faction);game.model.buy(0,0);game.model.phase="combat"
 	game.model.enemies.clear();game.model.spawn_schedule.clear()
 	var preview := "--wolf-pivot" in OS.get_cmdline_user_args()
 	var start_distances: Array[float] = []
@@ -26,7 +27,7 @@ func record() -> void:
 		for index in range(8):
 			start_distances.append(1.0+index*2.5)
 	for index in range(start_distances.size()):
-		var enemy: Dictionary=Model.make_enemy(index,0,0.0,0)
+		var enemy: Dictionary=Model.make_enemy(index,0,0.0,faction)
 		enemy.distance=start_distances[index]
 		game.model.enemies.append(enemy)
 	game.model.spawned=start_distances.size()
@@ -38,6 +39,8 @@ func record() -> void:
 		game.map_view.wolf_turn_preview = preview_enemy_pose
 	report_corner_displacement(game.model.path_points)
 	var directory:=ProjectSettings.globalize_path("user://qa_wolf_pivot" if preview else "user://qa_wolf_ingame")
+	if faction == 1:
+		directory += "_horde"
 	DirAccess.make_dir_recursive_absolute(directory)
 	for frame in range(144):
 		for enemy in game.model.enemies: enemy.distance+=enemy.speed/60.0
@@ -48,7 +51,7 @@ func record() -> void:
 	if preview:
 		assert(is_finite(minimum_turn_row_gap) and minimum_turn_row_gap > 0.0)
 		print("WOLF_TURN_MESH min_vertical_edge_px=%.3f" % minimum_turn_row_gap)
-	print("WOLF_GAME_RECORDING frames=144 isolated=",game.meta_profile==null," directory=",directory)
+	print("WOLF_GAME_RECORDING frames=144 isolated=",game.meta_profile==null," faction=",faction," directory=",directory)
 	quit()
 
 # Compare the same gait phase on both sides of each corner, isolating orientation.
