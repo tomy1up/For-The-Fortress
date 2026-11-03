@@ -1,0 +1,288 @@
+{
+  "scope": "Static frontal, front-three-quarter and rear-three-quarter drawing preparation, not an animation or artistic approval",
+  "passed": true,
+  "artistically_approved": false,
+  "source_pixels_edited": false,
+  "images": {
+    "profile": {
+      "path": "sanglier_proche_source_v001.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "visible_bounds_alpha16": [
+        108,
+        75,
+        1471,
+        960
+      ],
+      "alpha_max": 254,
+      "fully_transparent_pixels": 889773,
+      "maximum_edge_alpha": 1,
+      "fur_median_rgb": [
+        190.0,
+        95.0,
+        50.0
+      ],
+      "display_height": 28.9,
+      "uniform_scale": 0.032655367231638414,
+      "display_width": 44.509265536723156,
+      "pivot": [
+        789.5,
+        960
+      ],
+      "sha256": "01126996c0296e3b2a9e0b290629980c36e1feb5a4e9b0af9846cf3af32b2178",
+      "hoof_highlight_groups": [
+        {
+          "diagnostic_area": 9987,
+          "min_yx": [
+            851,
+            244
+          ],
+          "max_yx": [
+            940,
+            388
+          ]
+        },
+        {
+          "diagnostic_area": 10147,
+          "min_yx": [
+            863,
+            944
+          ],
+          "max_yx": [
+            952,
+            1086
+          ]
+        }
+      ]
+    },
+    "front": {
+      "path": "sanglier_face_source_v001.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "visible_bounds_alpha16": [
+        217,
+        66,
+        1036,
+        1171
+      ],
+      "alpha_max": 255,
+      "fully_transparent_pixels": 932421,
+      "maximum_edge_alpha": 1,
+      "fur_median_rgb": [
+        169.0,
+        79.0,
+        45.0
+      ],
+      "display_height": 28.9,
+      "uniform_scale": 0.026153846153846153,
+      "display_width": 21.419999999999998,
+      "pivot": [
+        626.5,
+        1171
+      ],
+      "sha256": "8b56880c8988aacdb803b6a72d9c557989aed96ae1a6b0eb13d416c4d77334b6",
+      "hoof_highlight_groups": [
+        {
+          "diagnostic_area": 7608,
+          "min_yx": [
+            955,
+            861
+          ],
+          "max_yx": [
+            1027,
+            980
+          ]
+        },
+        {
+          "diagnostic_area": 7616,
+          "min_yx": [
+            956,
+            270
+          ],
+          "max_yx": [
+            1027,
+            390
+          ]
+        },
+        {
+          "diagnostic_area": 11803,
+          "min_yx": [
+            1071,
+            735
+          ],
+          "max_yx": [
+            1164,
+            885
+          ]
+        },
+        {
+          "diagnostic_area": 11638,
+          "min_yx": [
+            1072,
+            361
+          ],
+          "max_yx": [
+            1165,
+            509
+          ]
+        }
+      ]
+    },
+    "quarter": {
+      "path": "sanglier_trois_quarts_source_v001.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "visible_bounds_alpha16": [
+        270,
+        51,
+        1282,
+        976
+      ],
+      "alpha_max": 254,
+      "fully_transparent_pixels": 959699,
+      "maximum_edge_alpha": 1,
+      "fur_median_rgb": [
+        187.0,
+        93.0,
+        51.0
+      ],
+      "display_height": 28.9,
+      "uniform_scale": 0.031243243243243242,
+      "display_width": 31.61816216216216,
+      "pivot": [
+        776.0,
+        976
+      ],
+      "sha256": "b23cae9009d5fe7bd80386455b787606c519475a070466161e328b9672783a85",
+      "hoof_highlight_groups": [
+        {
+          "diagnostic_area": 7297,
+          "min_yx": [
+            756,
+            522
+          ],
+          "max_yx": [
+            828,
+            641
+          ]
+        },
+        {
+          "diagnostic_area": 9399,
+          "min_yx": [
+            798,
+            331
+          ],
+          "max_yx": [
+            881,
+            466
+          ]
+        },
+        {
+          "diagnostic_area": 8672,
+          "min_yx": [
+            820,
+            940
+          ],
+          "max_yx": [
+            899,
+            1070
+          ]
+        },
+        {
+          "diagnostic_area": 11650,
+          "min_yx": [
+            872,
+            715
+          ],
+          "max_yx": [
+            969,
+            862
+          ]
+        }
+      ]
+    },
+    "rear": {
+      "path": "sanglier_arriere_trois_quarts_source_v001.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "visible_bounds_alpha16": [
+        306,
+        34,
+        1288,
+        1002
+      ],
+      "alpha_max": 254,
+      "fully_transparent_pixels": 1058634,
+      "maximum_edge_alpha": 0,
+      "fur_median_rgb": [
+        184.0,
+        88.0,
+        50.0
+      ],
+      "display_height": 28.9,
+      "uniform_scale": 0.029855371900826443,
+      "display_width": 29.317975206611568,
+      "pivot": [
+        797.0,
+        1002
+      ],
+      "sha256": "ded43dd0ef741cfdc2438c2b51c450c3acf786b811ff311c1f554ef6acbeed3c",
+      "hoof_highlight_groups": [
+        {
+          "diagnostic_area": 3427,
+          "min_yx": [
+            634,
+            1005
+          ],
+          "max_yx": [
+            687,
+            1080
+          ]
+        },
+        {
+          "diagnostic_area": 6483,
+          "min_yx": [
+            743,
+            909
+          ],
+          "max_yx": [
+            817,
+            1017
+          ]
+        },
+        {
+          "diagnostic_area": 5624,
+          "min_yx": [
+            849,
+            403
+          ],
+          "max_yx": [
+            914,
+            504
+          ]
+        },
+        {
+          "diagnostic_area": 8035,
+          "min_yx": [
+            917,
+            527
+          ],
+          "max_yx": [
+            996,
+            650
+          ]
+        }
+      ]
+    }
+  },
+  "hoof_diagnostic_limit": "Palette-specific lower-half highlight components; supports manual review, does not prove anatomy or count invisible limbs.",
+  "palette_note": "Front fur median is darker than the profile median; projected areas differ. No pixel recolouring, stretch or contrast normalization applied. Visual consistency still requires review."
+}

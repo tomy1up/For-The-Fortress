@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "scope": "Static direction artwork preflight and native sizing, not a turn animation or artistic approval",
+  "steps": [
+    {
+      "step": "sources",
+      "seconds": 2.968,
+      "exit_code": 0
+    },
+    {
+      "step": "native",
+      "seconds": 0.844,
+      "exit_code": 0
+    }
+  ],
+  "uniform_transforms": 8,
+  "maximum_rigid_basis_error": 2.0589473147258897e-09,
+  "profile_loaded": false,
+  "artistically_approved": false,
+  "production_version": "0.112",
+  "production_sources_unchanged": 75,
+  "production_executable_sha256": "9f50639c662008d36c75e3bceddb9a94dba238f0b1207ebd2474406aac6182c9",
+  "source_sha256": {
+    "preflight.py": "d29e98d5efedf23aa4b7d000ef65b2a7a11869e99ace133ef669349a98c4a840",
+    "build_comparison.py": "1c0500365addcfe6878bf5de0741daf5bc09cdd8edcf910a7aa898fbfe8fc505",
+    "render_comparison.gd": "55a0cb3aa370e14187dc792be77a5eb6adeec0f826bd1cc131d4feaa6d3220a1",
+    "sanglier_face_source_v001.png": "8b56880c8988aacdb803b6a72d9c557989aed96ae1a6b0eb13d416c4d77334b6",
+    "sanglier_trois_quarts_source_v001.png": "b23cae9009d5fe7bd80386455b787606c519475a070466161e328b9672783a85",
+    "sanglier_arriere_trois_quarts_source_v001.png": "ded43dd0ef741cfdc2438c2b51c450c3acf786b811ff311c1f554ef6acbeed3c",
+    "hoof_regions.py": "9cbef1897e4f373c7204e31ce5420019877f380c0b90b36d364af06b3214d162",
+    "Apercu_directions.png": "8aa7a60cb53ef17548d223ac73d69a31eb074d8ac694644a2a8106519760904f"
+  }
+}

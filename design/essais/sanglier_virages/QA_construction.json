@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-03",
+  "scope": "Static direction artwork inspected, not a movement or turn animation",
+  "artistically_approved": false,
+  "retained_views": [
+    "front",
+    "quarter",
+    "rear"
+  ],
+  "manual_review": [
+    "Front: two forelegs and two partly occluded hind legs visible, organically attached in the inspected drawing.",
+    "Front three-quarter: four hooves, compact body and connected shoulders/hips in the inspected drawing.",
+    "Rear three-quarter initial generation: fifth under-belly leg detected and rejected. Corrected source has four visible hooves and no central extra limb.",
+    "Native full-size comparison inspected at nominal size and x5; labels and silhouettes remain within their columns.",
+    "The profile reference is a near-leg construction layer, not the complete animated character.",
+    "Front fur median is darker than the profile; quarter-front median is close. These colour summaries do not prove artistically identical shading.",
+    "Static source poses do not prove grounded locomotion, fluid turning, body weight transfer or correspondence between gait phases."
+  ],
+  "hoof_region_counts": {
+    "profile": 2,
+    "front": 4,
+    "quarter": 4,
+    "rear": 4
+  },
+  "rejected_initial_rear": {
+    "file": "exec-762eca05-7ef6-4e9b-94ce-41cbd2cea68f.png",
+    "sha256": "486da91e4042881941d8f2264f4545fff217887002d5f35c257820873394739c",
+    "diagnostic_hoof_regions": 5,
+    "included_in_project": false
+  },
+  "reviewed_native_image": "Apercu_directions.png",
+  "reviewed_native_sha256": "8aa7a60cb53ef17548d223ac73d69a31eb074d8ac694644a2a8106519760904f",
+  "source_pixels_edited_after_generation": false,
+  "production_sources_unchanged": 75,
+  "production_executable_unchanged": true,
+  "profile_loaded": false
+}
