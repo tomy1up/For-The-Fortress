@@ -292,7 +292,7 @@ func _ready() -> void:
 			meta_profile = MetaProfile.new("")
 			meta_profile.data.banks[capture_faction].points = 51
 			meta_profile.data.banks[capture_faction].ranks = _capture_expanded_ranks(0)
-		if capture_state not in ["selection","talents","campaign_menu","campaign_sample","shop_menu"]:
+		if capture_state not in ["selection","talents","campaign_menu","campaign_sample","shop_menu","mission_scout"]:
 			if "--capture-meta-intermediate" in OS.get_cmdline_user_args(): mission_definition = {}
 			_choose_faction((0 if capture_type < 3 else 1) if capture_state in ["upgrade", "specialisation", "specialised"] else capture_faction)
 			if "--capture-meta-pending" in OS.get_cmdline_user_args():
@@ -641,6 +641,7 @@ func _ready() -> void:
 		if capture_state == "campaign_menu": await _capture_campaign_menu(capture_faction)
 		if capture_state == "campaign_sample": _capture_campaign_sample(capture_faction)
 		if capture_state == "shop_menu": _capture_shop_menu(capture_faction)
+		if capture_state == "mission_scout": _capture_mission_scout(capture_faction)
 		if route_workshop and capture_state=="preparation":
 			print("ROUTE_FORECAST_SNAPSHOT=",JSON.stringify({"faction":model.faction,"entries":map_view.entry_forecast,"note":forecast_note.text,"visible":forecast_panel.visible,"labels":map_view.entry_label_layouts().map(func(entry: Dictionary):return [entry.title,entry.detail])}))
 		if capture_state == "wolf_walk":
@@ -662,6 +663,16 @@ func _ready() -> void:
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
 		print("CAPTURE_RESULT=", error)
 		get_tree().quit(error)
+
+func _capture_mission_scout(camp: int) -> void:
+	meta_profile=MetaProfile.new("")
+	var number:=1
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--capture-scout-mission="): number=clampi(int(argument.trim_prefix("--capture-scout-mission=")),1,20)
+	var before: String=JSON.stringify(meta_profile.data)
+	_open_campaign(camp,(number-1)/10+1);campaign_menu._select((number-1)%10);campaign_menu._scout()
+	var scout=campaign_menu.scout
+	print("SCOUT_SNAPSHOT=",JSON.stringify({"isolated":meta_profile.path.is_empty(),"faction":camp,"mission":number,"visible":scout.visible,"blocked":campaign_menu.overlay_blocked,"unchanged":before==JSON.stringify(meta_profile.data),"heading":scout.heading.text,"subtitle":scout.subtitle.text,"entries":scout.entries,"names":scout.cards.filter(func(card):return card.visible).map(func(card):return card.get_node("Name").text),"details":scout.cards.filter(func(card):return card.visible).map(func(card):return card.get_node("Details").text),"note":scout.note.text}))
 
 func _capture_shop_menu(camp: int) -> void:
 	meta_profile=MetaProfile.new("");meta_profile.data.banks[camp].resource=420
@@ -881,8 +892,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			meta_menu.close();get_viewport().set_input_as_handled()
 		return
 	if campaign_menu.visible:
-		if event.keycode == KEY_ESCAPE:
-			campaign_menu.close();get_viewport().set_input_as_handled()
+		campaign_menu._unhandled_key_input(event)
 		return
 	if event.ctrl_pressed or event.alt_pressed or event.meta_pressed: return
 	if event.keycode == KEY_ESCAPE or event.physical_keycode == KEY_ESCAPE:

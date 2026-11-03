@@ -1,0 +1,17 @@
+{
+  "source_changes_between_packages": [
+    "project.godot",
+    "export_presets.cfg",
+    "scripts/main.gd",
+    "scripts/campaign_screen.gd"
+  ],
+  "added_sources": [
+    "scripts/mission_scout.gd"
+  ],
+  "unchanged_sources": 70,
+  "combat_model_unchanged": true,
+  "campaign_and_encounters_unchanged": true,
+  "profile_and_codec_unchanged": true,
+  "approved_wolf_texture_cycle_and_sampler_unchanged": true,
+  "boar_experiment_not_exported": true
+}

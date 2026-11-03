@@ -150,6 +150,8 @@ for camp in ['alliance','horde']:
 for camp in ['alliance','horde']:
     for variant in ['catalogue','owned','comparison_0','comparison_1']:
         cases.append((camp+'_shop_'+variant,'shop_menu',camp))
+for camp in ['alliance','horde']:
+    for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
 available_case_count=len(cases)
 if args.selected_cases:
     unknown=set(args.selected_cases)-{name for name,_,_ in cases}
@@ -165,6 +167,7 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if state=='mission_scout': command+=['--capture-scout-mission='+name.rsplit('_',1)[1]]
         if state=='wolf_walk': command+=['--capture-wolf-offset='+('0.0' if name.endswith('_0') else '0.35')]
         if state=='shop_menu':
             if '_comparison_' in name: command+=['--capture-shop-comparison='+name.rsplit('_',1)[1]]
@@ -443,6 +446,22 @@ for name,state,faction in cases:
         assert 'Bonus proposés' in (report_folder/'rapport.md').read_text(encoding='utf-8')
     if state:
         assert 'UI_VERSION='+manifest['version'] in text,(name,'Version embarquée différente du paquet')
+        if state=='mission_scout':
+            snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SCOUT_SNAPSHOT=')))
+            camp=0 if faction=='alliance' else 1;number=int(name.rsplit('_',1)[1])
+            assert snapshot['isolated'] and snapshot['visible'] and snapshot['blocked'] and snapshot['unchanged']
+            assert snapshot['faction']==camp and snapshot['mission']==number
+            types=[1,0,2,3,4,5,6,7] if number==1 else [1,8,0,2,4,5,6,7]
+            assert [e['type'] for e in snapshot['entries']]==types
+            assert snapshot['names']==[e['name'] for e in snapshot['entries']]
+            assert all(e['origin'] in ['neutral','horde' if camp==0 else 'alliance'] for e in snapshot['entries'])
+            base_hp=[12,40,24,120,80,240,360,600,180]
+            first={1:1,0:2,2:3,3:4,4:5,5:6,6:7,7:10,8:2}
+            if number>1: first[0]=2
+            for e,text_row in zip(snapshot['entries'],snapshot['details']):
+                assert abs(e['max_hp']-base_hp[e['type']]*(99+number)/100)<0.000001
+                assert e['first_wave']==first[e['type']] and 'Forteresse :' in text_row
+            assert ('25 %' in snapshot['note'])==(number>10)
         if state=='shop_menu':
             snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SHOP_COMPARISON_SNAPSHOT=')))
             camp=0 if faction=='alliance' else 1

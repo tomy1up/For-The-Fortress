@@ -28,7 +28,7 @@ SOURCE_PATHS = ('project.godot', 'export_presets.cfg', 'scenes/main.tscn',
 SOURCE_PATHS += ('scripts/bank_encounters.gd', 'assets/enemies/rosters/tortue_gardienne_v001.png', 'assets/enemies/rosters/tortue_gardienne_v001.png.import')
 SOURCE_PATHS += ('scripts/fortress_art.gd', 'assets/fortresses/forteresse_alliance_v001.png', 'assets/fortresses/forteresse_alliance_v001.png.import', 'assets/fortresses/forteresse_horde_v001.png', 'assets/fortresses/forteresse_horde_v001.png.import', 'assets/fortresses/roi_alliance_v001.png', 'assets/fortresses/roi_alliance_v001.png.import', 'assets/fortresses/roi_horde_v001.png', 'assets/fortresses/roi_horde_v001.png.import')
 SOURCE_PATHS += ('scripts/enemy_walk_art.gd', 'assets/enemies/animations/loup_corps_v002.png', 'assets/enemies/animations/loup_corps_v002.png.import')
-SOURCE_PATHS += ('assets/enemies/animations/loup_marche_v002.bin', 'scripts/route_geometry.gd', 'distribution/Lancer_atelier_routes.cmd')
+SOURCE_PATHS += ('assets/enemies/animations/loup_marche_v002.bin', 'scripts/route_geometry.gd', 'scripts/mission_scout.gd', 'distribution/Lancer_atelier_routes.cmd')
 
 
 def verify_sources(manifest, source_project=None):

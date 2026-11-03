@@ -1,6 +1,10 @@
 # Suivi du prototype
 
-État du 3 novembre 2026 — prototype v0.111, GDD principal v0.18 (référence jeu v0.109) et fiches complémentaires. Préparation entre vagues : 30 secondes.
+État du 3 novembre 2026 — prototype v0.112, GDD principal v0.18 (référence jeu v0.109) et fiches complémentaires. Préparation entre vagues : 30 secondes.
+
+## Préparer les rencontres — v0.112
+
+[La vue des ennemis](Rencontres_mission_v0112.md) est accessible depuis chaque fiche de mission produite. Portrait, origine, PV de mission, première apparition et danger pour la forteresse, avec explication de la protection au chapitre 2. Lecture sans mutation de sauvegarde, sans nouvelle règle de combat.
 
 ## Comparaison en boutique — v0.111
 

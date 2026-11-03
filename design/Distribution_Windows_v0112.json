@@ -1,0 +1,175 @@
+{
+  "archive_sha256": "f06b0cc1384692df3e05f6d32b4597c0fb071e682e6d4243d71da5ce7db8fda5",
+  "scope": "selected",
+  "available_cases": 281,
+  "executable_sha256": "9f50639c662008d36c75e3bceddb9a94dba238f0b1207ebd2474406aac6182c9",
+  "files": [
+    "For_the_Fortress_v0.112_Windows_x64/Fiche_essai_joueur.md",
+    "For_the_Fortress_v0.112_Windows_x64/For_the_Fortress.exe",
+    "For_the_Fortress_v0.112_Windows_x64/Lancer_atelier_routes.cmd",
+    "For_the_Fortress_v0.112_Windows_x64/LICENCES_GODOT.txt",
+    "For_the_Fortress_v0.112_Windows_x64/LIRE_MOI.txt",
+    "For_the_Fortress_v0.112_Windows_x64/VERSION.json"
+  ],
+  "tests": [
+    {
+      "case": "startup",
+      "exit_code": 0,
+      "capture": false
+    },
+    {
+      "case": "selection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_run_report",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_profile_protection",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_campaign_menu_fresh",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_campaign_menu_future",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_campaign_menu_locked2",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_campaign_menu_fresh",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_campaign_menu_future",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_campaign_menu_locked2",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_wolf_walk_0",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_wolf_walk_0",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_shop_comparison_1",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_shop_comparison_1",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_scout_1",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_scout_11",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "alliance_scout_20",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_scout_1",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_scout_11",
+      "exit_code": 0,
+      "capture": true
+    },
+    {
+      "case": "horde_scout_20",
+      "exit_code": 0,
+      "capture": true
+    }
+  ],
+  "source_checks": 75,
+  "local_sources_compared": true,
+  "visual_review": "All 21 selected native captures examined at full size. Encounter briefings for missions 1, 11 and 20 fit without clipping in both factions; portraits, origins and HP match the controlled mission. Fresh, locked and future campaign menus retain readable controls. Shop comparisons, wolf poses, talents and run summaries remain readable. Controlled fixtures and automated runs do not constitute a human campaign or artistic approval.",
+  "reviewed_captures": [
+    "selection",
+    "profile_protection",
+    "alliance_run_report",
+    "horde_run_report",
+    "alliance_profile_protection",
+    "alliance_campaign_menu_fresh",
+    "alliance_campaign_menu_future",
+    "alliance_campaign_menu_locked2",
+    "horde_campaign_menu_fresh",
+    "horde_campaign_menu_future",
+    "horde_campaign_menu_locked2",
+    "alliance_wolf_walk_0",
+    "horde_wolf_walk_0",
+    "alliance_shop_comparison_1",
+    "horde_shop_comparison_1",
+    "alliance_scout_1",
+    "alliance_scout_11",
+    "alliance_scout_20",
+    "horde_scout_1",
+    "horde_scout_11",
+    "horde_scout_20"
+  ],
+  "capture_sha256": {
+    "design/essais/captures/QA-v0112_selection.png": "f6c4fe45985af1ed6833e290b69898470cfd7730e7db3019d2c16a0452f832bc",
+    "design/essais/captures/QA-v0112_profile_protection.png": "3916cad67783fdd210436c464a326969e6febe299fa023b970e1e88e0e5ba0ac",
+    "design/essais/captures/QA-v0112_alliance_run_report.png": "96c2cece31caaff5b49834f6ba354644c6bc3378dfab4632d9503f47bcf7c524",
+    "design/essais/captures/QA-v0112_horde_run_report.png": "c396039b8ba645a5373a58b572e96cb4500168103940b7bd62b2fa93b436514a",
+    "design/essais/captures/QA-v0112_alliance_profile_protection.png": "a72a76a19f2478fb3a5187a221c0cca11482738a7888020341e140efd321a583",
+    "design/essais/captures/QA-v0112_alliance_campaign_menu_fresh.png": "7194cf12932b1618ed892f30f9f99a7049664f17e22c67926d99de6b231000a7",
+    "design/essais/captures/QA-v0112_alliance_campaign_menu_future.png": "bb67e60bed73df76b9617d2aae0d87c056e8a4f2cb8af0e3f8d3de0f1e7b9d64",
+    "design/essais/captures/QA-v0112_alliance_campaign_menu_locked2.png": "0c4e08c02521176142b2afd1bdbef70206181a4c45e5cf3d8d190ca9dd60dc9a",
+    "design/essais/captures/QA-v0112_horde_campaign_menu_fresh.png": "d33660b22439e628ed74fd78ceeb6f1ab8e748090d2eacc8dc54ece92e190fa6",
+    "design/essais/captures/QA-v0112_horde_campaign_menu_future.png": "9e6c9cc09c1f7b696b50b77c12d2250810b85e4de506f9edffcd94056c3f4133",
+    "design/essais/captures/QA-v0112_horde_campaign_menu_locked2.png": "45bc07e2c5059caeae04995c70267766c7e87cc6b3425144de1a13c772abefab",
+    "design/essais/captures/QA-v0112_alliance_wolf_walk_0.png": "08cfe0681292f6f87df8da840f7859fed94528542bf3fffcdffb617286143e7b",
+    "design/essais/captures/QA-v0112_horde_wolf_walk_0.png": "965cbd19c97b573d6ddd2c5436369839299998844ff30ba37066916d321a81e2",
+    "design/essais/captures/QA-v0112_alliance_shop_comparison_1.png": "148fdc8a332501a290ff3b879826c1228c9a50f3bbead1b3083936d63ba0a981",
+    "design/essais/captures/QA-v0112_horde_shop_comparison_1.png": "fa33bc0a17fa8e5b00e2d1491356e623665d2099a093e420d29f45874abacf0a",
+    "design/essais/captures/QA-v0112_alliance_scout_1.png": "1d456912c407459bd0a0ede604a4c4e4937e9a2702ac824d239ec4e185b14790",
+    "design/essais/captures/QA-v0112_alliance_scout_11.png": "bde8a4703d6688cea0af65b46d78ca08ab727074ef0b1d48b4241249fc243a0a",
+    "design/essais/captures/QA-v0112_alliance_scout_20.png": "4b9f7ab2187512d1c02f75fd99aabc558ad4b0978586e179e3fa43c655fa053b",
+    "design/essais/captures/QA-v0112_horde_scout_1.png": "c5109dac0314f88e01c6d7f8285585d770431c4c69d4101fdeef14bfb6ed72fc",
+    "design/essais/captures/QA-v0112_horde_scout_11.png": "6996974c38083aa59b623c325998858c3aa3090785da821265ecc023ed936a87",
+    "design/essais/captures/QA-v0112_horde_scout_20.png": "3a2699e687c07dcbadc6e7c4e7e3472acd5d523996956c8ad44dbf8162273170"
+  }
+}

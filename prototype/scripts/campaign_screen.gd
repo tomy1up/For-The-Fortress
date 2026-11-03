@@ -1,5 +1,6 @@
 extends ColorRect
 const Catalogue = preload("res://scripts/campaign_catalogue.gd")
+const Scout = preload("res://scripts/mission_scout.gd")
 const Maps = preload("res://scripts/map_definition.gd")
 signal mission_requested(id: String)
 signal talents_requested(faction: int)
@@ -86,6 +87,8 @@ class MissionNode extends Button:
 			draw_arc(Vector2(38,2),3,PI,TAU,12,Color("9ba89f"),1.5,true)
 			draw_rect(Rect2(34,2,8,6),Color("9ba89f"),false,1.5)
 
+var scout: ColorRect
+var scout_button: Button
 var shop_button: Button
 var shop_note: Label
 var profile: RefCounted
@@ -166,7 +169,7 @@ func _ready() -> void:
 		node.pressed.connect(_select.bind(index));node.focus_entered.connect(_select.bind(index))
 		path_drawing.add_child(node);nodes.append(node)
 		path_drawing.points.append(node.position+Vector2(21,21))
-	mission_heading = label_at(self,"",Rect2(870,136,358,28),17,Color("e5c779"))
+	mission_heading = label_at(self,"",Rect2(870,136,206,28),17,Color("e5c779"))
 	mission_title = label_at(self,"",Rect2(870,172,358,48),24)
 	terrain_preview = TerrainPreview.new();terrain_preview.position = Vector2(870,232);terrain_preview.size = Vector2(358,144);add_child(terrain_preview)
 	mission_detail = label_at(self,"",Rect2(870,384,358,44),14,Color("bbcbbf"))
@@ -179,10 +182,13 @@ func _ready() -> void:
 	shop_button = button_at("Boutique · Option supplémentaire",Rect2(292,744,330,38),_shop)
 	back_button = button_at("Changer de faction · Échap",Rect2(32,744,240,38),close)
 	footer = label_at(self,"",Rect2(646,744,602,42),13,Color("91a799"))
+	scout_button = button_at("Voir les ennemis",Rect2(1080,134,148,30),_scout)
+	scout = Scout.new();add_child(scout);scout.closed.connect(_scout_closed)
 	hide()
 
 func open(for_profile: RefCounted, for_faction: int, for_chapter: int = 0) -> void:
 	if for_faction not in [0,1]: return
+	if scout.visible: scout.close()
 	profile = for_profile;faction = for_faction;chapter = clampi(for_chapter,1,Catalogue.CHAPTER_COUNT);selected = 0
 	if for_chapter == 0:
 		var number: int = Catalogue.suggested_mission(profile.campaign_status(faction) if profile != null else {})
@@ -190,19 +196,24 @@ func open(for_profile: RefCounted, for_faction: int, for_chapter: int = 0) -> vo
 	set_overlay_blocked(false);show();refresh();initial_focus().grab_focus()
 
 func close() -> void:
+	if scout.visible: scout.close()
 	var was_visible: bool = visible;hide()
 	if was_visible: closed.emit()
 
 func initial_focus() -> Button:
+	if scout.visible: return scout.close_button
 	return start_button if not start_button.disabled else nodes[selected]
 
 func set_overlay_blocked(value: bool) -> void:
+	value = value or scout.visible
 	if overlay_blocked == value: return
 	overlay_blocked = value
-	for button in chapter_buttons+nodes+[start_button,talents_button,shop_button,back_button]:
+	for button in chapter_buttons+nodes+[start_button,talents_button,shop_button,scout_button,back_button]:
 		button.focus_mode = Control.FOCUS_NONE if value else Control.FOCUS_ALL
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if scout.visible:
+		scout._unhandled_key_input(event);return
 	if visible and not overlay_blocked and event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		close();get_viewport().set_input_as_handled()
 
@@ -306,6 +317,7 @@ func _refresh_detail() -> void:
 		mission_detail.text = "%d vagues · Première victoire" % definition.waves
 		rewards.text = "+%d PO · +%d XP\nUne seule fois pour cette faction." % [definition.po,definition.xp]
 		start_button.text = "Jouer la mission %d" % number
+	scout_button.disabled = not definition.available
 	start_button.disabled = not Catalogue.unlocked(number,status)
 	if definition.available and not status.is_empty(): mission_detail.text += "\nPV ennemis : %d %% · Barème d’essai" % definition.hp_percent
 	mission_detail.tooltip_text = ""
@@ -328,3 +340,10 @@ func _talents() -> void:
 
 func _shop() -> void:
 	if not overlay_blocked and visible and profile != null: shop_requested.emit(faction)
+
+func _scout() -> void:
+	if overlay_blocked or not visible or scout_button.disabled: return
+	if scout.open((chapter-1)*10+selected+1,faction): set_overlay_blocked(true)
+func _scout_closed() -> void:
+	set_overlay_blocked(false)
+	if visible: scout_button.grab_focus()

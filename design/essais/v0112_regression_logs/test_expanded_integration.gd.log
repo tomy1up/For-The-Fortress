@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+EXPANDED_COMBAT={"ending":18,"faction":0,"gold":110,"hp":44,"max_hp":44,"result":"victory","tree":0}
+EXPANDED_COMBAT={"ending":19,"faction":0,"gold":110,"hp":42,"max_hp":42,"result":"victory","tree":0}
+EXPANDED_COMBAT={"ending":20,"faction":0,"gold":110,"hp":39,"max_hp":39,"result":"victory","tree":0}
+EXPANDED_COMBAT={"ending":18,"faction":0,"gold":110,"hp":20,"max_hp":20,"result":"victory","tree":1}
+EXPANDED_COMBAT={"ending":19,"faction":0,"gold":110,"hp":20,"max_hp":20,"result":"victory","tree":1}
+EXPANDED_COMBAT={"ending":20,"faction":0,"gold":110,"hp":20,"max_hp":20,"result":"victory","tree":1}
+EXPANDED_COMBAT={"ending":18,"faction":0,"gold":104,"hp":40,"max_hp":42,"result":"victory","tree":2}
+EXPANDED_COMBAT={"ending":19,"faction":0,"gold":104,"hp":40,"max_hp":42,"result":"victory","tree":2}
+EXPANDED_COMBAT={"ending":20,"faction":0,"gold":104,"hp":42,"max_hp":44,"result":"victory","tree":2}
+EXPANDED_COMBAT={"ending":18,"faction":1,"gold":110,"hp":23,"max_hp":23,"result":"victory","tree":0}
+EXPANDED_COMBAT={"ending":19,"faction":1,"gold":191,"hp":20,"max_hp":23,"result":"victory","tree":0}
+EXPANDED_COMBAT={"ending":20,"faction":1,"gold":191,"hp":22,"max_hp":25,"result":"victory","tree":0}
+EXPANDED_COMBAT={"ending":18,"faction":1,"gold":108,"hp":19,"max_hp":23,"result":"victory","tree":1}
+EXPANDED_COMBAT={"ending":19,"faction":1,"gold":108,"hp":19,"max_hp":23,"result":"victory","tree":1}
+EXPANDED_COMBAT={"ending":20,"faction":1,"gold":108,"hp":21,"max_hp":25,"result":"victory","tree":1}
+EXPANDED_COMBAT={"ending":18,"faction":1,"gold":110,"hp":23,"max_hp":23,"result":"victory","tree":2}
+EXPANDED_COMBAT={"ending":19,"faction":1,"gold":112,"hp":22,"max_hp":23,"result":"victory","tree":2}
+EXPANDED_COMBAT={"ending":20,"faction":1,"gold":110,"hp":25,"max_hp":25,"result":"victory","tree":2}
+EXPANDED_INTEGRATION_TESTS checks=146 failures=0
