@@ -312,7 +312,7 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 		paws = [Vector2(302, 715), Vector2(505, 701), Vector2(676, 900), Vector2(943, 1043)] if pose.towards else [Vector2(541, 915), Vector2(761, 786), Vector2(886, 687), Vector2(1134, 710)]
 	# The drawings list the rear pair first. Select anatomical groups in
 	# the same order as the side rig, accounting for the mirrored drawing.
-	var groups := [1, 3, 2, 0] if pose.towards else [3, 1, 2, 0]
+	var groups := [1, 3, 0, 2] if pose.towards else [3, 1, 2, 0]
 	if pose.quarter:
 		groups = [1, 3, 0, 2]
 	var offsets := PackedVector2Array()
