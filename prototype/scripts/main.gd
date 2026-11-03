@@ -643,6 +643,10 @@ func _ready() -> void:
 		if capture_state == "shop_menu": _capture_shop_menu(capture_faction)
 		if capture_state == "mission_scout": _capture_mission_scout(capture_faction)
 		if route_workshop and capture_state=="preparation":
+			if "--capture-route-hover" in OS.get_cmdline_user_args():
+				set_process(false)
+				_update_wave_forecast(forecast_rows[0].get_global_rect().get_center())
+				print("ROUTE_HOVER_SNAPSHOT=",JSON.stringify({"isolated":meta_profile==null,"highlighted":map_view.highlighted_entries}))
 			print("ROUTE_FORECAST_SNAPSHOT=",JSON.stringify({"faction":model.faction,"entries":map_view.entry_forecast,"note":forecast_note.text,"visible":forecast_panel.visible,"labels":map_view.entry_label_layouts().map(func(entry: Dictionary):return [entry.title,entry.detail])}))
 		if capture_state == "wolf_walk":
 			# Fixture visuelle isolée : quatre directions du trajet, sans profil joueur.
@@ -1136,7 +1140,7 @@ func _forecast_portrait(profile: int) -> AtlasTexture:
 		forecast_textures[id] = texture
 	return forecast_textures[id]
 
-func _update_wave_forecast() -> void:
+func _update_wave_forecast(pointer := Vector2.INF) -> void:
 	forecast_panel.visible = false
 	map_view.entry_forecast.clear()
 	map_view.highlighted_entries.clear()
@@ -1159,7 +1163,7 @@ func _update_wave_forecast() -> void:
 			forecast_portraits[index].texture = null
 			continue
 		var group: Dictionary = forecast_data.groups[index]
-		if not model.routes.is_empty() and forecast_rows[index].get_global_rect().has_point(forecast_panel.get_global_mouse_position()):
+		if not model.routes.is_empty() and forecast_rows[index].get_global_rect().has_point(pointer if pointer.is_finite() else forecast_panel.get_global_mouse_position()):
 			for entry in group.get("entries", []):
 				map_view.highlighted_entries.append(int(entry.number)-1)
 		forecast_portraits[index].texture = _forecast_portrait(group.type)
