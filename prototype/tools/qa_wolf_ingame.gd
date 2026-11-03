@@ -358,7 +358,9 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 				indices.append_array([a, a+1, b, a+1, b+1, b])
 	var errors := PackedVector2Array()
 	var contact_feet := PackedInt32Array()
+	var contact_weights := PackedFloat32Array()
 	var correction := Vector2.ZERO
+	var total_contact_weight := 0.0
 	for foot in range(paws.size()):
 		var group: int = groups[foot] ^ (2 if pose.facing < 0.0 else 0)
 		var phase := fposmod(gait-STANCE_STARTS[group]/64.0, 1.0)
@@ -383,7 +385,11 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 		var error: Vector2 = position-contact.anchor
 		errors.append(error)
 		contact_feet.append(foot)
-		correction -= error
+		var stance: float = STANCE_LENGTHS[group]/64.0
+		var contact_weight := smoothstep(0.0, 0.08, minf(phase, stance-phase))
+		contact_weights.append(contact_weight)
+		total_contact_weight += contact_weight
+		correction -= error*contact_weight
 		max_uncorrected_contact_drift = maxf(max_uncorrected_contact_drift, error.length())
 		if contact.get("frame", -2) == capture_frame-1:
 			var step := position.distance_to(contact.position)
@@ -400,12 +406,12 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 		contact["label"] = pose.label
 		turn_contacts[key] = contact
 	if not errors.is_empty():
-		correction = (correction/errors.size()).limit_length(2.0)
+		correction = (correction/maxf(1.0, total_contact_weight)).limit_length(2.0)
 		var local_shift := correction*Vector2(pose.facing, 1.0)/scale
 		var local_corrections := PackedVector2Array()
 		var facing := Vector2(pose.facing, 1.0)
-		for error in errors:
-			local_corrections.append(-(error+correction).limit_length(1.6)*facing/scale)
+		for index in range(errors.size()):
+			local_corrections.append(-(errors[index]+correction).limit_length(1.6)*facing/scale*contact_weights[index])
 		var base_points := points.duplicate()
 		for index in range(points.size()):
 			var pixel := uvs[index]*texture.get_size()
