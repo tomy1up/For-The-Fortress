@@ -4,6 +4,8 @@ const Main=preload("res://scripts/main.gd")
 const Model=preload("res://scripts/valley_model.gd")
 const Walk=preload("res://scripts/enemy_walk_art.gd")
 const View=preload("res://scripts/valley_view.gd")
+var front_candidate: ImageTexture
+var rear_candidate: ImageTexture
 func _initialize() -> void: call_deferred("record")
 func record() -> void:
 	root.size=Vector2i(1280,800)
@@ -17,6 +19,9 @@ func record() -> void:
 	game.model.spawned=8
 	var preview := "--wolf-pivot" in OS.get_cmdline_user_args()
 	if preview:
+		var folder := ProjectSettings.globalize_path("res://../design/essais/loup_virages")
+		front_candidate = ImageTexture.create_from_image(Image.load_from_file(folder.path_join("loup_face_candidat_v001.png")))
+		rear_candidate = ImageTexture.create_from_image(Image.load_from_file(folder.path_join("loup_dos_candidat_v001.png")))
 		game.map_view.wolf_turn_preview = preview_pose
 	report_corner_displacement(game.model.path_points)
 	var directory:=ProjectSettings.globalize_path("user://qa_wolf_pivot" if preview else "user://qa_wolf_ingame")
@@ -214,5 +219,13 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 				partial_arc += length*clampf((phase-(t-1.0/16.0))*16.0, 0.0, 1.0)
 				previous = position
 			travel += partial_arc-full_arc*phase
-			return {"center": a.lerp(b, phase), "direction": direction, "travel": travel}
+			var result := {"center": a.lerp(b, phase), "direction": direction, "travel": travel}
+			if front_candidate != null and (middle-start).x*(finish-middle).x < 0.0 and absf(phase-0.5) < 0.14:
+				var towards := (b-a).y > 0.0
+				var source := Rect2(265, 23, 607, 1186) if towards else Rect2(389, 76, 391, 1095)
+				var size := source.size*(34.0/source.size.y)
+				result["texture"] = front_candidate if towards else rear_candidate
+				result["source"] = source
+				result["destination"] = Rect2(Vector2(-size.x/2.0, -size.y+4.0), size)
+			return result
 	return {}
