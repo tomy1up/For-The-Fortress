@@ -4,6 +4,7 @@ const Main=preload("res://scripts/main.gd")
 const Model=preload("res://scripts/valley_model.gd")
 const Walk=preload("res://scripts/enemy_walk_art.gd")
 const View=preload("res://scripts/valley_view.gd")
+var turn_meshes: Array[ArrayMesh] = []
 var front_candidate: ImageTexture
 var rear_candidate: ImageTexture
 func _initialize() -> void: call_deferred("record")
@@ -32,12 +33,13 @@ func record() -> void:
 		var folder := ProjectSettings.globalize_path("res://../design/essais/loup_virages")
 		front_candidate = ImageTexture.create_from_image(Image.load_from_file(folder.path_join("loup_face_candidat_v002.png")))
 		rear_candidate = ImageTexture.create_from_image(Image.load_from_file(folder.path_join("loup_dos_candidat_v001.png")))
-		game.map_view.wolf_turn_preview = preview_pose
+		game.map_view.wolf_turn_preview = preview_enemy_pose
 	report_corner_displacement(game.model.path_points)
 	var directory:=ProjectSettings.globalize_path("user://qa_wolf_pivot" if preview else "user://qa_wolf_ingame")
 	DirAccess.make_dir_recursive_absolute(directory)
 	for frame in range(144):
 		for enemy in game.model.enemies: enemy.distance+=enemy.speed/60.0
+		turn_meshes.clear()
 		game.model.elapsed=frame/60.0;game._update_interface();game.map_view.queue_redraw()
 		await process_frame;await RenderingServer.frame_post_draw
 		assert(root.get_texture().get_image().save_png(directory.path_join("%04d.png"%frame))==OK)
@@ -242,5 +244,49 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 			result["facing"] = signf((middle-start).x) if towards else signf((finish-middle).x)
 			result["source"] = source
 			result["destination"] = Rect2(Vector2(-size.x/2.0, -size.y+4.0), size)
+			result["towards"] = towards
 		return result
 	return {"travel": travel}
+
+func preview_enemy_pose(distance: float, points: Array[Vector2]) -> Dictionary:
+	var pose := preview_pose(distance, points)
+	if pose.has("texture"):
+		var mesh := animated_turn_mesh(pose)
+		turn_meshes.append(mesh)
+		pose["mesh"] = mesh
+	return pose
+
+func animated_turn_mesh(pose: Dictionary) -> ArrayMesh:
+	var source: Rect2 = pose.source
+	var destination: Rect2 = pose.destination
+	var texture: Texture2D = pose.texture
+	var gait := Walk.phase_for(pose.travel, 0, 0.7)
+	var paws: Array = [Vector2(350, 789), Vector2(573, 974), Vector2(500, 911), Vector2(700, 1166)] if pose.towards else [Vector2(650, 950), Vector2(505, 1140), Vector2(720, 612), Vector2(424, 710)]
+	var points := PackedVector2Array()
+	var uvs := PackedVector2Array()
+	var indices := PackedInt32Array()
+	const GRID := 24
+	for row in range(GRID+1):
+		for column in range(GRID+1):
+			var relative := Vector2(column, row)/float(GRID)
+			var pixel := source.position+relative*source.size
+			var point := destination.position+relative*destination.size
+			for index in range(paws.size()):
+				var delta: Vector2 = (pixel-paws[index])/Vector2(52, 96)
+				var influence := exp(-delta.length_squared()*1.5)
+				var cycle := gait*TAU+index*PI/2.0
+				point.y -= maxf(0.0, sin(cycle))*influence*1.15
+			points.append(point)
+			uvs.append(pixel/texture.get_size())
+			if row < GRID and column < GRID:
+				var a := row*(GRID+1)+column
+				var b := a+GRID+1
+				indices.append_array([a, a+1, b, a+1, b+1, b])
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = points
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_INDEX] = indices
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return mesh
