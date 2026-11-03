@@ -27,12 +27,17 @@ func run_checks() -> void:
 			var definition: Dictionary=menu.Catalogue.definition(number)
 			for wave in range(1,11):
 				for group in Model.Campaign.waves_for(definition.get("wave_set_id","ford"))[wave-1]:
-					if group[0] in seen: continue
-					seen.append(group[0]);expected.append({"type":group[0],"first":wave})
+					if group[0] in seen:
+						var existing: Dictionary = expected[seen.find(group[0])]
+						existing.total += group[1]
+						existing.last = wave
+						continue
+					seen.append(group[0]);expected.append({"type":group[0],"first":wave,"last":wave,"total":group[1]})
 			check(scout.entries.size()==expected.size() and scout.cards.filter(func(card):return card.visible).size()==expected.size(),"Seulement les ennemis réellement présents sont montrés, une fois chacun")
 			for index in range(expected.size()):
 				var entry: Dictionary=scout.entries[index];var source: Dictionary=Model.enemy_definition(expected[index].type)
 				check(entry.type==expected[index].type and entry.first_wave==expected[index].first,"L’ordre et la première vague suivent la vraie séquence")
+				check(entry.total==expected[index].total and entry.last_wave==expected[index].last,"Les effectifs et la derniere vague suivent les groupes de combat")
 				check(is_equal_approx(entry.max_hp,source.hp*(99+number)/100.0) and entry.fortress_damage==source.fortress_damage,"PV de mission et danger de passage exacts")
 				check(entry.origin in ["neutral","horde" if camp==0 else "alliance"],"Les attaquants humains sont du camp adverse et la faune reste neutre")
 				var card: Panel=scout.cards[index]

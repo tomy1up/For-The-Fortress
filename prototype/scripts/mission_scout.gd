@@ -21,9 +21,17 @@ static func encounter_data(number: int,camp: int) -> Array[Dictionary]:
 	var found: Dictionary={}
 	for wave in range(1,definition.waves+1):
 		for spawn in Model.Campaign.schedule(wave,definition.get("wave_set_id","ford")):
-			if found.has(spawn.type): continue
+			if found.has(spawn.type):
+				var existing: Dictionary = found[spawn.type]
+				existing.total += 1
+				existing.last_wave = wave
+				continue
 			var enemy: Dictionary=Model.make_enemy(0,spawn.type,0,camp,definition.hp_percent)
-			enemy.first_wave=wave;found[spawn.type]=true;result.append(enemy)
+			enemy.first_wave = wave
+			enemy.last_wave = wave
+			enemy.total = 1
+			found[spawn.type] = enemy
+			result.append(enemy)
 	return result
 
 func label_at(parent: Control,text: String,area: Rect2,size: int=16) -> Label:
@@ -60,7 +68,10 @@ func open(number: int,camp: int) -> bool:
 	mission_number=number;faction=camp;entries=data
 	var definition: Dictionary=Catalogue.definition(number)
 	heading.text="Rencontres · Mission %d · %s"%[number,"Alliance" if camp==0 else "Horde"]
-	subtitle.text="%s · %d vagues · PV de cette mission : %d %%"%[definition.title,definition.waves,definition.hp_percent]
+	var total := 0
+	for enemy in entries:
+		total += int(enemy.total)
+	subtitle.text="%s · %d vagues · %d ennemis prévus · PV : %d %%"%[definition.title,definition.waves,total,definition.hp_percent]
 	for index in range(cards.size()):
 		var card: Panel=cards[index];card.visible=index<entries.size()
 		if not card.visible: continue
@@ -69,7 +80,11 @@ func open(number: int,camp: int) -> bool:
 		card.get_node("Portrait").texture=atlas
 		card.get_node("Name").text=enemy.name
 		card.get_node("Origin").text=Model.Enemies.origin_label(enemy.origin)
-		card.get_node("Details").text="PV : %s\nForteresse : −%d PV s’il passe\nPrésent dès la vague %d"%[str(snappedf(enemy.max_hp,0.01)).trim_suffix(".0").replace(".",","),enemy.fortress_damage,enemy.first_wave]
+		var waves := "Vague %d" % enemy.first_wave
+		if enemy.last_wave != enemy.first_wave:
+			waves = "1re vague %d · Dernière %d" % [enemy.first_wave, enemy.last_wave]
+		card.get_node("Details").text="%d prévu%s · %s PV chacun\nForteresse : −%d PV par passage\n%s"%[
+			enemy.total, "s" if enemy.total > 1 else "", str(snappedf(enemy.max_hp,0.01)).trim_suffix(".0").replace(".",","), enemy.fortress_damage, waves]
 	note.text="Les unités neutres sont communes aux deux factions. Les autres attaquants viennent du camp adverse."
 	if definition.get("wave_set_id","")==Model.Banks.ID:
 		note.text="La tortue encaisse %d %% des dégâts de ses voisins proches, dans la limite de ses PV.\nElle ne protège ni les autres tortues ni les boss."%int(Model.Banks.SHARE*100)
