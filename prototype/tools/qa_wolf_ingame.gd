@@ -40,6 +40,8 @@ func report_corner_displacement(points: Array[Vector2]) -> void:
 		var trial_outgoing := trial_direction(0.0001, incoming, outgoing)
 		print("WOLF_TRIAL corner=%d remaining_turn_deg=%.1f" % [
 			corner, absf(rad_to_deg(trial_incoming.angle_to(trial_outgoing)))])
+		if incoming.x*outgoing.x > 0.0:
+			report_pivot_slip(corner, distance, points)
 		var max_jump := 0.0
 		for step in range(16):
 			var before := Walk.sample_vertices(step/16.0, incoming)
@@ -67,3 +69,20 @@ func preview_direction(distance: float, points: Array[Vector2]) -> Vector2:
 			var outgoing: Vector2 = Walk.path_motion(corner_distance+0.0001, points, View.AXIS).direction
 			return trial_direction(offset, incoming, outgoing)
 	return Walk.path_motion(distance, points, View.AXIS).direction
+
+func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> void:
+	var max_slip := 0.0
+	var stance_starts := [62.0, 52.0, 34.0, 20.0]
+	var stance_lengths := [37.0, 39.0, 34.0, 39.0]
+	for step in range(40):
+		var sample_distance := distance-0.2+step*0.01
+		var motion: Dictionary = Walk.path_motion(sample_distance, points, View.AXIS)
+		var phase := Walk.phase_for(motion.travel, 0, 0.7)
+		var reference := Walk.sample_vertices(phase, motion.direction)
+		var pivot := Walk.sample_vertices(phase, preview_direction(sample_distance, points))
+		for group in range(4):
+			var stance_phase := fposmod(phase-stance_starts[group]/64.0, 1.0)
+			if stance_phase < stance_lengths[group]/64.0:
+				var index: int = Walk.DATA.feet.find(group)
+				max_slip = maxf(max_slip, reference[index].distance_to(pivot[index])*0.7)
+	print("WOLF_PIVOT_STANCE corner=%d max_offset_from_reference_px=%.2f" % [corner, max_slip])
