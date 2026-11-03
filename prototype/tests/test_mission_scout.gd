@@ -31,19 +31,35 @@ func run_checks() -> void:
 						var existing: Dictionary = expected[seen.find(group[0])]
 						existing.total += group[1]
 						existing.last = wave
+						existing.wave_counts[wave] = existing.wave_counts.get(wave, 0)+group[1]
 						continue
-					seen.append(group[0]);expected.append({"type":group[0],"first":wave,"last":wave,"total":group[1]})
+					seen.append(group[0]);expected.append({"type":group[0],"first":wave,"last":wave,"total":group[1],"wave_counts":{wave:group[1]}})
 			check(scout.entries.size()==expected.size() and scout.cards.filter(func(card):return card.visible).size()==expected.size(),"Seulement les ennemis réellement présents sont montrés, une fois chacun")
 			for index in range(expected.size()):
 				var entry: Dictionary=scout.entries[index];var source: Dictionary=Model.enemy_definition(expected[index].type)
 				check(entry.type==expected[index].type and entry.first_wave==expected[index].first,"L’ordre et la première vague suivent la vraie séquence")
-				check(entry.total==expected[index].total and entry.last_wave==expected[index].last,"Les effectifs et la derniere vague suivent les groupes de combat")
+				check(entry.total==expected[index].total and entry.last_wave==expected[index].last and entry.wave_counts==expected[index].wave_counts,"Les effectifs et la derniere vague suivent les groupes de combat")
 				check(is_equal_approx(entry.max_hp,source.hp*(99+number)/100.0) and entry.fortress_damage==source.fortress_damage,"PV de mission et danger de passage exacts")
 				check(entry.origin in ["neutral","horde" if camp==0 else "alliance"],"Les attaquants humains sont du camp adverse et la faune reste neutre")
 				var card: Panel=scout.cards[index]
+				var wave_lines := PackedStringArray()
+				for wave in expected[index].wave_counts:
+					wave_lines.append("Vague %d · %d" % [wave, expected[index].wave_counts[wave]])
+				check(card.tooltip_text=="\n".join(wave_lines),"Le survol liste les effectifs exacts des vagues concernees")
 				check(card.get_node("Name").text==entry.name and card.get_node("Portrait").texture.atlas==scout.Art.TEXTURES[entry.identity_id],"Nom et portrait partagent la même identité")
 				for label in [card.get_node("Name"),card.get_node("Details"),card.get_node("Origin")]:
 					check(label.get_minimum_size().y<=label.size.y,"Les textes des rencontres tiennent dans leurs fiches")
+			for wave in range(1, definition.waves+1):
+				scout.wave_filter.select(wave)
+				scout.wave_filter.item_selected.emit(wave)
+				var visible_cards: Array = scout.cards.filter(func(card):return card.visible)
+				var groups: Array = expected.filter(func(entry):return entry.wave_counts.has(wave))
+				check(visible_cards.size()==groups.size(),"Le filtre affiche les seuls types presents dans la vague")
+				for index in range(groups.size()):
+					check(visible_cards[index].get_node("Details").text.begins_with("%d " % groups[index].wave_counts[wave]),"La fiche affiche le nombre de cette vague")
+			scout.wave_filter.select(0)
+			scout.wave_filter.item_selected.emit(0)
+
 			check(scout.note.text.contains("25 %")== (number>10),"La protection n’est expliquée que dans les missions où elle apparaît")
 			check(Rect2(0,0,1280,800).encloses(scout.panel.get_global_rect()),"La fenêtre reste entièrement lisible")
 			for button in menu.chapter_buttons+menu.nodes+[menu.start_button,menu.talents_button,menu.shop_button,menu.scout_button,menu.back_button]:

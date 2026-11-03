@@ -9,6 +9,7 @@ var heading: Label
 var subtitle: Label
 var note: Label
 var close_button: Button
+var wave_filter: OptionButton
 var cards: Array[Panel]=[]
 var entries: Array[Dictionary]=[]
 var mission_number: int=0
@@ -25,11 +26,13 @@ static func encounter_data(number: int,camp: int) -> Array[Dictionary]:
 				var existing: Dictionary = found[spawn.type]
 				existing.total += 1
 				existing.last_wave = wave
+				existing.wave_counts[wave] = existing.wave_counts.get(wave, 0)+1
 				continue
 			var enemy: Dictionary=Model.make_enemy(0,spawn.type,0,camp,definition.hp_percent)
 			enemy.first_wave = wave
 			enemy.last_wave = wave
 			enemy.total = 1
+			enemy.wave_counts = {wave: 1}
 			found[spawn.type] = enemy
 			result.append(enemy)
 	return result
@@ -46,7 +49,12 @@ func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);color=Color(0.02,0.04,0.035,0.96)
 	panel=box(self,Rect2(50,40,1180,720))
 	heading=label_at(panel,"",Rect2(24,18,1132,36),26)
-	subtitle=label_at(panel,"",Rect2(24,60,1132,28),16)
+	subtitle=label_at(panel,"",Rect2(24,60,865,28),16)
+	wave_filter = OptionButton.new()
+	wave_filter.position = Vector2(922, 51)
+	wave_filter.size = Vector2(234, 38)
+	wave_filter.item_selected.connect(_show_wave)
+	panel.add_child(wave_filter)
 	for index in range(9):
 		var card:=box(panel,Rect2(24+(index%3)*384,106+(index/3)*152,364,140));cards.append(card)
 		var portrait:=TextureRect.new();portrait.name="Portrait";portrait.position=Vector2(10,12);portrait.size=Vector2(90,90)
@@ -68,27 +76,48 @@ func open(number: int,camp: int) -> bool:
 	mission_number=number;faction=camp;entries=data
 	var definition: Dictionary=Catalogue.definition(number)
 	heading.text="Rencontres · Mission %d · %s"%[number,"Alliance" if camp==0 else "Horde"]
-	var total := 0
-	for enemy in entries:
-		total += int(enemy.total)
-	subtitle.text="%s · %d vagues · %d ennemis prévus · PV : %d %%"%[definition.title,definition.waves,total,definition.hp_percent]
-	for index in range(cards.size()):
-		var card: Panel=cards[index];card.visible=index<entries.size()
-		if not card.visible: continue
-		var enemy: Dictionary=entries[index]
-		var atlas:=AtlasTexture.new();atlas.atlas=Art.TEXTURES[enemy.identity_id];atlas.region=Art.FRAMES[enemy.identity_id].source
-		card.get_node("Portrait").texture=atlas
-		card.get_node("Name").text=enemy.name
-		card.get_node("Origin").text=Model.Enemies.origin_label(enemy.origin)
-		var waves := "Vague %d" % enemy.first_wave
-		if enemy.last_wave != enemy.first_wave:
-			waves = "1re vague %d · Dernière %d" % [enemy.first_wave, enemy.last_wave]
-		card.get_node("Details").text="%d prévu%s · %s PV chacun\nForteresse : −%d PV par passage\n%s"%[
-			enemy.total, "s" if enemy.total > 1 else "", str(snappedf(enemy.max_hp,0.01)).trim_suffix(".0").replace(".",","), enemy.fortress_damage, waves]
+	wave_filter.clear()
+	wave_filter.add_item("Toute la mission")
+	for wave in range(1, definition.waves+1):
+		wave_filter.add_item("Vague %d" % wave)
+	wave_filter.select(0)
+	_show_wave(0)
 	note.text="Les unités neutres sont communes aux deux factions. Les autres attaquants viennent du camp adverse."
 	if definition.get("wave_set_id","")==Model.Banks.ID:
 		note.text="La tortue encaisse %d %% des dégâts de ses voisins proches, dans la limite de ses PV.\nElle ne protège ni les autres tortues ni les boss."%int(Model.Banks.SHARE*100)
 	show();close_button.grab_focus();return true
+
+func _show_wave(wave: int) -> void:
+	var definition: Dictionary = Catalogue.definition(mission_number)
+	var visible_entries: Array[Dictionary] = []
+	var total := 0
+	for enemy in entries:
+		var count: int = enemy.total if wave == 0 else enemy.wave_counts.get(wave, 0)
+		if count > 0:
+			total += count
+			visible_entries.append(enemy)
+	var scope := "%d vagues" % definition.waves if wave == 0 else "Vague %d sur %d" % [wave, definition.waves]
+	subtitle.text="%s · %s · %d ennemis prévus · PV : %d %%"%[definition.title,scope,total,definition.hp_percent]
+	for index in range(cards.size()):
+		var card: Panel=cards[index];card.visible=index<visible_entries.size()
+		if not card.visible: continue
+		var enemy: Dictionary=visible_entries[index]
+		var atlas:=AtlasTexture.new();atlas.atlas=Art.TEXTURES[enemy.identity_id];atlas.region=Art.FRAMES[enemy.identity_id].source
+		card.get_node("Portrait").texture=atlas
+		card.get_node("Name").text=enemy.name
+		card.get_node("Origin").text=Model.Enemies.origin_label(enemy.origin)
+		var wave_details := PackedStringArray()
+		for appearance in enemy.wave_counts:
+			wave_details.append("Vague %d · %d" % [appearance, enemy.wave_counts[appearance]])
+		card.tooltip_text = "\n".join(wave_details)
+		var waves := "Vague %d" % enemy.first_wave
+		if enemy.last_wave != enemy.first_wave:
+			waves = "1re vague %d · Dernière %d" % [enemy.first_wave, enemy.last_wave]
+		var count: int = enemy.total if wave == 0 else enemy.wave_counts[wave]
+		if wave > 0:
+			waves = "Vague %d" % wave
+		card.get_node("Details").text="%d prévu%s · %s PV chacun\nForteresse : −%d PV par passage\n%s"%[
+			count, "s" if count > 1 else "", str(snappedf(enemy.max_hp,0.01)).trim_suffix(".0").replace(".",","), enemy.fortress_damage, waves]
 func close() -> void:
 	var was_visible: bool=visible;hide();entries.clear();mission_number=0;faction=-1
 	if was_visible: closed.emit()
