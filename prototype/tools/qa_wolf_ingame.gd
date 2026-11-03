@@ -11,6 +11,7 @@ var capture_frame := 0
 var turn_contacts := {}
 var max_turn_contact_drift := 0.0
 var max_uncorrected_contact_drift := 0.0
+var min_contact_correction_weight := 1.0
 var max_contact_step := 0.0
 var max_contact_switch := 0.0
 var worst_contact_switch := {}
@@ -78,6 +79,7 @@ func record() -> void:
 		print("WOLF_TURN_CONTACT max_drift_px=%.3f before_translation_px=%.3f" % [max_turn_contact_drift, max_uncorrected_contact_drift])
 		print("WOLF_TURN_STEPS same_pose_px=%.3f change_pose_px=%.3f" % [max_contact_step, max_contact_switch])
 		print("WOLF_WORST_SWITCH ", JSON.stringify(worst_contact_switch))
+		print("WOLF_CORRECTION min_weight=%.3f" % min_contact_correction_weight)
 		print("WOLF_TURN_MESH min_triangle_double_area_px2=%.3f" % minimum_turn_triangle_area)
 	print("WOLF_GAME_RECORDING frames=144 isolated=",game.meta_profile==null," faction=",faction," directory=",directory)
 	quit()
@@ -399,13 +401,31 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 		var local_corrections := PackedVector2Array()
 		var facing := Vector2(pose.facing, 1.0)
 		for error in errors:
-			local_corrections.append(-(error+correction).limit_length(0.28)*facing/scale)
+			local_corrections.append(-(error+correction).limit_length(1.6)*facing/scale)
+		var base_points := points.duplicate()
 		for index in range(points.size()):
 			var pixel := uvs[index]*texture.get_size()
 			points[index] += local_shift
 			for contact_index in range(contact_feet.size()):
-				var delta: Vector2 = (pixel-paws[contact_feet[contact_index]])/Vector2(82, 140)
+				var delta: Vector2 = (pixel-paws[contact_feet[contact_index]])/Vector2(110, 210)
 				points[index] += local_corrections[contact_index]*exp(-delta.length_squared()*1.5)
+		var weight := 1.0
+		for triangle in range(0, indices.size(), 3):
+			var a := indices[triangle]
+			var b := indices[triangle+1]
+			var c := indices[triangle+2]
+			var base_ab := base_points[b]-base_points[a]
+			var base_ac := base_points[c]-base_points[a]
+			var delta_ab := points[b]-points[a]-base_ab
+			var delta_ac := points[c]-points[a]-base_ac
+			var base_area := base_ab.cross(base_ac)
+			var loss := absf(delta_ab.cross(base_ac)+base_ab.cross(delta_ac))+absf(delta_ab.cross(delta_ac))
+			if loss > 0.0:
+				weight = minf(weight, 0.8*base_area/loss)
+		min_contact_correction_weight = minf(min_contact_correction_weight, weight)
+		for index in range(points.size()):
+			var translated := base_points[index]+local_shift
+			points[index] = translated.lerp(points[index], weight)
 		for contact_index in range(errors.size()):
 			var cell: Vector2 = (paws[contact_feet[contact_index]]-source.position)/source.size*GRID
 			var column := clampi(floori(cell.x), 0, GRID-1)
