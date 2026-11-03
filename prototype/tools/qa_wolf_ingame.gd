@@ -6,7 +6,7 @@ const Walk=preload("res://scripts/enemy_walk_art.gd")
 const View=preload("res://scripts/valley_view.gd")
 const STANCE_STARTS := [62.0, 52.0, 34.0, 20.0]
 const STANCE_LENGTHS := [37.0, 39.0, 34.0, 39.0]
-var minimum_turn_row_gap := INF
+var minimum_turn_triangle_area := INF
 var use_quarters := true
 var turn_meshes: Array[ArrayMesh] = []
 var rear_quarter_candidate: ImageTexture
@@ -59,8 +59,8 @@ func record() -> void:
 		await process_frame;await RenderingServer.frame_post_draw
 		assert(root.get_texture().get_image().save_png(directory.path_join("%04d.png"%frame))==OK)
 	if preview:
-		assert(is_finite(minimum_turn_row_gap) and minimum_turn_row_gap > 0.0)
-		print("WOLF_TURN_MESH min_vertical_edge_px=%.3f" % minimum_turn_row_gap)
+		assert(is_finite(minimum_turn_triangle_area) and minimum_turn_triangle_area > 0.0)
+		print("WOLF_TURN_MESH min_triangle_double_area_px2=%.3f" % minimum_turn_triangle_area)
 	print("WOLF_GAME_RECORDING frames=144 isolated=",game.meta_profile==null," faction=",faction," directory=",directory)
 	quit()
 
@@ -303,13 +303,15 @@ func animated_turn_mesh(pose: Dictionary, gait: float) -> ArrayMesh:
 	var groups := [1, 3, 2, 0] if pose.towards else [3, 1, 2, 0]
 	if pose.quarter:
 		groups = [1, 3, 0, 2]
-	var lifts := PackedFloat32Array()
+	var offsets := PackedVector2Array()
+	var forward: Vector2 = pose.direction*Vector2(pose.facing, 1.0)
 	for foot in range(paws.size()):
 		var group: int = groups[foot] ^ (2 if pose.facing < 0.0 else 0)
 		var stance: float = STANCE_LENGTHS[group]/64.0
 		var phase := fposmod(gait-STANCE_STARTS[group]/64.0, 1.0)
 		var swing := clampf(inverse_lerp(stance, 1.0, phase), 0.0, 1.0)
-		lifts.append(pow(sin(PI*swing), 2.0)*1.15)
+		var step := lerpf(0.65, -0.65, phase/stance) if phase < stance else lerpf(-0.65, 0.65, smoothstep(0.0, 1.0, swing))
+		offsets.append(forward*step-Vector2(0.0, pow(sin(PI*swing), 2.0)*1.15))
 	var points := PackedVector2Array()
 	var uvs := PackedVector2Array()
 	var indices := PackedInt32Array()
@@ -322,15 +324,18 @@ func animated_turn_mesh(pose: Dictionary, gait: float) -> ArrayMesh:
 			for index in range(paws.size()):
 				var delta: Vector2 = (pixel-paws[index])/Vector2(52, 96)
 				var influence := exp(-delta.length_squared()*1.5)
-				point.y -= lifts[index]*influence
-			if row > 0:
-				minimum_turn_row_gap = minf(minimum_turn_row_gap, point.y-points[points.size()-GRID-1].y)
+				point += offsets[index]*influence
 			points.append(point)
 			uvs.append(pixel/texture.get_size())
 			if row < GRID and column < GRID:
 				var a := row*(GRID+1)+column
 				var b := a+GRID+1
 				indices.append_array([a, a+1, b, a+1, b+1, b])
+	for triangle in range(0, indices.size(), 3):
+		var a := points[indices[triangle]]
+		var b := points[indices[triangle+1]]
+		var c := points[indices[triangle+2]]
+		minimum_turn_triangle_area = minf(minimum_turn_triangle_area, (b-a).cross(c-a))
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = points
