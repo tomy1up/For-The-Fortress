@@ -72,10 +72,23 @@ func preview_direction(distance: float, points: Array[Vector2]) -> Vector2:
 
 func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> void:
 	var max_slip := 0.0
+	var max_world_slip := 0.0
+	var anchors := {}
+	var remaining := distance-0.2
+	var segment := 0
+	while remaining >= points[segment].distance_to(points[segment+1]):
+		remaining -= points[segment].distance_to(points[segment+1])
+		segment += 1
 	var stance_starts := [62.0, 52.0, 34.0, 20.0]
 	var stance_lengths := [37.0, 39.0, 34.0, 39.0]
 	for step in range(40):
 		var sample_distance := distance-0.2+step*0.01
+		var offset := remaining+step*0.01
+		while offset >= points[segment].distance_to(points[segment+1]):
+			remaining -= points[segment].distance_to(points[segment+1])
+			offset = remaining+step*0.01
+			segment += 1
+		var center := View.project(points[segment].move_toward(points[segment+1], offset))
 		var motion: Dictionary = Walk.path_motion(sample_distance, points, View.AXIS)
 		var phase := Walk.phase_for(motion.travel, 0, 0.7)
 		var reference := Walk.sample_vertices(phase, motion.direction)
@@ -84,5 +97,12 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 			var stance_phase := fposmod(phase-stance_starts[group]/64.0, 1.0)
 			if stance_phase < stance_lengths[group]/64.0:
 				var index: int = Walk.DATA.feet.find(group)
+				var position := center+pivot[index]*Vector2(signf(motion.direction.x), 1.0)*0.7
+				if not anchors.has(group):
+					anchors[group] = position
+				max_world_slip = maxf(max_world_slip, position.distance_to(anchors[group]))
 				max_slip = maxf(max_slip, reference[index].distance_to(pivot[index])*0.7)
-	print("WOLF_PIVOT_STANCE corner=%d max_offset_from_reference_px=%.2f" % [corner, max_slip])
+			else:
+				anchors.erase(group)
+	print("WOLF_PIVOT_STANCE corner=%d max_offset_from_reference_px=%.2f max_world_drift_px=%.2f" % [
+		corner, max_slip, max_world_slip])
