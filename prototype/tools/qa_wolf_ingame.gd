@@ -224,8 +224,14 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 		var a := start.lerp(middle, phase)
 		var b := middle.lerp(finish, phase)
 		var direction := preview_direction(distance, points)
-		if (middle-start).x*(finish-middle).x > 0.0:
-			direction = (b-a).normalized()
+		var tangent := (b-a).normalized()
+		var changes_side := (middle-start).x*(finish-middle).x < 0.0
+		if changes_side:
+			# Tilt the side pose towards the curve, within its readable profile.
+			var turn := clampf(direction.angle_to(tangent), -PI/15.0, PI/15.0)
+			direction = direction.rotated(turn)
+		else:
+			direction = tangent
 		var partial_arc := 0.0
 		var previous := start
 		for step in range(1, 17):
@@ -241,7 +247,7 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 		if phase >= 1.0:
 			continue
 		var result := {"center": a.lerp(b, phase), "direction": direction, "travel": travel}
-		if front_candidate != null and (middle-start).x*(finish-middle).x < 0.0 and absf(phase-0.5) < 0.14:
+		if front_candidate != null and changes_side and absf(phase-0.5) < 0.14:
 			var towards := (b-a).y > 0.0
 			var source := Rect2(262, 19, 619, 1177) if towards else Rect2(389, 76, 391, 1095)
 			var size := source.size*(34.0/source.size.y)
