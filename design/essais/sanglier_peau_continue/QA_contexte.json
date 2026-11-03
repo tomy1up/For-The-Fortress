@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-03",
+  "scope": "Actual valley renderer, controlled three-boar spawning, no defenders; not a played mission",
+  "artistically_approved": false,
+  "videos": [
+    {
+      "path": "sanglier_sur_le_gue_alliance.mp4",
+      "frames": 720,
+      "fps": 60,
+      "seconds": 12,
+      "width": 1280,
+      "height": 800,
+      "decode_ok": true,
+      "sha256": "6c15774db847a50df38a4da1d506a5e210eb7158827f9755200fd361d5274664"
+    },
+    {
+      "path": "sanglier_sur_le_gue_horde.mp4",
+      "frames": 720,
+      "fps": 60,
+      "seconds": 12,
+      "width": 1280,
+      "height": 800,
+      "decode_ok": true,
+      "sha256": "967e0068e076c83af0bbbc4f4bc2431b5c4b13d5baaf6a4f5eb5aa43d2d86ef3"
+    }
+  ],
+  "full_native_frames_reviewed": [
+    {
+      "faction": "alliance",
+      "frame": 0
+    },
+    {
+      "faction": "alliance",
+      "frame": 171
+    },
+    {
+      "faction": "alliance",
+      "frame": 264
+    },
+    {
+      "faction": "horde",
+      "frame": 599
+    }
+  ],
+  "cycle_crops_reviewed": [
+    40,
+    43,
+    45,
+    48,
+    50,
+    53,
+    55,
+    58,
+    60,
+    63,
+    65,
+    68
+  ],
+  "corner_crops_reviewed": [
+    145,
+    146,
+    289,
+    290,
+    380,
+    381,
+    453,
+    454,
+    543,
+    544,
+    598,
+    599
+  ],
+  "reviewed_images_sha256": {
+    "Apercu_contexte_alliance_0000.png": "4b21f8890ef00d285988ebdc1306ce97c91e96818aaf9486ef83d3d4cf7d195a",
+    "Apercu_contexte_alliance_0171.png": "07a25745c7572c4eb710ef4c80e36b78eab5427c9083b148f6c7907080eba56e",
+    "Apercu_contexte_alliance_0264.png": "f194f94abfbb7f5a9ec87943245944afa2eb25bd2d45bfefc549380648bf5ab7",
+    "Apercu_contexte_horde_0599.png": "da9da2d81f4f0d7dafeba884f4da9c213c89238f51151177bb89b41d7227a647",
+    "Apercu_contexte_cycle.png": "0fba4e35453f5d38c7aaf76c4469898afad341995cffac5e62e8485e8f7f0df9",
+    "Apercu_contexte_virages.png": "8b8b7c6d5220bd8b241bb234cd8512153432df8f7c930abf5a635a94578e78cc"
+  },
+  "native_traces_sha256": {
+    "alliance": "892cf0a9d32b0bd05c6ad8fb31969779651daca79ce14291b20f6cb5262c8989",
+    "horde": "81a78f9af8937c41e6d97e2f535b3c903b35d9363f31957a9e77e1bebc9221e5"
+  },
+  "observations": [
+    "Inspected poses retain a continuous trunk and attached legs; no obvious separated limb or tear was observed in these samples.",
+    "The x3 inset enlarges actual game-sized pixels; it is not a higher-resolution rerender.",
+    "The diagnostic shows abrupt profile flips or rotation at six corners; no turn pose or frontal artwork is supplied.",
+    "Both videos were fully decoded, but visual inspection was limited to the listed frames and contact sheets; continuous perceived naturalness remains for artistic review.",
+    "The shadow and health bar use the production view. The hit reaction is deliberately imposed; no defender attacks or campaign rewards are simulated."
+  ],
+  "production_version": "0.112",
+  "production_sources_unchanged": 75,
+  "production_executable_unchanged": true,
+  "profile_loaded": false
+}

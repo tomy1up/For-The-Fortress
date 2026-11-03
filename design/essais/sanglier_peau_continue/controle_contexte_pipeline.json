@@ -1,0 +1,84 @@
+{
+  "passed": true,
+  "scope": "Isolated controlled traversal with the production valley renderer and experimental boar override; no campaign or profile",
+  "render_reused": false,
+  "videos": [
+    {
+      "path": "sanglier_sur_le_gue_alliance.mp4",
+      "frames": 720,
+      "fps": 60,
+      "seconds": 12,
+      "width": 1280,
+      "height": 800,
+      "decode_ok": true,
+      "sha256": "6c15774db847a50df38a4da1d506a5e210eb7158827f9755200fd361d5274664"
+    },
+    {
+      "path": "sanglier_sur_le_gue_horde.mp4",
+      "frames": 720,
+      "fps": 60,
+      "seconds": 12,
+      "width": 1280,
+      "height": 800,
+      "decode_ok": true,
+      "sha256": "967e0068e076c83af0bbbc4f4bc2431b5c4b13d5baaf6a4f5eb5aa43d2d86ef3"
+    }
+  ],
+  "steps": [
+    {
+      "step": "engine",
+      "exit_code": 0,
+      "seconds": 0.063
+    },
+    {
+      "step": "native_alliance",
+      "exit_code": 0,
+      "seconds": 31.5
+    },
+    {
+      "step": "native_horde",
+      "exit_code": 0,
+      "seconds": 31.406
+    },
+    {
+      "step": "audit",
+      "exit_code": 0,
+      "seconds": 0.891
+    },
+    {
+      "step": "encode_alliance",
+      "exit_code": 0,
+      "seconds": 1.437
+    },
+    {
+      "step": "decode_alliance",
+      "exit_code": 0,
+      "seconds": 0.203
+    },
+    {
+      "step": "encode_horde",
+      "exit_code": 0,
+      "seconds": 1.532
+    },
+    {
+      "step": "decode_horde",
+      "exit_code": 0,
+      "seconds": 0.218
+    }
+  ],
+  "production_version": "0.112",
+  "production_sources_unchanged": 75,
+  "production_executable_sha256": "9f50639c662008d36c75e3bceddb9a94dba238f0b1207ebd2474406aac6182c9",
+  "profile_loaded": false,
+  "artistically_approved": false,
+  "source_sha256": {
+    "design/essais/sanglier_peau_continue/build_context.py": "2bb22bce088956f98073ee99de3058def1896c76c1ecc6612a5bbfb93251b9e4",
+    "design/essais/sanglier_peau_continue/render_context.gd": "3ada845bcf6483c44a2bac4c6d071591d4c6f562fee094b4bcb893e016a62e4a",
+    "design/essais/sanglier_peau_continue/check_context.py": "21bc7689974d2cdaeb28897972886c258919c722135683dcb39e7ff32114e6c9",
+    "design/essais/sanglier_peau_continue/render_routes.gd": "2209b8a2d22f864b9aba07af4f12ba472efe2f0011dca9682848731661b1cb9d",
+    "design/essais/sanglier_peau_continue/render_study.gd": "f8bee92721b2d3e9c306ac9a4b6e129850daf7223dbb1904612bd79f5537e16f",
+    "design/essais/loup_peau_continue/render_walk.gd": "178bd4583c93b25a07f7584253e7f97fd25a475ce26b2968ab9d07041b25f608",
+    "prototype/scripts/valley_model.gd": "89ab8047112df7775dffe1f27e056a1483a730712d32c95fe8eb61001f204fc3",
+    "prototype/scripts/valley_view.gd": "b58117d251ec1f140428b9f1f6f2d5668b018458ecff4557f1a8f2b1d38625c8"
+  }
+}

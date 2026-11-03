@@ -1,6 +1,6 @@
 # Sanglier — étude de peau continue
 
-2 novembre 2026. **Essai non approuvé, hors du jeu distribué.** La v0.109 demeure la version jouable ; ce dossier ne modifie aucun script de production, profil, talent, récompense ou valeur de combat.
+Étude du 2 novembre, complétée le 3 novembre 2026. **Essai non approuvé, hors du jeu distribué.** La v0.109 demeure la version jouable ; ce dossier ne modifie aucun script de production, profil, talent, récompense ou valeur de combat.
 
 ## Intention
 
@@ -63,3 +63,23 @@ python design/essais/sanglier_peau_continue/build_routes.py
 Ce second script utilise les mêmes options `--engine` et `--ffmpeg`, lance Godot minimisé sur l’écran de droite et contrôle les sources du paquet Windows avant et après le rendu. Il ne recompile pas le jeu.
 
 For the Fortress! est un nom de travail dont la disponibilité juridique reste à confirmer.
+
+## Traversée du vrai tracé du Gué — 3 novembre 2026
+
+Deux vidéos de douze secondes à 60 images/s montrent trois sangliers de contrôle sur les sept segments du Gué : `sanglier_sur_le_gue_alliance.mp4` et `sanglier_sur_le_gue_horde.mp4`. Le modèle de déplacement, le terrain, le tri des personnages, les barres de PV et les forteresses proviennent du jeu. Seul le dessin du sanglier est remplacé dans une sous-classe de rendu utilisée par l’étude. Aucune modification des scripts de production ni du ZIP v0.112.
+
+La séquence d’apparition de trois animaux et l’impact de 4 PV sont imposés pour l’observation. Aucun défenseur ne tire ; il ne s’agit pas d’une mission de campagne jouée. Le premier passage est à vitesse normale ; une pause de 0,4 seconde précède le doublement de vitesse. Le cadre de gauche agrandit trois fois les pixels du même rendu, avec le sol ; ce n’est pas une deuxième simulation ni un dessin plus détaillé.
+
+Le contrôle indépendant compare la route, la position projetée, la phase et les axes du dessin sur les 1 440 images. Les 18 changements de segment de chaque traversée correspondent aux six virages franchis par chacun des trois sangliers. Les simulations neutres sont identiques dans les deux factions. La pause conserve 25 états successifs identiques, puis les pas suivent la vitesse doublée. Les 126 656 positions comparées de sommets de sabot en appui présentent une dérive maximale de 0,000077 pixel affiché **sur les portions droites, hors impact**. Cette mesure combine les coordonnées de placement lues dans le rendu natif et les ancrages des courbes ; elle n’est pas une mesure vidéo de chaque pixel ni une approbation de l’anatomie.
+
+Les deux vidéos sont entièrement décodées : 720 images chacune, sans erreur. Les planches `Apercu_contexte_cycle.png` et `Apercu_contexte_virages.png` montrent douze instants d’un cycle droit et les vues juste avant/après chacun des six virages. Des images complètes couvrent aussi le départ, l’impact, la reprise et le contexte Horde. Le relevé `QA_contexte.json` précise ce qui a été examiné ; aucune lecture humaine complète des vidéos n’est prétendue.
+
+**Limites :** l’orientation et le miroir de profil changent instantanément au sommet d’un virage. Il n’y a pas de pose dessinée de rotation, ni de vue frontale nouvelle. Les contacts ne sont donc pas certifiés pendant ce changement ni pendant la réaction d’impact. L’anatomie perçue, le naturel global et les changements de direction restent à valider artistiquement. Le survol, la cohabitation avec des défenseurs et les contraintes de performance de la campagne ne sont pas livrés par cet atelier. Les maillages expérimentaux sont reconstruits pour l’observation ; ce montage n’est pas un moteur d’animation prêt à intégrer.
+
+Pour reproduire ce nouveau contrôle depuis la racine du dépôt :
+
+```powershell
+python design/essais/sanglier_peau_continue/build_context.py
+```
+
+La commande rend les deux factions sur l’écran de droite, minimisées, contrôle les traces et encode/décode les vidéos. `--reuse-frames` réutilise seulement des captures déjà présentes. Le paquet v0.112 et ses 75 sources doivent correspondre au projet courant avant et après l’essai. Les commandes historiques des sections précédentes restent liées à leur état de référence v0.109 ; ce nouveau pipeline constitue la reproduction adaptée au dépôt actuel.

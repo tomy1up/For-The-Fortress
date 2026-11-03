@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "scope": "Controlled three-boar traversal on the actual valley path; not a played mission or artistic approval",
+  "profile_loaded": false,
+  "artistically_approved": false,
+  "factions": [
+    {
+      "faction": "alliance",
+      "frames": 720,
+      "enemies": 3,
+      "route_corners": 18,
+      "projected_directions": 3,
+      "contact_vertices_compared": 63328,
+      "maximum_contact_drift_pixels": 7.604271634134601e-05,
+      "maximum_anchor_error_pixels": 5.860646691673431e-05,
+      "maximum_rigid_basis_error": 1.500850338106985e-10,
+      "maximum_phase_error": 2.531308496145357e-14,
+      "pause_frames": 25,
+      "impact_samples": 16,
+      "final_fortress_hp": 17,
+      "arrivals": 3
+    },
+    {
+      "faction": "horde",
+      "frames": 720,
+      "enemies": 3,
+      "route_corners": 18,
+      "projected_directions": 3,
+      "contact_vertices_compared": 63328,
+      "maximum_contact_drift_pixels": 7.604271634134601e-05,
+      "maximum_anchor_error_pixels": 5.860646691673431e-05,
+      "maximum_rigid_basis_error": 1.500850338106985e-10,
+      "maximum_phase_error": 2.531308496145357e-14,
+      "pause_frames": 25,
+      "impact_samples": 16,
+      "final_fortress_hp": 17,
+      "arrivals": 3
+    }
+  ],
+  "neutral_simulations_identical": true,
+  "corners": "Instant profile changes at segment boundaries; contact tests exclude turns and impact reaction. No frontal drawing or turn animation supplied.",
+  "source_sha256": {
+    "render_context.gd": "3ada845bcf6483c44a2bac4c6d071591d4c6f562fee094b4bcb893e016a62e4a",
+    "check_context.py": "21bc7689974d2cdaeb28897972886c258919c722135683dcb39e7ff32114e6c9",
+    "smooth_walk.json": "d48f92c2aa360e796926fd9f63c360d49d5d83913d3db96e2d947c3ff60a7164",
+    "smooth_walk_far.json": "8aaae676461c8f6acd689e59084a69674b3dbf8f4ca0219353b1abc6fa6db2f4"
+  }
+}
