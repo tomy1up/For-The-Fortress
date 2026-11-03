@@ -17,3 +17,9 @@ Draw one full body 2D game sprite on transparent background of the exact grey cr
 La variante rend les quatre pattes distinctes. La patte avant tendue reste du meme cote que sur la premiere pose. Garder cette image comme reference anatomique pour le raccord. Une vraie inversion d'appui reste a dessiner.
 
 Draw the exact same grey cream wolf sprite from the exact same front elevated isometric camera and matching head and body dimensions. Draw the next walk pose, with the previously extended front paw now bending and lifting while the other front paw extends and plants. Keep nose and head centered, shift the chest slightly over the new supporting paw. Show both hind legs clearly with natural overlapping anatomy where possible. Same coat shapes, dark outline, gold eyes, and flat palette. One full body sprite, transparent background, no floor, shadow, or labels.
+
+## Trois quarts avant
+
+Dessin intermediaire entre le profil et la face. Les quatre pattes sont lisibles et la queue plus haute devra etre raccordee en mouvement.
+
+One isolated 2D game sprite, same exact grey and cream cartoon wolf from the references. Draw an intermediate raised isometric angle between the two images: nose points diagonally DOWN RIGHT, about 35 degrees right of the straight-towards-viewer pose. The visible flank and rear body extend toward the upper left. All four anatomically connected paws, staggered walk with front screen-right paw forward and an opposite rear paw planted. Match fur, head size, eyes, black outlines and palette. Keep real perspective and proportions, no stretching. Transparent background, no floor, glow, shadow or labels.
