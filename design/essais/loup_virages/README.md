@@ -23,3 +23,9 @@ Draw the exact same grey cream wolf sprite from the exact same front elevated is
 Dessin intermediaire entre le profil et la face. Les quatre pattes sont lisibles et la queue plus haute devra etre raccordee en mouvement.
 
 One isolated 2D game sprite, same exact grey and cream cartoon wolf from the references. Draw an intermediate raised isometric angle between the two images: nose points diagonally DOWN RIGHT, about 35 degrees right of the straight-towards-viewer pose. The visible flank and rear body extend toward the upper left. All four anatomically connected paws, staggered walk with front screen-right paw forward and an opposite rear paw planted. Match fur, head size, eyes, black outlines and palette. Keep real perspective and proportions, no stretching. Transparent background, no floor, glow, shadow or labels.
+
+## Trois quarts arriere
+
+Candidat ImageGen pour les virages vers le haut. La vue de dos et le profil du loup ont servi de references.
+
+Single transparent 2D game sprite of this exact grey and cream wolf. Rear three-quarter view, walking towards upper right, raised isometric camera. Rear and flank visible, head facing AWAY upper right, no eye visible. Four anatomically connected readable paws with staggered walk, weight on one rear and opposite front paw. Natural wolf proportions matching reference, angular gray cream fur and dark outline, medium tail held low with cream tip, no floor shadows glow text or other objects. Full body centered.
