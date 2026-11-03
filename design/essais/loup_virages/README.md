@@ -64,3 +64,9 @@ Mesure sur les memes six loups du Gue. La demi-fenetre est une fraction de la du
 Les gains ne justifient pas d'allonger la vue de face. Garder 0,10. Le parametre de capture --front-window permet de reproduire les mesures.
 
 Un essai de selection du raccord par phase de marche a privilegie les instants avec le moins de pattes au sol. Les pattes des groupes 1 et 2 comptaient davantage dans le choix. Sur la capture du Gue, le saut maximal passe de 6,502 a 6,465 px et la derive reste a 7,836 px. La variante est ecartee.
+
+## Face, pas court
+
+Variante v003, generee avec ImageGen a partir de la face v002 et du trois quarts avant v002. Echelle uniforme conservee. La silhouette montre davantage le flanc, ce qui reste a juger sur la sequence complete.
+
+One transparent 2D game sprite. Redraw the exact grey cream wolf of the first image in the same head-on elevated camera, nose aimed down screen, at the short compact mid-turn gait of the second image. Reduce the distance between the rearmost and leading front foot by flexing the foreleg and bringing the rear foot under the pelvis. Keep four distinct anatomically attached feet, with clear visible contact on a front foot and the opposite rear foot. Keep head scale, gray cream palette, gold eyes, linework, angular fur; keep the tail low behind the body. Do not stretch the silhouette. No ground, cast shadow, glow or text.
