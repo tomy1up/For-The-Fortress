@@ -15,8 +15,11 @@ func record() -> void:
 		var enemy: Dictionary=Model.make_enemy(index,0,0.0,0)
 		enemy.distance=1.0+index*2.5;game.model.enemies.append(enemy)
 	game.model.spawned=8
+	var preview := "--wolf-pivot" in OS.get_cmdline_user_args()
+	if preview:
+		game.map_view.wolf_orientation_preview = preview_direction
 	report_corner_displacement(game.model.path_points)
-	var directory:=ProjectSettings.globalize_path("user://qa_wolf_ingame")
+	var directory:=ProjectSettings.globalize_path("user://qa_wolf_pivot" if preview else "user://qa_wolf_ingame")
 	DirAccess.make_dir_recursive_absolute(directory)
 	for frame in range(144):
 		for enemy in game.model.enemies: enemy.distance+=enemy.speed/60.0
@@ -53,3 +56,14 @@ func trial_direction(offset: float, incoming: Vector2, outgoing: Vector2) -> Vec
 	if incoming.x*outgoing.x <= 0.0:
 		return incoming if offset < 0.0 else outgoing
 	return incoming.slerp(outgoing, smoothstep(-0.2, 0.2, offset))
+
+func preview_direction(distance: float, points: Array[Vector2]) -> Vector2:
+	var corner_distance := 0.0
+	for corner in range(1, points.size()-1):
+		corner_distance += points[corner-1].distance_to(points[corner])
+		var offset := distance-corner_distance
+		if absf(offset) < 0.2:
+			var incoming: Vector2 = Walk.path_motion(corner_distance-0.0001, points, View.AXIS).direction
+			var outgoing: Vector2 = Walk.path_motion(corner_distance+0.0001, points, View.AXIS).direction
+			return trial_direction(offset, incoming, outgoing)
+	return Walk.path_motion(distance, points, View.AXIS).direction

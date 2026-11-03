@@ -7,6 +7,7 @@ const AllianceArt = preload("res://scripts/alliance_art.gd")
 const EnemyArt = preload("res://scripts/enemy_art.gd")
 const EnemyWalkArt = preload("res://scripts/enemy_walk_art.gd")
 var walking_meshes:=EnemyWalkArt.new()
+var wolf_orientation_preview := Callable()
 const ShopArt = preload("res://scripts/shop_art.gd")
 const FortressArt = preload("res://scripts/fortress_art.gd")
 const ORIGIN := Vector2(658, 174)
@@ -796,7 +797,10 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	draw_set_transform_matrix(body)
 	if walking:
 		var phase: float=EnemyWalkArt.phase_for(motion.travel,enemy.id,scale)
-		var ground:=Vector2(absf(motion.direction.x),motion.direction.y)
+		var orientation: Vector2 = motion.direction
+		if wolf_orientation_preview.is_valid():
+			orientation = wolf_orientation_preview.call(enemy.distance, model.enemy_route_points(enemy))
+		var ground := Vector2(absf(orientation.x), orientation.y)
 		draw_mesh(walking_meshes.mesh_for(enemy.id,phase,ground),EnemyWalkArt.TEXTURE,Transform2D.IDENTITY,EnemyArt.tint(hit_strength))
 	else:
 		draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,EnemyArt.tint(hit_strength))
