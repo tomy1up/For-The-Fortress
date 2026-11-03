@@ -4,6 +4,8 @@ const Main=preload("res://scripts/main.gd")
 const Model=preload("res://scripts/valley_model.gd")
 const Walk=preload("res://scripts/enemy_walk_art.gd")
 const View=preload("res://scripts/valley_view.gd")
+const STANCE_STARTS := [62.0, 52.0, 34.0, 20.0]
+const STANCE_LENGTHS := [37.0, 39.0, 34.0, 39.0]
 var minimum_turn_row_gap := INF
 var use_quarters := true
 var turn_meshes: Array[ArrayMesh] = []
@@ -119,8 +121,6 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 	while remaining >= points[segment].distance_to(points[segment+1]):
 		remaining -= points[segment].distance_to(points[segment+1])
 		segment += 1
-	var stance_starts := [62.0, 52.0, 34.0, 20.0]
-	var stance_lengths := [37.0, 39.0, 34.0, 39.0]
 	for step in range(171):
 		var sample_distance := distance-0.85+step*0.01
 		var offset := remaining+step*0.01
@@ -147,8 +147,8 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 		var planted := PackedVector2Array()
 		var corrections := {}
 		for group in range(4):
-			var stance_phase := fposmod(phase-stance_starts[group]/64.0, 1.0)
-			if stance_phase < stance_lengths[group]/64.0:
+			var stance_phase := fposmod(phase-STANCE_STARTS[group]/64.0, 1.0)
+			if stance_phase < STANCE_LENGTHS[group]/64.0:
 				var index: int = Walk.DATA.feet.find(group)
 				var position := center+pivot[index]*Vector2(signf(motion.direction.x), 1.0)*0.7
 				if not anchors.has(group):
@@ -161,8 +161,8 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 			else:
 				anchors.erase(group)
 			for trial in range(radii.size()):
-				var rounded_stance := fposmod(rounded_phases[trial]-stance_starts[group]/64.0, 1.0)
-				if rounded_stance >= stance_lengths[group]/64.0:
+				var rounded_stance := fposmod(rounded_phases[trial]-STANCE_STARTS[group]/64.0, 1.0)
+				if rounded_stance >= STANCE_LENGTHS[group]/64.0:
 					rounded_anchors[trial].erase(group)
 					continue
 				var foot: int = Walk.DATA.feet.find(group)
@@ -298,6 +298,18 @@ func animated_turn_mesh(pose: Dictionary, gait: float) -> ArrayMesh:
 	var paws: Array = [Vector2(350, 789), Vector2(573, 974), Vector2(500, 911), Vector2(700, 1166)] if pose.towards else [Vector2(650, 950), Vector2(505, 1140), Vector2(720, 612), Vector2(424, 710)]
 	if pose.quarter:
 		paws = [Vector2(302, 715), Vector2(505, 701), Vector2(676, 900), Vector2(943, 1043)] if pose.towards else [Vector2(541, 915), Vector2(761, 786), Vector2(886, 687), Vector2(1134, 710)]
+	# The drawings list the rear pair first. Select anatomical groups in
+	# the same order as the side rig, accounting for the mirrored drawing.
+	var groups := [1, 3, 2, 0] if pose.towards else [3, 1, 2, 0]
+	if pose.quarter:
+		groups = [1, 3, 0, 2]
+	var lifts := PackedFloat32Array()
+	for foot in range(paws.size()):
+		var group: int = groups[foot] ^ (2 if pose.facing < 0.0 else 0)
+		var stance: float = STANCE_LENGTHS[group]/64.0
+		var phase := fposmod(gait-STANCE_STARTS[group]/64.0, 1.0)
+		var swing := clampf(inverse_lerp(stance, 1.0, phase), 0.0, 1.0)
+		lifts.append(pow(sin(PI*swing), 2.0)*1.15)
 	var points := PackedVector2Array()
 	var uvs := PackedVector2Array()
 	var indices := PackedInt32Array()
@@ -310,8 +322,7 @@ func animated_turn_mesh(pose: Dictionary, gait: float) -> ArrayMesh:
 			for index in range(paws.size()):
 				var delta: Vector2 = (pixel-paws[index])/Vector2(52, 96)
 				var influence := exp(-delta.length_squared()*1.5)
-				var cycle := gait*TAU+index*PI/2.0
-				point.y -= maxf(0.0, sin(cycle))*influence*1.15
+				point.y -= lifts[index]*influence
 			if row > 0:
 				minimum_turn_row_gap = minf(minimum_turn_row_gap, point.y-points[points.size()-GRID-1].y)
 			points.append(point)
