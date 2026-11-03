@@ -74,6 +74,8 @@ func preview_direction(distance: float, points: Array[Vector2]) -> Vector2:
 func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> void:
 	var max_slip := 0.0
 	var max_world_slip := 0.0
+	var max_rounded_slip := 0.0
+	var rounded_anchors := {}
 	var max_single_anchor_slip := 0.0
 	var max_translation := 0.0
 	var inverted_triangles := 0
@@ -97,6 +99,9 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 		var phase := Walk.phase_for(motion.travel, 0, 0.7)
 		var reference := Walk.sample_vertices(phase, motion.direction)
 		var pivot := Walk.sample_vertices(phase, preview_direction(sample_distance, points))
+		var rounded := preview_pose(sample_distance, points)
+		var rounded_vertices := Walk.sample_vertices(phase, rounded.get("direction", motion.direction))
+		var rounded_center: Vector2 = rounded.get("center", center)
 		var planted := PackedVector2Array()
 		var corrections := {}
 		for group in range(4):
@@ -107,18 +112,24 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 				if not anchors.has(group):
 					anchors[group] = position
 				var error: Vector2 = position-anchors[group]
+				var rounded_position := rounded_center+rounded_vertices[index]*Vector2(signf(motion.direction.x), 1.0)*0.7
+				if not rounded_anchors.has(group):
+					rounded_anchors[group] = rounded_position
+				max_rounded_slip = maxf(max_rounded_slip, rounded_position.distance_to(rounded_anchors[group]))
 				planted.append(error)
 				corrections[group] = -error*Vector2(signf(motion.direction.x), 1.0)/0.7
 				max_world_slip = maxf(max_world_slip, error.length())
 				max_slip = maxf(max_slip, reference[index].distance_to(pivot[index])*0.7)
 			else:
 				anchors.erase(group)
+				rounded_anchors.erase(group)
 		inverted_triangles += count_pivot_inversions(pivot, corrections)
 		if not planted.is_empty():
 			var translation := planted[0]
 			max_translation = maxf(max_translation, translation.length())
 			for error in planted:
 				max_single_anchor_slip = maxf(max_single_anchor_slip, (error-translation).length())
+	print("WOLF_ROUNDED_STANCE corner=%d max_world_drift_px=%.2f" % [corner, max_rounded_slip])
 	print("WOLF_LOCAL_ANCHORS corner=%d inverted_triangle_samples=%d" % [corner, inverted_triangles])
 	print("WOLF_SINGLE_ANCHOR corner=%d other_paws_max_drift_px=%.2f max_body_shift_px=%.2f" % [
 		corner, max_single_anchor_slip, max_translation])
