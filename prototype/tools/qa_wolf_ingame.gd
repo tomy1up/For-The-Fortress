@@ -7,6 +7,9 @@ const View=preload("res://scripts/valley_view.gd")
 const STANCE_STARTS := [62.0, 52.0, 34.0, 20.0]
 const STANCE_LENGTHS := [37.0, 39.0, 34.0, 39.0]
 var minimum_turn_triangle_area := INF
+var capture_frame := 0
+var turn_contacts := {}
+var max_turn_contact_drift := 0.0
 var use_quarters := true
 var turn_meshes: Array[ArrayMesh] = []
 var rear_quarter_candidate: ImageTexture
@@ -54,12 +57,14 @@ func record() -> void:
 	DirAccess.make_dir_recursive_absolute(directory)
 	for frame in range(144):
 		for enemy in game.model.enemies: enemy.distance+=enemy.speed/60.0
+		capture_frame = frame
 		turn_meshes.clear()
 		game.model.elapsed=frame/60.0;game._update_interface();game.map_view.queue_redraw()
 		await process_frame;await RenderingServer.frame_post_draw
 		assert(root.get_texture().get_image().save_png(directory.path_join("%04d.png"%frame))==OK)
 	if preview:
 		assert(is_finite(minimum_turn_triangle_area) and minimum_turn_triangle_area > 0.0)
+		print("WOLF_TURN_CONTACT max_drift_px=%.3f" % max_turn_contact_drift)
 		print("WOLF_TURN_MESH min_triangle_double_area_px2=%.3f" % minimum_turn_triangle_area)
 	print("WOLF_GAME_RECORDING frames=144 isolated=",game.meta_profile==null," faction=",faction," directory=",directory)
 	quit()
@@ -286,12 +291,12 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 func preview_enemy_pose(distance: float, points: Array[Vector2], enemy_id: int, scale: float) -> Dictionary:
 	var pose := preview_pose(distance, points)
 	if pose.has("texture"):
-		var mesh := animated_turn_mesh(pose, Walk.phase_for(pose.travel, enemy_id, scale))
+		var mesh := animated_turn_mesh(pose, Walk.phase_for(pose.travel, enemy_id, scale), enemy_id, scale)
 		turn_meshes.append(mesh)
 		pose["mesh"] = mesh
 	return pose
 
-func animated_turn_mesh(pose: Dictionary, gait: float) -> ArrayMesh:
+func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: float) -> ArrayMesh:
 	var source: Rect2 = pose.source
 	var destination: Rect2 = pose.destination
 	var texture: Texture2D = pose.texture
@@ -331,6 +336,30 @@ func animated_turn_mesh(pose: Dictionary, gait: float) -> ArrayMesh:
 				var a := row*(GRID+1)+column
 				var b := a+GRID+1
 				indices.append_array([a, a+1, b, a+1, b+1, b])
+	for foot in range(paws.size()):
+		var group: int = groups[foot] ^ (2 if pose.facing < 0.0 else 0)
+		var phase := fposmod(gait-STANCE_STARTS[group]/64.0, 1.0)
+		var key := Vector2i(enemy_id, group)
+		if phase >= STANCE_LENGTHS[group]/64.0:
+			turn_contacts.erase(key)
+			continue
+		var cell: Vector2 = (paws[foot]-source.position)/source.size*GRID
+		var column := clampi(floori(cell.x), 0, GRID-1)
+		var row := clampi(floori(cell.y), 0, GRID-1)
+		var u := cell.x-column
+		var v := cell.y-row
+		var a := row*(GRID+1)+column
+		var b := a+GRID+1
+		var point := points[a]*(1.0-u-v)+points[a+1]*u+points[b]*v
+		if u+v > 1.0:
+			point = points[b+1]*(u+v-1.0)+points[a+1]*(1.0-v)+points[b]*(1.0-u)
+		var position: Vector2 = pose.center+point*Vector2(pose.facing, 1.0)*scale
+		var contact: Dictionary = turn_contacts.get(key, {})
+		if contact.get("frame", -2) < capture_frame-1:
+			contact = {"anchor": position}
+		max_turn_contact_drift = maxf(max_turn_contact_drift, position.distance_to(contact.anchor))
+		contact["frame"] = capture_frame
+		turn_contacts[key] = contact
 	for triangle in range(0, indices.size(), 3):
 		var a := points[indices[triangle]]
 		var b := points[indices[triangle+1]]
