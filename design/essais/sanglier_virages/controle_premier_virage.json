@@ -1,10 +1,12 @@
 {
+  "final_distance": 6.57249999999998,
   "fps": 60,
   "frames": 240,
   "maximum_contact_correction_px": 5.06824636459351,
   "maximum_contact_drift_px": 0.000030517578125,
   "maximum_visual_path_deviation_px": 5.7421875,
   "minimum_triangle_ratio": 0.174864069620768,
+  "passed": true,
   "stance_samples": 436,
   "stride_px": 8.5,
   "view_changes": [

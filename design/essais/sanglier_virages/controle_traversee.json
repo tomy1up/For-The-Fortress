@@ -1,0 +1,102 @@
+{
+  "final_distance": 27.9950000000005,
+  "fps": 60,
+  "frames": 1019,
+  "maximum_contact_correction_px": 5.06824636459351,
+  "maximum_contact_drift_px": 0.000030517578125,
+  "maximum_visual_path_deviation_px": 6.07501220703125,
+  "minimum_triangle_ratio": 0.125334167480469,
+  "passed": true,
+  "stance_samples": 1862,
+  "stride_px": 8.5,
+  "view_changes": [
+    {
+      "distance": 3.76749999999999,
+      "from": 0,
+      "residual_gap_px": 0.0,
+      "shared_contacts": 2,
+      "to": 1,
+      "uncorrected_gap_px": 5.06824636459351
+    },
+    {
+      "distance": 4.17999999999999,
+      "from": 1,
+      "residual_gap_px": 0.0,
+      "shared_contacts": 2,
+      "to": 2,
+      "uncorrected_gap_px": 4.87490606307983
+    },
+    {
+      "distance": 7.83749999999998,
+      "from": 2,
+      "residual_gap_px": 0.0,
+      "shared_contacts": 2,
+      "to": 1,
+      "uncorrected_gap_px": 4.87490606307983
+    },
+    {
+      "distance": 8.27749999999998,
+      "from": 1,
+      "residual_gap_px": 0.0,
+      "shared_contacts": 2,
+      "to": 0,
+      "uncorrected_gap_px": 5.06824636459351
+    },
+    {
+      "distance": 13.0625,
+      "from": 0,
+      "residual_gap_px": 0.0,
+      "shared_contacts": 2,
+      "to": 3,
+      "uncorrected_gap_px": 3.26632452011108
+    },
+    {
+      "distance": 16.9950000000002,
+      "from": 3,
+      "residual_gap_px": 0.0,
+      "shared_contacts": 2,
+      "to": 0,
+      "uncorrected_gap_px": 3.26632452011108
+    },
+    {
+      "distance": 21.7800000000004,
+      "from": 0,
+      "residual_gap_px": 0.0,
+      "shared_contacts": 2,
+      "to": 1,
+      "uncorrected_gap_px": 5.06824636459351
+    },
+    {
+      "distance": 22.2200000000004,
+      "from": 1,
+      "residual_gap_px": 0.0,
+      "shared_contacts": 2,
+      "to": 2,
+      "uncorrected_gap_px": 4.87490606307983
+    },
+    {
+      "distance": 24.7500000000005,
+      "from": 2,
+      "residual_gap_px": 0.0,
+      "shared_contacts": 2,
+      "to": 1,
+      "uncorrected_gap_px": 4.87490606307983
+    },
+    {
+      "distance": 25.1625000000006,
+      "from": 1,
+      "residual_gap_px": 0.0,
+      "shared_contacts": 2,
+      "to": 0,
+      "uncorrected_gap_px": 5.06824636459351
+    }
+  ],
+  "worst": {
+    "distance": 17.0500000000002,
+    "view": 0,
+    "xy": [
+      1004.0,
+      744.0
+    ]
+  }
+}

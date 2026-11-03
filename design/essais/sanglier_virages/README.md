@@ -69,3 +69,11 @@ Ajouter `-- --turn` à la commande de capture pour produire les 240 images de `p
 Le centre du dessin suit un arrondi expérimental de 0,45 unité autour du sommet. L’écart maximal mesuré avec le centre logique est de 5,75 pixels à l’arrondi près. La correction locale conserve les deux repères d’appui communs à chaque changement de vue, puis se résorbe pendant le retour du sabot. Les deux sauts de repères mesurés avant correction atteignaient 5,07 et 4,87 pixels. Après correction, ils sont nuls sur les images échantillonnées. Le contrôle porte sur les sommets utilisés comme repères.
 
 Les triangles du maillage gardent leur orientation sur les 240 images. Les dessins changent encore par paliers et la silhouette peut paraître brusque. L’arrondi, la durée de la vue de face et le raccord des volumes restent des choix expérimentaux à évaluer avant intégration.
+
+## Traversée complète
+
+L’option `-- --route` enregistre le trajet de l’entrée à la porte de la forteresse. Les quatre virages qui inversent la direction à l’écran passent par la face. Les deux autres utilisent le trois quarts arrière sur la portion montante. Le réglage expérimental choisit les changements de dessin selon la phase du pas.
+
+La traversée a été rendue et décodée sur 1 019 images à 60 images/s. L’aire signée minimale du maillage est de 12,5 % de sa valeur au repos. Les deux sommets d’appui communs à chacun des dix changements restent au même point sur les images de contrôle. La dérive maximale entre images d’une même vue est inférieure à 0,001 pixel. L’écart entre la position logique et le centre du dessin atteint 6,08 pixels.
+
+La vidéo `traversee_complete.mp4` montre la cadence à taille de jeu et avec un agrandissement ×4. Les transitions de silhouette restent discrètes au sens technique. Chaque changement remplace le dessin en une image. La fluidité perçue et la tenue des volumes restent à valider avant intégration.

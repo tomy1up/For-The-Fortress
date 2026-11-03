@@ -11,7 +11,12 @@ const FRONT_PIVOT := Vector2(626.5, 1082)
 const FRONT_HOOVES := [Vector2(920, 990), Vector2(330, 990), Vector2(810, 1120), Vector2(435, 1120)]
 const FRONT_ORDER := [1, 3, 2, 0]
 const PROJECTED_UNIT := 30.186917696
-const CORNER := 4.0
+const CORNERS := [4.0, 8.0, 13.0, 17.0, 22.0, 25.0]
+const SEGMENT_VIEWS := [0, 2, 0, 3, 0, 2, 0]
+const REAR_SCALE := 28.9 / 968.0
+const REAR_PIVOT := Vector2(755, 830)
+const REAR_HOOVES := [Vector2(588, 960), Vector2(453, 882), Vector2(965, 783), Vector2(1043, 661)]
+const REAR_ORDER := [1, 0, 2, 3]
 const TURN_HALF_WIDTH := 0.215
 const ROUNDING_RADIUS := 0.45
 const HOOVES := [Vector2(581, 793), Vector2(398, 840), Vector2(1004, 861), Vector2(789, 925)]
@@ -25,6 +30,9 @@ class GaitView extends View:
 	var travel := 0.0
 	var distance := 0.0
 	var turning := false
+	var full_route := false
+	var rear_skin: Texture2D
+	var schedule: Array[Dictionary] = []
 	var front_skin: Texture2D
 	var quarter_skin: Texture2D
 	var view_index := -1
@@ -44,6 +52,19 @@ class GaitView extends View:
 
 	var contact_indices := PackedInt32Array([-1, -1, -1, -1])
 	var triangle_areas := PackedFloat32Array()
+
+	func rear_weights(point: Vector2) -> Vector4:
+		# Across the direction of travel, near and far hooves remain separated
+		# even when the two front hooves overlap on the horizontal axis.
+		var across := Vector2(0.25, 1.0)
+		var lateral := point.dot(across)
+		var hind := clampf(inverse_lerp(REAR_HOOVES[1].dot(across), REAR_HOOVES[0].dot(across), lateral), 0.0, 1.0)
+		var fore := clampf(inverse_lerp(REAR_HOOVES[3].dot(across), REAR_HOOVES[2].dot(across), lateral), 0.0, 1.0)
+		var forward := smoothstep(REAR_HOOVES[0].x, REAR_HOOVES[2].x, point.x)
+		var weight := Vector4(hind * (1.0 - forward), (1.0 - hind) * (1.0 - forward),
+			fore * forward, (1.0 - fore) * forward)
+		var soles := Vector4(REAR_HOOVES[0].y, REAR_HOOVES[1].y, REAR_HOOVES[2].y, REAR_HOOVES[3].y)
+		return weight * smoothstep(330.0, weight.dot(soles) - 24.0, point.y)
 
 	func prepare(texture_size: Vector2i, hooves: Array, order: Array) -> void:
 		weights.clear()
@@ -85,10 +106,11 @@ class GaitView extends View:
 						break
 				var mix_value := clampf(inverse_lerp(hooves[left].x, hooves[right].x, point.x), 0.0, 1.0)
 				var sole_y := lerpf(hooves[left].y, hooves[right].y, mix_value)
-				var height := smoothstep(540.0, sole_y - 24.0, point.y)
+				var blend_start := 445.0 if full_route else 540.0
+				var height := smoothstep(blend_start, sole_y - 24.0, point.y)
 				influence[left] = (1.0 - mix_value) * height
 				influence[right] = mix_value * height
-				weights.append(influence)
+				weights.append(rear_weights(point) if hooves == REAR_HOOVES else influence)
 				if row < rows.size() - 1 and column < columns.size() - 1:
 					var a := row * columns.size() + column
 					var below := a + columns.size()
@@ -98,15 +120,48 @@ class GaitView extends View:
 		for index in contact_indices:
 			assert(index >= 0)
 
+	func switch_distance(wanted: float, phase: float) -> float:
+		var cycle_length := STRIDE / PROJECTED_UNIT
+		return (roundf(wanted / cycle_length - phase) + phase) * cycle_length
+
+	func prepare_route() -> void:
+		if not turning:
+			return
+		for corner_index in range(CORNERS.size() if full_route else 1):
+			var distance_at_corner: float = CORNERS[corner_index]
+			var before: int = SEGMENT_VIEWS[corner_index]
+			var after: int = SEGMENT_VIEWS[corner_index + 1]
+			var use_face := before == 2 or after == 2
+			if use_face:
+				var first := distance_at_corner - TURN_HALF_WIDTH
+				var second := distance_at_corner + TURN_HALF_WIDTH
+				if full_route:
+					first = switch_distance(first, 0.32 if before == 0 else 0.82)
+					second = switch_distance(second, 0.32 if after == 0 else 0.82)
+				schedule.append({"at": first, "view": 1})
+				schedule.append({"at": second, "view": after})
+			else:
+				schedule.append({"at": switch_distance(distance_at_corner, 0.32), "view": after})
+
 	func visual_position(progress: float) -> Vector2:
 		var point: Vector2 = model.point_on_path(progress)
 		if progress < 0.0:
 			point = model.path_points[0] + Vector2(progress, 0)
 		var screen := project(point)
-		var delta := absf(progress - CORNER)
-		if turning and delta < ROUNDING_RADIUS:
-			# Match both straight tangents at the limits of the visual arc.
-			screen.x -= 27.0 * pow(ROUNDING_RADIUS - delta, 2) / (2.0 * ROUNDING_RADIUS)
+		if turning:
+			for corner_index in range(CORNERS.size() if full_route else 1):
+				var delta := absf(progress - float(CORNERS[corner_index]))
+				if delta >= ROUNDING_RADIUS:
+					continue
+				var corner: Vector2 = model.path_points[corner_index + 1]
+				var from: Vector2 = model.path_points[corner_index]
+				var to: Vector2 = model.path_points[corner_index + 2]
+				var incoming := project(corner) - project(from)
+				incoming /= from.distance_to(corner)
+				var outgoing := project(to) - project(corner)
+				outgoing /= to.distance_to(corner)
+				screen += (outgoing - incoming) * pow(ROUNDING_RADIUS - delta, 2) / (4.0 * ROUNDING_RADIUS)
+				break
 		return screen
 
 	func offsets(center: Vector2, local_scale: Vector2, mirrored: bool) -> Array[Vector2]:
@@ -127,17 +182,22 @@ class GaitView extends View:
 
 	func _draw_pillager(center: Vector2, _enemy: Dictionary, _hit: float = 0.0, _pose: Dictionary = {}) -> void:
 		var next_view := 0
-		if turning and distance >= CORNER - TURN_HALF_WIDTH:
-			next_view = 2 if distance >= CORNER + TURN_HALF_WIDTH else 1
+		for entry in schedule:
+			if distance < entry.at:
+				break
+			next_view = entry.view
 		var changed := next_view != view_index
 		var front := next_view == 1
 		var mirrored := next_view == 2
+		var rear := next_view == 3
+		var hooves := FRONT_HOOVES if front else REAR_HOOVES if rear else HOOVES
+		var order := FRONT_ORDER if front else REAR_ORDER if rear else FOOT_ORDER
 		if changed:
-			skin = front_skin if front else quarter_skin
-			prepare(skin.get_size(), FRONT_HOOVES if front else HOOVES, FRONT_ORDER if front else FOOT_ORDER)
-		var scale_value := FRONT_SCALE if front else SCALE
+			skin = front_skin if front else rear_skin if rear else quarter_skin
+			prepare(skin.get_size(), hooves, order)
+		var scale_value := FRONT_SCALE if front else REAR_SCALE if rear else SCALE
 		var local_scale := Vector2(-scale_value if mirrored else scale_value, scale_value)
-		var pivot := FRONT_PIVOT if front else PIVOT
+		var pivot := FRONT_PIVOT if front else REAR_PIVOT if rear else PIVOT
 		var visual_center := visual_position(distance)
 		maximum_path_deviation = maxf(maximum_path_deviation, center.distance_to(visual_center))
 		var feet := offsets(visual_center, local_scale, mirrored)
@@ -164,11 +224,10 @@ class GaitView extends View:
 			# Carry the change across adjacent limbs so a correction does not
 			# concentrate in the narrow strip between two hooves.
 			var anchors: Array[int] = []
-			for foot in (FRONT_ORDER if front else FOOT_ORDER):
+			for foot in order:
 				if contact_corrections.has(foot ^ int(mirrored)):
 					anchors.append(foot)
 			if anchors.size() >= 2:
-				var hooves := FRONT_HOOVES if front else HOOVES
 				for foot in range(4):
 					var logical_foot := foot ^ int(mirrored)
 					if contact_corrections.has(logical_foot):
@@ -246,10 +305,11 @@ class Preview extends Node2D:
 	var board: SubViewport
 	var focus := Vector2.ZERO
 	var turning := false
+	var full_route := false
 	func _draw() -> void:
 		draw_texture(board.get_texture(), Vector2.ZERO)
 		var font := ThemeDB.fallback_font
-		draw_string(font, Vector2(24, 40), "Sanglier · Premier virage du Gué" if turning else "Sanglier · Cycle de trois quarts avant", HORIZONTAL_ALIGNMENT_LEFT, -1, 26)
+		draw_string(font, Vector2(24, 40), "Sanglier · Traversée du Gué" if full_route else "Sanglier · Premier virage du Gué" if turning else "Sanglier · Cycle de trois quarts avant", HORIZONTAL_ALIGNMENT_LEFT, -1, 26)
 		draw_string(font, Vector2(24, 72), "Essai hors campagne · Passage par la vue de face" if turning else "Essai hors campagne · Première diagonale du Gué", HORIZONTAL_ALIGNMENT_LEFT, -1, 17)
 		draw_string(font, Vector2(24, 376), "Agrandissement ×4 du rendu", HORIZONTAL_ALIGNMENT_LEFT, -1, 17)
 		draw_texture_rect_region(board.get_texture(), Rect2(24, 390, 320, 224), Rect2(focus - Vector2(40, 40), Vector2(80, 56)))
@@ -263,8 +323,9 @@ func record() -> void:
 	root.size = Vector2i(1280, 800)
 	root.content_scale_size = root.size
 	var folder: String = get_script().resource_path.get_base_dir()
-	var turning := "--turn" in OS.get_cmdline_user_args()
-	var frames: String = folder.path_join("captures/turn" if turning else "captures/gait")
+	var full_route := "--route" in OS.get_cmdline_user_args()
+	var turning := full_route or "--turn" in OS.get_cmdline_user_args()
+	var frames: String = folder.path_join("captures/full_route" if full_route else "captures/turn" if turning else "captures/gait")
 	DirAccess.make_dir_recursive_absolute(frames)
 	var model := Model.new()
 	model.spawn_schedule.assign([{"type": 2, "time": 0.0}])
@@ -276,6 +337,8 @@ func record() -> void:
 	var view := GaitView.new()
 	view.model = model
 	view.turning = turning
+	view.full_route = full_route
+	view.prepare_route()
 	var source := Image.load_from_file(folder.path_join("sanglier_trois_quarts_source_v001.png"))
 	source.generate_mipmaps()
 	view.quarter_skin = ImageTexture.create_from_image(source)
@@ -283,13 +346,20 @@ func record() -> void:
 		var front := Image.load_from_file(folder.path_join("sanglier_face_source_v001.png"))
 		front.generate_mipmaps()
 		view.front_skin = ImageTexture.create_from_image(front)
+	if full_route:
+		var rear := Image.load_from_file(folder.path_join("sanglier_arriere_trois_quarts_source_v001.png"))
+		rear.generate_mipmaps()
+		view.rear_skin = ImageTexture.create_from_image(rear)
 	view.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	board.add_child(view)
 	var preview := Preview.new()
 	preview.board = board
 	preview.turning = turning
+	preview.full_route = full_route
+	view.full_route = full_route
+	view.prepare_route()
 	root.add_child(preview)
-	var frame_count := 240 if turning else 144
+	var frame_count := 1019 if full_route else 240 if turning else 144
 	for frame in range(frame_count):
 		if frame > 0:
 			model.advance(1.0 / 60.0)
@@ -302,11 +372,28 @@ func record() -> void:
 		await process_frame
 		await RenderingServer.frame_post_draw
 		assert(root.get_texture().get_image().save_png(frames.path_join("%04d.png" % frame)) == OK)
-	var proof := FileAccess.open(folder.path_join("controle_premier_virage.json" if turning else "controle_cycle_avant.json"), FileAccess.WRITE)
-	proof.store_string(JSON.stringify({"frames": frame_count, "fps": 60, "stride_px": STRIDE, "minimum_triangle_ratio": view.minimum_ratio, "maximum_contact_drift_px": view.native_contact, "worst": view.worst, "stance_samples": view.stance_samples, "view_changes": view.view_changes, "maximum_contact_correction_px": view.correction_peak, "maximum_visual_path_deviation_px": view.maximum_path_deviation}, "  ") + "\n")
-	proof.close()
-	print("BOAR_QUARTER_GAIT frames=", frame_count, " minimum_ratio=", view.minimum_ratio, " contact=", view.native_contact, " switches=", view.view_changes.size())
-	var switches_valid := not turning or view.view_changes.size() == 2
+	var expected_switches := 10 if full_route else 2 if turning else 0
+	var switches_valid := view.view_changes.size() == expected_switches
 	for change in view.view_changes:
-		switches_valid = switches_valid and change.shared_contacts == 2 and change.residual_gap_px < 0.001
-	quit(0 if view.minimum_ratio > 0.1 and view.native_contact < 0.001 and view.stance_samples > 0 and switches_valid else 1)
+		switches_valid = switches_valid and change.shared_contacts >= 2 and change.residual_gap_px < 0.001
+	var passed := view.minimum_ratio > 0.1 and view.native_contact < 0.001 and view.stance_samples > 0 and switches_valid
+	var report_name := "controle_traversee.json" if full_route else "controle_premier_virage.json" if turning else "controle_cycle_avant.json"
+	var proof := FileAccess.open(folder.path_join(report_name), FileAccess.WRITE)
+	proof.store_string(JSON.stringify({
+		"passed": passed,
+		"frames": frame_count,
+		"fps": 60,
+		"stride_px": STRIDE,
+		"final_distance": view.distance,
+		"minimum_triangle_ratio": view.minimum_ratio,
+		"maximum_contact_drift_px": view.native_contact,
+		"worst": view.worst,
+		"stance_samples": view.stance_samples,
+		"view_changes": view.view_changes,
+		"maximum_contact_correction_px": view.correction_peak,
+		"maximum_visual_path_deviation_px": view.maximum_path_deviation,
+	}, "  ") + "\n")
+	proof.close()
+	print("BOAR_GAIT frames=", frame_count, " minimum_ratio=", view.minimum_ratio,
+		" contact=", view.native_contact, " switches=", view.view_changes.size(), " passed=", passed)
+	quit(0 if passed else 1)
