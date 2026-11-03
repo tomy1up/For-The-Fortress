@@ -75,6 +75,7 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 	var max_world_slip := 0.0
 	var max_single_anchor_slip := 0.0
 	var max_translation := 0.0
+	var inverted_triangles := 0
 	var anchors := {}
 	var remaining := distance-0.2
 	var segment := 0
@@ -96,6 +97,7 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 		var reference := Walk.sample_vertices(phase, motion.direction)
 		var pivot := Walk.sample_vertices(phase, preview_direction(sample_distance, points))
 		var planted := PackedVector2Array()
+		var corrections := {}
 		for group in range(4):
 			var stance_phase := fposmod(phase-stance_starts[group]/64.0, 1.0)
 			if stance_phase < stance_lengths[group]/64.0:
@@ -105,16 +107,38 @@ func report_pivot_slip(corner: int, distance: float, points: Array[Vector2]) -> 
 					anchors[group] = position
 				var error: Vector2 = position-anchors[group]
 				planted.append(error)
+				corrections[group] = -error*Vector2(signf(motion.direction.x), 1.0)/0.7
 				max_world_slip = maxf(max_world_slip, error.length())
 				max_slip = maxf(max_slip, reference[index].distance_to(pivot[index])*0.7)
 			else:
 				anchors.erase(group)
+		inverted_triangles += count_pivot_inversions(pivot, corrections)
 		if not planted.is_empty():
 			var translation := planted[0]
 			max_translation = maxf(max_translation, translation.length())
 			for error in planted:
 				max_single_anchor_slip = maxf(max_single_anchor_slip, (error-translation).length())
+	print("WOLF_LOCAL_ANCHORS corner=%d inverted_triangle_samples=%d" % [corner, inverted_triangles])
 	print("WOLF_SINGLE_ANCHOR corner=%d other_paws_max_drift_px=%.2f max_body_shift_px=%.2f" % [
 		corner, max_single_anchor_slip, max_translation])
 	print("WOLF_PIVOT_STANCE corner=%d max_offset_from_reference_px=%.2f max_world_drift_px=%.2f" % [
 		corner, max_slip, max_world_slip])
+
+# Check whether the existing skin tolerates corrections confined to the lower legs.
+func count_pivot_inversions(vertices: PackedVector2Array, corrections: Dictionary) -> int:
+	var corrected := vertices.duplicate()
+	for index in range(vertices.size()):
+		var uv: Vector2 = Walk.DATA.uv[index]
+		var group := (0 if uv.x > 850.0/1536.0 else 1) + (2 if Walk.DATA.colors[index].r < 0.9 else 0)
+		var correction: Vector2 = corrections.get(group, Vector2.ZERO)
+		corrected[index] += correction*smoothstep(760.0, 900.0, uv.y*1024.0)
+	var inverted := 0
+	for triangle in range(0, Walk.DATA.indices.size(), 3):
+		var a: int = Walk.DATA.indices[triangle]
+		var b: int = Walk.DATA.indices[triangle+1]
+		var c: int = Walk.DATA.indices[triangle+2]
+		var before := (vertices[b]-vertices[a]).cross(vertices[c]-vertices[a])
+		var after := (corrected[b]-corrected[a]).cross(corrected[c]-corrected[a])
+		if before*after < 0.0:
+			inverted += 1
+	return inverted
