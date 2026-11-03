@@ -34,6 +34,7 @@ func report_corner_displacement(points: Array[Vector2]) -> void:
 	var distance := 0.0
 	for corner in range(1, points.size()-1):
 		distance += points[corner-1].distance_to(points[corner])
+		report_rounded_corner(corner, points[corner-1], points[corner], points[corner+1])
 		var incoming: Vector2 = Walk.path_motion(distance-0.0001, points, View.AXIS).direction
 		var outgoing: Vector2 = Walk.path_motion(distance+0.0001, points, View.AXIS).direction
 		var trial_incoming := trial_direction(-0.0001, incoming, outgoing)
@@ -142,3 +143,17 @@ func count_pivot_inversions(vertices: PackedVector2Array, corrections: Dictionar
 		if before*after < 0.0:
 			inverted += 1
 	return inverted
+
+# Measure how far a quadratic corner cut moves the visual center off the route.
+func report_rounded_corner(corner: int, previous: Vector2, vertex: Vector2, next: Vector2) -> void:
+	var start := View.project(vertex.move_toward(previous, 0.45))
+	var control := View.project(vertex)
+	var finish := View.project(vertex.move_toward(next, 0.45))
+	var maximum := 0.0
+	for step in range(33):
+		var phase := step/32.0
+		var point := start.lerp(control, phase).lerp(control.lerp(finish, phase), phase)
+		var on_incoming := Geometry2D.get_closest_point_to_segment(point, start, control)
+		var on_outgoing := Geometry2D.get_closest_point_to_segment(point, control, finish)
+		maximum = maxf(maximum, minf(point.distance_to(on_incoming), point.distance_to(on_outgoing)))
+	print("WOLF_ROUNDED_ROUTE corner=%d max_centerline_offset_px=%.2f" % [corner, maximum])
