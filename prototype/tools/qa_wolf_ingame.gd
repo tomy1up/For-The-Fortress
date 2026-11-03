@@ -5,6 +5,7 @@ const Model=preload("res://scripts/valley_model.gd")
 const Walk=preload("res://scripts/enemy_walk_art.gd")
 const View=preload("res://scripts/valley_view.gd")
 var minimum_turn_row_gap := INF
+var use_quarters := true
 var turn_meshes: Array[ArrayMesh] = []
 var rear_quarter_candidate: ImageTexture
 var quarter_candidate: ImageTexture
@@ -19,6 +20,7 @@ func record() -> void:
 	game._choose_faction(faction);game.model.buy(0,0);game.model.phase="combat"
 	game.model.enemies.clear();game.model.spawn_schedule.clear()
 	var preview := "--wolf-pivot" in OS.get_cmdline_user_args()
+	use_quarters = not "--no-quarters" in OS.get_cmdline_user_args()
 	var start_distances: Array[float] = []
 	if preview:
 		var corner_distance := 0.0
@@ -43,6 +45,8 @@ func record() -> void:
 		game.map_view.wolf_turn_preview = preview_enemy_pose
 	report_corner_displacement(game.model.path_points)
 	var directory:=ProjectSettings.globalize_path("user://qa_wolf_pivot" if preview else "user://qa_wolf_ingame")
+	if preview and not use_quarters:
+		directory += "_without_quarters"
 	if faction == 1:
 		directory += "_horde"
 	DirAccess.make_dir_recursive_absolute(directory)
@@ -256,8 +260,8 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 		var result := {"center": a.lerp(b, phase), "direction": direction, "travel": travel}
 		var towards := tangent.y > 0.0
 		var turn_center := absf(phase-0.5)
-		var quarter := turn_center >= 0.10
-		if front_candidate != null and changes_side and turn_center < 0.26:
+		var quarter := use_quarters and turn_center >= 0.10
+		if front_candidate != null and changes_side and turn_center < (0.26 if use_quarters else 0.14):
 			var source := Rect2(262, 19, 619, 1177) if towards else Rect2(389, 76, 391, 1095)
 			if quarter:
 				source = Rect2(109, 26, 984, 1055) if towards else Rect2(226, 61, 1092, 886)
