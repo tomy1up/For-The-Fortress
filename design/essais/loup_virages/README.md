@@ -83,3 +83,15 @@ Relancer `res://tools/qa_wolf_ingame.gd -- --wolf-pivot` avec puis sans `--previ
 Les deux dessins donnent les memes mesures. Ces mesures portent sur les points du maillage, communs aux deux textures. Pour juger le raccord des appuis dessines, il reste a verifier leur position dans chaque texture et a comparer les captures a la taille du plateau. Essai isole du jeu distribue.
 
 Les mesures ci-dessus precedaient le recalage du dessin v002. La comparaison utilise maintenant un cadrage et quatre reperes de pattes propres a ce dessin, releves visuellement. A decalage 0, la v002 recalee donne 6,671 px de derive, 5,986 px de saut et 0,135 px2 d'aire double minimale. La v003 conserve 6,676 px et 5,916 px. L'ecart est trop faible pour retenir une variante sur ces mesures seules.
+
+## Translation du dessin pendant le virage
+
+Essai avec le dessin v003 et `--turn-shift=0` ou `--turn-shift=4`. Le plafond par defaut reste a 2 px. Le parametre deplace la pose entiere sans ajouter d'etirement.
+
+| Plafond | Decalage 0, saut maximal | Decalage 3, saut maximal |
+| --- | --- | --- |
+| 0 px | 6,086 px | 6,492 px |
+| 2 px | 5,916 px | 6,201 px |
+| 4 px | 5,053 px | 5,380 px |
+
+Le raccord de face vers le trois quarts est le pire avant correction dans ces essais. Le plafond de 4 px reduit le saut entre vues, mais a la phase 3 le deplacement maximal entre deux images d'une meme vue passe de 0,812 a 1,009 px. Les triangles restent valides. Il reste a comparer visuellement le deplacement du corps par rapport au chemin avant de changer le reglage de reference.

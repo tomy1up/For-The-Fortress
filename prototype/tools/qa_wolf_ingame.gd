@@ -21,6 +21,7 @@ var worst_contact_switch := {}
 var use_quarters := true
 var front_half_window := 0.10
 var previous_front := false
+var turn_shift_limit := 2.0
 var turn_meshes: Array[ArrayMesh] = []
 var rear_quarter_candidate: ImageTexture
 var quarter_candidate: ImageTexture
@@ -42,6 +43,8 @@ func record() -> void:
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--front-window="):
 			front_half_window = clampf(argument.trim_prefix("--front-window=").to_float(), 0.04, 0.20)
+		if argument.begins_with("--turn-shift="):
+			turn_shift_limit = clampf(argument.trim_prefix("--turn-shift=").to_float(), 0.0, 6.0)
 		if argument.begins_with("--id-offset="):
 			id_offset = maxi(0, argument.trim_prefix("--id-offset=").to_int())
 	var start_distances: Array[float] = []
@@ -79,6 +82,8 @@ func record() -> void:
 		directory += "_previous_front"
 	if id_offset != 0:
 		directory += "_offset_%d" % id_offset
+	if preview and turn_shift_limit != 2.0:
+		directory += "_shift_%.2f" % turn_shift_limit
 	DirAccess.make_dir_recursive_absolute(directory)
 	for frame in range(144):
 		for enemy in game.model.enemies: enemy.distance+=enemy.speed/60.0
@@ -431,7 +436,7 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 		contact["label"] = pose.label
 		turn_contacts[key] = contact
 	if not errors.is_empty():
-		correction = (correction/maxf(1.0, total_contact_weight)).limit_length(2.0)
+		correction = (correction/maxf(1.0, total_contact_weight)).limit_length(turn_shift_limit)
 		var local_shift := correction*Vector2(pose.facing, 1.0)/scale
 		var local_corrections := PackedVector2Array()
 		var facing := Vector2(pose.facing, 1.0)
