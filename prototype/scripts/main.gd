@@ -2318,7 +2318,12 @@ func _combat_tally_text() -> String:
 	if combat_numbers_visible:
 		return "Apparus : %d / %d\nÉliminés : %d · Passés : %d\nEn chemin : %d" % [model.spawned,model.spawn_schedule.size(),model.killed,model.escaped,model.enemies.size()]
 	var first: String = "Éliminés : %d sur %d" % [model.killed,model.spawn_schedule.size()] if model.phase in ["finished","bonus","victory","defeat"] else "Ennemis restants : %d" % maxi(0,model.spawn_schedule.size()-model.killed-model.escaped)
-	return first+"\nOnt atteint la forteresse : %d" % model.escaped
+	var arrivals := first+"\nOnt atteint la forteresse : %d" % model.escaped
+	if model.routes.size() == 2:
+		arrivals += "\nEntrée 1 : %d · Entrée 2 : %d" % [
+			model.wave_arrivals_by_route.get(model.routes[0].id, 0),
+			model.wave_arrivals_by_route.get(model.routes[1].id, 0)]
+	return arrivals
 
 func _update_interface() -> void:
 	_refresh_loadout_label()

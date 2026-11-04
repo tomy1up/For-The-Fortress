@@ -60,6 +60,7 @@ var max_hp: int = INITIAL_HP
 var total_killed: int = 0
 var total_escaped: int = 0
 var arrivals_by_route: Dictionary = {}
+var wave_arrivals_by_route: Dictionary = {}
 var total_income: int = 0
 var completed_time: float = 0.0
 var bonuses: Array[int] = [] # indices 0..11 du catalogue R
@@ -133,6 +134,7 @@ func reset() -> void:
 	spawned = 0
 	killed = 0
 	escaped = 0
+	wave_arrivals_by_route.clear()
 	enemies.clear()
 	shots.clear()
 	damage_events.clear()
@@ -450,6 +452,7 @@ func prepare_next_wave() -> bool:
 	spawned = 0
 	killed = 0
 	escaped = 0
+	wave_arrivals_by_route.clear()
 	shots.clear()
 	damage_events.clear()
 	protection_events.clear()
@@ -689,6 +692,7 @@ func _resolve_instant() -> void:
 			if not routes.is_empty():
 				var route_id: String = enemy.route_id
 				arrivals_by_route[route_id] = arrivals_by_route.get(route_id, 0)+1
+				wave_arrivals_by_route[route_id] = wave_arrivals_by_route.get(route_id, 0)+1
 			arrival_damage += enemy.get("fortress_damage", 1)
 			event_log.append("%.9f arrivee %d" % [elapsed, enemy.id])
 		else:
