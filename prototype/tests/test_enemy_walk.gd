@@ -21,6 +21,9 @@ func run_checks() -> void:
 	for direction in [Vector2(0.8944272,0.4472136),Vector2(-0.8944272,0.4472136),Vector2(0.8944272,-0.4472136),Vector2(-0.8944272,-0.4472136)]:
 		var ground:=Walk.ground_basis(direction)
 		var facing: float=-1.0 if direction.x<0 else 1.0
+		var wolf := Model.make_enemy(0, 0, 0.0, 0)
+		var recoil := View.enemy_body_transform(wolf, facing, {"offset": Vector2(-3.5, 0.0)}, 0.0, false, direction)
+		check(recoil.origin.is_equal_approx(direction*(-3.5*View._enemy_scale(wolf))), "Le recul du loup suit le trajet dans les quatre directions")
 		for phase in [0.0,0.17,0.43,0.79]:
 			var flat:=Walk.sample_vertices(phase)
 			var oriented:=Walk.sample_vertices(phase,direction)

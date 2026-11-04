@@ -160,7 +160,7 @@ static func enemy_reaction_pose(enemy: Dictionary, events: Array[Dictionary], no
 	strength *= enemy_reaction_weight(int(enemy.get("type",1)))
 	return {"strength":strength,"offset":Vector2(-3.5*strength,0.7*strength),"rotation":-0.105*strength}
 
-static func enemy_body_transform(enemy: Dictionary, facing: float, pose: Dictionary, elapsed: float, moving: bool) -> Transform2D:
+static func enemy_body_transform(enemy: Dictionary, facing: float, pose: Dictionary, elapsed: float, moving: bool, route_direction := Vector2.ZERO) -> Transform2D:
 	var scale: float = _enemy_scale(enemy)
 	var stride: float = sin(elapsed*10.0*enemy.get("speed",1.0)+enemy.id)*2.0 if moving else 0.0
 	# Les pieds restent proches de leur ancrage. Ni recul logique, ni ralentissement.
@@ -168,6 +168,8 @@ static func enemy_body_transform(enemy: Dictionary, facing: float, pose: Diction
 	var mirror := Transform2D(Vector2(facing*scale,0),Vector2(0,scale),Vector2.ZERO)
 	var reaction := Transform2D(float(pose.get("rotation",0.0)),Vector2.ONE,0.0,offset)
 	var result: Transform2D = mirror*reaction
+	if route_direction != Vector2.ZERO:
+		result.origin += (route_direction-Vector2(facing, 0.0))*offset.x*scale
 	result.origin.y -= absf(stride)*0.3*scale
 	return result
 
@@ -812,7 +814,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]),Color("d6a1ef"))
 		break
 	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
-	var body: Transform2D = enemy_body_transform(enemy,facing,pose,model.elapsed,model.active and not walking)
+	var body: Transform2D = enemy_body_transform(enemy,facing,pose,model.elapsed,model.active and not walking, motion.get("direction", Vector2.ZERO))
 	body.origin += center
 	draw_set_transform_matrix(body)
 	if preview.has("texture"):
