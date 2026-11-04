@@ -6,6 +6,16 @@ import argparse
 import json
 import re
 
+MAP_IDS = ('valley_ford', 'ford_woods', 'ford_heights', 'ford_turns', 'ford_glade',
+           'ford_pass', 'ford_switchbacks', 'ford_trail', 'ford_approach', 'ford_ramparts')
+
+
+def mission_numbers(data):
+    scope = data.get('mission_range', [1, 3])
+    if scope not in ([1, 3], [11, 20]):
+        raise ValueError('Périmètre de missions inconnu.')
+    return range(scope[0], scope[1]+1)
+
 
 def key(row):
     return tuple(row[field] for field in (
@@ -20,7 +30,7 @@ def validate(data):
     seeds = [42] if smoke else [7, 42, 2026]
     expected = set()
     for faction, mission, seed, layout, composition, early in product(
-            range(2), range(1, 4), seeds, [1] if smoke else range(6),
+            range(2), mission_numbers(data), seeds, [1] if smoke else range(6),
             [0] if smoke else range(4), [2] if smoke else [1, 2, 3]):
         for talent in [-1, 0, 5, 10] if mission == 3 else [-1]:
             expected.add((faction, mission, seed, layout, composition, early, talent))
@@ -29,8 +39,10 @@ def validate(data):
     for row in rows:
         if row['enemy_hp_percent'] != 99+row['mission']:
             raise ValueError('PV ennemis différents de la mission annoncée.')
-        if row['map_id'] != ['valley_ford', 'ford_woods', 'ford_heights'][row['mission']-1]:
+        if row['map_id'] != MAP_IDS[(row['mission']-1) % len(MAP_IDS)]:
             raise ValueError('Carte différente de la mission annoncée.')
+        if row.get('wave_set_id', 'ford') != ('ford_banks' if row['mission'] > 10 else 'ford'):
+            raise ValueError('Rencontres différentes de la mission annoncée.')
         if row['points'] != (0 if row['talent'] == -1 else 1):
             raise ValueError('Nombre de points inattendu.')
         if row['gold'] < 0 or row['gold'] != 150+row['income']-row['spent']:
@@ -48,10 +60,12 @@ def validate(data):
 
 def summary(data):
     rows = validate(data)
+    missions = mission_numbers(data)
+    banks = missions.start == 11
     by_key = {key(row): row for row in rows}
     base = [row for row in rows if row['points'] == 0]
     lines = [
-        '# Comparaison des trois missions du prototype', '',
+        '# Comparaison des missions 11 à 20' if banks else '# Comparaison des trois missions du prototype', '',
         f"Jeu {data['game_version']} ; {format(len(rows), ',').replace(',', ' ')} simulations de politiques fixes, sans profil joueur ni changement d’équilibrage.", '',
         '**Ce tableau ne mesure pas le taux de victoire des joueurs.** Les mêmes décisions mécaniques sont répétées sur six triplets d’emplacements, quatre compositions, trois moments de tentative d’amélioration et trois graines de tirage. Les compositions, branches et choix de bonus couverts ne représentent pas toutes les stratégies possibles.', '',
         '## Sans talent persistant', '',
@@ -59,7 +73,7 @@ def summary(data):
         '| --- | --- | --- | --- | --- | --- |',
     ]
     totals = []
-    for faction, mission in product(range(2), range(1, 4)):
+    for faction, mission in product(range(2), missions):
         selected = [row for row in base if row['faction'] == faction and row['mission'] == mission]
         policies = defaultdict(list)
         for row in selected:
@@ -73,6 +87,12 @@ def summary(data):
         totals.append(record)
         detail = ', '.join(f'vague {wave} : {count}' for wave, count in sorted(failures.items())) or 'Aucune'
         lines.append(f"| {['Alliance', 'Horde'][faction]} | {mission} | {wins} / {len(selected)} | {stable} / {len(policies)} | {variable} / {len(policies)} | {detail} |")
+    if banks:
+        lines += ['', 'Les simulations utilisent les vagues du chapitre des Berges et leurs gardiennes. Les placements, les compositions et les graines sont identiques dans les deux factions. Aucun talent persistant ni recrutement de boutique.', '',
+                  data['policy'], '',
+                  'Les différences observées décrivent ces politiques fixes. Elles ne suffisent pas à attribuer un écart à la gardienne, ni à établir la difficulté en partie réelle.', '']
+        return '\n'.join(lines), {'schema': 1, 'game_version': data['game_version'], 'case_count': len(rows),
+                                  'human_balance_test': False, 'zero_points': totals, 'first_point_pairs': []}
     lines += ['', 'Les différences entre missions combinent changement de tracé, positions et PV. Elles ne permettent pas d’attribuer à la seule hausse de 1 % les victoires ou défaites. Un résultat variable montre la sensibilité de cette politique aux trois tirages testés, sans mesurer la probabilité de victoire humaine.', '',
               '## Premier point en mission 3', '',
               'Les trois choix de premier talent sont évalués séparément : un seul point investi à la fois, tel qu’obtenable après les deux premières victoires. Chaque essai est comparé à la même faction, au même placement, à la même composition, à la même tentative d’amélioration et à la même graine sans talent.', '',
