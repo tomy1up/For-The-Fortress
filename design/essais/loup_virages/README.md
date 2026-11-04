@@ -99,3 +99,7 @@ Le raccord de face vers le trois quarts est le pire avant correction dans ces es
 Le [comparatif au ralenti](comparatif_translation.mp4) montre les six virages avec le meme cadrage, a la phase initiale 3. A gauche, plafond de 2 px. A droite, plafond de 4 px. Le recadrage conserve l'echelle du jeu et la video est ralentie de moitie. Les 144 images proviennent de captures dans la scene du Gue avec un profil isole. Les loups sont places a l'avance pres des virages pour faciliter la comparaison.
 
 Le suivi de la translation du corps inclut aussi le retour au profil. Dans les quatre captures (decalages 0 et 3, plafonds 2 et 4 px), le saut maximal de la translation entre deux images atteint exactement le plafond teste. Le gain sur les pattes a 4 px s'accompagne donc d'un a-coup du corps de 4 px. Conserver le reglage de reference pour l'atelier tant que la translation n'est pas raccordee progressivement au profil.
+
+### Retour progressif au profil
+
+Avec `--turn-shift=4 --taper-turn-shift`, le decalage du corps revient progressivement a zero aux deux bords de la zone du virage. Sur les six virages du Gue, le saut maximal de translation descend de 4 px a 1,211 px (decalage 0) et 1,474 px (decalage 3). Le saut d'appui entre deux vues reste de 5,053 et 5,380 px. Le saut maximal dans une meme vue augmente de 1,022 a 1,728 px et de 1,009 a 1,587 px. Aucun triangle retourne sur les deux captures de 144 images. Garder cet essai optionnel pour la comparaison visuelle.

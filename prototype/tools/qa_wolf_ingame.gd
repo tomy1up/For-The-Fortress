@@ -22,6 +22,7 @@ var use_quarters := true
 var front_half_window := 0.10
 var previous_front := false
 var turn_shift_limit := 2.0
+var taper_turn_shift := false
 var last_body_shift: Dictionary = {}
 var max_body_shift_step := 0.0
 var turn_meshes: Array[ArrayMesh] = []
@@ -40,6 +41,7 @@ func record() -> void:
 	var preview := "--wolf-pivot" in OS.get_cmdline_user_args()
 	var hit_preview := "--wolf-hit" in OS.get_cmdline_user_args()
 	previous_front = "--previous-front" in OS.get_cmdline_user_args()
+	taper_turn_shift = "--taper-turn-shift" in OS.get_cmdline_user_args()
 	var id_offset := 0
 	use_quarters = not "--no-quarters" in OS.get_cmdline_user_args()
 	for argument in OS.get_cmdline_user_args():
@@ -86,6 +88,8 @@ func record() -> void:
 		directory += "_offset_%d" % id_offset
 	if preview and turn_shift_limit != 2.0:
 		directory += "_shift_%.2f" % turn_shift_limit
+	if preview and taper_turn_shift:
+		directory += "_taper"
 	DirAccess.make_dir_recursive_absolute(directory)
 	for frame in range(144):
 		for enemy in game.model.enemies: enemy.distance+=enemy.speed/60.0
@@ -312,7 +316,9 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 		var towards := tangent.y > 0.0
 		var turn_center := absf(phase-0.5)
 		var quarter := use_quarters and turn_center >= (front_half_window if towards else 0.10)
-		if front_candidate != null and changes_side and turn_center < (0.26 if use_quarters else 0.14):
+		var turn_window := 0.26 if use_quarters else 0.14
+		if front_candidate != null and changes_side and turn_center < turn_window:
+			result["shift_weight"] = smoothstep(0.0, 0.10, turn_window-turn_center) if taper_turn_shift else 1.0
 			var source := Rect2(214, 272, 773, 672) if towards else Rect2(389, 76, 391, 1095)
 			if towards and previous_front:
 				source = Rect2(245, 12, 650, 1185)
@@ -445,6 +451,7 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 		turn_contacts[key] = contact
 	if not errors.is_empty():
 		correction = (correction/maxf(1.0, total_contact_weight)).limit_length(turn_shift_limit)
+		correction *= pose.shift_weight
 		pose["body_shift"] = correction
 		var local_shift := correction*Vector2(pose.facing, 1.0)/scale
 		var local_corrections := PackedVector2Array()
