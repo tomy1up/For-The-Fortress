@@ -1,0 +1,555 @@
+{
+  "schema": 1,
+  "game_version": "0.135",
+  "case_count": 4320,
+  "human_balance_test": false,
+  "zero_points": [
+    {
+      "faction": 0,
+      "mission": 11,
+      "wins": 76,
+      "cases": 216,
+      "policies_all_seeds_won": 19,
+      "policies_variable": 19,
+      "defeat_waves": {
+        "3": 9,
+        "4": 41,
+        "5": 33,
+        "6": 13,
+        "7": 30,
+        "8": 9,
+        "9": 5
+      }
+    },
+    {
+      "faction": 0,
+      "mission": 12,
+      "wins": 70,
+      "cases": 216,
+      "policies_all_seeds_won": 17,
+      "policies_variable": 16,
+      "defeat_waves": {
+        "3": 3,
+        "4": 36,
+        "5": 36,
+        "6": 13,
+        "7": 41,
+        "8": 8,
+        "9": 4,
+        "10": 5
+      }
+    },
+    {
+      "faction": 0,
+      "mission": 13,
+      "wins": 155,
+      "cases": 216,
+      "policies_all_seeds_won": 45,
+      "policies_variable": 17,
+      "defeat_waves": {
+        "4": 19,
+        "5": 11,
+        "6": 2,
+        "7": 16,
+        "8": 10,
+        "9": 3
+      }
+    },
+    {
+      "faction": 0,
+      "mission": 14,
+      "wins": 59,
+      "cases": 216,
+      "policies_all_seeds_won": 16,
+      "policies_variable": 10,
+      "defeat_waves": {
+        "4": 72,
+        "5": 52,
+        "6": 6,
+        "7": 15,
+        "8": 11,
+        "9": 1
+      }
+    },
+    {
+      "faction": 0,
+      "mission": 15,
+      "wins": 77,
+      "cases": 216,
+      "policies_all_seeds_won": 17,
+      "policies_variable": 26,
+      "defeat_waves": {
+        "4": 35,
+        "5": 21,
+        "6": 21,
+        "7": 35,
+        "8": 17,
+        "9": 9,
+        "10": 1
+      }
+    },
+    {
+      "faction": 0,
+      "mission": 16,
+      "wins": 173,
+      "cases": 216,
+      "policies_all_seeds_won": 50,
+      "policies_variable": 19,
+      "defeat_waves": {
+        "5": 14,
+        "6": 1,
+        "7": 16,
+        "8": 3,
+        "9": 9
+      }
+    },
+    {
+      "faction": 0,
+      "mission": 17,
+      "wins": 114,
+      "cases": 216,
+      "policies_all_seeds_won": 33,
+      "policies_variable": 15,
+      "defeat_waves": {
+        "4": 7,
+        "5": 31,
+        "6": 5,
+        "7": 29,
+        "8": 27,
+        "9": 3
+      }
+    },
+    {
+      "faction": 0,
+      "mission": 18,
+      "wins": 138,
+      "cases": 216,
+      "policies_all_seeds_won": 35,
+      "policies_variable": 27,
+      "defeat_waves": {
+        "4": 18,
+        "5": 17,
+        "6": 9,
+        "7": 11,
+        "8": 17,
+        "9": 6
+      }
+    },
+    {
+      "faction": 0,
+      "mission": 19,
+      "wins": 57,
+      "cases": 216,
+      "policies_all_seeds_won": 11,
+      "policies_variable": 21,
+      "defeat_waves": {
+        "3": 3,
+        "4": 58,
+        "5": 34,
+        "6": 8,
+        "7": 16,
+        "8": 22,
+        "9": 16,
+        "10": 2
+      }
+    },
+    {
+      "faction": 0,
+      "mission": 20,
+      "wins": 114,
+      "cases": 216,
+      "policies_all_seeds_won": 30,
+      "policies_variable": 23,
+      "defeat_waves": {
+        "4": 29,
+        "5": 20,
+        "6": 6,
+        "7": 24,
+        "8": 19,
+        "9": 3,
+        "10": 1
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 11,
+      "wins": 17,
+      "cases": 216,
+      "policies_all_seeds_won": 0,
+      "policies_variable": 17,
+      "defeat_waves": {
+        "3": 21,
+        "4": 66,
+        "5": 58,
+        "6": 10,
+        "7": 21,
+        "8": 11,
+        "9": 12
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 12,
+      "wins": 12,
+      "cases": 216,
+      "policies_all_seeds_won": 3,
+      "policies_variable": 3,
+      "defeat_waves": {
+        "3": 30,
+        "4": 58,
+        "5": 61,
+        "6": 13,
+        "7": 39,
+        "9": 3
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 13,
+      "wins": 31,
+      "cases": 216,
+      "policies_all_seeds_won": 5,
+      "policies_variable": 15,
+      "defeat_waves": {
+        "3": 30,
+        "4": 37,
+        "5": 63,
+        "6": 25,
+        "7": 26,
+        "8": 2,
+        "9": 2
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 14,
+      "wins": 0,
+      "cases": 216,
+      "policies_all_seeds_won": 0,
+      "policies_variable": 0,
+      "defeat_waves": {
+        "3": 24,
+        "4": 67,
+        "5": 85,
+        "6": 23,
+        "7": 13,
+        "9": 4
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 15,
+      "wins": 33,
+      "cases": 216,
+      "policies_all_seeds_won": 8,
+      "policies_variable": 7,
+      "defeat_waves": {
+        "3": 15,
+        "4": 32,
+        "5": 72,
+        "6": 10,
+        "7": 45,
+        "8": 2,
+        "9": 7
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 16,
+      "wins": 58,
+      "cases": 216,
+      "policies_all_seeds_won": 13,
+      "policies_variable": 18,
+      "defeat_waves": {
+        "3": 18,
+        "4": 32,
+        "5": 56,
+        "6": 6,
+        "7": 26,
+        "8": 12,
+        "9": 8
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 17,
+      "wins": 38,
+      "cases": 216,
+      "policies_all_seeds_won": 9,
+      "policies_variable": 10,
+      "defeat_waves": {
+        "3": 6,
+        "4": 6,
+        "5": 51,
+        "6": 32,
+        "7": 54,
+        "8": 12,
+        "9": 13,
+        "10": 4
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 18,
+      "wins": 28,
+      "cases": 216,
+      "policies_all_seeds_won": 2,
+      "policies_variable": 18,
+      "defeat_waves": {
+        "3": 12,
+        "4": 43,
+        "5": 57,
+        "6": 13,
+        "7": 44,
+        "8": 11,
+        "9": 5,
+        "10": 3
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 19,
+      "wins": 5,
+      "cases": 216,
+      "policies_all_seeds_won": 0,
+      "policies_variable": 5,
+      "defeat_waves": {
+        "3": 18,
+        "4": 61,
+        "5": 61,
+        "6": 30,
+        "7": 24,
+        "8": 11,
+        "9": 6
+      }
+    },
+    {
+      "faction": 1,
+      "mission": 20,
+      "wins": 17,
+      "cases": 216,
+      "policies_all_seeds_won": 1,
+      "policies_variable": 13,
+      "defeat_waves": {
+        "3": 18,
+        "4": 44,
+        "5": 86,
+        "6": 16,
+        "7": 30,
+        "8": 4,
+        "9": 1
+      }
+    }
+  ],
+  "faction_pairs": [
+    {
+      "mission": 11,
+      "both_win": 17,
+      "alliance_only": 59,
+      "horde_only": 0,
+      "both_lose": 140
+    },
+    {
+      "mission": 12,
+      "both_win": 11,
+      "alliance_only": 59,
+      "horde_only": 1,
+      "both_lose": 145
+    },
+    {
+      "mission": 13,
+      "both_win": 23,
+      "alliance_only": 132,
+      "horde_only": 8,
+      "both_lose": 53
+    },
+    {
+      "mission": 14,
+      "both_win": 0,
+      "alliance_only": 59,
+      "horde_only": 0,
+      "both_lose": 157
+    },
+    {
+      "mission": 15,
+      "both_win": 29,
+      "alliance_only": 48,
+      "horde_only": 4,
+      "both_lose": 135
+    },
+    {
+      "mission": 16,
+      "both_win": 52,
+      "alliance_only": 121,
+      "horde_only": 6,
+      "both_lose": 37
+    },
+    {
+      "mission": 17,
+      "both_win": 33,
+      "alliance_only": 81,
+      "horde_only": 5,
+      "both_lose": 97
+    },
+    {
+      "mission": 18,
+      "both_win": 23,
+      "alliance_only": 115,
+      "horde_only": 5,
+      "both_lose": 73
+    },
+    {
+      "mission": 19,
+      "both_win": 3,
+      "alliance_only": 54,
+      "horde_only": 2,
+      "both_lose": 157
+    },
+    {
+      "mission": 20,
+      "both_win": 14,
+      "alliance_only": 100,
+      "horde_only": 3,
+      "both_lose": 99
+    }
+  ],
+  "playtest_examples": [
+    {
+      "faction": 0,
+      "mission": 11,
+      "layout": 1,
+      "composition": 1,
+      "early_upgrade_wave": 1,
+      "min_hp": 18
+    },
+    {
+      "faction": 0,
+      "mission": 12,
+      "layout": 2,
+      "composition": 2,
+      "early_upgrade_wave": 3,
+      "min_hp": 12
+    },
+    {
+      "faction": 0,
+      "mission": 13,
+      "layout": 1,
+      "composition": 0,
+      "early_upgrade_wave": 1,
+      "min_hp": 14
+    },
+    {
+      "faction": 0,
+      "mission": 14,
+      "layout": 1,
+      "composition": 2,
+      "early_upgrade_wave": 3,
+      "min_hp": 13
+    },
+    {
+      "faction": 0,
+      "mission": 15,
+      "layout": 5,
+      "composition": 3,
+      "early_upgrade_wave": 1,
+      "min_hp": 12
+    },
+    {
+      "faction": 0,
+      "mission": 16,
+      "layout": 2,
+      "composition": 3,
+      "early_upgrade_wave": 1,
+      "min_hp": 14
+    },
+    {
+      "faction": 0,
+      "mission": 17,
+      "layout": 2,
+      "composition": 3,
+      "early_upgrade_wave": 1,
+      "min_hp": 17
+    },
+    {
+      "faction": 0,
+      "mission": 18,
+      "layout": 1,
+      "composition": 1,
+      "early_upgrade_wave": 1,
+      "min_hp": 13
+    },
+    {
+      "faction": 0,
+      "mission": 19,
+      "layout": 2,
+      "composition": 2,
+      "early_upgrade_wave": 3,
+      "min_hp": 12
+    },
+    {
+      "faction": 0,
+      "mission": 20,
+      "layout": 2,
+      "composition": 2,
+      "early_upgrade_wave": 3,
+      "min_hp": 13
+    },
+    {
+      "faction": 1,
+      "mission": 12,
+      "layout": 2,
+      "composition": 1,
+      "early_upgrade_wave": 1,
+      "min_hp": 5
+    },
+    {
+      "faction": 1,
+      "mission": 13,
+      "layout": 1,
+      "composition": 1,
+      "early_upgrade_wave": 1,
+      "min_hp": 8
+    },
+    {
+      "faction": 1,
+      "mission": 15,
+      "layout": 5,
+      "composition": 1,
+      "early_upgrade_wave": 3,
+      "min_hp": 9
+    },
+    {
+      "faction": 1,
+      "mission": 16,
+      "layout": 1,
+      "composition": 3,
+      "early_upgrade_wave": 1,
+      "min_hp": 10
+    },
+    {
+      "faction": 1,
+      "mission": 17,
+      "layout": 0,
+      "composition": 1,
+      "early_upgrade_wave": 1,
+      "min_hp": 13
+    },
+    {
+      "faction": 1,
+      "mission": 18,
+      "layout": 4,
+      "composition": 1,
+      "early_upgrade_wave": 3,
+      "min_hp": 6
+    },
+    {
+      "faction": 1,
+      "mission": 20,
+      "layout": 5,
+      "composition": 1,
+      "early_upgrade_wave": 3,
+      "min_hp": 2
+    }
+  ],
+  "first_point_pairs": []
+}
