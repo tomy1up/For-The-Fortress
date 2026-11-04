@@ -54,6 +54,14 @@ func run_checks() -> void:
 		check(signature(scene) == before,"Le rendu animé ne modifie ni combat, or, cibles, RNG ni rapport")
 		scene.model.shots.append({"type":type,"time":10.0,"slot":0,"from":Vector2(2,6),"to":Vector2(3,3)})
 		check(scene.map_view.defender_pose(0).direction == 1.0,"Le prochain vrai tir peut changer le côté")
+		if type == 0:
+			scene.model.defenders[0].ready_at = 10.5
+			for sample in [[0.0,1],[0.15,2],[0.33,3],[0.41,0]]:
+				scene.model.elapsed = 10.0+sample[0]
+				check(scene.map_view.defender_pose(0).archer_stage == sample[1],"Le cycle de l’archer revient à la visée avant le prochain tir")
+			scene.model.elapsed = 10.0
+		else:
+			check(not scene.map_view.defender_pose(0).has("archer_stage"),"Les autres défenseurs gardent leurs poses propres")
 		scene.model.defenders[0].last_target_position = scene.model.slots[0]+Vector2(-1,0)
 		scene.model.phase = "finished"
 		check(scene.map_view.defender_pose(0) == {"pulse":0.0,"direction":-1.0},"Fin de vague : repos du dernier cote vise")
