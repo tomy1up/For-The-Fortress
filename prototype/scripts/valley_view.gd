@@ -670,6 +670,8 @@ func defender_pose(slot: int) -> Dictionary:
 		if shot.slot != slot or age < 0.0: continue
 		pose.pulse = attack_pulse(age)
 		pose.direction = shot_facing(shot)
+		if shot.type == 0:
+			pose.archer_stage = AllianceArt.archer_shot_stage(age, defender.ready_at-shot.time)
 		break
 	return pose
 
@@ -724,7 +726,8 @@ func _draw_illustrated_defender(center: Vector2, type: int, pose: Dictionary, ar
 	var transform: Transform2D = attack_transform(type,pose)
 	transform.origin += center
 	draw_set_transform_matrix(transform)
-	draw_texture_rect_region(art.TEXTURES[type],art.destination(type),art.FRAMES[type].source)
+	var texture: Texture2D = AllianceArt.ARCHER_SHOT_TEXTURES[pose.get("archer_stage", 0)] if type == 0 else art.TEXTURES[type]
+	draw_texture_rect_region(texture,art.destination(type),art.FRAMES[type].source)
 	draw_set_transform(Vector2.ZERO)
 
 func _draw_level_badge(center: Vector2, level: int, branch: int) -> void:

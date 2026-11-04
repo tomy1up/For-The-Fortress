@@ -7,16 +7,15 @@ class ArcherPreview extends View:
 	var reload_texture: ImageTexture
 	var nock_texture: ImageTexture
 	var shot_time := INF
-	var cycle_duration := 0.52
+	var live_cycle := false
 
 	func shot_stage(age: float) -> int:
-		var phase := age/cycle_duration
-		if phase < 0.0 or phase >= 1.0: return 0
-		if phase < 0.14/0.52: return 1
-		if phase < 0.38/0.52: return 2
-		return 3
+		return AllianceArt.archer_shot_stage(age, 1.0)
 
 	func _draw_illustrated_defender(center: Vector2, type: int, pose: Dictionary, art: GDScript) -> void:
+		if live_cycle:
+			super._draw_illustrated_defender(center, type, pose, art)
+			return
 		var age: float = model.elapsed-shot_time
 		var stage := shot_stage(age)
 		if type == 0 and age < 0.0:
@@ -41,7 +40,7 @@ func _initialize() -> void:
 func capture() -> void:
 	root.size = Vector2i(1280,800)
 	var view := ArcherPreview.new()
-	var folder := ProjectSettings.globalize_path("res://../design/essais/archer_tir")
+	var folder := ProjectSettings.globalize_path("res://assets/units/alliance")
 	view.release_texture = load_pose(folder.path_join("archer_lacher_v001.png"))
 	view.reload_texture = load_pose(folder.path_join("archer_rearmement_v001.png"))
 	view.nock_texture = load_pose(folder.path_join("archer_encochage_v001.png"))
@@ -54,6 +53,7 @@ func capture() -> void:
 	var slot := 1 if face_right else 0
 	view.model.buy(slot,0)
 	var repeat := "--repeat" in args
+	view.live_cycle = repeat
 	if repeat:
 		view.model.bonuses.append(1)
 	view.model.start()
@@ -86,8 +86,7 @@ func capture() -> void:
 					stages.clear()
 				previous_shot = shot.time
 				view.shot_time = shot.time
-				view.cycle_duration = minf(0.52, (view.model.defenders[slot].ready_at-shot.time)*0.8)
-			stages[view.shot_stage(view.model.elapsed-view.shot_time)] = true
+			stages[view.defender_pose(slot).get("archer_stage", 0)] = true
 		else:
 			view.model.elapsed = view.shot_time+(frame-12)/60.0
 		view.queue_redraw()
