@@ -1,0 +1,1 @@
+L’inspection indique les 25 % de dégâts transférés et le nombre de voisins protégés par la gardienne. Le statut de malédiction reste visible. 821 contrôles Godot ciblés et 10 essais Windows réussis, dont la protection des profils et la séparation des bonus. 83 sources comparées.
