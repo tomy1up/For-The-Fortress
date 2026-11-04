@@ -15,3 +15,7 @@ Edit this exact elf archer transparent game sprite into a reload pose immediatel
 ImageGen, references : la pose de rearmement et le sprite de tir original. Le joueur voit la fleche sur la corde avant le retour a l arc tendu. Les temps restent des valeurs d essai.
 
 Edit this exact cartoon elf archer for the Nocking frame between the two references. Same original 1263x1246 composition, both boots at exact same locations, body, head, costume, expression and colors unchanged. Bow is in the forward hand, halfway raised, arm slightly bent. One arrow held in the drawing hand between chest and bow, with its rear nock resting against the nearly straight bowstring, tip pointing right. This is BEFORE pulling the string, so drawing hand is farther forward than in the second (fully drawn) reference and never near the cheek. Natural attached arms, one arrow being loaded, remaining arrows in original quiver. Transparent background, no labels, floor or effects.
+
+## Tirs repetes
+
+Lancer la capture avec `-- --repeat` pour faire avancer le combat a vitesse x2 avec le bonus de cadence actif. Le cycle de dessin dure au plus 0,52 s de simulation et est borne a 80 % du delai de recuperation indique par le modele. La capture a verifie six cycles complets en 180 images. Chaque cycle montre le lacher, le rearmement, l encochage et le retour a l arc tendu. Les tirs et leurs cibles sont resolus par le modele de combat. Les seuils et les dessins restent en atelier.
