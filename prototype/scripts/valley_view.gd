@@ -310,12 +310,19 @@ static func enemy_bounds(enemy: Dictionary, defending_faction: int = -1, route_p
 	var bounds := Rect2(center+Vector2(-width/2.0,-39.0*scale),Vector2(width,47.0*scale))
 	if EnemyArt.TEXTURES.has(enemy_art_id(enemy,defending_faction)):
 		var image: Rect2 = EnemyArt.destination(enemy_art_id(enemy,defending_faction))
+		var facing: float
 		if EnemyWalkArt.supports(enemy_art_id(enemy,defending_faction)):
 			var motion: Dictionary=EnemyWalkArt.path_motion(enemy.distance,route_points,AXIS)
 			image=image.merge(EnemyWalkArt.projected_bounds(motion.direction))
-		if enemy_facing(enemy,route_points,route_length) < 0.0: image.position.x = -image.end.x
+			facing = wolf_facing(motion.direction)
+		else:
+			facing = enemy_facing(enemy,route_points,route_length)
+		if facing < 0.0: image.position.x = -image.end.x
 		bounds = bounds.merge(Rect2(center+image.position*scale,image.size*scale).grow(1.0))
 	return bounds.grow(8.0) # Marge fixe couvrant les poses, sans survol qui tremble avec le corps.
+
+static func wolf_facing(direction: Vector2) -> float:
+	return -1.0 if direction.x < 0.0 else 1.0
 
 static func enemy_facing(enemy: Dictionary, route_points: Array[Vector2] = Model.PATH_POINTS, route_length: float = Model.PATH_LENGTH) -> float:
 	var distance: float = clampf(enemy.distance,0.0,route_length)
@@ -808,7 +815,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	var motion: Dictionary = {}
 	if walking or not pose.get("offset", Vector2.ZERO).is_zero_approx():
 		motion = EnemyWalkArt.path_motion(enemy.distance, route_points, AXIS)
-	var facing: float=(-1.0 if motion.direction.x<0 else 1.0) if walking else enemy_facing(enemy,route_points,model.enemy_route_length(enemy))
+	var facing: float=wolf_facing(motion.direction) if walking else enemy_facing(enemy,route_points,model.enemy_route_length(enemy))
 	var preview: Dictionary = {}
 	if walking and wolf_turn_preview.is_valid():
 		preview = wolf_turn_preview.call(enemy.distance, route_points, enemy.id, scale)
