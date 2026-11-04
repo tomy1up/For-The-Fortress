@@ -19,6 +19,8 @@ static func source_hashes() -> Dictionary:
 func play(faction: int, mission: int, seed_value: int, layout: int, composition: int, early: int, talent: int, step: float, replay: bool) -> Dictionary:
 	var definition: Dictionary = Catalogue.definition(mission)
 	var m = Model.new(true,Model.Maps.for_id(definition.map_id))
+	var wave_set: String = definition.get("wave_set_id","ford")
+	if not m.configure_wave_set(wave_set): error = "Rencontres de mission refusées.";return {}
 	if not m.configure_enemy_hp(definition.hp_percent): error = "PV de mission refusés.";return {}
 	var ranks: Array = Talents.empty_ranks()
 	if talent >= 0:
@@ -50,13 +52,15 @@ func play(faction: int, mission: int, seed_value: int, layout: int, composition:
 	if replay:
 		var verified: Dictionary = Replay.verify(JSON.parse_string(JSON.stringify(Report.build(m))))
 		if not verified.ok: error = "Rejeu refusé : "+verified.get("error","");return {}
-	return {"faction":faction,"mission":mission,"map_id":definition.map_id,"enemy_hp_percent":definition.hp_percent,"seed":seed_value,"layout":layout,"composition":composition,"early_upgrade_wave":early,"talent":talent,"talent_name":"Aucun" if talent < 0 else Talents.node(faction,talent).name,"points":Talents.spent(ranks),"result":m.phase,"reached_wave":m.wave,"hp":m.fortress_hp,"max_hp":m.max_hp,"gold":m.gold,"income":m.total_income,"spent":paid,"combat_seconds":m.completed_time+m.elapsed,"bonuses":m.bonuses.duplicate(),"leaked":m.total_escaped,"killed":m.total_killed}
+	return {"faction":faction,"mission":mission,"map_id":definition.map_id,"wave_set_id":wave_set,"enemy_hp_percent":definition.hp_percent,"seed":seed_value,"layout":layout,"composition":composition,"early_upgrade_wave":early,"talent":talent,"talent_name":"Aucun" if talent < 0 else Talents.node(faction,talent).name,"points":Talents.spent(ranks),"result":m.phase,"reached_wave":m.wave,"hp":m.fortress_hp,"max_hp":m.max_hp,"gold":m.gold,"income":m.total_income,"spent":paid,"combat_seconds":m.completed_time+m.elapsed,"bonuses":m.bonuses.duplicate(),"leaked":m.total_escaped,"killed":m.total_killed}
 
 func _initialize() -> void:
 	var output: String = "";var smoke: bool = false;var step: float = 300.0
+	var banks := false
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--output="): output = argument.trim_prefix("--output=")
 		elif argument == "--smoke": smoke = true
+		elif argument == "--banks": banks = true
 		elif argument == "--small-steps": step = 0.05
 		else: printerr("Argument inconnu : "+argument);quit(2);return
 	if output.is_empty(): printerr("Indiquer --output=<nouveau rapport hors des données du joueur>.");quit(2);return
@@ -66,7 +70,7 @@ func _initialize() -> void:
 		printerr("Destination existante ou réservée au joueur refusée.");quit(2);return
 	var before: Dictionary = source_hashes();var results: Array = []
 	for faction in range(2):
-		for mission in range(1,4):
+		for mission in (range(11,21) if banks else range(1,4)):
 			for seed_value in ([42] if smoke else SEEDS):
 				for layout in ([1] if smoke else range(LAYOUTS.size())):
 					for composition in ([0] if smoke else range(COMPOSITIONS.size())):
@@ -76,8 +80,9 @@ func _initialize() -> void:
 								if row.is_empty(): printerr(error);quit(1);return
 								results.append(row)
 			print("CAMPAIGN_SURVEY_PROGRESS=",results.size())
-	if before != source_hashes() or results.size() != (12 if smoke else 2592): printerr("Sources modifiées ou échantillon incomplet.");quit(1);return
+	var expected := (20 if smoke else 4320) if banks else (12 if smoke else 2592)
+	if before != source_hashes() or results.size() != expected: printerr("Sources modifiées ou échantillon incomplet.");quit(1);return
 	var file := FileAccess.open(output,FileAccess.WRITE)
 	if file == null: printerr("Rapport non accessible.");quit(1);return
-	file.store_string(JSON.stringify({"schema":1,"game_version":ProjectSettings.get_setting("application/config/version"),"human_balance_test":false,"profile_loaded":false,"sources_sha256":before,"step":step,"smoke_replays":smoke,"case_count":results.size(),"seeds":[42] if smoke else SEEDS,"layouts":LAYOUTS,"compositions":COMPOSITIONS,"policy":"Deux recrues au départ ; tentative d’amélioration de la première aux vagues 1, 2 ou 3 ; troisième recrue à partir de la vague 4 ; améliorations à partir de la vague 5, branche A ; premier bonus proposé. Aucun revenu ajouté, aucune opération forcée. Un seul point, facultatif, est simulé uniquement en mission 3.","results":results},"\t")+"\n");file.close()
+	file.store_string(JSON.stringify({"schema":1,"game_version":ProjectSettings.get_setting("application/config/version"),"human_balance_test":false,"mission_range":[11,20] if banks else [1,3],"profile_loaded":false,"sources_sha256":before,"step":step,"smoke_replays":smoke,"case_count":results.size(),"seeds":[42] if smoke else SEEDS,"layouts":LAYOUTS,"compositions":COMPOSITIONS,"policy":"Deux recrues au départ ; tentative d’amélioration de la première aux vagues 1, 2 ou 3 ; troisième recrue à partir de la vague 4 ; améliorations à partir de la vague 5, branche A ; premier bonus proposé. Aucun revenu ajouté, aucune opération forcée. Les variantes avec un point concernent uniquement le relevé des missions 1 à 3.","results":results},"\t")+"\n");file.close()
 	print("CAMPAIGN_SURVEY_COMPLETE=",results.size());quit()
