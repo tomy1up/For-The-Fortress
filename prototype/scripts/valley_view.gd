@@ -798,11 +798,14 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	var id: String = enemy_art_id(enemy,model.faction)
 	var scale: float = _enemy_scale(enemy)
 	var walking: bool = EnemyWalkArt.supports(id)
-	var motion: Dictionary=EnemyWalkArt.path_motion(enemy.distance,model.enemy_route_points(enemy),AXIS) if walking else {}
-	var facing: float=(-1.0 if motion.direction.x<0 else 1.0) if walking else enemy_facing(enemy,model.enemy_route_points(enemy),model.enemy_route_length(enemy))
+	var route_points: Array[Vector2] = model.enemy_route_points(enemy)
+	var motion: Dictionary = {}
+	if walking or not pose.get("offset", Vector2.ZERO).is_zero_approx():
+		motion = EnemyWalkArt.path_motion(enemy.distance, route_points, AXIS)
+	var facing: float=(-1.0 if motion.direction.x<0 else 1.0) if walking else enemy_facing(enemy,route_points,model.enemy_route_length(enemy))
 	var preview: Dictionary = {}
 	if walking and wolf_turn_preview.is_valid():
-		preview = wolf_turn_preview.call(enemy.distance, model.enemy_route_points(enemy), enemy.id, scale)
+		preview = wolf_turn_preview.call(enemy.distance, route_points, enemy.id, scale)
 	center = preview.get("center", center)
 	draw_set_transform(center,0.0,Vector2.ONE*scale)
 	if enemy.id == inspected_enemy_id:
