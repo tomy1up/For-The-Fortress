@@ -1,11 +1,13 @@
 extends SceneTree
 const Geometry = preload("res://scripts/route_geometry.gd")
 const View = preload("res://scripts/valley_view.gd")
+const Enemies = preload("res://scripts/enemy_catalogue.gd")
 const Maps = preload("res://scripts/map_definition.gd")
 
 class Board extends View:
 	var routes: Array[Dictionary] = []
 	var destinations := {}
+	var progress := 0.0
 
 	func _draw() -> void:
 		draw_rect(Rect2(0, 0, 1280, 800), Color("0b1814"))
@@ -26,6 +28,14 @@ class Board extends View:
 			draw_polyline(line, entry_color(index), 11, true)
 			draw_circle(line[0], 9, entry_color(index))
 			draw_string(ThemeDB.fallback_font, line[0]+Vector2(-35, -16), "Entrée %d" % (index+1), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, entry_color(index))
+			var points: Array[Vector2] = []
+			points.assign(route.path_points)
+			var actor := project(Geometry.position_at(progress*route.path_length, points, route.path_length))
+			var identity: Dictionary = Enemies.for_profile(1, 0)
+			var sprite: Rect2 = EnemyArt.destination(identity.id)
+			sprite.position += actor
+			draw_circle(actor, 11.0, entry_color(index), false, 2.0, true)
+			draw_texture_rect_region(EnemyArt.TEXTURES[identity.id], sprite, EnemyArt.FRAMES[identity.id].source)
 			_draw_fortress(project(destinations[route.destination_id]))
 			draw_string(ThemeDB.fallback_font, fortress_center(line[-1])+Vector2(-40, 58), "Bastion %s" % route.destination_id, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, entry_color(index))
 
@@ -42,8 +52,25 @@ func capture() -> void:
 		board.routes.append({"id": spec[0], "destination_id": spec[1], "path_points": spec[2], "path_length": Maps.measured_length(spec[2])})
 	assert(Geometry.destinations_error(board.routes, board.destinations).is_empty())
 	root.add_child(board)
-	await process_frame
-	await RenderingServer.frame_post_draw
+	var capture_frames := "--traversee" in OS.get_cmdline_user_args()
+	var frames := 180 if capture_frames else 1
+	var directory := ProjectSettings.globalize_path("user://qa_deux_bastions")
+	if capture_frames:
+		DirAccess.make_dir_recursive_absolute(directory)
+	for frame in range(frames):
+		board.progress = float(frame)/float(frames-1) if capture_frames else 0.68
+		board.queue_redraw()
+		await process_frame
+		await RenderingServer.frame_post_draw
+		if capture_frames:
+			var status := root.get_texture().get_image().save_png(directory.path_join("%04d.png" % frame))
+			if status != OK:
+				quit(status)
+				return
+	if capture_frames:
+		print("BASTIONS_TRAVERSAL frames=", frames, " directory=", directory)
+		quit()
+		return
 	var output := ProjectSettings.globalize_path("res://../design/essais/deux_forteresses/les_deux_bastions.png")
 	var status := root.get_texture().get_image().save_png(output)
 	print("BASTIONS_CAPTURE=", status)
