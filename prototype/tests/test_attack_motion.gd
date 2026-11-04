@@ -54,8 +54,11 @@ func run_checks() -> void:
 		check(signature(scene) == before,"Le rendu animé ne modifie ni combat, or, cibles, RNG ni rapport")
 		scene.model.shots.append({"type":type,"time":10.0,"slot":0,"from":Vector2(2,6),"to":Vector2(3,3)})
 		check(scene.map_view.defender_pose(0).direction == 1.0,"Le prochain vrai tir peut changer le côté")
+		scene.model.defenders[0].last_target_position = scene.model.slots[0]+Vector2(-1,0)
 		scene.model.phase = "finished"
-		check(scene.map_view.defender_pose(0) == {"pulse":0.0,"direction":1.0},"Fin de vague : repos sans mouvement ni orientation résiduelle")
+		check(scene.map_view.defender_pose(0) == {"pulse":0.0,"direction":-1.0},"Fin de vague : repos du dernier cote vise")
+		scene.model.shots.clear()
+		check(scene.map_view.defender_pose(0).direction == -1.0,"La suppression des effets ne retourne pas le defenseur")
 		scene.model.reset();scene.model.select_faction(0 if type<3 else 1)
 		check(scene.map_view.defender_pose(0) == {"pulse":0.0,"direction":1.0},"Nouvelle partie : aucun état d’animation conservé")
 		scene.queue_free();await process_frame

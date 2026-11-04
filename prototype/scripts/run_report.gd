@@ -73,6 +73,7 @@ static func build(model: RefCounted) -> Dictionary:
 	for slot in range(model.defenders.size()):
 		if model.defenders[slot].is_empty(): continue
 		var unit: Dictionary = model.defenders[slot].duplicate(true)
+		unit.erase("last_target_position")
 		unit["slot"] = slot
 		unit["name"] = Model.ROSTER[unit.type].name
 		army.append(unit)

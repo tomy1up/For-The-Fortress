@@ -647,6 +647,7 @@ func _resolve_instant() -> void:
 		targets.sort_custom(_target_priority)
 		var primary: Dictionary = targets[0]
 		var impact: Vector2 = enemy_position(primary)
+		defender.last_target_position = impact
 		var direct_damage: float = damage_for(stats,"direct",primary)
 		_add_damage(damage, primary.id, direct_damage)
 		hits.append({"source_id":defender.instance_id,"enemy_id":primary.id,"component":"direct","amount":direct_damage})

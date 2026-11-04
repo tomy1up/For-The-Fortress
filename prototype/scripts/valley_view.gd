@@ -651,7 +651,11 @@ static func attack_pulse(age: float) -> float:
 
 func defender_pose(slot: int) -> Dictionary:
 	var pose: Dictionary = {"pulse":0.0,"direction":1.0}
-	if model == null or not model.active: return pose
+	if model == null or slot < 0 or slot >= model.defenders.size(): return pose
+	var defender: Dictionary = model.defenders[slot]
+	if defender.has("last_target_position"):
+		pose.direction = shot_facing({"from": model.slots[slot], "to": defender.last_target_position})
+	if not model.active: return pose
 	# Garder le côté du dernier tir de cet emplacement après la fin du mouvement.
 	for index in range(model.shots.size()-1,-1,-1):
 		var shot: Dictionary = model.shots[index]
