@@ -12,7 +12,7 @@ MAP_IDS = ('valley_ford', 'ford_woods', 'ford_heights', 'ford_turns', 'ford_glad
 
 def mission_numbers(data):
     scope = data.get('mission_range', [1, 3])
-    if scope not in ([1, 3], [11, 20]):
+    if scope not in ([1, 3], [11, 20], [14, 14]):
         raise ValueError('Périmètre de missions inconnu.')
     return range(scope[0], scope[1]+1)
 
@@ -28,11 +28,14 @@ def validate(data):
     rows = data['results']
     smoke = data.get('smoke_replays') is True
     seeds = [42] if smoke else [7, 42, 2026]
+    focus = mission_numbers(data).start == 14
+    if focus and data.get('talent_mode') != 'six_in_one_tree':
+        raise ValueError('Répartition des six points non déclarée.')
     expected = set()
     for faction, mission, seed, layout, composition, early in product(
-            range(2), mission_numbers(data), seeds, [1] if smoke else range(6),
+            [1] if focus else range(2), mission_numbers(data), seeds, [1] if smoke else range(6),
             [0] if smoke else range(4), [2] if smoke else [1, 2, 3]):
-        for talent in [-1, 0, 5, 10] if mission == 3 else [-1]:
+        for talent in [-1, 0, 5, 10] if mission == 3 or focus else [-1]:
             expected.add((faction, mission, seed, layout, composition, early, talent))
     if len(rows) != data['case_count'] or len(rows) != len(expected) or {key(row) for row in rows} != expected:
         raise ValueError('Scénarios absents, répétés ou hors du périmètre annoncé.')
@@ -43,7 +46,7 @@ def validate(data):
             raise ValueError('Carte différente de la mission annoncée.')
         if row.get('wave_set_id', 'ford') != ('ford_banks' if row['mission'] > 10 else 'ford'):
             raise ValueError('Rencontres différentes de la mission annoncée.')
-        if row['points'] != (0 if row['talent'] == -1 else 1):
+        if row['points'] != (0 if row['talent'] == -1 else 6 if focus else 1):
             raise ValueError('Nombre de points inattendu.')
         if row['gold'] < 0 or row['gold'] != 150+row['income']-row['spent']:
             raise ValueError('Conservation du budget de combat incorrecte.')
@@ -63,6 +66,24 @@ def summary(data):
     missions = mission_numbers(data)
     banks = missions.start == 11
     by_key = {key(row): row for row in rows}
+    if missions.start == 14:
+        lines = ['# Mission 14 côté Horde', '',
+                 'Comparaison de plans fixes avec les six points accessibles après les treize premières victoires. Chaque variante investit cinq rangs dans le talent indiqué, puis un rang dans le premier talent de la ligne suivante du même arbre.', '',
+                 '| Allocation | Victoires / cas | Défaites aux vagues 4 et 5 | Défaites devenues victoires |',
+                 '| --- | --- | --- | --- |']
+        variants = []
+        for talent in (-1, 0, 5, 10):
+            runs = [row for row in rows if row['talent'] == talent]
+            wins = sum(row['result'] == 'victory' for row in runs)
+            early = sum(row['result'] == 'defeat' and row['reached_wave'] in (4, 5) for row in runs)
+            gained = sum(row['result'] == 'victory' and by_key[key(row)[:-1]+(-1,)]['result'] == 'defeat' for row in runs)
+            name = runs[0]['talent_name']
+            variants.append({'talent': talent, 'name': name, 'wins': wins, 'cases': len(runs),
+                             'defeats_waves_4_5': early, 'defeat_to_victory': gained})
+            lines.append(f'| {name} | {wins} / {len(runs)} | {early} | {gained} |')
+        lines += ['', data['policy'], '', 'Ces résultats sont limités aux trois allocations et aux plans de combat testés. Les unités de boutique et les décisions adaptées au déroulement de la vague ne sont pas couvertes.', '']
+        return '\n'.join(lines), {'schema': 1, 'game_version': data['game_version'], 'case_count': len(rows),
+                                  'human_balance_test': False, 'variants': variants}
     base = [row for row in rows if row['points'] == 0]
     lines = [
         '# Comparaison des missions 11 à 20' if banks else '# Comparaison des trois missions du prototype', '',

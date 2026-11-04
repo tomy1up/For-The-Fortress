@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "game_version": "0.135",
+  "case_count": 864,
+  "human_balance_test": false,
+  "variants": [
+    {
+      "talent": -1,
+      "name": "Aucun",
+      "wins": 0,
+      "cases": 216,
+      "defeats_waves_4_5": 152,
+      "defeat_to_victory": 0
+    },
+    {
+      "talent": 0,
+      "name": "Entraînement",
+      "wins": 35,
+      "cases": 216,
+      "defeats_waves_4_5": 96,
+      "defeat_to_victory": 35
+    },
+    {
+      "talent": 5,
+      "name": "Rituels",
+      "wins": 14,
+      "cases": 216,
+      "defeats_waves_4_5": 137,
+      "defeat_to_victory": 14
+    },
+    {
+      "talent": 10,
+      "name": "Explosifs",
+      "wins": 30,
+      "cases": 216,
+      "defeats_waves_4_5": 121,
+      "defeat_to_victory": 30
+    }
+  ]
+}
