@@ -59,6 +59,7 @@ var wave: int = 1
 var max_hp: int = INITIAL_HP
 var total_killed: int = 0
 var total_escaped: int = 0
+var arrivals_by_route: Dictionary = {}
 var total_income: int = 0
 var completed_time: float = 0.0
 var bonuses: Array[int] = [] # indices 0..11 du catalogue R
@@ -120,6 +121,7 @@ func reset() -> void:
 	max_hp = INITIAL_HP
 	total_killed = 0
 	total_escaped = 0
+	arrivals_by_route.clear()
 	total_income = 0
 	completed_time = 0.0
 	bonuses.clear()
@@ -684,6 +686,9 @@ func _resolve_instant() -> void:
 		if enemy.distance >= enemy_route_length(enemy) - EPS:
 			escaped += 1
 			total_escaped += 1
+			if not routes.is_empty():
+				var route_id: String = enemy.route_id
+				arrivals_by_route[route_id] = arrivals_by_route.get(route_id, 0)+1
 			arrival_damage += enemy.get("fortress_damage", 1)
 			event_log.append("%.9f arrivee %d" % [elapsed, enemy.id])
 		else:

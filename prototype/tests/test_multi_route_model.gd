@@ -120,7 +120,13 @@ func run_checks() -> void:
 			complete.start();complete.advance(10000)
 		var report: Dictionary=JSON.parse_string(JSON.stringify(Report.build(complete)))
 		check(report.route_target_policy=="arrival_time","Nouveau rapport : règle de ciblage explicite")
+		var entries: Array = report.arrivals_by_entry
+		check(entries.size()==2 and entries[0].route_id=="upper" and entries[1].route_id=="lower","Le bilan conserve l'identite des deux entrees")
+		check(entries[0].arrivals+entries[1].arrivals==report.total_escaped,"Les arrivees par entree correspondent au total du combat")
 		check(Replay.verify(report).ok,"Rapport multitrajet rejouable avec affectation identique")
+		var wrong_arrivals := report.duplicate(true)
+		wrong_arrivals.arrivals_by_entry[0].arrivals += 1
+		check(not Replay.verify(wrong_arrivals).ok,"Le rejeu rejette un effectif falsifie par entree")
 		for invalid in [null,1,"unknown",{}]:
 			var malformed:=report.duplicate(true);malformed.route_target_policy=invalid
 			check(not Replay.verify(malformed).ok,"Règle de ciblage invalide rejetée avant relecture")

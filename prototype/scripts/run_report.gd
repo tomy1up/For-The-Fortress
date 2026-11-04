@@ -87,7 +87,12 @@ static func build(model: RefCounted) -> Dictionary:
 		"army":army,"bonuses":bonuses,"waves":model.wave_history.duplicate(true),"actions":model.action_history.duplicate(true),"performance":performance(model),"boss_encounter":boss_encounter(model)}
 	if Model.MetaTalents.spent(model.meta_ranks) > 0: report.meta_ranks = model.meta_ranks.duplicate()
 	if model.map_definition != Model.Maps.valley(): report.map_definition = Model.Maps.to_data(model.map_definition)
-	if not model.routes.is_empty(): report.route_target_policy=model.route_target_policy
+	if not model.routes.is_empty():
+		report.route_target_policy = model.route_target_policy
+		report.arrivals_by_entry = []
+		for index in range(model.routes.size()):
+			var route_id: String = model.routes[index].id
+			report.arrivals_by_entry.append({"entry": index+1, "route_id": route_id, "arrivals": model.arrivals_by_route.get(route_id, 0)})
 	if model.auxiliary_type >= 0:
 		report.auxiliary_type = model.auxiliary_type
 		report.auxiliary_base_cost = model.base_recruit_cost(model.auxiliary_type)
@@ -107,6 +112,13 @@ static func markdown(report: Dictionary) -> String:
 		lines.insert(5,"Talents permanents actifs (rangs par arbre) : "+str(report.meta_ranks)+". Barème de prototype "+("v0.67" if report.meta_ranks.size() == 9 else "v0.68" if report.meta_ranks.size() == 15 else "arbres enrichis")+".")
 	for wave in report.waves:
 		lines.append("| %d | %d | %d | %d | %d | %s |" % [wave.wave,wave.killed,wave.escaped,wave.hp_lost,wave.income,"Défaite" if wave.result == "defeat" else "Terminée"])
+	if report.has("arrivals_by_entry"):
+		lines.append("\n## Arrivées par entrée\n")
+		lines.append("| Entrée | Ennemis ayant atteint la forteresse |")
+		lines.append("| --- | --- |")
+		for entry in report.arrivals_by_entry:
+			lines.append("| %d | %d |" % [entry.entry, entry.arrivals])
+
 	if report.has("boss_encounter"):
 		lines.append("\n## Boss final\n")
 		lines.append("**%s**\n" % report.boss_encounter.name)

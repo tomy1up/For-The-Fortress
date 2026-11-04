@@ -105,6 +105,7 @@ static func verify(data: Variant) -> Dictionary:
 			bonus.description = bonus.description.replace("ours, unités lourdes, gardes d’élite et boss","Brutes, Colosses, Élites et boss")
 	for field in observed:
 		if field in ["game_version","engine_version"]: continue
+		if field == "arrivals_by_entry" and not data.has(field): continue # Optional detail absent from earlier route reports.
 		if field=="route_target_policy" and not data.has(field): continue # v0.106 : distance restante, restaurée avant les actions.
 		if field == "boss_encounter" and not data.has(field): continue # Champ ajouté en v0.50 ; rapports historiques au format 2.
 		if field == "enemy_catalog" and not data.has(field): continue # Champ facultatif ajouté en v0.65.
