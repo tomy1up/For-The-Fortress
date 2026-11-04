@@ -7,7 +7,9 @@ const Maps = preload("res://scripts/map_definition.gd")
 class Board extends View:
 	var routes: Array[Dictionary] = []
 	var destinations := {}
-	var progress := 0.0
+	var elapsed := 0.0
+	const PREVIEW_SPEED := 9.0
+	const SPAWN_INTERVAL := 0.55
 
 	func _draw() -> void:
 		draw_rect(Rect2(0, 0, 1280, 800), Color("0b1814"))
@@ -30,13 +32,23 @@ class Board extends View:
 			draw_string(ThemeDB.fallback_font, line[0]+Vector2(-35, -16), "Entrée %d" % (index+1), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, entry_color(index))
 			var points: Array[Vector2] = []
 			points.assign(route.path_points)
-			var actor := project(Geometry.position_at(progress*route.path_length, points, route.path_length))
-			var identity: Dictionary = Enemies.for_profile(1, 0)
-			var sprite: Rect2 = EnemyArt.destination(identity.id)
-			sprite.position += actor
-			draw_circle(actor, 11.0, entry_color(index), false, 2.0, true)
-			draw_texture_rect_region(EnemyArt.TEXTURES[identity.id], sprite, EnemyArt.FRAMES[identity.id].source)
-			_draw_fortress(project(destinations[route.destination_id]))
+			var travel := (elapsed-index*SPAWN_INTERVAL)*PREVIEW_SPEED
+			var arrival_age := (travel-float(route.path_length))/PREVIEW_SPEED
+			if travel >= 0.0 and arrival_age < 0.0:
+				var actor := project(Geometry.position_at(travel, points, route.path_length))
+				var identity: Dictionary = Enemies.for_profile(1, 0)
+				var sprite: Rect2 = EnemyArt.destination(identity.id)
+				sprite.position += actor
+				draw_circle(actor, 11.0, entry_color(index), false, 2.0, true)
+				draw_texture_rect_region(EnemyArt.TEXTURES[identity.id], sprite, EnemyArt.FRAMES[identity.id].source)
+			var destination := project(destinations[route.destination_id])
+			royal_hurt_age = arrival_age if arrival_age >= 0.0 else INF
+			_draw_fortress(destination)
+			if arrival_age >= 0.0 and arrival_age < 0.45:
+				var color := entry_color(index)
+				color.a = 1.0-arrival_age/0.45
+				draw_arc(destination, 9.0+arrival_age*32.0, 0.0, TAU, 32, color, 2.0, true)
+
 			draw_string(ThemeDB.fallback_font, fortress_center(line[-1])+Vector2(-40, 58), "Bastion %s" % route.destination_id, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, entry_color(index))
 
 func _initialize() -> void:
@@ -53,12 +65,12 @@ func capture() -> void:
 	assert(Geometry.destinations_error(board.routes, board.destinations).is_empty())
 	root.add_child(board)
 	var capture_frames := "--traversee" in OS.get_cmdline_user_args()
-	var frames := 180 if capture_frames else 1
-	var directory := ProjectSettings.globalize_path("user://qa_deux_bastions")
+	var frames := 210 if capture_frames else 1
+	var directory := ProjectSettings.globalize_path("user://qa_deux_bastions_arrivees")
 	if capture_frames:
 		DirAccess.make_dir_recursive_absolute(directory)
 	for frame in range(frames):
-		board.progress = float(frame)/float(frames-1) if capture_frames else 0.68
+		board.elapsed = frame/60.0 if capture_frames else 2.5
 		board.queue_redraw()
 		await process_frame
 		await RenderingServer.frame_post_draw
