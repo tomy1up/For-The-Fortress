@@ -4,6 +4,7 @@ const Model = View.Model
 
 class ArcherPreview extends View:
 	var release_texture: ImageTexture
+	var reload_texture: ImageTexture
 	var shot_time := INF
 
 	func _draw_illustrated_defender(center: Vector2, type: int, pose: Dictionary, art: GDScript) -> void:
@@ -11,7 +12,7 @@ class ArcherPreview extends View:
 		if type == 0 and age < 0.0:
 			pose = pose.duplicate()
 			pose.direction = shot_facing(model.shots[0])
-		if type != 0 or age < 0.0 or age >= 0.14:
+		if type != 0 or age < 0.0 or age >= 0.38:
 			super._draw_illustrated_defender(center, type, pose, art)
 			return
 		draw_set_transform(center+Vector2(0,2),0,Vector2(1,0.45))
@@ -20,7 +21,7 @@ class ArcherPreview extends View:
 		transform.origin += center
 		draw_set_transform_matrix(transform)
 		# Both sprites use the original canvas, crop and foot anchor.
-		draw_texture_rect_region(release_texture, art.destination(type), art.FRAMES[type].source)
+		draw_texture_rect_region(release_texture if age < 0.14 else reload_texture, art.destination(type), art.FRAMES[type].source)
 		draw_set_transform(Vector2.ZERO)
 
 func _initialize() -> void:
@@ -34,6 +35,10 @@ func capture() -> void:
 	assert(image != null and image.get_size() == Vector2i(1263,1246))
 	assert(image.generate_mipmaps() == OK)
 	view.release_texture = ImageTexture.create_from_image(image)
+	var reload_image := Image.load_from_file(folder.path_join("archer_rearmement_v001.png"))
+	assert(reload_image != null and reload_image.get_size() == image.get_size())
+	assert(reload_image.generate_mipmaps() == OK)
+	view.reload_texture = ImageTexture.create_from_image(reload_image)
 	view.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	view.font = ThemeDB.fallback_font
 	view.model = Model.new()
