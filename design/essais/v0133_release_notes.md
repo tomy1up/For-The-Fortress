@@ -1,0 +1,1 @@
+La carapace de la tortue gardienne s’illumine lorsqu’elle absorbe une partie des dégâts destinés à un autre ennemi. L’éclat a été examiné sur les captures Windows des deux factions. 4 826 contrôles Godot ciblés et 8 essais Windows réussis, dont la protection des profils et la séparation des bonus. 83 sources comparées.
