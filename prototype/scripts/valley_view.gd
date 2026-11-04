@@ -229,10 +229,17 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 			draw_line(point-shaft*6,point+shaft*5,Color("d0ac75"),2.5,true)
 			draw_colored_polygon(PackedVector2Array([point+shaft*4,point+shaft*7+edge*6,point-shaft*2+edge*7,point-shaft*3+edge*3]),Color("c9e5da"))
 		4:
+			var roll := sin(age/PROJECTILE_FLIGHT*PI)*0.75*shot_facing(shot)
+			var fuse := point+Vector2(4,-8).rotated(roll)
 			draw_circle(point,5,Color("253a3e"),true,-1,true)
-			draw_arc(point,4,3.7,5.0,8,Color("a6b7a9"),1.5,true)
-			draw_line(point+Vector2(2,-4),point+Vector2(4,-8),Color("d8b16b"),1.5,true)
-			draw_circle(point+Vector2(4,-8),2,color,true,-1,true)
+			draw_arc(point,4,3.7+roll,5.0+roll,8,Color("a6b7a9"),1.5,true)
+			draw_line(point+Vector2(2,-4).rotated(roll),fuse,Color("d8b16b"),1.5,true)
+			draw_circle(fuse,4.0,Color(1.0,0.57,0.22,0.26),true,-1,true)
+			draw_circle(fuse,1.7,Color("fff0b4"),true,-1,true)
+			for spark in range(3):
+				var phase := fposmod(age*17.0+float(spark)/3.0,1.0)
+				var offset := Vector2.UP.rotated(roll+(spark-1)*0.65)*lerpf(2.0,7.0,phase)
+				draw_circle(fuse+offset,1.1,Color(1.0,0.72,0.34,1.0-phase),true,-1,true)
 		5:
 			var cross := PackedVector2Array([point+Vector2(0,-6),point+Vector2(4,0),point+Vector2(0,6),point+Vector2(-4,0)])
 			draw_colored_polygon(cross,color)
