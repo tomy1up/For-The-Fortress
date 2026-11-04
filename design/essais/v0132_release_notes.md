@@ -1,0 +1,1 @@
+Les attaquants s’orientent selon le segment effectivement parcouru. Le recul et le survol suivent la même direction. 5 621 contrôles Godot ciblés et 10 essais Windows réussis, dont la marche du loup, les réactions aux dégâts, l’inspection, la protection des profils et les bonus des factions. 83 sources comparées.
