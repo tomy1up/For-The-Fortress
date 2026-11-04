@@ -1,0 +1,1 @@
+Le rendu des defenseurs accepte les evenements de tir sans type et conserve leur orientation. 95 suites Godot et 45 973 controles passes, ainsi que 17 tests Python. Le paquet Windows passe 7 essais cibles, notamment les tirs de l archer dans les deux sens, la protection des profils et les bonus des deux factions. 81 sources comparees.

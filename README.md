@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Prototype v0.125**. L’archer elfe se réarme entre deux tirs et revient en visée. [Notes de version](design/essais/v0125_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.125).
+**Prototype v0.126**. L’archer elfe se réarme entre deux tirs et revient en visée. [Notes de version](design/essais/v0126_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.126).
 
 **Prototype v0.111 — comparer les unités de boutique** : [fiches et tableau facultatif](design/Comparaison_boutique_v0111.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.111). Les chiffres de niveau 1 sont présentés face à ceux du défenseur de départ, avec une distinction entre PO de déblocage et or de recrutement. Aucun changement de prix ou de combat.
 
