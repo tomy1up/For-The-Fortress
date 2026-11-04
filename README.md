@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Prototype v0.115**. Dans La Confluence, survolez un groupe de la prochaine vague pour repérer ses entrées et chemins. L’atelier s’ouvre avec `Lancer_atelier_routes.cmd` dans le paquet Windows. [Notes de version](design/essais/v0115_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.115).
+**Prototype v0.117**. Dans La Confluence, le bilan et les rapports indiquent les arrivées par entrée. L’atelier s’ouvre avec `Lancer_atelier_routes.cmd` dans le paquet Windows. [Notes de version](design/essais/v0117_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.117).
 
 **Prototype v0.111 — comparer les unités de boutique** : [fiches et tableau facultatif](design/Comparaison_boutique_v0111.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.111). Les chiffres de niveau 1 sont présentés face à ceux du défenseur de départ, avec une distinction entre PO de déblocage et or de recrutement. Aucun changement de prix ou de combat.
 

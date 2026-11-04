@@ -10,6 +10,8 @@ Orientation validée pour les prochains chapitres : varier les tracés, introdui
 - [ ] Préparer les cartes à plusieurs forteresses, chacune lisible, inspectable et visuellement propre à la faction.
 - [ ] Définir puis tester l’affectation des groupes aux routes et sorties, ainsi que la difficulté des attaques simultanées.
 
+L’étude [Les Deux Bastions](essais/deux_forteresses/les_deux_bastions.png) montre deux trajets vers deux forteresses distinctes et une [réaction visuelle par destination](essais/deux_forteresses/arrivees.mp4). Le tracé reste une proposition. La v0.117 permet de comparer les arrivées par entrée dans le bilan de La Confluence.
+
 Questions ouvertes : PV propres ou partagés entre forteresses, défaite à la perte d’une seule ou de toutes, comportement des attaquants si leur destination est déjà détruite, et chapitres d’introduction. Aucun de ces choix n’est déduit de la seule demande de variantes.
 
 ### Configurations de parcours à explorer
