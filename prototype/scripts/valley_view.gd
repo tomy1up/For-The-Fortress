@@ -493,12 +493,19 @@ func _draw() -> void:
 		draw_polyline(route,Color("b3a17b"),20,true)
 		for point in route: draw_circle(point,10,Color("b3a17b"))
 	for route in screen_routes: draw_polyline(route,Color("c7b58d"),2,true)
+	var highlighted_segments := {}
 	for index in highlighted_entries:
 		if index < 0 or index >= screen_routes.size():
 			continue
-		var tint := entry_color(index)
-		tint.a = 0.72 if highlighted_entries.size() == 1 else 0.45
-		draw_polyline(screen_routes[index], tint, 5.0, true)
+		var route := screen_routes[index]
+		for step in range(1, route.size()):
+			var start := route[step-1]
+			var finish := route[step]
+			var segment := Vector4(start.x, start.y, finish.x, finish.y)
+			var tint := Color("f2dfb2") if highlighted_segments.has(segment) else entry_color(index)
+			highlighted_segments[segment] = tint
+	for segment: Vector4 in highlighted_segments:
+		draw_line(Vector2(segment.x, segment.y), Vector2(segment.z, segment.w), highlighted_segments[segment], 5.0, true)
 	if definition.decoration == "valley": _draw_valley_bridge()
 	for tree in definition.trees:
 		_draw_tree(project(tree))
