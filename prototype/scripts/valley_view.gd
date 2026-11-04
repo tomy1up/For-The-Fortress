@@ -674,6 +674,8 @@ func defender_pose(slot: int) -> Dictionary:
 			pose.archer_stage = AllianceArt.archer_shot_stage(age, defender.ready_at-shot.time)
 		elif shot.get("type", -1) == 1:
 			pose.crossbow_reload = age >= ATTACK_POSE_DURATION and age < minf(0.72, (defender.ready_at-shot.time)*0.8)
+		elif shot.get("type", -1) == 2 and age < ATTACK_POSE_DURATION:
+			pose.staff_flash = 1.0-smoothstep(0.0, ATTACK_POSE_DURATION, age)
 		break
 	return pose
 
@@ -732,6 +734,11 @@ func _draw_illustrated_defender(center: Vector2, type: int, pose: Dictionary, ar
 	if type == 1 and pose.get("crossbow_reload", false):
 		texture = AllianceArt.CROSSBOW_RELOAD_TEXTURE
 	draw_texture_rect_region(texture,art.destination(type),art.FRAMES[type].source)
+	var flash: float = pose.get("staff_flash", 0.0)
+	if flash > 0.0:
+		var crystal: Vector2 = art.MUZZLES[type]
+		draw_circle(crystal, 7.0+3.0*(1.0-flash), Color(0.40,0.87,1.0,0.24*flash), true, -1.0, true)
+		draw_circle(crystal, 3.0, Color(0.86,0.98,1.0,0.8*flash), true, -1.0, true)
 	draw_set_transform(Vector2.ZERO)
 
 func _draw_level_badge(center: Vector2, level: int, branch: int) -> void:
