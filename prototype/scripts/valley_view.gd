@@ -672,6 +672,8 @@ func defender_pose(slot: int) -> Dictionary:
 		pose.direction = shot_facing(shot)
 		if shot.get("type", -1) == 0:
 			pose.archer_stage = AllianceArt.archer_shot_stage(age, defender.ready_at-shot.time)
+		elif shot.get("type", -1) == 1:
+			pose.crossbow_reload = age >= ATTACK_POSE_DURATION and age < minf(0.72, (defender.ready_at-shot.time)*0.8)
 		break
 	return pose
 
@@ -727,6 +729,8 @@ func _draw_illustrated_defender(center: Vector2, type: int, pose: Dictionary, ar
 	transform.origin += center
 	draw_set_transform_matrix(transform)
 	var texture: Texture2D = AllianceArt.ARCHER_SHOT_TEXTURES[pose.get("archer_stage", 0)] if type == 0 else art.TEXTURES[type]
+	if type == 1 and pose.get("crossbow_reload", false):
+		texture = AllianceArt.CROSSBOW_RELOAD_TEXTURE
 	draw_texture_rect_region(texture,art.destination(type),art.FRAMES[type].source)
 	draw_set_transform(Vector2.ZERO)
 

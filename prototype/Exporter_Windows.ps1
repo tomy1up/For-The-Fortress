@@ -48,6 +48,7 @@ foreach ($pose in @('lacher','rearmement','encochage')) {
     $asset = "assets\units\alliance\archer_${pose}_v001.png"
     $sourcePaths += @($asset, "$asset.import")
 }
+$sourcePaths += @('assets\units\alliance\arbaletrier_rearmement_v001.png','assets\units\alliance\arbaletrier_rearmement_v001.png.import')
 $sourcePaths += @('scripts\fortress_art.gd','assets\fortresses\forteresse_alliance_v001.png','assets\fortresses\forteresse_alliance_v001.png.import','assets\fortresses\forteresse_horde_v001.png','assets\fortresses\forteresse_horde_v001.png.import','assets\fortresses\roi_alliance_v001.png','assets\fortresses\roi_alliance_v001.png.import','assets\fortresses\roi_horde_v001.png','assets\fortresses\roi_horde_v001.png.import')
 $sourcePaths += @('scripts\enemy_walk_art.gd','assets\enemies\animations\loup_corps_v002.png','assets\enemies\animations\loup_corps_v002.png.import')
 $sourcePaths += @('assets\enemies\animations\loup_marche_v002.bin','scripts\route_geometry.gd')

@@ -11,6 +11,7 @@ const ARCHER_SHOT_TEXTURES: Array[Texture2D] = [
 	preload("res://assets/units/alliance/archer_rearmement_v001.png"),
 	preload("res://assets/units/alliance/archer_encochage_v001.png"),
 ]
+const CROSSBOW_RELOAD_TEXTURE = preload("res://assets/units/alliance/arbaletrier_rearmement_v001.png")
 
 static func archer_shot_stage(age: float, interval: float) -> int:
 	var duration := minf(0.52, interval*0.8)

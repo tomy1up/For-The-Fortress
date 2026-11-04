@@ -9,3 +9,5 @@ Source de référence dans le prototype, sous assets/units/alliance/arbaletrier_
 La [planche de contrôle](cycle_sur_le_gue.png) compare quatre moments du tir, vers la gauche en E1 et vers la droite en E2, avec un agrandissement ×2. Le contour des bottes reste visuellement stable et le geste se lit par la main au-dessus du fût et l'arme abaissée. À cette taille, l'absence de carreau chargé est plus discrète que le mouvement de la main.
 
 La capture Godot lance une vague et utilise son premier tir réel. Elle échantillonne ensuite le rendu autour de ce tir, avec la pose d'essai entre 0,14 et 0,62 seconde. L'option `-- --right` choisit E2. Chaque capture contient 60 images. Les durées sont provisoires et la capture ne teste pas un enchaînement de plusieurs tirs.
+
+La pose est maintenant intégrée au rendu du prototype. Elle commence après la fin du recul, à 0,26 s, et se termine au plus tard à 0,72 s, avec une limite liée au délai de récupération. La planche ci-dessus illustre le réglage d'atelier antérieur. La capture `-- --repeat` vérifie trois cycles complets à vitesse ×2 avec le bonus de cadence, en passant par le rendu normal.
