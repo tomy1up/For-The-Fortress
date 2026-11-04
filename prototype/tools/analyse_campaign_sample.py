@@ -73,14 +73,23 @@ def summary(data):
         '| --- | --- | --- | --- | --- | --- |',
     ]
     totals = []
+    playtest_examples = []
     for faction, mission in product(range(2), missions):
         selected = [row for row in base if row['faction'] == faction and row['mission'] == mission]
         policies = defaultdict(list)
         for row in selected:
-            policies[(row['layout'], row['composition'], row['early_upgrade_wave'])].append(row['result'] == 'victory')
+            policies[(row['layout'], row['composition'], row['early_upgrade_wave'])].append(row)
         wins = sum(row['result'] == 'victory' for row in selected)
-        stable = sum(all(values) for values in policies.values())
-        variable = sum(any(values) and not all(values) for values in policies.values())
+        stable_policies = {policy: min(row['hp'] for row in runs) for policy, runs in policies.items()
+                           if all(row['result'] == 'victory' for row in runs)}
+        stable = len(stable_policies)
+        variable = sum(policy not in stable_policies and any(row['result'] == 'victory' for row in runs)
+                       for policy, runs in policies.items())
+        if banks and stable_policies:
+            layout, composition, early = max(stable_policies, key=stable_policies.get)
+            playtest_examples.append({'faction': faction, 'mission': mission, 'layout': layout,
+                                      'composition': composition, 'early_upgrade_wave': early,
+                                      'min_hp': stable_policies[layout, composition, early]})
         failures = Counter(row['reached_wave'] for row in selected if row['result'] == 'defeat')
         record = {'faction': faction, 'mission': mission, 'wins': wins, 'cases': len(selected),
                   'policies_all_seeds_won': stable, 'policies_variable': variable, 'defeat_waves': dict(sorted(failures.items()))}
@@ -103,11 +112,22 @@ def summary(data):
             ))
             faction_pairs.append({'mission': mission, **paired_counts})
             lines.append(f"| {mission} | " + " | ".join(str(count) for count in paired_counts.values()) + " |")
+        lines += ['', '## Exemples à rejouer', '',
+                  'Pour chaque faction et mission couverte, cet exemple maximise les PV restants dans le moins bon des tirages testés, parmi les plans qui gagnent à chaque tirage.', '',
+                  '| Faction | Mission | Emplacements | Ordre des recrues | Première tentative d’amélioration | PV minimum |',
+                  '| --- | --- | --- | --- | --- | --- |']
+        recruits = (('Archer', 'Arbalétrier', 'Mage'), ('Lanceur de haches', 'Sapeur', 'Chaman'))
+        for example in playtest_examples:
+            faction = example['faction']
+            slots = ', '.join(f'E{slot+1}' for slot in data['layouts'][example['layout']])
+            units = ', '.join(recruits[faction][unit] for unit in data['compositions'][example['composition']])
+            lines.append(f"| {['Alliance', 'Horde'][faction]} | {example['mission']} | {slots} | {units} | Vague {example['early_upgrade_wave']} | {example['min_hp']} |")
         lines += ['', 'Les simulations utilisent les vagues du chapitre des Berges et leurs gardiennes. Les placements, les compositions et les graines sont identiques dans les deux factions. Aucun talent persistant ni recrutement de boutique.', '',
                   data['policy'], '',
                   'Les différences observées décrivent ces politiques fixes. Elles ne suffisent pas à attribuer un écart à la gardienne, ni à établir la difficulté en partie réelle.', '']
         return '\n'.join(lines), {'schema': 1, 'game_version': data['game_version'], 'case_count': len(rows),
-                                  'human_balance_test': False, 'zero_points': totals, 'faction_pairs': faction_pairs, 'first_point_pairs': []}
+                                  'human_balance_test': False, 'zero_points': totals, 'faction_pairs': faction_pairs,
+                                  'playtest_examples': playtest_examples, 'first_point_pairs': []}
     lines += ['', 'Les différences entre missions combinent changement de tracé, positions et PV. Elles ne permettent pas d’attribuer à la seule hausse de 1 % les victoires ou défaites. Un résultat variable montre la sensibilité de cette politique aux trois tirages testés, sans mesurer la probabilité de victoire humaine.', '',
               '## Premier point en mission 3', '',
               'Les trois choix de premier talent sont évalués séparément : un seul point investi à la fois, tel qu’obtenable après les deux premières victoires. Chaque essai est comparé à la même faction, au même placement, à la même composition, à la même tentative d’amélioration et à la même graine sans talent.', '',
