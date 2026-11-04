@@ -22,6 +22,8 @@ var use_quarters := true
 var front_half_window := 0.10
 var previous_front := false
 var turn_shift_limit := 2.0
+var last_body_shift: Dictionary = {}
+var max_body_shift_step := 0.0
 var turn_meshes: Array[ArrayMesh] = []
 var rear_quarter_candidate: ImageTexture
 var quarter_candidate: ImageTexture
@@ -106,6 +108,7 @@ func record() -> void:
 		print("WOLF_TURN_CONTACT max_drift_px=%.3f before_translation_px=%.3f" % [max_turn_contact_drift, max_uncorrected_contact_drift])
 		print("WOLF_TURN_STEPS same_pose_px=%.3f change_pose_px=%.3f" % [max_contact_step, max_contact_switch])
 		print("WOLF_CORRECTED_STEPS same_pose_px=%.3f change_pose_px=%.3f" % [max_corrected_step, max_corrected_switch])
+		print("WOLF_BODY_SHIFT max_frame_step_px=%.3f" % max_body_shift_step)
 		print("WOLF_WORST_SWITCH ", JSON.stringify(worst_contact_switch))
 		print("WOLF_CORRECTION min_weight=%.3f" % min_contact_correction_weight)
 		print("WOLF_TURN_MESH min_triangle_double_area_px2=%.3f" % minimum_turn_triangle_area)
@@ -342,6 +345,11 @@ func preview_enemy_pose(distance: float, points: Array[Vector2], enemy_id: int, 
 		var mesh := animated_turn_mesh(pose, Walk.phase_for(pose.travel, enemy_id, scale), enemy_id, scale)
 		turn_meshes.append(mesh)
 		pose["mesh"] = mesh
+	var shift: Vector2 = pose.get("body_shift", Vector2.ZERO)
+	var previous: Dictionary = last_body_shift.get(enemy_id, {})
+	if previous.get("frame", -2) == capture_frame-1:
+		max_body_shift_step = maxf(max_body_shift_step, shift.distance_to(previous.shift))
+	last_body_shift[enemy_id] = {"frame": capture_frame, "shift": shift}
 	return pose
 
 func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: float) -> ArrayMesh:
@@ -437,6 +445,7 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 		turn_contacts[key] = contact
 	if not errors.is_empty():
 		correction = (correction/maxf(1.0, total_contact_weight)).limit_length(turn_shift_limit)
+		pose["body_shift"] = correction
 		var local_shift := correction*Vector2(pose.facing, 1.0)/scale
 		var local_corrections := PackedVector2Array()
 		var facing := Vector2(pose.facing, 1.0)
