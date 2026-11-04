@@ -1,0 +1,1 @@
+Après le recul du tir, l’arbalétrier nain abaisse son arme, tire la corde et reprend sa visée. Trois cycles complets à vitesse ×2 vérifiés dans le prototype. 397 contrôles Godot ciblés et 9 essais sur le paquet Windows, dont les tirs de l’arbalétrier dans les deux sens, la protection des profils et les bonus des deux factions. 83 sources comparées.
