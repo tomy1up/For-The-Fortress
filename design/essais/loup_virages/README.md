@@ -103,3 +103,7 @@ Le suivi de la translation du corps inclut aussi le retour au profil. Dans les q
 ### Retour progressif au profil
 
 Avec `--turn-shift=4 --taper-turn-shift`, le decalage du corps revient progressivement a zero aux deux bords de la zone du virage. Sur les six virages du Gue, le saut maximal de translation descend de 4 px a 1,211 px (decalage 0) et 1,474 px (decalage 3). Le saut d'appui entre deux vues reste de 5,053 et 5,380 px. Le saut maximal dans une meme vue augmente de 1,022 a 1,728 px et de 1,009 a 1,587 px. Aucun triangle retourne sur les deux captures de 144 images. Garder cet essai optionnel pour la comparaison visuelle.
+
+### Impact pendant le virage, cote Horde
+
+Le [comparatif au ralenti](comparatif_horde_impact.mp4) utilise `--horde --wolf-pivot --wolf-hit --id-offset=3`. A gauche, reglage de reference a 2 px. A droite, retour progressif a 4 px. Chaque capture declenche six evenements de degats a l'image 42, avec un profil isole. Les 144 images du montage ont ete decodees sans erreur. Les mesures de translation excluent le recul ajoute par le rendu de combat. Le passage de 6,201 a 5,380 px entre vues concerne donc les appuis du virage seul.
