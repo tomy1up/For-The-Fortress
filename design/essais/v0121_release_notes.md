@@ -1,1 +1,1 @@
-L eclair du chaman reste rattache au point de lancement pendant son geste. Les 314 controles cibles passent. Le debut et le milieu du geste ont ete captures dans le paquet Windows.
+L’éclair du chaman reste rattaché au point de lancement pendant son geste. Les 314 contrôles ciblés passent. Le début et le milieu du geste ont été capturés dans le paquet Windows.

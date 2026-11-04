@@ -31,6 +31,7 @@ Les tracés pourront varier au sein d’un même biome. Le nombre d’entrées e
 Orientation validée par le porteur du projet ; l’état des premières réalisations est indiqué ci-dessous. Le chantier complet reste à réaliser.
 
 - [ ] Animer toutes les unités de défense, y compris les alternatives de boutique. Le geste d’attaque doit correspondre à l’arme et au projectile lancé, avec un départ de projectile synchronisé au geste.
+  - En v0.121, l’éclair du chaman suit son point de lancement animé. Les autres projectiles partent du point de l’arme au moment du tir. Les cycles dessinés des défenseurs restent à réaliser. [Contrôles de la v0.121](essais/v0121_release_notes.md).
 - [x] Première réaction corporelle des attaquants aux dégâts : inclinaison et recul visuel brefs, puis retour à la pose normale, en complément du clignotement. Prototype v0.103 ; silhouettes entières animées, sans animation séparée des membres.
 - [x] Faire approuver une marche du loup pour le prototype : peau continue, thorax et bassin entraînés par les appuis ; validation du porteur le 2 novembre 2026. [Intégration v0.108](Marche_loup_v0108.md).
 - [ ] Étendre cette démarche de travail aux autres attaquants, avec contrôle des volumes, des appuis et de la vitesse, puis validation visuelle.
