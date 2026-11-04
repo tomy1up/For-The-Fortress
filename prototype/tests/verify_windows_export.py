@@ -387,10 +387,10 @@ for name,state,faction in cases:
         assert all(abs(a-b)<0.000001 for a,b in zip(guardian['victims'],[35,20.4]))
         inspection=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('GUARDIAN_INSPECTION_SNAPSHOT=')))
         if name.endswith('_protected'):
-            assert inspection=={'inspected':2,'status':'À portée d’une Gardienne','links':1,'visible':True},inspection
+            assert inspection=={'inspected':2,'status':'25 % des dégâts transférés','links':1,'visible':True},inspection
         else:
             assert inspection['inspected']==0 and inspection['links']==2 and inspection['visible'],inspection
-            assert inspection['status']==('Protège 2 voisins · Malédiction active' if name.endswith('_cursed') else 'Protège 2 voisins'),inspection
+            assert inspection['status']==('Absorbe 25 % · 2 voisins · Maudite' if name.endswith('_cursed') else 'Absorbe 25 % · 2 voisins'),inspection
     if name.endswith('_enemy_hit_motion'):
         motion=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('HIT_MOTION_SNAPSHOT=')))
         assert motion['faction']==(0 if faction=='alliance' else 1) and motion['moving'] and motion['observations']>0

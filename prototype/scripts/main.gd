@@ -1620,11 +1620,12 @@ func _update_enemy_inspector() -> void:
 			if curse.enemy_id == id: cursed = true; break
 		var origin: String = Model.Enemies.origin_label(Model.Enemies.for_profile(enemy.type,model.faction).origin)
 		var links: Array[Dictionary] = map_view.inspected_protection_links()
+		var absorbed_percent := roundi(Model.Banks.SHARE*100.0)
 		if enemy.type == Model.Banks.GUARD_TYPE:
-			enemy_status.text = "Protège %d voisin%s" % [links.size(),"" if links.size()==1 else "s"]
-			if cursed: enemy_status.text += " · Malédiction active"
+			enemy_status.text = "Aucun voisin protégé" if links.is_empty() else "Absorbe %d %% · %d voisin%s" % [absorbed_percent,links.size(),"" if links.size()==1 else "s"]
+			if cursed: enemy_status.text += " · Maudite"
 		elif not links.is_empty():
-			enemy_status.text = "À portée d’une Gardienne" + (" · Maudit" if cursed else "")
+			enemy_status.text = "%d %% des dégâts transférés" % absorbed_percent + (" · Maudit" if cursed else "")
 		else:
 			enemy_status.text = origin + (" · Malédiction active" if cursed else " · Lecture sans pause")
 		enemy_status.add_theme_color_override("font_color",Color("d3afe4") if cursed else Color("aabbb0"))
