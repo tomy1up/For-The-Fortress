@@ -670,7 +670,7 @@ func defender_pose(slot: int) -> Dictionary:
 		if shot.slot != slot or age < 0.0: continue
 		pose.pulse = attack_pulse(age)
 		pose.direction = shot_facing(shot)
-		if shot.type == 0:
+		if shot.get("type", -1) == 0:
 			pose.archer_stage = AllianceArt.archer_shot_stage(age, defender.ready_at-shot.time)
 		break
 	return pose
