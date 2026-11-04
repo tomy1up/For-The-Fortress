@@ -39,6 +39,8 @@ func run_checks() -> void:
 	check(Art.destination("enemy.neutral.wolf").size.y*0.7 < Art.destination("enemy.neutral.boar").size.y*0.85 and Art.destination("enemy.neutral.boar").size.y*0.85 < Art.destination("enemy.horde.warrior").size.y,"Tailles relatives Grouillant, Sprinter et Pillard conservées")
 	for pair in [[0.0,1.0],[1.0,1.0],[5.0,-1.0],[9.0,1.0],[14.0,1.0],[18.0,1.0],[23.0,-1.0],[27.0,1.0],[28.0,1.0]]:
 		check(View.enemy_facing({"distance":pair[0]}) == pair[1],"Orientation selon le vrai chemin, y compris à l’entrée et à la forteresse")
+	for pair in [[3.999,1.0],[4.0,-1.0],[4.001,-1.0],[7.999,-1.0],[8.0,1.0]]:
+		check(View.enemy_facing({"distance":pair[0]}) == pair[1],"Le sprite se retourne au virage et suit le segment emprunté")
 	# Deux silhouettes d’un même atlas ne doivent pas inclure les pixels du voisin.
 	for a in Art.TEXTURES:
 		for b in Art.TEXTURES:

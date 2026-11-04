@@ -333,23 +333,19 @@ static func enemy_bounds(enemy: Dictionary, defending_faction: int = -1, route_p
 		if EnemyWalkArt.supports(enemy_art_id(enemy,defending_faction)):
 			var motion: Dictionary=EnemyWalkArt.path_motion(enemy.distance,route_points,AXIS)
 			image=image.merge(EnemyWalkArt.projected_bounds(motion.direction))
-			facing = wolf_facing(motion.direction)
+			facing = route_facing(motion.direction)
 		else:
 			facing = enemy_facing(enemy,route_points,route_length)
 		if facing < 0.0: image.position.x = -image.end.x
 		bounds = bounds.merge(Rect2(center+image.position*scale,image.size*scale).grow(1.0))
 	return bounds.grow(8.0) # Marge fixe couvrant les poses, sans survol qui tremble avec le corps.
 
-static func wolf_facing(direction: Vector2) -> float:
+static func route_facing(direction: Vector2) -> float:
 	return -1.0 if direction.x < 0.0 else 1.0
 
 static func enemy_facing(enemy: Dictionary, route_points: Array[Vector2] = Model.PATH_POINTS, route_length: float = Model.PATH_LENGTH) -> float:
 	var distance: float = clampf(enemy.distance,0.0,route_length)
-	var from: Vector2 = project(Model.position_at(distance,route_points,route_length))
-	var to: Vector2 = project(Model.position_at(minf(distance+0.01,route_length),route_points,route_length))
-	if distance == route_length:
-		from = project(Model.position_at(maxf(0.0,distance-0.01),route_points,route_length))
-	return -1.0 if to.x < from.x else 1.0
+	return route_facing(EnemyWalkArt.path_motion(distance,route_points,AXIS).direction)
 
 
 func enemy_at(point: Vector2) -> int:
@@ -845,10 +841,8 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	var scale: float = _enemy_scale(enemy)
 	var walking: bool = EnemyWalkArt.supports(id)
 	var route_points: Array[Vector2] = model.enemy_route_points(enemy)
-	var motion: Dictionary = {}
-	if walking or not pose.get("offset", Vector2.ZERO).is_zero_approx():
-		motion = EnemyWalkArt.path_motion(enemy.distance, route_points, AXIS)
-	var facing: float=wolf_facing(motion.direction) if walking else enemy_facing(enemy,route_points,model.enemy_route_length(enemy))
+	var motion := EnemyWalkArt.path_motion(enemy.distance, route_points, AXIS)
+	var facing := route_facing(motion.direction)
 	var preview: Dictionary = {}
 	if walking and wolf_turn_preview.is_valid():
 		preview = wolf_turn_preview.call(enemy.distance, route_points, enemy.id, scale)
