@@ -245,8 +245,12 @@ func _draw_spinning_axe(point: Vector2, age: float) -> void:
 	var rotation: float = age/PROJECTILE_FLIGHT*TAU
 	var shaft := Vector2(cos(rotation),sin(rotation))
 	var edge: Vector2 = shaft.orthogonal()
+	draw_line(point-shaft*6,point+shaft*5,Color("1a2524"),4.0,true)
 	draw_line(point-shaft*6,point+shaft*5,Color("d0ac75"),2.5,true)
-	draw_colored_polygon(PackedVector2Array([point+shaft*4,point+shaft*7+edge*6,point-shaft*2+edge*7,point-shaft*3+edge*3]),Color("c9e5da"))
+	var blade := PackedVector2Array([point+shaft*4,point+shaft*7+edge*6,point-shaft*2+edge*7,point-shaft*3+edge*3])
+	draw_colored_polygon(blade,Color("c9e5da"))
+	blade.append(blade[0])
+	draw_polyline(blade,Color("1a2524"),1.4,true)
 
 func _draw_hit_marker(point: Vector2, alpha: float, primary: bool, type: int, age: float) -> void:
 	type = Model.family(type)
@@ -298,6 +302,7 @@ func _draw_impact(shot: Dictionary, age: float) -> void:
 		draw_polyline(inner,Color(color,alpha*0.4),1,true)
 	var segments := secondary_segments(shot)
 	var bounce_duration := (IMPACT_DURATION-PROJECTILE_FLIGHT)/maxi(1,segments.size())
+	var axe_position := Vector2.INF
 	for index in range(segments.size()):
 		var segment := segments[index]
 		var secondary: Vector2 = segment[1]+height
@@ -306,9 +311,10 @@ func _draw_impact(shot: Dictionary, age: float) -> void:
 			var progress := (age-PROJECTILE_FLIGHT)/bounce_duration-index
 			draw_line(start,secondary,Color(color,alpha*0.65),1.8,true)
 			if progress >= 0.0 and progress < 1.0:
-				var position := start.lerp(secondary,progress)-Vector2(0.0,sin(PI*progress)*4.0)
-				_draw_spinning_axe(position,age)
+				axe_position = start.lerp(secondary,progress)-Vector2(0.0,sin(PI*progress)*4.0)
 		_draw_hit_marker(secondary,alpha,false,type,age)
+	if axe_position.is_finite():
+		_draw_spinning_axe(axe_position,age)
 
 
 static func enemy_art_id(enemy: Dictionary, defending_faction: int = -1) -> String:
