@@ -192,6 +192,7 @@ for name,state,faction in cases:
         if name.endswith('_countdown_final'): command+=['--capture-countdown-final']
         if '_expanded_tree_' in name: command+=['--capture-expanded-tree='+name[-1]]
         if '_bank_guardian_' in name: command+=['--capture-guardian-inspection='+name.rsplit('_',1)[1]]
+        if name.endswith('_bank_guardian_protected'): command+=['--capture-guardian-moved']
         if name.endswith('_expanded_summary'): command+=['--capture-expanded-summary']
         if name.startswith('home_'): command+=['--capture-home='+{'home_prepared':'prepared','home_maximum':'maximum','home_blocked':'blocked'}[name]]
         if name.endswith('_talents_reset'): command+=['--capture-meta-reset']
@@ -378,6 +379,7 @@ for name,state,faction in cases:
         assert royal['hp']=={'idle':20,'rally':20,'hurt':10,'defeat':0}[variant] and royal['pose']=={'idle':0,'rally':1,'hurt':2,'defeat':3}[variant]
         assert royal['castle'].endswith('forteresse_'+faction+'_v001.png') and royal['king'].endswith('roi_'+faction+'_v001.png')
     if '_bank_guardian' in name:
+        if name.endswith('_protected'): assert 'GUARDIAN_MOVED=true' in text, name
         guardian=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('GUARDIAN_SNAPSHOT=')))
         assert guardian['isolated'] and guardian['faction']==(0 if faction=='alliance' else 1)
         assert abs(guardian['hp']-193)<0.000001 and abs(guardian['max_hp']-198)<0.000001

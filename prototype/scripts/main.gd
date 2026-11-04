@@ -354,6 +354,13 @@ func _ready() -> void:
 				var enemy: Dictionary = Model.make_enemy(model.enemies.size(),type,0,capture_faction,110)
 				enemy.distance = 8.0+model.enemies.size()*0.7;model.enemies.append(enemy)
 			model._apply_damage({1:12.0,2:8.0});model.elapsed = 0.08
+			if "--capture-guardian-moved" in OS.get_cmdline_user_args():
+				model.elapsed = 0.24
+				for enemy in model.enemies:
+					enemy.distance += enemy.speed*model.elapsed
+				var transfer: Dictionary = model.protection_events[0]
+				print("GUARDIAN_MOVED=", not model.enemy_position(model.enemies[0]).is_equal_approx(transfer.to)
+					and not model.enemy_position(model.enemies[transfer.protected_id]).is_equal_approx(transfer.from))
 			selected = -1;map_view.selected = -1
 			inspection_pointer = MapView.project(model.point_on_path(8.0))+Vector2(0,-42)
 			if "--capture-guardian-inspection=protected" in OS.get_cmdline_user_args():

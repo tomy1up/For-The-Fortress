@@ -1,0 +1,1 @@
+Le lien de protection suit la tortue gardienne et l’ennemi protégé après le transfert de dégâts. 895 contrôles Godot ciblés et 8 essais Windows réussis, dont deux captures après déplacement des unités, la protection des profils et la séparation des bonus de faction. 83 sources comparées.
