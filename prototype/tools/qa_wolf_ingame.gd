@@ -35,6 +35,7 @@ func record() -> void:
 	game.model.enemies.clear();game.model.spawn_schedule.clear()
 	var preview := "--wolf-pivot" in OS.get_cmdline_user_args()
 	var hit_preview := "--wolf-hit" in OS.get_cmdline_user_args()
+	var previous_front := "--previous-front" in OS.get_cmdline_user_args()
 	var id_offset := 0
 	use_quarters = not "--no-quarters" in OS.get_cmdline_user_args()
 	for argument in OS.get_cmdline_user_args():
@@ -60,7 +61,8 @@ func record() -> void:
 		var folder := ProjectSettings.globalize_path("res://../design/essais/loup_virages")
 		rear_quarter_candidate = load_turn_texture(folder.path_join("loup_trois_quarts_arriere_v001.png"))
 		quarter_candidate = load_turn_texture(folder.path_join("loup_trois_quarts_avant_v002.png"))
-		front_candidate = load_turn_texture(folder.path_join("loup_face_candidat_v003.png"))
+		var front_file := "loup_face_candidat_v002.png" if previous_front else "loup_face_candidat_v003.png"
+		front_candidate = load_turn_texture(folder.path_join(front_file))
 		rear_candidate = load_turn_texture(folder.path_join("loup_dos_candidat_v001.png"))
 		game.map_view.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		game.map_view.wolf_turn_preview = preview_enemy_pose
@@ -72,6 +74,10 @@ func record() -> void:
 		directory += "_without_quarters"
 	if faction == 1:
 		directory += "_horde"
+	if preview and previous_front:
+		directory += "_previous_front"
+	if id_offset != 0:
+		directory += "_offset_%d" % id_offset
 	DirAccess.make_dir_recursive_absolute(directory)
 	for frame in range(144):
 		for enemy in game.model.enemies: enemy.distance+=enemy.speed/60.0

@@ -70,3 +70,14 @@ Un essai de selection du raccord par phase de marche a privilegie les instants a
 Variante v003, generee avec ImageGen a partir de la face v002 et du trois quarts avant v002. Echelle uniforme conservee. La silhouette montre davantage le flanc, ce qui reste a juger sur la sequence complete.
 
 One transparent 2D game sprite. Redraw the exact grey cream wolf of the first image in the same head-on elevated camera, nose aimed down screen, at the short compact mid-turn gait of the second image. Reduce the distance between the rearmost and leading front foot by flexing the foreleg and bringing the rear foot under the pelvis. Keep four distinct anatomically attached feet, with clear visible contact on a front foot and the opposite rear foot. Keep head scale, gray cream palette, gold eyes, linework, angular fur; keep the tail low behind the body. Do not stretch the silhouette. No ground, cast shadow, glow or text.
+
+## Comparaison des deux dessins de face
+
+Relancer `res://tools/qa_wolf_ingame.gd -- --wolf-pivot` avec puis sans `--previous-front` pour comparer les dessins v002 et v003 sur les memes six virages. Les captures sont separees par variante et par phase initiale (`--id-offset=3`).
+
+| Decalage | Derive maximale | Saut maximal entre vues | Aire double minimale |
+| --- | --- | --- | --- |
+| 0 | 6,676 px | 5,916 px | 0,159 px² |
+| 3 | 8,508 px | 6,201 px | 0,118 px² |
+
+Les deux dessins donnent les memes mesures. Ces mesures portent sur les points du maillage, communs aux deux textures. Pour juger le raccord des appuis dessines, il reste a verifier leur position dans chaque texture et a comparer les captures a la taille du plateau. Essai isole du jeu distribue.
