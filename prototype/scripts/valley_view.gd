@@ -223,11 +223,7 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 			draw_circle(point,3.5,color,true,-1,true)
 			draw_circle(point+Vector2(-1,-1),1.5,Color("ecffff"),true,-1,true)
 		3:
-			var rotation: float = age/PROJECTILE_FLIGHT*TAU
-			var shaft := Vector2(cos(rotation),sin(rotation))
-			var edge: Vector2 = shaft.orthogonal()
-			draw_line(point-shaft*6,point+shaft*5,Color("d0ac75"),2.5,true)
-			draw_colored_polygon(PackedVector2Array([point+shaft*4,point+shaft*7+edge*6,point-shaft*2+edge*7,point-shaft*3+edge*3]),Color("c9e5da"))
+			_draw_spinning_axe(point, age)
 		4:
 			var roll := sin(age/PROJECTILE_FLIGHT*PI)*0.75*shot_facing(shot)
 			var fuse := point+Vector2(4,-8).rotated(roll)
@@ -244,6 +240,13 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 			var cross := PackedVector2Array([point+Vector2(0,-6),point+Vector2(4,0),point+Vector2(0,6),point+Vector2(-4,0)])
 			draw_colored_polygon(cross,color)
 			draw_line(point+Vector2(0,-3),point+Vector2(0,3),Color("f5def5"),1.5,true)
+
+func _draw_spinning_axe(point: Vector2, age: float) -> void:
+	var rotation: float = age/PROJECTILE_FLIGHT*TAU
+	var shaft := Vector2(cos(rotation),sin(rotation))
+	var edge: Vector2 = shaft.orthogonal()
+	draw_line(point-shaft*6,point+shaft*5,Color("d0ac75"),2.5,true)
+	draw_colored_polygon(PackedVector2Array([point+shaft*4,point+shaft*7+edge*6,point-shaft*2+edge*7,point-shaft*3+edge*3]),Color("c9e5da"))
 
 func _draw_hit_marker(point: Vector2, alpha: float, primary: bool, type: int, age: float) -> void:
 	type = Model.family(type)
@@ -293,15 +296,18 @@ func _draw_impact(shot: Dictionary, age: float) -> void:
 		draw_polyline(ring,Color(color,alpha*0.6),1.5,true)
 		var inner := range_outline(shot.to,radius*(0.25+0.75*minf(age/0.18,1.0)))
 		draw_polyline(inner,Color(color,alpha*0.4),1,true)
-	for segment in secondary_segments(shot):
+	var segments := secondary_segments(shot)
+	var bounce_duration := (IMPACT_DURATION-PROJECTILE_FLIGHT)/maxi(1,segments.size())
+	for index in range(segments.size()):
+		var segment := segments[index]
 		var secondary: Vector2 = segment[1]+height
 		if type == 3:
 			var start: Vector2 = segment[0]+height
+			var progress := (age-PROJECTILE_FLIGHT)/bounce_duration-index
 			draw_line(start,secondary,Color(color,alpha*0.65),1.8,true)
-			if start.distance_to(secondary) > 8:
-				var direction: Vector2 = (secondary-start).normalized()
-				var tip: Vector2 = start.lerp(secondary,0.65)
-				draw_polyline(PackedVector2Array([tip-direction.rotated(0.55)*5,tip,tip-direction.rotated(-0.55)*5]),color,1.5,true)
+			if progress >= 0.0 and progress < 1.0:
+				var position := start.lerp(secondary,progress)-Vector2(0.0,sin(PI*progress)*4.0)
+				_draw_spinning_axe(position,age)
 		_draw_hit_marker(secondary,alpha,false,type,age)
 
 
