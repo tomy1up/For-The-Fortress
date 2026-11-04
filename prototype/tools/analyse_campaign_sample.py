@@ -88,11 +88,26 @@ def summary(data):
         detail = ', '.join(f'vague {wave} : {count}' for wave, count in sorted(failures.items())) or 'Aucune'
         lines.append(f"| {['Alliance', 'Horde'][faction]} | {mission} | {wins} / {len(selected)} | {stable} / {len(policies)} | {variable} / {len(policies)} | {detail} |")
     if banks:
+        lines += ['', '## Comparaison à placement et tirage identiques', '',
+                  '| Mission | Victoire des deux | Alliance seule | Horde seule | Défaite des deux |',
+                  '| --- | --- | --- | --- | --- |']
+        faction_pairs = []
+        for mission in missions:
+            outcomes = Counter(
+                (row['result'] == 'victory', by_key[(1,)+key(row)[1:]]['result'] == 'victory')
+                for row in base if row['faction'] == 0 and row['mission'] == mission
+            )
+            paired_counts = dict(zip(
+                ('both_win', 'alliance_only', 'horde_only', 'both_lose'),
+                (outcomes[pair] for pair in ((True, True), (True, False), (False, True), (False, False))),
+            ))
+            faction_pairs.append({'mission': mission, **paired_counts})
+            lines.append(f"| {mission} | " + " | ".join(str(count) for count in paired_counts.values()) + " |")
         lines += ['', 'Les simulations utilisent les vagues du chapitre des Berges et leurs gardiennes. Les placements, les compositions et les graines sont identiques dans les deux factions. Aucun talent persistant ni recrutement de boutique.', '',
                   data['policy'], '',
                   'Les différences observées décrivent ces politiques fixes. Elles ne suffisent pas à attribuer un écart à la gardienne, ni à établir la difficulté en partie réelle.', '']
         return '\n'.join(lines), {'schema': 1, 'game_version': data['game_version'], 'case_count': len(rows),
-                                  'human_balance_test': False, 'zero_points': totals, 'first_point_pairs': []}
+                                  'human_balance_test': False, 'zero_points': totals, 'faction_pairs': faction_pairs, 'first_point_pairs': []}
     lines += ['', 'Les différences entre missions combinent changement de tracé, positions et PV. Elles ne permettent pas d’attribuer à la seule hausse de 1 % les victoires ou défaites. Un résultat variable montre la sensibilité de cette politique aux trois tirages testés, sans mesurer la probabilité de victoire humaine.', '',
               '## Premier point en mission 3', '',
               'Les trois choix de premier talent sont évalués séparément : un seul point investi à la fois, tel qu’obtenable après les deux premières victoires. Chaque essai est comparé à la même faction, au même placement, à la même composition, à la même tentative d’amélioration et à la même graine sans talent.', '',
