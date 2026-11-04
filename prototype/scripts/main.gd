@@ -200,6 +200,7 @@ var summary_wave_content: Control
 var summary_performance_content: Control
 var summary_essential_content: Control
 var summary_key_values: Array[Label] = []
+var summary_arrivals_by_entry: Label
 var summary_loss_note: Label
 var summary_boss_note: Label
 var performance_list: VBoxContainer
@@ -1256,6 +1257,7 @@ func _build_run_summary(screen: Control) -> void:
 		summary_core_cards.append(card)
 		summary_core_titles.append(_label(card,["Forteresse","Ennemis passés","Or gagné au combat"][index],Vector2(16,12),Vector2(264,24),16,Color("bbcbbf")))
 		summary_key_values.append(_label(card,"",Vector2(16,46),Vector2(264,44),30,Color("e6c987")))
+	summary_arrivals_by_entry = _label(summary_core_cards[1],"",Vector2(16,83),Vector2(264,19),13,Color("bbcbbf"))
 	summary_meta_card = _panel(summary_essential_content,Rect2(726,130,222,108))
 	var po_heading: Label = _label(summary_meta_card,"PO de faction",Vector2(16,12),Vector2(190,24),16,Color("bbcbbf"))
 	po_heading.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -1323,6 +1325,11 @@ func _populate_essential_summary() -> void:
 	_update_meta_summary()
 	summary_key_values[0].text = "%d / %d PV" % [model.fortress_hp,model.max_hp]
 	summary_key_values[1].text = str(model.total_escaped)
+	var arrivals := PackedStringArray()
+	for index in range(model.routes.size()):
+		arrivals.append("Entrée %d : %d" % [index+1, model.arrivals_by_route.get(model.routes[index].id, 0)])
+	summary_arrivals_by_entry.text = " · ".join(arrivals)
+	summary_arrivals_by_entry.visible = not arrivals.is_empty()
 	summary_key_values[2].text = "%d or" % model.total_income
 	var lost: int = 0
 	var first: int = -1
