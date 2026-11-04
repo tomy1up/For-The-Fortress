@@ -19,3 +19,7 @@ Edit this exact cartoon elf archer for the Nocking frame between the two referen
 ## Tirs repetes
 
 Lancer la capture avec `-- --repeat` pour faire avancer le combat a vitesse x2 avec le bonus de cadence actif. Le cycle de dessin dure au plus 0,52 s de simulation et est borne a 80 % du delai de recuperation indique par le modele. La capture a verifie six cycles complets en 180 images. Chaque cycle montre le lacher, le rearmement, l encochage et le retour a l arc tendu. Les tirs et leurs cibles sont resolus par le modele de combat. Les seuils et les dessins restent en atelier.
+
+## Depart a gauche et a droite
+
+Le premier tir est oriente a gauche depuis E1. L option `-- --right` place l archer en E2 pour obtenir un tir vers la droite. La capture verifie le sens du premier tir dans les deux cas. La [planche du depart de fleche](depart_fleche_deux_sens.png) montre la derniere image avant le tir, le depart et deux instants du vol. Le projectile quitte l arc dans les deux sens. Sur le tir vers le haut a droite, un petit espace reste visible entre le projectile et l arc des la premiere image de vol. Le dessin et le point de depart restent a recaler ensemble avant integration.

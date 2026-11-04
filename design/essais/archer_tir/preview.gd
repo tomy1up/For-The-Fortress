@@ -49,8 +49,11 @@ func capture() -> void:
 	view.font = ThemeDB.fallback_font
 	view.model = Model.new()
 	view.model.select_faction(0)
-	view.model.buy(0,0)
-	var repeat := "--repeat" in OS.get_cmdline_user_args()
+	var args := OS.get_cmdline_user_args()
+	var face_right := "--right" in args
+	var slot := 1 if face_right else 0
+	view.model.buy(slot,0)
+	var repeat := "--repeat" in args
 	if repeat:
 		view.model.bonuses.append(1)
 	view.model.start()
@@ -59,10 +62,14 @@ func capture() -> void:
 		if not view.model.shots.is_empty():
 			break
 	assert(not view.model.shots.is_empty() and view.model.shots[0].type == 0)
+	var first_shot: Dictionary = view.model.shots[0]
+	assert(View.shot_facing(first_shot) == (1.0 if face_right else -1.0))
 	view.shot_time = view.model.shots[0].time
 	root.add_child(view)
 	view.set_process(false)
 	var output := ProjectSettings.globalize_path("user://qa_archer_repeat" if repeat else "user://qa_archer_lacher")
+	if face_right:
+		output += "_right"
 	DirAccess.make_dir_recursive_absolute(output)
 	var frame_count := 180 if repeat else 48
 	var previous_shot := -INF
@@ -79,7 +86,7 @@ func capture() -> void:
 					stages.clear()
 				previous_shot = shot.time
 				view.shot_time = shot.time
-				view.cycle_duration = minf(0.52, (view.model.defenders[0].ready_at-shot.time)*0.8)
+				view.cycle_duration = minf(0.52, (view.model.defenders[slot].ready_at-shot.time)*0.8)
 			stages[view.shot_stage(view.model.elapsed-view.shot_time)] = true
 		else:
 			view.model.elapsed = view.shot_time+(frame-12)/60.0
@@ -91,7 +98,7 @@ func capture() -> void:
 			quit(status)
 			return
 	assert(not repeat or complete_cycles >= 3)
-	print("ARCHER_RELEASE frames=", frame_count, " complete_cycles=", complete_cycles, " output=", output)
+	print("ARCHER_RELEASE frames=", frame_count, " facing=", View.shot_facing(first_shot), " complete_cycles=", complete_cycles, " output=", output)
 	quit()
 
 func load_pose(path: String) -> ImageTexture:
