@@ -183,11 +183,12 @@ static func secondary_segments(shot: Dictionary) -> Array[PackedVector2Array]:
 
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 
-static func shot_origin(shot: Dictionary) -> Vector2:
+static func shot_origin(shot: Dictionary, pose_age: float = 0.0) -> Vector2:
 	# Points d'équipement des silhouettes, distincts du centre logique de portée.
 	var art = defender_art(int(shot.type))
 	var muzzle: Vector2 = art.MUZZLES[int(shot.type)]
-	return project(shot.from)+Vector2(muzzle.x*shot_facing(shot),muzzle.y)
+	var pose := {"pulse": attack_pulse(pose_age), "direction": shot_facing(shot)}
+	return project(shot.from)+attack_transform(int(shot.type), pose)*muzzle
 
 static func defender_art(type: int) -> GDScript:
 	return ShopArt if ShopArt.TEXTURES.has(type) else AllianceArt if AllianceArt.TEXTURES.has(type) else HordeArt
@@ -265,6 +266,7 @@ func _draw_impact(shot: Dictionary, age: float) -> void:
 	# L'impact est visible dès le tir : le déplacement bref ne retarde aucun dégât.
 	_draw_hit_marker(target,alpha,true,type,age)
 	if type == 5:
+		origin = shot_origin(shot, age)
 		var direction: Vector2 = target-origin
 		var side: Vector2 = direction.normalized().orthogonal()
 		var bolt := PackedVector2Array([origin,origin+direction*0.3+side*4,origin+direction*0.55-side*4,origin+direction*0.78+side*3,target])

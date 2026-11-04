@@ -30,6 +30,10 @@ func run_checks() -> void:
 			var b: Transform2D = View.attack_transform(type,{"pulse":pulse,"direction":-1.0})
 			var point := Vector2(17,-40)
 			var right_point: Vector2 = a*point
+			var art := View.defender_art(type)
+			var muzzle: Vector2 = art.MUZZLES[type]
+			check(View.shot_origin(shot, age).is_equal_approx(origin+a*muzzle),"Le point d'effet suit la pose de l'arme")
+			check(View.projectile_position(shot,0.0).is_equal_approx(View.shot_origin(shot)),"Le projectile conserve son point de depart")
 			check((b*point).is_equal_approx(Vector2(-right_point.x,right_point.y)),"Mouvement symétrique, même côté que le tir")
 			check(is_equal_approx(absf(a.determinant()),1.0) and is_equal_approx(absf(b.determinant()),1.0),"Les illustrations ne sont ni étirées ni écrasées")
 			check(a.origin.length() <= 5.0 and a.is_finite() and b.is_finite(),"Déplacement bref borné et fini, sans quitter l’emplacement")
