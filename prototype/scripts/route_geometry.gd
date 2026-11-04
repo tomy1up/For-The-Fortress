@@ -82,6 +82,33 @@ static func common_exit_error(routes: Variant) -> String:
 		if route.path_points[-1]!=exit_point: return "Les trajets doivent rejoindre la même forteresse."
 	return ""
 
+# Validate the map geometry independently of fortress HP and defeat rules.
+static func destinations_error(routes: Variant, destinations: Dictionary) -> String:
+	var error := network_error(routes)
+	if not error.is_empty():
+		return error
+	if destinations.is_empty():
+		return "Le reseau doit definir au moins une destination."
+	var positions := {}
+	for id in destinations:
+		if not id is String or id.is_empty() or id != id.strip_edges():
+			return "Identifiant de destination invalide."
+		var position: Variant = destinations[id]
+		if not position is Vector2 or not position.is_finite() or positions.has(position):
+			return "Position de destination invalide ou repetee."
+		positions[position] = id
+	var used := {}
+	for route in routes:
+		var id: Variant = route.get("destination_id")
+		if not id is String or not destinations.has(id):
+			return "Destination de trajet inconnue."
+		if route.path_points[-1] != destinations[id]:
+			return "La sortie du trajet ne rejoint pas sa destination."
+		used[id] = true
+	if used.size() != destinations.size():
+		return "Une destination ne possede aucun trajet."
+	return ""
+
 static func network_copy(routes: Variant) -> Array[Dictionary]:
 	var result: Array[Dictionary]=[]
 	if not network_error(routes).is_empty(): return result

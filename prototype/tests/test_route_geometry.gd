@@ -33,6 +33,16 @@ func run_checks() -> void:
 	check(routes[1].path_points[0]==Vector2(0,8) and Geometry.route_for(routes,"absent").is_empty(),"Sélection isolée et trajet inconnu rejeté")
 	var other_exit:=routes.duplicate(true);other_exit[1].path_points[-1]=Vector2(11,4);other_exit[1].path_length=15.0
 	check(Geometry.network_error(other_exit).is_empty() and not Geometry.common_exit_error(other_exit).is_empty(),"Réseau géométrique distinct de la règle à forteresse unique")
+	var destinations := {"west": Vector2(10,4), "east": Vector2(11,4)}
+	other_exit[0].destination_id = "west"
+	other_exit[1].destination_id = "east"
+	check(Geometry.destinations_error(other_exit,destinations).is_empty(),"Deux sorties distinctes peuvent designer deux forteresses")
+	check(not Geometry.destinations_error(routes,destinations).is_empty(),"Une destination doit etre explicite")
+	check(not Geometry.destinations_error(other_exit,{"west": Vector2(10,4)}).is_empty(),"Une sortie inconnue est rejetee")
+	check(not Geometry.destinations_error(other_exit,{"west": Vector2(10,4), "east": Vector2(11,5)}).is_empty(),"Le trajet doit atteindre la forteresse declaree")
+	check(not Geometry.destinations_error(other_exit,{"west": Vector2(10,4), "east": Vector2(11,4), "unused": Vector2(12,4)}).is_empty(),"Chaque forteresse doit avoir un trajet")
+	check(not Geometry.destinations_error(other_exit,{"west": Vector2(10,4), "east": Vector2(10,4)}).is_empty(),"Deux forteresses ne partagent pas le meme point")
+
 	var invalid: Array=[]
 	invalid.append([]);invalid.append(null);invalid.append([3])
 	for mutation in ["duplicate_id","missing_id","empty_id","space_id","missing_points","zero_segment","nan_point","wrong_length","infinite_length"]:
