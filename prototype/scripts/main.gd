@@ -651,15 +651,17 @@ func _ready() -> void:
 			print("ROUTE_FORECAST_SNAPSHOT=",JSON.stringify({"faction":model.faction,"entries":map_view.entry_forecast,"note":forecast_note.text,"visible":forecast_panel.visible,"labels":map_view.entry_label_layouts().map(func(entry: Dictionary):return [entry.title,entry.detail])}))
 		if capture_state == "wolf_walk":
 			# Fixture visuelle isolée : quatre directions du trajet, sans profil joueur.
-			model.enemies.clear();model.spawn_schedule.clear();model.spawned=4;model.phase="combat"
+			model.enemies.clear();model.damage_events.clear();model.spawn_schedule.clear();model.spawned=4;model.phase="combat"
 			var pose_offset:=0.0
+			var route_impact := route_workshop and "--capture-route-hit" in OS.get_cmdline_user_args()
 			for argument in OS.get_cmdline_user_args():
 				if argument.begins_with("--capture-wolf-offset="): pose_offset=float(argument.trim_prefix("--capture-wolf-offset="))
 			for index in range(4):
-				var enemy: Dictionary=Model.make_enemy(index,0,0.0,model.faction)
+				var enemy: Dictionary=Model.make_enemy(index,1 if route_impact else 0,0.0,model.faction)
 				enemy.distance=[2.0,7.0,11.5,16.5][index]+pose_offset
+				if route_impact: enemy.route_id = model.routes[index%model.routes.size()].id
 				model.enemies.append(enemy)
-			if "--capture-wolf-hit" in OS.get_cmdline_user_args():
+			if route_impact or "--capture-wolf-hit" in OS.get_cmdline_user_args():
 				var damage := {}
 				for enemy in model.enemies:
 					damage[enemy.id] = enemy.max_hp*0.5

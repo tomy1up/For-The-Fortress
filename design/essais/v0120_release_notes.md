@@ -1,0 +1,1 @@
+Le recul visuel des attaquants suit leur trajet, y compris sur les branches de La Confluence. Les 1 459 controles cibles passent. Impacts controles dans le paquet Windows pour les deux factions, en atelier isole.
