@@ -95,3 +95,5 @@ Essai avec le dessin v003 et `--turn-shift=0` ou `--turn-shift=4`. Le plafond pa
 | 4 px | 5,053 px | 5,380 px |
 
 Le raccord de face vers le trois quarts est le pire avant correction dans ces essais. Le plafond de 4 px reduit le saut entre vues, mais a la phase 3 le deplacement maximal entre deux images d'une meme vue passe de 0,812 a 1,009 px. Les triangles restent valides. Il reste a comparer visuellement le deplacement du corps par rapport au chemin avant de changer le reglage de reference.
+
+Le [comparatif au ralenti](comparatif_translation.mp4) montre les six virages avec le meme cadrage, a la phase initiale 3. A gauche, plafond de 2 px. A droite, plafond de 4 px. Le recadrage conserve l'echelle du jeu et la video est ralentie de moitie. Les 144 images proviennent de captures dans la scene du Gue avec un profil isole. Les loups sont places a l'avance pres des virages pour faciliter la comparaison.
