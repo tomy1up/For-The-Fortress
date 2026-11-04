@@ -1,0 +1,1 @@
+L archer elfe lache sa fleche, se rearme et revient en visee. Le rythme visuel suit le delai entre les tirs. Six cycles complets controles a vitesse x2 dans le rendu du prototype. 325 controles Godot et 7 cas cibles dans le paquet Windows, dont la protection des profils et les bonus des deux factions. 81 sources comparees.
