@@ -1,0 +1,1 @@
+La hache du troll poursuit sa trajectoire entre les ennemis touchés par ses ricochets. Les dégâts conservent leur moment de résolution. 837 contrôles Godot ciblés et 7 essais Windows réussis, dont les captures au milieu du rebond dans les deux sens, la protection des profils et les bonus des factions. 83 sources comparées.

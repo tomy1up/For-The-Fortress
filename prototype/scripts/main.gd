@@ -393,6 +393,13 @@ func _ready() -> void:
 				print("ELIMINATION_VISIBLE=",not map_view.recent_eliminations().is_empty())
 			if "--capture-attack-pose" in OS.get_cmdline_user_args(): model.advance(MapView.ATTACK_POSE_DURATION/2)
 			if "--capture-projectile" in OS.get_cmdline_user_args(): model.advance(MapView.PROJECTILE_FLIGHT/2)
+			if "--capture-axe-bounce" in OS.get_cmdline_user_args():
+				var bounce_shot: Dictionary = model.shots.back()
+				var segments := MapView.secondary_segments(bounce_shot)
+				assert(capture_type == 3 and not segments.is_empty())
+				var age := MapView.PROJECTILE_FLIGHT+(MapView.IMPACT_DURATION-MapView.PROJECTILE_FLIGHT)/(2.0*segments.size())
+				model.advance(age-(model.elapsed-bounce_shot.time))
+				print("AXE_BOUNCE=",JSON.stringify({"segments":segments.size(),"age":model.elapsed-bounce_shot.time,"isolated":meta_profile == null or meta_profile.path.is_empty()}))
 			if "--capture-crossbow-reload" in OS.get_cmdline_user_args():
 				model.advance(0.40)
 				var reload_pose := map_view.defender_pose(capture_slot)
