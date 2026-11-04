@@ -569,16 +569,15 @@ func _draw() -> void:
 		draw_circle(entrance,5,Color("debd7f") if screen_routes.size()==1 else entry_color(index))
 		if screen_routes.size()==1: draw_string(font,entrance+Vector2(-48,-20),"ENTRÉE",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("a7b8aa"))
 	if model != null:
+		var protection_positions: Dictionary = {}
 		for enemy in model.enemies:
+			if model.active and not model.protection_events.is_empty():
+				protection_positions[enemy.id] = model.enemy_position(enemy)
 			if enemy.type != Model.Banks.GUARD_TYPE: continue
 			var ring := PackedVector2Array()
 			var center: Vector2 = model.enemy_position(enemy)
 			for step in range(49): ring.append(project(center+Vector2.from_angle(TAU*step/48)*Model.Banks.RADIUS))
 			draw_polyline(ring,Color(0.62,0.79,0.43,0.42),1.4,true)
-		for event in model.protection_events:
-			var age: float = model.elapsed-event.time
-			if age >= 0.0 and age < 0.4 and model.active:
-				draw_line(project(event.from)+Vector2(0,-12),project(event.to)+Vector2(0,-12),Color(0.83,0.96,0.52,(1.0-age/0.4)*0.85),2,true)
 		for link in inspected_protection_links():
 			draw_line(project(link.from)+Vector2(0,-12),project(link.to)+Vector2(0,-12),Color(0.72,0.89,0.56,0.65),1.5,true)
 			draw_arc(project(link.from)+Vector2(0,3),12,0,TAU,32,Color("b8d889"),1.5,true)
@@ -607,6 +606,12 @@ func _draw() -> void:
 					if span.y > span.x:
 						draw_rect(Rect2(bar_position+Vector2(24*span.x,0),Vector2(24*(span.y-span.x),4)),Color(Color("f3dfba"),damage_opacity(model.elapsed-event.time)))
 		if model.active:
+			for event in model.protection_events:
+				var age: float = model.elapsed-event.time
+				if age < 0.0 or age >= 0.4: continue
+				var from: Vector2 = protection_positions.get(event.get("protected_id", -1),event.from)
+				var to: Vector2 = protection_positions.get(event.get("guardian_id", -1),event.to)
+				draw_line(project(from)+Vector2(0,-12),project(to)+Vector2(0,-12),Color(0.83,0.96,0.52,(1.0-age/0.4)*0.85),2,true)
 			for shot in model.shots:
 				_draw_impact(shot, model.elapsed - shot.time)
 		for effect in recent_eliminations():

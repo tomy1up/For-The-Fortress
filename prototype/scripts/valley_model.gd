@@ -742,7 +742,8 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 		damage = redirected.damage;hits = redirected.hits
 		for transfer in redirected.transfers:
 			if transfer.amount <= 0.0: continue
-			protection_events.append({"time":elapsed,"from":positions[transfer.protected_id],"to":positions[transfer.guardian_id],"amount":transfer.amount,"guardian_id":transfer.guardian_id})
+			protection_events.append({"time":elapsed,"from":positions[transfer.protected_id],"to":positions[transfer.guardian_id],
+				"amount":transfer.amount,"guardian_id":transfer.guardian_id,"protected_id":transfer.protected_id})
 		while protection_events.size() > 24: protection_events.pop_front()
 	Metrics.credit(_wave_record.get("performance",[]),enemies,damage,hits)
 	var survivors: Array[Dictionary] = []
