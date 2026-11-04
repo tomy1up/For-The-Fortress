@@ -123,6 +123,7 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
 for index,unit in enumerate(['archer','crossbow','mage','troll','sapper','shaman']):
     for prefix in ['left_attack_','left_projectile_']:
         cases.append((prefix+unit,'effects','alliance' if index<3 else 'horde'))
+cases.extend((name,'effects','alliance') for name in ('crossbow_reload','left_crossbow_reload'))
 cases.append(('periodic_damage','damage_tick','horde'))
 for faction in ['alliance','horde']:
     for detail in ['compact','details']:
@@ -219,10 +220,12 @@ for name,state,faction in cases:
             effect_types.update({'projectile_'+unit:index for index,unit in enumerate(['archer','crossbow','mage','troll','sapper','shaman'])})
             for prefix in ['left_attack_','left_projectile_']:
                 effect_types.update({prefix+unit:index for index,unit in enumerate(['archer','crossbow','mage','troll','sapper','shaman'])})
+            effect_types.update({'crossbow_reload':1,'left_crossbow_reload':1})
             command+=['--capture-type='+str(effect_types[name])]
             if name.startswith('left_'): command+=['--capture-slot=0']
             if name.startswith(('attack_','left_attack_')): command+=['--capture-attack-pose']
             if name.startswith(('projectile_','left_projectile_')): command+=['--capture-projectile']
+            if name.endswith('crossbow_reload'): command+=['--capture-crossbow-reload']
         if name=='bonus_economy_comparison': command+=['--capture-type=1']
         if name.endswith('_bonus_other'): command+=['--capture-type=3']
         if name.endswith('_bonus_details'): command+=['--capture-details=0']
@@ -409,6 +412,10 @@ for name,state,faction in cases:
         elif name.endswith('_victory'): assert info['ready'] and info['saved']==60 and info['waves']==0 and info['bonus']==0 and info['xp_earned']==100 and info['balance']==66 and info['affordable']==0
         else: assert info['ready'] and info['saved']==0 and info['bonus']==0 and info['balance']==6 and info['xp_earned']==0
     if name.startswith('left_'): assert 'ATTACK_FACING=-1' in text,(name,'La fixture doit couvrir un vrai tir à gauche')
+    if name.endswith('crossbow_reload'):
+        snapshot = json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CROSSBOW_RELOAD=')))
+        assert snapshot['active'] and snapshot['pulse']==0.0 and snapshot['isolated'], (name,snapshot)
+        if name=='crossbow_reload': assert 'ATTACK_FACING=1' in text, name
     if name=='periodic_damage': assert 'DAMAGE_TICK_VISIBLE=true' in text,(name,'Le contrôle doit montrer un dégât périodique réel')
     if state=='elimination': assert 'ELIMINATION_VISIBLE=true' in text,(name,'La dissipation doit suivre une vraie élimination')
     if state=='wave_start':

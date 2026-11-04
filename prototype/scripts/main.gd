@@ -393,6 +393,10 @@ func _ready() -> void:
 				print("ELIMINATION_VISIBLE=",not map_view.recent_eliminations().is_empty())
 			if "--capture-attack-pose" in OS.get_cmdline_user_args(): model.advance(MapView.ATTACK_POSE_DURATION/2)
 			if "--capture-projectile" in OS.get_cmdline_user_args(): model.advance(MapView.PROJECTILE_FLIGHT/2)
+			if "--capture-crossbow-reload" in OS.get_cmdline_user_args():
+				model.advance(0.40)
+				var reload_pose := map_view.defender_pose(capture_slot)
+				print("CROSSBOW_RELOAD=", JSON.stringify({"active":reload_pose.get("crossbow_reload", false),"pulse":reload_pose.pulse,"isolated":meta_profile == null or meta_profile.path.is_empty()}))
 			if "--capture-hit-motion" in OS.get_cmdline_user_args():
 				model.advance(0.045)
 				var reacting: Array[Dictionary] = []
