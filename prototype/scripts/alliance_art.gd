@@ -11,7 +11,8 @@ const FRAMES: Dictionary = {
 	1: {"source":Rect2(92,112,1148,1075),"foot":Vector2(605.141,1187),"height":56.0},
 	2: {"source":Rect2(64,47,1191,1119),"foot":Vector2(630.923,1166),"height":66.0},
 }
-const MUZZLES: Dictionary = {0:Vector2(34,-37),1:Vector2(32,-26),2:Vector2(31,-54)}
+# La fleche se detache a la hauteur de la poignee de l'arc.
+const MUZZLES: Dictionary = {0:Vector2(26,-34),1:Vector2(32,-26),2:Vector2(31,-54)}
 
 static func destination(type: int) -> Rect2:
 	var frame: Dictionary = FRAMES[type]

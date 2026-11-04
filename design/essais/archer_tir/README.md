@@ -23,3 +23,5 @@ Lancer la capture avec `-- --repeat` pour faire avancer le combat a vitesse x2 a
 ## Depart a gauche et a droite
 
 Le premier tir est oriente a gauche depuis E1. L option `-- --right` place l archer en E2 pour obtenir un tir vers la droite. La capture verifie le sens du premier tir dans les deux cas. La [planche du depart de fleche](depart_fleche_deux_sens.png) montre la derniere image avant le tir, le depart et deux instants du vol. Le projectile quitte l arc dans les deux sens. Sur le tir vers le haut a droite, un petit espace reste visible entre le projectile et l arc des la premiere image de vol. Le dessin et le point de depart restent a recaler ensemble avant integration.
+
+Le [comparatif apres recalage](point_depart_compare.png) montre le point d origine rapproche de la poignee dans les deux sens. Le point est commun au sprite actuellement jouable et a l essai de lacher. Les trois suites d art Alliance, de mouvement d attaque et de projectiles passent (325 controles).
