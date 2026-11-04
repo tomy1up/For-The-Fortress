@@ -20,6 +20,7 @@ var max_corrected_step := 0.0
 var worst_contact_switch := {}
 var use_quarters := true
 var front_half_window := 0.10
+var previous_front := false
 var turn_meshes: Array[ArrayMesh] = []
 var rear_quarter_candidate: ImageTexture
 var quarter_candidate: ImageTexture
@@ -35,7 +36,7 @@ func record() -> void:
 	game.model.enemies.clear();game.model.spawn_schedule.clear()
 	var preview := "--wolf-pivot" in OS.get_cmdline_user_args()
 	var hit_preview := "--wolf-hit" in OS.get_cmdline_user_args()
-	var previous_front := "--previous-front" in OS.get_cmdline_user_args()
+	previous_front = "--previous-front" in OS.get_cmdline_user_args()
 	var id_offset := 0
 	use_quarters = not "--no-quarters" in OS.get_cmdline_user_args()
 	for argument in OS.get_cmdline_user_args():
@@ -305,12 +306,16 @@ func preview_pose(distance: float, points: Array[Vector2], radius: float = 0.45)
 		var quarter := use_quarters and turn_center >= (front_half_window if towards else 0.10)
 		if front_candidate != null and changes_side and turn_center < (0.26 if use_quarters else 0.14):
 			var source := Rect2(214, 272, 773, 672) if towards else Rect2(389, 76, 391, 1095)
+			if towards and previous_front:
+				source = Rect2(245, 12, 650, 1185)
 			if quarter:
 				source = Rect2(141, 274, 942, 652) if towards else Rect2(226, 61, 1092, 886)
 			var image_scale := 34.0/1055.0 if quarter and towards else (34.0/1177.0 if towards else 34.0/source.size.y)
 			var size := source.size*image_scale
 			# Center on the visible diagonal support pair, independent of tail and ears.
 			var support := Vector2(601, 866) if towards else Vector2(612, 895)
+			if towards and previous_front:
+				support = Vector2(525, 974)
 			result["texture"] = front_candidate if towards else rear_candidate
 			if quarter:
 				support = Vector2(610, 880) if towards else Vector2(837, 831)
@@ -339,6 +344,8 @@ func animated_turn_mesh(pose: Dictionary, gait: float, enemy_id: int, scale: flo
 	var destination: Rect2 = pose.destination
 	var texture: Texture2D = pose.texture
 	var paws: Array = [Vector2(447, 780), Vector2(521, 707), Vector2(633, 820), Vector2(754, 913)] if pose.towards else [Vector2(650, 950), Vector2(505, 1140), Vector2(720, 612), Vector2(424, 710)]
+	if pose.towards and previous_front:
+		paws = [Vector2(350, 790), Vector2(500, 930), Vector2(574, 990), Vector2(700, 1180)]
 	if pose.quarter:
 		paws = [Vector2(420, 831), Vector2(497, 790), Vector2(643, 832), Vector2(798, 895)] if pose.towards else [Vector2(541, 915), Vector2(761, 786), Vector2(886, 687), Vector2(1134, 710)]
 	# The drawings list the rear pair first. Select anatomical groups in

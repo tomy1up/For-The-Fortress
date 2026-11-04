@@ -81,3 +81,5 @@ Relancer `res://tools/qa_wolf_ingame.gd -- --wolf-pivot` avec puis sans `--previ
 | 3 | 8,508 px | 6,201 px | 0,118 px² |
 
 Les deux dessins donnent les memes mesures. Ces mesures portent sur les points du maillage, communs aux deux textures. Pour juger le raccord des appuis dessines, il reste a verifier leur position dans chaque texture et a comparer les captures a la taille du plateau. Essai isole du jeu distribue.
+
+Les mesures ci-dessus precedaient le recalage du dessin v002. La comparaison utilise maintenant un cadrage et quatre reperes de pattes propres a ce dessin, releves visuellement. A decalage 0, la v002 recalee donne 6,671 px de derive, 5,986 px de saut et 0,135 px2 d'aire double minimale. La v003 conserve 6,676 px et 5,916 px. L'ecart est trop faible pour retenir une variante sur ces mesures seules.
