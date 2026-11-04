@@ -1,0 +1,1 @@
+La fleche de l archer elfe part au niveau de la poignee de l arc. Les nouvelles poses de tir restent en atelier. 325 controles Godot et 8 cas cibles sur Windows passes, dont les tirs dans les deux sens, la protection des profils et les bonus des deux factions. 75 sources comparees.
