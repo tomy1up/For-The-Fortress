@@ -402,6 +402,12 @@ func _ready() -> void:
 				print("HIT_MOTION_SNAPSHOT=",JSON.stringify({"faction":model.faction,"reacting":reacting,"observations":model.damage_events.size(),"moving":model.active}))
 			selected = capture_slot
 			map_view.selected = capture_slot
+			if "--capture-attack-rest" in OS.get_cmdline_user_args():
+				var fired := map_view.defender_pose(capture_slot)
+				model.phase = "finished"
+				model.shots.clear()
+				var resting := map_view.defender_pose(capture_slot)
+				print("ATTACK_REST=",JSON.stringify({"shot": fired.direction,"rest": resting.direction,"pulse": resting.pulse,"isolated":meta_profile == null or meta_profile.path.is_empty()}))
 			print("ATTACK_FACING=",int(map_view.defender_pose(capture_slot).direction))
 		if capture_state == "wave_start":
 			model.reset();model.select_faction(capture_faction)

@@ -1,0 +1,1 @@
+Les defenseurs gardent le dernier cote vise entre les vagues. Les 791 controles cibles passent, y compris le rejeu de rapports historiques. Le paquet Windows confirme une pose stable a gauche pour l archer et a droite pour le chaman.
