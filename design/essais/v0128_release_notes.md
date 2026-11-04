@@ -1,0 +1,1 @@
+Le cristal du bâton du mage humain s’illumine au lancement du sort et suit le geste. Le rendu a été examiné dans les deux sens sur le paquet Windows. 1 103 contrôles Godot ciblés et 9 essais Windows réussis, dont le réarmement de l’arbalétrier, la protection des profils et les bonus des deux factions. 83 sources comparées.
