@@ -3,6 +3,7 @@ extends SceneTree
 const Model = preload("res://scripts/valley_model.gd")
 const Catalogue = preload("res://scripts/campaign_catalogue.gd")
 const Talents = preload("res://scripts/meta_talents_linked.gd")
+const Experience = preload("res://scripts/talent_experience.gd")
 const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 const SEEDS: Array[int] = [7,42,2026]
@@ -16,7 +17,7 @@ static func source_hashes() -> Dictionary:
 		if name.ends_with(".gd"): result[name] = FileAccess.get_sha256("res://scripts/"+name)
 	return result
 
-func play(faction: int, mission: int, seed_value: int, layout: int, composition: int, early: int, talent: int, step: float, replay: bool) -> Dictionary:
+func play(faction: int, mission: int, seed_value: int, layout: int, composition: int, early: int, talent: int, step: float, replay: bool, full_tree: bool = false) -> Dictionary:
 	var definition: Dictionary = Catalogue.definition(mission)
 	var m = Model.new(true,Model.Maps.for_id(definition.map_id))
 	var wave_set: String = definition.get("wave_set_id","ford")
@@ -24,9 +25,17 @@ func play(faction: int, mission: int, seed_value: int, layout: int, composition:
 	if not m.configure_enemy_hp(definition.hp_percent): error = "PV de mission refusés.";return {}
 	var ranks: Array = Talents.empty_ranks()
 	if talent >= 0:
-		var allocation: String = Talents.allocation_error(ranks,talent,1,faction)
-		if not allocation.is_empty(): error = "Premier point non accessible : "+allocation;return {}
-		ranks[talent] = 1
+		var available := 1
+		var picks: Array[int] = [talent]
+		if full_tree:
+			var xp := 0
+			for previous in range(1,mission): xp += int(Catalogue.definition(previous).xp)
+			available = Experience.points_for_xp(xp)
+			picks = [talent,talent,talent,talent,talent,Talents.index_for(Talents.coordinates(talent).x,1)]
+		for pick in picks:
+			var allocation: String = Talents.allocation_error(ranks,pick,available,faction)
+			if not allocation.is_empty(): error = "Point non accessible : "+allocation;return {}
+			ranks[pick] += 1
 	if not Talents.valid(ranks): error = "Configuration de talents invalide.";return {}
 	m.meta_ranks = ranks
 	if not m.select_faction(faction): error = "Faction refusée.";return {}
@@ -57,10 +66,12 @@ func play(faction: int, mission: int, seed_value: int, layout: int, composition:
 func _initialize() -> void:
 	var output: String = "";var smoke: bool = false;var step: float = 300.0
 	var banks := false
+	var horde_focus := false
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--output="): output = argument.trim_prefix("--output=")
 		elif argument == "--smoke": smoke = true
 		elif argument == "--banks": banks = true
+		elif argument == "--horde-14-talents": horde_focus = true
 		elif argument == "--small-steps": step = 0.05
 		else: printerr("Argument inconnu : "+argument);quit(2);return
 	if output.is_empty(): printerr("Indiquer --output=<nouveau rapport hors des données du joueur>.");quit(2);return
@@ -69,20 +80,22 @@ func _initialize() -> void:
 	if not output.is_absolute_path() or output.to_lower() == user_root or output.to_lower().begins_with(user_root+"/") or FileAccess.file_exists(output) or DirAccess.dir_exists_absolute(output):
 		printerr("Destination existante ou réservée au joueur refusée.");quit(2);return
 	var before: Dictionary = source_hashes();var results: Array = []
-	for faction in range(2):
-		for mission in (range(11,21) if banks else range(1,4)):
+	if banks and horde_focus: printerr("Choisir un seul périmètre.");quit(2);return
+	var mission_range := [14,14] if horde_focus else [11,20] if banks else [1,3]
+	for faction in ([1] if horde_focus else range(2)):
+		for mission in range(mission_range[0],mission_range[1]+1):
 			for seed_value in ([42] if smoke else SEEDS):
 				for layout in ([1] if smoke else range(LAYOUTS.size())):
 					for composition in ([0] if smoke else range(COMPOSITIONS.size())):
 						for early in ([2] if smoke else [1,2,3]):
-							for talent in ([-1,Talents.index_for(0,0),Talents.index_for(1,0),Talents.index_for(2,0)] if mission == 3 else [-1]):
-								var row: Dictionary = play(faction,mission,seed_value,layout,composition,early,talent,step,smoke)
+							for talent in ([-1,Talents.index_for(0,0),Talents.index_for(1,0),Talents.index_for(2,0)] if mission == 3 or horde_focus else [-1]):
+								var row: Dictionary = play(faction,mission,seed_value,layout,composition,early,talent,step,smoke,horde_focus)
 								if row.is_empty(): printerr(error);quit(1);return
 								results.append(row)
 			print("CAMPAIGN_SURVEY_PROGRESS=",results.size())
-	var expected := (20 if smoke else 4320) if banks else (12 if smoke else 2592)
+	var expected := (4 if smoke else 864) if horde_focus else (20 if smoke else 4320) if banks else (12 if smoke else 2592)
 	if before != source_hashes() or results.size() != expected: printerr("Sources modifiées ou échantillon incomplet.");quit(1);return
 	var file := FileAccess.open(output,FileAccess.WRITE)
 	if file == null: printerr("Rapport non accessible.");quit(1);return
-	file.store_string(JSON.stringify({"schema":1,"game_version":ProjectSettings.get_setting("application/config/version"),"human_balance_test":false,"mission_range":[11,20] if banks else [1,3],"profile_loaded":false,"sources_sha256":before,"step":step,"smoke_replays":smoke,"case_count":results.size(),"seeds":[42] if smoke else SEEDS,"layouts":LAYOUTS,"compositions":COMPOSITIONS,"policy":"Deux recrues au départ ; tentative d’amélioration de la première aux vagues 1, 2 ou 3 ; troisième recrue à partir de la vague 4 ; améliorations à partir de la vague 5, branche A ; premier bonus proposé. Aucun revenu ajouté, aucune opération forcée. Les variantes avec un point concernent uniquement le relevé des missions 1 à 3.","results":results},"\t")+"\n");file.close()
+	file.store_string(JSON.stringify({"schema":1,"game_version":ProjectSettings.get_setting("application/config/version"),"human_balance_test":false,"mission_range":mission_range,"talent_mode":"six_in_one_tree" if horde_focus else "initial","profile_loaded":false,"sources_sha256":before,"step":step,"smoke_replays":smoke,"case_count":results.size(),"seeds":[42] if smoke else SEEDS,"layouts":LAYOUTS,"compositions":COMPOSITIONS,"policy":"Deux recrues au départ ; tentative d’amélioration de la première aux vagues 1, 2 ou 3 ; troisième recrue à partir de la vague 4 ; améliorations à partir de la vague 5, branche A ; premier bonus proposé. Aucun revenu ajouté, aucune opération forcée. Le relevé de la mission 14 compare chaque arbre avec six points et un témoin sans talent. Les variantes avec un point concernent les missions 1 à 3.","results":results},"\t")+"\n");file.close()
 	print("CAMPAIGN_SURVEY_COMPLETE=",results.size());quit()
