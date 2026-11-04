@@ -1,0 +1,1 @@
+La hache du troll a un contour sombre et passe au-dessus des marques de ricochet. Sept essais Windows réussis, dont le lancer, le rebond dans les deux sens, la protection des profils et les bonus des factions. 83 sources comparées.
