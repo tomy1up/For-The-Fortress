@@ -34,6 +34,7 @@ func record() -> void:
 	game._choose_faction(faction);game.model.buy(0,0);game.model.phase="combat"
 	game.model.enemies.clear();game.model.spawn_schedule.clear()
 	var preview := "--wolf-pivot" in OS.get_cmdline_user_args()
+	var hit_preview := "--wolf-hit" in OS.get_cmdline_user_args()
 	var id_offset := 0
 	use_quarters = not "--no-quarters" in OS.get_cmdline_user_args()
 	for argument in OS.get_cmdline_user_args():
@@ -65,6 +66,8 @@ func record() -> void:
 		game.map_view.wolf_turn_preview = preview_enemy_pose
 	report_corner_displacement(game.model.path_points)
 	var directory:=ProjectSettings.globalize_path("user://qa_wolf_pivot" if preview else "user://qa_wolf_ingame")
+	if hit_preview:
+		directory += "_hit"
 	if preview and not use_quarters:
 		directory += "_without_quarters"
 	if faction == 1:
@@ -74,7 +77,16 @@ func record() -> void:
 		for enemy in game.model.enemies: enemy.distance+=enemy.speed/60.0
 		capture_frame = frame
 		turn_meshes.clear()
-		game.model.elapsed=frame/60.0;game._update_interface();game.map_view.queue_redraw()
+		game.model.elapsed = frame/60.0
+		if hit_preview and frame == 42:
+			var damage := {}
+			for enemy in game.model.enemies:
+				damage[enemy.id] = enemy.max_hp*0.5
+			game.model._apply_damage(damage)
+			assert(game.model.damage_events.size() == game.model.enemies.size())
+			print("WOLF_HITS events=", game.model.damage_events.size(), " faction=", faction)
+		game._update_interface()
+		game.map_view.queue_redraw()
 		await process_frame;await RenderingServer.frame_post_draw
 		assert(root.get_texture().get_image().save_png(directory.path_join("%04d.png"%frame))==OK)
 	if preview:
