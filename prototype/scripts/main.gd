@@ -963,7 +963,7 @@ func _build_interface() -> void:
 	loadout_label = _label(screen,"",Vector2(948,64),Vector2(300,26),12,Color("b6c3b7"))
 	loadout_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	var side := _panel(screen, Rect2(24, 122, 278, 632))
-	_label(side, "DÉFENDRE LE GUÉ", Vector2(22, 20), Vector2(240, 28), 18, Color("e0dbbf"))
+	_label(side, "PROTÉGER LA FORTERESSE", Vector2(22, 20), Vector2(240, 28), 18, Color("e0dbbf"))
 	guidance_label = _label(side, "", Vector2(22, 62), Vector2(238, 76), 14, Color("aabbb0"))
 	hp_label = _label(side, "", Vector2(22, 144), Vector2(238, 28), 21, Color("e2d5ad"))
 	fortress_bar = ProgressBar.new()
