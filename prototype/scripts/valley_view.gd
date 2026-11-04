@@ -870,6 +870,17 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		draw_mesh(walking_meshes.mesh_for(enemy.id,phase,ground),EnemyWalkArt.TEXTURE,Transform2D.IDENTITY,EnemyArt.tint(hit_strength))
 	else:
 		draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,EnemyArt.tint(hit_strength))
+	if enemy.type == Model.Banks.GUARD_TYPE and model.active:
+		for index in range(model.protection_events.size()-1,-1,-1):
+			var event: Dictionary = model.protection_events[index]
+			var age: float = model.elapsed-event.time
+			if age >= 0.4: break
+			if age < 0.0 or event.get("guardian_id", -1) != enemy.id: continue
+			var strength := 1.0-age/0.4
+			var shell := Vector2(-4,-18)
+			draw_circle(shell,11.0+5.0*(1.0-strength),Color(0.78,0.96,0.49,0.18*strength),true,-1,true)
+			draw_arc(shell,10.0+4.0*(1.0-strength),PI,TAU,20,Color(0.86,1.0,0.62,0.90*strength),2.0,true)
+			break
 	draw_set_transform(Vector2.ZERO)
 
 func _draw_valley_water() -> void:
