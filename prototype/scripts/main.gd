@@ -659,6 +659,13 @@ func _ready() -> void:
 				var enemy: Dictionary=Model.make_enemy(index,0,0.0,model.faction)
 				enemy.distance=[2.0,7.0,11.5,16.5][index]+pose_offset
 				model.enemies.append(enemy)
+			if "--capture-wolf-hit" in OS.get_cmdline_user_args():
+				var damage := {}
+				for enemy in model.enemies:
+					damage[enemy.id] = enemy.max_hp*0.5
+				model._apply_damage(damage)
+				model.elapsed += 0.045
+				print("WOLF_IMPACT_SNAPSHOT=",JSON.stringify({"events":model.damage_events.size(),"faction":model.faction}))
 			_update_interface()
 			print("WOLF_SNAPSHOT=",JSON.stringify({"isolated":meta_profile == null or meta_profile.path.is_empty(),"count":model.enemies.size(),"faction":model.faction,"motion_schema":MapView.EnemyWalkArt.DATA.schema}))
 		map_view.queue_redraw()
