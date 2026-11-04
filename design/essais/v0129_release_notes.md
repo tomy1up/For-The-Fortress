@@ -1,0 +1,1 @@
+La bombe du sapeur gobelin bascule en vol et sa mèche projette des étincelles. Les captures Windows ont été examinées dans les deux sens. 1 040 contrôles Godot ciblés et 7 essais Windows réussis, dont la protection des profils et les bonus des deux factions. 83 sources comparées.
