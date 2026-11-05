@@ -75,6 +75,10 @@ func run_checks() -> void:
 			for index in range(2):
 				check(layouts[index].detail.begins_with(str(scene.forecast_data.entries[index].count)),"Quantité du repère liée à l'entrée correspondante")
 				check(Rect2(330,64,926,530).encloses(layouts[index].area),"Repère lisible dans la zone de carte sans le panneau gauche")
+				scene._update_wave_forecast(scene.map_view.to_global(layouts[index].area.get_center()))
+				check(scene.map_view.highlighted_entries==[index],"Survol du repère limité à son trajet")
+			scene._update_wave_forecast(Vector2.ZERO)
+			check(scene.map_view.highlighted_entries.is_empty(),"Le trajet cesse d’être mis en évidence au départ du pointeur")
 			check(signature(scene.model)==before,"Rafraîchir le panneau reste une consultation")
 			scene.model.phase="combat";scene._update_interface()
 			check(not scene.forecast_panel.visible and scene.map_view.entry_forecast.is_empty() and scene.map_view.entry_label_layouts()[0].detail.is_empty(),"Les anciens effectifs annoncés disparaissent au combat")

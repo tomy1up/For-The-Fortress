@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.148**. Survolez une entrée pendant la préparation pour suivre son chemin jusqu’à la forteresse. [Notes de version](design/essais/v0148_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.148).
+
 **Prototype v0.147**. La mission 21 ouvre le Col des Ardoises à deux entrées. Équilibrage d’essai à approfondir, particulièrement côté Horde. [Conception et résultats](design/Mission_021_Col_des_Ardoises.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.147).
 
 **Prototype v0.146**. Le rapport Markdown affiche les arrivées par vague et par entrée. [Notes de version](design/essais/v0146_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.146).

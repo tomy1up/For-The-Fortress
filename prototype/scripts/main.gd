@@ -679,6 +679,12 @@ func _ready() -> void:
 					model.wave = clampi(argument.trim_prefix("--capture-route-wave=").to_int(), 1, 10)
 					model.spawn_schedule = Model.Campaign.schedule(model.wave, model.wave_set_id)
 					_update_interface()
+				if argument.begins_with("--capture-route-entry="):
+					set_process(false)
+					var index := clampi(argument.trim_prefix("--capture-route-entry=").to_int()-1,0,model.routes.size()-1)
+					var area: Rect2 = map_view.entry_label_layouts()[index].area
+					_update_wave_forecast(map_view.to_global(area.get_center()))
+					print("ROUTE_ENTRY_HOVER=",JSON.stringify(map_view.highlighted_entries))
 			if "--capture-route-hover" in OS.get_cmdline_user_args():
 				set_process(false)
 				_update_wave_forecast(forecast_rows[0].get_global_rect().get_center())
@@ -1247,6 +1253,12 @@ func _update_wave_forecast(pointer := Vector2.INF) -> void:
 	for entry in forecast_data.get("entries",[]): entry_counts.append("Entrée %d : %d"%[entry.number,entry.count])
 	forecast_note.text = "Survolez les groupes pour les détails." if entry_counts.is_empty() else " · ".join(entry_counts)
 	forecast_panel.size.y = footer+50
+	var map_pointer: Vector2 = map_view.to_local(pointer if pointer.is_finite() else get_global_mouse_position())
+	var labels: Array[Dictionary] = map_view.entry_label_layouts()
+	for index in range(labels.size()):
+		if labels[index].area.has_point(map_pointer):
+			map_view.highlighted_entries.assign([index])
+			break
 
 func _build_run_summary(screen: Control) -> void:
 	summary_panel = ColorRect.new()

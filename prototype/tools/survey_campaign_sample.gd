@@ -10,6 +10,7 @@ const SEEDS: Array[int] = [7,42,2026]
 const LAYOUTS: Array = [[0,1,2],[1,2,4],[1,3,4],[0,2,4],[2,4,5],[2,3,5]]
 const COMPOSITIONS: Array = [[0,1,2],[0,2,1],[1,1,0],[0,0,2]]
 var error: String = ""
+var spend_all_earned_points := false
 
 static func source_hashes() -> Dictionary:
 	var result: Dictionary = {}
@@ -37,6 +38,17 @@ func play(faction: int, mission: int, seed_value: int, layout: int, composition:
 			var allocation: String = Talents.allocation_error(ranks,pick,available,faction)
 			if not allocation.is_empty(): error = "Point non accessible : "+allocation;return {}
 			ranks[pick] += 1
+		if full_tree and spend_all_earned_points:
+			var tree: int = Talents.coordinates(talent).x
+			for remaining in range(available-Talents.spent(ranks)):
+				var allocated := false
+				for local in range(21):
+					var index: int = Talents.index_for(tree,local)
+					if Talents.allocation_error(ranks,index,available,faction).is_empty():
+						ranks[index] += 1
+						allocated = true
+						break
+				if not allocated: error = "Budget de points non répartissable dans cet arbre.";return {}
 	if not Talents.valid(ranks): error = "Configuration de talents invalide.";return {}
 	m.meta_ranks = ranks
 	if not m.select_faction(faction): error = "Faction refusée.";return {}
@@ -78,6 +90,7 @@ func _initialize() -> void:
 		elif argument == "--banks": banks = true
 		elif argument == "--horde-14-talents": horde_focus = true
 		elif argument == "--slate-pass": slate_pass = true
+		elif argument == "--all-earned-points": spend_all_earned_points = true
 		elif argument == "--early-recruit": recruit_from = 2
 		elif argument == "--small-steps": step = 0.05
 		else: printerr("Argument inconnu : "+argument);quit(2);return
@@ -104,5 +117,5 @@ func _initialize() -> void:
 	if before != source_hashes() or results.size() != expected: printerr("Sources modifiées ou échantillon incomplet.");quit(1);return
 	var file := FileAccess.open(output,FileAccess.WRITE)
 	if file == null: printerr("Rapport non accessible.");quit(1);return
-	file.store_string(JSON.stringify({"schema":1,"game_version":ProjectSettings.get_setting("application/config/version"),"human_balance_test":false,"mission_range":mission_range,"talent_mode":"six_in_one_tree" if horde_focus or slate_pass else "initial","profile_loaded":false,"sources_sha256":before,"step":step,"smoke_replays":smoke,"case_count":results.size(),"seeds":[42] if smoke else SEEDS,"layouts":LAYOUTS,"compositions":COMPOSITIONS,"recruit_from":recruit_from,"policy":"Deux recrues au départ ; tentative d’amélioration de la première aux vagues 1, 2 ou 3 ; troisième recrue à partir de la vague %d ; améliorations à partir de la vague 5, branche A ; premier bonus proposé. Aucun revenu ajouté, aucune opération forcée. Le relevé de la mission 14 compare chaque arbre avec six points et un témoin sans talent. Les variantes avec un point concernent les missions 1 à 3." % recruit_from,"results":results},"\t")+"\n");file.close()
+	file.store_string(JSON.stringify({"schema":1,"game_version":ProjectSettings.get_setting("application/config/version"),"human_balance_test":false,"mission_range":mission_range,"talent_mode":"all_earned_in_one_tree" if spend_all_earned_points else "six_in_one_tree" if horde_focus or slate_pass else "initial","profile_loaded":false,"sources_sha256":before,"step":step,"smoke_replays":smoke,"case_count":results.size(),"seeds":[42] if smoke else SEEDS,"layouts":LAYOUTS,"compositions":COMPOSITIONS,"recruit_from":recruit_from,"policy":"Deux recrues au départ ; tentative d’amélioration de la première aux vagues 1, 2 ou 3 ; troisième recrue à partir de la vague %d ; améliorations à partir de la vague 5, branche A ; premier bonus proposé. Aucun revenu ajouté, aucune opération forcée. Le relevé de la mission 14 compare chaque arbre avec six points et un témoin sans talent. Les variantes avec un point concernent les missions 1 à 3." % recruit_from,"results":results},"\t")+"\n");file.close()
 	print("CAMPAIGN_SURVEY_COMPLETE=",results.size());quit()
