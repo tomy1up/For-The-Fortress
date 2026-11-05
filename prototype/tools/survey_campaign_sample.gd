@@ -17,9 +17,10 @@ static func source_hashes() -> Dictionary:
 		if name.ends_with(".gd"): result[name] = FileAccess.get_sha256("res://scripts/"+name)
 	return result
 
-func play(faction: int, mission: int, seed_value: int, layout: int, composition: int, early: int, talent: int, step: float, replay: bool, full_tree: bool = false, recruit_from: int = 4) -> Dictionary:
+func play(faction: int, mission: int, seed_value: int, layout: int, composition: int, early: int, talent: int, step: float, replay: bool, full_tree: bool = false, recruit_from: int = 4, workshop: Dictionary = {}) -> Dictionary:
 	var definition: Dictionary = Catalogue.definition(mission)
-	var m = Model.new(true,Model.Maps.for_id(definition.map_id))
+	var board := Model.Maps.for_id(definition.map_id) if workshop.is_empty() else workshop
+	var m = Model.new(true,board)
 	var wave_set: String = definition.get("wave_set_id","ford")
 	if not m.configure_wave_set(wave_set): error = "Rencontres de mission refusées.";return {}
 	if not m.configure_enemy_hp(definition.hp_percent): error = "PV de mission refusés.";return {}
@@ -63,7 +64,7 @@ func play(faction: int, mission: int, seed_value: int, layout: int, composition:
 	if replay:
 		var verified: Dictionary = Replay.verify(JSON.parse_string(JSON.stringify(Report.build(m))))
 		if not verified.ok: error = "Rejeu refusé : "+verified.get("error","");return {}
-	return {"faction":faction,"mission":mission,"map_id":definition.map_id,"wave_set_id":wave_set,"enemy_hp_percent":definition.hp_percent,"seed":seed_value,"layout":layout,"composition":composition,"early_upgrade_wave":early,"talent":talent,"talent_name":"Aucun" if talent < 0 else Talents.node(faction,talent).name,"points":Talents.spent(ranks),"result":m.phase,"recruited_at":recruited_at,"reached_wave":m.wave,"hp":m.fortress_hp,"max_hp":m.max_hp,"gold":m.gold,"income":m.total_income,"spent":paid,"combat_seconds":m.completed_time+m.elapsed,"bonuses":m.bonuses.duplicate(),"leaked":m.total_escaped,"killed":m.total_killed}
+	return {"faction":faction,"mission":mission,"map_id":board.id,"wave_set_id":wave_set,"enemy_hp_percent":definition.hp_percent,"seed":seed_value,"layout":layout,"composition":composition,"early_upgrade_wave":early,"talent":talent,"talent_name":"Aucun" if talent < 0 else Talents.node(faction,talent).name,"points":Talents.spent(ranks),"result":m.phase,"recruited_at":recruited_at,"reached_wave":m.wave,"hp":m.fortress_hp,"max_hp":m.max_hp,"gold":m.gold,"income":m.total_income,"spent":paid,"combat_seconds":m.completed_time+m.elapsed,"bonuses":m.bonuses.duplicate(),"arrivals_by_route":m.arrivals_by_route.duplicate(),"leaked":m.total_escaped,"killed":m.total_killed}
 
 func _initialize() -> void:
 	var output: String = "";var smoke: bool = false;var step: float = 300.0
