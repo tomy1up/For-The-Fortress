@@ -24,10 +24,10 @@ static func definition(number: int) -> Dictionary:
 		var titles: Array[String] = ["La Vallée du Gué","Le Bois du Gué","Les Hauts du Gué","Les Détours du Gué","La Clairière du Gué","Le Défilé du Gué","Les Lacets du Gué","Le Sentier du Gué","Les Abords du Gué","Les Remparts du Gué"]
 		result.merge({"title":titles[(number-1)%10],"available":true,"map_id":maps[(number-1)%10],"hp_percent":99+number,"po":60,"xp":100,"waves":10},true)
 		if number > 10: result.wave_set_id = "ford_banks"
-	elif number == 21:
-		result.merge({"title":"Le Col des Ardoises","available":true,"map_id":"slate_pass","hp_percent":120,"po":60,"xp":100,"waves":10},true)
-	elif number == 22:
-		result.merge({"title":"Les Crêtes des Ardoises","available":true,"map_id":"slate_ridges","hp_percent":121,"po":60,"xp":100,"waves":10},true)
+	elif number <= 25:
+		var maps: Array[String] = ["slate_pass","slate_ridges","slate_scree","slate_ravine","slate_gates"]
+		var titles: Array[String] = ["Le Col des Ardoises","Les Crêtes des Ardoises","Les Éboulis des Ardoises","Le Ravin des Ardoises","Les Portes des Ardoises"]
+		result.merge({"title":titles[number-21],"available":true,"map_id":maps[number-21],"hp_percent":99+number,"po":60,"xp":100,"waves":10},true)
 	return result
 
 static func runtime(id: String) -> Dictionary:

@@ -25,4 +25,4 @@ Le relevé local `dist/slate-ridges-candidate.json` compare 240 politiques fixes
 
 L’Alliance remporte 78 cas sur 120, la Horde 23 sur 120. Les ordres de recrutement E4, E5, E3 et E5, E4, E3 ne sont pas équivalents sur ce tracé. Le test d’intégration utilise une politique gagnante observée dans chaque faction, avec les mêmes budgets et règles d’amélioration que le jeu.
 
-Les missions 23 à 200 restent à développer.
+Les missions 23 à 25 poursuivent le biome. Les missions 26 à 200 restent à développer.

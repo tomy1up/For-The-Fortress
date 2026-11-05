@@ -563,6 +563,42 @@ static func converging_workshop() -> Dictionary:
 
 static func for_id(id: String) -> Dictionary:
 	if id == "valley_ford": return valley()
+	if id in ["slate_scree","slate_ravine","slate_gates"]:
+		var board := mountain_workshop()
+		board.id = id
+		var upper: Array[Vector2] = []
+		var lower: Array[Vector2] = []
+		var shared: Array[Vector2] = []
+		match id:
+			"slate_scree":
+				board.title = "Les Éboulis des Ardoises"
+				upper.assign([Vector2(0,1),Vector2(5,1)])
+				lower.assign([Vector2(0,9),Vector2(2,9),Vector2(2,5)])
+				shared.assign([Vector2(5,5),Vector2(9,5),Vector2(9,2),Vector2(13,2),Vector2(13,7),Vector2(17,7),Vector2(17,6)])
+				board.slots = [Vector2(2.5,2.8),Vector2(1,6.8),Vector2(6.8,3.3),Vector2(10.8,4),Vector2(14.8,5),Vector2(15,8.5)]
+			"slate_ravine":
+				board.title = "Le Ravin des Ardoises"
+				board.path_points = [Vector2(0,2),Vector2(4,2),Vector2(4,8),Vector2(8,8),Vector2(8,3),Vector2(12,3),Vector2(12,7),Vector2(15,7),Vector2(15,4),Vector2(17,4),Vector2(17,6)]
+				board.path_length = measured_length(board.path_points)
+				board.slots = [Vector2(2,4),Vector2(6,5),Vector2(6,1.5),Vector2(10,5.2),Vector2(13.5,5),Vector2(16.5,8)]
+				board.erase("routes")
+				board.erase("route_pattern")
+				return board
+			"slate_gates":
+				board.title = "Les Portes des Ardoises"
+				upper.assign([Vector2(0,1),Vector2(4,1),Vector2(4,4),Vector2(8,4),Vector2(8,1),Vector2(12,1)])
+				lower.assign([Vector2(0,9),Vector2(4,9),Vector2(4,6),Vector2(9,6),Vector2(9,8),Vector2(12,8)])
+				shared.assign([Vector2(12,5),Vector2(15,5),Vector2(15,2),Vector2(17,2),Vector2(17,6)])
+				board.slots = [Vector2(2,3),Vector2(2,7),Vector2(6,5),Vector2(10,3),Vector2(13.5,3),Vector2(15.5,7.5)]
+		upper.append_array(shared)
+		lower.append_array(shared)
+		board.path_points = upper
+		board.path_length = measured_length(upper)
+		board.routes = [
+			{"id":"upper","path_points":upper,"path_length":board.path_length},
+			{"id":"lower","path_points":lower,"path_length":measured_length(lower)},
+		]
+		return board
 	if id == "slate_ridges":
 		var board := mountain_workshop()
 		board.id = id

@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.151**. Les missions 23 à 25 varient les jonctions et les chemins du biome montagneux. [Conception et limites](design/Missions_023_025_Ardoises.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.151).
+
 **Prototype v0.150**. La mission 22 propose les Crêtes des Ardoises, avec une jonction plus tardive entre les deux routes. [Conception et limites](design/Mission_022_Cretes_des_Ardoises.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.150).
 
 **Prototype v0.149**. La fiche d’un ennemi indique son entrée d’origine. Les nouveaux essais du Col montrent l’importance de défendre la portion commune dès le départ. [Notes et limites](design/essais/v0149_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.149).
