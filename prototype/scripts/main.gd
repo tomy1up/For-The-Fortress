@@ -2452,6 +2452,7 @@ func _update_interface() -> void:
 	sell_button.disabled = modal or not model.can_build()
 	upgrade_button.visible = occupied
 	var recruit_options := 0
+	var missing_recruit_gold := 0
 	for type in range(buy_buttons.size()):
 		var button: Button = buy_buttons[type]
 		if type >= model.available_types().size():
@@ -2470,6 +2471,9 @@ func _update_interface() -> void:
 		button.disabled = modal or not purchase_error.is_empty()
 		if button.visible and not button.disabled:
 			recruit_options += 1
+		elif purchase_error == "Or insuffisant.":
+			var missing: int = model.purchase_cost(actual_type)-model.gold
+			missing_recruit_gold = missing if missing_recruit_gold == 0 else mini(missing_recruit_gold,missing)
 	if selected < 0:
 		title_label.text = "CONSTRUIRE · " + ("ALLIANCE" if model.faction == 0 else "HORDE")
 		details_label.text = "Choisissez un emplacement sur la carte.\nLes défenseurs du premier essai commencent au niveau 1."
@@ -2500,8 +2504,13 @@ func _update_interface() -> void:
 		hint_label.text = "Les tirs sont automatiques. Vous pouvez inspecter les unités et changer la vitesse."
 	elif model.phase == "finished":
 		hint_label.text = "Achats, améliorations et ventes autorisés avant la vague suivante."
-	if selected >= 0 and not occupied and recruit_options > 0:
-		hint_label.text = "Achat possible · Survolez une recrue pour voir sa portée." if recruit_options == 1 else "%d choix d’achat · Survolez une recrue pour voir sa portée." % recruit_options
+	if selected >= 0 and not occupied and model.can_build() and not modal:
+		if recruit_options > 0:
+			hint_label.text = "Achat possible · Survolez une recrue pour voir sa portée." if recruit_options == 1 else "%d choix d’achat · Survolez une recrue pour voir sa portée." % recruit_options
+		elif missing_recruit_gold > 0:
+			hint_label.text = "Il manque %d or pour la recrue la moins chère." % missing_recruit_gold
+		else:
+			hint_label.text = "Limite de recrutement atteinte pour chaque type."
 	if occupied:
 		var effects: Dictionary = model.get_stats(selected)
 		hint_label.text = "Synergies actives : %d · Partenaires reliés sur la carte · Survolez pour les détails" % effects.synergies.size() if not effects.synergies.is_empty() else "Aucune synergie active · Survolez pour voir les associations possibles"
