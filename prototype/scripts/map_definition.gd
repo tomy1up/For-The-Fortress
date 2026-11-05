@@ -576,7 +576,7 @@ static func validation_error(data: Dictionary) -> String:
 		for other in range(index):
 			if data.slots[index] == data.slots[other]: return "Emplacements superposés."
 	if not (data.path_length is float or data.path_length is int) or not is_finite(float(data.path_length)) or float(data.path_length) <= 0.0 or absf(float(data.path_length)-measured_length(data.path_points)) > 0.000000001: return "Longueur de chemin incohérente."
-	if data.decoration not in ["valley","none"]: return "Décor de carte inconnu."
+	if data.decoration not in ["valley","none","mountain"]: return "Décor de carte inconnu."
 	if data.has("routes"):
 		var error: String = Routes.common_exit_error(data.routes)
 		if not error.is_empty(): return error

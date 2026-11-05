@@ -439,7 +439,8 @@ static func scenery_bounds(item: Dictionary) -> Rect2:
 static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
 	# Habillage des nouveaux terrains uniquement. Aucun tirage du générateur de combat.
 	var result: Array[Dictionary] = []
-	if definition.get("id","") not in Model.Maps.CHAPTER_ONE_MAPS: return result
+	var mountain: bool = definition.get("decoration","") == "mountain"
+	if not mountain and definition.get("id","") not in Model.Maps.CHAPTER_ONE_MAPS: return result
 	if not Model.Maps.validation_error(definition).is_empty(): return result
 	var board := PackedVector2Array([project(Vector2.ZERO),project(Vector2(definition.size.x,0)),project(Vector2(definition.size)),project(Vector2(0,definition.size.y))])
 	var reserved: Array[Rect2] = [fortress_bounds(project(definition.path_points[-1])).grow(12)]
@@ -450,7 +451,9 @@ static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
 	for x in range(12):
 		for y in range(7):
 			var order: int = (x*29+y*47+seed_value)%101
-			candidates.append({"point":Vector2(0.8+x*1.45,0.8+y*1.35),"kind":["pine","shrub","rock"][order%3],"order":order})
+			var kind: String = ["pine","shrub","rock"][order%3]
+			if mountain and kind == "shrub": kind = "rock"
+			candidates.append({"point":Vector2(0.8+x*1.45,0.8+y*1.35),"kind":kind,"order":order})
 	candidates.sort_custom(func(a: Dictionary,b: Dictionary) -> bool: return a.order < b.order)
 	for candidate in candidates:
 		var area: Rect2 = scenery_bounds(candidate)
@@ -491,6 +494,7 @@ func _draw_terrain_detail(item: Dictionary) -> void:
 func _draw() -> void:
 	walking_meshes.begin_frame()
 	var definition: Dictionary = model.map_definition if model != null else Model.Maps.valley()
+	var mountain: bool = definition.decoration == "mountain"
 	var board: Vector2i = definition.size
 	var ghost: Dictionary = purchase_ghost()
 	var corners: Array[Vector2] = [Vector2.ZERO, Vector2(board.x, 0), Vector2(board.x, board.y), Vector2(0, board.y)]
@@ -499,11 +503,11 @@ func _draw() -> void:
 		base.append(project(corner) + Vector2(0, 16))
 	draw_colored_polygon(base, Color("172c2b"))
 	# Deux faces donnent de l'épaisseur au plateau, sans déplacer sa surface logique.
-	for edge in [[corners[1],corners[2],Color("263e34")],[corners[2],corners[3],Color("1c322c")]]:
+	for edge in [[corners[1],corners[2],Color("34444c") if mountain else Color("263e34")],[corners[2],corners[3],Color("27363f") if mountain else Color("1c322c")]]:
 		var first: Vector2 = project(edge[0])
 		var last: Vector2 = project(edge[1])
 		draw_colored_polygon(PackedVector2Array([first,last,last+Vector2(0,16),first+Vector2(0,16)]),edge[2])
-	polygon(corners, Color("3a513e"))
+	polygon(corners, Color("4a5b65") if mountain else Color("3a513e"))
 	for x in range(board.x+1):
 		draw_line(project(Vector2(x, 0)), project(Vector2(x, board.y)), Color(0.75, 0.86, 0.7, 0.055), 1)
 	for y in range(board.y+1):
@@ -514,7 +518,7 @@ func _draw() -> void:
 		var route := PackedVector2Array()
 		for point in entry.path_points: route.append(project(point))
 		screen_routes.append(route)
-	for route in screen_routes: draw_polyline(route,Color("26372e"),28,true)
+	for route in screen_routes: draw_polyline(route,Color("2d3a42") if mountain else Color("26372e"),28,true)
 	for route in screen_routes:
 		draw_polyline(route,Color("b3a17b"),20,true)
 		for point in route: draw_circle(point,10,Color("b3a17b"))
