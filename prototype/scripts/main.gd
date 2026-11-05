@@ -233,10 +233,11 @@ var syncing_keyboard_focus: bool = false
 
 func _ready() -> void:
 	var isolated: bool = DisplayServer.get_name() == "headless" or "--script" in OS.get_cmdline_args() or "-s" in OS.get_cmdline_args()
-	var route_workshop: bool = "--atelier-routes" in OS.get_cmdline_user_args()
+	var mountain_workshop: bool = "--atelier-col" in OS.get_cmdline_user_args()
+	var route_workshop: bool = mountain_workshop or "--atelier-routes" in OS.get_cmdline_user_args()
 	if route_workshop:
 		isolated = true
-		model = Model.new(true,Model.Maps.converging_workshop())
+		model = Model.new(true,Model.Maps.mountain_workshop() if mountain_workshop else Model.Maps.converging_workshop())
 		mission_definition = {}
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture="): isolated = true

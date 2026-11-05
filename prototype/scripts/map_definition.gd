@@ -535,6 +535,13 @@ const VALLEY_TREES: Array[Vector2] = [Vector2(1,1),Vector2(1.4,8.5),Vector2(4.6,
 static func valley() -> Dictionary:
 	return {"id":"valley_ford","title":"La Vallée du Gué","size":Vector2i(18,10),"path_points":VALLEY_PATH.duplicate(),"slots":VALLEY_SLOTS.duplicate(),"path_length":VALLEY_LENGTH,"trees":VALLEY_TREES.duplicate(),"decoration":"valley"}
 
+static func mountain_workshop() -> Dictionary:
+	var board := converging_workshop()
+	board.id = "workshop_mountain"
+	board.title = "Le Col des Ardoises"
+	board.decoration = "mountain"
+	return board
+
 static func converging_workshop() -> Dictionary:
 	# Atelier isolé : tracé et alternance des entrées sont des propositions H.
 	var upper: Array[Vector2] = [Vector2(0,2),Vector2(5,2),Vector2(5,5),Vector2(10,5),Vector2(10,2),Vector2(14,2),Vector2(14,6),Vector2(17,6)]

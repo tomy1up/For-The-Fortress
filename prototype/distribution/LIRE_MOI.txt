@@ -204,3 +204,5 @@ Le roi encourage au départ d’une vague, réagit aux pertes de PV,
 puis adopte une pose de défaite si la forteresse est détruite.
 Les bâtiments et rois sont décoratifs : aucun changement de statistiques.
 Leur apparence et les durées d’animation restent des propositions de prototype.
+
+Pour essayer le decor de montagne, lancer Lancer_atelier_routes.cmd col.

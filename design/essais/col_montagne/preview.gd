@@ -8,9 +8,7 @@ func _initialize() -> void:
 
 func capture() -> void:
 	root.size = Vector2i(1280,800)
-	var board := Model.Maps.converging_workshop()
-	board.title = "Le Col des Ardoises"
-	board.decoration = "mountain"
+	var board := Model.Maps.mountain_workshop()
 	var model := Model.new(true,board)
 	assert(model.map_definition.decoration == "mountain" and model.routes.size() == 2)
 	var view := View.new()

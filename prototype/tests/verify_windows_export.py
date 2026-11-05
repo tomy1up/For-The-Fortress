@@ -53,6 +53,7 @@ results=[]
 cases=[('startup',None,None),('selection','selection',None),('countdown','finished',None),('bonus','bonus',None),
        ('alliance_routes','combat','alliance'),('horde_routes','combat','horde'),
        ('alliance_routes_forecast','preparation','alliance'),('horde_routes_forecast','preparation','horde'),
+       ('alliance_routes_mountain_forecast','preparation','alliance'),('horde_routes_mountain_forecast','preparation','horde'),
        ('alliance_bank_guardian','bank_guardian','alliance'),('horde_bank_guardian','bank_guardian','horde'),
        ('alliance_bank_guardian_protected','bank_guardian','alliance'),('horde_bank_guardian_protected','bank_guardian','horde'),
        ('alliance_bank_guardian_cursed','bank_guardian','alliance'),('horde_bank_guardian_cursed','bank_guardian','horde'),
@@ -174,7 +175,7 @@ for name,state,faction in cases:
         if state=='shop_menu':
             if '_comparison_' in name: command+=['--capture-shop-comparison='+name.rsplit('_',1)[1]]
             if name.endswith('_owned'): command+=['--capture-shop-owned']
-        if '_routes' in name: command+=['--atelier-routes']
+        if '_routes' in name: command+=['--atelier-col' if '_mountain_' in name else '--atelier-routes']
         if '_royal_' in name: command+=['--capture-royal-state='+name.rsplit('_',1)[1]]
         if name.endswith('_enemy_hit_motion'): command+=['--capture-hit-motion','--capture-type='+('2' if faction=='alliance' else '4')]
         if state=="campaign_menu": command += ["--capture-campaign="+name.rsplit("_",1)[1]]
@@ -245,7 +246,8 @@ for name,state,faction in cases:
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
     if '_routes' in name:
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_WORKSHOP=')))
-        assert snapshot=={'isolated':True,'routes':2,'mission_empty':True,'map_id':'workshop_confluence'}
+        map_id = 'workshop_mountain' if '_mountain_' in name else 'workshop_confluence'
+        assert snapshot=={'isolated':True,'routes':2,'mission_empty':True,'map_id':map_id}
         if name.endswith('_forecast'):
             forecast=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_FORECAST_SNAPSHOT=')))
             assert forecast['faction']==(0 if faction=='alliance' else 1) and forecast['visible']
