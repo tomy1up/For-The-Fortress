@@ -645,11 +645,22 @@ func entry_label_layouts() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	if model==null or model.routes.size()<2: return result
 	var font: Font=ThemeDB.fallback_font
+	var busiest_route := ""
+	var highest_count := 0
+	for entry in entry_forecast:
+		if entry.count > highest_count:
+			highest_count = entry.count
+			busiest_route = entry.route_id
+		elif entry.count == highest_count:
+			busiest_route = ""
 	for index in range(model.routes.size()):
 		var title: String="ENTRÉE %d"%(index+1)
+		var route_id: String = model.routes[index].id
+		if route_id == busiest_route:
+			title += " · PRINCIPALE"
 		var detail: String=""
 		for entry in entry_forecast:
-			if entry.route_id==model.routes[index].id: detail="%d ennemi%s"%[entry.count,"" if entry.count==1 else "s"]
+			if entry.route_id==route_id: detail="%d ennemi%s"%[entry.count,"" if entry.count==1 else "s"]
 		var width: float=maxf(92.0,maxf(font.get_string_size(title,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x,font.get_string_size(detail,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x)+16.0)
 		var height: float=24.0 if detail.is_empty() else 44.0
 		var origin: Vector2=project(model.routes[index].path_points[0])+Vector2(-width/2.0,-76.0-height)

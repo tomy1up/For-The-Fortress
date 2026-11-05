@@ -1,0 +1,1 @@
+Sur les cartes à plusieurs entrées, le repère PRINCIPALE désigne l’entrée qui recevra le plus d’ennemis à la prochaine vague. En cas d’égalité, chaque entrée affiche simplement son effectif. Vérifié sur les trois premières vagues du Col des Ardoises dans les deux factions et par 1 354 contrôles Godot ciblés.

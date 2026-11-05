@@ -266,10 +266,13 @@ for name,state,faction in cases:
             assert forecast['faction']==(0 if faction=='alliance' else 1) and forecast['visible']
             counts = [entry['count'] for entry in forecast['entries']]
             assert len(counts)==2 and min(counts)>0
-            if '_wave2_' in name: assert counts[0]>counts[1], counts
-            elif '_wave3_' in name: assert counts[1]>counts[0], counts
-            else: assert counts==[5,5], counts
-            assert forecast['labels']==[[f'ENTRÉE {index}',f'{count} ennemis'] for index,count in enumerate(counts,1)]
+            expected = [12,6] if '_wave2_' in name else [5,11] if '_wave3_' in name else [5,5]
+            assert counts==expected, counts
+            main_entry = counts.index(max(counts))+1 if counts[0]!=counts[1] else 0
+            assert forecast['labels']==[
+                [f'ENTRÉE {index}'+(' · PRINCIPALE' if index==main_entry else ''),f'{count} ennemis']
+                for index,count in enumerate(counts,1)
+            ]
             assert forecast['note']==f'Entrée 1 : {counts[0]} · Entrée 2 : {counts[1]}'
     if '_wave_context_' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('WAVE_CONTEXT_SNAPSHOT=')))
