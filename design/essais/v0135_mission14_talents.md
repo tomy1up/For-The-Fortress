@@ -18,3 +18,16 @@ Ces résultats sont limités aux trois allocations et aux plans de combat testé
 Avec la variante Entraînement, placer deux lanceurs de haches en E2 et E4 puis un chaman en E5 à partir de la vague 4. Tenter la première amélioration d’E2 à la vague 2 et suivre ensuite la politique ci-dessus. Ce plan conserve 14, 20 et 16 PV sur les graines 7, 42 et 2026. Six plans Entraînement, un plan Rituels et cinq plans Explosifs gagnent sur ces trois graines. La variété des choix en partie réelle reste à évaluer.
 
 Reproduire avec res://tools/survey_campaign_sample.gd et --horde-14-talents --output=<nouveau rapport>, puis analyser avec analyse_campaign_sample.py.
+
+## Recrutement anticipé
+
+Le même relevé a été rejoué avec une tentative de troisième recrutement dès la vague 2, selon le budget normal. Les 864 scénarios ont été appariés au relevé de référence, avec des sources de jeu identiques.
+
+| Allocation | Victoires avec tentative dès la vague 4 | Victoires avec tentative dès la vague 2 | Achats réalisés avant la vague 4 |
+| --- | --- | --- | --- |
+| Aucun talent | 0 | 2 | 12 |
+| Entraînement | 35 | 37 | 12 |
+| Rituels | 14 | 16 | 12 |
+| Explosifs | 30 | 32 | 36 |
+
+Aucune victoire de référence ne devient une défaite dans ces essais. Les deux victoires sans talent proviennent du même tirage, la graine 42, avec deux sapeurs en E1 et E3 et un lanceur de haches en E5. Elles se terminent à 10 PV. Ce résultat montre qu'une victoire sans talent est possible avec un achat anticipé dans ce scénario. Il reste sensible au tirage. Reproduire le relevé avec les mêmes options et ajouter `--early-recruit`.
