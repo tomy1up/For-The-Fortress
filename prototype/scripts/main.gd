@@ -1981,6 +1981,14 @@ func _update_specialisation_choices() -> void:
 		var candidate: Dictionary = defender.duplicate(true)
 		candidate.level = 4; candidate.branch = branch
 		specialisation_buttons[branch].tooltip_text = _preview_synergy_tooltip(pending_slot,candidate)
+		if model.routes.size() == 2 and not is_equal_approx(current.range,stats.range):
+			var center: Vector2 = model.slots[pending_slot]
+			var before := map_view.entry_coverage_percentages(center,current.range)
+			var after := map_view.entry_coverage_percentages(center,stats.range)
+			var coverage := "Entrée 1 · %d → %d %% à portée\nEntrée 2 · %d → %d %% à portée" % [before[0],after[0],before[1],after[1]]
+			if not specialisation_numbers_visible:
+				specialisation_descriptions[branch].text += "\n"+coverage
+			specialisation_buttons[branch].tooltip_text += "\nTrajet à portée\n"+coverage
 		specialisation_buttons[branch].text = "Choisir · %d or" % model.upgrade_cost(pending_slot)
 
 func _toggle_specialisation_numbers() -> void:

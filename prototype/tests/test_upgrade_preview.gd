@@ -101,5 +101,20 @@ func run_checks() -> void:
 	scene.upgrade_button.mouse_entered.emit()
 	check(scene.map_view.upgrade_preview.is_empty(),"Pas d'aperçu d'amélioration en combat")
 	scene.free()
+	var workshop := Main.new()
+	workshop.model = Model.new(true,Model.Maps.mountain_workshop())
+	root.add_child(workshop)
+	workshop.set_process(false)
+	workshop._choose_faction(0)
+	workshop.model.gold = 1000
+	workshop.model.buy(0,0)
+	workshop.model.upgrade(0)
+	workshop.model.upgrade(0)
+	workshop.selected = 0
+	workshop._upgrade()
+	for branch in range(2):
+		check(workshop.specialisation_descriptions[branch].text.contains("Entrée 1") and workshop.specialisation_descriptions[branch].text.contains("Entrée 2"),"Comparer la couverture des deux approches avant la spécialisation")
+		check(workshop.specialisation_buttons[branch].tooltip_text.contains("Trajet à portée"),"La comparaison reste accessible dans l’aide")
+	workshop.free()
 	print("UPGRADE_PREVIEW_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(0 if failures == 0 else 1)
