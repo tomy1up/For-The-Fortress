@@ -1,0 +1,1 @@
+Dans le bilan d’une carte à plusieurs entrées, sélectionner une vague indique combien d’ennemis ont atteint la forteresse par chaque entrée. Le rapport JSON conserve ce détail par vague. Les anciens rapports restent rejouables. Quatre essais Windows et 1 570 contrôles Godot ciblés réussis.

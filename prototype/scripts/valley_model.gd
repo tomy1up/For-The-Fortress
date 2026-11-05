@@ -723,6 +723,8 @@ func _resolve_instant() -> void:
 func _finish_wave_record() -> void:
 	if _wave_record.is_empty() or _wave_record.wave != wave: return
 	var record: Dictionary = _wave_record.duplicate(true)
+	if not routes.is_empty():
+		record["arrivals_by_route"] = wave_arrivals_by_route.duplicate()
 	record.merge({"hp_after":fortress_hp,"hp_lost":record.hp_before-fortress_hp,"income":total_income-record.income_before,"killed":killed,"escaped":escaped,"spawned":spawned,"remaining":enemies.size(),"seconds":elapsed,"result":"defeat" if phase == "defeat" else "cleared"})
 	wave_history.append(record)
 	_record_action("wave_end",{"result":record.result,"killed":killed,"escaped":escaped,"income":record.income,"seconds":elapsed})

@@ -74,6 +74,8 @@ func run_checks() -> void:
 		arrival.advance(2.0)
 		check(arrival.escaped==2 and arrival.fortress_hp==18 and arrival.gold==150 and arrival.phase=="finished","Trajet long : arrivée à quatorze secondes, aucune récompense")
 		check(arrival.wave_arrivals_by_route=={"upper": 1, "lower": 1},"Les deux entrees comptent une arrivee dans la vague")
+		check(arrival.prepare_next_wave(),"Préparation après la première vague")
+		check(arrival.wave_arrivals_by_route.is_empty() and arrival.wave_history[0].arrivals_by_route=={"upper": 1, "lower": 1},"Le bilan conserve les arrivées après remise à zéro des compteurs de vague")
 		arrival.reset()
 		check(arrival.wave_arrivals_by_route.is_empty(),"Un nouvel essai vide les compteurs par entree")
 		check(arrival.routes.size()==2 and arrival.enemies.is_empty(),"Reset conserve le réseau et retire les ennemis")

@@ -187,6 +187,7 @@ var summary_totals: Label
 var summary_rows: Array[Button] = []
 var summary_selected_wave: int = 0
 var summary_army_heading: Label
+var summary_wave_arrivals: Label
 var summary_bonus_heading: Label
 var summary_loss_button: Button
 var summary_final_button: Button
@@ -1288,6 +1289,7 @@ func _build_run_summary(screen: Control) -> void:
 	for index in range(3):
 		summary_bonuses.append(_label(summary_wave_content,"",Vector2(650,502+30*index),Vector2(298,28),13,Color("bbcbbf")))
 		summary_bonuses[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	summary_wave_arrivals = _label(summary_wave_content,"",Vector2(24,598),Vector2(924,20),13,Color("cdb47e"))
 	summary_performance_content = Control.new()
 	summary_performance_content.size = Vector2(972,600)
 	summary_performance_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1419,6 +1421,7 @@ func _capture_summary_wave(context: String) -> void:
 	for label in summary_bonuses:
 		if not label.text.is_empty(): bonuses.append(label.text)
 	print("WAVE_CONTEXT_SNAPSHOT=",JSON.stringify({"context":context,"faction":model.faction,"selected":summary_selected_wave,"tab":summary_tab,"army":army,"bonuses":bonuses,"heading":summary_army_heading.text,"bonus_heading":summary_bonus_heading.text,"final_disabled":summary_final_button.disabled,"loss_disabled":summary_loss_button.disabled,"marked":summary_rows.filter(func(row):return row.button_pressed).size(),"enabled":summary_rows.filter(func(row):return not row.disabled).size(),"record_count":model.wave_history.size(),"readonly":before == JSON.stringify([RunReport.build(model),str(model.rng.state),meta_profile.data if meta_profile != null else null]),"isolated":meta_profile == null or meta_profile.path.is_empty()}))
+	print("WAVE_ARRIVALS_SNAPSHOT=",JSON.stringify(summary_wave_arrivals.text))
 
 func _inspect_summary_losses() -> void:
 	if not summary_open: return
@@ -1439,6 +1442,11 @@ func _select_summary_wave(number: int) -> void:
 	summary_final_button.disabled = number == 0
 	summary_army_heading.text = "Défense finale" if number == 0 else "Défense au départ · Vague %d" % number
 	summary_bonus_heading.text = "Bonus choisis" if number == 0 else "Bonus actifs · Vague %d" % number
+	var arrivals := PackedStringArray()
+	if record.has("arrivals_by_route"):
+		for index in range(model.routes.size()):
+			arrivals.append("Entrée %d · %d" % [index+1, record.arrivals_by_route.get(model.routes[index].id, 0)])
+	summary_wave_arrivals.text = "" if arrivals.is_empty() else "Ennemis ayant atteint la forteresse — " + "   /   ".join(arrivals)
 	var army: Array = record.get("army",[])
 	var bonuses: Array = record.get("bonuses",[])
 	if number == 0:
@@ -1557,6 +1565,7 @@ func _populate_run_summary() -> void:
 	summary_selected_wave = 0
 	summary_final_button.disabled = true
 	summary_army_heading.text = "Défense finale";summary_bonus_heading.text = "Bonus choisis"
+	summary_wave_arrivals.text = ""
 	summary_title.text = ("Carte terminée" if model.phase == "victory" and not _run_finished() else "Victoire" if model.phase == "victory" else "Défaite") + " · " + ("Alliance" if model.faction == 0 else "Horde")
 	summary_subtitle.text = "Forteresse : %d/%d PV · %d or restants · Survolez une ligne pour les unités et bonus de la vague.\nCombat cumulé : %s s simulées, hors préparation et choix ; la vitesse réduit le temps réel." % [model.fortress_hp,model.max_hp,model.gold,("%.1f" % (model.completed_time+model.elapsed)).replace(".",",")]
 	var lost: int = 0

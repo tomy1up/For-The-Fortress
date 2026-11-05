@@ -98,6 +98,12 @@ static func verify(data: Variant) -> Dictionary:
 		var detail: String = _difference(action,JSON.parse_string(JSON.stringify(model.action_history[index])),"actions[%d]" % index)
 		if not detail.is_empty(): return _fail(detail)
 	var observed: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
+	# Older reports recorded the total per entrance, but omitted the wave breakdown.
+	var recorded_waves: Variant = data.get("waves")
+	if recorded_waves is Array:
+		for index in range(mini(recorded_waves.size(), observed.waves.size())):
+			if recorded_waves[index] is Dictionary and not recorded_waves[index].has("arrivals_by_route"):
+				observed.waves[index].erase("arrivals_by_route")
 	if not data.has("enemy_catalog"):
 		# Les rapports historiques gardent les noms de profils et le libellé R-12.
 		observed.boss_encounter.name = Model.ENEMY_TYPES[7].name
