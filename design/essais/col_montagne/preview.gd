@@ -11,6 +11,7 @@ func capture() -> void:
 	var board := Model.Maps.mountain_workshop()
 	var model := Model.new(true,board)
 	assert(model.map_definition.decoration == "mountain" and model.routes.size() == 2)
+	assert(model.routes[0].path_length == 28.0 and model.routes[1].path_length == 33.0)
 	var view := View.new()
 	view.model = model
 	view.font = ThemeDB.fallback_font
