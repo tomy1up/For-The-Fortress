@@ -159,6 +159,9 @@ for camp in ['alliance','horde']:
         cases.append((camp+'_shop_'+variant,'shop_menu',camp))
 for camp in ['alliance','horde']:
     for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
+for camp in ['alliance','horde']:
+    for wave in [2,3]:
+        cases.append((f'{camp}_routes_mountain_wave{wave}_forecast','preparation',camp))
 available_case_count=len(cases)
 if args.selected_cases:
     unknown=set(args.selected_cases)-{name for name,_,_ in cases}
@@ -180,6 +183,7 @@ for name,state,faction in cases:
             if '_comparison_' in name: command+=['--capture-shop-comparison='+name.rsplit('_',1)[1]]
             if name.endswith('_owned'): command+=['--capture-shop-owned']
         if '_routes' in name: command+=['--atelier-col' if '_mountain_' in name else '--atelier-routes']
+        if '_mountain_wave' in name: command+=['--capture-route-wave='+name.split('_')[-2][-1]]
         if '_royal_' in name: command+=['--capture-royal-state='+name.rsplit('_',1)[1]]
         if name.endswith('_enemy_hit_motion'): command+=['--capture-hit-motion','--capture-type='+('2' if faction=='alliance' else '4')]
         if state=="campaign_menu": command += ["--capture-campaign="+name.rsplit("_",1)[1]]
@@ -260,9 +264,13 @@ for name,state,faction in cases:
         if name.endswith('_forecast'):
             forecast=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_FORECAST_SNAPSHOT=')))
             assert forecast['faction']==(0 if faction=='alliance' else 1) and forecast['visible']
-            assert [entry['count'] for entry in forecast['entries']]==[5,5]
-            assert forecast['labels']==[['ENTRÉE 1','5 ennemis'],['ENTRÉE 2','5 ennemis']]
-            assert forecast['note']=='Entrée 1 : 5 · Entrée 2 : 5'
+            counts = [entry['count'] for entry in forecast['entries']]
+            assert len(counts)==2 and min(counts)>0
+            if '_wave2_' in name: assert counts[0]>counts[1], counts
+            elif '_wave3_' in name: assert counts[1]>counts[0], counts
+            else: assert counts==[5,5], counts
+            assert forecast['labels']==[[f'ENTRÉE {index}',f'{count} ennemis'] for index,count in enumerate(counts,1)]
+            assert forecast['note']==f'Entrée 1 : {counts[0]} · Entrée 2 : {counts[1]}'
     if '_wave_context_' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('WAVE_CONTEXT_SNAPSHOT=')))
         context=name.rsplit('_',1)[1]

@@ -672,6 +672,11 @@ func _ready() -> void:
 		if capture_state == "shop_menu": _capture_shop_menu(capture_faction)
 		if capture_state == "mission_scout": _capture_mission_scout(capture_faction)
 		if route_workshop and capture_state=="preparation":
+			for argument in OS.get_cmdline_user_args():
+				if argument.begins_with("--capture-route-wave="):
+					model.wave = clampi(argument.trim_prefix("--capture-route-wave=").to_int(), 1, 10)
+					model.spawn_schedule = Model.Campaign.schedule(model.wave, model.wave_set_id)
+					_update_interface()
 			if "--capture-route-hover" in OS.get_cmdline_user_args():
 				set_process(false)
 				_update_wave_forecast(forecast_rows[0].get_global_rect().get_center())
