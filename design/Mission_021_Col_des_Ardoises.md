@@ -79,6 +79,24 @@ Le relevé `dist/slate-branches.json` compare les branches A et B sur les 24 cas
 
 Le changement systématique de branche ne résout pas l’écart observé. L’étape suivante consiste à examiner les compositions et les pertes avant les spécialisations, puis à comparer des choix de branches adaptés à chaque unité. Les huit cas du contrôle court en branche B sont rejoués sans divergence.
 
+## Dispositions autour du chemin commun
+
+Le relevé `dist/slate-core-placement.json` explore cinq dispositions, trois graines, quatre compositions et deux configurations à dix points. Il comprend 240 cas. Les premières dispositions du relevé initial ne couvraient pas systématiquement les emplacements proches de la portion commune dès le départ.
+
+Dans le tableau, les deux premiers emplacements sont occupés au départ. Le troisième est recruté dès que le budget le permet, à partir de la vague 2. Les améliorations suivent la politique de référence.
+
+| Ordre de recrutement | Alliance | Horde | PV perdus par la Horde, moyenne sur les vagues 1 à 3 |
+| --- | --- | --- | --- |
+| E2, E4, E5 | 24 victoires sur 24 | 0 sur 24 | 6,125 |
+| E4, E3, E5 | 24 sur 24 | 23 sur 24 | 1,625 |
+| E4, E5, E3 | 24 sur 24 | 24 sur 24 | 1,75 |
+| E5, E3, E4 | 24 sur 24 | 24 sur 24 | 1,875 |
+| E5, E4, E3 | 24 sur 24 | 24 sur 24 | 1,75 |
+
+Le placement initial change fortement le résultat de la Horde dans ces essais. Les écarts précédents ne suffisent donc pas à établir une faiblesse générale de la faction sur cette carte. Le terrain et les statistiques publiés restent ceux de la v0.147. Le naturel des choix en première découverte, la difficulté humaine et les autres configurations de talents restent à évaluer.
+
+Douze victoires de la disposition E4, E5, E3 sont également rejouées à partir du rapport de combat, dans les deux factions, sur trois graines et deux compositions. Le relevé est enregistré dans `dist/slate-core-replayed.json`.
+
 ## Suite du travail
 
 Comparer des configurations utilisant les dix points disponibles et des unités de boutique, examiner les pertes par entrée, puis faire tester la mission par le porteur. Adapter les placements ou le calendrier si la difficulté Horde reste excessivement restrictive. Étendre ensuite les situations du chapitre sans annoncer les missions suivantes comme terminées.

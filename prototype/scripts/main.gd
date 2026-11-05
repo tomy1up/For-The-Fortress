@@ -177,6 +177,7 @@ var enemy_health_bar: ProgressBar
 var enemy_threat: Label
 var enemy_reward: Label
 var enemy_status: Label
+var enemy_entry: Label
 var enemy_prompt: Label
 var summary_open: bool = false
 var summary_button: Button
@@ -693,6 +694,13 @@ func _ready() -> void:
 			for index in range(forecast_data.groups.size()):
 				group_routes.append(forecast_routes[index].text)
 			print("ROUTE_FORECAST_SNAPSHOT=",JSON.stringify({"faction":model.faction,"entries":map_view.entry_forecast,"note":forecast_note.text,"visible":forecast_panel.visible,"labels":map_view.entry_label_layouts().map(func(entry: Dictionary):return [entry.title,entry.detail]),"group_routes":group_routes}))
+		if route_workshop and "--capture-route-inspection" in OS.get_cmdline_user_args():
+			for enemy in model.enemies:
+				if enemy.get("route_id","") != model.routes[1].id: continue
+				inspection_pointer = MapView.enemy_bounds(enemy,model.faction,model.enemy_route_points(enemy),model.enemy_route_length(enemy)).get_center()
+				break
+			_update_enemy_inspector()
+			print("ENEMY_ENTRY_SNAPSHOT=",JSON.stringify({"visible":enemy_inspector.visible,"entry":enemy_entry.text,"route":model.routes[1].id}))
 		if capture_state == "wolf_walk":
 			# Fixture visuelle isolée : quatre directions du trajet, sans profil joueur.
 			model.enemies.clear();model.damage_events.clear();model.spawn_schedule.clear();model.spawned=4;model.phase="combat"
@@ -1639,6 +1647,8 @@ func _build_enemy_inspector(screen: Control) -> void:
 	enemy_threat = _label(enemy_inspector,"",Vector2(14,84),Vector2(282,44),14,Color("e0dbbf"))
 	enemy_reward = _label(enemy_inspector,"",Vector2(14,132),Vector2(282,22),14,Color("cdb47e"))
 	enemy_status = _label(enemy_inspector,"",Vector2(14,160),Vector2(282,18),12,Color("aabbb0"))
+	enemy_entry = _label(enemy_inspector,"",Vector2(14,160),Vector2(282,18),12,Color("cdb47e"))
+	enemy_entry.visible = false
 	enemy_inspector.visible = false
 
 func _update_enemy_inspector() -> void:
@@ -1663,6 +1673,15 @@ func _update_enemy_inspector() -> void:
 		enemy_threat.text = "S’il atteint la forteresse,\nelle perd %d PV%s" % [enemy.fortress_damage," · Défaite" if fatal else ""]
 		enemy_threat.add_theme_color_override("font_color",Color("ed9989") if fatal else Color("e0dbbf"))
 		enemy_reward.text = "Éliminé : vous gagnez %d or." % enemy.reward
+		enemy_entry.visible = not model.routes.is_empty()
+		enemy_entry.text = ""
+		for index in range(model.routes.size()):
+			if model.routes[index].id == enemy.get("route_id",""):
+				enemy_entry.text = "Vient de l’entrée %d" % [index+1]
+				enemy_entry.add_theme_color_override("font_color",MapView.entry_color(index))
+				break
+		enemy_status.position.y = 182 if enemy_entry.visible else 160
+		enemy_inspector.size.y = 212 if enemy_entry.visible else 190
 		var cursed: bool = false
 		for curse in model.curses:
 			if curse.enemy_id == id: cursed = true; break

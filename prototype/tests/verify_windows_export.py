@@ -166,6 +166,7 @@ for camp in ['alliance','horde']:
         cases.append((f'{camp}_routes_mountain_wave{wave}_forecast','preparation',camp))
     cases.append((f'{camp}_routes_mountain_breaches','defeat_summary',camp))
     cases.append((f'{camp}_routes_mountain_entry2_forecast','preparation',camp))
+    cases.append((f'{camp}_routes_mountain_inspection','inspection',camp))
 available_case_count=len(cases)
 if args.selected_cases:
     unknown=set(args.selected_cases)-{name for name,_,_ in cases}
@@ -189,6 +190,7 @@ for name,state,faction in cases:
         if '_routes' in name: command+=['--atelier-col' if '_mountain_' in name else '--atelier-routes']
         if '_mountain_wave' in name: command+=['--capture-route-wave='+name.split('_')[-2][-1]]
         if '_mountain_entry2_' in name: command+=['--capture-route-entry=2']
+        if name.endswith('_routes_mountain_inspection'): command+=['--capture-route-inspection']
         if name.endswith('_mountain_breaches'): command+=['--capture-summary-wave=1','--capture-export-report']
         if '_royal_' in name: command+=['--capture-royal-state='+name.rsplit('_',1)[1]]
         if name.endswith('_enemy_hit_motion'): command+=['--capture-hit-motion','--capture-type='+('2' if faction=='alliance' else '4')]
@@ -262,6 +264,9 @@ for name,state,faction in cases:
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_WORKSHOP=')))
         map_id = 'workshop_mountain' if '_mountain_' in name else 'workshop_confluence'
         assert snapshot=={'isolated':True,'routes':2,'mission_empty':True,'map_id':map_id}
+        if name.endswith('_routes_mountain_inspection'):
+            entry=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ENEMY_ENTRY_SNAPSHOT=')))
+            assert entry=={'visible':True,'entry':'Vient de l’entrée 2','route':'lower'}
         if '_mountain_entry2_' in name:
             assert json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_ENTRY_HOVER=')))==[1]
         if name.endswith('_mountain_breaches'):
