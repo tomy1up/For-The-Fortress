@@ -57,6 +57,7 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('alliance_routes_mountain_forecast','preparation','alliance'),('horde_routes_mountain_forecast','preparation','horde'),
        ('alliance_routes_mountain_combat','combat','alliance'),('horde_routes_mountain_combat','combat','horde'),
        ('alliance_routes_mountain_purchase','purchase','alliance'),('horde_routes_mountain_purchase','purchase','horde'),
+       ('alliance_routes_mountain_specialisation','specialisation','alliance'),
        ('alliance_bank_guardian','bank_guardian','alliance'),('horde_bank_guardian','bank_guardian','horde'),
        ('alliance_bank_guardian_protected','bank_guardian','alliance'),('horde_bank_guardian_protected','bank_guardian','horde'),
        ('alliance_bank_guardian_cursed','bank_guardian','alliance'),('horde_bank_guardian_cursed','bank_guardian','horde'),
@@ -253,6 +254,9 @@ for name,state,faction in cases:
         assert snapshot=={'isolated':True,'routes':2,'mission_empty':True,'map_id':map_id}
         if name.endswith('_purchase'):
             assert re.search(r'ROUTE_PURCHASE_HINT=Trajet à portée · Entrée 1 : \d+ % · Entrée 2 : \d+ %',text), name
+        if name.endswith('_specialisation'):
+            descriptions = json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_SPECIALISATION=')))
+            assert len(descriptions)==2 and all('Entrée 1' in value and 'Entrée 2' in value for value in descriptions), descriptions
         if name.endswith('_forecast'):
             forecast=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_FORECAST_SNAPSHOT=')))
             assert forecast['faction']==(0 if faction=='alliance' else 1) and forecast['visible']

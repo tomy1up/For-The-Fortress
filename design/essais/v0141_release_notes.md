@@ -1,0 +1,1 @@
+Sur les cartes à deux entrées, les spécialisations qui modifient la portée indiquent la couverture avant et après. La mise en page a été vérifiée sur les deux branches de l’archer au Col. 1 015 contrôles Godot ciblés et 8 essais Windows réussis. 83 sources comparées.

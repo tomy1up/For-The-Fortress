@@ -665,6 +665,8 @@ func _ready() -> void:
 			var ghost: Dictionary = map_view.purchase_ghost()
 			print("PURCHASE_GHOST_SNAPSHOT=",JSON.stringify({"visible":not ghost.is_empty(),"type":ghost.get("type",-1),"slot":ghost.get("slot",-1),"empty":model.defenders[selected].is_empty(),"gold":model.gold,"instances":model.next_instance_id}))
 			if route_workshop: print("ROUTE_PURCHASE_HINT=",hint_label.text)
+		if route_workshop and capture_state == "specialisation":
+			print("ROUTE_SPECIALISATION=",JSON.stringify(specialisation_descriptions.map(func(label: Label): return label.text)))
 		if capture_state == "campaign_menu": await _capture_campaign_menu(capture_faction)
 		if capture_state == "campaign_sample": _capture_campaign_sample(capture_faction)
 		if capture_state == "shop_menu": _capture_shop_menu(capture_faction)
