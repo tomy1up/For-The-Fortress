@@ -138,7 +138,7 @@ func run_checks() -> void:
 			var malformed:=report.duplicate(true);malformed.route_target_policy=invalid
 			check(not Replay.verify(malformed).ok,"Règle de ciblage invalide rejetée avant relecture")
 		var markdown: String = Report.markdown(report)
-		check(markdown.contains("Atelier multitrajet : 2 entrées") and markdown.contains("à tour de rôle"),"Rapport lisible explicitant le contexte d'atelier")
+		check(markdown.contains("Carte multitrajet : 2 entrées") and markdown.contains("à tour de rôle"),"Rapport lisible explicitant le contexte du terrain de test")
 		check(markdown.contains("### Détail par vague\n\n| Vague | Entrée 1 | Entrée 2 |"),"Le rapport inclut les deux colonnes du détail par vague")
 		var forged:=report.duplicate(true);forged.map_definition.routes[1].path_length=12.0
 		check(not Replay.verify(forged).ok,"Rapport multitrajet à longueur falsifiée rejeté")

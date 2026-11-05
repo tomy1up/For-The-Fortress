@@ -563,6 +563,10 @@ static func converging_workshop() -> Dictionary:
 
 static func for_id(id: String) -> Dictionary:
 	if id == "valley_ford": return valley()
+	if id == "slate_pass":
+		var board := mountain_workshop()
+		board.id = id
+		return board
 	if CHAPTER_ONE_MAPS.has(id): return from_data(CHAPTER_ONE_MAPS[id])
 	var result: Dictionary = valley()
 	if id == "ford_woods":

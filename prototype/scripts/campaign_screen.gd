@@ -27,11 +27,14 @@ class TerrainPreview extends Control:
 		var available: Vector2 = size-Vector2(24,38)
 		var factor: float = minf(available.x/extent.x,available.y/extent.y)
 		var origin: Vector2 = Vector2(12,6)+(available-extent*factor)/2-minimum*factor
-		var board := PackedVector2Array();var path := PackedVector2Array();var slots := PackedVector2Array()
+		var board := PackedVector2Array();var paths: Array[PackedVector2Array] = [];var slots := PackedVector2Array()
 		for point in logical_board: board.append(origin+project(point)*factor)
-		for point in definition.path_points: path.append(origin+project(point)*factor)
+		for route in definition.get("routes",[definition]):
+			var path := PackedVector2Array()
+			for point in route.path_points: path.append(origin+project(point)*factor)
+			paths.append(path)
 		for point in definition.slots: slots.append(origin+project(point)*factor)
-		return {"id":definition.id,"board":board,"path":path,"slots":slots}
+		return {"id":definition.id,"board":board,"paths":paths,"slots":slots}
 	func _draw() -> void:
 		var font: Font = ThemeDB.fallback_font
 		draw_style_box(_background(),Rect2(Vector2.ZERO,size))
@@ -40,20 +43,22 @@ class TerrainPreview extends Control:
 			var message: String = "Carte à venir"
 			draw_string(font,Vector2((size.x-font.get_string_size(message,HORIZONTAL_ALIGNMENT_LEFT,-1,15).x)/2,size.y/2+5),message,HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("91a799"))
 			return
-		draw_colored_polygon(layout.board,Color("294536"))
+		draw_colored_polygon(layout.board,Color("405256") if definition.decoration == "mountain" else Color("294536"))
 		var outline: PackedVector2Array = layout.board.duplicate();outline.append(outline[0])
 		draw_polyline(outline,Color("48634e"),1,true)
-		draw_polyline(layout.path,Color("645b3b"),9,true)
-		draw_polyline(layout.path,Color("d6c18a"),5,true)
+		for path in layout.paths: draw_polyline(path,Color("645b3b"),9,true)
+		for path in layout.paths: draw_polyline(path,Color("d6c18a"),5,true)
 		for point in layout.slots:
 			var diamond := PackedVector2Array([point+Vector2(0,-4),point+Vector2(7,0),point+Vector2(0,4),point+Vector2(-7,0)])
 			draw_colored_polygon(diamond,Color("142d28"));diamond.append(diamond[0]);draw_polyline(diamond,Color("bdd0c3"),1.5,true)
-		var entry: Vector2 = layout.path[0];var fortress: Vector2 = layout.path[-1]
-		draw_circle(entry,4,Color("e9c46a"))
+		var fortress: Vector2 = layout.paths[0][-1]
+		for index in range(layout.paths.size()):
+			draw_circle(layout.paths[index][0],4,Color("e9c46a") if index == 0 else Color("83c4c6"))
 		draw_rect(Rect2(fortress-Vector2(5,7),Vector2(10,10)),Color("a5c8c1"))
 		draw_line(fortress+Vector2(0,-7),fortress+Vector2(0,-16),Color("d9e4d7"),1.5,true)
 		draw_colored_polygon(PackedVector2Array([fortress+Vector2(0,-16),fortress+Vector2(8,-13),fortress+Vector2(0,-10)]),Color("e9c46a"))
-		var legend: String = "Entrée → Forteresse · %d emplacements" % layout.slots.size()
+		var entrances := "Entrée" if layout.paths.size() == 1 else "%d entrées" % layout.paths.size()
+		var legend: String = "%s → Forteresse · %d emplacements" % [entrances,layout.slots.size()]
 		draw_string(font,Vector2((size.x-font.get_string_size(legend,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x)/2,size.y-8),legend,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("bbcbbf"))
 	func _background() -> StyleBoxFlat:
 		var box := StyleBoxFlat.new();box.bg_color = Color("0c1d17");box.set_corner_radius_all(6);return box

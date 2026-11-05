@@ -70,12 +70,14 @@ func _initialize() -> void:
 	var output: String = "";var smoke: bool = false;var step: float = 300.0
 	var banks := false
 	var horde_focus := false
+	var slate_pass := false
 	var recruit_from := 4
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--output="): output = argument.trim_prefix("--output=")
 		elif argument == "--smoke": smoke = true
 		elif argument == "--banks": banks = true
 		elif argument == "--horde-14-talents": horde_focus = true
+		elif argument == "--slate-pass": slate_pass = true
 		elif argument == "--early-recruit": recruit_from = 2
 		elif argument == "--small-steps": step = 0.05
 		else: printerr("Argument inconnu : "+argument);quit(2);return
@@ -85,22 +87,22 @@ func _initialize() -> void:
 	if not output.is_absolute_path() or output.to_lower() == user_root or output.to_lower().begins_with(user_root+"/") or FileAccess.file_exists(output) or DirAccess.dir_exists_absolute(output):
 		printerr("Destination existante ou réservée au joueur refusée.");quit(2);return
 	var before: Dictionary = source_hashes();var results: Array = []
-	if banks and horde_focus: printerr("Choisir un seul périmètre.");quit(2);return
-	var mission_range := [14,14] if horde_focus else [11,20] if banks else [1,3]
+	if int(banks)+int(horde_focus)+int(slate_pass)>1: printerr("Choisir un seul périmètre.");quit(2);return
+	var mission_range := [21,21] if slate_pass else [14,14] if horde_focus else [11,20] if banks else [1,3]
 	for faction in ([1] if horde_focus else range(2)):
 		for mission in range(mission_range[0],mission_range[1]+1):
 			for seed_value in ([42] if smoke else SEEDS):
 				for layout in ([1] if smoke else range(LAYOUTS.size())):
 					for composition in ([0] if smoke else range(COMPOSITIONS.size())):
 						for early in ([2] if smoke else [1,2,3]):
-							for talent in ([-1,Talents.index_for(0,0),Talents.index_for(1,0),Talents.index_for(2,0)] if mission == 3 or horde_focus else [-1]):
-								var row: Dictionary = play(faction,mission,seed_value,layout,composition,early,talent,step,smoke,horde_focus,recruit_from)
+							for talent in ([-1,Talents.index_for(0,0),Talents.index_for(1,0),Talents.index_for(2,0)] if mission == 3 or horde_focus or slate_pass else [-1]):
+								var row: Dictionary = play(faction,mission,seed_value,layout,composition,early,talent,step,smoke,horde_focus or slate_pass,recruit_from)
 								if row.is_empty(): printerr(error);quit(1);return
 								results.append(row)
 			print("CAMPAIGN_SURVEY_PROGRESS=",results.size())
-	var expected := (4 if smoke else 864) if horde_focus else (20 if smoke else 4320) if banks else (12 if smoke else 2592)
+	var expected := (8 if smoke else 1728) if slate_pass else (4 if smoke else 864) if horde_focus else (20 if smoke else 4320) if banks else (12 if smoke else 2592)
 	if before != source_hashes() or results.size() != expected: printerr("Sources modifiées ou échantillon incomplet.");quit(1);return
 	var file := FileAccess.open(output,FileAccess.WRITE)
 	if file == null: printerr("Rapport non accessible.");quit(1);return
-	file.store_string(JSON.stringify({"schema":1,"game_version":ProjectSettings.get_setting("application/config/version"),"human_balance_test":false,"mission_range":mission_range,"talent_mode":"six_in_one_tree" if horde_focus else "initial","profile_loaded":false,"sources_sha256":before,"step":step,"smoke_replays":smoke,"case_count":results.size(),"seeds":[42] if smoke else SEEDS,"layouts":LAYOUTS,"compositions":COMPOSITIONS,"recruit_from":recruit_from,"policy":"Deux recrues au départ ; tentative d’amélioration de la première aux vagues 1, 2 ou 3 ; troisième recrue à partir de la vague %d ; améliorations à partir de la vague 5, branche A ; premier bonus proposé. Aucun revenu ajouté, aucune opération forcée. Le relevé de la mission 14 compare chaque arbre avec six points et un témoin sans talent. Les variantes avec un point concernent les missions 1 à 3." % recruit_from,"results":results},"\t")+"\n");file.close()
+	file.store_string(JSON.stringify({"schema":1,"game_version":ProjectSettings.get_setting("application/config/version"),"human_balance_test":false,"mission_range":mission_range,"talent_mode":"six_in_one_tree" if horde_focus or slate_pass else "initial","profile_loaded":false,"sources_sha256":before,"step":step,"smoke_replays":smoke,"case_count":results.size(),"seeds":[42] if smoke else SEEDS,"layouts":LAYOUTS,"compositions":COMPOSITIONS,"recruit_from":recruit_from,"policy":"Deux recrues au départ ; tentative d’amélioration de la première aux vagues 1, 2 ou 3 ; troisième recrue à partir de la vague %d ; améliorations à partir de la vague 5, branche A ; premier bonus proposé. Aucun revenu ajouté, aucune opération forcée. Le relevé de la mission 14 compare chaque arbre avec six points et un témoin sans talent. Les variantes avec un point concernent les missions 1 à 3." % recruit_from,"results":results},"\t")+"\n");file.close()
 	print("CAMPAIGN_SURVEY_COMPLETE=",results.size());quit()

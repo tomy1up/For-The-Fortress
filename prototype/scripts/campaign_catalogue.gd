@@ -24,6 +24,8 @@ static func definition(number: int) -> Dictionary:
 		var titles: Array[String] = ["La Vallée du Gué","Le Bois du Gué","Les Hauts du Gué","Les Détours du Gué","La Clairière du Gué","Le Défilé du Gué","Les Lacets du Gué","Le Sentier du Gué","Les Abords du Gué","Les Remparts du Gué"]
 		result.merge({"title":titles[(number-1)%10],"available":true,"map_id":maps[(number-1)%10],"hp_percent":99+number,"po":60,"xp":100,"waves":10},true)
 		if number > 10: result.wave_set_id = "ford_banks"
+	elif number == 21:
+		result.merge({"title":"Le Col des Ardoises","available":true,"map_id":"slate_pass","hp_percent":120,"po":60,"xp":100,"waves":10},true)
 	return result
 
 static func runtime(id: String) -> Dictionary:

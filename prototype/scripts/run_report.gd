@@ -111,7 +111,8 @@ static func markdown(report: Dictionary) -> String:
 		var allocation := "Une apparition par entrée à tour de rôle."
 		if map.get("route_pattern") == "alternating_pressure":
 			allocation = "À partir de la vague 2, environ deux ennemis sur trois empruntent l’entrée principale, qui change à chaque vague."
-		lines.insert(5,"Atelier multitrajet : %d entrées vers une forteresse. %s" % [map.routes.size(),allocation])
+		var context := "Atelier multitrajet" if str(map.id).begins_with("workshop_") else "Carte multitrajet"
+		lines.insert(5,"%s : %d entrées vers une forteresse. %s" % [context,map.routes.size(),allocation])
 		lines.insert(6,"Ciblage : "+("ennemi qui atteindra le plus tôt la forteresse, selon sa vitesse." if report.get("route_target_policy","remaining_distance")=="arrival_time" else "distance restante la plus courte (règle historique)."))
 	if report.has("meta_ranks"):
 		lines.insert(5,"Talents permanents actifs (rangs par arbre) : "+str(report.meta_ranks)+". Barème de prototype "+("v0.67" if report.meta_ranks.size() == 9 else "v0.68" if report.meta_ranks.size() == 15 else "arbres enrichis")+".")
