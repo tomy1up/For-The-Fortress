@@ -54,6 +54,7 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('alliance_routes','combat','alliance'),('horde_routes','combat','horde'),
        ('alliance_routes_forecast','preparation','alliance'),('horde_routes_forecast','preparation','horde'),
        ('alliance_routes_mountain_forecast','preparation','alliance'),('horde_routes_mountain_forecast','preparation','horde'),
+       ('alliance_routes_mountain_combat','combat','alliance'),('horde_routes_mountain_combat','combat','horde'),
        ('alliance_bank_guardian','bank_guardian','alliance'),('horde_bank_guardian','bank_guardian','horde'),
        ('alliance_bank_guardian_protected','bank_guardian','alliance'),('horde_bank_guardian_protected','bank_guardian','horde'),
        ('alliance_bank_guardian_cursed','bank_guardian','alliance'),('horde_bank_guardian_cursed','bank_guardian','horde'),

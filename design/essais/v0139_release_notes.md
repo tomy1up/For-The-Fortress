@@ -1,0 +1,1 @@
+Le Col des Ardoises propose deux routes de 28 et 33 unités et six emplacements redistribués. Le tracé reste à l’essai. Lancer Lancer_atelier_routes.cmd col. 1 596 contrôles Godot ciblés et 8 essais Windows réussis, dont la préparation et le lancement du combat dans les deux factions. 83 sources comparées.
