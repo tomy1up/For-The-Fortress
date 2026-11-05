@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Prototype v0.137**. La préparation indique combien d’or manque pour recruter sur un emplacement libre. [Notes de version](design/essais/v0137_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.137).
+**Prototype v0.138**. Le Col des Ardoises est jouable en atelier, sans gain de campagne. [Notes de version](design/essais/v0138_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.138).
 
 **Prototype v0.111 — comparer les unités de boutique** : [fiches et tableau facultatif](design/Comparaison_boutique_v0111.md), [version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.111). Les chiffres de niveau 1 sont présentés face à ceux du défenseur de départ, avec une distinction entre PO de déblocage et or de recrutement. Aucun changement de prix ou de combat.
 

@@ -1,0 +1,1 @@
+Le Col des Ardoises propose un décor de montagne sur les routes convergentes de La Confluence. Lancer Lancer_atelier_routes.cmd col depuis le dossier extrait. Ce décor est à l’essai et l’atelier ne charge aucun profil de campagne. 677 contrôles Godot ciblés et 8 essais Windows réussis, avec les annonces par entrée, les profils et les bonus des deux factions. 83 sources comparées.
