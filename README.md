@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.144**. Le panneau de vague détaille la répartition de chaque groupe d’ennemis par entrée. [Notes de version](design/essais/v0144_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.144).
+
 **Prototype v0.143**. La carte indique quelle entrée recevra le plus d’ennemis à la prochaine vague. [Notes de version](design/essais/v0143_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.143).
 
 **Prototype v0.142**. Au Col des Ardoises, l’entrée qui reçoit le plus d’ennemis alterne dès la deuxième vague. [Notes de version](design/essais/v0142_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.142).

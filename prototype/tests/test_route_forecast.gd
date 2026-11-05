@@ -63,7 +63,13 @@ func run_checks() -> void:
 			var before:=signature(scene.model)
 			scene._update_interface()
 			check(scene.forecast_panel.visible and scene.forecast_note.text.contains("Entrée 1") and scene.forecast_note.text.contains("Entrée 2"),"Répartition visible dans le panneau de préparation")
-			check(scene.forecast_panel.size.y==112+44*scene.forecast_data.groups.size(),"Aucun agrandissement du panneau sur la carte")
+			check(scene.forecast_panel.size.y==112+60*scene.forecast_data.groups.size(),"Le panneau réserve une ligne de répartition par groupe")
+			for index in range(scene.forecast_data.groups.size()):
+				var group: Dictionary = scene.forecast_data.groups[index]
+				var segments: Array[String] = []
+				for entry in group.entries:
+					segments.append("Entrée %d · %d" % [entry.number,entry.count])
+				check(scene.forecast_routes[index].visible and scene.forecast_routes[index].text=="   /   ".join(segments),"Répartition du groupe visible sans survol")
 			var layouts:=scene.map_view.entry_label_layouts()
 			check(layouts.size()==2 and layouts[0].color!=layouts[1].color,"Repères d'entrée distincts")
 			for index in range(2):

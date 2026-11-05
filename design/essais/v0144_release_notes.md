@@ -1,0 +1,1 @@
+Sur les cartes à plusieurs entrées, le panneau de la prochaine vague affiche les effectifs par entrée sous chaque groupe d’ennemis. Les horaires restent accessibles au survol. Les six essais Windows au Col des Ardoises et les 2 720 contrôles Godot ciblés passent.

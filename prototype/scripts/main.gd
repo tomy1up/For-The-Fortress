@@ -214,6 +214,7 @@ var forecast_timing: Label
 var forecast_rows: Array[Control] = []
 var forecast_names: Array[Label] = []
 var forecast_details: Array[Label] = []
+var forecast_routes: Array[Label] = []
 var forecast_marks: Array[ColorRect] = []
 var forecast_portraits: Array[TextureRect] = []
 var forecast_textures: Dictionary = {}
@@ -681,7 +682,10 @@ func _ready() -> void:
 				set_process(false)
 				_update_wave_forecast(forecast_rows[0].get_global_rect().get_center())
 				print("ROUTE_HOVER_SNAPSHOT=",JSON.stringify({"isolated":meta_profile==null,"highlighted":map_view.highlighted_entries}))
-			print("ROUTE_FORECAST_SNAPSHOT=",JSON.stringify({"faction":model.faction,"entries":map_view.entry_forecast,"note":forecast_note.text,"visible":forecast_panel.visible,"labels":map_view.entry_label_layouts().map(func(entry: Dictionary):return [entry.title,entry.detail])}))
+			var group_routes: Array[String] = []
+			for index in range(forecast_data.groups.size()):
+				group_routes.append(forecast_routes[index].text)
+			print("ROUTE_FORECAST_SNAPSHOT=",JSON.stringify({"faction":model.faction,"entries":map_view.entry_forecast,"note":forecast_note.text,"visible":forecast_panel.visible,"labels":map_view.entry_label_layouts().map(func(entry: Dictionary):return [entry.title,entry.detail]),"group_routes":group_routes}))
 		if capture_state == "wolf_walk":
 			# Fixture visuelle isolée : quatre directions du trajet, sans profil joueur.
 			model.enemies.clear();model.damage_events.clear();model.spawn_schedule.clear();model.spawned=4;model.phase="combat"
@@ -1167,6 +1171,7 @@ func _build_wave_forecast(screen: Control) -> void:
 		forecast_portraits.append(portrait)
 		forecast_names.append(_label(row,"",Vector2(50,0),Vector2(232,20),14,Color("e0dbbf")))
 		forecast_details.append(_label(row,"",Vector2(50,22),Vector2(232,18),12,Color("bbcbbf")))
+		forecast_routes.append(_label(row,"",Vector2(50,39),Vector2(232,16),11,Color("cdb47e")))
 	forecast_reward = _label(forecast_panel,"",Vector2(14,106),Vector2(282,22),13,Color("cdb47e"))
 	forecast_note = _label(forecast_panel,"Survolez les groupes pour les détails.",Vector2(14,128),Vector2(282,18),11,Color("aabbb0"))
 	forecast_panel.visible = false
@@ -1200,7 +1205,12 @@ func _update_wave_forecast(pointer := Vector2.INF) -> void:
 	map_view.entry_forecast.assign(forecast_data.get("entries",[]))
 	forecast_title.text = "Prochaine vague · %d/10" % number
 	forecast_timing.text = "%d ennemis · %s" % [forecast_data.total,"Départ manuel" if countdown_remaining < 0 else "Décompte en pause" if _countdown_paused() else "Dans %d s" % ceili(countdown_remaining)]
+	var split_routes: bool = not map_view.entry_forecast.is_empty()
+	var row_step := 60 if split_routes else 44
 	for index in range(forecast_rows.size()):
+		forecast_rows[index].position.y = 58+row_step*index
+		forecast_rows[index].size.y = row_step-4
+		forecast_routes[index].visible = split_routes
 		forecast_rows[index].visible = index < forecast_data.groups.size()
 		if index >= forecast_data.groups.size():
 			forecast_portraits[index].texture = null
@@ -1217,10 +1227,13 @@ func _update_wave_forecast(pointer := Vector2.INF) -> void:
 		forecast_details[index].add_theme_color_override("font_color",Color("ed9989") if fatal else Color("bbcbbf"))
 		forecast_rows[index].tooltip_text = "Groupe %d · %d × %s\n%s PV par ennemi\nPremière apparition : %s s après le départ\nDernière apparition : %s s après le départ\n%s\nSi un ennemi atteint la forteresse, elle perd %d PV.\nÉlimination : +%d or par ennemi" % [index+1,group.count,group.name,_number(group.hp),_number(group.first_at),_number(group.last_at),"Ennemi unique." if group.count == 1 else "Un ennemi toutes les %s s." % _number(group.interval),group.fortress_damage,group.reward]
 		if group.type == Model.Banks.GUARD_TYPE: forecast_rows[index].tooltip_text += "\nGardienne : encaisse 25 % des dégâts de ses voisins proches. Ne protège ni les boss ni les autres tortues. La protection cesse à sa mort."
+		var routes_text: Array[String] = []
 		for entry in group.get("entries",[]):
+			routes_text.append("Entrée %d · %d"%[entry.number,entry.count])
 			forecast_rows[index].tooltip_text += "\nEntrée %d : %d ennemi%s · de %s à %s s après le départ."%[entry.number,entry.count,"" if entry.count==1 else "s",_number(entry.first_at),_number(entry.last_at)]
+		forecast_routes[index].text = "   /   ".join(routes_text)
 		forecast_rows[index].tooltip_text += "\nHoraires et intervalles à vitesse ×1 ; divisés par 2 en ×2 et par 10 en ×10 debug."
-	var footer: int = 62+forecast_data.groups.size()*44
+	var footer: int = 62+forecast_data.groups.size()*row_step
 	forecast_reward.position.y = footer
 	forecast_reward.text = "Si tous éliminés : +%d or" % forecast_data.income
 	forecast_note.position.y = footer+22

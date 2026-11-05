@@ -274,6 +274,12 @@ for name,state,faction in cases:
                 for index,count in enumerate(counts,1)
             ]
             assert forecast['note']==f'Entrée 1 : {counts[0]} · Entrée 2 : {counts[1]}'
+            displayed_counts = [0,0]
+            for group in forecast['group_routes']:
+                for segment in group.split('   /   '):
+                    entry,count = re.fullmatch(r'Entrée ([12]) · (\d+)',segment).groups()
+                    displayed_counts[int(entry)-1] += int(count)
+            assert displayed_counts==counts, forecast['group_routes']
     if '_wave_context_' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('WAVE_CONTEXT_SNAPSHOT=')))
         context=name.rsplit('_',1)[1]
