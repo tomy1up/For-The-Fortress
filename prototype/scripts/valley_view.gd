@@ -425,6 +425,17 @@ func map_covered_routes(center: Vector2, radius: float) -> Array[PackedVector2Ar
 		sections.append_array(covered_route(center,radius,points,route.path_length))
 	return sections
 
+func entry_coverage_percentages(center: Vector2, radius: float) -> Array[int]:
+	var percentages: Array[int] = []
+	for route in model.routes:
+		var points: Array[Vector2] = []
+		points.assign(route.path_points)
+		var length := 0.0
+		for window in Model.coverage_windows(center,radius,points):
+			length += window.last-window.first
+		percentages.append(clampi(roundi(100.0*length/route.path_length),0,100))
+	return percentages
+
 static func _segment_in_rect(first: Vector2, last: Vector2, area: Rect2) -> bool:
 	if area.has_point(first) or area.has_point(last): return true
 	var corners: Array[Vector2] = [area.position,Vector2(area.end.x,area.position.y),area.end,Vector2(area.position.x,area.end.y)]

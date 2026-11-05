@@ -143,5 +143,17 @@ func run_checks() -> void:
 	scene.model.phase = "defeat"; scene._reset()
 	check(scene.map_view.purchase_preview.is_empty() and scene.hovered_purchase == -1 and scene.focused_purchase == -1,"Nouvel essai efface tout aperçu")
 	scene.free()
+	var workshop := Main.new()
+	workshop.model = Model.new(true,Model.Maps.mountain_workshop())
+	root.add_child(workshop)
+	workshop.set_process(false)
+	workshop._choose_faction(0)
+	workshop.selected = 0
+	workshop.hovered_purchase = 0
+	workshop._refresh_purchase_preview()
+	var coverage := workshop.map_view.entry_coverage_percentages(workshop.model.slots[0],workshop.map_view.purchase_preview.range)
+	check(coverage[0] > coverage[1] and coverage[1] >= 0,"E1 couvre davantage la première approche du Col")
+	check(workshop.hint_label.text == "Trajet à portée · Entrée 1 : %d %% · Entrée 2 : %d %%" % [coverage[0],coverage[1]],"L’aperçu distingue les deux trajets")
+	workshop.free()
 	print("PURCHASE_PREVIEW_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(0 if failures == 0 else 1)

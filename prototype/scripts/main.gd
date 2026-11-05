@@ -2336,6 +2336,11 @@ func _refresh_purchase_preview() -> void:
 	var error: String = model.purchase_error(selected, type)
 	hint_label.text = "Aperçu sans achat · Synergies prévues : %d · Route bleue : portée · Liens pointillés : partenaires" % stats.synergies.size() if error.is_empty() else "Aperçu sans achat · " + error
 	hint_label.tooltip_text = _preview_synergy_tooltip(selected,candidate)
+	if model.routes.size() == 2:
+		var coverage := map_view.entry_coverage_percentages(model.slots[selected],stats.range)
+		var route_hint := "Trajet à portée · Entrée 1 : %d %% · Entrée 2 : %d %%" % [coverage[0],coverage[1]]
+		hint_label.tooltip_text += "\n"+route_hint
+		if error.is_empty(): hint_label.text = route_hint
 
 func _sell() -> void:
 	if pending_slot >= 0 or overview_open:
