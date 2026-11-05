@@ -106,8 +106,12 @@ static func markdown(report: Dictionary) -> String:
 		"Forteresse : %d/%d PV · Or restant : %d · Combat : %.2f s simulées" % [report.fortress_hp,report.max_hp,report.gold,report.combat_seconds],
 		"", "Rapport de débogage local, sans fonction de reprise de partie.", "", "## Vagues", "", "| Vague | Éliminés | Passés | PV perdus | Or gagné | Résultat |", "| --- | --- | --- | --- | --- | --- |"]
 	if report.has("enemy_hp_percent"): lines.insert(5,"PV ennemis : %d %% de la référence. Vitesse, dégâts et récompenses de combat inchangés." % report.enemy_hp_percent)
-	if report.get("map_definition",{}).has("routes"):
-		lines.insert(5,"Atelier multitrajet : %d entrées vers une forteresse. Affectation alternée des apparitions ; règle de prototype."%report.map_definition.routes.size())
+	var map: Dictionary = report.get("map_definition",{})
+	if map.has("routes"):
+		var allocation := "Une apparition par entrée à tour de rôle."
+		if map.get("route_pattern") == "alternating_pressure":
+			allocation = "À partir de la vague 2, environ deux ennemis sur trois empruntent l’entrée principale, qui change à chaque vague."
+		lines.insert(5,"Atelier multitrajet : %d entrées vers une forteresse. %s" % [map.routes.size(),allocation])
 		lines.insert(6,"Ciblage : "+("ennemi qui atteindra le plus tôt la forteresse, selon sa vitesse." if report.get("route_target_policy","remaining_distance")=="arrival_time" else "distance restante la plus courte (règle historique)."))
 	if report.has("meta_ranks"):
 		lines.insert(5,"Talents permanents actifs (rangs par arbre) : "+str(report.meta_ranks)+". Barème de prototype "+("v0.67" if report.meta_ranks.size() == 9 else "v0.68" if report.meta_ranks.size() == 15 else "arbres enrichis")+".")
@@ -119,6 +123,20 @@ static func markdown(report: Dictionary) -> String:
 		lines.append("| --- | --- |")
 		for entry in report.arrivals_by_entry:
 			lines.append("| %d | %d |" % [entry.entry, entry.arrivals])
+		if report.waves.any(func(wave: Dictionary) -> bool: return wave.has("arrivals_by_route")):
+			lines.append("\n### Détail par vague\n")
+			var columns := PackedStringArray(["Vague"])
+			var separators := PackedStringArray(["---"])
+			for entry in report.arrivals_by_entry:
+				columns.append("Entrée %d" % entry.entry)
+				separators.append("---")
+			lines.append("| " + " | ".join(columns) + " |")
+			lines.append("| " + " | ".join(separators) + " |")
+			for wave in report.waves:
+				var cells := PackedStringArray([str(wave.wave)])
+				for entry in report.arrivals_by_entry:
+					cells.append(str(wave.arrivals_by_route.get(entry.route_id,0)) if wave.has("arrivals_by_route") else "—")
+				lines.append("| " + " | ".join(cells) + " |")
 
 	if report.has("boss_encounter"):
 		lines.append("\n## Boss final\n")

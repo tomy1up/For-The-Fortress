@@ -131,10 +131,15 @@ func run_checks() -> void:
 		var wrong_arrivals := report.duplicate(true)
 		wrong_arrivals.arrivals_by_entry[0].arrivals += 1
 		check(not Replay.verify(wrong_arrivals).ok,"Le rejeu rejette un effectif falsifie par entree")
+		var wrong_wave := report.duplicate(true)
+		wrong_wave.waves[0].arrivals_by_route.upper = wrong_wave.waves[0].arrivals_by_route.get("upper",0)+1
+		check(not Replay.verify(wrong_wave).ok,"Le rejeu rejette une arrivée falsifiée dans une vague")
 		for invalid in [null,1,"unknown",{}]:
 			var malformed:=report.duplicate(true);malformed.route_target_policy=invalid
 			check(not Replay.verify(malformed).ok,"Règle de ciblage invalide rejetée avant relecture")
-		check(Report.markdown(report).contains("Atelier multitrajet : 2 entrées"),"Rapport lisible explicitant le contexte d'atelier")
+		var markdown: String = Report.markdown(report)
+		check(markdown.contains("Atelier multitrajet : 2 entrées") and markdown.contains("à tour de rôle"),"Rapport lisible explicitant le contexte d'atelier")
+		check(markdown.contains("### Détail par vague\n\n| Vague | Entrée 1 | Entrée 2 |"),"Le rapport inclut les deux colonnes du détail par vague")
 		var forged:=report.duplicate(true);forged.map_definition.routes[1].path_length=12.0
 		check(not Replay.verify(forged).ok,"Rapport multitrajet à longueur falsifiée rejeté")
 		var view:=View.new();view.model=ranged;get_root().add_child(view);view.set_process(false)

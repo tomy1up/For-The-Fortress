@@ -1,0 +1,1 @@
+Le rapport Markdown exporté depuis le bilan détaille les arrivées par vague et par entrée. Il décrit la répartition en vigueur sur la carte, y compris la pression alternée du Col des Ardoises. Quatre exports Windows et 310 contrôles Godot ciblés ont réussi.

@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.146**. Le rapport Markdown affiche les arrivées par vague et par entrée. [Notes de version](design/essais/v0146_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.146).
+
 **Prototype v0.145**. Le bilan détaille par vague et par entrée les ennemis qui ont atteint la forteresse. [Notes de version](design/essais/v0145_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.145).
 
 **Prototype v0.144**. Le panneau de vague détaille la répartition de chaque groupe d’ennemis par entrée. [Notes de version](design/essais/v0144_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.144).

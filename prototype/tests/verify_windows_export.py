@@ -185,7 +185,7 @@ for name,state,faction in cases:
             if name.endswith('_owned'): command+=['--capture-shop-owned']
         if '_routes' in name: command+=['--atelier-col' if '_mountain_' in name else '--atelier-routes']
         if '_mountain_wave' in name: command+=['--capture-route-wave='+name.split('_')[-2][-1]]
-        if name.endswith('_mountain_breaches'): command+=['--capture-summary-wave=1']
+        if name.endswith('_mountain_breaches'): command+=['--capture-summary-wave=1','--capture-export-report']
         if '_royal_' in name: command+=['--capture-royal-state='+name.rsplit('_',1)[1]]
         if name.endswith('_enemy_hit_motion'): command+=['--capture-hit-motion','--capture-type='+('2' if faction=='alliance' else '4')]
         if state=="campaign_menu": command += ["--capture-campaign="+name.rsplit("_",1)[1]]
@@ -261,6 +261,16 @@ for name,state,faction in cases:
         if name.endswith('_mountain_breaches'):
             arrivals=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('WAVE_ARRIVALS_SNAPSHOT=')))
             assert arrivals=='Ennemis ayant atteint la forteresse — Entrée 1 · 5   /   Entrée 2 · 5', arrivals
+            report_folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))
+            report=json.loads((report_folder/'rapport.json').read_text(encoding='utf-8'))
+            markdown=(report_folder/'rapport.md').read_text(encoding='utf-8')
+            assert report['game_version']==manifest['version'] and report['faction']==(0 if faction=='alliance' else 1)
+            assert 'À partir de la vague 2, environ deux ennemis sur trois' in markdown
+            assert '### Détail par vague\n\n| Vague | Entrée 1 | Entrée 2 |' in markdown
+            for wave in report['waves']:
+                counts = [wave['arrivals_by_route'].get(entry['route_id'],0) for entry in report['arrivals_by_entry']]
+                assert sum(counts)==wave['escaped']
+                assert f"| {wave['wave']} | {counts[0]} | {counts[1]} |" in markdown
         if name.endswith('_purchase'):
             assert re.search(r'ROUTE_PURCHASE_HINT=Trajet à portée · Entrée 1 : \d+ % · Entrée 2 : \d+ %',text), name
         if name.endswith('_specialisation'):
