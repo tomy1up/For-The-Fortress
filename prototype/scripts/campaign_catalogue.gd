@@ -26,6 +26,8 @@ static func definition(number: int) -> Dictionary:
 		if number > 10: result.wave_set_id = "ford_banks"
 	elif number == 21:
 		result.merge({"title":"Le Col des Ardoises","available":true,"map_id":"slate_pass","hp_percent":120,"po":60,"xp":100,"waves":10},true)
+	elif number == 22:
+		result.merge({"title":"Les Crêtes des Ardoises","available":true,"map_id":"slate_ridges","hp_percent":121,"po":60,"xp":100,"waves":10},true)
 	return result
 
 static func runtime(id: String) -> Dictionary:

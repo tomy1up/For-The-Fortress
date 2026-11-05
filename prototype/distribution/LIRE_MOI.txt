@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.149 — 5 novembre 2026
+Version : 0.150 — 5 novembre 2026
 
 ATELIER A DEUX ENTREES
 
@@ -9,7 +9,7 @@ Cet atelier ne lit pas le profil joueur et ne donne ni PO ni XP.
 Le trace et l'alternance des entrees sont des essais provisoires.
 Les defenseurs ciblent l'ennemi a portee qui arrivera le plus tot, selon sa vitesse.
 Avant chaque vague, les quantites par entree et par groupe sont affichees.
-Le lancement habituel propose vingt et une missions de campagne.
+Le lancement habituel propose vingt-deux missions de campagne.
 La nouvelle marche du loup, approuvee pour le prototype, est integree aux missions et a cet atelier.
 Le corps accompagne les appuis ; la cadence suit la distance parcourue et la vitesse du jeu.
 
@@ -23,6 +23,7 @@ JOUER
    Les pointillés signalent les missions à venir, le cadenas un succès requis.
    Vingt missions de dix vagues sont jouables dans le thème du Gué.
    La mission 21 ouvre le Col des Ardoises, à deux entrées, après la mission 20.
+   La mission 22 poursuit ce biome avec les Crêtes des Ardoises.
    Chapitre 2 : mêmes tracés, nouvelles rencontres avec une tortue gardienne.
    Elle encaisse 25 % des dégâts des voisins proches, dans la limite de ses PV.
    Cercle vert : rayon de protection ; traits brefs : dégâts réellement transférés.
@@ -64,13 +65,13 @@ talents permanents ne sont possibles avant la victoire finale ou la défaite.
 Les constructions, achats, ventes et améliorations d’unités entre les vagues restent
 possibles. Les choix de bonus de la partie ne sont pas les arbres de talents permanents.
 
-Le prototype contient vingt et une missions de dix vagues.
-Les PV ennemis sont de 100 % à 120 % de la référence. Leur vitesse,
+Le prototype contient vingt-deux missions de dix vagues.
+Les PV ennemis sont de 100 % à 121 % de la référence. Leur vitesse,
 leurs dégâts à la forteresse et leurs récompenses de combat restent identiques.
 Une mission est une session complète : retour au parcours après victoire ou défaite.
 Chaque mission repart avec ses PV maximum, 150 or de combat, aucun défenseur
 et aucun bonus temporaire. PO, XP et talents restent persistants. Le parcours
-présente vingt chapitres de dix positions ; 179 missions restent à développer.
+présente vingt chapitres de dix positions ; 178 missions restent à développer.
 
 PO, XP ET PROGRESSION PERMANENTE
 
@@ -84,7 +85,7 @@ Courbe de référence : 100 XP par mission, 10 000 XP pour obtenir les 51 points
 Premier point à 197 XP, donc après deux premières victoires distinctes. Après les
 dix missions, un profil neuf a 1 000 XP, cinq points et 600 PO hors dépenses.
 Le cinquième point arrive après la mission 10 et ne facilite pas sa première victoire.
-Le rejeu ne donne aucun nouveau gain ; les missions 22 à 200 restent à développer.
+Le rejeu ne donne aucun nouveau gain ; les missions 23 à 200 restent à développer.
 Les PO débloquent des unités dans la boutique accessible depuis le parcours.
 L’or de combat sert au recrutement et aux améliorations pendant la mission.
 

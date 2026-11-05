@@ -767,8 +767,9 @@ func _capture_campaign_menu(camp: int) -> void:
 		var id: int = meta_profile.begin_mission(camp,"campaign.001",60,10,100)
 		var credited: bool = meta_profile.credit_mission(id,camp,10,true)
 		if not credited: push_error("Échec du profil de contrôle de campagne.");return
-	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or variant in ["slate","slateplay"]:
-		var target := 21 if variant in ["slate","slateplay"] else clampi(int(variant.trim_prefix("terrain")),2,10)
+	var mountain_preview := variant in ["slate","slateplay","ridges","ridgesplay"]
+	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or mountain_preview:
+		var target := (22 if variant.begins_with("ridges") else 21) if mountain_preview else clampi(int(variant.trim_prefix("terrain")),2,10)
 		for number in range(1,target):
 			var entry: Dictionary = CampaignCatalogue.definition(number)
 			var id: int = meta_profile.begin_mission(camp,entry.id,entry.po,entry.waves,entry.xp)
@@ -776,7 +777,8 @@ func _capture_campaign_menu(camp: int) -> void:
 			if not credited: push_error("Échec du profil isolé des aperçus de terrain.");return
 	if variant == "blocked":
 		meta_profile.blocked = true;meta_profile.error = "Sauvegarde indisponible simulée pour le contrôle."
-	_open_campaign(camp,20 if variant == "future" else 3 if variant in ["slate","slateplay"] else 1)
+	_open_campaign(camp,20 if variant == "future" else 3 if mountain_preview else 1)
+	if variant.begins_with("ridges"): campaign_menu._select(1)
 	if variant.begins_with("terrain") or variant == "locked2":
 		campaign_menu._select(clampi(int(variant.trim_prefix("terrain")),2,10)-1 if variant != "locked2" else 1)
 		campaign_menu.initial_focus().grab_focus()
@@ -797,7 +799,7 @@ func _capture_campaign_menu(camp: int) -> void:
 	var preview: Dictionary = campaign_menu.terrain_preview.geometry()
 	var paths: Array = preview.get("paths",[])
 	print("CAMPAIGN_SNAPSHOT=",JSON.stringify({"mission_states":campaign_menu.nodes.map(func(node): return node.state),"chapter_visible":campaign_menu.chapter_in_view(),"start_label":campaign_menu.start_button.text,"preview_map":preview.get("id",""),"preview_slots":preview.get("slots",[]).size(),"preview_routes":paths.size(),"preview_segments":0 if paths.is_empty() else paths[0].size()-1,"variant":variant,"faction":camp,"isolated":meta_profile.path.is_empty(),"menu":campaign_menu.visible,"talents":meta_menu.visible,"chapter":campaign_menu.chapter,"selected":(campaign_menu.chapter-1)*10+campaign_menu.selected+1,"completed":status.get("completed",-1),"other_completed":other.get("completed",-1),"disabled":campaign_menu.start_button.disabled,"po":bank.resource,"xp":bank.xp,"nodes":campaign_menu.nodes.size(),"chapters":campaign_menu.chapter_buttons.size(),"fresh":model.gold == 150 and model.bonuses.is_empty() and model.defenders.all(func(unit): return unit.is_empty()),"choosing":choosing_faction}))
-	if variant == "slateplay":
+	if variant in ["slateplay","ridgesplay"]:
 		campaign_menu._launch()
 		print("SLATE_MISSION=",JSON.stringify({"map":model.map_definition.id,"routes":model.routes.size(),"hp_percent":model.enemy_hp_percent,"mission":mission_definition.get("id",""),"faction":model.faction,"menu":campaign_menu.visible,"hp":model.fortress_hp,"gold":model.gold,"forecast":map_view.entry_forecast.size(),"active_profile_run":meta_run_id > 0}))
 

@@ -12,7 +12,9 @@ func check(value: bool, message: String) -> void:
 func _initialize() -> void:
 	call_deferred("run_checks")
 func run_checks() -> void:
-	for faction in range(2):
+	for case in [[0,21],[1,21],[0,22],[1,22]]:
+		var faction: int = case[0]
+		var mission_number: int = case[1]
 		var game := Main.new()
 		root.add_child(game)
 		game.set_process(false)
@@ -20,23 +22,27 @@ func run_checks() -> void:
 		var profile := Profile.new(path)
 		game.meta_profile = profile
 		game._open_campaign(faction,3)
+		game.campaign_menu._select(mission_number-21)
 		game.campaign_menu._launch()
-		check(game.choosing_faction,"Mission 21 verrouillée avant la mission 20")
-		for number in range(1,21):
+		check(game.choosing_faction,"La mission reste verrouillée avant sa précédente")
+		for number in range(1,mission_number):
 			var id: int = profile.begin_mission(faction,Main.CampaignCatalogue.id_for(number),60,10,100)
 			check(id>0 and profile.credit_mission(id,faction,10,true),"Première victoire préalable créditée par le service")
-		for index in [0,0,0,0,0,1]:
-			check(profile.allocate(faction,index),"Six rangs achetés avec les points gagnés avant la mission 21")
+		for index in [0,0,0,0,0,1,1,1,2,2]:
+			check(profile.allocate(faction,index),"Dix rangs investis avec les points gagnés auparavant")
 		game._open_campaign(faction,3)
+		game.campaign_menu._select(mission_number-21)
 		game.campaign_menu._launch()
 		var model = game.model
-		check(not game.choosing_faction and game.mission_definition.id=="campaign.021" and model.routes.size()==2,"La mission 21 démarre par le parcours normal")
-		check(model.enemy_hp_percent==120 and model.gold==150 and model.fortress_hp==model.max_hp and model.bonuses.is_empty(),"Paramètres et remise à neuf avec les talents actifs")
+		check(not game.choosing_faction and game.mission_definition.id==Main.CampaignCatalogue.id_for(mission_number) and model.routes.size()==2,"La mission démarre par le parcours normal")
+		check(model.enemy_hp_percent==99+mission_number and model.gold==150 and model.fortress_hp==model.max_hp and model.bonuses.is_empty(),"Paramètres et remise à neuf avec les talents actifs")
 		model.rng.seed = 7
-		var slots: Array = [1,3,4]
+		var slots: Array = [3,4,2]
+		if faction==1 and mission_number==22:
+			slots = [4,3,2]
 		check(model.buy(slots[0],faction*3) and model.buy(slots[1],faction*3+1),"Recrutement initial dans le budget")
 		for wave in range(1,11):
-			if wave==1: model.upgrade(slots[0])
+			if wave==2: model.upgrade(slots[0])
 			if wave>=2 and model.defenders[slots[2]].is_empty(): model.buy(slots[2],faction*3+2)
 			if wave>=5:
 				for slot in slots:
@@ -49,12 +55,12 @@ func run_checks() -> void:
 		check(model.phase=="victory","Une politique gagnante dans chaque faction sans revenu ajouté")
 		check(Replay.verify(JSON.parse_string(JSON.stringify(Main.RunReport.build(model)))).ok,"Le combat de campagne multitrajet est rejouable")
 		game._sync_meta_rewards(true)
-		check(profile.campaign_status(faction).completed==21 and profile.data.banks[faction].resource==1260 and profile.data.banks[faction].xp==2100,"Première victoire créditée avec 60 PO et 100 XP")
+		check(profile.campaign_status(faction).completed==mission_number and profile.data.banks[faction].resource==60*mission_number and profile.data.banks[faction].xp==100*mission_number,"Première victoire créditée avec 60 PO et 100 XP")
 		game._sync_meta_rewards(true)
-		check(profile.data.banks[faction].resource==1260 and profile.campaign_status(1-faction).completed==0,"Crédit unique et parcours adverse indépendant")
+		check(profile.data.banks[faction].resource==60*mission_number and profile.campaign_status(1-faction).completed==0,"Crédit unique et parcours adverse indépendant")
 		Profile.Codec.cache.clear()
 		var reopened := Profile.new(path)
-		check(reopened.campaign_status(faction).completed==21 and reopened.data.banks[faction].xp==2100,"Gains et réussite relus après fermeture du profil")
+		check(reopened.campaign_status(faction).completed==mission_number and reopened.data.banks[faction].xp==100*mission_number,"Gains et réussite relus après fermeture du profil")
 		game.free()
 		for suffix in ["",".bak",".tmp"]:
 			if FileAccess.file_exists(path+suffix): DirAccess.remove_absolute(path+suffix)

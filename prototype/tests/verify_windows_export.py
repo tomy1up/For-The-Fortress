@@ -160,7 +160,7 @@ for camp in ['alliance','horde']:
 for camp in ['alliance','horde']:
     for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
 for camp in ['alliance','horde']:
-    for variant in ['slate','slateplay']:
+    for variant in ['slate','slateplay','ridges','ridgesplay']:
         cases.append((camp+'_campaign_menu_'+variant,'campaign_menu',camp))
     for wave in [2,3]:
         cases.append((f'{camp}_routes_mountain_wave{wave}_forecast','preparation',camp))
@@ -342,16 +342,19 @@ for name,state,faction in cases:
             report=json.loads((report_folder/'rapport.json').read_text(encoding='utf-8'))
             assert report['result']=='victory' and len(report['waves'])==10 and report['enemy_hp_percent']==99+mission and report['map_definition']['id']==snap['map']
             assert abs(report['boss_encounter']['max_hp']-600*(99+mission)/100)<0.000001
-    if name.endswith(('_campaign_menu_slate','_campaign_menu_slateplay')):
+    if name.endswith(('_campaign_menu_slate','_campaign_menu_slateplay','_campaign_menu_ridges','_campaign_menu_ridgesplay')):
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
         assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
-        assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==(3,21,'slate_pass',2)
-        assert (snap['completed'],snap['other_completed'],snap['po'],snap['xp'])==(20,0,1200,2000)
-        assert snap['mission_states']==['available']+['future']*9
-        if name.endswith('slateplay'):
+        ridges = '_ridges' in name
+        number = 22 if ridges else 21
+        map_id = 'slate_ridges' if ridges else 'slate_pass'
+        assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==(3,number,map_id,2)
+        assert (snap['completed'],snap['other_completed'],snap['po'],snap['xp'])==(number-1,0,60*(number-1),100*(number-1))
+        assert snap['mission_states']==(['completed','available'] if ridges else ['available','locked'])+['future']*8
+        if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':'slate_pass','routes':2,'hp_percent':120,'mission':'campaign.021','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':2,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':2,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':2,'active_profile_run':True}
     elif state=="campaign_menu":
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         variant=name.rsplit('_',1)[1]

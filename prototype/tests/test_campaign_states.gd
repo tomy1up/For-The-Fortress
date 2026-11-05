@@ -23,7 +23,7 @@ func run_checks() -> void:
 			check(menu.chapter == chapter and menu.chapter_in_view(),"Chaque chapitre sélectionné devient visible dans la liste après mise en page")
 			check(menu.get_viewport().gui_get_focus_owner() == menu.nodes[0],"Révéler le chapitre ne vole pas le focus de la mission sélectionnée")
 			if chapter == 3:
-				check(menu.nodes[0].state=="locked" and menu.nodes.slice(1).all(func(node): return node.state=="future"),"Le chapitre partiel distingue sa mission jouable verrouillée des neuf missions à venir")
+				check(menu.nodes[0].state=="locked" and menu.nodes[1].state=="locked" and menu.nodes.slice(2).all(func(node): return node.state=="future"),"Le chapitre partiel distingue ses deux missions jouables verrouillées des huit missions à venir")
 			if chapter > 3:
 				check(menu.chapter_buttons[chapter-1].text.contains("À venir"),"Un chapitre sans contenu jouable ne prétend pas être prêt")
 				for node in menu.nodes: check(node.state == "future" and not node.locked,"Les nœuds d’un chapitre futur restent consultables, sans faux cadenas de progression")
