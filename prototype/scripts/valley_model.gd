@@ -237,8 +237,15 @@ static func wave_forecast(number: int, defending_faction: int = -1, hp_percent: 
 		offset += count
 	return {"wave":number,"groups":groups,"total":schedule.size(),"income":income}
 
-func spawn_route_id(index: int, entry: Dictionary) -> String:
-	return "" if routes.is_empty() else str(entry.get("route_id",routes[index%routes.size()].id))
+func spawn_route_id(index: int, entry: Dictionary, forecast_wave: int = -1) -> String:
+	if routes.is_empty(): return ""
+	if entry.has("route_id"): return str(entry.route_id)
+	var number := wave if forecast_wave < 0 else forecast_wave
+	var route_index := index%routes.size()
+	if number > 1 and map_definition.get("route_pattern") == "alternating_pressure":
+		var preferred := number%2
+		route_index = 1-preferred if index%3 == 2 else preferred
+	return routes[route_index].id
 
 func forecast_for_routes(number: int) -> Dictionary:
 	var data: Dictionary = wave_forecast(number,faction,enemy_hp_percent,wave_set_id)
@@ -255,7 +262,7 @@ func forecast_for_routes(number: int) -> Dictionary:
 		for entry in data.entries:
 			allocations.append({"route_id":entry.route_id,"number":entry.number,"count":0,"first_at":-1.0,"last_at":-1.0})
 		for index in range(offset,offset+group.count):
-			var route_id: String = spawn_route_id(index,schedule[index])
+			var route_id: String = spawn_route_id(index,schedule[index],number)
 			if not indices.has(route_id): return {}
 			for allocation in [data.entries[indices[route_id]],allocations[indices[route_id]]]:
 				if allocation.count==0: allocation.first_at=schedule[index].time

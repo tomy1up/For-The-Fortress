@@ -7,3 +7,5 @@ La capture utilise le moteur de rendu, les contrôles de placement du décor et 
 Le Col est jouable depuis le lanceur Windows avec Lancer_atelier_routes.cmd col. Le lanceur sans argument ouvre La Confluence. Les deux ateliers restent isolés de la campagne et des profils.
 
 Le tracé révisé propose deux trajets de 28 et 33 unités jusqu’à la même forteresse, avec 17 unités en commun. Les trois premiers emplacements couvrent les approches, les trois derniers le parcours commun. La nouvelle capture traces_distincts.png montre cette variante. Son équilibre en partie reste à éprouver.
+
+Nouvel essai de répartition des vagues. La première reste équilibrée entre les deux entrées. Ensuite, deux apparitions sur trois privilégient une entrée, qui change à chaque vague. Les prévisions et le combat utilisent la même règle. Les rapports qui ne déclarent pas cette variante gardent la répartition d’origine.

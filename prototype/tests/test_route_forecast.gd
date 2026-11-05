@@ -11,6 +11,20 @@ func _initialize() -> void: call_deferred("run_checks")
 func signature(model: RefCounted) -> String:
 	return JSON.stringify([model.wave,model.phase,model.gold,model.fortress_hp,str(model.rng.state),model.spawn_schedule,model.enemies,model.defenders])
 func run_checks() -> void:
+	var mountain := Model.new(true,Maps.mountain_workshop())
+	mountain.select_faction(0)
+	var second := mountain.forecast_for_routes(2)
+	var third := mountain.forecast_for_routes(3)
+	check(second.entries[0].count > second.entries[1].count and third.entries[1].count > third.entries[0].count,"Les vagues du Col alternent leur entrée principale")
+	mountain.wave = 2
+	mountain.spawn_schedule = Model.Campaign.schedule(2)
+	var mountain_arrivals := {"upper":0,"lower":0}
+	mountain.start()
+	for entry in mountain.spawn_schedule:
+		mountain.advance(maxf(0.0,entry.time-mountain.elapsed))
+		var spawned: Dictionary = mountain.enemies.back()
+		mountain_arrivals[spawned.route_id] += 1
+	check(second.entries[0].count == mountain_arrivals.upper and second.entries[1].count == mountain_arrivals.lower,"La pression annoncée correspond aux apparitions")
 	for faction in [0,1]:
 		for set_id in ["ford","ford_banks"]:
 			for number in range(1,11):

@@ -540,6 +540,7 @@ static func mountain_workshop() -> Dictionary:
 	board.id = "workshop_mountain"
 	board.title = "Le Col des Ardoises"
 	board.decoration = "mountain"
+	board.route_pattern = "alternating_pressure"
 	var shared: Array[Vector2] = [Vector2(7,5),Vector2(11,5),Vector2(11,2),Vector2(15,2),Vector2(15,6),Vector2(17,6)]
 	var upper: Array[Vector2] = [Vector2(0,1),Vector2(7,1)]
 	var lower: Array[Vector2] = [Vector2(0,8),Vector2(2,8),Vector2(2,6),Vector2(4,6),Vector2(4,9),Vector2(7,9)]
@@ -596,6 +597,9 @@ static func validation_error(data: Dictionary) -> String:
 			if data.slots[index] == data.slots[other]: return "Emplacements superposés."
 	if not (data.path_length is float or data.path_length is int) or not is_finite(float(data.path_length)) or float(data.path_length) <= 0.0 or absf(float(data.path_length)-measured_length(data.path_points)) > 0.000000001: return "Longueur de chemin incohérente."
 	if data.decoration not in ["valley","none","mountain"]: return "Décor de carte inconnu."
+	if data.has("route_pattern"):
+		if data.route_pattern != "alternating_pressure" or not data.get("routes") is Array or data.routes.size() != 2:
+			return "Répartition des entrées invalide."
 	if data.has("routes"):
 		var error: String = Routes.common_exit_error(data.routes)
 		if not error.is_empty(): return error
