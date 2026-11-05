@@ -1,0 +1,1 @@
+Sélectionner un emplacement libre pendant la préparation indique le nombre de choix de recrutement accessibles. Le survol permet de comparer les portées. 1 487 contrôles Godot ciblés et 8 essais Windows réussis, dont les aperçus de recrutement, la protection des profils et la séparation des bonus de faction. 83 sources comparées.
