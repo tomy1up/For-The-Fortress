@@ -1,0 +1,1 @@
+Quand aucun achat n’est possible, la préparation indique l’or manquant pour la recrue la moins chère encore disponible ou la limite de recrutement. 757 contrôles Godot ciblés et 8 essais Windows réussis, dont les aperçus de recrutement, la protection des profils et la séparation des bonus de faction. 83 sources comparées.
