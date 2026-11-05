@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import struct
 import subprocess
 import zipfile
@@ -55,6 +56,7 @@ cases=[('startup',None,None),('selection','selection',None),('countdown','finish
        ('alliance_routes_forecast','preparation','alliance'),('horde_routes_forecast','preparation','horde'),
        ('alliance_routes_mountain_forecast','preparation','alliance'),('horde_routes_mountain_forecast','preparation','horde'),
        ('alliance_routes_mountain_combat','combat','alliance'),('horde_routes_mountain_combat','combat','horde'),
+       ('alliance_routes_mountain_purchase','purchase','alliance'),('horde_routes_mountain_purchase','purchase','horde'),
        ('alliance_bank_guardian','bank_guardian','alliance'),('horde_bank_guardian','bank_guardian','horde'),
        ('alliance_bank_guardian_protected','bank_guardian','alliance'),('horde_bank_guardian_protected','bank_guardian','horde'),
        ('alliance_bank_guardian_cursed','bank_guardian','alliance'),('horde_bank_guardian_cursed','bank_guardian','horde'),
@@ -249,6 +251,8 @@ for name,state,faction in cases:
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_WORKSHOP=')))
         map_id = 'workshop_mountain' if '_mountain_' in name else 'workshop_confluence'
         assert snapshot=={'isolated':True,'routes':2,'mission_empty':True,'map_id':map_id}
+        if name.endswith('_purchase'):
+            assert re.search(r'ROUTE_PURCHASE_HINT=Trajet à portée · Entrée 1 : \d+ % · Entrée 2 : \d+ %',text), name
         if name.endswith('_forecast'):
             forecast=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_FORECAST_SNAPSHOT=')))
             assert forecast['faction']==(0 if faction=='alliance' else 1) and forecast['visible']

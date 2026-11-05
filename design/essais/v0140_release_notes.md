@@ -1,0 +1,1 @@
+Sur les cartes à deux entrées, l’aperçu avant achat indique la part de chaque trajet à portée. 1 909 contrôles Godot ciblés et 8 essais Windows réussis, dont les aperçus sur le Col dans les deux factions, la protection des profils et la séparation des bonus. 83 sources comparées.
