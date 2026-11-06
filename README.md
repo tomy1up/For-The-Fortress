@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.161**. Les missions 42 et 43 prolongent les marais avec les Bassins Engloutis et la Cour des Noyés, à deux entrées. 43 missions sont jouables. [Cartes, essais et limites](design/Missions_042_043_Marais.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.161).
+
 **Prototype v0.160**. La mission 41 ouvre les marais et les ruines englouties avec une première chaussée, des bassins et des piliers brisés. Habillage de prototype à affiner. [Carte, comparaisons et limites](design/Mission_041_Seuil_des_Marais.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.160).
 
 **Prototype v0.159**. Les missions 38–40 terminent le quatrième chapitre. Quarante missions sont jouables, avec contrôle du rejeu sans nouveau gain et de la sauvegarde du palier. Le Bastion Horde reste un point d'équilibrage important. [Résultats et limites](design/Missions_038_040_Vents_contraires.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.159).

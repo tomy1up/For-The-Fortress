@@ -160,7 +160,7 @@ for camp in ['alliance','horde']:
 for camp in ['alliance','horde']:
     for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
 for camp in ['alliance','horde']:
-    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed','marsh41','marsh41play']:
+    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,44) for stage in ['', 'play']]:
         cases.append((camp+'_campaign_menu_'+variant,'campaign_menu',camp))
     for state in ['preparation','purchase','specialisation','defeat_summary']:
         cases.append((camp+'_three_'+state,state,camp))
@@ -369,16 +369,19 @@ for name,state,faction in cases:
     if '_campaign_menu_marsh' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
+        number=int(name.rsplit('_',1)[1].removeprefix('marsh').removesuffix('play'))
+        map_id=['marsh_threshold','marsh_basins','marsh_court'][number-41]
+        routes=2 if number==43 else 0
         assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
-        assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==(5,41,'marsh_threshold',1)
-        assert (snap['completed'],snap['other_completed'],snap['po'],snap['xp'])==(40,0,2400,4000)
-        assert snap['mission_states']==['available']+['future']*9
+        assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==(5,number,map_id,routes or 1)
+        assert (snap['completed'],snap['other_completed'],snap['po'],snap['xp'])==(number-1,0,60*(number-1),100*(number-1))
+        assert snap['mission_states']==['completed']*(number-41)+['available']+['locked']*(43-number)+['future']*7
         if name.endswith('play'):
             marsh=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('MARSH_SNAPSHOT=')))
-            assert marsh['isolated'] and marsh['map']=='marsh_threshold' and marsh['decoration']=='marsh'
+            assert marsh['isolated'] and marsh['map']==map_id and marsh['decoration']=='marsh'
             assert marsh['scenery_count']>0 and marsh['affix_empty'] and not marsh['affix_visible']
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':'marsh_threshold','routes':0,'hp_percent':140,'mission':'campaign.041','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':0,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
     elif name.endswith(('_campaign_menu_slate','_campaign_menu_slateplay','_campaign_menu_ridges','_campaign_menu_ridgesplay')) or '_campaign_menu_mountain' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1

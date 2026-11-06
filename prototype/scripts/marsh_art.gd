@@ -4,8 +4,8 @@ const POOLS: Array[Rect2] = [Rect2(0.5,4.7,2.8,3.8),Rect2(5,0.5,4.8,1.6),Rect2(9
 const GROUND := Color("40594d")
 const ROAD := Color("b8b69c")
 
-static func draw_ground(canvas: CanvasItem, projection: Callable, miniature: bool = false) -> void:
-	for pool in POOLS:
+static func draw_ground(canvas: CanvasItem, projection: Callable, miniature: bool = false, pools: Array = POOLS) -> void:
+	for pool: Rect2 in pools:
 		var points := PackedVector2Array()
 		for point in [pool.position,Vector2(pool.end.x,pool.position.y),pool.end,Vector2(pool.position.x,pool.end.y)]: points.append(projection.call(point))
 		canvas.draw_colored_polygon(points,Color("244b4b"))

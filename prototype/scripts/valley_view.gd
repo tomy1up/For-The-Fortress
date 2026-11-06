@@ -527,7 +527,7 @@ func _draw() -> void:
 		var last: Vector2 = project(edge[1])
 		draw_colored_polygon(PackedVector2Array([first,last,last+Vector2(0,16),first+Vector2(0,16)]),edge[2])
 	polygon(corners, MarshArt.GROUND if marsh else Color("4a5b65") if mountain else Color("3a513e"))
-	if marsh: MarshArt.draw_ground(self,project)
+	if marsh: MarshArt.draw_ground(self,project,false,definition.get("water_areas",MarshArt.POOLS))
 	for x in range(board.x+1):
 		draw_line(project(Vector2(x, 0)), project(Vector2(x, board.y)), Color(0.75, 0.86, 0.7, 0.055), 1)
 	for y in range(board.y+1):

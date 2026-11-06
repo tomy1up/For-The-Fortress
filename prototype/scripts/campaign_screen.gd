@@ -48,7 +48,7 @@ class TerrainPreview extends Control:
 		draw_colored_polygon(layout.board,MarshArt.GROUND if marsh else Color("405256") if definition.decoration == "mountain" else Color("294536"))
 		if marsh:
 			var factor: float = (layout.board[1].x-layout.board[0].x)/(definition.size.x*2.0)
-			MarshArt.draw_ground(self,func(point: Vector2):return layout.board[0]+project(point)*factor,true)
+			MarshArt.draw_ground(self,func(point: Vector2):return layout.board[0]+project(point)*factor,true,definition.get("water_areas",MarshArt.POOLS))
 		var outline: PackedVector2Array = layout.board.duplicate();outline.append(outline[0])
 		draw_polyline(outline,Color("48634e"),1,true)
 		for path in layout.paths: draw_polyline(path,Color("645b3b"),9,true)

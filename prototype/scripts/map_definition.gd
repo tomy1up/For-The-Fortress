@@ -563,6 +563,15 @@ static func converging_workshop() -> Dictionary:
 
 static func for_id(id: String) -> Dictionary:
 	if id == "valley_ford": return valley()
+	if id == "marsh_basins":
+		var points: Array[Vector2] = [Vector2(0,7),Vector2(3,7),Vector2(3,3),Vector2(7,3),Vector2(7,7),Vector2(11,7),Vector2(11,2),Vector2(15,2),Vector2(15,6),Vector2(17,6)]
+		return {"id":id,"title":"Les Bassins Engloutis","size":Vector2i(18,10),"path_points":points,"path_length":measured_length(points),"slots":[Vector2(1.5,4.8),Vector2(4.8,5),Vector2(6,1.2),Vector2(9,4.7),Vector2(13,4),Vector2(15.5,8.2)],"trees":[],"decoration":"marsh","water_areas":[Rect2(0.5,0.5,1.6,2.6),Rect2(4,8,5,1.4),Rect2(8,0.4,4.5,0.8),Rect2(12,7,2.4,2.3)]}
+	if id == "marsh_court":
+		var shared: Array[Vector2] = [Vector2(7,5),Vector2(10,5),Vector2(10,2),Vector2(14,2),Vector2(14,6),Vector2(17,6)]
+		var upper: Array[Vector2] = [Vector2(0,1),Vector2(4,1),Vector2(4,5)]
+		var lower: Array[Vector2] = [Vector2(0,9),Vector2(2,9),Vector2(2,7),Vector2(7,7)]
+		upper.append_array(shared);lower.append_array(shared)
+		return {"id":id,"title":"La Cour des Noyés","size":Vector2i(18,10),"path_points":upper,"path_length":measured_length(upper),"slots":[Vector2(2,3),Vector2(3.6,8.5),Vector2(6,3),Vector2(9,3.3),Vector2(12,4),Vector2(16,8)],"trees":[],"decoration":"marsh","route_pattern":"alternating_pressure","routes":[{"id":"upper","path_points":upper,"path_length":measured_length(upper)},{"id":"lower","path_points":lower,"path_length":measured_length(lower)}],"water_areas":[Rect2(0.5,5.4,1,1.6),Rect2(5,0.5,5.5,0.9),Rect2(8,7,5.5,2.1),Rect2(15,0.8,2.5,3.8)]}
 	if id == "marsh_threshold":
 		var points: Array[Vector2] = [Vector2(0,2),Vector2(4,2),Vector2(4,6),Vector2(8,6),Vector2(8,3),Vector2(12,3),Vector2(12,7),Vector2(16,7),Vector2(16,6),Vector2(17,6)]
 		return {"id":id,"title":"Le Seuil des Marais","size":Vector2i(18,10),"path_points":points,"path_length":measured_length(points),"slots":[Vector2(2,3.8),Vector2(5.8,3.8),Vector2(6,7.8),Vector2(9.8,4.8),Vector2(13.8,5.3),Vector2(16,8.5)],"trees":[],"decoration":"marsh"}
@@ -706,6 +715,10 @@ static func validation_error(data: Dictionary) -> String:
 			if data.slots[index] == data.slots[other]: return "Emplacements superposés."
 	if not (data.path_length is float or data.path_length is int) or not is_finite(float(data.path_length)) or float(data.path_length) <= 0.0 or absf(float(data.path_length)-measured_length(data.path_points)) > 0.000000001: return "Longueur de chemin incohérente."
 	if data.decoration not in ["valley","none","mountain","marsh"]: return "Décor de carte inconnu."
+	if data.has("water_areas"):
+		if data.decoration!="marsh" or not data.water_areas is Array or data.water_areas.size()>32: return "Bassins décoratifs invalides."
+		for pool in data.water_areas:
+			if not pool is Rect2 or not pool.position.is_finite() or not pool.size.is_finite() or pool.size.x<=0 or pool.size.y<=0 or not Rect2(Vector2.ZERO,Vector2(data.size)).encloses(pool): return "Bassin décoratif hors plateau ou invalide."
 	if data.has("route_pattern"):
 		if data.route_pattern != "alternating_pressure" or not data.get("routes") is Array or data.routes.size() != 2:
 			return "Répartition des entrées invalide."
@@ -722,6 +735,8 @@ static func to_data(definition: Dictionary) -> Dictionary:
 	if not validation_error(definition).is_empty(): return {}
 	var data: Dictionary = definition.duplicate(true)
 	data.size = [definition.size.x,definition.size.y]
+	if definition.has("water_areas"):
+		data.water_areas = definition.water_areas.map(func(pool):return [pool.position.x,pool.position.y,pool.size.x,pool.size.y])
 	for key in ["path_points","slots","trees"]:
 		var coordinates: Array = []
 		for point in definition[key]: coordinates.append([point.x,point.y])
@@ -741,6 +756,15 @@ static func from_data(data: Variant) -> Dictionary:
 	for value in size_value:
 		if not (value is int or value is float) or not is_finite(float(value)) or value != floorf(value) or value < 1 or value > 64: return {}
 	definition.size = Vector2i(int(size_value[0]),int(size_value[1]))
+	if data.has("water_areas"):
+		if not data.water_areas is Array or data.water_areas.size()>32: return {}
+		var pools: Array[Rect2] = []
+		for entry in data.water_areas:
+			if not entry is Array or entry.size()!=4: return {}
+			for value in entry:
+				if not (value is int or value is float) or not is_finite(float(value)) or absf(value)>64: return {}
+			pools.append(Rect2(float(entry[0]),float(entry[1]),float(entry[2]),float(entry[3])))
+		definition.water_areas = pools
 	for key in ["path_points","slots","trees"]:
 		var coordinates: Variant = data.get(key)
 		if not coordinates is Array or coordinates.size() > 512: return {}
