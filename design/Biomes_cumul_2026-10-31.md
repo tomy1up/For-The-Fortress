@@ -59,6 +59,6 @@ Cet ordre des travaux est une proposition de réalisation. Les principes de biom
 
 Le porteur retient un affixe pour les missions 31 à 40 du biome montagneux. Il choisit **Vents contraires**, qui réduit la cadence de tir des défenseurs.
 
-Le type d’affixe et son effet sur la cadence sont validés. L’intensité, les règles de calcul et les éventuelles exceptions restent à proposer et à équilibrer. L’implémentation est prévue pour une prochaine étape.
+Le porteur valide un premier essai à −10 % de cadence pour tous les défenseurs, sans ralentir les dégâts périodiques déjà appliqués. Ce dosage reste un réglage de prototype à équilibrer. À cadence égale par ailleurs, l’intervalle entre deux attaques sera divisé par 0,9. Les règles de cumul à long terme restent à préciser.
 
 La suite prévue consiste à terminer les missions 27 à 30, préparer un réglage d’essai de Vents contraires, afficher son effet avant le lancement et pendant la mission, puis comparer les deux factions sur les premières cartes concernées. Les cumuls à long terme restent régis par les principes ci-dessus.

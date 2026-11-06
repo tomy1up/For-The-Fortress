@@ -563,7 +563,7 @@ static func converging_workshop() -> Dictionary:
 
 static func for_id(id: String) -> Dictionary:
 	if id == "valley_ford": return valley()
-	if id == "slate_crossing":
+	if id in ["slate_crossing","slate_high_passages"]:
 		var board := mountain_workshop()
 		board.id = id
 		board.title = "Les Trois Passages des Ardoises"
@@ -572,6 +572,12 @@ static func for_id(id: String) -> Dictionary:
 		var upper: Array[Vector2] = [Vector2(0,1),Vector2(7,1)]
 		var middle: Array[Vector2] = [Vector2(0,5)]
 		var lower: Array[Vector2] = [Vector2(0,9),Vector2(3,9),Vector2(3,7),Vector2(7,7)]
+		if id == "slate_high_passages":
+			board.title = "Les Hauts Passages des Ardoises"
+			shared.assign([Vector2(9,5),Vector2(12,5),Vector2(12,2),Vector2(16,2),Vector2(16,6),Vector2(17,6)])
+			upper.assign([Vector2(0,1),Vector2(5,1),Vector2(5,3),Vector2(9,3)])
+			middle.assign([Vector2(0,5)])
+			lower.assign([Vector2(0,9),Vector2(5,9),Vector2(5,7),Vector2(9,7)])
 		upper.append_array(shared)
 		middle.append_array(shared)
 		lower.append_array(shared)
@@ -583,14 +589,22 @@ static func for_id(id: String) -> Dictionary:
 			{"id":"lower","path_points":lower,"path_length":measured_length(lower)},
 		]
 		board.slots = [Vector2(3,2.8),Vector2(2,6.8),Vector2(6,3),Vector2(9,3.3),Vector2(12.8,4.2),Vector2(15.8,7.6)]
+		if id == "slate_high_passages":
+			board.slots = [Vector2(3,2.8),Vector2(3,7.2),Vector2(6.8,5.8),Vector2(10.5,3.3),Vector2(14,4.5),Vector2(16,8)]
 		return board
-	if id in ["slate_scree","slate_ravine","slate_gates","slate_laces","slate_cirque"]:
+	if id in ["slate_scree","slate_ravine","slate_gates","slate_laces","slate_cirque","slate_bastion"]:
 		var board := mountain_workshop()
 		board.id = id
 		var upper: Array[Vector2] = []
 		var lower: Array[Vector2] = []
 		var shared: Array[Vector2] = []
 		match id:
+			"slate_bastion":
+				board.title = "Le Bastion des Ardoises"
+				upper.assign([Vector2(0,1),Vector2(4,1),Vector2(4,3),Vector2(8,3),Vector2(8,1),Vector2(11,1)])
+				lower.assign([Vector2(0,9),Vector2(3,9),Vector2(3,6),Vector2(7,6),Vector2(7,8),Vector2(11,8)])
+				shared.assign([Vector2(11,5),Vector2(14,5),Vector2(14,2),Vector2(17,2),Vector2(17,6)])
+				board.slots = [Vector2(2,3),Vector2(1.5,7),Vector2(6,4.5),Vector2(10,3.2),Vector2(15.5,3.5),Vector2(15.5,7.6)]
 			"slate_laces":
 				board.title = "Les Lacets des Ardoises"
 				board.path_points = [Vector2(0,1),Vector2(3,1),Vector2(3,7),Vector2(7,7),Vector2(7,2),Vector2(11,2),Vector2(11,8),Vector2(15,8),Vector2(15,4),Vector2(17,4),Vector2(17,6)]
