@@ -12,6 +12,7 @@ const COMPOSITIONS: Array = [[0,1,2],[0,2,1],[1,1,0],[0,0,2]]
 var error: String = ""
 var spend_all_earned_points := false
 var specialisation_branch := 0
+var combat_affix_override: Variant = null # Comparaison contrôlée, jamais lu par une mission jouée.
 
 static func source_hashes() -> Dictionary:
 	var result: Dictionary = {}
@@ -26,6 +27,7 @@ func play(faction: int, mission: int, seed_value: int, layout: int, composition:
 	var wave_set: String = definition.get("wave_set_id","ford")
 	if not m.configure_wave_set(wave_set): error = "Rencontres de mission refusées.";return {}
 	if not m.configure_enemy_hp(definition.hp_percent): error = "PV de mission refusés.";return {}
+	if not m.configure_combat_affix(definition.get("combat_affix",{}) if combat_affix_override==null else combat_affix_override): error = "Affixe de mission refusé.";return {}
 	var ranks: Array = Talents.empty_ranks()
 	if talent >= 0:
 		var available := 1

@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.154 — 6 novembre 2026
+Version : 0.155 — 6 novembre 2026
 
 ATELIER A DEUX ENTREES
 
@@ -9,7 +9,7 @@ Cet atelier ne lit pas le profil joueur et ne donne ni PO ni XP.
 Le trace et l'alternance des entrees sont des essais provisoires.
 Les defenseurs ciblent l'ennemi a portee qui arrivera le plus tot, selon sa vitesse.
 Avant chaque vague, les quantites par entree et par groupe sont affichees.
-Le lancement habituel propose trente missions de campagne.
+Le lancement habituel propose trente et une missions de campagne.
 La nouvelle marche du loup, approuvee pour le prototype, est integree aux missions et a cet atelier.
 Le corps accompagne les appuis ; la cadence suit la distance parcourue et la vitesse du jeu.
 
@@ -28,6 +28,10 @@ JOUER
    La mission 26 propose trois entrées vers la même forteresse.
    Les missions 27 et 28 proposent les Lacets puis le Cirque des Ardoises.
    Les missions 29 et 30 terminent le chapitre 3 avec les Hauts Passages et le Bastion.
+   La mission 31 ouvre le chapitre 4 au Col, avec Vents contraires.
+   Tous les defenseurs attaquent 10 % moins souvent pendant cette mission.
+   Les degats periodiques deja appliques gardent leur rythme.
+   L'affixe est indique avant le lancement et pendant la mission.
    Chapitre 2 : mêmes tracés, nouvelles rencontres avec une tortue gardienne.
    Elle encaisse 25 % des dégâts des voisins proches, dans la limite de ses PV.
    Cercle vert : rayon de protection ; traits brefs : dégâts réellement transférés.
@@ -69,13 +73,13 @@ talents permanents ne sont possibles avant la victoire finale ou la défaite.
 Les constructions, achats, ventes et améliorations d’unités entre les vagues restent
 possibles. Les choix de bonus de la partie ne sont pas les arbres de talents permanents.
 
-Le prototype contient trente missions de dix vagues.
-Les PV ennemis sont de 100 % à 129 % de la référence. Leur vitesse,
+Le prototype contient trente et une missions de dix vagues.
+Les PV ennemis sont de 100 % à 130 % de la référence. Leur vitesse,
 leurs dégâts à la forteresse et leurs récompenses de combat restent identiques.
 Une mission est une session complète : retour au parcours après victoire ou défaite.
 Chaque mission repart avec ses PV maximum, 150 or de combat, aucun défenseur
 et aucun bonus temporaire. PO, XP et talents restent persistants. Le parcours
-présente vingt chapitres de dix positions ; 170 missions restent à développer.
+présente vingt chapitres de dix positions ; 169 missions restent à développer.
 
 PO, XP ET PROGRESSION PERMANENTE
 

@@ -98,6 +98,7 @@ var selected: int = -1
 var choosing_faction: bool = true
 var faction_panel: ColorRect
 var map_caption: Label
+var affix_label: Label
 var faction_label: Label
 var faction_buttons: Array[Button] = []
 var status_label: Label
@@ -775,7 +776,7 @@ func _capture_campaign_menu(camp: int) -> void:
 	var mountain_number := 21
 	if variant.begins_with("ridges"): mountain_number = 22
 	if variant.begins_with("mountain"):
-		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").to_int(),23,30)
+		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").to_int(),23,31)
 	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or mountain_preview:
 		var target := mountain_number if mountain_preview else clampi(int(variant.trim_prefix("terrain")),2,10)
 		for number in range(1,target):
@@ -785,8 +786,8 @@ func _capture_campaign_menu(camp: int) -> void:
 			if not credited: push_error("Échec du profil isolé des aperçus de terrain.");return
 	if variant == "blocked":
 		meta_profile.blocked = true;meta_profile.error = "Sauvegarde indisponible simulée pour le contrôle."
-	_open_campaign(camp,20 if variant == "future" else 3 if mountain_preview else 1)
-	if mountain_preview: campaign_menu._select(mountain_number-21)
+	_open_campaign(camp,20 if variant == "future" else (mountain_number-1)/10+1 if mountain_preview else 1)
+	if mountain_preview: campaign_menu._select((mountain_number-1)%10)
 	if variant.begins_with("terrain") or variant == "locked2":
 		campaign_menu._select(clampi(int(variant.trim_prefix("terrain")),2,10)-1 if variant != "locked2" else 1)
 		campaign_menu.initial_focus().grab_focus()
@@ -810,6 +811,7 @@ func _capture_campaign_menu(camp: int) -> void:
 	if mountain_preview and variant.ends_with("play"):
 		campaign_menu._launch()
 		print("SLATE_MISSION=",JSON.stringify({"map":model.map_definition.id,"routes":model.routes.size(),"hp_percent":model.enemy_hp_percent,"mission":mission_definition.get("id",""),"faction":model.faction,"menu":campaign_menu.visible,"hp":model.fortress_hp,"gold":model.gold,"forecast":map_view.entry_forecast.size(),"active_profile_run":meta_run_id > 0}))
+		if not model.combat_affix.is_empty(): print("HEADWINDS_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
 		if "--capture-mountain-defence" in OS.get_cmdline_user_args():
 			model.buy(3,camp*3)
 			model.buy(4,camp*3+1)
@@ -1038,6 +1040,8 @@ func _build_interface() -> void:
 	ui.add_child(screen)
 	_label(screen, "FOR THE FORTRESS!", Vector2(32, 24), Vector2(300, 44), 29, Color("e0dbbf"))
 	map_caption = _label(screen, model.map_definition.title.to_upper(), Vector2(34, 71), Vector2(300, 24), 14, Color("9fb5a5"))
+	affix_label = _label(screen,"",Vector2(34,96),Vector2(440,20),13,Color("e5c777"))
+	affix_label.tooltip_text = "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
 	wave_notice = _panel(screen,Rect2(350,24,520,54))
 	wave_notice_title = _label(wave_notice,"",Vector2(14,4),Vector2(492,24),18,Color("e5ca88"))
 	wave_notice_detail = _label(wave_notice,"",Vector2(14,30),Vector2(492,18),12,Color("bbcbbf"))
@@ -1964,6 +1968,7 @@ func _launch_campaign_mission(id: String) -> void:
 	if definition.is_empty(): return
 	var prepared = Model.new(true,definition)
 	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(candidate.hp_percent) or not prepared.configure_wave_set(candidate.get("wave_set_id","ford")): return
+	if not prepared.configure_combat_affix(candidate.get("combat_affix",{})): return
 	mission_definition = candidate
 	_choose_faction(campaign_menu.faction,prepared)
 	if choosing_faction:
@@ -2469,6 +2474,8 @@ func _combat_tally_text() -> String:
 	return arrivals
 
 func _update_interface() -> void:
+	affix_label.text = model.affix_description()
+	affix_label.visible = not choosing_faction and not model.combat_affix.is_empty()
 	_refresh_loadout_label()
 	_refresh_home_progress()
 	_refresh_purchase_quiet(get_global_mouse_position())

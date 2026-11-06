@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.155**. La mission 31 introduit Vents contraires, avec −10 % de cadence de tir pour tous les défenseurs. Dosage d'essai, particulièrement exigeant côté Horde dans les stratégies testées. [Règles et comparaison](design/Vents_contraires_v0155.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.155).
+
 **Prototype v0.154**. Les Hauts Passages et le Bastion terminent le troisième chapitre. Trente missions sont désormais jouables. [Conception et limites](design/Missions_029_030_Ardoises.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.154).
 
 **Prototype v0.153**. Les missions 27 et 28 proposent les Lacets et le Cirque des Ardoises. [Conception et limites](design/Missions_027_028_Ardoises.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.153).

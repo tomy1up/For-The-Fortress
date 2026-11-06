@@ -59,6 +59,7 @@ static func verify(data: Variant) -> Dictionary:
 		definition = Model.Maps.from_data(data.map_definition)
 		if definition.is_empty(): return _fail("Définition de carte invalide.")
 	var model = Model.new(true,definition)
+	if data.has("combat_affix") and not model.configure_combat_affix(data.combat_affix): return _fail("Affixe de combat invalide.")
 	if not model.routes.is_empty():
 		if not model.configure_route_target_policy(data.get("route_target_policy","remaining_distance")): return _fail("Règle de ciblage multitrajet invalide.")
 	elif data.has("route_target_policy"): return _fail("Règle multitrajet sans réseau de routes.")

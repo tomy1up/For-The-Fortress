@@ -23,6 +23,7 @@ var wave_set_id: String = "ford"
 var route_target_policy: String = "arrival_time"
 var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
 var enemy_hp_percent: int = 100
+var combat_affix: Dictionary = {}
 var path_points: Array[Vector2] = []
 var slots: Array[Vector2] = []
 var path_length: float
@@ -190,7 +191,19 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	action_history.append(entry)
 
 static func valid_enemy_hp_percent(value: Variant) -> bool:
-	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 129
+	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 130
+
+func configure_combat_affix(value: Variant) -> bool:
+	if not value is Dictionary or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
+	if not value.is_empty():
+		if value.size() != 2 or value.get("id") != "headwinds": return false
+		var percent: Variant = value.get("cadence_percent")
+		if not (percent is int or percent is float) or not is_finite(float(percent)) or percent != floorf(float(percent)) or percent < 1 or percent > 100: return false
+	combat_affix = value.duplicate(true)
+	return true
+
+func affix_description() -> String:
+	return "" if combat_affix.is_empty() else "Vents contraires · −%d %% de cadence" % (100-int(combat_affix.cadence_percent))
 
 func configure_enemy_hp(value: Variant) -> bool:
 	if not valid_enemy_hp_percent(value) or not action_history.is_empty() or phase != "preparation" or gold != INITIAL_GOLD: return false
@@ -398,6 +411,7 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	stats.curse_damage = stats.reference_curse * (1.0+stats.curse_bonus)
 	stats.range += synergy.range + meta.range + (0.5 if 2 in active_bonuses else 0.0)
 	if 1 in active_bonuses and family(defender.type) != 5: stats.interval /= 1.12
+	if not combat_affix.is_empty(): stats.interval /= float(combat_affix.cadence_percent)/100.0
 	if 4 in active_bonuses and family(defender.type) in [2,3,4]: stats.radius += 0.2
 	stats.synergies = synergy.codes
 	return stats

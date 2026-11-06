@@ -24,7 +24,9 @@ func run_checks() -> void:
 			check(menu.get_viewport().gui_get_focus_owner() == menu.nodes[0],"Révéler le chapitre ne vole pas le focus de la mission sélectionnée")
 			if chapter == 3:
 				check(menu.nodes.all(func(node): return node.state=="locked"),"Les dix missions du chapitre 3 attendent les réussites préalables")
-			if chapter > 3:
+			if chapter == 4:
+				check(menu.nodes[0].state=="locked" and menu.nodes.slice(1).all(func(node):return node.state=="future"),"Une mission verrouillée et neuf missions à venir au chapitre 4")
+			if chapter > 4:
 				check(menu.chapter_buttons[chapter-1].text.contains("À venir"),"Un chapitre sans contenu jouable ne prétend pas être prêt")
 				for node in menu.nodes: check(node.state == "future" and not node.locked,"Les nœuds d’un chapitre futur restent consultables, sans faux cadenas de progression")
 				check(menu.terrain_preview.geometry().is_empty() and menu.start_button.disabled,"Une mission future reste sans carte inventée et sans lancement")

@@ -28,6 +28,8 @@ static func definition(number: int) -> Dictionary:
 		var maps: Array[String] = ["slate_pass","slate_ridges","slate_scree","slate_ravine","slate_gates","slate_crossing","slate_laces","slate_cirque","slate_high_passages","slate_bastion"]
 		var titles: Array[String] = ["Le Col des Ardoises","Les Crêtes des Ardoises","Les Éboulis des Ardoises","Le Ravin des Ardoises","Les Portes des Ardoises","Les Trois Passages des Ardoises","Les Lacets des Ardoises","Le Cirque des Ardoises","Les Hauts Passages des Ardoises","Le Bastion des Ardoises"]
 		result.merge({"title":titles[number-21],"available":true,"map_id":maps[number-21],"hp_percent":99+number,"po":60,"xp":100,"waves":10},true)
+	elif number == 31:
+		result.merge({"title":"Le Col des Ardoises","available":true,"map_id":"slate_pass","hp_percent":130,"po":60,"xp":100,"waves":10,"combat_affix":{"id":"headwinds","cadence_percent":90}},true)
 	return result
 
 static func runtime(id: String) -> Dictionary:
@@ -35,6 +37,7 @@ static func runtime(id: String) -> Dictionary:
 	if data.is_empty() or not data.available: return {}
 	var result: Dictionary = {"id":data.id,"po":data.po,"xp":data.xp,"waves":data.waves,"map_id":data.map_id,"hp_percent":data.hp_percent}
 	if data.has("wave_set_id"): result.wave_set_id = data.wave_set_id
+	if data.has("combat_affix"): result.combat_affix = data.combat_affix.duplicate(true)
 	return result
 
 static func unlocked(number: int, status: Dictionary) -> bool:

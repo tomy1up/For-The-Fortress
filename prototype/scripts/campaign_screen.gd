@@ -330,6 +330,9 @@ func _refresh_detail() -> void:
 	start_button.disabled = not Catalogue.unlocked(number,status)
 	if definition.available and not status.is_empty(): mission_detail.text += "\nPV ennemis : %d %% · Barème d’essai" % definition.hp_percent
 	mission_detail.tooltip_text = ""
+	if definition.has("combat_affix"):
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nVents contraires · Cadence −10 %%" % [definition.waves,definition.hp_percent]
+		mission_detail.tooltip_text = "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
 	if definition.get("wave_set_id","") == "ford_banks":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : tortue gardienne" % [definition.waves,definition.hp_percent]
 		mission_detail.tooltip_text = "Essai : la tortue encaisse 25 % des dégâts des voisins proches, dans la limite de ses PV. Ne protège ni les autres tortues ni les boss. Mêmes tracés que le chapitre 1 ; nouvelles rencontres. Valeurs provisoires."

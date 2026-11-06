@@ -61,4 +61,4 @@ Le porteur retient un affixe pour les missions 31 à 40 du biome montagneux. Il 
 
 Le porteur valide un premier essai à −10 % de cadence pour tous les défenseurs, sans ralentir les dégâts périodiques déjà appliqués. Ce dosage reste un réglage de prototype à équilibrer. À cadence égale par ailleurs, l’intervalle entre deux attaques sera divisé par 0,9. Les règles de cumul à long terme restent à préciser.
 
-La suite prévue consiste à terminer les missions 27 à 30, préparer un réglage d’essai de Vents contraires, afficher son effet avant le lancement et pendant la mission, puis comparer les deux factions sur les premières cartes concernées. Les cumuls à long terme restent régis par les principes ci-dessus.
+La v0.154 termine les missions 27 à 30. La v0.155 introduit Vents contraires sur la mission 31, affiche son effet avant le lancement et pendant la mission, et compare les deux factions avec et sans vent. Le réglage reste à évaluer en jeu, particulièrement côté Horde. Les missions 32–40 restent à produire. Les cumuls à long terme restent régis par les principes ci-dessus. Voir [le premier essai et ses limites](Vents_contraires_v0155.md).

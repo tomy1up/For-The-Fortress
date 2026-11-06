@@ -99,6 +99,7 @@ static func build(model: RefCounted) -> Dictionary:
 		report.auxiliary_base_cost = model.base_recruit_cost(model.auxiliary_type)
 	if model.enemy_hp_percent != 100: report.enemy_hp_percent = model.enemy_hp_percent
 	if model.wave_set_id != "ford": report.wave_set_id = model.wave_set_id
+	if not model.combat_affix.is_empty(): report.combat_affix = model.combat_affix.duplicate(true)
 	return report
 
 static func markdown(report: Dictionary) -> String:
@@ -106,6 +107,7 @@ static func markdown(report: Dictionary) -> String:
 		"Forteresse : %d/%d PV · Or restant : %d · Combat : %.2f s simulées" % [report.fortress_hp,report.max_hp,report.gold,report.combat_seconds],
 		"", "Rapport de débogage local, sans fonction de reprise de partie.", "", "## Vagues", "", "| Vague | Éliminés | Passés | PV perdus | Or gagné | Résultat |", "| --- | --- | --- | --- | --- | --- |"]
 	if report.has("enemy_hp_percent"): lines.insert(5,"PV ennemis : %d %% de la référence. Vitesse, dégâts et récompenses de combat inchangés." % report.enemy_hp_percent)
+	if report.has("combat_affix"): lines.insert(5,"Vents contraires · −%d %% de cadence pour tous les défenseurs. Les dégâts périodiques déjà appliqués gardent leur rythme." % (100-int(report.combat_affix.cadence_percent)))
 	var map: Dictionary = report.get("map_definition",{})
 	if map.has("routes"):
 		var allocation := "Une apparition par entrée à tour de rôle."
