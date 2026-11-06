@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.153**. Les missions 27 et 28 proposent les Lacets et le Cirque des Ardoises. [Conception et limites](design/Missions_027_028_Ardoises.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.153).
+
 **Prototype v0.152**. La mission 26 propose trois entrées vers la forteresse, avec annonces, portées et bilans adaptés. [Conception et limites](design/Mission_026_Trois_Passages.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.152).
 
 **Prototype v0.151**. Les missions 23 à 25 varient les jonctions et les chemins du biome montagneux. [Conception et limites](design/Missions_023_025_Ardoises.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.151).

@@ -1,6 +1,6 @@
 # Mission 21 — Le Col des Ardoises
 
-Le prototype ouvre la première mission du chapitre 3 après la réussite de la mission 20 dans la même faction. Le biome montagneux commence ici. La mission 22 poursuit le biome avec les Crêtes des Ardoises. Les missions 27 à 40 restent à produire.
+Le prototype ouvre la première mission du chapitre 3 après la réussite de la mission 20 dans la même faction. Le biome montagneux commence ici. La mission 22 poursuit le biome avec les Crêtes des Ardoises. Les missions 29 à 40 restent à produire.
 
 ## Décisions appliquées
 

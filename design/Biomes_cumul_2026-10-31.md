@@ -43,7 +43,7 @@ La nouveauté peut être **de nouvelles unités attaquantes liées au biome**, o
 
 Le déblocage de l’infini reste lié aux cent premières missions réussies dans la faction concernée. Ces décisions n’ajoutent pas de récompense répétable en PO ou en XP : l’économie et les récompenses de l’infini restent à définir séparément.
 
-## État de réalisation et feuille de route
+## État de réalisation au 31 octobre 2026 et feuille de route
 
 La version publiée v0.98 contient dix missions dans le thème du Gué. Elle ne livre ni second chapitre, ni affixe de biome, ni mode infini. Les éléments décrits ici sont des décisions de conception long terme, pas des fonctionnalités déjà réalisées.
 
@@ -54,3 +54,11 @@ La version publiée v0.98 contient dix missions dans le thème du Gué. Elle ne 
 5. Réutiliser ce contenu dans un mode infini à accumulation progressive, puis mesurer ses limites et sa difficulté.
 
 Cet ordre des travaux est une proposition de réalisation. Les principes de biome, d’introduction et de cumul ci-dessus sont les décisions validées.
+
+## Décision du 6 novembre 2026 — second chapitre des Ardoises
+
+Le porteur retient un affixe pour les missions 31 à 40 du biome montagneux. Il choisit **Vents contraires**, qui réduit la cadence de tir des défenseurs.
+
+Le type d’affixe et son effet sur la cadence sont validés. L’intensité, les règles de calcul et les éventuelles exceptions restent à proposer et à équilibrer. L’implémentation est prévue pour une prochaine étape.
+
+La suite prévue consiste à terminer les missions 27 à 30, préparer un réglage d’essai de Vents contraires, afficher son effet avant le lancement et pendant la mission, puis comparer les deux factions sur les premières cartes concernées. Les cumuls à long terme restent régis par les principes ci-dessus.

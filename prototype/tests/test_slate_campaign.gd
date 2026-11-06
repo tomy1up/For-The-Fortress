@@ -12,7 +12,7 @@ func check(value: bool, message: String) -> void:
 func _initialize() -> void:
 	call_deferred("run_checks")
 func run_checks() -> void:
-	for case in [[0,21],[1,21],[0,22],[1,22],[0,23],[1,23],[0,24],[1,24],[0,25],[1,25],[0,26],[1,26]]:
+	for case in [[0,21],[1,21],[0,22],[1,22],[0,23],[1,23],[0,24],[1,24],[0,25],[1,25],[0,26],[1,26],[0,27],[1,27],[0,28],[1,28]]:
 		var faction: int = case[0]
 		var mission_number: int = case[1]
 		var game := Main.new()
@@ -29,17 +29,18 @@ func run_checks() -> void:
 			var id: int = profile.begin_mission(faction,Main.CampaignCatalogue.id_for(number),60,10,100)
 			check(id>0 and profile.credit_mission(id,faction,10,true),"Première victoire préalable créditée par le service")
 		var available_points: int = profile.data.banks[faction].points
-		for index in [0,0,0,0,0,1,1,1,2,2,2,3].slice(0,available_points):
+		for index in [0,0,0,0,0,1,1,1,2,2,2,3,5].slice(0,available_points):
 			check(profile.allocate(faction,index),"Rangs investis avec les points gagnés auparavant")
 		game._open_campaign(faction,3)
 		game.campaign_menu._select(mission_number-21)
 		game.campaign_menu._launch()
 		var model = game.model
-		check(not game.choosing_faction and game.mission_definition.id==Main.CampaignCatalogue.id_for(mission_number) and model.routes.size()==(0 if mission_number==24 else 3 if mission_number==26 else 2),"La mission démarre par le parcours normal")
+		var route_count: int = {24:0,26:3,27:0}.get(mission_number,2)
+		check(not game.choosing_faction and game.mission_definition.id==Main.CampaignCatalogue.id_for(mission_number) and model.routes.size()==route_count,"La mission démarre par le parcours normal")
 		check(model.enemy_hp_percent==99+mission_number and model.gold==150 and model.fortress_hp==model.max_hp and model.bonuses.is_empty(),"Paramètres et remise à neuf avec les talents actifs")
 		model.rng.seed = 7
 		var slots: Array = [3,4,2]
-		if faction==1 and mission_number==22:
+		if faction==1 and mission_number in [22,28]:
 			slots = [4,3,2]
 		if faction==1 and mission_number==23:
 			slots = [2,3,4]

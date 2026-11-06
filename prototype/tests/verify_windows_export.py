@@ -160,7 +160,7 @@ for camp in ['alliance','horde']:
 for camp in ['alliance','horde']:
     for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
 for camp in ['alliance','horde']:
-    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in [23,24,25,26] for stage in ['', 'play']]:
+    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in [23,24,25,26,27,28] for stage in ['', 'play']]:
         cases.append((camp+'_campaign_menu_'+variant,'campaign_menu',camp))
     for state in ['preparation','purchase','specialisation','defeat_summary']:
         cases.append((camp+'_three_'+state,state,camp))
@@ -373,11 +373,11 @@ for name,state,faction in cases:
         ridges = '_ridges' in name
         number = 22 if ridges else 21
         if '_mountain' in name: number=int(name.rsplit('_',1)[1].removeprefix('mountain').removesuffix('play'))
-        map_id = ['slate_pass','slate_ridges','slate_scree','slate_ravine','slate_gates','slate_crossing'][number-21]
-        routes = 0 if number==24 else 3 if number==26 else 2
+        map_id = ['slate_pass','slate_ridges','slate_scree','slate_ravine','slate_gates','slate_crossing','slate_laces','slate_cirque'][number-21]
+        routes = {24:0,26:3,27:0}.get(number,2)
         assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==(3,number,map_id,routes or 1)
         assert (snap['completed'],snap['other_completed'],snap['po'],snap['xp'])==(number-1,0,60*(number-1),100*(number-1))
-        assert snap['mission_states']==['completed']*(number-21)+['available']+['locked']*(26-number)+['future']*4
+        assert snap['mission_states']==['completed']*(number-21)+['available']+['locked']*(28-number)+['future']*2
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
             assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}

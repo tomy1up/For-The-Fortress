@@ -584,13 +584,27 @@ static func for_id(id: String) -> Dictionary:
 		]
 		board.slots = [Vector2(3,2.8),Vector2(2,6.8),Vector2(6,3),Vector2(9,3.3),Vector2(12.8,4.2),Vector2(15.8,7.6)]
 		return board
-	if id in ["slate_scree","slate_ravine","slate_gates"]:
+	if id in ["slate_scree","slate_ravine","slate_gates","slate_laces","slate_cirque"]:
 		var board := mountain_workshop()
 		board.id = id
 		var upper: Array[Vector2] = []
 		var lower: Array[Vector2] = []
 		var shared: Array[Vector2] = []
 		match id:
+			"slate_laces":
+				board.title = "Les Lacets des Ardoises"
+				board.path_points = [Vector2(0,1),Vector2(3,1),Vector2(3,7),Vector2(7,7),Vector2(7,2),Vector2(11,2),Vector2(11,8),Vector2(15,8),Vector2(15,4),Vector2(17,4),Vector2(17,6)]
+				board.path_length = measured_length(board.path_points)
+				board.slots = [Vector2(1.5,3.2),Vector2(5,4.5),Vector2(5,8.5),Vector2(9,4.5),Vector2(13,5),Vector2(16.5,8.5)]
+				board.erase("routes")
+				board.erase("route_pattern")
+				return board
+			"slate_cirque":
+				board.title = "Le Cirque des Ardoises"
+				upper.assign([Vector2(0,2),Vector2(5,2),Vector2(5,5)])
+				lower.assign([Vector2(0,9),Vector2(2,9),Vector2(2,7),Vector2(9,7)])
+				shared.assign([Vector2(9,5),Vector2(9,1),Vector2(14,1),Vector2(14,6),Vector2(17,6)])
+				board.slots = [Vector2(2.5,3.8),Vector2(1,7),Vector2(6.8,6.2),Vector2(10.8,3),Vector2(12.2,4.5),Vector2(15.5,7.8)]
 			"slate_scree":
 				board.title = "Les Éboulis des Ardoises"
 				upper.assign([Vector2(0,1),Vector2(5,1)])

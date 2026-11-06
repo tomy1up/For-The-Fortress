@@ -30,4 +30,4 @@ Le contrôle d’intégration vérifie le parcours normal, une victoire avec les
 
 Les contrôles dédiés vérifient les trois compteurs, les couleurs, les limites de texte, les survols, les aperçus de portée et la séparation entre descriptions de spécialisation et boutons. Les captures Windows couvrent la préparation, l’achat, les spécialisations, le bilan et le lancement depuis le parcours.
 
-Les missions 27 à 200 restent à développer. L’introduction d’un attaquant ou d’un affixe propre au biome reste prévue pour le chapitre 4.
+Les missions 29 à 200 restent à développer. L’introduction d’un attaquant ou d’un affixe propre au biome reste prévue pour le chapitre 4.

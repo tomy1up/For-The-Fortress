@@ -75,7 +75,7 @@ func run_checks() -> void:
 			check(JSON.stringify(profile.data)==before,"Lire les rencontres ne modifie aucune progression")
 			await escape()
 			check(menu.visible and not scout.visible and not menu.overlay_blocked and root.gui_get_focus_owner()==menu.scout_button,"Échap revient au bouton d’origine sans quitter le parcours")
-		menu._chapter(3);menu._select(6);check(menu.scout_button.disabled,"Les missions futures n’inventent pas de rencontres")
+		menu._chapter(3);menu._select(8);check(menu.scout_button.disabled,"Les missions futures n’inventent pas de rencontres")
 		menu._scout();check(not scout.visible,"Le contenu futur ne s’ouvre pas")
 		menu._chapter(1);menu._scout();menu.close();check(not scout.visible and scout.entries.is_empty(),"Quitter le parcours efface la consultation")
 		menu.open(profile,1-camp);check(not scout.visible and not menu.overlay_blocked,"Aucune ancienne faction ne reste affichée après changement")

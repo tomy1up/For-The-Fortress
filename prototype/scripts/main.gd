@@ -775,7 +775,7 @@ func _capture_campaign_menu(camp: int) -> void:
 	var mountain_number := 21
 	if variant.begins_with("ridges"): mountain_number = 22
 	if variant.begins_with("mountain"):
-		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").to_int(),23,26)
+		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").to_int(),23,28)
 	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or mountain_preview:
 		var target := mountain_number if mountain_preview else clampi(int(variant.trim_prefix("terrain")),2,10)
 		for number in range(1,target):
@@ -810,6 +810,12 @@ func _capture_campaign_menu(camp: int) -> void:
 	if mountain_preview and variant.ends_with("play"):
 		campaign_menu._launch()
 		print("SLATE_MISSION=",JSON.stringify({"map":model.map_definition.id,"routes":model.routes.size(),"hp_percent":model.enemy_hp_percent,"mission":mission_definition.get("id",""),"faction":model.faction,"menu":campaign_menu.visible,"hp":model.fortress_hp,"gold":model.gold,"forecast":map_view.entry_forecast.size(),"active_profile_run":meta_run_id > 0}))
+		if "--capture-mountain-defence" in OS.get_cmdline_user_args():
+			model.buy(3,camp*3)
+			model.buy(4,camp*3+1)
+			selected = 3
+			map_view.selected = 3
+			_update_interface()
 
 func _capture_sample_combat() -> void:
 	model.rng.seed = 42
