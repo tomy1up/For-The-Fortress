@@ -57,7 +57,7 @@ func run_checks() -> void:
 			check(Report.markdown(report).contains("−10 %"),"Rapport lisible avec le dosage de l'affixe")
 			report.combat_affix.cadence_percent = "90"
 			check(not Replay.verify(report).ok,"Rapport contenant un affixe invalide refusé")
-	for case in [[0,31],[1,31],[0,32],[1,32],[0,33],[1,33]]:
+	for case in [[0,31],[1,31],[0,32],[1,32],[0,33],[1,33],[0,34],[1,34],[0,35],[1,35]]:
 		var camp: int = case[0]
 		var mission: int = case[1]
 		var game := Main.new()
@@ -75,15 +75,19 @@ func run_checks() -> void:
 		var tree: int = Talents.coordinates(first).x
 		for index in [first,first,first,first,first,Talents.index_for(tree,1)]:
 			check(profile.allocate(camp,index),"Talents de départ financés par les missions préalables")
+		var priority: Array = [5,7,9,16,18] if camp==1 and mission==35 else []
+		priority.append_array(range(21))
 		while Model.MetaTalents.spent(profile.data.banks[camp].ranks)<profile.data.banks[camp].points:
 			var allocated := false
-			for local in range(21):
+			for local in priority:
 				var index: int = Talents.index_for(tree,local)
 				if profile.allocate(camp,index):
 					allocated = true
 					break
 			check(allocated,"Répartition des seuls points gagnés avant cette mission")
 			if not allocated: break
+		if camp==1 and mission==35:
+			check(profile.data.banks[camp].ranks[Talents.index_for(0,9)]==1 and Talents.spent(profile.data.banks[camp].ranks)==17,"Talent majeur acquis avec dix-sept points légalement gagnés")
 		game._open_campaign(camp,4)
 		game.campaign_menu._select(mission-31)
 		check(not game.campaign_menu.start_button.disabled,"Mission accessible après sa précédente")
@@ -95,6 +99,7 @@ func run_checks() -> void:
 		var types: Array = [0,1,2] if camp==0 else [3,3,5]
 		if mission==32: types = [0,0,2] if camp==0 else [4,4,3]
 		var slots := [3,4,2]
+		if camp==1 and mission==35: slots = [4,3,2]
 		var army_slots: Array = slots.duplicate()
 		if camp==1 and mission==32: army_slots.append(0)
 		check(model.buy(slots[0],types[0]) and model.buy(slots[1],types[1]),"Défense initiale dans le budget normal")

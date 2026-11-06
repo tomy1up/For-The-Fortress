@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.157**. Les missions 34 et 35 proposent le Ravin et les Portes sous Vents contraires. Trente-cinq missions sont jouables. Les comparaisons enregistrent les talents et les défenseurs réellement utilisés. [Résultats et limites](design/Missions_034_035_Vents_contraires.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.157).
+
 **Prototype v0.156**. Les missions 32 et 33 poursuivent Vents contraires sur les Crêtes et les Éboulis. Trente-trois missions sont jouables. Équilibrage d'essai à approfondir, particulièrement côté Horde. [Comparaisons et limites](design/Missions_032_033_Vents_contraires.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.156).
 
 **Prototype v0.155**. La mission 31 introduit Vents contraires, avec −10 % de cadence de tir pour tous les défenseurs. Dosage d'essai, particulièrement exigeant côté Horde dans les stratégies testées. [Règles et comparaison](design/Vents_contraires_v0155.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.155).

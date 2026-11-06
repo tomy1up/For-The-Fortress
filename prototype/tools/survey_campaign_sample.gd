@@ -13,6 +13,7 @@ var error: String = ""
 var spend_all_earned_points := false
 var specialisation_branch := 0
 var combat_affix_override: Variant = null # Comparaison contrôlée, jamais lu par une mission jouée.
+var prefer_major_path := false
 
 static func source_hashes() -> Dictionary:
 	var result: Dictionary = {}
@@ -43,9 +44,11 @@ func play(faction: int, mission: int, seed_value: int, layout: int, composition:
 			ranks[pick] += 1
 		if full_tree and spend_all_earned_points:
 			var tree: int = Talents.coordinates(talent).x
+			var priority: Array = [5,7,9,16,18] if prefer_major_path else []
+			priority.append_array(range(21))
 			for remaining in range(available-Talents.spent(ranks)):
 				var allocated := false
-				for local in range(21):
+				for local in priority:
 					var index: int = Talents.index_for(tree,local)
 					if Talents.allocation_error(ranks,index,available,faction).is_empty():
 						ranks[index] += 1
@@ -89,7 +92,12 @@ func play(faction: int, mission: int, seed_value: int, layout: int, composition:
 	if replay:
 		var verified: Dictionary = Replay.verify(JSON.parse_string(JSON.stringify(Report.build(m))))
 		if not verified.ok: error = "Rejeu refusé : "+verified.get("error","");return {}
-	return {"faction":faction,"mission":mission,"map_id":board.id,"wave_set_id":wave_set,"enemy_hp_percent":definition.hp_percent,"seed":seed_value,"layout":layout,"placement":slots.duplicate(),"composition":composition,"early_upgrade_wave":early,"talent":talent,"talent_name":"Aucun" if talent < 0 else Talents.node(faction,talent).name,"points":Talents.spent(ranks),"result":m.phase,"recruited_at":recruited_at,"reached_wave":m.wave,"hp":m.fortress_hp,"max_hp":m.max_hp,"gold":m.gold,"income":m.total_income,"spent":paid,"combat_seconds":m.completed_time+m.elapsed,"bonuses":m.bonuses.duplicate(),"arrivals_by_route":m.arrivals_by_route.duplicate(),"leaked":m.total_escaped,"killed":m.total_killed,"waves":m.wave_history.map(func(wave: Dictionary): return {"wave":wave.wave,"hp_lost":wave.hp_lost,"escaped":wave.escaped,"income":wave.income,"arrivals_by_route":wave.get("arrivals_by_route",{})})}
+	var army: Array = []
+	for slot in range(m.defenders.size()):
+		if m.defenders[slot].is_empty(): continue
+		var unit: Dictionary = m.defenders[slot]
+		army.append({"slot":slot,"type":unit.type,"level":unit.level,"branch":unit.branch})
+	return {"faction":faction,"mission":mission,"map_id":board.id,"wave_set_id":wave_set,"enemy_hp_percent":definition.hp_percent,"combat_affix":m.combat_affix.duplicate(true),"meta_ranks":ranks.duplicate(),"army":army,"extra_recruits":extra_recruits.duplicate(true),"seed":seed_value,"layout":layout,"placement":slots.duplicate(),"composition":composition,"early_upgrade_wave":early,"talent":talent,"talent_name":"Aucun" if talent < 0 else Talents.node(faction,talent).name,"points":Talents.spent(ranks),"result":m.phase,"recruited_at":recruited_at,"reached_wave":m.wave,"hp":m.fortress_hp,"max_hp":m.max_hp,"gold":m.gold,"income":m.total_income,"spent":paid,"combat_seconds":m.completed_time+m.elapsed,"bonuses":m.bonuses.duplicate(),"arrivals_by_route":m.arrivals_by_route.duplicate(),"leaked":m.total_escaped,"killed":m.total_killed,"waves":m.wave_history.map(func(wave: Dictionary): return {"wave":wave.wave,"hp_lost":wave.hp_lost,"escaped":wave.escaped,"income":wave.income,"arrivals_by_route":wave.get("arrivals_by_route",{})})}
 
 func _initialize() -> void:
 	var output: String = "";var smoke: bool = false;var step: float = 300.0
