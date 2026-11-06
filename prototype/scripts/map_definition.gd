@@ -563,6 +563,9 @@ static func converging_workshop() -> Dictionary:
 
 static func for_id(id: String) -> Dictionary:
 	if id == "valley_ford": return valley()
+	if id == "marsh_threshold":
+		var points: Array[Vector2] = [Vector2(0,2),Vector2(4,2),Vector2(4,6),Vector2(8,6),Vector2(8,3),Vector2(12,3),Vector2(12,7),Vector2(16,7),Vector2(16,6),Vector2(17,6)]
+		return {"id":id,"title":"Le Seuil des Marais","size":Vector2i(18,10),"path_points":points,"path_length":measured_length(points),"slots":[Vector2(2,3.8),Vector2(5.8,3.8),Vector2(6,7.8),Vector2(9.8,4.8),Vector2(13.8,5.3),Vector2(16,8.5)],"trees":[],"decoration":"marsh"}
 	if id in ["slate_crossing","slate_high_passages"]:
 		var board := mountain_workshop()
 		board.id = id
@@ -702,7 +705,7 @@ static func validation_error(data: Dictionary) -> String:
 		for other in range(index):
 			if data.slots[index] == data.slots[other]: return "Emplacements superposés."
 	if not (data.path_length is float or data.path_length is int) or not is_finite(float(data.path_length)) or float(data.path_length) <= 0.0 or absf(float(data.path_length)-measured_length(data.path_points)) > 0.000000001: return "Longueur de chemin incohérente."
-	if data.decoration not in ["valley","none","mountain"]: return "Décor de carte inconnu."
+	if data.decoration not in ["valley","none","mountain","marsh"]: return "Décor de carte inconnu."
 	if data.has("route_pattern"):
 		if data.route_pattern != "alternating_pressure" or not data.get("routes") is Array or data.routes.size() != 2:
 			return "Répartition des entrées invalide."

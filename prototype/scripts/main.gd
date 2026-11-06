@@ -772,9 +772,10 @@ func _capture_campaign_menu(camp: int) -> void:
 		var id: int = meta_profile.begin_mission(camp,"campaign.001",60,10,100)
 		var credited: bool = meta_profile.credit_mission(id,camp,10,true)
 		if not credited: push_error("Échec du profil de contrôle de campagne.");return
-	var mountain_preview := variant in ["slate","slateplay","ridges","ridgesplay"] or variant.begins_with("mountain")
+	var mountain_preview := variant in ["slate","slateplay","ridges","ridgesplay"] or variant.begins_with("mountain") or variant.begins_with("marsh")
 	var mountain_number := 21
 	if variant.begins_with("ridges"): mountain_number = 22
+	if variant.begins_with("marsh"): mountain_number = 41
 	if variant.begins_with("mountain"):
 		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").trim_suffix("completed").to_int(),23,40)
 	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or mountain_preview:
@@ -811,6 +812,7 @@ func _capture_campaign_menu(camp: int) -> void:
 	if mountain_preview and variant.ends_with("play"):
 		campaign_menu._launch()
 		print("SLATE_MISSION=",JSON.stringify({"map":model.map_definition.id,"routes":model.routes.size(),"hp_percent":model.enemy_hp_percent,"mission":mission_definition.get("id",""),"faction":model.faction,"menu":campaign_menu.visible,"hp":model.fortress_hp,"gold":model.gold,"forecast":map_view.entry_forecast.size(),"active_profile_run":meta_run_id > 0}))
+		if variant.begins_with("marsh"): print("MARSH_SNAPSHOT=",JSON.stringify({"isolated":meta_profile.path.is_empty(),"map":model.map_definition.id,"decoration":model.map_definition.decoration,"scenery_count":map_view.terrain_details.size(),"affix_empty":model.combat_affix.is_empty(),"affix_visible":affix_label.visible}))
 		if not model.combat_affix.is_empty(): print("HEADWINDS_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
 		if "--capture-mountain-defence" in OS.get_cmdline_user_args():
 			model.buy(3,camp*3)

@@ -3,6 +3,7 @@ var entry_forecast: Array[Dictionary] = []
 var highlighted_entries: Array[int] = []
 
 const Model = preload("res://scripts/valley_model.gd")
+const MarshArt = preload("res://scripts/marsh_art.gd")
 const HordeArt = preload("res://scripts/horde_art.gd")
 const AllianceArt = preload("res://scripts/alliance_art.gd")
 const EnemyArt = preload("res://scripts/enemy_art.gd")
@@ -445,13 +446,15 @@ static func _segment_in_rect(first: Vector2, last: Vector2, area: Rect2) -> bool
 
 static func scenery_bounds(item: Dictionary) -> Rect2:
 	var center: Vector2 = project(item.point)
+	if item.kind in ["willow","ruin","reeds"]: return MarshArt.bounds(center,item.kind)
 	return Rect2(center+Vector2(-16,-46),Vector2(32,60)) if item.kind == "pine" else Rect2(center+Vector2(-13,-14),Vector2(26,23))
 
 static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
 	# Habillage des nouveaux terrains uniquement. Aucun tirage du générateur de combat.
 	var result: Array[Dictionary] = []
 	var mountain: bool = definition.get("decoration","") == "mountain"
-	if not mountain and definition.get("id","") not in Model.Maps.CHAPTER_ONE_MAPS: return result
+	var marsh: bool = definition.get("decoration","") == "marsh"
+	if not mountain and not marsh and definition.get("id","") not in Model.Maps.CHAPTER_ONE_MAPS: return result
 	if not Model.Maps.validation_error(definition).is_empty(): return result
 	var board := PackedVector2Array([project(Vector2.ZERO),project(Vector2(definition.size.x,0)),project(Vector2(definition.size)),project(Vector2(0,definition.size.y))])
 	var reserved: Array[Rect2] = [fortress_bounds(project(definition.path_points[-1])).grow(12)]
@@ -463,6 +466,7 @@ static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
 		for y in range(7):
 			var order: int = (x*29+y*47+seed_value)%101
 			var kind: String = ["pine","shrub","rock"][order%3]
+			if marsh: kind = ["reeds","ruin","willow"][order%3]
 			if mountain and kind == "shrub": kind = "rock"
 			candidates.append({"point":Vector2(0.8+x*1.45,0.8+y*1.35),"kind":kind,"order":order})
 	candidates.sort_custom(func(a: Dictionary,b: Dictionary) -> bool: return a.order < b.order)
@@ -489,6 +493,9 @@ static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
 
 func _draw_terrain_detail(item: Dictionary) -> void:
 	var center: Vector2 = project(item.point)
+	if item.kind in ["willow","ruin","reeds"]:
+		MarshArt.draw_detail(self,center,item.kind)
+		return
 	if item.kind == "pine": _draw_tree(center);return
 	if item.kind == "rock":
 		draw_colored_polygon(PackedVector2Array([center+Vector2(-12,2),center+Vector2(-7,-9),center+Vector2(3,-13),center+Vector2(12,-3),center+Vector2(10,4),center+Vector2(-2,7)]),Color("697765"))
@@ -506,6 +513,7 @@ func _draw() -> void:
 	walking_meshes.begin_frame()
 	var definition: Dictionary = model.map_definition if model != null else Model.Maps.valley()
 	var mountain: bool = definition.decoration == "mountain"
+	var marsh: bool = definition.decoration == "marsh"
 	var board: Vector2i = definition.size
 	var ghost: Dictionary = purchase_ghost()
 	var corners: Array[Vector2] = [Vector2.ZERO, Vector2(board.x, 0), Vector2(board.x, board.y), Vector2(0, board.y)]
@@ -514,11 +522,12 @@ func _draw() -> void:
 		base.append(project(corner) + Vector2(0, 16))
 	draw_colored_polygon(base, Color("172c2b"))
 	# Deux faces donnent de l'épaisseur au plateau, sans déplacer sa surface logique.
-	for edge in [[corners[1],corners[2],Color("34444c") if mountain else Color("263e34")],[corners[2],corners[3],Color("27363f") if mountain else Color("1c322c")]]:
+	for edge in [[corners[1],corners[2],Color("315247") if marsh else Color("34444c") if mountain else Color("263e34")],[corners[2],corners[3],Color("233e37") if marsh else Color("27363f") if mountain else Color("1c322c")]]:
 		var first: Vector2 = project(edge[0])
 		var last: Vector2 = project(edge[1])
 		draw_colored_polygon(PackedVector2Array([first,last,last+Vector2(0,16),first+Vector2(0,16)]),edge[2])
-	polygon(corners, Color("4a5b65") if mountain else Color("3a513e"))
+	polygon(corners, MarshArt.GROUND if marsh else Color("4a5b65") if mountain else Color("3a513e"))
+	if marsh: MarshArt.draw_ground(self,project)
 	for x in range(board.x+1):
 		draw_line(project(Vector2(x, 0)), project(Vector2(x, board.y)), Color(0.75, 0.86, 0.7, 0.055), 1)
 	for y in range(board.y+1):
@@ -531,9 +540,12 @@ func _draw() -> void:
 		screen_routes.append(route)
 	for route in screen_routes: draw_polyline(route,Color("2d3a42") if mountain else Color("26372e"),28,true)
 	for route in screen_routes:
-		draw_polyline(route,Color("b3a17b"),20,true)
-		for point in route: draw_circle(point,10,Color("b3a17b"))
+		draw_polyline(route,MarshArt.ROAD if marsh else Color("b3a17b"),20,true)
+		for point in route: draw_circle(point,10,MarshArt.ROAD if marsh else Color("b3a17b"))
 	for route in screen_routes: draw_polyline(route,Color("c7b58d"),2,true)
+	if marsh:
+		var paths: Array = routes_for(definition).map(func(route):return route.path_points)
+		MarshArt.draw_joints(self,project,paths)
 	var highlighted_segments := {}
 	for index in highlighted_entries:
 		if index < 0 or index >= screen_routes.size():

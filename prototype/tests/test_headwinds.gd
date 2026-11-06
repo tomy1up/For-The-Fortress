@@ -131,9 +131,10 @@ func run_checks() -> void:
 			if mission==40:
 				var status: Dictionary = profile.campaign_status(camp)
 				check(status.chapters.slice(0,4).all(func(count):return count==10) and status.first_hundred==40 and not status.infinite_eligible,"Quatre chapitres terminés sans déblocage anticipé de l'infini")
-				check(game.campaign_menu.nodes.all(func(node):return node.state=="completed") and game.campaign_menu.start_button.text=="Rejouer sans nouveau gain","La fin du contenu propose le rejeu sans faux gain")
+				game.campaign_menu._chapter(4)
+				check(game.campaign_menu.nodes.all(func(node):return node.state=="completed") and game.campaign_menu.start_button.text=="Rejouer sans nouveau gain","Le chapitre terminé propose le rejeu sans faux gain")
 				game.campaign_menu._chapter(5)
-				check(game.campaign_menu.nodes.all(func(node):return node.state=="future") and game.campaign_menu.start_button.disabled,"Le chapitre suivant reste clairement à venir")
+				check(game.campaign_menu.nodes[0].state=="available" and game.campaign_menu.nodes.slice(1).all(func(node):return node.state=="future") and not game.campaign_menu.start_button.disabled,"Les marais se débloquent après la fin du chapitre 4")
 				game.campaign_menu._chapter(4);game.campaign_menu._select(9);game.campaign_menu._launch()
 				check(game.model.gold==150 and game.model.bonuses.is_empty() and game.model.combat_affix==AFFIX,"Rejouer la finale repart avec les règles normales de la mission")
 				play_policy(game.model,types,slots,extra,seed_value)

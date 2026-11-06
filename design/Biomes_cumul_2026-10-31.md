@@ -67,6 +67,8 @@ La v0.159 termine les deux chapitres des Ardoises, aux missions 21–40. Vents c
 
 Le porteur retient **des marais et des ruines englouties** pour le prochain biome, aux missions 41–60. Cette décision porte sur l'ambiance des deux chapitres.
 
+La v0.160 ouvre ce biome avec [le Seuil des Marais, mission 41](Mission_041_Seuil_des_Marais.md). Le tracé, la palette, les bassins et les piliers sont un premier habillage de prototype à affiner. La mission n'applique pas Vents contraires. Les missions 42–60 restent à développer.
+
 Les nouvelles mécaniques seront proposées séparément. Les attaquants propres au biome, l'éventuel affixe et leurs valeurs restent ouverts. Selon le rythme de progression retenu, le second chapitre du biome, aux missions 51–60, doit introduire sa nouveauté. Les missions 41–50 préparent sa découverte par les terrains et les configurations de chemins.
 
 L'ambiance n'implique à elle seule aucun effet de poison, de soin, de ralentissement ou d'eau sur les règles du combat. Ces possibilités restent des idées à concevoir et à valider.

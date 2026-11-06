@@ -2,6 +2,7 @@ extends ColorRect
 const Catalogue = preload("res://scripts/campaign_catalogue.gd")
 const Scout = preload("res://scripts/mission_scout.gd")
 const Maps = preload("res://scripts/map_definition.gd")
+const MarshArt = preload("res://scripts/marsh_art.gd")
 signal mission_requested(id: String)
 signal talents_requested(faction: int)
 signal shop_requested(faction: int)
@@ -43,11 +44,15 @@ class TerrainPreview extends Control:
 			var message: String = "Carte à venir"
 			draw_string(font,Vector2((size.x-font.get_string_size(message,HORIZONTAL_ALIGNMENT_LEFT,-1,15).x)/2,size.y/2+5),message,HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("91a799"))
 			return
-		draw_colored_polygon(layout.board,Color("405256") if definition.decoration == "mountain" else Color("294536"))
+		var marsh: bool = definition.decoration=="marsh"
+		draw_colored_polygon(layout.board,MarshArt.GROUND if marsh else Color("405256") if definition.decoration == "mountain" else Color("294536"))
+		if marsh:
+			var factor: float = (layout.board[1].x-layout.board[0].x)/(definition.size.x*2.0)
+			MarshArt.draw_ground(self,func(point: Vector2):return layout.board[0]+project(point)*factor,true)
 		var outline: PackedVector2Array = layout.board.duplicate();outline.append(outline[0])
 		draw_polyline(outline,Color("48634e"),1,true)
 		for path in layout.paths: draw_polyline(path,Color("645b3b"),9,true)
-		for path in layout.paths: draw_polyline(path,Color("d6c18a"),5,true)
+		for path in layout.paths: draw_polyline(path,MarshArt.ROAD if marsh else Color("d6c18a"),5,true)
 		for point in layout.slots:
 			var diamond := PackedVector2Array([point+Vector2(0,-4),point+Vector2(7,0),point+Vector2(0,4),point+Vector2(-7,0)])
 			draw_colored_polygon(diamond,Color("142d28"));diamond.append(diamond[0]);draw_polyline(diamond,Color("bdd0c3"),1.5,true)

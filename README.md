@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.160**. La mission 41 ouvre les marais et les ruines englouties avec une première chaussée, des bassins et des piliers brisés. Habillage de prototype à affiner. [Carte, comparaisons et limites](design/Mission_041_Seuil_des_Marais.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.160).
+
 **Prototype v0.159**. Les missions 38–40 terminent le quatrième chapitre. Quarante missions sont jouables, avec contrôle du rejeu sans nouveau gain et de la sauvegarde du palier. Le Bastion Horde reste un point d'équilibrage important. [Résultats et limites](design/Missions_038_040_Vents_contraires.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.159).
 
 **Prototype v0.158**. Les missions 36 et 37 poursuivent Vents contraires aux Trois Passages et aux Lacets. Trente-sept missions sont jouables. [Comparaisons et limites](design/Missions_036_037_Vents_contraires.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.158).

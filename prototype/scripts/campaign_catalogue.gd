@@ -29,6 +29,8 @@ static func definition(number: int) -> Dictionary:
 		var titles: Array[String] = ["Le Col des Ardoises","Les Crêtes des Ardoises","Les Éboulis des Ardoises","Le Ravin des Ardoises","Les Portes des Ardoises","Les Trois Passages des Ardoises","Les Lacets des Ardoises","Le Cirque des Ardoises","Les Hauts Passages des Ardoises","Le Bastion des Ardoises"]
 		result.merge({"title":titles[(number-21)%10],"available":true,"map_id":maps[(number-21)%10],"hp_percent":99+number,"po":60,"xp":100,"waves":10},true)
 		if number > 30: result.combat_affix = {"id":"headwinds","cadence_percent":90}
+	elif number == 41:
+		result.merge({"title":"Le Seuil des Marais","available":true,"map_id":"marsh_threshold","hp_percent":140,"po":60,"xp":100,"waves":10},true)
 	return result
 
 static func runtime(id: String) -> Dictionary:
