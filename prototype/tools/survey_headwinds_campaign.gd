@@ -20,6 +20,14 @@ func _initialize() -> void:
 		elif argument=="--smoke": smoke = true
 		elif argument=="--branch=1": specialisation_branch = 1
 		elif argument=="--major-path": prefer_major_path = true
+		elif argument.begins_with("--bonus-priority="):
+			bonus_priority.clear()
+			for code in argument.trim_prefix("--bonus-priority=").split(","):
+				var index := -1
+				for candidate in range(Model.Campaign.BONUSES.size()):
+					if Model.Campaign.BONUSES[candidate].code==code: index = candidate;break
+				if index<0 or index in bonus_priority: _abort("Préférence de bonus invalide.");return
+				bonus_priority.append(index)
 		elif argument.begins_with("--recruit-slot="):
 			var text := argument.trim_prefix("--recruit-slot=")
 			if not text.is_valid_int(): _abort("Emplacement de renfort invalide.");return
@@ -56,7 +64,7 @@ func _initialize() -> void:
 							if row.is_empty(): _abort(error);return
 							rows.append(row)
 		print("HEADWINDS_SURVEY_PROGRESS=",rows.size())
-	var document := {"profile_loaded":false,"game_version":str(ProjectSettings.get_setting("application/config/version")),"source_sha256":source_hashes(),"tool_sha256":{"protocol":FileAccess.get_sha256("res://tools/survey_headwinds_campaign.gd"),"policies":FileAccess.get_sha256("res://tools/survey_campaign_sample.gd")},"protocol":{"missions":missions,"seeds":seeds,"placements":placements,"compositions":compositions,"trees":trees,"branch":specialisation_branch,"major_path":prefer_major_path,"early_upgrade_wave":2,"recruit_from":2,"extra_recruits":extra,"bonus_choice":"first_offer","all_earned_points":true,"smoke":smoke,"reports_replayed":smoke},"results":rows}
+	var document := {"profile_loaded":false,"game_version":str(ProjectSettings.get_setting("application/config/version")),"source_sha256":source_hashes(),"tool_sha256":{"protocol":FileAccess.get_sha256("res://tools/survey_headwinds_campaign.gd"),"policies":FileAccess.get_sha256("res://tools/survey_campaign_sample.gd")},"protocol":{"missions":missions,"seeds":seeds,"placements":placements,"compositions":compositions,"trees":trees,"branch":specialisation_branch,"major_path":prefer_major_path,"early_upgrade_wave":2,"recruit_from":2,"extra_recruits":extra,"bonus_choice":"first_offer" if bonus_priority.is_empty() else "first_available_in_priority","bonus_priority":bonus_priority.map(func(index):return Model.Campaign.BONUSES[index].code),"all_earned_points":true,"smoke":smoke,"reports_replayed":smoke},"results":rows}
 	var file := FileAccess.open(output,FileAccess.WRITE)
 	if file==null: _abort("Destination inaccessible.");return
 	file.store_string(JSON.stringify(document));file.close()

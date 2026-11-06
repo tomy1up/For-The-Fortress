@@ -57,12 +57,13 @@ func run_checks() -> void:
 			check(Report.markdown(report).contains("−10 %"),"Rapport lisible avec le dosage de l'affixe")
 			report.combat_affix.cadence_percent = "90"
 			check(not Replay.verify(report).ok,"Rapport contenant un affixe invalide refusé")
-	for case in [[0,31],[1,31],[0,32],[1,32],[0,33],[1,33],[0,34],[1,34],[0,35],[1,35],[0,36],[1,36],[0,37],[1,37]]:
+	for case in [[0,31],[1,31],[0,32],[1,32],[0,33],[1,33],[0,34],[1,34],[0,35],[1,35],[0,36],[1,36],[0,37],[1,37],[0,38],[1,38],[0,39],[1,39],[0,40],[1,40]]:
 		var camp: int = case[0]
 		var mission: int = case[1]
 		var game := Main.new()
 		root.add_child(game);game.set_process(false)
-		var profile := Profile.new("")
+		var profile_path: String = "user://test_headwinds_final_%d_%d.json" % [Time.get_ticks_usec(),camp] if mission==40 else ""
+		var profile := Profile.new(profile_path)
 		game.meta_profile = profile
 		game._open_campaign(camp,4)
 		game.campaign_menu._select(mission-31)
@@ -75,7 +76,7 @@ func run_checks() -> void:
 		var tree: int = Talents.coordinates(first).x
 		for index in [first,first,first,first,first,Talents.index_for(tree,1)]:
 			check(profile.allocate(camp,index),"Talents de départ financés par les missions préalables")
-		var priority: Array = [5,7,9,16,18] if camp==1 and mission==35 else []
+		var priority: Array = [5,7,9,16,18] if camp==1 and mission in [35,39,40] else []
 		priority.append_array(range(21))
 		while Model.MetaTalents.spent(profile.data.banks[camp].ranks)<profile.data.banks[camp].points:
 			var allocated := false
@@ -100,24 +101,17 @@ func run_checks() -> void:
 		if mission==32: types = [0,0,2] if camp==0 else [4,4,3]
 		if mission==36: types = [1,1,0] if camp==0 else [4,4,3]
 		if camp==1 and mission==37: types = [4,4,3]
+		if camp==0 and mission in [38,39,40]: types = [1,1,0]
+		if camp==1 and mission==40: types = [3,5,4]
 		var slots := [3,4,2]
 		if camp==1 and mission==35: slots = [4,3,2]
 		if mission==37: slots = [4,3,2]
-		var army_slots: Array = slots.duplicate()
-		if camp==1 and mission==32: army_slots.append(0)
-		check(model.buy(slots[0],types[0]) and model.buy(slots[1],types[1]),"Défense initiale dans le budget normal")
-		for wave in range(1,11):
-			if wave==2: model.upgrade(slots[0])
-			if wave>=2 and model.defenders[slots[2]].is_empty(): model.buy(slots[2],types[2])
-			if camp==1 and mission==32 and wave>=3 and model.defenders[0].is_empty(): model.buy(0,3)
-			if wave>=5:
-				for slot in army_slots:
-					if not model.defenders[slot].is_empty(): model.upgrade(slot,0 if model.defenders[slot].level==3 else -1)
-			check(model.start(),"Départ d'une vague sous Vents contraires")
-			model.advance(10000)
-			if model.phase=="defeat": break
-			if model.phase=="bonus": model.choose_bonus(model.bonus_offer[0])
-			if wave<10: model.prepare_next_wave()
+		if mission==38: slots = [2,3,4] if camp==0 else [4,3,2]
+		if camp==1 and mission==40: slots = [4,3,2]
+		var extra: Array = [[0,3,3]] if camp==1 and mission==32 else []
+		if camp==1 and mission==40: extra = [[0,3,3]]
+		var seed_value: int = 42 if camp==1 and mission==39 else 7
+		play_policy(model,types,slots,extra,seed_value)
 		check(model.phase=="victory","Victoire avec les ressources et talents normalement accessibles")
 		var spent := 0
 		for action in model.action_history:
@@ -134,11 +128,49 @@ func run_checks() -> void:
 		if model.phase=="victory":
 			game._show_run_summary();game._summary_to_campaign()
 			check(game.choosing_faction and game.campaign_menu.visible,"Retour réel au parcours après le bilan")
+			if mission==40:
+				var status: Dictionary = profile.campaign_status(camp)
+				check(status.chapters.slice(0,4).all(func(count):return count==10) and status.first_hundred==40 and not status.infinite_eligible,"Quatre chapitres terminés sans déblocage anticipé de l'infini")
+				check(game.campaign_menu.nodes.all(func(node):return node.state=="completed") and game.campaign_menu.start_button.text=="Rejouer sans nouveau gain","La fin du contenu propose le rejeu sans faux gain")
+				game.campaign_menu._chapter(5)
+				check(game.campaign_menu.nodes.all(func(node):return node.state=="future") and game.campaign_menu.start_button.disabled,"Le chapitre suivant reste clairement à venir")
+				game.campaign_menu._chapter(4);game.campaign_menu._select(9);game.campaign_menu._launch()
+				check(game.model.gold==150 and game.model.bonuses.is_empty() and game.model.combat_affix==AFFIX,"Rejouer la finale repart avec les règles normales de la mission")
+				play_policy(game.model,types,slots,extra,seed_value)
+				check(game.model.phase=="victory","La mission finale peut être remportée une seconde fois")
+				game._sync_meta_rewards(true)
+				check(profile.data.banks[camp].xp==4000 and profile.data.banks[camp].resource==2400 and profile.data.banks[camp].points==20,"Le rejeu de fin de chapitre ne permet de farmer ni PO ni XP ni points")
+				Profile.Codec.cache.clear()
+				var reopened := Profile.new(profile_path)
+				check(not reopened.blocked and reopened.campaign_status(camp).completed==40 and reopened.data.banks[camp].xp==4000 and reopened.data.banks[camp].resource==2400 and reopened.data.banks[camp].points==20 and reopened.campaign_status(1-camp).completed==0,"Fin des quatre chapitres et gains relus depuis la sauvegarde isolée")
+				game._show_run_summary();game._summary_to_campaign()
 			game.campaign_menu._chapter(3);game.campaign_menu._select(0);game.campaign_menu._launch()
 			check(not game.choosing_faction and game.mission_definition.id=="campaign.021" and game.model.combat_affix.is_empty() and not game.affix_label.visible,"Rejouer une mission antérieure ne conserve aucun vent ni son annonce")
 			var candidate := {"type":camp*3,"level":1,"branch":-1}
 			var actual: Dictionary = game.model.get_stats(0,-1,candidate)
 			check(is_equal_approx(actual.interval,Model.ROSTER[camp*3].interval),"La cadence d'origine est restaurée sans modifier les talents")
 		game.free()
+		if not profile_path.is_empty():
+			for suffix in ["",".bak",".tmp"]:
+				if FileAccess.file_exists(profile_path+suffix): DirAccess.remove_absolute(profile_path+suffix)
 	print("HEADWINDS_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
+
+func play_policy(model: RefCounted, types: Array, slots: Array, extra: Array, seed_value: int = 7) -> void:
+	model.rng.seed = seed_value
+	var army_slots: Array = slots.duplicate()
+	for recruit in extra: army_slots.append(recruit[0])
+	check(model.buy(slots[0],types[0]) and model.buy(slots[1],types[1]),"Défense initiale dans le budget normal")
+	for wave in range(1,11):
+		if wave==2: model.upgrade(slots[0])
+		if wave>=2 and model.defenders[slots[2]].is_empty(): model.buy(slots[2],types[2])
+		for recruit in extra:
+			if wave>=recruit[2] and model.defenders[recruit[0]].is_empty(): model.buy(recruit[0],recruit[1])
+		if wave>=5:
+			for slot in army_slots:
+				if not model.defenders[slot].is_empty(): model.upgrade(slot,0 if model.defenders[slot].level==3 else -1)
+		check(model.start(),"Départ d'une vague sous Vents contraires")
+		model.advance(10000)
+		if model.phase=="defeat": break
+		if model.phase=="bonus": model.choose_bonus(model.bonus_offer[0])
+		if wave<10: model.prepare_next_wave()

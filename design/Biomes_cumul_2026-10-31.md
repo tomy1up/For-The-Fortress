@@ -61,4 +61,12 @@ Le porteur retient un affixe pour les missions 31 à 40 du biome montagneux. Il 
 
 Le porteur valide un premier essai à −10 % de cadence pour tous les défenseurs, sans ralentir les dégâts périodiques déjà appliqués. Ce dosage reste un réglage de prototype à équilibrer. À cadence égale par ailleurs, l’intervalle entre deux attaques sera divisé par 0,9. Les règles de cumul à long terme restent à préciser.
 
-La v0.154 termine les missions 27 à 30. La v0.155 introduit Vents contraires sur la mission 31, affiche son effet avant le lancement et pendant la mission, et compare les deux factions avec et sans vent. La v0.156 poursuit cet essai sur les missions 32 et 33, puis la v0.157 sur les missions 34 et 35 et la v0.158 sur les missions 36 et 37. Le réglage reste à évaluer en jeu, particulièrement côté Horde. Les missions 38–40 restent à produire. Les cumuls à long terme restent régis par les principes ci-dessus. Voir [le premier essai et ses limites](Vents_contraires_v0155.md), [les comparaisons des Crêtes et des Éboulis](Missions_032_033_Vents_contraires.md), [celles du Ravin et des Portes](Missions_034_035_Vents_contraires.md) et [celles des Trois Passages et des Lacets](Missions_036_037_Vents_contraires.md).
+La v0.159 termine les deux chapitres des Ardoises, aux missions 21–40. Vents contraires est annoncé avant le lancement et reste visible pendant les missions 31–40. Le dosage et la difficulté de découverte restent à évaluer en jeu, particulièrement au Bastion côté Horde. Les cumuls à long terme restent régis par les principes ci-dessus. Voir [le premier essai](Vents_contraires_v0155.md), [les comparaisons des Crêtes et des Éboulis](Missions_032_033_Vents_contraires.md), [celles du Ravin et des Portes](Missions_034_035_Vents_contraires.md), [celles des Trois Passages et des Lacets](Missions_036_037_Vents_contraires.md) et [le bilan de fin de chapitre](Missions_038_040_Vents_contraires.md).
+
+## Décision du 6 novembre 2026 — chapitres 5 et 6
+
+Le porteur retient **des marais et des ruines englouties** pour le prochain biome, aux missions 41–60. Cette décision porte sur l'ambiance des deux chapitres.
+
+Les nouvelles mécaniques seront proposées séparément. Les attaquants propres au biome, l'éventuel affixe et leurs valeurs restent ouverts. Selon le rythme de progression retenu, le second chapitre du biome, aux missions 51–60, doit introduire sa nouveauté. Les missions 41–50 préparent sa découverte par les terrains et les configurations de chemins.
+
+L'ambiance n'implique à elle seule aucun effet de poison, de soin, de ralentissement ou d'eau sur les règles du combat. Ces possibilités restent des idées à concevoir et à valider.

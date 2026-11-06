@@ -14,6 +14,7 @@ var spend_all_earned_points := false
 var specialisation_branch := 0
 var combat_affix_override: Variant = null # Comparaison contrôlée, jamais lu par une mission jouée.
 var prefer_major_path := false
+var bonus_priority: Array[int] = [] # Préférence de comparaison, jamais une offre ajoutée au jeu.
 
 static func source_hashes() -> Dictionary:
 	var result: Dictionary = {}
@@ -82,7 +83,13 @@ func play(faction: int, mission: int, seed_value: int, layout: int, composition:
 		if not m.start(): error = "Départ de vague refusé.";return {}
 		while m.active: m.advance(step)
 		if m.phase == "defeat": break
-		if m.phase == "bonus" and not m.choose_bonus(m.bonus_offer[0]): error = "Choix de bonus refusé.";return {}
+		if m.phase == "bonus":
+			var chosen: int = m.bonus_offer[0]
+			for preferred in bonus_priority:
+				if preferred in m.bonus_offer:
+					chosen = preferred
+					break
+			if not m.choose_bonus(chosen): error = "Choix de bonus refusé.";return {}
 		if wave < 10 and not m.prepare_next_wave(): error = "Préparation refusée.";return {}
 	var paid: int = 0
 	for action in m.action_history:

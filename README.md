@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.159**. Les missions 38–40 terminent le quatrième chapitre. Quarante missions sont jouables, avec contrôle du rejeu sans nouveau gain et de la sauvegarde du palier. Le Bastion Horde reste un point d'équilibrage important. [Résultats et limites](design/Missions_038_040_Vents_contraires.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.159).
+
 **Prototype v0.158**. Les missions 36 et 37 poursuivent Vents contraires aux Trois Passages et aux Lacets. Trente-sept missions sont jouables. [Comparaisons et limites](design/Missions_036_037_Vents_contraires.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.158).
 
 **Prototype v0.157**. Les missions 34 et 35 proposent le Ravin et les Portes sous Vents contraires. Trente-cinq missions sont jouables. Les comparaisons enregistrent les talents et les défenseurs réellement utilisés. [Résultats et limites](design/Missions_034_035_Vents_contraires.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.157).

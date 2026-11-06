@@ -20,6 +20,8 @@ Depuis le dossier du projet, cette commande compare intégralement les missions 
 
 Ajouter `--major-path` donne la priorité aux prérequis et aux talents majeurs dès qu'ils sont accessibles. Les paliers, rangs maximum, exclusions et budget de points restent ceux du jeu. Sans cette option, la répartition suit l'ordre d'accès utilisé dans les premiers panels. `--branch=1` compare la seconde branche de spécialisation des défenseurs.
 
+L'option `--bonus-priority=R-02,R-01,R-08` essaie une préférence fixe entre les bonus. Le premier bonus de cette liste réellement présent dans l'offre est choisi. Si aucun ne figure dans l'offre, le premier bonus proposé est retenu. Les offres et leurs probabilités restent celles du jeu. Le JSON enregistre l'ordre utilisé. Les codes inconnus et les doublons sont refusés. Sans cette option, le premier bonus proposé reste le choix de référence.
+
 Le mode `--smoke` limite la comparaison à une graine, un placement et deux compositions, en conservant les trois arbres et les deux factions. Chaque rapport de ce mode est rejoué et vérifié. Il valide le fonctionnement du protocole, sans remplacer le panel complet d'équilibrage.
 
 ```powershell
