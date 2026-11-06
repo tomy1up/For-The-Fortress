@@ -53,7 +53,7 @@ class TerrainPreview extends Control:
 			draw_colored_polygon(diamond,Color("142d28"));diamond.append(diamond[0]);draw_polyline(diamond,Color("bdd0c3"),1.5,true)
 		var fortress: Vector2 = layout.paths[0][-1]
 		for index in range(layout.paths.size()):
-			draw_circle(layout.paths[index][0],4,Color("e9c46a") if index == 0 else Color("83c4c6"))
+			draw_circle(layout.paths[index][0],4,[Color("e9c46a"),Color("83c4c6"),Color("c8a6e3")][index%3])
 		draw_rect(Rect2(fortress-Vector2(5,7),Vector2(10,10)),Color("a5c8c1"))
 		draw_line(fortress+Vector2(0,-7),fortress+Vector2(0,-16),Color("d9e4d7"),1.5,true)
 		draw_colored_polygon(PackedVector2Array([fortress+Vector2(0,-16),fortress+Vector2(8,-13),fortress+Vector2(0,-10)]),Color("e9c46a"))
@@ -304,6 +304,10 @@ func _refresh_detail() -> void:
 	var definition: Dictionary = Catalogue.definition(number)
 	var done: bool = not status.is_empty() and status.missions[number-1]
 	mission_heading.text = "Mission %d" % number
+	var title_width: float = mission_title.get_theme_font("font").get_string_size(definition.title,HORIZONTAL_ALIGNMENT_LEFT,-1,24).x
+	var title_size := clampi(floori(24.0*358.0/maxf(title_width,1.0)),18,24)
+	mission_title.add_theme_font_size_override("font_size",title_size)
+	mission_title.size = Vector2(358,48)
 	mission_title.text = definition.title
 	terrain_preview.show_map(definition.get("map_id","") if definition.available else "")
 	if not definition.available:

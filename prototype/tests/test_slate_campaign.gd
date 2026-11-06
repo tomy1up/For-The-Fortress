@@ -12,7 +12,7 @@ func check(value: bool, message: String) -> void:
 func _initialize() -> void:
 	call_deferred("run_checks")
 func run_checks() -> void:
-	for case in [[0,21],[1,21],[0,22],[1,22],[0,23],[1,23],[0,24],[1,24],[0,25],[1,25]]:
+	for case in [[0,21],[1,21],[0,22],[1,22],[0,23],[1,23],[0,24],[1,24],[0,25],[1,25],[0,26],[1,26]]:
 		var faction: int = case[0]
 		var mission_number: int = case[1]
 		var game := Main.new()
@@ -35,7 +35,7 @@ func run_checks() -> void:
 		game.campaign_menu._select(mission_number-21)
 		game.campaign_menu._launch()
 		var model = game.model
-		check(not game.choosing_faction and game.mission_definition.id==Main.CampaignCatalogue.id_for(mission_number) and model.routes.size()==(0 if mission_number==24 else 2),"La mission démarre par le parcours normal")
+		check(not game.choosing_faction and game.mission_definition.id==Main.CampaignCatalogue.id_for(mission_number) and model.routes.size()==(0 if mission_number==24 else 3 if mission_number==26 else 2),"La mission démarre par le parcours normal")
 		check(model.enemy_hp_percent==99+mission_number and model.gold==150 and model.fortress_hp==model.max_hp and model.bonuses.is_empty(),"Paramètres et remise à neuf avec les talents actifs")
 		model.rng.seed = 7
 		var slots: Array = [3,4,2]

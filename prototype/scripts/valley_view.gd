@@ -668,7 +668,7 @@ func entry_label_layouts() -> Array[Dictionary]:
 	return result
 
 static func entry_color(index: int) -> Color:
-	return [Color("e5c779"),Color("83c4c6")][index%2]
+	return [Color("e5c779"),Color("83c4c6"),Color("c8a6e3")][index%3]
 
 static func breach_text(count: int, damage: int) -> String:
 	return "−%d PV · %d ennemi%s passé%s" % [damage,count,"" if count == 1 else "s","" if count == 1 else "s"]

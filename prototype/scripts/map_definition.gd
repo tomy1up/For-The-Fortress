@@ -563,6 +563,27 @@ static func converging_workshop() -> Dictionary:
 
 static func for_id(id: String) -> Dictionary:
 	if id == "valley_ford": return valley()
+	if id == "slate_crossing":
+		var board := mountain_workshop()
+		board.id = id
+		board.title = "Les Trois Passages des Ardoises"
+		board.erase("route_pattern")
+		var shared: Array[Vector2] = [Vector2(7,5),Vector2(11,5),Vector2(11,2),Vector2(15,2),Vector2(15,6),Vector2(17,6)]
+		var upper: Array[Vector2] = [Vector2(0,1),Vector2(7,1)]
+		var middle: Array[Vector2] = [Vector2(0,5)]
+		var lower: Array[Vector2] = [Vector2(0,9),Vector2(3,9),Vector2(3,7),Vector2(7,7)]
+		upper.append_array(shared)
+		middle.append_array(shared)
+		lower.append_array(shared)
+		board.path_points = upper
+		board.path_length = measured_length(upper)
+		board.routes = [
+			{"id":"upper","path_points":upper,"path_length":board.path_length},
+			{"id":"middle","path_points":middle,"path_length":measured_length(middle)},
+			{"id":"lower","path_points":lower,"path_length":measured_length(lower)},
+		]
+		board.slots = [Vector2(3,2.8),Vector2(2,6.8),Vector2(6,3),Vector2(9,3.3),Vector2(12.8,4.2),Vector2(15.8,7.6)]
+		return board
 	if id in ["slate_scree","slate_ravine","slate_gates"]:
 		var board := mountain_workshop()
 		board.id = id

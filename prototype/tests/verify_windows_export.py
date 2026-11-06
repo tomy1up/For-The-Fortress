@@ -160,8 +160,10 @@ for camp in ['alliance','horde']:
 for camp in ['alliance','horde']:
     for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
 for camp in ['alliance','horde']:
-    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in [23,24,25] for stage in ['', 'play']]:
+    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in [23,24,25,26] for stage in ['', 'play']]:
         cases.append((camp+'_campaign_menu_'+variant,'campaign_menu',camp))
+    for state in ['preparation','purchase','specialisation','defeat_summary']:
+        cases.append((camp+'_three_'+state,state,camp))
     for wave in [2,3]:
         cases.append((f'{camp}_routes_mountain_wave{wave}_forecast','preparation',camp))
     cases.append((f'{camp}_routes_mountain_breaches','defeat_summary',camp))
@@ -182,6 +184,9 @@ for name,state,faction in cases:
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
+        if '_three_' in name:
+            command+=['--atelier-trois','--capture-type='+('0' if faction=='alliance' else '3')]
+            if state=='defeat_summary': command+=['--capture-summary-wave=1','--capture-export-report']
         if state=='mission_scout': command+=['--capture-scout-mission='+name.rsplit('_',1)[1]]
         if state=='wolf_walk': command+=['--capture-wolf-offset='+('0.0' if name.endswith('_0') else '0.35')]
         if state=='shop_menu':
@@ -302,10 +307,29 @@ for name,state,faction in cases:
             assert forecast['note']==f'Entrée 1 : {counts[0]} · Entrée 2 : {counts[1]}'
             displayed_counts = [0,0]
             for group in forecast['group_routes']:
-                for segment in group.split('   /   '):
+                for segment in group.split(' / '):
                     entry,count = re.fullmatch(r'Entrée ([12]) · (\d+)',segment).groups()
                     displayed_counts[int(entry)-1] += int(count)
             assert displayed_counts==counts, forecast['group_routes']
+    if '_three_' in name:
+        workshop=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_WORKSHOP=')))
+        assert workshop=={'isolated':True,'routes':3,'mission_empty':True,'map_id':'slate_crossing'}
+        if state=='preparation':
+            forecast=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_FORECAST_SNAPSHOT=')))
+            assert [entry['count'] for entry in forecast['entries']]==[4,3,3]
+            assert 'Entrée 3' in forecast['group_routes'][0]
+        if state=='purchase':
+            assert re.search(r'ROUTE_PURCHASE_HINT=Trajet à portée · Entrée 1 : \d+ % · Entrée 2 : \d+ % · Entrée 3 : \d+ %',text)
+        if state=='specialisation' and faction=='alliance':
+            descriptions=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_SPECIALISATION=')))
+            assert all('Entrée 3' in value for value in descriptions)
+        if state=='defeat_summary':
+            arrivals=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('WAVE_ARRIVALS_SNAPSHOT=')))
+            assert arrivals=='Ennemis ayant atteint la forteresse — Entrée 1 · 4   /   Entrée 2 · 3   /   Entrée 3 · 3'
+            folder=Path(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('RUN_REPORT_FOLDER=')))
+            report=json.loads((folder/'rapport.json').read_text(encoding='utf-8'))
+            assert [entry['arrivals'] for entry in report['arrivals_by_entry']] and len(report['arrivals_by_entry'])==3
+            assert sum(entry['arrivals'] for entry in report['arrivals_by_entry'])==report['total_escaped']
     if '_wave_context_' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('WAVE_CONTEXT_SNAPSHOT=')))
         context=name.rsplit('_',1)[1]
@@ -349,11 +373,11 @@ for name,state,faction in cases:
         ridges = '_ridges' in name
         number = 22 if ridges else 21
         if '_mountain' in name: number=int(name.rsplit('_',1)[1].removeprefix('mountain').removesuffix('play'))
-        map_id = ['slate_pass','slate_ridges','slate_scree','slate_ravine','slate_gates'][number-21]
-        routes = 0 if number==24 else 2
+        map_id = ['slate_pass','slate_ridges','slate_scree','slate_ravine','slate_gates','slate_crossing'][number-21]
+        routes = 0 if number==24 else 3 if number==26 else 2
         assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==(3,number,map_id,routes or 1)
         assert (snap['completed'],snap['other_completed'],snap['po'],snap['xp'])==(number-1,0,60*(number-1),100*(number-1))
-        assert snap['mission_states']==['completed']*(number-21)+['available']+['locked']*(25-number)+['future']*5
+        assert snap['mission_states']==['completed']*(number-21)+['available']+['locked']*(26-number)+['future']*4
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
             assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}

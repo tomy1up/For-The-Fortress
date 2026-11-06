@@ -237,10 +237,14 @@ var syncing_keyboard_focus: bool = false
 func _ready() -> void:
 	var isolated: bool = DisplayServer.get_name() == "headless" or "--script" in OS.get_cmdline_args() or "-s" in OS.get_cmdline_args()
 	var mountain_workshop: bool = "--atelier-col" in OS.get_cmdline_user_args()
-	var route_workshop: bool = mountain_workshop or "--atelier-routes" in OS.get_cmdline_user_args()
+	var three_workshop: bool = "--atelier-trois" in OS.get_cmdline_user_args()
+	var route_workshop: bool = three_workshop or mountain_workshop or "--atelier-routes" in OS.get_cmdline_user_args()
 	if route_workshop:
 		isolated = true
-		model = Model.new(true,Model.Maps.mountain_workshop() if mountain_workshop else Model.Maps.converging_workshop())
+		var definition: Dictionary = Model.Maps.converging_workshop()
+		if mountain_workshop: definition = Model.Maps.mountain_workshop()
+		if three_workshop: definition = Model.Maps.for_id("slate_crossing")
+		model = Model.new(true,definition)
 		mission_definition = {}
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture="): isolated = true
@@ -771,7 +775,7 @@ func _capture_campaign_menu(camp: int) -> void:
 	var mountain_number := 21
 	if variant.begins_with("ridges"): mountain_number = 22
 	if variant.begins_with("mountain"):
-		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").to_int(),23,25)
+		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").to_int(),23,26)
 	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or mountain_preview:
 		var target := mountain_number if mountain_preview else clampi(int(variant.trim_prefix("terrain")),2,10)
 		for number in range(1,target):
@@ -1257,7 +1261,7 @@ func _update_wave_forecast(pointer := Vector2.INF) -> void:
 		for entry in group.get("entries",[]):
 			routes_text.append("Entrée %d · %d"%[entry.number,entry.count])
 			forecast_rows[index].tooltip_text += "\nEntrée %d : %d ennemi%s · de %s à %s s après le départ."%[entry.number,entry.count,"" if entry.count==1 else "s",_number(entry.first_at),_number(entry.last_at)]
-		forecast_routes[index].text = "   /   ".join(routes_text)
+		forecast_routes[index].text = " / ".join(routes_text)
 		forecast_rows[index].tooltip_text += "\nHoraires et intervalles à vitesse ×1 ; divisés par 2 en ×2 et par 10 en ×10 debug."
 	var footer: int = 62+forecast_data.groups.size()*row_step
 	forecast_reward.position.y = footer
@@ -1294,8 +1298,8 @@ func _build_run_summary(screen: Control) -> void:
 		_label(summary_wave_content,headings[column],Vector2(24+positions[column],124),Vector2(widths[column],24),13,Color("cdb47e"))
 	for index in range(10):
 		var row := Button.new()
-		row.position = Vector2(24,154+28*index)
-		row.size = Vector2(924,28)
+		row.position = Vector2(24,154+25*index)
+		row.size = Vector2(924,25)
 		row.mouse_filter = Control.MOUSE_FILTER_STOP
 		row.toggle_mode = true
 		for state in ["normal","hover","pressed","hover_pressed","disabled","focus"]:
@@ -1309,18 +1313,20 @@ func _build_run_summary(screen: Control) -> void:
 		summary_rows.append(row)
 		var cells: Array[Label] = []
 		for column in range(headings.size()):
-			cells.append(_label(row,"",Vector2(positions[column],4),Vector2(widths[column],22),13,Color("bbcbbf")))
+			cells.append(_label(row,"",Vector2(positions[column],3),Vector2(widths[column],20),13,Color("bbcbbf")))
 		summary_cells.append(cells)
-	summary_totals = _label(summary_wave_content,"",Vector2(24,444),Vector2(924,26),14,Color("e0dbbf"))
-	summary_army_heading = _label(summary_wave_content,"Défense finale",Vector2(24,478),Vector2(394,22),14,Color("cdb47e"))
-	summary_final_button = _button(summary_wave_content,"Voir la défense finale",Rect2(432,474,190,26),_select_summary_wave.bind(0))
-	summary_bonus_heading = _label(summary_wave_content,"Bonus choisis",Vector2(650,478),Vector2(298,22),14,Color("cdb47e"))
+	summary_totals = _label(summary_wave_content,"",Vector2(24,414),Vector2(924,26),14,Color("e0dbbf"))
+	summary_army_heading = _label(summary_wave_content,"Défense finale",Vector2(24,448),Vector2(394,22),14,Color("cdb47e"))
+	summary_final_button = _button(summary_wave_content,"Voir la défense finale",Rect2(432,444,190,26),_select_summary_wave.bind(0))
+	summary_bonus_heading = _label(summary_wave_content,"Bonus choisis",Vector2(650,448),Vector2(298,22),14,Color("cdb47e"))
 	for index in range(6):
-		summary_army.append(_label(summary_wave_content,"",Vector2(24,502+16*index),Vector2(610,18),12,Color("bbcbbf")))
+		summary_army.append(_label(summary_wave_content,"",Vector2(24,472+16*index),Vector2(610,18),12,Color("bbcbbf")))
+		summary_army[-1].size.y = 18
 	for index in range(3):
-		summary_bonuses.append(_label(summary_wave_content,"",Vector2(650,502+30*index),Vector2(298,28),13,Color("bbcbbf")))
+		summary_bonuses.append(_label(summary_wave_content,"",Vector2(650,472+30*index),Vector2(298,28),13,Color("bbcbbf")))
 		summary_bonuses[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	summary_wave_arrivals = _label(summary_wave_content,"",Vector2(24,598),Vector2(924,20),13,Color("cdb47e"))
+	summary_wave_arrivals = _label(summary_wave_content,"",Vector2(24,574),Vector2(924,20),13,Color("cdb47e"))
+	summary_wave_arrivals.size.y = 20
 	summary_performance_content = Control.new()
 	summary_performance_content.size = Vector2(972,600)
 	summary_performance_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1380,6 +1386,7 @@ func _build_run_summary(screen: Control) -> void:
 	for unit in range(3): summary_loadout_units.append(_label(summary_loadout_content,"",Vector2(24,470+30*unit),Vector2(924,28),14,Color("bbcbbf")))
 	_label(summary_loadout_content,"Lecture seule · Les niveaux, synergies et bonus obtenus pendant la partie s’ajoutent séparément.",Vector2(24,568),Vector2(924,24),13,Color("91a799"))
 	report_status = _label(panel,"",Vector2(24,600),Vector2(924,18),12,Color("bbcbbf"))
+	report_status.size.y = 18
 	report_status.mouse_filter = Control.MOUSE_FILTER_STOP
 	report_button = _button(panel,"Exporter le rapport",Rect2(24,622,240,30),_export_run_report)
 	report_button.tooltip_text = "Enregistrer localement les vagues, bonus proposés et décisions de cette partie."
@@ -2039,8 +2046,8 @@ func _update_specialisation_choices() -> void:
 		specialisation_names[branch].text = ("A · " if branch == 0 else "B · ") + stats.branch_name
 		specialisation_names[branch].add_theme_font_size_override("font_size",16 if specialisation_numbers_visible else 17)
 		specialisation_descriptions[branch].text = _specialisation_pitch(type,branch)
-		specialisation_descriptions[branch].position.y = 154+branch*224 if specialisation_numbers_visible else 166+branch*224
-		specialisation_descriptions[branch].size.y = 36 if specialisation_numbers_visible else 100
+		specialisation_descriptions[branch].position.y = 154+branch*224 if specialisation_numbers_visible or model.routes.size()>2 else 166+branch*224
+		specialisation_descriptions[branch].size.y = 36 if specialisation_numbers_visible else 144 if model.routes.size()>2 else 100
 		specialisation_descriptions[branch].add_theme_font_size_override("font_size",13 if specialisation_numbers_visible else 18)
 		specialisation_stats[branch].visible = specialisation_numbers_visible
 		specialisation_stats[branch].text = _comparison_text(current,stats,true)
@@ -2052,11 +2059,14 @@ func _update_specialisation_choices() -> void:
 		var candidate: Dictionary = defender.duplicate(true)
 		candidate.level = 4; candidate.branch = branch
 		specialisation_buttons[branch].tooltip_text = _preview_synergy_tooltip(pending_slot,candidate)
-		if model.routes.size() == 2 and not is_equal_approx(current.range,stats.range):
+		if model.routes.size() >= 2 and not is_equal_approx(current.range,stats.range):
 			var center: Vector2 = model.slots[pending_slot]
 			var before := map_view.entry_coverage_percentages(center,current.range)
 			var after := map_view.entry_coverage_percentages(center,stats.range)
-			var coverage := "Entrée 1 · %d → %d %% à portée\nEntrée 2 · %d → %d %% à portée" % [before[0],after[0],before[1],after[1]]
+			var coverage_lines: Array[String] = []
+			for index in range(before.size()):
+				coverage_lines.append("Entrée %d · %d → %d %% à portée" % [index+1,before[index],after[index]])
+			var coverage := "\n".join(coverage_lines)
 			if not specialisation_numbers_visible:
 				specialisation_descriptions[branch].text += "\n"+coverage
 			specialisation_buttons[branch].tooltip_text += "\nTrajet à portée\n"+coverage
@@ -2416,9 +2426,11 @@ func _refresh_purchase_preview() -> void:
 	var error: String = model.purchase_error(selected, type)
 	hint_label.text = "Aperçu sans achat · Synergies prévues : %d · Route bleue : portée · Liens pointillés : partenaires" % stats.synergies.size() if error.is_empty() else "Aperçu sans achat · " + error
 	hint_label.tooltip_text = _preview_synergy_tooltip(selected,candidate)
-	if model.routes.size() == 2:
+	if model.routes.size() >= 2:
 		var coverage := map_view.entry_coverage_percentages(model.slots[selected],stats.range)
-		var route_hint := "Trajet à portée · Entrée 1 : %d %% · Entrée 2 : %d %%" % [coverage[0],coverage[1]]
+		var entries: Array[String] = []
+		for index in range(coverage.size()): entries.append("Entrée %d : %d %%" % [index+1,coverage[index]])
+		var route_hint := "Trajet à portée · " + " · ".join(entries)
 		hint_label.tooltip_text += "\n"+route_hint
 		if error.is_empty(): hint_label.text = route_hint
 
@@ -2443,6 +2455,11 @@ func _combat_tally_text() -> String:
 		arrivals += "\nEntrée 1 : %d · Entrée 2 : %d" % [
 			model.wave_arrivals_by_route.get(model.routes[0].id, 0),
 			model.wave_arrivals_by_route.get(model.routes[1].id, 0)]
+	elif model.routes.size()>2:
+		var entries: Array[String] = []
+		for index in range(model.routes.size()):
+			entries.append("%d · %d" % [index+1,model.wave_arrivals_by_route.get(model.routes[index].id,0)])
+		arrivals += "\nEntrées · " + " / ".join(entries)
 	return arrivals
 
 func _update_interface() -> void:

@@ -69,7 +69,7 @@ func run_checks() -> void:
 				var segments: Array[String] = []
 				for entry in group.entries:
 					segments.append("Entrée %d · %d" % [entry.number,entry.count])
-				check(scene.forecast_routes[index].visible and scene.forecast_routes[index].text=="   /   ".join(segments),"Répartition du groupe visible sans survol")
+				check(scene.forecast_routes[index].visible and scene.forecast_routes[index].text==" / ".join(segments),"Répartition du groupe visible sans survol")
 			var layouts:=scene.map_view.entry_label_layouts()
 			check(layouts.size()==2 and layouts[0].color!=layouts[1].color,"Repères d'entrée distincts")
 			for index in range(2):

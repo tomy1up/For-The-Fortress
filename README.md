@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.152**. La mission 26 propose trois entrées vers la forteresse, avec annonces, portées et bilans adaptés. [Conception et limites](design/Mission_026_Trois_Passages.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.152).
+
 **Prototype v0.151**. Les missions 23 à 25 varient les jonctions et les chemins du biome montagneux. [Conception et limites](design/Missions_023_025_Ardoises.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.151).
 
 **Prototype v0.150**. La mission 22 propose les Crêtes des Ardoises, avec une jonction plus tardive entre les deux routes. [Conception et limites](design/Mission_022_Cretes_des_Ardoises.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.150).

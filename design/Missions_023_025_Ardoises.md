@@ -28,4 +28,4 @@ Ces résultats décrivent les politiques testées. Ils ne mesurent pas la probab
 
 Le contrôle d’intégration lance les missions par le parcours, remporte un combat dans chaque faction avec les achats normaux, rejoue les rapports, vérifie les gains uniques puis leur conservation après réouverture du profil temporaire. Les captures Windows contrôlent les aperçus et les lancements de chaque carte.
 
-Les missions 26 à 200 restent à développer.
+Les missions 27 à 200 restent à développer.
