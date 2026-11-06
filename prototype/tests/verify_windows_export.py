@@ -160,7 +160,7 @@ for camp in ['alliance','horde']:
 for camp in ['alliance','horde']:
     for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
 for camp in ['alliance','horde']:
-    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,36) for stage in ['', 'play']]:
+    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,38) for stage in ['', 'play']]:
         cases.append((camp+'_campaign_menu_'+variant,'campaign_menu',camp))
     for state in ['preparation','purchase','specialisation','defeat_summary']:
         cases.append((camp+'_three_'+state,state,camp))
@@ -377,7 +377,7 @@ for name,state,faction in cases:
         routes = {24:0,26:3,27:0,29:3}.get(21+(number-21)%10,2)
         assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==((number-1)//10+1,number,map_id,routes or 1)
         assert (snap['completed'],snap['other_completed'],snap['po'],snap['xp'])==(number-1,0,60*(number-1),100*(number-1))
-        assert snap['mission_states']==(['completed']*(number-31)+['available']+['locked']*(35-number)+['future']*5 if number>=31 else ['completed']*(number-21)+['available']+['locked']*(30-number))
+        assert snap['mission_states']==(['completed']*(number-31)+['available']+['locked']*(37-number)+['future']*3 if number>=31 else ['completed']*(number-21)+['available']+['locked']*(30-number))
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
             assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}

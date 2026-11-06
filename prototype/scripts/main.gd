@@ -776,7 +776,7 @@ func _capture_campaign_menu(camp: int) -> void:
 	var mountain_number := 21
 	if variant.begins_with("ridges"): mountain_number = 22
 	if variant.begins_with("mountain"):
-		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").to_int(),23,35)
+		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").to_int(),23,37)
 	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or mountain_preview:
 		var target := mountain_number if mountain_preview else clampi(int(variant.trim_prefix("terrain")),2,10)
 		for number in range(1,target):

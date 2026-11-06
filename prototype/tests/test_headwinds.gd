@@ -57,7 +57,7 @@ func run_checks() -> void:
 			check(Report.markdown(report).contains("−10 %"),"Rapport lisible avec le dosage de l'affixe")
 			report.combat_affix.cadence_percent = "90"
 			check(not Replay.verify(report).ok,"Rapport contenant un affixe invalide refusé")
-	for case in [[0,31],[1,31],[0,32],[1,32],[0,33],[1,33],[0,34],[1,34],[0,35],[1,35]]:
+	for case in [[0,31],[1,31],[0,32],[1,32],[0,33],[1,33],[0,34],[1,34],[0,35],[1,35],[0,36],[1,36],[0,37],[1,37]]:
 		var camp: int = case[0]
 		var mission: int = case[1]
 		var game := Main.new()
@@ -71,7 +71,7 @@ func run_checks() -> void:
 			var run: int = profile.begin_mission(camp,Main.CampaignCatalogue.id_for(number),60,10,100)
 			check(profile.credit_mission(run,camp,10,true),"Préparation du parcours isolé")
 		var first: int = 5 if camp==0 else 0
-		if camp==1 and mission==32: first = 10
+		if camp==1 and mission in [32,36,37]: first = 10
 		var tree: int = Talents.coordinates(first).x
 		for index in [first,first,first,first,first,Talents.index_for(tree,1)]:
 			check(profile.allocate(camp,index),"Talents de départ financés par les missions préalables")
@@ -98,8 +98,11 @@ func run_checks() -> void:
 		model.rng.seed = 7
 		var types: Array = [0,1,2] if camp==0 else [3,3,5]
 		if mission==32: types = [0,0,2] if camp==0 else [4,4,3]
+		if mission==36: types = [1,1,0] if camp==0 else [4,4,3]
+		if camp==1 and mission==37: types = [4,4,3]
 		var slots := [3,4,2]
 		if camp==1 and mission==35: slots = [4,3,2]
+		if mission==37: slots = [4,3,2]
 		var army_slots: Array = slots.duplicate()
 		if camp==1 and mission==32: army_slots.append(0)
 		check(model.buy(slots[0],types[0]) and model.buy(slots[1],types[1]),"Défense initiale dans le budget normal")
