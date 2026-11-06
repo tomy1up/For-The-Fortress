@@ -20,7 +20,7 @@ static func source_hashes() -> Dictionary:
 		if name.ends_with(".gd"): result[name] = FileAccess.get_sha256("res://scripts/"+name)
 	return result
 
-func play(faction: int, mission: int, seed_value: int, layout: int, composition: int, early: int, talent: int, step: float, replay: bool, full_tree: bool = false, recruit_from: int = 4, workshop: Dictionary = {}, placement: Array = []) -> Dictionary:
+func play(faction: int, mission: int, seed_value: int, layout: int, composition: int, early: int, talent: int, step: float, replay: bool, full_tree: bool = false, recruit_from: int = 4, workshop: Dictionary = {}, placement: Array = [], extra_recruits: Array = []) -> Dictionary:
 	var definition: Dictionary = Catalogue.definition(mission)
 	var board := Model.Maps.for_id(definition.map_id) if workshop.is_empty() else workshop
 	var m = Model.new(true,board)
@@ -60,14 +60,21 @@ func play(faction: int, mission: int, seed_value: int, layout: int, composition:
 	var types: Array = COMPOSITIONS[composition]
 	if slots.size()!=3 or slots.any(func(slot): return not slot is int or slot<0 or slot>=m.slots.size()) or slots[0]==slots[1] or slots[0]==slots[2] or slots[1]==slots[2]:
 		error = "Trois emplacements distincts et valides sont requis.";return {}
+	var army_slots: Array = slots.duplicate()
+	for recruit in extra_recruits:
+		if not recruit is Array or recruit.size()!=3 or not recruit[0] is int or not recruit[1] is int or not recruit[2] is int or recruit[0]<0 or recruit[0]>=m.slots.size() or recruit[0] in army_slots or recruit[1]<0 or recruit[1]>2 or recruit[2]<2 or recruit[2]>10:
+			error = "Renfort de comparaison invalide (emplacement, famille, première vague).";return {}
+		army_slots.append(recruit[0])
 	if not m.buy(slots[0],faction*3+types[0]) or not m.buy(slots[1],faction*3+types[1]): error = "Composition initiale hors budget.";return {}
 	var recruited_at := 0
 	for wave in range(1,11):
 		if wave == early: m.upgrade(slots[0]) # Une tentative, uniquement si les règles normales le permettent.
 		if wave >= recruit_from and m.defenders[slots[2]].is_empty():
 			if m.buy(slots[2],faction*3+types[2]): recruited_at = wave
+		for recruit in extra_recruits:
+			if wave>=recruit[2] and m.defenders[recruit[0]].is_empty(): m.buy(recruit[0],faction*3+recruit[1])
 		if wave >= 5:
-			for slot in slots:
+			for slot in army_slots:
 				if not m.defenders[slot].is_empty(): m.upgrade(slot,specialisation_branch if m.defenders[slot].level == 3 else -1)
 		if not m.start(): error = "Départ de vague refusé.";return {}
 		while m.active: m.advance(step)
