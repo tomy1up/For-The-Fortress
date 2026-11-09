@@ -488,6 +488,11 @@ static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
 			if area.grow(7).intersects(scenery_bounds(placed)): clear = false;break
 		if clear: result.append(candidate)
 		if result.size() >= 22: break
+	# Sur un terrain encombré, une ruine plus compacte remplace un saule déjà dégagé.
+	# Ses limites sont incluses dans celles de l'arbre : les marges restent préservées.
+	if marsh and not result.any(func(item):return item.kind=="ruin"):
+		for item in result:
+			if item.kind=="willow": item.kind = "ruin";break
 	result.sort_custom(func(a: Dictionary,b: Dictionary) -> bool: return project(a.point).y < project(b.point).y)
 	return result
 

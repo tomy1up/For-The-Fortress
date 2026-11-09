@@ -16,18 +16,21 @@ func check(ok: bool, message: String) -> void:
 func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
 	check(Catalogue.suggested_mission({}) == 1,"Progression indisponible : suggestion prudente, sans inventer un succès")
+	# Le nombre de missions jouables augmente à chaque version : le test le lit dans le catalogue.
+	var playable: int = Catalogue.available_count()
+	check(playable >= 20,"Le catalogue propose au moins les vingt premières missions")
 	for faction in range(2):
 		var p = Profile.new("")
-		for completed in range(21):
+		for completed in range(playable+1):
 			var before: String = JSON.stringify(p.data)
-			check(Catalogue.suggested_mission(p.campaign_status(faction)) == mini(completed+1,20),"Suggestion : première mission à réussir, puis dernière mission jouable lorsque l’échantillon est terminé")
+			check(Catalogue.suggested_mission(p.campaign_status(faction)) == mini(completed+1,playable),"Suggestion : première mission à réussir, puis dernière mission jouable lorsque l’échantillon est terminé")
 			check(Catalogue.suggested_mission(p.campaign_status(1-faction)) == 1 and JSON.stringify(p.data) == before,"La suggestion est sans écriture et ne transfère aucune réussite à l’autre camp")
-			if completed < 20:
+			if completed < playable:
 				var id: int = p.begin_mission(faction,Catalogue.id_for(completed+1),60,10,100)
 				check(p.credit_mission(id,faction,10,true),"Préparation d’une réussite réelle par le service de progression")
 		var scene = Main.new();root.add_child(scene);scene.set_process(false);scene.meta_profile = p
 		scene._open_campaign(faction)
-		check(scene.campaign_menu.chapter == 2 and scene.campaign_menu.selected == 9 and scene.choosing_faction,"Le parcours terminé propose la vingtième mission sans la lancer")
+		check(scene.campaign_menu.chapter == (playable-1)/10+1 and scene.campaign_menu.selected == (playable-1)%10 and scene.choosing_faction,"Le parcours terminé propose la dernière mission jouable sans la lancer")
 		scene.campaign_menu._chapter(2);scene.campaign_menu._select(5)
 		var before: String = JSON.stringify(p.data)
 		scene.campaign_menu._talents();scene.meta_menu.close()

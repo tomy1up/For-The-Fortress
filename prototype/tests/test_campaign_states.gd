@@ -27,7 +27,7 @@ func run_checks() -> void:
 			if chapter == 4:
 				check(menu.nodes.all(func(node):return node.state=="locked"),"Les dix missions du chapitre 4 attendent les réussites préalables")
 			if chapter == 5:
-				check(menu.nodes.slice(0,3).all(func(node):return node.state=="locked") and menu.nodes.slice(3).all(func(node):return node.state=="future"),"Trois missions des marais verrouillées et sept missions futures")
+				check(menu.nodes.slice(0,5).all(func(node):return node.state=="locked") and menu.nodes.slice(5).all(func(node):return node.state=="future"),"Cinq missions des marais verrouillées et cinq missions futures")
 			if chapter > 5:
 				check(menu.chapter_buttons[chapter-1].text.contains("À venir"),"Un chapitre sans contenu jouable ne prétend pas être prêt")
 				for node in menu.nodes: check(node.state == "future" and not node.locked,"Les nœuds d’un chapitre futur restent consultables, sans faux cadenas de progression")

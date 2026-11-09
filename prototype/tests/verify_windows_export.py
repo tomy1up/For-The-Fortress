@@ -160,7 +160,7 @@ for camp in ['alliance','horde']:
 for camp in ['alliance','horde']:
     for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
 for camp in ['alliance','horde']:
-    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,44) for stage in ['', 'play']]:
+    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,46) for stage in ['', 'play']]:
         cases.append((camp+'_campaign_menu_'+variant,'campaign_menu',camp))
     for state in ['preparation','purchase','specialisation','defeat_summary']:
         cases.append((camp+'_three_'+state,state,camp))
@@ -370,12 +370,12 @@ for name,state,faction in cases:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
         number=int(name.rsplit('_',1)[1].removeprefix('marsh').removesuffix('play'))
-        map_id=['marsh_threshold','marsh_basins','marsh_court'][number-41]
-        routes=2 if number==43 else 0
+        map_id=['marsh_threshold','marsh_basins','marsh_court','marsh_channels','marsh_cloister'][number-41]
+        routes=2 if number in (43,44) else 0
         assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
         assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==(5,number,map_id,routes or 1)
         assert (snap['completed'],snap['other_completed'],snap['po'],snap['xp'])==(number-1,0,60*(number-1),100*(number-1))
-        assert snap['mission_states']==['completed']*(number-41)+['available']+['locked']*(43-number)+['future']*7
+        assert snap['mission_states']==['completed']*(number-41)+['available']+['locked']*(45-number)+['future']*5
         if name.endswith('play'):
             marsh=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('MARSH_SNAPSHOT=')))
             assert marsh['isolated'] and marsh['map']==map_id and marsh['decoration']=='marsh'

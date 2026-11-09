@@ -563,6 +563,15 @@ static func converging_workshop() -> Dictionary:
 
 static func for_id(id: String) -> Dictionary:
 	if id == "valley_ford": return valley()
+	if id == "marsh_channels":
+		var shared: Array[Vector2] = [Vector2(8,6),Vector2(11,6),Vector2(11,2),Vector2(15,2),Vector2(15,6),Vector2(17,6)]
+		var upper: Array[Vector2] = [Vector2(0,1),Vector2(5,1),Vector2(5,4),Vector2(8,4)]
+		var lower: Array[Vector2] = [Vector2(0,9),Vector2(4,9),Vector2(4,6)]
+		upper.append_array(shared);lower.append_array(shared)
+		return {"id":id,"title":"Les Chenaux Oubliés","size":Vector2i(18,10),"path_points":upper,"path_length":measured_length(upper),"slots":[Vector2(2.5,3),Vector2(2,7),Vector2(6.5,7.8),Vector2(9.5,4.5),Vector2(13,4),Vector2(16.5,8)],"trees":[],"decoration":"marsh","route_pattern":"alternating_pressure","routes":[{"id":"upper","path_points":upper,"path_length":measured_length(upper)},{"id":"lower","path_points":lower,"path_length":measured_length(lower)}],"water_areas":[Rect2(0.5,4.3,2,1.3),Rect2(6.2,0.3,4.5,1.3),Rect2(8,8,5,1.4),Rect2(15.8,0.5,1.7,3)]}
+	if id == "marsh_cloister":
+		var points: Array[Vector2] = [Vector2(0,3),Vector2(3,3),Vector2(3,8),Vector2(8,8),Vector2(8,2),Vector2(12,2),Vector2(12,7),Vector2(15,7),Vector2(15,4),Vector2(17,4),Vector2(17,6)]
+		return {"id":id,"title":"Le Cloître Submergé","size":Vector2i(18,10),"path_points":points,"path_length":measured_length(points),"slots":[Vector2(1.5,5),Vector2(5.5,5.5),Vector2(6,1),Vector2(10,5),Vector2(14,2),Vector2(16.5,8.5)],"trees":[],"decoration":"marsh","water_areas":[Rect2(0.5,0.5,4.5,1.2),Rect2(4,6.5,2.5,0.8),Rect2(9,8.5,5.5,0.8),Rect2(13,0.4,4,0.8)]}
 	if id == "marsh_basins":
 		var points: Array[Vector2] = [Vector2(0,7),Vector2(3,7),Vector2(3,3),Vector2(7,3),Vector2(7,7),Vector2(11,7),Vector2(11,2),Vector2(15,2),Vector2(15,6),Vector2(17,6)]
 		return {"id":id,"title":"Les Bassins Engloutis","size":Vector2i(18,10),"path_points":points,"path_length":measured_length(points),"slots":[Vector2(1.5,4.8),Vector2(4.8,5),Vector2(6,1.2),Vector2(9,4.7),Vector2(13,4),Vector2(15.5,8.2)],"trees":[],"decoration":"marsh","water_areas":[Rect2(0.5,0.5,1.6,2.6),Rect2(4,8,5,1.4),Rect2(8,0.4,4.5,0.8),Rect2(12,7,2.4,2.3)]}

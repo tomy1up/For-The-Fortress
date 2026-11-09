@@ -22,8 +22,8 @@ func run_checks() -> void:
 	var excessive: Dictionary = source.duplicate(true);excessive.water_areas = []
 	for index in range(33): excessive.water_areas.append([0,0,1,1])
 	check(Model.Maps.from_data(excessive).is_empty(),"Nombre excessif de bassins refusé")
-	for number in range(41,44): await verify_terrain(number)
-	for case in [[0,41],[1,41],[0,42],[1,42],[0,43],[1,43]]:
+	for number in range(41,46): await verify_terrain(number)
+	for case in [[0,41],[1,41],[0,42],[1,42],[0,43],[1,43],[0,44],[1,44],[0,45],[1,45]]:
 		var camp: int = case[0]
 		var mission: int = case[1]
 		var game := Main.new();root.add_child(game);game.set_process(false)
@@ -57,7 +57,7 @@ func run_checks() -> void:
 		check(profile.campaign_status(camp).completed==mission and profile.data.banks[camp].xp==100*mission and profile.data.banks[camp].resource==60*mission and profile.data.banks[camp].points==Profile.Experience.points_for_xp(100*mission),"Première victoire créditée une seule fois selon la courbe normale")
 		check(profile.campaign_status(1-camp).completed==0,"Le parcours adverse est inchangé")
 		game._show_run_summary();game._summary_to_campaign()
-		check(game.campaign_menu.chapter==5 and game.campaign_menu.nodes.slice(0,mission-40).all(func(node):return node.state=="completed") and game.campaign_menu.nodes.slice(3).all(func(node):return node.state=="future"),"Retour sur le nouveau chapitre sans mission future présentée comme prête")
+		check(game.campaign_menu.chapter==5 and game.campaign_menu.nodes.slice(0,mission-40).all(func(node):return node.state=="completed") and game.campaign_menu.nodes.slice(5).all(func(node):return node.state=="future"),"Retour sur le nouveau chapitre sans mission future présentée comme prête")
 		game.free()
 	print("MARSH_CAMPAIGN_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
@@ -82,7 +82,7 @@ func play(model: RefCounted, types: Array) -> void:
 
 func verify_terrain(number: int) -> void:
 	var definition: Dictionary = Model.Maps.for_id(Main.CampaignCatalogue.definition(number).map_id)
-	check(Model.Maps.validation_error(definition).is_empty() and definition.decoration=="marsh" and definition.path_length=={41:29,42:34,43:28}[number],"Première carte des marais valide et de longueur mesurée")
+	check(Model.Maps.validation_error(definition).is_empty() and definition.decoration=="marsh" and definition.path_length=={41:29,42:34,43:28,44:30,45:38}[number],"Première carte des marais valide et de longueur mesurée")
 	var serialized: Dictionary = Model.Maps.to_data(definition)
 	check(Model.Maps.from_data(JSON.parse_string(JSON.stringify(serialized)))==definition,"La nouvelle décoration survit à la sérialisation des cartes et des rapports")
 	var routes: Array = View.routes_for(definition)
