@@ -4,25 +4,30 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 9 novembre 2026 — Claude Code
 
-**Dernière version publiée : v0.163** (commit `c4b4f65`, tag `v0.163`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.163) avec ZIP et `.sha256`, SHA-256 `59e788f7…d723`). 50 missions jouables ; le chapitre 5 des marais est complet. Aucun travail de code en cours non commité.
+**Dernière version publiée : v0.164** (commit `900da97`, tag `v0.164`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.164) avec ZIP et `.sha256`, SHA-256 `efaff707…2a43`). 51 missions jouables. Aucun travail de code en cours non commité.
 
-Fait pendant les dernières missions :
+Contenu de la v0.164 : le **Noyé**, nouveauté du chapitre 6 choisie par le porteur (créature des marais qui régénère ses PV dans l'eau), et la mission 51 « Les Eaux Mortes ». Fiche : `design/Mission_051_Eaux_Mortes_Noye.md`.
 
-- v0.162 : missions 44–45 (commencées par Codex), correction de `test_campaign_guidance.gd`.
-- v0.163 : missions 46–50 (`map_definition.gd`, `campaign_catalogue.gd`), PV ennemis jusqu'à 149 %, tests étendus aux missions 41–50 et à la fin du chapitre 5 (`marsh50completed` dans `verify_windows_export.py`). Fiche : `design/Missions_046_050_Marais.md`.
-- Essai d'équilibrage : `C:/Projet/.tools/survey_marsh_46_50.gd` → `dist/marsh-missions46-50-survey.json` (1 080 parties).
-- Régression complète : 99 suites, 53 647 contrôles Godot, 17 tests Python. 44 essais Windows et 84 empreintes de sources réussis.
+Points techniques à connaître :
 
-Pour Codex : les bassins des missions 46–50 sont des emplacements neutres posés par Claude Code ; voir `TODO_VISUELS.md`.
+- Le Noyé est l'ennemi de type 9, jeu de rencontres `marsh_drowned` (`scripts/drowned_encounters.gd`). Réglages d'essai : 150 PV de base, vitesse 0,85, régénération `REGEN_PER_SECOND = 0.05` (5 % des PV max par seconde).
+- L'eau est un champ facultatif `flooded` d'une carte : tronçons `{route, from, to}` en distance parcourue, réservés aux marais. La régénération est calculée exactement par tronçon (indépendante du pas de temps), dans `valley_model.gd` (`_update_positions`).
+- Ancien piège : `configure_wave_set` et `configure_enemy_hp` refusent sans rien dire d'être appelés après `select_faction`. Les configurer avant.
+- Tout nouveau fichier d'exécution doit être déclaré dans trois listes d'export (voir `AGENTS.md`). L'oubli de `drowned_encounters.gd` n'a été vu que par la vérification du ZIP.
+- Essais d'équilibrage : `C:/Projet/.tools/survey_marsh_51.gd` (et `survey_marsh_51_control.gd`, sans régénération) → `dist/marsh-mission51-*.json`.
+- Régression complète : 100 suites, 54 048 contrôles Godot, 17 tests Python. 48 essais Windows et 85 empreintes de sources réussis. Nouvelle suite : `tests/test_drowned.gd`.
+
+Pour Codex : le visuel du Noyé (silhouette provisoire de la tortue) et l'habillage des tronçons inondés (repère bleu provisoire) sont dans `TODO_VISUELS.md`.
 
 Fichiers non suivis à laisser tels quels sauf demande : `design/essais/v0109_game_frames/`, `prototype/tools/survey_route_workshops.gd.uid`. `prototype/scripts/enemy_walk_art.gd` apparaît modifié mais son contenu est identique (fins de ligne) : ne pas le committer.
 
 ## Prochaines étapes possibles
 
-- Code (Claude Code) : chapitre 6, missions 51–60, une fois la nouveauté du biome choisie par le porteur.
+- Code (Claude Code) : missions 52–60, qui exploitent le Noyé sur d'autres tracés (plusieurs entrées, eau sur la partie commune).
 - Visuels (Codex) : voir `TODO_VISUELS.md`.
 
 ## Questions ouvertes pour le porteur
 
-- Nouveauté du chapitre 6 (missions 51–60) : attaquants propres aux marais ou affixe de combat, comme Vents contraires au chapitre 4. À choisir avant de développer ces missions.
-- Équilibrage des marais à confirmer en jeu, surtout côté Horde (16 à 42 victoires sur 108 aux missions 46–50 dans les essais automatiques) ; la Nef (49) paraît plus clémente que ses voisines.
+- Confirmer en jeu le principe d'eau retenu (tronçons inondés du chemin) et la force de la régénération (5 % par seconde). Dans les essais automatiques, elle fait passer l'Alliance de 70 à 42 victoires sur 108 et la Horde de 32 à 14.
+- Équilibrage des marais à confirmer en jeu, surtout côté Horde.
+- Vérification du ZIP : sur cette machine, les captures en fenêtre réduite (`--background`) se bloquent parfois ; relancer sans cette option si besoin.
