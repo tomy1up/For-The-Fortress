@@ -1,6 +1,7 @@
 extends RefCounted
 const Routes = preload("res://scripts/route_geometry.gd")
 const Drowned = preload("res://scripts/drowned_encounters.gd")
+const DrownedMaps = preload("res://scripts/drowned_maps.gd")
 ## Dix terrains de prototype du premier chapitre. Géométries à éprouver en jeu.
 const CHAPTER_ONE_MAPS: Dictionary = {
 	"ford_turns": {
@@ -564,6 +565,7 @@ static func converging_workshop() -> Dictionary:
 
 static func for_id(id: String) -> Dictionary:
 	if id == "valley_ford": return valley()
+	if DrownedMaps.IDS.has(id): return DrownedMaps.board(id)
 	if id == "marsh_channels":
 		var shared: Array[Vector2] = [Vector2(8,6),Vector2(11,6),Vector2(11,2),Vector2(15,2),Vector2(15,6),Vector2(17,6)]
 		var upper: Array[Vector2] = [Vector2(0,1),Vector2(5,1),Vector2(5,4),Vector2(8,4)]

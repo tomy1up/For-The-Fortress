@@ -71,7 +71,7 @@ La v0.160 ouvre ce biome avec [le Seuil des Marais, mission 41](Mission_041_Seui
 
 ## Décision du 9 novembre 2026 — nouveauté du chapitre 6
 
-Le porteur retient **le Noyé, une créature des marais qui régénère ses PV dans l'eau**, comme nouvel attaquant lié au biome (CAMP-017). La v0.164 l'introduit à la mission 51, [Les Eaux Mortes](Mission_051_Eaux_Mortes_Noye.md). La définition de l'eau (tronçons inondés du chemin), les statistiques, la régénération de 5 % des PV maximum par seconde et la composition des vagues sont des propositions de prototype à confirmer. Les missions 52–60 restent à développer ; aucun autre attaquant ni affixe n'est décidé pour ce chapitre.
+Le porteur retient **le Noyé, une créature des marais qui régénère ses PV dans l'eau**, comme nouvel attaquant lié au biome (CAMP-017). La v0.164 l'introduit à la mission 51, [Les Eaux Mortes](Mission_051_Eaux_Mortes_Noye.md). La définition de l'eau (tronçons inondés du chemin), les statistiques, la régénération de 5 % des PV maximum par seconde et la composition des vagues sont des propositions de prototype à confirmer. La v0.165 termine le chapitre avec [les missions 52–60](Missions_052_060_Marais.md), neuf nouveaux tracés où le Noyé régénère dans l'eau. Aucun autre attaquant ni affixe n'est décidé pour ce chapitre. Le chapitre 7 ouvrira un nouveau biome, à choisir avec le porteur.
 
 Les nouvelles mécaniques seront proposées séparément. Les attaquants propres au biome, l'éventuel affixe et leurs valeurs restent ouverts. Selon le rythme de progression retenu, le second chapitre du biome, aux missions 51–60, doit introduire sa nouveauté. Les missions 41–50 préparent sa découverte par les terrains et les configurations de chemins.
 

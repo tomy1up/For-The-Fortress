@@ -58,7 +58,7 @@ func run_checks() -> void:
 		check(profile.campaign_status(1-camp).completed==0,"Le parcours adverse est inchangé")
 		game._show_run_summary();game._summary_to_campaign()
 		if mission < 50: check(game.campaign_menu.chapter==5 and game.campaign_menu.nodes.slice(0,mission-40).all(func(node):return node.state=="completed") and game.campaign_menu.nodes.slice(mission-40).all(func(node):return node.state in ["available","locked"]),"Retour sur le chapitre sans mission suivante présentée comme réussie")
-		else: check(game.campaign_menu.chapter==6 and game.campaign_menu.nodes[0].state=="available" and game.campaign_menu.nodes.slice(1).all(func(node):return node.state=="future"),"La fin du chapitre 5 propose la mission 51 sans la lancer")
+		else: check(game.campaign_menu.chapter==6 and game.campaign_menu.nodes[0].state=="available" and game.campaign_menu.nodes.slice(1).all(func(node):return node.state=="locked"),"La fin du chapitre 5 propose la mission 51 sans la lancer")
 		game.free()
 	print("MARSH_CAMPAIGN_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)

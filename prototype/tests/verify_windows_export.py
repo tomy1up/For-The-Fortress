@@ -160,7 +160,7 @@ for camp in ['alliance','horde']:
 for camp in ['alliance','horde']:
     for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
 for camp in ['alliance','horde']:
-    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,52) for stage in ['', 'play']]+['marsh50completed']:
+    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,61) for stage in ['', 'play']]+['marsh50completed','marsh60completed']:
         cases.append((camp+'_campaign_menu_'+variant,'campaign_menu',camp))
     for state in ['preparation','purchase','specialisation','defeat_summary']:
         cases.append((camp+'_three_'+state,state,camp))
@@ -370,13 +370,13 @@ for name,state,faction in cases:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
         number=int(name.rsplit('_',1)[1].removeprefix('marsh').removesuffix('play').removesuffix('completed'))
-        map_id=['marsh_threshold','marsh_basins','marsh_court','marsh_channels','marsh_cloister','marsh_causeway','marsh_fords','marsh_islets','marsh_nave','marsh_sanctuary','marsh_stagnant'][number-41]
-        routes={43:2,44:2,47:3,48:2,50:3}.get(number,0)
+        map_id=['marsh_threshold','marsh_basins','marsh_court','marsh_channels','marsh_cloister','marsh_causeway','marsh_fords','marsh_islets','marsh_nave','marsh_sanctuary','marsh_stagnant','marsh_banks','marsh_currents','marsh_abyss','marsh_delta','marsh_overflow','marsh_pillars','marsh_crossroads','marsh_cathedral','marsh_heart'][number-41]
+        routes={43:2,44:2,47:3,48:2,50:3,53:2,55:3,56:2,58:3,59:2,60:3}.get(number,0)
         assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
         assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==((number-1)//10+1,number,map_id,routes or 1)
         won_missions=number if name.endswith('completed') else number-1
         assert (snap['completed'],snap['other_completed'],snap['po'],snap['xp'])==(won_missions,0,60*won_missions,100*won_missions)
-        assert snap['mission_states']==(['completed']*10 if name.endswith('completed') else ['completed']*(number-(number-1)//10*10-1)+['available']+['locked']*(min(51,(number-1)//10*10+10)-number)+['future']*((number-1)//10*10+10-min(51,(number-1)//10*10+10)))
+        assert snap['mission_states']==(['completed']*10 if name.endswith('completed') else ['completed']*(number-(number-1)//10*10-1)+['available']+['locked']*(min(60,(number-1)//10*10+10)-number)+['future']*((number-1)//10*10+10-min(60,(number-1)//10*10+10)))
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             marsh=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('MARSH_SNAPSHOT=')))

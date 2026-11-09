@@ -30,7 +30,7 @@ func verify_catalogue() -> void:
 	var Catalogue = Main.CampaignCatalogue
 	var definition: Dictionary = Catalogue.definition(51)
 	check(definition.available and definition.map_id == "marsh_stagnant" and definition.wave_set_id == "marsh_drowned" and definition.hp_percent == 150 and definition.po == 60 and definition.xp == 100 and definition.waves == 10,"La mission 51 ouvre le chapitre 6 avec ses rencontres et ses gains habituels")
-	check(Catalogue.runtime("campaign.051").wave_set_id == "marsh_drowned" and not Catalogue.definition(52).available and Catalogue.runtime("campaign.052").is_empty(),"La mission 52 reste à venir")
+	check(Catalogue.runtime("campaign.051").wave_set_id == "marsh_drowned" and Catalogue.definition(52).available and not Catalogue.definition(61).available and Catalogue.runtime("campaign.061").is_empty(),"La mission 61 reste à venir")
 	check(not Catalogue.definition(50).has("wave_set_id") and Catalogue.definition(50).get("combat_affix",{}).is_empty(),"Les missions précédentes n'héritent ni des rencontres ni d'un affixe")
 	for faction in range(2):
 		var identity: Dictionary = Model.Enemies.for_profile(9,faction)
@@ -45,7 +45,7 @@ func verify_catalogue() -> void:
 	check(Model.Enemies.for_profile(10,0).is_empty(),"Un profil inconnu reste refusé")
 	var forecast: Dictionary = Model.wave_forecast(2,0,150,"marsh_drowned")
 	check(forecast.groups[0].type == 9 and forecast.groups[0].count == 1 and forecast.groups[0].name == "Noyé" and Model.wave_forecast(2,0,150,"inconnu").is_empty(),"La prévision de la vague 2 annonce un Noyé")
-	check(Model.valid_enemy_hp_percent(150) and not Model.valid_enemy_hp_percent(151),"Les PV ennemis montent jusqu'à 150 %")
+	check(Model.valid_enemy_hp_percent(150) and Model.valid_enemy_hp_percent(159) and not Model.valid_enemy_hp_percent(160),"Les PV ennemis montent jusqu'à 159 %")
 
 func verify_flood_rules() -> void:
 	var stretches: Array = [{"route":"","from":2.0,"to":5.0},{"route":"","from":8.0,"to":9.0},{"route":"b","from":0.0,"to":4.0}]
@@ -196,5 +196,5 @@ func verify_campaign(camp: int) -> void:
 	check(profile.campaign_status(camp).completed == 51 and profile.data.banks[camp].xp == 5100 and profile.data.banks[camp].resource == 3060,"Première victoire créditée une seule fois")
 	check(profile.campaign_status(1-camp).completed == 0,"Le parcours adverse est inchangé")
 	game._show_run_summary();game._summary_to_campaign()
-	check(game.campaign_menu.chapter == 6 and game.campaign_menu.nodes[0].state == "completed" and game.campaign_menu.nodes.slice(1).all(func(node):return node.state == "future"),"Retour sur le chapitre 6 sans mission suivante présentée comme prête")
+	check(game.campaign_menu.chapter == 6 and game.campaign_menu.nodes[0].state == "completed" and game.campaign_menu.nodes[1].state == "available" and game.campaign_menu.nodes.slice(2).all(func(node):return node.state == "locked"),"Retour sur le chapitre 6 avec la mission 52 disponible")
 	game.free()
