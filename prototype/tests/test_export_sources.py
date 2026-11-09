@@ -92,7 +92,7 @@ $after | ConvertTo-Json -Compress
 """, encoding='utf-8-sig')
             shell = shutil.which('pwsh') or shutil.which('powershell.exe')
             self.assertIsNotNone(shell, 'PowerShell requis pour vérifier l’exporteur Windows')
-            result = subprocess.run([shell, '-NoProfile', '-NonInteractive', '-File', str(script), str(module), str(root), operation], capture_output=True, text=True, timeout=15)
+            result = subprocess.run([shell, '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', str(script), str(module), str(root), operation], capture_output=True, text=True, timeout=15)
             self.assertEqual(result.returncode == 0, success, result.stderr)
             if success:
                 self.assertEqual(json.loads(result.stdout)['source.gd'], hashlib.sha256(b'before').hexdigest())

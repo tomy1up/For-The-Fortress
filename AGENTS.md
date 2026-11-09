@@ -1,0 +1,89 @@
+# Consignes communes aux agents — For the Fortress!
+
+Ce fichier est la source unique des consignes de développement. Codex le lit directement ; Claude Code le lit via `CLAUDE.md`. Toute nouvelle règle durable s'ajoute ici, pas dans un fichier propre à un agent.
+
+Avant de commencer une mission, lire [PASSATION.md](PASSATION.md) : il décrit l'état laissé par l'agent précédent. Les rôles de chaque agent sont fixés plus bas (« Répartition des rôles ») ; la file des visuels est [TODO_VISUELS.md](TODO_VISUELS.md).
+
+## Le projet
+
+Tower defense 2D isométrique, deux factions (Alliance des Royaumes, Horde des Cendres), campagne de missions de dix vagues. « For the Fortress! » reste un nom de travail.
+
+- `For_the_Fortress_GDD.md` (et `.docx`) : GDD de référence.
+- `design/` : décisions, fiches de lot et comparaisons. Points d'entrée : `Cadrage_campagne_2026-10-29.md` (règles CAMP-xxx), `Biomes_cumul_2026-10-31.md` (biomes, chapitres, décisions récentes), `Choix_techniques_prototype.md`.
+- `design/essais/` : notes de version `vXXXX_release_notes.md`, captures de QA, ateliers artistiques.
+- `prototype/` : projet Godot (`project.godot`, `scripts/`, `scenes/`, `assets/`, `tests/`, `tools/`, `distribution/`).
+- `README.md` : une ligne d'annonce par version, la plus récente en haut.
+- `dist/` : exports Windows et journaux de vérification, hors Git.
+
+## Règles de collaboration avec le porteur du projet
+
+- Écrire au porteur en français, sans exception.
+- Le porteur décide de la direction : périmètre, expérience visible, règles de jeu, équilibrage approuvé, priorités. Les choix purement techniques reviennent à l'agent, qui les explique brièvement.
+- Ne jamais présenter une hypothèse de conception comme approuvée. Les valeurs et habillages non validés sont écrits « réglage/habillage de prototype à confirmer ». Les décisions validées sont datées et attribuées au porteur dans `design/`.
+- Préserver la progression persistante (PO, XP, talents, missions réussies) et l'isolation des factions : chaque faction a son parcours, ses gains et ses talents.
+- Les essais graphiques s'ouvrent sur l'écran de droite : Godot `--screen 1`, fenêtre minimisée quand c'est possible pour laisser la main au joueur.
+- Ne pas affirmer qu'un test passe, qu'un fichier existe ou qu'une version est publiée sans l'avoir vérifié. Rapporter les nombres de contrôles réellement obtenus.
+
+## Outillage (hors dépôt)
+
+- Moteur : Godot 4.7.2 stable standard, `C:/Projet/.tools/Godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe` (version attendue `4.7.2.stable.official.ed1daf0bf`). Templates d'export dans `%APPDATA%/Godot/export_templates/4.7.2.stable`.
+- `C:/Projet/.tools/` contient aussi des scripts ponctuels d'essais et de publication (`survey_*.gd`, `publish_v0XXX.py`). Ce ne sont pas des outils officiels du dépôt.
+- Python 3 système (`python`). Sous Windows PowerShell, appeler les `.ps1` avec `-ExecutionPolicy Bypass` : la stratégie par défaut de la machine les bloque.
+- GitHub : dépôt privé `tomy1up/For-The-Fortress`, `gh` authentifié sur le compte `tomy1up`.
+
+## Commandes
+
+Jouer depuis les sources : `prototype/Lancer_le_prototype.cmd`, ou Godot avec `--path prototype --screen 1`. Atelier des routes : ajouter `-- --atelier-routes`.
+
+Tests (Godot + Python + contrats du GDD) :
+
+```
+python prototype/tests/run_regression.py                                  # tout (99 suites, long)
+python prototype/tests/run_regression.py --test test_marsh_campaign.gd    # suite ciblée, répétable
+python prototype/tests/run_regression.py --report dist/vXXXX-regression/report.json --timeout 120
+```
+
+Chaque suite Godot imprime `TESTS checks=N failures=0` ; le rapport final est `REGRESSION ok=True ...`. Définir `PYTHONIOENCODING=utf-8` si la console déforme les accents.
+
+Export Windows (la version doit correspondre à `project.godot`) :
+
+```
+powershell -NoProfile -ExecutionPolicy Bypass -File prototype/Exporter_Windows.ps1 -Version 0.XXX -OutputRoot "dist/v0XXX-validation"
+python prototype/tests/verify_windows_export.py dist/v0XXX-validation/For_the_Fortress_v0.XXX_Windows_x64.zip --destination dist/v0XXX-verification --screen 1 --background --source-project prototype [--case NOM ...]
+```
+
+`verify_windows_export.py` contrôle le contenu du ZIP, les empreintes des sources et lance des captures ; inspecter les captures pertinentes avant de publier.
+
+## Cycle d'une version
+
+Une version = un lot cohérent, testé, compilé et publié. Numérotation `0.XXX` (dernière publiée : voir `README.md` et `git tag`).
+
+1. Changer la version partout où Codex l'a fait jusqu'ici : `prototype/project.godot` (`config/version`), `prototype/export_presets.cfg`, valeur par défaut de `prototype/Exporter_Windows.ps1`, constantes de version dans les scripts et tests qui la vérifient (rechercher l'ancien numéro avec `rg`), `prototype/distribution/LIRE_MOI.txt`.
+2. Développer le lot et ses tests ; ajouter les nouvelles ressources d'exécution à la liste de `Exporter_Windows.ps1` et au préréglage d'export.
+3. Documenter : fiche `design/<Sujet>.md` (statut de conception, paramètres, essais, limites), notes `design/essais/vXXXX_release_notes.md`, ligne d'annonce en tête de `README.md`, mise à jour des documents de décision concernés.
+4. Vérifier : suites ciblées puis régression complète, export, `verify_windows_export.py`, inspection des captures dans les deux factions.
+5. Livrer, si la mission l'autorise : commit sur `main` (message court en anglais, par ex. `Add marsh missions 42 and 43 with map-specific basins`), tag annoté `v0.XXX` (`Prototype v0.XXX - <titre>`), push de `main` et du tag, puis publication GitHub en préversion avec le ZIP et son `.sha256` :
+
+```
+gh release create v0.XXX dist/v0XXX-validation/For_the_Fortress_v0.XXX_Windows_x64.zip dist/v0XXX-validation/For_the_Fortress_v0.XXX_Windows_x64.sha256 --prerelease --title "Prototype v0.XXX - <titre>" --notes-file design/essais/v0XXX_release_notes.md
+```
+
+Vérifier ensuite que la release liste les deux fichiers. Ne jamais forcer un push ni réécrire un tag publié.
+
+## Répartition des rôles
+
+Décision du porteur, 9 novembre 2026 :
+
+- **Codex : visuels, animations et toute la production artistique.** Assets, dessins, sprites, animations (marche, attaque, impacts, morts), effets visuels, icônes, habillage des cartes, palettes, décor, direction graphique des écrans.
+- **Claude Code : code.** Règles, campagne, missions, interface fonctionnelle, tests, export, publication.
+- **Son** : pas encore abordé ; ni l'un ni l'autre n'en produit avant que le porteur décide de son attribution.
+- Claude Code ne réalise pas le travail visuel : il l'ajoute à [TODO_VISUELS.md](TODO_VISUELS.md) avec le contexte utile, et peut poser un emplacement neutre ou réutiliser un visuel existant pour que le code fonctionne en attendant.
+- Codex prend ses tâches dans `TODO_VISUELS.md` et les marque livrées. S'il doit toucher au code pour intégrer un visuel, il garde les tests au vert et le signale dans `PASSATION.md`.
+
+## Passation entre agents
+
+Codex et Claude Code travaillent sur le même dossier, jamais en même temps.
+
+- En début de mission : lire `PASSATION.md`, puis `git status` et `git log -5` ; l'état réel du dépôt fait foi.
+- En fin de mission, ou dès que le porteur annonce un changement d'agent : mettre à jour `PASSATION.md` (version en cours, ce qui est commité ou non, tests réellement lancés et résultats, prochaines étapes, questions ouvertes pour le porteur).
+- Ne pas laisser de travail à moitié appliqué sans le signaler dans `PASSATION.md`.
