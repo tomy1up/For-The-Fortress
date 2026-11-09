@@ -134,7 +134,7 @@ func run_checks() -> void:
 				game.campaign_menu._chapter(4)
 				check(game.campaign_menu.nodes.all(func(node):return node.state=="completed") and game.campaign_menu.start_button.text=="Rejouer sans nouveau gain","Le chapitre terminé propose le rejeu sans faux gain")
 				game.campaign_menu._chapter(5)
-				check(game.campaign_menu.nodes[0].state=="available" and game.campaign_menu.nodes.slice(1,5).all(func(node):return node.state=="locked") and game.campaign_menu.nodes.slice(5).all(func(node):return node.state=="future") and not game.campaign_menu.start_button.disabled,"Les marais se débloquent après la fin du chapitre 4")
+				check(game.campaign_menu.nodes[0].state=="available" and game.campaign_menu.nodes.slice(1).all(func(node):return node.state=="locked") and not game.campaign_menu.start_button.disabled,"Les marais se débloquent après la fin du chapitre 4")
 				game.campaign_menu._chapter(4);game.campaign_menu._select(9);game.campaign_menu._launch()
 				check(game.model.gold==150 and game.model.bonuses.is_empty() and game.model.combat_affix==AFFIX,"Rejouer la finale repart avec les règles normales de la mission")
 				play_policy(game.model,types,slots,extra,seed_value)

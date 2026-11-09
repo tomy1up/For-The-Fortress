@@ -54,6 +54,8 @@ python prototype/tests/verify_windows_export.py dist/v0XXX-validation/For_the_Fo
 
 `verify_windows_export.py` contrôle le contenu du ZIP, les empreintes des sources et lance des captures ; inspecter les captures pertinentes avant de publier.
 
+Captures avec défenseurs d'une mission (après export, depuis le dossier vérifié) : lancer `For_the_Fortress.exe --screen 1 -- "--capture=<png>" --capture-state=campaign_menu --capture-faction=<alliance|horde> --capture-campaign=marsh<N>play --capture-mountain-defence` (`mountain<N>play` pour les Ardoises). Sans `--minimized` : une fenêtre réduite peut ne jamais enregistrer l'image et rester bloquée.
+
 ## Cycle d'une version
 
 Une version = un lot cohérent, testé, compilé et publié. Numérotation `0.XXX` (dernière publiée : voir `README.md` et `git tag`).

@@ -572,6 +572,36 @@ static func for_id(id: String) -> Dictionary:
 	if id == "marsh_cloister":
 		var points: Array[Vector2] = [Vector2(0,3),Vector2(3,3),Vector2(3,8),Vector2(8,8),Vector2(8,2),Vector2(12,2),Vector2(12,7),Vector2(15,7),Vector2(15,4),Vector2(17,4),Vector2(17,6)]
 		return {"id":id,"title":"Le Cloître Submergé","size":Vector2i(18,10),"path_points":points,"path_length":measured_length(points),"slots":[Vector2(1.5,5),Vector2(5.5,5.5),Vector2(6,1),Vector2(10,5),Vector2(14,2),Vector2(16.5,8.5)],"trees":[],"decoration":"marsh","water_areas":[Rect2(0.5,0.5,4.5,1.2),Rect2(4,6.5,2.5,0.8),Rect2(9,8.5,5.5,0.8),Rect2(13,0.4,4,0.8)]}
+	# Missions 46–50 : tracés de prototype ; les bassins sont des emplacements neutres en attente d'habillage.
+	if id == "marsh_causeway":
+		var points: Array[Vector2] = [Vector2(0,5),Vector2(6,5),Vector2(6,2),Vector2(12,2),Vector2(12,8),Vector2(17,8),Vector2(17,6)]
+		return {"id":id,"title":"La Chaussée des Roseaux","size":Vector2i(18,10),"path_points":points,"path_length":measured_length(points),"slots":[Vector2(3,7),Vector2(9,0.8),Vector2(4,3.5),Vector2(9,4.5),Vector2(14.5,5.5),Vector2(15,9.3)],"trees":[],"decoration":"marsh","water_areas":[Rect2(0.5,0.5,4,1.5),Rect2(7,5.5,4,2),Rect2(1,8,4,1.4),Rect2(13.5,0.5,3.5,2.5)]}
+	if id in ["marsh_fords","marsh_sanctuary"]:
+		var shared: Array[Vector2] = [Vector2(8,5),Vector2(11,5),Vector2(11,2),Vector2(15,2),Vector2(15,6),Vector2(17,6)]
+		var upper: Array[Vector2] = [Vector2(0,1),Vector2(4,1),Vector2(4,3),Vector2(8,3)]
+		var middle: Array[Vector2] = [Vector2(0,5)]
+		var lower: Array[Vector2] = [Vector2(0,9),Vector2(3,9),Vector2(3,7),Vector2(8,7)]
+		var title := "Les Trois Gués Noyés"
+		var slots: Array = [Vector2(2,3),Vector2(2,7),Vector2(6,4),Vector2(9.5,3.5),Vector2(13,4),Vector2(16,8.3)]
+		var pools: Array[Rect2] = [Rect2(5,0.3,5,1.2),Rect2(4.5,8,5,1.4),Rect2(12,7,3,2),Rect2(15.8,0.5,1.7,2.8)]
+		if id == "marsh_sanctuary":
+			title = "Le Sanctuaire Englouti"
+			shared.assign([Vector2(10,5),Vector2(13,5),Vector2(13,2),Vector2(16,2),Vector2(16,6),Vector2(17,6)])
+			upper.assign([Vector2(0,1),Vector2(6,1),Vector2(6,3),Vector2(10,3)])
+			lower.assign([Vector2(0,9),Vector2(4,9),Vector2(4,7),Vector2(10,7)])
+			slots = [Vector2(3,3),Vector2(2,7),Vector2(8,4),Vector2(11.5,3.5),Vector2(14.5,4),Vector2(8,8.4)]
+			pools.assign([Rect2(7,0.3,5,1.4),Rect2(11,6.5,4,2.5),Rect2(0.4,1.6,1.6,2.6),Rect2(16.3,0.5,1.4,1.2)])
+		upper.append_array(shared);middle.append_array(shared);lower.append_array(shared)
+		return {"id":id,"title":title,"size":Vector2i(18,10),"path_points":upper,"path_length":measured_length(upper),"slots":slots,"trees":[],"decoration":"marsh","routes":[{"id":"upper","path_points":upper,"path_length":measured_length(upper)},{"id":"middle","path_points":middle,"path_length":measured_length(middle)},{"id":"lower","path_points":lower,"path_length":measured_length(lower)}],"water_areas":pools}
+	if id == "marsh_islets":
+		var shared: Array[Vector2] = [Vector2(12,5),Vector2(14,5),Vector2(14,2),Vector2(16,2),Vector2(16,6),Vector2(17,6)]
+		var upper: Array[Vector2] = [Vector2(0,1),Vector2(4,1),Vector2(4,4),Vector2(8,4),Vector2(8,1),Vector2(12,1)]
+		var lower: Array[Vector2] = [Vector2(0,9),Vector2(3,9),Vector2(3,6),Vector2(8,6),Vector2(8,8),Vector2(12,8)]
+		upper.append_array(shared);lower.append_array(shared)
+		return {"id":id,"title":"Les Îlots du Chœur","size":Vector2i(18,10),"path_points":upper,"path_length":measured_length(upper),"slots":[Vector2(2,2.5),Vector2(1.5,7.5),Vector2(6,5),Vector2(10,5),Vector2(13,3.5),Vector2(10,9.2)],"trees":[],"decoration":"marsh","route_pattern":"alternating_pressure","routes":[{"id":"upper","path_points":upper,"path_length":measured_length(upper)},{"id":"lower","path_points":lower,"path_length":measured_length(lower)}],"water_areas":[Rect2(5,1.6,2,1.6),Rect2(4.5,7,2.5,1.4),Rect2(14.2,7,3,2.4),Rect2(16.6,0.5,1,1.2)]}
+	if id == "marsh_nave":
+		var points: Array[Vector2] = [Vector2(0,2),Vector2(3,2),Vector2(3,8),Vector2(7,8),Vector2(7,2),Vector2(11,2),Vector2(11,8),Vector2(15,8),Vector2(15,6),Vector2(17,6)]
+		return {"id":id,"title":"La Nef Effondrée","size":Vector2i(18,10),"path_points":points,"path_length":measured_length(points),"slots":[Vector2(1.5,5),Vector2(5,4.5),Vector2(5,6.5),Vector2(9,5.5),Vector2(13,5),Vector2(9,3.5)],"trees":[],"decoration":"marsh","water_areas":[Rect2(0.4,7.2,2,2.2),Rect2(7.6,0.3,2.8,1.2)]}
 	if id == "marsh_basins":
 		var points: Array[Vector2] = [Vector2(0,7),Vector2(3,7),Vector2(3,3),Vector2(7,3),Vector2(7,7),Vector2(11,7),Vector2(11,2),Vector2(15,2),Vector2(15,6),Vector2(17,6)]
 		return {"id":id,"title":"Les Bassins Engloutis","size":Vector2i(18,10),"path_points":points,"path_length":measured_length(points),"slots":[Vector2(1.5,4.8),Vector2(4.8,5),Vector2(6,1.2),Vector2(9,4.7),Vector2(13,4),Vector2(15.5,8.2)],"trees":[],"decoration":"marsh","water_areas":[Rect2(0.5,0.5,1.6,2.6),Rect2(4,8,5,1.4),Rect2(8,0.4,4.5,0.8),Rect2(12,7,2.4,2.3)]}
