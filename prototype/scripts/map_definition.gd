@@ -1,5 +1,6 @@
 extends RefCounted
 const Routes = preload("res://scripts/route_geometry.gd")
+const Drowned = preload("res://scripts/drowned_encounters.gd")
 ## Dix terrains de prototype du premier chapitre. Géométries à éprouver en jeu.
 const CHAPTER_ONE_MAPS: Dictionary = {
 	"ford_turns": {
@@ -572,6 +573,10 @@ static func for_id(id: String) -> Dictionary:
 	if id == "marsh_cloister":
 		var points: Array[Vector2] = [Vector2(0,3),Vector2(3,3),Vector2(3,8),Vector2(8,8),Vector2(8,2),Vector2(12,2),Vector2(12,7),Vector2(15,7),Vector2(15,4),Vector2(17,4),Vector2(17,6)]
 		return {"id":id,"title":"Le Cloître Submergé","size":Vector2i(18,10),"path_points":points,"path_length":measured_length(points),"slots":[Vector2(1.5,5),Vector2(5.5,5.5),Vector2(6,1),Vector2(10,5),Vector2(14,2),Vector2(16.5,8.5)],"trees":[],"decoration":"marsh","water_areas":[Rect2(0.5,0.5,4.5,1.2),Rect2(4,6.5,2.5,0.8),Rect2(9,8.5,5.5,0.8),Rect2(13,0.4,4,0.8)]}
+	# Mission 51 : premier terrain avec des tronçons inondés, où le Noyé régénère ses PV.
+	if id == "marsh_stagnant":
+		var points: Array[Vector2] = [Vector2(0,2),Vector2(4,2),Vector2(4,7),Vector2(9,7),Vector2(9,3),Vector2(13,3),Vector2(13,7),Vector2(17,7),Vector2(17,6)]
+		return {"id":id,"title":"Les Eaux Mortes","size":Vector2i(18,10),"path_points":points,"path_length":measured_length(points),"slots":[Vector2(2,4.5),Vector2(15,5),Vector2(6.5,4.5),Vector2(7,1),Vector2(11,5),Vector2(11,9)],"trees":[],"decoration":"marsh","flooded":[{"route":"","from":9.0,"to":16.0},{"route":"","from":22.0,"to":28.0}],"water_areas":[Rect2(0.5,6,2.5,2.5),Rect2(5,8,3,1.5),Rect2(14.5,8.2,2.5,1.5),Rect2(14,0.4,3,1.5)]}
 	# Missions 46–50 : tracés de prototype ; les bassins sont des emplacements neutres en attente d'habillage.
 	if id == "marsh_causeway":
 		var points: Array[Vector2] = [Vector2(0,5),Vector2(6,5),Vector2(6,2),Vector2(12,2),Vector2(12,8),Vector2(17,8),Vector2(17,6)]
@@ -768,6 +773,14 @@ static func validation_error(data: Dictionary) -> String:
 		for route in data.routes:
 			for point in route.path_points:
 				if point.x < 0 or point.y < 0 or point.x > data.size.x or point.y > data.size.y: return "Trajet hors de la carte."
+	if data.has("flooded"):
+		if data.decoration != "marsh": return "Tronçons inondés réservés aux marais."
+		var lengths: Dictionary = {}
+		if data.has("routes"):
+			for route in data.routes: lengths[str(route.id)] = float(route.path_length)
+		else: lengths[""] = float(data.path_length)
+		var flooded_error: String = Drowned.stretches_error(data.flooded,lengths)
+		if not flooded_error.is_empty(): return flooded_error
 	return ""
 
 static func to_data(definition: Dictionary) -> Dictionary:

@@ -69,6 +69,10 @@ Le porteur retient **des marais et des ruines englouties** pour le prochain biom
 
 La v0.160 ouvre ce biome avec [le Seuil des Marais, mission 41](Mission_041_Seuil_des_Marais.md). La v0.161 ajoute [les Bassins Engloutis et la Cour des Noyés, missions 42–43](Missions_042_043_Marais.md), dont une carte à deux entrées. La v0.162 ajoute [les Chenaux Oubliés et le Cloître Submergé, missions 44–45](Missions_044_045_Marais.md). La v0.163 termine le chapitre 5 avec [les missions 46–50](Missions_046_050_Marais.md), dont deux cartes à trois entrées. Les tracés, la palette, les bassins et les piliers restent un habillage de prototype à affiner. Ces missions n'appliquent pas Vents contraires. Les missions 51–60, qui doivent introduire la nouveauté du biome, restent à concevoir.
 
+## Décision du 9 novembre 2026 — nouveauté du chapitre 6
+
+Le porteur retient **le Noyé, une créature des marais qui régénère ses PV dans l'eau**, comme nouvel attaquant lié au biome (CAMP-017). La v0.164 l'introduit à la mission 51, [Les Eaux Mortes](Mission_051_Eaux_Mortes_Noye.md). La définition de l'eau (tronçons inondés du chemin), les statistiques, la régénération de 5 % des PV maximum par seconde et la composition des vagues sont des propositions de prototype à confirmer. Les missions 52–60 restent à développer ; aucun autre attaquant ni affixe n'est décidé pour ce chapitre.
+
 Les nouvelles mécaniques seront proposées séparément. Les attaquants propres au biome, l'éventuel affixe et leurs valeurs restent ouverts. Selon le rythme de progression retenu, le second chapitre du biome, aux missions 51–60, doit introduire sa nouveauté. Les missions 41–50 préparent sa découverte par les terrains et les configurations de chemins.
 
 L'ambiance n'implique à elle seule aucun effet de poison, de soin, de ralentissement ou d'eau sur les règles du combat. Ces possibilités restent des idées à concevoir et à valider.

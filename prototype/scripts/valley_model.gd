@@ -19,6 +19,7 @@ const PATH_LENGTH: float = Maps.VALLEY_LENGTH
 var map_definition: Dictionary
 var map_error: String = ""
 const Banks = preload("res://scripts/bank_encounters.gd")
+const Drowned = preload("res://scripts/drowned_encounters.gd")
 var wave_set_id: String = "ford"
 var route_target_policy: String = "arrival_time"
 var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
@@ -191,7 +192,7 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	action_history.append(entry)
 
 static func valid_enemy_hp_percent(value: Variant) -> bool:
-	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 149
+	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 150
 
 func configure_combat_affix(value: Variant) -> bool:
 	if not value is Dictionary or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
@@ -214,7 +215,7 @@ func configure_wave_set(value: Variant) -> bool:
 	wave_set_id = value;spawn_schedule = Campaign.schedule(wave,wave_set_id);return true
 
 static func enemy_definition(type: int) -> Dictionary:
-	return Banks.GUARD if type == Banks.GUARD_TYPE else ENEMY_TYPES[type]
+	return Banks.GUARD if type == Banks.GUARD_TYPE else Drowned.DEFINITION if type == Drowned.TYPE else ENEMY_TYPES[type]
 
 static func scaled_enemy_hp(type: int, percent: int = 100) -> float:
 	return float(enemy_definition(type).hp) if percent == 100 else float(enemy_definition(type).hp)*(float(percent)/100.0)
@@ -622,7 +623,14 @@ func _next_event_time() -> float:
 
 func _update_positions() -> void:
 	for enemy in enemies:
+		var previous: float = enemy.distance
 		enemy.distance = clampf((elapsed - enemy.spawn_time) * enemy.get("speed", 1.0), 0.0, enemy_route_length(enemy))
+		if enemy.get("type",1) == Drowned.TYPE and enemy.hp < enemy.max_hp:
+			# Régénération exacte par tronçon inondé : même résultat quel que soit le pas de temps.
+			enemy.hp = minf(enemy.max_hp,enemy.hp+Drowned.regenerated(map_definition.get("flooded",[]),str(enemy.get("route_id","")),enemy.max_hp,enemy.speed,previous,enemy.distance))
+
+func enemy_in_water(enemy: Dictionary) -> bool:
+	return enemy.get("type",1) == Drowned.TYPE and Drowned.in_water(map_definition.get("flooded",[]),str(enemy.get("route_id","")),enemy.distance)
 
 func _resolve_instant() -> void:
 	# 1. Apparitions et positions ; les arrivants restent ciblables jusqu'à la phase 4.

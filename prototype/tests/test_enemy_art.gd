@@ -13,7 +13,7 @@ func check(ok: bool, message: String) -> void:
 		push_error(message)
 func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
-	check(Art.TEXTURES.size() == 14,"Quatorze silhouettes distinctes : quatre neutres et cinq par camp")
+	check(Art.TEXTURES.size() == 15 and Art.TEXTURES.has("enemy.neutral.drowned"),"Quinze identités : cinq neutres, dont le Noyé en attente de visuel, et cinq par camp")
 	for id in Art.TEXTURES:
 		var image: Image = Art.TEXTURES[id].get_image()
 		check(not image.is_empty() and image.detect_alpha() != Image.ALPHA_NONE,"Canal alpha réel pour chaque ennemi illustré")
@@ -44,7 +44,7 @@ func run_checks() -> void:
 	# Deux silhouettes d’un même atlas ne doivent pas inclure les pixels du voisin.
 	for a in Art.TEXTURES:
 		for b in Art.TEXTURES:
-			if a >= b or Art.TEXTURES[a] != Art.TEXTURES[b]: continue
+			if a >= b or Art.TEXTURES[a] != Art.TEXTURES[b] or "enemy.neutral.drowned" in [a,b]: continue # Le Noyé partage provisoirement la silhouette de la tortue.
 			check(not Art.FRAMES[a].source.intersects(Art.FRAMES[b].source),"Cadres des personnages disjoints dans chaque atlas")
 	check(Art.tint(0.0) == Color.WHITE and Art.tint(1.0).a == 1.0 and Art.tint(1.0).r > 1.0,"Réaction aux dégâts : gain de luminosité sans opacifier le fond")
 	check(Art.tint(-1.0) == Art.tint(0.0) and Art.tint(2.0) == Art.tint(1.0),"Intensité de réaction bornée")

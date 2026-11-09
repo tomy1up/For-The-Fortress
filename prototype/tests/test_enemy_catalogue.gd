@@ -92,6 +92,6 @@ func run_checks() -> void:
 		for bonus in old_bonus_report.bonuses:bonus.description = bonus.description.replace("ours, unités lourdes, gardes d’élite et boss","Brutes, Colosses, Élites et boss")
 		check(Replay.verify(old_bonus_report).ok,"R-12 historique : ancien libellé reconnu sans accepter un bonus non joué")
 	check(all_ids.size() == 13,"Treize identités totales, sans doublons entre les camps")
-	check(Catalogue.available(-1).is_empty() and Catalogue.available(2).is_empty() and Catalogue.for_profile(9,0).is_empty() and Catalogue.by_id("defender.archer",0).is_empty(),"Catalogue fermé aux factions, profils et identifiants invalides")
+	check(Catalogue.available(-1).is_empty() and Catalogue.available(2).is_empty() and Catalogue.for_profile(10,0).is_empty() and Catalogue.by_id("defender.archer",0).is_empty(),"Catalogue fermé aux factions, profils et identifiants invalides")
 	print("ENEMY_CATALOGUE_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(0 if failures == 0 else 1)

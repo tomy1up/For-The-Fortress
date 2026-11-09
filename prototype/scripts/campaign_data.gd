@@ -44,9 +44,10 @@ const SPECIALISATIONS: Array[Dictionary] = [
 	{"code":"S-HOR-03","types":[4,5],"branches":[0,1],"effects":[[0.06,0.06,0.06,0],[0.06,0.06,0.06,0]]}
 ]
 const Banks = preload("res://scripts/bank_encounters.gd")
+const Drowned = preload("res://scripts/drowned_encounters.gd")
 
 static func waves_for(set_id: String = "ford") -> Array:
-	return Banks.WAVES if set_id == Banks.ID else WAVES
+	return Banks.WAVES if set_id == Banks.ID else Drowned.WAVES if set_id == Drowned.ID else WAVES
 
 static func schedule(wave: int, set_id: String = "ford") -> Array[Dictionary]:
 	var result: Array[Dictionary] = []

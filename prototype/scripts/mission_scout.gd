@@ -85,6 +85,8 @@ func open(number: int,camp: int) -> bool:
 	note.text="Les unités neutres sont communes aux deux factions. Les autres attaquants viennent du camp adverse."
 	if definition.get("wave_set_id","")==Model.Banks.ID:
 		note.text="La tortue encaisse %d %% des dégâts de ses voisins proches, dans la limite de ses PV.\nElle ne protège ni les autres tortues ni les boss."%int(Model.Banks.SHARE*100)
+	if definition.get("wave_set_id","")==Model.Drowned.ID:
+		note.text="Le Noyé régénère %d %% de ses PV maximum par seconde dans les tronçons inondés du chemin."%roundi(Model.Drowned.REGEN_PER_SECOND*100.0)
 	show();close_button.grab_focus();return true
 
 func _show_wave(wave: int) -> void:

@@ -22,7 +22,7 @@ func run_checks() -> void:
 	var excessive: Dictionary = source.duplicate(true);excessive.water_areas = []
 	for index in range(33): excessive.water_areas.append([0,0,1,1])
 	check(Model.Maps.from_data(excessive).is_empty(),"Nombre excessif de bassins refusé")
-	for number in range(41,51): await verify_terrain(number)
+	for number in range(41,52): await verify_terrain(number)
 	for case in range(41,51).map(func(number):return [[0,number],[1,number]]).reduce(func(all,pair):return all+pair,[]):
 		var camp: int = case[0]
 		var mission: int = case[1]
@@ -57,7 +57,8 @@ func run_checks() -> void:
 		check(profile.campaign_status(camp).completed==mission and profile.data.banks[camp].xp==100*mission and profile.data.banks[camp].resource==60*mission and profile.data.banks[camp].points==Profile.Experience.points_for_xp(100*mission),"Première victoire créditée une seule fois selon la courbe normale")
 		check(profile.campaign_status(1-camp).completed==0,"Le parcours adverse est inchangé")
 		game._show_run_summary();game._summary_to_campaign()
-		check(game.campaign_menu.chapter==5 and game.campaign_menu.nodes.slice(0,mission-40).all(func(node):return node.state=="completed") and game.campaign_menu.nodes.slice(mission-40).all(func(node):return node.state in ["available","locked"]),"Retour sur le nouveau chapitre sans mission suivante présentée comme réussie")
+		if mission < 50: check(game.campaign_menu.chapter==5 and game.campaign_menu.nodes.slice(0,mission-40).all(func(node):return node.state=="completed") and game.campaign_menu.nodes.slice(mission-40).all(func(node):return node.state in ["available","locked"]),"Retour sur le chapitre sans mission suivante présentée comme réussie")
+		else: check(game.campaign_menu.chapter==6 and game.campaign_menu.nodes[0].state=="available" and game.campaign_menu.nodes.slice(1).all(func(node):return node.state=="future"),"La fin du chapitre 5 propose la mission 51 sans la lancer")
 		game.free()
 	print("MARSH_CAMPAIGN_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
@@ -82,7 +83,7 @@ func play(model: RefCounted, types: Array) -> void:
 
 func verify_terrain(number: int) -> void:
 	var definition: Dictionary = Model.Maps.for_id(Main.CampaignCatalogue.definition(number).map_id)
-	check(Model.Maps.validation_error(definition).is_empty() and definition.decoration=="marsh" and definition.path_length=={41:29,42:34,43:28,44:30,45:38,46:28,47:28,48:34,49:37,50:28}[number],"Première carte des marais valide et de longueur mesurée")
+	check(Model.Maps.validation_error(definition).is_empty() and definition.decoration=="marsh" and definition.path_length=={41:29,42:34,43:28,44:30,45:38,46:28,47:28,48:34,49:37,50:28,51:31}[number],"Première carte des marais valide et de longueur mesurée")
 	var serialized: Dictionary = Model.Maps.to_data(definition)
 	check(Model.Maps.from_data(JSON.parse_string(JSON.stringify(serialized)))==definition,"La nouvelle décoration survit à la sérialisation des cartes et des rapports")
 	var routes: Array = View.routes_for(definition)

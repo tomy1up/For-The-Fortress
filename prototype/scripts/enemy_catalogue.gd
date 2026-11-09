@@ -4,6 +4,7 @@ const NEUTRALS: Dictionary = {
 	0: {"id":"enemy.neutral.wolf","name":"Loup de meute","origin":"neutral","profile":0},
 	2: {"id":"enemy.neutral.boar","name":"Sanglier sauvage","origin":"neutral","profile":2},
 	8: {"id":"enemy.neutral.turtle","name":"Tortue gardienne des berges","origin":"neutral","profile":8},
+	9: {"id":"enemy.neutral.drowned","name":"Noyé","origin":"neutral","profile":9},
 	3: {"id":"enemy.neutral.bear","name":"Ours sauvage","origin":"neutral","profile":3},
 }
 const ALLIANCE: Dictionary = {
@@ -22,19 +23,23 @@ const HORDE: Dictionary = {
 }
 
 static func for_profile(profile: int, defending_faction: int) -> Dictionary:
-	if defending_faction not in [0,1] or profile < 0 or profile > 8: return {}
+	if defending_faction not in [0,1] or profile < 0 or profile > 9: return {}
 	if NEUTRALS.has(profile): return NEUTRALS[profile].duplicate(true)
 	return (HORDE if defending_faction == 0 else ALLIANCE)[profile].duplicate(true)
 
 static func available(defending_faction: int, wave_set: String = "ford") -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	if defending_faction not in [0,1]: return result
-	for profile in range(9 if wave_set == "ford_banks" else 8): result.append(for_profile(profile,defending_faction))
+	var profiles: Array[int] = [0,1,2,3,4,5,6,7]
+	if wave_set == "ford_banks": profiles.append(8)
+	if wave_set == "marsh_drowned": profiles.append(9)
+	for profile in profiles: result.append(for_profile(profile,defending_faction))
 	return result
 
 static func by_id(id: String, defending_faction: int) -> Dictionary:
-	for identity in available(defending_faction,"ford_banks"):
-		if identity.id == id: return identity
+	for set_id in ["ford_banks","marsh_drowned"]:
+		for identity in available(defending_faction,set_id):
+			if identity.id == id: return identity
 	return {}
 
 static func origin_label(origin: String) -> String:

@@ -413,6 +413,23 @@ func _map_slots() -> Array[Vector2]:
 func _map_path() -> Array[Vector2]:
 	return model.path_points if model != null else Model.PATH_POINTS
 
+## Tronçons inondés projetés à l'écran, un tracé par tronçon.
+static func flooded_polylines(definition: Dictionary) -> Array[PackedVector2Array]:
+	var result: Array[PackedVector2Array] = []
+	for stretch in definition.get("flooded",[]):
+		var points: Array[Vector2] = []
+		var length: float = definition.path_length
+		if definition.has("routes"):
+			for route in definition.routes:
+				if route.id == stretch.route: points.assign(route.path_points);length = route.path_length
+		else: points.assign(definition.path_points)
+		if points.is_empty(): continue
+		var line := PackedVector2Array()
+		var steps: int = maxi(2,ceili((float(stretch.to)-float(stretch.from))*4.0))
+		for step in range(steps+1): line.append(project(Model.position_at(lerpf(float(stretch.from),float(stretch.to),float(step)/steps),points,length)))
+		result.append(line)
+	return result
+
 static func routes_for(definition: Dictionary) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	if definition.has("routes"): result.assign(definition.routes)
@@ -548,6 +565,10 @@ func _draw() -> void:
 		draw_polyline(route,MarshArt.ROAD if marsh else Color("b3a17b"),20,true)
 		for point in route: draw_circle(point,10,MarshArt.ROAD if marsh else Color("b3a17b"))
 	for route in screen_routes: draw_polyline(route,Color("c7b58d"),2,true)
+	# Tronçons inondés : repère fonctionnel provisoire, habillage à produire (TODO_VISUELS.md).
+	for line in flooded_polylines(definition):
+		draw_polyline(line,Color(0.22,0.5,0.58,0.62),20,true)
+		draw_polyline(line,Color(0.55,0.82,0.88,0.55),2,true)
 	if marsh:
 		var paths: Array = routes_for(definition).map(func(route):return route.path_points)
 		MarshArt.draw_joints(self,project,paths)
@@ -879,10 +900,10 @@ func _draw_fortress(anchor: Vector2) -> void:
 	draw_string(font,center+Vector2(-width/2,34),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("ed9989") if condition >= 2 else Color("d7bd83") if condition == 1 else INK)
 
 static func _enemy_scale(enemy: Dictionary) -> float:
-	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7, 1.4][enemy.get("type", 1)]
+	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7, 1.4, 1.1][enemy.get("type", 1)]
 
 static func enemy_color(type: int) -> Color:
-	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384"),Color("91ab72")][type]
+	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384"),Color("91ab72"),Color("5f9aa0")][type]
 
 func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.0, pose: Dictionary = {}) -> void:
 	var id: String = enemy_art_id(enemy,model.faction)

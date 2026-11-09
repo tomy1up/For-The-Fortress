@@ -3,6 +3,7 @@ const Catalogue = preload("res://scripts/campaign_catalogue.gd")
 const Scout = preload("res://scripts/mission_scout.gd")
 const Maps = preload("res://scripts/map_definition.gd")
 const MarshArt = preload("res://scripts/marsh_art.gd")
+const Drowned = preload("res://scripts/drowned_encounters.gd")
 signal mission_requested(id: String)
 signal talents_requested(faction: int)
 signal shop_requested(faction: int)
@@ -341,6 +342,10 @@ func _refresh_detail() -> void:
 	if definition.get("wave_set_id","") == "ford_banks":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : tortue gardienne" % [definition.waves,definition.hp_percent]
 		mission_detail.tooltip_text = "Essai : la tortue encaisse 25 % des dégâts des voisins proches, dans la limite de ses PV. Ne protège ni les autres tortues ni les boss. Mêmes tracés que le chapitre 1 ; nouvelles rencontres. Valeurs provisoires."
+	if definition.get("wave_set_id","") == "marsh_drowned":
+		mission_detail.text = "%d vagues · PV ennemis : %d %%
+Nouveau : Noyé · eau régénérante" % [definition.waves,definition.hp_percent]
+		mission_detail.tooltip_text = "Essai : le Noyé régénère %d %% de ses PV maximum par seconde dans les tronçons inondés de la carte, repérés en bleu sur le chemin. Valeurs provisoires." % roundi(Drowned.REGEN_PER_SECOND*100.0)
 	if status.is_empty():
 		mission_detail.text = "La progression n’est pas disponible."
 		rewards.text = profile.error if profile != null and not profile.error.is_empty() else "Revenez au choix de faction pour vérifier votre progression."
