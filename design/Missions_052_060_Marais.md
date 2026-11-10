@@ -18,11 +18,11 @@ PV ennemis : 99 % + 1 % par mission, soit 151 % à 159 %. Les longueurs sont cel
 | 57 | Les Piliers Engloutis | 1 | 37 | 7 + 7, deux colonnes | 28 |
 | 58 | Le Carrefour des Eaux | 3 | 28 / 24 / 28 (18 communs) | 4 sur les branches haute et basse, aucune au centre | 29 |
 | 59 | La Cathédrale Noyée | 2, pression alternée | 36 / 32 | 8 sur la partie commune | 29 |
-| 60 | Le Cœur du Marais | 3 | 35 / 32 / 35 (29 communs) | 3 sur les accès haut et bas, 10 sur la partie commune | 30 |
+| 60 | Le Cœur du Marais | 3 | 35 / 32 / 35 (29 communs) | 3 sur les accès haut et bas, 24 sur la partie commune, de la jonction à la forteresse (10 avant la v0.166) | 30 |
 
 Chaque carte garde six emplacements et dix vagues, avec les rencontres du Noyé de la mission 51. La mission précédente doit être réussie dans la faction concernée. La première victoire rapporte 60 PO et 100 XP une seule fois par faction ; chaque tentative repart avec 150 or de combat, une forteresse intacte, aucun défenseur et aucun bonus temporaire. Aucune mission n'applique d'affixe de combat.
 
-Progression de découverte : la Mare et les Piliers testent des eaux longues ou répétées sur une seule route ; le Delta et le Carrefour ouvrent trois entrées, avec de l'eau commune dans l'un et de l'eau sur deux entrées seulement dans l'autre (la voie du centre reste sèche) ; les Gués, la Crue et la Cathédrale placent l'eau sur une partie commune après la jonction de deux entrées ; le Cœur du Marais, finale du chapitre, combine trois entrées, de l'eau sur deux accès et une longue eau commune.
+Progression de découverte : la Mare et les Piliers testent des eaux longues ou répétées sur une seule route ; le Delta et le Carrefour ouvrent trois entrées, avec de l'eau commune dans l'un et de l'eau sur deux entrées seulement dans l'autre (la voie du centre reste sèche) ; les Gués, la Crue et la Cathédrale placent l'eau sur une partie commune après la jonction de deux entrées ; le Cœur du Marais, finale du chapitre, combine trois entrées, de l'eau sur deux accès et une très longue eau commune qui couvre la jonction jusqu'à la forteresse.
 
 ## Prise en compte des talents accumulés
 
@@ -48,7 +48,8 @@ Le relevé local `dist/marsh-missions52-60-survey.json` contient 1 944 essais : 
 | 57 | Les Piliers Engloutis | 68 | 27 |
 | 58 | Le Carrefour des Eaux | 32 | 16 |
 | 59 | La Cathédrale Noyée | 51 | 15 |
-| 60 | Le Cœur du Marais | 74 | 33 |
+| 60 | Le Cœur du Marais (v0.165 : eau commune de 10) | 74 | 33 |
+| 60 | Le Cœur du Marais durci (v0.166 : eau commune de 24) | 53 | 16 |
 
 **Effet des talents.** L'orientation choisie pèse davantage que la carte. Sur les neuf missions, chaque cellule ci-dessous compte 36 parties par mission, soit 324 :
 
@@ -65,7 +66,7 @@ Les stratégies automatiques ne choisissent pas leur arbre : elles montrent seul
 
 **Points à retenir.**
 - Le Delta des Noyés (55) est la mission la plus dure des deux factions : trois entrées et une eau courte sur la partie commune.
-- Le Cœur du Marais (60), finale du chapitre, est l'une des plus faciles pour l'Alliance (74 victoires) et la meilleure pour la Horde (33). La courbe de difficulté du chapitre n'est donc pas croissante ; la finale mériterait d'être durcie, par exemple par une eau plus longue sur la partie commune, après décision du porteur.
+- Le Cœur du Marais (60), finale du chapitre, était l'une des plus faciles en v0.165 (74 victoires pour l'Alliance, 33 pour la Horde). Le porteur a demandé de la durcir : voir la section suivante.
 - La Horde reste nettement en dessous de l'Alliance partout, comme depuis la mission 42, et son arbre Rituels ne gagne presque jamais.
 
 ## Vérifications
@@ -75,6 +76,24 @@ La régression complète réussit : 101 suites, 58 725 contrôles Godot et 17 te
 Les 86 essais Windows réussissent : menus et lancements des missions 41 à 60 dans les deux factions, chapitres 5 et 6 terminés avec rejeu sans nouveau gain, et spécialisations à trois entrées. Les 86 empreintes des sources exportées correspondent au projet. Les captures avec défenseurs des neuf nouvelles cartes ont été inspectées dans les deux factions : tronçons inondés, entrées et décor sont lisibles. Le Noyé en combat n'a pas été inspecté visuellement (silhouette provisoire de la tortue).
 
 ![Le Cœur du Marais, défense Horde dans la version Windows](essais/captures/QA-v0165_coeur_du_marais.png)
+
+![Le Cœur du Marais durci (v0.166), défense Horde : l'eau couvre la jonction jusqu'à la forteresse](essais/captures/QA-v0166_coeur_du_marais_durci.png)
+
+## Durcissement de la finale (v0.166)
+
+Sur demande du porteur, la finale du chapitre est durcie par l'eau, sans changer les PV ennemis (courbe fixée à +1 % par mission), les rencontres ni les emplacements. Trois longueurs d'eau commune ont été comparées avec les talents réels de la mission 60 (30 points), sur 48 parties de référence par variante (16 jeux d'emplacements, trois ordres d'achat) :
+
+| Eau sur la partie commune | Alliance | Horde | Référence gagnante (PV restants A / H) |
+| --- | --- | --- | --- |
+| 10 (v0.165) | 38 victoires sur 48 | 28 | 14 / 17 |
+| 13 (jonction → 3e coude) | 35 | 27 | 14 / 17 |
+| 16 | 33 | 18 | 12 / 12 |
+| 21 | 24 | 12 | 12 / 8 |
+| **24 (jonction → forteresse), retenue** | 23 | 6 | **9 / 6** |
+
+La variante retenue donne, avec la méthode des essais de la fiche (216 parties) : **Alliance 53 victoires sur 108 (74 avant), Horde 16 (33 avant)** ; le relevé local est `dist/marsh-mission60-hardened.json`. Avec 21 d'eau, on obtenait 59 et 18 (`dist/marsh-mission60-hardened-d20.json`). La stratégie de référence des tests gagne encore dans les deux factions, avec 9 PV (Alliance) et 6 PV (Horde) restants.
+
+Limites : la finale est maintenant dans la moyenne du chapitre pour l'Alliance et parmi les plus dures pour la Horde, mais elle n'est pas la plus difficile (le Delta, 55, reste plus dur). L'arbre Entraînement gagne encore toutes les parties côté Alliance (36 sur 36), ce qui tient aux talents et non à la carte. Un durcissement supplémentaire passerait par les rencontres (plus de Noyés aux vagues 9 et 10), donc par un jeu de rencontres propre à la finale : décision du porteur. La longueur d'eau reste un réglage de prototype à confirmer en jeu.
 
 ## Suite
 

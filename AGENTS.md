@@ -29,6 +29,7 @@ Tower defense 2D isométrique, deux factions (Alliance des Royaumes, Horde des C
 - Moteur : Godot 4.7.2 stable standard, `C:/Projet/.tools/Godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe` (version attendue `4.7.2.stable.official.ed1daf0bf`). Templates d'export dans `%APPDATA%/Godot/export_templates/4.7.2.stable`.
 - `C:/Projet/.tools/` contient aussi des scripts ponctuels d'essais et de publication (`survey_*.gd`, `publish_v0XXX.py`). Ce ne sont pas des outils officiels du dépôt.
 - Python 3 système (`python`). Sous Windows PowerShell, appeler les `.ps1` avec `-ExecutionPolicy Bypass` : la stratégie par défaut de la machine les bloque.
+- Si l'outil PowerShell de l'agent est indisponible, lancer les scripts depuis Bash avec `powershell.exe -NoProfile -ExecutionPolicy Bypass -File …`, et arrêter un jeu bloqué avec `taskkill //F //IM For_the_Fortress.exe`.
 - GitHub : dépôt privé `tomy1up/For-The-Fortress`, `gh` authentifié sur le compte `tomy1up`.
 
 ## Commandes
@@ -38,7 +39,7 @@ Jouer depuis les sources : `prototype/Lancer_le_prototype.cmd`, ou Godot avec `-
 Tests (Godot + Python + contrats du GDD) :
 
 ```
-python prototype/tests/run_regression.py                                  # tout (99 suites, long)
+python prototype/tests/run_regression.py                                  # tout (101 suites, long)
 python prototype/tests/run_regression.py --test test_marsh_campaign.gd    # suite ciblée, répétable
 python prototype/tests/run_regression.py --report dist/vXXXX-regression/report.json --timeout 120
 ```

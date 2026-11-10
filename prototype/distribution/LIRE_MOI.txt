@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.165 — 10 novembre 2026
+Version : 0.166 — 10 novembre 2026
 
 ATELIER A DEUX ENTREES
 
@@ -45,6 +45,7 @@ JOUER
    sur le chemin. Valeurs d'essai.
    Les missions 52 a 60 terminent le chapitre 6 : le Noye y regenere dans l'eau sur neuf
    nouveaux trace, a une, deux ou trois entrees. Valeurs d'essai.
+   Le Coeur du Marais (mission 60) est plus dur : l'eau couvre la jonction jusqu'a la forteresse.
    Bassins, roseaux et ruines sont decoratifs et ne changent pas les regles du combat.
    Tous les defenseurs attaquent 10 % moins souvent dans ces missions du chapitre 4.
    Les degats periodiques deja appliques gardent leur rythme.

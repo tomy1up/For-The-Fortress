@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.166**. La finale du chapitre 6, Le Cœur du Marais, est durcie : l'eau où le Noyé régénère couvre la jonction jusqu'à la forteresse. Réglage de prototype à confirmer en jeu. [Comparaison et limites](design/Missions_052_060_Marais.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.166).
+
 **Prototype v0.165**. Les missions 52 à 60 terminent le chapitre 6 des marais : le Noyé, qui régénère ses PV dans l'eau, sur neuf nouveaux tracés à une, deux ou trois entrées. 60 missions sont jouables, soit six chapitres complets. Visuel et habillage de l'eau provisoires. [Cartes, talents, essais et limites](design/Missions_052_060_Marais.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.165).
 
 **Prototype v0.164**. La mission 51 ouvre le chapitre 6 des marais avec le Noyé, une créature qui régénère ses PV dans l'eau, sur Les Eaux Mortes aux tronçons inondés. 51 missions sont jouables. Visuel et habillage de l'eau provisoires. [Règles, essais et limites](design/Mission_051_Eaux_Mortes_Noye.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.164).
