@@ -8,10 +8,10 @@ Tout le reste est une proposition de prototype de Claude Code, à confirmer : du
 
 ## Règle de l'affixe
 
-Réglage de prototype à confirmer : `{"id":"eruptions","interval":14,"warning":2,"duration":5}`.
+Réglage de prototype à confirmer : `{"id":"eruptions","interval":14,"warning":3,"duration":5}`.
 
 - Toutes les 14 s de combat (14 s, 28 s, 42 s…), un défenseur en place, tiré au hasard, est désactivé pendant 5 s : il ne tire plus et ne peut pas enchaîner d'attaque pendant ce temps.
-- Un avertissement de 2 s précède chaque éruption (de 12 s à 14 s pour la première). Le joueur voit l'emplacement visé avant qu'il soit touché.
+- Un avertissement de 3 s précède chaque éruption (de 11 s à 14 s pour la première). Le joueur voit l'emplacement visé avant qu'il soit touché.
 - Le chiffre de l'intervalle tient compte de la vitesse du jeu : l'éruption suit le temps de combat, pas le temps réel.
 - Un défenseur désactivé garde ses PV, ses améliorations et sa place ; il reprend simplement son rythme de tir à la fin de la désactivation. Les dégâts déjà infligés par ses projectiles en vol ou par ses effets périodiques ne sont pas retirés.
 - Le tirage est déterministe : il dépend de la graine de la partie, du numéro de vague et du numéro de l'éruption, jamais du pas de temps. Un rapport avec éruptions se rejoue à l'identique, et un rapport dont l'affixe a été retiré ou altéré est refusé au rejeu.
@@ -66,11 +66,11 @@ Constats :
 
 ## Habillage (Codex)
 
-Le code pose un repère neutre dans `valley_view.gd` (`_draw_eruption`) : losange orange pulsant pour l'avertissement, losange sombre et cercles gris pour la désactivation. Le porteur n'a pas tranché entre cendres et lave. Recommandation de Claude Code, à confirmer : **fissures de lave et braises** sur l'emplacement pendant l'avertissement de 2 s (le joueur voit d'où viendra l'éruption), puis **nuage de cendres sur l'unité** pendant la désactivation (l'unité paraît étouffée plutôt que détruite, ce qui reste cohérent avec toutes les unités). Voir `TODO_VISUELS.md`.
+Le code pose un repère neutre dans `valley_view.gd` (`_draw_eruption`) : losange orange pulsant pour l'avertissement, losange sombre et cercles gris pour la désactivation. Le porteur n'a pas tranché entre cendres et lave. Recommandation de Claude Code, à confirmer : **fissures de lave et braises** sur l'emplacement pendant l'avertissement de 3 s (le joueur voit d'où viendra l'éruption), puis **nuage de cendres sur l'unité** pendant la désactivation (l'unité paraît étouffée plutôt que détruite, ce qui reste cohérent avec toutes les unités). Voir `TODO_VISUELS.md`.
 
 ## Limites connues
 
-- Valeurs de l'affixe (14 s / 2 s / 5 s) et tracés à confirmer en jeu.
+- Valeurs de l'affixe (14 s / 3 s / 5 s) et tracés à confirmer en jeu.
 - Aucun son : l'avertissement n'est que visuel.
 - La Horde dispose de peu de marge sur 73 et 76 ; la finale (80) est plus aisée qu'une finale du chapitre 7 pour la Horde (20 PV restants).
 - Les chapitres 1 à 3 n'ont pas été remesurés avec les talents abaissés de l'Alliance.

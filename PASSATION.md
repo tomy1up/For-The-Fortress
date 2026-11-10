@@ -4,9 +4,9 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 10 novembre 2026 — Claude Code
 
-**Dernière version publiée : v0.170** (commit `4b930ad`, tag `v0.170`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.170) avec ZIP et `.sha256`, SHA-256 `cf779acc…dd9db`). 80 missions jouables : les chapitres 1 à 8 sont complets. La v0.169 la précède.
+**Dernière version publiée : v0.171** (avertissement des éruptions porté à 3 s à la demande du porteur ; tag `v0.171`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.171), SHA-256 `9643292f…84ae`). Elle suit la v0.170 (chapitre 8). 80 missions jouables : les chapitres 1 à 8 sont complets. L'équilibrage des cartes 71–80 est inchangé (l'avertissement n'agit pas sur le combat). Régression : 105 suites, 66 556 contrôles.
 
-**v0.170** : nouveauté du chapitre 8 décidée dans son principe par le porteur (10 novembre 2026) : un affixe qui désactive au hasard un emplacement de défense quelques secondes. Valeurs de prototype à confirmer : 5 s toutes les 14 s, 2 s d'avertissement (`{"id":"eruptions","interval":14,"warning":2,"duration":5}` dans `campaign_catalogue.gd`). Fiche : `design/Missions_071_080_Eruptions.md`. Points techniques :
+**v0.170** : nouveauté du chapitre 8 décidée dans son principe par le porteur (10 novembre 2026) : un affixe qui désactive au hasard un emplacement de défense quelques secondes. Valeurs de prototype à confirmer : 5 s toutes les 14 s, 3 s d'avertissement (`{"id":"eruptions","interval":14,"warning":3,"duration":5}` dans `campaign_catalogue.gd`). Fiche : `design/Missions_071_080_Eruptions.md`. Points techniques :
 
 - **Modèle** (`valley_model.gd`) : `configure_combat_affix` valide champ par champ `headwinds` et `eruptions` ; `eruption_status()`, `eruption_slot(n)` (tirage par hachage entier de graine, vague et numéro, indépendant du pas de temps), événement dans `_next_event_time` / `_resolve_instant` (journal `éruption n emplacement s`). Test : `tests/test_eruptions.gd` (213 contrôles). L'affixe est enregistré dans le rapport et le rejeu le refuse s'il est altéré ou retiré.
 - **Piège de réglage** : l'éruption désigne le *n*-ième emplacement *occupé* ; le résultat dépend donc de la position physique des défenseurs. Ne pas permuter les emplacements pour faire coller l'ordre d'achat d'un test : l'ordre d'achat de référence (4, 2, 3 pour toutes les cartes) est inscrit dans `tests/test_eruption_chapter.gd`.
@@ -37,7 +37,7 @@ Fichiers non suivis à laisser tels quels sauf demande : `design/essais/v0109_ga
 
 ## Questions ouvertes pour le porteur
 
-- **Éruptions** : valeurs (5 s toutes les 14 s, 2 s d'avertissement) à confirmer en jeu ; choix visuel lave ou cendres délégué à Codex avec recommandation (voir `TODO_VISUELS.md`).
+- **Éruptions** : valeurs (5 s toutes les 14 s, 3 s d'avertissement) à confirmer en jeu ; choix visuel lave ou cendres délégué à Codex avec recommandation (voir `TODO_VISUELS.md`).
 - **Courbe de difficulté du chapitre 7** : le Pont d'Obsidienne (66) est la carte la plus dure des deux factions (7 et 12 victoires sur 108 avec l'armée de chaque arbre), alors que le Seuil des Cendres, les Coulées Figées et le Cœur du Volcan côté Horde sont presque toujours gagnés. À lisser ?
 - **Unités chères** : les arbres du mage et du chaman supposent d'acheter cette unité (100 or) à l'ouverture. Si les joueurs achètent d'abord les unités peu chères, ces arbres seront moins rentables.
 - Équilibrage à confirmer en jeu : talents des deux factions, chapitres 4 à 7. Les chapitres 1 à 3 n'ont pas été remesurés avec les talents abaissés de l'Alliance (leurs tests de campagne passent).

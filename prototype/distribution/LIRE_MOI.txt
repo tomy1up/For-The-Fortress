@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.170 — 10 novembre 2026
+Version : 0.171 — 10 novembre 2026
 
 ATELIER A DEUX ENTREES
 
@@ -49,7 +49,7 @@ JOUER
    Les missions 61 a 70 ouvrent le chapitre 7 : terres volcaniques et cendres, dix nouveaux
    trace a une, deux ou trois entrees, sans regle particuliere. Habillage provisoire.
    Les missions 71 a 80 ouvrent le chapitre 8 avec l'affixe Eruptions : toutes les 14 s, un
-   defenseur au hasard est desactive pendant 5 s, avec 2 s d'avertissement. Valeurs d'essai.
+   defenseur au hasard est desactive pendant 5 s, avec 3 s d'avertissement. Valeurs d'essai.
    Bassins, roseaux et ruines sont decoratifs et ne changent pas les regles du combat.
    Tous les defenseurs attaquent 10 % moins souvent dans ces missions du chapitre 4.
    Les degats periodiques deja appliques gardent leur rythme.

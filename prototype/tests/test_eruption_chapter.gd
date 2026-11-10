@@ -7,7 +7,7 @@ const Talents = preload("res://scripts/meta_talents_linked.gd")
 const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 61 à 70.
-const AFFIX := {"id":"eruptions","interval":14,"warning":2,"duration":5}
+const AFFIX := {"id":"eruptions","interval":14,"warning":3,"duration":5}
 ## Longueur mesurée du premier trajet, nombre d'entrées et ordre d'achat de référence des missions 71 à 80 (l'éruption désigne un emplacement occupé : l'ordre fait partie de la mesure).
 const EXPECTED: Dictionary = {
 	71:{"map":"ash_crater","order":[4,2,3],"length":36.0,"routes":1},

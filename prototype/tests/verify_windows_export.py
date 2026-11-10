@@ -397,7 +397,7 @@ for name,state,faction in cases:
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
             assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
             eruptions=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ERUPTIONS_SNAPSHOT=')))
-            assert eruptions['affix']=={'id':'eruptions','interval':14,'warning':2,'duration':5} and eruptions['visible'] and eruptions['text'].startswith('Éruptions')
+            assert eruptions['affix']=={'id':'eruptions','interval':14,'warning':3,'duration':5} and eruptions['visible'] and eruptions['text'].startswith('Éruptions')
     elif '_campaign_menu_marsh' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
