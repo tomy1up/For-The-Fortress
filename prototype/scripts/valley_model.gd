@@ -25,6 +25,7 @@ var route_target_policy: String = "arrival_time"
 var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
 var enemy_hp_percent: int = 100
 var combat_affix: Dictionary = {}
+var eruption_next: int = 1 # Numéro de la prochaine éruption de la vague (affixe Éruptions).
 var path_points: Array[Vector2] = []
 var slots: Array[Vector2] = []
 var path_length: float
@@ -193,19 +194,75 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	action_history.append(entry)
 
 static func valid_enemy_hp_percent(value: Variant) -> bool:
-	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 169
+	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 179
 
 func configure_combat_affix(value: Variant) -> bool:
 	if not value is Dictionary or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
 	if not value.is_empty():
-		if value.size() != 2 or value.get("id") != "headwinds": return false
-		var percent: Variant = value.get("cadence_percent")
-		if not (percent is int or percent is float) or not is_finite(float(percent)) or percent != floorf(float(percent)) or percent < 1 or percent > 100: return false
+		match value.get("id"):
+			"headwinds":
+				if value.size() != 2: return false
+				var percent: Variant = value.get("cadence_percent")
+				if not _whole_number(percent) or percent < 1 or percent > 100: return false
+			"eruptions":
+				# Intervalle entre deux éruptions, délai d'annonce et durée de désactivation, en secondes de combat.
+				if value.size() != 4: return false
+				var interval: Variant = value.get("interval");var warning: Variant = value.get("warning");var duration: Variant = value.get("duration")
+				if not _whole_number(interval) or not _whole_number(warning) or not _whole_number(duration): return false
+				if interval < 8 or interval > 40 or warning < 1 or warning > 4 or duration < 2 or duration > 12 or duration+warning+1 > interval: return false
+			_: return false
 	combat_affix = value.duplicate(true)
 	return true
 
+static func _whole_number(value: Variant) -> bool:
+	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value))
+
 func affix_description() -> String:
-	return "" if combat_affix.is_empty() else "Vents contraires · −%d %% de cadence" % (100-int(combat_affix.cadence_percent))
+	match combat_affix.get("id",""):
+		"headwinds": return "Vents contraires · −%d %% de cadence" % (100-int(combat_affix.cadence_percent))
+		"eruptions": return "Éruptions · un défenseur désactivé %d s toutes les %d s" % [int(combat_affix.duration),int(combat_affix.interval)]
+	return ""
+
+func affix_tooltip() -> String:
+	match combat_affix.get("id",""):
+		"headwinds": return "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
+		"eruptions": return "Toutes les %d s de combat, un défenseur choisi au hasard parmi ceux en place est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Les dégâts périodiques déjà appliqués continuent. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.duration),int(combat_affix.warning)]
+	return ""
+
+func eruption_enabled() -> bool:
+	return combat_affix.get("id","") == "eruptions"
+
+## Instant de la vague (secondes de combat) où l'éruption numéro `number` désactive son défenseur.
+func eruption_time(number: int) -> float:
+	return float(combat_affix.interval)*number
+
+# Tirage déterministe, sans toucher au générateur du combat : mêmes éruptions quel que soit le pas de temps et au rejeu.
+func _eruption_roll(number: int) -> int:
+	var value: int = posmod(int(initial_rng_seed),2147483629)+wave*7919+number*104729
+	for round in range(3):
+		value = ((value >> 16) ^ value)*73244475 & 0xFFFFFFFF
+	return (value >> 16) ^ value
+
+## Emplacement frappé par l'éruption `number` : un défenseur en place, tiré au sort ; -1 sans défenseur.
+func eruption_slot(number: int) -> int:
+	var occupied: Array[int] = []
+	for slot in range(defenders.size()):
+		if not defenders[slot].is_empty(): occupied.append(slot)
+	return -1 if occupied.is_empty() else occupied[_eruption_roll(number)%occupied.size()]
+
+## État observé par l'interface : {} hors combat, sinon l'éruption annoncée ("warning") ou en cours ("active").
+func eruption_status() -> Dictionary:
+	if not eruption_enabled() or not active: return {}
+	var interval: float = float(combat_affix.interval)
+	var number: int = int(floor(elapsed/interval+EPS))
+	if number >= 1 and elapsed < eruption_time(number)+float(combat_affix.duration)-EPS:
+		var struck: int = eruption_slot(number)
+		if struck >= 0: return {"slot":struck,"state":"active","number":number,"remaining":eruption_time(number)+float(combat_affix.duration)-elapsed}
+	var upcoming: int = number+1
+	if elapsed >= eruption_time(upcoming)-float(combat_affix.warning)-EPS:
+		var announced: int = eruption_slot(upcoming)
+		if announced >= 0: return {"slot":announced,"state":"warning","number":upcoming,"remaining":eruption_time(upcoming)-elapsed}
+	return {}
 
 func configure_enemy_hp(value: Variant) -> bool:
 	if not valid_enemy_hp_percent(value) or not action_history.is_empty() or phase != "preparation" or gold != INITIAL_GOLD: return false
@@ -413,7 +470,7 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	stats.curse_damage = stats.reference_curse * (1.0+stats.curse_bonus)
 	stats.range += synergy.range + meta.range + (0.5 if 2 in active_bonuses else 0.0)
 	if 1 in active_bonuses and family(defender.type) != 5: stats.interval /= 1.12
-	if not combat_affix.is_empty(): stats.interval /= float(combat_affix.cadence_percent)/100.0
+	if combat_affix.get("id","") == "headwinds": stats.interval /= float(combat_affix.cadence_percent)/100.0
 	if 4 in active_bonuses and family(defender.type) in [2,3,4]: stats.radius += 0.2
 	stats.synergies = synergy.codes
 	return stats
@@ -586,6 +643,7 @@ func start() -> bool:
 		if not defender.is_empty():
 			defender.ready_at = 0.0
 	_record_action("wave_start",{"army":army.duplicate(true),"bonuses":bonuses.duplicate()})
+	eruption_next = 1
 	_resolve_instant()
 	return true
 
@@ -609,6 +667,7 @@ func _next_event_time() -> float:
 		next_time = spawn_schedule[spawned].time
 	for curse in curses:
 		next_time = minf(next_time, curse.next_at)
+	if eruption_enabled(): next_time = minf(next_time,eruption_time(eruption_next))
 	for enemy in enemies:
 		next_time = minf(next_time, enemy.spawn_time + enemy_route_length(enemy) / enemy.get("speed", 1.0))
 	for defender in defenders:
@@ -642,6 +701,13 @@ func _resolve_instant() -> void:
 		enemies.append(enemy)
 		spawned += 1
 	_update_positions()
+	# 1 bis. Éruptions (affixe) : le défenseur frappé ne tire plus avant la fin de sa désactivation.
+	while eruption_enabled() and eruption_time(eruption_next) <= elapsed + EPS:
+		var struck: int = eruption_slot(eruption_next)
+		if struck >= 0:
+			defenders[struck].ready_at = maxf(float(defenders[struck].ready_at),eruption_time(eruption_next)+float(combat_affix.duration))
+			event_log.append("%.9f éruption %d emplacement %d" % [elapsed,eruption_next,struck])
+		eruption_next += 1
 	# 2. Anciens ticks additionnés, puis morts retirés avant le choix des nouveaux tirs.
 	var damage: Dictionary = {}
 	var hits: Array[Dictionary] = []

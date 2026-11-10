@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.170**. Chapitre 8, les éruptions (missions 71–80) : toutes les 14 s, un défenseur tiré au hasard est désactivé 5 s, avec 2 s d'avertissement (valeurs de prototype à confirmer). Quatre-vingts missions jouables, PV ennemis jusqu'à 179 %. Habillage de la désactivation à définir avec Codex. [Chapitre 8](design/Missions_071_080_Eruptions.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.170).
+
 **Prototype v0.169**. Les talents de l'Alliance sont alignés sur ceux de la Horde (environ moitié moins puissants), pour que les deux factions aient la même difficulté : avec l'armée de chaque arbre, l'Alliance gagne 64 % du chapitre 7 et la Horde 57 % (97 % et 52 % avant). Valeurs de prototype à confirmer en jeu. [Équilibrage des talents](design/Equilibrage_arbres_talents_v0168.md) · [Chapitre 7](design/Missions_061_070_Volcan.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.169).
 
 **Prototype v0.168**. Les arbres de talents se valent : Bastion et Arts arcaniques (Alliance), ainsi que la Voie des maléfices et Démolition (Horde, plus légèrement), sont renforcés, mesurés à moins de 12 % de l'arbre de référence à chaque palier. Le chapitre 7 volcanique est durci. Valeurs de prototype à confirmer en jeu. [Équilibrage des talents](design/Equilibrage_arbres_talents_v0168.md) · [Chapitre 7](design/Missions_061_070_Volcan.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.168).

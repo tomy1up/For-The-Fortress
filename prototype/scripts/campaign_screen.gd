@@ -336,7 +336,10 @@ func _refresh_detail() -> void:
 	start_button.disabled = not Catalogue.unlocked(number,status)
 	if definition.available and not status.is_empty(): mission_detail.text += "\nPV ennemis : %d %% · Barème d’essai" % definition.hp_percent
 	mission_detail.tooltip_text = ""
-	if definition.has("combat_affix"):
+	if definition.get("combat_affix",{}).get("id","") == "eruptions":
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Éruptions · défenseur désactivé" % [definition.waves,definition.hp_percent]
+		mission_detail.tooltip_text = "Toutes les %d s de combat, un défenseur choisi au hasard est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
+	elif definition.has("combat_affix"):
 		mission_detail.text = "%d vagues · PV ennemis : %d %%\nVents contraires · Cadence −10 %%" % [definition.waves,definition.hp_percent]
 		mission_detail.tooltip_text = "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
 	if definition.get("wave_set_id","") == "ford_banks":

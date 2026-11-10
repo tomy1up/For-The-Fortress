@@ -659,6 +659,7 @@ func _draw() -> void:
 					var span: Vector2 = damage_span(event,actor.enemy.get("max_hp",40.0))
 					if span.y > span.x:
 						draw_rect(Rect2(bar_position+Vector2(24*span.x,0),Vector2(24*(span.y-span.x),4)),Color(Color("f3dfba"),damage_opacity(model.elapsed-event.time)))
+		_draw_eruption()
 		if model.active:
 			for event in model.protection_events:
 				var age: float = model.elapsed-event.time
@@ -952,6 +953,23 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 			draw_arc(shell,10.0+4.0*(1.0-strength),PI,TAU,20,Color(0.86,1.0,0.62,0.90*strength),2.0,true)
 			break
 	draw_set_transform(Vector2.ZERO)
+
+## Repère fonctionnel provisoire de l'affixe Éruptions : l'habillage (lave, cendres) revient à Codex (TODO_VISUELS.md).
+func _draw_eruption() -> void:
+	if model == null or not model.eruption_enabled(): return
+	var status: Dictionary = model.eruption_status()
+	if status.is_empty(): return
+	var center: Vector2 = project(_map_slots()[status.slot])
+	var diamond := PackedVector2Array([center+Vector2(-26,0),center+Vector2(0,-13),center+Vector2(26,0),center+Vector2(0,13)])
+	if status.state == "warning":
+		var pulse: float = 0.5+0.5*sin(model.elapsed*9.0)
+		draw_colored_polygon(diamond,Color(1.0,0.42,0.08,0.22+0.28*pulse))
+		draw_polyline(PackedVector2Array([diamond[0],diamond[1],diamond[2],diamond[3],diamond[0]]),Color(1.0,0.55,0.15,0.95),3.0,true)
+	else:
+		draw_colored_polygon(diamond,Color(0.1,0.08,0.08,0.82))
+		for index in range(5):
+			var drift := Vector2(sin(index*2.1+model.elapsed*1.3)*9.0,-14.0-index*4.0+cos(index*1.7+model.elapsed)*2.0)
+			draw_circle(center+drift,10.0-index,Color(0.36,0.34,0.33,0.55))
 
 func _draw_valley_water() -> void:
 	# La rivière et le pont sont des éléments visuels, sans collision.

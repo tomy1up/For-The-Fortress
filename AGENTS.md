@@ -39,7 +39,7 @@ Jouer depuis les sources : `prototype/Lancer_le_prototype.cmd`, ou Godot avec `-
 Tests (Godot + Python + contrats du GDD) :
 
 ```
-python prototype/tests/run_regression.py                                  # tout (101 suites, long)
+python prototype/tests/run_regression.py                                  # tout (105 suites, long)
 python prototype/tests/run_regression.py --test test_marsh_campaign.gd    # suite ciblée, répétable
 python prototype/tests/run_regression.py --report dist/vXXXX-regression/report.json --timeout 120
 ```

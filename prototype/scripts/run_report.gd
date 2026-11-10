@@ -107,7 +107,9 @@ static func markdown(report: Dictionary) -> String:
 		"Forteresse : %d/%d PV · Or restant : %d · Combat : %.2f s simulées" % [report.fortress_hp,report.max_hp,report.gold,report.combat_seconds],
 		"", "Rapport de débogage local, sans fonction de reprise de partie.", "", "## Vagues", "", "| Vague | Éliminés | Passés | PV perdus | Or gagné | Résultat |", "| --- | --- | --- | --- | --- | --- |"]
 	if report.has("enemy_hp_percent"): lines.insert(5,"PV ennemis : %d %% de la référence. Vitesse, dégâts et récompenses de combat inchangés." % report.enemy_hp_percent)
-	if report.has("combat_affix"): lines.insert(5,"Vents contraires · −%d %% de cadence pour tous les défenseurs. Les dégâts périodiques déjà appliqués gardent leur rythme." % (100-int(report.combat_affix.cadence_percent)))
+	if report.has("combat_affix"):
+		if report.combat_affix.get("id","") == "eruptions": lines.insert(5,"Éruptions · toutes les %d s de combat, un défenseur tiré au sort est désactivé pendant %d s (annoncé %d s avant)." % [int(report.combat_affix.interval),int(report.combat_affix.duration),int(report.combat_affix.warning)])
+		else: lines.insert(5,"Vents contraires · −%d %% de cadence pour tous les défenseurs. Les dégâts périodiques déjà appliqués gardent leur rythme." % (100-int(report.combat_affix.cadence_percent)))
 	var map: Dictionary = report.get("map_definition",{})
 	if map.has("routes"):
 		var allocation := "Une apparition par entrée à tour de rôle."
