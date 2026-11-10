@@ -4,34 +4,33 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 10 novembre 2026 — Claude Code
 
-**Dernière version publiée : v0.167** (commit `7c2d780`, tag `v0.167`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.167) avec ZIP et `.sha256`, SHA-256 `4a4846a4…4625`). **70 missions jouables : les chapitres 1 à 7 sont complets.** Aucun travail de code en cours non commité.
+**Dernière version publiée : v0.168** (commit `291744a`, tag `v0.168`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.168) avec ZIP et `.sha256`, SHA-256 `cb948e16…2a64`). 70 missions jouables : les chapitres 1 à 7 sont complets. Aucun travail de code en cours non commité.
 
-Deux versions pendant cette mission :
+Contenu de la v0.168, à la demande du porteur :
 
-- **v0.166** : finale du chapitre 6 (Cœur du Marais, mission 60) durcie à la demande du porteur. L'eau couvre la jonction jusqu'à la forteresse (24 unités sur 29). Essais : Alliance 74 → 53 victoires sur 108, Horde 33 → 16. Comparaison des longueurs d'eau dans `design/Missions_052_060_Marais.md`. Un jeu de rencontres propre à la finale serait le levier suivant (décision du porteur).
-- **v0.167** : chapitre 7, biome des **terres volcaniques et cendres** (choix du porteur, 10 novembre 2026). Missions 61–70, dix cartes sans règle propre ; la nouveauté du biome est prévue au **chapitre 8** (CAMP-017). Fiche : `design/Missions_061_070_Volcan.md`.
+- **Arbres de talents équilibrés.** Un banc de mesure donne la puissance de chaque arbre (PV ennemis maximaux battus, par dichotomie) avec l'armée qu'un joueur de cet arbre constituerait. Les arbres de la Horde se valaient déjà ; ceux de l'Alliance non (Arts arcaniques 43 % et Bastion 69 % de Maîtrise du tir à 51 points). Facteurs `TREE_SCALE` dans `meta_talents_expanded.gd` ([début, fin] par arbre, indexés [faction][arbre]) : Bastion 3,8 / 1,2 ; Arts arcaniques 2,0 / 2,15 ; Voie des maléfices 1,15 / 1,0 ; Démolition 1,0 / 1,4 ; Maîtrise du tir et Fureur de guerre 1,0. Fiche, méthode et résultats : `design/Equilibrage_arbres_talents_v0168.md`. Test : `tests/test_talent_balance.gd` (échelle, règle historique, parité mesurée à 51 points).
+- **Compatibilité.** Seules les valeurs des bonus changent (rangs, structure, PV de forteresse et sauvegardes inchangés). Les rapports de version antérieure à 0.168 se rejouent avec les valeurs historiques (`Replay.legacy_talents`, `Model.talent_rules_legacy`). Toute future retouche des effets de talents doit relever ce seuil de version.
+- **Chapitre 7 durci.** Trajets raccourcis sur neuf cartes (`volcanic_maps.gd` régénéré, emplacements recalculés), de 34 à 25 unités jusqu'à la finale. Victoires de l'arbre de référence : −8 % Alliance, −16 % Horde. Fiche : `design/Missions_061_070_Volcan.md`.
+- **Outil d'essai.** `tools/survey_campaign_sample.gd` accepte `natural_armies = true` : chaque orientation de talents joue l'armée de son arbre (unité de l'arbre achetée à l'ouverture). À utiliser pour comparer des arbres ; les compositions fixes de l'outil favorisent l'archer et la hache. Relevés : `C:/Projet/.tools/survey_volcano_61_70_natural.gd` → `dist/volcano-missions61-70-natural.json`.
+- Régression complète : 103 suites, 62 490 contrôles Godot, 17 tests Python. 52 essais Windows ciblés et 87 empreintes de sources réussis.
 
 Points techniques à connaître :
 
-- Cartes volcaniques : `scripts/volcanic_maps.gd` (module de données branché par `Maps.for_id`, décor `volcanic` accepté par `validation_error`). Rencontres standard (pas de `wave_set_id`), PV ennemis `99 + numéro` %, borne portée à 169 %.
-- Les repères de couleur du décor `volcanic` sont neutres (sol `3d3837`, faces `4a403d` / `352e2d` dans `valley_view.gd`, aperçu dans `campaign_screen.gd`) ; pas de décor automatique : `scenery_for` ne traite que les ardoises, les marais et le chapitre 1.
-- Emplacements non dessinés à la main : choisis par couverture du trajet puis par simulation (16 jeux par carte, trois ordres d'achat) avec les talents **réels** de la mission (30 à 35 points). Les outils de génération et de simulation sont hors dépôt (scratchpad de session). Pour modifier une carte, refaire cette simulation au lieu de déplacer des emplacements à l'œil. Les emplacements 3, 4 et 2 sont ceux de la stratégie de référence des tests.
-- Les chapitres de test suivent un modèle : `tests/test_drowned_chapter.gd` (52–60) et `tests/test_volcanic_chapter.gd` (61–70). Un nouveau chapitre doit aussi mettre à jour les tests « contenu à venir » (`test_campaign_preview`, `test_mission_scout`, `test_campaign_states`, `test_chapter_one`, `test_campaign_progress`, `test_campaign_sample`) et `verify_windows_export.py` (cas `volcano<N>`, `volcano70completed`).
+- Un banc de mesure des arbres a été écrit hors dépôt (scratchpad de session) : dichotomie du PV ennemi maximal battu, armées naturelle et doublée, budgets de 10, 20, 35 et 51 points. Sa méthode est décrite dans la fiche des talents ; le refaire plutôt que de régler à l'œil.
+- Le chapitre 7 et les cartes des marais ont des emplacements choisis par simulation avec les talents de l'arbre de référence (Maîtrise du tir / Fureur de guerre). Cet arbre n'a pas changé : leurs réglages restent valides.
+- L'outil PowerShell de l'agent peut être indisponible : lancer `powershell.exe …` depuis Bash (voir `AGENTS.md`). Ne pas écrire de chemins `\v…` dans un script Python lancé en ligne : écrire un fichier.
 - Tout nouveau fichier d'exécution doit être déclaré dans trois listes d'export (voir `AGENTS.md`).
-- Régression complète : 102 suites, 62 195 contrôles Godot, 17 tests Python. 68 essais Windows et 87 empreintes de sources réussis. Essais d'équilibrage : `C:/Projet/.tools/survey_volcano_61_70.gd` → `dist/volcano-missions61-70-survey.json` (2 160 parties).
-- L'outil PowerShell de l'agent peut être indisponible : lancer `powershell.exe …` depuis Bash (voir `AGENTS.md`).
-- Piège shell : un chemin de fichier `\v…` écrit dans un script Python via heredoc devient un caractère de tabulation verticale ; écrire les scripts dans un fichier plutôt qu'en ligne.
 
 Fichiers non suivis à laisser tels quels sauf demande : `design/essais/v0109_game_frames/`, `prototype/tools/survey_route_workshops.gd.uid`. `prototype/scripts/enemy_walk_art.gd` apparaît modifié mais son contenu est identique (fins de ligne) : ne pas le committer.
 
 ## Prochaines étapes possibles
 
 - Code (Claude Code) : chapitre 8, missions 71–80, avec la nouveauté du biome volcanique. À ne développer qu'après le choix de la nouveauté par le porteur.
-- Visuels (Codex) : voir `TODO_VISUELS.md`, en particulier tout l'habillage volcanique (sol, décor, palette).
+- Visuels (Codex) : voir `TODO_VISUELS.md`, en particulier tout l'habillage volcanique.
 
 ## Questions ouvertes pour le porteur
 
-- **Nouveauté du chapitre 8** (missions 71–80) : attaquant de feu, terrain de lave (tronçons sur le chemin), affixe de combat ou autre piste ? À proposer et valider avant de coder.
-- **Difficulté du chapitre 7** : nettement plus facile que le chapitre 6 (Alliance de 41 à 90 victoires sur 108, Horde de 15 à 62) et sa finale est dans la moyenne (76 / 46). Faut-il la durcir, comme celle du chapitre 6 ?
-- **Poids des talents** : l'orientation pèse plus que la carte (Alliance : 357 victoires sur 360 avec Entraînement, 90 avec Étude des arcanes). Est-ce voulu, ou faut-il rééquilibrer les arbres ?
-- Équilibrage à confirmer en jeu, surtout côté Horde.
+- **Nouveauté du chapitre 8** (missions 71–80) : terrain de lave, affixe d'éruption, nouvel attaquant de feu ou autre piste ? À choisir avant de coder.
+- **Écart entre factions.** À armées comparables, les talents de l'Alliance sont environ deux fois plus puissants que ceux de la Horde (+136 contre +67,5 à 51 points pour les arbres de référence), et avec l'armée de chaque arbre l'Alliance gagne 97 % des parties du chapitre 7 contre 52 % pour la Horde. Les cartes sont réglées pour que la Horde puisse gagner, donc l'Alliance les écrase. Faut-il aligner les talents de la Horde sur ceux de l'Alliance, ou régler la difficulté par faction ?
+- **Unités chères.** Les arbres du mage et du chaman supposent d'acheter cette unité (100 or) à l'ouverture. Si les joueurs achètent d'abord les unités peu chères, ces arbres seront moins rentables et leurs facteurs devraient monter.
+- Équilibrage à confirmer en jeu : arbres de talents, chapitre 7, marais.
