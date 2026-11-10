@@ -4,31 +4,34 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 10 novembre 2026 — Claude Code
 
-**Dernière version publiée : v0.165** (commit `ed69b00`, tag `v0.165`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.165) avec ZIP et `.sha256`, SHA-256 `78ca12c7…de27`). **60 missions jouables : les chapitres 1 à 6 sont complets.** Aucun travail de code en cours non commité.
+**Dernière version publiée : v0.167** (commit `7c2d780`, tag `v0.167`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.167) avec ZIP et `.sha256`, SHA-256 `4a4846a4…4625`). **70 missions jouables : les chapitres 1 à 7 sont complets.** Aucun travail de code en cours non commité.
 
-Contenu de la v0.165 : missions 52 à 60 (fin du chapitre 6 des marais), neuf tracés où le Noyé régénère dans l'eau. Fiche : `design/Missions_052_060_Marais.md`. Le Noyé et ses règles viennent de la v0.164 (`design/Mission_051_Eaux_Mortes_Noye.md`).
+Deux versions pendant cette mission :
+
+- **v0.166** : finale du chapitre 6 (Cœur du Marais, mission 60) durcie à la demande du porteur. L'eau couvre la jonction jusqu'à la forteresse (24 unités sur 29). Essais : Alliance 74 → 53 victoires sur 108, Horde 33 → 16. Comparaison des longueurs d'eau dans `design/Missions_052_060_Marais.md`. Un jeu de rencontres propre à la finale serait le levier suivant (décision du porteur).
+- **v0.167** : chapitre 7, biome des **terres volcaniques et cendres** (choix du porteur, 10 novembre 2026). Missions 61–70, dix cartes sans règle propre ; la nouveauté du biome est prévue au **chapitre 8** (CAMP-017). Fiche : `design/Missions_061_070_Volcan.md`.
 
 Points techniques à connaître :
 
-- Les cartes 52–60 sont dans `scripts/drowned_maps.gd` (module de données, branché par `Maps.for_id`). Chaque eau est un tronçon `{route, from, to}` défini entre deux sommets du trajet.
-- Les emplacements n'ont pas été dessinés à la main : ils ont été choisis par couverture du trajet puis par simulation (16 jeux par carte, trois ordres d'achat), avec les talents **réellement acquis** à chaque mission (26 à 30 points, répartis comme dans les tests). Les emplacements 3, 4 et 2 sont ceux de la stratégie de référence des tests ; les trois autres servent au décor. Les scripts de génération et de simulation ne sont pas dans le dépôt : si une carte est modifiée, refaire cette simulation plutôt que de déplacer des emplacements à l'œil.
-- Le placement du décor automatique dépend de l'identifiant de la carte : changer l'identifiant peut supprimer les roseaux ou les ruines que le test exige (La Crue s'appelle `marsh_overflow` pour cette raison).
-- `configure_wave_set` et `configure_enemy_hp` refusent sans rien dire d'être appelés après `select_faction`. Dans une simulation, régler aussi `meta_ranks` avant `select_faction` (les PV de forteresse en dépendent).
+- Cartes volcaniques : `scripts/volcanic_maps.gd` (module de données branché par `Maps.for_id`, décor `volcanic` accepté par `validation_error`). Rencontres standard (pas de `wave_set_id`), PV ennemis `99 + numéro` %, borne portée à 169 %.
+- Les repères de couleur du décor `volcanic` sont neutres (sol `3d3837`, faces `4a403d` / `352e2d` dans `valley_view.gd`, aperçu dans `campaign_screen.gd`) ; pas de décor automatique : `scenery_for` ne traite que les ardoises, les marais et le chapitre 1.
+- Emplacements non dessinés à la main : choisis par couverture du trajet puis par simulation (16 jeux par carte, trois ordres d'achat) avec les talents **réels** de la mission (30 à 35 points). Les outils de génération et de simulation sont hors dépôt (scratchpad de session). Pour modifier une carte, refaire cette simulation au lieu de déplacer des emplacements à l'œil. Les emplacements 3, 4 et 2 sont ceux de la stratégie de référence des tests.
+- Les chapitres de test suivent un modèle : `tests/test_drowned_chapter.gd` (52–60) et `tests/test_volcanic_chapter.gd` (61–70). Un nouveau chapitre doit aussi mettre à jour les tests « contenu à venir » (`test_campaign_preview`, `test_mission_scout`, `test_campaign_states`, `test_chapter_one`, `test_campaign_progress`, `test_campaign_sample`) et `verify_windows_export.py` (cas `volcano<N>`, `volcano70completed`).
 - Tout nouveau fichier d'exécution doit être déclaré dans trois listes d'export (voir `AGENTS.md`).
-- Vérification du ZIP : les captures en fenêtre réduite (`--background`) échouent par aléa sur cette machine ; utiliser la vérification sans cette option.
-- Essais d'équilibrage : `C:/Projet/.tools/survey_marsh_52_60.gd` → `dist/marsh-missions52-60-survey.json` (1 944 parties, trois orientations de talents).
-- Régression complète : 101 suites, 58 725 contrôles Godot, 17 tests Python. 86 essais Windows et 86 empreintes de sources réussis. Nouvelle suite : `tests/test_drowned_chapter.gd`.
+- Régression complète : 102 suites, 62 195 contrôles Godot, 17 tests Python. 68 essais Windows et 87 empreintes de sources réussis. Essais d'équilibrage : `C:/Projet/.tools/survey_volcano_61_70.gd` → `dist/volcano-missions61-70-survey.json` (2 160 parties).
+- L'outil PowerShell de l'agent peut être indisponible : lancer `powershell.exe …` depuis Bash (voir `AGENTS.md`).
+- Piège shell : un chemin de fichier `\v…` écrit dans un script Python via heredoc devient un caractère de tabulation verticale ; écrire les scripts dans un fichier plutôt qu'en ligne.
 
 Fichiers non suivis à laisser tels quels sauf demande : `design/essais/v0109_game_frames/`, `prototype/tools/survey_route_workshops.gd.uid`. `prototype/scripts/enemy_walk_art.gd` apparaît modifié mais son contenu est identique (fins de ligne) : ne pas le committer.
 
 ## Prochaines étapes possibles
 
-- Code (Claude Code) : chapitre 7, nouveau biome (missions 61–70). Son ambiance et sa nouveauté sont à choisir avec le porteur avant tout développement.
-- Visuels (Codex) : voir `TODO_VISUELS.md` (Noyé, eau, bassins, ruine compacte, animations).
+- Code (Claude Code) : chapitre 8, missions 71–80, avec la nouveauté du biome volcanique. À ne développer qu'après le choix de la nouveauté par le porteur.
+- Visuels (Codex) : voir `TODO_VISUELS.md`, en particulier tout l'habillage volcanique (sol, décor, palette).
 
 ## Questions ouvertes pour le porteur
 
-- **Biome du chapitre 7** : quelle ambiance pour les missions 61–70 ?
-- **Courbe de difficulté du chapitre 6** : le Delta des Noyés (55) est le plus dur (20 victoires sur 108 pour l'Alliance, 6 pour la Horde) et le Cœur du Marais (60, finale) est l'un des plus faciles (74 et 33). Faut-il durcir la finale ?
-- **Poids des talents** : dans les essais automatiques, l'orientation choisie pèse plus que la carte (Alliance : 288 victoires sur 324 avec Entraînement, 40 avec Étude des arcanes ; Horde : 88 avec Entraînement, 16 avec Rituels). Est-ce voulu, ou faut-il rééquilibrer les arbres ?
-- Équilibrage des marais à confirmer en jeu, surtout côté Horde.
+- **Nouveauté du chapitre 8** (missions 71–80) : attaquant de feu, terrain de lave (tronçons sur le chemin), affixe de combat ou autre piste ? À proposer et valider avant de coder.
+- **Difficulté du chapitre 7** : nettement plus facile que le chapitre 6 (Alliance de 41 à 90 victoires sur 108, Horde de 15 à 62) et sa finale est dans la moyenne (76 / 46). Faut-il la durcir, comme celle du chapitre 6 ?
+- **Poids des talents** : l'orientation pèse plus que la carte (Alliance : 357 victoires sur 360 avec Entraînement, 90 avec Étude des arcanes). Est-ce voulu, ou faut-il rééquilibrer les arbres ?
+- Équilibrage à confirmer en jeu, surtout côté Horde.
