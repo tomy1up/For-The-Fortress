@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 10 novembre 2026 — Claude Code
 
-**Version en cours de publication : v0.170** (chapitre 8, missions 71–80, affixe Éruptions). La dernière version déjà publiée avant elle est la v0.169 (tag `v0.169`). 80 missions jouables : les chapitres 1 à 8 sont complets. Si `git tag` ne montre pas `v0.170`, la publication n'a pas abouti : reprendre au commit, au tag, au push puis à `gh release create` (voir `AGENTS.md`).
+**Dernière version publiée : v0.170** (commit `4b930ad`, tag `v0.170`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.170) avec ZIP et `.sha256`, SHA-256 `cf779acc…dd9db`). 80 missions jouables : les chapitres 1 à 8 sont complets. La v0.169 la précède.
 
 **v0.170** : nouveauté du chapitre 8 décidée dans son principe par le porteur (10 novembre 2026) : un affixe qui désactive au hasard un emplacement de défense quelques secondes. Valeurs de prototype à confirmer : 5 s toutes les 14 s, 2 s d'avertissement (`{"id":"eruptions","interval":14,"warning":2,"duration":5}` dans `campaign_catalogue.gd`). Fiche : `design/Missions_071_080_Eruptions.md`. Points techniques :
 
