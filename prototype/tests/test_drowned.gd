@@ -183,7 +183,7 @@ func verify_campaign(camp: int) -> void:
 	check(not game.choosing_faction and game.mission_definition.id == "campaign.051" and model.map_definition.id == "marsh_stagnant" and model.wave_set_id == "marsh_drowned" and model.enemy_hp_percent == 150 and model.gold == 150 and model.combat_affix.is_empty(),"La mission 51 démarre par le parcours normal avec ses rencontres")
 	var forecast: Dictionary = model.forecast_for_routes(2)
 	check(not forecast.is_empty() and forecast.groups[0].name == "Noyé","La prévision de la vague 2 annonce le Noyé")
-	play(model,[0,1,2] if camp == 0 else [3,3,5])
+	play(model,[0,1,1] if camp == 0 else [3,3,5])
 	print("DROWNED_RESULT=",camp,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Une composition accessible gagne dans chaque faction")
 	var replay: Dictionary = Replay.verify(JSON.parse_string(JSON.stringify(Report.build(model))))

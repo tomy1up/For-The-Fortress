@@ -73,12 +73,12 @@ static func allocation_error(ranks: Array, index: int, points: int) -> String:
 static func can_allocate(ranks: Array, index: int, points: int) -> bool:
 	return allocation_error(ranks,index,points).is_empty()
 
-static func effects(faction: int, ranks: Array, type: int, scaled: bool = true) -> Dictionary:
+static func effects(faction: int, ranks: Array, type: int, rules: int = Expanded.RULES_CURRENT) -> Dictionary:
 	type = Linked.Shop.family(type)
-	if ranks.size() == Expanded.NODE_COUNT: return Linked.effects(faction,ranks,type,scaled) if Linked.valid(ranks) else Expanded.effects(faction,ranks,type,scaled)
+	if ranks.size() == Expanded.NODE_COUNT: return Linked.effects(faction,ranks,type,rules) if Linked.valid(ranks) else Expanded.effects(faction,ranks,type,rules)
 	if Legacy.valid(ranks): return Legacy.effects(faction,ranks,type)
 	# Format de quinze rangs (v0.68) : converti au format enrichi, comme le fait un profil réel, pour appliquer l'échelle des arbres.
-	if scaled and current_valid(ranks): return Expanded.effects(faction,Expanded.normalize(ranks),type,true)
+	if rules != Expanded.RULES_HISTORICAL and current_valid(ranks): return Expanded.effects(faction,Expanded.normalize(ranks),type,rules)
 	var result: Dictionary = {"direct":0.0,"secondary":0.0,"curse":0.0,"range":0.0}
 	if not current_valid(ranks) or type not in ([0,1,2] if faction == 0 else [3,4,5]): return result
 	if faction == 0:

@@ -17,7 +17,7 @@ const EXPECTED: Dictionary = {
 	67:{"map":"volcano_organs","length":31.0,"routes":1},
 	68:{"map":"volcano_twin","length":29.0,"routes":2},
 	69:{"map":"volcano_road","length":28.0,"routes":3},
-	70:{"map":"volcano_core","length":25.0,"routes":3},
+	70:{"map":"volcano_core","length":27.0,"routes":3},
 }
 var checks := 0
 var failures := 0
@@ -102,7 +102,7 @@ func verify_mission(camp: int, number: int) -> void:
 	game.campaign_menu._launch()
 	var model: Model = game.model
 	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == 99+number and model.gold == 150 and model.combat_affix.is_empty() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
-	play(model,[0,1,2] if camp == 0 else [3,3,5])
+	play(model,[0,1,1] if camp == 0 else [3,3,5])
 	print("VOLCANIC_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])
 	var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))

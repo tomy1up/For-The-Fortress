@@ -46,6 +46,9 @@ static func _audit(ok: bool,message: String,state: Dictionary) -> void:
 	state.checks += 1
 	if not ok and state.failures.size() < 100: state.failures.append(message)
 
+## Vrai pour rejouer les relevés historiques de la boutique avec les valeurs de talents d'origine.
+static var historical_talents: bool = false
+
 static func run_case(card: Dictionary,mission: int,layout_index: int,policy: String,branch: int,talent_mode: String,seed_value: int,alternative: bool,step: float = 300.0,include_report: bool = false,priority_extra: bool = false,historical_cost: int = -1) -> Dictionary:
 	var state: Dictionary = {"checks":0,"failures":[]}
 	var entry: Dictionary = Catalogue.definition(mission)
@@ -56,6 +59,7 @@ static func run_case(card: Dictionary,mission: int,layout_index: int,policy: Str
 	var m = Model.new(true,Model.Maps.for_id(entry.map_id))
 	_audit(m.configure_enemy_hp(entry.hp_percent) and m.configure_auxiliary(card.type if alternative else -1),"Règles de mission et choix d’unité configurés",state)
 	if historical_cost > 0 and alternative: m.configure_auxiliary_cost(historical_cost)
+	if historical_talents: m.talent_rules = Model.MetaTalents.Expanded.RULES_HISTORICAL
 	m.meta_ranks = ranks.duplicate();_audit(m.select_faction(card.faction),"Faction cohérente",state);m.rng.seed = seed_value
 	var types: Array = plan(card,policy,alternative)
 	var slots: Array = LAYOUTS[layout_index]
@@ -98,7 +102,9 @@ static func run_case(card: Dictionary,mission: int,layout_index: int,policy: Str
 		var unit: Dictionary = m.defenders[slot]
 		if not unit.is_empty(): units.append({"slot":slot,"type":unit.type,"level":unit.level,"branch":unit.branch,"paid":unit.paid})
 	var result: Dictionary = {"alternative":alternative,"result":m.phase,"wave":m.wave,"hp":m.fortress_hp,"max_hp":m.max_hp,"gold":m.gold,"income":m.total_income,"kills":m.total_killed,"escapes":m.total_escaped,"combat_seconds":m.completed_time+m.elapsed,"bonuses":m.bonuses.duplicate(),"talent_ranks":ranks,"talent_points_available":budget.points,"po_before_purchase":budget.po,"deployed_auxiliary":deployed_auxiliary,"first_auxiliary_wave":first_auxiliary_wave,"units":units,"waves":waves,"audit_checks":state.checks,"failures":state.failures}
-	if include_report: result.report = JSON.parse_string(JSON.stringify(Report.build(m)))
+	if include_report:
+		result.report = JSON.parse_string(JSON.stringify(Report.build(m)))
+		if historical_talents: result.report.game_version = "0.167" # Rejeu avec les valeurs de talents d'origine.
 	return result
 
 func _initialize() -> void:

@@ -60,7 +60,7 @@ func run_checks() -> void:
 		var m = Model.new();m.meta_ranks = ranks.duplicate();m.select_faction(faction)
 		check(m.max_hp == (31 if faction == 0 else 20),"PV du nouveau format exacts")
 		for type in m.available_types():
-			var effect: Dictionary = Talents.effects(faction,ranks,type,false) # Valeurs historiques, sans l'échelle des arbres de la v0.168.
+			var effect: Dictionary = Talents.effects(faction,ranks,type,0) # Valeurs historiques, sans l'échelle des arbres de la v0.168.
 			var expected: Array = {0:[0.29,0.0,0.0,0.3],1:[0.29,0.0,0.0,0.3],2:[0.29,0.21,0.0,0.1],3:[0.29,0.06,0.0,0.0],4:[0.29,0.21,0.0,0.0],5:[0.29,0.0,0.21,0.0]}[type]
 			check(is_equal_approx(effect.direct,expected[0]) and is_equal_approx(effect.secondary,expected[1]) and is_equal_approx(effect.curse,expected[2]) and is_equal_approx(effect.range,expected[3]),"Effets exacts de tous les nouveaux rangs par classe")
 		m.start();m.advance(10000)

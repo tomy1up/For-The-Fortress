@@ -97,22 +97,26 @@ func run_checks() -> void:
 		check(game.affix_label.visible and game.affix_label.text.contains("−10 %"),"Affixe visible pendant la préparation")
 		var model = game.model
 		model.rng.seed = 7
-		var types: Array = [0,1,2] if camp==0 else [3,3,5]
-		if mission==32: types = [0,0,2] if camp==0 else [4,4,3]
+		var types: Array = [0,1,1] if camp==0 else [3,3,5]
+		if mission==32: types = [1,1,0] if camp==0 else [4,4,3]
+		if camp==0 and mission==33: types = [1,1,0]
 		if mission==36: types = [1,1,0] if camp==0 else [4,4,3]
 		if camp==1 and mission==37: types = [4,4,3]
-		if camp==0 and mission in [38,39,40]: types = [1,1,0]
+		if camp==0 and mission==39: types = [1,1,0]
+		if camp==0 and mission==40: types = [1,0,1]
 		if camp==1 and mission==40: types = [3,5,4]
 		var slots := [3,4,2]
+		if camp==0 and mission in [32,33,34,35,36,39]: slots = [4,3,2]
+		if camp==0 and mission in [31,40]: slots = [2,3,4]
 		if camp==1 and mission==35: slots = [4,3,2]
 		if mission==37: slots = [4,3,2]
-		if mission==38: slots = [2,3,4] if camp==0 else [4,3,2]
+		if mission==38: slots = [4,3,2]
 		if camp==1 and mission==40: slots = [4,3,2]
-		var extra: Array = [[0,3,3]] if camp==1 and mission==32 else []
+		var extra: Array = [[0,3,3]] if camp==1 and mission==32 else [[0,0,3]] if camp==0 and mission in [32,33,36,39] else []
 		if camp==1 and mission==40: extra = [[0,3,3]]
 		var seed_value: int = 42 if camp==1 and mission==39 else 7
 		play_policy(model,types,slots,extra,seed_value)
-		check(model.phase=="victory","Victoire avec les ressources et talents normalement accessibles")
+		check(model.phase=="victory","Victoire avec les ressources et talents normalement accessibles (mission %d, faction %d)" % [mission,camp])
 		var spent := 0
 		for action in model.action_history:
 			if action.kind in ["buy","upgrade"]: spent += int(action.cost)

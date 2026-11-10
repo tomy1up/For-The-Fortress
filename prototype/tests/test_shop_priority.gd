@@ -7,6 +7,7 @@ func check(ok: bool,message: String) -> void:
 	checks += 1
 	if not ok: failures += 1;push_error(message)
 func _initialize() -> void:
+	Survey.historical_talents = true # Le relevé validé date d'avant l'équilibrage des talents.
 	var path: String = ProjectSettings.globalize_path("res://").path_join("../design/essais/boutique_v0991_releves.json.gz").simplify_path()
 	var archive: PackedByteArray = FileAccess.get_file_as_bytes(path)
 	var historical: Variant = JSON.parse_string(archive.decompress_dynamic(20000000,FileAccess.COMPRESSION_GZIP).get_string_from_utf8())

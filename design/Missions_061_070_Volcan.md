@@ -23,9 +23,9 @@ Aucune règle propre : rencontres standard (les dix vagues de base, sans tortue 
 | 67 | Les Orgues de Basalte | 1 | 31 | 33 |
 | 68 | Le Cratère Jumeau | 2, pression alternée | 29 / 29 | 34 |
 | 69 | La Route des Cendres | 3 | 28 / 24 / 28 | 34 |
-| 70 | Le Cœur du Volcan | 3 | 25 / 22 / 25 | 35 |
+| 70 | Le Cœur du Volcan | 3 | 27 / 24 / 27 | 35 |
 
-Chaque carte garde six emplacements et dix vagues. Le chapitre propose une variété comparable à celle du chapitre 5 : quatre cartes à une entrée, trois à deux entrées et trois à trois entrées. Les trajets sont de plus en plus courts au fil du chapitre (de 34 à 25 unités) pour compenser l'absence de règle particulière ; le Cœur du Volcan, finale du chapitre, est le plus court. Les longueurs de cette table sont celles de la v0.168.
+Chaque carte garde six emplacements et dix vagues. Le chapitre propose une variété comparable à celle du chapitre 5 : quatre cartes à une entrée, trois à deux entrées et trois à trois entrées. Les trajets sont de plus en plus courts au fil du chapitre (de 34 à 27 unités) pour compenser l'absence de règle particulière ; le Cœur du Volcan, finale du chapitre, est le plus court. Les longueurs de cette table sont celles de la v0.168.
 
 ## Prise en compte des talents accumulés
 
@@ -50,7 +50,7 @@ Le porteur a demandé de durcir le chapitre 7 : dans la v0.167, il était nettem
 | 67 | 34 | 31 |
 | 68 | 33 / 33 | 29 / 29 |
 | 69 | 32 / 28 / 32 | 28 / 24 / 28 |
-| 70 | 29 / 26 / 29 | 25 / 22 / 25 |
+| 70 | 29 / 26 / 29 | 25 / 22 / 25 (27 / 24 / 27 depuis la v0.169) |
 
 Les emplacements ont été recalculés pour chaque carte par la même méthode (480 parties de référence avec les talents réels). Parties de référence gagnées sur 48 par carte (16 jeux d'emplacements × 3 ordres d'achat), avant puis après :
 
@@ -65,7 +65,7 @@ La finale est maintenant au niveau de celle du chapitre 6 (23 et 6 sur 48). La s
 
 Le relevé local `dist/volcano-missions61-70-survey.json` contient 2 160 essais : trois graines (7, 42 et 2026), trois placements, quatre compositions et trois orientations de talents dans chaque faction et sur chaque carte. Tous dépensent tous les points acquis auparavant (30 à 35 selon la mission), avec les revenus normaux, une priorité de prérequis de talents majeurs, les spécialisations A et le premier bonus proposé. Les empreintes des scripts enregistrées dans le relevé correspondent aux sources de la version.
 
-Pour mesurer l'effet des seules cartes, on compare les arbres de référence (ceux que les cartes ont servi à régler : Maîtrise du tir pour l'Alliance, Fureur de guerre pour la Horde), victoires sur 36 parties par mission, avant et après le durcissement :
+Pour mesurer l'effet des seules cartes, on compare les arbres de référence (ceux que les cartes ont servi à régler : Maîtrise du tir pour l'Alliance, Fureur de guerre pour la Horde), victoires sur 36 parties par mission, avant et après le durcissement de la v0.168 :
 
 | Mission | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | Total sur 360 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -74,35 +74,33 @@ Pour mesurer l'effet des seules cartes, on compare les arbres de référence (ce
 | Horde avant | 26 | 9 | 7 | 12 | 15 | 22 | 35 | 19 | 9 | 22 | 176 |
 | Horde après | 35 | 35 | 7 | 8 | 12 | 3 | 30 | 6 | 7 | 4 | 147 |
 
-Le durcissement réduit les victoires de 8 % (Alliance) et de 16 % (Horde) sur l'arbre de référence, avec une difficulté croissante côté Horde : les missions 61 et 62, plus accessibles qu'avant, ouvrent le chapitre ; la finale passe de 22 à 4 victoires sur 36.
+Le durcissement réduisait les victoires de 8 % (Alliance) et de 16 % (Horde) sur l'arbre de référence.
 
-Avec toutes les orientations de talents, les totaux montent côté Alliance (709 → 786 victoires sur 1 080) parce que les arbres Bastion et Arts arcaniques ont été renforcés dans la même version (voir `Equilibrage_arbres_talents_v0168.md`) ; côté Horde, 359 → 314.
+**Alignement des factions (v0.169).** La v0.169 abaisse les talents de l'Alliance pour les aligner sur ceux de la Horde (voir `Equilibrage_arbres_talents_v0168.md`) et rallonge le finale de deux unités. Victoires sur 108 parties par mission avec les armées de chaque arbre (`dist/volcano-missions61-70-natural.json`) : l'unité améliorée par l'arbre est achetée à l'ouverture, parfois en deux exemplaires ; les compositions fixes des essais habituels favorisent certains arbres.
 
-**Essai avec les armées de chaque arbre.** Une seconde série de 2 160 parties (`dist/volcano-missions61-70-natural.json`, outil d'essai avec `natural_armies`) fait jouer à chaque orientation l'armée qu'un joueur de cet arbre constituerait : l'unité améliorée par l'arbre est achetée à l'ouverture, parfois en deux exemplaires. Les compositions fixes des essais habituels favorisent certains arbres (archer et hache, troisième unité achetée tard) ; cette série juge les arbres à armes égales.
+| Série | Faction | Missions 61 à 70 | Total sur 1 080 |
+| --- | --- | --- | --- |
+| Armées de chaque arbre, v0.168 | Alliance | 108, 108, 108, 85, 108, 106, 108, 104, 103, 105 | 1 043 (97 %) |
+| Armées de chaque arbre, v0.168 | Horde | 108, 107, 48, 51, 62, 12, 102, 13, 27, 28 | 558 (52 %) |
+| Armées de chaque arbre, v0.169 | Alliance | 108, 108, 70, 45, 94, 7, 107, 30, 30, 94 | 693 (64 %) |
+| Armées de chaque arbre, v0.169 | Horde | 108, 107, 48, 51, 62, 12, 102, 13, 27, 84 | 614 (57 %) |
+| Compositions fixes, v0.169 | Alliance | 92, 97, 42, 15, 54, 5, 77, 13, 16, 60 | 471 (44 %) |
+| Compositions fixes, v0.169 | Horde | 79, 71, 17, 17, 21, 10, 55, 15, 16, 37 | 338 (31 %) |
 
-| Faction | Orientation | Victoires sur 360 |
-| --- | --- | --- |
-| Alliance | Bastion | 343 |
-| Alliance | Maîtrise du tir | 349 |
-| Alliance | Arts arcaniques | 351 |
-| Horde | Fureur de guerre | 195 |
-| Horde | Voie des maléfices | 162 |
-| Horde | Démolition | 201 |
-
-Les trois arbres de chaque faction se valent donc en campagne. Mais avec ces armées, l'Alliance gagne 97 % des parties (1 043 sur 1 080), la Horde 52 % (558 sur 1 080) : l'Alliance atteint le plafond de la mesure et ne distingue plus les cartes. Les cartes sont réglées pour que la stratégie de référence de la Horde gagne ; avec une armée bien construite, l'Alliance les écrase.
+L'écart entre factions passe de 45 points (97 % contre 52 %) à 7 points (64 % contre 57 %) avec les armées de chaque arbre. Les résultats de la Horde ne changent qu'à la mission 70 (28 → 84 victoires) à cause du rallongement du finale. Victoires sur 360 par orientation de talents, armées de chaque arbre : Alliance Bastion 223, Maîtrise du tir 235, Arts arcaniques 235 ; Horde Fureur de guerre 209, Voie des maléfices 187, Démolition 218. Les six arbres se situent entre 187 et 235.
 
 Ces résultats décrivent les stratégies automatiques essayées. Ils ne constituent ni un taux de réussite des joueurs ni une validation humaine de l'équilibrage.
 
 **Points à retenir.**
-- Le chapitre 7 est maintenant du niveau du chapitre 6 pour la stratégie de référence, mais l'écart entre factions domine : une armée bien construite côté Alliance gagne presque toujours, même au chapitre durci.
-- Missions les plus difficiles côté Horde (armées de chaque arbre) : le Pont d'Obsidienne (66), le Cratère Jumeau (68) et le Cœur du Volcan (70).
-- Un durcissement supplémentaire côté Alliance passerait par un réglage propre à chaque faction (PV ennemis, difficulté), pas par les cartes seules : décision du porteur.
+- Les deux factions ont maintenant une difficulté comparable : la Horde ne retarde plus et l'Alliance n'écrase plus les cartes.
+- Missions les plus difficiles dans les deux factions : le Pont d'Obsidienne (66, 7 et 12 victoires sur 108), le Cratère Jumeau (68) et la Route des Cendres (69). Le Seuil des Cendres, les Coulées Figées et le Cœur du Volcan, côté Horde, sont gagnés presque à tous coups.
+- La courbe de difficulté du chapitre n'est pas croissante : le Pont d'Obsidienne, au milieu, est la carte la plus dure. Ajuster ces cartes reste possible après décision du porteur.
 
 ## Vérifications
 
-La régression complète réussit : 103 suites, 62 490 contrôles Godot et 17 tests Python. La suite dédiée aux dix missions (3 442 contrôles) est adaptée aux nouvelles longueurs. Les 52 essais Windows ciblés réussissent (menus et lancements des missions 61 à 70 dans les deux factions, chapitre 7 terminé avec rejeu sans nouveau gain, mission 60 comme témoin, écrans de talents, spécialisations à trois entrées) et les 87 empreintes de sources du paquet correspondent au projet. Les captures avec défenseurs des missions 66 et 70 ont été inspectées dans les deux factions.
+La régression complète réussit : 103 suites, 62 495 contrôles Godot et 17 tests Python, dont `test_talent_balance.gd` (426 contrôles : échelle de chaque arbre, trois jeux de règles par version, parité à 51 points). Les 52 essais Windows ciblés réussissent (menus et lancements des missions 61 à 70 dans les deux factions, chapitre 7 terminé avec rejeu sans nouveau gain, mission 60 comme témoin, écrans de talents, spécialisations à trois entrées) et les 87 empreintes de sources du paquet correspondent au projet. Les rapports de référence du grenadier (v0.100) et le relevé historique de la boutique se rejouent à l'identique avec les valeurs de talents d'origine.
 
-![Le Cœur du Volcan durci (v0.168), défense Horde dans la version Windows](essais/captures/QA-v0168_coeur_du_volcan_durci.png)
+![Le Cœur du Volcan (v0.169), défense Alliance dans la version Windows](essais/captures/QA-v0169_coeur_du_volcan.png)
 
 ## Suite
 

@@ -115,7 +115,7 @@ func verify_mission(camp: int, number: int) -> void:
 	game.campaign_menu._launch()
 	var model: Model = game.model
 	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "marsh_drowned" and model.enemy_hp_percent == 99+number and model.gold == 150 and model.combat_affix.is_empty() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
-	play(model,[0,1,2] if camp == 0 else [3,3,5])
+	play(model,[0,1,1] if camp == 0 else [3,3,5])
 	print("DROWNED_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])
 	var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))

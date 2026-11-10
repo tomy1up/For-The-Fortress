@@ -21,13 +21,14 @@ func run_checks() -> void:
 	quit(1 if failures else 0)
 
 func verify_scale() -> void:
-	check(Expanded.TREE_SCALE.size() == 2 and Expanded.TREE_SCALE.all(func(faction):return faction.size() == 3 and faction.all(func(tree):return tree.size() == 2 and tree.all(func(value):return value > 0.0 and value <= 6.0))),"Une échelle de début et de fin par arbre, strictement positive et bornée")
+	for table in [Expanded.TREE_SCALE,Expanded.TREE_SCALE_V168]: check(table.size() == 2 and table.all(func(faction):return faction.size() == 3 and faction.all(func(tree):return tree.size() == 2 and tree.all(func(value):return value > 0.0 and value <= 6.0))),"Une échelle de début et de fin par arbre, strictement positive et bornée")
+	check(Expanded.TREE_SCALE[1] == Expanded.TREE_SCALE_V168[1],"Les arbres de la Horde ne changent pas entre la v0.168 et la v0.169")
 	for faction in range(2):
 		for tree in range(3):
 			for local in range(Expanded.NODES_PER_TREE):
 				var index: int = Expanded.index_for(tree,local)
-				var original: Dictionary = Expanded.effect_for(faction,index,false)
-				var scaled: Dictionary = Expanded.effect_for(faction,index,true)
+				var original: Dictionary = Expanded.effect_for(faction,index,Expanded.RULES_HISTORICAL)
+				var scaled: Dictionary = Expanded.effect_for(faction,index)
 				var factor: float = Expanded.tree_scale(faction,tree,local)
 				check(factor == float(Expanded.TREE_SCALE[faction][tree][0 if local in Expanded.EARLY_LOCALS else 1]),"Facteur lu selon la ligne du talent")
 				check(original.keys() == scaled.keys() and original.get("types",[]) == scaled.get("types",[]) and original.get("hp",0) == scaled.get("hp",0),"L'échelle ne change ni les unités visées, ni les composantes, ni les PV de forteresse")
@@ -36,22 +37,28 @@ func verify_scale() -> void:
 	for faction in range(2):
 		var ranks: Array = allocate(faction,1,51,[5,7,9,16,18])
 		for type in ([0,1,2] if faction == 0 else [3,4,5]):
-			var current: Dictionary = Linked.effects(faction,ranks,type,true)
-			var historical: Dictionary = Linked.effects(faction,ranks,type,false)
-			for component in Expanded.SCALED_COMPONENTS: check(current[component] >= historical[component]-0.000001,"L'échelle de la v0.168 ne retire aucun bonus")
+			var current: Dictionary = Linked.effects(faction,ranks,type)
+			var balanced: Dictionary = Linked.effects(faction,ranks,type,Expanded.RULES_V168)
+			for component in Expanded.SCALED_COMPONENTS:
+				if faction == 1: check(is_equal_approx(current[component],balanced[component]),"Les talents de la Horde sont identiques en v0.168 et en v0.169")
+				else: check(current[component] <= balanced[component]+0.000001,"Les talents de l'Alliance ne dépassent jamais leurs valeurs de la v0.168")
 		check(Linked.extra_hp(faction,ranks) == Linked.extra_hp(faction,ranks),"PV de forteresse stables")
 
 func verify_legacy_rules() -> void:
-	for version in ["0.167","0.166","0.100","0.99.1","0.99","0.1"]: check(Replay.legacy_talents(version),"La version %s garde les valeurs historiques des arbres" % version)
-	for version in ["0.168","0.169","0.200","1.0","1.0.0","","abc","0","0.x"]: check(not Replay.legacy_talents(version),"La version « %s » utilise les valeurs équilibrées" % version)
+	for version in ["0.167","0.166","0.100","0.99.1","0.99","0.1"]: check(Replay.talent_rules_for(version) == Expanded.RULES_HISTORICAL,"La version %s garde les valeurs historiques des arbres" % version)
+	check(Replay.talent_rules_for("0.168") == Expanded.RULES_V168,"La version 0.168 garde ses valeurs équilibrées")
+	for version in ["0.169","0.200","1.0","1.0.0","","abc","0","0.x"]: check(Replay.talent_rules_for(version) == Expanded.RULES_CURRENT,"La version « %s » utilise les valeurs en vigueur" % version)
 	var ranks: Array = allocate(0,2,51,[5,7,9,16,18])
-	var current := Model.new(true);current.meta_ranks = ranks.duplicate();current.select_faction(0);current.buy(3,2)
-	var historical := Model.new(true);historical.talent_rules_legacy = true;historical.meta_ranks = ranks.duplicate();historical.select_faction(0);historical.buy(3,2)
-	var now: Dictionary = current.get_stats(3)
-	var before: Dictionary = historical.get_stats(3)
-	check(now.damage > before.damage and now.secondary_damage > before.secondary_damage and now.range > before.range,"Le mode équilibré renforce le mage de l'arbre Arts arcaniques")
-	check(is_equal_approx(before.damage,Model.new(true).stats_for(2,1).damage*(1.0+Linked.effects(0,ranks,2,false).direct)),"Le mode historique rend exactement les valeurs d'origine")
-	check(current.max_hp == historical.max_hp,"Les deux modes donnent la même forteresse de départ")
+	var stats: Dictionary = {}
+	for rules in [Expanded.RULES_HISTORICAL,Expanded.RULES_V168,Expanded.RULES_CURRENT]:
+		var model := Model.new(true);model.talent_rules = rules;model.meta_ranks = ranks.duplicate();model.select_faction(0);model.buy(3,2)
+		stats[rules] = model.get_stats(3)
+		stats[rules].max_hp = model.max_hp
+		var expected: Dictionary = Linked.effects(0,ranks,2,rules)
+		check(is_equal_approx(stats[rules].damage,Model.new(true).stats_for(2,1).damage*(1.0+expected.direct)),"Les règles %d donnent exactement les bonus de leur jeu de valeurs" % rules)
+	check(stats[Expanded.RULES_V168].damage > stats[Expanded.RULES_HISTORICAL].damage and stats[Expanded.RULES_V168].range > stats[Expanded.RULES_HISTORICAL].range,"La v0.168 renforce le mage de l'arbre Arts arcaniques")
+	check(stats[Expanded.RULES_CURRENT].damage < stats[Expanded.RULES_V168].damage and stats[Expanded.RULES_CURRENT].range < stats[Expanded.RULES_V168].range,"La v0.169 aligne les talents de l'Alliance sur ceux de la Horde (valeurs plus basses qu'en v0.168)")
+	check(stats[Expanded.RULES_CURRENT].max_hp == stats[Expanded.RULES_HISTORICAL].max_hp,"Les trois jeux de règles donnent la même forteresse de départ")
 
 func allocate(faction: int, tree: int, points: int, priority_head: Array) -> Array:
 	var ranks: Array = Linked.empty_ranks()

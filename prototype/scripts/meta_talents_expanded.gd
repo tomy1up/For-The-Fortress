@@ -8,11 +8,18 @@ const ROWS: Array[int] = [0,1,1,2,2,0,0,1,2,3,3,3,4,4,4,5,5,5,6,6,6]
 const MAX_RANKS: Array[int] = [5,3,3,1,1,3,3,3,3,1,3,3,2,2,2,3,3,3,1,3,3]
 const THRESHOLDS: Array[int] = [0,5,10,15,20,25,30]
 const EXCLUSIONS: Array = [[3,4],[15,16,17],[18,19,20]]
-## Rééquilibrage des arbres (v0.168), réglage de prototype : facteurs appliqués aux dégâts, rebonds, malédictions et portée,
+## Rééquilibrage des arbres, réglages de prototype : facteurs appliqués aux dégâts, rebonds, malédictions et portée,
 ## indexés [faction][arbre] = [début, fin] ; « début » concerne les talents EARLY_LOCALS (lignes 0 à 2), « fin » tous les
-## autres. Les PV de forteresse ne sont pas modifiés. Les rapports antérieurs à la v0.168 se rejouent avec les valeurs
-## historiques (voir Model.talent_rules_legacy).
-const TREE_SCALE: Array = [[[3.800,1.200],[1.000,1.000],[2.000,2.150]],[[1.000,1.000],[1.150,1.000],[1.000,1.400]]]
+## autres. Les PV de forteresse ne sont pas modifiés. Trois jeux de règles pour rejouer chaque rapport avec les valeurs de sa
+## version (voir Model.talent_rules et Replay.talent_rules_for) :
+##  - RULES_HISTORICAL : valeurs d'origine, rapports antérieurs à la v0.168 ;
+##  - RULES_V168 : arbres de l'Alliance et de la Horde équilibrés entre eux, rapports de la v0.168 ;
+##  - RULES_CURRENT : valeurs en vigueur depuis la v0.169, talents de l'Alliance alignés sur ceux de la Horde.
+const RULES_HISTORICAL: int = 0
+const RULES_V168: int = 1
+const RULES_CURRENT: int = 2
+const TREE_SCALE_V168: Array = [[[3.800,1.200],[1.000,1.000],[2.000,2.150]],[[1.000,1.000],[1.150,1.000],[1.000,1.400]]]
+const TREE_SCALE: Array = [[[2.400,0.380],[0.580,0.520],[1.100,1.050]],[[1.000,1.000],[1.150,1.000],[1.000,1.400]]]
 const EARLY_LOCALS: Array[int] = [0,1,2,3,4,5,6,7,8]
 const SCALED_COMPONENTS: Array[String] = ["direct","secondary","curse","range"]
 const UNIT_NAMES: Array[String] = ["Archer elfe","Arbalétrier nain","Mage humain","Lanceur de haches","Sapeur gobelin","Chaman orc"]
@@ -1154,27 +1161,29 @@ static func allocation_error(ranks: Array, index: int, points: int) -> String:
 	if spent(ranks) >= points: return "Aucun point disponible : gagnez de l’XP en réussissant des missions avec cette faction."
 	return ""
 
-static func tree_scale(faction: int, tree: int, local: int) -> float:
-	return float(TREE_SCALE[faction][tree][0 if local in EARLY_LOCALS else 1])
+static func tree_scale(faction: int, tree: int, local: int, rules: int = RULES_CURRENT) -> float:
+	if rules == RULES_HISTORICAL: return 1.0
+	var table: Array = TREE_SCALE if rules >= RULES_CURRENT else TREE_SCALE_V168
+	return float(table[faction][tree][0 if local in EARLY_LOCALS else 1])
 
-static func effect_for(faction: int, index: int, scaled: bool = true) -> Dictionary:
+static func effect_for(faction: int, index: int, rules: int = RULES_CURRENT) -> Dictionary:
 	var position: Vector2i = coordinates(index)
 	var effect: Dictionary = (CORE[faction][position.x][position.y] if position.y < 5 else EXTRAS[faction][position.x][position.y-5].effect).duplicate(true)
-	if scaled:
-		var factor: float = tree_scale(faction,position.x,position.y)
+	if rules != RULES_HISTORICAL:
+		var factor: float = tree_scale(faction,position.x,position.y,rules)
 		if factor != 1.0:
 			for component in SCALED_COMPONENTS:
 				if effect.has(component): effect[component] = snappedf(float(effect[component])*factor,0.001)
 	return effect
 
-static func _core_effects(faction: int, ranks: Array, type: int, scaled: bool = true) -> Dictionary:
+static func _core_effects(faction: int, ranks: Array, type: int, rules: int = RULES_CURRENT) -> Dictionary:
 	var result: Dictionary = {"direct":0.0,"secondary":0.0,"curse":0.0,"range":0.0}
 	if type not in ([0,1,2] if faction == 0 else [3,4,5]): return result
-	if scaled:
+	if rules != RULES_HISTORICAL:
 		# Mêmes noeuds que les valeurs historiques ci-dessous, lus dans CORE pour appliquer l'échelle de chaque arbre.
 		for index in range(15):
 			if int(ranks[index]) == 0: continue
-			var effect: Dictionary = effect_for(faction,index,true)
+			var effect: Dictionary = effect_for(faction,index,rules)
 			if type not in effect.get("types",[]): continue
 			for component in result: result[component] += float(effect.get(component,0))*int(ranks[index])
 		return result
@@ -1195,13 +1204,13 @@ static func _core_effects(faction: int, ranks: Array, type: int, scaled: bool = 
 	return result
 
 
-static func effects(faction: int, ranks: Array, type: int, scaled: bool = true) -> Dictionary:
+static func effects(faction: int, ranks: Array, type: int, rules: int = RULES_CURRENT) -> Dictionary:
 	var result: Dictionary = {"direct":0.0,"secondary":0.0,"curse":0.0,"range":0.0}
 	if faction not in [0,1] or not valid(ranks) or type not in ([0,1,2] if faction == 0 else [3,4,5]): return result
-	result = _core_effects(faction,ranks.slice(0,15),type,scaled)
+	result = _core_effects(faction,ranks.slice(0,15),type,rules)
 	for index in range(15,NODE_COUNT):
 		if ranks[index] == 0: continue
-		var effect: Dictionary = effect_for(faction,index,scaled)
+		var effect: Dictionary = effect_for(faction,index,rules)
 		if type not in effect.get("types",[]): continue
 		for component in result: result[component] += float(effect.get(component,0))*int(ranks[index])
 	return result

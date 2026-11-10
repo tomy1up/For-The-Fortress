@@ -1,4 +1,9 @@
-# Équilibrage des arbres de talents — v0.168
+# Équilibrage des arbres de talents — v0.168 et v0.169
+
+## Résumé
+
+- **v0.168** : les trois arbres de chaque faction sont réglés pour se valoir (voir ci-dessous).
+- **v0.169** : sur décision du porteur, les talents de l'Alliance sont abaissés pour rejoindre ceux de la Horde (section « Écart entre factions », en fin de fiche). Les arbres de l'Alliance restent équilibrés entre eux.
 
 ## Demande du porteur
 
@@ -68,15 +73,49 @@ Un test automatique (`prototype/tests/test_talent_balance.gd`) vérifie les fact
 
 ## Résultats en campagne
 
-Les mêmes 2 160 parties du chapitre 7 durci, jouées avec l'armée de chaque arbre (voir `Missions_061_070_Volcan.md`), donnent des victoires sur 360 très proches : Alliance 343 (Bastion), 349 (Maîtrise du tir), 351 (Arts arcaniques) ; Horde 195 (Fureur de guerre), 162 (Voie des maléfices), 201 (Démolition). Avec les compositions fixes des essais habituels (archer et hache dans tous les cas, troisième unité achetée à la vague 4), le même chapitre donne encore Alliance 332 (Bastion), 329 (Maîtrise du tir) et 125 (Arts arcaniques), Horde 147 (Fureur de guerre), 39 (Voie des maléfices) et 128 (Démolition). Ces compositions pénalisent toujours les arbres du mage et du chaman, dont l'unité est achetée tard ou absente : ce résultat mesure la composition, pas l'arbre. Pour comparaison, avant ce réglage et sur les cartes de la v0.167, les mêmes compositions donnaient Alliance 262 / 357 / 90 et Horde 176 / 50 / 133 (mêmes ordres d'arbres) ; les cartes ont changé entre-temps (durcissement du chapitre), donc seuls les écarts entre arbres d'une même série sont comparables. Les armées de chaque arbre restent la mesure à retenir.
+Après le réglage de la v0.168 (avant l'alignement des factions), les mêmes 2 160 parties du chapitre 7 durci, jouées avec l'armée de chaque arbre (voir `Missions_061_070_Volcan.md`), donnent des victoires sur 360 très proches : Alliance 343 (Bastion), 349 (Maîtrise du tir), 351 (Arts arcaniques) ; Horde 195 (Fureur de guerre), 162 (Voie des maléfices), 201 (Démolition). Avec les compositions fixes des essais habituels (archer et hache dans tous les cas, troisième unité achetée à la vague 4), le même chapitre donne encore Alliance 332 (Bastion), 329 (Maîtrise du tir) et 125 (Arts arcaniques), Horde 147 (Fureur de guerre), 39 (Voie des maléfices) et 128 (Démolition). Ces compositions pénalisent toujours les arbres du mage et du chaman, dont l'unité est achetée tard ou absente : ce résultat mesure la composition, pas l'arbre. Pour comparaison, avant ce réglage et sur les cartes de la v0.167, les mêmes compositions donnaient Alliance 262 / 357 / 90 et Horde 176 / 50 / 133 (mêmes ordres d'arbres) ; les cartes ont changé entre-temps (durcissement du chapitre), donc seuls les écarts entre arbres d'une même série sont comparables. Les armées de chaque arbre restent la mesure à retenir.
 
 ## Vérifications
 
-La régression complète réussit : 103 suites, 62 490 contrôles Godot et 17 tests Python, dont la nouvelle suite `test_talent_balance.gd` (421 contrôles : échelle de chaque arbre, règle des anciens rapports et parité mesurée à 51 points). Les anciens rapports de version antérieure à la 0.168 se rejouent avec les valeurs historiques : les rapports de référence du grenadier (v0.100), qui contiennent des talents de la Horde, se vérifient toujours à l'identique. Les 52 essais Windows ciblés, dont les écrans de talents des deux factions, réussissent et les 87 empreintes de sources correspondent au projet.
+La régression complète réussit : 103 suites, 62 495 contrôles Godot et 17 tests Python, dont `test_talent_balance.gd` (426 contrôles : échelle de chaque arbre, trois jeux de règles par version, parité à 51 points). Les 52 essais Windows ciblés réussissent (menus et lancements des missions 61 à 70 dans les deux factions, chapitre 7 terminé avec rejeu sans nouveau gain, mission 60 comme témoin, écrans de talents, spécialisations à trois entrées) et les 87 empreintes de sources du paquet correspondent au projet. Les rapports de référence du grenadier (v0.100) et le relevé historique de la boutique se rejouent à l'identique avec les valeurs de talents d'origine.
 
 ## Limites et questions ouvertes
 
 - **Parité jugée par un joueur automatique.** Les mesures utilisent une stratégie d'achat fixe sur trois cartes. Elles montrent l'ordre de grandeur, pas un jugement de joueur. La parité est vérifiée à 51 points par le test ; à des budgets intermédiaires, l'écart peut atteindre 12 %.
 - **Unités chères.** Un arbre dont l'unité coûte 100 or (Arts arcaniques, Voie des maléfices) vaut moins tant que l'unité n'est pas achetée. Le réglage suppose son achat à l'ouverture. Si les joueurs achètent d'abord les unités peu chères, ces arbres seront moins rentables ; leur facteur pourrait être augmenté.
 - **Armées mixtes.** Un joueur qui répartit ses points entre plusieurs arbres n'est pas mesuré directement ; la parité de chaque arbre rend ce cas neutre en moyenne.
-- **Écart entre factions.** À armée comparable, les talents de l'Alliance sont beaucoup plus puissants que ceux de la Horde (moyenne à 51 points : +136 contre +67,5 pour les arbres de référence). C'est sans doute une cause du retard constaté de la Horde dans tous les essais de campagne. Le réglage de cette version se limite aux arbres d'une même faction ; aligner la Horde sur l'Alliance changerait fortement sa difficulté et demande une décision du porteur.
+- **Écart entre factions** : traité dans la section suivante.
+
+## Écart entre factions (v0.169)
+
+**Constat.** Sans talent, les deux factions se valent : le seuil moyen de PV ennemis battus est de 116 (Alliance, armée « Maîtrise du tir ») contre 111 à 118 (Horde). Tout l'écart venait des talents. Avec la v0.168, à 10, 20, 35 et 51 points, un arbre de l'Alliance apportait en moyenne +23,5, +53, +85 et +136, contre +14,5, +28,7, +42,7 et +67,7 pour un arbre de la Horde (rapport d'environ 1,6 à 2). Les cartes des chapitres 4 à 7 sont réglées pour que la stratégie de référence de la Horde gagne : l'Alliance les écrasait (97 % de victoires avec l'armée de son arbre, contre 52 % pour la Horde au chapitre 7).
+
+**Décision du porteur.** Baisser les talents de l'Alliance pour les aligner sur ceux de la Horde. Les cartes, déjà réglées pour ce niveau, n'ont pas à être refaites.
+
+**Réglage.** Les facteurs de l'Alliance sont multipliés par un coefficient qui dépend de la ligne (début, avec un coefficient proche de 0,6 ; fin, proche de 0,5, ajustés arbre par arbre pour garder la parité). Facteurs `TREE_SCALE` de la v0.169 :
+
+| Faction | Arbre | Début | Fin | Valeur v0.168 (début / fin) |
+| --- | --- | --- | --- | --- |
+| Alliance | Bastion | 2,4 | 0,38 | 3,8 / 1,2 |
+| Alliance | Maîtrise du tir | 0,58 | 0,52 | 1,0 / 1,0 |
+| Alliance | Arts arcaniques | 1,1 | 1,05 | 2,0 / 2,15 |
+| Horde | Fureur de guerre | 1,0 | 1,0 | inchangé |
+| Horde | Voie des maléfices | 1,15 | 1,0 | inchangé |
+| Horde | Démolition | 1,0 | 1,4 | inchangé |
+
+Les valeurs de la Horde ne changent pas. Exemple : l'Entraînement de Maîtrise du tir (Alliance) passe de +3 % à +1,7 % de dégâts par rang. Les anciens rapports de partie se rejouent avec les valeurs de leur version : historiques avant la 0.168, équilibrées de la v0.168 pour la 0.168, en vigueur à partir de la 0.169 (`Replay.talent_rules_for`).
+
+**Résultat.** Gain de puissance moyen sur les deux séries d'armées (naturelle et doublée), à 10 / 20 / 35 / 51 points, avec l'écart à la moyenne des trois arbres de la Horde (14,5 / 28,7 / 42,7 / 67,7) :
+
+| Faction | Arbre | Gain moyen | Écart |
+| --- | --- | --- | --- |
+| Alliance | Bastion | 13 / 27 / 51 / 62 | −10 % / −6 % / +20 % / −8 % |
+| Alliance | Maîtrise du tir | 14 / 28,5 / 47 / 63,5 | −3 % / −1 % / +10 % / −6 % |
+| Alliance | Arts arcaniques | 16,5 / 31,5 / 45 / 62,5 | +14 % / +10 % / +5 % / −8 % |
+| Horde | Fureur de guerre | 14,5 / 29,5 / 44 / 67,5 | 0 % / +3 % / +3 % / 0 % |
+| Horde | Voie des maléfices | 13,5 / 27 / 41,5 / 69 | −7 % / −6 % / −3 % / +2 % |
+| Horde | Démolition | 15,5 / 29,5 / 42,5 / 66,5 | +7 % / +3 % / 0 % / −2 % |
+
+Les deux factions sont maintenant au même niveau à moins de 10 % près, sauf Bastion à 35 points (+20 %, un creux d'équilibrage de cet arbre qui se retrouve quel que soit son facteur de fin) et Arts arcaniques au début (+14 %). Le test de parité (`test_talent_balance.gd`) vérifie la parité des arbres d'une faction à 51 points.
+
+**Conséquences sur les cartes.** À talents égaux, la composition de référence « archer, arbalétrier, mage » ne gagnait plus plusieurs cartes des chapitres 4 à 7, alors que la composition de référence de la Horde (deux haches et un chaman) les gagnait. Les tests utilisent donc, pour l'Alliance, la composition équivalente « archer, arbalétrier, arbalétrier » (et, au chapitre 4, des compositions et renforts propres à quelques missions, comme la Horde en avait déjà). Le finale du chapitre 7 (Cœur du Volcan) a été rallongé de deux unités (27, 24, 27) pour que les deux factions le gagnent avec marge.
