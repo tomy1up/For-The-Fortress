@@ -67,7 +67,7 @@ func run_checks() -> void:
 		var normalized: Array = Expanded.normalize(old)
 		check(Expanded.valid(normalized) and normalized.slice(0,15) == old and Expanded.spent(normalized) == Previous.spent(old),"Ancien investissement conservé aux quinze identifiants historiques")
 		for faction in range(2):
-			for type in range(6): check(Expanded.effects(faction,normalized,type) == Previous.effects(faction,old,type),"Effets des anciens talents préservés exactement, y compris le refus du camp opposé")
+			for type in range(6): check(Expanded.effects(faction,normalized,type,false) == Previous.effects(faction,old,type),"Effets historiques des anciens talents préservés exactement (sans échelle des arbres), y compris le refus du camp opposé")
 			check(Expanded.extra_hp(faction,normalized) == Previous.extra_hp(faction,old),"PV des configurations historiques préservés")
 	for faction in range(2):
 		for index in range(63):

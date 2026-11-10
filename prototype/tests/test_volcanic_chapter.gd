@@ -8,16 +8,16 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 61 à 70.
 const EXPECTED: Dictionary = {
-	61:{"map":"volcano_threshold","length":36.0,"routes":1},
-	62:{"map":"volcano_flows","length":40.0,"routes":1},
+	61:{"map":"volcano_threshold","length":34.0,"routes":1},
+	62:{"map":"volcano_flows","length":36.0,"routes":1},
 	63:{"map":"volcano_caldera","length":29.0,"routes":2},
-	64:{"map":"volcano_vents","length":35.0,"routes":1},
-	65:{"map":"volcano_forges","length":30.0,"routes":3},
-	66:{"map":"volcano_bridge","length":33.0,"routes":2},
-	67:{"map":"volcano_organs","length":34.0,"routes":1},
-	68:{"map":"volcano_twin","length":33.0,"routes":2},
-	69:{"map":"volcano_road","length":32.0,"routes":3},
-	70:{"map":"volcano_core","length":29.0,"routes":3},
+	64:{"map":"volcano_vents","length":33.0,"routes":1},
+	65:{"map":"volcano_forges","length":28.0,"routes":3},
+	66:{"map":"volcano_bridge","length":27.0,"routes":2},
+	67:{"map":"volcano_organs","length":31.0,"routes":1},
+	68:{"map":"volcano_twin","length":29.0,"routes":2},
+	69:{"map":"volcano_road","length":28.0,"routes":3},
+	70:{"map":"volcano_core","length":25.0,"routes":3},
 }
 var checks := 0
 var failures := 0

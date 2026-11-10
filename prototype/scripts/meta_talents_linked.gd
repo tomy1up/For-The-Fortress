@@ -89,14 +89,14 @@ static func node(faction: int, index: int) -> Dictionary:
 	definition.parent = parent_index(index)
 	return definition
 
-static func effects(faction: int, ranks: Array, type: int) -> Dictionary:
+static func effects(faction: int, ranks: Array, type: int, scaled: bool = true) -> Dictionary:
 	type = Shop.family(type)
 	var result: Dictionary = {"direct":0.0,"secondary":0.0,"curse":0.0,"range":0.0}
 	if faction not in [0,1] or not valid(ranks) or type not in ([0,1,2] if faction == 0 else [3,4,5]): return result
-	result = Base._core_effects(faction,ranks.slice(0,15),type)
+	result = Base._core_effects(faction,ranks.slice(0,15),type,scaled)
 	for index in range(15,NODE_COUNT):
 		if ranks[index] == 0: continue
-		var effect: Dictionary = Base.effect_for(faction,index)
+		var effect: Dictionary = Base.effect_for(faction,index,scaled)
 		if type not in effect.get("types",[]): continue
 		for component in result: result[component] += float(effect.get(component,0))*int(ranks[index])
 	return result

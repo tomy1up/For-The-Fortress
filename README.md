@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.168**. Les arbres de talents se valent : Bastion et Arts arcaniques (Alliance), ainsi que la Voie des maléfices et Démolition (Horde, plus légèrement), sont renforcés, mesurés à moins de 12 % de l'arbre de référence à chaque palier. Le chapitre 7 volcanique est durci. Valeurs de prototype à confirmer en jeu. [Équilibrage des talents](design/Equilibrage_arbres_talents_v0168.md) · [Chapitre 7](design/Missions_061_070_Volcan.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.168).
+
 **Prototype v0.167**. Les missions 61 à 70 ouvrent le chapitre 7 dans les terres volcaniques et les cendres, nouveau biome retenu par le porteur : dix tracés à une, deux ou trois entrées, sans règle particulière. 70 missions sont jouables, soit sept chapitres complets. Habillage provisoire. [Cartes, talents, essais et limites](design/Missions_061_070_Volcan.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.167).
 
 **Prototype v0.166**. La finale du chapitre 6, Le Cœur du Marais, est durcie : l'eau où le Noyé régénère couvre la jonction jusqu'à la forteresse. Réglage de prototype à confirmer en jeu. [Comparaison et limites](design/Missions_052_060_Marais.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.166).

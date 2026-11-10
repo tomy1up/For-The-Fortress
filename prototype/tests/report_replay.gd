@@ -44,6 +44,11 @@ static func load_and_verify(path: String) -> Dictionary:
 	if parser.parse(text) != OK: return _fail("JSON invalide, ligne %d." % parser.get_error_line())
 	return verify(parser.data)
 
+## Version 0.XXX antérieure à la 0.168, première à équilibrer les arbres de talents.
+static func legacy_talents(version: String) -> bool:
+	var parts: PackedStringArray = version.split(".")
+	return parts.size() >= 2 and parts[0] == "0" and parts[1].is_valid_int() and int(parts[1]) < 168
+
 static func verify(data: Variant) -> Dictionary:
 	if not data is Dictionary: return _fail("Le rapport doit être un objet JSON.")
 	if data.get("schema_version") != 2: return _fail("Seuls les rapports au format 2 sont pris en charge.")
@@ -59,6 +64,7 @@ static func verify(data: Variant) -> Dictionary:
 		definition = Model.Maps.from_data(data.map_definition)
 		if definition.is_empty(): return _fail("Définition de carte invalide.")
 	var model = Model.new(true,definition)
+	model.talent_rules_legacy = legacy_talents(data.game_version) # Les rapports antérieurs à la v0.168 gardent les valeurs historiques des arbres.
 	if data.has("combat_affix") and not model.configure_combat_affix(data.combat_affix): return _fail("Affixe de combat invalide.")
 	if not model.routes.is_empty():
 		if not model.configure_route_target_policy(data.get("route_target_policy","remaining_distance")): return _fail("Règle de ciblage multitrajet invalide.")

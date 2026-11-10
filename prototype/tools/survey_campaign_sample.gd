@@ -14,7 +14,17 @@ var spend_all_earned_points := false
 var specialisation_branch := 0
 var combat_affix_override: Variant = null # Comparaison contrôlée, jamais lu par une mission jouée.
 var prefer_major_path := false
+var natural_armies := false # Comparaison des arbres : chaque orientation joue l'armée de son arbre (unité de l'arbre achetée à l'ouverture).
 var bonus_priority: Array[int] = [] # Préférence de comparaison, jamais une offre ajoutée au jeu.
+
+## Compositions [type local, type local, type local] de chaque arbre [faction][arbre] : l'unité de l'arbre est achetée à
+## l'ouverture (deux premiers achats dans les 150 or de départ), la troisième plus tard ; deux exemplaires possibles.
+static func natural_compositions(faction: int, tree: int) -> Array:
+	var table: Array = [
+		[[[0,1,2],[0,2,1],[1,0,2],[2,0,1]],[[0,1,2],[1,0,2],[0,0,1],[1,0,1]],[[2,0,1],[2,0,2],[2,0,0],[0,2,2]]],
+		[[[0,1,2],[0,2,1],[0,0,1],[0,0,2]],[[2,0,1],[2,0,2],[2,0,0],[0,2,2]],[[1,0,2],[1,0,1],[1,0,0],[0,1,1]]],
+	]
+	return table[faction][tree]
 
 static func source_hashes() -> Dictionary:
 	var result: Dictionary = {}
@@ -61,7 +71,7 @@ func play(faction: int, mission: int, seed_value: int, layout: int, composition:
 	if not m.select_faction(faction): error = "Faction refusée.";return {}
 	m.rng.seed = seed_value
 	var slots: Array = LAYOUTS[layout] if placement.is_empty() else placement
-	var types: Array = COMPOSITIONS[composition]
+	var types: Array = natural_compositions(faction,Talents.coordinates(talent).x)[composition] if natural_armies and talent >= 0 else COMPOSITIONS[composition]
 	if slots.size()!=3 or slots.any(func(slot): return not slot is int or slot<0 or slot>=m.slots.size()) or slots[0]==slots[1] or slots[0]==slots[2] or slots[1]==slots[2]:
 		error = "Trois emplacements distincts et valides sont requis.";return {}
 	var army_slots: Array = slots.duplicate()

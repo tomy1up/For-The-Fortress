@@ -71,6 +71,7 @@ var rng := RandomNumberGenerator.new()
 var synergies_enabled: bool = true # Désactivé uniquement dans les références historiques de test.
 var faction: int = 0
 var meta_ranks: Array = MetaTalents.empty_ranks()
+var talent_rules_legacy: bool = false # Vrai pour rejouer un rapport antérieur à la v0.168 avec les valeurs historiques des arbres.
 var next_instance_id: int = 0
 var curses: Array[Dictionary] = []
 var spawn_schedule: Array[Dictionary] = []
@@ -399,7 +400,7 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	var stats: Dictionary = stats_for(defender.type,level,branch_override if branch_override >= 0 else defender.get("branch",-1))
 	stats.price = base_recruit_cost(defender.type)
 	var synergy: Dictionary = synergy_effects(slot,branch_override,candidate)
-	var meta: Dictionary = MetaTalents.effects(faction,meta_ranks,defender.type)
+	var meta: Dictionary = MetaTalents.effects(faction,meta_ranks,defender.type,not talent_rules_legacy)
 	var common: float = (0.10 if 0 in active_bonuses else 0.0) + (0.15 if 6 in active_bonuses and level <= 2 else 0.0) + (0.12 if 7 in active_bonuses and level >= 3 else 0.0)
 	stats.reference_damage = stats.damage
 	stats.reference_secondary = stats.secondary_damage

@@ -83,6 +83,12 @@ Décision du porteur, 9 novembre 2026 :
 - Claude Code ne réalise pas le travail visuel : il l'ajoute à [TODO_VISUELS.md](TODO_VISUELS.md) avec le contexte utile, et peut poser un emplacement neutre ou réutiliser un visuel existant pour que le code fonctionne en attendant.
 - Codex prend ses tâches dans `TODO_VISUELS.md` et les marque livrées. S'il doit toucher au code pour intégrer un visuel, il garde les tests au vert et le signale dans `PASSATION.md`.
 
+## Équilibrage des talents
+
+- Les trois arbres de chaque faction doivent se valoir pendant toute l'aventure (décision du porteur, 10 novembre 2026). Fiche et méthode : `design/Equilibrage_arbres_talents_v0168.md` ; test de parité : `prototype/tests/test_talent_balance.gd`.
+- Les facteurs d'équilibrage sont dans `TREE_SCALE` (`meta_talents_expanded.gd`). Toute modification des effets de talents change le résultat des anciens rapports : ajouter un seuil de version dans `Replay.legacy_talents` pour rejouer les rapports antérieurs avec les valeurs historiques.
+- Juger un arbre avec son armée naturelle (l'unité qu'il améliore achetée à l'ouverture) et mesurer sa puissance par recherche du PV ennemi maximal battu, pas avec des compositions fixes qui favorisent un arbre.
+
 ## Passation entre agents
 
 Codex et Claude Code travaillent sur le même dossier, jamais en même temps.
