@@ -76,3 +76,9 @@ Le porteur retient **le Noyé, une créature des marais qui régénère ses PV d
 Les nouvelles mécaniques seront proposées séparément. Les attaquants propres au biome, l'éventuel affixe et leurs valeurs restent ouverts. Selon le rythme de progression retenu, le second chapitre du biome, aux missions 51–60, doit introduire sa nouveauté. Les missions 41–50 préparent sa découverte par les terrains et les configurations de chemins.
 
 L'ambiance n'implique à elle seule aucun effet de poison, de soin, de ralentissement ou d'eau sur les règles du combat. Ces possibilités restent des idées à concevoir et à valider.
+
+## Décision du 10 novembre 2026 — biome des chapitres 7 et 8
+
+Le porteur retient **les terres volcaniques et les cendres** comme ambiance des chapitres 7 et 8, aux missions 61–80. Cette décision porte sur l'ambiance. La v0.167 livre [le chapitre 7, missions 61–70](Missions_061_070_Volcan.md) : dix tracés à une, deux ou trois entrées, sans règle propre, avec un habillage provisoire. Selon CAMP-017, la nouveauté du biome (nouvel attaquant lié au biome ou affixe) arrive au chapitre 8, aux missions 71–80. Sa nature reste ouverte : attaquant de feu, terrain de lave, affixe de combat ou autre piste, à proposer et à faire valider séparément.
+
+Le porteur a aussi demandé le durcissement de la finale du chapitre 6 : voir [la fiche des missions 52 à 60](Missions_052_060_Marais.md), section sur la v0.166.

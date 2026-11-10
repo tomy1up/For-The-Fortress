@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.167**. Les missions 61 à 70 ouvrent le chapitre 7 dans les terres volcaniques et les cendres, nouveau biome retenu par le porteur : dix tracés à une, deux ou trois entrées, sans règle particulière. 70 missions sont jouables, soit sept chapitres complets. Habillage provisoire. [Cartes, talents, essais et limites](design/Missions_061_070_Volcan.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.167).
+
 **Prototype v0.166**. La finale du chapitre 6, Le Cœur du Marais, est durcie : l'eau où le Noyé régénère couvre la jonction jusqu'à la forteresse. Réglage de prototype à confirmer en jeu. [Comparaison et limites](design/Missions_052_060_Marais.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.166).
 
 **Prototype v0.165**. Les missions 52 à 60 terminent le chapitre 6 des marais : le Noyé, qui régénère ses PV dans l'eau, sur neuf nouveaux tracés à une, deux ou trois entrées. 60 missions sont jouables, soit six chapitres complets. Visuel et habillage de l'eau provisoires. [Cartes, talents, essais et limites](design/Missions_052_060_Marais.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.165).

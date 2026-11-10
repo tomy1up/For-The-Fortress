@@ -1,6 +1,6 @@
 param(
     [string]$EnginePath = '',
-    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.166',
+    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.167',
     [string]$OutputRoot = ''
 )
 $ErrorActionPreference = 'Stop'
@@ -53,7 +53,7 @@ $sourcePaths += @('scripts\fortress_art.gd','assets\fortresses\forteresse_allian
 $sourcePaths += @('scripts\enemy_walk_art.gd','assets\enemies\animations\loup_corps_v002.png','assets\enemies\animations\loup_corps_v002.png.import')
 $sourcePaths += @('assets\enemies\animations\loup_marche_v002.bin','scripts\route_geometry.gd')
 $sourcePaths += @('scripts\mission_scout.gd','distribution\Lancer_atelier_routes.cmd')
-$sourcePaths += @('scripts\marsh_art.gd','scripts\drowned_encounters.gd','scripts\drowned_maps.gd')
+$sourcePaths += @('scripts\marsh_art.gd','scripts\drowned_encounters.gd','scripts\drowned_maps.gd','scripts\volcanic_maps.gd')
 # Every declared runtime resource must be selected explicitly by this preset.
 $presetText = [IO.File]::ReadAllText((Join-Path $PSScriptRoot 'export_presets.cfg'))
 foreach ($resourcePath in $sourcePaths) {

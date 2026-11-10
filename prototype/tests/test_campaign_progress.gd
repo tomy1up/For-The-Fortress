@@ -15,8 +15,8 @@ func run_checks() -> void:
 		var id: String = Catalogue.id_for(number);var definition: Dictionary = Catalogue.definition(number)
 		check(not ids.has(id) and Catalogue.number_for(id) == number,"Identifiant de mission unique et stable sur les deux cents positions")
 		ids[id] = true
-		if number > 60: check(not definition.available and not definition.has("po") and not definition.has("xp") and Catalogue.runtime(id).is_empty(),"Contenu absent non jouable, sans récompense inventée")
-	check(Catalogue.available_count() == 60 and Catalogue.runtime("campaign.001") == {"id":"campaign.001","po":60,"xp":100,"waves":10,"map_id":"valley_ford","hp_percent":100},"La mission du Gué et ses gains de référence restent inchangés")
+		if number > 70: check(not definition.available and not definition.has("po") and not definition.has("xp") and Catalogue.runtime(id).is_empty(),"Contenu absent non jouable, sans récompense inventée")
+	check(Catalogue.available_count() == 70 and Catalogue.runtime("campaign.001") == {"id":"campaign.001","po":60,"xp":100,"waves":10,"map_id":"valley_ford","hp_percent":100},"La mission du Gué et ses gains de référence restent inchangés")
 	for invalid in ["campaign.1","campaign.000","campaign.201","campaign.+001","campaign.0001","campaign.001.extra",null,1]: check(Catalogue.number_for(invalid) == 0,"Identifiant non canonique refusé")
 	for number in [0,-1,201]: check(Catalogue.definition(number).is_empty() and Catalogue.id_for(number).is_empty(),"Position hors parcours refusée")
 	for pair in [[1,1],[10,1],[11,2],[20,2],[21,3],[100,10],[101,11],[200,20]]: check(Catalogue.definition(pair[0]).chapter == pair[1],"Dix missions par chapitre aux frontières du parcours")

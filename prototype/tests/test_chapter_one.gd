@@ -48,7 +48,7 @@ func run_checks() -> void:
 			var scaled: Dictionary = Model.make_enemy(0,type,0,0,entry.hp_percent)
 			check(is_equal_approx(scaled.max_hp,base.hp*entry.hp_percent/100.0),"PV exacts sans arrondi prématuré")
 			for key in ["speed","reward","fortress_damage","identity_id"]: check(scaled[key] == base[key],"Le changement de mission ne gonfle ni vitesse, ni récompense, ni dégâts à la forteresse")
-	check(not Catalogue.definition(61).available and Catalogue.runtime("campaign.061").is_empty(),"La mission 61 reste à venir, sans contenu annoncé comme jouable")
+	check(not Catalogue.definition(71).available and Catalogue.runtime("campaign.071").is_empty(),"La mission 71 reste à venir, sans contenu annoncé comme jouable")
 	for faction in range(2):
 		for number in range(4,11):
 			var entry: Dictionary = Catalogue.definition(number);var reports: Array = []

@@ -29,12 +29,12 @@ func check(value: bool, message: String) -> void:
 func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
 	var Catalogue = Main.CampaignCatalogue
-	check(Catalogue.available_count() == 60 and not Catalogue.definition(61).available and Catalogue.runtime("campaign.061").is_empty(),"Soixante missions jouables, la 61 reste à venir")
+	check(Catalogue.available_count() == 70 and Catalogue.definition(61).available and not Catalogue.definition(71).available,"Soixante-dix missions jouables, la 71 reste à venir")
 	for number in range(52,61):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.map_id == EXPECTED[number].map and definition.wave_set_id == "marsh_drowned" and definition.hp_percent == 99+number and definition.po == 60 and definition.xp == 100 and definition.waves == 10 and not definition.has("combat_affix"),"Mission %d : carte, rencontres du Noyé, PV et gains habituels" % number)
 		await verify_map(number)
-	check(Model.valid_enemy_hp_percent(159) and not Model.valid_enemy_hp_percent(160),"Les PV ennemis montent jusqu'à 159 %")
+	check(Model.valid_enemy_hp_percent(159) and Model.valid_enemy_hp_percent(169) and not Model.valid_enemy_hp_percent(170),"Les PV ennemis montent jusqu'à 169 %")
 	for number in range(52,61):
 		for camp in range(2): await verify_mission(camp,number)
 	print("DROWNED_CHAPTER_TESTS checks=%d failures=%d" % [checks,failures])
@@ -127,5 +127,5 @@ func verify_mission(camp: int, number: int) -> void:
 	check(profile.campaign_status(1-camp).completed == 0,"Le parcours adverse est inchangé")
 	game._show_run_summary();game._summary_to_campaign()
 	if number < 60: check(game.campaign_menu.chapter == 6 and game.campaign_menu.nodes.slice(0,number-50).all(func(node):return node.state == "completed") and game.campaign_menu.nodes[number-50].state == "available","Mission %d : retour sur le chapitre avec la suivante disponible" % number)
-	else: check(game.campaign_menu.chapter == 6 and game.campaign_menu.nodes.all(func(node):return node.state == "completed"),"La mission 60 termine le chapitre 6")
+	else: check(game.campaign_menu.chapter == 7 and game.campaign_menu.nodes[0].state == "available" and game.campaign_menu.nodes.slice(1).all(func(node):return node.state == "locked"),"La fin du chapitre 6 propose la mission 61 sans la lancer")
 	game.free()

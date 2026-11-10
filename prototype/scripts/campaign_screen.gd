@@ -46,7 +46,7 @@ class TerrainPreview extends Control:
 			draw_string(font,Vector2((size.x-font.get_string_size(message,HORIZONTAL_ALIGNMENT_LEFT,-1,15).x)/2,size.y/2+5),message,HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("91a799"))
 			return
 		var marsh: bool = definition.decoration=="marsh"
-		draw_colored_polygon(layout.board,MarshArt.GROUND if marsh else Color("405256") if definition.decoration == "mountain" else Color("294536"))
+		draw_colored_polygon(layout.board,MarshArt.GROUND if marsh else Color("3d3837") if definition.decoration == "volcanic" else Color("405256") if definition.decoration == "mountain" else Color("294536"))
 		if marsh:
 			var factor: float = (layout.board[1].x-layout.board[0].x)/(definition.size.x*2.0)
 			MarshArt.draw_ground(self,func(point: Vector2):return layout.board[0]+project(point)*factor,true,definition.get("water_areas",MarshArt.POOLS))
