@@ -1,5 +1,7 @@
 # Mission 51 — Les Eaux Mortes et le Noyé
 
+**Nom retenu le 11 novembre 2026.** Le porteur choisit **Gueule-de-Vase** pour la créature jusqu’ici appelée Noyé. Le nom de cette fiche et les relevés ci-dessous conservent la terminologie de la version testée. [Décision et visuel](Visuel_Gueule_de_Vase.md)
+
 ## Décision du porteur et statut de conception
 
 Pour la nouveauté du chapitre 6 des marais, le porteur retient **le Noyé, une créature des marais qui régénère ses PV dans l'eau** (option « nouvel attaquant lié au biome » de CAMP-017). Le principe est validé ; tout le reste (statistiques, vitesse de régénération, forme de l'eau, composition des vagues, carte) est une proposition de prototype de Claude Code, à confirmer en jeu.

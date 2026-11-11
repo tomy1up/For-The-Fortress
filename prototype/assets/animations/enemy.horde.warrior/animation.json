@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "id": "enemy.horde.warrior",
+  "display_height": 36.833333333333336,
+  "foot": [
+    104,
+    191
+  ],
+  "facing": "right",
+  "animations": {
+    "walk": {
+      "file": "walk.png",
+      "frames": 16,
+      "frame_size": [
+        192,
+        208
+      ],
+      "mode": "distance",
+      "stride": 25.6
+    },
+    "walk_up": {
+      "file": "walk_up.png",
+      "frames": 16,
+      "frame_size": [
+        192,
+        208
+      ],
+      "mode": "distance",
+      "stride": 25.6
+    },
+    "walk_down": {
+      "file": "walk_down.png",
+      "frames": 16,
+      "frame_size": [
+        192,
+        208
+      ],
+      "mode": "distance",
+      "stride": 25.6
+    }
+  }
+}

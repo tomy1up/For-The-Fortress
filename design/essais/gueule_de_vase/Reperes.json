@@ -1,0 +1,29 @@
+{
+  "unit": {
+    "id": "enemy.neutral.drowned",
+    "display_name": "Gueule-de-Vase",
+    "file": "gueule_de_vase_v001.png",
+    "size": [
+      1000,
+      1081
+    ],
+    "foot": [
+      415,
+      1076
+    ],
+    "display_height": 37.4
+  },
+  "effect": {
+    "file": "Remous_regeneration.png",
+    "frames": 16,
+    "frame_size": [
+      56,
+      42
+    ],
+    "anchor": [
+      28,
+      28
+    ],
+    "cycle_game_seconds": 0.96
+  }
+}

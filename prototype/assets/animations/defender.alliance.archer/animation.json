@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "id": "defender.alliance.archer",
+  "display_height": 66,
+  "foot": [
+    113,
+    249
+  ],
+  "facing": "right",
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 8,
+      "frame_size": [
+        256,
+        256
+      ],
+      "mode": "time",
+      "fps": 8
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 10,
+      "frame_size": [
+        256,
+        256
+      ],
+      "mode": "event",
+      "duration": 0.4
+    },
+    "disabled": {
+      "file": "disabled.png",
+      "frames": 8,
+      "frame_size": [
+        256,
+        256
+      ],
+      "mode": "event",
+      "duration": 5
+    }
+  },
+  "muzzle": [
+    214,
+    117
+  ]
+}

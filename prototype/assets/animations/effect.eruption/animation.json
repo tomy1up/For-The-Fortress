@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "id": "effect.eruption",
+  "display_height": 60,
+  "foot": [
+    40,
+    40
+  ],
+  "animations": {
+    "warning": {
+      "file": "warning.png",
+      "frames": 24,
+      "frame_size": [
+        80,
+        60
+      ],
+      "mode": "progress"
+    }
+  }
+}

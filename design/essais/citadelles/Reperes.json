@@ -1,0 +1,280 @@
+{
+  "assets": {
+    "alliance": {
+      "portail": {
+        "file": "alliance_portail.png",
+        "size": [
+          384,
+          404
+        ],
+        "anchor": [
+          192,
+          356
+        ],
+        "height_game": 62
+      },
+      "rempart": {
+        "file": "alliance_rempart.png",
+        "size": [
+          386,
+          404
+        ],
+        "anchor": [
+          193,
+          356
+        ],
+        "height_game": 45
+      },
+      "tour": {
+        "file": "alliance_tour.png",
+        "size": [
+          234,
+          402
+        ],
+        "anchor": [
+          117,
+          378
+        ],
+        "height_game": 69
+      },
+      "etendard": {
+        "file": "alliance_etendard.png",
+        "size": [
+          187,
+          411
+        ],
+        "anchor": [
+          94,
+          386
+        ],
+        "height_game": 37
+      }
+    },
+    "horde": {
+      "portail": {
+        "file": "horde_portail.png",
+        "size": [
+          363,
+          417
+        ],
+        "anchor": [
+          182,
+          367
+        ],
+        "height_game": 62
+      },
+      "rempart": {
+        "file": "horde_rempart.png",
+        "size": [
+          391,
+          426
+        ],
+        "anchor": [
+          196,
+          375
+        ],
+        "height_game": 45
+      },
+      "tour": {
+        "file": "horde_tour.png",
+        "size": [
+          258,
+          424
+        ],
+        "anchor": [
+          129,
+          399
+        ],
+        "height_game": 69
+      },
+      "etendard": {
+        "file": "horde_etendard.png",
+        "size": [
+          217,
+          424
+        ],
+        "anchor": [
+          108,
+          399
+        ],
+        "height_game": 37
+      }
+    }
+  },
+  "palette_ground": {
+    "alliance": [
+      79,
+      89,
+      100
+    ],
+    "horde": [
+      82,
+      72,
+      71
+    ]
+  },
+  "palette_faces": {
+    "alliance": [
+      [
+        66,
+        75,
+        87
+      ],
+      [
+        48,
+        56,
+        67
+      ]
+    ],
+    "horde": [
+      [
+        68,
+        58,
+        57
+      ],
+      [
+        50,
+        44,
+        45
+      ]
+    ]
+  },
+  "examples": {
+    "81": [
+      {
+        "object": "portail",
+        "position": [
+          3.4,
+          0.5
+        ],
+        "anchor_screen": [
+          736,
+          227
+        ]
+      },
+      {
+        "object": "tour",
+        "position": [
+          11.6,
+          0.6
+        ],
+        "anchor_screen": [
+          955,
+          339
+        ]
+      },
+      {
+        "object": "rempart",
+        "position": [
+          7.1,
+          0.55
+        ],
+        "anchor_screen": [
+          835,
+          277
+        ]
+      },
+      {
+        "object": "rempart",
+        "position": [
+          14.6,
+          0.45
+        ],
+        "anchor_screen": [
+          1040,
+          377
+        ]
+      },
+      {
+        "object": "etendard",
+        "position": [
+          3.1,
+          8.9
+        ],
+        "anchor_screen": [
+          501,
+          336
+        ]
+      },
+      {
+        "object": "etendard",
+        "position": [
+          16.5,
+          8.9
+        ],
+        "anchor_screen": [
+          863,
+          517
+        ]
+      }
+    ],
+    "87": [
+      {
+        "object": "portail",
+        "position": [
+          7.2,
+          0.5
+        ],
+        "anchor_screen": [
+          839,
+          278
+        ]
+      },
+      {
+        "object": "tour",
+        "position": [
+          11.6,
+          0.6
+        ],
+        "anchor_screen": [
+          955,
+          339
+        ]
+      },
+      {
+        "object": "rempart",
+        "position": [
+          15.0,
+          0.55
+        ],
+        "anchor_screen": [
+          1048,
+          384
+        ]
+      },
+      {
+        "object": "rempart",
+        "position": [
+          12.9,
+          0.2
+        ],
+        "anchor_screen": [
+          1001,
+          351
+        ]
+      },
+      {
+        "object": "etendard",
+        "position": [
+          11.3,
+          8.9
+        ],
+        "anchor_screen": [
+          723,
+          447
+        ]
+      },
+      {
+        "object": "etendard",
+        "position": [
+          10.3,
+          8.9
+        ],
+        "anchor_screen": [
+          696,
+          433
+        ]
+      }
+    ]
+  }
+}

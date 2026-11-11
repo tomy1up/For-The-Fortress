@@ -41,3 +41,15 @@ Retour sur le candidat à 24 poses : le porteur le juge meilleur, mais encore sa
 ## Validation du porteur du projet
 
 Présenter un candidat après cet autocontrôle, avec un aperçu en déplacement et une version jouable si nécessaire. Signaler explicitement ce qui reste à valider. Attendre le retour sur le loup avant d’appliquer la méthode aux autres animaux ou unités.
+
+## Autocontrôle du pilote — 11 novembre 2026
+
+| Critère | Archer elfe | Guerrier orc |
+| --- | --- | --- |
+| Silhouette et raccords | Arc, carquois et cape reconnaissables à taille de jeu. Poses du tir issues du dessin existant. Le bras protège le visage pendant la désactivation. | Hache, bandana et silhouette courte reconnaissables. Les jambes restent rattachées à la tunique et les bottes se distinguent au pas. |
+| Appuis et poids | Pieds stables au repos. La compression des épaules et le geste de protection signalent la désactivation. | Les bottes alternent appui et retour. Le haut du corps descend légèrement à la prise de poids. Un léger glissement reste perceptible dans l’axe vertical de la diagonale. |
+| Cadence et fluidité | Respiration en boucle et lâcher lisible avant la récupération. La mise en joue est brève, car le tir du modèle part au début de l’événement. | Les 16 poses défilent en jeu. La cadence suit le déplacement à ×1 et ×2. En pause de contrôle, la marche se fige. Le passage de la dernière à la première pose est moins marqué que le retournement instantané aux angles. |
+| Taille et direction | Tir observé à droite au Gué et des deux côtés au Cratère. L’arc et la tête émergent des cendres en jeu. | Profil gauche et droit observés sur les deux pentes du plateau. Le miroir garde les proportions. Une vue de face reste à dessiner si les futurs trajets l’exigent. |
+| Preuves | Repos, tir, désactivation et reprise visibles dans les vidéos à 60 images/s. | Déplacement sur le tracé réel avec décor fixe, vues à taille de jeu et contrôle image par image en agrandissement. |
+
+La vérification de pause est réalisée avec la scène de contrôle figée. Le repos est calculé sur l’horloge réelle dans le moteur et peut changer de pose si un autre écran force un nouveau dessin. Les images, résultats et limites du pilote sont regroupés dans [Pilote_animations.md](Pilote_animations.md). La décision artistique appartient au porteur.
