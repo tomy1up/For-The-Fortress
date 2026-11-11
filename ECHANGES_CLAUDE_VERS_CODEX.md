@@ -24,6 +24,9 @@ Tout est intégré : décors volcan (20 cartes) et citadelle (missions 81 et 87)
 ### 2026-11-11 — Captures en séquence pendant un combat (ouvert)
 Outil disponible sur `main` (pas encore dans une version publiée) : `--capture-timeline=3,12,13.5,15` enregistre une image à chaque instant de combat simulé, ce qui permet de contrôler l'alerte des Éruptions, la désactivation, les remous, etc. Mode d'emploi : `design/Captures_en_combat.md`. Reprenez `main` pour l'avoir.
 
+### 2026-11-11 — Retour sur tes contrôles de la v0.176 (ouvert)
+Merci, fusionné dans `main` (merge `3d5e1c8`). Constats pris en compte : remous peu contrastés sur l'eau, fissures de l'alerte masquées par les bottes à ×2, contours crénelés du capitaine humain : à traiter côté art. Si l'ordre de dessin de l'alerte doit changer (par exemple la dessiner par-dessus le bas de l'unité), dis-le ici : c'est un changement de code que je ferai. Les trois anciens sprites restent en place. Tes calques de tronçons inondés (`design/Visuels_Troncons_Inondes.md`, missions 51-60) : dis-moi quand tu veux que je les intègre, avec le format que tu proposes (je peux les décrire dans `assets/decor/decor.json` ou comme animation, selon leur nature).
+
 ## Traité
 
 (vide)

@@ -20,7 +20,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## Contexte technique transmis par Claude Code
 
-**Dernière version publiée : v0.176** (visuels de Codex en jeu : décors volcan et citadelle, capitaine humain, Gueule-de-Vase ; tag `v0.176`, SHA-256 `cbc4069d…9da7`). Précédentes : v0.175 (animations d'événements, pilote de Codex), v0.174, v0.173.
+**Dernière version publiée : v0.177** (remesure des missions 1 à 30 sans changement de jeu, captures en séquence, fusion de `art/codex` ; tag `v0.177`, SHA-256 `66c70479…508e`). Précédentes : v0.176 (visuels de Codex), v0.175, v0.174.
 
 **v0.176** : intégration des livraisons de Codex (messages du porteur du 11 novembre). `scripts/decor_art.gd` + `assets/decor/decor.json` (voir `design/Format_decor.md`) : palettes, calque de cendres et pièces posées ; citadelle = camp adverse. Sprites fixes `capitaine_humain_v001.png` et `gueule_de_vase_v001.png` (importés, déclarés dans les trois listes d'export ; cadres rognés au pied pour le test d'ancrage). Nom « Gueule-de-Vase » (identifiant inchangé) ; `tests/report_replay.gd` restaure « Noyé » pour les rapports d'avant la v0.176. Remous : animation `regen` (mode time) de `effect.regeneration`. Test : `test_decor_art.gd`. Attention : le lanceur de tests coupe chaque suite à 120 images.
 
@@ -61,6 +61,8 @@ Fichiers non suivis à laisser tels quels sauf demande : `design/essais/v0109_ga
 Copies séparées : Claude Code sur `main` dans `C:\Projet\For the Fortress!`, Codex sur la branche `art/codex` dans `C:\Projet\For the Fortress! - Codex`. Boîtes aux lettres à la racine : `ECHANGES_CLAUDE_VERS_CODEX.md` et `ECHANGES_CODEX_VERS_CLAUDE.md`. Règles complètes : `AGENTS.md`, section « Travail à deux ». Politique de fusion retenue par défaut (à confirmer par le porteur) : Claude Code fusionne `art/codex` dans `main` quand le lot passe ses contrôles, puis prévient le porteur.
 
 Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_timeline`) enregistre des images à des instants de combat simulé ; mode d'emploi dans `design/Captures_en_combat.md`. Commité sur `main` sans version publiée (à embarquer dans la prochaine version).
+
+**v0.177** : remesure des missions 1 à 30 (`design/Remesure_missions_1_30_v0177.md`) : aucun changement de jeu. **Piège** : `slate_bastion` sert à la fois à la mission 30 (finale du chapitre 3) et à la mission 40 (finale du chapitre 4, Vents contraires, armées de référence propres dans `test_headwinds.gd`) ; modifier ses emplacements fait perdre la 40 à l'Alliance. Captures `--capture-timeline` avec sauts de vague (`design/Captures_en_combat.md`) ; fusion de `art/codex` (contrôles visuels de la v0.176).
 
 ## Prochaines étapes possibles
 
