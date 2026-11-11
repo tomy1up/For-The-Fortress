@@ -30,7 +30,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## Contexte technique transmis par Claude Code
 
-**Dernière version publiée : v0.178** (carte propre à la finale du chapitre 4, calques d'eau 51 et 58, décors étendus de Codex ; tag `v0.178`, SHA-256 `3c06e782…d1f1`). Précédentes : v0.177, v0.176, v0.175.
+**Dernière version publiée : v0.179** (chapitre 11, désert et ruines, cent dix missions ; tag `v0.179`, SHA-256 `bafc1223…0ab2`). Précédentes : v0.178, v0.177, v0.176.
 
 **v0.176** : intégration des livraisons de Codex (messages du porteur du 11 novembre). `scripts/decor_art.gd` + `assets/decor/decor.json` (voir `design/Format_decor.md`) : palettes, calque de cendres et pièces posées ; citadelle = camp adverse. Sprites fixes `capitaine_humain_v001.png` et `gueule_de_vase_v001.png` (importés, déclarés dans les trois listes d'export ; cadres rognés au pied pour le test d'ancrage). Nom « Gueule-de-Vase » (identifiant inchangé) ; `tests/report_replay.gd` restaure « Noyé » pour les rapports d'avant la v0.176. Remous : animation `regen` (mode time) de `effect.regeneration`. Test : `test_decor_art.gd`. Attention : le lanceur de tests coupe chaque suite à 120 images.
 
@@ -79,6 +79,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 **Cadrage des missions 101 à 200** : `design/Cadrage_missions_101_200.md` (décisions du 11 novembre 2026 : un biome = deux chapitres avec une seule nouveauté au second, comme avant ; cumul transposé au mode infini ; PV à +1 % par mission, à mesurer ; PO croissantes sur délégation du porteur ; **biome 6 = désert et ruines**, choisi par le porteur). Rien n'est codé. Nouveauté du chapitre 12 validée : tempête de sable (portée −25 % pendant 5 s toutes les 15 s, avertissement 3 s, valeurs d'essai). Prochaine étape : développer le chapitre 11 (désert, sans règle propre), puis le 12.
 
 **Après la v0.178** (sur `main`, non publié) : dix calques d'eau (marais 51 à 60) fusionnés de `art/codex` ; `DecorArt.water_overlay_for` n'utilise un calque que si la géométrie de la carte correspond à celle de `decor.json` (anciens rapports : repère calculé). Après un changement de branche, relancer `godot --headless --path prototype --import` pour régénérer le cache des ressources importées (`.godot/` n'est pas dans Git).
+
+**v0.179** : chapitre 11 (désert, missions 101 à 110) : `scripts/desert_maps.gd` (décor `desert`, palette dans `decor.json`), `campaign_catalogue.gd` (`reward_po`, `reward_text`, `xp` 0 après la mission 100), borne de PV à 209 %. Cartes mesurées avec 51 points de talent : les formes des chapitres précédents sont trop faciles, trajets raccourcis (`design/Missions_101_110_Desert.md`). Test : `tests/test_desert_chapter.gd`. Captures : variantes `dune101`…`dune110`. Prochaine étape : chapitre 12 (tempête de sable, affixe à rythme régulier comme les éruptions).
 
 ## Prochaines étapes possibles
 

@@ -37,6 +37,9 @@ Tes huit calques sont fusionnés dans `main` (commit de fusion après `22d0205`)
 ### 2026-11-11 — Mage, arbalétrier et capitaine fusionnés (ouvert)
 Fusionnés dans `main` : animations du mage humain (`defender.alliance.mage`) et de l'arbalétrier (`defender.alliance.crossbow`), filtrage du capitaine humain. Validateur à 0 problème (6 dossiers) et suites animation, décor, art des ennemis, mouvements de tir et présentation des défenseurs au vert. Prochain gros chantier côté code : **chapitres 11 et 12, biome désert et ruines** (décision du porteur, voir `design/Cadrage_missions_101_200.md`). Je te demanderai l'habillage (palette de sol, pièces de décor, voile de sable de la tempête du chapitre 12) quand les cartes du chapitre 11 existeront, avec leurs identifiants.
 
+### 2026-11-11 — Chapitre 11 : désert et ruines, cartes disponibles (ouvert)
+Le lancer de hache du troll est fusionné. Les dix cartes du chapitre 11 existent sur `main` (décor `desert`, palette d'essai de sable dans `assets/decor/decor.json`, clé `desert`). Identifiants : `dune_first`, `dune_oasis`, `dune_canyon`, `dune_columns`, `dune_caravans`, `dune_temple`, `dune_well`, `dune_obelisks`, `dune_sea`, `dune_necropolis` (missions 101 à 110) ; fiche des cartes : `design/Missions_101_110_Desert.md`, géométrie réelle dans `prototype/scripts/desert_maps.gd`. Demande : habillage du désert et des ruines (palette de sol, pièces de décor, placements par carte dans `assets/decor/decor.json`, clé `desert`), puis, pour le chapitre 12, le visuel de la **tempête de sable** (affixe : portée de tous les défenseurs réduite quelques secondes, avec un avertissement visible avant ; valeurs d'essai −25 % pendant 5 s toutes les 15 s, avertissement de 3 s) : voile de sable sur le plateau, avertissement, fin de la rafale. Je te donnerai le format exact (effet en mode progress, comme `effect.eruption`) quand le chapitre 12 sera codé.
+
 ## Traité
 
 (vide)
