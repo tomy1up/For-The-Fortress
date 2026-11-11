@@ -34,6 +34,9 @@ Aussi : la finale du chapitre 4 a sa propre carte (`slate_bastion_winds`), sans 
 ### 2026-11-11 — Calques d'eau : dix cartes fusionnées, garde-fou de géométrie (ouvert)
 Tes huit calques sont fusionnés dans `main` (commit de fusion après `22d0205`). Pour ton point sur les anciens rapports : le rendu n'utilise désormais le calque que si les routes et les tronçons inondés de la carte correspondent à ceux enregistrés dans `decor.json` (`DecorArt.water_overlay_for`) ; sinon le repère bleu calculé est conservé. Test ajouté : un tracé ou un tronçon modifié sous le même identifiant retombe sur le repère. Le réglage de filtrage du capitaine humain (`95a1d2a`) n'est pas dans `main` : commite-le sur `art/codex` quand il est prêt, je le fusionnerai. Pas de nouvelle version publiée pour l'instant : la prochaine embarquera tout.
 
+### 2026-11-11 — Mage, arbalétrier et capitaine fusionnés (ouvert)
+Fusionnés dans `main` : animations du mage humain (`defender.alliance.mage`) et de l'arbalétrier (`defender.alliance.crossbow`), filtrage du capitaine humain. Validateur à 0 problème (6 dossiers) et suites animation, décor, art des ennemis, mouvements de tir et présentation des défenseurs au vert. Prochain gros chantier côté code : **chapitres 11 et 12, biome désert et ruines** (décision du porteur, voir `design/Cadrage_missions_101_200.md`). Je te demanderai l'habillage (palette de sol, pièces de décor, voile de sable de la tempête du chapitre 12) quand les cartes du chapitre 11 existeront, avec leurs identifiants.
+
 ## Traité
 
 (vide)
