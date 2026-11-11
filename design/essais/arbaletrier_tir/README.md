@@ -14,6 +14,8 @@ La pose est maintenant intégrée au rendu du prototype. Elle commence après la
 
 ## Tir par planche sur les sources de la v0.178
 
+**Retour du porteur, 11 novembre 2026.** Le tir et le réarmement lui paraissent bien d’après l’aperçu.
+
 La planche `defender.alliance.crossbow/attack.png` reprend le sprite de visée et la pose de réarmement illustrée. Le carreau part depuis la pose de visée, le haut du corps recule, puis la main saisit la corde avant de ramener l’arbalète à sa position de départ. Les appuis gardent le même ancrage. La planche contient 18 images de 272 × 256 px sur 0,72 s simulée. La durée rejoint la limite de l’ancienne pose de réarmement, pour éviter qu’elle réapparaisse à la fin. La pose fixe reprend ensuite le relais.
 
 [Animation issue de vrais tirs au Gué](Tir_arbaletrier.gif) · [Étapes du tir à ×1](Tir_arbaletrier_etapes.png)
