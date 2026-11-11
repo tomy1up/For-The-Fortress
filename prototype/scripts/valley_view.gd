@@ -8,6 +8,7 @@ const HordeArt = preload("res://scripts/horde_art.gd")
 const AllianceArt = preload("res://scripts/alliance_art.gd")
 const EnemyArt = preload("res://scripts/enemy_art.gd")
 const EnemyWalkArt = preload("res://scripts/enemy_walk_art.gd")
+const SheetAnimations = preload("res://scripts/animation_library.gd")
 var walking_meshes:=EnemyWalkArt.new()
 var wolf_turn_preview := Callable()
 const ShopArt = preload("res://scripts/shop_art.gd")
@@ -330,6 +331,9 @@ static func enemy_bounds(enemy: Dictionary, defending_faction: int = -1, route_p
 	var bounds := Rect2(center+Vector2(-width/2.0,-39.0*scale),Vector2(width,47.0*scale))
 	if EnemyArt.TEXTURES.has(enemy_art_id(enemy,defending_faction)):
 		var image: Rect2 = EnemyArt.destination(enemy_art_id(enemy,defending_faction))
+		if SheetAnimations.has_animation(enemy_art_id(enemy,defending_faction),"walk"):
+			var sheet: Dictionary = SheetAnimations.spec_for(enemy_art_id(enemy,defending_faction))
+			image = SheetAnimations.destination(sheet,sheet.animations.walk)
 		var facing: float
 		if EnemyWalkArt.supports(enemy_art_id(enemy,defending_faction)):
 			var motion: Dictionary=EnemyWalkArt.path_motion(enemy.distance,route_points,AXIS)
@@ -750,12 +754,17 @@ func defender_pose(slot: int) -> Dictionary:
 	if defender.has("last_target_position"):
 		pose.direction = shot_facing({"from": model.slots[slot], "to": defender.last_target_position})
 	if not model.active: return pose
+	var eruption: Dictionary = model.eruption_status()
+	if not eruption.is_empty() and eruption.state == "active" and eruption.slot == slot:
+		pose.disabled = true
+		pose.disabled_age = float(model.combat_affix.duration)-float(eruption.remaining)
 	# Garder le côté du dernier tir de cet emplacement après la fin du mouvement.
 	for index in range(model.shots.size()-1,-1,-1):
 		var shot: Dictionary = model.shots[index]
 		var age: float = model.elapsed-shot.time
 		if shot.slot != slot or age < 0.0: continue
 		pose.pulse = attack_pulse(age)
+		pose.attack_age = age
 		pose.direction = shot_facing(shot)
 		if shot.get("type", -1) == 0:
 			pose.archer_stage = AllianceArt.archer_shot_stage(age, defender.ready_at-shot.time)
@@ -814,6 +823,11 @@ func _draw_defender(center: Vector2, type: int, level: int = 1, branch: int = -1
 func _draw_illustrated_defender(center: Vector2, type: int, pose: Dictionary, art: GDScript) -> void:
 	draw_set_transform(center+Vector2(0,2),0,Vector2(1,0.45))
 	draw_circle(Vector2.ZERO,12,Color(0,0,0,0.25),true,-1,true)
+	var sheet_id: String = SheetAnimations.defender_id(type)
+	var sheet: Dictionary = SheetAnimations.spec_for(sheet_id)
+	if not sheet.is_empty() and SheetAnimations.defender_state(sheet,pose) != "":
+		_draw_sheet_defender(center,sheet_id,sheet,pose)
+		return
 	var transform: Transform2D = attack_transform(type,pose)
 	transform.origin += center
 	draw_set_transform_matrix(transform)
@@ -826,6 +840,20 @@ func _draw_illustrated_defender(center: Vector2, type: int, pose: Dictionary, ar
 		var crystal: Vector2 = art.MUZZLES[type]
 		draw_circle(crystal, 7.0+3.0*(1.0-flash), Color(0.40,0.87,1.0,0.24*flash), true, -1.0, true)
 		draw_circle(crystal, 3.0, Color(0.86,0.98,1.0,0.8*flash), true, -1.0, true)
+	draw_set_transform(Vector2.ZERO)
+
+## Défenseur animé par planche : désactivé (Éruptions), tir en cours, sinon repos. Côté de tir par miroir.
+func _draw_sheet_defender(center: Vector2, id: String, spec: Dictionary, pose: Dictionary) -> void:
+	var state: String = SheetAnimations.defender_state(spec,pose)
+	var anim: Dictionary = spec.animations[state]
+	var texture: Texture2D = SheetAnimations.texture_for(id,anim)
+	if texture == null: return
+	var side: float = float(pose.get("direction",1.0))*SheetAnimations.base_facing(spec)
+	draw_set_transform(center,0.0,Vector2(side,1.0))
+	var age: float = float(pose.get("attack_age",0.0)) if state == "attack" else float(pose.get("disabled_age",0.0))
+	var cycle: float = SheetAnimations.phase(anim,0.0,Time.get_ticks_msec()/1000.0,age)
+	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle))
+	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
 	draw_set_transform(Vector2.ZERO)
 
 func _draw_level_badge(center: Vector2, level: int, branch: int) -> void:
@@ -912,6 +940,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	var id: String = enemy_art_id(enemy,model.faction)
 	var scale: float = _enemy_scale(enemy)
 	var walking: bool = EnemyWalkArt.supports(id)
+	var sheet_walk: bool = not walking and SheetAnimations.has_animation(id,"walk")
 	var route_points: Array[Vector2] = model.enemy_route_points(enemy)
 	var motion := EnemyWalkArt.path_motion(enemy.distance, route_points, AXIS)
 	var facing := route_facing(motion.direction)
@@ -929,7 +958,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]),Color("d6a1ef"))
 		break
 	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
-	var body: Transform2D = enemy_body_transform(enemy,facing,pose,model.elapsed,model.active and not walking, motion.get("direction", Vector2.ZERO))
+	var body: Transform2D = enemy_body_transform(enemy,facing,pose,model.elapsed,model.active and not walking and not sheet_walk, motion.get("direction", Vector2.ZERO))
 	body.origin += center
 	draw_set_transform_matrix(body)
 	if preview.has("texture"):
@@ -940,6 +969,8 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		var orientation: Vector2 = preview.get("direction", motion.direction)
 		var ground := Vector2(absf(orientation.x), orientation.y)
 		draw_mesh(walking_meshes.mesh_for(enemy.id,phase,ground),EnemyWalkArt.TEXTURE,Transform2D.IDENTITY,EnemyArt.tint(hit_strength))
+	elif sheet_walk:
+		_draw_sheet_walker(id,enemy,motion,scale,facing,body,hit_strength)
 	else:
 		draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,EnemyArt.tint(hit_strength))
 	if enemy.type == Model.Banks.GUARD_TYPE and model.active:
@@ -954,6 +985,17 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 			draw_arc(shell,10.0+4.0*(1.0-strength),PI,TAU,20,Color(0.86,1.0,0.62,0.90*strength),2.0,true)
 			break
 	draw_set_transform(Vector2.ZERO)
+
+## Ennemi animé par une planche d'images (format de `animation_library.gd`) : cycle de marche réglé sur la distance parcourue.
+func _draw_sheet_walker(id: String, enemy: Dictionary, motion: Dictionary, scale: float, facing: float, body: Transform2D, hit_strength: float) -> void:
+	var spec: Dictionary = SheetAnimations.spec_for(id)
+	var anim: Dictionary = spec.animations.walk
+	var texture: Texture2D = SheetAnimations.texture_for(id,anim)
+	if texture == null: return
+	if SheetAnimations.base_facing(spec) < 0.0: draw_set_transform_matrix(body*Transform2D(Vector2(-1,0),Vector2(0,1),Vector2.ZERO))
+	var cycle: float = SheetAnimations.phase(anim,float(motion.get("travel",0.0))/scale,model.elapsed,0.0,fposmod(float(enemy.id)*0.37,1.0))
+	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle))
+	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region,EnemyArt.tint(hit_strength))
 
 ## Repère fonctionnel provisoire de l'affixe Éruptions : l'habillage (lave, cendres) revient à Codex (TODO_VISUELS.md).
 func _draw_eruption() -> void:

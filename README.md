@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.174**. Cadre technique des animations : un format de planches d'images (`design/Format_animations.md`) permet à Codex de déposer des animations de marche, de repos, de tir et de désactivation sans modifier le code ; sans planche, le jeu garde les illustrations fixes. Aucune planche réelle n'est encore livrée et le jeu ne change pas pour le joueur. [Format](design/Format_animations.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.174).
+
 **Prototype v0.173**. Chapitre 10, la Garnison (missions 91–100) : un capitaine d'élite propre à la citadelle (520 PV de base, vagues 5, 7, 9 et 10), plus résistant que l'élite ordinaire. Cent missions jouables, PV ennemis jusqu'à 199 %. Noms et valeurs de prototype à confirmer. [Chapitre 10](design/Missions_091_100_Garnison.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.173).
 
 **Prototype v0.172**. Chapitre 9, la citadelle ennemie (missions 81–90) : en jouant l'Alliance on assiège une citadelle de la Horde, et inversement. Dix cartes sans règle propre, quatre-vingt-dix missions jouables, PV ennemis jusqu'à 189 %. Habillage par faction à produire avec Codex. [Chapitre 9](design/Missions_081_090_Citadelle.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.172).

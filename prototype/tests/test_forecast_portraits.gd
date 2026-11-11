@@ -38,7 +38,7 @@ func run_checks() -> void:
 				check(before == signature(scene),"Prévision sans changement du modèle, du temps, de l’aléatoire ou du décompte")
 				check(scene.forecast_textures.size() <= 8,"Cache limité aux huit identités du camp courant")
 				check(scene.forecast_panel.size.y == 112+44*scene.forecast_data.groups.size(),"Hauteur inchangée pour ne pas recouvrir davantage la carte")
-		check(scene._forecast_portrait(-1) == null and scene._forecast_portrait(10) == null,"Profil invalide sans illustration inventée")
+		check(scene._forecast_portrait(-1) == null and scene._forecast_portrait(11) == null,"Profil invalide sans illustration inventée")
 		scene.model.phase = "defeat";scene._update_interface();scene._reset();scene._choose_faction(1-faction)
 		var enemy: Dictionary = scene.model.Enemies.for_profile(1,1-faction)
 		check(scene.forecast_portraits[0].texture.region == View.EnemyArt.FRAMES[enemy.id].source and scene.forecast_portraits[0].texture.atlas == View.EnemyArt.TEXTURES[enemy.id],"Nouvelle partie dans l’autre faction : aucun portrait de l’ancien adversaire")

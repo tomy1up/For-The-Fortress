@@ -6,7 +6,7 @@ Tout visuel ou toute valeur non validé reste « habillage de prototype à confi
 
 ## 1. Approche recommandée (à valider par le porteur)
 
-1. **Phase 0 — cadre technique (Claude Code, avant que Codex produise en série).** Un chargeur d'animations générique : chaque unité fournit ses images et un petit fichier de description (`.json` : animations, nombre d'images, cadence, point d'appui au sol, point de départ des projectiles, côté regardé par défaut). Le code le lit sans modification par unité, avec repli sur l'image fixe actuelle. Codex n'a alors qu'à déposer des fichiers. Cible : v0.174.
+1. **Phase 0 — cadre technique (Claude Code) : livré en v0.174, voir [design/Format_animations.md](design/Format_animations.md).** Un chargeur d'animations générique : chaque unité fournit ses images et un petit fichier de description (`.json` : animations, nombre d'images, cadence, point d'appui au sol, point de départ des projectiles, côté regardé par défaut). Le code le lit sans modification par unité, avec repli sur l'image fixe actuelle. Codex n'a alors qu'à déposer des fichiers. Livré : `scripts/animation_library.gd`, contrôle `tools/validate_animations.gd`, dossier `prototype/assets/animations/`. Branchés : marche des ennemis, repos / tir / désactivation des défenseurs. Réservés (formats acceptés, pas encore déclenchés) : mort, coup reçu, apparition, achat, revente, niveau.
 2. **Phase 1 — pilote (Codex).** Deux unités seulement, une par camp et par rôle : un défenseur (archer elfe) et un ennemi (guerrier orc). Cycle complet (voir §3) validé par le porteur en jeu avant toute extension.
 3. **Phase 2 — production par priorité** (§7), famille par famille, avec validation du porteur à chaque famille.
 4. **Phase 3 — effets, affixes et habillage des biomes**, en parallèle de la phase 2 puisqu'ils sont indépendants des unités.
@@ -27,7 +27,7 @@ Choix de technique à arbitrer par le porteur, pilote à l'appui :
 - Accord pas et vitesse : le cycle suit la distance parcourue (pied d'appui presque fixe par rapport au sol), pas un temps fixe. Les ennemis ont des vitesses de 0,45 à 1,65 ; le jeu tourne à plusieurs vitesses et peut être mis en pause.
 - Aucune animation ne modifie le combat : le modèle est résolu par événements, les animations ne sont qu'un habillage. Les durées (0,26 s pour un tir) ne retardent ni dégâts ni récompenses.
 - Contrôle visuel obligatoire avant présentation (tableau de `design/Validation_visuelle_animations.md`).
-- Déclarer chaque nouvel asset d'exécution dans les trois listes d'export (`export_presets.cfg`, `Exporter_Windows.ps1`, `tests/export_sources.py`), sinon le jeu exporté ne démarre pas. Un test lancé depuis les sources ne le voit pas.
+- **Animations par planches** : déposer les fichiers dans `prototype/assets/animations/<id>/` suffit (inclusion et empreintes automatiques), puis lancer `tools/validate_animations.gd`. Tout autre nouvel asset d'exécution doit être déclaré dans les trois listes d'export (`export_presets.cfg`, `Exporter_Windows.ps1`, `tests/export_sources.py`), sinon le jeu exporté ne démarre pas ; un test lancé depuis les sources ne le voit pas.
 - Si Codex doit toucher au code pour intégrer, garder les tests au vert et le signaler dans `PASSATION.md`.
 
 ## 3. Cycle d'animation à fournir par type

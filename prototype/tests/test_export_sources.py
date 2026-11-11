@@ -15,9 +15,11 @@ class PackageSourcesTests(unittest.TestCase):
         project = Path(__file__).resolve().parents[1]
         preset = (project / 'export_presets.cfg').read_text(encoding='utf-8')
         selected = set(re.findall(r'"res://([^"\n]+)"', preset.split('include_filter=')[0]))
-        required = {name for name in SOURCE_PATHS if Path(name).suffix in {'.gd', '.tscn', '.png'}}
+        # Les animations déposées dans assets/animations sont incluses telles quelles par le filtre d'inclusion, sans sélection fichier par fichier.
+        required = {name for name in SOURCE_PATHS if Path(name).suffix in {'.gd', '.tscn', '.png'} and not name.startswith('assets/animations/')}
         self.assertFalse(required - selected, 'Ressources absentes du programme exporté : ' + str(required - selected))
         included = re.search(r'include_filter="([^"]*)"', preset).group(1).split(',')
+        self.assertIn('assets/animations/*', included, 'Les animations déposées doivent être incluses par le filtre')
         for name in SOURCE_PATHS:
             if Path(name).suffix == '.bin':
                 self.assertIn(name, included, 'Données de marche absentes du paquet')

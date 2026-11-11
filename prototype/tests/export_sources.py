@@ -37,7 +37,19 @@ SOURCE_PATHS += ('scripts/bank_encounters.gd', 'assets/enemies/rosters/tortue_ga
 SOURCE_PATHS += ('scripts/fortress_art.gd', 'assets/fortresses/forteresse_alliance_v001.png', 'assets/fortresses/forteresse_alliance_v001.png.import', 'assets/fortresses/forteresse_horde_v001.png', 'assets/fortresses/forteresse_horde_v001.png.import', 'assets/fortresses/roi_alliance_v001.png', 'assets/fortresses/roi_alliance_v001.png.import', 'assets/fortresses/roi_horde_v001.png', 'assets/fortresses/roi_horde_v001.png.import')
 SOURCE_PATHS += ('scripts/enemy_walk_art.gd', 'assets/enemies/animations/loup_corps_v002.png', 'assets/enemies/animations/loup_corps_v002.png.import')
 SOURCE_PATHS += ('assets/enemies/animations/loup_marche_v002.bin', 'scripts/route_geometry.gd', 'scripts/mission_scout.gd', 'distribution/Lancer_atelier_routes.cmd')
-SOURCE_PATHS += ('scripts/marsh_art.gd','scripts/drowned_encounters.gd','scripts/drowned_maps.gd','scripts/volcanic_maps.gd','scripts/citadel_maps.gd','scripts/garrison_encounters.gd')
+SOURCE_PATHS += ('scripts/marsh_art.gd','scripts/drowned_encounters.gd','scripts/drowned_maps.gd','scripts/volcanic_maps.gd','scripts/citadel_maps.gd','scripts/garrison_encounters.gd','scripts/animation_library.gd')
+
+
+def animation_assets(project_root=None):
+    """Planches PNG et descriptions JSON de assets/animations, découvertes sur disque (dépôt de Codex)."""
+    root = Path(project_root) if project_root is not None else Path(__file__).resolve().parent.parent
+    folder = root / 'assets' / 'animations'
+    if not folder.is_dir():
+        return ()
+    return tuple(sorted(path.relative_to(root).as_posix() for path in folder.rglob('*') if path.is_file() and path.suffix in ('.png', '.json')))
+
+
+SOURCE_PATHS += animation_assets()
 
 
 def verify_sources(manifest, source_project=None):

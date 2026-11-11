@@ -1,6 +1,6 @@
 param(
     [string]$EnginePath = '',
-    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.173',
+    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.174',
     [string]$OutputRoot = ''
 )
 $ErrorActionPreference = 'Stop'
@@ -53,7 +53,7 @@ $sourcePaths += @('scripts\fortress_art.gd','assets\fortresses\forteresse_allian
 $sourcePaths += @('scripts\enemy_walk_art.gd','assets\enemies\animations\loup_corps_v002.png','assets\enemies\animations\loup_corps_v002.png.import')
 $sourcePaths += @('assets\enemies\animations\loup_marche_v002.bin','scripts\route_geometry.gd')
 $sourcePaths += @('scripts\mission_scout.gd','distribution\Lancer_atelier_routes.cmd')
-$sourcePaths += @('scripts\marsh_art.gd','scripts\drowned_encounters.gd','scripts\drowned_maps.gd','scripts\volcanic_maps.gd','scripts\citadel_maps.gd','scripts\garrison_encounters.gd')
+$sourcePaths += @('scripts\marsh_art.gd','scripts\drowned_encounters.gd','scripts\drowned_maps.gd','scripts\volcanic_maps.gd','scripts\citadel_maps.gd','scripts\garrison_encounters.gd','scripts\animation_library.gd')
 # Every declared runtime resource must be selected explicitly by this preset.
 $presetText = [IO.File]::ReadAllText((Join-Path $PSScriptRoot 'export_presets.cfg'))
 foreach ($resourcePath in $sourcePaths) {
@@ -62,6 +62,13 @@ foreach ($resourcePath in $sourcePaths) {
         if (-not $presetText.Contains($selectedResource)) {
             throw "Ressource absente de la selection d'export : $resourcePath"
         }
+    }
+}
+# Animations deposees par Codex : planches PNG et descriptions JSON de assets\animations, incluses telles quelles (include_filter).
+$animationRoot = Join-Path $PSScriptRoot 'assets\animations'
+if (Test-Path $animationRoot) {
+    foreach ($animationFile in (Get-ChildItem -Path $animationRoot -Recurse -File | Where-Object { $_.Extension -in @('.png','.json') } | Sort-Object FullName)) {
+        $sourcePaths += $animationFile.FullName.Substring($PSScriptRoot.Length + 1)
     }
 }
 $sources = Get-FortressSourceSnapshot -ProjectRoot $PSScriptRoot -RelativePaths $sourcePaths

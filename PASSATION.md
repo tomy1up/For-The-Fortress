@@ -4,7 +4,9 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 10 novembre 2026 — Claude Code
 
-**Dernière version publiée : v0.173** (chapitre 10, la Garnison, missions 91–100 ; tag `v0.173`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.173), SHA-256 `0ef751cf…a319`). 100 missions jouables. Précédentes : v0.172 (citadelle), v0.171, v0.170. Régression v0.173 : 108 suites, 74 561 contrôles Godot, 17 tests Python.
+**Dernière version publiée : v0.174** (cadre technique des animations ; voir le numéro de version et le SHA-256 dans la préversion GitHub `v0.174`). Précédentes : v0.173 (Garnison), v0.172 (citadelle), v0.171, v0.170.
+
+**v0.174** : cadre des animations par planches (`design/Format_animations.md`). `scripts/animation_library.gd` valide les descriptions, calcule phases et images ; `valley_view.gd` dessine `walk` (ennemis, `_draw_sheet_walker`) et `idle` / `attack` / `disabled` (défenseurs, `_draw_sheet_defender`), avec repli sur les illustrations fixes. La constante s'appelle `SheetAnimations` dans la vue (`AnimationLibrary` est une classe native de Godot). Les fichiers `.png` et `.json` de `assets/animations` sont découverts automatiquement par `Exporter_Windows.ps1` et `tests/export_sources.py` ; le paquet les inclut par `include_filter`. Contrôle : `tools/validate_animations.gd`. Non testé avec de l'art réel : seulement des planches synthétiques.
 
 **v0.173** : chapitre 10, nouveauté « Garnison » : ennemi de type 10 (`scripts/garrison_encounters.gd`, ensemble de vagues `citadel_garrison`, 520 PV, vitesse 0,6), identités par faction dans `enemy_catalogue.gd` (profil 10), silhouette provisoire dans `enemy_art.gd`. Les tableaux indexés par type d'ennemi (`_enemy_scale`, `enemy_color` dans `valley_view.gd`) doivent couvrir tout nouveau type : un oubli provoque un plantage au dessin, que les tests de combat sans rendu ne détectent pas. Cartes 91–100 dans `citadel_maps.gd`, fiche `design/Missions_091_100_Garnison.md`. Capture : variantes `garrison91`…`garrison100`.
 
@@ -37,7 +39,7 @@ Fichiers non suivis à laisser tels quels sauf demande : `design/essais/v0109_ga
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : mission d'ensemble animations, unités et effets dans `TODO_ANIMATIONS_UNITES.md`, à lancer à partir de la v0.173 après validation de l'approche par le porteur.
-- Code (Claude Code) : les missions 101 et suivantes ne donnent plus d'XP dans le design retenu : cadrage à faire avec le porteur avant de développer (voir `design/Cadrage_campagne_2026-10-29.md`). Pipeline d'animation à coder avant le travail de Codex (voir `TODO_ANIMATIONS_UNITES.md`).
+- Code (Claude Code) : les missions 101 et suivantes ne donnent plus d'XP dans le design retenu : cadrage à faire avec le porteur avant de développer (voir `design/Cadrage_campagne_2026-10-29.md`). Le cadre d'animation est livré (v0.174) : Codex peut commencer par le pilote décrit dans `TODO_ANIMATIONS_UNITES.md`.
 - Visuels (Codex) : voir `TODO_VISUELS.md`, en particulier tout l'habillage volcanique.
 
 ## Questions ouvertes pour le porteur
