@@ -66,20 +66,27 @@ func verify_props() -> void:
 	var piece: Dictionary = Decor.props("volcano_threshold","volcanic",0)[0]
 	check(is_equal_approx(piece.destination.size.y,float(Decor.set_for("volcanic").assets[piece.object].height)),"Hauteur de jeu respectée")
 
-## Les pièces ne chevauchent ni la chaussée ni les emplacements ni la forteresse.
+## Les pièces de toutes les cartes décrites ne chevauchent ni la chaussée ni les emplacements (volcan et citadelle, deux camps).
 func verify_margins() -> void:
-	for number in range(61,81):
-		var id: String = Catalogue.definition(number).map_id
-		var board: Dictionary = Model.Maps.for_id(id)
-		for prop in Decor.props(id,"volcanic",0):
-			var point: Vector2 = prop.point
-			check(point.x >= 0.0 and point.x <= float(board.size.x) and point.y >= 0.0 and point.y <= float(board.size.y),"Pièce dans le plateau (%s)" % id)
-			for slot in board.slots: check(point.distance_to(slot) >= 1.0,"Pièce loin des emplacements (%s)" % id)
-			for route in (board.routes if board.has("routes") else [{"path_points":board.path_points}]):
-				var points: Array = route.path_points
-				for index in range(points.size()-1):
-					var closest: Vector2 = Geometry2D.get_closest_point_to_segment(point,points[index],points[index+1])
-					check(point.distance_to(closest) >= 0.9,"Pièce loin de la chaussée (%s)" % id)
+	var counted := 0
+	for decoration in ["volcanic","citadel"]:
+		var placements: Dictionary = Decor.set_for(decoration).get("placements",{})
+		for id in placements:
+			var board: Dictionary = Model.Maps.for_id(str(id))
+			check(not board.is_empty() and board.decoration == decoration,"La carte %s existe avec le décor %s" % [id,decoration])
+			if board.is_empty(): continue
+			for faction in [0,1]:
+				for prop in Decor.props(str(id),decoration,faction):
+					counted += 1
+					var point: Vector2 = prop.point
+					check(point.x >= 0.0 and point.x <= float(board.size.x) and point.y >= 0.0 and point.y <= float(board.size.y),"Pièce dans le plateau (%s)" % id)
+					for slot in board.slots: check(point.distance_to(slot) >= 1.0,"Pièce loin des emplacements (%s, %s)" % [id,prop.object])
+					for route in (board.routes if board.has("routes") else [{"path_points":board.path_points}]):
+						var points: Array = route.path_points
+						for index in range(points.size()-1):
+							var closest: Vector2 = Geometry2D.get_closest_point_to_segment(point,points[index],points[index+1])
+							check(point.distance_to(closest) >= 0.9,"Pièce loin de la chaussée (%s, %s)" % [id,prop.object])
+	check(counted >= 250,"Toutes les pièces décrites sont contrôlées (%d)" % counted)
 
 func verify_rendering() -> void:
 	for faction in [0,1]:
