@@ -84,7 +84,35 @@ static func water_overlay(map_id: String) -> Dictionary:
 	if image == null: return {}
 	return {"texture":image,"position":Vector2(float(entry.position[0]),float(entry.position[1]))}
 
+## Le calque d'eau n'est utilisé que si la carte a la géométrie sur laquelle il a été dessiné (routes et tronçons inondés) :
+## une carte de même identifiant mais de tracé différent (ancien rapport, carte modifiée) garde le repère calculé.
+static var _water_checks: Dictionary = {}
+
+static func water_overlay_for(definition: Dictionary) -> Dictionary:
+	var id: String = str(definition.get("id",""))
+	var entry: Dictionary = set_for("marsh").get("overlays",{}).get(id,{})
+	if entry.is_empty(): return {}
+	var key: String = "%s:%d" % [id,hash(definition.get("routes",[]))+31*hash(definition.get("path_points",[]))+97*hash(definition.get("flooded",[]))]
+	if not _water_checks.has(key): _water_checks[key] = water_geometry_matches(definition,entry)
+	return water_overlay(id) if _water_checks[key] else {}
+
+static func water_geometry_matches(definition: Dictionary, entry: Dictionary) -> bool:
+	var routes: Array = definition.routes if definition.has("routes") else [{"id":"main","path_points":definition.get("path_points",[])}]
+	if routes.size() != entry.routes.size(): return false
+	for index in range(routes.size()):
+		var expected: Array = entry.routes[index].path_points
+		var actual: Array = routes[index].path_points
+		if expected.size() != actual.size(): return false
+		for point in range(expected.size()):
+			if not is_equal_approx(float(expected[point][0]),actual[point].x) or not is_equal_approx(float(expected[point][1]),actual[point].y): return false
+	var flooded: Array = definition.get("flooded",[])
+	if flooded.size() != entry.flooded.size(): return false
+	for index in range(flooded.size()):
+		if str(flooded[index].route) != str(entry.flooded[index].route) or not is_equal_approx(float(flooded[index].from),float(entry.flooded[index].from)) or not is_equal_approx(float(flooded[index].to),float(entry.flooded[index].to)): return false
+	return true
+
 static func clear_cache() -> void:
+	_water_checks.clear()
 	_data.clear()
 	_loaded = false
 	_textures.clear()

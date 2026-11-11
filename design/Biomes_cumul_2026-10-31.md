@@ -95,4 +95,4 @@ La nouveauté du chapitre 10, la Garnison, est livrée en v0.173 : [fiche des mi
 
 ## Décision du 11 novembre 2026 — missions 101 à 200
 
-Cadrage des chapitres 11 à 20 : [fiche](Cadrage_missions_101_200.md). PV ennemis plafonnés à 200 % dès la mission 101, difficulté par cumul des nouveautés ; PO de 65 à 105 selon le chapitre ; sixième biome (chapitres 11 et 12) en toundra et glace ; réintroduction progressive des nouveautés précédentes. Choix retenus par Claude Code sur délégation du porteur, valeurs à confirmer.
+Cadrage des chapitres 11 à 20 : [fiche](Cadrage_missions_101_200.md). Un biome = deux chapitres, une seule nouveauté dans le second, comme les chapitres 1 à 10 (décision du porteur) ; le cumul des nouveautés est transposé au mode infini et aux difficultés suivantes. La courbe de PV ennemis continue à +1 % par mission, à mesurer chapitre par chapitre. PO de 65 à 105 selon le chapitre et sixième biome (chapitres 11 et 12) en toundra et glace : choix de Claude Code sur délégation du porteur, valeurs à confirmer.
