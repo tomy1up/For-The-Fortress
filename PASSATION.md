@@ -4,7 +4,9 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 10 novembre 2026 — Claude Code
 
-**Dernière version publiée : v0.172** (chapitre 9, citadelle ennemie, missions 81–90 ; tag `v0.172`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.172), SHA-256 `8e9f3eac…0ac4`). 90 missions jouables. Précédentes : v0.171 (avertissement des éruptions à 3 s), v0.170 (chapitre 8, éruptions). Régression v0.172 : 106 suites, 70 650 contrôles Godot, 17 tests Python.
+**Dernière version publiée : v0.173** (chapitre 10, la Garnison, missions 91–100 ; tag `v0.173`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.173), SHA-256 `0ef751cf…a319`). 100 missions jouables. Précédentes : v0.172 (citadelle), v0.171, v0.170. Régression v0.173 : 108 suites, 74 561 contrôles Godot, 17 tests Python.
+
+**v0.173** : chapitre 10, nouveauté « Garnison » : ennemi de type 10 (`scripts/garrison_encounters.gd`, ensemble de vagues `citadel_garrison`, 520 PV, vitesse 0,6), identités par faction dans `enemy_catalogue.gd` (profil 10), silhouette provisoire dans `enemy_art.gd`. Les tableaux indexés par type d'ennemi (`_enemy_scale`, `enemy_color` dans `valley_view.gd`) doivent couvrir tout nouveau type : un oubli provoque un plantage au dessin, que les tests de combat sans rendu ne détectent pas. Cartes 91–100 dans `citadel_maps.gd`, fiche `design/Missions_091_100_Garnison.md`. Capture : variantes `garrison91`…`garrison100`.
 
 **v0.172** : décision du porteur (11 novembre 2026) : chapitres 9–10 = citadelle de la faction adverse ; chapitre 10 = nouveauté « Garnison » (ennemi d'élite : chef de guerre orc face à l'Alliance, maréchal face à la Horde, plus résistant), à développer ensuite. Récompenses inchangées (60 PO, 100 XP). Cartes 81–90 dans `scripts/citadel_maps.gd` (décor `citadel`, déclaré dans les trois listes d'export), fiche `design/Missions_081_090_Citadelle.md`. Le chapitre 9 est plus aisé que le 8 (marges de 9 à 26 PV) : le chapitre 10 devra durcir. Test : `tests/test_citadel_chapter.gd`. Capture : variantes `citadel81`…`citadel90`.
 
@@ -34,7 +36,7 @@ Fichiers non suivis à laisser tels quels sauf demande : `design/essais/v0109_ga
 
 ## Prochaines étapes possibles
 
-- Code (Claude Code) : chapitre 10 (missions 91–100) avec la Garnison : nouveau type d'ennemi d'élite par faction adverse (profil statistique, identité dans `enemy_catalogue.gd`, rencontres, tests) ; chiffres à proposer comme réglages de prototype.
+- Code (Claude Code) : les missions 101 et suivantes ne donnent plus d'XP dans le design retenu : cadrage à faire avec le porteur avant de développer (voir `design/Cadrage_campagne_2026-10-29.md`). Pipeline d'animation à coder avant le travail de Codex (voir `TODO_ANIMATIONS_UNITES.md`).
 - Visuels (Codex) : voir `TODO_VISUELS.md`, en particulier tout l'habillage volcanique.
 
 ## Questions ouvertes pour le porteur

@@ -20,6 +20,7 @@ var map_definition: Dictionary
 var map_error: String = ""
 const Banks = preload("res://scripts/bank_encounters.gd")
 const Drowned = preload("res://scripts/drowned_encounters.gd")
+const Garrison = preload("res://scripts/garrison_encounters.gd")
 var wave_set_id: String = "ford"
 var route_target_policy: String = "arrival_time"
 var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
@@ -194,7 +195,7 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	action_history.append(entry)
 
 static func valid_enemy_hp_percent(value: Variant) -> bool:
-	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 189
+	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 199
 
 func configure_combat_affix(value: Variant) -> bool:
 	if not value is Dictionary or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
@@ -273,7 +274,7 @@ func configure_wave_set(value: Variant) -> bool:
 	wave_set_id = value;spawn_schedule = Campaign.schedule(wave,wave_set_id);return true
 
 static func enemy_definition(type: int) -> Dictionary:
-	return Banks.GUARD if type == Banks.GUARD_TYPE else Drowned.DEFINITION if type == Drowned.TYPE else ENEMY_TYPES[type]
+	return Banks.GUARD if type == Banks.GUARD_TYPE else Drowned.DEFINITION if type == Drowned.TYPE else Garrison.DEFINITION if type == Garrison.TYPE else ENEMY_TYPES[type]
 
 static func scaled_enemy_hp(type: int, percent: int = 100) -> float:
 	return float(enemy_definition(type).hp) if percent == 100 else float(enemy_definition(type).hp)*(float(percent)/100.0)

@@ -345,6 +345,9 @@ func _refresh_detail() -> void:
 	if definition.get("wave_set_id","") == "ford_banks":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : tortue gardienne" % [definition.waves,definition.hp_percent]
 		mission_detail.tooltip_text = "Essai : la tortue encaisse 25 % des dégâts des voisins proches, dans la limite de ses PV. Ne protège ni les autres tortues ni les boss. Mêmes tracés que le chapitre 1 ; nouvelles rencontres. Valeurs provisoires."
+	if definition.get("wave_set_id","") == "citadel_garrison":
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Garnison · capitaine d'élite" % [definition.waves,definition.hp_percent]
+		mission_detail.tooltip_text = "Essai : la Garnison est l'unité d'élite de la citadelle (520 PV, vitesse 0,6, −4 PV de forteresse) ; elle accompagne les vagues 5, 7, 9 et 10. Valeurs provisoires."
 	if definition.get("wave_set_id","") == "marsh_drowned":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%
 Nouveau : Noyé · eau régénérante" % [definition.waves,definition.hp_percent]

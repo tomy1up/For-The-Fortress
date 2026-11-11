@@ -1,5 +1,6 @@
 extends RefCounted
 ## Silhouettes dans quatre atlas transparents, sans données de combat.
+## La Garnison réutilise provisoirement la silhouette du maréchal ou du chef de guerre : visuel à produire (TODO_VISUELS.md).
 ## Le Noyé réutilise provisoirement la silhouette de la tortue : visuel à produire (TODO_VISUELS.md).
 const TEXTURES: Dictionary = {
 	"enemy.neutral.turtle": preload("res://assets/enemies/rosters/tortue_gardienne_v001.png"),
@@ -12,11 +13,13 @@ const TEXTURES: Dictionary = {
 	"enemy.alliance.siegebreaker": preload("res://assets/enemies/rosters/alliance_v002.png"),
 	"enemy.alliance.guard": preload("res://assets/enemies/rosters/alliance_v002.png"),
 	"enemy.alliance.marshal": preload("res://assets/enemies/rosters/alliance_v002.png"),
+	"enemy.alliance.garrison": preload("res://assets/enemies/rosters/alliance_v002.png"),
 	"enemy.horde.warrior": preload("res://assets/enemies/rosters/horde_v003.png"),
 	"enemy.horde.scout": preload("res://assets/enemies/rosters/horde_v003.png"),
 	"enemy.horde.colossus": preload("res://assets/enemies/rosters/horde_v003.png"),
 	"enemy.horde.guard": preload("res://assets/enemies/rosters/horde_v003.png"),
 	"enemy.horde.warchief": preload("res://assets/enemies/rosters/horde_v003.png"),
+	"enemy.horde.garrison": preload("res://assets/enemies/rosters/horde_v003.png"),
 }
 const FRAMES: Dictionary = {
 	"enemy.neutral.turtle": {"source":Rect2(90,265,1075,732),"foot":Vector2(650,997),"height":34.0},
@@ -29,11 +32,13 @@ const FRAMES: Dictionary = {
 	"enemy.alliance.siegebreaker": {"source":Rect2(904,304,312,317),"foot":Vector2(1059.396,621),"height":34.0},
 	"enemy.alliance.guard": {"source":Rect2(1355,225,298,398),"foot":Vector2(1497.032,623),"height":34.0},
 	"enemy.alliance.marshal": {"source":Rect2(1776,165,356,463),"foot":Vector2(1947.885,628),"height":34.0},
+	"enemy.alliance.garrison": {"source":Rect2(1776,165,356,463),"foot":Vector2(1947.885,628),"height":34.0},
 	"enemy.horde.warrior": {"source":Rect2(51,275,302,324),"foot":Vector2(195.647,599),"height":34.0},
 	"enemy.horde.scout": {"source":Rect2(495,342,261,256),"foot":Vector2(614.592,598),"height":34.0},
 	"enemy.horde.colossus": {"source":Rect2(866,200,370,399),"foot":Vector2(1045.418,599),"height":34.0},
 	"enemy.horde.guard": {"source":Rect2(1349,282,295,316),"foot":Vector2(1478.468,598),"height":34.0},
 	"enemy.horde.warchief": {"source":Rect2(1716,182,416,417),"foot":Vector2(1920.095,599),"height":34.0},
+	"enemy.horde.garrison": {"source":Rect2(1716,182,416,417),"foot":Vector2(1920.095,599),"height":34.0},
 }
 
 static func destination(id: String) -> Rect2:
