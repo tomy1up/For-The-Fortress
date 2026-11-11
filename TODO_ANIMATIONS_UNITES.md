@@ -105,7 +105,7 @@ Voir `TODO_VISUELS.md` pour le détail par biome. Rappel du lien avec les unité
 
 ## 7. Ordre de production proposé
 
-1. **Pilote** : archer elfe (attaque, repos) + guerrier orc (marche, mort) → validation du porteur en jeu.
+1. **Pilote** (consigne prête à lancer : [PILOTE_CODEX.md](PILOTE_CODEX.md)) : archer elfe (repos, tir, désactivation) + guerrier orc (marche) → validation du porteur en jeu. La mort n'est pas branchée en v0.174.
 2. **Affixe Éruptions** (effet d'avertissement et de désactivation) : seul effet qui porte une règle de jeu visible déjà livrée.
 3. **Ennemis les plus fréquents** : fantassin / guerrier (profil 1), éclaireur (4), puis colosse / brise-remparts (5), garde (6).
 4. **Défenseurs de base** : arbalétrier, mage, lanceur, sapeur, chaman ; niveaux 1 à 4 et spécialisations.

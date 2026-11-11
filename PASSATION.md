@@ -39,7 +39,7 @@ Fichiers non suivis à laisser tels quels sauf demande : `design/essais/v0109_ga
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : mission d'ensemble animations, unités et effets dans `TODO_ANIMATIONS_UNITES.md`, à lancer à partir de la v0.173 après validation de l'approche par le porteur.
-- Code (Claude Code) : les missions 101 et suivantes ne donnent plus d'XP dans le design retenu : cadrage à faire avec le porteur avant de développer (voir `design/Cadrage_campagne_2026-10-29.md`). Le cadre d'animation est livré (v0.174) : Codex peut commencer par le pilote décrit dans `TODO_ANIMATIONS_UNITES.md`.
+- Code (Claude Code) : les missions 101 et suivantes ne donnent plus d'XP dans le design retenu : cadrage à faire avec le porteur avant de développer (voir `design/Cadrage_campagne_2026-10-29.md`). Le cadre d'animation est livré (v0.174) : Codex peut commencer par le pilote : consigne prête à lancer dans `PILOTE_CODEX.md` (archer elfe + guerrier orc), vue d'ensemble dans `TODO_ANIMATIONS_UNITES.md`.
 - Visuels (Codex) : voir `TODO_VISUELS.md`, en particulier tout l'habillage volcanique.
 
 ## Questions ouvertes pour le porteur
