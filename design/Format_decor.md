@@ -24,13 +24,18 @@ Code : `scripts/decor_art.gd` (chargeur), `valley_view.gd` (`_draw_decor_props`,
 - `volcanic` : commun aux deux camps. Le calque `overlay` est dessiné après la couleur du sol, avant la chaussée.
 - Les pièces sont dessinées sous les unités et l'interface, après la chaussée.
 
-## Cartes décorées en v0.176
+## Cartes décorées
 
-- Volcan : les 20 cartes des missions 61 à 80 (six pièces chacune, placements de Codex vérifiés par test contre les marges des routes et des emplacements).
-- Citadelle : essai sur Les Glacis (mission 81) et Les Portes Jumelles (mission 87). Les autres cartes de citadelle ont la palette mais pas encore de pièces : leurs marges sont à vérifier carte par carte (`tests/test_decor_art.gd` fait le contrôle pour le volcan).
+- Volcan : les 20 cartes des missions 61 à 80 (six pièces chacune, six types de pièces depuis les variantes de Codex en v0.178 ; placements vérifiés par test contre les marges des routes et des emplacements).
+- Citadelle : les vingt cartes des missions 81 à 100 (extension de Codex en v0.178 ; marges contrôlées par test pour les deux camps).
+- Marais : calques d'eau des tronçons inondés sur Les Eaux Mortes (51) et Le Carrefour des Eaux (58) (`marsh.overlays` dans `decor.json`, voir ci-dessous).
 
 ## Ajouter ou modifier
 
 1. Déposer les images dans `assets/decor/<dossier>/` et compléter `decor.json`.
 2. Vérifier : `python prototype/tests/run_regression.py --test test_decor_art.gd` (images présentes et de la bonne taille, ancres, placements dans le plateau et à 1 unité des emplacements, 0,9 de la chaussée).
 3. Contrôler en jeu dans les deux camps (survol, portées, annonces d'entrée, tri en profondeur) avant d'étendre.
+
+## Calques d'eau des marais (v0.178)
+
+`decor.json` : `"marsh": {"overlays": {"<id de carte>": {"file": "eaux/<png>", "position": [x, y], "size": [w, h], "routes": [...], "flooded": [...]}}}`. Le PNG est dessiné à `position` (coordonnées d'écran du plateau, origine isométrique du jeu) après la chaussée et avant les emplacements et les unités ; il remplace le repère bleu provisoire des tronçons inondés. Sans PNG (ou carte non décrite), le repère bleu est conservé. Les champs `routes` et `flooded` recopient la géométrie sur laquelle le calque a été dessiné : `tests/test_decor_art.gd` les compare à la carte réelle et échoue si la géométrie évolue sans nouveau calque. Les règles de régénération restent portées par les données `flooded` du modèle.

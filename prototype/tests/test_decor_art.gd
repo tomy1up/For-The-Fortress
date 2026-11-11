@@ -16,6 +16,7 @@ func run_checks() -> void:
 	verify_palettes()
 	verify_props()
 	verify_margins()
+	verify_water()
 	await verify_rendering()
 	print("DECOR_ART_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
@@ -23,7 +24,7 @@ func run_checks() -> void:
 func verify_data() -> void:
 	Decor.clear_cache()
 	check(not Decor.data().is_empty() and Decor.data().version == 1,"decor.json chargé")
-	check(Decor.set_for("valley").is_empty() and Decor.set_for("marsh").is_empty() and Decor.set_for("inconnu").is_empty(),"Seuls la citadelle et le volcan ont un décor par données")
+	check(Decor.set_for("valley").is_empty() and Decor.set_for("inconnu").is_empty() and Decor.palette("marsh",0).is_empty() and Decor.props("marsh_stagnant","marsh",0).is_empty(),"Les marais n'ont que des calques d'eau : ni palette ni pièces")
 	check(not Decor.set_for("citadel").is_empty() and not Decor.set_for("volcanic").is_empty(),"Citadelle et volcan décrits")
 	for decoration in ["citadel","volcanic"]:
 		var assets: Dictionary = Decor.set_for(decoration).assets
@@ -51,7 +52,7 @@ func verify_props() -> void:
 		var glacis: Array[Dictionary] = Decor.props("citadel_glacis","citadel",faction)
 		var gates: Array[Dictionary] = Decor.props("citadel_gates","citadel",faction)
 		check(glacis.size() == 6 and gates.size() >= 5,"Pièces de citadelle des missions 81 et 87 (faction %d)" % faction)
-		check(Decor.props("citadel_drawbridge","citadel",faction).is_empty(),"Cartes de citadelle sans placement vérifié : aucune pièce")
+		check(Decor.props("citadel_drawbridge","citadel",faction).size() == 6 and Decor.props("citadel_inconnue","citadel",faction).is_empty(),"Pont-levis décoré, carte inconnue sans pièce")
 		check(Decor.props("citadel_glacis","valley",faction).is_empty() and Decor.props("inconnue","volcanic",faction).is_empty(),"Pas de pièce hors décor ou carte décrite")
 	var positions_a: Array = Decor.props("citadel_gates","citadel",0).map(func(prop):return prop.point)
 	var positions_b: Array = Decor.props("citadel_gates","citadel",1).map(func(prop):return prop.point)
@@ -101,3 +102,26 @@ func verify_rendering() -> void:
 			await process_frame
 			check(before == JSON.stringify([model.gold,model.rng.state,model.defenders,model.action_history]),"Dessiner le décor de %s ne modifie pas le jeu (faction %d)" % [id,faction])
 			view.free()
+
+## Les calques d'eau suivent la géométrie actuelle des cartes : routes et tronçons inondés identiques à ceux du jeu.
+func verify_water() -> void:
+	var overlays: Dictionary = Decor.set_for("marsh").get("overlays",{})
+	check(overlays.has("marsh_stagnant") and overlays.has("marsh_crossroads"),"Calques d'eau des missions 51 et 58")
+	for id in overlays:
+		var entry: Dictionary = overlays[id]
+		var board: Dictionary = Model.Maps.for_id(str(id))
+		check(not board.is_empty() and board.has("flooded"),"La carte %s a des tronçons inondés" % id)
+		var image: Texture2D = Decor.texture(str(entry.file))
+		check(image != null and Vector2i(image.get_size()) == Vector2i(int(entry.size[0]),int(entry.size[1])),"Calque d'eau de %s présent et de la bonne taille" % id)
+		check(not Decor.water_overlay(str(id)).is_empty() and Decor.water_overlay("valley_ford").is_empty(),"Calque disponible pour %s seulement" % id)
+		var routes: Array = board.routes if board.has("routes") else [{"id":"main","path_points":board.path_points}]
+		check(routes.size() == entry.routes.size(),"Même nombre de routes (%s)" % id)
+		for index in range(mini(routes.size(),entry.routes.size())):
+			var expected: Array = entry.routes[index].path_points
+			var actual: Array = routes[index].path_points
+			var same: bool = expected.size() == actual.size()
+			for point in range(mini(expected.size(),actual.size())): same = same and is_equal_approx(float(expected[point][0]),actual[point].x) and is_equal_approx(float(expected[point][1]),actual[point].y)
+			check(same,"Route %d de %s identique à celle du calque" % [index,id])
+		var flooded: Array = board.flooded
+		check(flooded.size() == entry.flooded.size(),"Même nombre de tronçons inondés (%s)" % id)
+		for index in range(mini(flooded.size(),entry.flooded.size())): check(is_equal_approx(float(flooded[index].from),float(entry.flooded[index].from)) and is_equal_approx(float(flooded[index].to),float(entry.flooded[index].to)),"Tronçon %d de %s identique" % [index,id])

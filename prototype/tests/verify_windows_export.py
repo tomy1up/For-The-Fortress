@@ -454,6 +454,7 @@ for name,state,faction in cases:
         number = 22 if ridges else 21
         if '_mountain' in name: number=int(name.rsplit('_',1)[1].removeprefix('mountain').removesuffix('play').removesuffix('completed'))
         map_id = ['slate_pass','slate_ridges','slate_scree','slate_ravine','slate_gates','slate_crossing','slate_laces','slate_cirque','slate_high_passages','slate_bastion'][(number-21)%10]
+        if number == 40: map_id = 'slate_bastion_winds' # Finale du chapitre 4 : carte propre depuis la v0.178.
         routes = {24:0,26:3,27:0,29:3}.get(21+(number-21)%10,2)
         assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==((number-1)//10+1,number,map_id,routes or 1)
         won_missions=number if name.endswith('completed') else number-1
