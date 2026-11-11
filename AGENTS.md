@@ -81,7 +81,7 @@ Décision du porteur, 9 novembre 2026 :
 - **Claude Code : code.** Règles, campagne, missions, interface fonctionnelle, tests, export, publication.
 - **Son** : pas encore abordé ; ni l'un ni l'autre n'en produit avant que le porteur décide de son attribution.
 - Claude Code ne réalise pas le travail visuel : il l'ajoute à [TODO_VISUELS.md](TODO_VISUELS.md) avec le contexte utile, et peut poser un emplacement neutre ou réutiliser un visuel existant pour que le code fonctionne en attendant.
-- Codex prend ses tâches dans `TODO_VISUELS.md` et les marque livrées. S'il doit toucher au code pour intégrer un visuel, il garde les tests au vert et le signale dans `PASSATION.md`.
+- Codex prend ses tâches dans `TODO_VISUELS.md` et les marque livrées. S'il doit toucher au code pour intégrer un visuel, il le demande d'abord dans sa boîte aux lettres, garde les tests au vert et le signale dans `PASSATION.md`.
 
 ## Équilibrage des talents
 
@@ -90,10 +90,32 @@ Décision du porteur, 9 novembre 2026 :
 - Alliance et Horde doivent avoir la même puissance de talents (décision du porteur, 10 novembre 2026) : les cartes sont réglées pour la stratégie de référence de la Horde (deux haches et un chaman) ; la référence de l'Alliance est archer, arbalétrier, arbalétrier.
 - Juger un arbre avec son armée naturelle (l'unité qu'il améliore achetée à l'ouverture) et mesurer sa puissance par recherche du PV ennemi maximal battu, pas avec des compositions fixes qui favorisent un arbre.
 
+## Travail à deux : copies séparées, zones de fichiers, boîtes aux lettres
+
+Décision du porteur, 11 novembre 2026 : Codex et Claude Code ne travaillent **plus dans le même dossier**.
+
+**Copies séparées.** Claude Code travaille dans `C:\Projet\For the Fortress!` sur la branche `main`. Codex travaille dans son propre dossier, `C:\Projet\For the Fortress! - Codex`, qui est une copie de travail du même dépôt (`git worktree`) sur la branche `art/codex`. Le premier lancement de Godot dans ce dossier réimporte les ressources (plusieurs minutes).
+
+**Qui fait quoi dans Git.**
+- Codex commite sur `art/codex` et pousse cette branche. Il ne pousse jamais sur `main`, ne crée ni ne supprime de tag, ne publie aucune version.
+- Avant chaque nouveau lot, Codex met sa branche à jour : `git fetch origin` puis `git merge origin/main` (ou `git rebase origin/main` s'il le préfère), et relance les tests ciblés qui concernent son lot.
+- Claude Code fusionne `art/codex` dans `main` quand le lot de Codex passe ses contrôles (validateur, tests ciblés, régression), puis prévient le porteur. Le jugement artistique du porteur se fait sur la version publiée ; Claude Code ne publie jamais un visuel que Codex déclare non prêt. Claude Code est seul à construire l'export, taguer et publier.
+- Les actions irréversibles ou réservées du porteur (push forcé, suppression de branche ou de tag, réécriture d'historique) restent soumises à sa demande explicite.
+
+**Zones de fichiers.**
+- Codex : `prototype/assets/**` (images, animations, décor, y compris `assets/decor/decor.json` et les fichiers `.import` générés), `design/essais/**`, ses fiches `design/Visuel*.md`, `design/Pilote_animations.md`, `design/Appuis_*.md` et `design/Avertissement_*.md`.
+- Claude Code : `prototype/scripts/**`, `prototype/tests/**`, `prototype/tools/**`, les listes d'export, la version, `README.md`, `design/Format_*.md`, `design/Missions_*.md`.
+- Fichiers partagés : `PASSATION.md` (chacun écrit dans sa section et ne modifie pas celle de l'autre), `TODO_VISUELS.md` et `TODO_ANIMATIONS_UNITES.md` (Claude Code ajoute les besoins ; Codex coche ce qu'il livre), `AGENTS.md` (changement de règle seulement avec l'accord du porteur).
+- Si Codex doit modifier du code pour intégrer un visuel, il le demande d'abord dans sa boîte aux lettres : Claude Code le fait, ou accepte le changement à la fusion.
+
+**Boîtes aux lettres** (à la racine du dépôt). Chacun écrit dans **son** fichier et lit celui de l'autre :
+- `ECHANGES_CLAUDE_VERS_CODEX.md` : écrit par Claude Code (demandes de visuels, formats livrés, corrections).
+- `ECHANGES_CODEX_VERS_CLAUDE.md` : écrit par Codex (livraisons, identifiants visés, besoins de code, questions).
+- Chaque entrée porte la date, un titre et un état (`ouvert`, `traité`). L'auteur ne passe en `traité` que ses propres entrées une fois l'autre partie confirmée. Les entrées closes se déplacent en bas du fichier, section « Traité ».
+- Le porteur garde le dernier mot sur les décisions de direction ; les directives qu'il doit relayer à l'autre agent sont proposées en fin de message par l'agent qui les identifie.
+
 ## Passation entre agents
 
-Codex et Claude Code travaillent sur le même dossier, jamais en même temps.
-
-- En début de mission : lire `PASSATION.md`, puis `git status` et `git log -5` ; l'état réel du dépôt fait foi.
-- En fin de mission, ou dès que le porteur annonce un changement d'agent : mettre à jour `PASSATION.md` (version en cours, ce qui est commité ou non, tests réellement lancés et résultats, prochaines étapes, questions ouvertes pour le porteur).
+- En début de mission : lire `PASSATION.md`, la boîte aux lettres de l'autre agent, puis `git status` et `git log -5` ; l'état réel du dépôt fait foi.
+- En fin de mission, ou dès que le porteur annonce un changement d'agent : mettre à jour sa section de `PASSATION.md` (version en cours, ce qui est commité ou non, tests réellement lancés et résultats, prochaines étapes, questions ouvertes pour le porteur).
 - Ne pas laisser de travail à moitié appliqué sans le signaler dans `PASSATION.md`.
