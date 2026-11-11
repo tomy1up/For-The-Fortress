@@ -45,3 +45,15 @@ Les quatre tirs avec rebond ont été rejoués au Gué dans les deux sens, à ×
 ### Consignes pour les poses intermédiaires
 
 Deux images ont été générées avec l’outil intégré. La première reprend les poses de main vide et de transfert du poids, avec une rotation intermédiaire du torse, une main ouverte devant la poitrine et un bras arrière continu. La seconde reprend les poses de hache basse et de garde, avec une seule hache droite à mi-hauteur, le poignet au niveau du bas du torse et le manche bien saisi. Les deux consignes conservent le cadrage, les appuis, la palette et le fond transparent.
+
+## Synchronisation du geste et du projectile
+
+Le 12 novembre 2026, le porteur signale que la hache semble quitter la main avant le geste. Dans `valley_view.gd`, la planche d’attaque et le projectile démarrent sur le même évènement de tir. La main est déjà vide à la première image de la planche. Le bras poursuit son mouvement pendant le vol.
+
+L’essai ajoute six poses de préparation sur les 0,20 s avant le tir. La hache reste en main pendant cette phase. La planche RGBA est composée de cellules de 336 × 288 px, avec le pied ancré en (152, 269) et une hauteur affichée de 76 px. Ces valeurs servent à l’essai. La planche reste dans le dossier d’études.
+
+Le comparatif a été capturé avec le rendu Godot sur la vague 4 du Gué, dans les deux sens à ×1 et ×2. L’aperçu connaît à l’avance l’instant du tir grâce à une première exécution de la vague. Le modèle, le départ réel du projectile et son rebond restent identiques dans la comparaison.
+
+L’intégration demande un signal de présentation avant le tir, orienté d’après la cible et annulable si le tir n’a pas lieu. Le lâcher reste synchronisé sur l’évènement réel. Claude Code étudiera ce raccord avec la cadence, les dégâts et le rebond actuels.
+
+[Comparatif animé](essais/troll_lancer/Troll_armement_comparatif.gif) · [Étapes du geste](essais/troll_lancer/Troll_armement_etapes.png) · [Planche de préparation](essais/troll_lancer/Troll_armement_prototype.png)

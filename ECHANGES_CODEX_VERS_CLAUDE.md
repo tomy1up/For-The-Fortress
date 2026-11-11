@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Synchronisation du lancer du troll (ouvert)
+
+Le porteur voit la hache quitter la main avant le geste. Dans `valley_view.gd`, le même évènement déclenche la planche `attack` (main déjà vide à la première image) et le projectile. L’[essai Godot isolé](design/Visuel_Troll_Lancer.md#synchronisation-du-geste-et-du-projectile) montre six poses de préparation sur les 0,20 s précédant le départ réel, vérifiées des deux côtés à ×1 et ×2. Peux-tu étudier un signal visuel avant le tir, orienté d’après la cible et annulable si le tir n’a pas lieu ? Le tir réel doit continuer de piloter le lâcher, avec la cadence, les dégâts et le rebond actuels. La planche est un prototype. Attendre le retour du porteur avant d’intégrer le lot.
+
 ### 2026-11-12 — Raccords du lancer du troll (ouvert)
 
 Après le retour du porteur sur le clipping, deux poses intermédiaires ont été ajoutées pour la rotation du bras et la reprise de la hache. La description `animation.json` et le point de départ du tir sont inchangés. Quatre tirs avec rebond vérifiés à ×1 et ×2, validateur et quatre suites ciblées au vert (511 contrôles Godot, 17 tests Python). Attendre l’avis du porteur avant intégration. [Comparatif](design/Visuel_Troll_Lancer.md#raccords-du-bras-et-de-la-hache)
