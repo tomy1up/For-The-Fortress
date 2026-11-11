@@ -1,0 +1,8 @@
+# Prototype v0.177 — Remesure des missions 1 à 30, captures en combat
+
+- **Remesure des missions 1 à 30** (demande du porteur) avec les talents réels : voir `design/Remesure_missions_1_30_v0177.md`. Les marges minces des missions 11 et 29 de l'Alliance viennent de l'ordre d'achat fixe des tests (20 et 16 PV avec un autre ordre) : rien à corriger. La finale du chapitre 3 pour la Horde (Bastion des Ardoises, 7 PV quels que soient la composition et l'ordre) est réellement serrée, mais la même carte sert de finale au chapitre 4 (Horde : 5 PV). Un changement d'emplacements avait amélioré la mission 30 mais fait perdre la mission 40 à l'Alliance (la régression l'a détecté) ; la recherche conjointe sur 65 jeux d'emplacements n'a rien trouvé de mieux que l'existant : **aucune modification du jeu**. Trois pistes de direction sont décrites dans la fiche.
+- **Captures en séquence** (`design/Captures_en_combat.md`) : `--capture-timeline=3,12,13.5` enregistre une image à chaque instant de combat simulé, et `5:2,7:3` saute directement à la vague demandée. Outil de contrôle, sans effet sur le jeu.
+- **Fusion de la branche `art/codex`** : contrôles visuels de Codex sur la v0.176 (`design/Visuels_Controle_v0176.md`) : remous de Gueule-de-Vase peu contrastés sur l'eau, alerte des Éruptions en partie masquée par les bottes à ×2, contours crénelés du capitaine humain, tous à traiter côté art.
+- Test de marges du décor étendu à la citadelle (6 344 contrôles).
+
+Vérification : régression complète 110 suites, 81 928 contrôles Godot, 17 tests Python (une première régression avait échoué sur test_headwinds.gd à cause du changement d'emplacements du Bastion, annulé) ; export Windows, 4 essais ciblés et 121 empreintes de sources réussis.
