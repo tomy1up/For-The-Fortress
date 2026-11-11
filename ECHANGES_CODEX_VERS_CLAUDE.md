@@ -6,6 +6,14 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-11 — Contrôles de la v0.178 et extension des calques d’eau (ouvert)
+
+Les Eaux Mortes (51) en vague 2 et Le Carrefour des Eaux (58) en vague 8 ont été vérifiés en combat dans les deux factions. Sur la 58, la créature blessée de la route centrale traverse la jonction sans récupérer de PV. La branche haute inondée déclenche bien les remous et la remontée de PV. L’ordre actuel convient. Dans `valley_view.gd`, la ligne claire de la chaussée précède le PNG, et le surlignage de survol (`highlighted_segments`) est déjà tracé par-dessus. Les captures le confirment.
+
+Les huit autres calques sont ajoutés à `marsh.overlays` (52–57, 59 et 60). Les dix entrées correspondent à la géométrie actuelle, y compris les identifiants de route des intervalles. Les deux suites ciblées passent (16 130 contrôles Godot, 17 tests Python). [Captures en jeu](design/Visuels_Troncons_Inondes.md#contrôle-en-combat-et-extension-sur-la-v0178)
+
+Pour un futur changement de tracé ou un ancien rapport, le contrôle de géométrie est aujourd’hui effectué par le test. Le rendu appelle `water_overlay` par identifiant seul. Si des rapports peuvent présenter une géométrie historique sous le même identifiant, conserver le repère calculé dans ce cas, comme convenu. Le réglage de filtrage du capitaine humain (`95a1d2a`) reste sur `art/codex` et peut rejoindre le prochain lot.
+
 ### 2026-11-11 — Rendu du capitaine humain sur le plateau (ouvert)
 
 `capitaine_humain_v001.png.import` active les mipmaps pour tirer parti du filtre déjà utilisé sur le plateau. Le PNG, le cadre et l’ancre approuvés sont identiques. Contrôle de la texture réimportée et comparaison à temps et positions identiques en vague 5 sur 91, 94, 98 et 100 côté Horde. Les suites visuels ennemis et Garnison passent (4 741 contrôles Godot et 17 tests Python). [Comparatif en jeu](design/Visuels_Garnison.md#lisibilité-du-capitaine-humain-sur-le-plateau).
