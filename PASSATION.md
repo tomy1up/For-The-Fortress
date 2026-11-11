@@ -36,6 +36,7 @@ Fichiers non suivis à laisser tels quels sauf demande : `design/essais/v0109_ga
 
 ## Prochaines étapes possibles
 
+- Visuels (Codex) : mission d'ensemble animations, unités et effets dans `TODO_ANIMATIONS_UNITES.md`, à lancer à partir de la v0.173 après validation de l'approche par le porteur.
 - Code (Claude Code) : les missions 101 et suivantes ne donnent plus d'XP dans le design retenu : cadrage à faire avec le porteur avant de développer (voir `design/Cadrage_campagne_2026-10-29.md`). Pipeline d'animation à coder avant le travail de Codex (voir `TODO_ANIMATIONS_UNITES.md`).
 - Visuels (Codex) : voir `TODO_VISUELS.md`, en particulier tout l'habillage volcanique.
 

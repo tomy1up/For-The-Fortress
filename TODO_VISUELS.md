@@ -2,6 +2,8 @@
 
 Tâches artistiques confiées à Codex : visuels, animations, effets visuels, icônes, habillage et décor. Claude Code ajoute ici les besoins visuels qu'il rencontre en codant et ne les réalise pas lui-même. Codex coche ou retire une tâche quand il l'a livrée, et note la version concernée.
 
+**Mission d'ensemble animations, unités et effets** : voir [TODO_ANIMATIONS_UNITES.md](TODO_ANIMATIONS_UNITES.md) (approche en phases, inventaire complet, affixes, ordre de production).
+
 Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui existe déjà et les contraintes (fichiers, taille, intégration attendue).
 
 ## À faire

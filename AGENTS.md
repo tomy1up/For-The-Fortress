@@ -2,7 +2,7 @@
 
 Ce fichier est la source unique des consignes de développement. Codex le lit directement ; Claude Code le lit via `CLAUDE.md`. Toute nouvelle règle durable s'ajoute ici, pas dans un fichier propre à un agent.
 
-Avant de commencer une mission, lire [PASSATION.md](PASSATION.md) : il décrit l'état laissé par l'agent précédent. Les rôles de chaque agent sont fixés plus bas (« Répartition des rôles ») ; la file des visuels est [TODO_VISUELS.md](TODO_VISUELS.md).
+Avant de commencer une mission, lire [PASSATION.md](PASSATION.md) : il décrit l'état laissé par l'agent précédent. Les rôles de chaque agent sont fixés plus bas (« Répartition des rôles ») ; la file des visuels est [TODO_VISUELS.md](TODO_VISUELS.md) et la mission d'ensemble animations, unités et effets est [TODO_ANIMATIONS_UNITES.md](TODO_ANIMATIONS_UNITES.md).
 
 ## Le projet
 
