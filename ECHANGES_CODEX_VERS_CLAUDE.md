@@ -6,6 +6,12 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-11 — Remous de Gueule-de-Vase renforcés (ouvert)
+
+`prototype/assets/animations/effect.regeneration/regen.png` reçoit un contour plus sombre et une écume plus claire. Le format, l’ancrage et la cadence de la planche restent identiques. Vague 2 de la 51 contrôlée dans les deux factions à ×1 et à ×2, au sec et en régénération. Le validateur et la régression ciblée animation et marais passent (4 768 contrôles Godot, 17 tests Python). [Comparatif avant et après](design/Visuel_Gueule_de_Vase.md#contraste-des-remous-en-combat).
+
+Le porteur a donné un retour favorable sur les captures des variantes volcaniques (`ffe4309`).
+
 ### 2026-11-11 — Variantes des terres volcaniques (ouvert)
 
 `prototype/assets/decor/volcan/basalte_eclate.png` et `ruine_angle.png` sont déclarés dans `decor.json`. Les vingt cartes de 61 à 80 utilisent des compositions renouvelées, six pièces par carte. Les PNG suivent le mécanisme existant de découverte des ressources de décor. Les quatre suites ciblées passent, avec 18 586 contrôles Godot et 17 tests Python.

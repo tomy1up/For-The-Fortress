@@ -18,3 +18,13 @@ Les remous et les bulles sont une proposition d’effet pendant la régénérati
 Le sprite et l’effet ont été composés sur des captures Godot isolées de la mission 51 dans les deux factions, prises sur l’écran de droite. Les remous restent au niveau des pieds. La planche contient 16 poses distinctes et ses bords restent transparents. La vidéo montre une maquette du passage de la chaussée au premier tronçon inondé, avec l’effet à ×1 et ×2. Le sprite reste fixe pendant ce déplacement de démonstration. La marche et le rendu en combat restent à essayer. [Vue Alliance](essais/gueule_de_vase/Eaux_Mortes_alliance.png) · [Vue Horde](essais/gueule_de_vase/Eaux_Mortes_horde.png) · [Vidéo](essais/gueule_de_vase/Regeneration_x1_x2.mp4)
 
 Pour le branchement, conserver `enemy.neutral.drowned` et changer le nom visible dans le catalogue. Associer le nouveau PNG au portrait et au plateau, puis vérifier la prévision de vague et l’éclaireur dans les deux factions. Les fichiers de ce lot restent hors ressources d’exécution jusqu’à l’intégration par Claude Code. [Repères d’intégration](essais/gueule_de_vase/Reperes.json)
+
+## Contraste des remous en combat
+
+Les captures de la v0.176 montraient un anneau turquoise proche de la chaussée inondée. La planche livrée ajoute un contour vert sombre, un liseré d’écume plus clair à l’avant et trois bulles plus lisibles. L’effet reste au ras des pieds et laisse la barre de vie dégagée. L’animation conserve ses 16 poses, son cadre de 56 × 42 px, son ancre (28, 28) et son cycle de 0,96 s.
+
+[Comparatif avant et après à taille de jeu et agrandi](essais/remous_contraste/Remous_avant_apres.png)
+
+Les captures comparent les deux planches aux mêmes instants de la vague 2 des Eaux Mortes. Les scènes sont vérifiées à ×1 et à ×2 dans les deux factions. Les quatre paires au sec ont les mêmes pixels autour de la créature. Les seize paires en régénération montrent le liseré pendant la remontée de PV. Un essai supplémentaire a contrôlé que le jeu charge la nouvelle planche depuis le dossier des ressources. Le déclenchement et les valeurs de combat sont ceux de la v0.176.
+
+Le validateur d’animations passe sans problème. Les suites de la bibliothèque d’animations et du chapitre des marais passent avec 4 768 contrôles Godot et 17 tests Python. Le rendu en jeu est prêt pour avis artistique. La marche reste à produire.

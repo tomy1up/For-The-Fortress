@@ -38,6 +38,8 @@ Les 40 scènes de combat ont été capturées dans Godot avec un profil isolé, 
 
 Le validateur d’animations relève zéro problème. La régression ciblée passe les suites décor, volcan, affixe et chapitre des Éruptions, avec 18 586 contrôles Godot et 17 tests Python.
 
+**Retour du porteur, 11 novembre 2026.** Les variantes lui paraissent bien d’après les captures.
+
 ### Consignes de génération des deux variantes
 
 Les variantes ont été générées avec l’outil d’image intégré en prenant chaque pièce d’origine comme référence de palette, de contours et d’éclairage. Les PNG ont été recadrés pour la pose au sol.
