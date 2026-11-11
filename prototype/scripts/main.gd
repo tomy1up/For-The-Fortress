@@ -263,14 +263,28 @@ func _ready() -> void:
 	var capture_faction: int = 0
 	var capture_type: int = 0
 	var capture_slot: int = 1
-	var capture_timeline: Array[float] = []
+	var capture_timeline: Array[Dictionary] = []
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture="):
 			capture_path = argument.trim_prefix("--capture=")
 		elif argument.begins_with("--capture-timeline="):
-			# Instants de combat (secondes simulées, croissants) où une image est enregistrée : `--capture-timeline=2,12,13.5,15`.
+			# Instants de combat (secondes simulées) où une image est enregistrée : `--capture-timeline=2,12,13.5,15`.
+			# `V:T` joue directement la vague V (1 à 10, croissante) : `--capture-timeline=5:3,5:12,7:3` (voir design/Captures_en_combat.md).
 			for part in argument.trim_prefix("--capture-timeline=").split(","):
-				if part.is_valid_float() and float(part) >= 0.0 and (capture_timeline.is_empty() or float(part) > capture_timeline[-1]): capture_timeline.append(float(part))
+				var pieces: PackedStringArray = part.split(":")
+				var wave_part: int = 0
+				var time_part: String = pieces[-1]
+				if pieces.size() == 2:
+					if not pieces[0].is_valid_int(): continue
+					wave_part = int(pieces[0])
+				elif pieces.size() != 1: continue
+				if not time_part.is_valid_float() or float(time_part) < 0.0 or (wave_part != 0 and (wave_part < 1 or wave_part > 10)): continue
+				var entry := {"wave":wave_part,"time":float(time_part)}
+				if not capture_timeline.is_empty():
+					var last: Dictionary = capture_timeline[-1]
+					var same_wave: bool = wave_part == 0 or wave_part == int(last.wave) or int(last.wave) == 0
+					if (same_wave and float(entry.time) <= float(last.time)) or (not same_wave and wave_part < int(last.wave)): continue
+				capture_timeline.append(entry)
 		elif argument == "--capture-faction=horde":
 			capture_faction = 1
 		elif argument.begins_with("--capture-type="):
@@ -834,17 +848,25 @@ func _capture_campaign_menu(camp: int) -> void:
 
 ## Joue le combat de la mission en cours et enregistre une image à chaque instant demandé (fichier `<base>_tNN.NN.png`).
 ## Le temps est celui de la simulation : le résultat ne dépend ni de la vitesse ni de la machine.
-func _capture_timeline(base: String, times: Array[float]) -> void:
-	if model.phase == "preparation" and not model.start(): return
-	for time in times:
+func _capture_timeline(base: String, entries: Array[Dictionary]) -> void:
+	for entry in entries:
+		var wave_number: int = int(entry.wave)
+		var time: float = float(entry.time)
+		if wave_number > 0 and wave_number != model.wave:
+			# Saut de vague pour le contrôle visuel : la vague demandée repart de zéro avec l'armée actuelle, sans jouer les précédentes.
+			model.enemies.clear()
+			model.phase = "finished"
+			model.wave = wave_number-1
+			if not model.prepare_next_wave(): return
+		if model.phase == "preparation" and not model.start(): return
 		if time > model.elapsed and model.active: model.advance(time-model.elapsed)
 		_update_interface()
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
 		await RenderingServer.frame_post_draw
-		var path: String = "%s_t%05.2f.png" % [base.get_basename(),time]
+		var path: String = ("%s_t%05.2f.png" if wave_number == 0 else "%s_v%02d_t%05.2f.png") % ([base.get_basename(),time] if wave_number == 0 else [base.get_basename(),wave_number,time])
 		var error: Error = get_viewport().get_texture().get_image().save_png(path)
-		print("TIMELINE_FRAME=",JSON.stringify({"time":time,"elapsed":model.elapsed,"phase":model.phase,"file":path,"result":error,"eruption":model.eruption_status() if model.eruption_enabled() else {}}))
+		print("TIMELINE_FRAME=",JSON.stringify({"time":time,"wave":model.wave,"enemies":model.enemies.size(),"elapsed":model.elapsed,"phase":model.phase,"file":path,"result":error,"eruption":model.eruption_status() if model.eruption_enabled() else {}}))
 
 func _capture_sample_combat() -> void:
 	model.rng.seed = 42
