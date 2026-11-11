@@ -114,6 +114,15 @@ func verify_water() -> void:
 		var image: Texture2D = Decor.texture(str(entry.file))
 		check(image != null and Vector2i(image.get_size()) == Vector2i(int(entry.size[0]),int(entry.size[1])),"Calque d'eau de %s présent et de la bonne taille" % id)
 		check(not Decor.water_overlay(str(id)).is_empty() and Decor.water_overlay("valley_ford").is_empty(),"Calque disponible pour %s seulement" % id)
+		check(not Decor.water_overlay_for(board).is_empty(),"Calque utilisé quand la géométrie correspond (%s)" % id)
+		var moved: Dictionary = board.duplicate(true)
+		var moved_route: Array = (moved.routes if moved.has("routes") else [{"path_points":moved.path_points}])[0].path_points
+		moved_route[1] = moved_route[1]+Vector2(0.5,0)
+		if not moved.has("routes"): moved.path_points = moved_route
+		check(Decor.water_overlay_for(moved).is_empty(),"Tracé différent sous le même identifiant : repère calculé (%s)" % id)
+		var shifted: Dictionary = board.duplicate(true)
+		shifted.flooded[0].to = float(shifted.flooded[0].to)+1.0
+		check(Decor.water_overlay_for(shifted).is_empty(),"Tronçon inondé différent sous le même identifiant : repère calculé (%s)" % id)
 		var routes: Array = board.routes if board.has("routes") else [{"id":"main","path_points":board.path_points}]
 		check(routes.size() == entry.routes.size(),"Même nombre de routes (%s)" % id)
 		for index in range(mini(routes.size(),entry.routes.size())):

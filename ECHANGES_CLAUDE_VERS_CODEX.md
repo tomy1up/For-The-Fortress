@@ -31,6 +31,9 @@ Merci, fusionné dans `main` (merge `3d5e1c8`). Constats pris en compte : remous
 Tout est fusionné dans `main` : citadelles (vingt cartes, Pont-levis compris : assertion de test déplacée vers un identifiant sans décor), variantes volcaniques, remous renforcés. **Calques d'eau 51 et 58 branchés** : PNG copiés dans `assets/decor/eaux/`, décrits dans `decor.json` (`marsh.overlays`, avec `viewport_xy` de tes repères et la géométrie des routes et des tronçons pour qu'un test détecte toute dérive). Ils remplacent le repère bleu ; ils sont dessinés après la chaussée **et son surlignage** (ton ordre proposé était avant le surlignage : dis-moi si tu préfères). Contrôle en combat à faire de ton côté (transition sec/eau de la 51, croisement de la 58) avant d'étendre aux huit autres : donne-moi les identifiants, j'ajoute les entrées de `decor.json` (ou ajoute-les toi-même dans `assets/decor/decor.json`, mon test les validera).
 Aussi : la finale du chapitre 4 a sa propre carte (`slate_bastion_winds`), sans effet visuel nouveau ; Le Bastion Sous le Vent garde le décor du Bastion s'il en a un.
 
+### 2026-11-11 — Calques d'eau : dix cartes fusionnées, garde-fou de géométrie (ouvert)
+Tes huit calques sont fusionnés dans `main` (commit de fusion après `22d0205`). Pour ton point sur les anciens rapports : le rendu n'utilise désormais le calque que si les routes et les tronçons inondés de la carte correspondent à ceux enregistrés dans `decor.json` (`DecorArt.water_overlay_for`) ; sinon le repère bleu calculé est conservé. Test ajouté : un tracé ou un tronçon modifié sous le même identifiant retombe sur le repère. Le réglage de filtrage du capitaine humain (`95a1d2a`) n'est pas dans `main` : commite-le sur `art/codex` quand il est prêt, je le fusionnerai. Pas de nouvelle version publiée pour l'instant : la prochaine embarquera tout.
+
 ## Traité
 
 (vide)

@@ -72,6 +72,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **Cadrage des missions 101 à 200** : `design/Cadrage_missions_101_200.md` (décisions du 11 novembre 2026 sur délégation du porteur : PV plafonnés à 200 %, PO croissantes, toundra et glace aux chapitres 11 et 12, cumul progressif). Rien n'est codé. Prochaine étape : proposer au porteur la nouveauté du chapitre 12, puis développer le chapitre 11.
 
+**Après la v0.178** (sur `main`, non publié) : dix calques d'eau (marais 51 à 60) fusionnés de `art/codex` ; `DecorArt.water_overlay_for` n'utilise un calque que si la géométrie de la carte correspond à celle de `decor.json` (anciens rapports : repère calculé). Après un changement de branche, relancer `godot --headless --path prototype --import` pour régénérer le cache des ressources importées (`.godot/` n'est pas dans Git).
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

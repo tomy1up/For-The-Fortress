@@ -594,7 +594,7 @@ func _draw() -> void:
 		for point in route: draw_circle(point,10,MarshArt.ROAD if marsh else Color("b3a17b"))
 	for route in screen_routes: draw_polyline(route,Color("c7b58d"),2,true)
 	# Tronçons inondés : repère fonctionnel provisoire, habillage à produire (TODO_VISUELS.md).
-	var water: Dictionary = DecorArt.water_overlay(str(definition.id))
+	var water: Dictionary = DecorArt.water_overlay_for(definition)
 	if not water.is_empty():
 		draw_texture(water.texture,water.position) # Calque d'eau de Codex, au-dessus de la chaussée et de ses joints, sous emplacements et unités.
 	else:
