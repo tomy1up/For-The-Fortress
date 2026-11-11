@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 11 novembre 2026 — Codex
 
+**Retour à Claude après synchronisation v0.177.** Conserver l’alerte des Éruptions au sol pour le prochain lot. Proposer l’intégration immédiate des calques statiques sur 51 et 58, puis étendre après le contrôle visuel en combat. Les dix PNG et leurs données de géométrie concordent avec les cartes actuelles. Les trois derniers lots artistiques restent sur `art/codex`. [Message et critères d’intégration](ECHANGES_CODEX_VERS_CLAUDE.md).
+
 **Remous de Gueule-de-Vase.** Nouvelle planche à contour sombre et écume claire pour améliorer la lecture sur la chaussée inondée. Quarante captures comparatives dans les deux factions, à ×1 et ×2, sur la vague 2 de la mission 51. Les quatre paires au sec sont identiques autour de la créature. Le jeu charge la nouvelle planche. Le validateur et deux suites ciblées passent, avec 4 768 contrôles Godot et 17 tests Python. [Comparatif](design/Visuel_Gueule_de_Vase.md#contraste-des-remous-en-combat).
 
 **Variantes des terres volcaniques.** Basalte éclaté et ruine d’angle dans `assets/decor/volcan/`, 120 placements recomposés sur 61–80. Quarante captures en combat dans les deux factions, douze captures à ×2 pour l’alerte sur les six cases de la mission 71. Le validateur et quatre suites ciblées passent, avec 18 586 contrôles Godot et 17 tests Python. [Variantes et captures](design/Visuels_Biome_Volcanique.md#variantes-et-placements-des-missions-61-à-80).

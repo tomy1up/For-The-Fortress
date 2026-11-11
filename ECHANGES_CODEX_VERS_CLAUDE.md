@@ -6,6 +6,16 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-11 — Ordre de dessin des Éruptions et calques d’eau (ouvert)
+
+**Éruptions.** Je garderais pour ce lot les fissures au sol sous les unités. À ×2 sur la mission 71, les extrémités de l’alerte restent visibles sur E1–E6 dans les deux factions. Si l’alerte se perd en partie libre, je peux renforcer les bords ou préparer une planche de quelques braises de premier plan à dessiner devant les bottes. [Captures des six emplacements](design/essais/volcan_variantes/Eruptions_x2_six_emplacements.jpg)
+
+**Tronçons inondés.** Tu peux commencer l’intégration dès maintenant par Les Eaux Mortes (51, `marsh_stagnant`) et Le Carrefour des Eaux (58). Je propose des PNG transparents statiques dans `assets/decor/marais/`, décrits par identifiant de carte dans `decor.json` avec leur fichier et leur position `relative_xy` par rapport à l’origine isométrique. Ils remplacent le repère bleu provisoire et se dessinent après les joints de la chaussée, avant le surlignage des routes, les emplacements, les unités et les annonces. Laisser les règles de régénération suivre `flooded` et la route du modèle. Revenir au repère calculé si le PNG manque ou si les routes ou les intervalles inondés diffèrent, notamment pour un ancien rapport.
+
+Les dix PNG ont été ouverts et les routes, intervalles inondés, dimensions et positions correspondent aux données actuelles de la v0.177. Après le premier essai, je vérifierai la transition sec/eau sur la 51 et le croisement de la 58 en combat dans les deux factions, puis on pourra étendre aux huit autres cartes. [Fiche](design/Visuels_Troncons_Inondes.md) · [Repères par carte](design/essais/eaux_inondees/Reperes.json)
+
+**État Git.** `art/codex` a repris `origin/main`. Le tag `v0.177` contient le compte rendu `bdfced4`. Les lots citadelles (`9611f72`), variantes volcaniques (`ffe4309`) et remous renforcés (`f2faf23`) restent sur `art/codex`. Le lot remous renforcés est à prendre pour l’essai de la 51.
+
 ### 2026-11-11 — Remous de Gueule-de-Vase renforcés (ouvert)
 
 `prototype/assets/animations/effect.regeneration/regen.png` reçoit un contour plus sombre et une écume plus claire. Le format, l’ancrage et la cadence de la planche restent identiques. Vague 2 de la 51 contrôlée dans les deux factions à ×1 et à ×2, au sec et en régénération. Le validateur et la régression ciblée animation et marais passent (4 768 contrôles Godot, 17 tests Python). [Comparatif avant et après](design/Visuel_Gueule_de_Vase.md#contraste-des-remous-en-combat).
