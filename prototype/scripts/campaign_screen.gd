@@ -322,7 +322,7 @@ func _refresh_detail() -> void:
 		start_button.text = "Mission à venir"
 	elif not Catalogue.unlocked(number,status):
 		mission_detail.text = "Terminez la mission %d avec cette faction." % (number-1)
-		rewards.text = "+%d PO · +%d XP\nPremière victoire uniquement." % [definition.po,definition.xp]
+		rewards.text = "%s\nPremière victoire uniquement." % Catalogue.reward_text(int(definition.po),int(definition.xp))
 		start_button.text = "Mission verrouillée"
 	elif done:
 		mission_detail.text = "%d vagues · Mission déjà réussie" % definition.waves
@@ -330,7 +330,7 @@ func _refresh_detail() -> void:
 		start_button.text = "Rejouer sans nouveau gain"
 	else:
 		mission_detail.text = "%d vagues · Première victoire" % definition.waves
-		rewards.text = "+%d PO · +%d XP\nUne seule fois pour cette faction." % [definition.po,definition.xp]
+		rewards.text = "%s\nUne seule fois pour cette faction." % Catalogue.reward_text(int(definition.po),int(definition.xp))
 		start_button.text = "Jouer la mission %d" % number
 	scout_button.disabled = not definition.available
 	start_button.disabled = not Catalogue.unlocked(number,status)

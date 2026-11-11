@@ -21,7 +21,7 @@ static func data() -> Dictionary:
 ## Ensemble de décor d'une carte : `citadel` prend l'architecture du camp adverse, `volcanic` est commun aux deux camps.
 static func set_for(decoration: String) -> Dictionary:
 	var sets: Dictionary = data()
-	return sets.get(decoration,{}) if decoration in ["citadel","volcanic","marsh"] else {}
+	return sets.get(decoration,{}) if decoration in ["citadel","volcanic","marsh","desert"] else {}
 
 ## Camp de la citadelle affichée : le camp adverse de celui qui joue (0 = Alliance jouée, donc citadelle de la Horde).
 static func citadel_faction(played_faction: int) -> String:

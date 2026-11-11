@@ -792,7 +792,7 @@ func _capture_campaign_menu(camp: int) -> void:
 		var id: int = meta_profile.begin_mission(camp,"campaign.001",60,10,100)
 		var credited: bool = meta_profile.credit_mission(id,camp,10,true)
 		if not credited: push_error("Échec du profil de contrôle de campagne.");return
-	var mountain_preview := variant in ["slate","slateplay","ridges","ridgesplay"] or variant.begins_with("mountain") or variant.begins_with("marsh") or variant.begins_with("volcano") or variant.begins_with("ash") or variant.begins_with("citadel") or variant.begins_with("garrison")
+	var mountain_preview := variant in ["slate","slateplay","ridges","ridgesplay"] or variant.begins_with("mountain") or variant.begins_with("marsh") or variant.begins_with("volcano") or variant.begins_with("ash") or variant.begins_with("citadel") or variant.begins_with("garrison") or variant.begins_with("dune")
 	var mountain_number := 21
 	if variant.begins_with("ridges"): mountain_number = 22
 	if variant.begins_with("marsh"): mountain_number = clampi(variant.trim_prefix("marsh").trim_suffix("play").trim_suffix("completed").to_int(),41,60)
@@ -800,6 +800,7 @@ func _capture_campaign_menu(camp: int) -> void:
 	if variant.begins_with("ash"): mountain_number = clampi(variant.trim_prefix("ash").trim_suffix("play").trim_suffix("completed").to_int(),71,80)
 	if variant.begins_with("citadel"): mountain_number = clampi(variant.trim_prefix("citadel").trim_suffix("play").trim_suffix("completed").to_int(),81,90)
 	if variant.begins_with("garrison"): mountain_number = clampi(variant.trim_prefix("garrison").trim_suffix("play").trim_suffix("completed").to_int(),91,100)
+	if variant.begins_with("dune"): mountain_number = clampi(variant.trim_prefix("dune").trim_suffix("play").trim_suffix("completed").to_int(),101,110)
 	if variant.begins_with("mountain"):
 		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").trim_suffix("completed").to_int(),23,40)
 	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or mountain_preview:
@@ -1947,7 +1948,7 @@ func _update_meta_summary() -> void:
 			if info.at_cap: progress += " · Plafond : 51/51 points"
 		elif info.at_cap: progress = "Plafond : 51/51 points"
 		else: progress = "Prochain point : encore %d XP" % maxi(0,MetaProfile.Experience.xp_for_points(int(bank.points)+1)-int(bank.xp))
-		if not info.finished: summary_meta_note.text = "Première victoire : %d PO · %d XP. Talents fixés pendant la mission." % [info.expected,info.xp_expected]
+		if not info.finished: summary_meta_note.text = "Première victoire : %s. Talents fixés pendant la mission." % CampaignCatalogue.reward_text(int(info.expected),int(info.xp_expected),false)
 		elif not info.ready: summary_meta_note.text = "Gains non enregistrés : réessayez la sauvegarde avant de quitter ce résultat."
 		elif not info.first: summary_meta_note.text = "Mission déjà réussie : aucun nouveau gain · "+progress
 		else: summary_meta_note.text = "XP : +%d · Total : %d XP · %s" % [info.xp_earned,info.xp,progress]
@@ -2548,7 +2549,7 @@ func _update_interface() -> void:
 		meta_progress_label.tooltip_text = "PO persistantes versées au résultat de cette partie. Elles sont distinctes de l’or de combat, utilisé pour recruter et améliorer vos défenseurs." if not _run_finished() else meta_profile.error if not meta_profile.error.is_empty() else "PO de cette faction enregistrées et conservées après fermeture du jeu."
 		if not mission_definition.is_empty():
 			var mission_info: Dictionary = _meta_reward_summary()
-			meta_progress_label.text = "Gains : +%d PO · +%d XP" % [mission_info.saved,mission_info.xp_earned] if mission_info.ready else "Première victoire : %d PO · %d XP" % [mission_info.expected,mission_info.xp_expected]
+			meta_progress_label.text = "Gains : %s" % CampaignCatalogue.reward_text(int(mission_info.saved),int(mission_info.xp_earned)) if mission_info.ready else "Première victoire : %s" % CampaignCatalogue.reward_text(int(mission_info.expected),int(mission_info.xp_expected),false)
 			meta_progress_label.tooltip_text = "PO et XP versées uniquement à la première victoire de cette mission pour cette faction. Rejouer ou perdre ne donne pas cette récompense. Les points de talent se débloquent par l’XP."
 		meta_progress_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	if summary_open: _update_meta_summary()

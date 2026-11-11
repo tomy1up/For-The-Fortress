@@ -57,7 +57,22 @@ static func definition(number: int) -> Dictionary:
 		var maps: Array[String] = ["garrison_breach","garrison_siege","garrison_machicolations","garrison_hall","garrison_barracks","garrison_watchtower","garrison_armoury","garrison_stairs","garrison_throne","garrison_heart"]
 		var titles: Array[String] = ["La Brèche","Le Siège","Les Mâchicoulis","La Grande Salle","Les Casernes","La Tour de Guet","L'Armurerie","Les Escaliers","La Salle du Trône","Le Cœur de la Citadelle"]
 		result.merge({"title":titles[number-91],"available":true,"map_id":maps[number-91],"hp_percent":99+number,"po":60,"xp":100,"waves":10,"wave_set_id":"citadel_garrison"},true)
+	elif number <= 110:
+		# Chapitre 11 : désert et ruines, premier chapitre du sixième biome, sans règle propre (décision du porteur, 11 novembre 2026).
+		# Au-delà de la mission 100, plus d'XP (CAMP-011) ; PO de 60 + 5 par chapitre au-delà du dixième (valeurs d'essai).
+		var maps: Array[String] = ["dune_first","dune_oasis","dune_canyon","dune_columns","dune_caravans","dune_temple","dune_well","dune_obelisks","dune_sea","dune_necropolis"]
+		var titles: Array[String] = ["Les Premières Dunes","L'Oasis Asséchée","Le Canyon Rouge","Les Colonnes Brisées","La Route des Caravanes","Le Temple Ensablé","Le Puits Perdu","Les Obélisques","La Mer de Sable","La Nécropole Ancienne"]
+		result.merge({"title":titles[number-101],"available":true,"map_id":maps[number-101],"hp_percent":99+number,"po":reward_po(chapter),"xp":0,"waves":10},true)
 	return result
+
+## PO de la première victoire : 60 jusqu'au chapitre 10, puis +5 par chapitre (valeurs d'essai à confirmer).
+static func reward_po(chapter: int) -> int:
+	return 60+5*maxi(0,chapter-10)
+
+## Texte des gains d'une mission : l'XP n'est affichée que si elle existe (aucune après la mission 100).
+static func reward_text(po: int, xp: int, signed: bool = true) -> String:
+	var plus: String = "+" if signed else ""
+	return "%s%d PO · %s%d XP" % [plus,po,plus,xp] if xp > 0 else "%s%d PO" % [plus,po]
 
 static func runtime(id: String) -> Dictionary:
 	var data: Dictionary = definition(number_for(id))
