@@ -631,11 +631,12 @@ func _draw() -> void:
 		if not preview_synergy_unit.is_empty(): _draw_synergy_links(preview_synergy_unit)
 	if model != null and selected >= 0 and not model.defenders[selected].is_empty():
 		var stats: Dictionary = model.get_stats(selected)
-		var ring := range_outline(_map_slots()[selected], stats.range)
+		var shown_range: float = float(stats.range)*model.range_factor_now() # Rafale de sable : l'anneau montre la portée réduite.
+		var ring := range_outline(_map_slots()[selected], shown_range)
 		draw_colored_polygon(ring, Color(0.8, 0.85, 0.5, 0.05))
 		draw_polyline(ring, Color(0.8, 0.85, 0.5, 0.35), 1.5, true)
 		if preview.is_empty():
-			for section in map_covered_routes(_map_slots()[selected],stats.range):
+			for section in map_covered_routes(_map_slots()[selected],shown_range):
 				draw_polyline(section,Color(0.9,0.77,0.48,0.65),4,true)
 		if preview.is_empty(): _draw_synergy_links()
 	for index in range(_map_slots().size()):
@@ -667,6 +668,7 @@ func _draw() -> void:
 			draw_line(project(link.from)+Vector2(0,-12),project(link.to)+Vector2(0,-12),Color(0.72,0.89,0.56,0.65),1.5,true)
 			draw_arc(project(link.from)+Vector2(0,3),12,0,TAU,32,Color("b8d889"),1.5,true)
 		_draw_eruption_warning()
+		_draw_sandstorm()
 		_draw_decor_props(model.map_definition)
 		var actors: Array[Dictionary] = []
 		for slot in range(model.defenders.size()):
@@ -768,6 +770,7 @@ const UNIT_INK := Color("192a2b")
 const ATTACK_POSE_DURATION := 0.26
 const ERUPTION_EFFECT_ID := "effect.eruption"
 const REGEN_EFFECT_ID := "effect.regeneration"
+const STORM_EFFECT_ID := "effect.sandstorm"
 # Recul horizontal, inclinaison en radians, élévation : habillage des tirs résolus.
 const ATTACK_MOTIONS: Array[Vector3] = [
 	Vector3(2.8,-0.035,0.0), # Archer : traction et petit recul.
@@ -928,7 +931,7 @@ func _track_defenders() -> void:
 ## Vrai tant qu'une animation par planche exige un redessin continu (repos, achat, revente, niveau).
 func _sheet_animation_running() -> bool:
 	if model == null: return false
-	if model.combat_affix.get("id","") == "headwinds": return true
+	if model.combat_affix.get("id","") in ["headwinds","sandstorm"]: return true
 	if not _sold_ghosts.is_empty(): return true
 	for defender in model.defenders:
 		if not defender.is_empty() and not SheetAnimations.spec_for(SheetAnimations.defender_id(int(defender.type))).is_empty(): return true
@@ -1087,6 +1090,42 @@ func _draw_decor_props(definition: Dictionary) -> void:
 		draw_set_transform(project(prop.point),0.0,Vector2.ONE)
 		draw_texture_rect(prop.texture,prop.destination,false)
 	draw_set_transform(Vector2.ZERO)
+
+## Repère fonctionnel provisoire de l'affixe Tempête de sable (chapitre 12) : voile de sable sur le plateau pendant la rafale,
+## liséré qui s'épaissit pendant l'avertissement. L'habillage (voile, rafales, avertissement) revient à Codex (TODO_VISUELS.md).
+func _draw_sandstorm() -> void:
+	if model == null or not model.storm_enabled(): return
+	var status: Dictionary = model.storm_status()
+	if status.is_empty(): return
+	var board: Vector2i = model.map_definition.size
+	var corners: Array[Vector2] = [Vector2.ZERO,Vector2(board.x,0),Vector2(board.x,board.y),Vector2(0,board.y)]
+	var area := PackedVector2Array()
+	for corner in corners: area.append(project(corner))
+	# Habillage de Codex : planches de l'effet `effect.sandstorm`, étirées sur l'emprise du plateau (avertissement en progression, rafale en boucle).
+	var spec: Dictionary = SheetAnimations.spec_for(STORM_EFFECT_ID)
+	var sheet_name: String = "warning" if status.state == "warning" else "storm"
+	if not spec.is_empty() and spec.animations.has(sheet_name):
+		var anim: Dictionary = spec.animations[sheet_name]
+		var texture: Texture2D = SheetAnimations.texture_for(STORM_EFFECT_ID,anim)
+		if texture != null:
+			var bounds := Rect2(area[0],Vector2.ZERO)
+			for point in area: bounds = bounds.expand(point)
+			var progress_value: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0) if status.state == "warning" else 0.0
+			var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,Time.get_ticks_msec()/1000.0,progress_value)))
+			draw_texture_rect_region(texture,bounds,region)
+			return
+	if status.state == "warning":
+		var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+		var outline: PackedVector2Array = area.duplicate();outline.append(outline[0])
+		draw_polyline(outline,Color(0.93,0.78,0.45,0.25+0.5*progress),2.0+4.0*progress,true)
+	else:
+		draw_colored_polygon(area,Color(0.86,0.7,0.42,0.22))
+		var clock: float = Time.get_ticks_msec()/1000.0
+		for index in range(14):
+			var lane: float = fposmod(float(index)*0.381966,1.0)
+			var shift: float = fposmod(clock*0.5+float(index)*0.173,1.0)
+			var start: Vector2 = project(Vector2(float(board.x)*(shift*1.2-0.1),float(board.y)*lane))
+			draw_line(start,start+Vector2(34,-7),Color(0.97,0.88,0.62,0.45),1.5,true)
 
 ## Remous au pied de Gueule-de-Vase quand elle est dans l'eau et qu'il lui manque des PV (effet `effect.regeneration`).
 ## La phase suit le temps de combat. Le dessin se fait dans le repère de l'ennemi, pieds à l'origine.

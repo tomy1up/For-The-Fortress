@@ -30,7 +30,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## Contexte technique transmis par Claude Code
 
-**Dernière version publiée : v0.179** (chapitre 11, désert et ruines, cent dix missions ; tag `v0.179`, SHA-256 `bafc1223…0ab2`). Précédentes : v0.178, v0.177, v0.176.
+**Dernière version publiée : v0.180** (chapitre 12, tempête de sable, cent vingt missions ; tag `v0.180`, SHA-256 `dac81b32…62f1`). Précédentes : v0.179, v0.178, v0.177.
 
 **v0.176** : intégration des livraisons de Codex (messages du porteur du 11 novembre). `scripts/decor_art.gd` + `assets/decor/decor.json` (voir `design/Format_decor.md`) : palettes, calque de cendres et pièces posées ; citadelle = camp adverse. Sprites fixes `capitaine_humain_v001.png` et `gueule_de_vase_v001.png` (importés, déclarés dans les trois listes d'export ; cadres rognés au pied pour le test d'ancrage). Nom « Gueule-de-Vase » (identifiant inchangé) ; `tests/report_replay.gd` restaure « Noyé » pour les rapports d'avant la v0.176. Remous : animation `regen` (mode time) de `effect.regeneration`. Test : `test_decor_art.gd`. Attention : le lanceur de tests coupe chaque suite à 120 images.
 
@@ -81,6 +81,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 **Après la v0.178** (sur `main`, non publié) : dix calques d'eau (marais 51 à 60) fusionnés de `art/codex` ; `DecorArt.water_overlay_for` n'utilise un calque que si la géométrie de la carte correspond à celle de `decor.json` (anciens rapports : repère calculé). Après un changement de branche, relancer `godot --headless --path prototype --import` pour régénérer le cache des ressources importées (`.godot/` n'est pas dans Git).
 
 **v0.179** : chapitre 11 (désert, missions 101 à 110) : `scripts/desert_maps.gd` (décor `desert`, palette dans `decor.json`), `campaign_catalogue.gd` (`reward_po`, `reward_text`, `xp` 0 après la mission 100), borne de PV à 209 %. Cartes mesurées avec 51 points de talent : les formes des chapitres précédents sont trop faciles, trajets raccourcis (`design/Missions_101_110_Desert.md`). Test : `tests/test_desert_chapter.gd`. Captures : variantes `dune101`…`dune110`. Prochaine étape : chapitre 12 (tempête de sable, affixe à rythme régulier comme les éruptions).
+
+**v0.180** : chapitre 12, tempête de sable. Modèle (`valley_model.gd`) : affixe `sandstorm` (5 champs), `storm_status()`, `storm_active_now()`, `range_factor_now()`, frontières de rafale comme événements (`storm_next`, journal « tempête n début/fin »), fenêtres de couverture réduites (`storm_windows`, `storm_route_windows`, choisies par `_windows_for` selon l'instant). Vue : repère `_draw_sandstorm`, planches `effect.sandstorm` (`warning` progress, `storm` time) étirées sur le plateau. Cartes 111–120 dans `desert_maps.gd` (trajets longs). Tests : `test_sandstorm.gd`, `test_sandstorm_chapter.gd`. Captures : variantes `dune111`…`dune120`. Prochaine étape : chapitre 13 (nouveau biome, sans règle propre) : choix du biome à faire avec le porteur.
 
 ## Prochaines étapes possibles
 

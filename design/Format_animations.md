@@ -15,7 +15,7 @@ Code : `prototype/scripts/animation_library.gd` (format, validation, calcul des 
 
 ## Identifiants (`<id>`)
 
-- **Effets de jeu** : `effect.eruption` (avertissement des Éruptions : `foot` = centre de l'emplacement, planche à l'échelle du jeu, `display_height` = hauteur d'une image en pixels de jeu).
+- **Effets de jeu** : `effect.eruption` (avertissement des Éruptions : `foot` = centre de l'emplacement, planche à l'échelle du jeu, `display_height` = hauteur d'une image en pixels de jeu), `effect.regeneration` (remous de Gueule-de-Vase), `effect.sandstorm` (tempête de sable : animations `warning` et `storm`, étirées sur le plateau).
 - **Ennemis** : l'identifiant d'identité de `scripts/enemy_catalogue.gd`, par exemple `enemy.horde.warrior`, `enemy.alliance.infantry`, `enemy.horde.garrison`, `enemy.neutral.drowned`. Une animation par identité (donc une par camp pour les profils de camp).
 - **Défenseurs** : `defender.alliance.archer`, `defender.alliance.crossbow`, `defender.alliance.mage`, `defender.horde.axe`, `defender.horde.sapper`, `defender.horde.shaman`, puis la boutique : `defender.alliance.ranger`, `defender.alliance.musketeer`, `defender.horde.stalker`, `defender.horde.grenadier`.
 
@@ -73,7 +73,9 @@ Toutes sont pilotées par le jeu depuis la v0.175.
 | `buy` | Défenseurs | À l'achat (préparation) | `event` |
 | `level_up` | Défenseurs | À l'amélioration d'un niveau | `event` |
 | `sell` | Défenseurs | À la revente : joue à l'ancien emplacement | `event` |
-| `warning` | Effets de jeu (id `effect.eruption`) | Avertissement des Éruptions, au sol sous les unités, centré sur l'emplacement visé, pendant l'état `warning` | `progress` |
+| `warning` | Effets de jeu (id `effect.eruption`, `effect.sandstorm`) | Avertissement des Éruptions (au sol sous les unités, centré sur l'emplacement visé) ou de la tempête de sable (sur tout le plateau), pendant l'état `warning` | `progress` |
+| `storm` | Effet `effect.sandstorm` | Rafale de la tempête de sable, en boucle pendant toute la rafale ; image étirée sur l'emprise du plateau projeté (`foot` et `display_height` sont ignorés pour cet effet) | `time` (obligatoire) |
+| `regen` | Effet `effect.regeneration` | Remous de Gueule-de-Vase dans l'eau | `time` (obligatoire) |
 
 Les animations `death`, `hurt`, `spawn`, `buy`, `sell` et `level_up` ne se jouent qu'une fois par événement : mode `event` obligatoire, durée de 3 s au plus (validé). Les achats, niveaux et reventes sont repérés par le rendu en temps réel (le modèle ne bouge pas en préparation) ; ils ne sont pas animés au chargement d'une partie.
 
