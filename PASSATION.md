@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 11 novembre 2026 — Codex
 
+**Lancer de hache du troll.** Planche `defender.horde.axe/attack.png` à douze images sur 0,48 s. Quatre tirs avec rebond contrôlés dans les deux sens et aux deux vitesses. Validateur et quatre suites ciblées au vert (511 contrôles Godot, 17 tests Python). Mage, arbalétrier et filtrage du capitaine humain sont fusionnés dans `main`. Le biome désert et ruines est annoncé, en attente des cartes pour l’habillage. [Aperçu du troll](design/Visuel_Troll_Lancer.md).
+
 **Lancement du sort du mage.** Planche `defender.alliance.mage/attack.png` à 12 images sur 0,40 s. Tirs gauche et droite contrôlés au Gué à ×1 et ×2. Le validateur et cinq suites ciblées passent (12 038 contrôles Godot, 17 tests Python). Le porteur a donné un retour favorable sur l’aperçu de l’arbalétrier. Les dix calques d’eau et le contrôle de compatibilité géométrique sont fusionnés dans `main`. [Aperçu du mage](design/Visuel_Mage_Incantation.md).
 
 **Tir et réarmement de l’arbalétrier nain.** Planche `defender.alliance.crossbow/attack.png` à 18 images sur 0,72 s. Départ du carreau, recul et prise de corde vérifiés au Gué dans les deux sens à ×1 et ×2. Trois cycles enchaînés à ×2 avec le bonus de cadence. Validateur et quatre suites ciblées au vert (509 contrôles Godot, 17 tests Python). [Aperçu en jeu](design/essais/arbaletrier_tir/README.md#tir-par-planche-sur-les-sources-de-la-v0178).

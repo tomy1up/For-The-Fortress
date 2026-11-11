@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "id": "defender.horde.axe",
+  "display_height": 76,
+  "foot": [
+    146,
+    269
+  ],
+  "facing": "right",
+  "animations": {
+    "attack": {
+      "file": "attack.png",
+      "frames": 12,
+      "frame_size": [
+        320,
+        288
+      ],
+      "mode": "event",
+      "duration": 0.48
+    }
+  }
+}

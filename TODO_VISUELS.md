@@ -27,6 +27,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## Livré
 
+- [x] **Lanceur de haches troll, attaque** — lâcher, main vide pendant le vol et retour en garde. Quatre tirs avec rebond vérifiés au Gué, dans les deux sens à ×1 et ×2. [Animation et contrôles](design/Visuel_Troll_Lancer.md)
+
 - [x] **Mage humain, lancement du sort** — geste de la main et éclat du cristal, contrôlés au Gué dans les deux sens à ×1 et ×2. [Animation et captures](design/Visuel_Mage_Incantation.md)
 
 - [x] **Arbalétrier nain, tir et réarmement** — 18 images à partir des poses existantes. Vrais tirs gauche et droite vérifiés à ×1 et ×2, trois cycles enchaînés avec le bonus de cadence. [Animation et contrôles](design/essais/arbaletrier_tir/README.md#tir-par-planche-sur-les-sources-de-la-v0178)
