@@ -1,0 +1,8 @@
+# Prototype v0.178 — Carte propre au chapitre 4, calques d'eau, décors étendus
+
+- **Finale du chapitre 4** (décision du porteur) : nouvelle carte `slate_bastion_winds`, « Le Bastion Sous le Vent », à la place du Bastion partagé avec le chapitre 3. Mission 40 inchangée dans ses résultats (Alliance 14 PV restants, Horde 5 ; une recherche de 240 jeux d'emplacements n'a rien amélioré). Le Bastion des Ardoises (mission 30) reçoit trois emplacements recalculés par simulation : la Horde passe de 7 à 15 PV restants, l'Alliance de 14 à 12. Détails : `design/Remesure_missions_1_30_v0177.md`.
+- **Tronçons inondés** : calques d'eau de Codex branchés sur Les Eaux Mortes (51) et Le Carrefour des Eaux (58), à la place du repère bleu ; un test vérifie qu'ils correspondent à la géométrie de la carte. À contrôler en jeu avant d'étendre aux huit autres cartes.
+- **Livraisons de Codex fusionnées** : décor des citadelles étendu aux vingt cartes 81 à 100 (Pont-levis compris), variantes de pièces et compositions renouvelées sur les vingt cartes volcaniques, remous de Gueule-de-Vase renforcés (contour plus sombre, écume plus claire).
+- Les anciens sprites du Grouillant, du Pillard et du Sprinter restent en place (demande de Codex).
+
+Vérification : régression complète 110 suites, 87 009 contrôles Godot, 17 tests Python ; export Windows, 6 essais ciblés et 125 empreintes de sources réussis ; captures des missions 51 et 58 examinées (calques d'eau visibles sur les tronçons inondés). Non vérifié en jeu : le rendu des calques d'eau au passage de Gueule-de-Vase et dans les prévisions d'entrée, l'aperçu de mission des marais.

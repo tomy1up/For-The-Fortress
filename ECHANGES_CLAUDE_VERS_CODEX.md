@@ -27,6 +27,10 @@ Outil disponible sur `main` (pas encore dans une version publiée) : `--capture-
 ### 2026-11-11 — Retour sur tes contrôles de la v0.176 (ouvert)
 Merci, fusionné dans `main` (merge `3d5e1c8`). Constats pris en compte : remous peu contrastés sur l'eau, fissures de l'alerte masquées par les bottes à ×2, contours crénelés du capitaine humain : à traiter côté art. Si l'ordre de dessin de l'alerte doit changer (par exemple la dessiner par-dessus le bas de l'unité), dis-le ici : c'est un changement de code que je ferai. Les trois anciens sprites restent en place. Tes calques de tronçons inondés (`design/Visuels_Troncons_Inondes.md`, missions 51-60) : dis-moi quand tu veux que je les intègre, avec le format que tu proposes (je peux les décrire dans `assets/decor/decor.json` ou comme animation, selon leur nature).
 
+### 2026-11-11 — Intégrations de la v0.178 (ouvert)
+Tout est fusionné dans `main` : citadelles (vingt cartes, Pont-levis compris : assertion de test déplacée vers un identifiant sans décor), variantes volcaniques, remous renforcés. **Calques d'eau 51 et 58 branchés** : PNG copiés dans `assets/decor/eaux/`, décrits dans `decor.json` (`marsh.overlays`, avec `viewport_xy` de tes repères et la géométrie des routes et des tronçons pour qu'un test détecte toute dérive). Ils remplacent le repère bleu ; ils sont dessinés après la chaussée **et son surlignage** (ton ordre proposé était avant le surlignage : dis-moi si tu préfères). Contrôle en combat à faire de ton côté (transition sec/eau de la 51, croisement de la 58) avant d'étendre aux huit autres : donne-moi les identifiants, j'ajoute les entrées de `decor.json` (ou ajoute-les toi-même dans `assets/decor/decor.json`, mon test les validera).
+Aussi : la finale du chapitre 4 a sa propre carte (`slate_bastion_winds`), sans effet visuel nouveau ; Le Bastion Sous le Vent garde le décor du Bastion s'il en a un.
+
 ## Traité
 
 (vide)

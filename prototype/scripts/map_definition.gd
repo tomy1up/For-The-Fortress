@@ -654,7 +654,7 @@ static func for_id(id: String) -> Dictionary:
 		if id == "slate_high_passages":
 			board.slots = [Vector2(3,2.8),Vector2(3,7.2),Vector2(6.8,5.8),Vector2(10.5,3.3),Vector2(14,4.5),Vector2(16,8)]
 		return board
-	if id in ["slate_scree","slate_ravine","slate_gates","slate_laces","slate_cirque","slate_bastion"]:
+	if id in ["slate_scree","slate_ravine","slate_gates","slate_laces","slate_cirque","slate_bastion","slate_bastion_winds"]:
 		var board := mountain_workshop()
 		board.id = id
 		var upper: Array[Vector2] = []
@@ -663,6 +663,14 @@ static func for_id(id: String) -> Dictionary:
 		match id:
 			"slate_bastion":
 				board.title = "Le Bastion des Ardoises"
+				upper.assign([Vector2(0,1),Vector2(4,1),Vector2(4,3),Vector2(8,3),Vector2(8,1),Vector2(11,1)])
+				lower.assign([Vector2(0,9),Vector2(3,9),Vector2(3,6),Vector2(7,6),Vector2(7,8),Vector2(11,8)])
+				shared.assign([Vector2(11,5),Vector2(14,5),Vector2(14,2),Vector2(17,2),Vector2(17,6)])
+				# v0.178 : trois emplacements choisis par simulation pour la finale du chapitre 3 (Horde : 7 → 15 PV restants, Alliance : 12).
+				board.slots = [Vector2(2,3),Vector2(1.5,7),Vector2(15.5,5),Vector2(12.5,2.5),Vector2(9,5),Vector2(15.5,7.6)]
+			"slate_bastion_winds":
+				# Finale du chapitre 4 (Vents contraires) : même tracé que le Bastion, mais sa propre carte pour régler chaque finale séparément.
+				board.title = "Le Bastion Sous le Vent"
 				upper.assign([Vector2(0,1),Vector2(4,1),Vector2(4,3),Vector2(8,3),Vector2(8,1),Vector2(11,1)])
 				lower.assign([Vector2(0,9),Vector2(3,9),Vector2(3,6),Vector2(7,6),Vector2(7,8),Vector2(11,8)])
 				shared.assign([Vector2(11,5),Vector2(14,5),Vector2(14,2),Vector2(17,2),Vector2(17,6)])

@@ -24,7 +24,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## Contexte technique transmis par Claude Code
 
-**Dernière version publiée : v0.177** (remesure des missions 1 à 30 sans changement de jeu, captures en séquence, fusion de `art/codex` ; tag `v0.177`, SHA-256 `66c70479…508e`). Précédentes : v0.176 (visuels de Codex), v0.175, v0.174.
+**Dernière version publiée : v0.178** (carte propre à la finale du chapitre 4, calques d'eau 51 et 58, décors étendus de Codex ; tag `v0.178`, SHA-256 `3c06e782…d1f1`). Précédentes : v0.177, v0.176, v0.175.
 
 **v0.176** : intégration des livraisons de Codex (messages du porteur du 11 novembre). `scripts/decor_art.gd` + `assets/decor/decor.json` (voir `design/Format_decor.md`) : palettes, calque de cendres et pièces posées ; citadelle = camp adverse. Sprites fixes `capitaine_humain_v001.png` et `gueule_de_vase_v001.png` (importés, déclarés dans les trois listes d'export ; cadres rognés au pied pour le test d'ancrage). Nom « Gueule-de-Vase » (identifiant inchangé) ; `tests/report_replay.gd` restaure « Noyé » pour les rapports d'avant la v0.176. Remous : animation `regen` (mode time) de `effect.regeneration`. Test : `test_decor_art.gd`. Attention : le lanceur de tests coupe chaque suite à 120 images.
 
@@ -67,6 +67,8 @@ Copies séparées : Claude Code sur `main` dans `C:\Projet\For the Fortress!`, C
 Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_timeline`) enregistre des images à des instants de combat simulé ; mode d'emploi dans `design/Captures_en_combat.md`. Commité sur `main` sans version publiée (à embarquer dans la prochaine version).
 
 **v0.177** : remesure des missions 1 à 30 (`design/Remesure_missions_1_30_v0177.md`) : aucun changement de jeu. **Piège** : `slate_bastion` sert à la fois à la mission 30 (finale du chapitre 3) et à la mission 40 (finale du chapitre 4, Vents contraires, armées de référence propres dans `test_headwinds.gd`) ; modifier ses emplacements fait perdre la 40 à l'Alliance. Captures `--capture-timeline` avec sauts de vague (`design/Captures_en_combat.md`) ; fusion de `art/codex` (contrôles visuels de la v0.176).
+
+**v0.178** : finale du chapitre 4 sur sa propre carte `slate_bastion_winds` (`map_definition.gd`, `campaign_catalogue.gd` : mission 40) ; emplacements 2 à 4 du Bastion (mission 30) recalculés ; calques d'eau des marais 51 et 58 (`DecorArt.water_overlay`, `decor.json` `marsh.overlays`, test de cohérence avec la géométrie) ; fusion de quatre lots de Codex (citadelles 81–100, variantes volcaniques, remous renforcés). Les chapitres 3 et 4 partagent les neuf premières cartes de chaque dizaine (`(number-21)%10`) : seule la mission 40 diffère.
 
 ## Prochaines étapes possibles
 

@@ -21,7 +21,7 @@ static func data() -> Dictionary:
 ## Ensemble de décor d'une carte : `citadel` prend l'architecture du camp adverse, `volcanic` est commun aux deux camps.
 static func set_for(decoration: String) -> Dictionary:
 	var sets: Dictionary = data()
-	return sets.get(decoration,{}) if decoration in ["citadel","volcanic"] else {}
+	return sets.get(decoration,{}) if decoration in ["citadel","volcanic","marsh"] else {}
 
 ## Camp de la citadelle affichée : le camp adverse de celui qui joue (0 = Alliance jouée, donc citadelle de la Horde).
 static func citadel_faction(played_faction: int) -> String:
@@ -75,6 +75,14 @@ static func props(map_id: String, decoration: String, played_faction: int) -> Ar
 		var anchor := Vector2(float(asset.anchor[0]),float(asset.anchor[1]))
 		result.append({"texture":image,"point":Vector2(float(placement.xy[0]),float(placement.xy[1])),"destination":Rect2(-anchor*scale,size*scale),"object":str(placement.object)})
 	return result
+
+## Calque d'eau des tronçons inondés d'une carte des marais : {"texture", "position"} ou {}. Remplace le repère bleu provisoire.
+static func water_overlay(map_id: String) -> Dictionary:
+	var entry: Dictionary = set_for("marsh").get("overlays",{}).get(map_id,{})
+	if entry.is_empty(): return {}
+	var image: Texture2D = texture(str(entry.file))
+	if image == null: return {}
+	return {"texture":image,"position":Vector2(float(entry.position[0]),float(entry.position[1]))}
 
 static func clear_cache() -> void:
 	_data.clear()

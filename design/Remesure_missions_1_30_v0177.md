@@ -2,7 +2,7 @@
 
 Demande du porteur (11 novembre 2026) : traiter les marges minces relevées en v0.175 sur les trois premiers chapitres, avec les talents réels (Alliance abaissée au niveau de la Horde). Mesure : armée de référence de chaque faction (Alliance : archer, arbalétrier, arbalétrier ; Horde : deux haches et un chaman), emplacements par défaut de la carte, ordre d'achat des tests (emplacements 3, 4 puis 2), talents accumulés à chaque mission, PV ennemis de la mission.
 
-**Résultat : aucune modification du jeu.** Deux des trois cas sont des artefacts de l'ordre d'achat des tests ; le troisième est réel mais partagé avec la finale du chapitre 4, et aucun réglage d'emplacements ne l'améliore sans dégrader l'autre.
+**Résultat (v0.177) : aucune modification du jeu.** Deux des trois cas sont des artefacts de l'ordre d'achat des tests ; le troisième est réel mais partagé avec la finale du chapitre 4. **Suite (v0.178) : le porteur retient une carte propre à la finale du chapitre 4**, voir la dernière section.
 
 ## Les trois cas
 
@@ -37,3 +37,11 @@ Les emplacements d'origine sont donc les meilleurs de la recherche : le changeme
 
 - La mesure utilise les armées de référence et les emplacements par défaut ; elle ne remplace pas l'essai en jeu.
 - Les chapitres 1 à 3 gardent des missions faciles par conception d'ouverture : une marge de 20 PV (aucune perte) y est attendue.
+
+## Suite : carte propre à la finale du chapitre 4 (v0.178)
+
+Décision du porteur, 11 novembre 2026 : donner à la finale du chapitre 4 sa propre carte pour régler chaque finale séparément.
+
+- **Mission 40** : nouvelle carte `slate_bastion_winds`, « Le Bastion Sous le Vent », même tracé et mêmes emplacements que le Bastion d'origine. Ses résultats sont donc inchangés : Alliance 14 PV restants, Horde 5. Une recherche élargie de ses emplacements (240 jeux : 40 trios × 6 permutations, avec les armées de référence de `test_headwinds.gd`) n'a rien trouvé de mieux (meilleure marge minimale : 4 contre 5 d'origine), car cette finale combine Vents contraires et PV ennemis à 139 %.
+- **Mission 30** : `slate_bastion` reçoit les trois emplacements trouvés en v0.177 : (15,5 ; 5), (12,5 ; 2,5), (9 ; 5). Horde 7 → **15 PV restants**, Alliance 14 → 12. L'écart entre factions passe de 7 à 3 PV.
+- **Il reste une finale serrée pour la Horde** : la mission 40 (5 PV). Pistes à décider : allonger légèrement sa carte (à mesurer, avec un tracé et des emplacements à recalculer ensemble), ou la laisser telle quelle (la Horde la gagne).
