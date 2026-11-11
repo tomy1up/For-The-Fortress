@@ -81,6 +81,8 @@ Fichiers non suivis à laisser tels quels sauf demande : `design/essais/v0109_ga
 
 Copies séparées : Claude Code sur `main` dans `C:\Projet\For the Fortress!`, Codex sur la branche `art/codex` dans `C:\Projet\For the Fortress! - Codex`. Boîtes aux lettres à la racine : `ECHANGES_CLAUDE_VERS_CODEX.md` et `ECHANGES_CODEX_VERS_CLAUDE.md`. Règles complètes : `AGENTS.md`, section « Travail à deux ». Politique de fusion retenue par défaut (à confirmer par le porteur) : Claude Code fusionne `art/codex` dans `main` quand le lot passe ses contrôles, puis prévient le porteur.
 
+Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_timeline`) enregistre des images à des instants de combat simulé ; mode d'emploi dans `design/Captures_en_combat.md`. Commité sur `main` sans version publiée (à embarquer dans la prochaine version).
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

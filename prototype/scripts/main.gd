@@ -263,9 +263,14 @@ func _ready() -> void:
 	var capture_faction: int = 0
 	var capture_type: int = 0
 	var capture_slot: int = 1
+	var capture_timeline: Array[float] = []
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture="):
 			capture_path = argument.trim_prefix("--capture=")
+		elif argument.begins_with("--capture-timeline="):
+			# Instants de combat (secondes simulées, croissants) où une image est enregistrée : `--capture-timeline=2,12,13.5,15`.
+			for part in argument.trim_prefix("--capture-timeline=").split(","):
+				if part.is_valid_float() and float(part) >= 0.0 and (capture_timeline.is_empty() or float(part) > capture_timeline[-1]): capture_timeline.append(float(part))
 		elif argument == "--capture-faction=horde":
 			capture_faction = 1
 		elif argument.begins_with("--capture-type="):
@@ -730,6 +735,7 @@ func _ready() -> void:
 		map_view.queue_redraw()
 		if capture_state == "bank_guardian":
 			print("GUARDIAN_INSPECTION_SNAPSHOT=",JSON.stringify({"inspected":map_view.inspected_enemy_id,"status":enemy_status.text,"links":map_view.inspected_protection_links().size(),"visible":enemy_inspector.visible}))
+		if not capture_timeline.is_empty(): await _capture_timeline(capture_path,capture_timeline)
 		await RenderingServer.frame_post_draw
 		var error: Error = get_viewport().get_texture().get_image().save_png(capture_path)
 		print("CAPTURE_RESULT=", error)
@@ -825,6 +831,20 @@ func _capture_campaign_menu(camp: int) -> void:
 			selected = 3
 			map_view.selected = 3
 			_update_interface()
+
+## Joue le combat de la mission en cours et enregistre une image à chaque instant demandé (fichier `<base>_tNN.NN.png`).
+## Le temps est celui de la simulation : le résultat ne dépend ni de la vitesse ni de la machine.
+func _capture_timeline(base: String, times: Array[float]) -> void:
+	if model.phase == "preparation" and not model.start(): return
+	for time in times:
+		if time > model.elapsed and model.active: model.advance(time-model.elapsed)
+		_update_interface()
+		map_view.queue_redraw()
+		await RenderingServer.frame_post_draw
+		await RenderingServer.frame_post_draw
+		var path: String = "%s_t%05.2f.png" % [base.get_basename(),time]
+		var error: Error = get_viewport().get_texture().get_image().save_png(path)
+		print("TIMELINE_FRAME=",JSON.stringify({"time":time,"elapsed":model.elapsed,"phase":model.phase,"file":path,"result":error,"eruption":model.eruption_status() if model.eruption_enabled() else {}}))
 
 func _capture_sample_combat() -> void:
 	model.rng.seed = 42

@@ -21,6 +21,9 @@ Tout est intégré : décors volcan (20 cartes) et citadelle (missions 81 et 87)
 - Anciennes images `grouillant_v001.png`, `pillard_v001.png`, `sprinter_v001.png` : rattachées à aucun profil actuel. Dites si on les retire.
 - Besoins de code éventuels pour la série d'animations : les animations du format sont toutes branchées ; le point de départ des projectiles (`muzzle`) ne l'est pas.
 
+### 2026-11-11 — Captures en séquence pendant un combat (ouvert)
+Outil disponible sur `main` (pas encore dans une version publiée) : `--capture-timeline=3,12,13.5,15` enregistre une image à chaque instant de combat simulé, ce qui permet de contrôler l'alerte des Éruptions, la désactivation, les remous, etc. Mode d'emploi : `design/Captures_en_combat.md`. Reprenez `main` pour l'avoir.
+
 ## Traité
 
 (vide)
