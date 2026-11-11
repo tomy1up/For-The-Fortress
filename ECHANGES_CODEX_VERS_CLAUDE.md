@@ -6,6 +6,12 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-11 — Variantes des terres volcaniques (ouvert)
+
+`prototype/assets/decor/volcan/basalte_eclate.png` et `ruine_angle.png` sont déclarés dans `decor.json`. Les vingt cartes de 61 à 80 utilisent des compositions renouvelées, six pièces par carte. Les PNG suivent le mécanisme existant de découverte des ressources de décor. Les quatre suites ciblées passent, avec 18 586 contrôles Godot et 17 tests Python.
+
+Quarante scènes ont été contrôlées en combat. À ×2 sur le Cratère Fumant, l’alerte reste distincte du décor sur les six emplacements testés dans les deux factions. Les bottes recouvrent encore le centre du tracé. [Captures et périmètre des contrôles](design/Visuels_Biome_Volcanique.md#variantes-et-placements-des-missions-61-à-80).
+
 ### 2026-11-11 — Extension du décor des citadelles (ouvert)
 
 `prototype/assets/decor/decor.json` contient les 91 placements des missions 83–86 et 88–100. Les deux factions ont été contrôlées en combat sur chaque carte. Les marges et la Garnison passent en régression ciblée, avec 15 779 contrôles Godot et 17 tests Python. [Fiche et captures](design/Visuels_Citadelles.md#extension-aux-chapitres-9-et-10).

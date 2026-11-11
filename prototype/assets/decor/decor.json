@@ -954,6 +954,30 @@
      260
     ],
     "height": 25
+   },
+   "basalte_eclate": {
+    "file": "volcan/basalte_eclate.png",
+    "size": [
+     560,
+     460
+    ],
+    "anchor": [
+     280,
+     419
+    ],
+    "height": 42
+   },
+   "ruine_angle": {
+    "file": "volcan/ruine_angle.png",
+    "size": [
+     640,
+     446
+    ],
+    "anchor": [
+     320,
+     401
+    ],
+    "height": 34
    }
   },
   "palette": {
@@ -987,131 +1011,131 @@
     {
      "object": "fumerolle",
      "xy": [
-      1.81,
-      9.35
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      15.12,
-      0.55
+      1.8,
+      9.3
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      4.23,
-      9.35
+      4.2,
+      9.3
+     ]
+    },
+    {
+     "object": "basalte_eclate",
+     "xy": [
+      9.4,
+      0.5
      ]
     },
     {
      "object": "ruine",
      "xy": [
-      10.28,
-      0.55
+      11.6,
+      0.5
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      17.54,
-      0.55
+      13.5,
+      0.3
      ]
     },
     {
-     "object": "basalte",
+     "object": "lave_figee",
      "xy": [
-      12.7,
-      0.55
+      16.8,
+      0.5
      ]
     }
    ],
    "volcano_flows": [
     {
-     "object": "fumerolle",
+     "object": "lave_figee",
      "xy": [
-      0.6,
-      9.35
+      3.5,
+      9.6
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      10.28,
-      0.55
+      6.0,
+      9.6
      ]
     },
     {
-     "object": "basalte",
+     "object": "basalte_eclate",
      "xy": [
-      13.91,
-      0.55
+      10.8,
+      9.5
      ]
     },
     {
      "object": "ruine",
      "xy": [
-      17.54,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      7.86,
-      0.55
+      8.0,
+      0.6
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      17.54,
-      9.35
+      11.4,
+      0.7
+     ]
+    },
+    {
+     "object": "fumerolle",
+     "xy": [
+      13.5,
+      0.3
      ]
     }
    ],
    "volcano_caldera": [
     {
+     "object": "basalte",
+     "xy": [
+      1.9,
+      5.1
+     ]
+    },
+    {
+     "object": "basalte_eclate",
+     "xy": [
+      1.5,
+      6.7
+     ]
+    },
+    {
+     "object": "ruine_angle",
+     "xy": [
+      7.5,
+      0.6
+     ]
+    },
+    {
+     "object": "lave_figee",
+     "xy": [
+      10.4,
+      0.6
+     ]
+    },
+    {
      "object": "fumerolle",
      "xy": [
-      4.23,
-      0.55
+      13.6,
+      9.2
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      11.49,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      17.54,
-      0.55
-     ]
-    },
-    {
-     "object": "ruine",
-     "xy": [
-      9.07,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      13.91,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      9.07,
-      9.35
+      16.7,
+      0.4
      ]
     }
    ],
@@ -1119,175 +1143,175 @@
     {
      "object": "fumerolle",
      "xy": [
-      1.81,
-      0.55
+      2.0,
+      0.6
      ]
     },
     {
-     "object": "lave_figee",
+     "object": "fumerolle",
      "xy": [
-      12.7,
-      0.55
+      4.3,
+      0.6
      ]
     },
     {
-     "object": "basalte",
+     "object": "fumerolle",
      "xy": [
-      5.44,
-      0.55
+      6.8,
+      0.6
      ]
     },
     {
-     "object": "ruine",
+     "object": "basalte_eclate",
      "xy": [
-      17.54,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      10.28,
-      0.55
+      9.8,
+      0.6
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      15.12,
-      0.55
+      13.0,
+      0.6
+     ]
+    },
+    {
+     "object": "lave_figee",
+     "xy": [
+      14.8,
+      9.3
      ]
     }
    ],
    "volcano_forges": [
     {
-     "object": "fumerolle",
+     "object": "ruine_angle",
      "xy": [
-      5.44,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      12.7,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      17.54,
-      0.55
+      7.0,
+      0.7
      ]
     },
     {
      "object": "ruine",
      "xy": [
-      13.91,
-      9.35
+      10.0,
+      0.3
      ]
     },
     {
-     "object": "lave_figee",
+     "object": "basalte_eclate",
      "xy": [
-      7.86,
-      9.35
+      12.0,
+      0.6
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      17.54,
-      9.35
+      16.5,
+      0.3
+     ]
+    },
+    {
+     "object": "lave_figee",
+     "xy": [
+      7.5,
+      9.3
+     ]
+    },
+    {
+     "object": "fumerolle",
+     "xy": [
+      13.7,
+      9.3
      ]
     }
    ],
    "volcano_bridge": [
     {
-     "object": "fumerolle",
-     "xy": [
-      5.44,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      17.54,
-      0.55
-     ]
-    },
-    {
      "object": "basalte",
      "xy": [
-      3.02,
-      0.55
+      3.0,
+      0.6
+     ]
+    },
+    {
+     "object": "basalte_eclate",
+     "xy": [
+      5.4,
+      0.6
      ]
     },
     {
      "object": "ruine",
      "xy": [
-      12.7,
-      0.55
+      8.6,
+      0.6
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      10.28,
-      0.55
+      11.2,
+      0.6
      ]
     },
     {
-     "object": "basalte",
+     "object": "lave_figee",
      "xy": [
-      17.54,
-      9.35
+      13.5,
+      0.3
+     ]
+    },
+    {
+     "object": "fumerolle",
+     "xy": [
+      16.5,
+      9.3
      ]
     }
    ],
    "volcano_organs": [
     {
-     "object": "fumerolle",
+     "object": "basalte",
      "xy": [
-      5.44,
-      0.55
+      4.5,
+      0.6
      ]
     },
     {
-     "object": "lave_figee",
+     "object": "basalte_eclate",
      "xy": [
-      9.07,
-      0.55
+      6.9,
+      0.6
+     ]
+    },
+    {
+     "object": "basalte_eclate",
+     "xy": [
+      9.3,
+      0.6
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      0.6,
-      9.35
+      11.8,
+      0.6
      ]
     },
     {
      "object": "ruine",
      "xy": [
-      12.7,
-      0.55
+      13.6,
+      0.3
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      15.12,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      17.54,
-      0.55
+      16.7,
+      0.4
      ]
     }
    ],
@@ -1295,307 +1319,307 @@
     {
      "object": "fumerolle",
      "xy": [
-      4.23,
-      0.55
+      3.8,
+      0.6
+     ]
+    },
+    {
+     "object": "basalte_eclate",
+     "xy": [
+      6.2,
+      0.6
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      17.54,
-      0.55
+      8.5,
+      0.6
      ]
     },
     {
-     "object": "basalte",
+     "object": "ruine_angle",
      "xy": [
-      15.12,
-      0.55
+      11.3,
+      0.6
      ]
     },
     {
-     "object": "ruine",
+     "object": "basalte_eclate",
      "xy": [
-      12.7,
-      0.55
+      13.8,
+      9.3
      ]
     },
     {
-     "object": "lave_figee",
+     "object": "fumerolle",
      "xy": [
-      6.65,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      13.91,
-      9.35
+      16.5,
+      9.3
      ]
     }
    ],
    "volcano_road": [
     {
+     "object": "basalte_eclate",
+     "xy": [
+      5.8,
+      0.3
+     ]
+    },
+    {
+     "object": "ruine_angle",
+     "xy": [
+      7.1,
+      0.6
+     ]
+    },
+    {
      "object": "fumerolle",
      "xy": [
-      17.54,
-      0.55
+      9.3,
+      0.6
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      12.7,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      7.86,
-      0.55
+      11.5,
+      9.3
      ]
     },
     {
      "object": "ruine",
      "xy": [
-      10.28,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      16.33,
-      9.35
+      14.4,
+      9.3
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      12.7,
-      9.35
+      17.0,
+      9.3
      ]
     }
    ],
    "volcano_core": [
     {
+     "object": "basalte_eclate",
+     "xy": [
+      5.0,
+      0.6
+     ]
+    },
+    {
+     "object": "lave_figee",
+     "xy": [
+      7.4,
+      0.3
+     ]
+    },
+    {
+     "object": "lave_figee",
+     "xy": [
+      10.3,
+      0.6
+     ]
+    },
+    {
+     "object": "basalte_eclate",
+     "xy": [
+      12.9,
+      0.6
+     ]
+    },
+    {
      "object": "fumerolle",
      "xy": [
-      4.23,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      12.7,
-      0.55
+      16.5,
+      0.3
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      5.44,
-      9.35
-     ]
-    },
-    {
-     "object": "ruine",
-     "xy": [
-      10.28,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      17.54,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      12.7,
-      9.35
+      7.6,
+      9.3
      ]
     }
    ],
    "ash_crater": [
     {
+     "object": "basalte_eclate",
+     "xy": [
+      2.9,
+      0.3
+     ]
+    },
+    {
      "object": "fumerolle",
      "xy": [
-      1.81,
-      9.35
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      12.7,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      5.44,
-      9.35
+      8.7,
+      0.3
      ]
     },
     {
      "object": "ruine",
      "xy": [
-      10.28,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      15.12,
-      0.55
+      10.2,
+      1.4
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      17.54,
-      0.55
+      11.2,
+      0.3
+     ]
+    },
+    {
+     "object": "lave_figee",
+     "xy": [
+      13.5,
+      0.3
+     ]
+    },
+    {
+     "object": "lave_figee",
+     "xy": [
+      6.5,
+      9.3
      ]
     }
    ],
    "ash_chimneys": [
     {
+     "object": "basalte_eclate",
+     "xy": [
+      3.2,
+      0.6
+     ]
+    },
+    {
      "object": "fumerolle",
      "xy": [
-      5.44,
-      0.55
+      5.5,
+      0.6
      ]
     },
     {
-     "object": "lave_figee",
+     "object": "fumerolle",
      "xy": [
-      15.12,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      3.02,
-      0.55
-     ]
-    },
-    {
-     "object": "ruine",
-     "xy": [
-      17.54,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      0.6,
-      9.35
+      8.0,
+      0.6
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      17.54,
-      9.35
+      11.0,
+      0.6
+     ]
+    },
+    {
+     "object": "fumerolle",
+     "xy": [
+      13.5,
+      0.3
+     ]
+    },
+    {
+     "object": "ruine_angle",
+     "xy": [
+      16.2,
+      9.3
      ]
     }
    ],
    "ash_cone": [
     {
-     "object": "fumerolle",
+     "object": "basalte_eclate",
      "xy": [
-      5.44,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      15.12,
-      0.55
+      2.6,
+      7.7
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      17.54,
-      0.55
+      6.2,
+      9.4
+     ]
+    },
+    {
+     "object": "basalte_eclate",
+     "xy": [
+      7.9,
+      9.3
      ]
     },
     {
      "object": "ruine",
      "xy": [
-      11.49,
-      0.55
+      9.5,
+      0.6
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      7.86,
-      0.55
+      12.1,
+      0.6
      ]
     },
     {
-     "object": "basalte",
+     "object": "fumerolle",
      "xy": [
-      17.54,
-      9.35
+      16.5,
+      0.3
      ]
     }
    ],
    "ash_rift": [
     {
-     "object": "fumerolle",
+     "object": "lave_figee",
      "xy": [
-      5.44,
-      0.55
+      5.1,
+      0.5
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      11.49,
-      0.55
+      7.5,
+      0.6
      ]
     },
     {
-     "object": "basalte",
+     "object": "basalte_eclate",
      "xy": [
-      13.91,
-      0.55
+      10.0,
+      0.6
+     ]
+    },
+    {
+     "object": "lave_figee",
+     "xy": [
+      12.4,
+      0.6
      ]
     },
     {
      "object": "ruine",
      "xy": [
-      9.07,
-      0.55
+      16.5,
+      0.3
      ]
     },
     {
-     "object": "lave_figee",
+     "object": "fumerolle",
      "xy": [
-      17.54,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      17.54,
-      9.35
+      16.6,
+      9.3
      ]
     }
    ],
@@ -1603,175 +1627,175 @@
     {
      "object": "fumerolle",
      "xy": [
-      4.23,
-      0.55
+      2.7,
+      0.6
+     ]
+    },
+    {
+     "object": "fumerolle",
+     "xy": [
+      5.5,
+      0.6
+     ]
+    },
+    {
+     "object": "basalte_eclate",
+     "xy": [
+      8.4,
+      0.6
+     ]
+    },
+    {
+     "object": "fumerolle",
+     "xy": [
+      11.1,
+      0.6
+     ]
+    },
+    {
+     "object": "ruine_angle",
+     "xy": [
+      13.5,
+      0.3
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      12.7,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      1.81,
-      0.55
-     ]
-    },
-    {
-     "object": "ruine",
-     "xy": [
-      9.07,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      17.54,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      15.12,
-      0.55
+      16.9,
+      0.6
      ]
     }
    ],
    "ash_flow": [
     {
-     "object": "fumerolle",
+     "object": "basalte_eclate",
      "xy": [
-      5.44,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      17.54,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      3.02,
-      0.55
+      2.0,
+      0.6
      ]
     },
     {
      "object": "ruine",
      "xy": [
-      13.91,
-      0.55
+      4.6,
+      0.6
+     ]
+    },
+    {
+     "object": "fumerolle",
+     "xy": [
+      7.2,
+      0.6
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      5.44,
-      9.35
+      10.1,
+      9.3
+     ]
+    },
+    {
+     "object": "lave_figee",
+     "xy": [
+      13.0,
+      9.6
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      11.49,
-      0.55
+      16.2,
+      9.4
      ]
     }
    ],
    "ash_embers": [
     {
-     "object": "fumerolle",
+     "object": "basalte",
      "xy": [
-      4.23,
-      0.55
+      3.5,
+      0.6
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      13.91,
-      0.55
+      6.3,
+      0.6
      ]
     },
     {
-     "object": "basalte",
+     "object": "ruine_angle",
      "xy": [
-      6.65,
-      0.55
-     ]
-    },
-    {
-     "object": "ruine",
-     "xy": [
-      9.07,
-      0.55
+      9.3,
+      0.6
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      11.49,
-      0.55
+      12.2,
+      0.6
      ]
     },
     {
-     "object": "basalte",
+     "object": "basalte_eclate",
      "xy": [
-      17.54,
-      0.55
+      16.5,
+      0.3
+     ]
+    },
+    {
+     "object": "lave_figee",
+     "xy": [
+      17.7,
+      1.3
      ]
     }
    ],
    "ash_dome": [
     {
-     "object": "fumerolle",
+     "object": "basalte_eclate",
      "xy": [
-      4.23,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      13.91,
-      0.55
+      3.7,
+      0.6
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      10.28,
-      0.55
+      6.2,
+      0.6
+     ]
+    },
+    {
+     "object": "basalte_eclate",
+     "xy": [
+      8.7,
+      0.6
      ]
     },
     {
      "object": "ruine",
      "xy": [
-      17.54,
-      0.55
+      11.1,
+      0.6
+     ]
+    },
+    {
+     "object": "fumerolle",
+     "xy": [
+      13.5,
+      0.3
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      6.65,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      17.54,
-      9.35
+      16.8,
+      0.5
      ]
     }
    ],
@@ -1779,87 +1803,87 @@
     {
      "object": "fumerolle",
      "xy": [
-      1.81,
-      9.35
+      3.4,
+      9.5
      ]
     },
     {
-     "object": "lave_figee",
+     "object": "basalte_eclate",
      "xy": [
-      11.49,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      17.54,
-      0.55
-     ]
-    },
-    {
-     "object": "ruine",
-     "xy": [
-      15.12,
-      0.55
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      7.86,
-      0.55
+      7.8,
+      9.3
      ]
     },
     {
      "object": "basalte",
      "xy": [
-      13.91,
-      9.35
+      9.7,
+      9.3
+     ]
+    },
+    {
+     "object": "basalte_eclate",
+     "xy": [
+      10.6,
+      0.6
+     ]
+    },
+    {
+     "object": "ruine_angle",
+     "xy": [
+      13.2,
+      0.6
+     ]
+    },
+    {
+     "object": "lave_figee",
+     "xy": [
+      16.6,
+      0.3
      ]
     }
    ],
    "ash_heart": [
     {
+     "object": "basalte",
+     "xy": [
+      4.7,
+      0.3
+     ]
+    },
+    {
+     "object": "basalte_eclate",
+     "xy": [
+      6.3,
+      0.6
+     ]
+    },
+    {
      "object": "fumerolle",
      "xy": [
-      5.44,
-      0.55
+      8.9,
+      0.6
+     ]
+    },
+    {
+     "object": "basalte_eclate",
+     "xy": [
+      11.6,
+      0.5
      ]
     },
     {
      "object": "lave_figee",
      "xy": [
-      13.91,
-      0.55
+      13.5,
+      0.3
      ]
     },
     {
-     "object": "basalte",
+     "object": "ruine_angle",
      "xy": [
-      17.54,
-      0.55
-     ]
-    },
-    {
-     "object": "ruine",
-     "xy": [
-      10.28,
-      9.35
-     ]
-    },
-    {
-     "object": "lave_figee",
-     "xy": [
-      7.86,
-      0.55
-     ]
-    },
-    {
-     "object": "basalte",
-     "xy": [
-      17.54,
-      9.35
+      16.6,
+      9.5
      ]
     }
    ]
