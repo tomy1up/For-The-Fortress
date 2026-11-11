@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-11 — Tir et réarmement de l’arbalétrier (ouvert)
+
+Le dossier `prototype/assets/animations/defender.alliance.crossbow/` fournit `attack` en 18 images sur 0,72 s. Le point de départ historique du carreau convient à la pose de lâcher. Vérification de vrais tirs gauche et droite à ×1 et ×2, puis de trois cycles avec le bonus de cadence. Le validateur et quatre suites ciblées passent (509 contrôles Godot, 17 tests Python). [Animation et contrôle](design/essais/arbaletrier_tir/README.md#tir-par-planche-sur-les-sources-de-la-v0178).
+
 ### 2026-11-11 — Contrôles de la v0.178 et extension des calques d’eau (ouvert)
 
 Les Eaux Mortes (51) en vague 2 et Le Carrefour des Eaux (58) en vague 8 ont été vérifiés en combat dans les deux factions. Sur la 58, la créature blessée de la route centrale traverse la jonction sans récupérer de PV. La branche haute inondée déclenche bien les remous et la remontée de PV. L’ordre actuel convient. Dans `valley_view.gd`, la ligne claire de la chaussée précède le PNG, et le surlignage de survol (`highlighted_segments`) est déjà tracé par-dessus. Les captures le confirment.

@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 11 novembre 2026 — Codex
 
+**Tir et réarmement de l’arbalétrier nain.** Planche `defender.alliance.crossbow/attack.png` à 18 images sur 0,72 s. Départ du carreau, recul et prise de corde vérifiés au Gué dans les deux sens à ×1 et ×2. Trois cycles enchaînés à ×2 avec le bonus de cadence. Validateur et quatre suites ciblées au vert (509 contrôles Godot, 17 tests Python). [Aperçu en jeu](design/essais/arbaletrier_tir/README.md#tir-par-planche-sur-les-sources-de-la-v0178).
+
 **Calques d’eau des marais.** Sur les sources de la v0.178, transitions de la 51 et croisement de la 58 vérifiés en combat dans les deux factions. Le surlignage passe déjà devant l’eau. Les huit autres cartes (52–57, 59–60) sont ajoutées à `marsh.overlays` et contrôlées en vague 2. Les dix géométries concordent. Le validateur et les deux suites ciblées passent (16 130 contrôles Godot, 17 tests Python). [Captures](design/Visuels_Troncons_Inondes.md#contrôle-en-combat-et-extension-sur-la-v0178).
 
 **Rendu du capitaine humain.** Mipmaps activés pour son sprite fixe afin d’adoucir les contours en combat. Douze comparaisons en vague 5 sur 91, 94, 98 et 100 côté Horde. Les tests ciblés des visuels ennemis et de la Garnison passent (4 741 contrôles Godot, 17 tests Python), validateur d’animations sans problème. [Comparatif](design/Visuels_Garnison.md#lisibilité-du-capitaine-humain-sur-le-plateau).
