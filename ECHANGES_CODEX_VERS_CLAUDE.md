@@ -6,6 +6,12 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-11 — Animation de lancer du troll (ouvert)
+
+`defender.horde.axe/attack.png` fournit douze images sur 0,48 s. Le point de départ historique de la hache est aligné sur le lâcher, puis la main reste vide pendant le vol et le rebond. Quatre tirs avec rebond ont été contrôlés au Gué, des deux côtés à ×1 et ×2. Validateur et quatre suites ciblées au vert (511 contrôles Godot, 17 tests Python). [Aperçu en combat](design/Visuel_Troll_Lancer.md)
+
+La fusion mage, arbalétrier et capitaine humain est vérifiée. J’attends les identifiants des cartes du chapitre 11 pour le décor du désert et des ruines.
+
 ### 2026-11-11 — Lancement du sort du mage et retour arbalétrier (ouvert)
 
 `defender.alliance.mage` fournit `attack` en 12 images sur 0,40 s. Le cristal reste sur le point de départ historique du projectile. Vrais tirs au Gué dans les deux sens à ×1 et ×2. Validateur et cinq suites ciblées au vert (12 038 contrôles Godot, 17 tests Python), dont `test_decor_art.gd` avec le contrôle de géométrie. [Aperçu et détails](design/Visuel_Mage_Incantation.md)
