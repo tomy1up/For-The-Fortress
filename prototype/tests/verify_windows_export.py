@@ -160,7 +160,7 @@ for camp in ['alliance','horde']:
 for camp in ['alliance','horde']:
     for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
 for camp in ['alliance','horde']:
-    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,61) for stage in ['', 'play']]+['marsh50completed','marsh60completed']+[f'volcano{number}{stage}' for number in range(61,71) for stage in ['', 'play']]+['volcano70completed']+[f'ash{number}{stage}' for number in range(71,81) for stage in ['', 'play']]+['ash80completed']:
+    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,61) for stage in ['', 'play']]+['marsh50completed','marsh60completed']+[f'volcano{number}{stage}' for number in range(61,71) for stage in ['', 'play']]+['volcano70completed']+[f'ash{number}{stage}' for number in range(71,81) for stage in ['', 'play']]+['ash80completed']+[f'citadel{number}{stage}' for number in range(81,91) for stage in ['', 'play']]+['citadel90completed']:
         cases.append((camp+'_campaign_menu_'+variant,'campaign_menu',camp))
     for state in ['preparation','purchase','specialisation','defeat_summary']:
         cases.append((camp+'_three_'+state,state,camp))
@@ -377,6 +377,21 @@ for name,state,faction in cases:
         won_missions=number if name.endswith('completed') else number-1
         assert (snap['completed'],snap['other_completed'],snap['po'],snap['xp'])==(won_missions,0,60*won_missions,100*won_missions)
         assert snap['mission_states']==(['completed']*10 if name.endswith('completed') else ['completed']*(number-61)+['available']+['locked']*(70-number))
+        if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
+        if name.endswith('play'):
+            launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+    elif '_campaign_menu_citadel' in name:
+        snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
+        camp=0 if faction=='alliance' else 1
+        number=int(name.rsplit('_',1)[1].removeprefix('citadel').removesuffix('play').removesuffix('completed'))
+        map_id=['citadel_glacis','citadel_drawbridge','citadel_barbican','citadel_ramparts','citadel_court','citadel_towers','citadel_gates','citadel_wall','citadel_dungeons','citadel_keep'][number-81]
+        routes={83:2,84:3,86:2,87:3,88:2,90:3}.get(number,0)
+        assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
+        assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==(9,number,map_id,routes or 1)
+        won_missions=number if name.endswith('completed') else number-1
+        assert (snap['completed'],snap['other_completed'],snap['po'],snap['xp'])==(won_missions,0,60*won_missions,100*won_missions)
+        assert snap['mission_states']==(['completed']*10 if name.endswith('completed') else ['completed']*(number-81)+['available']+['locked']*(90-number))
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))

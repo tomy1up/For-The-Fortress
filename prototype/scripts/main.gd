@@ -772,12 +772,13 @@ func _capture_campaign_menu(camp: int) -> void:
 		var id: int = meta_profile.begin_mission(camp,"campaign.001",60,10,100)
 		var credited: bool = meta_profile.credit_mission(id,camp,10,true)
 		if not credited: push_error("Échec du profil de contrôle de campagne.");return
-	var mountain_preview := variant in ["slate","slateplay","ridges","ridgesplay"] or variant.begins_with("mountain") or variant.begins_with("marsh") or variant.begins_with("volcano") or variant.begins_with("ash")
+	var mountain_preview := variant in ["slate","slateplay","ridges","ridgesplay"] or variant.begins_with("mountain") or variant.begins_with("marsh") or variant.begins_with("volcano") or variant.begins_with("ash") or variant.begins_with("citadel")
 	var mountain_number := 21
 	if variant.begins_with("ridges"): mountain_number = 22
 	if variant.begins_with("marsh"): mountain_number = clampi(variant.trim_prefix("marsh").trim_suffix("play").trim_suffix("completed").to_int(),41,60)
 	if variant.begins_with("volcano"): mountain_number = clampi(variant.trim_prefix("volcano").trim_suffix("play").trim_suffix("completed").to_int(),61,70)
 	if variant.begins_with("ash"): mountain_number = clampi(variant.trim_prefix("ash").trim_suffix("play").trim_suffix("completed").to_int(),71,80)
+	if variant.begins_with("citadel"): mountain_number = clampi(variant.trim_prefix("citadel").trim_suffix("play").trim_suffix("completed").to_int(),81,90)
 	if variant.begins_with("mountain"):
 		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").trim_suffix("completed").to_int(),23,40)
 	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or mountain_preview:

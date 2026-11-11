@@ -1,0 +1,37 @@
+extends RefCounted
+## Missions 81–90 : citadelles de la faction adverse (chapitre 9, sans règle propre ; le décor dépend de la faction jouée, habillage à produire par Codex).
+## Tracés et emplacements sont des propositions de prototype à confirmer ; l'habillage revient à Codex.
+const IDS: Array[String] = ["citadel_glacis", "citadel_drawbridge", "citadel_barbican", "citadel_ramparts", "citadel_court", "citadel_towers", "citadel_gates", "citadel_wall", "citadel_dungeons", "citadel_keep"]
+const TITLES: Dictionary = {"citadel_glacis":"Les Glacis", "citadel_drawbridge":"Le Pont-levis", "citadel_barbican":"La Barbacane", "citadel_ramparts":"Les Remparts", "citadel_court":"La Cour d'Armes", "citadel_towers":"Les Deux Tours", "citadel_gates":"Les Portes Jumelles", "citadel_wall":"Le Chemin de Ronde", "citadel_dungeons":"Les Oubliettes", "citadel_keep":"Le Donjon"}
+
+static func board(id: String) -> Dictionary:
+	match id:
+		"citadel_glacis": return _board(id,[["",[Vector2(0,5),Vector2(5,5),Vector2(5,2),Vector2(9,2),Vector2(9,7),Vector2(13,7),Vector2(13,5),Vector2(17,5),Vector2(17,6)]]],[Vector2(3.5,3.5),Vector2(14.5,7),Vector2(5,6.5),Vector2(7,4.5),Vector2(11,4.5),Vector2(7,6.5)],false)
+		"citadel_drawbridge": return _board(id,[["",[Vector2(0,2),Vector2(4,2),Vector2(4,7),Vector2(8,7),Vector2(8,3),Vector2(12,3),Vector2(12,6),Vector2(17,6)]]],[Vector2(2.5,4.5),Vector2(13.5,4.5),Vector2(10,5.5),Vector2(6,2.5),Vector2(6,4.5),Vector2(1,3.5)],false)
+		"citadel_barbican": return _board(id,[["upper",[Vector2(0,2),Vector2(3,2),Vector2(3,4),Vector2(8,4),Vector2(8,5),Vector2(11,5),Vector2(11,8),Vector2(14,8),Vector2(14,3),Vector2(17,3),Vector2(17,6)]],["lower",[Vector2(0,8),Vector2(3,8),Vector2(3,6),Vector2(8,6),Vector2(8,5),Vector2(11,5),Vector2(11,8),Vector2(14,8),Vector2(14,3),Vector2(17,3),Vector2(17,6)]]],[Vector2(15.5,6),Vector2(9.5,6.5),Vector2(2,5),Vector2(12.5,5),Vector2(11,3.5),Vector2(8,7.5)],true)
+		"citadel_ramparts": return _board(id,[["upper",[Vector2(0,2),Vector2(3,2),Vector2(3,4),Vector2(8,4),Vector2(8,5),Vector2(11,5),Vector2(11,3),Vector2(14,3),Vector2(14,7),Vector2(17,7),Vector2(17,6)]],["middle",[Vector2(0,5),Vector2(3,5),Vector2(3,7),Vector2(5,7),Vector2(5,5),Vector2(8,5),Vector2(11,5),Vector2(11,3),Vector2(14,3),Vector2(14,7),Vector2(17,7),Vector2(17,6)]],["lower",[Vector2(0,8),Vector2(3,8),Vector2(3,6),Vector2(8,6),Vector2(8,5),Vector2(11,5),Vector2(11,3),Vector2(14,3),Vector2(14,7),Vector2(17,7),Vector2(17,6)]]],[Vector2(15.5,4),Vector2(11,7),Vector2(6,2.5),Vector2(12.5,6),Vector2(9.5,3.5),Vector2(8,2.5)],false)
+		"citadel_court": return _board(id,[["",[Vector2(0,8),Vector2(3,8),Vector2(3,2),Vector2(6,2),Vector2(6,7),Vector2(9,7),Vector2(9,6),Vector2(17,6)]]],[Vector2(1.5,5),Vector2(10.5,7.5),Vector2(7.5,4),Vector2(4.5,7),Vector2(4.5,5),Vector2(5.5,8.5)],false)
+		"citadel_towers": return _board(id,[["upper",[Vector2(0,2),Vector2(3,2),Vector2(3,4),Vector2(8,4),Vector2(8,5),Vector2(11,5),Vector2(11,7),Vector2(14,7),Vector2(14,2),Vector2(17,2),Vector2(17,6)]],["lower",[Vector2(0,8),Vector2(3,8),Vector2(3,6),Vector2(8,6),Vector2(8,5),Vector2(11,5),Vector2(11,7),Vector2(14,7),Vector2(14,2),Vector2(17,2),Vector2(17,6)]]],[Vector2(9.5,6.5),Vector2(15.5,7),Vector2(9.5,3.5),Vector2(15.5,5),Vector2(12.5,4),Vector2(2,5)],true)
+		"citadel_gates": return _board(id,[["upper",[Vector2(0,1),Vector2(4,1),Vector2(4,3),Vector2(8,3),Vector2(8,5),Vector2(11,5),Vector2(11,2),Vector2(14,2),Vector2(14,7),Vector2(17,7),Vector2(17,6)]],["middle",[Vector2(0,5),Vector2(8,5),Vector2(11,5),Vector2(11,2),Vector2(14,2),Vector2(14,7),Vector2(17,7),Vector2(17,6)]],["lower",[Vector2(0,9),Vector2(4,9),Vector2(4,7),Vector2(8,7),Vector2(8,5),Vector2(11,5),Vector2(11,2),Vector2(14,2),Vector2(14,7),Vector2(17,7),Vector2(17,6)]]],[Vector2(15.5,4),Vector2(12.5,7.5),Vector2(9.5,3.5),Vector2(11,6.5),Vector2(12.5,5),Vector2(14.5,8.5)],false)
+		"citadel_wall": return _board(id,[["upper",[Vector2(0,1),Vector2(3,1),Vector2(3,4),Vector2(8,4),Vector2(8,5),Vector2(11,5),Vector2(11,8),Vector2(14,8),Vector2(14,3),Vector2(17,3),Vector2(17,6)]],["lower",[Vector2(0,9),Vector2(3,9),Vector2(3,6),Vector2(8,6),Vector2(8,5),Vector2(11,5),Vector2(11,8),Vector2(14,8),Vector2(14,3),Vector2(17,3),Vector2(17,6)]]],[Vector2(9.5,6.5),Vector2(8,7.5),Vector2(15.5,6),Vector2(11,3.5),Vector2(12.5,5),Vector2(9,3)],true)
+		"citadel_dungeons": return _board(id,[["",[Vector2(0,3),Vector2(4,3),Vector2(4,7),Vector2(7,7),Vector2(7,3),Vector2(11,3),Vector2(11,6),Vector2(17,6)]]],[Vector2(2.5,5.5),Vector2(12.5,4.5),Vector2(5.5,2),Vector2(5.5,4),Vector2(9,5.5),Vector2(14,3.5)],false)
+		"citadel_keep": return _board(id,[["upper",[Vector2(0,1),Vector2(4,1),Vector2(4,3),Vector2(8,3),Vector2(8,5),Vector2(11,5),Vector2(11,7),Vector2(14,7),Vector2(14,3),Vector2(17,3),Vector2(17,6)]],["middle",[Vector2(0,5),Vector2(8,5),Vector2(11,5),Vector2(11,7),Vector2(14,7),Vector2(14,3),Vector2(17,3),Vector2(17,6)]],["lower",[Vector2(0,9),Vector2(4,9),Vector2(4,7),Vector2(8,7),Vector2(8,5),Vector2(11,5),Vector2(11,7),Vector2(14,7),Vector2(14,3),Vector2(17,3),Vector2(17,6)]]],[Vector2(11,3),Vector2(12.5,8.5),Vector2(15.5,6),Vector2(9.5,6.5),Vector2(12.5,4),Vector2(15.5,1.5)],false)
+	return {}
+
+static func _length(points: Array) -> float:
+	var total: float = 0.0
+	for index in range(1,points.size()): total += points[index-1].distance_to(points[index])
+	return total
+
+static func _board(id: String, route_data: Array, slots: Array, alternating: bool) -> Dictionary:
+	var routes: Array[Dictionary] = []
+	for entry in route_data:
+		var points: Array[Vector2] = []
+		points.assign(entry[1])
+		routes.append({"id":entry[0],"path_points":points,"path_length":_length(points)})
+	var slot_points: Array[Vector2] = []
+	slot_points.assign(slots)
+	var board: Dictionary = {"id":id,"title":TITLES[id],"size":Vector2i(18,10),"path_points":routes[0].path_points,"path_length":routes[0].path_length,"slots":slot_points,"trees":[],"decoration":"citadel"}
+	if routes.size() > 1: board.routes = routes
+	if alternating: board.route_pattern = "alternating_pressure"
+	return board

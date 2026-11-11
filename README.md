@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.172**. Chapitre 9, la citadelle ennemie (missions 81–90) : en jouant l'Alliance on assiège une citadelle de la Horde, et inversement. Dix cartes sans règle propre, quatre-vingt-dix missions jouables, PV ennemis jusqu'à 189 %. Habillage par faction à produire avec Codex. [Chapitre 9](design/Missions_081_090_Citadelle.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.172).
+
 **Prototype v0.171**. Avertissement des éruptions allongé de 2 s à 3 s (désactivation de 5 s toutes les 14 s inchangée), pour laisser plus de temps de réaction ; l'équilibrage des cartes du chapitre 8 est inchangé. Valeurs de prototype à confirmer. [Chapitre 8](design/Missions_071_080_Eruptions.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.171).
 
 **Prototype v0.170**. Chapitre 8, les éruptions (missions 71–80) : toutes les 14 s, un défenseur tiré au hasard est désactivé 5 s, avec 2 s d'avertissement (valeurs de prototype à confirmer). Quatre-vingts missions jouables, PV ennemis jusqu'à 179 %. Habillage de la désactivation à définir avec Codex. [Chapitre 8](design/Missions_071_080_Eruptions.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.170).

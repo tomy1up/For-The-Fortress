@@ -536,6 +536,7 @@ func _draw() -> void:
 	var definition: Dictionary = model.map_definition if model != null else Model.Maps.valley()
 	var mountain: bool = definition.decoration == "mountain"
 	var marsh: bool = definition.decoration == "marsh"
+	var citadel: bool = definition.decoration == "citadel" # Repères de couleur neutres, habillage par faction à produire (TODO_VISUELS.md).
 	var volcanic: bool = definition.decoration == "volcanic" # Repères de couleur neutres, habillage à produire (TODO_VISUELS.md).
 	var board: Vector2i = definition.size
 	var ghost: Dictionary = purchase_ghost()
@@ -545,11 +546,11 @@ func _draw() -> void:
 		base.append(project(corner) + Vector2(0, 16))
 	draw_colored_polygon(base, Color("172c2b"))
 	# Deux faces donnent de l'épaisseur au plateau, sans déplacer sa surface logique.
-	for edge in [[corners[1],corners[2],Color("315247") if marsh else Color("4a403d") if volcanic else Color("34444c") if mountain else Color("263e34")],[corners[2],corners[3],Color("233e37") if marsh else Color("352e2d") if volcanic else Color("27363f") if mountain else Color("1c322c")]]:
+	for edge in [[corners[1],corners[2],Color("315247") if marsh else Color("4a403d") if volcanic else Color("4a4a52") if citadel else Color("34444c") if mountain else Color("263e34")],[corners[2],corners[3],Color("233e37") if marsh else Color("352e2d") if volcanic else Color("35353c") if citadel else Color("27363f") if mountain else Color("1c322c")]]:
 		var first: Vector2 = project(edge[0])
 		var last: Vector2 = project(edge[1])
 		draw_colored_polygon(PackedVector2Array([first,last,last+Vector2(0,16),first+Vector2(0,16)]),edge[2])
-	polygon(corners, MarshArt.GROUND if marsh else Color("3d3837") if volcanic else Color("4a5b65") if mountain else Color("3a513e"))
+	polygon(corners, MarshArt.GROUND if marsh else Color("3d3837") if volcanic else Color("55555d") if citadel else Color("4a5b65") if mountain else Color("3a513e"))
 	if marsh: MarshArt.draw_ground(self,project,false,definition.get("water_areas",MarshArt.POOLS))
 	for x in range(board.x+1):
 		draw_line(project(Vector2(x, 0)), project(Vector2(x, board.y)), Color(0.75, 0.86, 0.7, 0.055), 1)

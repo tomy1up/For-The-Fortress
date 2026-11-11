@@ -4,7 +4,9 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 10 novembre 2026 — Claude Code
 
-**Dernière version publiée : v0.171** (avertissement des éruptions porté à 3 s à la demande du porteur ; tag `v0.171`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.171), SHA-256 `9643292f…84ae`). Elle suit la v0.170 (chapitre 8). 80 missions jouables : les chapitres 1 à 8 sont complets. L'équilibrage des cartes 71–80 est inchangé (l'avertissement n'agit pas sur le combat). Régression : 105 suites, 66 556 contrôles.
+**Dernière version publiée : v0.172** (chapitre 9, citadelle ennemie, missions 81–90 ; tag `v0.172`, [préversion GitHub](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.172), SHA-256 `8e9f3eac…0ac4`). 90 missions jouables. Précédentes : v0.171 (avertissement des éruptions à 3 s), v0.170 (chapitre 8, éruptions). Régression v0.172 : 106 suites, 70 650 contrôles Godot, 17 tests Python.
+
+**v0.172** : décision du porteur (11 novembre 2026) : chapitres 9–10 = citadelle de la faction adverse ; chapitre 10 = nouveauté « Garnison » (ennemi d'élite : chef de guerre orc face à l'Alliance, maréchal face à la Horde, plus résistant), à développer ensuite. Récompenses inchangées (60 PO, 100 XP). Cartes 81–90 dans `scripts/citadel_maps.gd` (décor `citadel`, déclaré dans les trois listes d'export), fiche `design/Missions_081_090_Citadelle.md`. Le chapitre 9 est plus aisé que le 8 (marges de 9 à 26 PV) : le chapitre 10 devra durcir. Test : `tests/test_citadel_chapter.gd`. Capture : variantes `citadel81`…`citadel90`.
 
 **v0.170** : nouveauté du chapitre 8 décidée dans son principe par le porteur (10 novembre 2026) : un affixe qui désactive au hasard un emplacement de défense quelques secondes. Valeurs de prototype à confirmer : 5 s toutes les 14 s, 3 s d'avertissement (`{"id":"eruptions","interval":14,"warning":3,"duration":5}` dans `campaign_catalogue.gd`). Fiche : `design/Missions_071_080_Eruptions.md`. Points techniques :
 
@@ -32,7 +34,7 @@ Fichiers non suivis à laisser tels quels sauf demande : `design/essais/v0109_ga
 
 ## Prochaines étapes possibles
 
-- Code (Claude Code) : chapitre 9 (missions 81–90), premier chapitre d'un nouveau biome : biome et règles à faire choisir au porteur avant de développer.
+- Code (Claude Code) : chapitre 10 (missions 91–100) avec la Garnison : nouveau type d'ennemi d'élite par faction adverse (profil statistique, identité dans `enemy_catalogue.gd`, rencontres, tests) ; chiffres à proposer comme réglages de prototype.
 - Visuels (Codex) : voir `TODO_VISUELS.md`, en particulier tout l'habillage volcanique.
 
 ## Questions ouvertes pour le porteur
