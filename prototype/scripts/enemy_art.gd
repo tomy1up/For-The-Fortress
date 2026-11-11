@@ -1,10 +1,10 @@
 extends RefCounted
 ## Silhouettes dans quatre atlas transparents, sans données de combat.
-## La Garnison réutilise provisoirement la silhouette du maréchal ou du chef de guerre : visuel à produire (TODO_VISUELS.md).
-## Le Noyé réutilise provisoirement la silhouette de la tortue : visuel à produire (TODO_VISUELS.md).
+## Capitaine de garnison humain (face à la Horde) : visuel de Codex (v0.176). Le capitaine orc réutilise provisoirement la silhouette du chef de guerre.
+## Gueule-de-Vase (ex-Noyé) : visuel de Codex (v0.176). Les cadres sont rognés au pied (quelques pixels transparents) et la hauteur ajustée pour garder l'échelle du cadre complet (34 px).
 const TEXTURES: Dictionary = {
 	"enemy.neutral.turtle": preload("res://assets/enemies/rosters/tortue_gardienne_v001.png"),
-	"enemy.neutral.drowned": preload("res://assets/enemies/rosters/tortue_gardienne_v001.png"),
+	"enemy.neutral.drowned": preload("res://assets/enemies/rosters/gueule_de_vase_v001.png"),
 	"enemy.neutral.wolf": preload("res://assets/enemies/rosters/neutres_v001.png"),
 	"enemy.neutral.boar": preload("res://assets/enemies/rosters/neutres_v001.png"),
 	"enemy.neutral.bear": preload("res://assets/enemies/rosters/neutres_v001.png"),
@@ -13,7 +13,7 @@ const TEXTURES: Dictionary = {
 	"enemy.alliance.siegebreaker": preload("res://assets/enemies/rosters/alliance_v002.png"),
 	"enemy.alliance.guard": preload("res://assets/enemies/rosters/alliance_v002.png"),
 	"enemy.alliance.marshal": preload("res://assets/enemies/rosters/alliance_v002.png"),
-	"enemy.alliance.garrison": preload("res://assets/enemies/rosters/alliance_v002.png"),
+	"enemy.alliance.garrison": preload("res://assets/enemies/rosters/capitaine_humain_v001.png"),
 	"enemy.horde.warrior": preload("res://assets/enemies/rosters/horde_v003.png"),
 	"enemy.horde.scout": preload("res://assets/enemies/rosters/horde_v003.png"),
 	"enemy.horde.colossus": preload("res://assets/enemies/rosters/horde_v003.png"),
@@ -23,7 +23,7 @@ const TEXTURES: Dictionary = {
 }
 const FRAMES: Dictionary = {
 	"enemy.neutral.turtle": {"source":Rect2(90,265,1075,732),"foot":Vector2(650,997),"height":34.0},
-	"enemy.neutral.drowned": {"source":Rect2(90,265,1075,732),"foot":Vector2(650,997),"height":34.0},
+	"enemy.neutral.drowned": {"source":Rect2(0,0,1000,1076),"foot":Vector2(415,1076),"height":33.84},
 	"enemy.neutral.wolf": {"source":Rect2(27,208,633,437),"foot":Vector2(354.164,645),"height":34.0},
 	"enemy.neutral.boar": {"source":Rect2(742,198,618,452),"foot":Vector2(1026.745,650),"height":34.0},
 	"enemy.neutral.bear": {"source":Rect2(1412,100,741,553),"foot":Vector2(1758.409,653),"height":34.0},
@@ -32,7 +32,7 @@ const FRAMES: Dictionary = {
 	"enemy.alliance.siegebreaker": {"source":Rect2(904,304,312,317),"foot":Vector2(1059.396,621),"height":34.0},
 	"enemy.alliance.guard": {"source":Rect2(1355,225,298,398),"foot":Vector2(1497.032,623),"height":34.0},
 	"enemy.alliance.marshal": {"source":Rect2(1776,165,356,463),"foot":Vector2(1947.885,628),"height":34.0},
-	"enemy.alliance.garrison": {"source":Rect2(1776,165,356,463),"foot":Vector2(1947.885,628),"height":34.0},
+	"enemy.alliance.garrison": {"source":Rect2(0,0,1295,1173),"foot":Vector2(478,1173),"height":33.83},
 	"enemy.horde.warrior": {"source":Rect2(51,275,302,324),"foot":Vector2(195.647,599),"height":34.0},
 	"enemy.horde.scout": {"source":Rect2(495,342,261,256),"foot":Vector2(614.592,598),"height":34.0},
 	"enemy.horde.colossus": {"source":Rect2(866,200,370,399),"foot":Vector2(1045.418,599),"height":34.0},

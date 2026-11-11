@@ -1274,7 +1274,7 @@ func _update_wave_forecast(pointer := Vector2.INF) -> void:
 		forecast_details[index].add_theme_color_override("font_color",Color("ed9989") if fatal else Color("bbcbbf"))
 		forecast_rows[index].tooltip_text = "Groupe %d · %d × %s\n%s PV par ennemi\nPremière apparition : %s s après le départ\nDernière apparition : %s s après le départ\n%s\nSi un ennemi atteint la forteresse, elle perd %d PV.\nÉlimination : +%d or par ennemi" % [index+1,group.count,group.name,_number(group.hp),_number(group.first_at),_number(group.last_at),"Ennemi unique." if group.count == 1 else "Un ennemi toutes les %s s." % _number(group.interval),group.fortress_damage,group.reward]
 		if group.type == Model.Drowned.TYPE: forecast_rows[index].tooltip_text += "
-Noyé : régénère %d %% de ses PV maximum par seconde tant qu’il traverse un tronçon inondé. Réglage d’essai." % roundi(Model.Drowned.REGEN_PER_SECOND*100.0)
+Gueule-de-Vase : régénère %d %% de ses PV maximum par seconde tant qu’il traverse un tronçon inondé. Réglage d’essai." % roundi(Model.Drowned.REGEN_PER_SECOND*100.0)
 		if group.type == Model.Garrison.TYPE: forecast_rows[index].tooltip_text += "\nGarnison : unité d’élite de la citadelle, plus résistante que l’élite ordinaire. Réglage d’essai."
 		if group.type == Model.Banks.GUARD_TYPE: forecast_rows[index].tooltip_text += "\nGardienne : encaisse 25 % des dégâts de ses voisins proches. Ne protège ni les boss ni les autres tortues. La protection cesse à sa mort."
 		var routes_text: Array[String] = []

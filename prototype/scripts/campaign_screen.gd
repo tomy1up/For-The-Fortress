@@ -350,8 +350,8 @@ func _refresh_detail() -> void:
 		mission_detail.tooltip_text = "Essai : la Garnison est l'unité d'élite de la citadelle (520 PV, vitesse 0,6, −4 PV de forteresse) ; elle accompagne les vagues 5, 7, 9 et 10. Valeurs provisoires."
 	if definition.get("wave_set_id","") == "marsh_drowned":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%
-Nouveau : Noyé · eau régénérante" % [definition.waves,definition.hp_percent]
-		mission_detail.tooltip_text = "Essai : le Noyé régénère %d %% de ses PV maximum par seconde dans les tronçons inondés de la carte, repérés en bleu sur le chemin. Valeurs provisoires." % roundi(Drowned.REGEN_PER_SECOND*100.0)
+Nouveau : Gueule-de-Vase · eau régénérante" % [definition.waves,definition.hp_percent]
+		mission_detail.tooltip_text = "Essai : Gueule-de-Vase régénère %d %% de ses PV maximum par seconde dans les tronçons inondés de la carte, repérés en bleu sur le chemin. Valeurs provisoires." % roundi(Drowned.REGEN_PER_SECOND*100.0)
 	if status.is_empty():
 		mission_detail.text = "La progression n’est pas disponible."
 		rewards.text = profile.error if profile != null and not profile.error.is_empty() else "Revenez au choix de faction pour vérifier votre progression."

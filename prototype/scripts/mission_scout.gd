@@ -88,7 +88,7 @@ func open(number: int,camp: int) -> bool:
 	if definition.get("wave_set_id","")==Model.Garrison.ID:
 		note.text="La Garnison est l'unité d'élite de la citadelle : %d PV de base, vitesse %s, elle accompagne les vagues 5, 7, 9 et 10."%[int(Model.Garrison.DEFINITION.hp),str(Model.Garrison.DEFINITION.speed).replace(".",",")]
 	if definition.get("wave_set_id","")==Model.Drowned.ID:
-		note.text="Le Noyé régénère %d %% de ses PV maximum par seconde dans les tronçons inondés du chemin."%roundi(Model.Drowned.REGEN_PER_SECOND*100.0)
+		note.text="Gueule-de-Vase régénère %d %% de ses PV maximum par seconde dans les tronçons inondés du chemin."%roundi(Model.Drowned.REGEN_PER_SECOND*100.0)
 	show();close_button.grab_focus();return true
 
 func _show_wave(wave: int) -> void:

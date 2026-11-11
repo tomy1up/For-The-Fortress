@@ -4,7 +4,7 @@ const NEUTRALS: Dictionary = {
 	0: {"id":"enemy.neutral.wolf","name":"Loup de meute","origin":"neutral","profile":0},
 	2: {"id":"enemy.neutral.boar","name":"Sanglier sauvage","origin":"neutral","profile":2},
 	8: {"id":"enemy.neutral.turtle","name":"Tortue gardienne des berges","origin":"neutral","profile":8},
-	9: {"id":"enemy.neutral.drowned","name":"Noyé","origin":"neutral","profile":9},
+	9: {"id":"enemy.neutral.drowned","name":"Gueule-de-Vase","origin":"neutral","profile":9},
 	3: {"id":"enemy.neutral.bear","name":"Ours sauvage","origin":"neutral","profile":3},
 }
 const ALLIANCE: Dictionary = {

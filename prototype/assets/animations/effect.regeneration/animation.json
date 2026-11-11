@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "id": "effect.regeneration",
+  "display_height": 42,
+  "foot": [
+    28,
+    28
+  ],
+  "animations": {
+    "regen": {
+      "file": "regen.png",
+      "frames": 16,
+      "frame_size": [
+        56,
+        42
+      ],
+      "mode": "time",
+      "fps": 16.6667
+    }
+  }
+}

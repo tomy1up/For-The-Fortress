@@ -1,13 +1,13 @@
 extends RefCounted
-## Chapitre 6 des marais : le Noyé, créature neutre qui régénère ses PV dans l'eau.
+## Chapitre 6 des marais : Gueule-de-Vase (appelée Noyé jusqu'à la v0.175), créature neutre qui régénère ses PV dans l'eau.
 ## Noms, statistiques, régénération et composition sont des réglages de prototype à confirmer.
 const ID := "marsh_drowned"
 const TYPE := 9
-const DEFINITION := {"name":"Noyé","hp":150.0,"speed":0.85,"fortress_damage":2,"reward":8}
-## Part des PV maximum régénérée par seconde tant que le Noyé se trouve dans un tronçon inondé.
+const DEFINITION := {"name":"Gueule-de-Vase","hp":150.0,"speed":0.85,"fortress_damage":2,"reward":8}
+## Part des PV maximum régénérée par seconde tant que Gueule-de-Vase se trouve dans un tronçon inondé.
 const REGEN_PER_SECOND := 0.05
 const MAX_STRETCHES := 8
-## Même rythme que les rencontres du chapitre 2 ; le Noyé remplace la tortue.
+## Même rythme que les rencontres du chapitre 2 ; Gueule-de-Vase remplace la tortue.
 const WAVES: Array = [
 	[[1,10,2.5]],
 	[[9,1,0.0],[1,8,2.0],[0,6,0.65]],

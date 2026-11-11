@@ -46,6 +46,10 @@ static func load_and_verify(path: String) -> Dictionary:
 
 ## Jeu de règles des arbres de talents d'un rapport : valeurs d'origine avant la v0.168, équilibrage de la v0.168
 ## pour cette version, valeurs en vigueur ensuite (talents de l'Alliance alignés sur ceux de la Horde depuis la v0.169).
+static func _minor_version(version: String) -> int:
+	var parts: PackedStringArray = version.split(".")
+	return int(parts[1]) if parts.size() >= 2 and parts[0] == "0" and parts[1].is_valid_int() else 1000000
+
 static func talent_rules_for(version: String) -> int:
 	var parts: PackedStringArray = version.split(".")
 	if parts.size() < 2 or parts[0] != "0" or not parts[1].is_valid_int(): return Model.MetaTalents.Expanded.RULES_CURRENT
@@ -115,6 +119,10 @@ static func verify(data: Variant) -> Dictionary:
 		for index in range(mini(recorded_waves.size(), observed.waves.size())):
 			if recorded_waves[index] is Dictionary and not recorded_waves[index].has("arrivals_by_route"):
 				observed.waves[index].erase("arrivals_by_route")
+	if data.has("enemy_catalog") and _minor_version(str(data.get("game_version",""))) < 176:
+		# Avant la v0.176, Gueule-de-Vase s'appelait « Noyé » dans le catalogue des ennemis.
+		for item in observed.enemy_catalog:
+			if item.id == "enemy.neutral.drowned": item.name = "Noyé"
 	if not data.has("enemy_catalog"):
 		# Les rapports historiques gardent les noms de profils et le libellé R-12.
 		observed.boss_encounter.name = Model.ENEMY_TYPES[7].name

@@ -111,7 +111,7 @@ func verify_mission(camp: int, number: int) -> void:
 		check(allocated,"Les points accessibles sont répartis légalement")
 		if not allocated: break
 	game._open_campaign(camp,6);game.campaign_menu._select(number-51)
-	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("Noyé"),"Mission %d : la fiche annonce le Noyé" % number)
+	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("Gueule-de-Vase"),"Mission %d : la fiche annonce le Noyé" % number)
 	game.campaign_menu._launch()
 	var model: Model = game.model
 	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "marsh_drowned" and model.enemy_hp_percent == 99+number and model.gold == 150 and model.combat_affix.is_empty() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)

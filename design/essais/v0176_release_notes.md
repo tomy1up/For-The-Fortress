@@ -1,0 +1,12 @@
+# Prototype v0.176 — Visuels de Codex en jeu : décors, capitaine, Gueule-de-Vase
+
+Intégration des livraisons de Codex du 11 novembre 2026. Aucune règle de jeu ne change.
+
+- **Gueule-de-Vase** : le porteur retient ce nom pour la créature appelée Noyé. L'identifiant `enemy.neutral.drowned` est conservé ; le nom affiché change partout (catalogue, fiches de mission, prévision, éclaireur, rapports). Les anciens rapports restent rejouables (le nom « Noyé » est restauré pour les rapports d'avant la v0.176). Nouveau sprite fixe (plus la silhouette de la tortue) et **remous de régénération** au pied, affichés seulement quand elle est dans l'eau et qu'il lui manque des PV (animation `regen`, effet `effect.regeneration`, 0,96 s).
+- **Capitaine de garnison humain** (`enemy.alliance.garrison`, visible en jouant la Horde) : nouveau visuel fixe. Le capitaine orc garde la silhouette provisoire en attendant la validation de son illustration.
+- **Décor volcanique** : palette cendre froide, calque de cendres sous la chaussée, quatre pièces (basalte, ruine, fumerolle, lave figée) sur les 20 cartes des missions 61 à 80, communes aux deux camps. Placements de Codex vérifiés par test contre les marges des routes et des emplacements.
+- **Décor de citadelle** : sol et faces de la citadelle du camp adverse (Horde quand on joue l'Alliance, Alliance quand on joue la Horde), pièces (portail, remparts, tour, étendards) sur Les Glacis (81) et Les Portes Jumelles (87) ; la forteresse du joueur est conservée. Les autres cartes de citadelle ont la palette, pas encore les pièces.
+- **Format** (`design/Format_decor.md`) : `assets/decor/decor.json` et images lues brutes, incluses dans le paquet et contrôlées sans déclaration fichier par fichier. Nouveau script `scripts/decor_art.gd` ; les deux sprites fixes (importés) sont déclarés dans les trois listes d'export.
+- Les cadres des deux sprites fixes sont rognés au pied (quelques pixels transparents) pour respecter l'ancrage attendu ; l'échelle d'affichage est conservée.
+
+Vérification : régression complète 110 suites, 78 485 contrôles Godot, 17 tests Python ; export Windows, 6 essais ciblés et 121 empreintes de sources réussis ; capture du jeu exporté examinée (citadelle de l'Alliance en jouant la Horde). Non vérifié en jeu : les remous de Gueule-de-Vase en combat, le capitaine humain en combat, l'alerte des Éruptions sur le décor volcanique à ×1 et ×2, la lisibilité du décor de citadelle en combat.

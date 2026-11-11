@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.176**. Les visuels de Codex entrent en jeu : décor des terres volcaniques (missions 61 à 80), citadelle de la faction adverse (essai sur les missions 81 et 87), capitaine de garnison humain, et Gueule-de-Vase (nom définitif du Noyé) avec ses remous de régénération. Nouveau format de décor par données. [Format du décor](design/Format_decor.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.176).
+
 **Prototype v0.175**. Premières animations livrées par Codex en jeu (archer elfe : repos, tir, désactivation ; guerrier orc : marche ; avertissement des Éruptions en fissures et braises), toutes les animations du format branchées (mort, coup reçu, apparition, achat, niveau, revente), variantes de marche selon la pente du trajet, tracés du chapitre 10 corrigés, repère provisoire des vents contraires. Remesure des missions 1 à 30 : toutes gagnables. [Format](design/Format_animations.md) · [Pilote](design/Pilote_animations.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.175).
 
 **Prototype v0.174**. Cadre technique des animations : un format de planches d'images (`design/Format_animations.md`) permet à Codex de déposer des animations de marche, de repos, de tir et de désactivation sans modifier le code ; sans planche, le jeu garde les illustrations fixes. Aucune planche réelle n'est encore livrée et le jeu ne change pas pour le joueur. [Format](design/Format_animations.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.174).

@@ -9,6 +9,7 @@ const AllianceArt = preload("res://scripts/alliance_art.gd")
 const EnemyArt = preload("res://scripts/enemy_art.gd")
 const EnemyWalkArt = preload("res://scripts/enemy_walk_art.gd")
 const SheetAnimations = preload("res://scripts/animation_library.gd")
+const DecorArt = preload("res://scripts/decor_art.gd")
 var walking_meshes:=EnemyWalkArt.new()
 var wolf_turn_preview := Callable()
 const ShopArt = preload("res://scripts/shop_art.gd")
@@ -566,18 +567,22 @@ func _draw() -> void:
 	for corner in corners:
 		base.append(project(corner) + Vector2(0, 16))
 	draw_colored_polygon(base, Color("172c2b"))
+	var palette: Dictionary = DecorArt.palette(str(definition.decoration),model.faction if model != null else 0)
 	# Deux faces donnent de l'épaisseur au plateau, sans déplacer sa surface logique.
 	for edge in [[corners[1],corners[2],Color("315247") if marsh else Color("4a403d") if volcanic else Color("4a4a52") if citadel else Color("34444c") if mountain else Color("263e34")],[corners[2],corners[3],Color("233e37") if marsh else Color("352e2d") if volcanic else Color("35353c") if citadel else Color("27363f") if mountain else Color("1c322c")]]:
 		var first: Vector2 = project(edge[0])
 		var last: Vector2 = project(edge[1])
-		draw_colored_polygon(PackedVector2Array([first,last,last+Vector2(0,16),first+Vector2(0,16)]),edge[2])
-	polygon(corners, MarshArt.GROUND if marsh else Color("3d3837") if volcanic else Color("55555d") if citadel else Color("4a5b65") if mountain else Color("3a513e"))
+		var face_color: Color = edge[2] if palette.is_empty() else palette.face_right if edge[0] == corners[1] else palette.face_left
+		draw_colored_polygon(PackedVector2Array([first,last,last+Vector2(0,16),first+Vector2(0,16)]),face_color)
+	polygon(corners, palette.ground if not palette.is_empty() else MarshArt.GROUND if marsh else Color("3d3837") if volcanic else Color("55555d") if citadel else Color("4a5b65") if mountain else Color("3a513e"))
 	if marsh: MarshArt.draw_ground(self,project,false,definition.get("water_areas",MarshArt.POOLS))
 	for x in range(board.x+1):
 		draw_line(project(Vector2(x, 0)), project(Vector2(x, board.y)), Color(0.75, 0.86, 0.7, 0.055), 1)
 	for y in range(board.y+1):
 		draw_line(project(Vector2(0, y)), project(Vector2(board.x, y)), Color(0.75, 0.86, 0.7, 0.055), 1)
 	if definition.decoration == "valley": _draw_valley_water()
+	var ash: Dictionary = DecorArt.overlay(str(definition.decoration))
+	if not ash.is_empty(): draw_texture(ash.texture,ash.position) # Cendres : après la couleur du sol, avant la chaussée.
 	var screen_routes: Array[PackedVector2Array] = []
 	for entry in routes_for(definition):
 		var route := PackedVector2Array()
@@ -658,6 +663,7 @@ func _draw() -> void:
 			draw_line(project(link.from)+Vector2(0,-12),project(link.to)+Vector2(0,-12),Color(0.72,0.89,0.56,0.65),1.5,true)
 			draw_arc(project(link.from)+Vector2(0,3),12,0,TAU,32,Color("b8d889"),1.5,true)
 		_draw_eruption_warning()
+		_draw_decor_props(model.map_definition)
 		var actors: Array[Dictionary] = []
 		for slot in range(model.defenders.size()):
 			if not model.defenders[slot].is_empty():
@@ -757,6 +763,7 @@ func _draw_breach_feedback() -> void:
 const UNIT_INK := Color("192a2b")
 const ATTACK_POSE_DURATION := 0.26
 const ERUPTION_EFFECT_ID := "effect.eruption"
+const REGEN_EFFECT_ID := "effect.regeneration"
 # Recul horizontal, inclinaison en radians, élévation : habillage des tirs résolus.
 const ATTACK_MOTIONS: Array[Vector3] = [
 	Vector3(2.8,-0.035,0.0), # Archer : traction et petit recul.
@@ -1025,6 +1032,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]),Color("d6a1ef"))
 		break
 	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
+	_draw_regeneration_swirl(enemy)
 	var body: Transform2D = enemy_body_transform(enemy,facing,pose,model.elapsed,model.active and not walking and not sheet_walk, motion.get("direction", Vector2.ZERO))
 	body.origin += center
 	draw_set_transform_matrix(body)
@@ -1068,6 +1076,25 @@ func _draw_sheet_walker(id: String, enemy: Dictionary, motion: Dictionary, scale
 	var cycle: float = SheetAnimations.phase(anim,float(motion.get("travel",0.0))/scale,model.elapsed,age,fposmod(float(enemy.id)*0.37,1.0))
 	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle))
 	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region,EnemyArt.tint(hit_strength))
+
+## Pièces de décor posées sur le plateau (portails, remparts, basalte…), sous les unités et l'interface.
+func _draw_decor_props(definition: Dictionary) -> void:
+	for prop in DecorArt.props(str(definition.id),str(definition.decoration),model.faction):
+		draw_set_transform(project(prop.point),0.0,Vector2.ONE)
+		draw_texture_rect(prop.texture,prop.destination,false)
+	draw_set_transform(Vector2.ZERO)
+
+## Remous au pied de Gueule-de-Vase quand elle est dans l'eau et qu'il lui manque des PV (effet `effect.regeneration`).
+## La phase suit le temps de combat. Le dessin se fait dans le repère de l'ennemi, pieds à l'origine.
+func _draw_regeneration_swirl(enemy: Dictionary) -> void:
+	if enemy.get("type",1) != Model.Drowned.TYPE or not SheetAnimations.has_animation(REGEN_EFFECT_ID,"regen"): return
+	if not model.enemy_in_water(enemy) or float(enemy.hp) >= float(enemy.get("max_hp",enemy.hp)): return
+	var spec: Dictionary = SheetAnimations.spec_for(REGEN_EFFECT_ID)
+	var anim: Dictionary = spec.animations.regen
+	var texture: Texture2D = SheetAnimations.texture_for(REGEN_EFFECT_ID,anim)
+	if texture == null: return
+	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,model.elapsed,0.0,fposmod(float(enemy.id)*0.37,1.0))))
+	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
 
 ## Mort d'un ennemi par planche : jouée une fois à l'endroit de l'élimination, dans le sens du chemin.
 func _draw_sheet_death(id: String, event: Dictionary, age: float) -> void:

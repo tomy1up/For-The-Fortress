@@ -34,17 +34,17 @@ func verify_catalogue() -> void:
 	check(not Catalogue.definition(50).has("wave_set_id") and Catalogue.definition(50).get("combat_affix",{}).is_empty(),"Les missions précédentes n'héritent ni des rencontres ni d'un affixe")
 	for faction in range(2):
 		var identity: Dictionary = Model.Enemies.for_profile(9,faction)
-		check(identity.id == "enemy.neutral.drowned" and identity.name == "Noyé" and identity.origin == "neutral" and identity.profile == 9,"Le Noyé est une faune neutre commune aux deux factions")
+		check(identity.id == "enemy.neutral.drowned" and identity.name == "Gueule-de-Vase" and identity.origin == "neutral" and identity.profile == 9,"Le Noyé est une faune neutre commune aux deux factions")
 		var available: Array[Dictionary] = Model.Enemies.available(faction,"marsh_drowned")
 		check(available.size() == 9 and available.any(func(item):return item.id == "enemy.neutral.drowned") and not available.any(func(item):return item.id == "enemy.neutral.turtle"),"Le catalogue des marais contient le Noyé et pas la tortue")
 		check(Model.Enemies.available(faction).size() == 8 and not Model.Enemies.available(faction,"ford_banks").any(func(item):return item.profile == 9),"Les autres jeux de rencontres sont inchangés")
 		check(Model.Enemies.by_id("enemy.neutral.drowned",faction) == identity,"Le Noyé est retrouvable par identifiant")
 		var enemy: Dictionary = Model.make_enemy(0,9,0.0,faction,150)
-		check(enemy.hp == 225.0 and enemy.max_hp == 225.0 and enemy.speed == 0.85 and enemy.fortress_damage == 2 and enemy.reward == 8 and enemy.name == "Noyé","Statistiques du Noyé à 150 % de PV")
+		check(enemy.hp == 225.0 and enemy.max_hp == 225.0 and enemy.speed == 0.85 and enemy.fortress_damage == 2 and enemy.reward == 8 and enemy.name == "Gueule-de-Vase","Statistiques du Noyé à 150 % de PV")
 		check(not Scout.encounter_data(51,faction).is_empty() and Scout.encounter_data(51,faction).any(func(item):return item.type == 9),"L'éclaireur annonce le Noyé")
 	check(Model.Enemies.for_profile(11,0).is_empty(),"Un profil inconnu reste refusé")
 	var forecast: Dictionary = Model.wave_forecast(2,0,150,"marsh_drowned")
-	check(forecast.groups[0].type == 9 and forecast.groups[0].count == 1 and forecast.groups[0].name == "Noyé" and Model.wave_forecast(2,0,150,"inconnu").is_empty(),"La prévision de la vague 2 annonce un Noyé")
+	check(forecast.groups[0].type == 9 and forecast.groups[0].count == 1 and forecast.groups[0].name == "Gueule-de-Vase" and Model.wave_forecast(2,0,150,"inconnu").is_empty(),"La prévision de la vague 2 annonce un Noyé")
 	check(Model.valid_enemy_hp_percent(150) and Model.valid_enemy_hp_percent(199) and not Model.valid_enemy_hp_percent(200),"Les PV ennemis montent jusqu'à 199 %")
 
 func verify_flood_rules() -> void:
@@ -177,12 +177,12 @@ func verify_campaign(camp: int) -> void:
 		check(allocated,"Les points accessibles sont répartis légalement")
 		if not allocated: break
 	game._open_campaign(camp,6);game.campaign_menu._select(0)
-	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("Noyé") and game.campaign_menu.mission_detail.tooltip_text.contains("%d %%" % roundi(Drowned.REGEN_PER_SECOND*100.0)),"La fiche de la mission 51 annonce le Noyé")
+	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("Gueule-de-Vase") and game.campaign_menu.mission_detail.tooltip_text.contains("%d %%" % roundi(Drowned.REGEN_PER_SECOND*100.0)),"La fiche de la mission 51 annonce le Noyé")
 	game.campaign_menu._launch()
 	var model: Model = game.model
 	check(not game.choosing_faction and game.mission_definition.id == "campaign.051" and model.map_definition.id == "marsh_stagnant" and model.wave_set_id == "marsh_drowned" and model.enemy_hp_percent == 150 and model.gold == 150 and model.combat_affix.is_empty(),"La mission 51 démarre par le parcours normal avec ses rencontres")
 	var forecast: Dictionary = model.forecast_for_routes(2)
-	check(not forecast.is_empty() and forecast.groups[0].name == "Noyé","La prévision de la vague 2 annonce le Noyé")
+	check(not forecast.is_empty() and forecast.groups[0].name == "Gueule-de-Vase","La prévision de la vague 2 annonce le Noyé")
 	play(model,[0,1,1] if camp == 0 else [3,3,5])
 	print("DROWNED_RESULT=",camp,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Une composition accessible gagne dans chaque faction")
