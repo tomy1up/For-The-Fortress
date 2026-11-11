@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "id": "defender.alliance.mage",
+  "display_height": 76,
+  "foot": [
+    147,
+    269
+  ],
+  "facing": "right",
+  "animations": {
+    "attack": {
+      "file": "attack.png",
+      "frames": 12,
+      "frame_size": [
+        320,
+        288
+      ],
+      "mode": "event",
+      "duration": 0.4
+    }
+  }
+}

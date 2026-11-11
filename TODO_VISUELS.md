@@ -27,6 +27,10 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## Livré
 
+- [x] **Mage humain, lancement du sort** — geste de la main et éclat du cristal, contrôlés au Gué dans les deux sens à ×1 et ×2. [Animation et captures](design/Visuel_Mage_Incantation.md)
+
+- [x] **Arbalétrier nain, tir et réarmement** — 18 images à partir des poses existantes. Vrais tirs gauche et droite vérifiés à ×1 et ×2, trois cycles enchaînés avec le bonus de cadence. [Animation et contrôles](design/essais/arbaletrier_tir/README.md#tir-par-planche-sur-les-sources-de-la-v0178)
+
 - [x] **Guerrier orc du pilote, appuis en diagonale** — variantes de montée et descente dans les ressources locales. Les quatre diagonales ont été parcourues à ×1 et ×2. Mesures des appuis, pause, validateur et régression vérifiés. Validation artistique du porteur à venir. [Contrôles et vidéo](design/Appuis_Guerrier_Orc.md)
 
 - [x] **Biome volcanique, proposition d’habillage pour les missions 61–80** — quatre pièces, calque de cendres, palette et 120 placements contrôlés. Maquettes sur 61, 66, 71 et 80 dans les deux factions. Intégration et contrôle en combat à faire. [Fiche et visuels](design/Visuels_Biome_Volcanique.md)

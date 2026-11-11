@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "id": "defender.alliance.crossbow",
+  "display_height": 65,
+  "foot": [
+    123,
+    247
+  ],
+  "facing": "right",
+  "animations": {
+    "attack": {
+      "file": "attack.png",
+      "frames": 18,
+      "frame_size": [
+        272,
+        256
+      ],
+      "mode": "event",
+      "duration": 0.72
+    }
+  }
+}
