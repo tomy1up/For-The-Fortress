@@ -23,27 +23,26 @@ Cartes dans `prototype/scripts/citadel_maps.gd` (décor `citadel`, habillage par
 | 91 | La Brèche | 1 | 34 |
 | 92 | Le Siège | 1 | 35 |
 | 93 | Les Mâchicoulis | 2, pression alternée | 38 / 38 |
-| 94 | La Grande Salle | 3 | 38 / 34 / 38 |
+| 94 | La Grande Salle | 3 | 36 / 32 / 36 |
 | 95 | Les Casernes | 1 | 31 |
 | 96 | La Tour de Guet | 2, pression alternée | 35 / 35 |
-| 97 | L'Armurerie | 3 | 38 / 34 / 38 |
+| 97 | L'Armurerie | 3 | 35 / 32 / 35 |
 | 98 | Les Escaliers | 2, pression alternée | 38 / 38 |
 | 99 | La Salle du Trône | 1 | 32 |
-| 100 | Le Cœur de la Citadelle | 3 | 38 / 34 / 38 |
+| 100 | Le Cœur de la Citadelle | 3 | 33 / 32 / 33 |
 
 ## Méthode de réglage
 
 Même méthode que le chapitre 9 : simulation avec les talents réels (50 points à la mission 100), 48 parties par carte et par faction avec la Garnison, armée de référence (Alliance : archer, arbalétrier, arbalétrier ; Horde : deux haches et un chaman), choix du jeu d'emplacements qui maximise les PV restants de la faction la plus faible.
 
-PV de forteresse restants (Alliance / Horde) : 91 : 16 / 18 ; 92 : 11 / 10 ; 93 : 11 / 17 ; 94 : 14 / 19 ; 95 : 15 / 10 ; 96 : 14 / 14 ; 97 : 14 / 21 ; 98 : 13 / 19 ; 99 : 16 / 23 ; 100 : 19 / 23.
+PV de forteresse restants (Alliance / Horde) : 91 : 16 / 18 ; 92 : 11 / 10 ; 93 : 11 / 17 ; 94 : 13 / 23 ; 95 : 15 / 10 ; 96 : 14 / 14 ; 97 : 14 / 15 ; 98 : 13 / 19 ; 99 : 16 / 23 ; 100 : 16 / 19 (v0.175).
 
 Constats :
 
 - **La Garnison durcit nettement le chapitre** : avec les tracés du chapitre 9, la plupart des cartes n'avaient aucun jeu gagnant pour les deux factions. Les tracés retenus reprennent la forme du Cœur des éruptions (entrées à bosse sur une queue partagée), qui offre la meilleure couverture.
-- **La finale est la plus facile des marges** (19 / 23 PV) : à durcir si le porteur le souhaite, par exemple en raccourcissant le trajet de la mission 100.
+- **Tracés à trois entrées corrigés en v0.175** : en v0.173, les entrées à bosse et le trajet central des cartes 94, 97 et 100 se croisaient près de la jonction. Les bosses restent maintenant chacune dans leur moitié de la carte (haut, bas) et le décrochement central reste entre elles : plus aucun croisement.
+- **La finale reste la plus accessible** (16 / 19 PV restants) : les essais pour la durcir ont donné soit la même marge, soit aucune victoire de l'Alliance (trajets de 29 / 26 / 29 : 0 victoire sur 48). À durcir autrement si le porteur le souhaite (par exemple un affixe ou une vague supplémentaire, ce qui est une décision de règles).
 - Les cartes les plus serrées sont 92 et 95 (10 PV pour la Horde).
-
-- **Tracés qui se croisent** : sur les cartes à trois entrées (94, 97, 100), les entrées à bosse et le trajet central se croisent près de la jonction (capture de la mission 94). Les cartes restent valides pour le jeu, mais la lecture est chargée ; à reprendre si le porteur le demande (la forme à bosse est celle qui donne la meilleure couverture aux défenseurs).
 
 ## Habillage et animations (Codex)
 

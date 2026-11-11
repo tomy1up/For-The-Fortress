@@ -73,7 +73,7 @@ Choix visuel à trancher par le porteur, lave ou cendres. Recommandation de Clau
 
 ## Limites à connaître
 
-- Seules `walk` (ennemis) et `idle`, `attack`, `disabled` (défenseurs) sont branchées. Mort, coup reçu, apparition, achat, revente et niveau sont acceptés par le format mais pas déclenchés : ne pas en livrer avant d'en avoir demandé le branchement à Claude Code.
+- Depuis la v0.175, toutes les animations du format sont branchées : `walk`, `hurt`, `spawn`, `death` (ennemis), `idle`, `attack`, `disabled`, `buy`, `level_up`, `sell` (défenseurs). Le pilote ne demande que celles du tableau ci-dessus ; les autres peuvent être ajoutées pour l'archer et le guerrier si Codex le juge utile (voir `design/Format_animations.md`).
 - Pas encore de variantes par niveau (1 à 4) ni par spécialisation : un seul jeu d'animations par unité.
 - Les valeurs de cadence et de durée sont des réglages de prototype à confirmer avec le porteur.
 - Le jeu garde l'illustration fixe si la description ou une planche est invalide : un échec silencieux possible, d'où l'importance du contrôle formel (étape 2).

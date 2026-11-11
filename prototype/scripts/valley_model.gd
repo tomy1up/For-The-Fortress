@@ -852,7 +852,7 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 		if enemy.hp < hp_before:
 			damage_events.append({"time":elapsed,"enemy_id":enemy.id,"hp_before":hp_before,"hp_after":maxf(0.0,enemy.hp)})
 		if enemy.hp <= 0.0:
-			elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":enemy_position(enemy)})
+			elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":enemy_position(enemy),"distance":enemy.distance,"route_id":str(enemy.get("route_id",""))})
 			killed += 1
 			total_killed += 1
 			var reward: int = enemy.get("reward", 3)

@@ -24,6 +24,11 @@ const HIT_REACTION_DURATION := 0.28
 const ELIMINATION_DURATION := 0.45
 const MAX_ELIMINATION_EFFECTS := 24
 var elimination_tail: float = 0.0
+## Suivi purement visuel des défenseurs (achat, passage de niveau, revente), cadencé en temps réel : le modèle ne bouge pas en préparation.
+var _seen_model: Object = null
+var _seen_defenders: Array[Dictionary] = []
+var _defender_events: Dictionary = {}
+var _sold_ghosts: Array[Dictionary] = []
 var flag_phase: float = 0.0
 var model: RefCounted:
 	set(value):
@@ -55,22 +60,24 @@ func _init() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 
 func _process(delta: float) -> void:
+	_track_defenders()
+	if _sheet_animation_running(): queue_redraw()
 	royal_hurt_age = minf(2.0,royal_hurt_age+maxf(0.0,delta))
 	royal_rally_age = minf(2.0,royal_rally_age+maxf(0.0,delta))
 	flag_phase = fmod(flag_phase+maxf(0.0,delta),TAU)
 	if model == null or model.active or model.phase not in ["finished","bonus","victory","defeat"]:
 		elimination_tail = 0.0
-	elif elimination_tail < ELIMINATION_DURATION:
-		elimination_tail = minf(ELIMINATION_DURATION,elimination_tail+maxf(0.0,delta))
+	elif elimination_tail < maxf(ELIMINATION_DURATION,SheetAnimations.death_window()):
+		elimination_tail = minf(maxf(ELIMINATION_DURATION,SheetAnimations.death_window()),elimination_tail+maxf(0.0,delta))
 		queue_redraw()
 
-func recent_eliminations() -> Array[Dictionary]:
+func recent_eliminations(window: float = ELIMINATION_DURATION) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	if model == null or model.phase not in ["combat","finished","bonus","victory","defeat"]: return result
 	for index in range(model.elimination_events.size()-1,-1,-1):
 		var event: Dictionary = model.elimination_events[index]
 		var age: float = model.elapsed-event.time+(0.0 if model.active else elimination_tail)
-		if age >= ELIMINATION_DURATION: break
+		if age >= window: break
 		if age >= 0.0:
 			result.append({"event":event,"age":age})
 			if result.size() >= MAX_ELIMINATION_EFFECTS: break
@@ -124,6 +131,16 @@ func recent_enemy_damage(enemy_id: int) -> Array[Dictionary]:
 		if age >= DAMAGE_TRAIL_DURATION: break
 		if event.enemy_id == enemy_id and age >= 0.0: recent.append(event)
 	return recent
+
+## Âge du dernier coup reçu par cet ennemi, ou une valeur négative s'il n'en a pas reçu récemment (animation `hurt`).
+func last_hit_age(enemy_id: int) -> float:
+	if model == null or not model.active: return -1.0
+	for index in range(model.damage_events.size()-1,-1,-1):
+		var event: Dictionary = model.damage_events[index]
+		var age: float = model.elapsed-event.time
+		if age > 3.0: break
+		if event.enemy_id == enemy_id and age >= 0.0: return age
+	return -1.0
 
 func enemy_hit_strength(events: Array[Dictionary]) -> float:
 	var strength: float = 0.0
@@ -272,7 +289,7 @@ func _draw_hit_marker(point: Vector2, alpha: float, primary: bool, type: int, ag
 
 func _draw_impact(shot: Dictionary, age: float) -> void:
 	var alpha: float = impact_opacity(age)
-	if alpha <= 0.0: return
+	if alpha <= 0.0 or not shot.has("type"): return
 	var type: int = Model.family(shot.type)
 	var color: Color = [Color("f0d796"),Color("e1e9dc"),Color("90dceb"),Color("a8ddbd"),Color("f2b269"),Color("d1a3ed")][type]
 	color.a = alpha
@@ -640,6 +657,7 @@ func _draw() -> void:
 		for link in inspected_protection_links():
 			draw_line(project(link.from)+Vector2(0,-12),project(link.to)+Vector2(0,-12),Color(0.72,0.89,0.56,0.65),1.5,true)
 			draw_arc(project(link.from)+Vector2(0,3),12,0,TAU,32,Color("b8d889"),1.5,true)
+		_draw_eruption_warning()
 		var actors: Array[Dictionary] = []
 		for slot in range(model.defenders.size()):
 			if not model.defenders[slot].is_empty():
@@ -665,6 +683,7 @@ func _draw() -> void:
 					if span.y > span.x:
 						draw_rect(Rect2(bar_position+Vector2(24*span.x,0),Vector2(24*(span.y-span.x),4)),Color(Color("f3dfba"),damage_opacity(model.elapsed-event.time)))
 		_draw_eruption()
+		_draw_headwinds()
 		if model.active:
 			for event in model.protection_events:
 				var age: float = model.elapsed-event.time
@@ -674,9 +693,14 @@ func _draw() -> void:
 				draw_line(project(from)+Vector2(0,-12),project(to)+Vector2(0,-12),Color(0.83,0.96,0.52,(1.0-age/0.4)*0.85),2,true)
 			for shot in model.shots:
 				_draw_impact(shot, model.elapsed - shot.time)
-		for effect in recent_eliminations():
-			for particle in elimination_particles(effect.event,effect.age):
-				draw_circle(particle.point,particle.radius,Color(Color("d6c7a6"),particle.alpha))
+		for effect in recent_eliminations(maxf(ELIMINATION_DURATION,SheetAnimations.death_window())):
+			var death_id: String = enemy_art_id({"type":effect.event.type},model.faction)
+			if SheetAnimations.has_animation(death_id,"death"):
+				_draw_sheet_death(death_id,effect.event,effect.age)
+			elif effect.age < ELIMINATION_DURATION:
+				for particle in elimination_particles(effect.event,effect.age):
+					draw_circle(particle.point,particle.radius,Color(Color("d6c7a6"),particle.alpha))
+		_draw_sold_defenders()
 	for entry in entry_label_layouts():
 		var box:=StyleBoxFlat.new();box.bg_color=Color("10271f");box.border_color=entry.color
 		box.set_border_width_all(1);box.set_corner_radius_all(5)
@@ -732,6 +756,7 @@ func _draw_breach_feedback() -> void:
 
 const UNIT_INK := Color("192a2b")
 const ATTACK_POSE_DURATION := 0.26
+const ERUPTION_EFFECT_ID := "effect.eruption"
 # Recul horizontal, inclinaison en radians, élévation : habillage des tirs résolus.
 const ATTACK_MOTIONS: Array[Vector3] = [
 	Vector3(2.8,-0.035,0.0), # Archer : traction et petit recul.
@@ -753,6 +778,9 @@ func defender_pose(slot: int) -> Dictionary:
 	var defender: Dictionary = model.defenders[slot]
 	if defender.has("last_target_position"):
 		pose.direction = shot_facing({"from": model.slots[slot], "to": defender.last_target_position})
+	var event: Dictionary = _defender_events.get(slot,{})
+	if not event.is_empty():
+		pose[str(event.kind)+"_age"] = Time.get_ticks_msec()/1000.0-float(event.start)
 	if not model.active: return pose
 	var eruption: Dictionary = model.eruption_status()
 	if not eruption.is_empty() and eruption.state == "active" and eruption.slot == slot:
@@ -850,11 +878,50 @@ func _draw_sheet_defender(center: Vector2, id: String, spec: Dictionary, pose: D
 	if texture == null: return
 	var side: float = float(pose.get("direction",1.0))*SheetAnimations.base_facing(spec)
 	draw_set_transform(center,0.0,Vector2(side,1.0))
-	var age: float = float(pose.get("attack_age",0.0)) if state == "attack" else float(pose.get("disabled_age",0.0))
+	var age: float = float(pose.get(state+"_age",0.0))
 	var cycle: float = SheetAnimations.phase(anim,0.0,Time.get_ticks_msec()/1000.0,age)
 	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle))
 	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
 	draw_set_transform(Vector2.ZERO)
+
+## Compare les défenseurs du modèle à ceux vus à l'image précédente pour déclencher achat, passage de niveau et revente.
+func _track_defenders() -> void:
+	if model == null:
+		_seen_model = null;_seen_defenders.clear();_defender_events.clear();_sold_ghosts.clear()
+		return
+	var now: float = Time.get_ticks_msec()/1000.0
+	var current_state: Array[Dictionary] = []
+	for slot in range(model.defenders.size()):
+		var defender: Dictionary = model.defenders[slot]
+		current_state.append({} if defender.is_empty() else {"type":defender.type,"level":defender.get("level",1),"branch":defender.get("branch",-1)})
+	# Nouveau modèle, ou retour à l'état initial : on adopte l'état sans animer.
+	if _seen_model != model or model.action_history.is_empty():
+		_seen_model = model;_seen_defenders = current_state;_defender_events.clear();_sold_ghosts.clear()
+		return
+	for slot in range(current_state.size()):
+		var before: Dictionary = _seen_defenders[slot] if slot < _seen_defenders.size() else {}
+		var after: Dictionary = current_state[slot]
+		if after.is_empty():
+			if not before.is_empty():
+				_sold_ghosts.append({"type":before.type,"slot":slot,"start":now})
+			_defender_events.erase(slot)
+		elif before.is_empty() or before.type != after.type:
+			_defender_events[slot] = {"kind":"buy","start":now}
+		elif int(after.level) > int(before.level):
+			_defender_events[slot] = {"kind":"level_up","start":now}
+	_seen_defenders = current_state
+	_sold_ghosts = _sold_ghosts.filter(func(ghost: Dictionary) -> bool: return now-float(ghost.start) < 4.0)
+	for slot in _defender_events.keys():
+		if now-float(_defender_events[slot].start) > 4.0: _defender_events.erase(slot)
+
+## Vrai tant qu'une animation par planche exige un redessin continu (repos, achat, revente, niveau).
+func _sheet_animation_running() -> bool:
+	if model == null: return false
+	if model.combat_affix.get("id","") == "headwinds": return true
+	if not _sold_ghosts.is_empty(): return true
+	for defender in model.defenders:
+		if not defender.is_empty() and not SheetAnimations.spec_for(SheetAnimations.defender_id(int(defender.type))).is_empty(): return true
+	return false
 
 func _draw_level_badge(center: Vector2, level: int, branch: int) -> void:
 	if level > 1:
@@ -989,19 +1056,84 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 ## Ennemi animé par une planche d'images (format de `animation_library.gd`) : cycle de marche réglé sur la distance parcourue.
 func _draw_sheet_walker(id: String, enemy: Dictionary, motion: Dictionary, scale: float, facing: float, body: Transform2D, hit_strength: float) -> void:
 	var spec: Dictionary = SheetAnimations.spec_for(id)
-	var anim: Dictionary = spec.animations.walk
+	var info: Dictionary = {"hurt_age":last_hit_age(enemy.id),"direction":motion.get("direction",Vector2.ZERO)}
+	if model.active: info.spawn_age = model.elapsed-float(enemy.get("spawn_time",0.0))
+	var state: String = SheetAnimations.enemy_state(spec,info)
+	if state == "": return
+	var anim: Dictionary = spec.animations[state]
 	var texture: Texture2D = SheetAnimations.texture_for(id,anim)
 	if texture == null: return
 	if SheetAnimations.base_facing(spec) < 0.0: draw_set_transform_matrix(body*Transform2D(Vector2(-1,0),Vector2(0,1),Vector2.ZERO))
-	var cycle: float = SheetAnimations.phase(anim,float(motion.get("travel",0.0))/scale,model.elapsed,0.0,fposmod(float(enemy.id)*0.37,1.0))
+	var age: float = float(info.hurt_age) if state == "hurt" else float(info.get("spawn_age",0.0))
+	var cycle: float = SheetAnimations.phase(anim,float(motion.get("travel",0.0))/scale,model.elapsed,age,fposmod(float(enemy.id)*0.37,1.0))
 	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle))
 	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region,EnemyArt.tint(hit_strength))
 
+## Mort d'un ennemi par planche : jouée une fois à l'endroit de l'élimination, dans le sens du chemin.
+func _draw_sheet_death(id: String, event: Dictionary, age: float) -> void:
+	var spec: Dictionary = SheetAnimations.spec_for(id)
+	var anim: Dictionary = spec.animations.death
+	if age < 0.0 or age >= float(anim.duration): return
+	var texture: Texture2D = SheetAnimations.texture_for(id,anim)
+	if texture == null: return
+	var enemy := {"type":event.type,"route_id":event.get("route_id","")}
+	var route_points: Array[Vector2] = model.enemy_route_points(enemy)
+	var motion := EnemyWalkArt.path_motion(float(event.get("distance",0.0)),route_points,AXIS)
+	var side: float = route_facing(motion.direction)*SheetAnimations.base_facing(spec)
+	draw_set_transform(project(event.point),0.0,Vector2(side,1.0)*_enemy_scale(enemy))
+	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,0.0,age)))
+	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
+	draw_set_transform(Vector2.ZERO)
+
+## Défenseurs revendus : l'animation `sell` joue à leur ancien emplacement.
+func _draw_sold_defenders() -> void:
+	var now: float = Time.get_ticks_msec()/1000.0
+	for ghost in _sold_ghosts:
+		var id: String = SheetAnimations.defender_id(int(ghost.type))
+		var spec: Dictionary = SheetAnimations.spec_for(id)
+		var age: float = now-float(ghost.start)
+		if spec.is_empty() or SheetAnimations.defender_state(spec,{"sell_age":age}) != "sell": continue
+		_draw_sheet_defender(project(_map_slots()[int(ghost.slot)]),id,spec,{"sell_age":age})
+
+## Repère fonctionnel provisoire de l'affixe Vents contraires (chapitre 4) : traînées claires qui traversent le plateau
+## à contre-courant des défenseurs. L'habillage (poussière, herbes couchées, étendards) revient à Codex (TODO_VISUELS.md).
+func _draw_headwinds() -> void:
+	if model == null or model.combat_affix.get("id","") != "headwinds": return
+	var board := Vector2(model.map_definition.size)
+	var clock: float = Time.get_ticks_msec()/1000.0
+	for index in range(16):
+		var lane: float = fposmod(float(index)*0.381966,1.0)
+		var progress: float = fposmod(clock*0.22+float(index)*0.137,1.0)
+		var start: Vector2 = project(Vector2(board.x*(1.05-1.1*progress),board.y*lane))
+		var alpha: float = sin(progress*PI)*0.32
+		draw_line(start,start+Vector2(-26,-5),Color(0.9,0.97,1.0,alpha),1.5,true)
+		draw_line(start+Vector2(-6,3),start+Vector2(-20,0),Color(0.9,0.97,1.0,alpha*0.6),1.0,true)
+
 ## Repère fonctionnel provisoire de l'affixe Éruptions : l'habillage (lave, cendres) revient à Codex (TODO_VISUELS.md).
+func _eruption_warning_sheet() -> bool:
+	return SheetAnimations.has_animation(ERUPTION_EFFECT_ID,"warning")
+
+## Avertissement des Éruptions par planche (effet « effect.eruption ») : au sol, sous les unités, pendant l'état `warning`.
+## La progression 0 → 1 vient du jeu (`1 - remaining / warning`), donc suit la vitesse et la pause.
+func _draw_eruption_warning() -> void:
+	if model == null or not model.eruption_enabled() or not _eruption_warning_sheet(): return
+	var status: Dictionary = model.eruption_status()
+	if status.is_empty() or status.state != "warning": return
+	var spec: Dictionary = SheetAnimations.spec_for(ERUPTION_EFFECT_ID)
+	var anim: Dictionary = spec.animations.warning
+	var texture: Texture2D = SheetAnimations.texture_for(ERUPTION_EFFECT_ID,anim)
+	if texture == null: return
+	var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,0.0,progress)))
+	draw_set_transform(project(_map_slots()[status.slot]),0.0,Vector2.ONE)
+	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
+	draw_set_transform(Vector2.ZERO)
+
 func _draw_eruption() -> void:
 	if model == null or not model.eruption_enabled(): return
 	var status: Dictionary = model.eruption_status()
 	if status.is_empty(): return
+	if status.state == "warning" and _eruption_warning_sheet(): return # Remplacé par la planche d'avertissement, dessinée sous les unités.
 	var center: Vector2 = project(_map_slots()[status.slot])
 	var diamond := PackedVector2Array([center+Vector2(-26,0),center+Vector2(0,-13),center+Vector2(26,0),center+Vector2(0,13)])
 	if status.state == "warning":
