@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 12 novembre 2026 — Codex
 
-**Synchronisation du lancer du troll.** Le porteur voit la hache partir avant le geste. Le rendu actuel lance ensemble le projectile et la première image de la planche, main déjà vide. Un armement de 0,20 s a été essayé en capture Godot isolée dans les deux sens, à ×1 et ×2. Un signal de préparation reste à brancher par Claude Code. Attendre la validation visuelle du lancer et de son raccord avant intégration. [Essai](design/Visuel_Troll_Lancer.md#synchronisation-du-geste-et-du-projectile).
+**Prise de hache du troll.** La hache d’origine reste dans la main jusqu’à l’extension du bras, tranchant vers l’avant. La main s’ouvre à la huitième image. Validateur sans problème, deux suites ciblées au vert (199 contrôles Godot, 17 tests Python). Rendu contrôlé sur quatre tirs au Gué, dans les deux sens à ×1 et ×2. Attendre l’avis du porteur avant intégration. [Comparatif](design/Visuel_Troll_Lancer.md#prise-de-la-hache-pendant-le-geste).
 
 **Raccords du lancer du troll.** Après le retour sur le clipping, ajout de deux poses intermédiaires, pour la rotation du torse et la remontée de la hache. Déformation des raccords bornée, marge minimale de 16 px autour du sprite. Quatre tirs avec rebond vérifiés dans les deux sens et aux deux vitesses, validateur et quatre suites ciblées au vert. Intégration en attente du retour du porteur. [Comparatif](design/Visuel_Troll_Lancer.md#raccords-du-bras-et-de-la-hache).
 

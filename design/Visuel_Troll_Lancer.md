@@ -54,6 +54,14 @@ L’essai ajoute six poses de préparation sur les 0,20 s avant le tir. La hache
 
 Le comparatif a été capturé avec le rendu Godot sur la vague 4 du Gué, dans les deux sens à ×1 et ×2. L’aperçu connaît à l’avance l’instant du tir grâce à une première exécution de la vague. Le modèle, le départ réel du projectile et son rebond restent identiques dans la comparaison.
 
-L’intégration demande un signal de présentation avant le tir, orienté d’après la cible et annulable si le tir n’a pas lieu. Le lâcher reste synchronisé sur l’évènement réel. Claude Code étudiera ce raccord avec la cadence, les dégâts et le rebond actuels.
+Cette piste a été abandonnée après clarification du retour du porteur. Voir la correction de la planche ci-dessous.
 
 [Comparatif animé](essais/troll_lancer/Troll_armement_comparatif.gif) · [Étapes du geste](essais/troll_lancer/Troll_armement_etapes.png) · [Planche de préparation](essais/troll_lancer/Troll_armement_prototype.png)
+
+## Prise de la hache pendant le geste
+
+Le 12 novembre 2026, le porteur précise que son retour concerne la hache dessinée dans la main. Sur les nouvelles poses, il relève aussi un tranchant à l’envers et une lame dont la silhouette change.
+
+Les sept premières images gardent la hache en main, de la garde jusqu’au bras tendu. La huitième reprend la pose de main ouverte. La lame et les extrémités du manche viennent du sprite d’origine. Elles suivent la prise de la main, avec le tranchant tourné vers l’avant sur la fin du mouvement. Les trois poses de prise ont été préparées à partir du troll de référence et de la pose de main ouverte, puis recalées sur l’ancre de la planche. La planche conserve ses 24 images sur 0,80 s.
+
+[Comparatif du sprite au ralenti](essais/troll_lancer/Troll_prise_comparatif.gif) · [Huit premières images](essais/troll_lancer/Troll_prise_etapes.png)
