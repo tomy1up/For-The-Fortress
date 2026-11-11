@@ -31,7 +31,7 @@ Source : `Cadrage_campagne_2026-10-29.md` (CAMP-007, 010, 011, 012, 017, 018, 01
 
 - Le porteur retient **désert et ruines** après avoir constaté que la toundra et glace recoupait les Ardoises (chapitres 3 et 4 : roche bleu-gris, climat froid, vent). Palette visée : sable, or, pierre claire, soleil dur, la plus éloignée des cinq biomes existants (Gué, Ardoises, Marais, terres volcaniques, citadelle).
 - Le chapitre 11 ouvre le sixième biome, sans règle propre (comme les chapitres 5, 7 et 9).
-- Le chapitre 12 apporte sa nouveauté unique (CAMP-017). **Nature à proposer au porteur**, par exemple : tempête de sable qui réduit la portée des défenseurs, sables mouvants qui ralentissent les ennemis ou les défenseurs, ou nouvel attaquant du désert.
+- Le chapitre 12 apporte sa nouveauté unique (CAMP-017) : **la tempête de sable**, validée dans son principe par le porteur le 11 novembre 2026. Affixe à rythme régulier : des rafales qui réduisent la portée de tous les défenseurs pendant quelques secondes, avec un avertissement visible avant. **Valeurs d'essai à confirmer** : −25 % de portée pendant 5 s toutes les 15 s, avertissement de 3 s ; habillage (voile de sable sur le plateau) à produire par Codex. Les sables mouvants et un attaquant du désert ont été écartés.
 - La toundra et glace reste disponible pour un biome ultérieur (huitième ou neuvième par exemple).
 - Les biomes des chapitres 13 à 20 (un par paire de chapitres) seront choisis après ces deux-là.
 
@@ -43,13 +43,12 @@ Source : `Cadrage_campagne_2026-10-29.md` (CAMP-007, 010, 011, 012, 017, 018, 01
 
 ## Ce qui n'est pas décidé
 
-- Nature de la nouveauté du chapitre 12 et biomes des chapitres 13 à 20.
+- Biomes des chapitres 13 à 20.
 - Catalogue et prix de la boutique (CAMP-008, CAMP-012).
 - Règles précises du mode infini et des difficultés Héroïque et Mythique, dont le cumul (CAMP-019, CAMP-020).
 - Habillage visuel du désert et des ruines : à produire par Codex, sur demande après le choix des cartes.
 
 ## Suite
 
-1. Proposer au porteur les options détaillées de la nouveauté du chapitre 12 (désert).
-2. Développer le chapitre 11 : dix cartes sans règle propre, rencontres standard du Gué, PV à 200 % et plus, 65 PO, mesurées avec les talents réels.
-3. Demander à Codex l'habillage du biome (palette, pièces de décor) avec la fiche des cartes du chapitre 11.
+1. Développer le chapitre 11 : dix cartes sans règle propre, rencontres standard du Gué, PV à 200 % et plus, 65 PO, mesurées avec les talents réels.
+3. Développer le chapitre 12 (tempête de sable) puis demander à Codex l'habillage du biome et de la tempête (palette, pièces de décor) avec la fiche des cartes du chapitre 11.
