@@ -6,6 +6,12 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Reprise du lancer du troll, avis attendu (ouvert)
+
+Le porteur trouve raide la première animation publiée dans la v0.179. La seconde proposition fait participer le genou avant, les épaules et le bras libre, et ajoute une reprise de la hache près de la hanche. 24 images sur 0,80 s, testées au Gué dans les deux sens à ×1 et ×2. Validateur et quatre suites ciblées au vert (511 contrôles Godot, 17 tests Python). Attendre le retour du porteur avant d’intégrer cette proposition. [Comparatif](design/Visuel_Troll_Lancer.md#lancer-retravaillé)
+
+La planche commence au lâcher, sur le signal d’attaque actuel. Si l’essai montre qu’il faut une préparation avant le tir, on pourra discuter d’un signal de présentation distinct. Les cartes du désert 101–110 sont disponibles pour le prochain lot d’habillage.
+
 ### 2026-11-11 — Animation de lancer du troll (ouvert)
 
 `defender.horde.axe/attack.png` fournit douze images sur 0,48 s. Le point de départ historique de la hache est aligné sur le lâcher, puis la main reste vide pendant le vol et le rebond. Quatre tirs avec rebond ont été contrôlés au Gué, des deux côtés à ×1 et ×2. Validateur et quatre suites ciblées au vert (511 contrôles Godot, 17 tests Python). [Aperçu en combat](design/Visuel_Troll_Lancer.md)
