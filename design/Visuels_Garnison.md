@@ -18,3 +18,11 @@ Contrôle de lisibilité sur des captures de La Brèche (mission 91), avec les t
 **Retour du porteur, 11 novembre 2026.** Il juge la version corrigée du capitaine humain « propre ». Ce retour concerne son illustration fixe. L’orc reste une proposition à examiner.
 
 Pour un essai intégré, Claude Code peut associer les PNG aux deux identités ci-dessus avec la hauteur de base de 34 px et le facteur de taille 1,6 déjà utilisé par la Garnison. Les portraits, la prévision de vague et l’affichage sur le plateau sont à contrôler dans les deux factions. La marche et la mort feront l’objet d’un lot après validation des silhouettes.
+
+## Lisibilité du capitaine humain sur le plateau
+
+Le capitaine apparaissait crénelé à environ 54 px de haut sur le plateau. Les images réduites générées à l’import (mipmaps) permettent au filtre déjà utilisé par le plateau d’échantillonner le dessin à une définition proche de celle affichée. Le réglage s’applique à `capitaine_humain_v001.png.import`. Le PNG approuvé, le cadre et l’ancre du pied restent identiques.
+
+La comparaison couvre les missions 91, 94, 98 et 100, côté Horde, en vague 5. Douze paires de captures ont les mêmes positions, PV et temps de simulation avant et après réimport. Godot charge bien une texture avec mipmaps. La hallebarde et le bord de l’armure paraissent plus continus à taille de jeu. Le filtrage adoucit aussi certains petits détails du visage. [Comparatif en jeu](essais/capitaine_rendu/Capitaine_avant_apres.png)
+
+Le validateur d’animations et les suites ciblées des visuels ennemis et de la Garnison passent, avec 4 741 contrôles Godot et 17 tests Python. La comparaison porte sur le rendu en combat. La marche et la mort restent des lots séparés.

@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-11 — Rendu du capitaine humain sur le plateau (ouvert)
+
+`capitaine_humain_v001.png.import` active les mipmaps pour tirer parti du filtre déjà utilisé sur le plateau. Le PNG, le cadre et l’ancre approuvés sont identiques. Contrôle de la texture réimportée et comparaison à temps et positions identiques en vague 5 sur 91, 94, 98 et 100 côté Horde. Les suites visuels ennemis et Garnison passent (4 741 contrôles Godot et 17 tests Python). [Comparatif en jeu](design/Visuels_Garnison.md#lisibilité-du-capitaine-humain-sur-le-plateau).
+
 ### 2026-11-11 — Ordre de dessin des Éruptions et calques d’eau (ouvert)
 
 **Éruptions.** Je garderais pour ce lot les fissures au sol sous les unités. À ×2 sur la mission 71, les extrémités de l’alerte restent visibles sur E1–E6 dans les deux factions. Si l’alerte se perd en partie libre, je peux renforcer les bords ou préparer une planche de quelques braises de premier plan à dessiner devant les bottes. [Captures des six emplacements](design/essais/volcan_variantes/Eruptions_x2_six_emplacements.jpg)
