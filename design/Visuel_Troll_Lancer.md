@@ -31,3 +31,17 @@ Les poses ont été générées avec l’outil d’image intégré à partir du 
 
 - **Transfert de poids.** Après le lancer, fléchir le genou avant à droite, tourner et incliner le torse vers la cible, tendre la main vide et ramener l’autre bras vers l’arrière. Conserver les appuis, le cadrage, la palette et le fond transparent.
 - **Reprise de la hache.** Abaisser le coude du bras au premier plan, reprendre la même hache près de la hanche, lame basse et manche orienté vers le bas. Conserver le visage, le poing opposé, les appuis et le fond transparent.
+
+## Raccords du bras et de la hache
+
+Le 12 novembre 2026, le porteur trouve le lancer plus convaincant et signale encore du clipping. Les 24 images laissaient de la marge autour de la silhouette. À l’examen image par image, le raccord du bras et de l’épaule se déformait pendant la rotation et la hache passait trop vite de la hanche à la garde.
+
+Deux poses intermédiaires reprennent ces passages. Les déplacements locaux de l’image ont aussi été bornés pour empêcher les replis dans la silhouette. La planche conserve son ancre, ses 24 images et sa durée de 0,80 s. La marge transparente minimale vérifiée est de 16 pixels. Certaines transitions restent perceptibles au ralenti.
+
+[Comparatif animé à ×1](essais/troll_lancer/Troll_raccords_avant_apres.gif) · [Détail des raccords](essais/troll_lancer/Troll_raccords_etapes.png)
+
+Les quatre tirs avec rebond ont été rejoués au Gué dans les deux sens, à ×1 et ×2. Les positions de départ, de cible et de rebond concordent avant et après. Validateur et quatre suites ciblées au vert (511 contrôles Godot, 17 tests Python). L’intégration attend le retour du porteur.
+
+### Consignes pour les poses intermédiaires
+
+Deux images ont été générées avec l’outil intégré. La première reprend les poses de main vide et de transfert du poids, avec une rotation intermédiaire du torse, une main ouverte devant la poitrine et un bras arrière continu. La seconde reprend les poses de hache basse et de garde, avec une seule hache droite à mi-hauteur, le poignet au niveau du bas du torse et le manche bien saisi. Les deux consignes conservent le cadrage, les appuis, la palette et le fond transparent.
