@@ -25,3 +25,18 @@ Les décors ont été montés sur quatre captures Godot de la v0.174, prises sur
 **Retour du porteur, 11 novembre 2026.** Les maquettes lui paraissent « propres ». Le prochain contrôle porte sur la lisibilité du décor en combat.
 
 Si cette direction convient, intégrer les pièces côté décor et commencer par les deux cartes d’essai. Sélectionner l’architecture par faction adverse et garder le même placement logique pour les deux versions. Pour les autres cartes, vérifier les marges à partir de leur géométrie avant de choisir les emplacements. En combat, contrôler les silhouettes, les portées au survol, les annonces d’entrée et le tri des objets en profondeur. L’aperçu de mission peut reprendre la palette de sol. Les règles de combat, les routes, les emplacements de recrutement et l’architecture de la forteresse du joueur ne nécessitent aucun changement.
+
+## Extension aux chapitres 9 et 10
+
+Le lot ajoute 91 pièces sur 17 cartes, des missions 83 à 100 hors 87 déjà habillée. Les Remparts alignent quatre sections de mur sur le bord nord. Les Deux Tours encadrent un rempart avec deux tours. La Cour d’Armes ouvre un espace autour d’un portail flanqué d’étendards. Au Cœur de la Citadelle, deux tours encadrent le portail et des bannières marquent le flanc opposé. Le placement tient compte du contour visible des pièces des deux factions, de la largeur des chemins, des pastilles d’entrée et des six emplacements de recrutement.
+
+Les 34 captures ont été prises dans Godot sur l’écran de droite, dans les deux factions. Les cartes du chapitre 9 sont montrées à la vague 1 après 11 s de combat. Le chapitre 10 est montré à la vague 5 après 8 s, avec le capitaine dans les scènes capturées. L’outil de capture lance cette vague directement. Les étendards de L’Armurerie et des Escaliers ont été déplacés après un premier passage pour les éloigner des silhouettes des attaquants.
+
+- [Missions 83 à 86](essais/citadelles_extension/Citadelles_83_86.jpg)
+- [Missions 88 à 91](essais/citadelles_extension/Citadelles_88_91.jpg)
+- [Missions 92 à 95](essais/citadelles_extension/Citadelles_92_95.jpg)
+- [Missions 96 à 100](essais/citadelles_extension/Citadelles_96_100.jpg)
+
+Le Pont-levis, mission 82, sert actuellement de témoin sans placement dans `test_decor_art.gd`. Ses six placements ont été essayés en mémoire dans les deux factions et attendent le déplacement de ce témoin vers un identifiant sans décor. [Captures de l’essai](essais/citadelles_extension/Citadelle_82_essai.jpg) · [Placements prêts à intégrer](essais/citadelles_extension/Pont_levis_placements.json).
+
+Vérifications sur le lot actif. Le validateur d’animations a trouvé zéro problème. La régression ciblée a passé les suites décor et Garnison, soit 15 779 contrôles Godot et 17 tests Python.

@@ -231,6 +231,677 @@
       8.9
      ]
     }
+   ],
+   "citadel_barbican": [
+    {
+     "object": "portail",
+     "xy": [
+      7.0,
+      0.6
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      10.0,
+      0.7
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      12.0,
+      0.5
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      16.3,
+      0.3
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      2.0,
+      3.9
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      1.8,
+      6.2
+     ]
+    }
+   ],
+   "citadel_ramparts": [
+    {
+     "object": "tour",
+     "xy": [
+      6.3,
+      0.5
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      8.4,
+      0.5
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      10.4,
+      0.5
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      12.4,
+      0.5
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      16.3,
+      0.3
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      4.8,
+      9.1
+     ]
+    }
+   ],
+   "citadel_court": [
+    {
+     "object": "portail",
+     "xy": [
+      12.0,
+      0.7
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      10.7,
+      0.8
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      13.4,
+      0.5
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      3.5,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      7.0,
+      0.5
+     ]
+    }
+   ],
+   "citadel_towers": [
+    {
+     "object": "tour",
+     "xy": [
+      5.5,
+      0.6
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      11.8,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      7.7,
+      0.4
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      9.8,
+      0.4
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      8.0,
+      9.2
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      9.2,
+      9.2
+     ]
+    }
+   ],
+   "citadel_wall": [
+    {
+     "object": "tour",
+     "xy": [
+      16.3,
+      0.3
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      13.3,
+      0.4
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      11.2,
+      0.5
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      9.0,
+      0.6
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      4.9,
+      9.2
+     ]
+    }
+   ],
+   "citadel_dungeons": [
+    {
+     "object": "portail",
+     "xy": [
+      8.3,
+      0.6
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      11.0,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      13.2,
+      0.5
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      16.3,
+      0.3
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      2.1,
+      8.6
+     ]
+    }
+   ],
+   "citadel_keep": [
+    {
+     "object": "portail",
+     "xy": [
+      11.5,
+      0.6
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      13.5,
+      0.3
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      16.5,
+      0.5
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      10.2,
+      0.7
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      10.3,
+      9.2
+     ]
+    }
+   ],
+   "garrison_breach": [
+    {
+     "object": "tour",
+     "xy": [
+      11.7,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      9.5,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      13.4,
+      0.3
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      1.5,
+      8.8
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      2.6,
+      9.2
+     ]
+    }
+   ],
+   "garrison_siege": [
+    {
+     "object": "portail",
+     "xy": [
+      5.0,
+      0.6
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      7.6,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      11.7,
+      0.5
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      13.4,
+      0.3
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      9.6,
+      9.2
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      11.0,
+      9.2
+     ]
+    }
+   ],
+   "garrison_machicolations": [
+    {
+     "object": "tour",
+     "xy": [
+      10.4,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      12.6,
+      0.5
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      16.3,
+      0.3
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      8.9,
+      0.6
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      1.6,
+      5.4
+     ]
+    }
+   ],
+   "garrison_hall": [
+    {
+     "object": "portail",
+     "xy": [
+      10.4,
+      0.6
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      13.3,
+      0.5
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      16.3,
+      0.3
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      9.1,
+      0.7
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      11.8,
+      9.6
+     ]
+    }
+   ],
+   "garrison_barracks": [
+    {
+     "object": "portail",
+     "xy": [
+      12.7,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      10.2,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      16.3,
+      0.3
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      8.8,
+      0.6
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      17.6,
+      0.3
+     ]
+    }
+   ],
+   "garrison_watchtower": [
+    {
+     "object": "tour",
+     "xy": [
+      8.7,
+      0.6
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      13.5,
+      0.3
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      11.0,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      11.7,
+      2.0
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      7.4,
+      0.7
+     ]
+    }
+   ],
+   "garrison_armoury": [
+    {
+     "object": "portail",
+     "xy": [
+      8.8,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      11.1,
+      0.6
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      13.5,
+      0.3
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      16.3,
+      0.3
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      10.0,
+      9.5
+     ]
+    }
+   ],
+   "garrison_stairs": [
+    {
+     "object": "tour",
+     "xy": [
+      10.0,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      12.0,
+      0.6
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      13.4,
+      0.3
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      9.9,
+      9.5
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      10.1,
+      8.9
+     ]
+    }
+   ],
+   "garrison_throne": [
+    {
+     "object": "portail",
+     "xy": [
+      13.2,
+      0.3
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      16.4,
+      0.4
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      12.2,
+      0.8
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      8.2,
+      0.7
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      10.4,
+      0.6
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      1.1,
+      9.2
+     ]
+    }
+   ],
+   "garrison_heart": [
+    {
+     "object": "portail",
+     "xy": [
+      11.5,
+      0.6
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      8.8,
+      0.6
+     ]
+    },
+    {
+     "object": "tour",
+     "xy": [
+      13.5,
+      0.3
+     ]
+    },
+    {
+     "object": "rempart",
+     "xy": [
+      16.8,
+      0.6
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      10.1,
+      9.2
+     ]
+    },
+    {
+     "object": "etendard",
+     "xy": [
+      11.4,
+      9.2
+     ]
+    }
    ]
   }
  },

@@ -6,6 +6,12 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-11 — Extension du décor des citadelles (ouvert)
+
+`prototype/assets/decor/decor.json` contient les 91 placements des missions 83–86 et 88–100. Les deux factions ont été contrôlées en combat sur chaque carte. Les marges et la Garnison passent en régression ciblée, avec 15 779 contrôles Godot et 17 tests Python. [Fiche et captures](design/Visuels_Citadelles.md#extension-aux-chapitres-9-et-10).
+
+Le Pont-levis (`citadel_drawbridge`, mission 82) reste le témoin sans placement dans `test_decor_art.gd`. Peux-tu déplacer cette assertion vers un identifiant sans décor ? Les [six placements du Pont-levis](design/essais/citadelles_extension/Pont_levis_placements.json) ont déjà été essayés dans les deux factions. Ils pourront alors rejoindre `citadel.placements`.
+
 ### 2026-11-11 — Contrôles visuels de la v0.176 (ouvert)
 
 Contrôles réalisés sur `art/codex` à partir de `bf8c654`. Les [captures et résultats](design/Visuels_Controle_v0176.md) couvrent les deux factions pour les missions 51, 61, 71 et 87, ainsi que la Horde sur 91–100. Le validateur et les quatre tests ciblés passent.

@@ -1,0 +1,46 @@
+{
+  "citadel_drawbridge": [
+    {
+      "object": "portail",
+      "xy": [
+        6.5,
+        0.5
+      ]
+    },
+    {
+      "object": "rempart",
+      "xy": [
+        9.0,
+        0.5
+      ]
+    },
+    {
+      "object": "tour",
+      "xy": [
+        11.2,
+        0.6
+      ]
+    },
+    {
+      "object": "rempart",
+      "xy": [
+        13.4,
+        0.3
+      ]
+    },
+    {
+      "object": "etendard",
+      "xy": [
+        3.1,
+        8.9
+      ]
+    },
+    {
+      "object": "etendard",
+      "xy": [
+        4.3,
+        9.2
+      ]
+    }
+  ]
+}
