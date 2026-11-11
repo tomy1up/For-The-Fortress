@@ -92,3 +92,7 @@ Le porteur valide le principe d'un **affixe « Éruptions » qui désactive au h
 Le porteur retient pour le cinquième biome (missions 81–100) une thématique unique : la citadelle de la faction adverse (citadelle de la Horde quand on joue l'Alliance, citadelle de l'Alliance quand on joue la Horde). Le chapitre 9 ouvre sans règle propre ([fiche](Missions_081_090_Citadelle.md)). Nouveauté du chapitre 10, validée par le porteur : la **Garnison**, un ennemi propre à la citadelle, l'unité d'élite de la faction adverse (chef de guerre ou maréchal), plus résistante. Gains inchangés (60 PO, 100 XP) ; le porteur précise que les missions 101 et suivantes ne donneront plus d'XP dans le design retenu.
 
 La nouveauté du chapitre 10, la Garnison, est livrée en v0.173 : [fiche des missions 91 à 100](Missions_091_100_Garnison.md). Noms (« Capitaine de garnison humain / orc ») et statistiques sont des réglages de prototype à confirmer.
+
+## Décision du 11 novembre 2026 — missions 101 à 200
+
+Cadrage des chapitres 11 à 20 : [fiche](Cadrage_missions_101_200.md). PV ennemis plafonnés à 200 % dès la mission 101, difficulté par cumul des nouveautés ; PO de 65 à 105 selon le chapitre ; sixième biome (chapitres 11 et 12) en toundra et glace ; réintroduction progressive des nouveautés précédentes. Choix retenus par Claude Code sur délégation du porteur, valeurs à confirmer.

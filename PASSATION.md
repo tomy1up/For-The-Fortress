@@ -68,6 +68,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.178** : finale du chapitre 4 sur sa propre carte `slate_bastion_winds` (`map_definition.gd`, `campaign_catalogue.gd` : mission 40) ; emplacements 2 à 4 du Bastion (mission 30) recalculés ; calques d'eau des marais 51 et 58 (`DecorArt.water_overlay`, `decor.json` `marsh.overlays`, test de cohérence avec la géométrie) ; fusion de quatre lots de Codex (citadelles 81–100, variantes volcaniques, remous renforcés). Les chapitres 3 et 4 partagent les neuf premières cartes de chaque dizaine (`(number-21)%10`) : seule la mission 40 diffère.
 
+**Cadrage des missions 101 à 200** : `design/Cadrage_missions_101_200.md` (décisions du 11 novembre 2026 sur délégation du porteur : PV plafonnés à 200 %, PO croissantes, toundra et glace aux chapitres 11 et 12, cumul progressif). Rien n'est codé. Prochaine étape : proposer au porteur la nouveauté du chapitre 12, puis développer le chapitre 11.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.
