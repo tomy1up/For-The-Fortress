@@ -98,6 +98,11 @@ static func definition(number: int) -> Dictionary:
 		var maps: Array[String] = ["coast_beacon","coast_causeway","coast_chalk","coast_graveyard","coast_shoal","coast_phantom","coast_twinrocks","coast_arsenal","coast_storm","coast_citadel"]
 		var titles: Array[String] = ["Le Phare des Brumes","La Digue Noyée","Les Falaises Blanches","Le Cimetière des Navires","Le Banc de Sable","La Baie Fantôme","Les Écueils Jumeaux","L'Arsenal Englouti","Le Cap des Tempêtes","La Citadelle des Embruns"]
 		result.merge({"title":titles[number-171],"available":true,"map_id":maps[number-171],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"seamist","interval":22,"warning":3,"duration":6,"gold_percent":30}},true)
+	elif number <= 190:
+		# Chapitre 19 : dixième biome, nécropole et terres maudites, sans règle propre (choix du porteur, 13 novembre 2026).
+		var maps: Array[String] = ["necro_gate","necro_road","necro_graveyard","necro_crypts","necro_fen","necro_hill","necro_mausoleums","necro_ossuary","necro_stelae","necro_royal"]
+		var titles: Array[String] = ["Le Portail des Ossements","La Route des Tombes","Le Cimetière Oublié","Les Cryptes Basses","Le Marais des Défunts","La Colline des Pendus","Les Mausolées Jumeaux","L'Ossuaire","Le Champ des Stèles","La Nécropole Royale"]
+		result.merge({"title":titles[number-181],"available":true,"map_id":maps[number-181],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10},true)
 	return result
 
 ## PV ennemis (en % de la référence) d'une mission : `99 + numéro` jusqu'à la mission 140, puis +1 % toutes les deux missions jusqu'à la mission 180 (décision du porteur, 12 novembre 2026), puis +1 % toutes les quatre missions (+0,25 % par mission, décision du porteur, 13 novembre 2026).

@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.189**. Chapitre 19, nécropole et terres maudites (missions 181 à 190), dixième biome choisi par le porteur : PV ennemis de 260 à 262 % (courbe ralentie à +0,25 % par mission), 105 PO, sans règle propre ; le revenant du chapitre 20 suivra. 190 missions jouables. [Chapitre 19](design/Missions_181_190_Necropole.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.189).
+
 **Prototype v0.188**. Chapitre 18, la brume marine (missions 171 à 180) : toutes les 22 s, l'or gagné par élimination est réduit de 30 % pendant 6 s, annoncé 3 s avant (valeurs de prototype à confirmer). 180 missions jouables ; marges minces à ce niveau de PV. [Chapitre 18](design/Missions_171_180_Brume_marine.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.188).
 
 **Prototype v0.187**. Chapitre 17, côtes et récifs (missions 161 à 170), neuvième biome choisi par le porteur : PV ennemis de 250 à 254 %, 95 PO, sans règle propre ; l'affixe du chapitre 18 (Brume marine) suivra. 170 missions jouables. [Chapitre 17](design/Missions_161_170_Cotes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.187).

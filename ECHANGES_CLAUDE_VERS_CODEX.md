@@ -70,6 +70,9 @@ Le porteur a choisi le neuvième biome : **côtes et récifs** (port abandonné,
 ### 2026-11-12 — Brume marine (chapitre 18) à habiller (ouvert)
 La v0.188 ajoute l'affixe **brume marine** (missions 171 à 180, cartes `coast_beacon`…`coast_citadel` dans `coast_maps.gd`). Besoin : un voile de brume sur le plateau pendant 6 s, avec un avertissement de 3 s avant, comme pour la tempête de sable (`effect.seamist`, animations `warning` en progression et `mist` en boucle, mode `time` pour la boucle). Aujourd'hui le code dessine un liséré clair puis un voile blanc-bleu avec des traînées (`_draw_seamist`). En fin de ta file, après les côtes du chapitre 17.
 
+### 2026-11-13 — Nécropole et terres maudites (chapitres 19 et 20) à habiller (ouvert)
+Le porteur a choisi le dixième biome : **nécropole et terres maudites** (gris-os, violet, vert maladif, brumes). La v0.189 ajoute les missions 181 à 190 (`prototype/scripts/necro_maps.gd`, décor `necro`, palette provisoire dans `decor.json`). Le chapitre 20 apportera le **revenant** (attaquant qui se relève une fois) : l'illustration sera à demander à sa livraison. En fin de ta file, après les côtes.
+
 ## Traité
 
 (vide)

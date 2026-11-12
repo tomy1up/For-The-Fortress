@@ -54,7 +54,9 @@ func run_checks() -> void:
 				check(menu.nodes.all(func(node):return node.state == "locked") and not menu.chapter_buttons[16].text.contains("À venir"),"Dix missions des côtes verrouillées avant les réussites préalables")
 			if chapter == 18:
 				check(menu.nodes.all(func(node):return node.state == "locked") and not menu.chapter_buttons[17].text.contains("À venir"),"Dix missions de la brume marine verrouillées avant les réussites préalables")
-			if chapter > 18:
+			if chapter == 19:
+				check(menu.nodes.all(func(node):return node.state == "locked") and not menu.chapter_buttons[18].text.contains("À venir"),"Dix missions de la nécropole verrouillées avant les réussites préalables")
+			if chapter > 19:
 				check(menu.chapter_buttons[chapter-1].text.contains("À venir"),"Un chapitre sans contenu jouable ne prétend pas être prêt")
 				for node in menu.nodes: check(node.state == "future" and not node.locked,"Les nœuds d’un chapitre futur restent consultables, sans faux cadenas de progression")
 				check(menu.terrain_preview.geometry().is_empty() and menu.start_button.disabled,"Une mission future reste sans carte inventée et sans lancement")

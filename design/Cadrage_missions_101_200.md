@@ -75,3 +75,7 @@ La brume marine du chapitre 18 est livrée en v0.188 : [fiche](Missions_171_180_
 ## Décision du 13 novembre 2026 — courbe de PV encore ralentie
 
 Au chapitre 18 (255-259 % de PV avec la brume marine), les marges de la référence tombent à 3 PV (mission 178, Horde). Le porteur retient de **ralentir encore la courbe à +0,25 % par mission à partir de la mission 181** : 260 % aux missions 181 à 184, 261 % de 185 à 188, jusqu'à 264 % à la mission 200 (`Catalogue.hp_percent_for`). La mission 180 reste à 259 %.
+
+## Décision du 13 novembre 2026 — dixième biome
+
+Le porteur retient **nécropole et terres maudites** pour les chapitres 19 et 20, avec le **revenant** (attaquant qui se relève une fois avec la moitié de ses PV) au chapitre 20 (valeurs à confirmer). Voir [la fiche du chapitre 19](Missions_181_190_Necropole.md).

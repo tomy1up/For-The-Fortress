@@ -126,6 +126,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **Courbe de PV (13 novembre 2026)** : `hp_percent_for` ralentie à +0,25 % par mission à partir de la mission 181 (260 % à 264 %), décision du porteur ; code et GDD 0.24 commités, aucun chapitre livré ; le biome des chapitres 19 et 20 reste à choisir (options restantes : jungle et temple perdu, nécropole et terres maudites, cité en ruines).
 
+**v0.189** : chapitre 19 (181-190, `necro_maps.gd`, décor `necro`, biome « nécropole et terres maudites » choisi par le porteur, tracés repris du chapitre 17). Prochain : chapitre 20 (191-200) avec le revenant (type 12 : un attaquant qui se relève une fois avec la moitié de ses PV ; à coder sur le modèle de l'aigle des cimes `eagle_encounters.gd` et de la régénération de Gueule-de-Vase ; la relève doit rester rejouable et indépendante du pas). PV du chapitre 20 : 262 % à 264 %.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

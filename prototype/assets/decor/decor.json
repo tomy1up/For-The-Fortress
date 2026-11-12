@@ -4587,5 +4587,28 @@
   },
   "assets": {},
   "placements": {}
+ },
+ "necro": {
+  "palette": {
+   "ground": [
+    112,
+    110,
+    98
+   ],
+   "faces": [
+    [
+     88,
+     86,
+     100
+    ],
+    [
+     66,
+     64,
+     80
+    ]
+   ]
+  },
+  "assets": {},
+  "placements": {}
  }
 }
