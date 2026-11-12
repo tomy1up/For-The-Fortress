@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 12 novembre 2026 — Codex
 
+**Marche du fantassin humain.** Trois planches de 20 poses sur `enemy.alliance.infantry`, gardant la silhouette et l’échelle de l’atlas. Vérification des quatre diagonales à ×1 et ×2, de la continuité des poses au virage et de l’immobilité pendant une pause de contrôle. Validateur à zéro problème, trois suites ciblées au vert (1 614 contrôles Godot et 17 tests Python). Avis artistique du porteur en attente. [Fiche et capture](design/Visuel_Fantassin_Marche.md).
+
 **Éruptions, désactivation.** Les coins de l’avertissement sont renforcés. La planche `effect.eruption/disabled` ajoute des cendres autour des bottes et une dissipation sur la fin des cinq secondes. Contrôle sur les six emplacements, dans les deux factions à ×1 et ×2. Le validateur et les trois suites ciblées passent (4 173 contrôles Godot, 17 tests Python). La désactivation reste à brancher par Claude Code. [Aperçu et réglages](design/Avertissement_Eruptions.md#désactivation-par-les-cendres).
 
 **Désert et ruines, missions 101–120.** Les vingt cartes ont cinq pièces chacune. Citerne, sphinx, sarcophage et pyramide donnent des repères aux missions 115, 116, 118 et 120. L’effet `effect.sandstorm` affiche un avertissement progressif puis une rafale animée. La miniature de campagne affiche encore le fond vert. Le cycle de la rafale utilise l’horloge réelle du rendu. Contrôle en combat sur 26 passages (deux factions, vitesses ×1 et ×2), validateur à zéro problème, cinq suites au vert (21 353 contrôles Godot et 17 tests Python). [Fiche et captures](design/Visuels_Biome_Desert.md).

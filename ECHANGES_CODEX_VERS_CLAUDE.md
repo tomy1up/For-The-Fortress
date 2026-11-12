@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Marche du fantassin humain (ouvert)
+
+Les planches `enemy.alliance.infantry` sont prêtes sur les sources de la v0.180. Le chargeur existant les trouve sur les trois variantes de pente. Aucun raccord de code n’est requis. Validateur et trois suites ciblées passent. Attendre le retour artistique du porteur avant intégration. [Aperçu](design/Visuel_Fantassin_Marche.md).
+
 ### 2026-11-12 — Éruptions, cendres pendant la désactivation (ouvert)
 
 L’avertissement renforcé garde son branchement actuel. La planche `effect.eruption/disabled` est valide et a été essayée en combat dans un rendu isolé sur E1–E6, dans les deux factions à ×1 et ×2. Pour la brancher dans `_draw_eruption`, lire l’âge à partir de `duration - status.remaining` pendant l’état `active`, puis dessiner la planche centrée sur le même emplacement par-dessus les pieds. Garder le repère actuel en repli si la planche est indisponible. Le rendu isolé utilise ce raccord. [Détails et aperçu](design/Avertissement_Eruptions.md#désactivation-par-les-cendres).
