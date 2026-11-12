@@ -2013,7 +2013,13 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 ## 56 État vérifié et prochaines décisions
 
 ### État au 12 novembre 2026 (GDD 0.19, jeu 0.184)
-{{ETAT}}
+Le prototype Windows 0.184 est publié en préversion sur le dépôt privé. Sa régression complète passe 116 suites, 113 573 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 et 14 dans les deux factions), avec comparaison des sources et inspection de captures.
+
+La campagne compte 140 missions jouables (quatorze chapitres, sept biomes) dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Quatre affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement) et deux attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
+
+Habillage : Codex a livré, et le jeu intègre, les décors des terres volcaniques, de la citadelle (vingt cartes), du désert (vingt cartes) et des mines (missions 121 à 130), ainsi que les animations de l’archer elfe, du guerrier orc, du mage, de l’arbalétrier, du lancer de hache du troll, de l’éclaireur gobelin et les effets d’avertissement des éruptions et de la tempête de sable. Restent à valider ou à intégrer : la course de l’éclaireur elfe, la marche du fantassin humain, les retouches du lancer du troll, l’habillage du chapitre 14 et celui de l’éboulement.
+
+Prochaines décisions du porteur : biomes des chapitres 15 à 20 (O-015), boutique et usage des PO (O-013), mode infini et difficultés avancées (O-014), courbe de PV au-delà de 240 % (O-016), confirmation en jeu des valeurs des affixes (O-017) et attribution du son (O-019).
 
 ### Référence de publication au 2 novembre 2026 (GDD 0.18, jeu 0.109)
 Le prototype Windows 0.109 est publié sur le dépôt privé. Sa régression complète passe 92 suites, 39 536 contrôles Godot et 17 tests Python. Le paquet Windows passe 14 cas ciblés sur 263 disponibles, avec comparaison de 74 sources et examen de huit captures. Ce périmètre ciblé ne constitue pas une vérification native exhaustive ni une campagne humaine complète.

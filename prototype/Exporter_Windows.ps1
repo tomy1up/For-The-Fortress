@@ -1,6 +1,6 @@
 param(
     [string]$EnginePath = '',
-    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.183',
+    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.184',
     [string]$OutputRoot = ''
 )
 $ErrorActionPreference = 'Stop'
