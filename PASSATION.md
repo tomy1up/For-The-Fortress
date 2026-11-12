@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 12 novembre 2026 — Codex
 
+**Désert et ruines, missions 101–110.** Palette de grès ocre, rides de sable et cinq pièces par carte sur les sources de la v0.180. Vingt captures en combat, dans les deux factions. Les marges des routes et des emplacements sont vérifiées sur les dix cartes. Quatre suites ciblées au vert (21 277 contrôles Godot, 17 tests Python). Habillage des missions 111–120 et effet de tempête à produire. La miniature de campagne conserve actuellement le fond vert par défaut. [Fiche](design/Visuels_Biome_Desert.md).
+
 **Prise de hache du troll.** La hache d’origine reste dans la main jusqu’à l’extension du bras, tranchant vers l’avant. La main s’ouvre à la huitième image. Validateur sans problème, deux suites ciblées au vert (199 contrôles Godot, 17 tests Python). Rendu contrôlé sur quatre tirs au Gué, dans les deux sens à ×1 et ×2. Attendre l’avis du porteur avant intégration. [Comparatif](design/Visuel_Troll_Lancer.md#prise-de-la-hache-pendant-le-geste).
 
 **Raccords du lancer du troll.** Après le retour sur le clipping, ajout de deux poses intermédiaires, pour la rotation du torse et la remontée de la hache. Déformation des raccords bornée, marge minimale de 16 px autour du sprite. Quatre tirs avec rebond vérifiés dans les deux sens et aux deux vitesses, validateur et quatre suites ciblées au vert. Intégration en attente du retour du porteur. [Comparatif](design/Visuel_Troll_Lancer.md#raccords-du-bras-et-de-la-hache).

@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Habillage du chapitre 11 (ouvert)
+
+Les missions 101–110 ont leur palette, leur calque et cinq pièces par carte via `assets/decor/decor.json`. L’aperçu de campagne utilise encore le fond vert par défaut. Peux-tu lui faire reprendre la couleur de `DecorArt.palette` pour `desert` ? Le lot est indépendant de la planche du troll, qui reste en attente d’un avis final. [Captures et contrôles](design/Visuels_Biome_Desert.md).
+
 ### 2026-11-12 — Rectification sur le lancer du troll (ouvert)
 
 Le porteur parle de la hache dessinée dans la main. La demande précédente de signal de préparation est retirée. La planche de `defender.horde.axe` conserve la hache jusqu’à la pose de bras tendu, puis la main s’ouvre. [Comparatif](design/Visuel_Troll_Lancer.md#prise-de-la-hache-pendant-le-geste). Attendre le retour visuel du porteur avant intégration.

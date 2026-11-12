@@ -3071,24 +3071,499 @@
  "desert": {
   "palette": {
    "ground": [
-    181,
-    154,
-    103
+    191,
+    150,
+    91
    ],
    "faces": [
     [
-     154,
-     131,
-     88
+     150,
+     110,
+     66
     ],
     [
-     122,
-     104,
-     69
+     112,
+     82,
+     55
     ]
    ]
   },
-  "assets": {},
-  "placements": {}
+  "overlay": {
+   "file": "desert/rides_sable.png",
+   "position": [
+    388,
+    174
+   ]
+  },
+  "assets": {
+   "colonne": {
+    "file": "desert/colonne.png",
+    "size": [
+     141,
+     230
+    ],
+    "anchor": [
+     70,
+     212
+    ],
+    "height": 37
+   },
+   "colonne_retour": {
+    "file": "desert/colonne_retour.png",
+    "size": [
+     141,
+     230
+    ],
+    "anchor": [
+     70,
+     212
+    ],
+    "height": 37
+   },
+   "mur": {
+    "file": "desert/mur.png",
+    "size": [
+     245,
+     174
+    ],
+    "anchor": [
+     122,
+     160
+    ],
+    "height": 27
+   },
+   "mur_retour": {
+    "file": "desert/mur_retour.png",
+    "size": [
+     245,
+     174
+    ],
+    "anchor": [
+     122,
+     160
+    ],
+    "height": 27
+   },
+   "gres": {
+    "file": "desert/gres.png",
+    "size": [
+     245,
+     147
+    ],
+    "anchor": [
+     122,
+     135
+    ],
+    "height": 21
+   },
+   "gres_retour": {
+    "file": "desert/gres_retour.png",
+    "size": [
+     245,
+     147
+    ],
+    "anchor": [
+     122,
+     135
+    ],
+    "height": 21
+   },
+   "obelisque": {
+    "file": "desert/obelisque.png",
+    "size": [
+     166,
+     230
+    ],
+    "anchor": [
+     83,
+     212
+    ],
+    "height": 44
+   },
+   "obelisque_retour": {
+    "file": "desert/obelisque_retour.png",
+    "size": [
+     166,
+     230
+    ],
+    "anchor": [
+     83,
+     212
+    ],
+    "height": 44
+   }
+  },
+  "placements": {
+   "dune_first": [
+    {
+     "object": "colonne_retour",
+     "xy": [
+      2.0,
+      1.0
+     ]
+    },
+    {
+     "object": "colonne",
+     "xy": [
+      9.75,
+      1.0
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      4.0,
+      8.0
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      14.5,
+      2.0
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      11.5,
+      8.5
+     ]
+    }
+   ],
+   "dune_oasis": [
+    {
+     "object": "gres_retour",
+     "xy": [
+      5.25,
+      1.25
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "mur_retour",
+     "xy": [
+      12.5,
+      1.5
+     ]
+    },
+    {
+     "object": "colonne_retour",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "dune_canyon": [
+    {
+     "object": "colonne",
+     "xy": [
+      6.0,
+      2.25
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      1.5,
+      6.75
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      12.5,
+      1.5
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      9.5,
+      9.25
+     ]
+    }
+   ],
+   "dune_columns": [
+    {
+     "object": "colonne_retour",
+     "xy": [
+      6.0,
+      2.25
+     ]
+    },
+    {
+     "object": "colonne",
+     "xy": [
+      5.0,
+      8.75
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      12.5,
+      1.5
+     ]
+    },
+    {
+     "object": "colonne",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "dune_caravans": [
+    {
+     "object": "gres",
+     "xy": [
+      6.0,
+      1.75
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      1.5,
+      6.75
+     ]
+    },
+    {
+     "object": "mur_retour",
+     "xy": [
+      12.5,
+      1.5
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "colonne",
+     "xy": [
+      8.5,
+      9.0
+     ]
+    }
+   ],
+   "dune_temple": [
+    {
+     "object": "colonne",
+     "xy": [
+      6.0,
+      2.25
+     ]
+    },
+    {
+     "object": "colonne_retour",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      12.5,
+      1.25
+     ]
+    },
+    {
+     "object": "mur_retour",
+     "xy": [
+      12.75,
+      5.5
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "dune_well": [
+    {
+     "object": "mur_retour",
+     "xy": [
+      1.5,
+      6.75
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      6.0,
+      2.25
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      12.5,
+      3.5
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      16.75,
+      1.25
+     ]
+    },
+    {
+     "object": "colonne",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "dune_obelisks": [
+    {
+     "object": "colonne",
+     "xy": [
+      6.0,
+      2.25
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      12.5,
+      1.5
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "obelisque_retour",
+     "xy": [
+      10.5,
+      9.25
+     ]
+    }
+   ],
+   "dune_sea": [
+    {
+     "object": "gres_retour",
+     "xy": [
+      7.0,
+      1.75
+     ]
+    },
+    {
+     "object": "colonne_retour",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      12.5,
+      1.5
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "dune_necropolis": [
+    {
+     "object": "obelisque",
+     "xy": [
+      6.0,
+      2.25
+     ]
+    },
+    {
+     "object": "colonne",
+     "xy": [
+      5.0,
+      8.0
+     ]
+    },
+    {
+     "object": "mur_retour",
+     "xy": [
+      12.5,
+      1.5
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "obelisque_retour",
+     "xy": [
+      10.25,
+      8.75
+     ]
+    }
+   ]
+  }
  }
 }
