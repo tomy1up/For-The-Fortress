@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 12 novembre 2026 — Codex
 
+**Marche des deux boss et du capitaine humain.** Trois planches de 24 poses par unité. Appuis et armes contrôlés aux Coulées Figées (vague 10, quatre diagonales) et à La Brèche (vague 5, trois diagonales), à ×1 et ×2, avec pause de contrôle. Validateur à zéro problème et quatre suites ciblées au vert. En attente du retour visuel. [Boss](design/Visuels_Marche_Boss.md) · [Capitaine](design/Visuels_Garnison.md#marche-du-capitaine-humain).
+
 **Marche du garde noir.** Trois planches de 24 poses sur `enemy.horde.guard`. Épée et bouclier gardent leur silhouette, le pan de cape accompagne le pas. Quatre diagonales à ×1 et ×2 et pause vérifiées aux Coulées Figées, vague 7. Validateur et trois suites au vert (1 620 contrôles Godot, 17 tests Python). En attente d’un retour visuel. [Aperçu](design/Visuel_Garde_Noir.md).
 
 **Marche du garde royal.** Trois planches de 24 poses sur `enemy.alliance.guard`. Épée et bouclier gardent leur forme, le cimier suit le pas. Quatre diagonales à ×1 et ×2 et pause vérifiées aux Coulées Figées, vague 7. Validateur à zéro problème, trois suites ciblées au vert (1 619 contrôles Godot, 17 tests Python). En attente du retour visuel du porteur. [Aperçu](design/Visuel_Garde_Royal.md).

@@ -26,3 +26,13 @@ Le capitaine apparaissait crénelé à environ 54 px de haut sur le plateau. Les
 La comparaison couvre les missions 91, 94, 98 et 100, côté Horde, en vague 5. Douze paires de captures ont les mêmes positions, PV et temps de simulation avant et après réimport. Godot charge bien une texture avec mipmaps. La hallebarde et le bord de l’armure paraissent plus continus à taille de jeu. Le filtrage adoucit aussi certains petits détails du visage. [Comparatif en jeu](essais/capitaine_rendu/Capitaine_avant_apres.png)
 
 Le validateur d’animations et les suites ciblées des visuels ennemis et de la Garnison passent, avec 4 741 contrôles Godot et 17 tests Python. La comparaison porte sur le rendu en combat. La marche et la mort restent des lots séparés.
+
+## Marche du capitaine humain
+
+Le cycle utilise le sprite fixe retenu par le porteur. Le capitaine avance d’un pas court, avec un léger transfert de poids dans les épaules. La hallebarde reste rigide et suit les deux gants tout au long de la boucle.
+
+Les trois planches de `enemy.alliance.garrison` contiennent chacune 24 poses de 376 × 324 px. Le cycle couvre 21 px projetés à l’échelle de base. La dérive résiduelle mesurée sur les semelles isolées pendant l’appui va de 0,08 à 0,35 px à cette échelle.
+
+À La Brèche (mission 91, vague 5, côté Horde), les trois diagonales du trajet ont été parcourues à ×1 et ×2, avec les 24 poses jouées à chaque vitesse. La scène de contrôle figée donne deux captures identiques autour du capitaine à 0,65 s d’intervalle. Le validateur et les quatre suites ciblées du lot passent. La marche du capitaine humain attend le retour visuel du porteur. L’illustration du capitaine orc reste à valider.
+
+[Extrait en combat](essais/capitaine_marche/Capitaine_en_combat.gif) · [Diagonales de La Brèche](essais/capitaine_marche/Capitaine_diagonales.jpg)

@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Marche des deux boss et du capitaine humain (ouvert)
+
+Planches dans les dossiers `enemy.alliance.marshal`, `enemy.horde.warchief` et `enemy.alliance.garrison`. Le format actuel charge les trois cycles. Le validateur et les quatre suites ciblées passent. Attendre le retour visuel du porteur avant intégration. [Boss](design/Visuels_Marche_Boss.md) · [Capitaine humain](design/Visuels_Garnison.md#marche-du-capitaine-humain).
+
 ### 2026-11-12 — Marche du garde noir (ouvert)
 
 Trois planches dans le dossier d’exécution `enemy.horde.guard`. Essais aux Coulées Figées (vague 7) sur les quatre diagonales à ×1 et ×2. Validateur et trois suites ciblées passent. Attendre l’avis visuel du porteur avant intégration. [Captures](design/Visuel_Garde_Noir.md).
