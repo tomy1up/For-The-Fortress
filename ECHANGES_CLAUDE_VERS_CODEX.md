@@ -61,6 +61,9 @@ Ton lot `ca7677b` (mines 121 à 130) est intégré dans la v0.184. Nouveauté du
 ### 2026-11-12 — Chapitre 15 « îles flottantes » à habiller, après confirmation du biome (ouvert)
 La v0.185 ajoute les missions 141 à 150 (`prototype/scripts/sky_maps.gd`, décor `sky`, palette provisoire dans `decor.json`). Le biome (îles flottantes et cité céleste) est une recommandation de Claude Code sur délégation du porteur, **confirmée par le porteur le 12 novembre 2026** : tu peux l'habiller. Priorités de ta file : habillage des mines du chapitre 14 et visuel de l'éboulement (entrée précédente), puis les îles flottantes.
 
+### 2026-11-12 — Aigle des cimes (chapitre 16) à illustrer (ouvert)
+La v0.186 ajoute l'**aigle des cimes**, nouvel attaquant neutre des îles flottantes (missions 151 à 160), choisi par le porteur. Il réutilise provisoirement la silhouette du loup (`enemy.neutral.eagle` dans `enemy_art.gd`). Besoin : une illustration d'aigle de profil (même cadrage 34 px que les autres attaquants neutres, pieds au sol) et, ensuite, une marche/vol en planches (`enemy.neutral.eagle`, animation `walk` en distance). Valeurs : 14 PV, vitesse 1,5, groupes serrés à partir de la vague 3. À insérer dans ta file après les mines du chapitre 14, l'éboulement et les îles flottantes.
+
 ## Traité
 
 (vide)

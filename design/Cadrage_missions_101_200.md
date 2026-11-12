@@ -61,3 +61,7 @@ Le porteur a validé le 12 novembre 2026 le septième biome proposé par Claude 
 
 - **Courbe de PV** : à 240-249 % de PV (+1 % par mission), l'Alliance de référence avec 51 points de talent ne gagnait plus au-delà d'environ la mission 146, quelle que soit la disposition des emplacements (mesure du chapitre 15). Le porteur retient de **ralentir à +0,5 % par mission à partir de la mission 141** : 240 % aux missions 141 et 142, 244 % à la mission 150, 269 % à la mission 200 (`Catalogue.hp_percent_for`). Jusqu'à la mission 140, `99 + numéro` inchangé.
 - **Huitième biome (chapitres 15 et 16) : îles flottantes et cité céleste**, recommandation de Claude Code sur délégation du porteur (« comme tu le souhaites »), **confirmée par le porteur le 12 novembre 2026**. La toundra et glace est écartée (elle recoupait les Ardoises). La nouveauté du chapitre 16 reste à proposer.
+
+## Décision du 12 novembre 2026 — nouveauté du chapitre 16
+
+Le porteur retient **l'aigle des cimes**, un attaquant neutre rapide et fragile, pour le chapitre 16, après avoir relevé que le chapitre 14 était déjà un affixe (l'alternance attaquant/affixe des chapitres pairs avait été rompue). Voir [la fiche](Missions_151_160_Aigle.md).

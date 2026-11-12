@@ -51,7 +51,7 @@ func verify_validation() -> void:
 		check(not model.configure_combat_affix(bad) and model.combat_affix.is_empty(),"Affixe mal formé refusé sans effet : %s" % str(bad))
 	var started := Model.new(true);started.buy(3,0)
 	check(not started.configure_combat_affix(AFFIX),"Affixe refusé après une action")
-	check(Model.valid_enemy_hp_percent(244) and not Model.valid_enemy_hp_percent(245),"PV ennemis acceptés jusqu'à 244 %")
+	check(Model.valid_enemy_hp_percent(249) and not Model.valid_enemy_hp_percent(250),"PV ennemis acceptés jusqu'à 249 %")
 
 func verify_texts() -> void:
 	var model := stormy()

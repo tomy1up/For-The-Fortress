@@ -83,6 +83,11 @@ static func definition(number: int) -> Dictionary:
 		var maps: Array[String] = ["sky_pontoon","sky_mistbridge","sky_cloudgate","sky_spires","sky_gardens","sky_belvedere","sky_updrafts","sky_dome","sky_fallen","sky_summit"]
 		var titles: Array[String] = ["Le Ponton des Nuées","Le Pont de Brume","La Porte des Nuages","Les Flèches d'Azur","Les Jardins Suspendus","Le Belvédère","Les Courants Ascendants","Le Dôme Céleste","L'Île Effondrée","La Citadelle des Cimes"]
 		result.merge({"title":titles[number-141],"available":true,"map_id":maps[number-141],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10},true)
+	elif number <= 160:
+		# Chapitre 16 : nouveauté du biome des îles flottantes, l'aigle des cimes (décision du porteur, 12 novembre 2026). Valeurs d'essai.
+		var maps: Array[String] = ["sky_aerie","sky_nest","sky_twinpeaks","sky_triplenest","sky_ledge","sky_col","sky_raptors","sky_roost","sky_azurefall","sky_throne"]
+		var titles: Array[String] = ["L'Aire des Aigles","Le Nid de Brume","Les Pitons Jumeaux","Les Trois Aires","La Corniche Ventée","Le Col du Ciel","Les Rapaces","Le Perchoir","La Chute d'Azur","Le Trône des Nuées"]
+		result.merge({"title":titles[number-151],"available":true,"map_id":maps[number-151],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10,"wave_set_id":"sky_eagles"},true)
 	return result
 
 ## PV ennemis (en % de la référence) d'une mission : `99 + numéro` jusqu'à la mission 140, puis +1 % toutes les deux missions (décision du porteur, 12 novembre 2026, courbe ralentie à +0,5 % par mission).

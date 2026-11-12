@@ -118,6 +118,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.185** : chapitre 15 (141-150, `sky_maps.gd`, biome « îles flottantes » à confirmer) ; `Catalogue.hp_percent_for` : courbe de PV `99 + numéro` jusqu'à la mission 140 puis +1 % toutes les deux missions (décision du porteur) ; borne des PV à 244 %. Les tests des chapitres 13 et 14 utilisent encore des ordres d'achat propres à chaque carte ; celui du chapitre 15 utilise l'ordre standard [3,4,2] (marges minces).
 
+**v0.186** : chapitre 16 (151-160) et attaquant `Eagle` (`eagle_encounters.gd`, type 11, jeu de rencontres `sky_eagles` branché dans `campaign_data.gd`, `bank_encounters.gd`, `enemy_catalogue.gd`, `enemy_art.gd`, `valley_model.gd`). Visuel provisoire : silhouette du loup (cadre partagé avec le loup, exclu du test de disjonction). Cartes prolongées (`maps16.py` hors dépôt). Marge la plus fine : mission 155 (8/6 PV).
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

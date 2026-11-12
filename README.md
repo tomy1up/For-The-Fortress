@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.186**. Chapitre 16, l'aigle des cimes (missions 151 à 160) : un attaquant neutre rapide et fragile qui arrive en groupes serrés (valeurs de prototype à confirmer, visuel provisoire). 160 missions jouables. [Chapitre 16](design/Missions_151_160_Aigle.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.186).
+
 **Prototype v0.185**. Chapitre 15, îles flottantes et cité céleste (missions 141 à 150, biome proposé par Claude Code et à confirmer) ; la courbe de PV ennemis passe à +0,5 % par mission à partir de la mission 141 (240 % à la mission 141, 269 % à la mission 200), décision du porteur. 150 missions jouables. [Chapitre 15](design/Missions_141_150_Iles_flottantes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.185).
 
 **Prototype v0.184**. Chapitre 14, l'éboulement (missions 131 à 140) : toutes les 18 s, une entrée est bloquée 7 s et les ennemis qui devaient y apparaître passent par l'entrée suivante (valeurs de prototype à confirmer). Habillage des mines de Codex intégré ; GDD 0.19 consolidé. [Chapitre 14](design/Missions_131_140_Eboulement.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.184).
