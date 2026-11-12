@@ -29,6 +29,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## Livré
 
+- [x] **Éclaireur elfe, course** — trois planches de 20 poses testées en jeu sur les quatre diagonales à ×1 et ×2. Aperçu en attente de retour du porteur. [Fiche](design/Visuel_Eclaireur_Elfe.md).
+
 - [x] **Éclaireur gobelin, première course** — trois planches de 20 images vérifiées en jeu. Étude livrée hors ressources d’exécution, en attente du retour visuel et de l’ajustement du test témoin. [Aperçu](design/Visuel_Eclaireur_Gobelin.md).
 
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).

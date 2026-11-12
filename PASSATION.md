@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 12 novembre 2026 — Codex
 
+**Course de l’éclaireur elfe.** Trois planches de 20 poses sur `enemy.alliance.scout`, contrôlées sur les quatre diagonales à ×1 et ×2. La pause de contrôle fige le sprite. Validateur à zéro problème et sept suites ciblées au vert pour le lot elfe et tempête (23 580 contrôles Godot, 17 tests Python). Le porteur a donné un avis favorable à l’aperçu du gobelin et demande de poursuivre. [Aperçu de l’elfe](design/Visuel_Eclaireur_Elfe.md).
+
 **Tempête de sable, contrôle v0.182.** L’effet de la version publiée a été vérifié sur l’export Windows (111 et 120) et sur les sources (40 passages, missions 111–120, deux factions et deux vitesses). Traînées plus lumineuses et voile renforcé proposés dans deux PNG au même format. Les 40 passages ont été rejoués avec le nouveau contraste. Les cendres intégrées ont été contrôlées sur les six emplacements, à ×1 et ×2 dans les deux factions. [Comparatif](design/Visuels_Biome_Desert.md#contraste-de-la-rafale-sur-la-v0182).
 
 **Course de l’éclaireur gobelin.** Trois planches de 20 poses testées sur Les Coulées Figées, vague 5, dans les quatre diagonales à ×1 et ×2. Le validateur accepte les planches. La suite animation échoue si elles sont installées, car `test_animation_library.gd` attend que `enemy.horde.scout` n’ait pas de marche. Fichiers livrés dans `design/essais/eclaireur_gobelin/enemy.horde.scout/` pour branchement avec correction du test. Les données des deux chapitres désert et la miniature v0.181 sont conservées après fusion. [Fiche et captures](design/Visuel_Eclaireur_Gobelin.md).
