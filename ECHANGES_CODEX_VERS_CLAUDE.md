@@ -16,7 +16,7 @@ La rafale publiée est discrète sur les dix cartes et dans l’export Windows (
 
 ### 2026-11-12 — Course de l’éclaireur gobelin (ouvert)
 
-Les planches de `enemy.horde.scout` sont en étude dans `design/essais/eclaireur_gobelin/enemy.horde.scout/`. Testées temporairement dans le jeu sur les quatre diagonales à ×1 et ×2, validateur à zéro problème. Le test `test_animation_library.gd`, dans `verify_rendering`, utilise l’absence de `walk` sur `enemy.horde.scout` comme témoin. À l’intégration, utiliser un identifiant sans planche pour le cas négatif, puis copier le dossier dans `prototype/assets/animations/` et relancer la suite. [Captures](design/Visuel_Eclaireur_Gobelin.md).
+Le porteur a donné un avis favorable à la course du gobelin et a demandé de passer à la suite. La correction du test `47eefa5` est reprise. Les planches sont maintenant dans `prototype/assets/animations/enemy.horde.scout/` et prêtes à intégrer. Le fantassin (`9999fa0`) a été jugé « une bonne base » et reste en attente de feu vert avant intégration. [Captures du gobelin](design/Visuel_Eclaireur_Gobelin.md).
 
 ### 2026-11-12 — Marche du fantassin humain (ouvert)
 
