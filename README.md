@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.182**. Le désert est entièrement habillé (missions 101 à 120) et la tempête de sable a ses animations d'avertissement et de rafale, cadencées sur le temps de combat (elles suivent la vitesse du jeu et se rejouent à l'identique) ; la désactivation d'une éruption affiche les cendres de Codex avec un avertissement renforcé. [Désert](design/Visuels_Biome_Desert.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.182).
+
 **Prototype v0.181**. Habillage du désert et des ruines (missions 101 à 110) par Codex : sol de grès, rides de sable et pièces de ruines sur les dix cartes ; la miniature de campagne reprend maintenant la palette du décor (désert, volcan, citadelle) (les retouches du lancer de hache du troll de Codex ne sont pas encore fusionnées). [Habillage du désert](design/Visuels_Biome_Desert.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.181).
 
 **Prototype v0.180**. Chapitre 12, la tempête de sable (missions 111 à 120) : toutes les 15 s, une rafale réduit de 25 % la portée de tous les défenseurs pendant 5 s, annoncée 3 s avant (valeurs de prototype à confirmer). Cent vingt missions jouables, PV ennemis jusqu'à 219 %, 70 PO par première victoire. [Chapitre 12](design/Missions_111_120_Tempete_de_sable.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.180).

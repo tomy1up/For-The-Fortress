@@ -1111,7 +1111,7 @@ func _draw_sandstorm() -> void:
 			var bounds := Rect2(area[0],Vector2.ZERO)
 			for point in area: bounds = bounds.expand(point)
 			var progress_value: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0) if status.state == "warning" else 0.0
-			var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,Time.get_ticks_msec()/1000.0,progress_value)))
+			var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,model.elapsed,progress_value)))
 			draw_texture_rect_region(texture,bounds,region)
 			return
 	if status.state == "warning":
@@ -1120,7 +1120,7 @@ func _draw_sandstorm() -> void:
 		draw_polyline(outline,Color(0.93,0.78,0.45,0.25+0.5*progress),2.0+4.0*progress,true)
 	else:
 		draw_colored_polygon(area,Color(0.86,0.7,0.42,0.22))
-		var clock: float = Time.get_ticks_msec()/1000.0
+		var clock: float = model.elapsed # Temps de combat : suit la vitesse du jeu, la pause et le rejeu.
 		for index in range(14):
 			var lane: float = fposmod(float(index)*0.381966,1.0)
 			var shift: float = fposmod(clock*0.5+float(index)*0.173,1.0)
@@ -1205,6 +1205,18 @@ func _draw_eruption() -> void:
 	if status.is_empty(): return
 	if status.state == "warning" and _eruption_warning_sheet(): return # Remplacé par la planche d'avertissement, dessinée sous les unités.
 	var center: Vector2 = project(_map_slots()[status.slot])
+	# Désactivation par planche (effet `effect.eruption`, animation `disabled`) : cendres au-dessus des pieds, âge = durée − temps restant.
+	if status.state == "active" and SheetAnimations.has_animation(ERUPTION_EFFECT_ID,"disabled"):
+		var spec: Dictionary = SheetAnimations.spec_for(ERUPTION_EFFECT_ID)
+		var anim: Dictionary = spec.animations.disabled
+		var texture: Texture2D = SheetAnimations.texture_for(ERUPTION_EFFECT_ID,anim)
+		if texture != null:
+			var age: float = float(model.combat_affix.duration)-float(status.remaining)
+			var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,0.0,age)))
+			draw_set_transform(center,0.0,Vector2.ONE)
+			draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
+			draw_set_transform(Vector2.ZERO)
+			return
 	var diamond := PackedVector2Array([center+Vector2(-26,0),center+Vector2(0,-13),center+Vector2(26,0),center+Vector2(0,13)])
 	if status.state == "warning":
 		var pulse: float = 0.5+0.5*sin(model.elapsed*9.0)

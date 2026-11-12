@@ -22,6 +22,7 @@ func run_checks() -> void:
 	verify_step_independence()
 	verify_replay()
 	await verify_rendering()
+	await verify_eruption_ash()
 	print("SANDSTORM_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
 
@@ -189,3 +190,36 @@ func verify_rendering() -> void:
 	await process_frame
 	check(not model.storm_status().is_empty(),"Sans planche : repère provisoire dessiné sans erreur")
 	bare.free()
+
+## Désactivation d'une éruption par planche (`effect.eruption/disabled`) : dessinée sans modifier le jeu, repli sur le repère sans planche.
+func verify_eruption_ash() -> void:
+	Library.clear_cache()
+	var spec := {"version":1,"id":"effect.eruption","display_height":60,"foot":[40,40],"animations":{
+		"warning":{"file":"warning.png","frames":24,"frame_size":[80,60],"mode":"progress"},
+		"disabled":{"file":"disabled.png","frames":60,"frame_size":[80,60],"mode":"event","duration":5.0}}}
+	check(Library.validation_error(spec) == "","Description de l'effet d'éruption valide")
+	var warning_strip := Image.create(24*80,60,false,Image.FORMAT_RGBA8);warning_strip.fill(Color(1,0.4,0.1,0.4))
+	var ash_strip := Image.create(60*80,60,false,Image.FORMAT_RGBA8);ash_strip.fill(Color(0.4,0.4,0.4,0.6))
+	Library.register_for_test("effect.eruption",spec,{"warning":ImageTexture.create_from_image(warning_strip),"disabled":ImageTexture.create_from_image(ash_strip)})
+	var model := Model.new(true)
+	model.configure_combat_affix({"id":"eruptions","interval":14,"warning":3,"duration":5})
+	model.rng.seed = 7
+	model.buy(3,0)
+	model.start()
+	model.advance(16.0)
+	var view := View.new();view.model = model;root.add_child(view)
+	var before: String = JSON.stringify([model.gold,model.rng.state,model.defenders,model.eruption_status()])
+	view.queue_redraw()
+	await process_frame
+	await process_frame
+	check(model.eruption_status().get("state","") == "active" and before == JSON.stringify([model.gold,model.rng.state,model.defenders,model.eruption_status()]),"Cendres dessinées pendant la désactivation sans modifier le jeu")
+	view.free()
+	Library.clear_cache()
+	Library.register_for_test("effect.eruption",{})
+	var bare := View.new();bare.model = model;root.add_child(bare)
+	await process_frame
+	bare.queue_redraw()
+	await process_frame
+	check(model.eruption_status().get("state","") == "active","Sans planche : repère provisoire de désactivation")
+	bare.free()
+	Library.clear_cache()

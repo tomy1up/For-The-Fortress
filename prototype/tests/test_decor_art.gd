@@ -70,7 +70,7 @@ func verify_props() -> void:
 ## Les pièces de toutes les cartes décrites ne chevauchent ni la chaussée ni les emplacements (volcan et citadelle, deux camps).
 func verify_margins() -> void:
 	var counted := 0
-	for decoration in ["volcanic","citadel"]:
+	for decoration in ["volcanic","citadel","desert"]:
 		var placements: Dictionary = Decor.set_for(decoration).get("placements",{})
 		for id in placements:
 			var board: Dictionary = Model.Maps.for_id(str(id))
