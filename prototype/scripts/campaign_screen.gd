@@ -1,5 +1,6 @@
 extends ColorRect
 const Catalogue = preload("res://scripts/campaign_catalogue.gd")
+const DecorArt = preload("res://scripts/decor_art.gd")
 const Scout = preload("res://scripts/mission_scout.gd")
 const Maps = preload("res://scripts/map_definition.gd")
 const MarshArt = preload("res://scripts/marsh_art.gd")
@@ -11,6 +12,7 @@ signal closed
 
 class TerrainPreview extends Control:
 	var definition: Dictionary = {}
+	var faction: int = 0 # Faction jouée : la citadelle affichée est celle du camp adverse.
 	func _init() -> void:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 	func show_map(id: String) -> void:
@@ -46,7 +48,8 @@ class TerrainPreview extends Control:
 			draw_string(font,Vector2((size.x-font.get_string_size(message,HORIZONTAL_ALIGNMENT_LEFT,-1,15).x)/2,size.y/2+5),message,HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("91a799"))
 			return
 		var marsh: bool = definition.decoration=="marsh"
-		draw_colored_polygon(layout.board,MarshArt.GROUND if marsh else Color("3d3837") if definition.decoration == "volcanic" else Color("55555d") if definition.decoration == "citadel" else Color("405256") if definition.decoration == "mountain" else Color("294536"))
+		var palette: Dictionary = DecorArt.palette(str(definition.decoration),faction)
+		draw_colored_polygon(layout.board,palette.ground if not palette.is_empty() else MarshArt.GROUND if marsh else Color("3d3837") if definition.decoration == "volcanic" else Color("55555d") if definition.decoration == "citadel" else Color("405256") if definition.decoration == "mountain" else Color("294536"))
 		if marsh:
 			var factor: float = (layout.board[1].x-layout.board[0].x)/(definition.size.x*2.0)
 			MarshArt.draw_ground(self,func(point: Vector2):return layout.board[0]+project(point)*factor,true,definition.get("water_areas",MarshArt.POOLS))
@@ -315,6 +318,7 @@ func _refresh_detail() -> void:
 	mission_title.add_theme_font_size_override("font_size",title_size)
 	mission_title.size = Vector2(358,48)
 	mission_title.text = definition.title
+	terrain_preview.faction = faction
 	terrain_preview.show_map(definition.get("map_id","") if definition.available else "")
 	if not definition.available:
 		mission_detail.text = "Contenu à venir."
