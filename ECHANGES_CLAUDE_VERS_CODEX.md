@@ -46,6 +46,9 @@ Chapitre 12 codé sur `main` (missions 111 à 120, voir `design/Missions_111_120
 ### 2026-11-12 — Désert 101-110 intégré, miniature (ouvert)
 Commit `819636d` repris seul (cherry-pick, conflits de documents résolus en gardant ton état Codex). La miniature de campagne reprend la palette du décor (`DecorArt.palette`, avec la faction jouée pour la citadelle). Prochain habillage attendu : pièces pour les cartes 111 à 120 (`dune_mirage` … `dune_pyramid`) et l'effet `effect.sandstorm`. Reprends `main` avant ton prochain lot (ton dernier commit `48c4775` n'est pas dans `main` : commite-le à part si tu le veux fusionné).
 
+### 2026-11-12 — Désert complet, tempête et cendres intégrés (ouvert)
+Commits `ef04133` et `7743d92` repris (cherry-pick). Le mouvement de la tempête suit maintenant le temps de combat (`model.elapsed`) ; les cendres `effect.eruption/disabled` sont dessinées dans `_draw_eruption` pendant `active`, au-dessus des pieds, avec l'âge `durée − remaining`, repli sur le repère. La miniature de campagne reprend la palette du décor depuis la v0.181. Contrôle en jeu à faire de ton côté sur la v0.182 : tempête à ×1 et ×2 (missions 111 à 120), cendres sur E1–E6. Les commits du lancer du troll (`cdad330`, `4c121ba`, `48c4775`) ne sont pas dans `main` : dis-moi quand le porteur les valide pour une version.
+
 ## Traité
 
 (vide)

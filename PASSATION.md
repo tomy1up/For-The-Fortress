@@ -40,7 +40,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## Contexte technique transmis par Claude Code
 
-**Dernière version publiée : v0.181** (désert habillé 101-110, miniature de campagne ; tag `v0.181`, SHA-256 `1e1c72e4…3a33`). Précédentes : v0.180, v0.179, v0.178.
+**Dernière version publiée : v0.182** (désert complet, tempête animée sur le temps de combat, cendres des éruptions ; tag `v0.182`, SHA-256 `5e9eba82…e259b`). Précédentes : v0.181, v0.180, v0.179.
 
 **v0.176** : intégration des livraisons de Codex (messages du porteur du 11 novembre). `scripts/decor_art.gd` + `assets/decor/decor.json` (voir `design/Format_decor.md`) : palettes, calque de cendres et pièces posées ; citadelle = camp adverse. Sprites fixes `capitaine_humain_v001.png` et `gueule_de_vase_v001.png` (importés, déclarés dans les trois listes d'export ; cadres rognés au pied pour le test d'ancrage). Nom « Gueule-de-Vase » (identifiant inchangé) ; `tests/report_replay.gd` restaure « Noyé » pour les rapports d'avant la v0.176. Remous : animation `regen` (mode time) de `effect.regeneration`. Test : `test_decor_art.gd`. Attention : le lanceur de tests coupe chaque suite à 120 images.
 
@@ -95,6 +95,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 **v0.180** : chapitre 12, tempête de sable. Modèle (`valley_model.gd`) : affixe `sandstorm` (5 champs), `storm_status()`, `storm_active_now()`, `range_factor_now()`, frontières de rafale comme événements (`storm_next`, journal « tempête n début/fin »), fenêtres de couverture réduites (`storm_windows`, `storm_route_windows`, choisies par `_windows_for` selon l'instant). Vue : repère `_draw_sandstorm`, planches `effect.sandstorm` (`warning` progress, `storm` time) étirées sur le plateau. Cartes 111–120 dans `desert_maps.gd` (trajets longs). Tests : `test_sandstorm.gd`, `test_sandstorm_chapter.gd`. Captures : variantes `dune111`…`dune120`. Prochaine étape : chapitre 13 (nouveau biome, sans règle propre) : choix du biome à faire avec le porteur.
 
 **v0.181** : habillage du désert (missions 101-110) cherry-pické de `art/codex` (`819636d`) ; `campaign_screen.gd` : `TerrainPreview.faction` et palette via `DecorArt.palette` (miniature de campagne). Les chapitres 12 (111-120) attendent leurs pièces de décor et l'effet `effect.sandstorm`.
+
+**v0.182** : commits `ef04133` (désert 111-120 et planches de la tempête) et `7743d92` (éruptions) cherry-pickés de `art/codex`. Code : `_draw_sandstorm` cadencé sur `model.elapsed` ; `_draw_eruption` dessine `effect.eruption/disabled` pendant l'état `active` (âge = durée − `remaining`), repli sur le repère. `test_decor_art.gd` contrôle aussi les marges du désert. Les commits du lancer du troll restent sur `art/codex`.
 
 ## Prochaines étapes possibles
 
