@@ -6,17 +6,33 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Course de l’éclaireur elfe (ouvert)
+
+L’elfe utilise les planches de `enemy.alliance.scout` dans le dossier d’exécution. Le validateur et les sept suites ciblées du lot elfe et tempête passent. Les quatre diagonales ont été vérifiées à ×1 et ×2. Le porteur a donné un avis favorable à l’aperçu du gobelin, dont le dossier d’essai et l’ajustement de test restent décrits plus bas. [Aperçu de l’elfe](design/Visuel_Eclaireur_Elfe.md).
+
+### 2026-11-12 — Tempête v0.182, contraste (ouvert)
+
+La rafale publiée est discrète sur les dix cartes et dans l’export Windows (111 et 120). Les deux PNG de `effect.sandstorm` sont renforcés. La phase de la rafale suit déjà le temps de combat dans la v0.182. [Comparatif](design/Visuels_Biome_Desert.md#contraste-de-la-rafale-sur-la-v0182).
+
+### 2026-11-12 — Course de l’éclaireur gobelin (ouvert)
+
+Le porteur a donné un avis favorable à la course du gobelin et a demandé de passer à la suite. La correction du test `47eefa5` est reprise. Les planches sont maintenant dans `prototype/assets/animations/enemy.horde.scout/` et prêtes à intégrer. Le fantassin (`9999fa0`) a été jugé « une bonne base » et reste en attente de feu vert avant intégration. [Captures du gobelin](design/Visuel_Eclaireur_Gobelin.md).
+
+### 2026-11-12 — Marche du fantassin humain (ouvert)
+
+Les planches `enemy.alliance.infantry` sont prêtes sur les sources de la v0.180. Le chargeur existant les trouve sur les trois variantes de pente. Aucun raccord de code n’est requis. Validateur et trois suites ciblées passent. Attendre le retour artistique du porteur avant intégration. [Aperçu](design/Visuel_Fantassin_Marche.md).
+
 ### 2026-11-12 — Éruptions, cendres pendant la désactivation (ouvert)
 
 L’avertissement renforcé garde son branchement actuel. La planche `effect.eruption/disabled` est valide et a été essayée en combat dans un rendu isolé sur E1–E6, dans les deux factions à ×1 et ×2. Pour la brancher dans `_draw_eruption`, lire l’âge à partir de `duration - status.remaining` pendant l’état `active`, puis dessiner la planche centrée sur le même emplacement par-dessus les pieds. Garder le repère actuel en repli si la planche est indisponible. Le rendu isolé utilise ce raccord. [Détails et aperçu](design/Avertissement_Eruptions.md#désactivation-par-les-cendres).
 
 ### 2026-11-12 — Habillage du chapitre 12 et tempête de sable (ouvert)
 
-Les missions 111–120 ont cinq placements chacune. `effect.sandstorm` contient `warning` en progression et `storm` en boucle, 384 × 192 px par image. Les deux lots du désert peuvent être intégrés à la suite. La planche du troll reste en attente d’un avis final. La miniature de campagne attend la palette `desert`. La phase de la rafale repose sur `Time.get_ticks_msec()` dans `_draw_sandstorm`. Si tu veux que le mouvement suive la vitesse de combat et soit reproductible en rejeu, il faudra le cadencer sur le temps du modèle. [Détails et captures](design/Visuels_Biome_Desert.md#chapitre-12--la-tempête-de-sable).
+Les missions 111–120 ont cinq placements chacune. `effect.sandstorm` contient `warning` en progression et `storm` en boucle, 384 × 192 px par image. Les deux lots du désert peuvent être intégrés à la suite. La planche du troll reste en attente d’un avis final. La miniature de campagne utilise désormais la palette `desert` depuis la v0.181. La phase de la rafale repose sur `Time.get_ticks_msec()` dans `_draw_sandstorm`. Si tu veux que le mouvement suive la vitesse de combat et soit reproductible en rejeu, il faudra le cadencer sur le temps du modèle. [Détails et captures](design/Visuels_Biome_Desert.md#chapitre-12--la-tempête-de-sable).
 
 ### 2026-11-12 — Habillage du chapitre 11 (ouvert)
 
-Les missions 101–110 ont leur palette, leur calque et cinq pièces par carte via `assets/decor/decor.json`. L’aperçu de campagne utilise encore le fond vert par défaut. Peux-tu lui faire reprendre la couleur de `DecorArt.palette` pour `desert` ? Le lot est indépendant de la planche du troll, qui reste en attente d’un avis final. [Captures et contrôles](design/Visuels_Biome_Desert.md).
+Les missions 101–110 ont leur palette, leur calque et cinq pièces par carte via `assets/decor/decor.json`. Le lot et la palette de l’aperçu de campagne sont intégrés en v0.181. Le lot est indépendant de la planche du troll, qui reste en attente d’un avis final. [Captures et contrôles](design/Visuels_Biome_Desert.md).
 
 ### 2026-11-12 — Rectification sur le lancer du troll (ouvert)
 
