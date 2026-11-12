@@ -2,7 +2,7 @@
 
 ## Décision du porteur et statut de conception
 
-Le 12 novembre 2026, le porteur valide le biome « souterrains et mines », puis retient **l'éboulement qui bloque un trajet** comme nouveauté du chapitre 14 (CAMP-017). Le principe est validé ; la mécanique précise et ses valeurs sont des **réglages de prototype à confirmer** proposés par Claude Code.
+Le 12 novembre 2026, le porteur valide le biome « souterrains et mines », puis retient **l'éboulement qui bloque un trajet** comme nouveauté du chapitre 14 (CAMP-017). Le principe est validé. Le porteur a aussi validé le 12 novembre 2026 les valeurs d'essai proposées par Claude Code (18 s, 7 s, 3 s, report sur l'entrée suivante) ; elles restent à réévaluer à l'équilibrage.
 
 ## Règle
 

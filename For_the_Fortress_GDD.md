@@ -1643,7 +1643,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-25 | Terres volcaniques et cendres (chapitres 7 et 8) ; nouveauté du chapitre 8 : **Éruptions**, un emplacement désactivé au hasard — V | Décisions du porteur, 10 novembre 2026. 5 s toutes les 14 s, avertissement de 3 s : H. Habillage laissé à Codex |
 | MAJ-26 | Citadelle de la faction adverse (chapitres 9 et 10) ; nouveauté du chapitre 10 : **la Garnison**, élite propre à la citadelle — V | Décision du porteur, 11 novembre 2026. Noms et statistiques (520 PV de base) : H |
 | MAJ-27 | Désert et ruines (chapitres 11 et 12) ; nouveauté du chapitre 12 : **tempête de sable** — V | Décisions du porteur, 11 novembre 2026. −25 % de portée pendant 5 s toutes les 15 s, avertissement de 3 s : H |
-| MAJ-28 | Souterrains et mines (chapitres 13 et 14) ; nouveauté du chapitre 14 : **éboulement** qui bloque une entrée — V | Décisions du porteur, 12 novembre 2026 (biome puis éboulement). 7 s toutes les 18 s, avertissement de 3 s, apparitions reportées sur l’entrée suivante : H |
+| MAJ-28 | Souterrains et mines (chapitres 13 et 14) ; nouveauté du chapitre 14 : **éboulement** qui bloque une entrée — V | Décisions du porteur, 12 novembre 2026 (biome puis éboulement). 7 s toutes les 18 s, avertissement de 3 s, apparitions reportées sur l’entrée suivante : valeurs d’essai **validées par le porteur le 12 novembre 2026**, à réévaluer à l’équilibrage |
 | MAJ-29 | Les arbres de talents de chaque faction se valent pendant toute l’aventure ; l’Alliance et la Horde ont la même puissance de talents — V | Décisions du porteur, 10 novembre 2026 (section 64). Facteurs d’équilibrage H |
 | MAJ-30 | La courbe de PV ennemis continue à +1 % par mission jusqu’à la mission 200 — V | Décision du porteur, 11 novembre 2026 ; à mesurer chapitre par chapitre, ralentissement proposé au porteur si la référence ne gagne plus (section 62) |
 | MAJ-31 | PO de première victoire : 60 jusqu’au chapitre 10, puis +5 par chapitre (65 au chapitre 11, 105 au chapitre 20) ; aucune XP après la mission 100 — H pour le barème, V pour l’absence d’XP | Barème choisi par Claude Code sur délégation du porteur, 11 novembre 2026, à confirmer quand la boutique existera |
@@ -2246,7 +2246,7 @@ Les cartes comptent une, deux ou trois entrées vers la forteresse. Les cartes �
 Une nouveauté de biome est soit un attaquant propre au biome, soit un affixe qui affaiblit la défense ou renforce les attaquants. Elle est annoncée avant la mission et visible pendant le combat, pour que le joueur puisse préparer sa défense. Tous les affixes sont des fonctions du temps de combat : ils se rejouent à l’identique et ne dépendent pas du pas de simulation ; les rapports conservent l’affixe et leur rejeu le vérifie.
 
 ### Affixes réalisés
-Toutes les valeurs sont des réglages de prototype à confirmer (H).
+Toutes les valeurs sont des réglages de prototype à confirmer (H), sauf celles de l’éboulement (18 s, 7 s, 3 s), validées par le porteur le 12 novembre 2026 comme valeurs d’essai.
 | Affixe | Chapitre | Règle | Annonce et lisibilité | Version |
 | --- | --- | --- | --- | --- |
 | Vents contraires | 4 (missions 31–40) | Tous les défenseurs attaquent 10 % moins souvent (intervalle divisé par 0,9) pendant toute la mission ; les dégâts périodiques déjà appliqués gardent leur rythme | Annoncé avant le lancement ; mention permanente ; repère provisoire de traînées | 0.155 |
