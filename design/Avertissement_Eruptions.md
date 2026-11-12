@@ -11,3 +11,16 @@ Pour le branchement par Claude Code, utiliser la planche uniquement lorsque `eru
 La planche est livrée hors ressources d’exécution. Le branchement, l’essai en jeu et l’habillage commun de la désactivation sont à faire séparément.
 
 **Retour du porteur, 11 novembre 2026** — la maquette lui paraît « plutôt propre ». Ce retour porte sur l’aperçu des fissures et des braises. Le rendu et sa transition vers la désactivation seront à juger en jeu.
+
+## Désactivation par les cendres
+
+Proposition sur les sources de la v0.180, le 12 novembre 2026. Le bord de la case s’allume plus nettement pendant l’annonce, même si les fissures sont sous les bottes. À l’éruption, le sol s’assombrit et deux volutes de cendres montent autour des pieds. L’arme et le visage restent dégagés. Les cendres se dissipent vers la fin de l’état, puis le plateau retrouve son rendu normal.
+
+`effect.eruption/disabled` utilise 60 images de 80 × 60 px sur 5 s en mode `event`. L’ancre reste en (40, 40). La planche est dessinée au-dessus du bas de l’unité pour éviter que l’effet soit couvert. L’âge est calculé avec le temps de combat à partir de `duration - remaining`. L’avertissement conserve son mode `progress` et son dessin sous l’unité.
+
+Contrôle en situation de combat sur la mission 71, avec les six emplacements, les trois défenseurs de base par faction et les vitesses ×1 et ×2, soit 24 passages. L’essai charge une vue isolée qui dessine la planche de cendres pendant l’état `active`. L’avertissement, la désactivation puis sa fin sont vérifiés contre l’état du jeu. La vérification du rendu compare aussi l’état du combat avant et après chaque capture. Le validateur signale zéro problème et les trois suites ciblées passent (4 173 contrôles Godot, 17 tests Python).
+
+Le jeu utilise encore son repère provisoire pendant la désactivation. Claude Code doit relier la planche à l’état `active`.
+
+- [Les quatre étapes à ×2](essais/eruption_cendres/Eruptions_etapes_x2.jpg)
+- [Sapeur gobelin en combat, ×1](essais/eruption_cendres/Eruption_en_combat.gif)

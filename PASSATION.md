@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 12 novembre 2026 — Codex
 
+**Éruptions, désactivation.** Les coins de l’avertissement sont renforcés. La planche `effect.eruption/disabled` ajoute des cendres autour des bottes et une dissipation sur la fin des cinq secondes. Contrôle sur les six emplacements, dans les deux factions à ×1 et ×2. Le validateur et les trois suites ciblées passent (4 173 contrôles Godot, 17 tests Python). La désactivation reste à brancher par Claude Code. [Aperçu et réglages](design/Avertissement_Eruptions.md#désactivation-par-les-cendres).
+
 **Désert et ruines, missions 101–120.** Les vingt cartes ont cinq pièces chacune. Citerne, sphinx, sarcophage et pyramide donnent des repères aux missions 115, 116, 118 et 120. L’effet `effect.sandstorm` affiche un avertissement progressif puis une rafale animée. La miniature de campagne affiche encore le fond vert. Le cycle de la rafale utilise l’horloge réelle du rendu. Contrôle en combat sur 26 passages (deux factions, vitesses ×1 et ×2), validateur à zéro problème, cinq suites au vert (21 353 contrôles Godot et 17 tests Python). [Fiche et captures](design/Visuels_Biome_Desert.md).
 
 **Prise de hache du troll.** La hache d’origine reste dans la main jusqu’à l’extension du bras, tranchant vers l’avant. La main s’ouvre à la huitième image. Validateur sans problème, deux suites ciblées au vert (199 contrôles Godot, 17 tests Python). Rendu contrôlé sur quatre tirs au Gué, dans les deux sens à ×1 et ×2. Attendre l’avis du porteur avant intégration. [Comparatif](design/Visuel_Troll_Lancer.md#prise-de-la-hache-pendant-le-geste).
