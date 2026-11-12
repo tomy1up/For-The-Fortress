@@ -116,6 +116,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.184** : affixe `rockfall` (`valley_model.gd` : `rockfall_blocked_route`, `rockfall_status`, report dans `spawn_route_id`), chapitre 14 (131-140, cartes dans `mine_maps.gd`), habillage des mines de Codex (`ca7677b`) repris, GDD 0.19 consolidé et étape GDD ajoutée à `AGENTS.md`. Repère provisoire de l'éboulement dans `valley_view.gd` (`_draw_rockfall`).
 
+**v0.185** : chapitre 15 (141-150, `sky_maps.gd`, biome « îles flottantes » à confirmer) ; `Catalogue.hp_percent_for` : courbe de PV `99 + numéro` jusqu'à la mission 140 puis +1 % toutes les deux missions (décision du porteur) ; borne des PV à 244 %. Les tests des chapitres 13 et 14 utilisent encore des ordres d'achat propres à chaque carte ; celui du chapitre 15 utilise l'ordre standard [3,4,2] (marges minces).
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

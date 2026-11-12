@@ -78,7 +78,16 @@ static func definition(number: int) -> Dictionary:
 		var maps: Array[String] = ["mine_pillars","mine_vein","mine_tunnel","mine_arch","mine_twins","mine_abyss","mine_sluice","mine_crossing","mine_crypt","mine_core"]
 		var titles: Array[String] = ["Les Piliers Fissurés","La Veine Oubliée","Le Tunnel Éventré","La Voûte Instable","Les Galeries Jumelles","Le Gouffre Noir","L'Écluse Souterraine","Le Carrefour des Éboulis","La Crypte des Mineurs","Le Cœur Effondré"]
 		result.merge({"title":titles[number-131],"available":true,"map_id":maps[number-131],"hp_percent":99+number,"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"rockfall","interval":18,"warning":3,"duration":7}},true)
+	elif number <= 150:
+		# Chapitre 15 : huitième biome, îles flottantes et cité céleste, sans règle propre (recommandation de Claude Code sur délégation du porteur, 12 novembre 2026 ; biome à confirmer).
+		var maps: Array[String] = ["sky_pontoon","sky_mistbridge","sky_cloudgate","sky_spires","sky_gardens","sky_belvedere","sky_updrafts","sky_dome","sky_fallen","sky_summit"]
+		var titles: Array[String] = ["Le Ponton des Nuées","Le Pont de Brume","La Porte des Nuages","Les Flèches d'Azur","Les Jardins Suspendus","Le Belvédère","Les Courants Ascendants","Le Dôme Céleste","L'Île Effondrée","La Citadelle des Cimes"]
+		result.merge({"title":titles[number-141],"available":true,"map_id":maps[number-141],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10},true)
 	return result
+
+## PV ennemis (en % de la référence) d'une mission : `99 + numéro` jusqu'à la mission 140, puis +1 % toutes les deux missions (décision du porteur, 12 novembre 2026, courbe ralentie à +0,5 % par mission).
+static func hp_percent_for(number: int) -> int:
+	return 99+number if number <= 140 else 239+((number-139)>>1)
 
 ## PO de la première victoire : 60 jusqu'au chapitre 10, puis +5 par chapitre (valeurs d'essai à confirmer).
 static func reward_po(chapter: int) -> int:

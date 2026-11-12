@@ -56,3 +56,8 @@ Source : `Cadrage_campagne_2026-10-29.md` (CAMP-007, 010, 011, 012, 017, 018, 01
 ## Biome des chapitres 13 et 14 : souterrains et mines (validé par le porteur le 12 novembre 2026)
 
 Le porteur a validé le 12 novembre 2026 le septième biome proposé par Claude Code. Le chapitre 13 a été développé sur cette **recommandation** : souterrains et mines (galeries sombres, cristaux, torches, éclairage très différent des six biomes existants). Le chapitre 13 ouvre le biome sans règle propre ; la nouveauté du chapitre 14 reste à proposer (piste : éboulement qui bloque un trajet quelques secondes, ou ennemis qui sortent de galeries). Si le porteur choisit un autre biome, seuls le nom de décor, la palette et les titres changent : les cartes réglées par simulation restent valables.
+
+## Décision du 12 novembre 2026 — courbe de PV ralentie et huitième biome
+
+- **Courbe de PV** : à 240-249 % de PV (+1 % par mission), l'Alliance de référence avec 51 points de talent ne gagnait plus au-delà d'environ la mission 146, quelle que soit la disposition des emplacements (mesure du chapitre 15). Le porteur retient de **ralentir à +0,5 % par mission à partir de la mission 141** : 240 % aux missions 141 et 142, 244 % à la mission 150, 269 % à la mission 200 (`Catalogue.hp_percent_for`). Jusqu'à la mission 140, `99 + numéro` inchangé.
+- **Huitième biome (chapitres 15 et 16) : îles flottantes et cité céleste**, recommandation de Claude Code sur délégation du porteur (« comme tu le souhaites »), à confirmer. La toundra et glace est écartée (elle recoupait les Ardoises). La nouveauté du chapitre 16 reste à proposer.
