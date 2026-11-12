@@ -336,7 +336,10 @@ func _refresh_detail() -> void:
 	start_button.disabled = not Catalogue.unlocked(number,status)
 	if definition.available and not status.is_empty(): mission_detail.text += "\nPV ennemis : %d %% · Barème d’essai" % definition.hp_percent
 	mission_detail.tooltip_text = ""
-	if definition.get("combat_affix",{}).get("id","") == "eruptions":
+	if definition.get("combat_affix",{}).get("id","") == "sandstorm":
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Tempête de sable · portée réduite" % [definition.waves,definition.hp_percent]
+		mission_detail.tooltip_text = "Toutes les %d s de combat, une rafale réduit de %d %% la portée de tous les défenseurs pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.range_percent),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
+	elif definition.get("combat_affix",{}).get("id","") == "eruptions":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Éruptions · défenseur désactivé" % [definition.waves,definition.hp_percent]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, un défenseur choisi au hasard est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.has("combat_affix"):

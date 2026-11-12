@@ -109,6 +109,7 @@ static func markdown(report: Dictionary) -> String:
 	if report.has("enemy_hp_percent"): lines.insert(5,"PV ennemis : %d %% de la référence. Vitesse, dégâts et récompenses de combat inchangés." % report.enemy_hp_percent)
 	if report.has("combat_affix"):
 		if report.combat_affix.get("id","") == "eruptions": lines.insert(5,"Éruptions · toutes les %d s de combat, un défenseur tiré au sort est désactivé pendant %d s (annoncé %d s avant)." % [int(report.combat_affix.interval),int(report.combat_affix.duration),int(report.combat_affix.warning)])
+		elif report.combat_affix.get("id","") == "sandstorm": lines.insert(5,"Tempête de sable · toutes les %d s de combat, la portée de tous les défenseurs est réduite de %d %% pendant %d s (annoncée %d s avant)." % [int(report.combat_affix.interval),int(report.combat_affix.range_percent),int(report.combat_affix.duration),int(report.combat_affix.warning)])
 		else: lines.insert(5,"Vents contraires · −%d %% de cadence pour tous les défenseurs. Les dégâts périodiques déjà appliqués gardent leur rythme." % (100-int(report.combat_affix.cadence_percent)))
 	var map: Dictionary = report.get("map_definition",{})
 	if map.has("routes"):

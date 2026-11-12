@@ -7,7 +7,7 @@ const VERSION := 1
 ## Noms d'animations connus, tous pilotés par le jeu depuis la v0.175.
 ## Ennemis : walk, hurt, spawn, death. Défenseurs : idle, attack, disabled, buy, level_up, sell.
 ## Variantes de marche selon la pente du trajet à l'écran (`walk_up` : le trajet monte, `walk_down` : il descend) ; `warning` : effet d'avertissement lié à un événement de jeu (mode progress).
-const NAMES: Array[String] = ["walk","walk_up","walk_down","idle","attack","disabled","death","hurt","spawn","buy","sell","level_up","warning","regen"]
+const NAMES: Array[String] = ["walk","walk_up","walk_down","idle","attack","disabled","death","hurt","spawn","buy","sell","level_up","warning","regen","storm"]
 ## Animations jouées une seule fois sur un événement : le mode `event` est obligatoire.
 const EVENT_ONLY: Array[String] = ["death","hurt","spawn","buy","sell","level_up"]
 const MODES: Array[String] = ["distance","time","event","progress"]
@@ -56,6 +56,7 @@ static func validation_error(data: Variant, expected_id: String = "") -> String:
 		if name not in NAMES: return "Nom d'animation inconnu : %s." % str(name)
 		var error: String = _animation_error(data.animations[name])
 		if error != "": return "%s : %s" % [name,error]
+		if name == "storm" and data.animations[name].mode != "time": return "storm : la rafale de sable boucle sur le temps de combat (mode time obligatoire)."
 		if name == "regen" and data.animations[name].mode != "time": return "regen : les remous de régénération bouclent sur le temps de combat (mode time obligatoire)."
 		if name == "warning" and data.animations[name].mode != "progress": return "warning : l'avertissement suit la progression d'un événement du jeu (mode progress obligatoire)."
 		if name != "warning" and data.animations[name].mode == "progress": return "%s : le mode progress est réservé à l'animation warning." % name

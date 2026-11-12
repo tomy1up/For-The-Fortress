@@ -27,6 +27,7 @@ var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effe
 var enemy_hp_percent: int = 100
 var combat_affix: Dictionary = {}
 var eruption_next: int = 1 # Numéro de la prochaine éruption de la vague (affixe Éruptions).
+var storm_next: int = 0 # Indice de la prochaine frontière de tempête de sable (début puis fin de chaque rafale).
 var path_points: Array[Vector2] = []
 var slots: Array[Vector2] = []
 var path_length: float
@@ -195,7 +196,7 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	action_history.append(entry)
 
 static func valid_enemy_hp_percent(value: Variant) -> bool:
-	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 209
+	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 219
 
 func configure_combat_affix(value: Variant) -> bool:
 	if not value is Dictionary or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
@@ -211,6 +212,12 @@ func configure_combat_affix(value: Variant) -> bool:
 				var interval: Variant = value.get("interval");var warning: Variant = value.get("warning");var duration: Variant = value.get("duration")
 				if not _whole_number(interval) or not _whole_number(warning) or not _whole_number(duration): return false
 				if interval < 8 or interval > 40 or warning < 1 or warning > 4 or duration < 2 or duration > 12 or duration+warning+1 > interval: return false
+			"sandstorm":
+				# Tempête de sable : portée de tous les défenseurs réduite de `range_percent` % pendant `duration` s, toutes les `interval` s, annoncée `warning` s avant.
+				if value.size() != 5: return false
+				var s_interval: Variant = value.get("interval");var s_warning: Variant = value.get("warning");var s_duration: Variant = value.get("duration");var s_percent: Variant = value.get("range_percent")
+				if not _whole_number(s_interval) or not _whole_number(s_warning) or not _whole_number(s_duration) or not _whole_number(s_percent): return false
+				if s_interval < 10 or s_interval > 40 or s_warning < 1 or s_warning > 4 or s_duration < 2 or s_duration > 12 or s_percent < 5 or s_percent > 60 or s_duration+s_warning+1 > s_interval: return false
 			_: return false
 	combat_affix = value.duplicate(true)
 	return true
@@ -222,16 +229,52 @@ func affix_description() -> String:
 	match combat_affix.get("id",""):
 		"headwinds": return "Vents contraires · −%d %% de cadence" % (100-int(combat_affix.cadence_percent))
 		"eruptions": return "Éruptions · un défenseur désactivé %d s toutes les %d s" % [int(combat_affix.duration),int(combat_affix.interval)]
+		"sandstorm": return "Tempête de sable · portée −%d %% pendant %d s toutes les %d s" % [int(combat_affix.range_percent),int(combat_affix.duration),int(combat_affix.interval)]
 	return ""
 
 func affix_tooltip() -> String:
 	match combat_affix.get("id",""):
 		"headwinds": return "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
+		"sandstorm": return "Toutes les %d s de combat, une rafale de sable réduit de %d %% la portée de tous les défenseurs pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.range_percent),int(combat_affix.duration),int(combat_affix.warning)]
 		"eruptions": return "Toutes les %d s de combat, un défenseur choisi au hasard parmi ceux en place est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Les dégâts périodiques déjà appliqués continuent. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.duration),int(combat_affix.warning)]
 	return ""
 
 func eruption_enabled() -> bool:
 	return combat_affix.get("id","") == "eruptions"
+
+## Tempête de sable (affixe) : rafales régulières qui réduisent la portée de tous les défenseurs.
+func storm_enabled() -> bool:
+	return combat_affix.get("id","") == "sandstorm"
+
+func storm_start_time(number: int) -> float:
+	return float(combat_affix.interval)*number
+
+## Frontières de rafale : indice 2k = début de la rafale k+1, 2k+1 = sa fin.
+func storm_boundary_time(index: int) -> float:
+	var number: int = index/2+1
+	return storm_start_time(number)+(float(combat_affix.duration) if index%2 == 1 else 0.0)
+
+## Vrai pendant une rafale (instant de combat courant) ; la portée est alors réduite.
+func storm_active_now() -> bool:
+	if not storm_enabled(): return false
+	var number: int = int(floor((elapsed+EPS)/float(combat_affix.interval)))
+	return number >= 1 and elapsed < storm_start_time(number)+float(combat_affix.duration)-EPS
+
+## Coefficient de portée en vigueur : 1 hors rafale, 1 − pourcentage pendant la rafale.
+func range_factor_now() -> float:
+	return 1.0-float(combat_affix.range_percent)/100.0 if storm_active_now() else 1.0
+
+## État observé par l'interface : {} hors combat, sinon l'avertissement ("warning") ou la rafale en cours ("active").
+func storm_status() -> Dictionary:
+	if not storm_enabled() or not active: return {}
+	var interval: float = float(combat_affix.interval)
+	var number: int = int(floor((elapsed+EPS)/interval))
+	if number >= 1 and elapsed < storm_start_time(number)+float(combat_affix.duration)-EPS:
+		return {"state":"active","number":number,"remaining":storm_start_time(number)+float(combat_affix.duration)-elapsed}
+	var upcoming: int = number+1
+	if elapsed >= storm_start_time(upcoming)-float(combat_affix.warning)-EPS:
+		return {"state":"warning","number":upcoming,"remaining":storm_start_time(upcoming)-elapsed}
+	return {}
 
 ## Instant de la vague (secondes de combat) où l'éruption numéro `number` désactive son défenseur.
 func eruption_time(number: int) -> float:
@@ -489,6 +532,10 @@ func _refresh_windows() -> void:
 		if not defenders[slot].is_empty():
 			defenders[slot].windows = coverage_windows(slots[slot], get_stats(slot).range, path_points)
 			if not routes.is_empty(): defenders[slot].route_windows = Routes.network_coverage(slots[slot],get_stats(slot).range,routes)
+			if storm_enabled():
+				var reduced: float = get_stats(slot).range*(1.0-float(combat_affix.range_percent)/100.0)
+				defenders[slot].storm_windows = coverage_windows(slots[slot], reduced, path_points)
+				if not routes.is_empty(): defenders[slot].storm_route_windows = Routes.network_coverage(slots[slot],reduced,routes)
 
 func purchase_cost(type: int) -> int:
 	return _discounted_cost(base_recruit_cost(type),10,bonuses)
@@ -645,6 +692,7 @@ func start() -> bool:
 			defender.ready_at = 0.0
 	_record_action("wave_start",{"army":army.duplicate(true),"bonuses":bonuses.duplicate()})
 	eruption_next = 1
+	storm_next = 0
 	_resolve_instant()
 	return true
 
@@ -669,6 +717,7 @@ func _next_event_time() -> float:
 	for curse in curses:
 		next_time = minf(next_time, curse.next_at)
 	if eruption_enabled(): next_time = minf(next_time,eruption_time(eruption_next))
+	if storm_enabled(): next_time = minf(next_time,storm_boundary_time(storm_next))
 	for enemy in enemies:
 		next_time = minf(next_time, enemy.spawn_time + enemy_route_length(enemy) / enemy.get("speed", 1.0))
 	for defender in defenders:
@@ -709,6 +758,10 @@ func _resolve_instant() -> void:
 			defenders[struck].ready_at = maxf(float(defenders[struck].ready_at),eruption_time(eruption_next)+float(combat_affix.duration))
 			event_log.append("%.9f éruption %d emplacement %d" % [elapsed,eruption_next,struck])
 		eruption_next += 1
+	# 1 ter. Tempête de sable (affixe) : les frontières de rafale sont des événements ; les fenêtres de portée suivent l'instant courant.
+	while storm_enabled() and storm_boundary_time(storm_next) <= elapsed + EPS:
+		event_log.append("%.9f tempête %d %s" % [elapsed,storm_next/2+1,"fin" if storm_next%2 == 1 else "début"])
+		storm_next += 1
 	# 2. Anciens ticks additionnés, puis morts retirés avant le choix des nouveaux tirs.
 	var damage: Dictionary = {}
 	var hits: Array[Dictionary] = []
@@ -935,7 +988,9 @@ func enemy_separation_squared(first: Dictionary, second: Dictionary) -> float:
 	return Routes.cross_separation_squared(first.distance,enemy_route_points(first),enemy_route_length(first),second.distance,enemy_route_points(second),enemy_route_length(second))
 
 func _windows_for(defender: Dictionary, enemy: Dictionary) -> Array:
-	return defender.get("route_windows",{}).get(enemy.get("route_id",""),[]) if not routes.is_empty() else defender.windows
+	var stormy: bool = storm_active_now() and defender.has("storm_windows")
+	if not routes.is_empty(): return defender.get("storm_route_windows" if stormy else "route_windows",{}).get(enemy.get("route_id",""),[])
+	return defender.storm_windows if stormy else defender.windows
 
 static func coverage_windows(center: Vector2, radius: float, route_points: Array[Vector2] = PATH_POINTS) -> Array[Dictionary]:
 	return Routes.coverage_windows(center,radius,route_points)

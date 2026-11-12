@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.180**. Chapitre 12, la tempête de sable (missions 111 à 120) : toutes les 15 s, une rafale réduit de 25 % la portée de tous les défenseurs pendant 5 s, annoncée 3 s avant (valeurs de prototype à confirmer). Cent vingt missions jouables, PV ennemis jusqu'à 219 %, 70 PO par première victoire. [Chapitre 12](design/Missions_111_120_Tempete_de_sable.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.180).
+
 **Prototype v0.179**. Chapitre 11, désert et ruines (missions 101 à 110) : sixième biome, sans règle propre, PV ennemis de 200 % à 209 %, 65 PO par première victoire et aucune XP. Cent dix missions jouables. Animations du mage, de l'arbalétrier et du lancer de hache du troll livrées par Codex. [Chapitre 11](design/Missions_101_110_Desert.md) · [Cadrage 101-200](design/Cadrage_missions_101_200.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.179).
 
 **Prototype v0.178**. La finale du chapitre 4 a sa propre carte (le Bastion Sous le Vent) : la finale du chapitre 3 passe à 15 PV restants pour la Horde ; calques d'eau de Codex sur les marais 51 et 58 ; décor des citadelles étendu aux vingt cartes 81 à 100, variantes des terres volcaniques, remous de Gueule-de-Vase renforcés. [Remesure et carte du chapitre 4](design/Remesure_missions_1_30_v0177.md) · [Format du décor](design/Format_decor.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.178).

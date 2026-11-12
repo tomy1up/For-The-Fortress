@@ -63,6 +63,11 @@ static func definition(number: int) -> Dictionary:
 		var maps: Array[String] = ["dune_first","dune_oasis","dune_canyon","dune_columns","dune_caravans","dune_temple","dune_well","dune_obelisks","dune_sea","dune_necropolis"]
 		var titles: Array[String] = ["Les Premières Dunes","L'Oasis Asséchée","Le Canyon Rouge","Les Colonnes Brisées","La Route des Caravanes","Le Temple Ensablé","Le Puits Perdu","Les Obélisques","La Mer de Sable","La Nécropole Ancienne"]
 		result.merge({"title":titles[number-101],"available":true,"map_id":maps[number-101],"hp_percent":99+number,"po":reward_po(chapter),"xp":0,"waves":10},true)
+	elif number <= 120:
+		# Chapitre 12 : nouveauté du biome du désert, la tempête de sable (décision du porteur, 11 novembre 2026). Valeurs d'essai.
+		var maps: Array[String] = ["dune_mirage","dune_scorpion","dune_ruins","dune_arches","dune_cistern","dune_sphinx","dune_wind","dune_sarcophagus","dune_crater","dune_pyramid"]
+		var titles: Array[String] = ["Le Mirage","La Vallée des Scorpions","Les Ruines Englouties","Les Arches de Grès","La Citerne Perdue","Le Sphinx Brisé","Le Col des Vents de Sable","La Salle du Sarcophage","Le Cratère de Verre","La Pyramide Ensablée"]
+		result.merge({"title":titles[number-111],"available":true,"map_id":maps[number-111],"hp_percent":99+number,"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"sandstorm","interval":15,"warning":3,"duration":5,"range_percent":25}},true)
 	return result
 
 ## PO de la première victoire : 60 jusqu'au chapitre 10, puis +5 par chapitre (valeurs d'essai à confirmer).
