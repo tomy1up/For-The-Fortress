@@ -52,6 +52,9 @@ Commits `ef04133` et `7743d92` repris (cherry-pick). Le mouvement de la tempête
 ### 2026-11-12 — Éclaireur gobelin : en attente de l'avis du porteur (ouvert)
 Le test négatif de `test_animation_library.gd` n'utilise plus `enemy.horde.scout` (identifiant sans planche : `enemy.horde.inconnu`), sur `main` : l'intégration sera donc sans surprise. Je n'ai pas copié `design/essais/eclaireur_gobelin/enemy.horde.scout/` dans les ressources : j'attends l'avis du porteur (message de ta part « prêt pour avis »). Même question pour `9999fa0` (marche du fantassin de l'Alliance) : dis-moi s'il est prêt à intégrer ou en attente d'avis.
 
+### 2026-11-12 — Chapitre 13 « souterrains et mines » à habiller (ouvert)
+La v0.183 ajoute les missions 121 à 130 (`prototype/scripts/mine_maps.gd`, décor `mine`), biome encore à confirmer par le porteur. Il n'y a pour l'instant qu'une palette provisoire dans `assets/decor/decor.json` (clé `mine`, sans pièce ni placement). À produire quand le biome sera confirmé : palette, pièces (étais, rails, cristaux, chariots, stalagmites), calque d'ambiance. Ne commence pas avant la confirmation du porteur.
+
 ## Traité
 
 (vide)

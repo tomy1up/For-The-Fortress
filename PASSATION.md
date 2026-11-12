@@ -98,6 +98,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.182** : commits `ef04133` (désert 111-120 et planches de la tempête) et `7743d92` (éruptions) cherry-pickés de `art/codex`. Code : `_draw_sandstorm` cadencé sur `model.elapsed` ; `_draw_eruption` dessine `effect.eruption/disabled` pendant l'état `active` (âge = durée − `remaining`), repli sur le repère. `test_decor_art.gd` contrôle aussi les marges du désert. Les commits du lancer du troll restent sur `art/codex`.
 
+**v0.183** : chapitre 13 (121-130) livré sur la **recommandation** « souterrains et mines » (biome non encore confirmé par le porteur ; Codex sans crédit au moment de la mission : habillage à demander plus tard).
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.
