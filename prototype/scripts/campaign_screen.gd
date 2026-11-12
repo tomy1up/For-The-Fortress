@@ -340,7 +340,11 @@ func _refresh_detail() -> void:
 	start_button.disabled = not Catalogue.unlocked(number,status)
 	if definition.available and not status.is_empty(): mission_detail.text += "\nPV ennemis : %d %% · Barème d’essai" % definition.hp_percent
 	mission_detail.tooltip_text = ""
-	if definition.get("combat_affix",{}).get("id","") == "sandstorm":
+	if definition.get("combat_affix",{}).get("id","") == "rockfall":
+		mission_detail.text = "%d vagues · PV ennemis : %d %%
+Nouveau : Éboulement · entrée bloquée" % [definition.waves,definition.hp_percent]
+		mission_detail.tooltip_text = "Toutes les %d s de combat, un éboulement bloque une entrée pendant %d s : les ennemis qui devaient y apparaître passent par l'entrée suivante. L'entrée touchée est signalée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
+	elif definition.get("combat_affix",{}).get("id","") == "sandstorm":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Tempête de sable · portée réduite" % [definition.waves,definition.hp_percent]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, une rafale réduit de %d %% la portée de tous les défenseurs pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.range_percent),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.get("combat_affix",{}).get("id","") == "eruptions":

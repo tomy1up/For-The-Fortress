@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.18 — 2 novembre 2026
+Game Design Document — Version 0.19 — 12 novembre 2026
 
-Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, les vingt missions jouables, la progression persistante par faction et le prototype Windows 0.109. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. Les prochains biomes, difficultés avancées et cartes à plusieurs forteresses restent à développer.
+Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne jouable de 140 missions (quatorze chapitres, sept biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.184. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. Les biomes des chapitres 15 à 20, la boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
 
-**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage. Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
+**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18, la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.184. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.18 ; jeu de référence 0.109.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.19 ; jeu de référence 0.184.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -73,6 +73,11 @@ Nom de travail — disponibilité juridique à confirmer.
 59. [59 Chapitre deux et Gardienne des berges](#s59)
 60. [60 Présentation et animations du prototype](#s60)
 61. [61 Atelier des routes convergentes](#s61)
+62. [62 Campagne de 200 missions et courbe de difficulté](#s62)
+63. [63 Biomes, nouveautés et affixes de combat](#s63)
+64. [64 Équilibrage des talents et mesure des cartes](#s64)
+65. [65 Cadre de travail, outils et production](#s65)
+66. [66 Journal des versions 0.110 à 0.184](#s66)
 
 <a id="s1"></a>
 
@@ -1632,6 +1637,19 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-19 | Entre plusieurs routes, cibler l’ennemi à portée qui arrivera le plus tôt selon sa vitesse — V | Règle réalisée dans l’atelier ; anciennes priorités conservées pour les rapports historiques |
 | MAJ-20 | Démarche du loup « thorax et bassin » approuvée pour le prototype — V | Cycle intégré en v0.108 ; cisaillement rejeté puis orientation corrigée en v0.109, encore à éprouver |
 | MAJ-21 | Allure du sanglier à examiner — P | Atelier isolé ; aucune intégration ou approbation artistique déduite des contrôles |
+| MAJ-22 | Un biome couvre deux chapitres et apporte une seule nouveauté, dans son second chapitre ; **après la mission 100, pas de réintroduction des nouveautés dans la campagne normale : le cumul est transposé au mode infini et aux difficultés Héroïque et Mythique** — V | Décision du porteur, 11 novembre 2026 ; remplace le tableau de réintroduction. Règles de cumul O |
+| MAJ-23 | Ardoises (chapitres 3 et 4) ; nouveauté du chapitre 4 : **Vents contraires** — V | Décision du porteur, 6 novembre 2026. −10 % de cadence de tir pour tous les défenseurs : valeur H |
+| MAJ-24 | Marais et ruines englouties (chapitres 5 et 6) ; nouveauté du chapitre 6 : **le Noyé** (nom définitif : Gueule-de-Vase), qui régénère ses PV dans l’eau — V | Décisions du porteur, 6 et 9 novembre 2026. 5 % des PV maximum par seconde, tronçons inondés : H |
+| MAJ-25 | Terres volcaniques et cendres (chapitres 7 et 8) ; nouveauté du chapitre 8 : **Éruptions**, un emplacement désactivé au hasard — V | Décisions du porteur, 10 novembre 2026. 5 s toutes les 14 s, avertissement de 3 s : H. Habillage laissé à Codex |
+| MAJ-26 | Citadelle de la faction adverse (chapitres 9 et 10) ; nouveauté du chapitre 10 : **la Garnison**, élite propre à la citadelle — V | Décision du porteur, 11 novembre 2026. Noms et statistiques (520 PV de base) : H |
+| MAJ-27 | Désert et ruines (chapitres 11 et 12) ; nouveauté du chapitre 12 : **tempête de sable** — V | Décisions du porteur, 11 novembre 2026. −25 % de portée pendant 5 s toutes les 15 s, avertissement de 3 s : H |
+| MAJ-28 | Souterrains et mines (chapitres 13 et 14) ; nouveauté du chapitre 14 : **éboulement** qui bloque une entrée — V | Décisions du porteur, 12 novembre 2026 (biome puis éboulement). 7 s toutes les 18 s, avertissement de 3 s, apparitions reportées sur l’entrée suivante : H |
+| MAJ-29 | Les arbres de talents de chaque faction se valent pendant toute l’aventure ; l’Alliance et la Horde ont la même puissance de talents — V | Décisions du porteur, 10 novembre 2026 (section 64). Facteurs d’équilibrage H |
+| MAJ-30 | La courbe de PV ennemis continue à +1 % par mission jusqu’à la mission 200 — V | Décision du porteur, 11 novembre 2026 ; à mesurer chapitre par chapitre, ralentissement proposé au porteur si la référence ne gagne plus (section 62) |
+| MAJ-31 | PO de première victoire : 60 jusqu’au chapitre 10, puis +5 par chapitre (65 au chapitre 11, 105 au chapitre 20) ; aucune XP après la mission 100 — H pour le barème, V pour l’absence d’XP | Barème choisi par Claude Code sur délégation du porteur, 11 novembre 2026, à confirmer quand la boutique existera |
+| MAJ-32 | Répartition des rôles : Codex produit les visuels et animations, Claude Code le code, les tests, l’export et la publication ; le son n’est attribué à personne — V | Décision du porteur, 9 novembre 2026 (section 65) |
+| MAJ-33 | Copies de travail séparées pour Codex et Claude Code, boîtes aux lettres, fusion et publication par Claude Code — V | Décision du porteur, 11 novembre 2026 (section 65) |
+| MAJ-34 | **Le GDD est tenu à jour à chaque publication de version, par Claude Code** : décisions prises, décisions à prendre et noyau du jeu — V | Demande du porteur, 12 novembre 2026 ; étape ajoutée au cycle d’une version dans `AGENTS.md` |
 
 <a id="s49"></a>
 
@@ -1649,6 +1667,14 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-010 | PV et défaite des cartes à plusieurs forteresses, affectation et réorientation des routes | Conception des futurs tracés |
 | O-011 | Autres cycles de marche, gestes synchronisés et transitions royales | Production artistique et lisibilité à petite taille |
 | O-012 | Placement corrigé du loup et allure expérimentale du sanglier | Retours visuels du porteur avant extension et intégration |
+| O-013 | Catalogue et prix de la boutique ; usage des PO après la mission 100 (CAMP-008, CAMP-012) | Les PO s’accumulent sans dépense au-delà du premier catalogue |
+| O-014 | Mode infini, difficultés Héroïque et Mythique, règles de cumul des attaquants et affixes (CAMP-018 à CAMP-020), récompenses | Fin de la campagne normale |
+| O-015 | Biomes des chapitres 15 à 20 et nouveautés des chapitres 16, 18 et 20 (la toundra et glace reste disponible) | Fin du chapitre 14 |
+| O-016 | Courbe de PV de 240 % à 299 % : tient-elle avec 51 points de talent, ou faut-il la ralentir (par exemple +0,5 % par mission) ? | Mesures des chapitres 15 à 20 |
+| O-017 | Confirmation en jeu des valeurs d’essai des affixes (Vents contraires, Éruptions, tempête de sable, éboulement) et de leur lisibilité | Retours du porteur ; habillage de Codex |
+| O-018 | Marges minces de la Horde aux finales des chapitres 3 et 4 (missions 30 et 40) ; mission 40 sur carte propre depuis la v0.178 | Remesure et éventuelle révision des tracés |
+| O-019 | Attribution et production du son | Décision du porteur |
+| O-020 | Habillage artistique restant : mines (livré pour les missions 121 à 130, à intégrer), éboulement, courses de l’éclaireur elfe et du fantassin, lancer du troll | Livraisons de Codex et validations du porteur |
 
 <a id="s50"></a>
 
@@ -1691,6 +1717,8 @@ Version 0.16 — 31 octobre 2026 : dix missions, boutique et alternatives, talen
 Version 0.17 — 1 novembre 2026 : consolidation du jeu 0.104, vingt missions, Gardienne à l’essai, réactions corporelles, forteresses et souverains ; demandes futures sur les animations et les routes multiples. Conservation des tableaux du socle, de la boutique et des 126 talents. Le choix Gardienne ou Protectrice et les nouvelles apparences restent ouverts ou H.
 
 Version 0.18 — 2 novembre 2026 : référence au jeu 0.109, atelier à deux entrées et priorité au temps d’arrivée, démarche du loup approuvée pour le prototype et correction du placement diagonal à éprouver. Le sanglier reste une proposition séparée. Aucun changement de statistiques, d’économie ou de progression n’est déduit de cette consolidation.
+
+Version 0.19 — 12 novembre 2026 : consolidation depuis la version 0.18 (jeu 0.109 devenu 0.184) à la demande du porteur, qui constatait que le GDD n’avait pas suivi les versions 0.110 à 0.183. Ajout des sections 62 à 66 (campagne de 200 missions et quatorze chapitres jouables, sept biomes et leurs affixes, courbe de PV et récompenses, équilibrage des talents et des cartes, cadre de travail, journal des versions), des décisions MAJ-22 à MAJ-34 et des questions O-013 à O-020. Le socle des sections 1 à 46 n’est pas modifié. **Aucun réglage n’est présenté comme approuvé s’il ne l’a pas été : les valeurs des affixes, des récompenses et des unités ajoutées restent H.**
 
 <a id="s51"></a>
 
@@ -1984,7 +2012,10 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### Référence de publication
+### État au 12 novembre 2026 (GDD 0.19, jeu 0.184)
+{{ETAT}}
+
+### Référence de publication au 2 novembre 2026 (GDD 0.18, jeu 0.109)
 Le prototype Windows 0.109 est publié sur le dépôt privé. Sa régression complète passe 92 suites, 39 536 contrôles Godot et 17 tests Python. Le paquet Windows passe 14 cas ciblés sur 263 disponibles, avec comparaison de 74 sources et examen de huit captures. Ce périmètre ciblé ne constitue pas une vérification native exhaustive ni une campagne humaine complète.
 
 La v0.109 conserve le dessin et les courbes de la démarche du loup approuvée pour le prototype. Elle remplace le cisaillement de la v0.108 par une rotation rigide sur les diagonales, afin de conserver les proportions et les angles. Les appuis restent liés à la distance parcourue. Le naturel du nouveau placement reste à éprouver avec le porteur. Les contrôles historiques des forteresses et souverains restent ceux de leur version de réalisation ; ils ne sont pas présentés comme de nouveaux essais complets en v0.109.
@@ -1997,7 +2028,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.18, jeu 0.109. Cette consolidation ne constitue pas un nouvel essai humain ni une nouvelle compilation du jeu.
+La documentation est versionnée séparément du binaire : GDD 0.19, jeu 0.184 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2159,3 +2190,129 @@ Cette règle concerne les combats multitrajets. Les cartes actuelles à trajet u
 
 ### Suite de la conception
 Éprouver la lisibilité des entrées, les couvertures avant et après jonction et la difficulté des attaques simultanées. L’affectation des tracés aux chapitres et les rencontres doivent être conçues avant extension de la campagne. Les règles de PV, de défaite et de réorientation sur une carte à plusieurs forteresses restent O ; l’atelier à une forteresse ne les tranche pas.
+
+<a id="s62"></a>
+
+## 62 Campagne de 200 missions et courbe de difficulté
+
+### Cadre validé
+- La campagne compte 200 missions, vingt chapitres de dix missions (CAMP-002 et suivants, section 52). Chaque faction a son parcours, ses PO, son XP et ses talents (CAMP-010).
+- **Un biome couvre deux chapitres ; une seule nouveauté, dans le second chapitre** : nouvel attaquant lié au biome ou affixe de combat (CAMP-017, MAJ-22). Le premier chapitre d’un biome n’a pas de règle propre.
+- Chaque mission repart à neuf (CAMP-013). Une première victoire verse ses PO une seule fois (CAMP-004) ; rejouer ne redonne rien.
+- XP et points de talent s’arrêtent à la mission 100 (51 points au maximum, CAMP-011). À partir de la mission 101, une première victoire ne donne que des PO (CAMP-007).
+- Le cumul des attaquants et affixes déjà rencontrés (CAMP-018, CAMP-019) n’entre pas dans la campagne normale : il est réservé au mode infini et aux difficultés Héroïque et Mythique, encore à concevoir (O-014).
+
+### Les chapitres
+| Chapitre | Missions | Biome | Nouveauté du second chapitre | PV ennemis | Première victoire | Version |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 1–10 | Vallée du Gué | — | 100–109 % | 60 PO, 100 XP | 0.98 |
+| 2 | 11–20 | Vallée du Gué | Tortue et Gardienne des berges (section 59) | 110–119 % | 60 PO, 100 XP | 0.104 |
+| 3 | 21–30 | Ardoises (montagne) | — ; premières cartes à deux et trois entrées | 120–129 % | 60 PO, 100 XP | 0.147 à 0.154 |
+| 4 | 31–40 | Ardoises | **Vents contraires** | 130–139 % | 60 PO, 100 XP | 0.155 à 0.159 |
+| 5 | 41–50 | Marais et ruines englouties | — ; bassins, chaussées | 140–149 % | 60 PO, 100 XP | 0.160 à 0.163 |
+| 6 | 51–60 | Marais | **Noyé / Gueule-de-Vase**, tronçons inondés | 150–159 % | 60 PO, 100 XP | 0.164 à 0.166 |
+| 7 | 61–70 | Terres volcaniques et cendres | — | 160–169 % | 60 PO, 100 XP | 0.167 |
+| 8 | 71–80 | Terres volcaniques | **Éruptions** | 170–179 % | 60 PO, 100 XP | 0.170 et 0.171 |
+| 9 | 81–90 | Citadelle de la faction adverse | — | 180–189 % | 60 PO, 100 XP | 0.172 |
+| 10 | 91–100 | Citadelle | **Garnison** (capitaine d’élite) | 190–199 % | 60 PO, 100 XP | 0.173 |
+| 11 | 101–110 | Désert et ruines | — | 200–209 % | 65 PO, aucune XP | 0.179 |
+| 12 | 111–120 | Désert et ruines | **Tempête de sable** | 210–219 % | 70 PO, aucune XP | 0.180 |
+| 13 | 121–130 | Souterrains et mines | — | 220–229 % | 75 PO, aucune XP | 0.183 |
+| 14 | 131–140 | Souterrains et mines | **Éboulement** | 230–239 % | 80 PO, aucune XP | 0.184 |
+| 15–20 | 141–200 | À choisir avec le porteur (O-015) | À concevoir | 240–299 % | 85 à 105 PO, aucune XP | — |
+
+Les noms de cartes, de chapitres et les valeurs sont des réglages de prototype à confirmer. Le détail mission par mission est dans les fiches `design/Missions_*.md` et `design/Mission_*.md`, et les décisions de biome dans `design/Biomes_cumul_2026-10-31.md` et `design/Cadrage_missions_101_200.md`.
+
+### Courbe de PV ennemis
+Les PV ennemis valent `99 + numéro de mission` pour cent des PV de référence (CAMP-015, MAJ-30) : 100 % à la mission 1, 199 % à la mission 100, 299 % à la mission 200. Vitesses, dégâts et récompenses de combat ne changent pas. La borne des PV acceptés par le moteur monte avec les chapitres développés (239 % pour le chapitre 14). Chaque chapitre est mesuré avec les talents réels au maximum (51 points) et les armées de référence : les deux factions doivent gagner chaque carte avec les deux compositions de référence. Si la référence ne gagne plus, on règle d’abord les tracés et les emplacements, puis on propose au porteur de ralentir la courbe (O-016).
+
+### Récompenses de première victoire
+PO : 60 jusqu’au chapitre 10, puis 60 + 5 par chapitre au-delà du dixième (MAJ-31, H). XP : 100 par mission jusqu’à la mission 100, aucune ensuite. Les PO financent la boutique (section 57) ; leur usage après la mission 100 reste ouvert (O-013).
+
+### Cartes
+Les cartes comptent une, deux ou trois entrées vers la forteresse. Les cartes à deux entrées peuvent alterner leur pression (`alternating_pressure`) ; la prévision de vague, le panneau de vague, le bilan et le rapport Markdown détaillent les effectifs par entrée. Entre plusieurs routes, la priorité de ciblage va à l’ennemi qui arrivera le plus tôt (MAJ-19, section 61). Les cartes de chaque chapitre sont définies par données (`prototype/scripts/*_maps.gd`) et vérifiées par des tests de chapitre.
+
+<a id="s63"></a>
+
+## 63 Biomes, nouveautés et affixes de combat
+
+### Principe
+Une nouveauté de biome est soit un attaquant propre au biome, soit un affixe qui affaiblit la défense ou renforce les attaquants. Elle est annoncée avant la mission et visible pendant le combat, pour que le joueur puisse préparer sa défense. Tous les affixes sont des fonctions du temps de combat : ils se rejouent à l’identique et ne dépendent pas du pas de simulation ; les rapports conservent l’affixe et leur rejeu le vérifie.
+
+### Affixes réalisés
+Toutes les valeurs sont des réglages de prototype à confirmer (H).
+| Affixe | Chapitre | Règle | Annonce et lisibilité | Version |
+| --- | --- | --- | --- | --- |
+| Vents contraires | 4 (missions 31–40) | Tous les défenseurs attaquent 10 % moins souvent (intervalle divisé par 0,9) pendant toute la mission ; les dégâts périodiques déjà appliqués gardent leur rythme | Annoncé avant le lancement ; mention permanente ; repère provisoire de traînées | 0.155 |
+| Éruptions | 8 (71–80) | Toutes les 14 s de combat, un défenseur tiré au hasard parmi ceux en place est désactivé 5 s : il ne tire plus, son emplacement reste occupé | Avertissement de 3 s (2 s avant la v0.171) sur l’emplacement visé ; cendres de désactivation de Codex | 0.170, 0.171, 0.182 |
+| Tempête de sable | 12 (111–120) | Toutes les 15 s de combat, une rafale de 5 s réduit de 25 % la portée de tous les défenseurs | Avertissement de 3 s ; voile et rafale animés de Codex sur le plateau | 0.180, 0.182 |
+| Éboulement | 14 (131–140) | Toutes les 18 s de combat, une entrée est bloquée 7 s : les ennemis qui devaient y apparaître pendant ce temps passent par l’entrée suivante. L’entrée touchée par l’éboulement n est la numéro (n + numéro de vague) modulo le nombre d’entrées. Exige au moins deux entrées : toutes les cartes du chapitre 14 en ont deux ou trois | Avertissement de 3 s sur l’entrée touchée ; la prévision de vague tient compte du report ; repère provisoire (anneau puis éboulis) en attendant l’habillage de Codex | 0.184 |
+
+### Nouveaux attaquants
+| Attaquant | Chapitre | Valeurs de prototype | Source |
+| --- | --- | --- | --- |
+| Noyé, nom définitif **Gueule-de-Vase** (type 9) | 6 | Vitesse 0,85 ; régénère 5 % de ses PV maximum par seconde tant qu’il traverse un tronçon inondé ; la régénération dépend uniquement de la position et ne dépasse jamais les PV maximum | `design/Mission_051_Eaux_Mortes_Noye.md` |
+| **Capitaine de garnison** humain ou orc (type 10), élite propre à la citadelle | 10 | 520 PV de base (élite ordinaire 360, boss 600), vitesse 0,6, −4 PV de forteresse, 26 or ; une ou deux Garnisons aux vagues 5, 7, 9 et 10 à la place des brutes et de l’élite | `design/Missions_091_100_Garnison.md` |
+
+### Décor et ambiance
+Chaque biome a son décor : Gué, Ardoises, marais (eau décorative et tronçons inondés), terres volcaniques, citadelle (propre à la faction adverse), désert, souterrains. Le décor est défini par données (`prototype/assets/decor/decor.json`, `design/Format_decor.md`) ; les animations sont définies par planches d’images (`design/Format_animations.md`). Un biome sans habillage reçoit une palette provisoire. La production artistique revient à Codex (section 65).
+
+<a id="s64"></a>
+
+## 64 Équilibrage des talents et mesure des cartes
+
+### Talents
+- **Les trois arbres de chaque faction se valent pendant toute l’aventure** (décision du porteur, 10 novembre 2026, MAJ-29). Un arbre est jugé avec son armée naturelle (l’unité qu’il améliore, achetée à l’ouverture) et sa puissance se mesure par recherche du PV ennemi maximal battu, pas avec des compositions fixes qui favoriseraient un arbre. Fiche : `design/Equilibrage_arbres_talents_v0168.md` ; test de parité : `prototype/tests/test_talent_balance.gd`.
+- **L’Alliance et la Horde ont la même puissance de talents** (10 novembre 2026). Les talents de l’Alliance ont été alignés sur ceux de la Horde en v0.169.
+- Les facteurs d’équilibrage sont dans `TREE_SCALE` ; les anciens jeux de valeurs sont conservés (`TREE_SCALE_V168`, `RULES_HISTORICAL`) et chaque nouveau jeu de règles est versionné pour que les anciens rapports restent rejouables (`Replay.talent_rules_for`).
+
+### Mesure des cartes
+- Stratégies de référence : Horde, deux haches et un chaman ; Alliance, un archer et deux arbalétriers. Pour chaque carte, seize jeux d’emplacements, trois ordres d’achat et les deux factions sont simulés (480 simulations par chapitre) avec les talents réels (51 points après la mission 100) ; on retient un jeu où les deux factions gagnent avec la meilleure marge.
+- Marges retenues : de l’ordre de 6 à 29 PV de forteresse restants selon les cartes des chapitres 11 à 14. Points encore minces : finales des chapitres 3 et 4 côté Horde (O-018) et mission 127 côté Alliance.
+- Les suites de test lancent la même stratégie en jeu réel et vérifient la victoire, le rapport rejouable, les récompenses et l’enchaînement des missions.
+
+<a id="s65"></a>
+
+## 65 Cadre de travail, outils et production
+
+### Répartition des rôles (décision du porteur, 9 novembre 2026, MAJ-32)
+Codex produit les visuels, animations, effets visuels, icônes, décors et palettes. Claude Code produit le code : règles, campagne, missions, interface fonctionnelle, tests, export et publication, ainsi que ce GDD (MAJ-34). Le son n’est attribué à personne. Claude Code ne réalise pas le travail visuel : il l’ajoute à `TODO_VISUELS.md` et peut poser un emplacement provisoire.
+
+### Copies séparées (11 novembre 2026, MAJ-33)
+Claude Code travaille sur `main`, Codex sur la branche `art/codex` dans sa propre copie. Codex ne pousse jamais sur `main` et ne publie rien ; Claude Code fusionne les lots validés, construit l’export, pose les étiquettes et publie. Les échanges passent par `ECHANGES_CLAUDE_VERS_CODEX.md` et `ECHANGES_CODEX_VERS_CLAUDE.md`, l’état courant par `PASSATION.md`. Le jugement artistique appartient au porteur, sur la version publiée.
+
+### Cycle d’une version
+Une version est un lot cohérent, testé, compilé et publié : développement et tests, documentation (fiche, notes de version, `README.md`, **GDD**), régression complète, export Windows, vérification du paquet exporté et captures, étiquette annotée, publication GitHub en préversion avec le ZIP et son empreinte. Le détail est dans `AGENTS.md`.
+
+### Outils
+Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `prototype/tests/run_regression.py` lance toutes les suites ; `prototype/tests/verify_windows_export.py` vérifie le paquet exporté et produit des captures. Tout nouveau script d’exécution doit être déclaré dans trois listes d’export (`export_presets.cfg`, `Exporter_Windows.ps1`, `tests/export_sources.py`), faute de quoi le jeu exporté ne démarre pas alors que les tests des sources passent.
+
+### Où retrouver quoi
+- Décisions de conception datées : `design/` (cadrage de campagne, biomes et cumul, cadrage des missions 101 à 200, fiches de chapitre).
+- Choix techniques : `design/Choix_techniques_prototype.md`.
+- Notes de chaque version : `design/essais/vXXXX_release_notes.md` ; annonces : `README.md`.
+
+<a id="s66"></a>
+
+## 66 Journal des versions 0.110 à 0.184
+
+| Versions | Contenu |
+| --- | --- |
+| 0.110 et 0.111 | Protection de la Gardienne lisible au survol ; comparaison des unités de boutique sans changement de prix |
+| 0.112 à 0.118 | Aperçu des rencontres par faction, navigation et filtre du panneau de vague, survol et lisibilité des routes, bilan des arrivées par entrée et par vague |
+| 0.119 à 0.135 | Animations et gestes : recul directionnel du loup et des attaquants, lancer du chaman, orientation persistante des défenseurs, archer elfe, arbalétrier, mage, mèche du sapeur, rebonds des haches, orientation aux coins, retours de la Gardienne |
+| 0.136 à 0.142 | Conseils de recrutement par budget et par entrée, atelier des routes de montagne, couverture par entrée, pression alternée |
+| 0.143 à 0.149 | Lisibilité des entrées : entrée la plus chargée, effectifs par entrée, brèches par entrée, rapport Markdown, survol d’une entrée, origine d’un ennemi |
+| 0.147 à 0.154 | Chapitre 3, Ardoises : missions 21 à 30 (première carte à deux entrées, jonctions variées, trois entrées en mission 26, finale du Bastion) |
+| 0.155 à 0.159 | Chapitre 4 : Vents contraires, missions 31 à 40 |
+| 0.160 à 0.166 | Chapitres 5 et 6, marais : missions 41 à 60, Noyé en mission 51, finale durcie en 0.166 |
+| 0.167 à 0.169 | Chapitre 7 volcanique ; équilibrage des arbres de talents (0.168) et alignement de l’Alliance sur la Horde (0.169) |
+| 0.170 et 0.171 | Chapitre 8 : Éruptions, avertissement porté à 3 s |
+| 0.172 et 0.173 | Chapitres 9 et 10 : citadelle et Garnison |
+| 0.174 à 0.176 | Cadre technique des animations, premières livraisons de Codex, décor par données, Gueule-de-Vase et capitaine de garnison humain |
+| 0.177 et 0.178 | Remesure des missions 1 à 30 ; carte propre pour la mission 40 ; extension du décor |
+| 0.179 à 0.182 | Chapitres 11 et 12, désert et tempête de sable ; habillage du désert et animations de la tempête et des cendres |
+| 0.183 | Chapitre 13, souterrains et mines (missions 121 à 130) |
+| 0.184 | Chapitre 14, éboulement (missions 131 à 140) ; consolidation du GDD 0.19 |
+
+Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

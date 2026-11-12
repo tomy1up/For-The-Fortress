@@ -8,7 +8,7 @@ Avant de commencer une mission, lire [PASSATION.md](PASSATION.md) : il décrit l
 
 Tower defense 2D isométrique, deux factions (Alliance des Royaumes, Horde des Cendres), campagne de missions de dix vagues. « For the Fortress! » reste un nom de travail.
 
-- `For_the_Fortress_GDD.md` (et `.docx`) : GDD de référence.
+- `For_the_Fortress_GDD.md` (et `.docx`) : GDD de référence, tenu à jour par Claude Code à chaque version (voir « Cycle d'une version »).
 - `design/` : décisions, fiches de lot et comparaisons. Points d'entrée : `Cadrage_campagne_2026-10-29.md` (règles CAMP-xxx), `Biomes_cumul_2026-10-31.md` (biomes, chapitres, décisions récentes), `Choix_techniques_prototype.md`.
 - `design/essais/` : notes de version `vXXXX_release_notes.md`, captures de QA, ateliers artistiques.
 - `prototype/` : projet Godot (`project.godot`, `scripts/`, `scenes/`, `assets/`, `tests/`, `tools/`, `distribution/`).
@@ -64,6 +64,7 @@ Une version = un lot cohérent, testé, compilé et publié. Numérotation `0.XX
 1. Changer la version partout où Codex l'a fait jusqu'ici : `prototype/project.godot` (`config/version`), `prototype/export_presets.cfg`, valeur par défaut de `prototype/Exporter_Windows.ps1`, constantes de version dans les scripts et tests qui la vérifient (rechercher l'ancien numéro avec `rg`), `prototype/distribution/LIRE_MOI.txt`.
 2. Développer le lot et ses tests. Tout nouveau script ou asset d'exécution doit être déclaré dans trois listes : `prototype/export_presets.cfg` (`export_files`), `prototype/Exporter_Windows.ps1` (`$sourcePaths`) et `prototype/tests/export_sources.py` (`SOURCE_PATHS`). Les tests lancés depuis les sources ne voient pas un oubli : le jeu exporté ne démarre pas (erreur d'analyse au chargement). Seule la vérification du ZIP exporté le détecte.
 3. Documenter : fiche `design/<Sujet>.md` (statut de conception, paramètres, essais, limites), notes `design/essais/vXXXX_release_notes.md`, ligne d'annonce en tête de `README.md`, mise à jour des documents de décision concernés.
+   **GDD (décision du porteur, 12 novembre 2026) : à chaque version, Claude Code met à jour `For_the_Fortress_GDD.md` puis régénère `For_the_Fortress_GDD.docx`.** Le GDD est la référence pour retrouver une décision passée : y consigner les décisions prises (registre de la section 48, avec date et statut V/H), les décisions encore à prendre (section 49), l'état de la campagne et des affixes (sections 62 à 64) et le journal des versions (section 66), sans présenter une hypothèse comme validée. Lancer `python prototype/tests/run_regression.py` : les contrats du GDD y sont vérifiés.
 4. Vérifier : suites ciblées puis régression complète, export, `verify_windows_export.py`, inspection des captures dans les deux factions.
 5. Livrer, si la mission l'autorise : commit sur `main` (message court en anglais, par ex. `Add marsh missions 42 and 43 with map-specific basins`), tag annoté `v0.XXX` (`Prototype v0.XXX - <titre>`), push de `main` et du tag, puis publication GitHub en préversion avec le ZIP et son `.sha256` :
 

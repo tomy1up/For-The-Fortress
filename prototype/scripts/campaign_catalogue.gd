@@ -73,6 +73,11 @@ static func definition(number: int) -> Dictionary:
 		var maps: Array[String] = ["mine_entrance","mine_shaft","mine_gallery","mine_crystals","mine_cart","mine_forge","mine_lake","mine_vault","mine_collapse","mine_heart"]
 		var titles: Array[String] = ["L'Entrée de la Mine","Le Puits Principal","La Galerie des Échos","La Grotte aux Cristaux","Les Rails Abandonnés","La Forge Souterraine","Le Lac Noir","La Chambre Forte","L'Éboulis","Le Cœur de la Montagne"]
 		result.merge({"title":titles[number-121],"available":true,"map_id":maps[number-121],"hp_percent":99+number,"po":reward_po(chapter),"xp":0,"waves":10},true)
+	elif number <= 140:
+		# Chapitre 14 : nouveauté du biome des souterrains, l'éboulement (décision du porteur, 12 novembre 2026). Valeurs d'essai.
+		var maps: Array[String] = ["mine_pillars","mine_vein","mine_tunnel","mine_arch","mine_twins","mine_abyss","mine_sluice","mine_crossing","mine_crypt","mine_core"]
+		var titles: Array[String] = ["Les Piliers Fissurés","La Veine Oubliée","Le Tunnel Éventré","La Voûte Instable","Les Galeries Jumelles","Le Gouffre Noir","L'Écluse Souterraine","Le Carrefour des Éboulis","La Crypte des Mineurs","Le Cœur Effondré"]
+		result.merge({"title":titles[number-131],"available":true,"map_id":maps[number-131],"hp_percent":99+number,"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"rockfall","interval":18,"warning":3,"duration":7}},true)
 	return result
 
 ## PO de la première victoire : 60 jusqu'au chapitre 10, puis +5 par chapitre (valeurs d'essai à confirmer).
