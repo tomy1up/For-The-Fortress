@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Course de l’éclaireur gobelin (ouvert)
+
+Les planches de `enemy.horde.scout` sont en étude dans `design/essais/eclaireur_gobelin/enemy.horde.scout/`. Testées temporairement dans le jeu sur les quatre diagonales à ×1 et ×2, validateur à zéro problème. Le test `test_animation_library.gd`, dans `verify_rendering`, utilise l’absence de `walk` sur `enemy.horde.scout` comme témoin. À l’intégration, utiliser un identifiant sans planche pour le cas négatif, puis copier le dossier dans `prototype/assets/animations/` et relancer la suite. [Captures](design/Visuel_Eclaireur_Gobelin.md).
+
 ### 2026-11-12 — Marche du fantassin humain (ouvert)
 
 Les planches `enemy.alliance.infantry` sont prêtes sur les sources de la v0.180. Le chargeur existant les trouve sur les trois variantes de pente. Aucun raccord de code n’est requis. Validateur et trois suites ciblées passent. Attendre le retour artistique du porteur avant intégration. [Aperçu](design/Visuel_Fantassin_Marche.md).

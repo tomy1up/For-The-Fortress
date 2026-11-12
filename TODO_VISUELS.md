@@ -29,6 +29,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## Livré
 
+- [x] **Éclaireur gobelin, première course** — trois planches de 20 images vérifiées en jeu. Étude livrée hors ressources d’exécution, en attente du retour visuel et de l’ajustement du test témoin. [Aperçu](design/Visuel_Eclaireur_Gobelin.md).
+
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).
 
 - [x] **Lanceur de haches troll, seconde proposition** — transfert de poids, rotation des épaules et reprise de la hache près de la hanche. Vérifié en combat à ×1 et ×2, en attente de l’avis du porteur. [Comparatif](design/Visuel_Troll_Lancer.md#lancer-retravaillé)
