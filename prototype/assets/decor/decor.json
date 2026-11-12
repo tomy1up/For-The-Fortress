@@ -4011,24 +4011,535 @@
  "mine": {
   "palette": {
    "ground": [
-    66,
-    59,
-    71
+    49,
+    61,
+    68
    ],
    "faces": [
     [
-     54,
-     47,
-     60
+     37,
+     48,
+     56
     ],
     [
-     41,
-     36,
-     47
+     28,
+     37,
+     46
     ]
    ]
   },
-  "assets": {},
-  "placements": {}
+  "overlay": {
+   "file": "mine/strates.png",
+   "position": [
+    388,
+    174
+   ]
+  },
+  "assets": {
+   "etai": {
+    "file": "mine/etai.png",
+    "size": [
+     198,
+     230
+    ],
+    "anchor": [
+     99,
+     210
+    ],
+    "height": 42
+   },
+   "rails": {
+    "file": "mine/rails.png",
+    "size": [
+     245,
+     129
+    ],
+    "anchor": [
+     122,
+     118
+    ],
+    "height": 18
+   },
+   "rails_retour": {
+    "file": "mine/rails_retour.png",
+    "size": [
+     245,
+     129
+    ],
+    "anchor": [
+     122,
+     118
+    ],
+    "height": 18
+   },
+   "chariot": {
+    "file": "mine/chariot.png",
+    "size": [
+     225,
+     230
+    ],
+    "anchor": [
+     112,
+     210
+    ],
+    "height": 28
+   },
+   "chariot_retour": {
+    "file": "mine/chariot_retour.png",
+    "size": [
+     225,
+     230
+    ],
+    "anchor": [
+     112,
+     210
+    ],
+    "height": 28
+   },
+   "cristaux": {
+    "file": "mine/cristaux.png",
+    "size": [
+     229,
+     230
+    ],
+    "anchor": [
+     114,
+     210
+    ],
+    "height": 31
+   },
+   "cristaux_retour": {
+    "file": "mine/cristaux_retour.png",
+    "size": [
+     229,
+     230
+    ],
+    "anchor": [
+     114,
+     210
+    ],
+    "height": 31
+   },
+   "stalagmites": {
+    "file": "mine/stalagmites.png",
+    "size": [
+     206,
+     230
+    ],
+    "anchor": [
+     103,
+     210
+    ],
+    "height": 34
+   },
+   "stalagmites_retour": {
+    "file": "mine/stalagmites_retour.png",
+    "size": [
+     206,
+     230
+    ],
+    "anchor": [
+     103,
+     210
+    ],
+    "height": 34
+   },
+   "forge": {
+    "file": "mine/forge.png",
+    "size": [
+     245,
+     206
+    ],
+    "anchor": [
+     122,
+     188
+    ],
+    "height": 30
+   },
+   "bassin": {
+    "file": "mine/bassin.png",
+    "size": [
+     224,
+     120
+    ],
+    "anchor": [
+     112,
+     110
+    ],
+    "height": 25
+   }
+  },
+  "placements": {
+   "mine_entrance": [
+    {
+     "object": "etai",
+     "xy": [
+      1.75,
+      3.5
+     ]
+    },
+    {
+     "object": "chariot",
+     "xy": [
+      9.75,
+      1.0
+     ]
+    },
+    {
+     "object": "rails",
+     "xy": [
+      14.5,
+      2.0
+     ]
+    },
+    {
+     "object": "cristaux_retour",
+     "xy": [
+      7.75,
+      8.75
+     ]
+    },
+    {
+     "object": "stalagmites",
+     "xy": [
+      11.5,
+      8.5
+     ]
+    }
+   ],
+   "mine_shaft": [
+    {
+     "object": "stalagmites_retour",
+     "xy": [
+      6.0,
+      1.75
+     ]
+    },
+    {
+     "object": "etai",
+     "xy": [
+      1.5,
+      6.75
+     ]
+    },
+    {
+     "object": "chariot_retour",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "cristaux",
+     "xy": [
+      12.75,
+      3.75
+     ]
+    },
+    {
+     "object": "rails",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "mine_gallery": [
+    {
+     "object": "cristaux",
+     "xy": [
+      6.0,
+      1.75
+     ]
+    },
+    {
+     "object": "stalagmites_retour",
+     "xy": [
+      1.5,
+      6.75
+     ]
+    },
+    {
+     "object": "rails_retour",
+     "xy": [
+      11.0,
+      2.0
+     ]
+    },
+    {
+     "object": "etai",
+     "xy": [
+      13.25,
+      1.0
+     ]
+    },
+    {
+     "object": "stalagmites",
+     "xy": [
+      8.25,
+      9.25
+     ]
+    }
+   ],
+   "mine_crystals": [
+    {
+     "object": "cristaux_retour",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "cristaux",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "stalagmites",
+     "xy": [
+      11.0,
+      2.0
+     ]
+    },
+    {
+     "object": "cristaux",
+     "xy": [
+      13.25,
+      1.0
+     ]
+    },
+    {
+     "object": "etai",
+     "xy": [
+      10.25,
+      9.0
+     ]
+    }
+   ],
+   "mine_cart": [
+    {
+     "object": "rails_retour",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "chariot",
+     "xy": [
+      11.5,
+      1.5
+     ]
+    },
+    {
+     "object": "rails",
+     "xy": [
+      14.0,
+      1.5
+     ]
+    },
+    {
+     "object": "etai",
+     "xy": [
+      8.5,
+      9.25
+     ]
+    },
+    {
+     "object": "stalagmites_retour",
+     "xy": [
+      16.5,
+      1.25
+     ]
+    }
+   ],
+   "mine_forge": [
+    {
+     "object": "rails_retour",
+     "xy": [
+      6.0,
+      2.25
+     ]
+    },
+    {
+     "object": "etai",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "forge",
+     "xy": [
+      11.5,
+      1.0
+     ]
+    },
+    {
+     "object": "cristaux",
+     "xy": [
+      12.5,
+      5.5
+     ]
+    },
+    {
+     "object": "chariot",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "mine_lake": [
+    {
+     "object": "bassin",
+     "xy": [
+      6.0,
+      2.25
+     ]
+    },
+    {
+     "object": "bassin",
+     "xy": [
+      10.25,
+      1.0
+     ]
+    },
+    {
+     "object": "cristaux_retour",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "stalagmites",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    },
+    {
+     "object": "etai",
+     "xy": [
+      12.25,
+      9.0
+     ]
+    }
+   ],
+   "mine_vault": [
+    {
+     "object": "stalagmites",
+     "xy": [
+      6.0,
+      2.25
+     ]
+    },
+    {
+     "object": "forge",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "chariot_retour",
+     "xy": [
+      12.5,
+      1.5
+     ]
+    },
+    {
+     "object": "cristaux_retour",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "etai",
+     "xy": [
+      10.25,
+      9.0
+     ]
+    }
+   ],
+   "mine_collapse": [
+    {
+     "object": "stalagmites_retour",
+     "xy": [
+      5.0,
+      1.25
+     ]
+    },
+    {
+     "object": "cristaux",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "rails_retour",
+     "xy": [
+      12.5,
+      1.5
+     ]
+    },
+    {
+     "object": "stalagmites",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "chariot",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "mine_heart": [
+    {
+     "object": "stalagmites_retour",
+     "xy": [
+      1.25,
+      6.75
+     ]
+    },
+    {
+     "object": "etai",
+     "xy": [
+      8.0,
+      1.0
+     ]
+    },
+    {
+     "object": "forge",
+     "xy": [
+      9.5,
+      3.0
+     ]
+    },
+    {
+     "object": "cristaux",
+     "xy": [
+      11.5,
+      1.5
+     ]
+    },
+    {
+     "object": "cristaux_retour",
+     "xy": [
+      9.5,
+      9.25
+     ]
+    }
+   ]
+  }
  }
 }

@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Habillage des souterrains et mines (ouvert)
+
+Les missions 121–130 ont leur palette, leur calque de strates et cinq pièces par carte. Les ressources sont dans `assets/decor/mine/`, les données dans la clé `mine`. Le moteur affiche le décor avec le format existant. Les marges des dix cartes ont été vérifiées en combat dans les deux factions. [Fiche](design/Visuels_Biome_Mines.md).
+
 ### 2026-11-12 — Marche du colosse troll (ouvert)
 
 Trois planches sur `enemy.horde.colossus`, déjà dans le dossier d’exécution. Vérifiées dans les quatre diagonales à ×1 et ×2 et au validateur. Attendre le retour visuel du porteur avant intégration. [Captures](design/Visuel_Colosse_Troll.md).

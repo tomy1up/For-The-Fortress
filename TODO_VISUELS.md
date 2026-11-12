@@ -31,6 +31,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## Livré
 
+- [x] **Souterrains et mines, missions 121–130** — palette, calque et cinq pièces par carte, vérifiés dans les deux factions. En attente d’intégration. [Aperçus](design/Visuels_Biome_Mines.md).
+
 - [x] **Colosse troll, marche** — trois planches de 24 poses et quatre diagonales vérifiées à ×1 et ×2. Aperçu en attente de retour. [Fiche](design/Visuel_Colosse_Troll.md).
 
 - [x] **Brise-remparts nain, marche** — trois planches de 24 poses, quatre diagonales vérifiées à ×1 et ×2. En attente de retour visuel. [Aperçu](design/Visuel_Brise_Remparts.md).
