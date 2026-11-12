@@ -15,6 +15,16 @@
         60
       ],
       "mode": "progress"
+    },
+    "disabled": {
+      "file": "disabled.png",
+      "frames": 60,
+      "frame_size": [
+        80,
+        60
+      ],
+      "mode": "event",
+      "duration": 5.0
     }
   }
 }

@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Éruptions, cendres pendant la désactivation (ouvert)
+
+L’avertissement renforcé garde son branchement actuel. La planche `effect.eruption/disabled` est valide et a été essayée en combat dans un rendu isolé sur E1–E6, dans les deux factions à ×1 et ×2. Pour la brancher dans `_draw_eruption`, lire l’âge à partir de `duration - status.remaining` pendant l’état `active`, puis dessiner la planche centrée sur le même emplacement par-dessus les pieds. Garder le repère actuel en repli si la planche est indisponible. Le rendu isolé utilise ce raccord. [Détails et aperçu](design/Avertissement_Eruptions.md#désactivation-par-les-cendres).
+
 ### 2026-11-12 — Habillage du chapitre 12 et tempête de sable (ouvert)
 
 Les missions 111–120 ont cinq placements chacune. `effect.sandstorm` contient `warning` en progression et `storm` en boucle, 384 × 192 px par image. Les deux lots du désert peuvent être intégrés à la suite. La planche du troll reste en attente d’un avis final. La miniature de campagne attend la palette `desert`. La phase de la rafale repose sur `Time.get_ticks_msec()` dans `_draw_sandstorm`. Si tu veux que le mouvement suive la vitesse de combat et soit reproductible en rejeu, il faudra le cadencer sur le temps du modèle. [Détails et captures](design/Visuels_Biome_Desert.md#chapitre-12--la-tempête-de-sable).
