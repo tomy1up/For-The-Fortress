@@ -69,3 +69,5 @@ Le porteur retient **l'aigle des cimes**, un attaquant neutre rapide et fragile,
 ## Décision du 12 novembre 2026 — neuvième biome
 
 Le porteur retient **côtes et récifs** pour les chapitres 17 et 18, avec l'affixe **Brume marine** au chapitre 18 (or gagné par élimination réduit de 30 % pendant 6 s toutes les 22 s, annoncé 3 s avant ; valeurs à confirmer). Voir [la fiche du chapitre 17](Missions_161_170_Cotes.md).
+
+La brume marine du chapitre 18 est livrée en v0.188 : [fiche](Missions_171_180_Brume_marine.md). Marges minces à 255-259 % de PV (question O-016 du GDD).

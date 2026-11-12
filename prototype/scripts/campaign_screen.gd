@@ -340,7 +340,11 @@ func _refresh_detail() -> void:
 	start_button.disabled = not Catalogue.unlocked(number,status)
 	if definition.available and not status.is_empty(): mission_detail.text += "\nPV ennemis : %d %% · Barème d’essai" % definition.hp_percent
 	mission_detail.tooltip_text = ""
-	if definition.get("combat_affix",{}).get("id","") == "rockfall":
+	if definition.get("combat_affix",{}).get("id","") == "seamist":
+		mission_detail.text = "%d vagues · PV ennemis : %d %%
+Nouveau : Brume marine · or réduit" % [definition.waves,definition.hp_percent]
+		mission_detail.tooltip_text = "Toutes les %d s de combat, une brume marine réduit de %d %% l'or gagné par élimination pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.gold_percent),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
+	elif definition.get("combat_affix",{}).get("id","") == "rockfall":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%
 Nouveau : Éboulement · entrée bloquée" % [definition.waves,definition.hp_percent]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, un éboulement bloque une entrée pendant %d s : les ennemis qui devaient y apparaître passent par l'entrée suivante. L'entrée touchée est signalée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]

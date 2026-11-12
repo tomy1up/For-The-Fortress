@@ -93,6 +93,11 @@ static func definition(number: int) -> Dictionary:
 		var maps: Array[String] = ["coast_jetty","coast_lighthouse","coast_reefs","coast_wrecks","coast_quay","coast_cliff","coast_coves","coast_harbor","coast_skerry","coast_cape"]
 		var titles: Array[String] = ["La Jetée Abandonnée","Le Phare Éteint","Les Récifs Blancs","La Baie des Épaves","Le Quai des Brumes","La Falaise du Guet","Les Criques Jumelles","Le Port Englouti","L'Écueil Noir","La Forteresse du Cap"]
 		result.merge({"title":titles[number-161],"available":true,"map_id":maps[number-161],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10},true)
+	elif number <= 180:
+		# Chapitre 18 : nouveauté du biome des côtes, l'affixe Brume marine (décision du porteur, 12 novembre 2026). Valeurs d'essai.
+		var maps: Array[String] = ["coast_beacon","coast_causeway","coast_chalk","coast_graveyard","coast_shoal","coast_phantom","coast_twinrocks","coast_arsenal","coast_storm","coast_citadel"]
+		var titles: Array[String] = ["Le Phare des Brumes","La Digue Noyée","Les Falaises Blanches","Le Cimetière des Navires","Le Banc de Sable","La Baie Fantôme","Les Écueils Jumeaux","L'Arsenal Englouti","Le Cap des Tempêtes","La Citadelle des Embruns"]
+		result.merge({"title":titles[number-171],"available":true,"map_id":maps[number-171],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"seamist","interval":22,"warning":3,"duration":6,"gold_percent":30}},true)
 	return result
 
 ## PV ennemis (en % de la référence) d'une mission : `99 + numéro` jusqu'à la mission 140, puis +1 % toutes les deux missions (décision du porteur, 12 novembre 2026, courbe ralentie à +0,5 % par mission).

@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.22 — 12 novembre 2026
+Game Design Document — Version 0.23 — 13 novembre 2026
 
-Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne jouable de 170 missions (dix-sept chapitres, neuf biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.187. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. Les biomes des chapitres 15 à 20, la boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
+Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne jouable de 180 missions (dix-huit chapitres, neuf biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.188. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. Les biomes des chapitres 15 à 20, la boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
 
-**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.187. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
+**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.188. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.22 ; jeu de référence 0.187.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.23 ; jeu de référence 0.188.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -77,7 +77,7 @@ Nom de travail — disponibilité juridique à confirmer.
 63. [63 Biomes, nouveautés et affixes de combat](#s63)
 64. [64 Équilibrage des talents et mesure des cartes](#s64)
 65. [65 Cadre de travail, outils et production](#s65)
-66. [66 Journal des versions 0.110 à 0.187](#s66)
+66. [66 Journal des versions 0.110 à 0.188](#s66)
 
 <a id="s1"></a>
 
@@ -1652,7 +1652,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-35 | **Courbe de PV ralentie à +0,5 % par mission à partir de la mission 141** (+1 % toutes les deux missions : 240 % à la mission 141, 244 % à la mission 150, 269 % à la mission 200) — V | Décision du porteur, 12 novembre 2026, après la mesure du chapitre 15 : l’Alliance de référence ne gagnait plus au-delà d’environ 245 % de PV. À remesurer aux chapitres 16 à 20 (O-016) |
 | MAJ-36 | Huitième biome (chapitres 15 et 16) : **îles flottantes et cité céleste** — V | Proposé par Claude Code sur délégation du porteur, **confirmé par le porteur le 12 novembre 2026** ; la toundra et glace est écartée. Chapitre 15 sans règle propre ; nouveauté du chapitre 16 à choisir (O-015) |
 | MAJ-37 | Nouveauté du chapitre 16 : **aigle des cimes**, attaquant neutre rapide et fragile — V | Décision du porteur, 12 novembre 2026, après avoir relevé que le chapitre 14 était déjà un affixe (retour à un attaquant). 14 PV, vitesse 1,5, groupes serrés à partir de la vague 3, visuel provisoire : H |
-| MAJ-38 | Neuvième biome (chapitres 17 et 18) : **côtes et récifs**, avec l’affixe **Brume marine** au chapitre 18 — V | Choix du porteur, 12 novembre 2026, parmi quatre options. Brume marine : or d’élimination −30 % pendant 6 s toutes les 22 s, annoncée 3 s avant : H |
+| MAJ-38 | Neuvième biome (chapitres 17 et 18) : **côtes et récifs**, avec l’affixe **Brume marine** au chapitre 18 — V | Choix du porteur, 12 novembre 2026, parmi quatre options. Brume marine (livrée en v0.188) : or d’élimination −30 % pendant 6 s toutes les 22 s, annoncée 3 s avant : H |
 | MAJ-34 | **Le GDD est tenu à jour à chaque publication de version, par Claude Code** : décisions prises, décisions à prendre et noyau du jeu — V | Demande du porteur, 12 novembre 2026 ; étape ajoutée au cycle d’une version dans `AGENTS.md` |
 
 <a id="s49"></a>
@@ -1673,8 +1673,8 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-012 | Placement corrigé du loup et allure expérimentale du sanglier | Retours visuels du porteur avant extension et intégration |
 | O-013 | Catalogue et prix de la boutique ; usage des PO après la mission 100 (CAMP-008, CAMP-012) | Les PO s’accumulent sans dépense au-delà du premier catalogue |
 | O-014 | Mode infini, difficultés Héroïque et Mythique, règles de cumul des attaquants et affixes (CAMP-018 à CAMP-020), récompenses | Fin de la campagne normale |
-| O-015 | Biome des chapitres 19 et 20 et nouveauté du chapitre 20 ; valeurs de l’affixe Brume marine du chapitre 18 (la toundra et glace est écartée) | Fin du chapitre 18 |
-| O-016 | Courbe de PV ralentie à +0,5 % par mission depuis la mission 141 (269 % à la mission 200) : tient-elle aux chapitres 16 à 20 avec 51 points de talent, ou faut-il compter sur la puissance de la boutique ? Marges minces au chapitre 15 (mission 147 : 7 PV) | Mesures des chapitres 16 à 20 ; boutique (O-013) |
+| O-015 | Biome des chapitres 19 et 20 et nouveauté du chapitre 20 ; confirmation des valeurs de la brume marine (la toundra et glace est écartée) | Fin du chapitre 18 |
+| O-016 | Courbe de PV ralentie à +0,5 % par mission depuis la mission 141 (269 % à la mission 200) : tient-elle aux chapitres 19 et 20 avec 51 points de talent, ou faut-il la ralentir encore ou compter sur la puissance de la boutique ? **Marges minces au chapitre 18** (brume marine, 255-259 % : mission 178 Horde 3 PV, mission 176 6 / 6 PV) | Mesures des chapitres 19 et 20 ; boutique (O-013) |
 | O-017 | Confirmation en jeu des valeurs d’essai des affixes (Vents contraires, Éruptions, tempête de sable, éboulement) et de leur lisibilité | Retours du porteur ; habillage de Codex |
 | O-018 | Marges minces de la Horde aux finales des chapitres 3 et 4 (missions 30 et 40) ; mission 40 sur carte propre depuis la v0.178 | Remesure et éventuelle révision des tracés |
 | O-019 | Attribution et production du son | Décision du porteur |
@@ -1729,6 +1729,8 @@ Version 0.20 — 12 novembre 2026 : chapitre 15 (îles flottantes, missions 141 
 Version 0.21 — 12 novembre 2026 : chapitre 16 (aigle des cimes, missions 151 à 160, jeu 0.186) et décision MAJ-37. Le socle des sections 1 à 46 n’est pas modifié.
 
 Version 0.22 — 12 novembre 2026 : chapitre 17 (côtes et récifs, missions 161 à 170, jeu 0.187), décision MAJ-38, correction du barème de PO (110 PO au chapitre 20, et non 105). Le socle des sections 1 à 46 n’est pas modifié.
+
+Version 0.23 — 13 novembre 2026 : chapitre 18 (brume marine, missions 171 à 180, jeu 0.188). Le socle des sections 1 à 46 n’est pas modifié.
 
 <a id="s51"></a>
 
@@ -2022,14 +2024,14 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 12 novembre 2026 (GDD 0.22, jeu 0.187)
-Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 119 suites, 131 702 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 17 dans les deux factions), avec comparaison des sources et inspection de captures.
+### État au 13 novembre 2026 (GDD 0.23, jeu 0.188)
+Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 121 suites, 138 317 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 18 dans les deux factions), avec comparaison des sources et inspection de captures.
 
-La campagne compte 170 missions jouables (dix-sept chapitres, neuf biomes) dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Quatre affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement) et trois attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
+La campagne compte 180 missions jouables (dix-huit chapitres, neuf biomes) dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et trois attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
 
-Habillage : Codex a livré, et le jeu intègre, les décors des terres volcaniques, de la citadelle (vingt cartes), du désert (vingt cartes) et des mines (missions 121 à 130), ainsi que les animations de l’archer elfe, du guerrier orc, du mage, de l’arbalétrier, du lancer de hache du troll, de l’éclaireur gobelin et les effets d’avertissement des éruptions et de la tempête de sable. Restent à valider ou à intégrer : la course de l’éclaireur elfe, la marche du fantassin humain, les retouches du lancer du troll, l’habillage du chapitre 14, celui de l’éboulement, des îles flottantes et des côtes, et l’illustration de l’aigle des cimes.
+Habillage : Codex a livré, et le jeu intègre, les décors des terres volcaniques, de la citadelle (vingt cartes), du désert (vingt cartes) et des mines (missions 121 à 130), ainsi que les animations de l’archer elfe, du guerrier orc, du mage, de l’arbalétrier, du lancer de hache du troll, de l’éclaireur gobelin et les effets d’avertissement des éruptions et de la tempête de sable. Restent à valider ou à intégrer : la course de l’éclaireur elfe, la marche du fantassin humain, les retouches du lancer du troll, l’habillage du chapitre 14, celui de l’éboulement, des îles flottantes et des côtes, la brume marine et l’illustration de l’aigle des cimes.
 
-Prochaines décisions du porteur : biome des chapitres 19 et 20 et nouveauté du chapitre 20 (O-015) ; l’affixe Brume marine du chapitre 18 reste à développer, boutique et usage des PO (O-013), mode infini et difficultés avancées (O-014), tenue de la courbe de PV ralentie aux chapitres 16 à 20 (O-016), confirmation en jeu des valeurs des affixes (O-017) et attribution du son (O-019).
+Prochaines décisions du porteur : biome des chapitres 19 et 20 et nouveauté du chapitre 20 (O-015) ; tenue de la courbe de PV aux chapitres 19 et 20 (O-016), boutique et usage des PO (O-013), mode infini et difficultés avancées (O-014), tenue de la courbe de PV ralentie aux chapitres 16 à 20 (O-016), confirmation en jeu des valeurs des affixes (O-017) et attribution du son (O-019).
 
 ### Référence de publication au 2 novembre 2026 (GDD 0.18, jeu 0.109)
 Le prototype Windows 0.109 est publié sur le dépôt privé. Sa régression complète passe 92 suites, 39 536 contrôles Godot et 17 tests Python. Le paquet Windows passe 14 cas ciblés sur 263 disponibles, avec comparaison de 74 sources et examen de huit captures. Ce périmètre ciblé ne constitue pas une vérification native exhaustive ni une campagne humaine complète.
@@ -2044,7 +2046,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.22, jeu 0.187 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.23, jeu 0.188 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2238,7 +2240,8 @@ Cette règle concerne les combats multitrajets. Les cartes actuelles à trajet u
 | 15 | 141–150 | Îles flottantes et cité céleste | — | 240–244 % | 85 PO, aucune XP | 0.185 |
 | 16 | 151–160 | Îles flottantes et cité céleste | **Aigle des cimes** (attaquant neutre) | 245–249 % | 90 PO, aucune XP | 0.186 |
 | 17 | 161–170 | Côtes et récifs | — | 250–254 % | 95 PO, aucune XP | 0.187 |
-| 18–20 | 171–200 | Chapitre 18 : côtes et récifs, affixe **Brume marine** à développer ; chapitres 19 et 20 : biome à choisir (O-015) | À concevoir | 255–269 % | 100 à 110 PO, aucune XP | — |
+| 18 | 171–180 | Côtes et récifs | **Brume marine** (affixe) | 255–259 % | 100 PO, aucune XP | 0.188 |
+| 19–20 | 181–200 | Biome à choisir (O-015) | Chapitre 20 : à concevoir | 260–269 % | 105 à 110 PO, aucune XP | — |
 
 Les noms de cartes, de chapitres et les valeurs sont des réglages de prototype à confirmer. Le détail mission par mission est dans les fiches `design/Missions_*.md` et `design/Mission_*.md`, et les décisions de biome dans `design/Biomes_cumul_2026-10-31.md` et `design/Cadrage_missions_101_200.md`.
 
@@ -2265,6 +2268,7 @@ Toutes les valeurs sont des réglages de prototype à confirmer (H), sauf celles
 | Vents contraires | 4 (missions 31–40) | Tous les défenseurs attaquent 10 % moins souvent (intervalle divisé par 0,9) pendant toute la mission ; les dégâts périodiques déjà appliqués gardent leur rythme | Annoncé avant le lancement ; mention permanente ; repère provisoire de traînées | 0.155 |
 | Éruptions | 8 (71–80) | Toutes les 14 s de combat, un défenseur tiré au hasard parmi ceux en place est désactivé 5 s : il ne tire plus, son emplacement reste occupé | Avertissement de 3 s (2 s avant la v0.171) sur l’emplacement visé ; cendres de désactivation de Codex | 0.170, 0.171, 0.182 |
 | Tempête de sable | 12 (111–120) | Toutes les 15 s de combat, une rafale de 5 s réduit de 25 % la portée de tous les défenseurs | Avertissement de 3 s ; voile et rafale animés de Codex sur le plateau | 0.180, 0.182 |
+| Brume marine | 18 (171–180) | Toutes les 22 s de combat, une brume de 6 s réduit de 30 % l’or gagné par élimination (arrondi à l’entier le plus proche, au moins 1 or ; seule la mort à l’instant de la brume compte) | Avertissement de 3 s ; liséré clair puis voile blanc-bleu provisoire, habillage à produire par Codex | 0.188 |
 | Éboulement | 14 (131–140) | Toutes les 18 s de combat, une entrée est bloquée 7 s : les ennemis qui devaient y apparaître pendant ce temps passent par l’entrée suivante. L’entrée touchée par l’éboulement n est la numéro (n + numéro de vague) modulo le nombre d’entrées. Exige au moins deux entrées : toutes les cartes du chapitre 14 en ont deux ou trois | Avertissement de 3 s sur l’entrée touchée ; la prévision de vague tient compte du report ; repère provisoire (anneau puis éboulis) en attendant l’habillage de Codex | 0.184 |
 
 ### Nouveaux attaquants
@@ -2288,7 +2292,7 @@ Chaque biome a son décor : Gué, Ardoises, marais (eau décorative et tronçons
 
 ### Mesure des cartes
 - Stratégies de référence : Horde, deux haches et un chaman ; Alliance, un archer et deux arbalétriers. Pour chaque carte, seize jeux d’emplacements, trois ordres d’achat et les deux factions sont simulés (480 simulations par chapitre) avec les talents réels (51 points après la mission 100) ; on retient un jeu où les deux factions gagnent avec la meilleure marge.
-- Marges retenues : de l’ordre de 6 à 29 PV de forteresse restants selon les cartes des chapitres 11 à 17. Points encore minces : finales des chapitres 3 et 4 côté Horde (O-018), mission 127, mission 147 (7 PV) et mission 155 (8 PV côté Alliance, 6 côté Horde).
+- Marges retenues : de l’ordre de 6 à 29 PV de forteresse restants selon les cartes des chapitres 11 à 18. Points encore minces : finales des chapitres 3 et 4 côté Horde (O-018), mission 127, mission 147 (7 PV) et mission 155 (8 PV côté Alliance, 6 côté Horde) et surtout chapitre 18 (mission 178 : 3 PV côté Horde ; mission 176 : 6 PV de chaque côté).
 - Les suites de test lancent la même stratégie en jeu réel et vérifient la victoire, le rapport rejouable, les récompenses et l’enchaînement des missions.
 
 <a id="s65"></a>
@@ -2314,7 +2318,7 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 
 <a id="s66"></a>
 
-## 66 Journal des versions 0.110 à 0.187
+## 66 Journal des versions 0.110 à 0.188
 
 | Versions | Contenu |
 | --- | --- |
@@ -2337,5 +2341,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.185 | Chapitre 15, îles flottantes (missions 141 à 150) ; courbe de PV ralentie à +0,5 % par mission ; GDD 0.20 |
 | 0.186 | Chapitre 16, aigle des cimes (missions 151 à 160) ; GDD 0.21 |
 | 0.187 | Chapitre 17, côtes et récifs (missions 161 à 170) ; GDD 0.22 |
+| 0.188 | Chapitre 18, brume marine (missions 171 à 180) ; GDD 0.23 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

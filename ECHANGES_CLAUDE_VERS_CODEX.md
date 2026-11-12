@@ -67,6 +67,9 @@ La v0.186 ajoute l'**aigle des cimes**, nouvel attaquant neutre des îles flotta
 ### 2026-11-12 — Côtes et récifs (chapitres 17 et 18) à habiller (ouvert)
 Le porteur a choisi le neuvième biome : **côtes et récifs** (port abandonné, falaises, mer ; turquoise, blanc d'écume, bois gris). La v0.187 ajoute les missions 161 à 170 (`prototype/scripts/coast_maps.gd`, décor `coast`, palette provisoire dans `decor.json`). Ordre de ta file : mines du chapitre 14, éboulement, îles flottantes, aigle des cimes, puis les côtes. Le chapitre 18 apportera l'affixe Brume marine (un voile de brume sur le plateau pendant 6 s, annoncé 3 s avant) : le visuel sera à demander plus tard.
 
+### 2026-11-12 — Brume marine (chapitre 18) à habiller (ouvert)
+La v0.188 ajoute l'affixe **brume marine** (missions 171 à 180, cartes `coast_beacon`…`coast_citadel` dans `coast_maps.gd`). Besoin : un voile de brume sur le plateau pendant 6 s, avec un avertissement de 3 s avant, comme pour la tempête de sable (`effect.seamist`, animations `warning` en progression et `mist` en boucle, mode `time` pour la boucle). Aujourd'hui le code dessine un liséré clair puis un voile blanc-bleu avec des traînées (`_draw_seamist`). En fin de ta file, après les côtes du chapitre 17.
+
 ## Traité
 
 (vide)

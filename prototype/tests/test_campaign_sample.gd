@@ -36,7 +36,7 @@ func run_checks() -> void:
 				check(is_equal_approx(scaled.hp,base.hp*percent/100.0) and scaled.hp == scaled.max_hp,"Les PV initiaux et maximum appliquent exactement le pourcentage demandé")
 				for key in ["speed","reward","fortress_damage","identity_id","origin"]: check(scaled[key] == base[key],"Vitesse, gains, dégâts à la forteresse et identité de faction inchangés")
 	var m = Model.new()
-	for invalid in [0,99,255,100.5,true,"101",null,INF]: check(not m.configure_enemy_hp(invalid) and m.enemy_hp_percent == 100,"Réglage absent, non entier ou hors de l’échantillon refusé sans effet")
+	for invalid in [0,99,260,100.5,true,"101",null,INF]: check(not m.configure_enemy_hp(invalid) and m.enemy_hp_percent == 100,"Réglage absent, non entier ou hors de l’échantillon refusé sans effet")
 	check(m.configure_enemy_hp(101) and m.select_faction(0) and not m.configure_enemy_hp(102),"Le pourcentage est configuré avant le départ puis figé")
 	m.start();m.advance(0)
 	check(not m.enemies.is_empty() and m.enemies[0].max_hp == Model.scaled_enemy_hp(m.enemies[0].type,101),"Le moteur applique les PV réglés aux apparitions réelles")

@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.188**. Chapitre 18, la brume marine (missions 171 à 180) : toutes les 22 s, l'or gagné par élimination est réduit de 30 % pendant 6 s, annoncé 3 s avant (valeurs de prototype à confirmer). 180 missions jouables ; marges minces à ce niveau de PV. [Chapitre 18](design/Missions_171_180_Brume_marine.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.188).
+
 **Prototype v0.187**. Chapitre 17, côtes et récifs (missions 161 à 170), neuvième biome choisi par le porteur : PV ennemis de 250 à 254 %, 95 PO, sans règle propre ; l'affixe du chapitre 18 (Brume marine) suivra. 170 missions jouables. [Chapitre 17](design/Missions_161_170_Cotes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.187).
 
 **Prototype v0.186**. Chapitre 16, l'aigle des cimes (missions 151 à 160) : un attaquant neutre rapide et fragile qui arrive en groupes serrés (valeurs de prototype à confirmer, visuel provisoire). 160 missions jouables. [Chapitre 16](design/Missions_151_160_Aigle.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.186).

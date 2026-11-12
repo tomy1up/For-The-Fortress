@@ -803,7 +803,7 @@ func _capture_campaign_menu(camp: int) -> void:
 	if variant.begins_with("dune"): mountain_number = clampi(variant.trim_prefix("dune").trim_suffix("play").trim_suffix("completed").to_int(),101,120)
 	if variant.begins_with("mine"): mountain_number = clampi(variant.trim_prefix("mine").trim_suffix("play").trim_suffix("completed").to_int(),121,140)
 	if variant.begins_with("sky"): mountain_number = clampi(variant.trim_prefix("sky").trim_suffix("play").trim_suffix("completed").to_int(),141,160)
-	if variant.begins_with("coast"): mountain_number = clampi(variant.trim_prefix("coast").trim_suffix("play").trim_suffix("completed").to_int(),161,170)
+	if variant.begins_with("coast"): mountain_number = clampi(variant.trim_prefix("coast").trim_suffix("play").trim_suffix("completed").to_int(),161,180)
 	if variant.begins_with("mountain"):
 		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").trim_suffix("completed").to_int(),23,40)
 	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or mountain_preview:
@@ -843,6 +843,7 @@ func _capture_campaign_menu(camp: int) -> void:
 		if variant.begins_with("marsh"): print("MARSH_SNAPSHOT=",JSON.stringify({"isolated":meta_profile.path.is_empty(),"map":model.map_definition.id,"decoration":model.map_definition.decoration,"scenery_count":map_view.terrain_details.size(),"affix_empty":model.combat_affix.is_empty(),"affix_visible":affix_label.visible}))
 		if model.combat_affix.get("id","") == "headwinds": print("HEADWINDS_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
 		if model.eruption_enabled(): print("ERUPTIONS_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
+		if model.mist_enabled(): print("SEAMIST_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
 		if model.storm_enabled(): print("SANDSTORM_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
 		if "--capture-mountain-defence" in OS.get_cmdline_user_args():
 			model.buy(3,camp*3)
