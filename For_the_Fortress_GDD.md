@@ -1650,7 +1650,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-32 | Répartition des rôles : Codex produit les visuels et animations, Claude Code le code, les tests, l’export et la publication ; le son n’est attribué à personne — V | Décision du porteur, 9 novembre 2026 (section 65) |
 | MAJ-33 | Copies de travail séparées pour Codex et Claude Code, boîtes aux lettres, fusion et publication par Claude Code — V | Décision du porteur, 11 novembre 2026 (section 65) |
 | MAJ-35 | **Courbe de PV ralentie à +0,5 % par mission à partir de la mission 141** (+1 % toutes les deux missions : 240 % à la mission 141, 244 % à la mission 150, 269 % à la mission 200) — V | Décision du porteur, 12 novembre 2026, après la mesure du chapitre 15 : l’Alliance de référence ne gagnait plus au-delà d’environ 245 % de PV. À remesurer aux chapitres 16 à 20 (O-016) |
-| MAJ-36 | Huitième biome (chapitres 15 et 16) : **îles flottantes et cité céleste** — H | Recommandation de Claude Code sur délégation du porteur (« comme tu le souhaites », 12 novembre 2026), **à confirmer** ; la toundra et glace est écartée. Chapitre 15 sans règle propre ; nouveauté du chapitre 16 à proposer |
+| MAJ-36 | Huitième biome (chapitres 15 et 16) : **îles flottantes et cité céleste** — V | Proposé par Claude Code sur délégation du porteur, **confirmé par le porteur le 12 novembre 2026** ; la toundra et glace est écartée. Chapitre 15 sans règle propre ; nouveauté du chapitre 16 à choisir (O-015) |
 | MAJ-34 | **Le GDD est tenu à jour à chaque publication de version, par Claude Code** : décisions prises, décisions à prendre et noyau du jeu — V | Demande du porteur, 12 novembre 2026 ; étape ajoutée au cycle d’une version dans `AGENTS.md` |
 
 <a id="s49"></a>
@@ -1671,7 +1671,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-012 | Placement corrigé du loup et allure expérimentale du sanglier | Retours visuels du porteur avant extension et intégration |
 | O-013 | Catalogue et prix de la boutique ; usage des PO après la mission 100 (CAMP-008, CAMP-012) | Les PO s’accumulent sans dépense au-delà du premier catalogue |
 | O-014 | Mode infini, difficultés Héroïque et Mythique, règles de cumul des attaquants et affixes (CAMP-018 à CAMP-020), récompenses | Fin de la campagne normale |
-| O-015 | Confirmation du biome des îles flottantes (chapitres 15 et 16), nouveauté du chapitre 16, biomes des chapitres 17 à 20 et nouveautés des chapitres 18 et 20 (la toundra et glace est écartée) | Fin du chapitre 15 |
+| O-015 | Nouveauté du chapitre 16 (biome des îles flottantes confirmé), biomes des chapitres 17 à 20 et nouveautés des chapitres 18 et 20 (la toundra et glace est écartée) | Fin du chapitre 15 |
 | O-016 | Courbe de PV ralentie à +0,5 % par mission depuis la mission 141 (269 % à la mission 200) : tient-elle aux chapitres 16 à 20 avec 51 points de talent, ou faut-il compter sur la puissance de la boutique ? Marges minces au chapitre 15 (mission 147 : 7 PV) | Mesures des chapitres 16 à 20 ; boutique (O-013) |
 | O-017 | Confirmation en jeu des valeurs d’essai des affixes (Vents contraires, Éruptions, tempête de sable, éboulement) et de leur lisibilité | Retours du porteur ; habillage de Codex |
 | O-018 | Marges minces de la Horde aux finales des chapitres 3 et 4 (missions 30 et 40) ; mission 40 sur carte propre depuis la v0.178 | Remesure et éventuelle révision des tracés |
@@ -2023,7 +2023,7 @@ La campagne compte 150 missions jouables (quinze chapitres, huit biomes) dans le
 
 Habillage : Codex a livré, et le jeu intègre, les décors des terres volcaniques, de la citadelle (vingt cartes), du désert (vingt cartes) et des mines (missions 121 à 130), ainsi que les animations de l’archer elfe, du guerrier orc, du mage, de l’arbalétrier, du lancer de hache du troll, de l’éclaireur gobelin et les effets d’avertissement des éruptions et de la tempête de sable. Restent à valider ou à intégrer : la course de l’éclaireur elfe, la marche du fantassin humain, les retouches du lancer du troll, l’habillage du chapitre 14 et celui de l’éboulement.
 
-Prochaines décisions du porteur : confirmation du biome du chapitre 15 et nouveauté du chapitre 16 (O-015), boutique et usage des PO (O-013), mode infini et difficultés avancées (O-014), tenue de la courbe de PV ralentie aux chapitres 16 à 20 (O-016), confirmation en jeu des valeurs des affixes (O-017) et attribution du son (O-019).
+Prochaines décisions du porteur : nouveauté du chapitre 16 et biomes des chapitres 17 à 20 (O-015), boutique et usage des PO (O-013), mode infini et difficultés avancées (O-014), tenue de la courbe de PV ralentie aux chapitres 16 à 20 (O-016), confirmation en jeu des valeurs des affixes (O-017) et attribution du son (O-019).
 
 ### Référence de publication au 2 novembre 2026 (GDD 0.18, jeu 0.109)
 Le prototype Windows 0.109 est publié sur le dépôt privé. Sa régression complète passe 92 suites, 39 536 contrôles Godot et 17 tests Python. Le paquet Windows passe 14 cas ciblés sur 263 disponibles, avec comparaison de 74 sources et examen de huit captures. Ce périmètre ciblé ne constitue pas une vérification native exhaustive ni une campagne humaine complète.
@@ -2229,7 +2229,7 @@ Cette règle concerne les combats multitrajets. Les cartes actuelles à trajet u
 | 12 | 111–120 | Désert et ruines | **Tempête de sable** | 210–219 % | 70 PO, aucune XP | 0.180 |
 | 13 | 121–130 | Souterrains et mines | — | 220–229 % | 75 PO, aucune XP | 0.183 |
 | 14 | 131–140 | Souterrains et mines | **Éboulement** | 230–239 % | 80 PO, aucune XP | 0.184 |
-| 15 | 141–150 | Îles flottantes et cité céleste (à confirmer) | — | 240–244 % | 85 PO, aucune XP | 0.185 |
+| 15 | 141–150 | Îles flottantes et cité céleste | — | 240–244 % | 85 PO, aucune XP | 0.185 |
 | 16–20 | 151–200 | Chapitre 16 : nouveauté à proposer ; chapitres 17 à 20 : biomes à choisir (O-015) | À concevoir | 244–269 % | 90 à 105 PO, aucune XP | — |
 
 Les noms de cartes, de chapitres et les valeurs sont des réglages de prototype à confirmer. Le détail mission par mission est dans les fiches `design/Missions_*.md` et `design/Mission_*.md`, et les décisions de biome dans `design/Biomes_cumul_2026-10-31.md` et `design/Cadrage_missions_101_200.md`.
@@ -2266,7 +2266,7 @@ Toutes les valeurs sont des réglages de prototype à confirmer (H), sauf celles
 | **Capitaine de garnison** humain ou orc (type 10), élite propre à la citadelle | 10 | 520 PV de base (élite ordinaire 360, boss 600), vitesse 0,6, −4 PV de forteresse, 26 or ; une ou deux Garnisons aux vagues 5, 7, 9 et 10 à la place des brutes et de l’élite | `design/Missions_091_100_Garnison.md` |
 
 ### Décor et ambiance
-Chaque biome a son décor : Gué, Ardoises, marais (eau décorative et tronçons inondés), terres volcaniques, citadelle (propre à la faction adverse), désert, souterrains, îles flottantes (palette provisoire). Le décor est défini par données (`prototype/assets/decor/decor.json`, `design/Format_decor.md`) ; les animations sont définies par planches d’images (`design/Format_animations.md`). Un biome sans habillage reçoit une palette provisoire. La production artistique revient à Codex (section 65).
+Chaque biome a son décor : Gué, Ardoises, marais (eau décorative et tronçons inondés), terres volcaniques, citadelle (propre à la faction adverse), désert, souterrains, îles flottantes (palette provisoire ; biome confirmé le 12 novembre 2026). Le décor est défini par données (`prototype/assets/decor/decor.json`, `design/Format_decor.md`) ; les animations sont définies par planches d’images (`design/Format_animations.md`). Un biome sans habillage reçoit une palette provisoire. La production artistique revient à Codex (section 65).
 
 <a id="s64"></a>
 

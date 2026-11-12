@@ -3,7 +3,7 @@
 ## Décisions et statut de conception
 
 - **Courbe de PV ralentie (décision du porteur, 12 novembre 2026)** : à 240-249 % de PV avec +1 % par mission, l'Alliance de référence (51 points de talent) ne gagnait plus au-delà d'environ la mission 146 et aucune disposition des emplacements n'y changeait rien. Le porteur retient **+0,5 % par mission à partir de la mission 141** : PV ennemis `239 + (numéro − 139) ÷ 2` (division entière), soit 240 % aux missions 141 et 142, 244 % aux missions 149 et 150 et 269 % à la mission 200. Jusqu'à la mission 140, `99 + numéro` % inchangé. La borne des PV acceptés passe à 244 %.
-- **Huitième biome : îles flottantes et cité céleste.** Recommandation de Claude Code sur délégation du porteur (« comme tu le souhaites », 12 novembre 2026) ; **biome à confirmer par le porteur**. La toundra et glace est écartée (elle recoupait les Ardoises).
+- **Huitième biome : îles flottantes et cité céleste.** Recommandation de Claude Code sur délégation du porteur (« comme tu le souhaites », 12 novembre 2026) ; **biome confirmé par le porteur le 12 novembre 2026**. La toundra et glace est écartée (elle recoupait les Ardoises).
 - Chapitre 15 sans règle propre (CAMP-017) : rencontres standard du Gué, **85 PO** à la première victoire, aucune XP. La nouveauté du chapitre 16 reste à proposer.
 - Décor `sky`, palette d'essai (bleu-gris clair) posée par le code, sans pièce de décor : habillage à produire par Codex.
 
