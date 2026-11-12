@@ -124,6 +124,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.188** : affixe `seamist` (`valley_model.gd` : `mist_active_now`, `mist_status`, `kill_reward` ; or d'élimination −30 % pendant 6 s toutes les 22 s, arrondi, au moins 1 or) et chapitre 18 (171-180, cartes de `coast_maps.gd` reprenant celles du chapitre 17 : les variantes en miroir étaient trop dures). Marges minces (mission 178 Horde : 3 PV) : O-016 approche de sa limite pour les chapitres 19 et 20 (courbe de PV, 260-269 %). Biome des chapitres 19 et 20 à choisir avec le porteur.
 
+**Courbe de PV (13 novembre 2026)** : `hp_percent_for` ralentie à +0,25 % par mission à partir de la mission 181 (260 % à 264 %), décision du porteur ; code et GDD 0.24 commités, aucun chapitre livré ; le biome des chapitres 19 et 20 reste à choisir (options restantes : jungle et temple perdu, nécropole et terres maudites, cité en ruines).
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

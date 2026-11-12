@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.23 — 13 novembre 2026
+Game Design Document — Version 0.24 — 13 novembre 2026
 
 Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne jouable de 180 missions (dix-huit chapitres, neuf biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.188. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. Les biomes des chapitres 15 à 20, la boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
 
 **Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.188. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.23 ; jeu de référence 0.188.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.24 ; jeu de référence 0.188.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -1653,6 +1653,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-36 | Huitième biome (chapitres 15 et 16) : **îles flottantes et cité céleste** — V | Proposé par Claude Code sur délégation du porteur, **confirmé par le porteur le 12 novembre 2026** ; la toundra et glace est écartée. Chapitre 15 sans règle propre ; nouveauté du chapitre 16 à choisir (O-015) |
 | MAJ-37 | Nouveauté du chapitre 16 : **aigle des cimes**, attaquant neutre rapide et fragile — V | Décision du porteur, 12 novembre 2026, après avoir relevé que le chapitre 14 était déjà un affixe (retour à un attaquant). 14 PV, vitesse 1,5, groupes serrés à partir de la vague 3, visuel provisoire : H |
 | MAJ-38 | Neuvième biome (chapitres 17 et 18) : **côtes et récifs**, avec l’affixe **Brume marine** au chapitre 18 — V | Choix du porteur, 12 novembre 2026, parmi quatre options. Brume marine (livrée en v0.188) : or d’élimination −30 % pendant 6 s toutes les 22 s, annoncée 3 s avant : H |
+| MAJ-39 | **Courbe de PV encore ralentie à +0,25 % par mission à partir de la mission 181** (+1 % toutes les quatre missions : 260 % à la mission 181, 261 % à la mission 185, 264 % à la mission 200) — V | Décision du porteur, 13 novembre 2026, après le chapitre 18 : marges de la référence tombées à 3 PV (mission 178 Horde) à 255-259 % de PV avec la brume marine. Remplace la pente de MAJ-35 pour les chapitres 19 et 20. À remesurer (O-016) |
 | MAJ-34 | **Le GDD est tenu à jour à chaque publication de version, par Claude Code** : décisions prises, décisions à prendre et noyau du jeu — V | Demande du porteur, 12 novembre 2026 ; étape ajoutée au cycle d’une version dans `AGENTS.md` |
 
 <a id="s49"></a>
@@ -1674,7 +1675,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-013 | Catalogue et prix de la boutique ; usage des PO après la mission 100 (CAMP-008, CAMP-012) | Les PO s’accumulent sans dépense au-delà du premier catalogue |
 | O-014 | Mode infini, difficultés Héroïque et Mythique, règles de cumul des attaquants et affixes (CAMP-018 à CAMP-020), récompenses | Fin de la campagne normale |
 | O-015 | Biome des chapitres 19 et 20 et nouveauté du chapitre 20 ; confirmation des valeurs de la brume marine (la toundra et glace est écartée) | Fin du chapitre 18 |
-| O-016 | Courbe de PV ralentie à +0,5 % par mission depuis la mission 141 (269 % à la mission 200) : tient-elle aux chapitres 19 et 20 avec 51 points de talent, ou faut-il la ralentir encore ou compter sur la puissance de la boutique ? **Marges minces au chapitre 18** (brume marine, 255-259 % : mission 178 Horde 3 PV, mission 176 6 / 6 PV) | Mesures des chapitres 19 et 20 ; boutique (O-013) |
+| O-016 | Courbe de PV ralentie à +0,25 % par mission depuis la mission 181 (264 % à la mission 200) : tient-elle aux chapitres 19 et 20 avec 51 points de talent, ou faut-il compter sur la puissance de la boutique ? Marges minces au chapitre 18 (mission 178 Horde : 3 PV) | Mesures des chapitres 19 et 20 ; boutique (O-013) |
 | O-017 | Confirmation en jeu des valeurs d’essai des affixes (Vents contraires, Éruptions, tempête de sable, éboulement) et de leur lisibilité | Retours du porteur ; habillage de Codex |
 | O-018 | Marges minces de la Horde aux finales des chapitres 3 et 4 (missions 30 et 40) ; mission 40 sur carte propre depuis la v0.178 | Remesure et éventuelle révision des tracés |
 | O-019 | Attribution et production du son | Décision du porteur |
@@ -1731,6 +1732,8 @@ Version 0.21 — 12 novembre 2026 : chapitre 16 (aigle des cimes, missions 151 �
 Version 0.22 — 12 novembre 2026 : chapitre 17 (côtes et récifs, missions 161 à 170, jeu 0.187), décision MAJ-38, correction du barème de PO (110 PO au chapitre 20, et non 105). Le socle des sections 1 à 46 n’est pas modifié.
 
 Version 0.23 — 13 novembre 2026 : chapitre 18 (brume marine, missions 171 à 180, jeu 0.188). Le socle des sections 1 à 46 n’est pas modifié.
+
+Version 0.24 — 13 novembre 2026 : courbe de PV ralentie à +0,25 % par mission à partir de la mission 181 (décision du porteur, MAJ-39). Documentation seule : le jeu de référence reste 0.188.
 
 <a id="s51"></a>
 
@@ -2024,7 +2027,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 13 novembre 2026 (GDD 0.23, jeu 0.188)
+### État au 13 novembre 2026 (GDD 0.24, jeu 0.188)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 121 suites, 138 317 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 18 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 180 missions jouables (dix-huit chapitres, neuf biomes) dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et trois attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2046,7 +2049,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.23, jeu 0.188 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.24, jeu 0.188 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2241,12 +2244,12 @@ Cette règle concerne les combats multitrajets. Les cartes actuelles à trajet u
 | 16 | 151–160 | Îles flottantes et cité céleste | **Aigle des cimes** (attaquant neutre) | 245–249 % | 90 PO, aucune XP | 0.186 |
 | 17 | 161–170 | Côtes et récifs | — | 250–254 % | 95 PO, aucune XP | 0.187 |
 | 18 | 171–180 | Côtes et récifs | **Brume marine** (affixe) | 255–259 % | 100 PO, aucune XP | 0.188 |
-| 19–20 | 181–200 | Biome à choisir (O-015) | Chapitre 20 : à concevoir | 260–269 % | 105 à 110 PO, aucune XP | — |
+| 19–20 | 181–200 | Biome à choisir (O-015) | Chapitre 20 : à concevoir | 260–264 % | 105 à 110 PO, aucune XP | — |
 
 Les noms de cartes, de chapitres et les valeurs sont des réglages de prototype à confirmer. Le détail mission par mission est dans les fiches `design/Missions_*.md` et `design/Mission_*.md`, et les décisions de biome dans `design/Biomes_cumul_2026-10-31.md` et `design/Cadrage_missions_101_200.md`.
 
 ### Courbe de PV ennemis
-Les PV ennemis valent `99 + numéro de mission` pour cent des PV de référence jusqu’à la mission 140 (CAMP-015, MAJ-30) : 100 % à la mission 1, 199 % à la mission 100, 239 % à la mission 140. **À partir de la mission 141, la courbe est ralentie à +0,5 % par mission** (décision du porteur, 12 novembre 2026, MAJ-35) : +1 % toutes les deux missions, soit 240 % aux missions 141 et 142, 244 % à la mission 150 et 269 % à la mission 200, car l’Alliance de référence ne gagnait plus au-delà d’environ 245 % avec 51 points de talent. Vitesses, dégâts et récompenses de combat ne changent pas. La borne des PV acceptés par le moteur monte avec les chapitres développés (244 % pour le chapitre 15). Chaque chapitre est mesuré avec les talents réels au maximum (51 points) et les armées de référence : les deux factions doivent gagner chaque carte avec les deux compositions de référence. Si la référence ne gagne plus, on règle d’abord les tracés et les emplacements, puis on propose au porteur de ralentir la courbe encore (O-016).
+Les PV ennemis valent `99 + numéro de mission` pour cent des PV de référence jusqu’à la mission 140 (CAMP-015, MAJ-30) : 100 % à la mission 1, 199 % à la mission 100, 239 % à la mission 140. **À partir de la mission 141, la courbe est ralentie à +0,5 % par mission** (décision du porteur, 12 novembre 2026, MAJ-35) : +1 % toutes les deux missions, soit 240 % aux missions 141 et 142, 244 % à la mission 150 et 269 % à la mission 200, car l’Alliance de référence ne gagnait plus au-delà d’environ 245 % avec 51 points de talent. Vitesses, dégâts et récompenses de combat ne changent pas. **À partir de la mission 181, la pente est encore ralentie à +0,25 % par mission** (décision du porteur, 13 novembre 2026, MAJ-39) : +1 % toutes les quatre missions, soit 260 % à la mission 181, 261 % à la mission 185 et 264 % à la mission 200, car les marges de la référence tombaient à 3 PV au chapitre 18. La borne des PV acceptés par le moteur monte avec les chapitres développés (259 % pour le chapitre 18). Chaque chapitre est mesuré avec les talents réels au maximum (51 points) et les armées de référence : les deux factions doivent gagner chaque carte avec les deux compositions de référence. Si la référence ne gagne plus, on règle d’abord les tracés et les emplacements, puis on propose au porteur de ralentir la courbe encore (O-016).
 
 ### Récompenses de première victoire
 PO : 60 jusqu’au chapitre 10, puis 60 + 5 par chapitre au-delà du dixième (MAJ-31, H). XP : 100 par mission jusqu’à la mission 100, aucune ensuite. Les PO financent la boutique (section 57) ; leur usage après la mission 100 reste ouvert (O-013).

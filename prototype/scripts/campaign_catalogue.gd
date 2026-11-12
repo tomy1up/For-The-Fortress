@@ -100,9 +100,11 @@ static func definition(number: int) -> Dictionary:
 		result.merge({"title":titles[number-171],"available":true,"map_id":maps[number-171],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"seamist","interval":22,"warning":3,"duration":6,"gold_percent":30}},true)
 	return result
 
-## PV ennemis (en % de la référence) d'une mission : `99 + numéro` jusqu'à la mission 140, puis +1 % toutes les deux missions (décision du porteur, 12 novembre 2026, courbe ralentie à +0,5 % par mission).
+## PV ennemis (en % de la référence) d'une mission : `99 + numéro` jusqu'à la mission 140, puis +1 % toutes les deux missions jusqu'à la mission 180 (décision du porteur, 12 novembre 2026), puis +1 % toutes les quatre missions (+0,25 % par mission, décision du porteur, 13 novembre 2026).
 static func hp_percent_for(number: int) -> int:
-	return 99+number if number <= 140 else 239+((number-139)>>1)
+	if number <= 140: return 99+number
+	if number <= 180: return 239+((number-139)>>1)
+	return 259+((number-177)>>2)
 
 ## PO de la première victoire : 60 jusqu'au chapitre 10, puis +5 par chapitre (valeurs d'essai à confirmer).
 static func reward_po(chapter: int) -> int:
