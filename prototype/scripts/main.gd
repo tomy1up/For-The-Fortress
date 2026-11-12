@@ -801,7 +801,7 @@ func _capture_campaign_menu(camp: int) -> void:
 	if variant.begins_with("citadel"): mountain_number = clampi(variant.trim_prefix("citadel").trim_suffix("play").trim_suffix("completed").to_int(),81,90)
 	if variant.begins_with("garrison"): mountain_number = clampi(variant.trim_prefix("garrison").trim_suffix("play").trim_suffix("completed").to_int(),91,100)
 	if variant.begins_with("dune"): mountain_number = clampi(variant.trim_prefix("dune").trim_suffix("play").trim_suffix("completed").to_int(),101,120)
-	if variant.begins_with("mine"): mountain_number = clampi(variant.trim_prefix("mine").trim_suffix("play").trim_suffix("completed").to_int(),121,130)
+	if variant.begins_with("mine"): mountain_number = clampi(variant.trim_prefix("mine").trim_suffix("play").trim_suffix("completed").to_int(),121,140)
 	if variant.begins_with("mountain"):
 		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").trim_suffix("completed").to_int(),23,40)
 	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or mountain_preview:

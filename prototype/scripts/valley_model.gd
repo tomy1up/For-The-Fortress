@@ -196,7 +196,7 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	action_history.append(entry)
 
 static func valid_enemy_hp_percent(value: Variant) -> bool:
-	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 229
+	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 239
 
 func configure_combat_affix(value: Variant) -> bool:
 	if not value is Dictionary or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
@@ -218,6 +218,12 @@ func configure_combat_affix(value: Variant) -> bool:
 				var s_interval: Variant = value.get("interval");var s_warning: Variant = value.get("warning");var s_duration: Variant = value.get("duration");var s_percent: Variant = value.get("range_percent")
 				if not _whole_number(s_interval) or not _whole_number(s_warning) or not _whole_number(s_duration) or not _whole_number(s_percent): return false
 				if s_interval < 10 or s_interval > 40 or s_warning < 1 or s_warning > 4 or s_duration < 2 or s_duration > 12 or s_percent < 5 or s_percent > 60 or s_duration+s_warning+1 > s_interval: return false
+			"rockfall":
+				# Éboulement : une entrée est bloquée `duration` s toutes les `interval` s, annoncée `warning` s avant ; les apparitions prévues pendant ce temps passent par l'entrée suivante. Exige au moins deux entrées.
+				if value.size() != 4 or routes.size() < 2: return false
+				var r_interval: Variant = value.get("interval");var r_warning: Variant = value.get("warning");var r_duration: Variant = value.get("duration")
+				if not _whole_number(r_interval) or not _whole_number(r_warning) or not _whole_number(r_duration): return false
+				if r_interval < 10 or r_interval > 40 or r_warning < 1 or r_warning > 4 or r_duration < 2 or r_duration > 12 or r_duration+r_warning+1 > r_interval: return false
 			_: return false
 	combat_affix = value.duplicate(true)
 	return true
@@ -229,15 +235,43 @@ func affix_description() -> String:
 	match combat_affix.get("id",""):
 		"headwinds": return "Vents contraires · −%d %% de cadence" % (100-int(combat_affix.cadence_percent))
 		"eruptions": return "Éruptions · un défenseur désactivé %d s toutes les %d s" % [int(combat_affix.duration),int(combat_affix.interval)]
+		"rockfall": return "Éboulement · une entrée bloquée %d s toutes les %d s" % [int(combat_affix.duration),int(combat_affix.interval)]
 		"sandstorm": return "Tempête de sable · portée −%d %% pendant %d s toutes les %d s" % [int(combat_affix.range_percent),int(combat_affix.duration),int(combat_affix.interval)]
 	return ""
 
 func affix_tooltip() -> String:
 	match combat_affix.get("id",""):
 		"headwinds": return "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
+		"rockfall": return "Toutes les %d s de combat, un éboulement bloque une entrée pendant %d s : les ennemis qui devaient y apparaître passent par l'entrée suivante. L'entrée touchée est signalée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.duration),int(combat_affix.warning)]
 		"sandstorm": return "Toutes les %d s de combat, une rafale de sable réduit de %d %% la portée de tous les défenseurs pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.range_percent),int(combat_affix.duration),int(combat_affix.warning)]
 		"eruptions": return "Toutes les %d s de combat, un défenseur choisi au hasard parmi ceux en place est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Les dégâts périodiques déjà appliqués continuent. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.duration),int(combat_affix.warning)]
 	return ""
+
+func rockfall_enabled() -> bool:
+	return combat_affix.get("id","") == "rockfall"
+
+## Instant de la vague (secondes de combat) où l'éboulement numéro `number` (à partir de 1) bloque son entrée.
+func rockfall_time(number: int) -> float:
+	return float(combat_affix.interval)*number
+
+## Entrée bloquée à l'instant `time` de la vague `wave_number` ("" si aucune) : l'éboulement n tombe sur l'entrée (n + vague) modulo le nombre d'entrées.
+func rockfall_blocked_route(time: float, wave_number: int) -> String:
+	if not rockfall_enabled() or routes.size() < 2: return ""
+	var number: int = int(floor((time+EPS)/float(combat_affix.interval)))
+	if number < 1 or time >= rockfall_time(number)+float(combat_affix.duration)-EPS: return ""
+	return str(routes[(number+wave_number)%routes.size()].id)
+
+## État observé par l'interface : {} hors combat, sinon l'avertissement ("warning") ou le blocage en cours ("active") avec l'entrée touchée.
+func rockfall_status() -> Dictionary:
+	if not rockfall_enabled() or not active: return {}
+	var interval: float = float(combat_affix.interval)
+	var number: int = int(floor((elapsed+EPS)/interval))
+	if number >= 1 and elapsed < rockfall_time(number)+float(combat_affix.duration)-EPS:
+		return {"state":"active","number":number,"route_id":str(routes[(number+wave)%routes.size()].id),"remaining":rockfall_time(number)+float(combat_affix.duration)-elapsed}
+	var upcoming: int = number+1
+	if elapsed >= rockfall_time(upcoming)-float(combat_affix.warning)-EPS:
+		return {"state":"warning","number":upcoming,"route_id":str(routes[(upcoming+wave)%routes.size()].id),"remaining":rockfall_time(upcoming)-elapsed}
+	return {}
 
 func eruption_enabled() -> bool:
 	return combat_affix.get("id","") == "eruptions"
@@ -361,6 +395,7 @@ func spawn_route_id(index: int, entry: Dictionary, forecast_wave: int = -1) -> S
 	if number > 1 and map_definition.get("route_pattern") == "alternating_pressure":
 		var preferred := number%2
 		route_index = 1-preferred if index%3 == 2 else preferred
+	if rockfall_enabled() and entry.has("time") and routes[route_index].id == rockfall_blocked_route(float(entry.time),number): route_index = (route_index+1)%routes.size()
 	return routes[route_index].id
 
 func forecast_for_routes(number: int) -> Dictionary:

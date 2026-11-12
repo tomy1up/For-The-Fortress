@@ -669,6 +669,7 @@ func _draw() -> void:
 			draw_arc(project(link.from)+Vector2(0,3),12,0,TAU,32,Color("b8d889"),1.5,true)
 		_draw_eruption_warning()
 		_draw_sandstorm()
+		_draw_rockfall()
 		_draw_decor_props(model.map_definition)
 		var actors: Array[Dictionary] = []
 		for slot in range(model.defenders.size()):
@@ -931,7 +932,7 @@ func _track_defenders() -> void:
 ## Vrai tant qu'une animation par planche exige un redessin continu (repos, achat, revente, niveau).
 func _sheet_animation_running() -> bool:
 	if model == null: return false
-	if model.combat_affix.get("id","") in ["headwinds","sandstorm"]: return true
+	if model.combat_affix.get("id","") in ["headwinds","sandstorm","rockfall"]: return true
 	if not _sold_ghosts.is_empty(): return true
 	for defender in model.defenders:
 		if not defender.is_empty() and not SheetAnimations.spec_for(SheetAnimations.defender_id(int(defender.type))).is_empty(): return true
@@ -1126,6 +1127,30 @@ func _draw_sandstorm() -> void:
 			var shift: float = fposmod(clock*0.5+float(index)*0.173,1.0)
 			var start: Vector2 = project(Vector2(float(board.x)*(shift*1.2-0.1),float(board.y)*lane))
 			draw_line(start,start+Vector2(34,-7),Color(0.97,0.88,0.62,0.45),1.5,true)
+
+## Repère fonctionnel provisoire de l'affixe Éboulement (chapitre 14) : anneau qui pulse à l'entrée touchée pendant l'avertissement,
+## éboulis gris pendant le blocage. L'habillage revient à Codex (TODO_VISUELS.md). Le mouvement suit le temps de combat.
+func _draw_rockfall() -> void:
+	if model == null or not model.rockfall_enabled(): return
+	var status: Dictionary = model.rockfall_status()
+	if status.is_empty(): return
+	var origin := Vector2.ZERO
+	var found := false
+	for route in model.routes:
+		if route.id == status.route_id and not route.path_points.is_empty():
+			origin = project(route.path_points[0]);found = true;break
+	if not found: return
+	if status.state == "warning":
+		var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+		var pulse: float = 0.5+0.5*sin(model.elapsed*TAU*2.0)
+		draw_arc(origin,16.0+10.0*progress,0.0,TAU,32,Color(0.95,0.55,0.25,0.35+0.4*pulse),2.0+2.0*progress,true)
+	else:
+		var rubble: Array[Vector2] = [Vector2(-14,2),Vector2(-6,-8),Vector2(4,-12),Vector2(14,-4),Vector2(10,6),Vector2(-2,10)]
+		var shape := PackedVector2Array()
+		for point in rubble: shape.append(origin+point)
+		draw_colored_polygon(shape,Color(0.38,0.36,0.4,0.95))
+		draw_polyline(shape+PackedVector2Array([shape[0]]),Color(0.16,0.15,0.18,0.9),1.5,true)
+		for offset in [Vector2(-6,-2),Vector2(5,-5),Vector2(1,4)]: draw_circle(origin+offset,3.0,Color(0.52,0.5,0.54,0.95))
 
 ## Remous au pied de Gueule-de-Vase quand elle est dans l'eau et qu'il lui manque des PV (effet `effect.regeneration`).
 ## La phase suit le temps de combat. Le dessin se fait dans le repère de l'ennemi, pieds à l'origine.

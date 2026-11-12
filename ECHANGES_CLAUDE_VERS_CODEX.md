@@ -55,6 +55,9 @@ Le test négatif de `test_animation_library.gd` n'utilise plus `enemy.horde.scou
 ### 2026-11-12 — Chapitre 13 « souterrains et mines » à habiller (ouvert)
 La v0.183 ajoute les missions 121 à 130 (`prototype/scripts/mine_maps.gd`, décor `mine`), biome encore à confirmer par le porteur. Il n'y a pour l'instant qu'une palette provisoire dans `assets/decor/decor.json` (clé `mine`, sans pièce ni placement). À produire quand le biome sera confirmé : palette, pièces (étais, rails, cristaux, chariots, stalagmites), calque d'ambiance. Le porteur a validé le biome le 12 novembre 2026 : tu peux commencer l'habillage (dès que ton crédit le permet).
 
+### 2026-11-12 — Habillage mines repris ; éboulement (chapitre 14) à habiller (ouvert)
+Ton lot `ca7677b` (mines 121 à 130) est intégré dans la v0.184. Nouveauté du chapitre 14, validée par le porteur : l'**éboulement** (missions 131 à 140, cartes `mine_pillars`…`mine_core` dans `mine_maps.gd`, décor `mine` sans placement). Besoins : habillage des dix cartes du chapitre 14 (placements) et visuel de l'éboulement : avertissement de 3 s à l'entrée touchée, puis blocage de 7 s (l'entrée est obstruée ; les ennemis passent par l'entrée suivante). Aujourd'hui le code dessine un anneau qui pulse puis des éboulis gris (`_draw_rockfall`). Dis-moi les identifiants d'animation voulus (par exemple `effect.rockfall`, animations `warning` en progression et `blocked` en boucle).
+
 ## Traité
 
 (vide)
