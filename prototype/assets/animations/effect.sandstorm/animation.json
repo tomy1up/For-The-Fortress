@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "id": "effect.sandstorm",
+  "display_height": 192,
+  "foot": [
+    192,
+    191
+  ],
+  "facing": "right",
+  "animations": {
+    "warning": {
+      "file": "warning.png",
+      "frames": 24,
+      "frame_size": [
+        384,
+        192
+      ],
+      "mode": "progress"
+    },
+    "storm": {
+      "file": "storm.png",
+      "frames": 36,
+      "frame_size": [
+        384,
+        192
+      ],
+      "mode": "time",
+      "fps": 24
+    }
+  }
+}

@@ -3191,6 +3191,78 @@
      212
     ],
     "height": 44
+   },
+   "pyramide": {
+    "file": "desert/pyramide.png",
+    "size": [
+     245,
+     151
+    ],
+    "anchor": [
+     122,
+     137
+    ],
+    "height": 42
+   },
+   "sphinx": {
+    "file": "desert/sphinx.png",
+    "size": [
+     245,
+     220
+    ],
+    "anchor": [
+     122,
+     200
+    ],
+    "height": 34
+   },
+   "sphinx_retour": {
+    "file": "desert/sphinx_retour.png",
+    "size": [
+     245,
+     220
+    ],
+    "anchor": [
+     122,
+     200
+    ],
+    "height": 34
+   },
+   "citerne": {
+    "file": "desert/citerne.png",
+    "size": [
+     245,
+     178
+    ],
+    "anchor": [
+     122,
+     162
+    ],
+    "height": 25
+   },
+   "citerne_retour": {
+    "file": "desert/citerne_retour.png",
+    "size": [
+     245,
+     178
+    ],
+    "anchor": [
+     122,
+     162
+    ],
+    "height": 25
+   },
+   "sarcophage": {
+    "file": "desert/sarcophage.png",
+    "size": [
+     245,
+     186
+    ],
+    "anchor": [
+     122,
+     169
+    ],
+    "height": 26
    }
   },
   "placements": {
@@ -3561,6 +3633,376 @@
      "xy": [
       10.25,
       8.75
+     ]
+    }
+   ],
+   "dune_mirage": [
+    {
+     "object": "citerne_retour",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "colonne_retour",
+     "xy": [
+      9.75,
+      1.0
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      12.5,
+      1.5
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "dune_scorpion": [
+    {
+     "object": "mur_retour",
+     "xy": [
+      6.0,
+      1.75
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      1.5,
+      6.75
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      12.75,
+      3.5
+     ]
+    },
+    {
+     "object": "colonne",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "dune_ruins": [
+    {
+     "object": "mur_retour",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "colonne_retour",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      11.0,
+      2.0
+     ]
+    },
+    {
+     "object": "colonne",
+     "xy": [
+      13.25,
+      1.0
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "dune_arches": [
+    {
+     "object": "mur",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "mur_retour",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "colonne",
+     "xy": [
+      11.0,
+      2.0
+     ]
+    },
+    {
+     "object": "mur_retour",
+     "xy": [
+      13.25,
+      1.0
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "dune_cistern": [
+    {
+     "object": "mur",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "citerne",
+     "xy": [
+      11.5,
+      1.5
+     ]
+    },
+    {
+     "object": "citerne_retour",
+     "xy": [
+      14.0,
+      1.5
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      16.5,
+      1.25
+     ]
+    },
+    {
+     "object": "colonne_retour",
+     "xy": [
+      9.25,
+      9.25
+     ]
+    }
+   ],
+   "dune_sphinx": [
+    {
+     "object": "gres_retour",
+     "xy": [
+      6.0,
+      1.75
+     ]
+    },
+    {
+     "object": "colonne_retour",
+     "xy": [
+      1.5,
+      6.75
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      9.5,
+      3.0
+     ]
+    },
+    {
+     "object": "sphinx",
+     "xy": [
+      11.5,
+      1.5
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      9.5,
+      9.25
+     ]
+    }
+   ],
+   "dune_wind": [
+    {
+     "object": "mur",
+     "xy": [
+      5.0,
+      1.25
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      1.0,
+      6.75
+     ]
+    },
+    {
+     "object": "gres_retour",
+     "xy": [
+      11.0,
+      2.0
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      13.25,
+      1.0
+     ]
+    },
+    {
+     "object": "colonne",
+     "xy": [
+      10.0,
+      9.0
+     ]
+    }
+   ],
+   "dune_sarcophagus": [
+    {
+     "object": "colonne_retour",
+     "xy": [
+      4.75,
+      1.75
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      9.25,
+      2.25
+     ]
+    },
+    {
+     "object": "sarcophage",
+     "xy": [
+      11.5,
+      1.25
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      10.25,
+      9.0
+     ]
+    }
+   ],
+   "dune_crater": [
+    {
+     "object": "gres_retour",
+     "xy": [
+      5.0,
+      1.25
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      1.5,
+      7.75
+     ]
+    },
+    {
+     "object": "colonne_retour",
+     "xy": [
+      12.5,
+      1.5
+     ]
+    },
+    {
+     "object": "gres",
+     "xy": [
+      15.25,
+      1.25
+     ]
+    },
+    {
+     "object": "mur",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    }
+   ],
+   "dune_pyramid": [
+    {
+     "object": "obelisque",
+     "xy": [
+      1.0,
+      6.75
+     ]
+    },
+    {
+     "object": "sphinx_retour",
+     "xy": [
+      9.0,
+      1.5
+     ]
+    },
+    {
+     "object": "pyramide",
+     "xy": [
+      11.5,
+      1.5
+     ]
+    },
+    {
+     "object": "mur_retour",
+     "xy": [
+      9.5,
+      9.0
+     ]
+    },
+    {
+     "object": "colonne",
+     "xy": [
+      16.0,
+      9.0
      ]
     }
    ]

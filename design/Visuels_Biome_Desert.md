@@ -11,4 +11,16 @@ Les ancres gardent au moins 1,16 unité de distance aux trajets et 1,45 aux empl
 - [Missions 101 à 105](essais/desert_ch11/Desert_101_105.jpg)
 - [Missions 106 à 110](essais/desert_ch11/Desert_106_110.jpg)
 
-La palette s’applique aussi aux missions 111–120, dont les pièces de décor restent à placer. L’effet animé de tempête de sable fera l’objet d’un lot dédié. La miniature de campagne affiche encore le fond vert par défaut. Le raccord de sa palette est demandé à Claude Code.
+La miniature de campagne affiche encore le fond vert par défaut. Le raccord de sa palette est demandé à Claude Code.
+
+## Chapitre 12 · la tempête de sable
+
+Les dix cartes reçoivent cinq éléments de décor chacune. Quatre nouveaux éléments en grès reprennent la matière et l’angle des ruines du chapitre 11. La citerne, le sphinx ébréché, le sarcophage fermé et la pyramide servent de repères sur les cartes correspondantes. Les tracés de combat et les emplacements viennent des données de la v0.180.
+
+La planche d’avertissement suit la progression des trois secondes d’annonce. Une poussière dorée monte le long des bords du plateau. Pendant la rafale, les traînées se déplacent en diagonale et traversent le plateau sous les unités. Le voile s’arrête au retour à la portée normale. Les cellules mesurent 384 × 192 px. L’avertissement compte 24 images en mode `progress`. La rafale boucle sur 36 images à 24 images/s en mode `time`. Le jeu choisit ses états selon le temps de combat, tandis que la phase de la boucle suit actuellement l’horloge réelle.
+
+Les dix cartes ont été contrôlées en combat avec chaque faction. Les missions 111, 114 et 120 ont été contrôlées à ×1 et ×2 pour chaque faction, soit 26 passages au total. L’annonce conserve la portée normale, la rafale applique le facteur 0,75 et la portée revient à 1 à sa fin. Le validateur signale zéro problème sur huit dossiers. Les cinq suites ciblées passent (21 353 contrôles Godot, 17 tests Python).
+
+- [Quatre monuments sur le plateau](essais/desert_ch12/Desert_111_120_monuments.jpg)
+- [Étapes d’une rafale aux Arches de Grès, Horde ×2](essais/desert_ch12/Tempete_etapes.jpg)
+- [Annonce, rafale et retour au calme à la Pyramide Ensablée, Horde ×1](essais/desert_ch12/Tempete_en_combat.gif)
