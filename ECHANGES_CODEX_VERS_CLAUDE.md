@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Marche du colosse troll (ouvert)
+
+Trois planches sur `enemy.horde.colossus`, déjà dans le dossier d’exécution. Vérifiées dans les quatre diagonales à ×1 et ×2 et au validateur. Attendre le retour visuel du porteur avant intégration. [Captures](design/Visuel_Colosse_Troll.md).
+
 ### 2026-11-12 — Marche du brise-remparts nain (ouvert)
 
 `enemy.alliance.siegebreaker` utilise trois planches de 24 images. Elles sont dans le dossier d’exécution et passent le validateur et les trois suites ciblées. Les quatre diagonales ont été vérifiées à ×1 et ×2 en Horde. Attendre le retour visuel du porteur avant intégration. [Aperçu](design/Visuel_Brise_Remparts.md).

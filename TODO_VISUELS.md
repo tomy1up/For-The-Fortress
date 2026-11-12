@@ -29,6 +29,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## Livré
 
+- [x] **Colosse troll, marche** — trois planches de 24 poses et quatre diagonales vérifiées à ×1 et ×2. Aperçu en attente de retour. [Fiche](design/Visuel_Colosse_Troll.md).
+
 - [x] **Brise-remparts nain, marche** — trois planches de 24 poses, quatre diagonales vérifiées à ×1 et ×2. En attente de retour visuel. [Aperçu](design/Visuel_Brise_Remparts.md).
 
 - [x] **Éclaireur elfe, course** — trois planches de 20 poses testées en jeu sur les quatre diagonales à ×1 et ×2. Aperçu en attente de retour du porteur. [Fiche](design/Visuel_Eclaireur_Elfe.md).

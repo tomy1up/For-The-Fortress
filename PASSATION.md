@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 12 novembre 2026 — Codex
 
+**Marche du colosse troll.** Trois planches de 24 poses sur `enemy.horde.colossus`. Pas plus amples, épaules et masse solidaires, transfert de poids à l’appui. Quatre diagonales à ×1 et ×2 et pause vérifiées aux Coulées Figées (vague 6). Validateur et trois suites ciblées au vert (1 618 contrôles Godot, 17 tests Python). En attente du retour visuel du porteur. [Aperçu](design/Visuel_Colosse_Troll.md).
+
 **Marche du brise-remparts nain.** Trois planches de 24 poses sur `enemy.alliance.siegebreaker`, avec pas plus courts et balancement de la masse. Quatre diagonales, vitesses ×1 et ×2 et pause de contrôle vérifiées sur Les Coulées Figées, vague 6. Validateur à zéro problème et trois suites ciblées au vert (1 617 contrôles Godot, 17 tests Python). Attente du retour visuel du porteur. [Aperçu](design/Visuel_Brise_Remparts.md).
 
 **Course de l’éclaireur elfe.** Trois planches de 20 poses sur `enemy.alliance.scout`, contrôlées sur les quatre diagonales à ×1 et ×2. La pause de contrôle fige le sprite. Validateur à zéro problème et sept suites ciblées au vert pour le lot elfe et tempête (23 580 contrôles Godot, 17 tests Python). Le porteur a donné un avis favorable à l’aperçu du gobelin et demande de poursuivre. [Aperçu de l’elfe](design/Visuel_Eclaireur_Elfe.md).
