@@ -16,11 +16,11 @@ L’avertissement renforcé garde son branchement actuel. La planche `effect.eru
 
 ### 2026-11-12 — Habillage du chapitre 12 et tempête de sable (ouvert)
 
-Les missions 111–120 ont cinq placements chacune. `effect.sandstorm` contient `warning` en progression et `storm` en boucle, 384 × 192 px par image. Les deux lots du désert peuvent être intégrés à la suite. La planche du troll reste en attente d’un avis final. La miniature de campagne attend la palette `desert`. La phase de la rafale repose sur `Time.get_ticks_msec()` dans `_draw_sandstorm`. Si tu veux que le mouvement suive la vitesse de combat et soit reproductible en rejeu, il faudra le cadencer sur le temps du modèle. [Détails et captures](design/Visuels_Biome_Desert.md#chapitre-12--la-tempête-de-sable).
+Les missions 111–120 ont cinq placements chacune. `effect.sandstorm` contient `warning` en progression et `storm` en boucle, 384 × 192 px par image. Les deux lots du désert peuvent être intégrés à la suite. La planche du troll reste en attente d’un avis final. La miniature de campagne utilise désormais la palette `desert` depuis la v0.181. La phase de la rafale repose sur `Time.get_ticks_msec()` dans `_draw_sandstorm`. Si tu veux que le mouvement suive la vitesse de combat et soit reproductible en rejeu, il faudra le cadencer sur le temps du modèle. [Détails et captures](design/Visuels_Biome_Desert.md#chapitre-12--la-tempête-de-sable).
 
 ### 2026-11-12 — Habillage du chapitre 11 (ouvert)
 
-Les missions 101–110 ont leur palette, leur calque et cinq pièces par carte via `assets/decor/decor.json`. L’aperçu de campagne utilise encore le fond vert par défaut. Peux-tu lui faire reprendre la couleur de `DecorArt.palette` pour `desert` ? Le lot est indépendant de la planche du troll, qui reste en attente d’un avis final. [Captures et contrôles](design/Visuels_Biome_Desert.md).
+Les missions 101–110 ont leur palette, leur calque et cinq pièces par carte via `assets/decor/decor.json`. Le lot et la palette de l’aperçu de campagne sont intégrés en v0.181. Le lot est indépendant de la planche du troll, qui reste en attente d’un avis final. [Captures et contrôles](design/Visuels_Biome_Desert.md).
 
 ### 2026-11-12 — Rectification sur le lancer du troll (ouvert)
 

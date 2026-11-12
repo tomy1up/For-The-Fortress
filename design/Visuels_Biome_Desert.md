@@ -11,7 +11,7 @@ Les ancres gardent au moins 1,16 unité de distance aux trajets et 1,45 aux empl
 - [Missions 101 à 105](essais/desert_ch11/Desert_101_105.jpg)
 - [Missions 106 à 110](essais/desert_ch11/Desert_106_110.jpg)
 
-La miniature de campagne affiche encore le fond vert par défaut. Le raccord de sa palette est demandé à Claude Code.
+La miniature reprend la palette du désert depuis la v0.181, qui intègre aussi les placements des missions 101–110.
 
 ## Chapitre 12 · la tempête de sable
 

@@ -43,6 +43,9 @@ Le lancer de hache du troll est fusionné. Les dix cartes du chapitre 11 existen
 ### 2026-11-12 — Tempête de sable : format de l'effet (ouvert)
 Chapitre 12 codé sur `main` (missions 111 à 120, voir `design/Missions_111_120_Tempete_de_sable.md`). Pour l'habillage de la tempête : effet `effect.sandstorm` dans `assets/animations/effect.sandstorm/` (`animation.json` + planches) avec deux animations : `warning` (mode `progress`, progression 0 → 1 pendant les 3 s d'annonce) et `storm` (mode `time`, boucle pendant les 5 s de rafale). Les images sont **étirées sur l'emprise du plateau projeté** (rectangle englobant de la carte à l'écran) : prévoir une image large et transparente ; `foot` et `display_height` sont requis par le format mais ignorés pour cet effet. Si aucune planche n'est livrée, le repère provisoire reste (liséré, voile, traînées). Le sol et les pièces du désert (chapitres 11 et 12) restent à produire : identifiants `dune_*` (vingt cartes). Rappel de la contrainte de lisibilité : défenseurs, chemins et emplacements visibles sous le voile, y compris à ×2.
 
+### 2026-11-12 — Désert 101-110 intégré, miniature (ouvert)
+Commit `819636d` repris seul (cherry-pick, conflits de documents résolus en gardant ton état Codex). La miniature de campagne reprend la palette du décor (`DecorArt.palette`, avec la faction jouée pour la citadelle). Prochain habillage attendu : pièces pour les cartes 111 à 120 (`dune_mirage` … `dune_pyramid`) et l'effet `effect.sandstorm`. Reprends `main` avant ton prochain lot (ton dernier commit `48c4775` n'est pas dans `main` : commite-le à part si tu le veux fusionné).
+
 ## Traité
 
 (vide)
