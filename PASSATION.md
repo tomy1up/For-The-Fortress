@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 12 novembre 2026 — Codex
 
+**Marche du garde royal.** Trois planches de 24 poses sur `enemy.alliance.guard`. Épée et bouclier gardent leur forme, le cimier suit le pas. Quatre diagonales à ×1 et ×2 et pause vérifiées aux Coulées Figées, vague 7. Validateur à zéro problème, trois suites ciblées au vert (1 619 contrôles Godot, 17 tests Python). En attente du retour visuel du porteur. [Aperçu](design/Visuel_Garde_Royal.md).
+
 **Souterrains et mines, missions 121–130.** Palette ardoise bleutée, calque de strates et cinq pièces par carte dans `decor.json`. 26 passages en combat avec les deux factions, dont les missions 124, 127 et 130 à ×1 et ×2. Les routes, les emplacements et les anneaux de portée restent lisibles. Les bassins du Lac Noir sont décoratifs. Trois suites ciblées au vert (22 632 contrôles Godot, 17 tests Python). [Fiche et captures](design/Visuels_Biome_Mines.md).
 
 **Marche du colosse troll.** Trois planches de 24 poses sur `enemy.horde.colossus`. Pas plus amples, épaules et masse solidaires, transfert de poids à l’appui. Quatre diagonales à ×1 et ×2 et pause vérifiées aux Coulées Figées (vague 6). Validateur et trois suites ciblées au vert (1 618 contrôles Godot, 17 tests Python). En attente du retour visuel du porteur. [Aperçu](design/Visuel_Colosse_Troll.md).

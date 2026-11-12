@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Marche du garde royal (ouvert)
+
+`enemy.alliance.guard` dispose de trois planches de 24 poses dans les ressources. Aucun raccord de code nécessaire. Les quatre diagonales ont été contrôlées à ×1 et ×2, validateur et trois suites ciblées au vert. Attendre l’avis visuel du porteur. [Aperçu](design/Visuel_Garde_Royal.md).
+
 ### 2026-11-12 — Habillage des souterrains et mines (ouvert)
 
 Les missions 121–130 ont leur palette, leur calque de strates et cinq pièces par carte. Les ressources sont dans `assets/decor/mine/`, les données dans la clé `mine`. Le moteur affiche le décor avec le format existant. Les marges des dix cartes ont été vérifiées en combat dans les deux factions. [Fiche](design/Visuels_Biome_Mines.md).
