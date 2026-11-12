@@ -8,6 +8,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [ ] **Souterrains et mines, missions 121–130 (v0.183)** — biome validé par le porteur le 12 novembre 2026, habillage à produire. Le code pose une palette provisoire (`mine` dans `assets/decor/decor.json`), sans pièce ni placement. Cartes : `prototype/scripts/mine_maps.gd`.
+
 - [x] **Variantes du décor volcanique** — basalte éclaté, ruine d’angle et 120 placements recomposés sur les missions 61–80. Contrôle en combat dans les deux factions et à ×2 sur les six cases du Cratère Fumant. [Variantes et captures](design/Visuels_Biome_Volcanique.md#variantes-et-placements-des-missions-61-à-80)
 
 
@@ -35,11 +37,13 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Éclaireur elfe, course** — trois planches de 20 poses testées en jeu sur les quatre diagonales à ×1 et ×2. Aperçu en attente de retour du porteur. [Fiche](design/Visuel_Eclaireur_Elfe.md).
 
-- [x] **Éclaireur gobelin, course** — trois planches de 20 images dans les ressources de jeu. Test témoin corrigé, avis visuel favorable et contrôle en jeu à ×1 et ×2. En attente d’intégration dans `main`. [Aperçu](design/Visuel_Eclaireur_Gobelin.md).
+- [x] **Éclaireur gobelin, course** — trois planches de 20 images dans les ressources de jeu. Test témoin corrigé, contrôle en jeu à ×1 et ×2. Intégré sur `main` (`332c7f1`). [Aperçu](design/Visuel_Eclaireur_Gobelin.md).
 
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).
 
 - [x] **Lanceur de haches troll, seconde proposition** — transfert de poids, rotation des épaules et reprise de la hache près de la hanche. Vérifié en combat à ×1 et ×2, en attente de l’avis du porteur. [Comparatif](design/Visuel_Troll_Lancer.md#lancer-retravaillé)
+
+- [x] **Lanceur de haches troll, attaque** — lâcher, main vide pendant le vol et retour en garde. Quatre tirs avec rebond vérifiés au Gué, dans les deux sens à ×1 et ×2. [Animation et contrôles](design/Visuel_Troll_Lancer.md)
 
 - [x] **Mage humain, lancement du sort** — geste de la main et éclat du cristal, contrôlés au Gué dans les deux sens à ×1 et ×2. [Animation et captures](design/Visuel_Mage_Incantation.md)
 

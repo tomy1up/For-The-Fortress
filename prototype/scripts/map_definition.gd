@@ -5,6 +5,7 @@ const DrownedMaps = preload("res://scripts/drowned_maps.gd")
 const VolcanicMaps = preload("res://scripts/volcanic_maps.gd")
 const CitadelMaps = preload("res://scripts/citadel_maps.gd")
 const DesertMaps = preload("res://scripts/desert_maps.gd")
+const MineMaps = preload("res://scripts/mine_maps.gd")
 ## Dix terrains de prototype du premier chapitre. Géométries à éprouver en jeu.
 const CHAPTER_ONE_MAPS: Dictionary = {
 	"ford_turns": {
@@ -572,6 +573,7 @@ static func for_id(id: String) -> Dictionary:
 	if VolcanicMaps.IDS.has(id): return VolcanicMaps.board(id)
 	if CitadelMaps.IDS.has(id): return CitadelMaps.board(id)
 	if DesertMaps.IDS.has(id): return DesertMaps.board(id)
+	if MineMaps.IDS.has(id): return MineMaps.board(id)
 	if id == "marsh_channels":
 		var shared: Array[Vector2] = [Vector2(8,6),Vector2(11,6),Vector2(11,2),Vector2(15,2),Vector2(15,6),Vector2(17,6)]
 		var upper: Array[Vector2] = [Vector2(0,1),Vector2(5,1),Vector2(5,4),Vector2(8,4)]
@@ -774,7 +776,7 @@ static func validation_error(data: Dictionary) -> String:
 		for other in range(index):
 			if data.slots[index] == data.slots[other]: return "Emplacements superposés."
 	if not (data.path_length is float or data.path_length is int) or not is_finite(float(data.path_length)) or float(data.path_length) <= 0.0 or absf(float(data.path_length)-measured_length(data.path_points)) > 0.000000001: return "Longueur de chemin incohérente."
-	if data.decoration not in ["valley","none","mountain","marsh","volcanic","citadel","desert"]: return "Décor de carte inconnu."
+	if data.decoration not in ["valley","none","mountain","marsh","volcanic","citadel","desert","mine"]: return "Décor de carte inconnu."
 	if data.has("water_areas"):
 		if data.decoration!="marsh" or not data.water_areas is Array or data.water_areas.size()>32: return "Bassins décoratifs invalides."
 		for pool in data.water_areas:

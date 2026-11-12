@@ -52,3 +52,7 @@ Source : `Cadrage_campagne_2026-10-29.md` (CAMP-007, 010, 011, 012, 017, 018, 01
 
 1. Développer le chapitre 11 : dix cartes sans règle propre, rencontres standard du Gué, PV à 200 % et plus, 65 PO, mesurées avec les talents réels.
 3. Développer le chapitre 12 (tempête de sable) puis demander à Codex l'habillage du biome et de la tempête (palette, pièces de décor) avec la fiche des cartes du chapitre 11.
+
+## Biome des chapitres 13 et 14 : souterrains et mines (validé par le porteur le 12 novembre 2026)
+
+Le porteur a validé le 12 novembre 2026 le septième biome proposé par Claude Code. Le chapitre 13 a été développé sur cette **recommandation** : souterrains et mines (galeries sombres, cristaux, torches, éclairage très différent des six biomes existants). Le chapitre 13 ouvre le biome sans règle propre ; la nouveauté du chapitre 14 reste à proposer (piste : éboulement qui bloque un trajet quelques secondes, ou ennemis qui sortent de galeries). Si le porteur choisit un autre biome, seuls le nom de décor, la palette et les titres changent : les cartes réglées par simulation restent valables.

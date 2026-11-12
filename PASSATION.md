@@ -12,7 +12,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 **Tempête de sable, contrôle v0.182.** L’effet de la version publiée a été vérifié sur l’export Windows (111 et 120) et sur les sources (40 passages, missions 111–120, deux factions et deux vitesses). Traînées plus lumineuses et voile renforcé proposés dans deux PNG au même format. Les 40 passages ont été rejoués avec le nouveau contraste. Les cendres intégrées ont été contrôlées sur les six emplacements, à ×1 et ×2 dans les deux factions. [Comparatif](design/Visuels_Biome_Desert.md#contraste-de-la-rafale-sur-la-v0182).
 
-**Course de l’éclaireur gobelin.** Le porteur trouve l’aperçu convaincant et souhaite poursuivre. Le test négatif de Claude Code utilise désormais `enemy.horde.inconnu` (`47eefa5`). Les trois planches sont installées dans `prototype/assets/animations/enemy.horde.scout/` sur `art/codex`, prêtes à intégrer. [Fiche et captures](design/Visuel_Eclaireur_Gobelin.md).
+**Course de l’éclaireur gobelin.** Le porteur trouve l’aperçu convaincant et souhaite poursuivre. Le test négatif de Claude Code utilise désormais `enemy.horde.inconnu` (`47eefa5`). Les trois planches sont installées dans les ressources d’exécution et intégrées sur `main` (`332c7f1`). [Fiche et captures](design/Visuel_Eclaireur_Gobelin.md).
 
 **Marche du fantassin humain.** Trois planches de 20 poses vérifiées à ×1 et ×2 sur les quatre diagonales. Le porteur trouve le résultat « une bonne base » et le juge encore perfectible. Le lot `9999fa0` attend son feu vert avant intégration. [Fiche et capture](design/Visuel_Fantassin_Marche.md).
 
@@ -105,6 +105,12 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 **v0.179** : chapitre 11 (désert, missions 101 à 110) : `scripts/desert_maps.gd` (décor `desert`, palette dans `decor.json`), `campaign_catalogue.gd` (`reward_po`, `reward_text`, `xp` 0 après la mission 100), borne de PV à 209 %. Cartes mesurées avec 51 points de talent : les formes des chapitres précédents sont trop faciles, trajets raccourcis (`design/Missions_101_110_Desert.md`). Test : `tests/test_desert_chapter.gd`. Captures : variantes `dune101`…`dune110`. Prochaine étape : chapitre 12 (tempête de sable, affixe à rythme régulier comme les éruptions).
 
 **v0.180** : chapitre 12, tempête de sable. Modèle (`valley_model.gd`) : affixe `sandstorm` (5 champs), `storm_status()`, `storm_active_now()`, `range_factor_now()`, frontières de rafale comme événements (`storm_next`, journal « tempête n début/fin »), fenêtres de couverture réduites (`storm_windows`, `storm_route_windows`, choisies par `_windows_for` selon l'instant). Vue : repère `_draw_sandstorm`, planches `effect.sandstorm` (`warning` progress, `storm` time) étirées sur le plateau. Cartes 111–120 dans `desert_maps.gd` (trajets longs). Tests : `test_sandstorm.gd`, `test_sandstorm_chapter.gd`. Captures : variantes `dune111`…`dune120`. Prochaine étape : chapitre 13 (nouveau biome, sans règle propre) : choix du biome à faire avec le porteur.
+
+**v0.181** : habillage du désert (missions 101-110) cherry-pické de `art/codex` (`819636d`) ; `campaign_screen.gd` : `TerrainPreview.faction` et palette via `DecorArt.palette` (miniature de campagne). Les chapitres 12 (111-120) attendent leurs pièces de décor et l'effet `effect.sandstorm`.
+
+**v0.182** : commits `ef04133` (désert 111-120 et planches de la tempête) et `7743d92` (éruptions) cherry-pickés de `art/codex`. Code : `_draw_sandstorm` cadencé sur `model.elapsed` ; `_draw_eruption` dessine `effect.eruption/disabled` pendant l'état `active` (âge = durée − `remaining`), repli sur le repère. `test_decor_art.gd` contrôle aussi les marges du désert. Les commits du lancer du troll restent sur `art/codex`.
+
+**v0.183** : chapitre 13 (121-130) livré sur la **recommandation** « souterrains et mines » (biome non encore confirmé par le porteur ; Codex sans crédit au moment de la mission : habillage à demander plus tard).
 
 ## Prochaines étapes possibles
 
