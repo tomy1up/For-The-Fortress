@@ -8,7 +8,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
-- [ ] **Souterrains et mines, missions 121–130 (v0.183)** — biome à confirmer par le porteur avant tout travail. Le code pose une palette provisoire (`mine` dans `assets/decor/decor.json`), sans pièce ni placement. Cartes : `prototype/scripts/mine_maps.gd`.
+- [ ] **Souterrains et mines, missions 121–130 (v0.183)** — biome validé par le porteur le 12 novembre 2026, habillage à produire. Le code pose une palette provisoire (`mine` dans `assets/decor/decor.json`), sans pièce ni placement. Cartes : `prototype/scripts/mine_maps.gd`.
 
 - [x] **Variantes du décor volcanique** — basalte éclaté, ruine d’angle et 120 placements recomposés sur les missions 61–80. Contrôle en combat dans les deux factions et à ×2 sur les six cases du Cratère Fumant. [Variantes et captures](design/Visuels_Biome_Volcanique.md#variantes-et-placements-des-missions-61-à-80)
 

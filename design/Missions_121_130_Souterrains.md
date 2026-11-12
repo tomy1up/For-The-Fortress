@@ -2,7 +2,7 @@
 
 ## Statut de conception
 
-**Biome à confirmer par le porteur.** Faute de réponse sur le septième biome et Codex étant indisponible (crédit épuisé), Claude Code a développé le chapitre 13 sur sa recommandation « souterrains et mines » (voir `Cadrage_missions_101_200.md`). Réglage de prototype à confirmer : titres, palette, valeurs.
+**Biome « souterrains et mines » validé par le porteur le 12 novembre 2026** (voir `Cadrage_missions_101_200.md`). Titres, palette et valeurs restent des réglages de prototype à confirmer.
 
 ## Règles
 
