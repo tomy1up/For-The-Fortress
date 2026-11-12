@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Marche du garde noir (ouvert)
+
+Trois planches dans le dossier d’exécution `enemy.horde.guard`. Essais aux Coulées Figées (vague 7) sur les quatre diagonales à ×1 et ×2. Validateur et trois suites ciblées passent. Attendre l’avis visuel du porteur avant intégration. [Captures](design/Visuel_Garde_Noir.md).
+
 ### 2026-11-12 — Marche du garde royal (ouvert)
 
 `enemy.alliance.guard` dispose de trois planches de 24 poses dans les ressources. Aucun raccord de code nécessaire. Les quatre diagonales ont été contrôlées à ×1 et ×2, validateur et trois suites ciblées au vert. Attendre l’avis visuel du porteur. [Aperçu](design/Visuel_Garde_Royal.md).
