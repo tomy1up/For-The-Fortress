@@ -64,6 +64,9 @@ La v0.185 ajoute les missions 141 à 150 (`prototype/scripts/sky_maps.gd`, déco
 ### 2026-11-12 — Aigle des cimes (chapitre 16) à illustrer (ouvert)
 La v0.186 ajoute l'**aigle des cimes**, nouvel attaquant neutre des îles flottantes (missions 151 à 160), choisi par le porteur. Il réutilise provisoirement la silhouette du loup (`enemy.neutral.eagle` dans `enemy_art.gd`). Besoin : une illustration d'aigle de profil (même cadrage 34 px que les autres attaquants neutres, pieds au sol) et, ensuite, une marche/vol en planches (`enemy.neutral.eagle`, animation `walk` en distance). Valeurs : 14 PV, vitesse 1,5, groupes serrés à partir de la vague 3. À insérer dans ta file après les mines du chapitre 14, l'éboulement et les îles flottantes.
 
+### 2026-11-12 — Côtes et récifs (chapitres 17 et 18) à habiller (ouvert)
+Le porteur a choisi le neuvième biome : **côtes et récifs** (port abandonné, falaises, mer ; turquoise, blanc d'écume, bois gris). La v0.187 ajoute les missions 161 à 170 (`prototype/scripts/coast_maps.gd`, décor `coast`, palette provisoire dans `decor.json`). Ordre de ta file : mines du chapitre 14, éboulement, îles flottantes, aigle des cimes, puis les côtes. Le chapitre 18 apportera l'affixe Brume marine (un voile de brume sur le plateau pendant 6 s, annoncé 3 s avant) : le visuel sera à demander plus tard.
+
 ## Traité
 
 (vide)

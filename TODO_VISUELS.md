@@ -8,6 +8,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [ ] **Côtes et récifs, missions 161–170 (v0.187)** — neuvième biome choisi par le porteur (12 novembre 2026). Palette provisoire (`coast` dans `assets/decor/decor.json`), sans pièce ni placement. Cartes : `prototype/scripts/coast_maps.gd`. En fin de file.
+
 - [ ] **Aigle des cimes, chapitre 16 (v0.186)** — nouvel attaquant neutre, rapide et fragile (`enemy.neutral.eagle`). Silhouette provisoire du loup. À illustrer (même cadrage que les neutres), puis marche/vol en planches. Voir `design/Missions_151_160_Aigle.md`.
 
 - [ ] **Îles flottantes et cité céleste, missions 141–150 (v0.185)** — biome confirmé par le porteur le 12 novembre 2026. Palette provisoire (`sky` dans `assets/decor/decor.json`), sans pièce ni placement. Cartes : `prototype/scripts/sky_maps.gd`. Ordre de la file : mines du chapitre 14 et éboulement d'abord.

@@ -23,7 +23,7 @@ Source : `Cadrage_campagne_2026-10-29.md` (CAMP-007, 010, 011, 012, 017, 018, 01
 
 ### 2. Récompenses : PO croissantes avec les chapitres (choix de Claude Code sur délégation, à confirmer)
 
-- Chapitres 1 à 10 : 60 PO par première victoire (inchangé). **Chapitres 11 à 20 : 60 PO + 5 PO par chapitre au-delà du dixième**, soit 65 PO au chapitre 11 et 105 PO au chapitre 20.
+- Chapitres 1 à 10 : 60 PO par première victoire (inchangé). **Chapitres 11 à 20 : 60 PO + 5 PO par chapitre au-delà du dixième**, soit 65 PO au chapitre 11 et 110 PO au chapitre 20 (correction du 12 novembre 2026 : 105 était une erreur de calcul).
 - Aucune XP au-delà de la mission 100 (CAMP-011).
 - Les PO servent à la boutique (CAMP-012) ; le catalogue de boutique reste à définir. Le barème est à ajuster quand la boutique existera.
 
@@ -65,3 +65,7 @@ Le porteur a validé le 12 novembre 2026 le septième biome proposé par Claude 
 ## Décision du 12 novembre 2026 — nouveauté du chapitre 16
 
 Le porteur retient **l'aigle des cimes**, un attaquant neutre rapide et fragile, pour le chapitre 16, après avoir relevé que le chapitre 14 était déjà un affixe (l'alternance attaquant/affixe des chapitres pairs avait été rompue). Voir [la fiche](Missions_151_160_Aigle.md).
+
+## Décision du 12 novembre 2026 — neuvième biome
+
+Le porteur retient **côtes et récifs** pour les chapitres 17 et 18, avec l'affixe **Brume marine** au chapitre 18 (or gagné par élimination réduit de 30 % pendant 6 s toutes les 22 s, annoncé 3 s avant ; valeurs à confirmer). Voir [la fiche du chapitre 17](Missions_161_170_Cotes.md).

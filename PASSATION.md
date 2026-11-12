@@ -120,6 +120,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.186** : chapitre 16 (151-160) et attaquant `Eagle` (`eagle_encounters.gd`, type 11, jeu de rencontres `sky_eagles` branché dans `campaign_data.gd`, `bank_encounters.gd`, `enemy_catalogue.gd`, `enemy_art.gd`, `valley_model.gd`). Visuel provisoire : silhouette du loup (cadre partagé avec le loup, exclu du test de disjonction). Cartes prolongées (`maps16.py` hors dépôt). Marge la plus fine : mission 155 (8/6 PV).
 
+**v0.187** : chapitre 17 (161-170, `coast_maps.gd`, décor `coast`, biome « côtes et récifs » choisi par le porteur). Le Quai des Brumes a un tracé propre (la forme de la Corniche ne gagnait plus). Prochain : chapitre 18 avec l'affixe Brume marine (or réduit de 30 % pendant 6 s toutes les 22 s, annoncé 3 s avant : à coder dans `valley_model.gd` sur le modèle de la tempête de sable ; l'or d'élimination doit être calculé selon le temps de combat pour rester rejouable).
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

@@ -30,7 +30,7 @@ func verify_catalogue() -> void:
 	var Catalogue = Main.CampaignCatalogue
 	var definition: Dictionary = Catalogue.definition(51)
 	check(definition.available and definition.map_id == "marsh_stagnant" and definition.wave_set_id == "marsh_drowned" and definition.hp_percent == 150 and definition.po == 60 and definition.xp == 100 and definition.waves == 10,"La mission 51 ouvre le chapitre 6 avec ses rencontres et ses gains habituels")
-	check(Catalogue.runtime("campaign.051").wave_set_id == "marsh_drowned" and Catalogue.definition(52).available and Catalogue.definition(61).available and Catalogue.definition(81).available and Catalogue.definition(91).available and Catalogue.definition(101).available and Catalogue.definition(111).available and not Catalogue.definition(161).available and Catalogue.runtime("campaign.161").is_empty(),"La mission 91 reste à venir")
+	check(Catalogue.runtime("campaign.051").wave_set_id == "marsh_drowned" and Catalogue.definition(52).available and Catalogue.definition(61).available and Catalogue.definition(81).available and Catalogue.definition(91).available and Catalogue.definition(101).available and Catalogue.definition(111).available and not Catalogue.definition(171).available and Catalogue.runtime("campaign.171").is_empty(),"La mission 91 reste à venir")
 	check(not Catalogue.definition(50).has("wave_set_id") and Catalogue.definition(50).get("combat_affix",{}).is_empty(),"Les missions précédentes n'héritent ni des rencontres ni d'un affixe")
 	for faction in range(2):
 		var identity: Dictionary = Model.Enemies.for_profile(9,faction)
@@ -45,7 +45,7 @@ func verify_catalogue() -> void:
 	check(Model.Enemies.for_profile(12,0).is_empty(),"Un profil inconnu reste refusé")
 	var forecast: Dictionary = Model.wave_forecast(2,0,150,"marsh_drowned")
 	check(forecast.groups[0].type == 9 and forecast.groups[0].count == 1 and forecast.groups[0].name == "Gueule-de-Vase" and Model.wave_forecast(2,0,150,"inconnu").is_empty(),"La prévision de la vague 2 annonce un Noyé")
-	check(Model.valid_enemy_hp_percent(150) and Model.valid_enemy_hp_percent(249) and not Model.valid_enemy_hp_percent(250),"Les PV ennemis montent jusqu'à 249 %")
+	check(Model.valid_enemy_hp_percent(150) and Model.valid_enemy_hp_percent(254) and not Model.valid_enemy_hp_percent(255),"Les PV ennemis montent jusqu'à 254 %")
 
 func verify_flood_rules() -> void:
 	var stretches: Array = [{"route":"","from":2.0,"to":5.0},{"route":"","from":8.0,"to":9.0},{"route":"b","from":0.0,"to":4.0}]

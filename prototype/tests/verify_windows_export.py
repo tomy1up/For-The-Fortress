@@ -160,7 +160,7 @@ for camp in ['alliance','horde']:
 for camp in ['alliance','horde']:
     for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
 for camp in ['alliance','horde']:
-    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,61) for stage in ['', 'play']]+['marsh50completed','marsh60completed']+[f'volcano{number}{stage}' for number in range(61,71) for stage in ['', 'play']]+['volcano70completed']+[f'ash{number}{stage}' for number in range(71,81) for stage in ['', 'play']]+['ash80completed']+[f'citadel{number}{stage}' for number in range(81,91) for stage in ['', 'play']]+['citadel90completed']+[f'garrison{number}{stage}' for number in range(91,101) for stage in ['', 'play']]+['garrison100completed']+[f'dune{number}{stage}' for number in range(101,111) for stage in ['', 'play']]+['dune110completed']+[f'dune{number}{stage}' for number in range(111,121) for stage in ['', 'play']]+['dune120completed']+[f'mine{number}{stage}' for number in range(121,131) for stage in ['', 'play']]+[f'mine{number}{stage}' for number in range(131,141) for stage in ['', 'play']]+[f'sky{number}{stage}' for number in range(141,161) for stage in ['', 'play']]+['sky160completed']:
+    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,61) for stage in ['', 'play']]+['marsh50completed','marsh60completed']+[f'volcano{number}{stage}' for number in range(61,71) for stage in ['', 'play']]+['volcano70completed']+[f'ash{number}{stage}' for number in range(71,81) for stage in ['', 'play']]+['ash80completed']+[f'citadel{number}{stage}' for number in range(81,91) for stage in ['', 'play']]+['citadel90completed']+[f'garrison{number}{stage}' for number in range(91,101) for stage in ['', 'play']]+['garrison100completed']+[f'dune{number}{stage}' for number in range(101,111) for stage in ['', 'play']]+['dune110completed']+[f'dune{number}{stage}' for number in range(111,121) for stage in ['', 'play']]+['dune120completed']+[f'mine{number}{stage}' for number in range(121,131) for stage in ['', 'play']]+[f'mine{number}{stage}' for number in range(131,141) for stage in ['', 'play']]+[f'sky{number}{stage}' for number in range(141,161) for stage in ['', 'play']]+[f'coast{number}{stage}' for number in range(161,171) for stage in ['', 'play']]+['coast170completed']:
         cases.append((camp+'_campaign_menu_'+variant,'campaign_menu',camp))
     for state in ['preparation','purchase','specialisation','defeat_summary']:
         cases.append((camp+'_three_'+state,state,camp))
@@ -430,6 +430,22 @@ for name,state,faction in cases:
         assert snap['completed']==won_missions and snap['other_completed']==0
         assert (snap['po'],snap['xp'])==(6000+650+700+750+800+85*(min(won_missions,150)-140)+90*max(0,won_missions-150),10000)
         assert snap['mission_states']==(['completed']*10 if name.endswith('completed') else ['completed']*(number-(number-141)//10*10-141)+['available']+['locked']*((number-141)//10*10+150-number))
+        if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
+        if name.endswith('play'):
+            launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':239+((number-139)>>1),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+    elif '_campaign_menu_coast' in name:
+        snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
+        camp=0 if faction=='alliance' else 1
+        number=int(name.rsplit('_',1)[1].removeprefix('coast').removesuffix('play').removesuffix('completed'))
+        map_id=['coast_jetty','coast_lighthouse','coast_reefs','coast_wrecks','coast_quay','coast_cliff','coast_coves','coast_harbor','coast_skerry','coast_cape'][number-161]
+        routes={163:2,164:3,166:2,167:3,168:2,170:3}.get(number,0)
+        assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
+        assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==(17,number,map_id,routes or 1)
+        won_missions=number if name.endswith('completed') else number-1
+        assert snap['completed']==won_missions and snap['other_completed']==0
+        assert (snap['po'],snap['xp'])==(6000+650+700+750+800+850+900+95*(won_missions-160),10000)
+        assert snap['mission_states']==(['completed']*10 if name.endswith('completed') else ['completed']*(number-161)+['available']+['locked']*(170-number))
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
