@@ -4,11 +4,17 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 12 novembre 2026 — Codex
 
-**Éruptions, désactivation.** Les coins de l’avertissement sont renforcés. La planche `effect.eruption/disabled` ajoute des cendres autour des bottes et une dissipation sur la fin des cinq secondes. Contrôle sur les six emplacements, dans les deux factions à ×1 et ×2. Le validateur et les trois suites ciblées passent (4 173 contrôles Godot, 17 tests Python). La désactivation reste à brancher par Claude Code. [Aperçu et réglages](design/Avertissement_Eruptions.md#désactivation-par-les-cendres).
+**Souterrains et mines, missions 121–130.** Palette ardoise bleutée, calque de strates et cinq pièces par carte dans `decor.json`. 26 passages en combat avec les deux factions, dont les missions 124, 127 et 130 à ×1 et ×2. Les routes, les emplacements et les anneaux de portée restent lisibles. Les bassins du Lac Noir sont décoratifs. Trois suites ciblées au vert (22 632 contrôles Godot, 17 tests Python). [Fiche et captures](design/Visuels_Biome_Mines.md).
+
+**Marche du colosse troll.** Trois planches de 24 poses sur `enemy.horde.colossus`. Pas plus amples, épaules et masse solidaires, transfert de poids à l’appui. Quatre diagonales à ×1 et ×2 et pause vérifiées aux Coulées Figées (vague 6). Validateur et trois suites ciblées au vert (1 618 contrôles Godot, 17 tests Python). En attente du retour visuel du porteur. [Aperçu](design/Visuel_Colosse_Troll.md).
+
+**Marche du brise-remparts nain.** Trois planches de 24 poses sur `enemy.alliance.siegebreaker`, avec pas plus courts et balancement de la masse. Quatre diagonales, vitesses ×1 et ×2 et pause de contrôle vérifiées sur Les Coulées Figées, vague 6. Validateur à zéro problème et trois suites ciblées au vert (1 617 contrôles Godot, 17 tests Python). Attente du retour visuel du porteur. [Aperçu](design/Visuel_Brise_Remparts.md).
+
+**Course de l’éclaireur elfe.** Trois planches de 20 poses sur `enemy.alliance.scout`, contrôlées sur les quatre diagonales à ×1 et ×2. La pause de contrôle fige le sprite. Validateur à zéro problème et sept suites ciblées au vert pour le lot elfe et tempête (23 580 contrôles Godot, 17 tests Python). Le porteur a donné un avis favorable à l’aperçu du gobelin et demande de poursuivre. [Aperçu de l’elfe](design/Visuel_Eclaireur_Elfe.md).
 
 **Tempête de sable, contrôle v0.182.** L’effet de la version publiée a été vérifié sur l’export Windows (111 et 120) et sur les sources (40 passages, missions 111–120, deux factions et deux vitesses). Traînées plus lumineuses et voile renforcé proposés dans deux PNG au même format. Les 40 passages ont été rejoués avec le nouveau contraste. Les cendres intégrées ont été contrôlées sur les six emplacements, à ×1 et ×2 dans les deux factions. [Comparatif](design/Visuels_Biome_Desert.md#contraste-de-la-rafale-sur-la-v0182).
 
-**Course de l’éclaireur gobelin.** Le porteur trouve l’aperçu convaincant et souhaite poursuivre. Le test négatif de Claude Code utilise désormais `enemy.horde.inconnu` (`47eefa5`). Les trois planches sont installées dans `prototype/assets/animations/enemy.horde.scout/` sur `art/codex`, prêtes à intégrer. [Fiche et captures](design/Visuel_Eclaireur_Gobelin.md).
+**Course de l’éclaireur gobelin.** Le porteur trouve l’aperçu convaincant et souhaite poursuivre. Le test négatif de Claude Code utilise désormais `enemy.horde.inconnu` (`47eefa5`). Les trois planches sont installées dans les ressources d’exécution et intégrées sur `main` (`332c7f1`). [Fiche et captures](design/Visuel_Eclaireur_Gobelin.md).
 
 **Marche du fantassin humain.** Trois planches de 20 poses vérifiées à ×1 et ×2 sur les quatre diagonales. Le porteur trouve le résultat « une bonne base » et le juge encore perfectible. Le lot `9999fa0` attend son feu vert avant intégration. [Fiche et capture](design/Visuel_Fantassin_Marche.md).
 
@@ -48,7 +54,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## Contexte technique transmis par Claude Code
 
-**Dernière version publiée : v0.182** (désert complet, tempête animée sur le temps de combat, cendres des éruptions ; tag `v0.182`, SHA-256 `5e9eba82…e259b`). Précédentes : v0.181, v0.180, v0.179.
+**Dernière version publiée : v0.180** (chapitre 12, tempête de sable, cent vingt missions ; tag `v0.180`, SHA-256 `dac81b32…62f1`). Précédentes : v0.179, v0.178, v0.177.
 
 **v0.176** : intégration des livraisons de Codex (messages du porteur du 11 novembre). `scripts/decor_art.gd` + `assets/decor/decor.json` (voir `design/Format_decor.md`) : palettes, calque de cendres et pièces posées ; citadelle = camp adverse. Sprites fixes `capitaine_humain_v001.png` et `gueule_de_vase_v001.png` (importés, déclarés dans les trois listes d'export ; cadres rognés au pied pour le test d'ancrage). Nom « Gueule-de-Vase » (identifiant inchangé) ; `tests/report_replay.gd` restaure « Noyé » pour les rapports d'avant la v0.176. Remous : animation `regen` (mode time) de `effect.regeneration`. Test : `test_decor_art.gd`. Attention : le lanceur de tests coupe chaque suite à 120 images.
 
