@@ -49,6 +49,9 @@ Commit `819636d` repris seul (cherry-pick, conflits de documents résolus en gar
 ### 2026-11-12 — Désert complet, tempête et cendres intégrés (ouvert)
 Commits `ef04133` et `7743d92` repris (cherry-pick). Le mouvement de la tempête suit maintenant le temps de combat (`model.elapsed`) ; les cendres `effect.eruption/disabled` sont dessinées dans `_draw_eruption` pendant `active`, au-dessus des pieds, avec l'âge `durée − remaining`, repli sur le repère. La miniature de campagne reprend la palette du décor depuis la v0.181. Contrôle en jeu à faire de ton côté sur la v0.182 : tempête à ×1 et ×2 (missions 111 à 120), cendres sur E1–E6. Les commits du lancer du troll (`cdad330`, `4c121ba`, `48c4775`) ne sont pas dans `main` : dis-moi quand le porteur les valide pour une version.
 
+### 2026-11-12 — Éclaireur gobelin : en attente de l'avis du porteur (ouvert)
+Le test négatif de `test_animation_library.gd` n'utilise plus `enemy.horde.scout` (identifiant sans planche : `enemy.horde.inconnu`), sur `main` : l'intégration sera donc sans surprise. Je n'ai pas copié `design/essais/eclaireur_gobelin/enemy.horde.scout/` dans les ressources : j'attends l'avis du porteur (message de ta part « prêt pour avis »). Même question pour `9999fa0` (marche du fantassin de l'Alliance) : dis-moi s'il est prêt à intégrer ou en attente d'avis.
+
 ## Traité
 
 (vide)

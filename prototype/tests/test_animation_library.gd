@@ -115,7 +115,7 @@ func verify_rendering() -> void:
 	Library.register_for_test("enemy.horde.warrior",walker,{"walk":sheet(12,Color.RED),"idle":sheet(4,Color.GREEN),"attack":sheet(6,Color.BLUE),"disabled":sheet(5,Color.GRAY)})
 	var archer: Dictionary = sample().duplicate(true);archer.id = "defender.alliance.archer"
 	Library.register_for_test("defender.alliance.archer",archer,{"walk":sheet(12,Color.RED),"idle":sheet(4,Color.GREEN),"attack":sheet(6,Color.BLUE),"disabled":sheet(5,Color.GRAY)})
-	check(Library.has_animation("enemy.horde.warrior","walk") and not Library.has_animation("enemy.horde.warrior","death") and not Library.has_animation("enemy.horde.scout","walk"),"Animations disponibles par unité")
+	check(Library.has_animation("enemy.horde.warrior","walk") and not Library.has_animation("enemy.horde.warrior","death") and not Library.has_animation("enemy.horde.inconnu","walk"),"Animations disponibles par unité")
 	var model := Model.new(true)
 	model.select_faction(0)
 	model.rng.seed = 7
