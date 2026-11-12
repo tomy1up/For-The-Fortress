@@ -20,7 +20,7 @@ Proposition sur les sources de la v0.180, le 12 novembre 2026. Le bord de la cas
 
 Contrôle en situation de combat sur la mission 71, avec les six emplacements, les trois défenseurs de base par faction et les vitesses ×1 et ×2, soit 24 passages. L’essai charge une vue isolée qui dessine la planche de cendres pendant l’état `active`. L’avertissement, la désactivation puis sa fin sont vérifiés contre l’état du jeu. La vérification du rendu compare aussi l’état du combat avant et après chaque capture. Le validateur signale zéro problème et les trois suites ciblées passent (4 173 contrôles Godot, 17 tests Python).
 
-Le jeu utilise encore son repère provisoire pendant la désactivation. Claude Code doit relier la planche à l’état `active`.
+La v0.182 affiche la planche pendant l’état `active`. Le rendu intégré a été contrôlé sur la mission 71, dans les deux factions, sur E1–E6 à ×1 et ×2 (24 passages).
 
 - [Les quatre étapes à ×2](essais/eruption_cendres/Eruptions_etapes_x2.jpg)
 - [Sapeur gobelin en combat, ×1](essais/eruption_cendres/Eruption_en_combat.gif)

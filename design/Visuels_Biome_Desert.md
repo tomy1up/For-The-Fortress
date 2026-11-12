@@ -24,3 +24,11 @@ Les dix cartes ont été contrôlées en combat avec chaque faction. Les mission
 - [Quatre monuments sur le plateau](essais/desert_ch12/Desert_111_120_monuments.jpg)
 - [Étapes d’une rafale aux Arches de Grès, Horde ×2](essais/desert_ch12/Tempete_etapes.jpg)
 - [Annonce, rafale et retour au calme à la Pyramide Ensablée, Horde ×1](essais/desert_ch12/Tempete_en_combat.gif)
+
+## Contraste de la rafale sur la v0.182
+
+La rafale publiée a été contrôlée en jeu sur les missions 111 à 120, avec les deux factions à ×1 et ×2. Deux contrôles supplémentaires ont utilisé l’exécutable Windows de la v0.182, sur Le Mirage et La Pyramide Ensablée. Les traînées de la version publiée se confondent parfois avec le sol ocre.
+
+L’essai renforce la teinte claire du voile et allonge les traînées. Le bord lumineux de l’annonce est aussi renforcé. Les routes, les cases et le cercle de portée restent lisibles. Le comparatif est pris à 16,20 s simulées, à ×2, avec le même placement et le même état de combat. Les dimensions et cadences des deux planches restent celles de la v0.182. Les 40 passages ont été rejoués après la retouche. L’avertissement conserve la portée de départ, la rafale réduit la portée et la fin de rafale rétablit la portée normale dans chaque cas.
+
+[Comparatif en combat](essais/desert_ch12/Tempete_contraste_v0182.jpg)

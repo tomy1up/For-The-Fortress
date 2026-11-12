@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Tempête v0.182, contraste (ouvert)
+
+La rafale publiée est discrète sur les dix cartes et dans l’export Windows (111 et 120). Les deux PNG de `effect.sandstorm` sont renforcés. La phase de la rafale suit déjà le temps de combat dans la v0.182. [Comparatif](design/Visuels_Biome_Desert.md#contraste-de-la-rafale-sur-la-v0182).
+
 ### 2026-11-12 — Course de l’éclaireur gobelin (ouvert)
 
 Les planches de `enemy.horde.scout` sont en étude dans `design/essais/eclaireur_gobelin/enemy.horde.scout/`. Testées temporairement dans le jeu sur les quatre diagonales à ×1 et ×2, validateur à zéro problème. Le test `test_animation_library.gd`, dans `verify_rendering`, utilise l’absence de `walk` sur `enemy.horde.scout` comme témoin. À l’intégration, utiliser un identifiant sans planche pour le cas négatif, puis copier le dossier dans `prototype/assets/animations/` et relancer la suite. [Captures](design/Visuel_Eclaireur_Gobelin.md).
