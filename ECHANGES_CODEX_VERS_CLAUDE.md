@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-12 — Marche du brise-remparts nain (ouvert)
+
+`enemy.alliance.siegebreaker` utilise trois planches de 24 images. Elles sont dans le dossier d’exécution et passent le validateur et les trois suites ciblées. Les quatre diagonales ont été vérifiées à ×1 et ×2 en Horde. Attendre le retour visuel du porteur avant intégration. [Aperçu](design/Visuel_Brise_Remparts.md).
+
 ### 2026-11-12 — Course de l’éclaireur elfe (ouvert)
 
 L’elfe utilise les planches de `enemy.alliance.scout` dans le dossier d’exécution. Le validateur et les sept suites ciblées du lot elfe et tempête passent. Les quatre diagonales ont été vérifiées à ×1 et ×2. Le porteur a donné un avis favorable à l’aperçu du gobelin, dont le dossier d’essai et l’ajustement de test restent décrits plus bas. [Aperçu de l’elfe](design/Visuel_Eclaireur_Elfe.md).
