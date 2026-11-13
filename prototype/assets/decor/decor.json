@@ -5954,6 +5954,376 @@
    }
   },
   "placements": {
+   "coast_beacon": [
+    {
+     "object": "jetee_retour",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "epave",
+     "xy": [
+      1.75,
+      5.0
+     ]
+    },
+    {
+     "object": "recifs",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "phare",
+     "xy": [
+      8.75,
+      9.0
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      11.0,
+      8.75
+     ]
+    }
+   ],
+   "coast_causeway": [
+    {
+     "object": "recifs_retour",
+     "xy": [
+      2.5,
+      1.5
+     ]
+    },
+    {
+     "object": "epave",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      7.75,
+      1.0
+     ]
+    },
+    {
+     "object": "jetee",
+     "xy": [
+      9.0,
+      9.0
+     ]
+    },
+    {
+     "object": "jetee_retour",
+     "xy": [
+      11.25,
+      9.25
+     ]
+    }
+   ],
+   "coast_chalk": [
+    {
+     "object": "recifs_retour",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      2.0,
+      5.5
+     ]
+    },
+    {
+     "object": "porte_retour",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "recifs",
+     "xy": [
+      2.5,
+      7.75
+     ]
+    },
+    {
+     "object": "recifs",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    }
+   ],
+   "coast_graveyard": [
+    {
+     "object": "recifs",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      3.0,
+      3.75
+     ]
+    },
+    {
+     "object": "epave_retour",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "epave",
+     "xy": [
+      5.75,
+      9.25
+     ]
+    },
+    {
+     "object": "epave",
+     "xy": [
+      16.5,
+      9.25
+     ]
+    }
+   ],
+   "coast_shoal": [
+    {
+     "object": "jetee",
+     "xy": [
+      1.75,
+      3.5
+     ]
+    },
+    {
+     "object": "recifs_retour",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "recifs",
+     "xy": [
+      3.0,
+      9.0
+     ]
+    },
+    {
+     "object": "epave_retour",
+     "xy": [
+      5.75,
+      9.25
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
+   "coast_phantom": [
+    {
+     "object": "casiers",
+     "xy": [
+      5.75,
+      1.0
+     ]
+    },
+    {
+     "object": "epave_retour",
+     "xy": [
+      2.75,
+      6.75
+     ]
+    },
+    {
+     "object": "phare",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "recifs",
+     "xy": [
+      6.5,
+      9.25
+     ]
+    },
+    {
+     "object": "jetee_retour",
+     "xy": [
+      9.5,
+      9.25
+     ]
+    }
+   ],
+   "coast_twinrocks": [
+    {
+     "object": "recifs",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "epave_retour",
+     "xy": [
+      3.0,
+      4.25
+     ]
+    },
+    {
+     "object": "jetee",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "recifs_retour",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
+   "coast_arsenal": [
+    {
+     "object": "casiers",
+     "xy": [
+      1.75,
+      3.5
+     ]
+    },
+    {
+     "object": "jetee_retour",
+     "xy": [
+      1.5,
+      5.75
+     ]
+    },
+    {
+     "object": "porte",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "epave",
+     "xy": [
+      11.75,
+      2.0
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    }
+   ],
+   "coast_storm": [
+    {
+     "object": "recifs",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "porte_retour",
+     "xy": [
+      1.75,
+      6.5
+     ]
+    },
+    {
+     "object": "recifs_retour",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "phare",
+     "xy": [
+      8.75,
+      8.75
+     ]
+    },
+    {
+     "object": "epave",
+     "xy": [
+      11.0,
+      8.75
+     ]
+    }
+   ],
+   "coast_citadel": [
+    {
+     "object": "recifs",
+     "xy": [
+      2.0,
+      3.5
+     ]
+    },
+    {
+     "object": "phare",
+     "xy": [
+      4.0,
+      4.25
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      2.25,
+      7.0
+     ]
+    },
+    {
+     "object": "porte",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "jetee_retour",
+     "xy": [
+      16.5,
+      9.25
+     ]
+    }
+   ],
    "coast_jetty": [
     {
      "object": "casiers",
@@ -6329,24 +6699,893 @@
  "necro": {
   "palette": {
    "ground": [
-    112,
-    110,
-    98
+    69,
+    58,
+    77
    ],
    "faces": [
     [
-     88,
-     86,
-     100
+     59,
+     46,
+     66
     ],
     [
-     66,
-     64,
-     80
+     49,
+     40,
+     58
     ]
    ]
   },
-  "assets": {},
-  "placements": {}
+  "overlay": {
+   "file": "necro/brume_et_strates.png",
+   "position": [
+    335,
+    143
+   ]
+  },
+  "assets": {
+   "arche": {
+    "file": "necro/arche.png",
+    "size": [
+     242,
+     250
+    ],
+    "anchor": [
+     121,
+     235
+    ],
+    "height": 48
+   },
+   "steles": {
+    "file": "necro/steles.png",
+    "size": [
+     250,
+     209
+    ],
+    "anchor": [
+     125,
+     196
+    ],
+    "height": 29
+   },
+   "steles_retour": {
+    "file": "necro/steles_retour.png",
+    "size": [
+     250,
+     209
+    ],
+    "anchor": [
+     125,
+     196
+    ],
+    "height": 29
+   },
+   "obelisque": {
+    "file": "necro/obelisque.png",
+    "size": [
+     222,
+     250
+    ],
+    "anchor": [
+     111,
+     235
+    ],
+    "height": 44
+   },
+   "ossements": {
+    "file": "necro/ossements.png",
+    "size": [
+     250,
+     222
+    ],
+    "anchor": [
+     125,
+     209
+    ],
+    "height": 23
+   },
+   "ossements_retour": {
+    "file": "necro/ossements_retour.png",
+    "size": [
+     250,
+     222
+    ],
+    "anchor": [
+     125,
+     209
+    ],
+    "height": 23
+   },
+   "mausolee": {
+    "file": "necro/mausolee.png",
+    "size": [
+     239,
+     250
+    ],
+    "anchor": [
+     119,
+     235
+    ],
+    "height": 44
+   },
+   "mausolee_retour": {
+    "file": "necro/mausolee_retour.png",
+    "size": [
+     239,
+     250
+    ],
+    "anchor": [
+     119,
+     235
+    ],
+    "height": 44
+   },
+   "arbre": {
+    "file": "necro/arbre.png",
+    "size": [
+     240,
+     250
+    ],
+    "anchor": [
+     120,
+     235
+    ],
+    "height": 43
+   },
+   "arbre_retour": {
+    "file": "necro/arbre_retour.png",
+    "size": [
+     240,
+     250
+    ],
+    "anchor": [
+     120,
+     235
+    ],
+    "height": 43
+   }
+  },
+  "placements": {
+   "necro_tombgate": [
+    {
+     "object": "arche",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      1.75,
+      5.0
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      8.5,
+      9.0
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      11.0,
+      9.0
+     ]
+    }
+   ],
+   "necro_wake": [
+    {
+     "object": "steles_retour",
+     "xy": [
+      2.5,
+      1.5
+     ]
+    },
+    {
+     "object": "arbre",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      7.5,
+      1.0
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      8.0,
+      9.0
+     ]
+    },
+    {
+     "object": "arbre_retour",
+     "xy": [
+      11.25,
+      9.25
+     ]
+    }
+   ],
+   "necro_catacombs": [
+    {
+     "object": "steles",
+     "xy": [
+      2.0,
+      5.5
+     ]
+    },
+    {
+     "object": "arche",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      2.75,
+      7.75
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      11.5,
+      1.75
+     ]
+    },
+    {
+     "object": "ossements_retour",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    }
+   ],
+   "necro_bonefield": [
+    {
+     "object": "ossements_retour",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      4.0,
+      4.25
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      5.75,
+      9.25
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      16.75,
+      9.25
+     ]
+    }
+   ],
+   "necro_mire": [
+    {
+     "object": "mausolee_retour",
+     "xy": [
+      1.75,
+      3.5
+     ]
+    },
+    {
+     "object": "arbre",
+     "xy": [
+      7.5,
+      1.0
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      3.0,
+      9.0
+     ]
+    },
+    {
+     "object": "arbre_retour",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
+   "necro_gallows": [
+    {
+     "object": "arbre_retour",
+     "xy": [
+      5.75,
+      1.0
+     ]
+    },
+    {
+     "object": "steles_retour",
+     "xy": [
+      2.75,
+      6.75
+     ]
+    },
+    {
+     "object": "arbre",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      9.5,
+      9.25
+     ]
+    }
+   ],
+   "necro_twintombs": [
+    {
+     "object": "steles_retour",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "mausolee_retour",
+     "xy": [
+      3.0,
+      4.25
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
+   "necro_charnel": [
+    {
+     "object": "ossements",
+     "xy": [
+      1.75,
+      3.25
+     ]
+    },
+    {
+     "object": "arche",
+     "xy": [
+      1.5,
+      5.5
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "arbre",
+     "xy": [
+      11.75,
+      1.75
+     ]
+    },
+    {
+     "object": "ossements_retour",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    }
+   ],
+   "necro_obelisks": [
+    {
+     "object": "obelisque",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      1.75,
+      6.5
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      8.25,
+      9.0
+     ]
+    },
+    {
+     "object": "ossements_retour",
+     "xy": [
+      10.5,
+      8.75
+     ]
+    }
+   ],
+   "necro_throne": [
+    {
+     "object": "obelisque",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      8.0,
+      1.25
+     ]
+    },
+    {
+     "object": "arbre_retour",
+     "xy": [
+      7.0,
+      8.75
+     ]
+    },
+    {
+     "object": "arche",
+     "xy": [
+      9.5,
+      9.25
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
+   "necro_gate": [
+    {
+     "object": "ossements",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "arche",
+     "xy": [
+      1.75,
+      5.0
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      8.75,
+      9.0
+     ]
+    },
+    {
+     "object": "arbre",
+     "xy": [
+      11.0,
+      9.0
+     ]
+    }
+   ],
+   "necro_road": [
+    {
+     "object": "steles",
+     "xy": [
+      2.5,
+      1.5
+     ]
+    },
+    {
+     "object": "steles_retour",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      7.75,
+      1.0
+     ]
+    },
+    {
+     "object": "arbre_retour",
+     "xy": [
+      8.0,
+      9.25
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      11.25,
+      9.0
+     ]
+    }
+   ],
+   "necro_graveyard": [
+    {
+     "object": "ossements_retour",
+     "xy": [
+      2.0,
+      5.25
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "steles_retour",
+     "xy": [
+      2.75,
+      7.75
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      11.5,
+      1.75
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    }
+   ],
+   "necro_crypts": [
+    {
+     "object": "ossements",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      4.0,
+      4.25
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "mausolee_retour",
+     "xy": [
+      2.75,
+      7.75
+     ]
+    },
+    {
+     "object": "ossements_retour",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
+   "necro_fen": [
+    {
+     "object": "arbre",
+     "xy": [
+      1.75,
+      3.5
+     ]
+    },
+    {
+     "object": "arbre_retour",
+     "xy": [
+      7.5,
+      1.0
+     ]
+    },
+    {
+     "object": "ossements_retour",
+     "xy": [
+      3.0,
+      9.0
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      16.25,
+      9.0
+     ]
+    }
+   ],
+   "necro_hill": [
+    {
+     "object": "ossements",
+     "xy": [
+      5.75,
+      1.0
+     ]
+    },
+    {
+     "object": "arbre",
+     "xy": [
+      2.75,
+      6.75
+     ]
+    },
+    {
+     "object": "arbre_retour",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      6.25,
+      9.0
+     ]
+    },
+    {
+     "object": "steles_retour",
+     "xy": [
+      9.5,
+      9.25
+     ]
+    }
+   ],
+   "necro_mausoleums": [
+    {
+     "object": "steles",
+     "xy": [
+      5.0,
+      1.25
+     ]
+    },
+    {
+     "object": "mausolee_retour",
+     "xy": [
+      3.0,
+      4.25
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      9.5,
+      3.0
+     ]
+    },
+    {
+     "object": "arbre_retour",
+     "xy": [
+      16.75,
+      9.25
+     ]
+    }
+   ],
+   "necro_ossuary": [
+    {
+     "object": "ossements",
+     "xy": [
+      1.75,
+      3.25
+     ]
+    },
+    {
+     "object": "arche",
+     "xy": [
+      1.5,
+      5.5
+     ]
+    },
+    {
+     "object": "ossements_retour",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "steles_retour",
+     "xy": [
+      11.75,
+      2.0
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    }
+   ],
+   "necro_stelae": [
+    {
+     "object": "steles",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "arbre",
+     "xy": [
+      1.75,
+      6.5
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "steles_retour",
+     "xy": [
+      8.0,
+      8.75
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      10.5,
+      8.75
+     ]
+    }
+   ],
+   "necro_royal": [
+    {
+     "object": "obelisque",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "arche",
+     "xy": [
+      8.0,
+      1.25
+     ]
+    },
+    {
+     "object": "arbre",
+     "xy": [
+      7.0,
+      8.75
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      9.5,
+      9.25
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ]
+  }
  }
 }

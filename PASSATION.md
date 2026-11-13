@@ -4,6 +4,14 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 13 novembre 2026 — Codex
 
+**Boutique, types 10, 11, 16 et 17.** Première planche écartée suite au retour du porteur sur le style. Nouvelle proposition calée sur les sprites de référence. Quatre portraits, quatre achats et recrutements et quatre premiers tirs vérifiés dans la copie d’essai. Test de cadrage étendu à 40 contrôles, zéro échec. Attendre le retour sur cette planche avant intégration. [Aperçus](design/Visuels_Boutique_Guetteurs.md).
+
+**Nécropole 191–200 et Revenant.** Cinq placements par carte, trois planches de marche en combat et portrait livré. 26 passages en vague 4 dans les deux factions. Le validateur couvre 23 dossiers sans problème. Sept suites ciblées passent (31 528 contrôles Godot et 17 tests Python). Le portrait et la relève sont à brancher par Claude Code. La planche de relève a un aperçu isolé. [Fiche](design/Visuels_Necropole.md#chapitre-20--missions-191-à-200).
+
+**Nécropole et terres maudites, missions 181–190.** Six pièces, quatre variantes miroir et brume périphérique. Cinq pièces par carte et 26 passages en combat dans les deux factions. Le validateur couvre 22 dossiers sans problème. Les trois suites ciblées passent (24 222 contrôles Godot et 17 tests Python). Prêt pour intégration et avis visuel. Suite : missions 191–200 et Revenant. [Fiche](design/Visuels_Necropole.md).
+
+**Côtes et récifs 171–180 et Brume marine.** Cinq pièces par carte et deux planches `effect.seamist` sur le branchement `6b3d706`. 26 passages dans les deux factions, quatre états par passage. Le validateur couvre 22 dossiers sans problème. Six suites ciblées passent (30 569 contrôles Godot et 17 tests Python). Prêt pour intégration et avis visuel. Suite : nécropole et terres maudites. [Fiche](design/Visuels_Cotes_Recifs.md#chapitre-18--missions-171-à-180).
+
 **Côtes et récifs, missions 161–170.** Six pièces et quatre variantes, cinq placements par carte et calque de falaises et d’écume. 26 passages en combat dans les deux factions. Le validateur couvre 21 dossiers sans problème. Les quatre suites ciblées passent (30 356 contrôles Godot et 17 tests Python). Prêt pour intégration et avis visuel. Suite : missions 171–180 et Brume marine. [Fiche](design/Visuels_Cotes_Recifs.md).
 
 **Îles flottantes 151–160 et Aigle des cimes.** Cinq pièces par carte et trois planches de vol. Vague 3 vérifiée dans les deux factions (26 passages, 24 poses et trois diagonales), validateur sans problème et six suites ciblées au vert. Portrait statique livré, association dans le catalogue visuel à faire par Claude Code. Suite de la file : côtes et récifs. [Aperçu](design/Visuels_Iles_Flottantes.md#chapitre-16--missions-151-à-160).

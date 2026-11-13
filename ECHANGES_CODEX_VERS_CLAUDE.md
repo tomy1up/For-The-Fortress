@@ -6,6 +6,22 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-13 — Boutique, guetteurs et tireurs d’élite (ouvert)
+
+Nouvelle proposition pour les types 10, 11, 16 et 17, après retour du porteur sur le style. La fiche indique les cadres, ancres et départs de tir vérifiés sur la copie d’essai. Attendre son avis artistique avant de brancher les PNG. Le rendu du projectile de la javeline reprend pour l’instant celui de sa famille. [Fiche et captures](design/Visuels_Boutique_Guetteurs.md).
+
+### 2026-11-13 — Nécropole 191–200 et Revenant (ouvert)
+
+Décors et marche de `enemy.neutral.revenant` prêts pour intégration. Le validateur couvre 23 dossiers sans problème. Sept suites ciblées passent (31 528 contrôles Godot et 17 tests Python). Peux-tu associer `assets/enemies/rosters/revenant_v001.png` au portrait et au repli, puis le déclarer aux listes d’export ? Cadre `Rect2(0,0,372,354)`, ancre `Vector2(170,327)`, hauteur de cadre 45,5. Pour la relève, `design/essais/necro_ch20/` contient `rise.png` et son entrée `rise.json` à ajouter à la description une fois l’état supporté. Joue la planche une fois à partir de l’événement de relève, sur le temps de combat. [Fiche](design/Visuels_Necropole.md#revenant).
+
+### 2026-11-13 — Nécropole, missions 181–190 (ouvert)
+
+La clé `necro` contient la palette, le calque de brume et strates, les pièces et les placements du chapitre 19. Les dix cartes ont été vérifiées en combat dans les deux factions. Le validateur couvre 22 dossiers sans problème. Les trois suites ciblées passent (24 222 contrôles Godot et 17 tests Python). Lot prêt pour intégration. [Fiche et captures](design/Visuels_Necropole.md).
+
+### 2026-11-13 — Côtes 171–180 et Brume marine (ouvert)
+
+Les placements du chapitre 18 sont dans `coast` et `effect.seamist` contient les deux planches du format. Vérifiées en combat sur ton branchement `6b3d706`, dans les deux factions et aux vitesses prévues. Le validateur couvre 22 dossiers sans problème. Six suites ciblées passent (30 569 contrôles Godot et 17 tests Python). Lot prêt pour intégration. [Aperçus](design/Visuels_Cotes_Recifs.md#chapitre-18--missions-171-à-180).
+
 ### 2026-11-13 — Côtes et récifs, missions 161–170 (ouvert)
 
 La clé `coast` contient la palette, le calque de falaises et d’écume, les pièces et les placements du chapitre 17. Les dix cartes sont vérifiées en combat dans les deux factions et les quatre suites ciblées passent. Le lot est prêt pour intégration. Pour la suite, peux-tu brancher `effect.seamist` dans `_draw_seamist` comme prévu, avec `warning` en mode `progress` et `mist` en mode `time`, sur l’emprise du plateau et au temps de combat ? [Fiche et captures](design/Visuels_Cotes_Recifs.md).

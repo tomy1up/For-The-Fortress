@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "id": "enemy.neutral.revenant",
+  "display_height": 45.5,
+  "foot": [
+    170,
+    327
+  ],
+  "facing": "right",
+  "animations": {
+    "walk": {
+      "file": "walk.png",
+      "frames": 24,
+      "frame_size": [
+        372,
+        354
+      ],
+      "mode": "distance",
+      "stride": 16.6
+    },
+    "walk_up": {
+      "file": "walk_up.png",
+      "frames": 24,
+      "frame_size": [
+        372,
+        354
+      ],
+      "mode": "distance",
+      "stride": 16.6
+    },
+    "walk_down": {
+      "file": "walk_down.png",
+      "frames": 24,
+      "frame_size": [
+        372,
+        354
+      ],
+      "mode": "distance",
+      "stride": 16.6
+    }
+  }
+}

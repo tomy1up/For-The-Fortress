@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "id": "effect.seamist",
+  "display_height": 160,
+  "foot": [
+    160,
+    80
+  ],
+  "animations": {
+    "warning": {
+      "file": "warning.png",
+      "frames": 18,
+      "frame_size": [
+        320,
+        160
+      ],
+      "mode": "progress"
+    },
+    "mist": {
+      "file": "mist.png",
+      "frames": 36,
+      "frame_size": [
+        320,
+        160
+      ],
+      "mode": "time",
+      "fps": 12
+    }
+  }
+}

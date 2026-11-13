@@ -14,11 +14,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Boutique étendue, premier lot (v0.192)** — douze unités (types 10 à 21 : sentinelle, tireur d'élite, arquebusier, bombarde, piquier, pyromancien côté Alliance ; veilleur, javelinier, lance-éclats, catapulte, lance-épieu, brûleur côté Horde) qui réutilisent l'illustration de leur famille. À illustrer (même cadrage que les alternatives `rodeur`, `mousquetaire`, `traqueur`, `grenadier`) puis à animer. Voir `design/Boutique_20_unites_proposition.md`.
 
-- [ ] **Revenant, chapitre 20 (v0.190)** — attaquant neutre (`enemy.neutral.revenant`) qui se relève une fois avec la moitié de ses PV. Silhouette provisoire de l'ours. À illustrer (même cadrage que les neutres), puis marche et animation de relève. Voir `design/Missions_191_200_Revenant.md`.
-
-- [ ] **Nécropole et terres maudites, missions 181–190 (v0.189)** — dixième biome choisi par le porteur (13 novembre 2026). Palette provisoire (`necro` dans `assets/decor/decor.json`), sans pièce ni placement. Cartes : `prototype/scripts/necro_maps.gd`. En fin de file ; le revenant du chapitre 20 viendra ensuite.
-
-- [ ] **Brume marine, missions 171–180 (v0.188)** — voile de brume sur le plateau pendant 6 s, avertissement de 3 s avant (`effect.seamist`, `warning` en progression, `mist` en boucle). Repère provisoire dans `_draw_seamist`. En fin de file. Voir `design/Missions_171_180_Brume_marine.md`.
+- [ ] **Revenant, chapitre 20** — portrait et planche de relève livrés pour branchement. [Aperçus](design/Visuels_Necropole.md#revenant).
 
 - [ ] **Aigle des cimes, chapitre 16 (v0.186)** — nouvel attaquant neutre, rapide et fragile (`enemy.neutral.eagle`). Vol livré en combat. Associer le portrait de l’aigle à la prévision et à l’éclaireur. Voir `design/Missions_151_160_Aigle.md`.
 
@@ -41,6 +37,14 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 - [ ] **Sanglier** : étude non intégrée et non approuvée (`design/essais/sanglier_peau_continue/README.md`, `design/essais/sanglier_virages/README.md`).
 
 ## Livré
+
+- [x] **Boutique, types 10, 11, 16 et 17** — quatre propositions d’illustration vérifiées en boutique et en combat sur une copie d’essai. Avis artistique et branchement à suivre. [Aperçus](design/Visuels_Boutique_Guetteurs.md).
+
+- [x] **Nécropole 191–200 et marche du Revenant** — cinq pièces par carte et trois planches de marche vérifiées en combat. [Aperçus](design/Visuels_Necropole.md#chapitre-20--missions-191-à-200).
+
+- [x] **Nécropole et terres maudites, missions 181–190** — cinq pièces par carte, brume et strates. Vérifié en combat dans les deux factions. [Aperçus](design/Visuels_Necropole.md).
+
+- [x] **Côtes et récifs 171–180 et Brume marine** — cinq pièces par carte, deux planches vérifiées en combat dans les deux factions. [Aperçus](design/Visuels_Cotes_Recifs.md#chapitre-18--missions-171-à-180).
 
 - [x] **Côtes et récifs, missions 161–170** — cinq pièces par carte, falaises et écume. Prêt pour intégration et avis visuel. [Aperçus](design/Visuels_Cotes_Recifs.md).
 
