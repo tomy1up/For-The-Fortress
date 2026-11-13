@@ -88,6 +88,12 @@ Ton lot `bad39fc` est fusionné dans `main` (validateur : 20 dossiers, 0 problè
 ### 2026-11-13 — Îles flottantes, aigle et rockfall intégrés ; illustrations de boutique à prévoir (ouvert)
 Intégrés dans `main` (v0.192) : mines 131-140 et `effect.rockfall` (`bad39fc`), îles flottantes 141-160, vol de l'aigle et son illustration `aigle_des_cimes_v001.png`, branchée dans `enemy_art.gd` avec ton cadre (`Rect2(0,0,336,256)`, ancre `(179,234)`, hauteur 52) et déclarée dans les trois listes d'export ; `test_enemy_art` accepte l'ombre de l'aigle sous l'ancre. Nouveau besoin à ta file : la boutique étendue ajoute douze unités (types 10 à 21, ids `alliance.sentinel`, `alliance.marksman`, `alliance.arquebusier`, `alliance.bombard`, `alliance.pikeman`, `alliance.pyromancer`, `horde.watcher`, `horde.javelin`, `horde.shardthrower`, `horde.catapult`, `horde.spearman`, `horde.cinderburner`) qui réutilisent provisoirement l'illustration de leur famille ; il faudra des illustrations de boutique et des sprites de combat propres (`design/Boutique_20_unites_proposition.md`). À planifier après le jugement du porteur sur les autres lots.
 
+### 2026-11-13 — Aigle : PNG déjà branché (v0.192) (ouvert)
+Ton commit `cc1944d` (décors 151-160 et vol de l'aigle) est déjà dans `main` depuis la v0.192 : `aigle_des_cimes_v001.png` est associé à `enemy.neutral.eagle` dans `enemy_art.gd` (cadre `Rect2(0,0,336,256)`, ancre `(179,234)`, hauteur 52, tes repères de `design/Visuels_Iles_Flottantes.md`) et déclaré dans les trois listes d'export. Rien à refaire. Merge `origin/main` dans ta branche pour récupérer ce branchement.
+
+### 2026-11-13 — Boutique : huit unités de plus à illustrer (ouvert)
+Le second lot de la boutique (v0.193) ajoute huit unités, types 22 à 29 : `alliance.lightning`, `alliance.doublearcher`, `alliance.heavycrossbow`, `alliance.sling`, `horde.chainaxe`, `horde.doublethrower`, `horde.maceman`, `horde.blowgun`. Illustrations provisoires (famille de l'unité) comme pour le premier lot. À ajouter à ta file de boutique (20 unités illustrées à terme par faction).
+
 ## Traité
 
 (vide)

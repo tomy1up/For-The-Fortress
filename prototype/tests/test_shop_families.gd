@@ -9,6 +9,12 @@ var failures: int = 0
 func check(ok: bool,message: String) -> void:
 	checks += 1
 	if not ok: failures += 1;push_error(message)
+## Une famille de plus de deux alternatives est citée par « et ses alternatives » ; sinon chaque alternative est nommée.
+static func cites_alternative(text: String, card: Dictionary, shop: Variant) -> bool:
+	var count := 0
+	for entry in shop.CARDS:
+		if entry.family == card.family: count += 1
+	return text.contains(card.name) if count <= 2 else text.contains("et ses alternatives")
 func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
 	for faction in range(2):
@@ -18,7 +24,7 @@ func run_checks() -> void:
 			var node: Dictionary = Linked.node(faction,index)
 			for card in Model.Shop.CARDS:
 				if card.faction == faction and card.family in node.effect.get("types",[]):
-					check(node.description.contains(card.name) and node.description.contains(Model.ROSTER[card.family].name),"Chaque talent concerné cite la base et son alternative")
+					check(cites_alternative(node.description,card,Model.Shop) and node.description.contains(Model.ROSTER[card.family].name),"Chaque talent concerné cite la base et ses alternatives")
 				elif card.faction != faction:
 					check(not node.description.contains(card.name),"Aucune alternative étrangère dans une description")
 			var preview: Dictionary = Linked.rank_preview(faction,Linked.empty_ranks(),index)
@@ -26,7 +32,7 @@ func run_checks() -> void:
 				var gain: String = screen._rank_gain(index)
 				for unit in preview.units:
 					for card in Model.Shop.for_faction(faction):
-						if card.family == unit.type: check(gain.contains(card.name),"Le prochain rang cite également l’alternative bénéficiaire")
+						if card.family == unit.type: check(cites_alternative(gain,card,Model.Shop),"Le prochain rang cite également les alternatives bénéficiaires")
 		for tree in range(3):
 			var ranks: Array = Fixture.build(tree)
 			check(Linked.valid(ranks),"Configuration liée 31/20 valide")
