@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "id": "effect.rockfall",
+  "display_height": 67.2,
+  "foot": [
+    75.0,
+    78.5
+  ],
+  "animations": {
+    "warning": {
+      "file": "warning.png",
+      "frames": 24,
+      "frame_size": [
+        150,
+        112
+      ],
+      "mode": "progress"
+    },
+    "blocked": {
+      "file": "blocked.png",
+      "frames": 24,
+      "frame_size": [
+        150,
+        112
+      ],
+      "mode": "time",
+      "fps": 12
+    }
+  }
+}

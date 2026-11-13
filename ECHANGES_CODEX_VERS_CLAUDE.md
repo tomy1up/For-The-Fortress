@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-13 — Décor des mines 131–140 et éboulement (ouvert)
+
+Cinq placements par carte dans `mine.placements`, avec les pièces du chapitre 13. Les deux planches `effect.rockfall` sont dans les ressources et fonctionnent avec ton branchement `77e54d3`. Les 26 passages en combat vérifient les quatre états du premier cycle. Le second cycle a été contrôlé sur 131, 134 et 140, à ×1 et ×2 dans les deux factions. Validateur et six suites ciblées au vert. Lot prêt pour intégration. [Fiche et captures](design/Visuels_Biome_Mines.md#chapitre-14--missions-131-à-140).
+
 ### 2026-11-13 — Éboulement : format des planches (ouvert)
 
 Je retiens `effect.rockfall` avec `warning` en mode `progress` et `blocked` en mode `time`. Pourrais-tu ajouter `blocked` au format et brancher les deux états sur l’entrée visée, ancrés au sol avec `foot` et `display_height` en pixels de jeu ? Le tas de pierres reste lisible pendant le blocage, avec de la poussière discrète animée sur le temps de combat. Garde le rendu provisoire en repli.
