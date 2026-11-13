@@ -160,7 +160,7 @@ for camp in ['alliance','horde']:
 for camp in ['alliance','horde']:
     for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
 for camp in ['alliance','horde']:
-    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,61) for stage in ['', 'play']]+['marsh50completed','marsh60completed']+[f'volcano{number}{stage}' for number in range(61,71) for stage in ['', 'play']]+['volcano70completed']+[f'ash{number}{stage}' for number in range(71,81) for stage in ['', 'play']]+['ash80completed']+[f'citadel{number}{stage}' for number in range(81,91) for stage in ['', 'play']]+['citadel90completed']+[f'garrison{number}{stage}' for number in range(91,101) for stage in ['', 'play']]+['garrison100completed']+[f'dune{number}{stage}' for number in range(101,111) for stage in ['', 'play']]+['dune110completed']+[f'dune{number}{stage}' for number in range(111,121) for stage in ['', 'play']]+['dune120completed']+[f'mine{number}{stage}' for number in range(121,131) for stage in ['', 'play']]+[f'mine{number}{stage}' for number in range(131,141) for stage in ['', 'play']]+[f'sky{number}{stage}' for number in range(141,161) for stage in ['', 'play']]+[f'coast{number}{stage}' for number in range(161,181) for stage in ['', 'play']]+[f'necro{number}{stage}' for number in range(181,191) for stage in ['', 'play']]+['necro190completed']:
+    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,61) for stage in ['', 'play']]+['marsh50completed','marsh60completed']+[f'volcano{number}{stage}' for number in range(61,71) for stage in ['', 'play']]+['volcano70completed']+[f'ash{number}{stage}' for number in range(71,81) for stage in ['', 'play']]+['ash80completed']+[f'citadel{number}{stage}' for number in range(81,91) for stage in ['', 'play']]+['citadel90completed']+[f'garrison{number}{stage}' for number in range(91,101) for stage in ['', 'play']]+['garrison100completed']+[f'dune{number}{stage}' for number in range(101,111) for stage in ['', 'play']]+['dune110completed']+[f'dune{number}{stage}' for number in range(111,121) for stage in ['', 'play']]+['dune120completed']+[f'mine{number}{stage}' for number in range(121,131) for stage in ['', 'play']]+[f'mine{number}{stage}' for number in range(131,141) for stage in ['', 'play']]+[f'sky{number}{stage}' for number in range(141,161) for stage in ['', 'play']]+[f'coast{number}{stage}' for number in range(161,181) for stage in ['', 'play']]+[f'necro{number}{stage}' for number in range(181,201) for stage in ['', 'play']]+['necro200completed']:
         cases.append((camp+'_campaign_menu_'+variant,'campaign_menu',camp))
     for state in ['preparation','purchase','specialisation','defeat_summary']:
         cases.append((camp+'_three_'+state,state,camp))
@@ -457,14 +457,14 @@ for name,state,faction in cases:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
         number=int(name.rsplit('_',1)[1].removeprefix('necro').removesuffix('play').removesuffix('completed'))
-        map_id=['necro_gate','necro_road','necro_graveyard','necro_crypts','necro_fen','necro_hill','necro_mausoleums','necro_ossuary','necro_stelae','necro_royal'][number-181]
-        routes={183:2,184:3,186:2,187:3,188:2,190:3}.get(number,0)
+        map_id=['necro_gate','necro_road','necro_graveyard','necro_crypts','necro_fen','necro_hill','necro_mausoleums','necro_ossuary','necro_stelae','necro_royal','necro_tombgate','necro_wake','necro_catacombs','necro_bonefield','necro_mire','necro_gallows','necro_twintombs','necro_charnel','necro_obelisks','necro_throne'][number-181]
+        routes={183:2,184:3,186:2,187:3,188:2,190:3,193:2,194:3,196:2,197:3,198:2,200:3}.get(number,0)
         assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
-        assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==(19,number,map_id,routes or 1)
+        assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==((number-1)//10+1,number,map_id,routes or 1)
         won_missions=number if name.endswith('completed') else number-1
         assert snap['completed']==won_missions and snap['other_completed']==0
-        assert (snap['po'],snap['xp'])==(6000+650+700+750+800+850+900+950+1000+105*(won_missions-180),10000)
-        assert snap['mission_states']==(['completed']*10 if name.endswith('completed') else ['completed']*(number-181)+['available']+['locked']*(190-number))
+        assert (snap['po'],snap['xp'])==(6000+650+700+750+800+850+900+950+1000+105*(min(won_missions,190)-180)+110*max(0,won_missions-190),10000)
+        assert snap['mission_states']==(['completed']*10 if name.endswith('completed') else ['completed']*(number-(number-181)//10*10-181)+['available']+['locked']*((number-181)//10*10+190-number))
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))

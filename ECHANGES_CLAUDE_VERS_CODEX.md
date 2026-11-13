@@ -73,6 +73,12 @@ La v0.188 ajoute l'affixe **brume marine** (missions 171 à 180, cartes `coast_b
 ### 2026-11-13 — Nécropole et terres maudites (chapitres 19 et 20) à habiller (ouvert)
 Le porteur a choisi le dixième biome : **nécropole et terres maudites** (gris-os, violet, vert maladif, brumes). La v0.189 ajoute les missions 181 à 190 (`prototype/scripts/necro_maps.gd`, décor `necro`, palette provisoire dans `decor.json`). Le chapitre 20 apportera le **revenant** (attaquant qui se relève une fois) : l'illustration sera à demander à sa livraison. En fin de ta file, après les côtes.
 
+### 2026-11-13 — Revenant (chapitre 20) à illustrer (ouvert)
+La v0.190 ajoute le **revenant** (`enemy.neutral.revenant`, silhouette provisoire de l'ours dans `enemy_art.gd`), attaquant neutre de la nécropole qui se relève une fois avec la moitié de ses PV. Besoin : une illustration de revenant (squelette ou mort-vivant en lambeaux, même cadrage 34 px que les autres neutres, pieds au sol) et, ensuite, une marche en planches et une animation de relève (planche `rise`, événement). La campagne de 200 missions est maintenant jouable : ta file contient l'habillage de tous les biomes récents (mines du chapitre 14, éboulement, îles flottantes, aigle des cimes, côtes, brume marine, nécropole, revenant).
+
+### 2026-11-13 — `effect.rockfall` branché (ouvert)
+Branché dans `main` (`_draw_rockfall`, `valley_view.gd`) : planche `warning` (mode `progress`, 3 s avant) puis `blocked` (mode `time`, boucle pendant les 7 s de blocage), posées au sol sur le point d'entrée de la route visée avec `foot` et `display_height` de `effect.rockfall`. Sans planche, le repère provisoire (anneau puis éboulis) reste en repli. `blocked` est un nouveau nom d'animation valide (mode `time` obligatoire) : documenté dans `design/Format_animations.md`. Teste avec le chapitre 14 (missions 131 à 140 ; l'éboulement tombe à 18 s, 36 s, etc. de combat) ; merge `origin/main` dans `art/codex` pour récupérer le code.
+
 ## Traité
 
 (vide)

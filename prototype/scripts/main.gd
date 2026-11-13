@@ -804,7 +804,7 @@ func _capture_campaign_menu(camp: int) -> void:
 	if variant.begins_with("mine"): mountain_number = clampi(variant.trim_prefix("mine").trim_suffix("play").trim_suffix("completed").to_int(),121,140)
 	if variant.begins_with("sky"): mountain_number = clampi(variant.trim_prefix("sky").trim_suffix("play").trim_suffix("completed").to_int(),141,160)
 	if variant.begins_with("coast"): mountain_number = clampi(variant.trim_prefix("coast").trim_suffix("play").trim_suffix("completed").to_int(),161,180)
-	if variant.begins_with("necro"): mountain_number = clampi(variant.trim_prefix("necro").trim_suffix("play").trim_suffix("completed").to_int(),181,190)
+	if variant.begins_with("necro"): mountain_number = clampi(variant.trim_prefix("necro").trim_suffix("play").trim_suffix("completed").to_int(),181,200)
 	if variant.begins_with("mountain"):
 		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").trim_suffix("completed").to_int(),23,40)
 	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or mountain_preview:
@@ -1324,6 +1324,7 @@ func _update_wave_forecast(pointer := Vector2.INF) -> void:
 		forecast_rows[index].tooltip_text = "Groupe %d · %d × %s\n%s PV par ennemi\nPremière apparition : %s s après le départ\nDernière apparition : %s s après le départ\n%s\nSi un ennemi atteint la forteresse, elle perd %d PV.\nÉlimination : +%d or par ennemi" % [index+1,group.count,group.name,_number(group.hp),_number(group.first_at),_number(group.last_at),"Ennemi unique." if group.count == 1 else "Un ennemi toutes les %s s." % _number(group.interval),group.fortress_damage,group.reward]
 		if group.type == Model.Drowned.TYPE: forecast_rows[index].tooltip_text += "
 Gueule-de-Vase : régénère %d %% de ses PV maximum par seconde tant qu’il traverse un tronçon inondé. Réglage d’essai." % roundi(Model.Drowned.REGEN_PER_SECOND*100.0)
+		if group.type == Model.Revenant.TYPE: forecast_rows[index].tooltip_text += "\nRevenant : attaquant neutre qui se relève une fois avec la moitié de ses PV maximum. Réglage d’essai."
 		if group.type == Model.Eagle.TYPE: forecast_rows[index].tooltip_text += "\nAigle des cimes : attaquant neutre rapide et fragile, en groupes serrés. Réglage d’essai."
 		if group.type == Model.Garrison.TYPE: forecast_rows[index].tooltip_text += "\nGarnison : unité d’élite de la citadelle, plus résistante que l’élite ordinaire. Réglage d’essai."
 		if group.type == Model.Banks.GUARD_TYPE: forecast_rows[index].tooltip_text += "\nGardienne : encaisse 25 % des dégâts de ses voisins proches. Ne protège ni les boss ni les autres tortues. La protection cesse à sa mort."

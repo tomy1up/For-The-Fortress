@@ -22,6 +22,7 @@ const Banks = preload("res://scripts/bank_encounters.gd")
 const Drowned = preload("res://scripts/drowned_encounters.gd")
 const Garrison = preload("res://scripts/garrison_encounters.gd")
 const Eagle = preload("res://scripts/eagle_encounters.gd")
+const Revenant = preload("res://scripts/revenant_encounters.gd")
 var wave_set_id: String = "ford"
 var route_target_policy: String = "arrival_time"
 var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
@@ -197,7 +198,7 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	action_history.append(entry)
 
 static func valid_enemy_hp_percent(value: Variant) -> bool:
-	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 262
+	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 264
 
 func configure_combat_affix(value: Variant) -> bool:
 	if not value is Dictionary or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
@@ -389,7 +390,7 @@ func configure_wave_set(value: Variant) -> bool:
 	wave_set_id = value;spawn_schedule = Campaign.schedule(wave,wave_set_id);return true
 
 static func enemy_definition(type: int) -> Dictionary:
-	return Banks.GUARD if type == Banks.GUARD_TYPE else Drowned.DEFINITION if type == Drowned.TYPE else Garrison.DEFINITION if type == Garrison.TYPE else Eagle.DEFINITION if type == Eagle.TYPE else ENEMY_TYPES[type]
+	return Banks.GUARD if type == Banks.GUARD_TYPE else Drowned.DEFINITION if type == Drowned.TYPE else Garrison.DEFINITION if type == Garrison.TYPE else Eagle.DEFINITION if type == Eagle.TYPE else Revenant.DEFINITION if type == Revenant.TYPE else ENEMY_TYPES[type]
 
 static func scaled_enemy_hp(type: int, percent: int = 100) -> float:
 	return float(enemy_definition(type).hp) if percent == 100 else float(enemy_definition(type).hp)*(float(percent)/100.0)
@@ -977,6 +978,13 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 		enemy.hp -= damage.get(enemy.id, 0.0)
 		if enemy.hp < hp_before:
 			damage_events.append({"time":elapsed,"enemy_id":enemy.id,"hp_before":hp_before,"hp_after":maxf(0.0,enemy.hp)})
+		if enemy.hp <= 0.0 and enemy.get("type",1) == Revenant.TYPE and not enemy.get("risen",false):
+			# Le revenant se relève une seule fois avec la moitié de ses PV maximum ; aucune récompense ni élimination comptée à cet instant.
+			enemy.risen = true
+			enemy.hp = enemy.max_hp*Revenant.RISE_FRACTION
+			event_log.append("%.9f relève %d" % [elapsed, enemy.id])
+			survivors.append(enemy)
+			continue
 		if enemy.hp <= 0.0:
 			elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":enemy_position(enemy),"distance":enemy.distance,"route_id":str(enemy.get("route_id",""))})
 			killed += 1

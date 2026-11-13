@@ -103,6 +103,11 @@ static func definition(number: int) -> Dictionary:
 		var maps: Array[String] = ["necro_gate","necro_road","necro_graveyard","necro_crypts","necro_fen","necro_hill","necro_mausoleums","necro_ossuary","necro_stelae","necro_royal"]
 		var titles: Array[String] = ["Le Portail des Ossements","La Route des Tombes","Le Cimetière Oublié","Les Cryptes Basses","Le Marais des Défunts","La Colline des Pendus","Les Mausolées Jumeaux","L'Ossuaire","Le Champ des Stèles","La Nécropole Royale"]
 		result.merge({"title":titles[number-181],"available":true,"map_id":maps[number-181],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10},true)
+	elif number <= 200:
+		# Chapitre 20 : nouveauté du biome de la nécropole, le revenant (décision du porteur, 13 novembre 2026). Valeurs d'essai.
+		var maps: Array[String] = ["necro_tombgate","necro_wake","necro_catacombs","necro_bonefield","necro_mire","necro_gallows","necro_twintombs","necro_charnel","necro_obelisks","necro_throne"]
+		var titles: Array[String] = ["La Porte des Tombeaux","La Veillée Funèbre","Les Catacombes","Le Champ d'Ossements","Le Bourbier des Âmes","Le Gibet Oublié","Les Tombes Jumelles","Le Charnier","Les Obélisques Noirs","Le Trône du Roi Mort"]
+		result.merge({"title":titles[number-191],"available":true,"map_id":maps[number-191],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10,"wave_set_id":"necro_revenants"},true)
 	return result
 
 ## PV ennemis (en % de la référence) d'une mission : `99 + numéro` jusqu'à la mission 140, puis +1 % toutes les deux missions jusqu'à la mission 180 (décision du porteur, 12 novembre 2026), puis +1 % toutes les quatre missions (+0,25 % par mission, décision du porteur, 13 novembre 2026).

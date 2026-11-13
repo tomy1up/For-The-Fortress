@@ -87,6 +87,8 @@ func open(number: int,camp: int) -> bool:
 		note.text="La tortue encaisse %d %% des dégâts de ses voisins proches, dans la limite de ses PV.\nElle ne protège ni les autres tortues ni les boss."%int(Model.Banks.SHARE*100)
 	if definition.get("wave_set_id","")==Model.Garrison.ID:
 		note.text="La Garnison est l'unité d'élite de la citadelle : %d PV de base, vitesse %s, elle accompagne les vagues 5, 7, 9 et 10."%[int(Model.Garrison.DEFINITION.hp),str(Model.Garrison.DEFINITION.speed).replace(".",",")]
+	if definition.get("wave_set_id","")==Model.Revenant.ID:
+		note.text="Le revenant est un attaquant neutre (%d PV de base, vitesse %s) qui se relève une fois avec la moitié de ses PV maximum, à partir de la vague 4."%[int(Model.Revenant.DEFINITION.hp),str(Model.Revenant.DEFINITION.speed).replace(".",",")]
 	if definition.get("wave_set_id","")==Model.Eagle.ID:
 		note.text="L'aigle des cimes est un attaquant neutre rapide et fragile (%d PV de base, vitesse %s) qui arrive en groupes serrés à partir de la vague 3."%[int(Model.Eagle.DEFINITION.hp),str(Model.Eagle.DEFINITION.speed).replace(".",",")]
 	if definition.get("wave_set_id","")==Model.Drowned.ID:

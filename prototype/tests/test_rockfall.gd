@@ -3,6 +3,7 @@ const Model = preload("res://scripts/valley_model.gd")
 const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 const View = preload("res://scripts/valley_view.gd")
+const Library = preload("res://scripts/animation_library.gd")
 const AFFIX := {"id":"rockfall","interval":18,"warning":3,"duration":7}
 var checks := 0
 var failures := 0
@@ -21,6 +22,7 @@ func run_checks() -> void:
 	verify_status()
 	verify_replay()
 	await verify_rendering()
+	await verify_sheets()
 	print("ROCKFALL_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
 
@@ -167,3 +169,35 @@ func verify_rendering() -> void:
 	check(not model.rockfall_status().is_empty() or model.elapsed > 0.0,"Le combat avance pendant le dessin")
 	view.free()
 	check(before != "","Dessin de l'avertissement et du blocage sans erreur")
+
+## Habillage par planches (`effect.rockfall`) : accepté, dessiné sans modifier le jeu, repli sur le repère provisoire sans planche.
+func verify_sheets() -> void:
+	Library.clear_cache()
+	var spec := {"version":1,"id":"effect.rockfall","display_height":48,"foot":[32,40],"animations":{
+		"warning":{"file":"warning.png","frames":6,"frame_size":[64,48],"mode":"progress"},
+		"blocked":{"file":"blocked.png","frames":8,"frame_size":[64,48],"mode":"time","fps":8}}}
+	check(Library.validation_error(spec) == "","Description de l'effet d'éboulement valide")
+	var wrong: Dictionary = spec.duplicate(true);wrong.animations.blocked = {"file":"b.png","frames":4,"frame_size":[64,48],"mode":"event","duration":1.0}
+	check(Library.validation_error(wrong) != "","Le blocage boucle : mode time obligatoire")
+	var warning_strip := Image.create(6*64,48,false,Image.FORMAT_RGBA8);warning_strip.fill(Color(0.9,0.5,0.2,0.4))
+	var blocked_strip := Image.create(8*64,48,false,Image.FORMAT_RGBA8);blocked_strip.fill(Color(0.4,0.4,0.45,0.9))
+	Library.register_for_test("effect.rockfall",spec,{"warning":ImageTexture.create_from_image(warning_strip),"blocked":ImageTexture.create_from_image(blocked_strip)})
+	var model := rocky()
+	model.gold = 600;model.select_faction(0);model.buy(3,0)
+	model.start()
+	var view := View.new();view.model = model;root.add_child(view)
+	for time in [18.5,20.0]:
+		model.advance(time-model.elapsed)
+		var before: String = JSON.stringify([model.gold,model.rng.state,model.defenders,model.rockfall_status()])
+		view.queue_redraw()
+		await process_frame
+		await process_frame
+		check(before == JSON.stringify([model.gold,model.rng.state,model.defenders,model.rockfall_status()]) and not model.rockfall_status().is_empty(),"Dessiner l'éboulement à %.1f s (planches) ne modifie pas le jeu" % time)
+	view.free()
+	Library.clear_cache()
+	var bare := View.new();bare.model = model;root.add_child(bare)
+	await process_frame
+	bare.queue_redraw()
+	await process_frame
+	check(not model.rockfall_status().is_empty(),"Sans planche : repère provisoire dessiné sans erreur")
+	bare.free()
