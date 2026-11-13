@@ -773,6 +773,7 @@ const ATTACK_POSE_DURATION := 0.26
 const ERUPTION_EFFECT_ID := "effect.eruption"
 const REGEN_EFFECT_ID := "effect.regeneration"
 const STORM_EFFECT_ID := "effect.sandstorm"
+const ROCKFALL_EFFECT_ID := "effect.rockfall"
 # Recul horizontal, inclinaison en radians, élévation : habillage des tirs résolus.
 const ATTACK_MOTIONS: Array[Vector3] = [
 	Vector3(2.8,-0.035,0.0), # Archer : traction et petit recul.
@@ -1141,6 +1142,19 @@ func _draw_rockfall() -> void:
 		if route.id == status.route_id and not route.path_points.is_empty():
 			origin = project(route.path_points[0]);found = true;break
 	if not found: return
+	# Habillage de Codex : planches de l'effet `effect.rockfall` posées au sol sur l'entrée visée (avertissement en progression, blocage en boucle).
+	var spec: Dictionary = SheetAnimations.spec_for(ROCKFALL_EFFECT_ID)
+	var sheet_name: String = "warning" if status.state == "warning" else "blocked"
+	if not spec.is_empty() and spec.animations.has(sheet_name):
+		var anim: Dictionary = spec.animations[sheet_name]
+		var texture: Texture2D = SheetAnimations.texture_for(ROCKFALL_EFFECT_ID,anim)
+		if texture != null:
+			var progress_value: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0) if status.state == "warning" else 0.0
+			var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,model.elapsed,progress_value)))
+			draw_set_transform(origin,0.0,Vector2.ONE)
+			draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
+			draw_set_transform(Vector2.ZERO)
+			return
 	if status.state == "warning":
 		var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
 		var pulse: float = 0.5+0.5*sin(model.elapsed*TAU*2.0)
