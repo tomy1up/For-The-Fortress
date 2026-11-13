@@ -16,7 +16,15 @@ const CARDS: Array[Dictionary] = [
 	{"id":"horde.shardthrower","faction":1,"type":18,"family":3,"name":"Lance-éclats gobelin","po":420,"unlock_missions":30,"role":"Rafale continue","tradeoff":"Cadence très élevée, mais chaque tir est minuscule et la portée courte.","stats":{"price":85,"damage":3.5,"interval":0.35,"range":3.2}},
 	{"id":"horde.catapult","faction":1,"type":19,"family":4,"name":"Catapulte gobeline","po":480,"unlock_missions":40,"role":"Explosion sur les groupes","tradeoff":"Très large zone, mais lente et peu précise sur une cible isolée.","stats":{"price":120,"damage":22.0,"interval":4.2,"range":4.2,"secondary_damage":15.0,"secondary_cap":5,"radius":1.7}},
 	{"id":"horde.spearman","faction":1,"type":20,"family":3,"name":"Lance-épieu orc","po":540,"unlock_missions":50,"role":"Défense bon marché","tradeoff":"Peu cher et efficace de près, mais sa portée est très courte.","stats":{"price":55,"damage":15.0,"interval":1.3,"range":2.2}},
-	{"id":"horde.cinderburner","faction":1,"type":21,"family":5,"name":"Brûleur de cendres","po":600,"unlock_missions":60,"role":"Brûlure prolongée","tradeoff":"Dégâts surtout sur la durée : peu efficace pour achever une cible.","stats":{"price":105,"damage":5.0,"interval":2.0,"range":4.2,"curse_damage":7.2}}
+	{"id":"horde.cinderburner","faction":1,"type":21,"family":5,"name":"Brûleur de cendres","po":600,"unlock_missions":60,"role":"Brûlure prolongée","tradeoff":"Dégâts surtout sur la durée : peu efficace pour achever une cible.","stats":{"price":105,"damage":5.0,"interval":2.0,"range":4.2,"curse_damage":7.2}},
+	{"id":"alliance.lightning","faction":0,"type":22,"family":2,"name":"Mage de la foudre humain","po":660,"unlock_missions":70,"role":"Éclairs en chaîne","tradeoff":"Frappe plusieurs ennemis proches, mais chaque impact est réduit.","stats":{"price":95,"damage":12.0,"interval":1.8,"range":3.8,"secondary_damage":6.5,"secondary_cap":3,"radius":1.3}},
+	{"id":"alliance.doublearcher","faction":0,"type":23,"family":0,"name":"Archer double","po":720,"unlock_missions":80,"role":"Achève les cibles déjà touchées","tradeoff":"Dégâts +90 % sur un ennemi déjà blessé, mais faible sur une cible intacte.","stats":{"price":80,"damage":6.5,"interval":1.1,"range":4.0,"wounded_bonus":0.9}},
+	{"id":"alliance.heavycrossbow","faction":0,"type":24,"family":1,"name":"Arbalète lourde","po":780,"unlock_missions":90,"role":"Briseuse de cuirasses","tradeoff":"Dégâts ×1,8 contre les lourds, mais ×0,5 contre les petits ennemis.","stats":{"price":100,"damage":30.0,"interval":3.0,"range":4.5,"heavy_mult":1.8,"small_mult":0.5}},
+	{"id":"alliance.sling","faction":0,"type":25,"family":0,"name":"Fronde elfe","po":840,"unlock_missions":100,"role":"Chasseuse de rapides","tradeoff":"Dégâts ×1,8 contre les rapides, mais ×0,5 contre les lourds.","stats":{"price":75,"damage":9.0,"interval":0.9,"range":4.5,"fast_mult":1.8,"heavy_mult":0.5}},
+	{"id":"horde.chainaxe","faction":1,"type":26,"family":3,"name":"Hache en chaîne","po":660,"unlock_missions":70,"role":"Rebonds en chaîne","tradeoff":"Frappe plusieurs ennemis proches, mais chaque impact est réduit.","stats":{"price":90,"damage":12.0,"interval":1.8,"range":3.5,"secondary_damage":7.5,"secondary_cap":3,"radius":1.3}},
+	{"id":"horde.doublethrower","faction":1,"type":27,"family":3,"name":"Lanceur double troll","po":720,"unlock_missions":80,"role":"Achève les cibles déjà touchées","tradeoff":"Dégâts +90 % sur un ennemi déjà blessé, mais faible sur une cible intacte.","stats":{"price":80,"damage":6.5,"interval":1.1,"range":4.0,"wounded_bonus":0.9}},
+	{"id":"horde.maceman","faction":1,"type":28,"family":3,"name":"Lanceur de masse orc","po":780,"unlock_missions":90,"role":"Briseur de cuirasses","tradeoff":"Dégâts ×1,8 contre les lourds, mais ×0,5 contre les petits ennemis.","stats":{"price":100,"damage":32.0,"interval":3.2,"range":3.8,"heavy_mult":1.8,"small_mult":0.5}},
+	{"id":"horde.blowgun","faction":1,"type":29,"family":3,"name":"Sarbacane gobeline","po":840,"unlock_missions":100,"role":"Chasseuse de rapides","tradeoff":"Dégâts ×1,8 contre les rapides, mais ×0,5 contre les lourds.","stats":{"price":75,"damage":9.5,"interval":0.9,"range":4.5,"fast_mult":1.8,"heavy_mult":0.5}}
 ]
 const BRANCHES: Dictionary = {
 	6:[{"name":"Tir fulgurant","description":"Impact et portée renforcés, tirs moins fréquents.","damage":29.25,"interval":1.0,"range":4.5},{"name":"Éclaireur de volée","description":"Cadence renforcée, portée encore réduite.","damage":14.625,"interval":0.42,"range":3.0}],
@@ -34,7 +42,15 @@ const BRANCHES: Dictionary = {
 	18:[{"name":"Rafale lourde","description":"Impact et portée renforcés, tirs moins fréquents.","damage":17.062,"interval":0.5,"range":4.2},{"name":"Rafale vive","description":"Cadence renforcée, portée réduite.","damage":8.531,"interval":0.21,"range":2.7}],
 	19:[{"name":"Pilonnage","description":"Impact renforcé, éclats plus puissants.","damage":107.25,"interval":6.006,"range":5.2,"secondary_damage":45.0},{"name":"Tir tendu","description":"Explosion étendue à plus de voisins, impact réduit.","damage":53.625,"interval":2.52,"range":3.7,"secondary_damage":48.75,"secondary_cap":7,"radius":1.95}],
 	20:[{"name":"Pointe lourde","description":"Impact et portée renforcés, tirs moins fréquents.","damage":73.125,"interval":1.859,"range":3.2},{"name":"Estoc rapide","description":"Cadence renforcée, portée réduite.","damage":36.562,"interval":0.78,"range":1.7}],
-	21:[{"name":"Brasier profond","description":"Brûlure beaucoup plus forte, impact réduit.","damage":24.375,"interval":2.86,"range":5.2,"curse_damage":35.1},{"name":"Étincelles","description":"Brûlure plus modérée, tirs plus fréquents.","damage":12.188,"interval":1.2,"range":3.7,"curse_damage":17.55}]
+	21:[{"name":"Brasier profond","description":"Brûlure beaucoup plus forte, impact réduit.","damage":24.375,"interval":2.86,"range":5.2,"curse_damage":35.1},{"name":"Étincelles","description":"Brûlure plus modérée, tirs plus fréquents.","damage":12.188,"interval":1.2,"range":3.7,"curse_damage":17.55}],
+	22:[{"name":"Foudre étendue","description":"Impact renforcé, éclats plus puissants.","damage":58.5,"interval":2.574,"range":4.8,"secondary_damage":19.5},{"name":"Étincelles rapides","description":"Chaîne étendue à plus de voisins, impact réduit.","damage":29.25,"interval":1.08,"range":3.3,"secondary_damage":21.125,"secondary_cap":5,"radius":1.55}],
+	23:[{"name":"Coup de grâce","description":"Impact et portée renforcés, tirs moins fréquents.","damage":31.688,"interval":1.573,"range":5.0},{"name":"Tir enchaîné","description":"Cadence renforcée, portée réduite.","damage":15.844,"interval":0.66,"range":3.5}],
+	24:[{"name":"Écrasement","description":"Impact et portée renforcés, tirs moins fréquents.","damage":146.25,"interval":4.29,"range":5.5},{"name":"Frappe nerveuse","description":"Cadence renforcée, portée réduite.","damage":73.125,"interval":1.8,"range":4.0}],
+	25:[{"name":"Tir précis","description":"Impact et portée renforcés, tirs moins fréquents.","damage":43.875,"interval":1.287,"range":5.5},{"name":"Tir continu","description":"Cadence renforcée, portée réduite.","damage":21.938,"interval":0.54,"range":4.0}],
+	26:[{"name":"Foudre étendue","description":"Impact renforcé, éclats plus puissants.","damage":58.5,"interval":2.574,"range":4.5,"secondary_damage":22.5},{"name":"Étincelles rapides","description":"Chaîne étendue à plus de voisins, impact réduit.","damage":29.25,"interval":1.08,"range":3.0,"secondary_damage":24.375,"secondary_cap":5,"radius":1.55}],
+	27:[{"name":"Coup de grâce","description":"Impact et portée renforcés, tirs moins fréquents.","damage":31.688,"interval":1.573,"range":5.0},{"name":"Tir enchaîné","description":"Cadence renforcée, portée réduite.","damage":15.844,"interval":0.66,"range":3.5}],
+	28:[{"name":"Écrasement","description":"Impact et portée renforcés, tirs moins fréquents.","damage":156.0,"interval":4.576,"range":4.8},{"name":"Frappe nerveuse","description":"Cadence renforcée, portée réduite.","damage":78.0,"interval":1.92,"range":3.3}],
+	29:[{"name":"Tir précis","description":"Impact et portée renforcés, tirs moins fréquents.","damage":46.312,"interval":1.287,"range":5.5},{"name":"Tir continu","description":"Cadence renforcée, portée réduite.","damage":23.156,"interval":0.54,"range":4.0}]
 }
 
 static func family(type: int) -> int:
@@ -47,8 +63,12 @@ static func family_label(type: int) -> String:
 	var base: int = family(type)
 	if base < 0: return "Unité inconnue"
 	var label: String = names[base]
+	var alternatives: Array[String] = []
 	for entry in CARDS:
-		if entry.family == base: label += " / "+entry.name
+		if entry.family == base: alternatives.append(entry.name)
+	# Au-delà de deux alternatives, le libellé reste court : la boutique en détaille chaque unité.
+	if alternatives.size() > 2: return label+" et ses alternatives"
+	for name in alternatives: label += " / "+name
 	return label
 
 static func talent_description(text: String, faction: int) -> String:

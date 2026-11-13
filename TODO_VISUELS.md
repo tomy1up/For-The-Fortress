@@ -8,6 +8,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [ ] **Boutique étendue, second lot (v0.193)** — huit unités (types 22 à 29 : mage de la foudre, archer double, arbalète lourde, fronde elfe ; hache en chaîne, lanceur double, lanceur de masse, sarbacane), illustration de famille provisoire. À illustrer comme le premier lot. Voir `design/Boutique_20_unites_proposition.md`.
+
 - [ ] **Boutique étendue, premier lot (v0.192)** — douze unités (types 10 à 21 : sentinelle, tireur d'élite, arquebusier, bombarde, piquier, pyromancien côté Alliance ; veilleur, javelinier, lance-éclats, catapulte, lance-épieu, brûleur côté Horde) qui réutilisent l'illustration de leur famille. À illustrer (même cadrage que les alternatives `rodeur`, `mousquetaire`, `traqueur`, `grenadier`) puis à animer. Voir `design/Boutique_20_unites_proposition.md`.
 
 - [ ] **Revenant, chapitre 20 (v0.190)** — attaquant neutre (`enemy.neutral.revenant`) qui se relève une fois avec la moitié de ses PV. Silhouette provisoire de l'ours. À illustrer (même cadrage que les neutres), puis marche et animation de relève. Voir `design/Missions_191_200_Revenant.md`.

@@ -156,6 +156,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.192** : premier lot de la boutique étendue (douze unités, types 10 à 21 de `ROSTER`, cartes et spécialisations dans `shop_catalogue.gd`, déblocage `unlock_missions`, boutique paginée dans `shop_screen.gd`, illustrations provisoires par famille dans `shop_art.gd`) ; lots de Codex intégrés (mines 131-140, rockfall, îles flottantes 141-160, vol et illustration de l'aigle). Prochains lots de boutique : archétypes 7 et suivants ; les règles nouvelles (entravant, marqueur, gardien, pilleur, sapeur d'entrée, réaction en chaîne, unité-pivot…) attendent la validation du porteur une par une. Limite : `Campaign.bonus_description` ne cite que les quatre alternatives d'origine.
 
+**v0.193** : second lot de la boutique (types 22 à 29, archétypes 7 à 10) et règles de cible `Model.target_multiplier` (champs `wounded_bonus`, `heavy_mult`, `small_mult`, `fast_mult` des fiches). Le porteur a validé le 13 novembre 2026 les règles nouvelles (archétypes 8 à 15, 17, 18) : restent à coder entravant, marqueur, gardien, pilleur, sapeur d'entrée, réaction en chaîne, unité-pivot, tourelle de forteresse. `Shop.family_label` : « et ses alternatives » au-delà de deux alternatives (tests de talents adaptés).
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

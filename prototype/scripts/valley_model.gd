@@ -61,6 +61,14 @@ const ROSTER: Array[Dictionary] = [
 	{"name":"Catapulte gobeline","price":120,"damage":22.0,"interval":4.2,"range":4.2,"secondary_damage":15.0,"secondary_cap":5,"radius":1.7},
 	{"name":"Lance-épieu orc","price":55,"damage":15.0,"interval":1.3,"range":2.2},
 	{"name":"Brûleur de cendres","price":105,"damage":5.0,"interval":2.0,"range":4.2,"curse_damage":7.2},
+	{"name":"Mage de la foudre humain","price":95,"damage":12.0,"interval":1.8,"range":3.8,"secondary_damage":6.5,"secondary_cap":3,"radius":1.3},
+	{"name":"Archer double","price":80,"damage":6.5,"interval":1.1,"range":4.0,"wounded_bonus":0.9},
+	{"name":"Arbalète lourde","price":100,"damage":30.0,"interval":3.0,"range":4.5,"heavy_mult":1.8,"small_mult":0.5},
+	{"name":"Fronde elfe","price":75,"damage":9.0,"interval":0.9,"range":4.5,"fast_mult":1.8,"heavy_mult":0.5},
+	{"name":"Hache en chaîne","price":90,"damage":12.0,"interval":1.8,"range":3.5,"secondary_damage":7.5,"secondary_cap":3,"radius":1.3},
+	{"name":"Lanceur double troll","price":80,"damage":6.5,"interval":1.1,"range":4.0,"wounded_bonus":0.9},
+	{"name":"Lanceur de masse orc","price":100,"damage":32.0,"interval":3.2,"range":3.8,"heavy_mult":1.8,"small_mult":0.5},
+	{"name":"Sarbacane gobeline","price":75,"damage":9.5,"interval":0.9,"range":4.5,"fast_mult":1.8,"heavy_mult":0.5},
 ]
 
 const ENEMY_TYPES: Array[Dictionary] = [
@@ -608,10 +616,25 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 func damage_for(stats: Dictionary, component: String, victim: Dictionary) -> float:
 	return _damage_with_bonuses(stats,component,victim,bonuses)
 
+## Types d'ennemis lourds, petits et rapides pour les règles des unités de boutique (valeurs de prototype à confirmer).
+const HEAVY_ENEMY_TYPES: Array[int] = [3,5,6,7,10]
+const SMALL_ENEMY_TYPES: Array[int] = [0,1,2,4,11]
+const FAST_ENEMY_TYPES: Array[int] = [0,2,4,11]
+
+## Multiplicateur propre à l'unité selon la cible, sur le tir direct : ennemi déjà blessé, lourd, petit ou rapide.
+static func target_multiplier(stats: Dictionary, victim: Dictionary) -> float:
+	var multiplier := 1.0
+	var kind: int = int(victim.get("type",1))
+	if kind in HEAVY_ENEMY_TYPES: multiplier *= float(stats.get("heavy_mult",1.0))
+	if kind in SMALL_ENEMY_TYPES: multiplier *= float(stats.get("small_mult",1.0))
+	if kind in FAST_ENEMY_TYPES: multiplier *= float(stats.get("fast_mult",1.0))
+	if float(victim.get("hp",0.0)) < float(victim.get("max_hp",0.0))-EPS: multiplier *= 1.0+float(stats.get("wounded_bonus",0.0))
+	return multiplier
+
 func _damage_with_bonuses(stats: Dictionary, component: String, victim: Dictionary, active_bonuses: Array) -> float:
 	var reference: float = stats[{"direct":"reference_damage","secondary":"reference_secondary","curse":"reference_curse"}[component]]
 	var extra: float = 0.20 if 11 in active_bonuses and victim.type in [3,5,6,7] else 0.0
-	return reference * (1.0+stats[component+"_bonus"]+extra)
+	return reference * (1.0+stats[component+"_bonus"]+extra) * (target_multiplier(stats,victim) if component == "direct" else 1.0)
 
 func _refresh_windows() -> void:
 	for slot in range(defenders.size()):

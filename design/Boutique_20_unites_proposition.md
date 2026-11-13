@@ -29,6 +29,23 @@ Somme des 18 nouvelles : 14 550 ; avec les 420 existantes : **14 970 PO ≥ 14 7
 
 Une unité à 1 300 PO ne doit pas être achetable dès le chapitre 3 : le déblocage suit les PO cumulés, avec environ une nouvelle unité par chapitre à partir du chapitre 2 (les prix suivent le cumul de PO du joueur qui achète à peu près tout ce qu'il peut). Exemple de rythme : unités 3 et 4 au chapitre 2 (en plus des deux existantes), une unité par chapitre ensuite, les dernières aux chapitres 19 et 20. Les unités se débloquent à l'achat avec des PO ; la condition de chapitre évite d'acheter la plus chère avec les PO des tout premiers chapitres.
 
+## Second lot livré (v0.193) et règles validées
+
+Le porteur a validé le 13 novembre 2026 les règles de combat nouvelles listées ci-dessous (archétypes 8 à 15, 17 et 18). Le second lot code les archétypes 7 à 10, dont les trois règles de cible (blessé, lourd, petit, rapide), soit huit unités. Types de cible (prototype) : lourds = brute, colosse, élite, boss, capitaine de garnison ; petits = grouillant, pillard, sprinter, maraudeur, aigle ; rapides = grouillant, sprinter, maraudeur, aigle ; « blessé » = PV courants inférieurs aux PV maximum au moment du tir. Les règles s'appliquent au tir direct. Le mage de la foudre (Alliance) remplace l'« arbalète à répétition » de la proposition, pour bénéficier de l'explosion de la famille du mage.
+
+| Faction | Unité | Famille (talents) | Recrutement | Déblocage | Missions requises | Principe |
+| --- | --- | --- | --- | --- | --- | --- |
+| Alliance | Mage de la foudre humain | Mage humain | 95 or | 660 PO | 70 missions | Éclairs en chaîne (3 voisins), impacts réduits |
+| Alliance | Archer double | Archer elfe | 80 or | 720 PO | 80 missions | +90 % sur un ennemi déjà blessé, faible sur une cible intacte |
+| Alliance | Arbalète lourde | Arbalétrier nain | 100 or | 780 PO | 90 missions | ×1,8 contre les lourds, ×0,5 contre les petits |
+| Alliance | Fronde elfe | Archer elfe | 75 or | 840 PO | 100 missions | ×1,8 contre les rapides, ×0,5 contre les lourds |
+| Horde | Hache en chaîne | Lanceur de haches troll | 90 or | 660 PO | 70 missions | Rebonds en chaîne (3 voisins), impacts réduits |
+| Horde | Lanceur double troll | Lanceur de haches troll | 80 or | 720 PO | 80 missions | +90 % sur un ennemi déjà blessé, faible sur une cible intacte |
+| Horde | Lanceur de masse orc | Lanceur de haches troll | 100 or | 780 PO | 90 missions | ×1,8 contre les lourds, ×0,5 contre les petits |
+| Horde | Sarbacane gobeline | Lanceur de haches troll | 75 or | 840 PO | 100 missions | ×1,8 contre les rapides, ×0,5 contre les lourds |
+
+Reste à coder (règles validées) : entravant, marqueur, gardien, pilleur, sapeur d'entrée, réaction en chaîne, unité-pivot, et la tourelle de forteresse. Le libellé de talents d'une famille de plus de deux alternatives devient « <unité> et ses alternatives ».
+
 ## Dix-huit archétypes (communs aux deux factions, noms à valider)
 
 Chaque archétype a une **force et une faiblesse** (CAMP-008) ; aucun ne remplace systématiquement une unité de départ. Les noms par faction sont des propositions.

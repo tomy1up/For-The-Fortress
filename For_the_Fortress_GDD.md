@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.29 — 13 novembre 2026
+Game Design Document — Version 0.30 — 13 novembre 2026
 
-Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne de 200 missions, entièrement jouable (vingt chapitres, dix biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.192. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. La boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
+Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne de 200 missions, entièrement jouable (vingt chapitres, dix biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.193. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. La boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
 
-**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.192. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
+**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.193. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.29 ; jeu de référence 0.192.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.30 ; jeu de référence 0.193.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -77,7 +77,7 @@ Nom de travail — disponibilité juridique à confirmer.
 63. [63 Biomes, nouveautés et affixes de combat](#s63)
 64. [64 Équilibrage des talents et mesure des cartes](#s64)
 65. [65 Cadre de travail, outils et production](#s65)
-66. [66 Journal des versions 0.110 à 0.192](#s66)
+66. [66 Journal des versions 0.110 à 0.193](#s66)
 
 <a id="s1"></a>
 
@@ -1655,7 +1655,8 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-38 | Neuvième biome (chapitres 17 et 18) : **côtes et récifs**, avec l’affixe **Brume marine** au chapitre 18 — V | Choix du porteur, 12 novembre 2026, parmi quatre options. Brume marine (livrée en v0.188) : or d’élimination −30 % pendant 6 s toutes les 22 s, annoncée 3 s avant : H |
 | MAJ-39 | **Courbe de PV encore ralentie à +0,25 % par mission à partir de la mission 181** (+1 % toutes les quatre missions : 260 % à la mission 181, 261 % à la mission 185, 264 % à la mission 200) — V | Décision du porteur, 13 novembre 2026, après le chapitre 18 : marges de la référence tombées à 3 PV (mission 178 Horde) à 255-259 % de PV avec la brume marine. Remplace la pente de MAJ-35 pour les chapitres 19 et 20. À remesurer (O-016) |
 | MAJ-40 | Dixième biome (chapitres 19 et 20) : **nécropole et terres maudites**, avec le **revenant** (attaquant qui se relève une fois avec la moitié de ses PV) au chapitre 20 — V | Choix du porteur, 13 novembre 2026, parmi trois options. Revenant livré en v0.190 : 30 PV, vitesse 0,9, relève unique à 50 % des PV maximum (valeurs H) |
-| MAJ-41 | **Boutique : la valeur totale du catalogue doit au moins égaler le total de PO accumulé sur les 200 missions en Normal (14 750 PO par faction), avec environ 20 unités par faction** — V pour le principe, la taille, la liste des 18 archétypes et le barème | Décisions du porteur, 13 novembre 2026. Catalogue (18 archétypes, barème de 300 à 1 300 PO, déblocage par missions réussies) dans `design/Boutique_20_unites_proposition.md`. Premier lot (six archétypes à règles existantes par faction) livré en v0.192 : valeurs H. Les neuf règles nouvelles restent à valider une par une |
+| MAJ-41 | **Boutique : la valeur totale du catalogue doit au moins égaler le total de PO accumulé sur les 200 missions en Normal (14 750 PO par faction), avec environ 20 unités par faction** — V pour le principe, la taille, la liste des 18 archétypes et le barème | Décisions du porteur, 13 novembre 2026. Catalogue (18 archétypes, barème de 300 à 1 300 PO, déblocage par missions réussies) dans `design/Boutique_20_unites_proposition.md`. Premier lot (six archétypes à règles existantes par faction) livré en v0.192, second lot (archétypes 7 à 10) en v0.193 : valeurs H. Règles nouvelles validées par le porteur (voir MAJ-42), codées par lots |
+| MAJ-42 | Règles de combat nouvelles de la boutique validées : tir croisé (blessé), briseur (lourds), chasseur de légers (rapides), entravant, marqueur, gardien, pilleur, sapeur d’entrée, réaction en chaîne, unité-pivot — V | Validation du porteur, 13 novembre 2026. Livrées en v0.193 : les trois règles de cible ; les autres seront codées par lots, valeurs H |
 | MAJ-34 | **Le GDD est tenu à jour à chaque publication de version, par Claude Code** : décisions prises, décisions à prendre et noyau du jeu — V | Demande du porteur, 12 novembre 2026 ; étape ajoutée au cycle d’une version dans `AGENTS.md` |
 
 <a id="s49"></a>
@@ -1674,7 +1675,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-010 | PV et défaite des cartes à plusieurs forteresses, affectation et réorientation des routes | Conception des futurs tracés |
 | O-011 | Autres cycles de marche, gestes synchronisés et transitions royales | Production artistique et lisibilité à petite taille |
 | O-012 | Placement corrigé du loup et allure expérimentale du sanglier | Retours visuels du porteur avant extension et intégration |
-| O-013 | Suite de la boutique étendue : archétypes 7 à 18 (les neuf règles de combat nouvelles à valider une par une), nombre d’unités alternatives par mission (une seule pour l’instant), libellés de bonus qui citent toutes les alternatives, illustrations de Codex | Validation du porteur ; production par lots |
+| O-013 | Suite de la boutique étendue : archétypes 11 à 18 (règles validées, restent à coder), tourelle de forteresse, nombre d’unités alternatives par mission (une seule pour l’instant), libellés de bonus qui citent toutes les alternatives, illustrations de Codex | Production par lots ; jugement du porteur |
 | O-014 | Mode infini, difficultés Héroïque et Mythique, règles de cumul des attaquants et affixes (CAMP-018 à CAMP-020), récompenses | Fin de la campagne normale |
 | O-015 | Confirmation en jeu des valeurs du revenant (chapitre 20) et de la brume marine (chapitre 18) ; la campagne de 200 missions est entièrement conçue et jouable (la toundra et glace est écartée) | Retours du porteur |
 | O-016 | Courbe de PV (264 % à la mission 200) : tient-elle avec 51 points de talent ? Marges mesurées avec la référence : 3 PV au chapitre 18 (mission 178 Horde), 12 PV au chapitre 19, 11 PV au chapitre 20 ; la puissance de la boutique n’est pas simulée | Boutique (O-013) ; retours en jeu |
@@ -1746,6 +1747,8 @@ Version 0.27 — 13 novembre 2026 : jeu 0.191, visuels de Codex intégrés pour 
 Version 0.28 — 13 novembre 2026 : décision MAJ-41 sur la taille de la boutique et proposition de catalogue à valider. Documentation seule : le jeu de référence reste 0.191.
 
 Version 0.29 — 13 novembre 2026 : jeu 0.192, premier lot de la boutique étendue (douze unités, déblocage par missions réussies, boutique paginée), liste d’archétypes et barème validés par le porteur ; lots de Codex intégrés (mines 131-140, îles flottantes, aigle, planches de l’éboulement).
+
+Version 0.30 — 13 novembre 2026 : jeu 0.193, second lot de la boutique étendue (huit unités, règles de cible) ; règles nouvelles de la boutique validées par le porteur (MAJ-42).
 
 <a id="s51"></a>
 
@@ -2039,8 +2042,8 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 13 novembre 2026 (GDD 0.29, jeu 0.192)
-Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 125 suites, 154 345 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
+### État au 13 novembre 2026 (GDD 0.30, jeu 0.193)
+Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 125 suites, 156 022 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
 
@@ -2061,7 +2064,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.29, jeu 0.192 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.30, jeu 0.193 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2105,7 +2108,7 @@ Les bonus de mission, aperçus d’achat et inspections utilisent uniquement les
 
 
 ### Boutique étendue : premier lot (v0.192)
-Le porteur veut un catalogue d’environ 20 unités par faction, de valeur totale au moins égale aux PO gagnés (14 750 par faction, MAJ-41). Le premier lot ajoute douze alternatives à règles existantes (guetteur, tireur d’élite, mitrailleur, artilleur, lancier, incendiaire, par faction), de 300 à 600 PO, débloquées après 10, 20 à 60 missions réussies avec la faction ; une seule alternative est choisie par mission ; les talents de leur famille s’appliquent ; la boutique est paginée (deux cartes par page) ; leurs illustrations sont provisoires. Tableau détaillé, archétypes restants et règles nouvelles à valider : `design/Boutique_20_unites_proposition.md`. Valeurs H.
+Le porteur veut un catalogue d’environ 20 unités par faction, de valeur totale au moins égale aux PO gagnés (14 750 par faction, MAJ-41). Le premier lot ajoute douze alternatives à règles existantes (guetteur, tireur d’élite, mitrailleur, artilleur, lancier, incendiaire, par faction), de 300 à 600 PO, débloquées après 10, 20 à 60 missions réussies avec la faction ; une seule alternative est choisie par mission ; les talents de leur famille s’appliquent ; la boutique est paginée (deux cartes par page) ; leurs illustrations sont provisoires. Le second lot (v0.193) ajoute huit unités (archétypes 7 à 10, de 660 à 840 PO, débloquées après 70 à 100 missions réussies), dont trois règles de cible (ennemi blessé, lourd, petit, rapide). Tableaux détaillés, archétypes restants et règles validées à coder : `design/Boutique_20_unites_proposition.md`. Valeurs H.
 
 <a id="s58"></a>
 
@@ -2338,7 +2341,7 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 
 <a id="s66"></a>
 
-## 66 Journal des versions 0.110 à 0.192
+## 66 Journal des versions 0.110 à 0.193
 
 | Versions | Contenu |
 | --- | --- |
@@ -2366,5 +2369,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.190 | Chapitre 20, revenant (missions 191 à 200) : la campagne de 200 missions est jouable ; GDD 0.26 |
 | 0.191 | Intégration des visuels de Codex (marches, lancer du troll, tempête) à juger en jeu ; planches de l’éboulement branchées ; GDD 0.27 |
 | 0.192 | Boutique étendue, premier lot (douze unités) ; habillage des mines 131-140 et des îles flottantes, vol de l’aigle ; GDD 0.29 |
+| 0.193 | Boutique étendue, second lot (huit unités, règles de cible) ; GDD 0.30 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.
