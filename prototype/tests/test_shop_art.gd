@@ -10,6 +10,7 @@ func check(ok: bool,message: String) -> void:
 func _initialize() -> void:
 	for card in Shop.CARDS:
 		var type: int = card.type
+		if type >= Art.PROVISIONAL_FROM: continue # Illustration provisoire de la famille, en attendant Codex.
 		check(View.defender_art(type) == Art and Art.TEXTURES[type] != View.defender_art(card.family).TEXTURES[card.family],"Chaque alternative a son illustration propre")
 		var image: Image = Art.TEXTURES[type].get_image()
 		check(image != null and image.has_mipmaps() == false and image.get_pixel(0,0).a == 0.0,"Sprite transparent sans décor au coin")

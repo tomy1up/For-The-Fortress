@@ -14,6 +14,7 @@ func _initialize() -> void:
 	check(historical is Dictionary and historical.pairs.size() == 3744,"Archive historique complète disponible pour le contrôle de compatibilité")
 	if not historical is Dictionary: quit(1);return
 	for card in Survey.Model.Shop.CARDS:
+		if card.type > 9: continue # Le relevé historique ne couvre que les quatre alternatives d'origine.
 		var mission: int = 4 if card.po == 180 else 5
 		var reference: Dictionary = {}
 		for pair in historical.pairs:

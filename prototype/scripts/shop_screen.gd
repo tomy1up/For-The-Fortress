@@ -5,7 +5,13 @@ const Model = preload("res://scripts/valley_model.gd")
 signal closed
 var profile: RefCounted
 var faction: int = 0
-var cards: Array[Dictionary] = []
+var cards: Array[Dictionary] = [] # Les deux cartes de la page affichée.
+var all_cards: Array[Dictionary] = []
+var page: int = 0
+var page_label: Label
+var previous_button: Button
+var next_button: Button
+const PAGE_SIZE := 2
 var heading: Label
 var balance: Label
 var choice_note: Label
@@ -62,6 +68,9 @@ func _ready() -> void:
 		select_buttons.append(button_at("",Rect2(x+296,628,296,42),_select.bind(index)))
 	notice = label_at(self,"",Rect2(32,686,1216,44),16)
 	none_button = button_at("Sans unité supplémentaire",Rect2(32,744,350,38),_none)
+	previous_button = button_at("◀ Précédentes",Rect2(400,744,150,38),_turn_page.bind(-1))
+	page_label = label_at(self,"",Rect2(560,750,150,30),16);page_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	next_button = button_at("Suivantes ▶",Rect2(720,744,150,38),_turn_page.bind(1))
 	back_button = button_at("Retour au parcours · Échap",Rect2(898,744,350,38),close)
 	_build_comparison()
 	hide()
@@ -117,10 +126,18 @@ func _close_comparison() -> void:
 func open(for_profile: RefCounted,for_faction: int) -> void:
 	if for_profile == null or for_faction not in [0,1] or for_profile.shop_locked: return
 	_close_comparison()
-	profile = for_profile;faction = for_faction;cards = Shop.for_faction(faction);show();refresh();back_button.grab_focus()
+	profile = for_profile;faction = for_faction;all_cards = Shop.for_faction(faction);page = 0;show();refresh();back_button.grab_focus()
 func refresh() -> void:
 	if profile == null: return
+	page = clampi(page,0,maxi(0,(all_cards.size()-1)/PAGE_SIZE))
+	cards = all_cards.slice(page*PAGE_SIZE,page*PAGE_SIZE+PAGE_SIZE)
 	heading.text = "Boutique · "+("Alliance" if faction == 0 else "Horde")
+	page_label.text = "Page %d / %d · %d unités" % [page+1,maxi(1,ceili(float(all_cards.size())/PAGE_SIZE)),all_cards.size()]
+	previous_button.disabled = page <= 0
+	next_button.disabled = (page+1)*PAGE_SIZE >= all_cards.size()
+	for index in range(PAGE_SIZE):
+		card_panels[index].visible = index < cards.size()
+		buy_buttons[index].visible = index < cards.size();select_buttons[index].visible = index < cards.size();compare_buttons[index].visible = index < cards.size()
 	var bank: Dictionary = profile.data.banks[faction]
 	balance.text = "PO indisponibles" if profile.blocked else "%d PO" % bank.resource
 	var chosen: Dictionary = Shop.card(bank.shop_selected)
@@ -145,6 +162,9 @@ func refresh() -> void:
 		select_buttons[index].disabled = profile.blocked or profile.shop_locked or not owned or selected
 	none_button.disabled = profile.blocked or profile.shop_locked or bank.shop_selected.is_empty()
 	notice.text = profile.error if not profile.error.is_empty() else profile.shop_notice
+func _turn_page(direction: int) -> void:
+	if not visible or comparison_overlay.visible or profile == null: return
+	page = clampi(page+direction,0,maxi(0,(all_cards.size()-1)/PAGE_SIZE));refresh()
 func _buy(index: int) -> void:
 	if not visible or comparison_overlay.visible or profile == null or index < 0 or index >= cards.size(): return
 	profile.buy_shop_unit(faction,cards[index].id);refresh()

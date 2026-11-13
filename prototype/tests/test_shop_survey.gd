@@ -10,6 +10,7 @@ func _initialize() -> void:
 	check(Survey.budget_before(4) == {"po":180,"xp":300,"points":1},"Première alternative à 180 PO finançable après trois premières victoires")
 	check(Survey.budget_before(5) == {"po":240,"xp":400,"points":2},"Alternative à 240 PO et deux points à l’entrée de la mission 5")
 	for card in Survey.Model.Shop.CARDS:
+		if card.type > 9: continue # Le relevé historique ne couvre que les quatre alternatives d'origine.
 		var mission: int = 4 if card.po == 180 else 5
 		for policy in ["substitution","renfort"]:
 			for alternative in [false,true]:

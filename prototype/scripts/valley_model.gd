@@ -49,6 +49,18 @@ const ROSTER: Array[Dictionary] = [
 	{"name":"Mousquetaire nain","price":90,"damage":38.0,"interval":4.0,"range":6.0},
 	{"name":"Traqueur troll","price":65,"damage":10.0,"interval":1.25,"range":4.0,"secondary_damage":4.0,"secondary_cap":1,"radius":1.0},
 	{"name":"Grenadier gobelin","price":75,"damage":18.0,"interval":2.0,"range":2.7,"secondary_damage":6.0,"secondary_cap":4,"radius":1.15},
+	{"name":"Sentinelle elfe","price":70,"damage":6.0,"interval":1.6,"range":7.0},
+	{"name":"Tireur d’élite elfe","price":110,"damage":60.0,"interval":5.0,"range":6.0},
+	{"name":"Arquebusier nain","price":85,"damage":3.2,"interval":0.3,"range":3.0},
+	{"name":"Bombarde naine","price":120,"damage":20.0,"interval":4.0,"range":4.0,"secondary_damage":14.0,"secondary_cap":5,"radius":1.6},
+	{"name":"Piquier humain","price":55,"damage":14.0,"interval":1.2,"range":2.2},
+	{"name":"Pyromancien humain","price":105,"damage":5.0,"interval":2.0,"range":4.0,"curse_damage":7.0},
+	{"name":"Veilleur des cendres","price":70,"damage":6.0,"interval":1.6,"range":7.0},
+	{"name":"Lanceur de javeline troll","price":105,"damage":56.0,"interval":4.5,"range":5.0},
+	{"name":"Lance-éclats gobelin","price":85,"damage":3.5,"interval":0.35,"range":3.2},
+	{"name":"Catapulte gobeline","price":120,"damage":22.0,"interval":4.2,"range":4.2,"secondary_damage":15.0,"secondary_cap":5,"radius":1.7},
+	{"name":"Lance-épieu orc","price":55,"damage":15.0,"interval":1.3,"range":2.2},
+	{"name":"Brûleur de cendres","price":105,"damage":5.0,"interval":2.0,"range":4.2,"curse_damage":7.2},
 ]
 
 const ENEMY_TYPES: Array[Dictionary] = [

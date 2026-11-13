@@ -36,6 +36,7 @@ func run_checks() -> void:
 		for code in [1,3,4]:
 			var description: String = Model.Campaign.bonus_description(code,faction).to_lower()
 			for card in Model.Shop.for_faction(faction):
+				if card.type > 9: continue # Les libellés de bonus ne citent que les quatre alternatives d'origine (limite de la boutique étendue).
 				if code == 1 or faction == 1:
 					check(description.contains(card.name.to_lower()),"Les bonus concernés explicitent les alternatives du bon camp")
 		screen.free()

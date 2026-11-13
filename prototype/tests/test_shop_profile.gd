@@ -25,7 +25,7 @@ func run_checks() -> void:
 		var cards: Array[Dictionary] = Shop.for_faction(faction);var other_cards: Array[Dictionary] = Shop.for_faction(1-faction)
 		var path: String = "user://test_shop_profile_%d_%d.json" % [faction,Time.get_ticks_usec()]
 		var p = Profile.new(path)
-		check(cards.size() == 2 and p.selected_shop_type(faction) == -1,"Deux propositions d’alternative, aucune choisie sans achat")
+		check(cards.size() == 8 and p.selected_shop_type(faction) == -1,"Huit propositions d’alternative, aucune choisie sans achat")
 		check(not p.buy_shop_unit(faction,cards[0].id) and p.error.is_empty() and p.data.banks[faction].shop_owned.is_empty(),"Solde insuffisant sans faux message de sauvegarde corrompue")
 		for mission in range(1,8):
 			var run: int = p.begin_mission(faction,"campaign.%03d" % mission,60,10,100)

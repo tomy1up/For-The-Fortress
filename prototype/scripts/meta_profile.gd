@@ -308,6 +308,7 @@ func shop_error(faction: int, id: String) -> String:
 	var entry: Dictionary = Shop.card(id)
 	if entry.is_empty() or entry.faction != faction: return "Cette unité n’appartient pas à cette faction."
 	if data.banks[faction].shop_owned.has(id): return "Unité déjà acquise."
+	if int(entry.get("unlock_missions",0)) > int(campaign_status(faction).completed): return "Disponible après %d missions réussies avec cette faction." % int(entry.unlock_missions)
 	if data.banks[faction].resource < entry.po: return "PO insuffisantes : %d requises." % entry.po
 	return ""
 
