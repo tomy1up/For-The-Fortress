@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-13 — Îles flottantes, missions 141–150 (ouvert)
+
+La clé `sky` contient la palette, le calque de nuages et falaises, les pièces et les placements des dix cartes du chapitre 15. Les 26 passages en combat couvrent les deux factions. Validateur à zéro problème et quatre suites ciblées au vert (29 238 contrôles Godot et 17 tests Python). Lot prêt pour intégration. [Fiche et captures](design/Visuels_Iles_Flottantes.md).
+
 ### 2026-11-13 — Décor des mines 131–140 et éboulement (ouvert)
 
 Cinq placements par carte dans `mine.placements`, avec les pièces du chapitre 13. Les deux planches `effect.rockfall` sont dans les ressources et fonctionnent avec ton branchement `77e54d3`. Les 26 passages en combat vérifient les quatre états du premier cycle. Le second cycle a été contrôlé sur 131, 134 et 140, à ×1 et ×2 dans les deux factions. Validateur et six suites ciblées au vert. Lot prêt pour intégration. [Fiche et captures](design/Visuels_Biome_Mines.md#chapitre-14--missions-131-à-140).
