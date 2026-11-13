@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.190**. Chapitre 20, le revenant (missions 191 à 200) : un attaquant neutre qui se relève une fois avec la moitié de ses PV (valeurs de prototype à confirmer, visuel provisoire). **La campagne de 200 missions est entièrement jouable** ; restent la boutique, le mode infini et les difficultés Héroïque et Mythique. [Chapitre 20](design/Missions_191_200_Revenant.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.190).
+
 **Prototype v0.189**. Chapitre 19, nécropole et terres maudites (missions 181 à 190), dixième biome choisi par le porteur : PV ennemis de 260 à 262 % (courbe ralentie à +0,25 % par mission), 105 PO, sans règle propre ; le revenant du chapitre 20 suivra. 190 missions jouables. [Chapitre 19](design/Missions_181_190_Necropole.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.189).
 
 **Prototype v0.188**. Chapitre 18, la brume marine (missions 171 à 180) : toutes les 22 s, l'or gagné par élimination est réduit de 30 % pendant 6 s, annoncé 3 s avant (valeurs de prototype à confirmer). 180 missions jouables ; marges minces à ce niveau de PV. [Chapitre 18](design/Missions_171_180_Brume_marine.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.188).

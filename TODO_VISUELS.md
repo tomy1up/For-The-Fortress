@@ -8,6 +8,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [ ] **Revenant, chapitre 20 (v0.190)** — attaquant neutre (`enemy.neutral.revenant`) qui se relève une fois avec la moitié de ses PV. Silhouette provisoire de l'ours. À illustrer (même cadrage que les neutres), puis marche et animation de relève. Voir `design/Missions_191_200_Revenant.md`.
+
 - [ ] **Nécropole et terres maudites, missions 181–190 (v0.189)** — dixième biome choisi par le porteur (13 novembre 2026). Palette provisoire (`necro` dans `assets/decor/decor.json`), sans pièce ni placement. Cartes : `prototype/scripts/necro_maps.gd`. En fin de file ; le revenant du chapitre 20 viendra ensuite.
 
 - [ ] **Brume marine, missions 171–180 (v0.188)** — voile de brume sur le plateau pendant 6 s, avertissement de 3 s avant (`effect.seamist`, `warning` en progression, `mist` en boucle). Repère provisoire dans `_draw_seamist`. En fin de file. Voir `design/Missions_171_180_Brume_marine.md`.

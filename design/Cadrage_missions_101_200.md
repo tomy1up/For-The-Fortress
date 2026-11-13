@@ -79,3 +79,5 @@ Au chapitre 18 (255-259 % de PV avec la brume marine), les marges de la référe
 ## Décision du 13 novembre 2026 — dixième biome
 
 Le porteur retient **nécropole et terres maudites** pour les chapitres 19 et 20, avec le **revenant** (attaquant qui se relève une fois avec la moitié de ses PV) au chapitre 20 (valeurs à confirmer). Voir [la fiche du chapitre 19](Missions_181_190_Necropole.md).
+
+Le revenant du chapitre 20 est livré en v0.190 : [fiche](Missions_191_200_Revenant.md). **Les 200 missions de la campagne sont jouables.**

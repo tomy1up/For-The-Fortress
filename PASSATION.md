@@ -128,6 +128,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.189** : chapitre 19 (181-190, `necro_maps.gd`, décor `necro`, biome « nécropole et terres maudites » choisi par le porteur, tracés repris du chapitre 17). Prochain : chapitre 20 (191-200) avec le revenant (type 12 : un attaquant qui se relève une fois avec la moitié de ses PV ; à coder sur le modèle de l'aigle des cimes `eagle_encounters.gd` et de la régénération de Gueule-de-Vase ; la relève doit rester rejouable et indépendante du pas). PV du chapitre 20 : 262 % à 264 %.
 
+**v0.190** : chapitre 20 (191-200, cartes de `necro_maps.gd`) et attaquant `Revenant` (`revenant_encounters.gd`, type 12 ; relève unique à 50 % des PV dans `valley_model.gd`, événement `relève` du journal). **La campagne de 200 missions est jouable.** Tests : `test_revenant.gd`, `test_revenant_chapter.gd` ; les tests « contenu futur » (`test_campaign_preview`, `test_mission_scout`) portent sur une mission verrouillée du chapitre 20. Prochains chantiers de conception avec le porteur : boutique (O-013), mode infini et difficultés Héroïque et Mythique (O-014), valeurs d'essai à confirmer, habillage de Codex (nécropole, revenant, aigle, côtes, brume, éboulement, îles).
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.
