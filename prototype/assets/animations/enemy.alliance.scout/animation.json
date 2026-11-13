@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "id": "enemy.alliance.scout",
+  "display_height": 42.472131147540985,
+  "foot": [
+    161,
+    331
+  ],
+  "facing": "right",
+  "animations": {
+    "walk": {
+      "file": "walk.png",
+      "frames": 20,
+      "frame_size": [
+        358,
+        381
+      ],
+      "mode": "distance",
+      "stride": 27.0
+    },
+    "walk_up": {
+      "file": "walk_up.png",
+      "frames": 20,
+      "frame_size": [
+        358,
+        381
+      ],
+      "mode": "distance",
+      "stride": 27.0
+    },
+    "walk_down": {
+      "file": "walk_down.png",
+      "frames": 20,
+      "frame_size": [
+        358,
+        381
+      ],
+      "mode": "distance",
+      "stride": 27.0
+    }
+  }
+}

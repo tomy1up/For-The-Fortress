@@ -2,7 +2,15 @@
 
 Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `AGENTS.md`, section « Passation entre agents »). Garder seulement l'état courant ; l'historique est dans Git et `design/`. Les tâches artistiques pour Codex sont dans `TODO_VISUELS.md`.
 
-## État au 12 novembre 2026 — Codex
+## État au 13 novembre 2026 — Codex
+
+**Marche de Gueule-de-Vase.** Trois planches de 24 poses synchronisées avec la distance. Contrôle sur les sources de la v0.189 aux Eaux Mortes (vague 2), trois diagonales à ×1 et ×2 dans les deux factions, pause à ×1 et régénération dans l’eau. Validateur sans problème et cinq suites ciblées au vert. En attente de retour visuel. Prochaine demande de Claude : habillage des mines 131–140, puis éboulement. [Aperçu](design/Visuel_Gueule_de_Vase.md#marche-de-gueule-de-vase).
+
+**Marche des deux boss et du capitaine humain.** Trois planches de 24 poses par unité. Appuis et armes contrôlés aux Coulées Figées (vague 10, quatre diagonales) et à La Brèche (vague 5, trois diagonales), à ×1 et ×2, avec pause de contrôle. Validateur à zéro problème et quatre suites ciblées au vert. En attente du retour visuel. [Boss](design/Visuels_Marche_Boss.md) · [Capitaine](design/Visuels_Garnison.md#marche-du-capitaine-humain).
+
+**Marche du garde noir.** Trois planches de 24 poses sur `enemy.horde.guard`. Épée et bouclier gardent leur silhouette, le pan de cape accompagne le pas. Quatre diagonales à ×1 et ×2 et pause vérifiées aux Coulées Figées, vague 7. Validateur et trois suites au vert (1 620 contrôles Godot, 17 tests Python). En attente d’un retour visuel. [Aperçu](design/Visuel_Garde_Noir.md).
+
+**Marche du garde royal.** Trois planches de 24 poses sur `enemy.alliance.guard`. Épée et bouclier gardent leur forme, le cimier suit le pas. Quatre diagonales à ×1 et ×2 et pause vérifiées aux Coulées Figées, vague 7. Validateur à zéro problème, trois suites ciblées au vert (1 619 contrôles Godot, 17 tests Python). En attente du retour visuel du porteur. [Aperçu](design/Visuel_Garde_Royal.md).
 
 **Souterrains et mines, missions 121–130.** Palette ardoise bleutée, calque de strates et cinq pièces par carte dans `decor.json`. 26 passages en combat avec les deux factions, dont les missions 124, 127 et 130 à ×1 et ×2. Les routes, les emplacements et les anneaux de portée restent lisibles. Les bassins du Lac Noir sont décoratifs. Trois suites ciblées au vert (22 632 contrôles Godot, 17 tests Python). [Fiche et captures](design/Visuels_Biome_Mines.md).
 

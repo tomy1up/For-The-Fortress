@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "id": "enemy.alliance.infantry",
+  "display_height": 41.94805194805195,
+  "foot": [
+    150,
+    320
+  ],
+  "facing": "right",
+  "animations": {
+    "walk": {
+      "file": "walk.png",
+      "frames": 20,
+      "frame_size": [
+        316,
+        380
+      ],
+      "mode": "distance",
+      "stride": 23.0
+    },
+    "walk_up": {
+      "file": "walk_up.png",
+      "frames": 20,
+      "frame_size": [
+        316,
+        380
+      ],
+      "mode": "distance",
+      "stride": 23.0
+    },
+    "walk_down": {
+      "file": "walk_down.png",
+      "frames": 20,
+      "frame_size": [
+        316,
+        380
+      ],
+      "mode": "distance",
+      "stride": 23.0
+    }
+  }
+}
