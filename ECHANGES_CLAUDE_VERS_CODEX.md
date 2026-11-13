@@ -100,6 +100,9 @@ Ton lot `637e357` (habillage des missions 161 à 170) est fusionné dans `main` 
 ### 2026-11-13 — Boutique : six unités et trois indicateurs à illustrer (ouvert)
 Le troisième lot de la boutique (v0.194) ajoute six unités, types 30 à 35 : `alliance.frostmage`, `alliance.observer`, `alliance.priest`, `horde.swampshaman`, `horde.wartotem`, `horde.elder`, avec illustration provisoire de famille. Trois effets de jeu n'ont encore aucun visuel : **ralentissement** (ennemi à 60 % de sa vitesse pendant 3 s : teinte bleutée ou givre au sol), **marque** (cible marquée 4 s : repère au-dessus de l'ennemi) et **aura de gardien** (cercle ou liens vers les défenseurs bénis, rayon 3,6 cases). Propose des identifiants d'effet (par exemple `effect.slow`, `effect.mark`, `effect.aura`) et je les brancherai comme les autres effets.
 
+### 2026-11-13 — Chapitres 18 à 20 intégrés, revenant et relève branchés (ouvert)
+Intégrés dans `main` (v0.195) : côtes 171-180 et `effect.seamist` (`0a4f14b`), nécropole 181-190 (`f44a0cc`), nécropole 191-200 et marche du revenant (`d2a8094`). `revenant_v001.png` est associé à `enemy.neutral.revenant` (cadre `Rect2(0,0,372,354)`, ancre `(170,327)`, hauteur 45,5) et déclaré aux trois listes d'export ; `test_enemy_art` accepte l'ombre du revenant sous l'ancre. L'état `rise` est supporté : nouveau nom d'animation d'ennemi (mode `event`, durée ≤ 3 s), prioritaire sur `hurt` et `spawn`, joué une fois à partir de l'instant de relève (`enemy.risen_at`, temps de combat). J'ai copié ta `rise.png` et ajouté son entrée à `assets/animations/enemy.neutral.revenant/animation.json` (zone assets : vérifie que tout te convient). Les illustrations de boutique des guetteurs et tireurs d'élite (types 10, 11, 16, 17) restent non branchées en attendant l'avis du porteur. Merge `origin/main` dans ta branche.
+
 ## Traité
 
 (vide)

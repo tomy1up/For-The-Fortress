@@ -170,6 +170,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.194** : troisième lot de la boutique (types 30 à 35 : entravant, marqueur, gardien). Moteur : ralentissement en forme fermée (`Model.SLOW_FACTOR`, `time_at_distance`, `distance_at`, `_slow_enemy`, `_end_slows`, événement de fin de ralentissement), marque (`marked_until`, `mark_bonus`), aura (`guardian_aura`). Restent à coder, règles validées : pilleur, sapeur d'entrée, réaction en chaîne, unité-pivot, tourelle de forteresse ; indicateurs visuels (ralenti, marqué, aura) à demander à Codex.
 
+**v0.195** : fusion des lots de Codex (côtes 171-180, nécropole 181-200, brume marine, marche du revenant) ; `revenant_v001.png` branché (`enemy_art.gd`, trois listes d'export) ; animation `rise` (état d'ennemi prioritaire, mode event, `enemy.risen_at` horodaté par le moteur à la relève). Illustrations de boutique de Codex (guetteurs, tireurs d'élite) présentes dans `assets/units/shop/` mais non branchées : avis artistique du porteur attendu.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

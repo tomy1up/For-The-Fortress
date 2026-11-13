@@ -2,6 +2,7 @@ extends SceneTree
 const Model = preload("res://scripts/valley_model.gd")
 const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
+const Library = preload("res://scripts/animation_library.gd")
 var checks := 0
 var failures := 0
 func check(value: bool, message: String) -> void:
@@ -15,6 +16,7 @@ func run_checks() -> void:
 	verify_rise_once()
 	verify_step_independence()
 	verify_replay()
+	verify_rise_animation()
 	print("REVENANT_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
 
@@ -95,3 +97,32 @@ func verify_replay() -> void:
 		check(report.get("wave_set_id","") == "necro_revenants","Le rapport conserve le jeu de rencontres du revenant")
 		var replay: Dictionary = Replay.verify(report)
 		check(replay.ok,"Le rapport de la faction %d est rejouable : %s" % [faction,str(replay.get("error",""))])
+
+## Animation de relève (`rise`) : acceptée en mode event, prioritaire à l'état d'ennemi pendant sa durée, horodatée par le moteur.
+func verify_rise_animation() -> void:
+	var spec := {"version":1,"id":"enemy.test.rise","display_height":40,"foot":[20,38],"animations":{
+		"walk":{"file":"walk.png","frames":8,"frame_size":[64,64],"mode":"distance","stride":16},
+		"rise":{"file":"rise.png","frames":24,"frame_size":[64,64],"mode":"event","duration":0.72}}}
+	check(Library.validation_error(spec) == "","Description avec animation de relève valide")
+	var wrong: Dictionary = spec.duplicate(true);wrong.animations.rise = {"file":"r.png","frames":8,"frame_size":[64,64],"mode":"time","fps":8}
+	check(Library.validation_error(wrong) != "","La relève se joue une fois : mode event obligatoire")
+	var long_rise: Dictionary = spec.duplicate(true);long_rise.animations.rise.duration = 4.0
+	check(Library.validation_error(long_rise) != "","La relève est limitée à 3 s")
+	check(Library.enemy_state(spec.duplicate(true),{"rise_age":0.3}) == "rise" and Library.enemy_state(spec,{"rise_age":0.8}) == "walk" and Library.enemy_state(spec,{}) == "walk","L'état rise ne dure que 0,72 s après la relève")
+	# Le moteur horodate la relève sur le temps de combat.
+	var model := necro()
+	model.gold = 800;model.select_faction(0)
+	model.buy(3,0);model.buy(4,1);model.buy(2,1)
+	var stamped := false
+	for wave in range(1,7):
+		model.start()
+		var guard := 0
+		while model.phase == "combat" and guard < 5000:
+			model.advance(0.25);guard += 1
+			for enemy in model.enemies:
+				if enemy.get("risen",false):
+					stamped = enemy.has("risen_at") and float(enemy.risen_at) <= model.elapsed+0.000001 and model.elapsed-float(enemy.risen_at) < 100.0
+		if stamped or model.phase == "defeat": break
+		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+		if wave < 6: model.prepare_next_wave()
+	check(stamped,"Un revenant relevé porte l'instant de sa relève")

@@ -1077,13 +1077,14 @@ func _draw_sheet_walker(id: String, enemy: Dictionary, motion: Dictionary, scale
 	var spec: Dictionary = SheetAnimations.spec_for(id)
 	var info: Dictionary = {"hurt_age":last_hit_age(enemy.id),"direction":motion.get("direction",Vector2.ZERO)}
 	if model.active: info.spawn_age = model.elapsed-float(enemy.get("spawn_time",0.0))
+	if enemy.has("risen_at"): info.rise_age = model.elapsed-float(enemy.risen_at)
 	var state: String = SheetAnimations.enemy_state(spec,info)
 	if state == "": return
 	var anim: Dictionary = spec.animations[state]
 	var texture: Texture2D = SheetAnimations.texture_for(id,anim)
 	if texture == null: return
 	if SheetAnimations.base_facing(spec) < 0.0: draw_set_transform_matrix(body*Transform2D(Vector2(-1,0),Vector2(0,1),Vector2.ZERO))
-	var age: float = float(info.hurt_age) if state == "hurt" else float(info.get("spawn_age",0.0))
+	var age: float = float(info.rise_age) if state == "rise" else float(info.hurt_age) if state == "hurt" else float(info.get("spawn_age",0.0))
 	var cycle: float = SheetAnimations.phase(anim,float(motion.get("travel",0.0))/scale,model.elapsed,age,fposmod(float(enemy.id)*0.37,1.0))
 	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle))
 	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region,EnemyArt.tint(hit_strength))

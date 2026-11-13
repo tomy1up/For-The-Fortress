@@ -37,6 +37,16 @@
       ],
       "mode": "distance",
       "stride": 16.6
+    },
+    "rise": {
+      "file": "rise.png",
+      "frames": 24,
+      "frame_size": [
+        372,
+        354
+      ],
+      "mode": "event",
+      "duration": 0.72
     }
   }
 }
