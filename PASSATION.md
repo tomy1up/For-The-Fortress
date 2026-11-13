@@ -142,6 +142,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.191** : fusion de `art/codex` dans `main` (assets seulement : planches de marche de dix attaquants, lancer de hache du troll, contraste de la tempête ; aucun code Codex) ; planches `effect.rockfall` branchées. Visuels **à juger en jeu par le porteur** ; Codex retouche selon ses retours. Validateur : 19 dossiers, 0 problème. Prochain chantier de conception choisi par le porteur : la boutique (O-013).
 
+**Boutique (13 novembre 2026)** : le porteur veut un catalogue dont la valeur totale égale au moins les 14 750 PO gagnés par faction, environ 20 unités par faction ; proposition de 18 archétypes dans `design/Boutique_20_unites_proposition.md`, en attente de sa validation (liste, règles nouvelles une par une, nombre d'alternatives par mission, barème). Aucun code ni visuel avant validation.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.
