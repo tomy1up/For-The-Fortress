@@ -78,7 +78,38 @@ static func definition(number: int) -> Dictionary:
 		var maps: Array[String] = ["mine_pillars","mine_vein","mine_tunnel","mine_arch","mine_twins","mine_abyss","mine_sluice","mine_crossing","mine_crypt","mine_core"]
 		var titles: Array[String] = ["Les Piliers Fissurés","La Veine Oubliée","Le Tunnel Éventré","La Voûte Instable","Les Galeries Jumelles","Le Gouffre Noir","L'Écluse Souterraine","Le Carrefour des Éboulis","La Crypte des Mineurs","Le Cœur Effondré"]
 		result.merge({"title":titles[number-131],"available":true,"map_id":maps[number-131],"hp_percent":99+number,"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"rockfall","interval":18,"warning":3,"duration":7}},true)
+	elif number <= 150:
+		# Chapitre 15 : huitième biome, îles flottantes et cité céleste, sans règle propre (recommandation de Claude Code sur délégation du porteur, 12 novembre 2026 ; biome à confirmer).
+		var maps: Array[String] = ["sky_pontoon","sky_mistbridge","sky_cloudgate","sky_spires","sky_gardens","sky_belvedere","sky_updrafts","sky_dome","sky_fallen","sky_summit"]
+		var titles: Array[String] = ["Le Ponton des Nuées","Le Pont de Brume","La Porte des Nuages","Les Flèches d'Azur","Les Jardins Suspendus","Le Belvédère","Les Courants Ascendants","Le Dôme Céleste","L'Île Effondrée","La Citadelle des Cimes"]
+		result.merge({"title":titles[number-141],"available":true,"map_id":maps[number-141],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10},true)
+	elif number <= 160:
+		# Chapitre 16 : nouveauté du biome des îles flottantes, l'aigle des cimes (décision du porteur, 12 novembre 2026). Valeurs d'essai.
+		var maps: Array[String] = ["sky_aerie","sky_nest","sky_twinpeaks","sky_triplenest","sky_ledge","sky_col","sky_raptors","sky_roost","sky_azurefall","sky_throne"]
+		var titles: Array[String] = ["L'Aire des Aigles","Le Nid de Brume","Les Pitons Jumeaux","Les Trois Aires","La Corniche Ventée","Le Col du Ciel","Les Rapaces","Le Perchoir","La Chute d'Azur","Le Trône des Nuées"]
+		result.merge({"title":titles[number-151],"available":true,"map_id":maps[number-151],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10,"wave_set_id":"sky_eagles"},true)
+	elif number <= 170:
+		# Chapitre 17 : neuvième biome, côtes et récifs, sans règle propre (choix du porteur, 12 novembre 2026).
+		var maps: Array[String] = ["coast_jetty","coast_lighthouse","coast_reefs","coast_wrecks","coast_quay","coast_cliff","coast_coves","coast_harbor","coast_skerry","coast_cape"]
+		var titles: Array[String] = ["La Jetée Abandonnée","Le Phare Éteint","Les Récifs Blancs","La Baie des Épaves","Le Quai des Brumes","La Falaise du Guet","Les Criques Jumelles","Le Port Englouti","L'Écueil Noir","La Forteresse du Cap"]
+		result.merge({"title":titles[number-161],"available":true,"map_id":maps[number-161],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10},true)
+	elif number <= 180:
+		# Chapitre 18 : nouveauté du biome des côtes, l'affixe Brume marine (décision du porteur, 12 novembre 2026). Valeurs d'essai.
+		var maps: Array[String] = ["coast_beacon","coast_causeway","coast_chalk","coast_graveyard","coast_shoal","coast_phantom","coast_twinrocks","coast_arsenal","coast_storm","coast_citadel"]
+		var titles: Array[String] = ["Le Phare des Brumes","La Digue Noyée","Les Falaises Blanches","Le Cimetière des Navires","Le Banc de Sable","La Baie Fantôme","Les Écueils Jumeaux","L'Arsenal Englouti","Le Cap des Tempêtes","La Citadelle des Embruns"]
+		result.merge({"title":titles[number-171],"available":true,"map_id":maps[number-171],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"seamist","interval":22,"warning":3,"duration":6,"gold_percent":30}},true)
+	elif number <= 190:
+		# Chapitre 19 : dixième biome, nécropole et terres maudites, sans règle propre (choix du porteur, 13 novembre 2026).
+		var maps: Array[String] = ["necro_gate","necro_road","necro_graveyard","necro_crypts","necro_fen","necro_hill","necro_mausoleums","necro_ossuary","necro_stelae","necro_royal"]
+		var titles: Array[String] = ["Le Portail des Ossements","La Route des Tombes","Le Cimetière Oublié","Les Cryptes Basses","Le Marais des Défunts","La Colline des Pendus","Les Mausolées Jumeaux","L'Ossuaire","Le Champ des Stèles","La Nécropole Royale"]
+		result.merge({"title":titles[number-181],"available":true,"map_id":maps[number-181],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10},true)
 	return result
+
+## PV ennemis (en % de la référence) d'une mission : `99 + numéro` jusqu'à la mission 140, puis +1 % toutes les deux missions jusqu'à la mission 180 (décision du porteur, 12 novembre 2026), puis +1 % toutes les quatre missions (+0,25 % par mission, décision du porteur, 13 novembre 2026).
+static func hp_percent_for(number: int) -> int:
+	if number <= 140: return 99+number
+	if number <= 180: return 239+((number-139)>>1)
+	return 259+((number-177)>>2)
 
 ## PO de la première victoire : 60 jusqu'au chapitre 10, puis +5 par chapitre (valeurs d'essai à confirmer).
 static func reward_po(chapter: int) -> int:

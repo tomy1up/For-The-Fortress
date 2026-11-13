@@ -160,7 +160,7 @@ for camp in ['alliance','horde']:
 for camp in ['alliance','horde']:
     for number in [1,11,20]: cases.append((camp+'_scout_'+str(number),'mission_scout',camp))
 for camp in ['alliance','horde']:
-    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,61) for stage in ['', 'play']]+['marsh50completed','marsh60completed']+[f'volcano{number}{stage}' for number in range(61,71) for stage in ['', 'play']]+['volcano70completed']+[f'ash{number}{stage}' for number in range(71,81) for stage in ['', 'play']]+['ash80completed']+[f'citadel{number}{stage}' for number in range(81,91) for stage in ['', 'play']]+['citadel90completed']+[f'garrison{number}{stage}' for number in range(91,101) for stage in ['', 'play']]+['garrison100completed']+[f'dune{number}{stage}' for number in range(101,111) for stage in ['', 'play']]+['dune110completed']+[f'dune{number}{stage}' for number in range(111,121) for stage in ['', 'play']]+['dune120completed']+[f'mine{number}{stage}' for number in range(121,131) for stage in ['', 'play']]+[f'mine{number}{stage}' for number in range(131,141) for stage in ['', 'play']]+['mine140completed']:
+    for variant in ['slate','slateplay','ridges','ridgesplay']+[f'mountain{number}{stage}' for number in range(23,41) for stage in ['', 'play']]+['mountain40completed']+[f'marsh{number}{stage}' for number in range(41,61) for stage in ['', 'play']]+['marsh50completed','marsh60completed']+[f'volcano{number}{stage}' for number in range(61,71) for stage in ['', 'play']]+['volcano70completed']+[f'ash{number}{stage}' for number in range(71,81) for stage in ['', 'play']]+['ash80completed']+[f'citadel{number}{stage}' for number in range(81,91) for stage in ['', 'play']]+['citadel90completed']+[f'garrison{number}{stage}' for number in range(91,101) for stage in ['', 'play']]+['garrison100completed']+[f'dune{number}{stage}' for number in range(101,111) for stage in ['', 'play']]+['dune110completed']+[f'dune{number}{stage}' for number in range(111,121) for stage in ['', 'play']]+['dune120completed']+[f'mine{number}{stage}' for number in range(121,131) for stage in ['', 'play']]+[f'mine{number}{stage}' for number in range(131,141) for stage in ['', 'play']]+[f'sky{number}{stage}' for number in range(141,161) for stage in ['', 'play']]+[f'coast{number}{stage}' for number in range(161,181) for stage in ['', 'play']]+[f'necro{number}{stage}' for number in range(181,191) for stage in ['', 'play']]+['necro190completed']:
         cases.append((camp+'_campaign_menu_'+variant,'campaign_menu',camp))
     for state in ['preparation','purchase','specialisation','defeat_summary']:
         cases.append((camp+'_three_'+state,state,camp))
@@ -418,6 +418,57 @@ for name,state,faction in cases:
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
             assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+    elif '_campaign_menu_sky' in name:
+        snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
+        camp=0 if faction=='alliance' else 1
+        number=int(name.rsplit('_',1)[1].removeprefix('sky').removesuffix('play').removesuffix('completed'))
+        map_id=['sky_pontoon','sky_mistbridge','sky_cloudgate','sky_spires','sky_gardens','sky_belvedere','sky_updrafts','sky_dome','sky_fallen','sky_summit','sky_aerie','sky_nest','sky_twinpeaks','sky_triplenest','sky_ledge','sky_col','sky_raptors','sky_roost','sky_azurefall','sky_throne'][number-141]
+        routes={143:2,144:3,146:2,147:3,148:2,150:3,153:2,154:3,156:2,157:3,158:2,160:3}.get(number,0)
+        assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
+        assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==((number-1)//10+1,number,map_id,routes or 1)
+        won_missions=number if name.endswith('completed') else number-1
+        assert snap['completed']==won_missions and snap['other_completed']==0
+        assert (snap['po'],snap['xp'])==(6000+650+700+750+800+85*(min(won_missions,150)-140)+90*max(0,won_missions-150),10000)
+        assert snap['mission_states']==(['completed']*10 if name.endswith('completed') else ['completed']*(number-(number-141)//10*10-141)+['available']+['locked']*((number-141)//10*10+150-number))
+        if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
+        if name.endswith('play'):
+            launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':239+((number-139)>>1),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+    elif '_campaign_menu_coast' in name:
+        snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
+        camp=0 if faction=='alliance' else 1
+        number=int(name.rsplit('_',1)[1].removeprefix('coast').removesuffix('play').removesuffix('completed'))
+        map_id=['coast_jetty','coast_lighthouse','coast_reefs','coast_wrecks','coast_quay','coast_cliff','coast_coves','coast_harbor','coast_skerry','coast_cape','coast_beacon','coast_causeway','coast_chalk','coast_graveyard','coast_shoal','coast_phantom','coast_twinrocks','coast_arsenal','coast_storm','coast_citadel'][number-161]
+        routes={163:2,164:3,166:2,167:3,168:2,170:3,173:2,174:3,176:2,177:3,178:2,180:3}.get(number,0)
+        assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
+        assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==((number-1)//10+1,number,map_id,routes or 1)
+        won_missions=number if name.endswith('completed') else number-1
+        assert snap['completed']==won_missions and snap['other_completed']==0
+        assert (snap['po'],snap['xp'])==(6000+650+700+750+800+850+900+95*(min(won_missions,170)-160)+100*max(0,won_missions-170),10000)
+        assert snap['mission_states']==(['completed']*10 if name.endswith('completed') else ['completed']*(number-(number-161)//10*10-161)+['available']+['locked']*((number-161)//10*10+170-number))
+        if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
+        if name.endswith('play'):
+            launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':239+((number-139)>>1),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+            if number>=171:
+                mist=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SEAMIST_SNAPSHOT=')))
+                assert mist['affix']=={'id':'seamist','interval':22,'warning':3,'duration':6,'gold_percent':30} and mist['visible'] and mist['text'].startswith('Brume marine')
+    elif '_campaign_menu_necro' in name:
+        snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
+        camp=0 if faction=='alliance' else 1
+        number=int(name.rsplit('_',1)[1].removeprefix('necro').removesuffix('play').removesuffix('completed'))
+        map_id=['necro_gate','necro_road','necro_graveyard','necro_crypts','necro_fen','necro_hill','necro_mausoleums','necro_ossuary','necro_stelae','necro_royal'][number-181]
+        routes={183:2,184:3,186:2,187:3,188:2,190:3}.get(number,0)
+        assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
+        assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==(19,number,map_id,routes or 1)
+        won_missions=number if name.endswith('completed') else number-1
+        assert snap['completed']==won_missions and snap['other_completed']==0
+        assert (snap['po'],snap['xp'])==(6000+650+700+750+800+850+900+950+1000+105*(won_missions-180),10000)
+        assert snap['mission_states']==(['completed']*10 if name.endswith('completed') else ['completed']*(number-181)+['available']+['locked']*(190-number))
+        if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
+        if name.endswith('play'):
+            launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':259+((number-177)>>2),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
     elif '_campaign_menu_garrison' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1

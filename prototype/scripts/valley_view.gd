@@ -670,6 +670,7 @@ func _draw() -> void:
 		_draw_eruption_warning()
 		_draw_sandstorm()
 		_draw_rockfall()
+		_draw_seamist()
 		_draw_decor_props(model.map_definition)
 		var actors: Array[Dictionary] = []
 		for slot in range(model.defenders.size()):
@@ -932,7 +933,7 @@ func _track_defenders() -> void:
 ## Vrai tant qu'une animation par planche exige un redessin continu (repos, achat, revente, niveau).
 func _sheet_animation_running() -> bool:
 	if model == null: return false
-	if model.combat_affix.get("id","") in ["headwinds","sandstorm","rockfall"]: return true
+	if model.combat_affix.get("id","") in ["headwinds","sandstorm","rockfall","seamist"]: return true
 	if not _sold_ghosts.is_empty(): return true
 	for defender in model.defenders:
 		if not defender.is_empty() and not SheetAnimations.spec_for(SheetAnimations.defender_id(int(defender.type))).is_empty(): return true
@@ -1013,10 +1014,10 @@ func _draw_fortress(anchor: Vector2) -> void:
 	draw_string(font,center+Vector2(-width/2,34),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("ed9989") if condition >= 2 else Color("d7bd83") if condition == 1 else INK)
 
 static func _enemy_scale(enemy: Dictionary) -> float:
-	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7, 1.4, 1.1, 1.6][enemy.get("type", 1)]
+	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7, 1.4, 1.1, 1.6, 0.8][enemy.get("type", 1)]
 
 static func enemy_color(type: int) -> Color:
-	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384"),Color("91ab72"),Color("5f9aa0"),Color("b8a05c")][type]
+	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384"),Color("91ab72"),Color("5f9aa0"),Color("b8a05c"),Color("8fb4d8")][type]
 
 func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.0, pose: Dictionary = {}) -> void:
 	var id: String = enemy_art_id(enemy,model.faction)
@@ -1151,6 +1152,28 @@ func _draw_rockfall() -> void:
 		draw_colored_polygon(shape,Color(0.38,0.36,0.4,0.95))
 		draw_polyline(shape+PackedVector2Array([shape[0]]),Color(0.16,0.15,0.18,0.9),1.5,true)
 		for offset in [Vector2(-6,-2),Vector2(5,-5),Vector2(1,4)]: draw_circle(origin+offset,3.0,Color(0.52,0.5,0.54,0.95))
+
+## Repère fonctionnel provisoire de l'affixe Brume marine (chapitre 18) : liséré clair pendant l'avertissement, voile blanc-bleu sur le plateau
+## pendant la brume. L'habillage revient à Codex (TODO_VISUELS.md). Le mouvement suit le temps de combat.
+func _draw_seamist() -> void:
+	if model == null or not model.mist_enabled(): return
+	var status: Dictionary = model.mist_status()
+	if status.is_empty(): return
+	var board: Vector2i = model.map_definition.size
+	var area := PackedVector2Array()
+	for corner in [Vector2.ZERO,Vector2(board.x,0),Vector2(board.x,board.y),Vector2(0,board.y)]: area.append(project(corner))
+	if status.state == "warning":
+		var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+		var outline: PackedVector2Array = area.duplicate();outline.append(outline[0])
+		draw_polyline(outline,Color(0.85,0.93,0.96,0.25+0.5*progress),2.0+4.0*progress,true)
+	else:
+		draw_colored_polygon(area,Color(0.85,0.93,0.97,0.28))
+		var clock: float = model.elapsed
+		for index in range(8):
+			var lane: float = fposmod(float(index)*0.381966,1.0)
+			var shift: float = fposmod(clock*0.12+float(index)*0.211,1.0)
+			var start: Vector2 = project(Vector2(float(board.x)*(shift*1.2-0.1),float(board.y)*lane))
+			draw_line(start,start+Vector2(60,-12),Color(0.95,0.98,1.0,0.35),6.0,true)
 
 ## Remous au pied de Gueule-de-Vase quand elle est dans l'eau et qu'il lui manque des PV (effet `effect.regeneration`).
 ## La phase suit le temps de combat. Le dessin se fait dans le repère de l'ennemi, pieds à l'origine.

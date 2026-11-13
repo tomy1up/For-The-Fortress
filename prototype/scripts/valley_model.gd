@@ -21,6 +21,7 @@ var map_error: String = ""
 const Banks = preload("res://scripts/bank_encounters.gd")
 const Drowned = preload("res://scripts/drowned_encounters.gd")
 const Garrison = preload("res://scripts/garrison_encounters.gd")
+const Eagle = preload("res://scripts/eagle_encounters.gd")
 var wave_set_id: String = "ford"
 var route_target_policy: String = "arrival_time"
 var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
@@ -196,7 +197,7 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	action_history.append(entry)
 
 static func valid_enemy_hp_percent(value: Variant) -> bool:
-	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 239
+	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 262
 
 func configure_combat_affix(value: Variant) -> bool:
 	if not value is Dictionary or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
@@ -218,6 +219,12 @@ func configure_combat_affix(value: Variant) -> bool:
 				var s_interval: Variant = value.get("interval");var s_warning: Variant = value.get("warning");var s_duration: Variant = value.get("duration");var s_percent: Variant = value.get("range_percent")
 				if not _whole_number(s_interval) or not _whole_number(s_warning) or not _whole_number(s_duration) or not _whole_number(s_percent): return false
 				if s_interval < 10 or s_interval > 40 or s_warning < 1 or s_warning > 4 or s_duration < 2 or s_duration > 12 or s_percent < 5 or s_percent > 60 or s_duration+s_warning+1 > s_interval: return false
+			"seamist":
+				# Brume marine : l'or d'élimination est réduit de `gold_percent` % pendant `duration` s, toutes les `interval` s, annoncée `warning` s avant.
+				if value.size() != 5: return false
+				var m_interval: Variant = value.get("interval");var m_warning: Variant = value.get("warning");var m_duration: Variant = value.get("duration");var m_percent: Variant = value.get("gold_percent")
+				if not _whole_number(m_interval) or not _whole_number(m_warning) or not _whole_number(m_duration) or not _whole_number(m_percent): return false
+				if m_interval < 10 or m_interval > 40 or m_warning < 1 or m_warning > 4 or m_duration < 2 or m_duration > 12 or m_percent < 10 or m_percent > 60 or m_duration+m_warning+1 > m_interval: return false
 			"rockfall":
 				# Éboulement : une entrée est bloquée `duration` s toutes les `interval` s, annoncée `warning` s avant ; les apparitions prévues pendant ce temps passent par l'entrée suivante. Exige au moins deux entrées.
 				if value.size() != 4 or routes.size() < 2: return false
@@ -235,6 +242,7 @@ func affix_description() -> String:
 	match combat_affix.get("id",""):
 		"headwinds": return "Vents contraires · −%d %% de cadence" % (100-int(combat_affix.cadence_percent))
 		"eruptions": return "Éruptions · un défenseur désactivé %d s toutes les %d s" % [int(combat_affix.duration),int(combat_affix.interval)]
+		"seamist": return "Brume marine · or d'élimination −%d %% pendant %d s toutes les %d s" % [int(combat_affix.gold_percent),int(combat_affix.duration),int(combat_affix.interval)]
 		"rockfall": return "Éboulement · une entrée bloquée %d s toutes les %d s" % [int(combat_affix.duration),int(combat_affix.interval)]
 		"sandstorm": return "Tempête de sable · portée −%d %% pendant %d s toutes les %d s" % [int(combat_affix.range_percent),int(combat_affix.duration),int(combat_affix.interval)]
 	return ""
@@ -242,10 +250,40 @@ func affix_description() -> String:
 func affix_tooltip() -> String:
 	match combat_affix.get("id",""):
 		"headwinds": return "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
+		"seamist": return "Toutes les %d s de combat, une brume marine réduit de %d %% l'or gagné par élimination pendant %d s (arrondi à l'entier le plus proche, au moins 1 or). Elle est annoncée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.gold_percent),int(combat_affix.duration),int(combat_affix.warning)]
 		"rockfall": return "Toutes les %d s de combat, un éboulement bloque une entrée pendant %d s : les ennemis qui devaient y apparaître passent par l'entrée suivante. L'entrée touchée est signalée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.duration),int(combat_affix.warning)]
 		"sandstorm": return "Toutes les %d s de combat, une rafale de sable réduit de %d %% la portée de tous les défenseurs pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.range_percent),int(combat_affix.duration),int(combat_affix.warning)]
 		"eruptions": return "Toutes les %d s de combat, un défenseur choisi au hasard parmi ceux en place est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Les dégâts périodiques déjà appliqués continuent. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.duration),int(combat_affix.warning)]
 	return ""
+
+func mist_enabled() -> bool:
+	return combat_affix.get("id","") == "seamist"
+
+## Instant de la vague (secondes de combat) où la brume numéro `number` (à partir de 1) se lève.
+func mist_start_time(number: int) -> float:
+	return float(combat_affix.interval)*number
+
+func mist_active_now() -> bool:
+	if not mist_enabled(): return false
+	var number: int = int(floor((elapsed+EPS)/float(combat_affix.interval)))
+	return number >= 1 and elapsed < mist_start_time(number)+float(combat_affix.duration)-EPS
+
+## Or d'une élimination à l'instant courant : réduit pendant la brume, arrondi à l'entier le plus proche, au moins 1 or.
+func kill_reward(base: int) -> int:
+	if not mist_active_now(): return base
+	return maxi(1,roundi(float(base)*(100.0-float(combat_affix.gold_percent))/100.0))
+
+## État observé par l'interface : {} hors combat, sinon l'avertissement ("warning") ou la brume en cours ("active").
+func mist_status() -> Dictionary:
+	if not mist_enabled() or not active: return {}
+	var interval: float = float(combat_affix.interval)
+	var number: int = int(floor((elapsed+EPS)/interval))
+	if number >= 1 and elapsed < mist_start_time(number)+float(combat_affix.duration)-EPS:
+		return {"state":"active","number":number,"remaining":mist_start_time(number)+float(combat_affix.duration)-elapsed}
+	var upcoming: int = number+1
+	if elapsed >= mist_start_time(upcoming)-float(combat_affix.warning)-EPS:
+		return {"state":"warning","number":upcoming,"remaining":mist_start_time(upcoming)-elapsed}
+	return {}
 
 func rockfall_enabled() -> bool:
 	return combat_affix.get("id","") == "rockfall"
@@ -351,7 +389,7 @@ func configure_wave_set(value: Variant) -> bool:
 	wave_set_id = value;spawn_schedule = Campaign.schedule(wave,wave_set_id);return true
 
 static func enemy_definition(type: int) -> Dictionary:
-	return Banks.GUARD if type == Banks.GUARD_TYPE else Drowned.DEFINITION if type == Drowned.TYPE else Garrison.DEFINITION if type == Garrison.TYPE else ENEMY_TYPES[type]
+	return Banks.GUARD if type == Banks.GUARD_TYPE else Drowned.DEFINITION if type == Drowned.TYPE else Garrison.DEFINITION if type == Garrison.TYPE else Eagle.DEFINITION if type == Eagle.TYPE else ENEMY_TYPES[type]
 
 static func scaled_enemy_hp(type: int, percent: int = 100) -> float:
 	return float(enemy_definition(type).hp) if percent == 100 else float(enemy_definition(type).hp)*(float(percent)/100.0)
@@ -943,7 +981,7 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 			elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":enemy_position(enemy),"distance":enemy.distance,"route_id":str(enemy.get("route_id",""))})
 			killed += 1
 			total_killed += 1
-			var reward: int = enemy.get("reward", 3)
+			var reward: int = kill_reward(enemy.get("reward", 3))
 			gold += reward
 			total_income += reward
 			event_log.append("%.9f mort %d +%d" % [elapsed, enemy.id, reward])

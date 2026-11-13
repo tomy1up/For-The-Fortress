@@ -1,6 +1,6 @@
 param(
     [string]$EnginePath = '',
-    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.184',
+    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.189',
     [string]$OutputRoot = ''
 )
 $ErrorActionPreference = 'Stop'
@@ -53,7 +53,7 @@ $sourcePaths += @('scripts\fortress_art.gd','assets\fortresses\forteresse_allian
 $sourcePaths += @('scripts\enemy_walk_art.gd','assets\enemies\animations\loup_corps_v002.png','assets\enemies\animations\loup_corps_v002.png.import')
 $sourcePaths += @('assets\enemies\animations\loup_marche_v002.bin','scripts\route_geometry.gd')
 $sourcePaths += @('scripts\mission_scout.gd','distribution\Lancer_atelier_routes.cmd')
-$sourcePaths += @('scripts\marsh_art.gd','scripts\drowned_encounters.gd','scripts\drowned_maps.gd','scripts\volcanic_maps.gd','scripts\citadel_maps.gd','scripts\garrison_encounters.gd','scripts\animation_library.gd','scripts\decor_art.gd','scripts\desert_maps.gd','scripts\mine_maps.gd')
+$sourcePaths += @('scripts\marsh_art.gd','scripts\drowned_encounters.gd','scripts\drowned_maps.gd','scripts\volcanic_maps.gd','scripts\citadel_maps.gd','scripts\garrison_encounters.gd','scripts\animation_library.gd','scripts\decor_art.gd','scripts\desert_maps.gd','scripts\mine_maps.gd','scripts\sky_maps.gd','scripts\eagle_encounters.gd','scripts\coast_maps.gd','scripts\necro_maps.gd')
 $sourcePaths += @('assets\enemies\rosters\capitaine_humain_v001.png','assets\enemies\rosters\capitaine_humain_v001.png.import','assets\enemies\rosters\gueule_de_vase_v001.png','assets\enemies\rosters\gueule_de_vase_v001.png.import')
 # Every declared runtime resource must be selected explicitly by this preset.
 $presetText = [IO.File]::ReadAllText((Join-Path $PSScriptRoot 'export_presets.cfg'))

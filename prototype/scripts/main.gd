@@ -792,7 +792,7 @@ func _capture_campaign_menu(camp: int) -> void:
 		var id: int = meta_profile.begin_mission(camp,"campaign.001",60,10,100)
 		var credited: bool = meta_profile.credit_mission(id,camp,10,true)
 		if not credited: push_error("Échec du profil de contrôle de campagne.");return
-	var mountain_preview := variant in ["slate","slateplay","ridges","ridgesplay"] or variant.begins_with("mountain") or variant.begins_with("marsh") or variant.begins_with("volcano") or variant.begins_with("ash") or variant.begins_with("citadel") or variant.begins_with("garrison") or variant.begins_with("dune") or variant.begins_with("mine")
+	var mountain_preview := variant in ["slate","slateplay","ridges","ridgesplay"] or variant.begins_with("mountain") or variant.begins_with("marsh") or variant.begins_with("volcano") or variant.begins_with("ash") or variant.begins_with("citadel") or variant.begins_with("garrison") or variant.begins_with("dune") or variant.begins_with("mine") or variant.begins_with("sky") or variant.begins_with("coast") or variant.begins_with("necro")
 	var mountain_number := 21
 	if variant.begins_with("ridges"): mountain_number = 22
 	if variant.begins_with("marsh"): mountain_number = clampi(variant.trim_prefix("marsh").trim_suffix("play").trim_suffix("completed").to_int(),41,60)
@@ -802,6 +802,9 @@ func _capture_campaign_menu(camp: int) -> void:
 	if variant.begins_with("garrison"): mountain_number = clampi(variant.trim_prefix("garrison").trim_suffix("play").trim_suffix("completed").to_int(),91,100)
 	if variant.begins_with("dune"): mountain_number = clampi(variant.trim_prefix("dune").trim_suffix("play").trim_suffix("completed").to_int(),101,120)
 	if variant.begins_with("mine"): mountain_number = clampi(variant.trim_prefix("mine").trim_suffix("play").trim_suffix("completed").to_int(),121,140)
+	if variant.begins_with("sky"): mountain_number = clampi(variant.trim_prefix("sky").trim_suffix("play").trim_suffix("completed").to_int(),141,160)
+	if variant.begins_with("coast"): mountain_number = clampi(variant.trim_prefix("coast").trim_suffix("play").trim_suffix("completed").to_int(),161,180)
+	if variant.begins_with("necro"): mountain_number = clampi(variant.trim_prefix("necro").trim_suffix("play").trim_suffix("completed").to_int(),181,190)
 	if variant.begins_with("mountain"):
 		mountain_number = clampi(variant.trim_prefix("mountain").trim_suffix("play").trim_suffix("completed").to_int(),23,40)
 	if (variant.begins_with("terrain") and variant.trim_prefix("terrain").is_valid_int()) or mountain_preview:
@@ -841,6 +844,7 @@ func _capture_campaign_menu(camp: int) -> void:
 		if variant.begins_with("marsh"): print("MARSH_SNAPSHOT=",JSON.stringify({"isolated":meta_profile.path.is_empty(),"map":model.map_definition.id,"decoration":model.map_definition.decoration,"scenery_count":map_view.terrain_details.size(),"affix_empty":model.combat_affix.is_empty(),"affix_visible":affix_label.visible}))
 		if model.combat_affix.get("id","") == "headwinds": print("HEADWINDS_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
 		if model.eruption_enabled(): print("ERUPTIONS_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
+		if model.mist_enabled(): print("SEAMIST_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
 		if model.storm_enabled(): print("SANDSTORM_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
 		if "--capture-mountain-defence" in OS.get_cmdline_user_args():
 			model.buy(3,camp*3)
@@ -1320,6 +1324,7 @@ func _update_wave_forecast(pointer := Vector2.INF) -> void:
 		forecast_rows[index].tooltip_text = "Groupe %d · %d × %s\n%s PV par ennemi\nPremière apparition : %s s après le départ\nDernière apparition : %s s après le départ\n%s\nSi un ennemi atteint la forteresse, elle perd %d PV.\nÉlimination : +%d or par ennemi" % [index+1,group.count,group.name,_number(group.hp),_number(group.first_at),_number(group.last_at),"Ennemi unique." if group.count == 1 else "Un ennemi toutes les %s s." % _number(group.interval),group.fortress_damage,group.reward]
 		if group.type == Model.Drowned.TYPE: forecast_rows[index].tooltip_text += "
 Gueule-de-Vase : régénère %d %% de ses PV maximum par seconde tant qu’il traverse un tronçon inondé. Réglage d’essai." % roundi(Model.Drowned.REGEN_PER_SECOND*100.0)
+		if group.type == Model.Eagle.TYPE: forecast_rows[index].tooltip_text += "\nAigle des cimes : attaquant neutre rapide et fragile, en groupes serrés. Réglage d’essai."
 		if group.type == Model.Garrison.TYPE: forecast_rows[index].tooltip_text += "\nGarnison : unité d’élite de la citadelle, plus résistante que l’élite ordinaire. Réglage d’essai."
 		if group.type == Model.Banks.GUARD_TYPE: forecast_rows[index].tooltip_text += "\nGardienne : encaisse 25 % des dégâts de ses voisins proches. Ne protège ni les boss ni les autres tortues. La protection cesse à sa mort."
 		var routes_text: Array[String] = []

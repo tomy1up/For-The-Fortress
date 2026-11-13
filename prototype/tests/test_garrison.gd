@@ -37,7 +37,7 @@ func verify_catalogue() -> void:
 		check(Enemies.by_id(identity.id,faction) == identity and Enemies.available(faction,Garrison.ID).any(func(item):return item.profile == 10),"Catalogue de la citadelle contenant la Garnison")
 		check(not Enemies.available(faction).any(func(item):return item.profile == 10) and not Enemies.available(faction,"marsh_drowned").any(func(item):return item.profile == 10),"La Garnison reste propre à la citadelle")
 		check(Enemies.available(faction,Garrison.ID).size() == 9,"Neuf identités dans la citadelle")
-	check(Enemies.for_profile(11,0).is_empty() and Enemies.for_profile(-1,0).is_empty(),"Profils hors catalogue refusés")
+	check(Enemies.for_profile(12,0).is_empty() and Enemies.for_profile(-1,0).is_empty(),"Profils hors catalogue refusés")
 
 func verify_waves() -> void:
 	check(Garrison.WAVES.size() == 10,"Dix vagues")

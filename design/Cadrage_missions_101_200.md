@@ -23,7 +23,7 @@ Source : `Cadrage_campagne_2026-10-29.md` (CAMP-007, 010, 011, 012, 017, 018, 01
 
 ### 2. Récompenses : PO croissantes avec les chapitres (choix de Claude Code sur délégation, à confirmer)
 
-- Chapitres 1 à 10 : 60 PO par première victoire (inchangé). **Chapitres 11 à 20 : 60 PO + 5 PO par chapitre au-delà du dixième**, soit 65 PO au chapitre 11 et 105 PO au chapitre 20.
+- Chapitres 1 à 10 : 60 PO par première victoire (inchangé). **Chapitres 11 à 20 : 60 PO + 5 PO par chapitre au-delà du dixième**, soit 65 PO au chapitre 11 et 110 PO au chapitre 20 (correction du 12 novembre 2026 : 105 était une erreur de calcul).
 - Aucune XP au-delà de la mission 100 (CAMP-011).
 - Les PO servent à la boutique (CAMP-012) ; le catalogue de boutique reste à définir. Le barème est à ajuster quand la boutique existera.
 
@@ -56,3 +56,26 @@ Source : `Cadrage_campagne_2026-10-29.md` (CAMP-007, 010, 011, 012, 017, 018, 01
 ## Biome des chapitres 13 et 14 : souterrains et mines (validé par le porteur le 12 novembre 2026)
 
 Le porteur a validé le 12 novembre 2026 le septième biome proposé par Claude Code. Le chapitre 13 a été développé sur cette **recommandation** : souterrains et mines (galeries sombres, cristaux, torches, éclairage très différent des six biomes existants). Le chapitre 13 ouvre le biome sans règle propre ; la nouveauté du chapitre 14 reste à proposer (piste : éboulement qui bloque un trajet quelques secondes, ou ennemis qui sortent de galeries). Si le porteur choisit un autre biome, seuls le nom de décor, la palette et les titres changent : les cartes réglées par simulation restent valables.
+
+## Décision du 12 novembre 2026 — courbe de PV ralentie et huitième biome
+
+- **Courbe de PV** : à 240-249 % de PV (+1 % par mission), l'Alliance de référence avec 51 points de talent ne gagnait plus au-delà d'environ la mission 146, quelle que soit la disposition des emplacements (mesure du chapitre 15). Le porteur retient de **ralentir à +0,5 % par mission à partir de la mission 141** : 240 % aux missions 141 et 142, 244 % à la mission 150, 269 % à la mission 200 (`Catalogue.hp_percent_for`). Jusqu'à la mission 140, `99 + numéro` inchangé.
+- **Huitième biome (chapitres 15 et 16) : îles flottantes et cité céleste**, recommandation de Claude Code sur délégation du porteur (« comme tu le souhaites »), **confirmée par le porteur le 12 novembre 2026**. La toundra et glace est écartée (elle recoupait les Ardoises). La nouveauté du chapitre 16 reste à proposer.
+
+## Décision du 12 novembre 2026 — nouveauté du chapitre 16
+
+Le porteur retient **l'aigle des cimes**, un attaquant neutre rapide et fragile, pour le chapitre 16, après avoir relevé que le chapitre 14 était déjà un affixe (l'alternance attaquant/affixe des chapitres pairs avait été rompue). Voir [la fiche](Missions_151_160_Aigle.md).
+
+## Décision du 12 novembre 2026 — neuvième biome
+
+Le porteur retient **côtes et récifs** pour les chapitres 17 et 18, avec l'affixe **Brume marine** au chapitre 18 (or gagné par élimination réduit de 30 % pendant 6 s toutes les 22 s, annoncé 3 s avant ; valeurs à confirmer). Voir [la fiche du chapitre 17](Missions_161_170_Cotes.md).
+
+La brume marine du chapitre 18 est livrée en v0.188 : [fiche](Missions_171_180_Brume_marine.md). Marges minces à 255-259 % de PV (question O-016 du GDD).
+
+## Décision du 13 novembre 2026 — courbe de PV encore ralentie
+
+Au chapitre 18 (255-259 % de PV avec la brume marine), les marges de la référence tombent à 3 PV (mission 178, Horde). Le porteur retient de **ralentir encore la courbe à +0,25 % par mission à partir de la mission 181** : 260 % aux missions 181 à 184, 261 % de 185 à 188, jusqu'à 264 % à la mission 200 (`Catalogue.hp_percent_for`). La mission 180 reste à 259 %.
+
+## Décision du 13 novembre 2026 — dixième biome
+
+Le porteur retient **nécropole et terres maudites** pour les chapitres 19 et 20, avec le **revenant** (attaquant qui se relève une fois avec la moitié de ses PV) au chapitre 20 (valeurs à confirmer). Voir [la fiche du chapitre 19](Missions_181_190_Necropole.md).

@@ -58,6 +58,21 @@ La v0.183 ajoute les missions 121 à 130 (`prototype/scripts/mine_maps.gd`, déc
 ### 2026-11-12 — Habillage mines repris ; éboulement (chapitre 14) à habiller (ouvert)
 Ton lot `ca7677b` (mines 121 à 130) est intégré dans la v0.184. Nouveauté du chapitre 14, validée par le porteur : l'**éboulement** (missions 131 à 140, cartes `mine_pillars`…`mine_core` dans `mine_maps.gd`, décor `mine` sans placement). Besoins : habillage des dix cartes du chapitre 14 (placements) et visuel de l'éboulement : avertissement de 3 s à l'entrée touchée, puis blocage de 7 s (l'entrée est obstruée ; les ennemis passent par l'entrée suivante). Aujourd'hui le code dessine un anneau qui pulse puis des éboulis gris (`_draw_rockfall`). Dis-moi les identifiants d'animation voulus (par exemple `effect.rockfall`, animations `warning` en progression et `blocked` en boucle).
 
+### 2026-11-12 — Chapitre 15 « îles flottantes » à habiller, après confirmation du biome (ouvert)
+La v0.185 ajoute les missions 141 à 150 (`prototype/scripts/sky_maps.gd`, décor `sky`, palette provisoire dans `decor.json`). Le biome (îles flottantes et cité céleste) est une recommandation de Claude Code sur délégation du porteur, **confirmée par le porteur le 12 novembre 2026** : tu peux l'habiller. Priorités de ta file : habillage des mines du chapitre 14 et visuel de l'éboulement (entrée précédente), puis les îles flottantes.
+
+### 2026-11-12 — Aigle des cimes (chapitre 16) à illustrer (ouvert)
+La v0.186 ajoute l'**aigle des cimes**, nouvel attaquant neutre des îles flottantes (missions 151 à 160), choisi par le porteur. Il réutilise provisoirement la silhouette du loup (`enemy.neutral.eagle` dans `enemy_art.gd`). Besoin : une illustration d'aigle de profil (même cadrage 34 px que les autres attaquants neutres, pieds au sol) et, ensuite, une marche/vol en planches (`enemy.neutral.eagle`, animation `walk` en distance). Valeurs : 14 PV, vitesse 1,5, groupes serrés à partir de la vague 3. À insérer dans ta file après les mines du chapitre 14, l'éboulement et les îles flottantes.
+
+### 2026-11-12 — Côtes et récifs (chapitres 17 et 18) à habiller (ouvert)
+Le porteur a choisi le neuvième biome : **côtes et récifs** (port abandonné, falaises, mer ; turquoise, blanc d'écume, bois gris). La v0.187 ajoute les missions 161 à 170 (`prototype/scripts/coast_maps.gd`, décor `coast`, palette provisoire dans `decor.json`). Ordre de ta file : mines du chapitre 14, éboulement, îles flottantes, aigle des cimes, puis les côtes. Le chapitre 18 apportera l'affixe Brume marine (un voile de brume sur le plateau pendant 6 s, annoncé 3 s avant) : le visuel sera à demander plus tard.
+
+### 2026-11-12 — Brume marine (chapitre 18) à habiller (ouvert)
+La v0.188 ajoute l'affixe **brume marine** (missions 171 à 180, cartes `coast_beacon`…`coast_citadel` dans `coast_maps.gd`). Besoin : un voile de brume sur le plateau pendant 6 s, avec un avertissement de 3 s avant, comme pour la tempête de sable (`effect.seamist`, animations `warning` en progression et `mist` en boucle, mode `time` pour la boucle). Aujourd'hui le code dessine un liséré clair puis un voile blanc-bleu avec des traînées (`_draw_seamist`). En fin de ta file, après les côtes du chapitre 17.
+
+### 2026-11-13 — Nécropole et terres maudites (chapitres 19 et 20) à habiller (ouvert)
+Le porteur a choisi le dixième biome : **nécropole et terres maudites** (gris-os, violet, vert maladif, brumes). La v0.189 ajoute les missions 181 à 190 (`prototype/scripts/necro_maps.gd`, décor `necro`, palette provisoire dans `decor.json`). Le chapitre 20 apportera le **revenant** (attaquant qui se relève une fois) : l'illustration sera à demander à sa livraison. En fin de ta file, après les côtes.
+
 ## Traité
 
 (vide)

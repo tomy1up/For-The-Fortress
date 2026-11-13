@@ -30,8 +30,8 @@ func check(value: bool, message: String) -> void:
 func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
 	var Catalogue = Main.CampaignCatalogue
-	check(Catalogue.available_count() == 140 and Catalogue.definition(111).available and Catalogue.definition(120).available and Catalogue.definition(141).available == false and Catalogue.runtime("campaign.141").is_empty(),"Cent vingt missions jouables, la 141 reste à venir")
-	check(Model.valid_enemy_hp_percent(239) and not Model.valid_enemy_hp_percent(240),"Les PV ennemis montent jusqu'à 239 %")
+	check(Catalogue.available_count() == 190 and Catalogue.definition(111).available and Catalogue.definition(120).available and Catalogue.definition(191).available == false and Catalogue.runtime("campaign.191").is_empty(),"Cent vingt missions jouables, la 191 reste à venir")
+	check(Model.valid_enemy_hp_percent(262) and not Model.valid_enemy_hp_percent(263),"Les PV ennemis montent jusqu'à 262 %")
 	for number in range(111,121):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 12 and definition.map_id == EXPECTED[number].map and definition.hp_percent == 99+number and definition.po == 70 and definition.xp == 0 and definition.waves == 10,"Mission %d : carte, PV à 210 %% et plus, 70 PO sans XP" % number)

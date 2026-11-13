@@ -30,8 +30,8 @@ func check(value: bool, message: String) -> void:
 func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
 	var Catalogue = Main.CampaignCatalogue
-	check(Catalogue.available_count() == 140 and Catalogue.definition(131).available and Catalogue.definition(140).available and Catalogue.definition(141).available == false and Catalogue.runtime("campaign.141").is_empty(),"Cent quarante missions jouables, la 141 reste à venir")
-	check(Model.valid_enemy_hp_percent(239) and not Model.valid_enemy_hp_percent(240),"Les PV ennemis montent jusqu'à 239 %")
+	check(Catalogue.available_count() == 190 and Catalogue.definition(131).available and Catalogue.definition(140).available and Catalogue.definition(191).available == false and Catalogue.runtime("campaign.191").is_empty(),"Cent quatre-vingt-dix missions jouables, la 191 reste à venir")
+	check(Model.valid_enemy_hp_percent(262) and not Model.valid_enemy_hp_percent(263),"Les PV ennemis montent jusqu'à 262 %")
 	for number in range(131,141):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 14 and definition.map_id == EXPECTED[number].map and definition.hp_percent == 99+number and definition.po == 80 and definition.xp == 0 and definition.waves == 10,"Mission %d : carte, PV à 230 %% et plus, 80 PO sans XP" % number)
@@ -115,5 +115,5 @@ func verify_mission(camp: int, number: int) -> void:
 	check(profile.campaign_status(1-camp).completed == 0,"Le parcours adverse est inchangé")
 	game._show_run_summary();game._summary_to_campaign()
 	if number < 140: check(game.campaign_menu.chapter == 14 and game.campaign_menu.nodes.slice(0,number-130).all(func(node):return node.state == "completed") and game.campaign_menu.nodes[number-130].state == "available","Mission %d : retour sur le chapitre avec la suivante disponible" % number)
-	else: check(game.campaign_menu.chapter == 14 and game.campaign_menu.nodes.all(func(node):return node.state == "completed"),"La mission 140 termine le chapitre 14")
+	else: check(game.campaign_menu.chapter == 15 and game.campaign_menu.nodes[0].state == "available" and game.campaign_menu.nodes.slice(1).all(func(node):return node.state == "locked"),"La fin du chapitre 14 propose la mission 141 sans la lancer")
 	game.free()

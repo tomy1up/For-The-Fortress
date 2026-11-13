@@ -1,5 +1,15 @@
 # For the Fortress!
 
+**Prototype v0.189**. Chapitre 19, nécropole et terres maudites (missions 181 à 190), dixième biome choisi par le porteur : PV ennemis de 260 à 262 % (courbe ralentie à +0,25 % par mission), 105 PO, sans règle propre ; le revenant du chapitre 20 suivra. 190 missions jouables. [Chapitre 19](design/Missions_181_190_Necropole.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.189).
+
+**Prototype v0.188**. Chapitre 18, la brume marine (missions 171 à 180) : toutes les 22 s, l'or gagné par élimination est réduit de 30 % pendant 6 s, annoncé 3 s avant (valeurs de prototype à confirmer). 180 missions jouables ; marges minces à ce niveau de PV. [Chapitre 18](design/Missions_171_180_Brume_marine.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.188).
+
+**Prototype v0.187**. Chapitre 17, côtes et récifs (missions 161 à 170), neuvième biome choisi par le porteur : PV ennemis de 250 à 254 %, 95 PO, sans règle propre ; l'affixe du chapitre 18 (Brume marine) suivra. 170 missions jouables. [Chapitre 17](design/Missions_161_170_Cotes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.187).
+
+**Prototype v0.186**. Chapitre 16, l'aigle des cimes (missions 151 à 160) : un attaquant neutre rapide et fragile qui arrive en groupes serrés (valeurs de prototype à confirmer, visuel provisoire). 160 missions jouables. [Chapitre 16](design/Missions_151_160_Aigle.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.186).
+
+**Prototype v0.185**. Chapitre 15, îles flottantes et cité céleste (missions 141 à 150, biome proposé par Claude Code et à confirmer) ; la courbe de PV ennemis passe à +0,5 % par mission à partir de la mission 141 (240 % à la mission 141, 269 % à la mission 200), décision du porteur. 150 missions jouables. [Chapitre 15](design/Missions_141_150_Iles_flottantes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.185).
+
 **Prototype v0.184**. Chapitre 14, l'éboulement (missions 131 à 140) : toutes les 18 s, une entrée est bloquée 7 s et les ennemis qui devaient y apparaître passent par l'entrée suivante (valeurs de prototype à confirmer). Habillage des mines de Codex intégré ; GDD 0.19 consolidé. [Chapitre 14](design/Missions_131_140_Eboulement.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.184).
 
 **Prototype v0.183**. Chapitre 13 : dix missions dans les souterrains et mines (121 à 130, PV ennemis 220 à 229 %, 75 PO), biome proposé par Claude Code et à confirmer. [Fiche](design/Missions_121_130_Souterrains.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.183).

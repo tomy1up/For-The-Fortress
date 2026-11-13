@@ -122,6 +122,18 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.184** : affixe `rockfall` (`valley_model.gd` : `rockfall_blocked_route`, `rockfall_status`, report dans `spawn_route_id`), chapitre 14 (131-140, cartes dans `mine_maps.gd`), habillage des mines de Codex (`ca7677b`) repris, GDD 0.19 consolidé et étape GDD ajoutée à `AGENTS.md`. Repère provisoire de l'éboulement dans `valley_view.gd` (`_draw_rockfall`).
 
+**v0.185** : chapitre 15 (141-150, `sky_maps.gd`, biome « îles flottantes » à confirmer) ; `Catalogue.hp_percent_for` : courbe de PV `99 + numéro` jusqu'à la mission 140 puis +1 % toutes les deux missions (décision du porteur) ; borne des PV à 244 %. Les tests des chapitres 13 et 14 utilisent encore des ordres d'achat propres à chaque carte ; celui du chapitre 15 utilise l'ordre standard [3,4,2] (marges minces).
+
+**v0.186** : chapitre 16 (151-160) et attaquant `Eagle` (`eagle_encounters.gd`, type 11, jeu de rencontres `sky_eagles` branché dans `campaign_data.gd`, `bank_encounters.gd`, `enemy_catalogue.gd`, `enemy_art.gd`, `valley_model.gd`). Visuel provisoire : silhouette du loup (cadre partagé avec le loup, exclu du test de disjonction). Cartes prolongées (`maps16.py` hors dépôt). Marge la plus fine : mission 155 (8/6 PV).
+
+**v0.187** : chapitre 17 (161-170, `coast_maps.gd`, décor `coast`, biome « côtes et récifs » choisi par le porteur). Le Quai des Brumes a un tracé propre (la forme de la Corniche ne gagnait plus). Prochain : chapitre 18 avec l'affixe Brume marine (or réduit de 30 % pendant 6 s toutes les 22 s, annoncé 3 s avant : à coder dans `valley_model.gd` sur le modèle de la tempête de sable ; l'or d'élimination doit être calculé selon le temps de combat pour rester rejouable).
+
+**v0.188** : affixe `seamist` (`valley_model.gd` : `mist_active_now`, `mist_status`, `kill_reward` ; or d'élimination −30 % pendant 6 s toutes les 22 s, arrondi, au moins 1 or) et chapitre 18 (171-180, cartes de `coast_maps.gd` reprenant celles du chapitre 17 : les variantes en miroir étaient trop dures). Marges minces (mission 178 Horde : 3 PV) : O-016 approche de sa limite pour les chapitres 19 et 20 (courbe de PV, 260-269 %). Biome des chapitres 19 et 20 à choisir avec le porteur.
+
+**Courbe de PV (13 novembre 2026)** : `hp_percent_for` ralentie à +0,25 % par mission à partir de la mission 181 (260 % à 264 %), décision du porteur ; code et GDD 0.24 commités, aucun chapitre livré ; le biome des chapitres 19 et 20 reste à choisir (options restantes : jungle et temple perdu, nécropole et terres maudites, cité en ruines).
+
+**v0.189** : chapitre 19 (181-190, `necro_maps.gd`, décor `necro`, biome « nécropole et terres maudites » choisi par le porteur, tracés repris du chapitre 17). Prochain : chapitre 20 (191-200) avec le revenant (type 12 : un attaquant qui se relève une fois avec la moitié de ses PV ; à coder sur le modèle de l'aigle des cimes `eagle_encounters.gd` et de la régénération de Gueule-de-Vase ; la relève doit rester rejouable et indépendante du pas). PV du chapitre 20 : 262 % à 264 %.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.
