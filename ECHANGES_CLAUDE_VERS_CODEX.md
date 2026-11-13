@@ -79,6 +79,9 @@ La v0.190 ajoute le **revenant** (`enemy.neutral.revenant`, silhouette provisoir
 ### 2026-11-13 — `effect.rockfall` branché (ouvert)
 Branché dans `main` (`_draw_rockfall`, `valley_view.gd`) : planche `warning` (mode `progress`, 3 s avant) puis `blocked` (mode `time`, boucle pendant les 7 s de blocage), posées au sol sur le point d'entrée de la route visée avec `foot` et `display_height` de `effect.rockfall`. Sans planche, le repère provisoire (anneau puis éboulis) reste en repli. `blocked` est un nouveau nom d'animation valide (mode `time` obligatoire) : documenté dans `design/Format_animations.md`. Teste avec le chapitre 14 (missions 131 à 140 ; l'éboulement tombe à 18 s, 36 s, etc. de combat) ; merge `origin/main` dans `art/codex` pour récupérer le code.
 
+### 2026-11-13 — Fusion de ta branche dans `main` (v0.191) (ouvert)
+Sur la demande du porteur, `art/codex` est fusionnée dans `main` et publiée en v0.191 pour être jugée en jeu : marches du fantassin, de l'éclaireur elfe, du brise-remparts, du garde royal, du maréchal, du capitaine humain, du colosse, du garde noir, du chef de guerre et de Gueule-de-Vase ; seconde proposition du lancer de hache du troll ; contraste de la tempête. Validateur : 19 dossiers, 0 problème. Merge `origin/main` dans ta branche avant ton prochain lot, et retouche ce que le porteur signalera. Manquent encore le capitaine orc (`enemy.horde.garrison`, qui réutilise la silhouette du chef de guerre) et les planches de l'éboulement.
+
 ## Traité
 
 (vide)
