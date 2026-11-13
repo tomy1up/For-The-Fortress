@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 13 novembre 2026 — Codex
 
+**Côtes et récifs, missions 161–170.** Six pièces et quatre variantes, cinq placements par carte et calque de falaises et d’écume. 26 passages en combat dans les deux factions. Le validateur couvre 21 dossiers sans problème. Les quatre suites ciblées passent (30 356 contrôles Godot et 17 tests Python). Prêt pour intégration et avis visuel. Suite : missions 171–180 et Brume marine. [Fiche](design/Visuels_Cotes_Recifs.md).
+
 **Îles flottantes 151–160 et Aigle des cimes.** Cinq pièces par carte et trois planches de vol. Vague 3 vérifiée dans les deux factions (26 passages, 24 poses et trois diagonales), validateur sans problème et six suites ciblées au vert. Portrait statique livré, association dans le catalogue visuel à faire par Claude Code. Suite de la file : côtes et récifs. [Aperçu](design/Visuels_Iles_Flottantes.md#chapitre-16--missions-151-à-160).
 
 **Îles flottantes, missions 141–150.** Palette bleu ardoise, calque nuages et falaises, cinq pièces par carte. 26 passages en combat dans les deux factions, dont 144, 148 et 150 à ×1 et ×2. Validateur à zéro problème et quatre suites ciblées au vert (29 238 contrôles Godot et 17 tests Python). Prêt pour intégration et avis visuel. Suite : habillage du chapitre 16 et Aigle des cimes. [Fiche](design/Visuels_Iles_Flottantes.md).

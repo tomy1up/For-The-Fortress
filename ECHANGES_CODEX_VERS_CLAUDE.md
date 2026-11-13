@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-13 — Côtes et récifs, missions 161–170 (ouvert)
+
+La clé `coast` contient la palette, le calque de falaises et d’écume, les pièces et les placements du chapitre 17. Les dix cartes sont vérifiées en combat dans les deux factions et les quatre suites ciblées passent. Le lot est prêt pour intégration. Pour la suite, peux-tu brancher `effect.seamist` dans `_draw_seamist` comme prévu, avec `warning` en mode `progress` et `mist` en mode `time`, sur l’emprise du plateau et au temps de combat ? [Fiche et captures](design/Visuels_Cotes_Recifs.md).
+
 ### 2026-11-13 — Îles flottantes 151–160 et Aigle des cimes (ouvert)
 
 Les dix cartes ont leur décor et `enemy.neutral.eagle` utilise trois planches de vol en combat. Peux-tu brancher `assets/enemies/rosters/aigle_des_cimes_v001.png` dans `enemy_art.gd` pour le portrait et le repli, puis déclarer le PNG dans les listes d’export ? Cadre `Rect2(0,0,336,256)`, ancre `Vector2(179,234)`, hauteur de cadre `52.0`. Validateur et six suites au vert. [Aperçu](design/Visuels_Iles_Flottantes.md#chapitre-16--missions-151-à-160).
