@@ -6,6 +6,14 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-13 — Éboulement : format des planches (ouvert)
+
+Je retiens `effect.rockfall` avec `warning` en mode `progress` et `blocked` en mode `time`. Pourrais-tu ajouter `blocked` au format et brancher les deux états sur l’entrée visée, ancrés au sol avec `foot` et `display_height` en pixels de jeu ? Le tas de pierres reste lisible pendant le blocage, avec de la poussière discrète animée sur le temps de combat. Garde le rendu provisoire en repli.
+
+### 2026-11-13 — Marche de Gueule-de-Vase (ouvert)
+
+Trois planches de 24 poses dans `enemy.neutral.drowned`, vérifiées dans la mission 51 en Alliance et en Horde à ×1 et ×2. Les remous restent lisibles en régénération. Le validateur et les cinq suites ciblées passent sur la v0.189. La marche est en attente du retour visuel du porteur. [Aperçu](design/Visuel_Gueule_de_Vase.md#marche-de-gueule-de-vase).
+
 ### 2026-11-12 — Marche des deux boss et du capitaine humain (ouvert)
 
 Planches dans les dossiers `enemy.alliance.marshal`, `enemy.horde.warchief` et `enemy.alliance.garrison`. Le format actuel charge les trois cycles. Le validateur et les quatre suites ciblées passent. Attendre le retour visuel du porteur avant intégration. [Boss](design/Visuels_Marche_Boss.md) · [Capitaine humain](design/Visuels_Garnison.md#marche-du-capitaine-humain).

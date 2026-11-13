@@ -28,3 +28,13 @@ Les captures de la v0.176 montraient un anneau turquoise proche de la chaussée 
 Les captures comparent les deux planches aux mêmes instants de la vague 2 des Eaux Mortes. Les scènes sont vérifiées à ×1 et à ×2 dans les deux factions. Les quatre paires au sec ont les mêmes pixels autour de la créature. Les seize paires en régénération montrent le liseré pendant la remontée de PV. Un essai supplémentaire a contrôlé que le jeu charge la nouvelle planche depuis le dossier des ressources. Le déclenchement et les valeurs de combat sont ceux de la v0.176.
 
 Le validateur d’animations passe sans problème. Les suites de la bibliothèque d’animations et du chapitre des marais passent avec 4 768 contrôles Godot et 17 tests Python. Le rendu en jeu est prêt pour avis artistique. La marche reste à produire.
+
+## Marche de Gueule-de-Vase
+
+Le batracien avance bas sur ses pattes. Les genoux fléchissent à l’appui, les épaules et les mains accompagnent le transfert de poids et les nageoires suivent le mouvement du haut du corps. Les pieds palmés se soulèvent au retour du pas. Le cycle suit la distance parcourue et garde sa phase quand la route tourne.
+
+Trois planches dans `enemy.neutral.drowned`, chacune de 24 poses de 350 × 323 px. Foulée de 13,8 px à l’échelle de base du rendu. La variante de pente sélectionne des poses adaptées au chemin et le miroir couvre l’autre sens.
+
+Sur les sources de la v0.189, quatre essais sur Les Eaux Mortes (mission 51, vague 2) couvrent Alliance et Horde à ×1 et ×2. Les trois diagonales de cette carte et les 24 poses sont parcourues dans chaque essai. La marche est visible sur la chaussée sèche et dans l’eau, avec les remous pendant la remontée des PV. À ×1, la scène figée pendant 0,45 s conserve les mêmes pixels autour de la créature dans les deux factions. Le validateur couvre 19 dossiers sans problème et les cinq suites ciblées passent. La marche attend le retour visuel du porteur.
+
+[Extrait en combat](essais/gueule_de_vase/Marche_en_combat.gif) · [Captures des diagonales et des remous](essais/gueule_de_vase/Marche_en_jeu.jpg)
