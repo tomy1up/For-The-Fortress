@@ -8,6 +8,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [ ] **Boutique étendue, troisième lot (v0.194)** — six unités (types 30 à 35 : mage de givre, éclaireur-observateur, prêtre guerrier ; chaman des marais, totem de guerre, ancien des tribus) à illustrer ; trois effets de jeu sans visuel : ralentissement (60 % de vitesse, 3 s), marque de cible (4 s) et aura de gardien (rayon 3,6). Voir `design/Boutique_20_unites_proposition.md`.
+
 - [ ] **Boutique étendue, second lot (v0.193)** — huit unités (types 22 à 29 : mage de la foudre, archer double, arbalète lourde, fronde elfe ; hache en chaîne, lanceur double, lanceur de masse, sarbacane), illustration de famille provisoire. À illustrer comme le premier lot. Voir `design/Boutique_20_unites_proposition.md`.
 
 - [ ] **Boutique étendue, premier lot (v0.192)** — douze unités (types 10 à 21 : sentinelle, tireur d'élite, arquebusier, bombarde, piquier, pyromancien côté Alliance ; veilleur, javelinier, lance-éclats, catapulte, lance-épieu, brûleur côté Horde) qui réutilisent l'illustration de leur famille. À illustrer (même cadrage que les alternatives `rodeur`, `mousquetaire`, `traqueur`, `grenadier`) puis à animer. Voir `design/Boutique_20_unites_proposition.md`.

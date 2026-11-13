@@ -24,7 +24,7 @@ func verify_catalogue() -> void:
 	var total_po := 0
 	for faction in range(2):
 		var cards: Array[Dictionary] = Shop.for_faction(faction)
-		check(cards.size() == 12,"Douze alternatives par faction : deux d'origine, six du premier lot et quatre du second")
+		check(cards.size() == 15,"Quinze alternatives par faction : deux d'origine, six, quatre et trois des trois premiers lots")
 		var seen: Dictionary = {}
 		var previous_po := 0
 		for card in cards:
@@ -33,13 +33,13 @@ func verify_catalogue() -> void:
 			check(card.family / 3 == faction and card.family >= 0 and card.family < 6,"%s : famille de talents de sa faction" % card.name)
 			check(Shop.BRANCHES.has(card.type) and Shop.BRANCHES[card.type].size() == 2 or card.type < 6,"%s : deux spécialisations" % card.name)
 			if card.type >= 10:
-				check(int(card.po) >= 300 and int(card.po) <= 840 and int(card.po) >= previous_po and int(card.unlock_missions) >= 10,"%s : prix de 300 à 840 PO croissants et déblocage après au moins 10 missions" % card.name)
+				check(int(card.po) >= 300 and int(card.po) <= 1020 and int(card.po) >= previous_po and int(card.unlock_missions) >= 10,"%s : prix de 300 à 1020 PO croissants et déblocage après au moins 10 missions" % card.name)
 				previous_po = int(card.po)
 				for branch in Shop.BRANCHES[card.type]:
 					var plain: bool = branch.damage > 0.0 and branch.interval > 0.0 and branch.range >= 1.5 and branch.has("name") and branch.has("description")
 					check(plain,"%s : spécialisation %s valide" % [card.name,branch.name])
 			total_po += int(card.po)
-	check(total_po == 2*(180+240+300+360+420+480+540+600+660+720+780+840),"Les prix des deux premiers lots suivent le barème proposé (%d PO au total)" % total_po)
+	check(total_po == 2*(180+240+300+360+420+480+540+600+660+720+780+840+900+960+1020),"Les prix des deux premiers lots suivent le barème proposé (%d PO au total)" % total_po)
 	# Les unités du lot 1 n'écrasent aucune unité de départ : chacune a un défaut mesurable.
 	for card in Shop.CARDS:
 		if card.type < 10: continue
@@ -47,7 +47,7 @@ func verify_catalogue() -> void:
 		var alternative: Dictionary = Model.ROSTER[card.type]
 		var worse_somewhere: bool = float(alternative.damage) < float(base.damage) or float(alternative.range) < float(base.range) or float(alternative.interval) > float(base.interval) or int(alternative.price) > int(base.price)
 		var better_over_time: bool = alternative.has("curse_damage") and float(alternative.curse_damage) > float(base.get("curse_damage",0.0))
-		var better_by_rule: bool = alternative.has("wounded_bonus") or alternative.has("heavy_mult") or alternative.has("fast_mult")
+		var better_by_rule: bool = alternative.has("wounded_bonus") or alternative.has("heavy_mult") or alternative.has("fast_mult") or alternative.has("slow_seconds") or alternative.has("mark_seconds") or alternative.has("aura_bonus")
 		var better_somewhere: bool = better_over_time or better_by_rule or float(alternative.damage) > float(base.damage) or float(alternative.range) > float(base.range) or float(alternative.interval) < float(base.interval) or int(alternative.price) < int(base.price)
 		check(worse_somewhere and better_somewhere,"%s : ni strictement meilleure ni strictement pire que l'unité de départ de sa famille" % card.name)
 
@@ -78,15 +78,15 @@ func verify_pages() -> void:
 		var scene = Main.new();root.add_child(scene);scene.set_process(false);scene.meta_profile = p;scene._open_campaign(faction)
 		scene.campaign_menu.shop_button.pressed.emit()
 		var shop = scene.shop_menu
-		check(shop.all_cards.size() == 12 and shop.cards.size() == 2 and shop.page == 0 and shop.previous_button.disabled and not shop.next_button.disabled and shop.page_label.text.contains("Page 1 / 6"),"La boutique s'ouvre à la première page de six")
+		check(shop.all_cards.size() == 15 and shop.cards.size() == 2 and shop.page == 0 and shop.previous_button.disabled and not shop.next_button.disabled and shop.page_label.text.contains("Page 1 / 8"),"La boutique s'ouvre à la première page de huit")
 		var first: String = shop.cards[0].id
 		shop.next_button.pressed.emit()
 		check(shop.page == 1 and shop.cards[0].id != first and not shop.previous_button.disabled,"Page suivante : deux autres cartes")
 		check(shop.card_panels.all(func(panel):return panel.visible) and shop.buy_buttons.all(func(button):return button.visible),"Les deux emplacements de la page sont utilisés")
 		for index in range(shop.cards.size()):
 			check(Rect2(0,0,1280,800).encloses(shop.buy_buttons[index].get_global_rect()) and Rect2(0,0,1280,800).encloses(shop.next_button.get_global_rect()),"Les commandes de page tiennent dans la fenêtre")
-		for _i in range(8): shop.next_button.pressed.emit()
-		check(shop.page == 5 and shop.next_button.disabled,"La dernière page bloque « Suivantes »")
+		for _i in range(10): shop.next_button.pressed.emit()
+		check(shop.page == 7 and shop.next_button.disabled,"La dernière page bloque « Suivantes »")
 		shop.close()
 		scene.free()
 

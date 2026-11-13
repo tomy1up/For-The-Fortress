@@ -69,6 +69,12 @@ const ROSTER: Array[Dictionary] = [
 	{"name":"Lanceur double troll","price":80,"damage":6.5,"interval":1.1,"range":4.0,"wounded_bonus":0.9},
 	{"name":"Lanceur de masse orc","price":100,"damage":32.0,"interval":3.2,"range":3.8,"heavy_mult":1.8,"small_mult":0.5},
 	{"name":"Sarbacane gobeline","price":75,"damage":9.5,"interval":0.9,"range":4.5,"fast_mult":1.8,"heavy_mult":0.5},
+	{"name":"Mage de givre","price":100,"damage":4.0,"interval":1.6,"range":4.2,"slow_seconds":3.0},
+	{"name":"Éclaireur-observateur","price":70,"damage":1.0,"interval":1.5,"range":5.0,"mark_seconds":4.0,"mark_bonus":0.3},
+	{"name":"Prêtre guerrier","price":90,"damage":5.0,"interval":2.0,"range":3.5,"aura_radius":3.6,"aura_bonus":0.2},
+	{"name":"Chaman des marais","price":100,"damage":3.0,"interval":1.8,"range":4.2,"curse_damage":3.0,"slow_seconds":3.0},
+	{"name":"Totem de guerre","price":70,"damage":1.0,"interval":1.5,"range":5.0,"mark_seconds":4.0,"mark_bonus":0.3},
+	{"name":"Ancien des tribus","price":90,"damage":5.0,"interval":2.0,"range":3.5,"aura_radius":3.6,"aura_bonus":0.2},
 ]
 
 const ENEMY_TYPES: Array[Dictionary] = [
@@ -596,7 +602,7 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	stats.price = base_recruit_cost(defender.type)
 	var synergy: Dictionary = synergy_effects(slot,branch_override,candidate)
 	var meta: Dictionary = MetaTalents.effects(faction,meta_ranks,defender.type,talent_rules)
-	var common: float = (0.10 if 0 in active_bonuses else 0.0) + (0.15 if 6 in active_bonuses and level <= 2 else 0.0) + (0.12 if 7 in active_bonuses and level >= 3 else 0.0)
+	var common: float = (0.10 if 0 in active_bonuses else 0.0) + (0.15 if 6 in active_bonuses and level <= 2 else 0.0) + (0.12 if 7 in active_bonuses and level >= 3 else 0.0) + guardian_aura(slot)
 	stats.reference_damage = stats.damage
 	stats.reference_secondary = stats.secondary_damage
 	stats.reference_curse = stats.curse_damage
@@ -612,6 +618,15 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	if 4 in active_bonuses and family(defender.type) in [2,3,4]: stats.radius += 0.2
 	stats.synergies = synergy.codes
 	return stats
+
+## Bonus de dégâts reçu des gardiens voisins (unités à `aura_bonus`) : ceux qui se trouvent à `aura_radius` de l'emplacement, sans compter l'unité elle-même.
+func guardian_aura(slot: int) -> float:
+	var bonus := 0.0
+	for other in range(defenders.size()):
+		if other == slot or defenders[other].is_empty(): continue
+		var guard: Dictionary = ROSTER[defenders[other].type]
+		if float(guard.get("aura_bonus",0.0)) > 0.0 and slots[slot].distance_to(slots[other]) <= float(guard.get("aura_radius",0.0))+EPS: bonus += float(guard.aura_bonus)
+	return bonus
 
 func damage_for(stats: Dictionary, component: String, victim: Dictionary) -> float:
 	return _damage_with_bonuses(stats,component,victim,bonuses)
@@ -634,7 +649,8 @@ static func target_multiplier(stats: Dictionary, victim: Dictionary) -> float:
 func _damage_with_bonuses(stats: Dictionary, component: String, victim: Dictionary, active_bonuses: Array) -> float:
 	var reference: float = stats[{"direct":"reference_damage","secondary":"reference_secondary","curse":"reference_curse"}[component]]
 	var extra: float = 0.20 if 11 in active_bonuses and victim.type in [3,5,6,7] else 0.0
-	return reference * (1.0+stats[component+"_bonus"]+extra) * (target_multiplier(stats,victim) if component == "direct" else 1.0)
+	var marked: float = 1.0+float(victim.get("mark_bonus",0.0)) if float(victim.get("marked_until",-1.0)) > elapsed+EPS and float(stats.get("mark_seconds",0.0)) <= 0.0 else 1.0
+	return reference * (1.0+stats[component+"_bonus"]+extra) * (target_multiplier(stats,victim) if component == "direct" else 1.0) * marked
 
 func _refresh_windows() -> void:
 	for slot in range(defenders.size()):
@@ -819,6 +835,45 @@ func advance(seconds: float) -> void:
 		elapsed = maxf(elapsed, next_time)
 		_resolve_instant()
 
+## Ralentissement (unités entravantes de la boutique) : la vitesse est multipliée par SLOW_FACTOR tant que `slow_until` n'est pas atteint.
+## La position reste une forme fermée du temps : distance = vitesse × (t − apparition − retard cumulé − (1 − facteur) × durée ralentie).
+## La fin d'un ralentissement est un événement du moteur, donc le résultat ne dépend pas du pas de simulation.
+const SLOW_FACTOR := 0.6
+
+func _end_slows() -> void:
+	for enemy in enemies:
+		if enemy.has("slow_until") and float(enemy.slow_until) <= elapsed+EPS:
+			enemy.delay = float(enemy.get("delay",0.0))+(1.0-SLOW_FACTOR)*(float(enemy.slow_until)-float(enemy.slow_start))
+			enemy.erase("slow_until");enemy.erase("slow_start")
+
+func _slow_enemy(enemy: Dictionary, seconds: float) -> void:
+	var until: float = elapsed+seconds
+	if enemy.has("slow_until"): enemy.slow_until = maxf(float(enemy.slow_until),until)
+	else:
+		enemy.slow_start = elapsed
+		enemy.slow_until = until
+
+static func enemy_is_slowed(enemy: Dictionary) -> bool:
+	return enemy.has("slow_until")
+
+## Instant où l'ennemi atteint la distance `d` sur sa route, compte tenu du ralentissement en cours (les ralentissements futurs recalculent à leur événement).
+func time_at_distance(enemy: Dictionary, d: float) -> float:
+	var speed: float = float(enemy.get("speed",1.0))
+	var delay: float = float(enemy.get("delay",0.0))
+	if enemy.has("slow_until"):
+		var start: float = float(enemy.slow_start)
+		var slowed: float = (d/speed+float(enemy.spawn_time)+delay-(1.0-SLOW_FACTOR)*start)/SLOW_FACTOR
+		if slowed <= float(enemy.slow_until): return slowed
+		return float(enemy.spawn_time)+delay+(1.0-SLOW_FACTOR)*(float(enemy.slow_until)-start)+d/speed
+	return float(enemy.spawn_time)+delay+d/speed
+
+func distance_at(enemy: Dictionary, t: float) -> float:
+	var speed: float = float(enemy.get("speed",1.0))
+	var base: float = t-float(enemy.spawn_time)
+	if enemy.has("delay"): base -= float(enemy.delay)
+	if enemy.has("slow_until") and t > float(enemy.slow_start): base -= (1.0-SLOW_FACTOR)*(minf(t,float(enemy.slow_until))-float(enemy.slow_start))
+	return clampf(base*speed,0.0,enemy_route_length(enemy))
+
 func _next_event_time() -> float:
 	var next_time: float = INF
 	if spawned < spawn_schedule.size():
@@ -828,14 +883,15 @@ func _next_event_time() -> float:
 	if eruption_enabled(): next_time = minf(next_time,eruption_time(eruption_next))
 	if storm_enabled(): next_time = minf(next_time,storm_boundary_time(storm_next))
 	for enemy in enemies:
-		next_time = minf(next_time, enemy.spawn_time + enemy_route_length(enemy) / enemy.get("speed", 1.0))
+		next_time = minf(next_time, time_at_distance(enemy,enemy_route_length(enemy)))
+		if enemy.has("slow_until") and float(enemy.slow_until) > elapsed+EPS: next_time = minf(next_time,float(enemy.slow_until))
 	for defender in defenders:
 		if defender.is_empty():
 			continue
 		for enemy in enemies:
 			for window in _windows_for(defender,enemy):
-				var first: float = maxf(defender.ready_at, enemy.spawn_time + window.first / enemy.get("speed", 1.0))
-				var last: float = enemy.spawn_time + window.last / enemy.get("speed", 1.0)
+				var first: float = maxf(defender.ready_at, time_at_distance(enemy,window.first))
+				var last: float = time_at_distance(enemy,window.last)
 				if first > elapsed + EPS and first <= last + EPS:
 					next_time = minf(next_time, first)
 	return next_time
@@ -843,7 +899,7 @@ func _next_event_time() -> float:
 func _update_positions() -> void:
 	for enemy in enemies:
 		var previous: float = enemy.distance
-		enemy.distance = clampf((elapsed - enemy.spawn_time) * enemy.get("speed", 1.0), 0.0, enemy_route_length(enemy))
+		enemy.distance = distance_at(enemy,elapsed)
 		if enemy.get("type",1) == Drowned.TYPE and enemy.hp < enemy.max_hp:
 			# Régénération exacte par tronçon inondé : même résultat quel que soit le pas de temps.
 			enemy.hp = minf(enemy.max_hp,enemy.hp+Drowned.regenerated(map_definition.get("flooded",[]),str(enemy.get("route_id","")),enemy.max_hp,enemy.speed,previous,enemy.distance))
@@ -852,6 +908,7 @@ func enemy_in_water(enemy: Dictionary) -> bool:
 	return enemy.get("type",1) == Drowned.TYPE and Drowned.in_water(map_definition.get("flooded",[]),str(enemy.get("route_id","")),enemy.distance)
 
 func _resolve_instant() -> void:
+	_end_slows()
 	# 1. Apparitions et positions ; les arrivants restent ciblables jusqu'à la phase 4.
 	while spawned < spawn_schedule.size() and spawn_schedule[spawned].time <= elapsed + EPS:
 		var entry: Dictionary = spawn_schedule[spawned]
@@ -910,6 +967,10 @@ func _resolve_instant() -> void:
 		var direct_damage: float = damage_for(stats,"direct",primary)
 		_add_damage(damage, primary.id, direct_damage)
 		hits.append({"source_id":defender.instance_id,"enemy_id":primary.id,"component":"direct","amount":direct_damage})
+		if float(stats.get("slow_seconds",0.0)) > 0.0: _slow_enemy(primary,float(stats.slow_seconds))
+		if float(stats.get("mark_seconds",0.0)) > 0.0:
+			primary.marked_until = elapsed+float(stats.mark_seconds)
+			primary.mark_bonus = maxf(float(primary.get("mark_bonus",0.0)),float(stats.get("mark_bonus",0.0)))
 		var shot: Dictionary = {"time": elapsed, "slot": slot, "type": defender.type,
 			"target_id": primary.id, "from": slots[slot], "to": impact, "secondary": [], "radius": stats.radius}
 		event_log.append("%.9f tir E%d cible %d" % [elapsed, slot + 1, primary.id])
@@ -1090,6 +1151,7 @@ func enemy_route_length(enemy: Dictionary) -> float:
 	return path_length if routes.is_empty() else float(enemy_route(enemy).path_length)
 
 func enemy_arrival_delay(enemy: Dictionary) -> float:
+	if enemy.has("slow_until") or enemy.has("delay"): return maxf(0.0,time_at_distance(enemy,enemy_route_length(enemy))-elapsed)
 	return maxf(0.0,enemy_route_length(enemy)-enemy.distance)/float(enemy.get("speed",1.0))
 
 func enemy_route_points(enemy: Dictionary) -> Array[Vector2]:

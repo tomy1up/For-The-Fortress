@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.194**. Boutique étendue, troisième lot : six alternatives (quinze par faction) avec ralentissement, marque de cible et aura de gardien, de 900 à 1 020 PO ; habillage des côtes 161 à 170 et brume marine de Codex branchée (à juger en jeu). [Notes](design/essais/v0194_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.194).
+
 **Prototype v0.193**. Boutique étendue, second lot : huit nouvelles alternatives (douze par faction) avec des règles de cible (ennemi blessé, lourd, petit, rapide) ; prix de 660 à 840 PO, déblocage après 70 à 100 missions réussies. [Notes](design/essais/v0193_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.193).
 
 **Prototype v0.192**. Premier lot de la boutique étendue : douze nouvelles unités alternatives (six par faction, 300 à 600 PO, déblocage par missions réussies), boutique paginée ; habillage des mines 131 à 140 et des îles flottantes 141 à 160, planches de l'éboulement et vol de l'aigle (à juger en jeu). [Notes](design/essais/v0192_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.192).

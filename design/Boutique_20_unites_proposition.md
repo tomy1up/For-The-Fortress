@@ -46,6 +46,24 @@ Le porteur a validé le 13 novembre 2026 les règles de combat nouvelles listée
 
 Reste à coder (règles validées) : entravant, marqueur, gardien, pilleur, sapeur d'entrée, réaction en chaîne, unité-pivot, et la tourelle de forteresse. Le libellé de talents d'une famille de plus de deux alternatives devient « <unité> et ses alternatives ».
 
+## Troisième lot livré (v0.194)
+
+Archétypes 11 à 13, avec leurs règles nouvelles (validées le 13 novembre 2026), soit six unités. Valeurs de prototype à confirmer.
+
+| Faction | Unité | Famille (talents) | Recrutement | Déblocage | Missions requises | Principe |
+| --- | --- | --- | --- | --- | --- | --- |
+| Alliance | Mage de givre | Mage humain | 100 or | 900 PO | 110 missions | Ralentit de 40 % pendant 3 s, dégâts très faibles |
+| Alliance | Éclaireur-observateur | Archer elfe | 70 or | 960 PO | 120 missions | Marque une cible 4 s : +30 % des autres défenseurs, il ne blesse presque pas |
+| Alliance | Prêtre guerrier | Mage humain | 90 or | 1020 PO | 130 missions | +20 % de dégâts aux défenseurs à moins de 3,6 cases |
+| Horde | Chaman des marais | Chaman orc | 100 or | 900 PO | 110 missions | Ralentit de 40 % pendant 3 s et maudit, dégâts très faibles |
+| Horde | Totem de guerre | Lanceur de haches troll | 70 or | 960 PO | 120 missions | Marque une cible 4 s : +30 % des autres défenseurs, il ne blesse presque pas |
+| Horde | Ancien des tribus | Lanceur de haches troll | 90 or | 1020 PO | 130 missions | +20 % de dégâts aux défenseurs à moins de 3,6 cases |
+
+- **Ralentissement** : un ennemi touché avance à 60 % de sa vitesse pendant 3 s (un coup supplémentaire prolonge la durée). Le moteur calcule la position et le temps d'atteinte de chaque distance en forme fermée, avec un retard cumulé à chaque fin de ralentissement ; la fin d'un ralentissement est un événement du moteur : le résultat ne dépend pas du pas de simulation, et les combats sans ralentissement sont inchangés au bit près (anciens rapports toujours rejouables).
+- **Marque** : l'ennemi touché est marqué 4 s ; tous les autres défenseurs lui infligent +30 % (le marqueur n'en profite pas).
+- **Aura** : un gardien donne +20 % de dégâts aux défenseurs situés à moins de 3,6 cases de lui (pas à lui-même). Sur la Vallée du Gué, dont les emplacements sont distants de 4 cases ou plus, l'aura ne touche personne ; elle sert surtout sur les cartes dont les emplacements sont groupés.
+- Limites : aucun indicateur visuel de ralentissement, de marque ou d'aura en jeu pour l'instant (à demander à Codex) ; le libellé de talents d'une famille reste « <unité> et ses alternatives ».
+
 ## Dix-huit archétypes (communs aux deux factions, noms à valider)
 
 Chaque archétype a une **force et une faiblesse** (CAMP-008) ; aucun ne remplace systématiquement une unité de départ. Les noms par faction sont des propositions.

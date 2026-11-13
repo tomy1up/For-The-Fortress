@@ -160,6 +160,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **Après la v0.193** : lot `637e357` de Codex (habillage des côtes 161-170) fusionné ; planches `effect.seamist` branchées (`mist` ajouté aux noms d'animation valides). Poussés sans version, à publier avec la prochaine.
 
+**v0.194** : troisième lot de la boutique (types 30 à 35 : entravant, marqueur, gardien). Moteur : ralentissement en forme fermée (`Model.SLOW_FACTOR`, `time_at_distance`, `distance_at`, `_slow_enemy`, `_end_slows`, événement de fin de ralentissement), marque (`marked_until`, `mark_bonus`), aura (`guardian_aura`). Restent à coder, règles validées : pilleur, sapeur d'entrée, réaction en chaîne, unité-pivot, tourelle de forteresse ; indicateurs visuels (ralenti, marqué, aura) à demander à Codex.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

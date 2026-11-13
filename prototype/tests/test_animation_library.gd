@@ -58,7 +58,7 @@ func verify_validation() -> void:
 	check(Library.validation_error(plain) == "","Côté et projectile facultatifs")
 	var anim: Dictionary = sample().animations.walk
 	check(Library.sheet_size_error(anim,Vector2i(768,64)) == "" and Library.sheet_size_error(anim,Vector2i(768,63)) != "" and Library.sheet_size_error(anim,Vector2i(64,64)) != "","Taille de planche contrôlée")
-	check(Library.defender_id(0) == "defender.alliance.archer" and Library.defender_id(9) == "defender.horde.grenadier" and Library.defender_id(10) == "defender.alliance.sentinel" and Library.defender_id(21) == "defender.horde.cinderburner" and Library.defender_id(30) == "" and Library.defender_id(-1) == "" and Library.DEFENDER_IDS.size() == Model.ROSTER.size(),"Un identifiant par défenseur du modèle")
+	check(Library.defender_id(0) == "defender.alliance.archer" and Library.defender_id(9) == "defender.horde.grenadier" and Library.defender_id(10) == "defender.alliance.sentinel" and Library.defender_id(21) == "defender.horde.cinderburner" and Library.defender_id(40) == "" and Library.defender_id(-1) == "" and Library.DEFENDER_IDS.size() == Model.ROSTER.size(),"Un identifiant par défenseur du modèle")
 	check(Library.spec_for("") == {} and Library.spec_for("enemy.test.inexistant") == {},"Unité sans description : aucun résultat")
 
 func verify_maths() -> void:
