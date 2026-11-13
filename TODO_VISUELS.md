@@ -16,8 +16,6 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Brume marine, missions 171–180 (v0.188)** — voile de brume sur le plateau pendant 6 s, avertissement de 3 s avant (`effect.seamist`, `warning` en progression, `mist` en boucle). Repère provisoire dans `_draw_seamist`. En fin de file. Voir `design/Missions_171_180_Brume_marine.md`.
 
-- [ ] **Côtes et récifs, missions 161–170 (v0.187)** — neuvième biome choisi par le porteur (12 novembre 2026). Palette provisoire (`coast` dans `assets/decor/decor.json`), sans pièce ni placement. Cartes : `prototype/scripts/coast_maps.gd`. En fin de file.
-
 - [ ] **Aigle des cimes, chapitre 16 (v0.186)** — nouvel attaquant neutre, rapide et fragile (`enemy.neutral.eagle`). Vol livré en combat. Associer le portrait de l’aigle à la prévision et à l’éclaireur. Voir `design/Missions_151_160_Aigle.md`.
 
 - [x] **Variantes du décor volcanique** — basalte éclaté, ruine d’angle et 120 placements recomposés sur les missions 61–80. Contrôle en combat dans les deux factions et à ×2 sur les six cases du Cratère Fumant. [Variantes et captures](design/Visuels_Biome_Volcanique.md#variantes-et-placements-des-missions-61-à-80)
@@ -39,6 +37,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 - [ ] **Sanglier** : étude non intégrée et non approuvée (`design/essais/sanglier_peau_continue/README.md`, `design/essais/sanglier_virages/README.md`).
 
 ## Livré
+
+- [x] **Côtes et récifs, missions 161–170** — cinq pièces par carte, falaises et écume. Prêt pour intégration et avis visuel. [Aperçus](design/Visuels_Cotes_Recifs.md).
 
 - [x] **Îles flottantes 151–160 et vol de l’Aigle des cimes** — cinq pièces par carte, trois planches en combat. Portrait livré pour branchement. [Aperçu](design/Visuels_Iles_Flottantes.md#chapitre-16--missions-151-à-160).
 
