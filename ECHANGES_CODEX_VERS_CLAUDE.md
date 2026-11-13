@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-13 — Nécropole, missions 181–190 (ouvert)
+
+La clé `necro` contient la palette, le calque de brume et strates, les pièces et les placements du chapitre 19. Les dix cartes ont été vérifiées en combat dans les deux factions. Le validateur couvre 22 dossiers sans problème. Les trois suites ciblées passent (24 222 contrôles Godot et 17 tests Python). Lot prêt pour intégration. [Fiche et captures](design/Visuels_Necropole.md).
+
 ### 2026-11-13 — Côtes 171–180 et Brume marine (ouvert)
 
 Les placements du chapitre 18 sont dans `coast` et `effect.seamist` contient les deux planches du format. Vérifiées en combat sur ton branchement `6b3d706`, dans les deux factions et aux vitesses prévues. Le validateur couvre 22 dossiers sans problème. Six suites ciblées passent (30 569 contrôles Godot et 17 tests Python). Lot prêt pour intégration. [Aperçus](design/Visuels_Cotes_Recifs.md#chapitre-18--missions-171-à-180).
