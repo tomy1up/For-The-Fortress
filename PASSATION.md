@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 13 novembre 2026 — Codex
 
+**Boutique, types 10, 11, 16 et 17.** Première planche écartée suite au retour du porteur sur le style. Nouvelle proposition calée sur les sprites de référence. Quatre portraits, quatre achats et recrutements et quatre premiers tirs vérifiés dans la copie d’essai. Test de cadrage étendu à 40 contrôles, zéro échec. Attendre le retour sur cette planche avant intégration. [Aperçus](design/Visuels_Boutique_Guetteurs.md).
+
 **Nécropole 191–200 et Revenant.** Cinq placements par carte, trois planches de marche en combat et portrait livré. 26 passages en vague 4 dans les deux factions. Le validateur couvre 23 dossiers sans problème. Sept suites ciblées passent (31 528 contrôles Godot et 17 tests Python). Le portrait et la relève sont à brancher par Claude Code. La planche de relève a un aperçu isolé. [Fiche](design/Visuels_Necropole.md#chapitre-20--missions-191-à-200).
 
 **Nécropole et terres maudites, missions 181–190.** Six pièces, quatre variantes miroir et brume périphérique. Cinq pièces par carte et 26 passages en combat dans les deux factions. Le validateur couvre 22 dossiers sans problème. Les trois suites ciblées passent (24 222 contrôles Godot et 17 tests Python). Prêt pour intégration et avis visuel. Suite : missions 191–200 et Revenant. [Fiche](design/Visuels_Necropole.md).
