@@ -20,8 +20,6 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Îles flottantes et cité céleste, missions 141–150 (v0.185)** — biome confirmé par le porteur le 12 novembre 2026. Palette provisoire (`sky` dans `assets/decor/decor.json`), sans pièce ni placement. Cartes : `prototype/scripts/sky_maps.gd`. Ordre de la file : mines du chapitre 14 et éboulement d'abord.
 
-- [ ] **Souterrains et mines, missions 121–130 (v0.183)** — biome validé par le porteur le 12 novembre 2026, habillage à produire. Le code pose une palette provisoire (`mine` dans `assets/decor/decor.json`), sans pièce ni placement. Cartes : `prototype/scripts/mine_maps.gd`.
-
 - [x] **Variantes du décor volcanique** — basalte éclaté, ruine d’angle et 120 placements recomposés sur les missions 61–80. Contrôle en combat dans les deux factions et à ×2 sur les six cases du Cratère Fumant. [Variantes et captures](design/Visuels_Biome_Volcanique.md#variantes-et-placements-des-missions-61-à-80)
 
 
@@ -42,6 +40,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## Livré
 
+- [x] **Souterrains et mines, missions 131–140 et éboulement** — cinq pièces par carte, avertissement et blocage animés. Contrôles en combat dans les deux factions. Prêt pour intégration et avis visuel. [Aperçus](design/Visuels_Biome_Mines.md#chapitre-14--missions-131-à-140).
+
 - [x] **Marche de Gueule-de-Vase** — trois planches de 24 poses. Les Eaux Mortes vérifiées à ×1 et ×2 dans les deux factions. En attente de retour visuel. [Aperçu](design/Visuel_Gueule_de_Vase.md#marche-de-gueule-de-vase).
 
 - [x] **Marche des deux boss** — 24 poses par planche, quatre diagonales vérifiées à ×1 et ×2. En attente de retour visuel. [Aperçus](design/Visuels_Marche_Boss.md).
@@ -52,7 +52,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Garde royal, marche** — trois planches de 24 poses et quatre diagonales vérifiées à ×1 et ×2. Aperçu en attente de retour. [Fiche](design/Visuel_Garde_Royal.md).
 
-- [x] **Souterrains et mines, missions 121–130** — palette, calque et cinq pièces par carte, vérifiés dans les deux factions. En attente d’intégration. [Aperçus](design/Visuels_Biome_Mines.md).
+- [x] **Souterrains et mines, missions 121–130** — palette, calque et cinq pièces par carte, vérifiés dans les deux factions. Intégré en v0.184. [Aperçus](design/Visuels_Biome_Mines.md).
 
 - [x] **Colosse troll, marche** — trois planches de 24 poses et quatre diagonales vérifiées à ×1 et ×2. Aperçu en attente de retour. [Fiche](design/Visuel_Colosse_Troll.md).
 
