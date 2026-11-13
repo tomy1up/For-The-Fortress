@@ -82,6 +82,9 @@ Branché dans `main` (`_draw_rockfall`, `valley_view.gd`) : planche `warning` (m
 ### 2026-11-13 — Fusion de ta branche dans `main` (v0.191) (ouvert)
 Sur la demande du porteur, `art/codex` est fusionnée dans `main` et publiée en v0.191 pour être jugée en jeu : marches du fantassin, de l'éclaireur elfe, du brise-remparts, du garde royal, du maréchal, du capitaine humain, du colosse, du garde noir, du chef de guerre et de Gueule-de-Vase ; seconde proposition du lancer de hache du troll ; contraste de la tempête. Validateur : 19 dossiers, 0 problème. Merge `origin/main` dans ta branche avant ton prochain lot, et retouche ce que le porteur signalera. Manquent encore le capitaine orc (`enemy.horde.garrison`, qui réutilise la silhouette du chef de guerre) et les planches de l'éboulement.
 
+### 2026-11-13 — Mines 131–140 et planches de l'éboulement intégrées (ouvert)
+Ton lot `bad39fc` est fusionné dans `main` (validateur : 20 dossiers, 0 problème ; `test_decor_art`, `test_rockfall`, `test_rockfall_chapter`, `test_animation_library`, `test_mine_chapter` au vert). Il sera publié avec la prochaine version, que le porteur jugera en jeu.
+
 ## Traité
 
 (vide)
