@@ -75,6 +75,16 @@ const ROSTER: Array[Dictionary] = [
 	{"name":"Chaman des marais","price":100,"damage":3.0,"interval":1.8,"range":4.2,"curse_damage":3.0,"slow_seconds":3.0},
 	{"name":"Totem de guerre","price":70,"damage":1.0,"interval":1.5,"range":5.0,"mark_seconds":4.0,"mark_bonus":0.3},
 	{"name":"Ancien des tribus","price":90,"damage":5.0,"interval":2.0,"range":3.5,"aura_radius":3.6,"aura_bonus":0.2},
+	{"name":"Marchand mercenaire","price":85,"damage":4.0,"interval":1.8,"range":3.5,"loot_seconds":4.0,"loot_bonus":0.6},
+	{"name":"Piégeur nain","price":90,"damage":22.0,"interval":2.4,"range":3.8,"entrance_mult":1.8,"exit_mult":0.4},
+	{"name":"Balliste royale","price":105,"damage":36.0,"interval":3.5,"range":5.5,"exit_mult":1.8,"entrance_mult":0.4},
+	{"name":"Alchimiste","price":100,"damage":6.0,"interval":2.0,"range":4.0,"volatile_seconds":4.0,"volatile_damage":40.0,"volatile_radius":1.4},
+	{"name":"Vétéran royal","price":70,"damage":8.0,"interval":2.0,"range":4.0,"pivot_bonus":0.12},
+	{"name":"Pillard gobelin","price":85,"damage":4.0,"interval":1.8,"range":3.5,"loot_seconds":4.0,"loot_bonus":0.6},
+	{"name":"Poseur de mines","price":90,"damage":22.0,"interval":2.4,"range":3.8,"entrance_mult":1.8,"exit_mult":0.4},
+	{"name":"Baliste de guerre","price":105,"damage":36.0,"interval":3.5,"range":5.5,"exit_mult":1.8,"entrance_mult":0.4},
+	{"name":"Gobelin kamikaze","price":100,"damage":6.0,"interval":2.0,"range":4.0,"volatile_seconds":4.0,"volatile_damage":40.0,"volatile_radius":1.4},
+	{"name":"Chef de guerre vétéran","price":70,"damage":8.0,"interval":2.0,"range":4.0,"pivot_bonus":0.12},
 ]
 
 const ENEMY_TYPES: Array[Dictionary] = [
@@ -121,6 +131,7 @@ var defenders: Array[Dictionary] = []
 var shots: Array[Dictionary] = []
 var damage_events: Array[Dictionary] = [] # Observation des pertes réelles, réservée au rendu.
 var elimination_events: Array[Dictionary] = [] # Observation visuelle, sans effet de jeu.
+var bought_waves: Dictionary = {} # Vague d'achat de chaque défenseur (instance_id), pour l'unité-pivot ; hors de l'état comparé des rapports.
 var event_log: Array[String] = []
 var wave_history: Array[Dictionary] = []
 var _wave_record: Dictionary = {}
@@ -174,6 +185,7 @@ func reset() -> void:
 	damage_events.clear()
 	protection_events.clear()
 	elimination_events.clear()
+	bought_waves.clear()
 	event_log.clear()
 	defenders.clear()
 	for index in range(slots.size()):
@@ -522,6 +534,7 @@ func buy(slot: int, type: int) -> bool:
 	var stats: Dictionary = ROSTER[type]
 	defenders[slot] = {"instance_id": next_instance_id, "type": type, "level": 1, "branch": -1, "paid": purchase_cost(type), "ready_at": 0.0,
 		"windows": coverage_windows(slots[slot], stats.range, path_points)}
+	bought_waves[defenders[slot].instance_id] = wave
 	next_instance_id += 1
 	gold -= purchase_cost(type)
 	_refresh_windows()
@@ -602,7 +615,7 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	stats.price = base_recruit_cost(defender.type)
 	var synergy: Dictionary = synergy_effects(slot,branch_override,candidate)
 	var meta: Dictionary = MetaTalents.effects(faction,meta_ranks,defender.type,talent_rules)
-	var common: float = (0.10 if 0 in active_bonuses else 0.0) + (0.15 if 6 in active_bonuses and level <= 2 else 0.0) + (0.12 if 7 in active_bonuses and level >= 3 else 0.0) + guardian_aura(slot)
+	var common: float = (0.10 if 0 in active_bonuses else 0.0) + (0.15 if 6 in active_bonuses and level <= 2 else 0.0) + (0.12 if 7 in active_bonuses and level >= 3 else 0.0) + guardian_aura(slot) + pivot_bonus(defender)
 	stats.reference_damage = stats.damage
 	stats.reference_secondary = stats.secondary_damage
 	stats.reference_curse = stats.curse_damage
@@ -618,6 +631,12 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	if 4 in active_bonuses and family(defender.type) in [2,3,4]: stats.radius += 0.2
 	stats.synergies = synergy.codes
 	return stats
+
+## Unité-pivot : +`pivot_bonus` par vague survivée depuis son achat, plafonné à +90 %.
+func pivot_bonus(defender: Dictionary) -> float:
+	var per: float = float(ROSTER[defender.type].get("pivot_bonus",0.0))
+	if per <= 0.0 or not bought_waves.has(defender.get("instance_id",-1)): return 0.0
+	return minf(0.9,per*float(maxi(0,wave-int(bought_waves[defender.instance_id]))))
 
 ## Bonus de dégâts reçu des gardiens voisins (unités à `aura_bonus`) : ceux qui se trouvent à `aura_radius` de l'emplacement, sans compter l'unité elle-même.
 func guardian_aura(slot: int) -> float:
@@ -646,11 +665,22 @@ static func target_multiplier(stats: Dictionary, victim: Dictionary) -> float:
 	if float(victim.get("hp",0.0)) < float(victim.get("max_hp",0.0))-EPS: multiplier *= 1.0+float(stats.get("wounded_bonus",0.0))
 	return multiplier
 
+## Multiplicateur selon l'avancée de la cible sur sa route (sapeur d'entrée, tourelle de forteresse) : près de l'entrée (moins de 35 % du trajet) ou près de la forteresse (plus de 65 %).
+func progress_multiplier(stats: Dictionary, victim: Dictionary) -> float:
+	if not stats.has("entrance_mult") and not stats.has("exit_mult"): return 1.0
+	if not victim.has("distance"): return 1.0
+	var length: float = enemy_route_length(victim) if victim.has("route_id") or routes.is_empty() else path_length
+	if length <= 0.0: return 1.0
+	var fraction: float = float(victim.distance)/length
+	if fraction < 0.35: return float(stats.get("entrance_mult",1.0))
+	if fraction > 0.65: return float(stats.get("exit_mult",1.0))
+	return 1.0
+
 func _damage_with_bonuses(stats: Dictionary, component: String, victim: Dictionary, active_bonuses: Array) -> float:
 	var reference: float = stats[{"direct":"reference_damage","secondary":"reference_secondary","curse":"reference_curse"}[component]]
 	var extra: float = 0.20 if 11 in active_bonuses and victim.type in [3,5,6,7] else 0.0
 	var marked: float = 1.0+float(victim.get("mark_bonus",0.0)) if float(victim.get("marked_until",-1.0)) > elapsed+EPS and float(stats.get("mark_seconds",0.0)) <= 0.0 else 1.0
-	return reference * (1.0+stats[component+"_bonus"]+extra) * (target_multiplier(stats,victim) if component == "direct" else 1.0) * marked
+	return reference * (1.0+stats[component+"_bonus"]+extra) * ((target_multiplier(stats,victim)*progress_multiplier(stats,victim)) if component == "direct" else 1.0) * marked
 
 func _refresh_windows() -> void:
 	for slot in range(defenders.size()):
@@ -710,6 +740,7 @@ func prepare_next_wave() -> bool:
 	damage_events.clear()
 	protection_events.clear()
 	elimination_events.clear()
+	bought_waves.clear()
 	curses.clear()
 	event_log.clear()
 	spawn_schedule = Campaign.schedule(wave,wave_set_id)
@@ -968,6 +999,13 @@ func _resolve_instant() -> void:
 		_add_damage(damage, primary.id, direct_damage)
 		hits.append({"source_id":defender.instance_id,"enemy_id":primary.id,"component":"direct","amount":direct_damage})
 		if float(stats.get("slow_seconds",0.0)) > 0.0: _slow_enemy(primary,float(stats.slow_seconds))
+		if float(stats.get("loot_seconds",0.0)) > 0.0:
+			primary.loot_until = elapsed+float(stats.loot_seconds)
+			primary.loot_bonus = maxf(float(primary.get("loot_bonus",0.0)),float(stats.get("loot_bonus",0.0)))
+		if float(stats.get("volatile_seconds",0.0)) > 0.0:
+			primary.volatile_until = elapsed+float(stats.volatile_seconds)
+			primary.volatile_damage = maxf(float(primary.get("volatile_damage",0.0)),float(stats.get("volatile_damage",0.0)))
+			primary.volatile_radius = maxf(float(primary.get("volatile_radius",0.0)),float(stats.get("volatile_radius",1.0)))
 		if float(stats.get("mark_seconds",0.0)) > 0.0:
 			primary.marked_until = elapsed+float(stats.mark_seconds)
 			primary.mark_bonus = maxf(float(primary.get("mark_bonus",0.0)),float(stats.get("mark_bonus",0.0)))
@@ -1069,31 +1107,57 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 		while protection_events.size() > 24: protection_events.pop_front()
 	Metrics.credit(_wave_record.get("performance",[]),enemies,damage,hits)
 	var survivors: Array[Dictionary] = []
+	var blasts: Array[Dictionary] = []
 	for enemy in enemies:
 		var hp_before: float = enemy.hp
 		enemy.hp -= damage.get(enemy.id, 0.0)
 		if enemy.hp < hp_before:
 			damage_events.append({"time":elapsed,"enemy_id":enemy.id,"hp_before":hp_before,"hp_after":maxf(0.0,enemy.hp)})
-		if enemy.hp <= 0.0 and enemy.get("type",1) == Revenant.TYPE and not enemy.get("risen",false):
-			# Le revenant se relève une seule fois avec la moitié de ses PV maximum ; aucune récompense ni élimination comptée à cet instant.
-			enemy.risen = true
-			enemy.risen_at = elapsed # Observation visuelle : lance l'animation de relève.
-			enemy.hp = enemy.max_hp*Revenant.RISE_FRACTION
-			event_log.append("%.9f relève %d" % [elapsed, enemy.id])
-			survivors.append(enemy)
-			continue
-		if enemy.hp <= 0.0:
-			elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":enemy_position(enemy),"distance":enemy.distance,"route_id":str(enemy.get("route_id",""))})
-			killed += 1
-			total_killed += 1
-			var reward: int = kill_reward(enemy.get("reward", 3))
-			gold += reward
-			total_income += reward
-			event_log.append("%.9f mort %d +%d" % [elapsed, enemy.id, reward])
-		else:
-			survivors.append(enemy)
+		_settle_enemy(enemy,survivors,blasts)
+	# Réaction en chaîne : un ennemi marqué « volatile » qui meurt explose et blesse ses voisins ; les explosions peuvent en provoquer d'autres, chaque ennemi n'explose qu'une fois.
+	while not blasts.is_empty():
+		var next_blasts: Array[Dictionary] = []
+		var remaining: Array[Dictionary] = []
+		for enemy in survivors:
+			var splash := 0.0
+			for blast in blasts:
+				if blast.source.id != enemy.id and enemy_separation_squared(blast.source,enemy) <= blast.radius*blast.radius: splash += blast.damage
+			if splash > 0.0:
+				var before: float = enemy.hp
+				enemy.hp -= splash
+				damage_events.append({"time":elapsed,"enemy_id":enemy.id,"hp_before":before,"hp_after":maxf(0.0,enemy.hp)})
+			_settle_enemy(enemy,remaining,next_blasts)
+		survivors = remaining
+		blasts = next_blasts
 	enemies = survivors
 	_purge_curses()
+
+## Règle d'un ennemi après dégâts : relève du revenant (une seule fois), élimination avec or (pillage et brume marine compris) et explosion éventuelle, sinon survie.
+func _settle_enemy(enemy: Dictionary, survivors: Array[Dictionary], blasts: Array[Dictionary]) -> void:
+	if enemy.hp <= 0.0 and enemy.get("type",1) == Revenant.TYPE and not enemy.get("risen",false):
+		# Le revenant se relève une seule fois avec la moitié de ses PV maximum ; aucune récompense ni élimination comptée à cet instant.
+		enemy.risen = true
+		enemy.risen_at = elapsed # Observation visuelle : lance l'animation de relève.
+		enemy.hp = enemy.max_hp*Revenant.RISE_FRACTION
+		event_log.append("%.9f relève %d" % [elapsed, enemy.id])
+		survivors.append(enemy)
+		return
+	if enemy.hp <= 0.0:
+		elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":enemy_position(enemy),"distance":enemy.distance,"route_id":str(enemy.get("route_id",""))})
+		killed += 1
+		total_killed += 1
+		var base: int = enemy.get("reward", 3)
+		if float(enemy.get("loot_until",-1.0)) >= elapsed-EPS: base = roundi(float(base)*(1.0+float(enemy.get("loot_bonus",0.0))))
+		var reward: int = kill_reward(base)
+		gold += reward
+		total_income += reward
+		event_log.append("%.9f mort %d +%d" % [elapsed, enemy.id, reward])
+		if float(enemy.get("volatile_until",-1.0)) >= elapsed-EPS and not enemy.get("exploded",false):
+			enemy.exploded = true
+			event_log.append("%.9f explosion %d" % [elapsed, enemy.id])
+			blasts.append({"source":enemy,"damage":float(enemy.get("volatile_damage",0.0)),"radius":float(enemy.get("volatile_radius",1.0))})
+	else:
+		survivors.append(enemy)
 
 func _apply_curse(source_id: int, enemy_id: int, damage: float) -> void:
 	var surviving: Array[Dictionary] = []

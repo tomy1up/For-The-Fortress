@@ -55,6 +55,6 @@ func _initialize() -> void:
 		check(Replay._difference(rounds[0],rounds[1],"rapport").is_empty(),"Chronologie des alternatives identique à petits et grands pas")
 	var plain = Model.new();plain.select_faction(0)
 	check(plain.available_types() == [0,1,2] and not Report.build(plain).has("auxiliary_type"),"Le format et le recrutement historiques restent inchangés sans alternative")
-	for bad in [true,"6",6.5,0,5,40,-2,INF,null]:
+	for bad in [true,"6",6.5,0,5,50,-2,INF,null]:
 		var m = Model.new();check(not m.configure_auxiliary(bad) and m.auxiliary_type == -1,"Identifiants d’alternative invalides refusés sans effet")
 	print("SHOP_MODEL_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

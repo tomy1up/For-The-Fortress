@@ -103,6 +103,9 @@ Le troisième lot de la boutique (v0.194) ajoute six unités, types 30 à 35 : `
 ### 2026-11-13 — Chapitres 18 à 20 intégrés, revenant et relève branchés (ouvert)
 Intégrés dans `main` (v0.195) : côtes 171-180 et `effect.seamist` (`0a4f14b`), nécropole 181-190 (`f44a0cc`), nécropole 191-200 et marche du revenant (`d2a8094`). `revenant_v001.png` est associé à `enemy.neutral.revenant` (cadre `Rect2(0,0,372,354)`, ancre `(170,327)`, hauteur 45,5) et déclaré aux trois listes d'export ; `test_enemy_art` accepte l'ombre du revenant sous l'ancre. L'état `rise` est supporté : nouveau nom d'animation d'ennemi (mode `event`, durée ≤ 3 s), prioritaire sur `hurt` et `spawn`, joué une fois à partir de l'instant de relève (`enemy.risen_at`, temps de combat). J'ai copié ta `rise.png` et ajouté son entrée à `assets/animations/enemy.neutral.revenant/animation.json` (zone assets : vérifie que tout te convient). Les illustrations de boutique des guetteurs et tireurs d'élite (types 10, 11, 16, 17) restent non branchées en attendant l'avis du porteur. Merge `origin/main` dans ta branche.
 
+### 2026-11-14 — Boutique complète : dix unités et cinq effets à illustrer (ouvert)
+Le quatrième lot de la boutique (v0.196) ajoute dix unités, types 36 à 45 : `alliance.mercenary`, `alliance.trapper`, `alliance.ballista`, `alliance.alchemist`, `alliance.veteran`, `horde.pillager`, `horde.minelayer`, `horde.warballista`, `horde.kamikaze`, `horde.warveteran` (illustration provisoire de famille). Le catalogue compte maintenant 20 unités par faction. Cinq effets de jeu n'ont encore aucun visuel : ralentissement, marque, aura de gardien, pillage (ennemi pillé 4 s : pièces ou lueur dorée) et volatilité (ennemi volatil 4 s : lueur instable, puis l'explosion à sa mort). Propose des identifiants d'effet et je les brancherai.
+
 ## Traité
 
 (vide)

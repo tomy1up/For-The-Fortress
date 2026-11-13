@@ -1,0 +1,6 @@
+# Prototype v0.196 — Boutique étendue, quatrième lot : le catalogue de vingt unités par faction est complet
+
+- **Dix nouvelles alternatives**, cinq par faction (valeurs de prototype à confirmer) : marchand mercenaire / pillard gobelin (pillage : +60 % d'or sur l'ennemi touché qui meurt dans les 4 s), piégeur nain / poseur de mines (×1,8 à l'entrée du trajet, ×0,4 près de la forteresse), balliste royale / baliste de guerre (l'inverse), alchimiste / gobelin kamikaze (l'ennemi touché explose à sa mort, en chaîne), vétéran royal / chef de guerre vétéran (+12 % par vague survivée, jusqu'à +90 %). Prix de 1 080 à 1 300 PO, déblocage après 140 à 180 missions réussies.
+- **Catalogue complet** : 20 unités alternatives par faction pour 14 970 PO, au moins les 14 750 PO gagnés sur les 200 missions en Normal (décision du porteur). La boutique reste paginée (dix pages).
+- Moteur : règles de pillage, de position sur la route, de réaction en chaîne et de pivot ; déterministes, indépendantes du pas de simulation, anciens rapports inchangés.
+- Limites : pas d'indicateur visuel du pillage, de la volatilité ni de l'aura ; illustrations toujours provisoires (famille de l'unité) hors celles que le porteur n'a pas encore jugées.

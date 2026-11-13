@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.196**. Boutique étendue, quatrième et dernier lot : dix alternatives (pillage, entrée et forteresse, réaction en chaîne, unité-pivot), de 1 080 à 1 300 PO ; le catalogue compte 20 unités par faction pour 14 970 PO, au moins les PO gagnés sur la campagne. [Notes](design/essais/v0196_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.196).
+
 **Prototype v0.195**. Habillage des côtes (missions 171 à 180) et de la nécropole (181 à 200), brume marine, marche du revenant avec son animation de relève (à juger en jeu). [Notes](design/essais/v0195_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.195).
 
 **Prototype v0.194**. Boutique étendue, troisième lot : six alternatives (quinze par faction) avec ralentissement, marque de cible et aura de gardien, de 900 à 1 020 PO ; habillage des côtes 161 à 170 et brume marine de Codex branchée (à juger en jeu). [Notes](design/essais/v0194_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.194).

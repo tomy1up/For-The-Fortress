@@ -172,6 +172,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.195** : fusion des lots de Codex (côtes 171-180, nécropole 181-200, brume marine, marche du revenant) ; `revenant_v001.png` branché (`enemy_art.gd`, trois listes d'export) ; animation `rise` (état d'ennemi prioritaire, mode event, `enemy.risen_at` horodaté par le moteur à la relève). Illustrations de boutique de Codex (guetteurs, tireurs d'élite) présentes dans `assets/units/shop/` mais non branchées : avis artistique du porteur attendu.
 
+**v0.196** : quatrième lot de la boutique (types 36 à 45) : catalogue complet de 20 unités par faction (14 970 PO). Moteur : `_apply_damage` refactoré (`_settle_enemy`, explosions en chaîne), pillage (`loot_until`, `loot_bonus`), volatilité (`volatile_*`), `progress_multiplier` (entrée et forteresse), `pivot_bonus` (`bought_waves` par instance, hors de l état comparé des rapports). Aucun indicateur visuel pour ralentissement, marque, aura, pillage, volatilité : à demander à Codex. Illustrations de boutique de Codex (guetteurs, tireurs d'élite) toujours non branchées, en attente de l'avis du porteur.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

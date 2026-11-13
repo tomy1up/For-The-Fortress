@@ -29,6 +29,16 @@ const TEXTURES: Dictionary = {
 	27: HordeArt.TEXTURES[3],
 	28: HordeArt.TEXTURES[3],
 	29: HordeArt.TEXTURES[3],
+	36: AllianceArt.TEXTURES[0],
+	37: AllianceArt.TEXTURES[1],
+	38: AllianceArt.TEXTURES[1],
+	39: AllianceArt.TEXTURES[2],
+	40: AllianceArt.TEXTURES[1],
+	41: HordeArt.TEXTURES[3],
+	42: HordeArt.TEXTURES[4],
+	43: HordeArt.TEXTURES[3],
+	44: HordeArt.TEXTURES[4],
+	45: HordeArt.TEXTURES[3],
 	30: AllianceArt.TEXTURES[2],
 	31: AllianceArt.TEXTURES[0],
 	32: AllianceArt.TEXTURES[2],
@@ -61,6 +71,16 @@ const FRAMES: Dictionary = {
 	27: HordeArt.FRAMES[3],
 	28: HordeArt.FRAMES[3],
 	29: HordeArt.FRAMES[3],
+	36: AllianceArt.FRAMES[0],
+	37: AllianceArt.FRAMES[1],
+	38: AllianceArt.FRAMES[1],
+	39: AllianceArt.FRAMES[2],
+	40: AllianceArt.FRAMES[1],
+	41: HordeArt.FRAMES[3],
+	42: HordeArt.FRAMES[4],
+	43: HordeArt.FRAMES[3],
+	44: HordeArt.FRAMES[4],
+	45: HordeArt.FRAMES[3],
 	30: AllianceArt.FRAMES[2],
 	31: AllianceArt.FRAMES[0],
 	32: AllianceArt.FRAMES[2],
@@ -68,7 +88,7 @@ const FRAMES: Dictionary = {
 	34: HordeArt.FRAMES[3],
 	35: HordeArt.FRAMES[3],
 }
-const MUZZLES: Dictionary = {6:Vector2(30,-40),7:Vector2(43,-31),8:Vector2(-27,-41),9:Vector2(-18,-39),10:AllianceArt.MUZZLES[0], 11:AllianceArt.MUZZLES[1], 12:AllianceArt.MUZZLES[0], 13:AllianceArt.MUZZLES[2], 14:AllianceArt.MUZZLES[0], 15:AllianceArt.MUZZLES[2], 16:HordeArt.MUZZLES[3], 17:HordeArt.MUZZLES[3], 18:HordeArt.MUZZLES[3], 19:HordeArt.MUZZLES[4], 20:HordeArt.MUZZLES[3], 21:HordeArt.MUZZLES[5],22:AllianceArt.MUZZLES[2],23:AllianceArt.MUZZLES[0],24:AllianceArt.MUZZLES[1],25:AllianceArt.MUZZLES[0],26:HordeArt.MUZZLES[3],27:HordeArt.MUZZLES[3],28:HordeArt.MUZZLES[3],29:HordeArt.MUZZLES[3],30:AllianceArt.MUZZLES[2],31:AllianceArt.MUZZLES[0],32:AllianceArt.MUZZLES[2],33:HordeArt.MUZZLES[5],34:HordeArt.MUZZLES[3],35:HordeArt.MUZZLES[3]}
+const MUZZLES: Dictionary = {6:Vector2(30,-40),7:Vector2(43,-31),8:Vector2(-27,-41),9:Vector2(-18,-39),10:AllianceArt.MUZZLES[0], 11:AllianceArt.MUZZLES[1], 12:AllianceArt.MUZZLES[0], 13:AllianceArt.MUZZLES[2], 14:AllianceArt.MUZZLES[0], 15:AllianceArt.MUZZLES[2], 16:HordeArt.MUZZLES[3], 17:HordeArt.MUZZLES[3], 18:HordeArt.MUZZLES[3], 19:HordeArt.MUZZLES[4], 20:HordeArt.MUZZLES[3], 21:HordeArt.MUZZLES[5],22:AllianceArt.MUZZLES[2],23:AllianceArt.MUZZLES[0],24:AllianceArt.MUZZLES[1],25:AllianceArt.MUZZLES[0],26:HordeArt.MUZZLES[3],27:HordeArt.MUZZLES[3],28:HordeArt.MUZZLES[3],29:HordeArt.MUZZLES[3],30:AllianceArt.MUZZLES[2],31:AllianceArt.MUZZLES[0],32:AllianceArt.MUZZLES[2],33:HordeArt.MUZZLES[5],34:HordeArt.MUZZLES[3],35:HordeArt.MUZZLES[3],36:AllianceArt.MUZZLES[0],37:AllianceArt.MUZZLES[1],38:AllianceArt.MUZZLES[1],39:AllianceArt.MUZZLES[2],40:AllianceArt.MUZZLES[1],41:HordeArt.MUZZLES[3],42:HordeArt.MUZZLES[4],43:HordeArt.MUZZLES[3],44:HordeArt.MUZZLES[4],45:HordeArt.MUZZLES[3]}
 
 static func destination(type: int) -> Rect2:
 	var frame: Dictionary = FRAMES[type]

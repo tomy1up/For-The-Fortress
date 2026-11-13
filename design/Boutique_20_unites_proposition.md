@@ -64,6 +64,30 @@ Archétypes 11 à 13, avec leurs règles nouvelles (validées le 13 novembre 202
 - **Aura** : un gardien donne +20 % de dégâts aux défenseurs situés à moins de 3,6 cases de lui (pas à lui-même). Sur la Vallée du Gué, dont les emplacements sont distants de 4 cases ou plus, l'aura ne touche personne ; elle sert surtout sur les cartes dont les emplacements sont groupés.
 - Limites : aucun indicateur visuel de ralentissement, de marque ou d'aura en jeu pour l'instant (à demander à Codex) ; le libellé de talents d'une famille reste « <unité> et ses alternatives ».
 
+## Quatrième lot livré (v0.196) : catalogue complet
+
+Archétypes 14 à 18 : pilleur, sapeur d'entrée, tourelle de forteresse, réaction en chaîne et unité-pivot, soit dix unités (valeurs de prototype à confirmer). **Chaque faction compte désormais 20 unités alternatives pour une valeur totale de 14 970 PO**, au moins égale aux 14 750 PO gagnés sur les 200 missions en Normal (décision du porteur du 13 novembre 2026).
+
+| Faction | Unité | Famille (talents) | Recrutement | Déblocage | Missions requises | Principe |
+| --- | --- | --- | --- | --- | --- | --- |
+| Alliance | Marchand mercenaire | Archer elfe | 85 or | 1080 PO | 140 missions | Pillage : l'ennemi touché rapporte +60 % d'or s'il meurt dans les 4 s |
+| Alliance | Piégeur nain | Arbalétrier nain | 90 or | 1140 PO | 150 missions | ×1,8 sur le premier tiers du trajet, ×0,4 sur le dernier |
+| Alliance | Balliste royale | Arbalétrier nain | 105 or | 1200 PO | 160 missions | ×1,8 sur le dernier tiers du trajet, ×0,4 sur le premier |
+| Alliance | Alchimiste | Mage humain | 100 or | 1250 PO | 170 missions | L'ennemi touché explose à sa mort (40 dégâts, rayon 1,4) dans les 4 s, en chaîne |
+| Alliance | Vétéran royal | Arbalétrier nain | 70 or | 1300 PO | 180 missions | +12 % par vague survivée depuis l'achat (plafond +90 %) |
+| Horde | Pillard gobelin | Lanceur de haches troll | 85 or | 1080 PO | 140 missions | Pillage : l'ennemi touché rapporte +60 % d'or s'il meurt dans les 4 s |
+| Horde | Poseur de mines | Sapeur gobelin | 90 or | 1140 PO | 150 missions | ×1,8 sur le premier tiers du trajet, ×0,4 sur le dernier |
+| Horde | Baliste de guerre | Lanceur de haches troll | 105 or | 1200 PO | 160 missions | ×1,8 sur le dernier tiers du trajet, ×0,4 sur le premier |
+| Horde | Gobelin kamikaze | Sapeur gobelin | 100 or | 1250 PO | 170 missions | L'ennemi touché explose à sa mort (40 dégâts, rayon 1,4) dans les 4 s, en chaîne |
+| Horde | Chef de guerre vétéran | Lanceur de haches troll | 70 or | 1300 PO | 180 missions | +12 % par vague survivée depuis l'achat (plafond +90 %) |
+
+- **Pillage** : l'ennemi touché par un pilleur rapporte +60 % d'or (arrondi, puis brume marine éventuelle) s'il est éliminé dans les 4 s, par n'importe quel défenseur.
+- **Entrée et forteresse** : la position de la cible est sa distance parcourue divisée par la longueur de sa route ; moins de 35 % = entrée, plus de 65 % = forteresse ; entre les deux, aucun multiplicateur.
+- **Réaction en chaîne** : un ennemi touché devient volatil 4 s ; s'il meurt, il explose et inflige 40 dégâts aux ennemis à moins de 1,4 case. Les explosions peuvent tuer d'autres ennemis volatils (chaîne) ; chaque ennemi n'explose qu'une fois. Les éliminations par explosion rapportent leur or normalement.
+- **Unité-pivot** : +12 % de dégâts par vague survivée depuis l'achat (le compteur repart à zéro si l'unité est revendue puis rachetée), plafonné à +90 %.
+- Le moteur reste déterministe et indépendant du pas de simulation ; les anciens rapports sont toujours rejouables (`tests/test_shop_lot4.gd`).
+- Limites : aucun indicateur visuel pour le pillage, la volatilité ni l'aura (à demander à Codex), et la boutique est toujours paginée (deux cartes par page, dix pages).
+
 ## Dix-huit archétypes (communs aux deux factions, noms à valider)
 
 Chaque archétype a une **force et une faiblesse** (CAMP-008) ; aucun ne remplace systématiquement une unité de départ. Les noms par faction sont des propositions.
