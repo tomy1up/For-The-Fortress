@@ -5954,6 +5954,376 @@
    }
   },
   "placements": {
+   "coast_beacon": [
+    {
+     "object": "jetee_retour",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "epave",
+     "xy": [
+      1.75,
+      5.0
+     ]
+    },
+    {
+     "object": "recifs",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "phare",
+     "xy": [
+      8.75,
+      9.0
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      11.0,
+      8.75
+     ]
+    }
+   ],
+   "coast_causeway": [
+    {
+     "object": "recifs_retour",
+     "xy": [
+      2.5,
+      1.5
+     ]
+    },
+    {
+     "object": "epave",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      7.75,
+      1.0
+     ]
+    },
+    {
+     "object": "jetee",
+     "xy": [
+      9.0,
+      9.0
+     ]
+    },
+    {
+     "object": "jetee_retour",
+     "xy": [
+      11.25,
+      9.25
+     ]
+    }
+   ],
+   "coast_chalk": [
+    {
+     "object": "recifs_retour",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      2.0,
+      5.5
+     ]
+    },
+    {
+     "object": "porte_retour",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "recifs",
+     "xy": [
+      2.5,
+      7.75
+     ]
+    },
+    {
+     "object": "recifs",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    }
+   ],
+   "coast_graveyard": [
+    {
+     "object": "recifs",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      3.0,
+      3.75
+     ]
+    },
+    {
+     "object": "epave_retour",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "epave",
+     "xy": [
+      5.75,
+      9.25
+     ]
+    },
+    {
+     "object": "epave",
+     "xy": [
+      16.5,
+      9.25
+     ]
+    }
+   ],
+   "coast_shoal": [
+    {
+     "object": "jetee",
+     "xy": [
+      1.75,
+      3.5
+     ]
+    },
+    {
+     "object": "recifs_retour",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "recifs",
+     "xy": [
+      3.0,
+      9.0
+     ]
+    },
+    {
+     "object": "epave_retour",
+     "xy": [
+      5.75,
+      9.25
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
+   "coast_phantom": [
+    {
+     "object": "casiers",
+     "xy": [
+      5.75,
+      1.0
+     ]
+    },
+    {
+     "object": "epave_retour",
+     "xy": [
+      2.75,
+      6.75
+     ]
+    },
+    {
+     "object": "phare",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "recifs",
+     "xy": [
+      6.5,
+      9.25
+     ]
+    },
+    {
+     "object": "jetee_retour",
+     "xy": [
+      9.5,
+      9.25
+     ]
+    }
+   ],
+   "coast_twinrocks": [
+    {
+     "object": "recifs",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "epave_retour",
+     "xy": [
+      3.0,
+      4.25
+     ]
+    },
+    {
+     "object": "jetee",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "recifs_retour",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
+   "coast_arsenal": [
+    {
+     "object": "casiers",
+     "xy": [
+      1.75,
+      3.5
+     ]
+    },
+    {
+     "object": "jetee_retour",
+     "xy": [
+      1.5,
+      5.75
+     ]
+    },
+    {
+     "object": "porte",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "epave",
+     "xy": [
+      11.75,
+      2.0
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    }
+   ],
+   "coast_storm": [
+    {
+     "object": "recifs",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "porte_retour",
+     "xy": [
+      1.75,
+      6.5
+     ]
+    },
+    {
+     "object": "recifs_retour",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "phare",
+     "xy": [
+      8.75,
+      8.75
+     ]
+    },
+    {
+     "object": "epave",
+     "xy": [
+      11.0,
+      8.75
+     ]
+    }
+   ],
+   "coast_citadel": [
+    {
+     "object": "recifs",
+     "xy": [
+      2.0,
+      3.5
+     ]
+    },
+    {
+     "object": "phare",
+     "xy": [
+      4.0,
+      4.25
+     ]
+    },
+    {
+     "object": "casiers",
+     "xy": [
+      2.25,
+      7.0
+     ]
+    },
+    {
+     "object": "porte",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "jetee_retour",
+     "xy": [
+      16.5,
+      9.25
+     ]
+    }
+   ],
    "coast_jetty": [
     {
      "object": "casiers",
