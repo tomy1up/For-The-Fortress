@@ -12,7 +12,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Boutique étendue, premier lot (v0.192)** — douze unités (types 10 à 21 : sentinelle, tireur d'élite, arquebusier, bombarde, piquier, pyromancien côté Alliance ; veilleur, javelinier, lance-éclats, catapulte, lance-épieu, brûleur côté Horde) qui réutilisent l'illustration de leur famille. À illustrer (même cadrage que les alternatives `rodeur`, `mousquetaire`, `traqueur`, `grenadier`) puis à animer. Voir `design/Boutique_20_unites_proposition.md`.
 
-- [ ] **Revenant, chapitre 20 (v0.190)** — attaquant neutre (`enemy.neutral.revenant`) qui se relève une fois avec la moitié de ses PV. Silhouette provisoire de l'ours. À illustrer (même cadrage que les neutres), puis marche et animation de relève. Voir `design/Missions_191_200_Revenant.md`.
+- [ ] **Revenant, chapitre 20** — portrait et planche de relève livrés pour branchement. [Aperçus](design/Visuels_Necropole.md#revenant).
 
 - [ ] **Aigle des cimes, chapitre 16 (v0.186)** — nouvel attaquant neutre, rapide et fragile (`enemy.neutral.eagle`). Vol livré en combat. Associer le portrait de l’aigle à la prévision et à l’éclaireur. Voir `design/Missions_151_160_Aigle.md`.
 
@@ -35,6 +35,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 - [ ] **Sanglier** : étude non intégrée et non approuvée (`design/essais/sanglier_peau_continue/README.md`, `design/essais/sanglier_virages/README.md`).
 
 ## Livré
+
+- [x] **Nécropole 191–200 et marche du Revenant** — cinq pièces par carte et trois planches de marche vérifiées en combat. [Aperçus](design/Visuels_Necropole.md#chapitre-20--missions-191-à-200).
 
 - [x] **Nécropole et terres maudites, missions 181–190** — cinq pièces par carte, brume et strates. Vérifié en combat dans les deux factions. [Aperçus](design/Visuels_Necropole.md).
 

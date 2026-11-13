@@ -13,3 +13,20 @@ Les dix cartes ont été contrôlées en combat à ×1 dans les deux factions, a
 - [Missions 181 à 185](essais/necro_ch19/Necropole_181_185.jpg)
 - [Missions 186 à 190](essais/necro_ch19/Necropole_186_190.jpg)
 - [Nécropole Royale, Horde à ×2](essais/necro_ch19/Necropole_Royale_en_combat.jpg)
+
+## Chapitre 20 · missions 191 à 200
+
+Les dix cartes reçoivent cinq pièces chacune. Le Champ d’Ossements compte trois amas de ruines, les Tombes Jumelles reprennent les deux orientations du mausolée et les Obélisques Noirs ont trois pierres à rune verte. Les ancres restent à au moins 1,25 unité des trajets, 1,52 des emplacements et 2,30 des entrées.
+
+### Revenant
+
+Squelette neutre au linceul violet et aux yeux verts. La marche associe des appuis alternés, un léger mouvement du torse et une oscillation des pans de tissu. Trois planches de 24 poses en mode distance, cadre de 372 × 354 px, foulée de 16,6 px. Le portrait PNG fixe est livré dans `assets/enemies/rosters/revenant_v001.png`, avec un cadre `Rect2(0,0,372,354)`, une ancre `Vector2(170,327)` et une hauteur de cadre de 45,5. Le catalogue d’art et les listes d’export restent à mettre à jour pour le portrait.
+
+La planche `rise` est une proposition de 24 images sur 0,72 s. Le squelette se redresse et une lueur verte s’élève autour des pieds. L’aperçu de la relève est une lecture isolée de la planche. La planche reste dans `design/essais/necro_ch20/` en attendant que le jeu accepte l’état `rise` et le déclenche à la relève avec le temps de combat. La logique de retour à mi-vie est déjà vérifiée par les tests du jeu.
+
+Les 26 passages en vague 4 sur les sources de la v0.193 couvrent les deux factions, et les missions 194, 197 et 200 également à ×2. Les 24 poses de marche défilent dans chaque essai. Le validateur couvre 23 dossiers sans problème. Sept suites ciblées passent (31 528 contrôles Godot et 17 tests Python).
+
+- [Le Trône du Roi Mort en combat](essais/necro_ch20/Trone_du_Roi_Mort_en_combat.jpg)
+- [Aperçu isolé de la relève](essais/necro_ch20/Releve_apercu.gif)
+- [Missions 191 à 195](essais/necro_ch20/Necropole_191_195.jpg)
+- [Missions 196 à 200](essais/necro_ch20/Necropole_196_200.jpg)

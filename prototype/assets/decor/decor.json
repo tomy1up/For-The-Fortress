@@ -6846,6 +6846,376 @@
    }
   },
   "placements": {
+   "necro_tombgate": [
+    {
+     "object": "arche",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      1.75,
+      5.0
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      8.5,
+      9.0
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      11.0,
+      9.0
+     ]
+    }
+   ],
+   "necro_wake": [
+    {
+     "object": "steles_retour",
+     "xy": [
+      2.5,
+      1.5
+     ]
+    },
+    {
+     "object": "arbre",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      7.5,
+      1.0
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      8.0,
+      9.0
+     ]
+    },
+    {
+     "object": "arbre_retour",
+     "xy": [
+      11.25,
+      9.25
+     ]
+    }
+   ],
+   "necro_catacombs": [
+    {
+     "object": "steles",
+     "xy": [
+      2.0,
+      5.5
+     ]
+    },
+    {
+     "object": "arche",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      2.75,
+      7.75
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      11.5,
+      1.75
+     ]
+    },
+    {
+     "object": "ossements_retour",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    }
+   ],
+   "necro_bonefield": [
+    {
+     "object": "ossements_retour",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      4.0,
+      4.25
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      5.75,
+      9.25
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      16.75,
+      9.25
+     ]
+    }
+   ],
+   "necro_mire": [
+    {
+     "object": "mausolee_retour",
+     "xy": [
+      1.75,
+      3.5
+     ]
+    },
+    {
+     "object": "arbre",
+     "xy": [
+      7.5,
+      1.0
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      3.0,
+      9.0
+     ]
+    },
+    {
+     "object": "arbre_retour",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
+   "necro_gallows": [
+    {
+     "object": "arbre_retour",
+     "xy": [
+      5.75,
+      1.0
+     ]
+    },
+    {
+     "object": "steles_retour",
+     "xy": [
+      2.75,
+      6.75
+     ]
+    },
+    {
+     "object": "arbre",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      9.5,
+      9.25
+     ]
+    }
+   ],
+   "necro_twintombs": [
+    {
+     "object": "steles_retour",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "mausolee_retour",
+     "xy": [
+      3.0,
+      4.25
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
+   "necro_charnel": [
+    {
+     "object": "ossements",
+     "xy": [
+      1.75,
+      3.25
+     ]
+    },
+    {
+     "object": "arche",
+     "xy": [
+      1.5,
+      5.5
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "arbre",
+     "xy": [
+      11.75,
+      1.75
+     ]
+    },
+    {
+     "object": "ossements_retour",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    }
+   ],
+   "necro_obelisks": [
+    {
+     "object": "obelisque",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "steles",
+     "xy": [
+      1.75,
+      6.5
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "obelisque",
+     "xy": [
+      8.25,
+      9.0
+     ]
+    },
+    {
+     "object": "ossements_retour",
+     "xy": [
+      10.5,
+      8.75
+     ]
+    }
+   ],
+   "necro_throne": [
+    {
+     "object": "obelisque",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "mausolee",
+     "xy": [
+      8.0,
+      1.25
+     ]
+    },
+    {
+     "object": "arbre_retour",
+     "xy": [
+      7.0,
+      8.75
+     ]
+    },
+    {
+     "object": "arche",
+     "xy": [
+      9.5,
+      9.25
+     ]
+    },
+    {
+     "object": "ossements",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
    "necro_gate": [
     {
      "object": "ossements",
