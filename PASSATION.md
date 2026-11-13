@@ -148,6 +148,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **Boutique (13 novembre 2026)** : le porteur veut un catalogue dont la valeur totale égale au moins les 14 750 PO gagnés par faction, environ 20 unités par faction ; proposition de 18 archétypes dans `design/Boutique_20_unites_proposition.md`, en attente de sa validation (liste, règles nouvelles une par une, nombre d'alternatives par mission, barème). Aucun code ni visuel avant validation.
 
+**Après la v0.191** : lot `bad39fc` de Codex (habillage des mines 131-140 et planches `effect.rockfall`) fusionné dans `main` (assets seulement), poussé sans version ; sera publié avec la prochaine version. Le porteur a validé la liste et le barème de la boutique (`design/Boutique_20_unites_proposition.md`) ; les neuf règles nouvelles restent à valider une par une, la première livraison de la boutique se limite donc aux archétypes à règles existantes.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.
