@@ -85,6 +85,9 @@ Sur la demande du porteur, `art/codex` est fusionnée dans `main` et publiée en
 ### 2026-11-13 — Mines 131–140 et planches de l'éboulement intégrées (ouvert)
 Ton lot `bad39fc` est fusionné dans `main` (validateur : 20 dossiers, 0 problème ; `test_decor_art`, `test_rockfall`, `test_rockfall_chapter`, `test_animation_library`, `test_mine_chapter` au vert). Il sera publié avec la prochaine version, que le porteur jugera en jeu.
 
+### 2026-11-13 — Îles flottantes, aigle et rockfall intégrés ; illustrations de boutique à prévoir (ouvert)
+Intégrés dans `main` (v0.192) : mines 131-140 et `effect.rockfall` (`bad39fc`), îles flottantes 141-160, vol de l'aigle et son illustration `aigle_des_cimes_v001.png`, branchée dans `enemy_art.gd` avec ton cadre (`Rect2(0,0,336,256)`, ancre `(179,234)`, hauteur 52) et déclarée dans les trois listes d'export ; `test_enemy_art` accepte l'ombre de l'aigle sous l'ancre. Nouveau besoin à ta file : la boutique étendue ajoute douze unités (types 10 à 21, ids `alliance.sentinel`, `alliance.marksman`, `alliance.arquebusier`, `alliance.bombard`, `alliance.pikeman`, `alliance.pyromancer`, `horde.watcher`, `horde.javelin`, `horde.shardthrower`, `horde.catapult`, `horde.spearman`, `horde.cinderburner`) qui réutilisent provisoirement l'illustration de leur famille ; il faudra des illustrations de boutique et des sprites de combat propres (`design/Boutique_20_unites_proposition.md`). À planifier après le jugement du porteur sur les autres lots.
+
 ## Traité
 
 (vide)

@@ -20,7 +20,7 @@ func run_checks() -> void:
 		check(image.get_pixel(0,0).a < 0.01 and image.get_pixel(image.get_width()-1,image.get_height()-1).a < 0.01,"Absence de fond opaque")
 		check(Rect2(Vector2.ZERO,image.get_size()).encloses(Art.FRAMES[id].source),"Cadre de dessin contenu dans le PNG")
 		var target: Rect2 = Art.destination(id)
-		check(target.end.y == 0.0 and target.position.x < 0.0 and target.end.x > 0.0,"Ancrage des pieds sur la position de l’ennemi")
+		check((target.end.y == 0.0 or (id == "enemy.neutral.eagle" and target.end.y > 0.0 and target.position.y < 0.0)) and target.position.x < 0.0 and target.end.x > 0.0,"Ancrage des pieds sur la position de l’ennemi (l'aigle en vol garde son ombre sous l'ancre)")
 		check(is_equal_approx(target.size.x/target.size.y,Art.FRAMES[id].source.size.x/Art.FRAMES[id].source.size.y),"Illustration sans étirement")
 		for distance in [1.0,5.0]:
 			var identity: Dictionary = {}

@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.192**. Premier lot de la boutique étendue : douze nouvelles unités alternatives (six par faction, 300 à 600 PO, déblocage par missions réussies), boutique paginée ; habillage des mines 131 à 140 et des îles flottantes 141 à 160, planches de l'éboulement et vol de l'aigle (à juger en jeu). [Notes](design/essais/v0192_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.192).
+
 **Prototype v0.191**. Les visuels de Codex en attente sont intégrés pour être jugés en jeu : marches du fantassin, de l'éclaireur elfe, du brise-remparts, du garde royal, du maréchal, du capitaine humain, du colosse, du garde noir, du chef de guerre et de Gueule-de-Vase, nouveau lancer de hache du troll, tempête de sable plus lisible ; branchement des planches de l'éboulement. [Notes](design/essais/v0191_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.191).
 
 **Prototype v0.190**. Chapitre 20, le revenant (missions 191 à 200) : un attaquant neutre qui se relève une fois avec la moitié de ses PV (valeurs de prototype à confirmer, visuel provisoire). **La campagne de 200 missions est entièrement jouable** ; restent la boutique, le mode infini et les difficultés Héroïque et Mythique. [Chapitre 20](design/Missions_191_200_Revenant.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.190).

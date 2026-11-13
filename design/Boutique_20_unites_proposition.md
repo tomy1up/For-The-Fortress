@@ -1,6 +1,6 @@
 # Boutique : proposition de catalogue à 20 unités par faction
 
-**Statut : proposition de Claude Code, à valider par le porteur avant tout code.** Toutes les valeurs sont des réglages de prototype à confirmer. Contexte : CAMP-008 (la boutique ouvre des stratégies grâce à des unités ayant des forces et des faiblesses, aucune remplaçante systématiquement supérieure) et CAMP-012 (les PO des missions 1 à 200 servent à la boutique).
+**Statut : liste des archétypes et barème validés par le porteur le 13 novembre 2026 ; premier lot (six archétypes à règles existantes par faction) livré en v0.192 ; les neuf règles nouvelles restent à valider une par une.** Toutes les valeurs sont des réglages de prototype à confirmer. Contexte : CAMP-008 (la boutique ouvre des stratégies grâce à des unités ayant des forces et des faiblesses, aucune remplaçante systématiquement supérieure) et CAMP-012 (les PO des missions 1 à 200 servent à la boutique).
 
 ## Décision du porteur (13 novembre 2026)
 
@@ -72,3 +72,25 @@ Neuf archétypes réutilisent des règles existantes (statistiques, rebond, expl
 2. Les neuf règles nouvelles : lesquelles valides-tu, lesquelles écartes-tu ?
 3. Une seule unité alternative par mission (règle actuelle) ou plusieurs ?
 4. Le barème de 300 à 1 300 PO et le déblocage par chapitre te conviennent-ils ?
+
+
+## Premier lot livré (v0.192)
+
+Les six premiers archétypes à règles existantes (guetteur, tireur d'élite, mitrailleur, artilleur, lancier, incendiaire), soit douze unités. Valeurs de prototype à confirmer. Chaque unité se débloque avec des PO **après un nombre de missions réussies avec la faction** (10, 20… 60), reste une alternative unique par mission et reçoit les talents de sa famille ; les illustrations sont celles de la famille en attendant Codex.
+
+| Faction | Unité | Famille (talents) | Recrutement | Déblocage | Missions requises | Principe |
+| --- | --- | --- | --- | --- | --- | --- |
+| Alliance | Sentinelle elfe | Archer elfe | 70 or | 300 PO | 10 missions | Longue vue : portée 7, tirs faibles et espacés |
+| Alliance | Tireur d’élite elfe | Arbalétrier nain | 110 or | 360 PO | 20 missions | Un coup décisif (60), recharge de 5 s |
+| Alliance | Arquebusier nain | Archer elfe | 85 or | 420 PO | 30 missions | Rafale : un tir toutes les 0,3 s, 3,2 dégâts |
+| Alliance | Bombarde naine | Mage humain | 120 or | 480 PO | 40 missions | Explosion très large (5 voisins, rayon 1,6), lente |
+| Alliance | Piquier humain | Archer elfe | 55 or | 540 PO | 50 missions | Bon marché, portée courte (2,2) |
+| Alliance | Pyromancien humain | Mage humain | 105 or | 600 PO | 60 missions | Brûlure prolongée (7 par palier), impact faible |
+| Horde | Veilleur des cendres | Lanceur de haches troll | 70 or | 300 PO | 10 missions | Longue vue : portée 7, tirs faibles et espacés |
+| Horde | Lanceur de javeline troll | Lanceur de haches troll | 105 or | 360 PO | 20 missions | Un coup décisif (56), recharge de 4,5 s |
+| Horde | Lance-éclats gobelin | Lanceur de haches troll | 85 or | 420 PO | 30 missions | Rafale : un tir toutes les 0,35 s, 3,5 dégâts |
+| Horde | Catapulte gobeline | Sapeur gobelin | 120 or | 480 PO | 40 missions | Explosion très large (5 voisins, rayon 1,7), lente |
+| Horde | Lance-épieu orc | Lanceur de haches troll | 55 or | 540 PO | 50 missions | Bon marché, portée courte (2,2) |
+| Horde | Brûleur de cendres | Chaman orc | 105 or | 600 PO | 60 missions | Brûlure prolongée (7,2 par palier), impact faible |
+
+La boutique affiche huit unités par faction, deux par page. Les douze unités passent un test d'identité (ni strictement meilleures ni strictement pires que l'unité de départ de leur famille) et un test de combat avec rapport rejouable (`tests/test_shop_lot1.gd`). Limite connue : les libellés de bonus (`Campaign.bonus_description`) ne citent que les quatre alternatives d'origine.

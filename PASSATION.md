@@ -152,6 +152,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **Après la v0.191** : lot `bad39fc` de Codex (habillage des mines 131-140 et planches `effect.rockfall`) fusionné dans `main` (assets seulement), poussé sans version ; sera publié avec la prochaine version. Le porteur a validé la liste et le barème de la boutique (`design/Boutique_20_unites_proposition.md`) ; les neuf règles nouvelles restent à valider une par une, la première livraison de la boutique se limite donc aux archétypes à règles existantes.
 
+**v0.192** : premier lot de la boutique étendue (douze unités, types 10 à 21 de `ROSTER`, cartes et spécialisations dans `shop_catalogue.gd`, déblocage `unlock_missions`, boutique paginée dans `shop_screen.gd`, illustrations provisoires par famille dans `shop_art.gd`) ; lots de Codex intégrés (mines 131-140, rockfall, îles flottantes 141-160, vol et illustration de l'aigle). Prochains lots de boutique : archétypes 7 et suivants ; les règles nouvelles (entravant, marqueur, gardien, pilleur, sapeur d'entrée, réaction en chaîne, unité-pivot…) attendent la validation du porteur une par une. Limite : `Campaign.bonus_description` ne cite que les quatre alternatives d'origine.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

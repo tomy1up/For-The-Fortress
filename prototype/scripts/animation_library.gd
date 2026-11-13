@@ -18,6 +18,8 @@ const DEFENDER_IDS: Array[String] = [
 	"defender.alliance.archer","defender.alliance.crossbow","defender.alliance.mage",
 	"defender.horde.axe","defender.horde.sapper","defender.horde.shaman",
 	"defender.alliance.ranger","defender.alliance.musketeer","defender.horde.stalker","defender.horde.grenadier",
+	"defender.alliance.sentinel","defender.alliance.marksman","defender.alliance.arquebusier","defender.alliance.bombard","defender.alliance.pikeman","defender.alliance.pyromancer",
+	"defender.horde.watcher","defender.horde.javelin","defender.horde.shardthrower","defender.horde.catapult","defender.horde.spearman","defender.horde.cinderburner",
 ]
 
 static var _specs: Dictionary = {}

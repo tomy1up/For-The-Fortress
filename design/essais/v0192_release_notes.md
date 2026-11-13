@@ -1,0 +1,5 @@
+# Prototype v0.192 — Boutique étendue (premier lot), îles flottantes et aigle habillés
+
+- **Boutique, premier lot** (valeurs de prototype à confirmer) : douze nouvelles alternatives, six par faction, du catalogue de vingt unités par faction voulu par le porteur (valeur totale ≥ 14 750 PO). Prix de 300 à 600 PO, **déblocage après 10, 20… 60 missions réussies avec la faction**, une seule alternative choisie par mission (règle inchangée), talents de la famille appliqués. La boutique s'affiche par pages de deux cartes. Illustrations provisoires : celles de la famille de l'unité. Détail : `design/Boutique_20_unites_proposition.md`.
+- **Visuels de Codex** (à juger en jeu) : habillage des mines 131 à 140 et planches `effect.rockfall` (avertissement et blocage de l'éboulement), habillage des îles flottantes 141 à 160, vol de l'aigle des cimes et son illustration, branchée dans la prévision de vague.
+- Limites : les libellés de bonus ne citent que les quatre alternatives d'origine ; les neuf archétypes à règles nouvelles ne sont pas encore codés.
