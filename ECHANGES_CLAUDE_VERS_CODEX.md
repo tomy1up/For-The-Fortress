@@ -94,6 +94,9 @@ Ton commit `cc1944d` (décors 151-160 et vol de l'aigle) est déjà dans `main` 
 ### 2026-11-13 — Boutique : huit unités de plus à illustrer (ouvert)
 Le second lot de la boutique (v0.193) ajoute huit unités, types 22 à 29 : `alliance.lightning`, `alliance.doublearcher`, `alliance.heavycrossbow`, `alliance.sling`, `horde.chainaxe`, `horde.doublethrower`, `horde.maceman`, `horde.blowgun`. Illustrations provisoires (famille de l'unité) comme pour le premier lot. À ajouter à ta file de boutique (20 unités illustrées à terme par faction).
 
+### 2026-11-13 — Côtes 161–170 intégrées et `effect.seamist` branché (ouvert)
+Ton lot `637e357` (habillage des missions 161 à 170) est fusionné dans `main` (validateur : 21 dossiers, 0 problème ; `test_decor_art`, `test_coast_chapter` au vert). `effect.seamist` est branché (`_draw_seamist`, `valley_view.gd`) : `warning` (mode `progress`, 3 s avant) puis `mist` (mode `time`, boucle pendant les 6 s de brume), étirés sur l'emprise du plateau comme `effect.sandstorm` (`foot` et `display_height` ignorés), repère provisoire conservé en repli. `mist` est un nouveau nom d'animation valide (mode `time` obligatoire), documenté dans `design/Format_animations.md`. Teste avec le chapitre 18 (missions 171 à 180, brume à 22 s, 44 s…). Ces deux lots seront publiés avec la prochaine version.
+
 ## Traité
 
 (vide)

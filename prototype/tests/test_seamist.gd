@@ -3,6 +3,7 @@ const Model = preload("res://scripts/valley_model.gd")
 const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 const View = preload("res://scripts/valley_view.gd")
+const Library = preload("res://scripts/animation_library.gd")
 const AFFIX := {"id":"seamist","interval":22,"warning":3,"duration":6,"gold_percent":30}
 var checks := 0
 var failures := 0
@@ -20,6 +21,7 @@ func run_checks() -> void:
 	verify_step_independence()
 	verify_replay()
 	await verify_rendering()
+	await verify_sheets()
 	print("SEAMIST_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
 
@@ -136,3 +138,35 @@ func verify_rendering() -> void:
 		await process_frame
 	check(model.elapsed > 0.0,"Le combat avance pendant le dessin")
 	view.free()
+
+## Habillage par planches (`effect.seamist`) : accepté, dessiné sans modifier le jeu, repli sur le repère provisoire sans planche.
+func verify_sheets() -> void:
+	Library.clear_cache()
+	var spec := {"version":1,"id":"effect.seamist","display_height":100,"foot":[0,0],"animations":{
+		"warning":{"file":"warning.png","frames":6,"frame_size":[64,40],"mode":"progress"},
+		"mist":{"file":"mist.png","frames":8,"frame_size":[64,40],"mode":"time","fps":8}}}
+	check(Library.validation_error(spec) == "","Description de l'effet de brume valide")
+	var wrong: Dictionary = spec.duplicate(true);wrong.animations.mist = {"file":"m.png","frames":4,"frame_size":[64,40],"mode":"event","duration":1.0}
+	check(Library.validation_error(wrong) != "","La brume boucle : mode time obligatoire")
+	var warning_strip := Image.create(6*64,40,false,Image.FORMAT_RGBA8);warning_strip.fill(Color(0.9,0.95,1.0,0.3))
+	var mist_strip := Image.create(8*64,40,false,Image.FORMAT_RGBA8);mist_strip.fill(Color(0.9,0.95,1.0,0.5))
+	Library.register_for_test("effect.seamist",spec,{"warning":ImageTexture.create_from_image(warning_strip),"mist":ImageTexture.create_from_image(mist_strip)})
+	var model := misty()
+	model.gold = 600;model.select_faction(0);model.buy(3,0)
+	model.start()
+	var view := View.new();view.model = model;root.add_child(view)
+	for time in [20.0,24.0]:
+		model.advance(time-model.elapsed)
+		var before: String = JSON.stringify([model.gold,model.rng.state,model.defenders,model.mist_status()])
+		view.queue_redraw()
+		await process_frame
+		await process_frame
+		check(before == JSON.stringify([model.gold,model.rng.state,model.defenders,model.mist_status()]) and not model.mist_status().is_empty(),"Dessiner la brume à %.1f s (planches) ne modifie pas le jeu" % time)
+	view.free()
+	Library.clear_cache()
+	var bare := View.new();bare.model = model;root.add_child(bare)
+	await process_frame
+	bare.queue_redraw()
+	await process_frame
+	check(not model.mist_status().is_empty(),"Sans planche : repère provisoire dessiné sans erreur")
+	bare.free()

@@ -158,6 +158,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.193** : second lot de la boutique (types 22 à 29, archétypes 7 à 10) et règles de cible `Model.target_multiplier` (champs `wounded_bonus`, `heavy_mult`, `small_mult`, `fast_mult` des fiches). Le porteur a validé le 13 novembre 2026 les règles nouvelles (archétypes 8 à 15, 17, 18) : restent à coder entravant, marqueur, gardien, pilleur, sapeur d'entrée, réaction en chaîne, unité-pivot, tourelle de forteresse. `Shop.family_label` : « et ses alternatives » au-delà de deux alternatives (tests de talents adaptés).
 
+**Après la v0.193** : lot `637e357` de Codex (habillage des côtes 161-170) fusionné ; planches `effect.seamist` branchées (`mist` ajouté aux noms d'animation valides). Poussés sans version, à publier avec la prochaine.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

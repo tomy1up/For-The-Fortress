@@ -774,6 +774,7 @@ const ERUPTION_EFFECT_ID := "effect.eruption"
 const REGEN_EFFECT_ID := "effect.regeneration"
 const STORM_EFFECT_ID := "effect.sandstorm"
 const ROCKFALL_EFFECT_ID := "effect.rockfall"
+const SEAMIST_EFFECT_ID := "effect.seamist"
 # Recul horizontal, inclinaison en radians, élévation : habillage des tirs résolus.
 const ATTACK_MOTIONS: Array[Vector3] = [
 	Vector3(2.8,-0.035,0.0), # Archer : traction et petit recul.
@@ -1176,6 +1177,19 @@ func _draw_seamist() -> void:
 	var board: Vector2i = model.map_definition.size
 	var area := PackedVector2Array()
 	for corner in [Vector2.ZERO,Vector2(board.x,0),Vector2(board.x,board.y),Vector2(0,board.y)]: area.append(project(corner))
+	# Habillage de Codex : planches de l'effet `effect.seamist`, étirées sur l'emprise du plateau (avertissement en progression, brume en boucle sur le temps de combat).
+	var spec: Dictionary = SheetAnimations.spec_for(SEAMIST_EFFECT_ID)
+	var sheet_name: String = "warning" if status.state == "warning" else "mist"
+	if not spec.is_empty() and spec.animations.has(sheet_name):
+		var anim: Dictionary = spec.animations[sheet_name]
+		var texture: Texture2D = SheetAnimations.texture_for(SEAMIST_EFFECT_ID,anim)
+		if texture != null:
+			var bounds := Rect2(area[0],Vector2.ZERO)
+			for point in area: bounds = bounds.expand(point)
+			var progress_value: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0) if status.state == "warning" else 0.0
+			var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,model.elapsed,progress_value)))
+			draw_texture_rect_region(texture,bounds,region)
+			return
 	if status.state == "warning":
 		var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
 		var outline: PackedVector2Array = area.duplicate();outline.append(outline[0])
