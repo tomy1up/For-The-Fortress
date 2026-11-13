@@ -5062,6 +5062,376 @@
    }
   },
   "placements": {
+   "sky_aerie": [
+    {
+     "object": "arche",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "rochers",
+     "xy": [
+      1.75,
+      5.0
+     ]
+    },
+    {
+     "object": "rochers_retour",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "ruines",
+     "xy": [
+      8.75,
+      9.0
+     ]
+    },
+    {
+     "object": "jardin",
+     "xy": [
+      11.0,
+      9.0
+     ]
+    }
+   ],
+   "sky_nest": [
+    {
+     "object": "arche_retour",
+     "xy": [
+      2.5,
+      1.75
+     ]
+    },
+    {
+     "object": "rochers_retour",
+     "xy": [
+      5.0,
+      1.5
+     ]
+    },
+    {
+     "object": "jardin",
+     "xy": [
+      7.5,
+      1.0
+     ]
+    },
+    {
+     "object": "rochers",
+     "xy": [
+      7.75,
+      8.75
+     ]
+    },
+    {
+     "object": "ruines_retour",
+     "xy": [
+      11.25,
+      9.0
+     ]
+    }
+   ],
+   "sky_twinpeaks": [
+    {
+     "object": "jardin_retour",
+     "xy": [
+      2.0,
+      5.5
+     ]
+    },
+    {
+     "object": "fleche",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "rochers_retour",
+     "xy": [
+      2.75,
+      7.75
+     ]
+    },
+    {
+     "object": "ruines",
+     "xy": [
+      11.5,
+      1.75
+     ]
+    },
+    {
+     "object": "rochers",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    }
+   ],
+   "sky_triplenest": [
+    {
+     "object": "rochers",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "jardin",
+     "xy": [
+      4.0,
+      4.25
+     ]
+    },
+    {
+     "object": "ruines",
+     "xy": [
+      2.75,
+      7.75
+     ]
+    },
+    {
+     "object": "arche",
+     "xy": [
+      9.5,
+      1.0
+     ]
+    },
+    {
+     "object": "rochers_retour",
+     "xy": [
+      5.75,
+      9.25
+     ]
+    }
+   ],
+   "sky_ledge": [
+    {
+     "object": "ruines",
+     "xy": [
+      1.75,
+      5.0
+     ]
+    },
+    {
+     "object": "fleche",
+     "xy": [
+      7.5,
+      1.0
+     ]
+    },
+    {
+     "object": "rochers",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "rochers_retour",
+     "xy": [
+      8.0,
+      9.0
+     ]
+    },
+    {
+     "object": "jardin",
+     "xy": [
+      10.25,
+      9.0
+     ]
+    }
+   ],
+   "sky_col": [
+    {
+     "object": "ruines_retour",
+     "xy": [
+      6.0,
+      1.0
+     ]
+    },
+    {
+     "object": "arche",
+     "xy": [
+      8.25,
+      1.25
+     ]
+    },
+    {
+     "object": "jardin_retour",
+     "xy": [
+      2.75,
+      6.75
+     ]
+    },
+    {
+     "object": "fleche",
+     "xy": [
+      7.0,
+      9.25
+     ]
+    },
+    {
+     "object": "rochers",
+     "xy": [
+      9.25,
+      9.0
+     ]
+    }
+   ],
+   "sky_raptors": [
+    {
+     "object": "ruines",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "rochers_retour",
+     "xy": [
+      3.0,
+      4.25
+     ]
+    },
+    {
+     "object": "fleche",
+     "xy": [
+      9.0,
+      1.0
+     ]
+    },
+    {
+     "object": "rochers",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    },
+    {
+     "object": "jardin",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
+   "sky_roost": [
+    {
+     "object": "rochers",
+     "xy": [
+      1.75,
+      3.25
+     ]
+    },
+    {
+     "object": "arche_retour",
+     "xy": [
+      1.5,
+      5.5
+     ]
+    },
+    {
+     "object": "fleche",
+     "xy": [
+      8.75,
+      1.0
+     ]
+    },
+    {
+     "object": "ruines",
+     "xy": [
+      11.75,
+      2.0
+     ]
+    },
+    {
+     "object": "jardin",
+     "xy": [
+      6.0,
+      9.25
+     ]
+    }
+   ],
+   "sky_azurefall": [
+    {
+     "object": "ruines",
+     "xy": [
+      5.25,
+      1.0
+     ]
+    },
+    {
+     "object": "jardin_retour",
+     "xy": [
+      1.75,
+      6.5
+     ]
+    },
+    {
+     "object": "rochers",
+     "xy": [
+      3.0,
+      9.25
+     ]
+    },
+    {
+     "object": "rochers_retour",
+     "xy": [
+      7.75,
+      8.75
+     ]
+    },
+    {
+     "object": "arche",
+     "xy": [
+      10.5,
+      8.75
+     ]
+    }
+   ],
+   "sky_throne": [
+    {
+     "object": "arche_retour",
+     "xy": [
+      5.0,
+      1.25
+     ]
+    },
+    {
+     "object": "dome",
+     "xy": [
+      8.0,
+      1.25
+     ]
+    },
+    {
+     "object": "ruines_retour",
+     "xy": [
+      7.0,
+      8.75
+     ]
+    },
+    {
+     "object": "fleche",
+     "xy": [
+      9.5,
+      9.25
+     ]
+    },
+    {
+     "object": "jardin",
+     "xy": [
+      16.5,
+      9.0
+     ]
+    }
+   ],
    "sky_pontoon": [
     {
      "object": "arche",

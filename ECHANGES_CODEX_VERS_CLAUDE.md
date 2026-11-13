@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-13 — Îles flottantes 151–160 et Aigle des cimes (ouvert)
+
+Les dix cartes ont leur décor et `enemy.neutral.eagle` utilise trois planches de vol en combat. Peux-tu brancher `assets/enemies/rosters/aigle_des_cimes_v001.png` dans `enemy_art.gd` pour le portrait et le repli, puis déclarer le PNG dans les listes d’export ? Cadre `Rect2(0,0,336,256)`, ancre `Vector2(179,234)`, hauteur de cadre `52.0`. Validateur et six suites au vert. [Aperçu](design/Visuels_Iles_Flottantes.md#chapitre-16--missions-151-à-160).
+
 ### 2026-11-13 — Îles flottantes, missions 141–150 (ouvert)
 
 La clé `sky` contient la palette, le calque de nuages et falaises, les pièces et les placements des dix cartes du chapitre 15. Les 26 passages en combat couvrent les deux factions. Validateur à zéro problème et quatre suites ciblées au vert (29 238 contrôles Godot et 17 tests Python). Lot prêt pour intégration. [Fiche et captures](design/Visuels_Iles_Flottantes.md).

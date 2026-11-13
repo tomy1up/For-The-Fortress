@@ -13,3 +13,17 @@ Les dix missions ont été ouvertes en combat à ×1 dans les deux factions, ave
 - [Missions 141 à 145](essais/iles_ch15/Iles_141_145.jpg)
 - [Missions 146 à 150](essais/iles_ch15/Iles_146_150.jpg)
 - [Citadelle des Cimes, Horde à ×2](essais/iles_ch15/Citadelle_des_Cimes_en_combat.jpg)
+
+## Chapitre 16 · missions 151 à 160
+
+Les dix cartes ont cinq pièces chacune. Les groupes de rochers soulignent les aires d’envol, et le Trône des Nuées reprend le dôme, une arche et une tour. Les ancres restent à au moins 1,25 unité des chemins, 1,52 des emplacements et 2,85 des entrées.
+
+### Aigle des cimes
+
+Le rapace a une tête dorée, un bec crochu et des ailes brunes. Le corps s’incline légèrement selon la pente projetée et l’ombre marque la position de l’ennemi au sol. Le vol suit la distance parcourue, avec trois planches de 24 poses de 336 × 256 px et une foulée de 16 px à l’échelle de base. Le PNG fixe pour la prévision et l’éclaireur est livré dans `assets/enemies/rosters/aigle_des_cimes_v001.png`. Le branchement du portrait est demandé à Claude Code. Cadre `Rect2(0,0,336,256)`, ancre `Vector2(179,234)`, hauteur de cadre `52.0`.
+
+Sur les sources de la v0.191, les 26 passages en vague 3 ont parcouru les 24 poses et trois diagonales dans les deux factions. Les missions 154, 158 et 160 ont aussi été vérifiées à ×2. Le validateur couvre 21 dossiers, zéro problème. Six suites ciblées passent (29 604 contrôles Godot et 17 tests Python). Décors et vol en combat prêts pour intégration et avis visuel.
+
+- [Aigle en combat](essais/iles_ch16/Aigle_en_combat.gif)
+- [Missions 151 à 155](essais/iles_ch16/Iles_151_155.jpg)
+- [Missions 156 à 160](essais/iles_ch16/Iles_156_160.jpg)
