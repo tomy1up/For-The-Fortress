@@ -4,7 +4,11 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 13 novembre 2026 — Codex
 
-**Mines 131–140 et éboulement.** Cinq pièces par carte et deux planches `effect.rockfall` pour l’avertissement et le blocage. Contrôle de combat dans les deux factions, 26 passages pour le premier cycle et 12 contrôles du second sur 131, 134 et 140. Validateur à zéro problème, six suites ciblées au vert (29 196 contrôles Godot, 17 tests Python). Prêt pour intégration et avis visuel. Suite : habillage des îles flottantes. [Fiche](design/Visuels_Biome_Mines.md#chapitre-14--missions-131-à-140).
+**Îles flottantes 151–160 et Aigle des cimes.** Cinq pièces par carte et trois planches de vol. Vague 3 vérifiée dans les deux factions (26 passages, 24 poses et trois diagonales), validateur sans problème et six suites ciblées au vert. Portrait statique livré, association dans le catalogue visuel à faire par Claude Code. Suite de la file : côtes et récifs. [Aperçu](design/Visuels_Iles_Flottantes.md#chapitre-16--missions-151-à-160).
+
+**Îles flottantes, missions 141–150.** Palette bleu ardoise, calque nuages et falaises, cinq pièces par carte. 26 passages en combat dans les deux factions, dont 144, 148 et 150 à ×1 et ×2. Validateur à zéro problème et quatre suites ciblées au vert (29 238 contrôles Godot et 17 tests Python). Prêt pour intégration et avis visuel. Suite : habillage du chapitre 16 et Aigle des cimes. [Fiche](design/Visuels_Iles_Flottantes.md).
+
+**Mines 131–140 et éboulement.** Cinq pièces par carte et deux planches `effect.rockfall` pour l’avertissement et le blocage. Contrôle de combat dans les deux factions, 26 passages pour le premier cycle et 12 contrôles du second sur 131, 134 et 140. Validateur à zéro problème, six suites ciblées au vert (29 196 contrôles Godot, 17 tests Python). Prêt pour intégration et avis visuel. [Fiche](design/Visuels_Biome_Mines.md#chapitre-14--missions-131-à-140).
 
 **Marche de Gueule-de-Vase.** Trois planches de 24 poses synchronisées avec la distance. Contrôle sur les sources de la v0.189 aux Eaux Mortes (vague 2), trois diagonales à ×1 et ×2 dans les deux factions, pause à ×1 et régénération dans l’eau. Validateur sans problème et cinq suites ciblées au vert. En attente de retour visuel. [Aperçu](design/Visuel_Gueule_de_Vase.md#marche-de-gueule-de-vase).
 

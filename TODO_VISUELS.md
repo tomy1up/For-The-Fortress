@@ -16,9 +16,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Côtes et récifs, missions 161–170 (v0.187)** — neuvième biome choisi par le porteur (12 novembre 2026). Palette provisoire (`coast` dans `assets/decor/decor.json`), sans pièce ni placement. Cartes : `prototype/scripts/coast_maps.gd`. En fin de file.
 
-- [ ] **Aigle des cimes, chapitre 16 (v0.186)** — nouvel attaquant neutre, rapide et fragile (`enemy.neutral.eagle`). Silhouette provisoire du loup. À illustrer (même cadrage que les neutres), puis marche/vol en planches. Voir `design/Missions_151_160_Aigle.md`.
-
-- [ ] **Îles flottantes et cité céleste, missions 141–150 (v0.185)** — biome confirmé par le porteur le 12 novembre 2026. Palette provisoire (`sky` dans `assets/decor/decor.json`), sans pièce ni placement. Cartes : `prototype/scripts/sky_maps.gd`. Ordre de la file : mines du chapitre 14 et éboulement d'abord.
+- [ ] **Aigle des cimes, chapitre 16 (v0.186)** — nouvel attaquant neutre, rapide et fragile (`enemy.neutral.eagle`). Vol livré en combat. Associer le portrait de l’aigle à la prévision et à l’éclaireur. Voir `design/Missions_151_160_Aigle.md`.
 
 - [x] **Variantes du décor volcanique** — basalte éclaté, ruine d’angle et 120 placements recomposés sur les missions 61–80. Contrôle en combat dans les deux factions et à ×2 sur les six cases du Cratère Fumant. [Variantes et captures](design/Visuels_Biome_Volcanique.md#variantes-et-placements-des-missions-61-à-80)
 
@@ -39,6 +37,10 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 - [ ] **Sanglier** : étude non intégrée et non approuvée (`design/essais/sanglier_peau_continue/README.md`, `design/essais/sanglier_virages/README.md`).
 
 ## Livré
+
+- [x] **Îles flottantes 151–160 et vol de l’Aigle des cimes** — cinq pièces par carte, trois planches en combat. Portrait livré pour branchement. [Aperçu](design/Visuels_Iles_Flottantes.md#chapitre-16--missions-151-à-160).
+
+- [x] **Îles flottantes et cité céleste, missions 141–150** — cinq pièces par carte, nuages et falaises. Prêt pour intégration et avis visuel. [Aperçus](design/Visuels_Iles_Flottantes.md).
 
 - [x] **Souterrains et mines, missions 131–140 et éboulement** — cinq pièces par carte, avertissement et blocage animés. Contrôles en combat dans les deux factions. Prêt pour intégration et avis visuel. [Aperçus](design/Visuels_Biome_Mines.md#chapitre-14--missions-131-à-140).
 
