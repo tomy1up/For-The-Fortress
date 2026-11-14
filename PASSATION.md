@@ -4,6 +4,16 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Mage de givre, type 30.** Visuel fixe bien accueilli par le porteur. Comparatif à E2, portrait, déblocage, recrutement et premier tir avec éclat cyan vérifiés sur copie v0.198. 121 contrôles d’illustrations réussis. Intégration et animation du lâcher à suivre. [Fiche](design/Visuels_Boutique_Mage_Givre.md).
+
+**Sarbacane gobeline, type 29.** Visuel fixe validé par le porteur le 14 novembre 2026 (`0230eef`), prêt à intégrer. Comparatif à E2, portrait, déblocage, recrutement et premier tir avec un dard d’essai vérifiés sur copie v0.198. 116 contrôles d’illustrations réussis. [Fiche](design/Visuels_Boutique_Sarbacane.md).
+
+**Lanceur de masse orc, type 28.** Visuel fixe validé. Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.198. 111 contrôles d’illustrations réussis. Sprite à intégrer. Projectile et geste de lâcher à réaliser. [Fiche](design/Visuels_Boutique_Lanceur_Masse.md).
+
+**Lanceur double troll, type 27.** Visuel fixe validé. Comparatif à E2 et contrôle du portrait, du déblocage, du recrutement et du premier tir sur copie v0.198. 106 contrôles d’illustrations réussis. Sprite à intégrer. Alternance des bras et raccords de lâcher à animer. [Fiche](design/Visuels_Boutique_Lanceur_Double.md).
+
+**Hache en chaîne, type 26.** Visuel fixe bien accueilli par le porteur. Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.198, 101 contrôles d’illustrations réussis. Sprite à intégrer. Lâcher, projectile à deux lobes et représentation des rebonds à produire. [Fiche](design/Visuels_Boutique_Hache_En_Chaine.md).
+
 **Fronde elfe, type 25.** Proposition illustrée et comparée à l’Archer elfe et à l’Archer double sur le plateau. Copie v0.197 : portrait, déblocage, recrutement et premier tir vérifiés, 100 contrôles d’illustrations réussis. Visuel fixe validé par le porteur le 14 novembre 2026 et prêt à intégrer (`37a409a`). Le raccord entre la poche et le galet reste à animer. [Fiche](design/Visuels_Boutique_Fronde.md).
 
 **Effets de boutique.** Six repères transparents pour les cinq effets et l’explosion de volatilité. Lisibilité comparée sur une maquette à taille réelle avec trois statuts simultanés. Branchement et contrôle en combat à faire. [Fiche](design/Visuels_Effets_Boutique.md).

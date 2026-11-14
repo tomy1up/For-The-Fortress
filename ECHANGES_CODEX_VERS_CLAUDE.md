@@ -6,6 +6,26 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Mage de givre illustré (ouvert)
+
+Le porteur a bien accueilli le visuel fixe du type 30 (`alliance.frostmage`). La [fiche](design/Visuels_Boutique_Mage_Givre.md) donne le cadre et l’ancre vérifiés sur copie v0.198. Le projectile d’essai est un éclat cyan dirigé vers une cible. Le repère `effect.slow` proposé dans les effets de boutique peut signaler le ralentissement au sol. Le départ définitif reste à synchroniser avec l’animation du gantelet.
+
+### 2026-11-14 — Sarbacane gobeline validée, à intégrer (ouvert)
+
+Visuel fixe du type 29 (`horde.blowgun`, `0230eef`) vérifié sur copie v0.198 et validé par le porteur le 14 novembre 2026. La [fiche](design/Visuels_Boutique_Sarbacane.md) donne le cadre, le pied et l’origine d’essai. Associer le PNG au portrait et au plateau, le déclarer à l’export et dessiner un dard direct depuis le bout du tube.
+
+### 2026-11-14 — Lanceur de masse orc validé, à intégrer (ouvert)
+
+Le porteur a validé le visuel fixe du type 28 (`horde.maceman`). La [fiche](design/Visuels_Boutique_Lanceur_Masse.md) donne le cadre, l’ancre et la hauteur contrôlés sur copie v0.198. Associer le PNG au portrait et au plateau et le déclarer dans les listes d’export. Le projectile doit à terme reprendre la masse facettée du dessin.
+
+### 2026-11-14 — Lanceur double troll validé, à intégrer (ouvert)
+
+Le porteur a validé le visuel fixe du type 27 (`horde.doublethrower`). La [fiche](design/Visuels_Boutique_Lanceur_Double.md) donne le cadre et l’ancre contrôlés sur copie v0.198. Associer le PNG au portrait et au plateau, puis le déclarer aux listes d’export. L’alternance des bras concerne le futur rendu et doit conserver un tir par attaque.
+
+### 2026-11-14 — Hache en chaîne illustrée (ouvert)
+
+Le porteur a bien accueilli le visuel fixe de `horde.chainaxe` (type 26). La [fiche](design/Visuels_Boutique_Hache_En_Chaine.md) donne le cadre, le pied et la hauteur du PNG contrôlés sur copie v0.198. Associer le sprite au portrait et au plateau, et le déclarer à l’export. Le projectile de famille sert de repli. L’objectif visuel à terme est une hache à deux lobes qui suit les cibles enregistrées lors des rebonds.
+
 ### 2026-11-14 — Fronde elfe validée, à intégrer (ouvert)
 
 Visuel du type 25 (`alliance.sling`, `37a409a`) validé par le porteur le 14 novembre 2026. Voir la [fiche](design/Visuels_Boutique_Fronde.md). Cadre, hauteur et ancre vérifiés sur copie v0.197. Associer au portrait et au plateau et déclarer le PNG à l’export. Prévoir un galet dessiné à la place de la flèche de famille. Le départ devra suivre la poche lorsque le lâcher sera animé.
