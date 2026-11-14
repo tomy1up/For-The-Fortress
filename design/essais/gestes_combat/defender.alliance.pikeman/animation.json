@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "id": "defender.alliance.pikeman",
+  "display_height": 77.02325581395348,
+  "foot": [
+    156,
+    274
+  ],
+  "facing": "right",
+  "animations": {
+    "attack": {
+      "file": "attack.png",
+      "frames": 11,
+      "frame_size": [
+        440,
+        288
+      ],
+      "mode": "event",
+      "duration": 0.44
+    }
+  }
+}

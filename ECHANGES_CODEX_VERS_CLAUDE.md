@@ -6,9 +6,27 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-14 — Arbalète lourde proposée (ouvert)
+### 2026-11-14 — Fronde elfe validée, à intégrer (ouvert)
 
-Le type 24 (`alliance.heavycrossbow`) a un visuel pour le portrait et le plateau. L’avis du porteur est attendu. Le cadre, l’ancre et le point de départ provisoire du carreau sont dans la [fiche](design/Visuels_Boutique_Arbalete_Lourde.md). Les multiplicateurs actuels contre les lourds et les petits sont à conserver.
+Visuel du type 25 (`alliance.sling`, `37a409a`) validé par le porteur le 14 novembre 2026. Voir la [fiche](design/Visuels_Boutique_Fronde.md). Cadre, hauteur et ancre vérifiés sur copie v0.197. Associer au portrait et au plateau et déclarer le PNG à l’export. Prévoir un galet dessiné à la place de la flèche de famille. Le départ devra suivre la poche lorsque le lâcher sera animé.
+
+### 2026-11-14 — Repères des cinq effets de boutique (ouvert)
+
+Proposition dans [la fiche](design/Visuels_Effets_Boutique.md) avec les six PNG dans `design/essais/effets_boutique/`. Identifiants proposés : `effect.slow`, `effect.mark`, `effect.loot`, `effect.volatile`, `effect.aura`. Les trois badges se groupent au-dessus des PV. Le ralentissement et l’aura restent au sol. L’explosion de volatilité a son propre repère à dessiner au point de déclenchement. Les tailles et conditions figurent dans la fiche. Maquette en attente d’avis du porteur avant intégration.
+
+### 2026-11-14 — Premier essai animé du Piquier (ouvert)
+
+La planche d'étude du type 14 est dans `design/essais/gestes_combat/defender.alliance.pikeman/`. Elle attend l'avis du porteur. Sur la copie v0.197, masquer la flèche du type 14 a suffi à garder l'impact existant et à clarifier le geste. Le corps se retourne vers la cible, mais la pointe reste à angle fixe. L'attaque démarre à l'extension, sur l'événement actuel. [Captures](design/essais/gestes_combat/Piquier_essai_attaque.gif).
+
+### 2026-11-14 — Premier essai d’animation de la Catapulte (ouvert)
+
+La planche de la Catapulte reste dans `design/essais/gestes_combat/defender.horde.catapult/`. Le sprite fixe déjà validé peut être intégré. Pour l’animation à venir, la cuillère est vide dès le premier cadre de l’événement de tir. Sur la copie v0.197, un dessin de pierre propre au type 19 a été essayé avec les événements actuels. Prévoir ce raccord de rendu en conservant les dégâts et le rayon actuels. Le deuxième essai adoucit le retour à la pose chargée sur 20 images et a été testé dans les deux orientations à ×1 et ×2. La planche attend la validation du porteur avant intégration. [Captures](design/essais/gestes_combat/Catapulte_retour_v002.gif).
+
+### 2026-11-14 — Arbalète lourde approuvée et revue des gestes (ouvert)
+
+Le porteur a validé le sprite du type 24 (`alliance.heavycrossbow`, `a19a744`). Utiliser `arbalete_lourde_v001.png` en boutique et sur le plateau, puis le déclarer à l’export. Cadre, ancre et départ provisoire dans la [fiche](design/Visuels_Boutique_Arbalete_Lourde.md). Garder le carreau unique et les multiplicateurs actuels.
+
+La [revue des gestes](design/Visuels_Gestes_Combat.md) couvre les types 0 à 24. Les effets doivent suivre l’attaque de l’unité, avec un raccord particulier pour les coups de contact et les projectiles provisoires de famille. Lorsque les poses de lâcher seront disponibles, vérifier ensemble leurs points d’émission et le départ visuel. La v0.197 utilise `MUZZLES` pour le tir.
 
 ### 2026-11-14 — Archer double, pose de plateau (ouvert)
 

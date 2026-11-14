@@ -21,6 +21,8 @@ Choix de technique à arbitrer par le porteur, pilote à l'appui :
 
 ## 2. Contraintes communes
 
+- Commencer chaque nouvelle unité par sa mécanique d’attaque, sa pose de garde et sa pose de contact ou de lâcher. Reprendre les unités déjà illustrées à partir de la [revue des gestes](design/Visuels_Gestes_Combat.md), qui relie les sprites des types 0 à 24 à leurs attaques et aux raccords visuels à produire.
+
 - Style cartoon retenu : `design/Assets_Alliance_v061.md`, `design/Assets_Horde_v060.md`, `design/Assets_Ennemis_v064.md`. Les nouvelles unités doivent rester cohérentes avec ces références et lisibles à la taille de jeu (hauteur d'affichage d'environ 34 px pour un ennemi standard, voir `FRAMES` dans `scripts/enemy_art.gd`).
 - Vue isométrique : les routes suivent des diagonales (quatre directions de déplacement à l'écran). Une route presque de face reste à dessiner (limite connue du loup). Fournir au moins deux orientations (droite et gauche, la seconde pouvant être le miroir quand la symétrie le permet) ; la véritable vue frontale est un bonus.
 - Fond transparent, pas de scintillement une fois réduit (niveaux de détail), point d'appui au sol défini, boucle de marche fermée sans à-coup.

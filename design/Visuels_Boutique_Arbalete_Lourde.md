@@ -1,6 +1,6 @@
 # Boutique · Arbalète lourde
 
-Proposition du 14 novembre 2026 pour le type 24 (`alliance.heavycrossbow`), en attente d’avis artistique. L’arbalétrière naine est à genou, en armure vert patiné, avec une protection d’avant-bras ivoire. Elle porte son arbalète près du corps. La posture basse la distingue de l’Arbalétrier nain. L’arbalète reste portée afin de la distinguer des pièces de siège.
+Visuel du type 24 (`alliance.heavycrossbow`) approuvé par le porteur le 14 novembre 2026 (`a19a744`). L’arbalétrière naine est à genou, en armure vert patiné, avec une protection d’avant-bras ivoire. Elle porte son arbalète près du corps. La posture basse la distingue de l’Arbalétrier nain. L’arbalète reste portée afin de la distinguer des pièces de siège.
 
 [Comparatif sur le plateau](essais/boutique_guetteurs/Arbalete_lourde_comparatif.jpg)
 
