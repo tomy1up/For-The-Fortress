@@ -6,7 +6,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 **Arbalète lourde, type 24.** Visuel approuvé par le porteur (`a19a744`). Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 95 contrôles réussis lors de la livraison du sprite. Intégration à suivre. [Fiche](design/Visuels_Boutique_Arbalete_Lourde.md).
 
-**Revue des gestes d’attaque.** Après le retour du porteur, revue des sprites des types 0 à 24 face au catalogue, au modèle et au rendu v0.197. Le document précise les appuis, prises, lâchers et effets pour chacun. Poses d’attaque à esquisser en priorité pour le Piquier et la Catapulte. Cette passe documentaire ne livre aucune nouvelle animation. [Revue](design/Visuels_Gestes_Combat.md).
+**Revue des gestes d’attaque.** Après le retour du porteur, revue des types 0 à 24 face au catalogue, au modèle et au rendu v0.197. Le document précise les appuis, prises, lâchers et effets pour chacun. Deux poses d’étude ont été dessinées pour le Piquier et la Catapulte et comparées à l’échelle du plateau. Alignement des appuis, transitions et essai animé en jeu restent à faire. [Revue et comparatif](design/Visuels_Gestes_Combat.md).
 
 **Archer double, type 23.** Apparence bien accueillie par le porteur. Variante d’attente avec arc ivoire abaissé et main au carquois présentée en comparaison sur le plateau. Copie v0.197 : portrait, déblocage, recrutement et premier tir vérifiés, 90 contrôles d’illustrations réussis. [Fiche](design/Visuels_Boutique_Archer_Double.md).
 

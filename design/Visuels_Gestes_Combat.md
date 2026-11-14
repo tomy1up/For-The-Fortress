@@ -46,4 +46,6 @@ Revue du 14 novembre 2026 à partir de la v0.197 et des sprites de la branche ar
 
 ## Raccord au jeu
 
+Les premières études confrontent la garde du Piquier à sa pose de contact, et la Catapulte chargée à sa pose immédiatement après le départ de la pierre. Les deux poses sont lisibles à l’échelle du plateau dans le comparatif. Les pieds du Piquier et les patins de la Catapulte devront être alignés image par image avant de construire les transitions. Ces PNG d’étude attendent un avis artistique et ne sont pas chargés par le jeu. [Comparatif des poses](essais/gestes_combat/Piquier_et_Catapulte.jpg)
+
 En v0.197, le projectile est dessiné selon la famille de combat, puis placé à partir de `MUZZLES` et de la transformation d’attaque. Le `muzzle` des planches n’est pas utilisé par ce rendu. Le modèle résout le tir avant son animation. Pour les unités dont la garde et le lâcher ont des origines différentes, vérifier dans le jeu la synchronisation entre l’image, le point d’émission et l’effet. Si le rendu doit évoluer, convenir du raccord avec Claude Code en gardant le moment d’application des dégâts et le ciblage actuels.
