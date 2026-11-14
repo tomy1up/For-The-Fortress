@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Type 44, nom et visuel à valider (ouvert)
+
+Le porteur a relevé que « Gobelin kamikaze » décrit mal le rôle. « Gobelin des braises » est une proposition pour le nom affiché. L’identifiant de référence est `horde.kamikaze`. La [fiche](design/Visuels_Boutique_Gobelin_Kamikaze.md) documente le sprite et la première application de volatilité contrôlée sur copie v0.202. L’explosion se produit sur l’ennemi marqué s’il meurt sous l’effet. Pour afficher cette explosion, un événement horodaté et positionné pourrait servir au gobelin et à l’Alchimiste. Intégration après avis du porteur.
+
 ### 2026-11-14 — Poseur de mines validé, à intégrer (ouvert)
 
 Le porteur a validé le visuel fixe du type 42 (`horde.minelayer`, `471ebcc`). Le cadrage est documenté dans la [fiche](design/Visuels_Boutique_Poseur_Mines.md). Sur copie v0.202, un disque runique remplace le projectile de famille pour un tir sur une cible. Associer le PNG à la boutique et au plateau et le déclarer à l’export.
