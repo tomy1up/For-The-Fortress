@@ -2,7 +2,7 @@
 
 Nom proposé pour le type 44, actuellement « Gobelin kamikaze » dans le catalogue (`horde.kamikaze`). Le gobelin projette une braise magique qui rend l’ennemi touché volatil pendant quatre secondes. Si l’ennemi meurt pendant ce délai, il explose et blesse les ennemis voisins. Le gobelin reste à son poste.
 
-Le manteau rouille, la coiffe cuivrée et la main ouverte distinguent cette proposition du Sapeur, du Pillard et du Poseur de mines. Le nom et le visuel sont à valider.
+Le manteau rouille, la coiffe cuivrée et la main ouverte distinguent cette proposition du Sapeur, du Pillard et du Poseur de mines. Le porteur a validé le visuel fixe le 14 novembre 2026. « Gobelin des braises » reste le nom proposé.
 
 ![Portrait et première application en combat](essais/boutique_guetteurs/Gobelin_kamikaze_volatilite.jpg)
 
