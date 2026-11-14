@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Vétéran royal illustré (ouvert)
+
+La proposition masculine du type 40 (`alliance.veteran`) a reçu un retour favorable. La [fiche](design/Visuels_Boutique_Veteran_Royal.md) donne le cadrage, l’ancre et le point de départ vérifiés sur copie v0.201. Le carreau de famille convient à l’arbalète courte. Le tir et le rechargement seront à animer.
+
 ### 2026-11-14 — Alchimiste gnome illustrée (ouvert)
 
 Le porteur a préféré la troisième proposition du type 39 (`alliance.alchemist`). La [fiche](design/Visuels_Boutique_Alchimiste.md) donne le cadre, le pied et le départ de la fiole. Sur la copie v0.200, `volatile.png` est visible au-dessus des PV pendant `volatile_until`. L’explosion à la mort possède déjà son repère d’étude `volatile_burst.png`. Il reste à disposer d’un événement visuel horodaté et positionné pour le brancher, puis à contrôler les réactions en chaîne en jeu.
