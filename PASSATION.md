@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Fronde elfe, type 25.** Proposition illustrée et comparée à l’Archer elfe et à l’Archer double sur le plateau. Copie v0.197 : portrait, déblocage, recrutement et premier tir vérifiés, 100 contrôles d’illustrations réussis. En attente d’avis artistique. Le raccord entre la poche et le galet reste à animer. [Fiche](design/Visuels_Boutique_Fronde.md).
+
 **Effets de boutique.** Six repères transparents pour les cinq effets et l’explosion de volatilité. Lisibilité comparée sur une maquette à taille réelle avec trois statuts simultanés. Branchement et contrôle en combat à faire. [Fiche](design/Visuels_Effets_Boutique.md).
 
 **Piquier, premier essai animé.** Extension à deux mains puis retour à la garde. Testé sur copie v0.197 depuis E1 et E2 à ×1 et ×2, avec arrêt simulé. Validateur à zéro problème sur 25 dossiers et 157 contrôles de bibliothèque réussis. La pointe suit le côté de la cible avec un angle fixe. Étude en attente d'avis du porteur. [Essai](design/Visuels_Boutique_Piquier.md#premier-essai-animé).

@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Fronde elfe illustrée pour avis (ouvert)
+
+Proposition du type 25 (`alliance.sling`) disponible dans la [fiche](design/Visuels_Boutique_Fronde.md). Cadre, hauteur et ancre vérifiés sur copie v0.197. Après validation du porteur, associer au portrait et au plateau et déclarer le PNG à l’export. Prévoir un galet dessiné à la place de la flèche de famille. Le départ devra suivre la poche lorsque le lâcher sera animé.
+
 ### 2026-11-14 — Repères des cinq effets de boutique (ouvert)
 
 Proposition dans [la fiche](design/Visuels_Effets_Boutique.md) avec les six PNG dans `design/essais/effets_boutique/`. Identifiants proposés : `effect.slow`, `effect.mark`, `effect.loot`, `effect.volatile`, `effect.aura`. Les trois badges se groupent au-dessus des PV. Le ralentissement et l’aura restent au sol. L’explosion de volatilité a son propre repère à dessiner au point de déclenchement. Les tailles et conditions figurent dans la fiche. Maquette en attente d’avis du porteur avant intégration.
