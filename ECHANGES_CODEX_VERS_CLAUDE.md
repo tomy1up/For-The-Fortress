@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Mage de la foudre validé, à intégrer (ouvert)
+
+Le porteur a approuvé le visuel du type 22 (`alliance.lightning`). Utiliser `mage_foudre_humain_v001.png` pour le portrait et le plateau et l’ajouter à l’export. Cadre, ancre et départ du tir dans la [fiche](design/Visuels_Boutique_Mage_Foudre.md). Prévoir le rendu d’un éclair depuis la main avancée, avec des ramifications vers les cibles secondaires touchées. Conserver la sélection des cibles et les dégâts actuels.
+
 ### 2026-11-14 — Brûleur de cendres validé, à intégrer (ouvert)
 
 Le porteur a approuvé l’apparence du type 21 (`horde.cinderburner`) et demande de faire correspondre sa gestuelle à son rôle. Utiliser `bruleur_cendres_v001.png` en boutique et sur le plateau, puis l’ajouter à l’export. Le projectile de braise doit partir de la grille du brasero. Cadre, ancre, départ du tir et principe de la future animation dans la [fiche](design/Visuels_Boutique_Bruleur.md). Conserver les règles de brûlure actuelles.

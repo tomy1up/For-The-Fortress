@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Mage de la foudre, type 22.** Visuel approuvé par le porteur. Portrait, recrutement et premier tir vérifiés sur copie v0.197, 85 contrôles d’illustrations réussis. Sprite et rendu de l’éclair en chaîne à brancher. [Fiche et comparatif](design/Visuels_Boutique_Mage_Foudre.md).
+
 **Brûleur de cendres, type 21.** Apparence au brasero approuvée par le porteur. Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.197, avec 80 contrôles d’illustrations réussis. La fiche décrit une proposition d’animation qui relie appuis, poids du brasero et départ de la braise. Sprite et rendu du tir à intégrer. [Fiche](design/Visuels_Boutique_Bruleur.md).
 
 **Lance-épieu orc, type 20.** Visuel validé par le porteur. Comparaison avec le piquier et le javelinier au même emplacement. Portrait, recrutement et première attaque vérifiés sur copie v0.197, avec 75 contrôles d’illustrations réussis. Sprite et rendu du coup d’épieu à brancher. [Fiche](design/Visuels_Boutique_Lance_Epieu.md).
