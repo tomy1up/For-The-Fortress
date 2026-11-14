@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Lanceur de masse orc validé, à intégrer (ouvert)
+
+Le porteur a validé le visuel fixe du type 28 (`horde.maceman`). La [fiche](design/Visuels_Boutique_Lanceur_Masse.md) donne le cadre, l’ancre et la hauteur contrôlés sur copie v0.198. Associer le PNG au portrait et au plateau et le déclarer dans les listes d’export. Le projectile doit à terme reprendre la masse facettée du dessin.
+
 ### 2026-11-14 — Lanceur double troll validé, à intégrer (ouvert)
 
 Le porteur a validé le visuel fixe du type 27 (`horde.doublethrower`). La [fiche](design/Visuels_Boutique_Lanceur_Double.md) donne le cadre et l’ancre contrôlés sur copie v0.198. Associer le PNG au portrait et au plateau, puis le déclarer aux listes d’export. L’alternance des bras concerne le futur rendu et doit conserver un tir par attaque.

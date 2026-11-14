@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Lanceur de masse orc, type 28.** Visuel fixe validé. Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.198. 111 contrôles d’illustrations réussis. Sprite à intégrer. Projectile et geste de lâcher à réaliser. [Fiche](design/Visuels_Boutique_Lanceur_Masse.md).
+
 **Lanceur double troll, type 27.** Visuel fixe validé. Comparatif à E2 et contrôle du portrait, du déblocage, du recrutement et du premier tir sur copie v0.198. 106 contrôles d’illustrations réussis. Sprite à intégrer. Alternance des bras et raccords de lâcher à animer. [Fiche](design/Visuels_Boutique_Lanceur_Double.md).
 
 **Hache en chaîne, type 26.** Visuel fixe bien accueilli par le porteur. Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.198, 101 contrôles d’illustrations réussis. Sprite à intégrer. Lâcher, projectile à deux lobes et représentation des rebonds à produire. [Fiche](design/Visuels_Boutique_Hache_En_Chaine.md).
