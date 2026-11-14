@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Alchimiste gnome illustrée (ouvert)
+
+Le porteur a préféré la troisième proposition du type 39 (`alliance.alchemist`). La [fiche](design/Visuels_Boutique_Alchimiste.md) donne le cadre, le pied et le départ de la fiole. Sur la copie v0.200, `volatile.png` est visible au-dessus des PV pendant `volatile_until`. L’explosion à la mort possède déjà son repère d’étude `volatile_burst.png`. Il reste à disposer d’un événement visuel horodaté et positionné pour le brancher, puis à contrôler les réactions en chaîne en jeu.
+
 ### 2026-11-14 — Balliste royale et servant gnome validés, à intégrer (ouvert)
 
 Le porteur a validé le type 38 (`alliance.ballista`). La [fiche](design/Visuels_Boutique_Balliste_Royale.md) fournit le cadrage, l’ancre et l’origine du carreau de siège vérifiés sur copie v0.200. Le servant gnome donne une première représentation de la race dans les visuels de l’Alliance. Associer le PNG à la boutique et au plateau et le déclarer à l’export.
