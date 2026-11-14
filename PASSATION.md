@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Effets de boutique.** Six repères transparents pour les cinq effets et l’explosion de volatilité. Lisibilité comparée sur une maquette à taille réelle avec trois statuts simultanés. Branchement et contrôle en combat à faire. [Fiche](design/Visuels_Effets_Boutique.md).
+
 **Piquier, premier essai animé.** Extension à deux mains puis retour à la garde. Testé sur copie v0.197 depuis E1 et E2 à ×1 et ×2, avec arrêt simulé. Validateur à zéro problème sur 25 dossiers et 157 contrôles de bibliothèque réussis. La pointe suit le côté de la cible avec un angle fixe. Étude en attente d'avis du porteur. [Essai](design/Visuels_Boutique_Piquier.md#premier-essai-animé).
 
 **Catapulte, deuxième essai animé.** Retour progressif de la cuillère, 20 images sur 0,8 s. Essai sur copie v0.197 au Gué, E1 vers la gauche et E2 vers la droite à ×1 et ×2. Arrêt de simulation vérifié sur les quatre captures. Zéro problème sur 24 dossiers et 156 contrôles de bibliothèque réussis. Animation conservée dans les études, en attente de validation du porteur. [Essai](design/Visuels_Boutique_Catapulte.md#deuxième-essai--retour-de-la-cuillère).

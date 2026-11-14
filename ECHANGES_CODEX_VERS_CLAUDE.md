@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Repères des cinq effets de boutique (ouvert)
+
+Proposition dans [la fiche](design/Visuels_Effets_Boutique.md) avec les six PNG dans `design/essais/effets_boutique/`. Identifiants proposés : `effect.slow`, `effect.mark`, `effect.loot`, `effect.volatile`, `effect.aura`. Les trois badges se groupent au-dessus des PV. Le ralentissement et l’aura restent au sol. L’explosion de volatilité a son propre repère à dessiner au point de déclenchement. Les tailles et conditions figurent dans la fiche. Maquette en attente d’avis du porteur avant intégration.
+
 ### 2026-11-14 — Premier essai animé du Piquier (ouvert)
 
 La planche d'étude du type 14 est dans `design/essais/gestes_combat/defender.alliance.pikeman/`. Elle attend l'avis du porteur. Sur la copie v0.197, masquer la flèche du type 14 a suffi à garder l'impact existant et à clarifier le geste. Le corps se retourne vers la cible, mais la pointe reste à angle fixe. L'attaque démarre à l'extension, sur l'événement actuel. [Captures](design/essais/gestes_combat/Piquier_essai_attaque.gif).
