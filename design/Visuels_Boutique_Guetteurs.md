@@ -12,7 +12,9 @@ Le 14 novembre 2026, le porteur a approuvé la sentinelle, le tireur d’élite 
 | --- | --- | --- | --- | ---: | --- |
 | 10 | `sentinelle_elfe_v001.png` | `Rect2(0,0,543,871)` | `(232, 871)` | 59 | `(11.0, -22.5)` |
 | 11 | `tireur_elite_elfe_v001.png` | `Rect2(0,0,1284,1110)` | `(445, 1110)` | 56 | `(29.25, -32.25)` |
-| 16 | `veilleur_cendres_v001.png` | `Rect2(0,0,575,570)` | `(282, 570)` | 57 | `(-18.375, -24.125)` |
+| 16 | `veilleur_cendres_v001.png` | `Rect2(0,0,1174,1029)` | `(600, 1029)` | 57 | `(-3.25, -8.0)` |
 | 17 | `javelinier_troll_v001.png` | `Rect2(0,0,894,1031)` | `(347, 1031)` | 64 | `(-3.25, -25.5)` |
+
+Le veilleur des cendres est proposé en posture basse et large, avec un manteau de plumes charbon, une écharpe orange et un visage gris. Le portrait `veilleur_cendres_guet_v001.png` (1288 × 1031) le montre à la longue-vue, hachette à la ceinture. Le sprite du plateau le montre hachette basse en main, longue-vue rangée. Les deux poses sont fixes pour cet essai et attendent l’avis du porteur.
 
 Une copie d’essai v0.197 a affiché les quatre portraits en boutique. Les quatre unités ont été achetées sur des profils isolés, recrutées au Gué et observées jusqu’au premier tir. L’archer et le lanceur de haches de base ont été capturés au même emplacement. Le test visuel de boutique étendu sur la copie passe ses 40 contrôles. Les types 10, 11 et 17 sont prêts à brancher. Pour le type 10, utiliser `sentinelle_elfe_guet_v001.png` (543 × 858) comme portrait et inclure ce PNG dans les listes d’export. Les tirs utilisent encore le rendu générique des familles dans la copie, dont le carreau de la famille arbalétrier pour le tireur d’élite et la hache pour le javelinier. Associer les projectiles à l’arc et à la javeline lors du branchement des unités correspondantes.
