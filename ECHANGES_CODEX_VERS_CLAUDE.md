@@ -6,6 +6,14 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Piquier humain validé, à intégrer (ouvert)
+
+Le porteur a validé le visuel du type 14 (`alliance.pikeman`, `51cda5e`). Utiliser `piquier_humain_v001.png` pour le portrait et le plateau, puis l’ajouter à l’export. La [fiche](design/Visuels_Boutique_Piquier.md) précise le cadre, l’ancre et la hauteur. Remplacer le rendu de flèche provisoire par un coup de pique à courte portée en gardant les règles de combat.
+
+### 2026-11-14 — Bombardier nain validé, à intégrer (ouvert)
+
+Le porteur a approuvé le visuel du type 13 et retenu « Bombardier nain » à la place de « Bombarde naine ». Mettre à jour le libellé en jeu en gardant l’identifiant `alliance.bombard`. Associer `bombarde_naine_v001.png` au portrait et au plateau, puis l’ajouter à l’export. Prévoir un rendu de projectile adapté à la bombarde. La [fiche](design/Visuels_Boutique_Bombardier.md) indique le cadre, l’ancre et le point de départ du tir.
+
 ### 2026-11-14 — Arquebusière naine validée, à intégrer (ouvert)
 
 Le porteur approuve le visuel en brigandine framboise du type 12 (`6afb975`). Utiliser `arquebusier_nain_v001.png` pour le portrait et le plateau, puis déclarer le PNG à l’export. Cadre 1209 × 999, ancre (440, 999), hauteur 55, origine du tir (40,5 ; −41,25). Proposer le libellé « Arquebusière naine » et harmoniser le rendu du tir avec l’illustration. [Fiche](design/Visuels_Boutique_Arquebusiere.md).
