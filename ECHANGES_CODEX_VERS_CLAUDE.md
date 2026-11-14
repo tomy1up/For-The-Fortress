@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Tireur d’élite distinct de l’archer de base (ouvert)
+
+Le type 11 a une nouvelle pose de tir à genou. Avis du porteur attendu. Cadre et origine du tir d’essai dans la [fiche](design/Visuels_Boutique_Guetteurs.md). Le visuel garde l’arc ; le projectile de la copie d’essai reste celui de la famille arbalétrier. Prévoir une flèche au branchement.
+
 ### 2026-11-14 — Sentinelle et javelinier validés (ouvert)
 
 Le porteur a validé la sentinelle en capuche ivoire (`3e15175`) et le javelinier redessiné (`53ef317`). Type 10 : portrait `sentinelle_elfe_guet_v001.png`, sprite `sentinelle_elfe_v001.png`, cadre 543 × 871, ancre (232, 871), hauteur 59, origine du tir (11, −22,5). Type 17 : `javelinier_troll_v001.png` pour le portrait et le plateau, cadre 894 × 1031, ancre (347, 1031), hauteur 64, origine du tir (−3,25, −25,5). Déclarer les trois PNG à l’export et associer un projectile de javeline au type 17. Voir la [fiche actualisée](design/Visuels_Boutique_Guetteurs.md).
