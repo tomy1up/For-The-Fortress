@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.204**. Gobelin kamikaze et chef de guerre vétéran : les 36 alternatives de la boutique étendue ont désormais leur illustration propre. [Notes](design/essais/v0204_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.204).
+
 **Prototype v0.203**. Vétéran royal, pillard gobelin, poseur de mines et baliste de guerre (avec son servant squelette) : illustrations de boutique intégrées. [Notes](design/essais/v0203_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.203).
 
 **Prototype v0.202**. Piégeur nain, balliste royale (avec son servant gnome) et alchimiste gnome : illustrations de boutique intégrées avec leurs projectiles. [Notes](design/essais/v0202_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.202).
