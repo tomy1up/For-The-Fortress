@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Piquier humain proposé (ouvert)
+
+Le type 14 (`alliance.pikeman`) a un portrait et un sprite statique communs dans `piquier_humain_v001.png`. Avis artistique attendu. Cadre, ancre et hauteur dans la [fiche d’essai](design/Visuels_Boutique_Piquier.md). La copie affiche encore la flèche de sa famille. Prévoir à l’intégration un raccord de rendu propre au coup de pique en gardant les règles de combat.
+
 ### 2026-11-14 — Bombardier nain validé, à intégrer (ouvert)
 
 Le porteur a approuvé le visuel du type 13 et retenu « Bombardier nain » à la place de « Bombarde naine ». Mettre à jour le libellé en jeu en gardant l’identifiant `alliance.bombard`. Associer `bombarde_naine_v001.png` au portrait et au plateau, puis l’ajouter à l’export. Prévoir un rendu de projectile adapté à la bombarde. La [fiche](design/Visuels_Boutique_Bombardier.md) indique le cadre, l’ancre et le point de départ du tir.

@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Piquier humain, type 14.** Proposition en gambison bleu clair avec pique verticale. Portrait, recrutement et première attaque vérifiés sur copie v0.197, avec 55 contrôles réussis. Avis artistique attendu. Le visuel de l’attaque reprend encore celui de l’archer. [Fiche](design/Visuels_Boutique_Piquier.md).
+
 **Bombardier nain, type 13.** Visuel et nom approuvés par le porteur. Sur copie v0.197, 50 contrôles d’illustrations réussis, portrait et libellé vérifiés en boutique, recrutement et premier tir contrôlés. Le sprite, le libellé et le visuel de projectile sont à brancher. [Fiche](design/Visuels_Boutique_Bombardier.md).
 
 **Arquebusière naine, type 12.** Visuel aux deux tresses et à la brigandine framboise approuvé par le porteur le 14 novembre 2026 (`6afb975`). Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 45 contrôles d’illustrations réussis. Prête à intégrer. [Fiche](design/Visuels_Boutique_Arquebusiere.md).
