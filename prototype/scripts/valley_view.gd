@@ -205,6 +205,7 @@ const ARROW_TYPES: Array[int] = [11] # Tireur d'élite elfe : flèche, bien que 
 const BULLET_TYPE := 12 # Arquebusière naine : balle de plomb et traînée de poudre, bien que sa famille de combat reste celle de l'archer.
 const CANNON_TYPE := 13 # Bombardier nain : boulet en cloche.
 const PIKE_TYPES: Array[int] = [14,20] # Piquier humain et lance-épieu orc : coup à courte portée, sans projectile lancé.
+const PEBBLE_TYPE := 25 # Fronde elfe : galet, bien que sa famille de combat reste celle de l'archer.
 const FIRE_TYPE := 15 # Pyromancien humain : boule de feu.
 const SHARD_TYPE := 18 # Lance-éclats gobelin : éclat de cristal.
 const STONE_TYPE := 19 # Catapulte gobeline : pierre en cloche.
@@ -257,6 +258,9 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	if int(shot.type) in PIKE_TYPES:
 		_draw_pike_thrust(origin,direction,side,age/PROJECTILE_FLIGHT)
 		return
+	if int(shot.type) == PEBBLE_TYPE:
+		_draw_pebble(point,direction)
+		return
 	if int(shot.type) == FIRE_TYPE:
 		_draw_fireball(point,direction,age,1.0)
 		return
@@ -301,6 +305,12 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 			var cross := PackedVector2Array([point+Vector2(0,-6),point+Vector2(4,0),point+Vector2(0,6),point+Vector2(-4,0)])
 			draw_colored_polygon(cross,color)
 			draw_line(point+Vector2(0,-3),point+Vector2(0,3),Color("f5def5"),1.5,true)
+
+## Galet de la fronde elfe (type 25) : petite pierre grise et sillage léger.
+func _draw_pebble(point: Vector2, direction: Vector2) -> void:
+	draw_line(point-direction*8.0,point,Color(0.85,0.85,0.8,0.35),1.6,true)
+	draw_circle(point,3.0,Color("6f726c"),true,-1,true)
+	draw_circle(point+Vector2(-0.8,-0.8),1.0,Color("c9ccc2"),true,-1,true)
 
 ## Boule de feu (pyromancien) ou braise (brûleur de cendres, échelle réduite) : noyau clair, halo orange, étincelles.
 func _draw_fireball(point: Vector2, direction: Vector2, age: float, scale: float) -> void:
