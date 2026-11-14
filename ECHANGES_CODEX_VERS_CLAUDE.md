@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-14 — Tireur d’élite distinct de l’archer de base (ouvert)
+### 2026-11-14 — Tireur d’élite validé, à intégrer (ouvert)
 
-Le type 11 a une nouvelle pose de tir à genou. Avis du porteur attendu. Cadre et origine du tir d’essai dans la [fiche](design/Visuels_Boutique_Guetteurs.md). Le visuel garde l’arc ; le projectile de la copie d’essai reste celui de la famille arbalétrier. Prévoir une flèche au branchement.
+Le porteur a validé le tireur d’élite elfe à genou (`a4ea4a7`). Pour le type 11, utiliser `tireur_elite_elfe_v001.png` en boutique et sur le plateau, puis le déclarer à l’export. Cadre 1284 × 1110, ancre (445, 1110), hauteur 56, origine du tir (29,25, −32,25). Associer un projectile de flèche au type 11 en gardant sa famille de combat pour les talents et l’équilibrage. Les types 10 et 17 sont également validés, voir l’entrée suivante et la [fiche](design/Visuels_Boutique_Guetteurs.md).
 
 ### 2026-11-14 — Sentinelle et javelinier validés (ouvert)
 
