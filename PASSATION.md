@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Arquebusière naine, type 12.** Proposition de visuel à arme courte portée à la taille, tablier rouge et lunettes de cuir. Portrait, recrutement et premier tir contrôlés sur copie v0.197. Comparaison avec l’arbalétrier et le mousquetaire et 45 contrôles réussis. Avis du porteur attendu avant branchement. [Fiche](design/Visuels_Boutique_Arquebusiere.md).
+
 **Veilleur des cendres, type 16.** Le porteur a validé le portrait au guet et la pose de plateau accroupie (`8f328e0`, 14 novembre 2026). Copie v0.197 : rendu en boutique contrôlé, 40 contrôles d’illustrations réussis et six passages jusqu’au premier tir. Les deux poses sont prêtes à brancher. [Comparatif](design/essais/boutique_guetteurs/Troll_haches_javelinier_veilleur.jpg).
 
 **Sentinelle et javelinier.** Le porteur a validé la sentinelle (`3e15175`) et le javelinier redessiné (`53ef317`) le 14 novembre. Portrait au guet et sprite de garde de la sentinelle, ainsi que visuel du javelinier avec javeline basse, pan ocre et peau mauve, prêts à brancher. Copie d’essai v0.197 : 40 contrôles d’illustrations réussis et six passages jusqu’au premier tir, dont les deux unités de base de référence. [Comparatif des trolls](design/essais/boutique_guetteurs/Troll_haches_javelinier_veilleur.jpg).
