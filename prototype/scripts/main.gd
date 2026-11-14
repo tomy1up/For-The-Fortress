@@ -2197,7 +2197,13 @@ func _cancel_specialisation() -> void:
 	_update_interface()
 	map_view.queue_redraw()
 
+## Alternatives de la boutique étendue (types 10 et suivants) : leur texte de rôle et d'effet vient de leur carte, pas de leur famille de combat (le prêtre guerrier, de la famille du mage, ne produit pas d'explosion ; le totem, de celle des haches, ne rebondit pas).
+func _shop_text_card(type: int) -> Dictionary:
+	return Model.Shop.for_type(type) if type >= 10 else {}
+
 func _effect_text(stats: Dictionary, type: int) -> String:
+	var shop_card := _shop_text_card(type)
+	if not shop_card.is_empty(): return shop_card.tradeoff
 	type = Model.family(type)
 	if type == 3:
 		return "%s rebond%s : %s dégâts chacun, distance < %s." % [stats.secondary_cap, "" if stats.secondary_cap == 1 else "s successifs", _number(stats.secondary_damage), _number(stats.radius)]
@@ -2208,10 +2214,14 @@ func _effect_text(stats: Dictionary, type: int) -> String:
 	return ""
 
 func _recruit_role(type: int) -> String:
+	var shop_card := _shop_text_card(type)
+	if not shop_card.is_empty(): return shop_card.role
 	type = Model.family(type)
 	return ["Tirs rapides sur une cible", "Longue portée, tirs espacés", "Explosion autour de la cible", "Rebonds entre ennemis proches", "Explosion contre les groupes", "Dégâts immédiats puis malédiction"][type]
 
 func _recruit_effect(stats: Dictionary, type: int) -> String:
+	var shop_card := _shop_text_card(type)
+	if not shop_card.is_empty(): return shop_card.tradeoff
 	type = Model.family(type)
 	if type in [2,4]:
 		return "Explosion : %s dégâts sur jusqu’à %d autres ennemis proches." % [_number(stats.secondary_damage), stats.secondary_cap]
@@ -2230,7 +2240,7 @@ func _recruit_tooltip(type: int, error: String) -> String:
 		lines.append("Valeurs prévues à cet emplacement, bonus et synergies actuels inclus.")
 		lines.append("%s dégâts directs · Une attaque toutes les %s s · Portée : %s" % [_number(stats.damage),_number(stats.interval),_number(stats.range)])
 		lines.append(_recruit_effect(stats,type))
-		if Model.family(type) in [2,3,4]: lines.append("%s : strictement moins de %s sur la carte." % ["Distance de rebond" if Model.family(type) == 3 else "Rayon de l’explosion",_number(stats.radius)])
+		if Model.family(type) in [2,3,4] and _shop_text_card(type).is_empty(): lines.append("%s : strictement moins de %s sur la carte." % ["Distance de rebond" if Model.family(type) == 3 else "Rayon de l’explosion",_number(stats.radius)])
 		if Model.family(type) == 5: lines.append("Un nouveau tir de ce chaman renouvelle sa malédiction ; deux chamans conservent leurs effets séparés.")
 		lines.append("La cible principale est l’ennemi à portée qui atteindra la forteresse le plus tôt, selon sa vitesse et sa route." if not model.routes.is_empty() else "La cible principale est l’ennemi à portée le plus avancé vers la forteresse.")
 		lines.append("%d or · %d/2 exemplaires recrutés" % [model.purchase_cost(type),model.count_type(type)])

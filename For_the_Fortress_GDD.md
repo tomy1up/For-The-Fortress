@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.37 — 14 novembre 2026
+Game Design Document — Version 0.38 — 14 novembre 2026
 
-Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne de 200 missions, entièrement jouable (vingt chapitres, dix biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.200. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. La boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
+Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne de 200 missions, entièrement jouable (vingt chapitres, dix biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.201. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. La boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
 
-**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.200. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
+**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.201. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.37 ; jeu de référence 0.200.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.38 ; jeu de référence 0.201.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -77,7 +77,7 @@ Nom de travail — disponibilité juridique à confirmer.
 63. [63 Biomes, nouveautés et affixes de combat](#s63)
 64. [64 Équilibrage des talents et mesure des cartes](#s64)
 65. [65 Cadre de travail, outils et production](#s65)
-66. [66 Journal des versions 0.110 à 0.200](#s66)
+66. [66 Journal des versions 0.110 à 0.201](#s66)
 
 <a id="s1"></a>
 
@@ -1657,6 +1657,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-40 | Dixième biome (chapitres 19 et 20) : **nécropole et terres maudites**, avec le **revenant** (attaquant qui se relève une fois avec la moitié de ses PV) au chapitre 20 — V | Choix du porteur, 13 novembre 2026, parmi trois options. Revenant livré en v0.190 : 30 PV, vitesse 0,9, relève unique à 50 % des PV maximum (valeurs H) |
 | MAJ-41 | **Boutique : la valeur totale du catalogue doit au moins égaler le total de PO accumulé sur les 200 missions en Normal (14 750 PO par faction), avec environ 20 unités par faction** — V pour le principe, la taille, la liste des 18 archétypes et le barème | Décisions du porteur, 13 novembre 2026. Catalogue (18 archétypes, barème de 300 à 1 300 PO, déblocage par missions réussies) dans `design/Boutique_20_unites_proposition.md`. Premier lot (six archétypes à règles existantes par faction) livré en v0.192, second lot (archétypes 7 à 10) en v0.193, troisième lot (archétypes 11 à 13 : ralentissement, marque, aura) en v0.194, quatrième lot (archétypes 14 à 18 : pillage, entrée et forteresse, réaction en chaîne, unité-pivot) en v0.196, ce qui complète le catalogue de 20 unités par faction pour 14 970 PO (≥ 14 750) : valeurs H. Règles nouvelles validées par le porteur (voir MAJ-42), codées par lots |
 | MAJ-42 | Règles de combat nouvelles de la boutique validées : tir croisé (blessé), briseur (lourds), chasseur de légers (rapides), entravant, marqueur, gardien, pilleur, sapeur d’entrée, réaction en chaîne, unité-pivot — V | Validation du porteur, 13 novembre 2026. Toutes livrées : règles de cible (v0.193), ralentissement, marque, aura (v0.194), pillage, entrée et forteresse, réaction en chaîne, pivot (v0.196), valeurs H |
+| MAJ-43 | **L’Alliance des Royaumes comprend des gnomes** parmi ses peuples (avec les humains, elfes et nains déjà représentés) — V comme rappel, sans effet de règle ni d’unité à ce jour | Rappel du porteur, 14 novembre 2026, transmis par Codex ; à prendre en compte pour les futures unités et visuels de l’Alliance |
 | MAJ-34 | **Le GDD est tenu à jour à chaque publication de version, par Claude Code** : décisions prises, décisions à prendre et noyau du jeu — V | Demande du porteur, 12 novembre 2026 ; étape ajoutée au cycle d’une version dans `AGENTS.md` |
 
 <a id="s49"></a>
@@ -1682,7 +1683,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-017 | Confirmation en jeu des valeurs d’essai des affixes (Vents contraires, Éruptions, tempête de sable, éboulement) et de leur lisibilité | Retours du porteur ; habillage de Codex |
 | O-018 | Marges minces de la Horde aux finales des chapitres 3 et 4 (missions 30 et 40) ; mission 40 sur carte propre depuis la v0.178 | Remesure et éventuelle révision des tracés |
 | O-019 | Attribution et production du son | Décision du porteur |
-| O-020 | Habillage artistique restant : unités de la boutique (les illustrations des types 10 à 30 sont validées par le porteur et intégrées en v0.198 ; les autres unités gardent l’illustration provisoire de leur famille), indicateurs de ralentissement, de marque et d’aura, capitaine de garnison orc ; retouches selon le jugement du porteur sur les visuels intégrés en v0.191 à v0.195 | Livraisons de Codex et jugement du porteur |
+| O-020 | Habillage artistique restant : unités de la boutique (les illustrations des types 10 à 36 sont validées par le porteur et intégrées en v0.198 ; les autres unités gardent l’illustration provisoire de leur famille), indicateurs de ralentissement, de marque et d’aura, capitaine de garnison orc ; retouches selon le jugement du porteur sur les visuels intégrés en v0.191 à v0.195 | Livraisons de Codex et jugement du porteur |
 
 <a id="s50"></a>
 
@@ -1758,11 +1759,13 @@ Version 0.33 — 14 novembre 2026 : jeu 0.196, quatrième lot de la boutique ét
 
 Version 0.34 — 14 novembre 2026 : jeu 0.197, équilibrage de puissance des alternatives de la boutique (mesure sur cinq cartes, trois passes de réglage). Aucune décision de conception nouvelle : valeurs H.
 
-Version 0.35 — 14 novembre 2026 : jeu 0.198, réglage du pyromancien humain (17 de dégâts, brûlure 22 ; rapport 0,94 de la référence) ; ensemble de la boutique de 0,89 à 1,05 ; intégration des illustrations validées par le porteur pour la sentinelle (10), le tireur d’élite (11), l’arquebusière naine (12, renommée à partir de « Arquebusier nain »), le bombardier nain (13, renommé à partir de « Bombarde naine » sur décision du porteur), le piquier humain (14), le pyromancien humain (15), le lance-éclats gobelin (18), la catapulte gobeline (19), le lance-épieu orc (20), le brûleur de cendres (21), le mage de la foudre (22), l’archer double (23), l’arbalète lourde (24), la fronde elfe (25, galet), la hache en chaîne (26), le lanceur double troll (27), le lanceur de masse orc (28), la sarbacane gobeline (29, dard), le mage de givre (30), le veilleur des cendres (16) et le javelinier troll (17), avec des projectiles propres (flèche, balle, boulet, javeline, boule de feu, éclat de cristal, pierre, braise, éclair ramifié) et un coup de pique ou d’épieu à courte portée. Aucune décision de conception nouvelle : valeurs H.
+Version 0.35 — 14 novembre 2026 : jeu 0.198, réglage du pyromancien humain (17 de dégâts, brûlure 22 ; rapport 0,94 de la référence) ; ensemble de la boutique de 0,89 à 1,05 ; intégration des illustrations validées par le porteur pour la sentinelle (10), le tireur d’élite (11), l’arquebusière naine (12, renommée à partir de « Arquebusier nain »), le bombardier nain (13, renommé à partir de « Bombarde naine » sur décision du porteur), le piquier humain (14), le pyromancien humain (15), le lance-éclats gobelin (18), la catapulte gobeline (19), le lance-épieu orc (20), le brûleur de cendres (21), le mage de la foudre (22), l’archer double (23), l’arbalète lourde (24), la fronde elfe (25, galet), la hache en chaîne (26), le lanceur double troll (27), le lanceur de masse orc (28), la sarbacane gobeline (29, dard), le mage de givre (30), l’éclaireur-observateur (31), le prêtre guerrier (32), le chaman des marais (33), le totem de guerre (34), l’ancien des tribus (35), le marchand mercenaire (36), le veilleur des cendres (16) et le javelinier troll (17), avec des projectiles propres (flèche, balle, boulet, javeline, boule de feu, éclat de cristal, pierre, braise, éclair ramifié) et un coup de pique ou d’épieu à courte portée. Aucune décision de conception nouvelle : valeurs H.
 
 Version 0.36 — 14 novembre 2026 : jeu 0.199, illustration validée de la fronde elfe (type 25) intégrée avec projectile de galet. Aucune décision de conception nouvelle.
 
 Version 0.37 — 14 novembre 2026 : jeu 0.200, illustrations validées des types 26 à 30 intégrées (hache en chaîne, lanceur double, lanceur de masse, sarbacane avec dard, mage de givre). Aucune décision de conception nouvelle.
+
+Version 0.38 — 14 novembre 2026 : jeu 0.201, illustrations validées des types 31 à 36 intégrées ; libellés de combat des alternatives de la boutique tirés de leur carte (plus de texte d’explosion ou de rebond pour le prêtre, l’ancien, le totem) ; rappel du porteur : l’Alliance comprend des gnomes (MAJ-43). Aucune autre décision de conception nouvelle.
 
 <a id="s51"></a>
 
@@ -2056,7 +2059,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 14 novembre 2026 (GDD 0.37, jeu 0.200)
+### État au 14 novembre 2026 (GDD 0.38, jeu 0.201)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2078,7 +2081,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.37, jeu 0.200 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.38, jeu 0.201 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2355,7 +2358,7 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 
 <a id="s66"></a>
 
-## 66 Journal des versions 0.110 à 0.200
+## 66 Journal des versions 0.110 à 0.201
 
 | Versions | Contenu |
 | --- | --- |
@@ -2388,8 +2391,9 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.195 | Visuels de Codex des chapitres 18 à 20 et relève du revenant ; GDD 0.32 |
 | 0.196 | Boutique étendue, quatrième lot (dix unités) : catalogue de vingt unités par faction complet ; GDD 0.33 |
 | 0.197 | Équilibrage de puissance des alternatives de la boutique (moyenne 0,96 de la référence, de 0,86 à 1,05) ; GDD 0.34 |
-| 0.198 | Réglage du pyromancien humain (rapport 0,94) ; ensemble de la boutique de 0,89 à 1,05 ; illustrations validées des types 10 à 30 intégrées ; GDD 0.35 |
+| 0.198 | Réglage du pyromancien humain (rapport 0,94) ; ensemble de la boutique de 0,89 à 1,05 ; illustrations validées des types 10 à 36 intégrées ; GDD 0.35 |
 | 0.199 | Fronde elfe (type 25) : illustration validée et projectile de galet ; GDD 0.36 |
 | 0.200 | Illustrations de boutique des types 26 à 30 intégrées ; GDD 0.37 |
+| 0.201 | Illustrations de boutique des types 31 à 36 ; libellés de combat tirés des cartes ; GDD 0.38 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

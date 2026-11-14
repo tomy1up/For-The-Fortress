@@ -208,6 +208,10 @@ const PIKE_TYPES: Array[int] = [14,20] # Piquier humain et lance-épieu orc : co
 const PEBBLE_TYPE := 25 # Fronde elfe : galet, bien que sa famille de combat reste celle de l'archer.
 const FIRE_TYPE := 15 # Pyromancien humain : boule de feu.
 const SHARD_TYPES: Array[int] = [18,30] # Lance-éclats gobelin et mage de givre : éclat de cristal.
+const COIN_TYPE := 36 # Marchand mercenaire : pièce d'or.
+const GOLD_SHARD_TYPE := 32 # Prêtre guerrier : éclat doré.
+const WISP_TYPE := 33 # Chaman des marais : feu follet.
+const PULSE_TYPES: Array[int] = [34,35] # Totem de guerre et ancien des tribus : impulsion, onde cuivrée.
 const DART_TYPE := 29 # Sarbacane gobeline : dard.
 const STONE_TYPE := 19 # Catapulte gobeline : pierre en cloche.
 const EMBER_TYPE := 21 # Brûleur de cendres : braise partie de la grille du brasero.
@@ -271,6 +275,18 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	if int(shot.type) in SHARD_TYPES:
 		_draw_shard(point,direction,side)
 		return
+	if int(shot.type) == COIN_TYPE:
+		_draw_coin(point,age)
+		return
+	if int(shot.type) == GOLD_SHARD_TYPE:
+		_draw_shard(point,direction,side,Color("f3d27a"))
+		return
+	if int(shot.type) == WISP_TYPE:
+		_draw_wisp(point,age)
+		return
+	if int(shot.type) in PULSE_TYPES:
+		_draw_pulse(point,age,Color("d99a5b") if int(shot.type) == 35 else Color("e8c87a"))
+		return
 	if int(shot.type) == DART_TYPE:
 		_draw_dart(point,direction,side)
 		return
@@ -328,12 +344,33 @@ func _draw_fireball(point: Vector2, direction: Vector2, age: float, scale: float
 		draw_circle(point+Vector2.UP.rotated((spark-1)*0.9)*lerpf(3.0,8.0,phase)*scale,1.0,Color(1.0,0.75,0.3,1.0-phase),true,-1,true)
 
 ## Éclat de cristal du lance-éclats gobelin : losange turquoise allongé.
-func _draw_shard(point: Vector2, direction: Vector2, side: Vector2) -> void:
+func _draw_shard(point: Vector2, direction: Vector2, side: Vector2, fill: Color = Color("7fe8e0")) -> void:
 	var shard := PackedVector2Array([point+direction*6.0,point+side*2.4,point-direction*5.0,point-side*2.4])
-	draw_colored_polygon(shard,Color("7fe8e0"))
+	draw_colored_polygon(shard,fill)
 	shard.append(shard[0])
 	draw_polyline(shard,Color("1a4a50"),1.1,true)
 	draw_line(point-direction*5.0,point+direction*3.0,Color(1.0,1.0,1.0,0.6),0.9,true)
+
+## Pièce du marchand mercenaire : disque d'or qui tourne sur lui-même.
+func _draw_coin(point: Vector2, age: float) -> void:
+	var squash: float = absf(cos(age/PROJECTILE_FLIGHT*TAU*1.5))*0.8+0.2
+	draw_set_transform(point,0.0,Vector2(1.0,squash))
+	draw_circle(Vector2.ZERO,4.4,Color("8a6a1c"),true,-1,true)
+	draw_circle(Vector2.ZERO,3.3,Color("f3d27a"),true,-1,true)
+	draw_set_transform(Vector2.ZERO,0.0,Vector2.ONE)
+
+## Feu follet du chaman des marais : lueur verte qui palpite.
+func _draw_wisp(point: Vector2, age: float) -> void:
+	var pulse: float = 1.0+sin(age*60.0)*0.15
+	draw_circle(point,8.0*pulse,Color(0.35,0.9,0.5,0.20),true,-1,true)
+	draw_circle(point,4.4*pulse,Color("6fe08c"),true,-1,true)
+	draw_circle(point,2.0,Color("eafff0"),true,-1,true)
+
+## Impulsion du totem de guerre (dorée) ou onde de l'ancien des tribus (cuivrée) : anneau qui grandit en avançant.
+func _draw_pulse(point: Vector2, age: float, color: Color) -> void:
+	var grow: float = clampf(age/PROJECTILE_FLIGHT,0.0,1.0)
+	draw_arc(point,3.0+grow*6.0,0.0,TAU,20,Color(color,0.9-grow*0.4),2.0,true)
+	draw_circle(point,2.2,color,true,-1,true)
 
 ## Dard de la sarbacane gobeline : fine tige claire à pointe sombre.
 func _draw_dart(point: Vector2, direction: Vector2, side: Vector2) -> void:
