@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.206**. Lisibilité des unités sur le plateau (mipmaps, 33 cadrages de Codex) et type 44 renommé « Gobelin des braises ». [Notes](design/essais/v0206_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.206).
+
 **Prototype v0.205**. Repères d'effets de la boutique branchés (ralentissement, marque, pillage, volatilité, aura, explosion en chaîne), à juger en jeu. [Notes](design/essais/v0205_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.205).
 
 **Prototype v0.204**. Gobelin kamikaze et chef de guerre vétéran : les 36 alternatives de la boutique étendue ont désormais leur illustration propre. [Notes](design/essais/v0204_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.204).

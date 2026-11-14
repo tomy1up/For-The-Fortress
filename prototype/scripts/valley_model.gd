@@ -84,7 +84,7 @@ const ROSTER: Array[Dictionary] = [
 	{"name":"Pillard gobelin","price":70,"damage":7.0,"interval":1.8,"range":3.5,"loot_seconds":4.0,"loot_bonus":1.2},
 	{"name":"Poseur de mines","price":90,"damage":22.0,"interval":2.4,"range":3.8,"entrance_mult":1.8,"exit_mult":0.4},
 	{"name":"Baliste de guerre","price":105,"damage":36.0,"interval":3.5,"range":5.5,"exit_mult":1.8,"entrance_mult":0.4},
-	{"name":"Gobelin kamikaze","price":90,"damage":6.0,"interval":2.0,"range":4.0,"volatile_seconds":4.0,"volatile_damage":80.0,"volatile_radius":1.4},
+	{"name":"Gobelin des braises","price":90,"damage":6.0,"interval":2.0,"range":4.0,"volatile_seconds":4.0,"volatile_damage":80.0,"volatile_radius":1.4},
 	{"name":"Chef de guerre vétéran","price":60,"damage":11.0,"interval":2.0,"range":4.0,"pivot_bonus":0.16},
 ]
 

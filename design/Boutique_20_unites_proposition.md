@@ -78,7 +78,7 @@ Archétypes 14 à 18 : pilleur, sapeur d'entrée, tourelle de forteresse, réact
 | Horde | Pillard gobelin | Lanceur de haches troll | 70 or | 1080 PO | 140 missions | Pillage : l'ennemi touché rapporte +120 % d'or s'il meurt dans les 4 s |
 | Horde | Poseur de mines | Sapeur gobelin | 90 or | 1140 PO | 150 missions | ×1,8 sur le premier tiers du trajet, ×0,4 sur le dernier |
 | Horde | Baliste de guerre | Lanceur de haches troll | 105 or | 1200 PO | 160 missions | ×1,8 sur le dernier tiers du trajet, ×0,4 sur le premier |
-| Horde | Gobelin kamikaze | Sapeur gobelin | 90 or | 1250 PO | 170 missions | L'ennemi touché explose à sa mort (80 dégâts, rayon 1,4) dans les 4 s, en chaîne |
+| Horde | Gobelin des braises | Sapeur gobelin | 90 or | 1250 PO | 170 missions | L'ennemi touché explose à sa mort (80 dégâts, rayon 1,4) dans les 4 s, en chaîne |
 | Horde | Chef de guerre vétéran | Lanceur de haches troll | 60 or | 1300 PO | 180 missions | +16 % par vague survivée depuis l'achat (plafond +90 %) |
 
 - **Pillage** : l'ennemi touché par un pilleur rapporte +120 % d'or (arrondi, puis brume marine éventuelle) s'il est éliminé dans les 4 s, par n'importe quel défenseur.
@@ -129,7 +129,7 @@ Avant réglage, les quarante alternatives (vingt par faction, dont les quatre d'
 | Catapulte gobeline | 0,96 | 0,92 | 1,00 |
 | Chaman des marais | 0,95 | 0,88 | 1,00 |
 | Chef de guerre vétéran | 0,96 | 0,89 | 1,01 |
-| Gobelin kamikaze | 0,91 | 0,83 | 1,00 |
+| Gobelin des braises | 0,91 | 0,83 | 1,00 |
 | Grenadier gobelin | 1,01 | 0,98 | 1,06 |
 | Hache en chaîne | 0,99 | 0,94 | 1,05 |
 | Lance-éclats gobelin | 1,02 | 0,99 | 1,13 |
@@ -170,7 +170,7 @@ Chaque archétype a une **force et une faiblesse** (CAMP-008) ; aucun ne remplac
 | 14 | Pilleur | Gagne de l'or sur éliminations | Fragile et lent | Marchand mercenaire | Pillard gobelin | **règle nouvelle** |
 | 15 | Sapeur d'entrée | Efficace près de l'entrée | Inutile à portée de forteresse | Piégeur nain | Poseur de mines | **règle nouvelle** |
 | 16 | Tourelle de forteresse | Efficace près de la forteresse | Inutile loin | Balliste royale | Baliste de guerre | existante (emplacement) |
-| 17 | Réaction en chaîne | Une élimination déclenche une explosion | Dégâts directs faibles | Alchimiste | Gobelin kamikaze | **règle nouvelle** |
+| 17 | Réaction en chaîne | Une élimination déclenche une explosion | Dégâts directs faibles | Alchimiste | Gobelin des braises | **règle nouvelle** |
 | 18 | Unité-pivot | Bonus croissant par vague survivante | Faible au début | Vétéran royal | Chef de guerre vétéran | **règle nouvelle** |
 
 Neuf archétypes réutilisent des règles existantes (statistiques, rebond, explosion, durée) ; les neuf autres demandent des règles de combat nouvelles, à valider **une par une** par le porteur (périmètre fonctionnel) avant que je les code.

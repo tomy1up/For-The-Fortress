@@ -1,0 +1,5 @@
+# Prototype v0.206 — Lisibilité des unités sur le plateau et « Gobelin des braises »
+
+- **Lisibilité** (revue de Codex `53e29c3`, intégrée sur décision du porteur) : mipmaps activés sur les sprites de défenseurs (47 imports), mipmaps générés aussi pour les planches animées chargées en PNG brut (`animation_library.gd`, chemin de l'export), et 33 hauteurs d'unités du CSV `design/essais/lisibilite_plateau/Cadrages_essai.csv` appliquées avec leurs points de départ du tir (dont le Lanceur de masse et le Chef de guerre vétéran, de 57 à 66 px) ; pivot au pied et bornes de ±44 px conservés. Le loup garde son rendu par maillage. Le test de boutique n'attend plus l'absence de mipmaps.
+- **Renommage** : le type 44 (`horde.kamikaze`, identifiant inchangé) s'appelle « Gobelin des braises » (proposition de Codex retenue par le porteur) ; règles et valeurs inchangées.
+- Limites : la lisibilité en vagues denses et sur plusieurs cartes reste à contrôler en jeu ; deux unités (23 et 31) gardent le départ de tir de l'archer, à vérifier en mouvement.

@@ -13,7 +13,7 @@ func _initialize() -> void:
 		if type >= Art.PROVISIONAL_FROM and not Art.OWN_ART.has(type): continue # Illustration provisoire de la famille, en attendant Codex.
 		check(View.defender_art(type) == Art and Art.TEXTURES[type] != View.defender_art(card.family).TEXTURES[card.family],"Chaque alternative a son illustration propre")
 		var image: Image = Art.TEXTURES[type].get_image()
-		check(image != null and image.has_mipmaps() == false and image.get_pixel(0,0).a == 0.0,"Sprite transparent sans décor au coin")
+		check(image != null and image.get_pixel(0,0).a == 0.0,"Sprite transparent sans décor au coin")
 		var frame: Dictionary = Art.FRAMES[type]
 		check(Rect2(Vector2.ZERO,image.get_size()).encloses(frame.source),"Le cadre source reste dans le PNG")
 		var bounds: Rect2 = Art.destination(type)

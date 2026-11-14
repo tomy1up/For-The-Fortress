@@ -218,7 +218,9 @@ static func texture_for(id: String, anim: Dictionary) -> Texture2D:
 		texture = load(path) as Texture2D
 	if texture == null and FileAccess.file_exists(path):
 		var image := Image.load_from_file(path)
-		if image != null and not image.is_empty(): texture = ImageTexture.create_from_image(image)
+		if image != null and not image.is_empty():
+			image.generate_mipmaps()
+			texture = ImageTexture.create_from_image(image)
 	_textures[path] = texture
 	return texture
 
