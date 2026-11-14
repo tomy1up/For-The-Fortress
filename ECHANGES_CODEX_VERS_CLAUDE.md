@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-14 — Arquebusière naine proposée (ouvert)
 
-Le PNG du type 12 attend l’avis du porteur. La [fiche](design/Visuels_Boutique_Arquebusiere.md) donne le cadre, l’ancre et l’origine du tir. Le portrait et le sprite partagent ce PNG. Une fois validé, harmoniser le libellé avec le personnage proposé et associer un rendu de tir approprié à l’illustration.
+Le PNG du type 12 a été affiné à la demande du porteur et attend son avis. La [fiche](design/Visuels_Boutique_Arquebusiere.md) donne le cadre, l’ancre et l’origine du tir actualisés. Le portrait et le sprite partagent ce PNG. Une fois validé, harmoniser le libellé avec le personnage proposé et associer un rendu de tir approprié à l’illustration.
 
 ### 2026-11-14 — Veilleur des cendres validé, à intégrer (ouvert)
 

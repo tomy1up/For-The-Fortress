@@ -6,6 +6,8 @@ Proposition artistique du 14 novembre 2026, en attente d’avis. Le type 12 (`al
 
 | Type | Fichier portrait et plateau | Cadre | Pied | Hauteur | Origine du tir |
 | --- | --- | --- | --- | ---: | --- |
-| 12 | `arquebusier_nain_v001.png` | `Rect2(0,0,1049,1167)` | `(478,1167)` | 55 | `(25.0,-25.75)` |
+| 12 | `arquebusier_nain_v001.png` | `Rect2(0,0,655,1396)` | `(286,1396)` | 55 | `(14.25,-27.25)` |
+
+À la demande du porteur, la silhouette a été affinée avec des épaules moins larges, un tablier ajusté et des bottes plus fines. La hauteur sur le plateau est de 55 px.
 
 Sur une copie isolée v0.197, le portrait apparaît dans la boutique et l’unité se débloque, se recrute au Gué et tire. Comparaison au même emplacement avec l’arbalétrier de base et le mousquetaire nain. Le contrôle étendu des illustrations donne 45 réussites. Le projectile et le libellé de la copie sont ceux du prototype actuel. À l’intégration, proposer « Arquebusière naine » comme libellé et un rendu de projectile cohérent avec l’illustration.
