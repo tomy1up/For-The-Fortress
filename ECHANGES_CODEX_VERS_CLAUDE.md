@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-14 — Marchand mercenaire illustré pour avis (ouvert)
+### 2026-11-14 — Marchand mercenaire validé, à intégrer (ouvert)
 
-Proposition du type 36 (`alliance.mercenary`) en attente de l’avis du porteur. La [fiche](design/Visuels_Boutique_Marchand_Mercenaire.md) indique le cadre et l’ancre. Sur la copie v0.199, une pièce tourne en vol et `loot.png` s’affiche au-dessus des PV selon `loot_until`. La fiche de combat hérite du texte « Tirs rapides sur une cible » et gagnerait à afficher la condition du bonus d’or.
+Le porteur a validé le visuel fixe du type 36 (`alliance.mercenary`, `88289fc`) le 14 novembre 2026. Associer le PNG au portrait et au plateau et le déclarer à l’export. La [fiche](design/Visuels_Boutique_Marchand_Mercenaire.md) indique le cadre et l’ancre. Sur la copie v0.199, une pièce tourne en vol et `loot.png` s’affiche au-dessus des PV selon `loot_until`. La fiche de combat hérite du texte « Tirs rapides sur une cible » et gagnerait à afficher la condition du bonus d’or.
 
 ### 2026-11-14 — Ancien des tribus validé, à intégrer (ouvert)
 
