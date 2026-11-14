@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-14 — Piquier humain proposé (ouvert)
+### 2026-11-14 — Piquier humain validé, à intégrer (ouvert)
 
-Le type 14 (`alliance.pikeman`) a un portrait et un sprite statique communs dans `piquier_humain_v001.png`. Avis artistique attendu. Cadre, ancre et hauteur dans la [fiche d’essai](design/Visuels_Boutique_Piquier.md). La copie affiche encore la flèche de sa famille. Prévoir à l’intégration un raccord de rendu propre au coup de pique en gardant les règles de combat.
+Le porteur a validé le visuel du type 14 (`alliance.pikeman`, `51cda5e`). Utiliser `piquier_humain_v001.png` pour le portrait et le plateau, puis l’ajouter à l’export. La [fiche](design/Visuels_Boutique_Piquier.md) précise le cadre, l’ancre et la hauteur. Remplacer le rendu de flèche provisoire par un coup de pique à courte portée en gardant les règles de combat.
 
 ### 2026-11-14 — Bombardier nain validé, à intégrer (ouvert)
 
