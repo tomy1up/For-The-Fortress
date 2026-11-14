@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Brûleur de cendres validé, à intégrer (ouvert)
+
+Le porteur a approuvé l’apparence du type 21 (`horde.cinderburner`) et demande de faire correspondre sa gestuelle à son rôle. Utiliser `bruleur_cendres_v001.png` en boutique et sur le plateau, puis l’ajouter à l’export. Le projectile de braise doit partir de la grille du brasero. Cadre, ancre, départ du tir et principe de la future animation dans la [fiche](design/Visuels_Boutique_Bruleur.md). Conserver les règles de brûlure actuelles.
+
 ### 2026-11-14 — Lance-épieu orc validé, à intégrer (ouvert)
 
 Le porteur a approuvé le visuel du type 20 (`horde.spearman`). Utiliser `lance_epieu_orc_v001.png` en boutique et sur le plateau puis le déclarer à l’export. Cadre, ancre et hauteur dans la [fiche](design/Visuels_Boutique_Lance_Epieu.md). Remplacer le rendu de hache provisoire par un coup d’épieu à courte portée, en conservant les données de combat.
