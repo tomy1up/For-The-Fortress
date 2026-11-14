@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Sentinelle et javelinier.** Le porteur valide la sentinelle (`3e15175`), portrait au guet et sprite de garde prêts à brancher. Il a demandé de différencier le javelinier du lanceur de haches de base. Nouvelle silhouette du javelinier avec javeline basse, pan ocre et peau mauve, à valider. Copie d’essai v0.197 : 40 contrôles d’illustrations réussis et six passages jusqu’au premier tir, dont les deux unités de base de référence. [Comparatif des trolls](design/essais/boutique_guetteurs/Troll_haches_javelinier_veilleur.jpg).
+
 **Boutique, types 10, 11, 16 et 17.** Sentinelle redessinée en capuche ivoire et manteau bleu pétrole, avec comparaison à l’archer de base. Quatre portraits, premiers tirs et passage de référence de l’archer de base vérifiés sur la copie d’essai v0.197, 40 contrôles au vert. Le porteur exige désormais une silhouette propre à chaque unité. Le chantier est ouvert dans TODO_VISUELS.md, avec la proximité des deux autres archers et le doublon de la garnison orque identifiés. Avis artistique et branchement à suivre. [Aperçus](design/Visuels_Boutique_Guetteurs.md).
 
 **Nécropole 191–200 et Revenant.** Cinq placements par carte, trois planches de marche en combat et portrait livré. 26 passages en vague 4 dans les deux factions. Le validateur couvre 23 dossiers sans problème. Sept suites ciblées passent (31 528 contrôles Godot et 17 tests Python). Le portrait et la relève sont à brancher par Claude Code. La planche de relève a un aperçu isolé. [Fiche](design/Visuels_Necropole.md#chapitre-20--missions-191-à-200).

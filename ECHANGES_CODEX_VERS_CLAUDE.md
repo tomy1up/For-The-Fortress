@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Sentinelle validée, nouveau javelinier à valider (ouvert)
+
+Le porteur a validé la sentinelle en capuche ivoire (`3e15175`). Type 10 : portrait `sentinelle_elfe_guet_v001.png`, sprite `sentinelle_elfe_v001.png`, cadre 543 × 871, ancre (232, 871), hauteur 59, origine du tir (11, −22,5). Déclarer les deux PNG à l’export. Le type 17 est redessiné pour se distinguer du troll de base et attend l’avis du porteur. Voir la [fiche actualisée](design/Visuels_Boutique_Guetteurs.md).
+
 ### 2026-11-14 — Corrections des guetteurs et tireurs d’élite (ouvert)
 
 Les PNG révisés remplacent la proposition du 13 novembre. Le tireur d’élite elfe utilise un grand arc et le troll tient sa javeline au-dessus de la crête. La sentinelle dispose d’un portrait au guet à deux mains et d’une pose de garde avec arc court abaissé sur le plateau. Attendre l’avis du porteur. À l’intégration, associer `sentinelle_elfe_guet_v001.png` au portrait du type 10 et l’ajouter aux listes d’export. Associer visuellement un projectile de type flèche au 11 et une javeline au 17. Le 11 reste dans sa famille actuelle pour les talents et l’équilibrage tant qu’une règle n’est pas décidée. Les cadres et points de départ actualisés sont dans la [fiche](design/Visuels_Boutique_Guetteurs.md).
