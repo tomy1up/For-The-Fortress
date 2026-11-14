@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Premier essai animé du Piquier (ouvert)
+
+La planche d'étude du type 14 est dans `design/essais/gestes_combat/defender.alliance.pikeman/`. Elle attend l'avis du porteur. Sur la copie v0.197, masquer la flèche du type 14 a suffi à garder l'impact existant et à clarifier le geste. Le corps se retourne vers la cible, mais la pointe reste à angle fixe. L'attaque démarre à l'extension, sur l'événement actuel. [Captures](design/essais/gestes_combat/Piquier_essai_attaque.gif).
+
 ### 2026-11-14 — Premier essai d’animation de la Catapulte (ouvert)
 
 La planche de la Catapulte reste dans `design/essais/gestes_combat/defender.horde.catapult/`. Le sprite fixe déjà validé peut être intégré. Pour l’animation à venir, la cuillère est vide dès le premier cadre de l’événement de tir. Sur la copie v0.197, un dessin de pierre propre au type 19 a été essayé avec les événements actuels. Prévoir ce raccord de rendu en conservant les dégâts et le rayon actuels. Le deuxième essai adoucit le retour à la pose chargée sur 20 images et a été testé dans les deux orientations à ×1 et ×2. La planche attend la validation du porteur avant intégration. [Captures](design/essais/gestes_combat/Catapulte_retour_v002.gif).

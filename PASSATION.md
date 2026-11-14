@@ -4,11 +4,13 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Piquier, premier essai animé.** Extension à deux mains puis retour à la garde. Testé sur copie v0.197 depuis E1 et E2 à ×1 et ×2, avec arrêt simulé. Validateur à zéro problème sur 25 dossiers et 157 contrôles de bibliothèque réussis. La pointe suit le côté de la cible avec un angle fixe. Étude en attente d'avis du porteur. [Essai](design/Visuels_Boutique_Piquier.md#premier-essai-animé).
+
 **Catapulte, deuxième essai animé.** Retour progressif de la cuillère, 20 images sur 0,8 s. Essai sur copie v0.197 au Gué, E1 vers la gauche et E2 vers la droite à ×1 et ×2. Arrêt de simulation vérifié sur les quatre captures. Zéro problème sur 24 dossiers et 156 contrôles de bibliothèque réussis. Animation conservée dans les études, en attente de validation du porteur. [Essai](design/Visuels_Boutique_Catapulte.md#deuxième-essai--retour-de-la-cuillère).
 
 **Arbalète lourde, type 24.** Visuel approuvé par le porteur (`a19a744`). Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 95 contrôles réussis lors de la livraison du sprite. Intégration à suivre. [Fiche](design/Visuels_Boutique_Arbalete_Lourde.md).
 
-**Revue des gestes d’attaque.** Après le retour du porteur, revue des types 0 à 24 face au catalogue, au modèle et au rendu v0.197. Le document précise les appuis, prises, lâchers et effets pour chacun. Deux poses d’étude ont été dessinées pour le Piquier et la Catapulte et comparées à l’échelle du plateau. Alignement des appuis, transitions et essai animé en jeu restent à faire. [Revue et comparatif](design/Visuels_Gestes_Combat.md).
+**Revue des gestes d’attaque.** Après le retour du porteur, revue des types 0 à 24 face au catalogue, au modèle et au rendu v0.197. Le document précise les appuis, prises, lâchers et effets pour chacun. Deux poses d’étude ont été dessinées pour le Piquier et la Catapulte et comparées à l’échelle du plateau. Les deux unités ont depuis fait l'objet d'essais animés en jeu. [Revue et comparatif](design/Visuels_Gestes_Combat.md).
 
 **Archer double, type 23.** Apparence bien accueillie par le porteur. Variante d’attente avec arc ivoire abaissé et main au carquois présentée en comparaison sur le plateau. Copie v0.197 : portrait, déblocage, recrutement et premier tir vérifiés, 90 contrôles d’illustrations réussis. [Fiche](design/Visuels_Boutique_Archer_Double.md).
 
