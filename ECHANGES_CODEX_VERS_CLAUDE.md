@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Totem de guerre validé, à intégrer (ouvert)
+
+Le porteur a validé le type 34 (`horde.wartotem`). La [fiche](design/Visuels_Boutique_Totem_Guerre.md) donne le cadre, l’ancre et le repère de gemme vérifiés en combat. L’essai remplace la hache par une impulsion sur la gemme et réutilise `mark.png`, comme pour l’Éclaireur-observateur. Remplacer le libellé de rebonds par une description du marquage.
+
 ### 2026-11-14 — Chaman des marais validé, à intégrer (ouvert)
 
 Le porteur a validé le visuel fixe du type 33 (`horde.swampshaman`). La [fiche](design/Visuels_Boutique_Chaman_Marais.md) fournit le cadrage, l’ancre et le départ du feu follet. Sur la copie v0.199, le repère `slow.png` au sol suit `enemy_is_slowed` et cohabite avec l’anneau violet de la malédiction. Le départ de la volute reste à animer.
