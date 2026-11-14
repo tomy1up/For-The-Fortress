@@ -201,6 +201,9 @@ static func secondary_segments(shot: Dictionary) -> Array[PackedVector2Array]:
 		if Model.family(shot.type) == 3: origin = target
 	return segments
 
+const ARROW_TYPES: Array[int] = [11] # Tireur d'élite elfe : flèche, bien que sa famille de combat reste celle de l'arbalétrier.
+const BULLET_TYPE := 12 # Arquebusière naine : balle de plomb et traînée de poudre, bien que sa famille de combat reste celle de l'archer.
+const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 
 static func shot_origin(shot: Dictionary, pose_age: float = 0.0) -> Vector2:
@@ -232,10 +235,17 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	var direction: Vector2 = (target-origin).normalized()
 	if direction.is_zero_approx(): direction = Vector2.RIGHT
 	var side: Vector2 = direction.orthogonal()
-	match Model.family(int(shot.type)):
+	if int(shot.type) == JAVELIN_TYPE:
+		_draw_javelin(point,direction,side)
+		return
+	if int(shot.type) == BULLET_TYPE:
+		_draw_bullet(point,direction)
+		return
+	var style: int = 0 if int(shot.type) in ARROW_TYPES else Model.family(int(shot.type))
+	match style:
 		0,1:
-			var length: float = 13.0 if Model.family(shot.type) == 0 else 9.0
-			draw_line(point-direction*length,point,Color("ead9a8"),1.8 if Model.family(shot.type) == 0 else 3.0,true)
+			var length: float = 13.0 if style == 0 else 9.0
+			draw_line(point-direction*length,point,Color("ead9a8"),1.8 if style == 0 else 3.0,true)
 			draw_colored_polygon(PackedVector2Array([point+direction*3,point-direction*3+side*3,point-direction*3-side*3]),Color("e4f0e7"))
 			for sign in [-1,1]: draw_line(point-direction*(length-3),point-direction*length+side*sign*3,color,1.5,true)
 		2:
@@ -260,6 +270,24 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 			var cross := PackedVector2Array([point+Vector2(0,-6),point+Vector2(4,0),point+Vector2(0,6),point+Vector2(-4,0)])
 			draw_colored_polygon(cross,color)
 			draw_line(point+Vector2(0,-3),point+Vector2(0,3),Color("f5def5"),1.5,true)
+
+## Balle de l'arquebusière naine (type 12) : boule de plomb précédée d'un éclat de poudre, sans empennage de flèche.
+func _draw_bullet(point: Vector2, direction: Vector2) -> void:
+	draw_line(point-direction*9.0,point,Color(1.0,0.82,0.45,0.55),2.2,true)
+	draw_circle(point,2.6,Color("2a2d2e"),true,-1,true)
+	draw_circle(point+Vector2(-0.8,-0.8),1.0,Color("d8e2dc"),true,-1,true)
+
+## Javeline du lanceur de javeline troll (type 17) : lance droite, sans rotation, au lieu de la hache de sa famille.
+func _draw_javelin(point: Vector2, direction: Vector2, side: Vector2) -> void:
+	var tail: Vector2 = point-direction*17.0
+	draw_line(tail,point,Color("1a2524"),3.6,true)
+	draw_line(tail,point,Color("c79a62"),2.0,true)
+	var head := PackedVector2Array([point+direction*7.0,point+side*2.8,point-side*2.8])
+	draw_colored_polygon(head,Color("d6e6e0"))
+	head.append(head[0])
+	draw_polyline(head,Color("1a2524"),1.2,true)
+	draw_line(tail,tail+direction*5.0+side*3.0,Color("e0b44a"),1.4,true)
+	draw_line(tail,tail+direction*5.0-side*3.0,Color("e0b44a"),1.4,true)
 
 func _draw_spinning_axe(point: Vector2, age: float) -> void:
 	var rotation: float = age/PROJECTILE_FLIGHT*TAU

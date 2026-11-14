@@ -10,7 +10,7 @@ func check(ok: bool,message: String) -> void:
 func _initialize() -> void:
 	for card in Shop.CARDS:
 		var type: int = card.type
-		if type >= Art.PROVISIONAL_FROM: continue # Illustration provisoire de la famille, en attendant Codex.
+		if type >= Art.PROVISIONAL_FROM and not Art.OWN_ART.has(type): continue # Illustration provisoire de la famille, en attendant Codex.
 		check(View.defender_art(type) == Art and Art.TEXTURES[type] != View.defender_art(card.family).TEXTURES[card.family],"Chaque alternative a son illustration propre")
 		var image: Image = Art.TEXTURES[type].get_image()
 		check(image != null and image.has_mipmaps() == false and image.get_pixel(0,0).a == 0.0,"Sprite transparent sans décor au coin")
@@ -22,4 +22,5 @@ func _initialize() -> void:
 		var right: Vector2 = View.shot_origin(shot)-View.project(shot.from)
 		shot.to = Vector2(1,7)
 		check(right == Art.MUZZLES[type] and (View.shot_origin(shot)-View.project(shot.from)).is_equal_approx(Vector2(-right.x,right.y)),"Origine des projectiles propre à la nouvelle arme et symétrique")
+	check(Art.portrait(10) == Art.PORTRAITS[10] and Art.portrait(10) != Art.TEXTURES[10] and Art.portrait(16) == Art.PORTRAITS[16] and Art.portrait(16) != Art.TEXTURES[16] and Art.portrait(17) == Art.TEXTURES[17],"Portrait de boutique propre à la sentinelle et au veilleur, sprite commun pour le javelinier")
 	print("SHOP_ART_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

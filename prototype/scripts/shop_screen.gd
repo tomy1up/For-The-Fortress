@@ -144,7 +144,7 @@ func refresh() -> void:
 	choice_note.text = "Trois types habituels + option choisie : "+("indisponible" if profile.blocked else "aucune" if chosen.is_empty() else chosen.name)+". Choix fixé pendant la mission."
 	for index in range(cards.size()):
 		var card: Dictionary = cards[index];var panel: Panel = card_panels[index]
-		portraits[index].texture = Art.TEXTURES[card.type]
+		portraits[index].texture = Art.portrait(card.type)
 		panel.get_node("UnitName").text = card.name
 		panel.get_node("Role").text = card.role
 		panel.get_node("Tradeoff").text = card.tradeoff
