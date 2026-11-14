@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**Arquebusière naine, type 12.** Proportions revues après le retour du porteur, avec des jambes courtes et une carrure affinée. Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 45 contrôles d’illustrations réussis. Cadre, ancrage et comparatif actualisés. Avis du porteur attendu avant branchement. [Fiche](design/Visuels_Boutique_Arquebusiere.md).
+**Arquebusière naine, type 12.** Nouveau design à la demande du porteur, avec deux tresses, une brigandine framboise et une posture fléchie. Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 45 contrôles d’illustrations réussis. Cadre, ancrage et comparatif actualisés. Avis du porteur attendu avant branchement. [Fiche](design/Visuels_Boutique_Arquebusiere.md).
 
 **Veilleur des cendres, type 16.** Le porteur a validé le portrait au guet et la pose de plateau accroupie (`8f328e0`, 14 novembre 2026). Copie v0.197 : rendu en boutique contrôlé, 40 contrôles d’illustrations réussis et six passages jusqu’au premier tir. Les deux poses sont prêtes à brancher. [Comparatif](design/essais/boutique_guetteurs/Troll_haches_javelinier_veilleur.jpg).
 
