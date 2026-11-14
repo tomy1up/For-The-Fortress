@@ -209,7 +209,8 @@ const PEBBLE_TYPE := 25 # Fronde elfe : galet, bien que sa famille de combat res
 const FIRE_TYPE := 15 # Pyromancien humain : boule de feu.
 const SHARD_TYPES: Array[int] = [18,30] # Lance-éclats gobelin et mage de givre : éclat de cristal.
 const CARTRIDGE_TYPE := 37 # Piégeur nain : cartouche en bois.
-const BOLT_TYPE := 38 # Balliste royale : gros carreau.
+const BOLT_TYPES: Array[int] = [38,43] # Balliste royale et baliste de guerre : gros carreau de siège.
+const RUNE_TYPE := 42 # Poseur de mines : disque runique.
 const VIAL_TYPE := 39 # Alchimiste gnome : fiole.
 const COIN_TYPE := 36 # Marchand mercenaire : pièce d'or.
 const GOLD_SHARD_TYPE := 32 # Prêtre guerrier : éclat doré.
@@ -282,7 +283,10 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	if int(shot.type) == CARTRIDGE_TYPE:
 		_draw_cartridge(point,direction,side)
 		return
-	if int(shot.type) == BOLT_TYPE:
+	if int(shot.type) == RUNE_TYPE:
+		_draw_rune_disc(point,age)
+		return
+	if int(shot.type) in BOLT_TYPES:
 		_draw_ballista_bolt(point,direction,side)
 		return
 	if int(shot.type) == VIAL_TYPE:
@@ -381,6 +385,14 @@ func _draw_ballista_bolt(point: Vector2, direction: Vector2, side: Vector2) -> v
 	draw_colored_polygon(head,Color("d6dad8"))
 	draw_line(tail,tail+direction*6.0+side*3.4,Color("e4e0cf"),1.6,true)
 	draw_line(tail,tail+direction*6.0-side*3.4,Color("e4e0cf"),1.6,true)
+
+## Disque runique du poseur de mines : disque de pierre gravé qui tourne, lueur orange.
+func _draw_rune_disc(point: Vector2, age: float) -> void:
+	var spin: float = age/PROJECTILE_FLIGHT*TAU*2.0
+	draw_circle(point,7.5,Color(1.0,0.55,0.15,0.22),true,-1,true)
+	draw_circle(point,4.8,Color("3a3430"),true,-1,true)
+	draw_arc(point,3.2,spin,spin+TAU*0.75,10,Color("ffb04a"),1.4,true)
+	draw_circle(point,1.2,Color("ffe3a0"),true,-1,true)
 
 ## Fiole de l'alchimiste gnome : verre verdâtre qui tourne, liquide vif.
 func _draw_vial(point: Vector2, age: float) -> void:
