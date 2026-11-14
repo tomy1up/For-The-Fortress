@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Marchand mercenaire illustré pour avis (ouvert)
+
+Proposition du type 36 (`alliance.mercenary`) en attente de l’avis du porteur. La [fiche](design/Visuels_Boutique_Marchand_Mercenaire.md) indique le cadre et l’ancre. Sur la copie v0.199, une pièce tourne en vol et `loot.png` s’affiche au-dessus des PV selon `loot_until`. La fiche de combat hérite du texte « Tirs rapides sur une cible » et gagnerait à afficher la condition du bonus d’or.
+
 ### 2026-11-14 — Ancien des tribus validé, à intégrer (ouvert)
 
 Le porteur a validé le type 35 (`horde.elder`). La [fiche](design/Visuels_Boutique_Ancien_Tribus.md) donne le cadre, l’ancre et l’origine de l’onde cuivrée. L’essai sur la v0.199 réutilise `aura.png` sous les bénéficiaires comme pour le Prêtre. Adapter le libellé hérité des rebonds au tir et à la bénédiction de proximité.
