@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Lance-épieu orc, type 20.** Visuel validé par le porteur. Comparaison avec le piquier et le javelinier au même emplacement. Portrait, recrutement et première attaque vérifiés sur copie v0.197, avec 75 contrôles d’illustrations réussis. Sprite et rendu du coup d’épieu à brancher. [Fiche](design/Visuels_Boutique_Lance_Epieu.md).
+
 **Catapulte gobeline, type 19.** Visuel validé par le porteur le 14 novembre 2026 (`9b62adf`). Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.197, 70 contrôles d’illustrations réussis. Sprite et projectile de pierre à intégrer. [Fiche](design/Visuels_Boutique_Catapulte.md).
 
 **Lance-éclats gobelin, type 18.** Visuel au manteau prune et à l’éclat violet validé par le porteur. Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 65 contrôles d’illustrations réussis. Sprite et projectile de cristal à brancher. [Fiche](design/Visuels_Boutique_Lance_Eclats.md).

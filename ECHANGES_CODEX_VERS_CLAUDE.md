@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Lance-épieu orc validé, à intégrer (ouvert)
+
+Le porteur a approuvé le visuel du type 20 (`horde.spearman`). Utiliser `lance_epieu_orc_v001.png` en boutique et sur le plateau puis le déclarer à l’export. Cadre, ancre et hauteur dans la [fiche](design/Visuels_Boutique_Lance_Epieu.md). Remplacer le rendu de hache provisoire par un coup d’épieu à courte portée, en conservant les données de combat.
+
 ### 2026-11-14 — Catapulte gobeline validée, à intégrer (ouvert)
 
 Le porteur a validé le type 19 (`horde.catapult`, `9b62adf`). Utiliser `catapulte_gobeline_v001.png` pour le portrait et le plateau, puis déclarer le PNG à l’export. Le cadre, l’ancre et le départ du tir figurent dans la [fiche](design/Visuels_Boutique_Catapulte.md). Remplacer le visuel de bombe du Sapeur par une pierre en conservant les données de combat.
