@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Archer double, pose de plateau (ouvert)
+
+Le type 23 (`alliance.doublearcher`) a un nouveau visuel essayé en boutique et sur le plateau. Le porteur a donné un avis favorable à l’apparence. La variante de pose avec main au carquois est présentée dans la [fiche](design/Visuels_Boutique_Archer_Double.md), avec le cadre, l’ancre et la hauteur. Conserver le tir unique et le bonus sur cible blessée.
+
 ### 2026-11-14 — Mage de la foudre validé, à intégrer (ouvert)
 
 Le porteur a approuvé le visuel du type 22 (`alliance.lightning`). Utiliser `mage_foudre_humain_v001.png` pour le portrait et le plateau et l’ajouter à l’export. Cadre, ancre et départ du tir dans la [fiche](design/Visuels_Boutique_Mage_Foudre.md). Prévoir le rendu d’un éclair depuis la main avancée, avec des ramifications vers les cibles secondaires touchées. Conserver la sélection des cibles et les dégâts actuels.

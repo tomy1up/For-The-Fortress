@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Archer double, type 23.** Apparence bien accueillie par le porteur. Variante d’attente avec arc ivoire abaissé et main au carquois présentée en comparaison sur le plateau. Copie v0.197 : portrait, déblocage, recrutement et premier tir vérifiés, 90 contrôles d’illustrations réussis. [Fiche](design/Visuels_Boutique_Archer_Double.md).
+
 **Mage de la foudre, type 22.** Visuel approuvé par le porteur. Portrait, recrutement et premier tir vérifiés sur copie v0.197, 85 contrôles d’illustrations réussis. Sprite et rendu de l’éclair en chaîne à brancher. [Fiche et comparatif](design/Visuels_Boutique_Mage_Foudre.md).
 
 **Brûleur de cendres, type 21.** Apparence au brasero approuvée par le porteur. Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.197, avec 80 contrôles d’illustrations réussis. La fiche décrit une proposition d’animation qui relie appuis, poids du brasero et départ de la braise. Sprite et rendu du tir à intégrer. [Fiche](design/Visuels_Boutique_Bruleur.md).
