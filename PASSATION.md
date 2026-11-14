@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Poseur de mines, type 42.** Proposition pour avis. Copie v0.202 : portrait, déblocage, recrutement et premier lancer vérifiés. 176 contrôles d’illustrations et 49 du lot 4 réussis. Sprite et disque à intégrer après avis. Lâcher et retour à la caisse à animer. [Fiche](design/Visuels_Boutique_Poseur_Mines.md).
+
 **Baliste de guerre, type 43.** Proposition avec servant squelette bien accueillie. Copie v0.201 : portrait, déblocage, recrutement et premier tir vérifiés. 171 contrôles d’illustrations et 49 du lot 4 réussis. Tir et rechargement à animer. [Fiche](design/Visuels_Boutique_Baliste_Guerre.md).
 
 **Pillard gobelin, type 41.** Visuel fixe bien accueilli. Copie v0.201 : portrait, déblocage, recrutement et premier pillage vérifiés. 166 contrôles d’illustrations et 49 du lot 4 réussis. Lâcher à animer. Le porteur propose de représenter les morts-vivants de la Horde par un squelette jouable. Piste artistique : servant de la Baliste de guerre. [Fiche](design/Visuels_Boutique_Pillard_Gobelin.md).

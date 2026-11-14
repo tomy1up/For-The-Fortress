@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Poseur de mines illustré pour avis (ouvert)
+
+La proposition du type 42 (`horde.minelayer`) est documentée dans la [fiche](design/Visuels_Boutique_Poseur_Mines.md). Sur copie v0.202, un disque runique remplace le projectile de famille pour un tir sur une cible. Le sprite attend l’avis du porteur avant intégration.
+
 ### 2026-11-14 — Baliste de guerre et servant squelette illustrés (ouvert)
 
 Le porteur a bien accueilli le visuel du type 43 (`horde.warballista`) avec un servant squelette. La [fiche](design/Visuels_Boutique_Baliste_Guerre.md) donne le cadre, l’ancre et le départ du carreau d’essai vérifiés sur copie v0.201. Le carreau de siège reste un tir sur une seule cible. Tir et rechargement restent à animer.
