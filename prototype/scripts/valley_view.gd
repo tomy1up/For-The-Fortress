@@ -207,7 +207,8 @@ const CANNON_TYPE := 13 # Bombardier nain : boulet en cloche.
 const PIKE_TYPES: Array[int] = [14,20] # Piquier humain et lance-épieu orc : coup à courte portée, sans projectile lancé.
 const PEBBLE_TYPE := 25 # Fronde elfe : galet, bien que sa famille de combat reste celle de l'archer.
 const FIRE_TYPE := 15 # Pyromancien humain : boule de feu.
-const SHARD_TYPE := 18 # Lance-éclats gobelin : éclat de cristal.
+const SHARD_TYPES: Array[int] = [18,30] # Lance-éclats gobelin et mage de givre : éclat de cristal.
+const DART_TYPE := 29 # Sarbacane gobeline : dard.
 const STONE_TYPE := 19 # Catapulte gobeline : pierre en cloche.
 const EMBER_TYPE := 21 # Brûleur de cendres : braise partie de la grille du brasero.
 const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touchées.
@@ -267,8 +268,11 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	if int(shot.type) == EMBER_TYPE:
 		_draw_fireball(point,direction,age,0.6)
 		return
-	if int(shot.type) == SHARD_TYPE:
+	if int(shot.type) in SHARD_TYPES:
 		_draw_shard(point,direction,side)
+		return
+	if int(shot.type) == DART_TYPE:
+		_draw_dart(point,direction,side)
 		return
 	if int(shot.type) == STONE_TYPE:
 		_draw_stone(point,age)
@@ -330,6 +334,13 @@ func _draw_shard(point: Vector2, direction: Vector2, side: Vector2) -> void:
 	shard.append(shard[0])
 	draw_polyline(shard,Color("1a4a50"),1.1,true)
 	draw_line(point-direction*5.0,point+direction*3.0,Color(1.0,1.0,1.0,0.6),0.9,true)
+
+## Dard de la sarbacane gobeline : fine tige claire à pointe sombre.
+func _draw_dart(point: Vector2, direction: Vector2, side: Vector2) -> void:
+	draw_line(point-direction*11.0,point,Color("e7d9a8"),1.6,true)
+	draw_line(point-direction*11.0,point-direction*8.0+side*2.0,Color("c0504a"),1.2,true)
+	draw_line(point-direction*11.0,point-direction*8.0-side*2.0,Color("c0504a"),1.2,true)
+	draw_circle(point,1.6,Color("2f3a34"),true,-1,true)
 
 ## Pierre de la catapulte gobeline : roc irrégulier qui tourne pendant sa cloche.
 func _draw_stone(point: Vector2, age: float) -> void:
