@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Hache en chaîne illustrée (ouvert)
+
+Le porteur a bien accueilli le visuel fixe de `horde.chainaxe` (type 26). La [fiche](design/Visuels_Boutique_Hache_En_Chaine.md) donne le cadre, le pied et la hauteur du PNG contrôlés sur copie v0.198. Associer le sprite au portrait et au plateau, et le déclarer à l’export. Le projectile de famille sert de repli. L’objectif visuel à terme est une hache à deux lobes qui suit les cibles enregistrées lors des rebonds.
+
 ### 2026-11-14 — Fronde elfe validée, à intégrer (ouvert)
 
 Visuel du type 25 (`alliance.sling`, `37a409a`) validé par le porteur le 14 novembre 2026. Voir la [fiche](design/Visuels_Boutique_Fronde.md). Cadre, hauteur et ancre vérifiés sur copie v0.197. Associer au portrait et au plateau et déclarer le PNG à l’export. Prévoir un galet dessiné à la place de la flèche de famille. Le départ devra suivre la poche lorsque le lâcher sera animé.
