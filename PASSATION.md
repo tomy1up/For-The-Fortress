@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Catapulte, essai animé.** Neuf images sur 0,45 s et une pierre provisoire testées sur copie v0.197 à ×1 et ×2, avec arrêt simulé. Validateur à zéro problème sur 24 dossiers et 156 contrôles de bibliothèque réussis. L’animation reste dans les études. Le retour à la pose chargée est abrupt et l’autre orientation reste à vérifier. [Essai](design/Visuels_Boutique_Catapulte.md#premier-essai-animé).
+
 **Arbalète lourde, type 24.** Visuel approuvé par le porteur (`a19a744`). Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 95 contrôles réussis lors de la livraison du sprite. Intégration à suivre. [Fiche](design/Visuels_Boutique_Arbalete_Lourde.md).
 
 **Revue des gestes d’attaque.** Après le retour du porteur, revue des types 0 à 24 face au catalogue, au modèle et au rendu v0.197. Le document précise les appuis, prises, lâchers et effets pour chacun. Deux poses d’étude ont été dessinées pour le Piquier et la Catapulte et comparées à l’échelle du plateau. Alignement des appuis, transitions et essai animé en jeu restent à faire. [Revue et comparatif](design/Visuels_Gestes_Combat.md).
