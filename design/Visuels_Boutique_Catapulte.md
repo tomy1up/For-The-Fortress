@@ -17,3 +17,11 @@ La pierre quitte la cuillère à la première image de l’événement de tir, l
 Les ressources d’essai restent dans `design/essais/gestes_combat/defender.horde.catapult/`. Une copie locale v0.197 les a chargées dans le jeu, avec une pierre provisoire dessinée côté rendu. Le contrôle a couvert un tir à ×1 et un tir à ×2 au Gué, depuis E2, avec une paire d’images identiques pendant l’arrêt de la simulation. Validateur : 24 dossiers, 0 problème. Test de la bibliothèque : 156 contrôles réussis. La fluidité du retour et l’autre orientation restent à vérifier.
 
 [GIF de l’atelier et des captures en jeu](essais/gestes_combat/Catapulte_essai_animation.gif) · [Aperçu fixe](essais/gestes_combat/Catapulte_essai_animation.jpg)
+
+## Deuxième essai · retour de la cuillère
+
+La planche d'étude passe à 20 images sur 0,8 s. La cuillère vide descend après le tir, puis remonte progressivement. La pierre redevient visible au moment du rechargement et la dernière image reprend la pose fixe. Le servant reprend sa prise en fin de mouvement.
+
+Sur une copie v0.197, le premier tir a été capturé dans les deux orientations au Gué, à ×1 et ×2. Dans les quatre cas, le cadrage de la Catapulte est identique sur deux images successives avec simulation arrêtée. Validateur : zéro problème sur 24 dossiers. Test de bibliothèque : 156 contrôles réussis.
+
+[Captures en jeu côte à côte](essais/gestes_combat/Catapulte_retour_v002.gif). Essai soumis à validation visuelle du porteur.

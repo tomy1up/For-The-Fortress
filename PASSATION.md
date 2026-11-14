@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**Catapulte, essai animé.** Neuf images sur 0,45 s et une pierre provisoire testées sur copie v0.197 à ×1 et ×2, avec arrêt simulé. Validateur à zéro problème sur 24 dossiers et 156 contrôles de bibliothèque réussis. L’animation reste dans les études. Le retour à la pose chargée est abrupt et l’autre orientation reste à vérifier. [Essai](design/Visuels_Boutique_Catapulte.md#premier-essai-animé).
+**Catapulte, deuxième essai animé.** Retour progressif de la cuillère, 20 images sur 0,8 s. Essai sur copie v0.197 au Gué, E1 vers la gauche et E2 vers la droite à ×1 et ×2. Arrêt de simulation vérifié sur les quatre captures. Zéro problème sur 24 dossiers et 156 contrôles de bibliothèque réussis. Animation conservée dans les études, en attente de validation du porteur. [Essai](design/Visuels_Boutique_Catapulte.md#deuxième-essai--retour-de-la-cuillère).
 
 **Arbalète lourde, type 24.** Visuel approuvé par le porteur (`a19a744`). Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 95 contrôles réussis lors de la livraison du sprite. Intégration à suivre. [Fiche](design/Visuels_Boutique_Arbalete_Lourde.md).
 

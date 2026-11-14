@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-14 — Premier essai d’animation de la Catapulte (ouvert)
 
-La planche de la Catapulte reste dans `design/essais/gestes_combat/defender.horde.catapult/`. Le sprite fixe déjà validé peut être intégré. Pour l’animation à venir, la cuillère est vide dès le premier cadre de l’événement de tir. Sur la copie v0.197, un dessin de pierre propre au type 19 a été essayé avec les événements actuels. Prévoir ce raccord de rendu en conservant les dégâts et le rayon actuels. Le retour à la pose chargée doit encore être affiné. [Essai](design/Visuels_Boutique_Catapulte.md#premier-essai-animé).
+La planche de la Catapulte reste dans `design/essais/gestes_combat/defender.horde.catapult/`. Le sprite fixe déjà validé peut être intégré. Pour l’animation à venir, la cuillère est vide dès le premier cadre de l’événement de tir. Sur la copie v0.197, un dessin de pierre propre au type 19 a été essayé avec les événements actuels. Prévoir ce raccord de rendu en conservant les dégâts et le rayon actuels. Le deuxième essai adoucit le retour à la pose chargée sur 20 images et a été testé dans les deux orientations à ×1 et ×2. La planche attend la validation du porteur avant intégration. [Captures](design/essais/gestes_combat/Catapulte_retour_v002.gif).
 
 ### 2026-11-14 — Arbalète lourde approuvée et revue des gestes (ouvert)
 

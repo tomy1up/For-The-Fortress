@@ -10,13 +10,13 @@
   "animations": {
     "attack": {
       "file": "attack.png",
-      "frames": 9,
+      "frames": 20,
       "frame_size": [
         384,
         272
       ],
       "mode": "event",
-      "duration": 0.45
+      "duration": 0.8
     }
   }
 }
