@@ -8,6 +8,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [ ] **Silhouettes uniques pour toutes les unités, décision du porteur du 14 novembre 2026** — vérifier les défenseurs de base, les alternatives de boutique et les attaquants à leur taille sur le plateau. Comparer en priorité les unités d’une même famille, au repos et à l’attaque lorsque l’animation existe. Chaque unité doit avoir un signe lisible par sa silhouette, son équipement ou sa posture, renforcé par sa palette. En v0.197, les 36 alternatives des types 10 à 45 utilisent des silhouettes de famille. Les types 10, 11, 16 et 17 ont une proposition sur la branche art, dont la sentinelle redessinée face à l’archer de base. Revoir aussi la silhouette en joue du tireur d’élite face à cet archer. Chez les attaquants, la garnison orque et le chef de guerre partagent le même cadre.
+
 - [ ] **Boutique étendue, quatrième lot (v0.196)** — dix unités (types 36 à 45 : marchand mercenaire, piégeur nain, balliste royale, alchimiste, vétéran royal ; pillard gobelin, poseur de mines, baliste de guerre, gobelin kamikaze, chef de guerre vétéran) à illustrer ; deux effets de jeu de plus sans visuel : pillage (4 s) et volatilité (4 s, puis explosion). Le catalogue de 20 unités par faction est complet côté règles. Voir `design/Boutique_20_unites_proposition.md`.
 
 - [ ] **Boutique étendue, troisième lot (v0.194)** — six unités (types 30 à 35 : mage de givre, éclaireur-observateur, prêtre guerrier ; chaman des marais, totem de guerre, ancien des tribus) à illustrer ; trois effets de jeu sans visuel : ralentissement (60 % de vitesse, 3 s), marque de cible (4 s) et aura de gardien (rayon 3,6). Voir `design/Boutique_20_unites_proposition.md`.
