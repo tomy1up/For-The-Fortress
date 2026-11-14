@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-14 — Corrections des guetteurs et tireurs d’élite (ouvert)
 
-Les PNG révisés remplacent la proposition du 13 novembre. Le tireur d’élite elfe utilise un grand arc, la sentinelle a deux bras rattachés et le troll tient sa javeline au-dessus de la crête. Attendre l’avis du porteur sur les deux corrections. À l’intégration, associer visuellement un projectile de type flèche au 11 et une javeline au 17. Le 11 reste dans sa famille actuelle pour les talents et l’équilibrage tant qu’une règle n’est pas décidée. Les nouveaux cadres et points de départ sont dans la [fiche](design/Visuels_Boutique_Guetteurs.md).
+Les PNG révisés remplacent la proposition du 13 novembre. Le tireur d’élite elfe utilise un grand arc et le troll tient sa javeline au-dessus de la crête. La sentinelle dispose désormais d’un portrait au guet à deux mains et d’une pose de tir pour le plateau. Attendre l’avis du porteur. À l’intégration, associer `sentinelle_elfe_guet_v001.png` au portrait du type 10 et l’ajouter aux listes d’export. Associer visuellement un projectile de type flèche au 11 et une javeline au 17. Le 11 reste dans sa famille actuelle pour les talents et l’équilibrage tant qu’une règle n’est pas décidée. Les nouveaux cadres et points de départ sont dans la [fiche](design/Visuels_Boutique_Guetteurs.md).
 
 ### 2026-11-13 — Boutique, guetteurs et tireurs d’élite (ouvert)
 

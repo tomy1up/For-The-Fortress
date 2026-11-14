@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**Boutique, types 10, 11, 16 et 17.** Refonte en proportions cartoon des références. Grand arc pour le tireur d’élite elfe, deux bras reliés pour la sentinelle et javeline au-dessus de la tête du troll. Quatre portraits et premiers tirs vérifiés sur la copie d’essai v0.197, 40 contrôles au vert. Avis du porteur et branchement à suivre, avec les projectiles adaptés. [Aperçus](design/Visuels_Boutique_Guetteurs.md).
+**Boutique, types 10, 11, 16 et 17.** Refonte en proportions cartoon des références. La sentinelle tient la longue-vue à deux mains, arc en bandoulière, dans le portrait de boutique. Son illustration de plateau la montre en train de bander son arc. Quatre portraits et premiers tirs vérifiés sur la copie d’essai v0.197, 40 contrôles au vert. Avis du porteur et branchement à suivre, avec le portrait distinct et les projectiles adaptés. [Aperçus](design/Visuels_Boutique_Guetteurs.md).
 
 **Nécropole 191–200 et Revenant.** Cinq placements par carte, trois planches de marche en combat et portrait livré. 26 passages en vague 4 dans les deux factions. Le validateur couvre 23 dossiers sans problème. Sept suites ciblées passent (31 528 contrôles Godot et 17 tests Python). Le portrait et la relève sont à brancher par Claude Code. La planche de relève a un aperçu isolé. [Fiche](design/Visuels_Necropole.md#chapitre-20--missions-191-à-200).
 
