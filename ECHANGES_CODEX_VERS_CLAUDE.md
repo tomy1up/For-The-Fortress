@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Pyromancien humain validé, à intégrer (ouvert)
+
+Le porteur a approuvé le visuel du type 15 (`alliance.pyromancer`). Utiliser `pyromancien_humain_v001.png` en boutique et sur le plateau et l’ajouter à l’export. Cadre, ancre, hauteur et origine du tir dans la [fiche](design/Visuels_Boutique_Pyromancien.md). Prévoir un visuel de projectile de feu à la place de celui du Mage humain, en conservant les règles de brûlure actuelles.
+
 ### 2026-11-14 — Piquier humain validé, à intégrer (ouvert)
 
 Le porteur a validé le visuel du type 14 (`alliance.pikeman`, `51cda5e`). Utiliser `piquier_humain_v001.png` pour le portrait et le plateau, puis l’ajouter à l’export. La [fiche](design/Visuels_Boutique_Piquier.md) précise le cadre, l’ancre et la hauteur. Remplacer le rendu de flèche provisoire par un coup de pique à courte portée en gardant les règles de combat.

@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Pyromancien humain, type 15.** Visuel vermillon et safran, flamme au-dessus de la paume, approuvé par le porteur. Copie v0.197 : portrait, recrutement et premier tir vérifiés, 60 contrôles d’illustrations réussis. Sprite et projectile de feu à brancher par Claude Code. [Fiche](design/Visuels_Boutique_Pyromancien.md).
+
 **Piquier humain, type 14.** Visuel en gambison bleu clair avec pique verticale validé par le porteur le 14 novembre 2026 (`51cda5e`). Portrait, recrutement et première attaque vérifiés sur copie v0.197, avec 55 contrôles réussis. Sprite prêt à intégrer. Le rendu du coup de pique reste à brancher. [Fiche](design/Visuels_Boutique_Piquier.md).
 
 **Bombardier nain, type 13.** Visuel et nom approuvés par le porteur. Sur copie v0.197, 50 contrôles d’illustrations réussis, portrait et libellé vérifiés en boutique, recrutement et premier tir contrôlés. Le sprite, le libellé et le visuel de projectile sont à brancher. [Fiche](design/Visuels_Boutique_Bombardier.md).
