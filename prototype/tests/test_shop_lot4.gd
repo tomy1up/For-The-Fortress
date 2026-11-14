@@ -51,7 +51,7 @@ func verify_progress_rules() -> void:
 	var stats: Dictionary = model.get_stats(2)
 	check(is_equal_approx(model.damage_for(stats,"direct",early)/model.damage_for(stats,"direct",middle),1.8),"damage_for applique le multiplicateur d'entrée")
 
-## Unité-pivot : +12 % par vague survivée depuis l'achat, plafonné à +90 %.
+## Unité-pivot : +16 % par vague survivée depuis l'achat, plafonné à +90 %.
 func verify_pivot() -> void:
 	var veteran: int = Shop.card("alliance.veteran").type
 	var model := Model.new(true)
@@ -59,7 +59,7 @@ func verify_pivot() -> void:
 	model.select_faction(0);model.gold = 1000;model.buy(3,veteran)
 	check(model.bought_waves.get(model.defenders[3].instance_id,-1) == 1 and model.pivot_bonus(model.defenders[3]) == 0.0,"Le vétéran n'a aucun bonus l'instant où il est acheté")
 	model.wave = 4
-	check(is_equal_approx(model.pivot_bonus(model.defenders[3]),0.36) and model.get_stats(3).direct_bonus >= 0.36-0.000001,"Après trois vagues survivées : +36 %")
+	check(is_equal_approx(model.pivot_bonus(model.defenders[3]),0.48) and model.get_stats(3).direct_bonus >= 0.48-0.000001,"Après trois vagues survivées : +48 %")
 	model.wave = 20
 	check(is_equal_approx(model.pivot_bonus(model.defenders[3]),0.9),"Le bonus du vétéran est plafonné à +90 %")
 	check(Model.new(true).pivot_bonus({"type":0}) == 0.0,"Une unité ordinaire n'a aucun bonus de pivot")

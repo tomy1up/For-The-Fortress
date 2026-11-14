@@ -35,12 +35,12 @@ Le porteur a validé le 13 novembre 2026 les règles de combat nouvelles listée
 
 | Faction | Unité | Famille (talents) | Recrutement | Déblocage | Missions requises | Principe |
 | --- | --- | --- | --- | --- | --- | --- |
-| Alliance | Mage de la foudre humain | Mage humain | 95 or | 660 PO | 70 missions | Éclairs en chaîne (3 voisins), impacts réduits |
+| Alliance | Mage de la foudre humain | Mage humain | 85 or | 660 PO | 70 missions | Éclairs en chaîne (3 voisins), impacts réduits |
 | Alliance | Archer double | Archer elfe | 80 or | 720 PO | 80 missions | +90 % sur un ennemi déjà blessé, faible sur une cible intacte |
-| Alliance | Arbalète lourde | Arbalétrier nain | 100 or | 780 PO | 90 missions | ×1,8 contre les lourds, ×0,5 contre les petits |
+| Alliance | Arbalète lourde | Arbalétrier nain | 90 or | 780 PO | 90 missions | ×1,8 contre les lourds, ×0,5 contre les petits |
 | Alliance | Fronde elfe | Archer elfe | 75 or | 840 PO | 100 missions | ×1,8 contre les rapides, ×0,5 contre les lourds |
 | Horde | Hache en chaîne | Lanceur de haches troll | 90 or | 660 PO | 70 missions | Rebonds en chaîne (3 voisins), impacts réduits |
-| Horde | Lanceur double troll | Lanceur de haches troll | 80 or | 720 PO | 80 missions | +90 % sur un ennemi déjà blessé, faible sur une cible intacte |
+| Horde | Lanceur double troll | Lanceur de haches troll | 80 or | 720 PO | 80 missions | +85 % sur un ennemi déjà blessé, faible sur une cible intacte |
 | Horde | Lanceur de masse orc | Lanceur de haches troll | 100 or | 780 PO | 90 missions | ×1,8 contre les lourds, ×0,5 contre les petits |
 | Horde | Sarbacane gobeline | Lanceur de haches troll | 75 or | 840 PO | 100 missions | ×1,8 contre les rapides, ×0,5 contre les lourds |
 
@@ -52,16 +52,16 @@ Archétypes 11 à 13, avec leurs règles nouvelles (validées le 13 novembre 202
 
 | Faction | Unité | Famille (talents) | Recrutement | Déblocage | Missions requises | Principe |
 | --- | --- | --- | --- | --- | --- | --- |
-| Alliance | Mage de givre | Mage humain | 100 or | 900 PO | 110 missions | Ralentit de 40 % pendant 3 s, dégâts très faibles |
-| Alliance | Éclaireur-observateur | Archer elfe | 70 or | 960 PO | 120 missions | Marque une cible 4 s : +30 % des autres défenseurs, il ne blesse presque pas |
-| Alliance | Prêtre guerrier | Mage humain | 90 or | 1020 PO | 130 missions | +20 % de dégâts aux défenseurs à moins de 3,6 cases |
-| Horde | Chaman des marais | Chaman orc | 100 or | 900 PO | 110 missions | Ralentit de 40 % pendant 3 s et maudit, dégâts très faibles |
-| Horde | Totem de guerre | Lanceur de haches troll | 70 or | 960 PO | 120 missions | Marque une cible 4 s : +30 % des autres défenseurs, il ne blesse presque pas |
-| Horde | Ancien des tribus | Lanceur de haches troll | 90 or | 1020 PO | 130 missions | +20 % de dégâts aux défenseurs à moins de 3,6 cases |
+| Alliance | Mage de givre | Mage humain | 85 or | 900 PO | 110 missions | Ralentit de 40 % pendant 3 s, dégâts très faibles |
+| Alliance | Éclaireur-observateur | Archer elfe | 60 or | 960 PO | 120 missions | Marque une cible 4 s : +55 % des autres défenseurs, il ne blesse presque pas |
+| Alliance | Prêtre guerrier | Mage humain | 80 or | 1020 PO | 130 missions | +40 % de dégâts aux défenseurs à moins de 3,6 cases |
+| Horde | Chaman des marais | Chaman orc | 90 or | 900 PO | 110 missions | Ralentit de 40 % pendant 3 s et maudit, dégâts très faibles |
+| Horde | Totem de guerre | Lanceur de haches troll | 60 or | 960 PO | 120 missions | Marque une cible 4 s : +55 % des autres défenseurs, il ne blesse presque pas |
+| Horde | Ancien des tribus | Lanceur de haches troll | 80 or | 1020 PO | 130 missions | +40 % de dégâts aux défenseurs à moins de 3,6 cases |
 
 - **Ralentissement** : un ennemi touché avance à 60 % de sa vitesse pendant 3 s (un coup supplémentaire prolonge la durée). Le moteur calcule la position et le temps d'atteinte de chaque distance en forme fermée, avec un retard cumulé à chaque fin de ralentissement ; la fin d'un ralentissement est un événement du moteur : le résultat ne dépend pas du pas de simulation, et les combats sans ralentissement sont inchangés au bit près (anciens rapports toujours rejouables).
-- **Marque** : l'ennemi touché est marqué 4 s ; tous les autres défenseurs lui infligent +30 % (le marqueur n'en profite pas).
-- **Aura** : un gardien donne +20 % de dégâts aux défenseurs situés à moins de 3,6 cases de lui (pas à lui-même). Sur la Vallée du Gué, dont les emplacements sont distants de 4 cases ou plus, l'aura ne touche personne ; elle sert surtout sur les cartes dont les emplacements sont groupés.
+- **Marque** : l'ennemi touché est marqué 4 s ; tous les autres défenseurs lui infligent +55 % (le marqueur n'en profite pas).
+- **Aura** : un gardien donne +40 % de dégâts aux défenseurs situés à moins de 3,6 cases de lui (pas à lui-même). Sur la Vallée du Gué, dont les emplacements sont distants de 4 cases ou plus, l'aura ne touche personne ; elle sert surtout sur les cartes dont les emplacements sont groupés.
 - Limites : aucun indicateur visuel de ralentissement, de marque ou d'aura en jeu pour l'instant (à demander à Codex) ; le libellé de talents d'une famille reste « <unité> et ses alternatives ».
 
 ## Quatrième lot livré (v0.196) : catalogue complet
@@ -70,23 +70,83 @@ Archétypes 14 à 18 : pilleur, sapeur d'entrée, tourelle de forteresse, réact
 
 | Faction | Unité | Famille (talents) | Recrutement | Déblocage | Missions requises | Principe |
 | --- | --- | --- | --- | --- | --- | --- |
-| Alliance | Marchand mercenaire | Archer elfe | 85 or | 1080 PO | 140 missions | Pillage : l'ennemi touché rapporte +60 % d'or s'il meurt dans les 4 s |
-| Alliance | Piégeur nain | Arbalétrier nain | 90 or | 1140 PO | 150 missions | ×1,8 sur le premier tiers du trajet, ×0,4 sur le dernier |
-| Alliance | Balliste royale | Arbalétrier nain | 105 or | 1200 PO | 160 missions | ×1,8 sur le dernier tiers du trajet, ×0,4 sur le premier |
-| Alliance | Alchimiste | Mage humain | 100 or | 1250 PO | 170 missions | L'ennemi touché explose à sa mort (40 dégâts, rayon 1,4) dans les 4 s, en chaîne |
-| Alliance | Vétéran royal | Arbalétrier nain | 70 or | 1300 PO | 180 missions | +12 % par vague survivée depuis l'achat (plafond +90 %) |
-| Horde | Pillard gobelin | Lanceur de haches troll | 85 or | 1080 PO | 140 missions | Pillage : l'ennemi touché rapporte +60 % d'or s'il meurt dans les 4 s |
+| Alliance | Marchand mercenaire | Archer elfe | 70 or | 1080 PO | 140 missions | Pillage : l'ennemi touché rapporte +120 % d'or s'il meurt dans les 4 s |
+| Alliance | Piégeur nain | Arbalétrier nain | 80 or | 1140 PO | 150 missions | ×1,8 sur le premier tiers du trajet, ×0,4 sur le dernier |
+| Alliance | Balliste royale | Arbalétrier nain | 95 or | 1200 PO | 160 missions | ×1,8 sur le dernier tiers du trajet, ×0,4 sur le premier |
+| Alliance | Alchimiste | Mage humain | 90 or | 1250 PO | 170 missions | L'ennemi touché explose à sa mort (80 dégâts, rayon 1,4) dans les 4 s, en chaîne |
+| Alliance | Vétéran royal | Arbalétrier nain | 60 or | 1300 PO | 180 missions | +16 % par vague survivée depuis l'achat (plafond +90 %) |
+| Horde | Pillard gobelin | Lanceur de haches troll | 70 or | 1080 PO | 140 missions | Pillage : l'ennemi touché rapporte +120 % d'or s'il meurt dans les 4 s |
 | Horde | Poseur de mines | Sapeur gobelin | 90 or | 1140 PO | 150 missions | ×1,8 sur le premier tiers du trajet, ×0,4 sur le dernier |
 | Horde | Baliste de guerre | Lanceur de haches troll | 105 or | 1200 PO | 160 missions | ×1,8 sur le dernier tiers du trajet, ×0,4 sur le premier |
-| Horde | Gobelin kamikaze | Sapeur gobelin | 100 or | 1250 PO | 170 missions | L'ennemi touché explose à sa mort (40 dégâts, rayon 1,4) dans les 4 s, en chaîne |
-| Horde | Chef de guerre vétéran | Lanceur de haches troll | 70 or | 1300 PO | 180 missions | +12 % par vague survivée depuis l'achat (plafond +90 %) |
+| Horde | Gobelin kamikaze | Sapeur gobelin | 90 or | 1250 PO | 170 missions | L'ennemi touché explose à sa mort (80 dégâts, rayon 1,4) dans les 4 s, en chaîne |
+| Horde | Chef de guerre vétéran | Lanceur de haches troll | 60 or | 1300 PO | 180 missions | +16 % par vague survivée depuis l'achat (plafond +90 %) |
 
-- **Pillage** : l'ennemi touché par un pilleur rapporte +60 % d'or (arrondi, puis brume marine éventuelle) s'il est éliminé dans les 4 s, par n'importe quel défenseur.
+- **Pillage** : l'ennemi touché par un pilleur rapporte +120 % d'or (arrondi, puis brume marine éventuelle) s'il est éliminé dans les 4 s, par n'importe quel défenseur.
 - **Entrée et forteresse** : la position de la cible est sa distance parcourue divisée par la longueur de sa route ; moins de 35 % = entrée, plus de 65 % = forteresse ; entre les deux, aucun multiplicateur.
-- **Réaction en chaîne** : un ennemi touché devient volatil 4 s ; s'il meurt, il explose et inflige 40 dégâts aux ennemis à moins de 1,4 case. Les explosions peuvent tuer d'autres ennemis volatils (chaîne) ; chaque ennemi n'explose qu'une fois. Les éliminations par explosion rapportent leur or normalement.
-- **Unité-pivot** : +12 % de dégâts par vague survivée depuis l'achat (le compteur repart à zéro si l'unité est revendue puis rachetée), plafonné à +90 %.
+- **Réaction en chaîne** : un ennemi touché devient volatil 4 s ; s'il meurt, il explose et inflige 80 dégâts aux ennemis à moins de 1,4 case. Les explosions peuvent tuer d'autres ennemis volatils (chaîne) ; chaque ennemi n'explose qu'une fois. Les éliminations par explosion rapportent leur or normalement.
+- **Unité-pivot** : +16 % de dégâts par vague survivée depuis l'achat (le compteur repart à zéro si l'unité est revendue puis rachetée), plafonné à +90 %.
 - Le moteur reste déterministe et indépendant du pas de simulation ; les anciens rapports sont toujours rejouables (`tests/test_shop_lot4.gd`).
 - Limites : aucun indicateur visuel pour le pillage, la volatilité ni l'aura (à demander à Codex), et la boutique est toujours paginée (deux cartes par page, dix pages).
+
+## Équilibrage de puissance (v0.197)
+
+Mesure : chaque alternative remplace la troisième unité de l'armée de référence de sa faction (Alliance : archer, arbalétrier, arbalétrier ; Horde : deux haches et chaman) ; on cherche par dichotomie les PV ennemis maximaux (en % de la courbe normale) qu'elle bat, sur cinq cartes (Vallée du Gué, Passage d'ardoise, bassins du marais, entrée de la mine, jetée de la côte) et deux ordres d'emplacements, sans talents. Le rapport est seuil(unité) / seuil(référence) moyenné sur les dix essais : 1,00 = parité. Outil : `prototype/tools/balance_shop.gd`, `analyse_shop_balance.py` et `tune_shop.py` (réglage des fiches). Seuil au pas de 2 % : les rapports sont précis à environ ±0,02.
+
+Avant réglage, les quarante alternatives (vingt par faction, dont les quatre d'origine) étaient en moyenne à 0,93 de la référence, la plus faible à 0,77 (pyromancien). Après trois passes de réglage (dégâts, effets de règle et prix de recrutement), **la moyenne est de 0,96 de la référence, écart-type 0,04, de 0,86 (pyromancien) à 1,05 (sarbacane, lanceur double, traqueur)**. Les unités de soutien (ralentissement, marque, aura, pillage) restent un peu sous la parité parce que la mesure ne compte pas la totalité de leurs effets (or supplémentaire, ennemis ralentis plus longtemps sous le feu des autres) : écart accepté pour le prototype, à juger en jeu par le porteur. Valeurs de prototype à confirmer par le porteur en jeu.
+
+**Alliance**
+
+| Unité | Rapport moyen | Pire carte | Meilleure carte |
+| --- | --- | --- | --- |
+| Alchimiste | 0,90 | 0,81 | 0,99 |
+| Arbalète lourde | 0,94 | 0,88 | 1,00 |
+| Archer double | 0,95 | 0,81 | 1,04 |
+| Arquebusier nain | 0,94 | 0,87 | 1,00 |
+| Balliste royale | 0,95 | 0,81 | 1,02 |
+| Bombarde naine | 0,94 | 0,87 | 1,00 |
+| Fronde elfe | 1,00 | 0,95 | 1,06 |
+| Mage de givre | 0,92 | 0,83 | 0,99 |
+| Mage de la foudre humain | 0,94 | 0,89 | 1,00 |
+| Marchand mercenaire | 0,94 | 0,85 | 1,00 |
+| Mousquetaire nain | 0,95 | 0,89 | 1,00 |
+| Piquier humain | 0,98 | 0,84 | 1,10 |
+| Piégeur nain | 0,95 | 0,84 | 1,07 |
+| Prêtre guerrier | 0,89 | 0,81 | 1,00 |
+| Pyromancien humain | 0,86 | 0,81 | 0,92 |
+| Rôdeur elfe | 0,99 | 0,91 | 1,07 |
+| Sentinelle elfe | 0,93 | 0,86 | 1,00 |
+| Tireur d’élite elfe | 0,96 | 0,89 | 1,00 |
+| Vétéran royal | 0,92 | 0,84 | 1,00 |
+| Éclaireur-observateur | 0,91 | 0,81 | 1,00 |
+
+**Horde**
+
+| Unité | Rapport moyen | Pire carte | Meilleure carte |
+| --- | --- | --- | --- |
+| Ancien des tribus | 0,92 | 0,83 | 1,03 |
+| Baliste de guerre | 1,01 | 0,93 | 1,06 |
+| Brûleur de cendres | 0,97 | 0,89 | 1,01 |
+| Catapulte gobeline | 0,96 | 0,92 | 1,00 |
+| Chaman des marais | 0,95 | 0,88 | 1,00 |
+| Chef de guerre vétéran | 0,96 | 0,89 | 1,01 |
+| Gobelin kamikaze | 0,91 | 0,83 | 1,00 |
+| Grenadier gobelin | 1,01 | 0,98 | 1,06 |
+| Hache en chaîne | 0,99 | 0,94 | 1,05 |
+| Lance-éclats gobelin | 1,02 | 0,99 | 1,13 |
+| Lance-épieu orc | 1,04 | 0,87 | 1,10 |
+| Lanceur de javeline troll | 0,99 | 0,94 | 1,02 |
+| Lanceur de masse orc | 0,95 | 0,90 | 1,00 |
+| Lanceur double troll | 1,05 | 0,97 | 1,15 |
+| Pillard gobelin | 0,94 | 0,83 | 1,00 |
+| Poseur de mines | 0,97 | 0,87 | 1,09 |
+| Sarbacane gobeline | 1,05 | 0,94 | 1,12 |
+| Totem de guerre | 0,96 | 0,80 | 1,06 |
+| Traqueur troll | 1,05 | 1,00 | 1,13 |
+| Veilleur des cendres | 0,95 | 0,83 | 0,99 |
+
+Réglages principaux : dégâts propres relevés pour le mage de givre, le pyromancien (brûlure 16), le marchand, le pillard, les observateurs, les prêtres, les vétérans, les bombardes ; effets de règle renforcés (marque +55 %, aura +40 %, pillage +120 %, explosion 80, pivot +16 % par vague, tir croisé +85 % pour le lanceur double de la Horde) ; prix de recrutement revus pour 21 unités (de 60 à 100 or). Les libellés des cartes, les tests de lots 3 et 4 et ce document reprennent les nouvelles valeurs.
+
+Limites : cinq cartes seulement, sans talents ni événements d'affixe ; les règles de position (piégeur, balliste) dépendent du tracé et sont donc mesurées sur cinq tracés seulement ; les cartes des chapitres tardifs (îles flottantes, nécropole) ne sont pas mesurées. À rejouer quand le porteur aura confirmé ou modifié des valeurs.
 
 ## Dix-huit archétypes (communs aux deux factions, noms à valider)
 
@@ -139,16 +199,16 @@ Les six premiers archétypes à règles existantes (guetteur, tireur d'élite, m
 
 | Faction | Unité | Famille (talents) | Recrutement | Déblocage | Missions requises | Principe |
 | --- | --- | --- | --- | --- | --- | --- |
-| Alliance | Sentinelle elfe | Archer elfe | 70 or | 300 PO | 10 missions | Longue vue : portée 7, tirs faibles et espacés |
-| Alliance | Tireur d’élite elfe | Arbalétrier nain | 110 or | 360 PO | 20 missions | Un coup décisif (60), recharge de 5 s |
+| Alliance | Sentinelle elfe | Archer elfe | 60 or | 300 PO | 10 missions | Longue vue : portée 7, tirs faibles et espacés |
+| Alliance | Tireur d’élite elfe | Arbalétrier nain | 95 or | 360 PO | 20 missions | Un coup décisif (64), recharge de 5 s |
 | Alliance | Arquebusier nain | Archer elfe | 85 or | 420 PO | 30 missions | Rafale : un tir toutes les 0,3 s, 3,2 dégâts |
-| Alliance | Bombarde naine | Mage humain | 120 or | 480 PO | 40 missions | Explosion très large (5 voisins, rayon 1,6), lente |
+| Alliance | Bombarde naine | Mage humain | 100 or | 480 PO | 40 missions | Explosion très large (5 voisins, rayon 1,6), lente |
 | Alliance | Piquier humain | Archer elfe | 55 or | 540 PO | 50 missions | Bon marché, portée courte (2,2) |
-| Alliance | Pyromancien humain | Mage humain | 105 or | 600 PO | 60 missions | Brûlure prolongée (7 par palier), impact faible |
+| Alliance | Pyromancien humain | Mage humain | 85 or | 600 PO | 60 missions | Brûlure prolongée (16 par palier), impact faible |
 | Horde | Veilleur des cendres | Lanceur de haches troll | 70 or | 300 PO | 10 missions | Longue vue : portée 7, tirs faibles et espacés |
 | Horde | Lanceur de javeline troll | Lanceur de haches troll | 105 or | 360 PO | 20 missions | Un coup décisif (56), recharge de 4,5 s |
 | Horde | Lance-éclats gobelin | Lanceur de haches troll | 85 or | 420 PO | 30 missions | Rafale : un tir toutes les 0,35 s, 3,5 dégâts |
-| Horde | Catapulte gobeline | Sapeur gobelin | 120 or | 480 PO | 40 missions | Explosion très large (5 voisins, rayon 1,7), lente |
+| Horde | Catapulte gobeline | Sapeur gobelin | 100 or | 480 PO | 40 missions | Explosion très large (5 voisins, rayon 1,7), lente |
 | Horde | Lance-épieu orc | Lanceur de haches troll | 55 or | 540 PO | 50 missions | Bon marché, portée courte (2,2) |
 | Horde | Brûleur de cendres | Chaman orc | 105 or | 600 PO | 60 missions | Brûlure prolongée (7,2 par palier), impact faible |
 

@@ -174,6 +174,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.196** : quatrième lot de la boutique (types 36 à 45) : catalogue complet de 20 unités par faction (14 970 PO). Moteur : `_apply_damage` refactoré (`_settle_enemy`, explosions en chaîne), pillage (`loot_until`, `loot_bonus`), volatilité (`volatile_*`), `progress_multiplier` (entrée et forteresse), `pivot_bonus` (`bought_waves` par instance, hors de l état comparé des rapports). Aucun indicateur visuel pour ralentissement, marque, aura, pillage, volatilité : à demander à Codex. Illustrations de boutique de Codex (guetteurs, tireurs d'élite) toujours non branchées, en attente de l'avis du porteur.
 
+**v0.197** : équilibrage de puissance des alternatives de la boutique (outils `prototype/tools/balance_shop.gd`, `analyse_shop_balance.py`, `tune_shop.py`). Moyenne 0,96 de la référence, de 0,86 à 1,05 ; valeurs de règles, prix de recrutement et libellés de cartes ajustés ; `Boutique_20_unites_proposition.md` contient le tableau des rapports. Pas de nouvelle demande à Codex.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

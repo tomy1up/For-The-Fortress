@@ -1,0 +1,7 @@
+# Prototype v0.197 — Équilibrage de puissance des alternatives de la boutique
+
+- **Mesure de puissance** : chaque alternative remplace la troisième unité de l'armée de référence de sa faction (Alliance : archer, arbalétrier, arbalétrier ; Horde : deux haches et chaman) ; on cherche les PV ennemis maximaux battus sur cinq cartes et deux ordres d'emplacements, sans talents. Outils : `prototype/tools/balance_shop.gd`, `analyse_shop_balance.py`, `tune_shop.py`.
+- **Résultat** : avant réglage, moyenne de 0,93 de la référence (jusqu'à 0,77) ; après trois passes, **moyenne 0,96, écart-type 0,04, de 0,86 à 1,05**. Les unités de soutien restent légèrement sous la parité (leurs effets annexes ne sont pas mesurés). Valeurs de prototype à confirmer par le porteur en jeu.
+- **Réglages** : dégâts propres relevés (mage de givre, pyromancien, marchand, pillard, observateurs, prêtres, vétérans, bombardes…), effets de règle renforcés (marque +55 %, aura +40 %, pillage +120 %, explosion 80 dégâts, pivot +16 % par vague, tir croisé de la Horde +85 %), prix de recrutement revus pour 21 unités (60 à 100 or). Libellés des cartes et tests de lots 3 et 4 alignés.
+- **Compatibilité** : seules les alternatives de boutique changent ; les armées de départ et les anciens rapports sans alternative se rejouent comme avant.
+- Limites : cinq cartes mesurées, sans talents ni événements d'affixe ; illustrations et indicateurs visuels (ralentissement, marque, aura, pillage, volatilité) toujours à produire par Codex.

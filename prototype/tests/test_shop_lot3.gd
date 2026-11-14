@@ -69,7 +69,7 @@ func verify_mark_and_aura() -> void:
 	check(is_equal_approx(model.damage_for(observer_stats,"direct",victim),model.damage_for(observer_stats,"direct",{"type":1,"hp":40.0,"max_hp":40.0})),"Le marqueur ne profite pas de sa propre marque")
 	model.elapsed = 4.5
 	check(is_equal_approx(model.damage_for(archer_stats,"direct",victim),before),"La marque expire après 4 s")
-	# Aura : deux emplacements proches du prêtre reçoivent +20 %, un emplacement éloigné rien.
+	# Aura : deux emplacements proches du prêtre reçoivent +40 %, un emplacement éloigné rien.
 	var aura := Model.new(true,Model.Maps.for_id("necro_gate"))
 	check(aura.configure_auxiliary(priest),"Le prêtre guerrier est accepté comme alternative")
 	aura.select_faction(0);aura.gold = 2000
@@ -85,8 +85,8 @@ func verify_mark_and_aura() -> void:
 			guard_slot = candidate;near = close;far = distant;break
 	check(guard_slot >= 0,"La carte de contrôle offre un emplacement de gardien avec un voisin proche et un éloigné")
 	aura.buy(guard_slot,priest);aura.buy(near,0);aura.buy(far,0)
-	check(is_equal_approx(aura.guardian_aura(near),0.2) and aura.guardian_aura(far) == 0.0 and aura.guardian_aura(guard_slot) == 0.0,"L'aura du prêtre bénit son voisin, pas l'éloigné ni lui-même")
-	check(aura.get_stats(near).direct_bonus >= 0.2-0.000001,"L'aura s'ajoute au bonus de dégâts directs du voisin")
+	check(is_equal_approx(aura.guardian_aura(near),0.4) and aura.guardian_aura(far) == 0.0 and aura.guardian_aura(guard_slot) == 0.0,"L'aura du prêtre bénit son voisin, pas l'éloigné ni lui-même")
+	check(aura.get_stats(near).direct_bonus >= 0.4-0.000001,"L'aura s'ajoute au bonus de dégâts directs du voisin")
 
 func army(card_id: String, step: float, waves: int = 4) -> Dictionary:
 	var card: Dictionary = Shop.card(card_id)
