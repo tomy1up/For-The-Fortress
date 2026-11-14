@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Éclaireur-observateur validé, à intégrer (ouvert)
+
+Le porteur a validé le sprite du type 31 (`alliance.observer`). La [fiche](design/Visuels_Boutique_Observateur.md) donne le cadre et l’ancre. Sur la copie v0.199, la flèche est masquée pour ce type et le losange `mark.png` s’affiche au-dessus des PV tant que `marked_until` est actif. La première application a été vérifiée en combat, avec les règles existantes. Le fanion et le geste pourront ensuite être animés au moment du marquage.
+
 ### 2026-11-14 — Mage de givre illustré (ouvert)
 
 Le porteur a bien accueilli le visuel fixe du type 30 (`alliance.frostmage`). La [fiche](design/Visuels_Boutique_Mage_Givre.md) donne le cadre et l’ancre vérifiés sur copie v0.198. Le projectile d’essai est un éclat cyan dirigé vers une cible. Le repère `effect.slow` proposé dans les effets de boutique peut signaler le ralentissement au sol. Le départ définitif reste à synchroniser avec l’animation du gantelet.

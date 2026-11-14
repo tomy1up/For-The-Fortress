@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Éclaireur-observateur, type 31.** Visuel fixe validé. Portrait, déblocage, recrutement et affichage de la première marque vérifiés sur copie v0.199. 106 contrôles d’illustrations réussis. Sprite et repère à intégrer, pose de repos et transition à produire. [Fiche](design/Visuels_Boutique_Observateur.md).
+
 **Mage de givre, type 30.** Visuel fixe bien accueilli par le porteur. Comparatif à E2, portrait, déblocage, recrutement et premier tir avec éclat cyan vérifiés sur copie v0.198. 121 contrôles d’illustrations réussis. Intégration et animation du lâcher à suivre. [Fiche](design/Visuels_Boutique_Mage_Givre.md).
 
 **Sarbacane gobeline, type 29.** Visuel fixe validé par le porteur le 14 novembre 2026 (`0230eef`), prêt à intégrer. Comparatif à E2, portrait, déblocage, recrutement et premier tir avec un dard d’essai vérifiés sur copie v0.198. 116 contrôles d’illustrations réussis. [Fiche](design/Visuels_Boutique_Sarbacane.md).
