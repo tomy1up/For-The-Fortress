@@ -52,7 +52,7 @@ const ROSTER: Array[Dictionary] = [
 	{"name":"Sentinelle elfe","price":60,"damage":6.5,"interval":1.6,"range":7.0},
 	{"name":"Tireur d’élite elfe","price":95,"damage":64.0,"interval":5.0,"range":6.0},
 	{"name":"Arquebusière naine","price":85,"damage":3.2,"interval":0.3,"range":3.0},
-	{"name":"Bombarde naine","price":100,"damage":26.0,"interval":4.0,"range":4.0,"secondary_damage":18.0,"secondary_cap":5,"radius":1.6},
+	{"name":"Bombardier nain","price":100,"damage":26.0,"interval":4.0,"range":4.0,"secondary_damage":18.0,"secondary_cap":5,"radius":1.6},
 	{"name":"Piquier humain","price":55,"damage":14.0,"interval":1.2,"range":2.2},
 	{"name":"Pyromancien humain","price":85,"damage":17.0,"interval":2.0,"range":4.0,"curse_damage":22.0},
 	{"name":"Veilleur des cendres","price":70,"damage":6.0,"interval":1.6,"range":7.0},

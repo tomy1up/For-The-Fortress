@@ -103,7 +103,7 @@ Avant réglage, les quarante alternatives (vingt par faction, dont les quatre d'
 | Archer double | 0,95 | 0,81 | 1,04 |
 | Arquebusière naine | 0,94 | 0,87 | 1,00 |
 | Balliste royale | 0,95 | 0,81 | 1,02 |
-| Bombarde naine | 0,94 | 0,87 | 1,00 |
+| Bombardier nain | 0,94 | 0,87 | 1,00 |
 | Fronde elfe | 1,00 | 0,95 | 1,06 |
 | Mage de givre | 0,92 | 0,83 | 0,99 |
 | Mage de la foudre humain | 0,94 | 0,89 | 1,00 |
@@ -157,7 +157,7 @@ Chaque archétype a une **force et une faiblesse** (CAMP-008) ; aucun ne remplac
 | 1 | Guetteur de longue portée | Portée très grande | Dégâts faibles | Guetteur des crêtes | Veilleur des cendres | existante |
 | 2 | Tireur d'élite | Un coup très fort | Recharge très lente | Tireur d'élite elfe | Lanceur de javeline troll | existante |
 | 3 | Mitrailleur | Cadence très haute | Dégâts minuscules | Arquebusière naine | Lance-éclats gobelin | existante |
-| 4 | Artilleur | Explosion très large | Lent, portée moyenne | Bombarde naine | Catapulte gobeline | existante |
+| 4 | Artilleur | Explosion très large | Lent, portée moyenne | Bombardier nain | Catapulte gobeline | existante |
 | 5 | Lancier | Bon marché pour sa puissance | Portée courte | Piquier humain | Lance-épieu orc | existante |
 | 6 | Incendiaire | Dégâts sur la durée | Impact initial faible | Pyromancien humain | Brûleur de cendres | existante (type chaman) |
 | 7 | Ricocheur | Plusieurs cibles en chaîne | Impact réduit | Arbalète à répétition | Hache en chaîne | existante |
@@ -202,7 +202,7 @@ Les six premiers archétypes à règles existantes (guetteur, tireur d'élite, m
 | Alliance | Sentinelle elfe | Archer elfe | 60 or | 300 PO | 10 missions | Longue vue : portée 7, tirs faibles et espacés |
 | Alliance | Tireur d’élite elfe | Arbalétrier nain | 95 or | 360 PO | 20 missions | Un coup décisif (64), recharge de 5 s |
 | Alliance | Arquebusière naine | Archer elfe | 85 or | 420 PO | 30 missions | Rafale : un tir toutes les 0,3 s, 3,2 dégâts |
-| Alliance | Bombarde naine | Mage humain | 100 or | 480 PO | 40 missions | Explosion très large (5 voisins, rayon 1,6), lente |
+| Alliance | Bombardier nain | Mage humain | 100 or | 480 PO | 40 missions | Explosion très large (5 voisins, rayon 1,6), lente |
 | Alliance | Piquier humain | Archer elfe | 55 or | 540 PO | 50 missions | Bon marché, portée courte (2,2) |
 | Alliance | Pyromancien humain | Mage humain | 85 or | 600 PO | 60 missions | Brûlure prolongée (22 par palier), impact faible |
 | Horde | Veilleur des cendres | Lanceur de haches troll | 70 or | 300 PO | 10 missions | Longue vue : portée 7, tirs faibles et espacés |

@@ -203,6 +203,8 @@ static func secondary_segments(shot: Dictionary) -> Array[PackedVector2Array]:
 
 const ARROW_TYPES: Array[int] = [11] # Tireur d'élite elfe : flèche, bien que sa famille de combat reste celle de l'arbalétrier.
 const BULLET_TYPE := 12 # Arquebusière naine : balle de plomb et traînée de poudre, bien que sa famille de combat reste celle de l'archer.
+const CANNON_TYPE := 13 # Bombardier nain : boulet en cloche.
+const PIKE_TYPE := 14 # Piquier humain : coup de pique à courte portée, sans projectile lancé.
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 
@@ -225,6 +227,7 @@ static func projectile_position(shot: Dictionary, age: float) -> Vector2:
 	var target: Vector2 = project(shot.to)+Vector2(0,-12)
 	var point: Vector2 = origin.lerp(target,progress)
 	if Model.family(shot.type) in [3,4]: point.y -= sin(PI*progress)*(15.0 if Model.family(shot.type) == 4 else 8.0)
+	elif int(shot.type) == CANNON_TYPE: point.y -= sin(PI*progress)*12.0
 	return point
 
 func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
@@ -240,6 +243,12 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		return
 	if int(shot.type) == BULLET_TYPE:
 		_draw_bullet(point,direction)
+		return
+	if int(shot.type) == CANNON_TYPE:
+		_draw_cannonball(point,direction)
+		return
+	if int(shot.type) == PIKE_TYPE:
+		_draw_pike_thrust(origin,direction,side,age/PROJECTILE_FLIGHT)
 		return
 	var style: int = 0 if int(shot.type) in ARROW_TYPES else Model.family(int(shot.type))
 	match style:
@@ -270,6 +279,23 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 			var cross := PackedVector2Array([point+Vector2(0,-6),point+Vector2(4,0),point+Vector2(0,6),point+Vector2(-4,0)])
 			draw_colored_polygon(cross,color)
 			draw_line(point+Vector2(0,-3),point+Vector2(0,3),Color("f5def5"),1.5,true)
+
+## Boulet du bombardier nain (type 13) : sphère de fonte avec fumée de poudre.
+func _draw_cannonball(point: Vector2, direction: Vector2) -> void:
+	for puff in range(3):
+		draw_circle(point-direction*(5.0+puff*5.0),3.5-puff*0.8,Color(0.78,0.78,0.74,0.32-puff*0.08),true,-1,true)
+	draw_circle(point,4.6,Color("1d2224"),true,-1,true)
+	draw_circle(point+Vector2(-1.4,-1.4),1.6,Color("c7d2cf"),true,-1,true)
+
+## Coup de pique du piquier humain (type 14) : la pointe jaillit vers la cible sur 15 px puis se retire.
+func _draw_pike_thrust(origin: Vector2, direction: Vector2, side: Vector2, progress: float) -> void:
+	var reach: float = sin(PI*clampf(progress,0.0,1.0))*15.0
+	var tip: Vector2 = origin+direction*reach
+	draw_line(origin-direction*6.0,tip,Color("1a2524"),3.6,true)
+	draw_line(origin-direction*6.0,tip,Color("c79a62"),2.0,true)
+	var head := PackedVector2Array([tip+direction*6.0,tip+side*2.6,tip-side*2.6])
+	draw_colored_polygon(head,Color("dfeae6"))
+	draw_line(tip+direction*6.0,tip-direction*1.0,Color(1.0,1.0,1.0,0.6),1.0,true)
 
 ## Balle de l'arquebusière naine (type 12) : boule de plomb précédée d'un éclat de poudre, sans empennage de flèche.
 func _draw_bullet(point: Vector2, direction: Vector2) -> void:
