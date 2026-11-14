@@ -6,9 +6,11 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-14 — Arbalète lourde proposée (ouvert)
+### 2026-11-14 — Arbalète lourde approuvée et revue des gestes (ouvert)
 
-Le type 24 (`alliance.heavycrossbow`) a un visuel pour le portrait et le plateau. L’avis du porteur est attendu. Le cadre, l’ancre et le point de départ provisoire du carreau sont dans la [fiche](design/Visuels_Boutique_Arbalete_Lourde.md). Les multiplicateurs actuels contre les lourds et les petits sont à conserver.
+Le porteur a validé le sprite du type 24 (`alliance.heavycrossbow`, `a19a744`). Utiliser `arbalete_lourde_v001.png` en boutique et sur le plateau, puis le déclarer à l’export. Cadre, ancre et départ provisoire dans la [fiche](design/Visuels_Boutique_Arbalete_Lourde.md). Garder le carreau unique et les multiplicateurs actuels.
+
+La [revue des gestes](design/Visuels_Gestes_Combat.md) couvre les types 0 à 24. Les effets doivent suivre l’attaque de l’unité, avec un raccord particulier pour les coups de contact et les projectiles provisoires de famille. Lorsque les poses de lâcher seront disponibles, vérifier ensemble leurs points d’émission et le départ visuel. La v0.197 utilise `MUZZLES` pour le tir.
 
 ### 2026-11-14 — Archer double, pose de plateau (ouvert)
 
