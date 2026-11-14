@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Lanceur double troll validé, à intégrer (ouvert)
+
+Le porteur a validé le visuel fixe du type 27 (`horde.doublethrower`). La [fiche](design/Visuels_Boutique_Lanceur_Double.md) donne le cadre et l’ancre contrôlés sur copie v0.198. Associer le PNG au portrait et au plateau, puis le déclarer aux listes d’export. L’alternance des bras concerne le futur rendu et doit conserver un tir par attaque.
+
 ### 2026-11-14 — Hache en chaîne illustrée (ouvert)
 
 Le porteur a bien accueilli le visuel fixe de `horde.chainaxe` (type 26). La [fiche](design/Visuels_Boutique_Hache_En_Chaine.md) donne le cadre, le pied et la hauteur du PNG contrôlés sur copie v0.198. Associer le sprite au portrait et au plateau, et le déclarer à l’export. Le projectile de famille sert de repli. L’objectif visuel à terme est une hache à deux lobes qui suit les cibles enregistrées lors des rebonds.
