@@ -1,0 +1,6 @@
+# Prototype v0.205 — Repères d'effets de la boutique branchés
+
+- **Repères de Codex branchés en combat** (valeurs d'affichage de `design/Visuels_Effets_Boutique.md`, à juger en jeu par le porteur) : cristaux bleus aux pieds d'un ennemi ralenti (29 × 14 px) ; pastilles de 16 × 16 px au-dessus de la barre de PV, dans l'ordre marque (losange rose), pillage (deux pièces) et volatilité (étoile orange), centrées avec 18 px d'entraxe ; double chevron vert (19 × 13 px) au pied des défenseurs qui bénéficient d'une aura de gardien.
+- **Explosion de réaction en chaîne** : le moteur expose maintenant l'instant, la position et le rayon de chaque explosion (`explosion_events`, observation visuelle sans effet de jeu, y compris en chaîne) ; la vue affiche `volatile_burst.png` pendant 0,45 s, anneau et éclats qui s'estompent. Les rapports et rejeux ne changent pas.
+- Nouveau test `test_shop_effects.gd` (ordre et expiration des pastilles, événements d'explosion en chaîne, présence des six ressources). Les six PNG sont déclarés dans les trois listes d'export.
+- Limites : non observé en jeu dans cette version (transitions, superpositions en mouvement et lisibilité sur une vague dense à vérifier) ; le repère d'aura n'apparaît que sur les cartes aux emplacements groupés.

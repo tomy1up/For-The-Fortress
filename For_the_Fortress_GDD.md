@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.41 — 14 novembre 2026
+Game Design Document — Version 0.42 — 14 novembre 2026
 
-Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne de 200 missions, entièrement jouable (vingt chapitres, dix biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.204. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. La boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
+Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne de 200 missions, entièrement jouable (vingt chapitres, dix biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.205. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. La boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
 
-**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.204. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
+**Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.205. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.41 ; jeu de référence 0.204.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.42 ; jeu de référence 0.205.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -77,7 +77,7 @@ Nom de travail — disponibilité juridique à confirmer.
 63. [63 Biomes, nouveautés et affixes de combat](#s63)
 64. [64 Équilibrage des talents et mesure des cartes](#s64)
 65. [65 Cadre de travail, outils et production](#s65)
-66. [66 Journal des versions 0.110 à 0.204](#s66)
+66. [66 Journal des versions 0.110 à 0.205](#s66)
 
 <a id="s1"></a>
 
@@ -1683,7 +1683,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-017 | Confirmation en jeu des valeurs d’essai des affixes (Vents contraires, Éruptions, tempête de sable, éboulement) et de leur lisibilité | Retours du porteur ; habillage de Codex |
 | O-018 | Marges minces de la Horde aux finales des chapitres 3 et 4 (missions 30 et 40) ; mission 40 sur carte propre depuis la v0.178 | Remesure et éventuelle révision des tracés |
 | O-019 | Attribution et production du son | Décision du porteur |
-| O-020 | Habillage artistique restant : unités de la boutique (les illustrations des types 10 à 45, soit toutes les alternatives de la boutique étendue, sont validées par le porteur et intégrées de la v0.198 à la v0.204), indicateurs de ralentissement, de marque et d’aura, capitaine de garnison orc ; retouches selon le jugement du porteur sur les visuels intégrés en v0.191 à v0.195 | Livraisons de Codex et jugement du porteur |
+| O-020 | Habillage artistique restant : unités de la boutique (les illustrations des types 10 à 45, soit toutes les alternatives de la boutique étendue, sont validées par le porteur et intégrées de la v0.198 à la v0.204), indicateurs de ralentissement, de marque, de pillage, de volatilité et d’aura (branchés en v0.205, à juger en jeu), capitaine de garnison orc ; retouches selon le jugement du porteur sur les visuels intégrés en v0.191 à v0.195 | Livraisons de Codex et jugement du porteur |
 | O-021 | **Nouvelle race pour la Horde** (le porteur souhaite explorer cette piste, 14 novembre 2026) ; piste proposée : un **squelette jouable** inspiré de l’infanterie morte-vivante, dont le servant squelette de la baliste de guerre serait un premier aperçu visuel | Décision du porteur : race, rôle (unité de boutique, de départ ou ennemi retourné), nom, place dans les règles et dans la campagne ; aucune règle ni unité décidée à ce jour |
 
 <a id="s50"></a>
@@ -1773,6 +1773,8 @@ Version 0.39 — 14 novembre 2026 : jeu 0.202, illustrations validées des types
 Version 0.40 — 14 novembre 2026 : jeu 0.203, illustrations validées des types 40 à 43 intégrées (dont le servant squelette de la baliste de guerre). Deux pistes du porteur pour la Horde sont notées en questions ouvertes (O-021) : une nouvelle race, et un squelette jouable inspiré de l’infanterie morte-vivante. Aucune décision de conception nouvelle.
 
 Version 0.41 — 14 novembre 2026 : jeu 0.204, illustrations validées du gobelin kamikaze (44) et du chef de guerre vétéran (45) : toutes les alternatives de la boutique étendue ont leur illustration. Aucune décision de conception nouvelle.
+
+Version 0.42 — 14 novembre 2026 : jeu 0.205, repères d’effets de la boutique branchés en combat (ralentissement, marque, pillage, volatilité, aura) et explosion de réaction en chaîne affichée grâce à des événements d’explosion exposés par le moteur (observation visuelle seule). Dimensions et conditions d’affichage de Codex, à juger en jeu par le porteur. Aucune décision de conception nouvelle.
 
 <a id="s51"></a>
 
@@ -2066,7 +2068,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 14 novembre 2026 (GDD 0.41, jeu 0.204)
+### État au 14 novembre 2026 (GDD 0.42, jeu 0.205)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2088,7 +2090,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.41, jeu 0.204 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.42, jeu 0.205 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2365,7 +2367,7 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 
 <a id="s66"></a>
 
-## 66 Journal des versions 0.110 à 0.204
+## 66 Journal des versions 0.110 à 0.205
 
 | Versions | Contenu |
 | --- | --- |
@@ -2405,5 +2407,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.202 | Illustrations de boutique des types 37 à 39 ; GDD 0.39 |
 | 0.203 | Illustrations de boutique des types 40 à 43 ; GDD 0.40 |
 | 0.204 | Illustrations de boutique des types 44 et 45 : toutes les alternatives illustrées ; GDD 0.41 |
+| 0.205 | Repères d’effets de la boutique branchés ; événements d’explosion exposés ; GDD 0.42 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

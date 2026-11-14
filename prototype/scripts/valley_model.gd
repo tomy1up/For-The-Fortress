@@ -26,6 +26,7 @@ const Revenant = preload("res://scripts/revenant_encounters.gd")
 var wave_set_id: String = "ford"
 var route_target_policy: String = "arrival_time"
 var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
+var explosion_events: Array[Dictionary] = [] # Explosions de réaction en chaîne (instant, position, rayon) : observation visuelle, aucun effet de jeu.
 var enemy_hp_percent: int = 100
 var combat_affix: Dictionary = {}
 var eruption_next: int = 1 # Numéro de la prochaine éruption de la vague (affixe Éruptions).
@@ -184,6 +185,7 @@ func reset() -> void:
 	shots.clear()
 	damage_events.clear()
 	protection_events.clear()
+	explosion_events.clear()
 	elimination_events.clear()
 	bought_waves.clear()
 	event_log.clear()
@@ -739,6 +741,7 @@ func prepare_next_wave() -> bool:
 	shots.clear()
 	damage_events.clear()
 	protection_events.clear()
+	explosion_events.clear()
 	elimination_events.clear()
 	bought_waves.clear()
 	curses.clear()
@@ -1155,6 +1158,8 @@ func _settle_enemy(enemy: Dictionary, survivors: Array[Dictionary], blasts: Arra
 		if float(enemy.get("volatile_until",-1.0)) >= elapsed-EPS and not enemy.get("exploded",false):
 			enemy.exploded = true
 			event_log.append("%.9f explosion %d" % [elapsed, enemy.id])
+			explosion_events.append({"time":elapsed,"position":enemy_position(enemy),"radius":float(enemy.get("volatile_radius",1.0))})
+			while explosion_events.size() > 24: explosion_events.pop_front()
 			blasts.append({"source":enemy,"damage":float(enemy.get("volatile_damage",0.0)),"radius":float(enemy.get("volatile_radius",1.0))})
 	else:
 		survivors.append(enemy)

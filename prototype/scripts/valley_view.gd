@@ -503,6 +503,31 @@ func _draw_javelin(point: Vector2, direction: Vector2, side: Vector2) -> void:
 	draw_line(tail,tail+direction*5.0+side*3.0,Color("e0b44a"),1.4,true)
 	draw_line(tail,tail+direction*5.0-side*3.0,Color("e0b44a"),1.4,true)
 
+## Pastilles d'état au-dessus de la barre de PV, dans l'ordre marque, pillage, volatilité, centrées avec 18 px d'entraxe.
+static func enemy_badges(enemy: Dictionary, elapsed: float) -> Array[String]:
+	var badges: Array[String] = []
+	if float(enemy.get("marked_until",-1.0)) > elapsed: badges.append("mark")
+	if float(enemy.get("loot_until",-1.0)) >= elapsed: badges.append("loot")
+	if float(enemy.get("volatile_until",-1.0)) >= elapsed and not enemy.get("exploded",false): badges.append("volatile")
+	return badges
+
+func _draw_enemy_badges(enemy: Dictionary, bar_position: Vector2) -> void:
+	var badges: Array[String] = enemy_badges(enemy,model.elapsed)
+	var textures := {"mark":FX_MARK,"loot":FX_LOOT,"volatile":FX_VOLATILE}
+	for index in range(badges.size()):
+		var center := Vector2(bar_position.x+12.0+(float(index)-float(badges.size()-1)*0.5)*FX_BADGE_SPACING,bar_position.y-10.0)
+		draw_texture_rect(textures[badges[index]],Rect2(center-FX_BADGE_SIZE*0.5,FX_BADGE_SIZE),false)
+
+## Explosions de réaction en chaîne : anneau bref et éclats, à la position de l'ennemi mort.
+func _draw_volatile_bursts() -> void:
+	for event in model.explosion_events:
+		var age: float = model.elapsed-float(event.time)
+		if age < 0.0 or age >= FX_BURST_DURATION: continue
+		var scale: float = (0.7+age/FX_BURST_DURATION*0.5)*clampf(float(event.radius)/1.4,0.8,1.6)
+		var size := Vector2(41,27)*scale
+		var center: Vector2 = project(event.position)+Vector2(0,-6)
+		draw_texture_rect(FX_BURST,Rect2(center-size*0.5,size),false,Color(1,1,1,1.0-age/FX_BURST_DURATION))
+
 func _draw_spinning_axe(point: Vector2, age: float) -> void:
 	var rotation: float = age/PROJECTILE_FLIGHT*TAU
 	var shaft := Vector2(cos(rotation),sin(rotation))
@@ -926,18 +951,22 @@ func _draw() -> void:
 			if actor.has("ghost"):
 				_draw_purchase_ghost(actor.ghost)
 			elif actor.has("defender"):
+				if model.guardian_aura(actor.slot) > 0.0: draw_texture_rect(FX_AURA,Rect2(actor.point+Vector2(-9.5,-1.0),Vector2(19,13)),false)
 				_draw_defender(actor.point, actor.defender.type, actor.defender.get("level", 1), actor.defender.get("branch", -1), defender_pose(actor.slot))
 			else:
+				if Model.enemy_is_slowed(actor.enemy): draw_texture_rect(FX_SLOW,Rect2(actor.point+Vector2(-14.5,-5.0),Vector2(29,14)),false)
 				var feedback: Array[Dictionary] = recent_enemy_damage(actor.enemy.id)
 				_draw_pillager(actor.point, actor.enemy,enemy_hit_strength(feedback),enemy_reaction_pose(actor.enemy,feedback,model.elapsed))
 				var ratio: float = clampf(actor.enemy.hp / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
 				var bar_position: Vector2 = actor.point + Vector2(-12, -39 * _enemy_scale(actor.enemy))
 				draw_rect(Rect2(bar_position, Vector2(24, 4)), Color("472f2a"))
 				draw_rect(Rect2(bar_position, Vector2(24 * ratio, 4)), Color("edcc80") if actor.enemy.id == inspected_enemy_id else Color("a1ba75"))
+				_draw_enemy_badges(actor.enemy,bar_position)
 				for event in feedback:
 					var span: Vector2 = damage_span(event,actor.enemy.get("max_hp",40.0))
 					if span.y > span.x:
 						draw_rect(Rect2(bar_position+Vector2(24*span.x,0),Vector2(24*(span.y-span.x),4)),Color(Color("f3dfba"),damage_opacity(model.elapsed-event.time)))
+		_draw_volatile_bursts()
 		_draw_eruption()
 		_draw_headwinds()
 		if model.active:
@@ -1015,6 +1044,16 @@ const ATTACK_POSE_DURATION := 0.26
 const ERUPTION_EFFECT_ID := "effect.eruption"
 const REGEN_EFFECT_ID := "effect.regeneration"
 const STORM_EFFECT_ID := "effect.sandstorm"
+## Repères d'effets de la boutique (Codex, 14 novembre 2026) : dimensions d'affichage de la fiche `design/Visuels_Effets_Boutique.md`.
+const FX_SLOW := preload("res://assets/effects/shop/slow.png")
+const FX_MARK := preload("res://assets/effects/shop/mark.png")
+const FX_LOOT := preload("res://assets/effects/shop/loot.png")
+const FX_VOLATILE := preload("res://assets/effects/shop/volatile.png")
+const FX_AURA := preload("res://assets/effects/shop/aura.png")
+const FX_BURST := preload("res://assets/effects/shop/volatile_burst.png")
+const FX_BADGE_SIZE := Vector2(16,16)
+const FX_BADGE_SPACING := 18.0
+const FX_BURST_DURATION := 0.45
 const ROCKFALL_EFFECT_ID := "effect.rockfall"
 const SEAMIST_EFFECT_ID := "effect.seamist"
 # Recul horizontal, inclinaison en radians, élévation : habillage des tirs résolus.
