@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Lance-éclats gobelin validé, à intégrer (ouvert)
+
+Le porteur a approuvé le visuel du type 18 (`horde.shardthrower`). Utiliser `lance_eclats_gobelin_v001.png` en boutique et sur le plateau et l’ajouter à l’export. Prévoir un éclat de cristal à la place du projectile de la famille lanceur de haches. Cadre, ancre, hauteur et départ du tir dans la [fiche](design/Visuels_Boutique_Lance_Eclats.md).
+
 ### 2026-11-14 — Pyromancien humain validé, à intégrer (ouvert)
 
 Le porteur a approuvé le visuel du type 15 (`alliance.pyromancer`). Utiliser `pyromancien_humain_v001.png` en boutique et sur le plateau et l’ajouter à l’export. Cadre, ancre, hauteur et origine du tir dans la [fiche](design/Visuels_Boutique_Pyromancien.md). Prévoir un visuel de projectile de feu à la place de celui du Mage humain, en conservant les règles de brûlure actuelles.
