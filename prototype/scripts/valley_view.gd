@@ -204,7 +204,12 @@ static func secondary_segments(shot: Dictionary) -> Array[PackedVector2Array]:
 const ARROW_TYPES: Array[int] = [11] # Tireur d'élite elfe : flèche, bien que sa famille de combat reste celle de l'arbalétrier.
 const BULLET_TYPE := 12 # Arquebusière naine : balle de plomb et traînée de poudre, bien que sa famille de combat reste celle de l'archer.
 const CANNON_TYPE := 13 # Bombardier nain : boulet en cloche.
-const PIKE_TYPE := 14 # Piquier humain : coup de pique à courte portée, sans projectile lancé.
+const PIKE_TYPES: Array[int] = [14,20] # Piquier humain et lance-épieu orc : coup à courte portée, sans projectile lancé.
+const FIRE_TYPE := 15 # Pyromancien humain : boule de feu.
+const SHARD_TYPE := 18 # Lance-éclats gobelin : éclat de cristal.
+const STONE_TYPE := 19 # Catapulte gobeline : pierre en cloche.
+const EMBER_TYPE := 21 # Brûleur de cendres : braise partie de la grille du brasero.
+const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touchées.
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 
@@ -228,6 +233,8 @@ static func projectile_position(shot: Dictionary, age: float) -> Vector2:
 	var point: Vector2 = origin.lerp(target,progress)
 	if Model.family(shot.type) in [3,4]: point.y -= sin(PI*progress)*(15.0 if Model.family(shot.type) == 4 else 8.0)
 	elif int(shot.type) == CANNON_TYPE: point.y -= sin(PI*progress)*12.0
+	elif int(shot.type) == STONE_TYPE: point.y -= sin(PI*progress)*16.0
+	elif int(shot.type) == EMBER_TYPE: point.y -= sin(PI*progress)*6.0
 	return point
 
 func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
@@ -247,8 +254,23 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	if int(shot.type) == CANNON_TYPE:
 		_draw_cannonball(point,direction)
 		return
-	if int(shot.type) == PIKE_TYPE:
+	if int(shot.type) in PIKE_TYPES:
 		_draw_pike_thrust(origin,direction,side,age/PROJECTILE_FLIGHT)
+		return
+	if int(shot.type) == FIRE_TYPE:
+		_draw_fireball(point,direction,age,1.0)
+		return
+	if int(shot.type) == EMBER_TYPE:
+		_draw_fireball(point,direction,age,0.6)
+		return
+	if int(shot.type) == SHARD_TYPE:
+		_draw_shard(point,direction,side)
+		return
+	if int(shot.type) == STONE_TYPE:
+		_draw_stone(point,age)
+		return
+	if int(shot.type) == LIGHTNING_TYPE:
+		_draw_lightning(shot,origin,target,age)
 		return
 	var style: int = 0 if int(shot.type) in ARROW_TYPES else Model.family(int(shot.type))
 	match style:
@@ -279,6 +301,62 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 			var cross := PackedVector2Array([point+Vector2(0,-6),point+Vector2(4,0),point+Vector2(0,6),point+Vector2(-4,0)])
 			draw_colored_polygon(cross,color)
 			draw_line(point+Vector2(0,-3),point+Vector2(0,3),Color("f5def5"),1.5,true)
+
+## Boule de feu (pyromancien) ou braise (brûleur de cendres, échelle réduite) : noyau clair, halo orange, étincelles.
+func _draw_fireball(point: Vector2, direction: Vector2, age: float, scale: float) -> void:
+	for trail in range(3):
+		draw_circle(point-direction*(4.0+trail*4.5)*scale,(4.2-trail*1.0)*scale,Color(1.0,0.45,0.12,0.30-trail*0.08),true,-1,true)
+	draw_circle(point,7.0*scale,Color(1.0,0.4,0.1,0.22),true,-1,true)
+	draw_circle(point,4.2*scale,Color("ff8a2a"),true,-1,true)
+	draw_circle(point,2.2*scale,Color("fff0b4"),true,-1,true)
+	for spark in range(3):
+		var phase := fposmod(age*19.0+float(spark)/3.0,1.0)
+		draw_circle(point+Vector2.UP.rotated((spark-1)*0.9)*lerpf(3.0,8.0,phase)*scale,1.0,Color(1.0,0.75,0.3,1.0-phase),true,-1,true)
+
+## Éclat de cristal du lance-éclats gobelin : losange turquoise allongé.
+func _draw_shard(point: Vector2, direction: Vector2, side: Vector2) -> void:
+	var shard := PackedVector2Array([point+direction*6.0,point+side*2.4,point-direction*5.0,point-side*2.4])
+	draw_colored_polygon(shard,Color("7fe8e0"))
+	shard.append(shard[0])
+	draw_polyline(shard,Color("1a4a50"),1.1,true)
+	draw_line(point-direction*5.0,point+direction*3.0,Color(1.0,1.0,1.0,0.6),0.9,true)
+
+## Pierre de la catapulte gobeline : roc irrégulier qui tourne pendant sa cloche.
+func _draw_stone(point: Vector2, age: float) -> void:
+	var spin: float = age/PROJECTILE_FLIGHT*TAU
+	var rock := PackedVector2Array()
+	for corner in range(7):
+		var radius := 5.4 if corner % 2 == 0 else 4.2
+		rock.append(point+Vector2(radius,0).rotated(spin+corner*TAU/7.0))
+	draw_colored_polygon(rock,Color("8c8f86"))
+	rock.append(rock[0])
+	draw_polyline(rock,Color("2c2f2c"),1.2,true)
+	draw_circle(point+Vector2(-1.6,-1.6),1.3,Color("c9ccc2"),true,-1,true)
+
+## Éclair du mage de la foudre : tracé brisé depuis la main avancée jusqu'à la cible, puis vers les cibles secondaires réellement touchées.
+func _draw_lightning(shot: Dictionary, origin: Vector2, target: Vector2, age: float) -> void:
+	var fade: float = 1.0-clampf(age/PROJECTILE_FLIGHT,0.0,1.0)*0.4
+	var chains: Array = [[origin,target]]
+	var previous: Vector2 = target
+	for extra in shot.get("secondary",[]):
+		var point: Vector2 = project(extra)+Vector2(0,-12)
+		chains.append([previous,point])
+		previous = point
+	for link in chains:
+		var path := _jagged_path(link[0],link[1],int(age*60.0))
+		draw_polyline(path,Color(0.55,0.75,1.0,0.45*fade),5.0,true)
+		draw_polyline(path,Color(0.92,0.97,1.0,fade),1.8,true)
+
+static func _jagged_path(from: Vector2, to: Vector2, seed_value: int) -> PackedVector2Array:
+	var path := PackedVector2Array([from])
+	var axis: Vector2 = to-from
+	var normal: Vector2 = axis.orthogonal().normalized()
+	var steps: int = maxi(3,int(axis.length()/9.0))
+	for step in range(1,steps):
+		var jitter: float = sin(float(seed_value*37+step*91))*5.0
+		path.append(from+axis*float(step)/float(steps)+normal*jitter)
+	path.append(to)
+	return path
 
 ## Boulet du bombardier nain (type 13) : sphère de fonte avec fumée de poudre.
 func _draw_cannonball(point: Vector2, direction: Vector2) -> void:

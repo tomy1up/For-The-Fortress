@@ -1,6 +1,6 @@
 # For the Fortress!
 
-**Prototype v0.198**. Réglage du pyromancien humain, l'alternative la plus faible de la boutique : 17 de dégâts, brûlure 22 (rapport 0,94 de la référence, ensemble de 0,89 à 1,05) ; illustrations validées de la sentinelle, du tireur d'élite, de l'arquebusière naine, du bombardier nain, du piquier humain, du veilleur des cendres et du javelinier intégrées avec flèche, balle et javeline. [Notes](design/essais/v0198_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.198).
+**Prototype v0.198**. Réglage du pyromancien humain, l'alternative la plus faible de la boutique : 17 de dégâts, brûlure 22 (rapport 0,94 de la référence, ensemble de 0,89 à 1,05) ; illustrations validées de la sentinelle, du tireur d'élite, de l'arquebusière naine, du bombardier nain, du piquier humain, du pyromancien, du lance-éclats, de la catapulte, du lance-épieu, du brûleur, du mage de la foudre, de l'archer double, du veilleur des cendres et du javelinier intégrées avec flèche, balle et javeline. [Notes](design/essais/v0198_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.198).
 
 **Prototype v0.197**. Équilibrage de puissance des 40 alternatives de la boutique : mesure sur cinq cartes, trois passes de réglage (moyenne 0,96 de la référence, de 0,86 à 1,05), règles et prix revus. [Notes](design/essais/v0197_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.197).
 

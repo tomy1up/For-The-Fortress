@@ -1682,7 +1682,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-017 | Confirmation en jeu des valeurs d’essai des affixes (Vents contraires, Éruptions, tempête de sable, éboulement) et de leur lisibilité | Retours du porteur ; habillage de Codex |
 | O-018 | Marges minces de la Horde aux finales des chapitres 3 et 4 (missions 30 et 40) ; mission 40 sur carte propre depuis la v0.178 | Remesure et éventuelle révision des tracés |
 | O-019 | Attribution et production du son | Décision du porteur |
-| O-020 | Habillage artistique restant : unités de la boutique (les illustrations des types 10, 11, 12, 13, 14, 16 et 17 sont validées par le porteur et intégrées en v0.198 ; les autres unités gardent l’illustration provisoire de leur famille), indicateurs de ralentissement, de marque et d’aura, capitaine de garnison orc ; retouches selon le jugement du porteur sur les visuels intégrés en v0.191 à v0.195 | Livraisons de Codex et jugement du porteur |
+| O-020 | Habillage artistique restant : unités de la boutique (les illustrations des types 10 à 23 sont validées par le porteur et intégrées en v0.198 ; les autres unités gardent l’illustration provisoire de leur famille), indicateurs de ralentissement, de marque et d’aura, capitaine de garnison orc ; retouches selon le jugement du porteur sur les visuels intégrés en v0.191 à v0.195 | Livraisons de Codex et jugement du porteur |
 
 <a id="s50"></a>
 
@@ -1758,7 +1758,7 @@ Version 0.33 — 14 novembre 2026 : jeu 0.196, quatrième lot de la boutique ét
 
 Version 0.34 — 14 novembre 2026 : jeu 0.197, équilibrage de puissance des alternatives de la boutique (mesure sur cinq cartes, trois passes de réglage). Aucune décision de conception nouvelle : valeurs H.
 
-Version 0.35 — 14 novembre 2026 : jeu 0.198, réglage du pyromancien humain (17 de dégâts, brûlure 22 ; rapport 0,94 de la référence) ; ensemble de la boutique de 0,89 à 1,05 ; intégration des illustrations validées par le porteur pour la sentinelle (10), le tireur d’élite (11), l’arquebusière naine (12, renommée à partir de « Arquebusier nain »), le bombardier nain (13, renommé à partir de « Bombarde naine » sur décision du porteur), le piquier humain (14), le veilleur des cendres (16) et le javelinier troll (17), avec projectiles de flèche, de balle, de boulet et de javeline et un coup de pique pour le piquier. Aucune décision de conception nouvelle : valeurs H.
+Version 0.35 — 14 novembre 2026 : jeu 0.198, réglage du pyromancien humain (17 de dégâts, brûlure 22 ; rapport 0,94 de la référence) ; ensemble de la boutique de 0,89 à 1,05 ; intégration des illustrations validées par le porteur pour la sentinelle (10), le tireur d’élite (11), l’arquebusière naine (12, renommée à partir de « Arquebusier nain »), le bombardier nain (13, renommé à partir de « Bombarde naine » sur décision du porteur), le piquier humain (14), le pyromancien humain (15), le lance-éclats gobelin (18), la catapulte gobeline (19), le lance-épieu orc (20), le brûleur de cendres (21), le mage de la foudre (22), l’archer double (23), le veilleur des cendres (16) et le javelinier troll (17), avec des projectiles propres (flèche, balle, boulet, javeline, boule de feu, éclat de cristal, pierre, braise, éclair ramifié) et un coup de pique ou d’épieu à courte portée. Aucune décision de conception nouvelle : valeurs H.
 
 <a id="s51"></a>
 
@@ -2384,6 +2384,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.195 | Visuels de Codex des chapitres 18 à 20 et relève du revenant ; GDD 0.32 |
 | 0.196 | Boutique étendue, quatrième lot (dix unités) : catalogue de vingt unités par faction complet ; GDD 0.33 |
 | 0.197 | Équilibrage de puissance des alternatives de la boutique (moyenne 0,96 de la référence, de 0,86 à 1,05) ; GDD 0.34 |
-| 0.198 | Réglage du pyromancien humain (rapport 0,94) ; ensemble de la boutique de 0,89 à 1,05 ; illustrations validées des types 10 à 14, 16 et 17 intégrées ; GDD 0.35 |
+| 0.198 | Réglage du pyromancien humain (rapport 0,94) ; ensemble de la boutique de 0,89 à 1,05 ; illustrations validées des types 10 à 23 intégrées ; GDD 0.35 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.
