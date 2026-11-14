@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Lisibilité native des unités, Alliance, Horde et neutres (ouvert)
+
+Le [dossier de contrôle](design/Visuels_Lisibilite_Plateau.md) contient les 46 défenseurs et les 19 attaquants capturés à taille native sur la copie v0.202. Le Troll utilise déjà des mipmaps. En activer sur les sprites des défenseurs et les planches des attaquants améliore les contours. Appliquer les hauteurs du CSV dans `shop_art.gd`, régler le test qui attend actuellement l’absence de mipmaps, et contrôler le chargement des planches dans l’export Windows. Le Lanceur de masse et le Chef de guerre vétéran passent de 57 à 66 px. Aucun réglage à reprendre pour le maillage du loup. L’identité visuelle du Capitaine orc reste à distinguer du Chef de guerre.
+
 ### 2026-11-14 — Chef de guerre vétéran illustré (ouvert)
 
 Le porteur a réagi favorablement au visuel fixe du type 45 (`horde.warveteran`). La [fiche](design/Visuels_Boutique_Chef_Guerre_Veteran.md) donne le cadre, le pied et le point de départ du lancer testés sur copie v0.202. La hache de famille convient au tir sur une cible. À intégrer au portrait, au plateau et à l’export. Le panneau de combat affiche encore « Rebond : 0 × 0 max. » sur la copie d’essai. Il gagnerait à indiquer le bonus de dégâts accumulé au fil des vagues.
