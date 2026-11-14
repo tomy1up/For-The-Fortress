@@ -4,6 +4,20 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Archer double, type 23.** Apparence bien accueillie par le porteur. Variante d’attente avec arc ivoire abaissé et main au carquois présentée en comparaison sur le plateau. Copie v0.197 : portrait, déblocage, recrutement et premier tir vérifiés, 90 contrôles d’illustrations réussis. [Fiche](design/Visuels_Boutique_Archer_Double.md).
+
+**Mage de la foudre, type 22.** Visuel approuvé par le porteur. Portrait, recrutement et premier tir vérifiés sur copie v0.197, 85 contrôles d’illustrations réussis. Sprite et rendu de l’éclair en chaîne à brancher. [Fiche et comparatif](design/Visuels_Boutique_Mage_Foudre.md).
+
+**Brûleur de cendres, type 21.** Apparence au brasero approuvée par le porteur. Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.197, avec 80 contrôles d’illustrations réussis. La fiche décrit une proposition d’animation qui relie appuis, poids du brasero et départ de la braise. Sprite et rendu du tir à intégrer. [Fiche](design/Visuels_Boutique_Bruleur.md).
+
+**Lance-épieu orc, type 20.** Visuel validé par le porteur. Comparaison avec le piquier et le javelinier au même emplacement. Portrait, recrutement et première attaque vérifiés sur copie v0.197, avec 75 contrôles d’illustrations réussis. Sprite et rendu du coup d’épieu à brancher. [Fiche](design/Visuels_Boutique_Lance_Epieu.md).
+
+**Catapulte gobeline, type 19.** Visuel validé par le porteur le 14 novembre 2026 (`9b62adf`). Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.197, 70 contrôles d’illustrations réussis. Sprite et projectile de pierre à intégrer. [Fiche](design/Visuels_Boutique_Catapulte.md).
+
+**Lance-éclats gobelin, type 18.** Visuel au manteau prune et à l’éclat violet validé par le porteur. Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 65 contrôles d’illustrations réussis. Sprite et projectile de cristal à brancher. [Fiche](design/Visuels_Boutique_Lance_Eclats.md).
+
+**Pyromancien humain, type 15.** Visuel vermillon et safran, flamme au-dessus de la paume, approuvé par le porteur. Copie v0.197 : portrait, recrutement et premier tir vérifiés, 60 contrôles d’illustrations réussis. Sprite et projectile de feu à brancher par Claude Code. [Fiche](design/Visuels_Boutique_Pyromancien.md).
+
 **Piquier humain, type 14.** Visuel en gambison bleu clair avec pique verticale validé par le porteur le 14 novembre 2026 (`51cda5e`). Portrait, recrutement et première attaque vérifiés sur copie v0.197, avec 55 contrôles réussis. Sprite prêt à intégrer. Le rendu du coup de pique reste à brancher. [Fiche](design/Visuels_Boutique_Piquier.md).
 
 **Bombardier nain, type 13.** Visuel et nom approuvés par le porteur. Sur copie v0.197, 50 contrôles d’illustrations réussis, portrait et libellé vérifiés en boutique, recrutement et premier tir contrôlés. Le sprite, le libellé et le visuel de projectile sont à brancher. [Fiche](design/Visuels_Boutique_Bombardier.md).
