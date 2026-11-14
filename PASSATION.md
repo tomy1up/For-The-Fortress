@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Pillard gobelin, type 41.** Visuel fixe bien accueilli. Copie v0.201 : portrait, déblocage, recrutement et premier pillage vérifiés. 166 contrôles d’illustrations et 49 du lot 4 réussis. Lâcher à animer. Le porteur propose de représenter les morts-vivants de la Horde par un squelette jouable. Piste artistique : servant de la Baliste de guerre. [Fiche](design/Visuels_Boutique_Pillard_Gobelin.md).
+
 **Vétéran royal, type 40.** Proposition masculine bien accueillie par le porteur. Copie v0.201 : portrait, déblocage, recrutement et premier tir vérifiés. 161 contrôles d’illustrations et 49 du lot 4 réussis. Sprite à intégrer et geste de tir à animer. [Fiche](design/Visuels_Boutique_Veteran_Royal.md).
 
 **Alchimiste, type 39.** Troisième proposition, gnome aux boucles cuivrées, mieux accueillie par le porteur. Copie v0.200 : portrait, déblocage, recrutement, premier lancer et étoile de volatilité vérifiés. 141 contrôles d’illustrations et 49 du lot 4 réussis. Le rendu de l’explosion à la mort reste à brancher et vérifier. [Fiche](design/Visuels_Boutique_Alchimiste.md).

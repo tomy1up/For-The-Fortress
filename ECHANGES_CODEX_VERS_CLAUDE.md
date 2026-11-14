@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Pillard gobelin et piste du squelette jouable (ouvert)
+
+Le porteur a bien accueilli le sprite du type 41 (`horde.pillager`). La [fiche](design/Visuels_Boutique_Pillard_Gobelin.md) donne son cadrage, le départ du jeton et le repère `loot.png` contrôlé. Pour représenter les morts-vivants de la Horde, le porteur propose un squelette dans l’esprit de l’infanterie attaquante. Le servant de la Baliste de guerre est une piste à valider, en miroir visuel de la Balliste royale et de son servant gnome.
+
 ### 2026-11-14 — Vétéran royal illustré (ouvert)
 
 La proposition masculine du type 40 (`alliance.veteran`) a reçu un retour favorable. La [fiche](design/Visuels_Boutique_Veteran_Royal.md) donne le cadrage, l’ancre et le point de départ vérifiés sur copie v0.201. Le carreau de famille convient à l’arbalète courte. Le tir et le rechargement seront à animer.

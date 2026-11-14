@@ -8,7 +8,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
-- [ ] **Nouvelle race de la Horde** — piste ouverte par le porteur le 14 novembre 2026. Proposer une silhouette et un rôle compatibles avec la Horde. La race et l’unité restent à choisir.
+- [ ] **Nouvelle race de la Horde** — le porteur propose un squelette jouable inspiré de l’infanterie morte-vivante, en pendant du gnome de l’Alliance. Étudier un servant squelette pour la Baliste de guerre (type 43). Unité et visuel à valider.
 
 - [x] **Première représentation des gnomes de l’Alliance** — le servant de la Balliste royale a été validé le 14 novembre 2026. Sprite prêt à intégrer. [Fiche](design/Visuels_Boutique_Balliste_Royale.md).
 
