@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Chef de guerre vétéran, type 45.** Visuel fixe bien accueilli par le porteur. Portrait, déblocage, recrutement et premier lancer de hache vérifiés sur copie v0.202. 186 contrôles d’illustrations et 49 du lot 4 réussis. Dernière illustration fixe du catalogue de boutique. [Fiche](design/Visuels_Boutique_Chef_Guerre_Veteran.md).
+
 **Gobelin des braises, type 44.** Nom de remplacement proposé après le retour du porteur sur « Gobelin kamikaze ». Visuel fixe validé par le porteur le 14 novembre 2026 (`dda92de`), prêt à intégrer. Copie v0.202 : portrait, déblocage, recrutement et première volatilité vérifiés à ×1 et ×2. 181 contrôles d’illustration et 49 du lot 4 réussis. Geste à animer et effet d’explosion à brancher avec le même événement que pour l’Alchimiste. [Fiche](design/Visuels_Boutique_Gobelin_Kamikaze.md).
 
 **Poseur de mines, type 42.** Visuel fixe validé par le porteur (`471ebcc`). Copie v0.202 : portrait, déblocage, recrutement et premier lancer vérifiés. 176 contrôles d’illustrations et 49 du lot 4 réussis. Sprite et disque prêts pour l’intégration. Lâcher et retour à la caisse à animer. [Fiche](design/Visuels_Boutique_Poseur_Mines.md).

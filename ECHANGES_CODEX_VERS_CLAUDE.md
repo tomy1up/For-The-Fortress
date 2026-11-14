@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Chef de guerre vétéran illustré (ouvert)
+
+Le porteur a réagi favorablement au visuel fixe du type 45 (`horde.warveteran`). La [fiche](design/Visuels_Boutique_Chef_Guerre_Veteran.md) donne le cadre, le pied et le point de départ du lancer testés sur copie v0.202. La hache de famille convient au tir sur une cible. À intégrer au portrait, au plateau et à l’export. Le panneau de combat affiche encore « Rebond : 0 × 0 max. » sur la copie d’essai. Il gagnerait à indiquer le bonus de dégâts accumulé au fil des vagues.
+
 ### 2026-11-14 — Type 44, visuel validé et prêt à intégrer (ouvert)
 
 Le porteur a relevé que « Gobelin kamikaze » décrit mal le rôle. « Gobelin des braises » est une proposition pour le nom affiché. L’identifiant de référence est `horde.kamikaze`. La [fiche](design/Visuels_Boutique_Gobelin_Kamikaze.md) documente le sprite et la première application de volatilité contrôlée sur copie v0.202. L’explosion se produit sur l’ennemi marqué s’il meurt sous l’effet. Pour afficher cette explosion, un événement horodaté et positionné pourrait servir au gobelin et à l’Alchimiste. Le porteur a validé le visuel fixe du lot `dda92de`. Associer le PNG au portrait et au plateau, puis le déclarer à l’export.
