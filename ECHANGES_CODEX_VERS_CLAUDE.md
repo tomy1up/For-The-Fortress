@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-14 — Fronde elfe illustrée pour avis (ouvert)
+### 2026-11-14 — Fronde elfe validée, à intégrer (ouvert)
 
-Proposition du type 25 (`alliance.sling`) disponible dans la [fiche](design/Visuels_Boutique_Fronde.md). Cadre, hauteur et ancre vérifiés sur copie v0.197. Après validation du porteur, associer au portrait et au plateau et déclarer le PNG à l’export. Prévoir un galet dessiné à la place de la flèche de famille. Le départ devra suivre la poche lorsque le lâcher sera animé.
+Visuel du type 25 (`alliance.sling`, `37a409a`) validé par le porteur le 14 novembre 2026. Voir la [fiche](design/Visuels_Boutique_Fronde.md). Cadre, hauteur et ancre vérifiés sur copie v0.197. Associer au portrait et au plateau et déclarer le PNG à l’export. Prévoir un galet dessiné à la place de la flèche de famille. Le départ devra suivre la poche lorsque le lâcher sera animé.
 
 ### 2026-11-14 — Repères des cinq effets de boutique (ouvert)
 
