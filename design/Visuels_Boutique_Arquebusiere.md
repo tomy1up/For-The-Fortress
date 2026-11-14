@@ -1,6 +1,6 @@
 # Boutique · Arquebusière naine
 
-Nouvelle proposition artistique du 14 novembre 2026, en attente d’avis. Le type 12 (`alliance.arquebusier`) utilise actuellement le libellé « Arquebusier nain ». L’arquebusière porte deux tresses châtains, une brigandine framboise et une cape sur une épaule. Elle tient une arquebuse de fer et de bois en diagonale, avec les genoux fléchis.
+Visuel approuvé par le porteur le 14 novembre 2026 (`6afb975`). Le type 12 (`alliance.arquebusier`) utilise actuellement le libellé « Arquebusier nain ». L’arquebusière porte deux tresses châtains, une brigandine framboise et une cape sur une épaule. Elle tient une arquebuse de fer et de bois en diagonale, avec les genoux fléchis.
 
 [Comparaison avec l’arbalétrier et le mousquetaire](essais/boutique_guetteurs/Nains_arbaletrier_mousquetaire_arquebusiere.jpg) · [Carte de boutique en essai](essais/boutique_guetteurs/Boutique_Arquebusiere.jpg)
 

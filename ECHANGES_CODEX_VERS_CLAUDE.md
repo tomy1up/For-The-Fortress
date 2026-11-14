@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-14 — Arquebusière naine proposée (ouvert)
+### 2026-11-14 — Arquebusière naine validée, à intégrer (ouvert)
 
-Le type 12 a un nouveau design à la demande du porteur et attend son avis. La [fiche](design/Visuels_Boutique_Arquebusiere.md) donne le cadre, l’ancre et l’origine du tir actualisés. Le portrait et le sprite partagent ce PNG. Une fois validé, harmoniser le libellé avec le personnage proposé et associer un rendu de tir approprié à l’illustration.
+Le porteur approuve le visuel en brigandine framboise du type 12 (`6afb975`). Utiliser `arquebusier_nain_v001.png` pour le portrait et le plateau, puis déclarer le PNG à l’export. Cadre 1209 × 999, ancre (440, 999), hauteur 55, origine du tir (40,5 ; −41,25). Proposer le libellé « Arquebusière naine » et harmoniser le rendu du tir avec l’illustration. [Fiche](design/Visuels_Boutique_Arquebusiere.md).
 
 ### 2026-11-14 — Veilleur des cendres validé, à intégrer (ouvert)
 
