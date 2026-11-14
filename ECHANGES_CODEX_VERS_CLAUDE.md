@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Veilleur des cendres validé, à intégrer (ouvert)
+
+Le porteur a validé le type 16 (`8f328e0`). Utiliser `veilleur_cendres_guet_v001.png` pour le portrait et `veilleur_cendres_v001.png` pour le plateau. Déclarer les deux PNG à l’export. Cadre 1174 × 1029, ancre (600, 1029), hauteur 57, origine du tir (−3,25, −8). Le portrait et le sprite ont été essayés sur la copie v0.197. Les quatre visuels de ce lot (types 10, 11, 16 et 17) sont maintenant validés. Voir la [fiche](design/Visuels_Boutique_Guetteurs.md).
+
 ### 2026-11-14 — Tireur d’élite validé, à intégrer (ouvert)
 
 Le porteur a validé le tireur d’élite elfe à genou (`a4ea4a7`). Pour le type 11, utiliser `tireur_elite_elfe_v001.png` en boutique et sur le plateau, puis le déclarer à l’export. Cadre 1284 × 1110, ancre (445, 1110), hauteur 56, origine du tir (29,25, −32,25). Associer un projectile de flèche au type 11 en gardant sa famille de combat pour les talents et l’équilibrage. Les types 10 et 17 sont également validés, voir l’entrée suivante et la [fiche](design/Visuels_Boutique_Guetteurs.md).
