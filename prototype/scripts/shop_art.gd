@@ -5,7 +5,7 @@ const AllianceArt = preload("res://scripts/alliance_art.gd")
 const HordeArt = preload("res://scripts/horde_art.gd")
 const PROVISIONAL_FROM := 10
 ## Types de la boutique étendue qui ont déjà leur illustration propre (validée par le porteur le 14 novembre 2026).
-const OWN_ART: Array[int] = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]
+const OWN_ART: Array[int] = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
 ## Portrait de boutique, quand il diffère du sprite posé sur le plateau (la sentinelle porte sa longue-vue à deux mains en boutique).
 const PORTRAITS: Dictionary = {
 	10: preload("res://assets/units/shop/sentinelle_elfe_guet_v001.png"),
@@ -32,10 +32,10 @@ const TEXTURES: Dictionary = {
 	23: preload("res://assets/units/shop/archer_double_v001.png"),
 	24: preload("res://assets/units/shop/arbalete_lourde_v001.png"),
 	25: preload("res://assets/units/shop/fronde_elfe_v001.png"),
-	26: HordeArt.TEXTURES[3],
-	27: HordeArt.TEXTURES[3],
-	28: HordeArt.TEXTURES[3],
-	29: HordeArt.TEXTURES[3],
+	26: preload("res://assets/units/shop/hache_en_chaine_v001.png"),
+	27: preload("res://assets/units/shop/lanceur_double_troll_v001.png"),
+	28: preload("res://assets/units/shop/lanceur_masse_orc_v001.png"),
+	29: preload("res://assets/units/shop/sarbacane_gobeline_v001.png"),
 	36: AllianceArt.TEXTURES[0],
 	37: AllianceArt.TEXTURES[1],
 	38: AllianceArt.TEXTURES[1],
@@ -46,7 +46,7 @@ const TEXTURES: Dictionary = {
 	43: HordeArt.TEXTURES[3],
 	44: HordeArt.TEXTURES[4],
 	45: HordeArt.TEXTURES[3],
-	30: AllianceArt.TEXTURES[2],
+	30: preload("res://assets/units/shop/mage_givre_v001.png"),
 	31: AllianceArt.TEXTURES[0],
 	32: AllianceArt.TEXTURES[2],
 	33: HordeArt.TEXTURES[5],
@@ -74,10 +74,10 @@ const FRAMES: Dictionary = {
 	23: {"source":Rect2(0,0,1125,1349),"foot":Vector2(510.0,1349),"height":60.0},
 	24: {"source":Rect2(0,0,1329,1119),"foot":Vector2(565.0,1119),"height":55.0},
 	25: {"source":Rect2(0,0,1092,1085),"foot":Vector2(586.0,1085),"height":56.0},
-	26: HordeArt.FRAMES[3],
-	27: HordeArt.FRAMES[3],
-	28: HordeArt.FRAMES[3],
-	29: HordeArt.FRAMES[3],
+	26: {"source":Rect2(0,0,1182,1205),"foot":Vector2(462.0,1205),"height":58.0},
+	27: {"source":Rect2(0,0,905,1128),"foot":Vector2(462.0,1128),"height":57.0},
+	28: {"source":Rect2(0,0,1233,1030),"foot":Vector2(580.0,1030),"height":57.0},
+	29: {"source":Rect2(0,0,1303,1014),"foot":Vector2(480.0,1014),"height":53.0},
 	36: AllianceArt.FRAMES[0],
 	37: AllianceArt.FRAMES[1],
 	38: AllianceArt.FRAMES[1],
@@ -88,14 +88,14 @@ const FRAMES: Dictionary = {
 	43: HordeArt.FRAMES[3],
 	44: HordeArt.FRAMES[4],
 	45: HordeArt.FRAMES[3],
-	30: AllianceArt.FRAMES[2],
+	30: {"source":Rect2(0,0,957,1197),"foot":Vector2(287.0,1197),"height":58.0},
 	31: AllianceArt.FRAMES[0],
 	32: AllianceArt.FRAMES[2],
 	33: HordeArt.FRAMES[5],
 	34: HordeArt.FRAMES[3],
 	35: HordeArt.FRAMES[3],
 }
-const MUZZLES: Dictionary = {6:Vector2(30,-40),7:Vector2(43,-31),8:Vector2(-27,-41),9:Vector2(-18,-39),10:Vector2(11.0,-22.5), 11:Vector2(29.25,-32.25), 12:Vector2(40.5,-41.25), 13:Vector2(31.25,-39.25), 14:Vector2(7.0,-36.0), 15:Vector2(24.5,-47.0), 16:Vector2(-3.25,-8.0), 17:Vector2(-3.25,-25.5), 18:Vector2(-22.0,-43.0), 19:Vector2(28.75,-49.0), 20:Vector2(-14.0,-30.0), 21:Vector2(28.75,-17.5),22:Vector2(20.0,-47.5),23:AllianceArt.MUZZLES[0],24:Vector2(31.5,-19.5),25:Vector2(-12.0,-51.0),26:HordeArt.MUZZLES[3],27:HordeArt.MUZZLES[3],28:HordeArt.MUZZLES[3],29:HordeArt.MUZZLES[3],30:AllianceArt.MUZZLES[2],31:AllianceArt.MUZZLES[0],32:AllianceArt.MUZZLES[2],33:HordeArt.MUZZLES[5],34:HordeArt.MUZZLES[3],35:HordeArt.MUZZLES[3],36:AllianceArt.MUZZLES[0],37:AllianceArt.MUZZLES[1],38:AllianceArt.MUZZLES[1],39:AllianceArt.MUZZLES[2],40:AllianceArt.MUZZLES[1],41:HordeArt.MUZZLES[3],42:HordeArt.MUZZLES[4],43:HordeArt.MUZZLES[3],44:HordeArt.MUZZLES[4],45:HordeArt.MUZZLES[3]}
+const MUZZLES: Dictionary = {6:Vector2(30,-40),7:Vector2(43,-31),8:Vector2(-27,-41),9:Vector2(-18,-39),10:Vector2(11.0,-22.5), 11:Vector2(29.25,-32.25), 12:Vector2(40.5,-41.25), 13:Vector2(31.25,-39.25), 14:Vector2(7.0,-36.0), 15:Vector2(24.5,-47.0), 16:Vector2(-3.25,-8.0), 17:Vector2(-3.25,-25.5), 18:Vector2(-22.0,-43.0), 19:Vector2(28.75,-49.0), 20:Vector2(-14.0,-30.0), 21:Vector2(28.75,-17.5),22:Vector2(20.0,-47.5),23:AllianceArt.MUZZLES[0],24:Vector2(31.5,-19.5),25:Vector2(-12.0,-51.0),26:Vector2(21.0,-18.0),27:Vector2(18.0,-37.0),28:Vector2(-16.0,-49.0),29:Vector2(42.5,-31.0),30:Vector2(30.0,-46.5),31:AllianceArt.MUZZLES[0],32:AllianceArt.MUZZLES[2],33:HordeArt.MUZZLES[5],34:HordeArt.MUZZLES[3],35:HordeArt.MUZZLES[3],36:AllianceArt.MUZZLES[0],37:AllianceArt.MUZZLES[1],38:AllianceArt.MUZZLES[1],39:AllianceArt.MUZZLES[2],40:AllianceArt.MUZZLES[1],41:HordeArt.MUZZLES[3],42:HordeArt.MUZZLES[4],43:HordeArt.MUZZLES[3],44:HordeArt.MUZZLES[4],45:HordeArt.MUZZLES[3]}
 
 static func portrait(type: int) -> Texture2D:
 	return PORTRAITS.get(type,TEXTURES[type])

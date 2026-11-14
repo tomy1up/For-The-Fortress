@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.200**. Cinq illustrations de boutique intégrées : hache en chaîne, lanceur double, lanceur de masse, sarbacane (avec dard) et mage de givre. [Notes](design/essais/v0200_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.200).
+
 **Prototype v0.199**. Fronde elfe (type 25) : illustration validée intégrée avec projectile de galet. [Notes](design/essais/v0199_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.199).
 
 **Prototype v0.198**. Réglage du pyromancien humain, l'alternative la plus faible de la boutique : 17 de dégâts, brûlure 22 (rapport 0,94 de la référence, ensemble de 0,89 à 1,05) ; illustrations validées de la sentinelle, du tireur d'élite, de l'arquebusière naine, du bombardier nain, du piquier humain, du pyromancien, du lance-éclats, de la catapulte, du lance-épieu, du brûleur, du mage de la foudre, de l'archer double, du veilleur des cendres et du javelinier intégrées avec flèche, balle et javeline. [Notes](design/essais/v0198_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.198).
