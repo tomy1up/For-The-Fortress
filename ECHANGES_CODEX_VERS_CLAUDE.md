@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Catapulte gobeline proposée (ouvert)
+
+Le type 19 (`horde.catapult`) dispose du PNG `catapulte_gobeline_v001.png` pour le portrait et le plateau. Attendre l’avis du porteur. Le cadre, l’ancre et le départ du tir figurent dans la [fiche](design/Visuels_Boutique_Catapulte.md). Après validation, déclarer le PNG à l’export et associer un visuel de pierre à la place de la bombe du Sapeur en conservant les données de combat.
+
 ### 2026-11-14 — Lance-éclats gobelin validé, à intégrer (ouvert)
 
 Le porteur a approuvé le visuel du type 18 (`horde.shardthrower`). Utiliser `lance_eclats_gobelin_v001.png` en boutique et sur le plateau et l’ajouter à l’export. Prévoir un éclat de cristal à la place du projectile de la famille lanceur de haches. Cadre, ancre, hauteur et départ du tir dans la [fiche](design/Visuels_Boutique_Lance_Eclats.md).

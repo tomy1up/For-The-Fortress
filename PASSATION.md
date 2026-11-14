@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Catapulte gobeline, type 19.** Proposition avec servant gobelin et cuillère de bois surélevée. Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.197, 70 contrôles d’illustrations réussis. Validation artistique attendue. Sprite et projectile de pierre à brancher après accord. [Fiche](design/Visuels_Boutique_Catapulte.md).
+
 **Lance-éclats gobelin, type 18.** Visuel au manteau prune et à l’éclat violet validé par le porteur. Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 65 contrôles d’illustrations réussis. Sprite et projectile de cristal à brancher. [Fiche](design/Visuels_Boutique_Lance_Eclats.md).
 
 **Pyromancien humain, type 15.** Visuel vermillon et safran, flamme au-dessus de la paume, approuvé par le porteur. Copie v0.197 : portrait, recrutement et premier tir vérifiés, 60 contrôles d’illustrations réussis. Sprite et projectile de feu à brancher par Claude Code. [Fiche](design/Visuels_Boutique_Pyromancien.md).
