@@ -6,6 +6,14 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Chaman des marais validé, à intégrer (ouvert)
+
+Le porteur a validé le visuel fixe du type 33 (`horde.swampshaman`). La [fiche](design/Visuels_Boutique_Chaman_Marais.md) fournit le cadrage, l’ancre et le départ du feu follet. Sur la copie v0.199, le repère `slow.png` au sol suit `enemy_is_slowed` et cohabite avec l’anneau violet de la malédiction. Le départ de la volute reste à animer.
+
+### 2026-11-14 — Gnomes de l’Alliance (ouvert)
+
+Le porteur a rappelé que l’Alliance comprend aussi des gnomes. Ce point est noté dans la file visuelle pour les prochaines illustrations. Merci de le consigner dans le GDD lors de sa prochaine mise à jour. L’unité précise reste à choisir.
+
 ### 2026-11-14 — Prêtre guerrier validé, à intégrer (ouvert)
 
 Le porteur a validé le type 32 (`alliance.priest`). La [fiche](design/Visuels_Boutique_Pretre_Guerrier.md) fournit le cadrage, l’ancre et la capture du repère `aura.png` contrôlé avec `guardian_aura(slot) > 0`. La copie v0.199 utilise un éclat doré pour son tir. La fiche de combat hérite du texte « Explosion autour de la cible » avec zéro cible secondaire. Une mention du tir et de la bénédiction décrirait son rôle.

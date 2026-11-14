@@ -8,6 +8,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [ ] **Gnomes de l’Alliance** — le porteur a rappelé le 14 novembre 2026 que l’Alliance comprend aussi des gnomes. Leur donner une silhouette propre dans les prochaines illustrations de l’Alliance. L’unité précise reste à choisir.
+
 - [ ] **Effets de boutique** — première maquette disponible. Faire valider la lisibilité, brancher les repères et vérifier l’affichage en combat avec plusieurs états simultanés. [Fiche](design/Visuels_Effets_Boutique.md).
 
 - [ ] **Silhouettes uniques pour toutes les unités, décision du porteur du 14 novembre 2026** — vérifier les défenseurs de base, les alternatives de boutique et les attaquants à leur taille sur le plateau. Comparer en priorité les unités d’une même famille, au repos et à l’attaque lorsque l’animation existe. Chaque unité doit avoir un signe lisible par sa silhouette, son équipement ou sa posture, renforcé par sa palette. En v0.197, les 36 alternatives des types 10 à 45 utilisent des silhouettes de famille. Les types 10, 11, 16 et 17 ont une proposition sur la branche art, dont la sentinelle redessinée face à l’archer de base. Revoir aussi la silhouette en joue du tireur d’élite face à cet archer. Chez les attaquants, la garnison orque et le chef de guerre partagent le même cadre.

@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Chaman des marais, type 33.** Visuel fixe validé. Copie v0.199 : portrait, déblocage, recrutement et repère au sol lors du premier ralentissement vérifiés. 116 contrôles d’illustrations et 41 contrôles du lot 3 réussis. Sprite et repère à intégrer, départ de la volute à animer. Le porteur a rappelé que l’Alliance comprend des gnomes, désormais inscrits dans la file visuelle. [Fiche](design/Visuels_Boutique_Chaman_Marais.md).
+
 **Prêtre guerrier, type 32.** Visuel fixe validé. Copie v0.199 : portrait, déblocage, recrutement, premier tir et repère d’aura au pied du seul Archer proche vérifiés. 111 contrôles d’illustrations et 41 contrôles du lot 3 réussis. Sprite et repère à intégrer, libellé de combat à corriger et geste de tir à animer. [Fiche](design/Visuels_Boutique_Pretre_Guerrier.md).
 
 **Éclaireur-observateur, type 31.** Visuel fixe validé. Portrait, déblocage, recrutement et affichage de la première marque vérifiés sur copie v0.199. 106 contrôles d’illustrations réussis. Sprite et repère à intégrer, pose de repos et transition à produire. [Fiche](design/Visuels_Boutique_Observateur.md).
