@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Balliste royale, type 38.** Visuel fixe et servant gnome validés. Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.200. 136 contrôles d’illustrations et 49 du lot 4 réussis. Sprite et carreau à intégrer, départ et rechargement à animer. [Fiche](design/Visuels_Boutique_Balliste_Royale.md).
+
 **Piégeur nain, type 37.** Visuel fixe validé. Portrait, déblocage, recrutement et premier lancer vérifiés sur copie v0.200. 131 contrôles d’illustrations et 49 du lot 4 réussis. Sprite et cartouche à intégrer, lâcher à animer. Le porteur ouvre aussi la recherche d’une nouvelle race pour la Horde. [Fiche](design/Visuels_Boutique_Piegeur_Nain.md).
 
 **Marchand mercenaire, type 36.** Visuel fixe validé le 14 novembre 2026 (`88289fc`), prêt à intégrer. Copie v0.199 : portrait, déblocage, recrutement, premier tir et pièces de pillage au-dessus de la cible vérifiés. 131 contrôles d’illustrations et 49 du lot 4 réussis. Animation du lâcher à produire. [Fiche](design/Visuels_Boutique_Marchand_Mercenaire.md).

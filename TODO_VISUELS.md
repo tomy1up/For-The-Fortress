@@ -10,7 +10,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Nouvelle race de la Horde** — piste ouverte par le porteur le 14 novembre 2026. Proposer une silhouette et un rôle compatibles avec la Horde. La race et l’unité restent à choisir.
 
-- [ ] **Gnomes de l’Alliance** — le porteur a rappelé le 14 novembre 2026 que l’Alliance comprend aussi des gnomes. Leur donner une silhouette propre dans les prochaines illustrations de l’Alliance. L’unité précise reste à choisir.
+- [x] **Première représentation des gnomes de l’Alliance** — le servant de la Balliste royale a été validé le 14 novembre 2026. Sprite prêt à intégrer. [Fiche](design/Visuels_Boutique_Balliste_Royale.md).
 
 - [ ] **Effets de boutique** — première maquette disponible. Faire valider la lisibilité, brancher les repères et vérifier l’affichage en combat avec plusieurs états simultanés. [Fiche](design/Visuels_Effets_Boutique.md).
 

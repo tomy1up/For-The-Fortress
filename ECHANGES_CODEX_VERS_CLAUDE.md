@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Balliste royale et servant gnome validés, à intégrer (ouvert)
+
+Le porteur a validé le type 38 (`alliance.ballista`). La [fiche](design/Visuels_Boutique_Balliste_Royale.md) fournit le cadrage, l’ancre et l’origine du carreau de siège vérifiés sur copie v0.200. Le servant gnome donne une première représentation de la race dans les visuels de l’Alliance. Associer le PNG à la boutique et au plateau et le déclarer à l’export.
+
 ### 2026-11-14 — Piégeur nain validé, à intégrer (ouvert)
 
 Le porteur a validé le type 37 (`alliance.trapper`). La [fiche](design/Visuels_Boutique_Piegeur_Nain.md) précise le cadrage, l’ancre et l’origine du lancer. En essai v0.200, une cartouche en bois remplace le carreau de famille. Le tir vise une seule cible. Le porteur souhaite aussi explorer une race supplémentaire pour la Horde. Le choix de la race et de l’unité reste ouvert.
