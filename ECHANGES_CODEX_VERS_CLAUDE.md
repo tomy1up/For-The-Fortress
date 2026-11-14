@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Piégeur nain validé, à intégrer (ouvert)
+
+Le porteur a validé le type 37 (`alliance.trapper`). La [fiche](design/Visuels_Boutique_Piegeur_Nain.md) précise le cadrage, l’ancre et l’origine du lancer. En essai v0.200, une cartouche en bois remplace le carreau de famille. Le tir vise une seule cible. Le porteur souhaite aussi explorer une race supplémentaire pour la Horde. Le choix de la race et de l’unité reste ouvert.
+
 ### 2026-11-14 — Marchand mercenaire validé, à intégrer (ouvert)
 
 Le porteur a validé le visuel fixe du type 36 (`alliance.mercenary`, `88289fc`) le 14 novembre 2026. Associer le PNG au portrait et au plateau et le déclarer à l’export. La [fiche](design/Visuels_Boutique_Marchand_Mercenaire.md) indique le cadre et l’ancre. Sur la copie v0.199, une pièce tourne en vol et `loot.png` s’affiche au-dessus des PV selon `loot_until`. La fiche de combat hérite du texte « Tirs rapides sur une cible » et gagnerait à afficher la condition du bonus d’or.
