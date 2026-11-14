@@ -208,6 +208,9 @@ const PIKE_TYPES: Array[int] = [14,20] # Piquier humain et lance-épieu orc : co
 const PEBBLE_TYPE := 25 # Fronde elfe : galet, bien que sa famille de combat reste celle de l'archer.
 const FIRE_TYPE := 15 # Pyromancien humain : boule de feu.
 const SHARD_TYPES: Array[int] = [18,30] # Lance-éclats gobelin et mage de givre : éclat de cristal.
+const CARTRIDGE_TYPE := 37 # Piégeur nain : cartouche en bois.
+const BOLT_TYPE := 38 # Balliste royale : gros carreau.
+const VIAL_TYPE := 39 # Alchimiste gnome : fiole.
 const COIN_TYPE := 36 # Marchand mercenaire : pièce d'or.
 const GOLD_SHARD_TYPE := 32 # Prêtre guerrier : éclat doré.
 const WISP_TYPE := 33 # Chaman des marais : feu follet.
@@ -239,6 +242,7 @@ static func projectile_position(shot: Dictionary, age: float) -> Vector2:
 	var point: Vector2 = origin.lerp(target,progress)
 	if Model.family(shot.type) in [3,4]: point.y -= sin(PI*progress)*(15.0 if Model.family(shot.type) == 4 else 8.0)
 	elif int(shot.type) == CANNON_TYPE: point.y -= sin(PI*progress)*12.0
+	elif int(shot.type) == VIAL_TYPE: point.y -= sin(PI*progress)*10.0
 	elif int(shot.type) == STONE_TYPE: point.y -= sin(PI*progress)*16.0
 	elif int(shot.type) == EMBER_TYPE: point.y -= sin(PI*progress)*6.0
 	return point
@@ -274,6 +278,15 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		return
 	if int(shot.type) in SHARD_TYPES:
 		_draw_shard(point,direction,side)
+		return
+	if int(shot.type) == CARTRIDGE_TYPE:
+		_draw_cartridge(point,direction,side)
+		return
+	if int(shot.type) == BOLT_TYPE:
+		_draw_ballista_bolt(point,direction,side)
+		return
+	if int(shot.type) == VIAL_TYPE:
+		_draw_vial(point,age)
 		return
 	if int(shot.type) == COIN_TYPE:
 		_draw_coin(point,age)
@@ -350,6 +363,33 @@ func _draw_shard(point: Vector2, direction: Vector2, side: Vector2, fill: Color 
 	shard.append(shard[0])
 	draw_polyline(shard,Color("1a4a50"),1.1,true)
 	draw_line(point-direction*5.0,point+direction*3.0,Color(1.0,1.0,1.0,0.6),0.9,true)
+
+## Cartouche en bois du piégeur nain : petit cylindre cerclé de fer.
+func _draw_cartridge(point: Vector2, direction: Vector2, side: Vector2) -> void:
+	var back: Vector2 = point-direction*6.0
+	draw_line(back,point,Color("1f2420"),5.0,true)
+	draw_line(back,point,Color("b98a4e"),3.4,true)
+	draw_line(back+direction*2.0+side*2.0,back+direction*2.0-side*2.0,Color("6b6f72"),1.2,true)
+	draw_line(point-direction*1.0+side*2.0,point-direction*1.0-side*2.0,Color("6b6f72"),1.2,true)
+
+## Gros carreau de la balliste royale : long fût, pointe de fer et empennage.
+func _draw_ballista_bolt(point: Vector2, direction: Vector2, side: Vector2) -> void:
+	var tail: Vector2 = point-direction*20.0
+	draw_line(tail,point,Color("1a2524"),4.4,true)
+	draw_line(tail,point,Color("c8a46a"),2.6,true)
+	var head := PackedVector2Array([point+direction*8.0,point+side*3.2,point-side*3.2])
+	draw_colored_polygon(head,Color("d6dad8"))
+	draw_line(tail,tail+direction*6.0+side*3.4,Color("e4e0cf"),1.6,true)
+	draw_line(tail,tail+direction*6.0-side*3.4,Color("e4e0cf"),1.6,true)
+
+## Fiole de l'alchimiste gnome : verre verdâtre qui tourne, liquide vif.
+func _draw_vial(point: Vector2, age: float) -> void:
+	var spin: float = age/PROJECTILE_FLIGHT*TAU
+	var axis := Vector2(0,-1).rotated(spin)
+	draw_circle(point,6.5,Color(0.55,1.0,0.4,0.2),true,-1,true)
+	draw_line(point-axis*3.0,point+axis*3.5,Color("cfe9d8"),4.6,true)
+	draw_line(point-axis*3.0,point+axis*1.0,Color("7ee05a"),3.2,true)
+	draw_line(point+axis*3.5,point+axis*5.5,Color("8a6a3a"),2.0,true)
 
 ## Pièce du marchand mercenaire : disque d'or qui tourne sur lui-même.
 func _draw_coin(point: Vector2, age: float) -> void:

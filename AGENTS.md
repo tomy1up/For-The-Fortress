@@ -73,6 +73,7 @@ gh release create v0.XXX dist/v0XXX-validation/For_the_Fortress_v0.XXX_Windows_x
 ```
 
 Vérifier ensuite que la release liste les deux fichiers. Ne jamais forcer un push ni réécrire un tag publié.
+6. Nettoyer `dist/` (décision du porteur, 14 novembre 2026 : le dossier dépassait 50 Go) : après chaque publication, supprimer les exports, vérifications, régressions et ZIP des versions antérieures aux deux dernières, sans toucher à rien hors de `dist/` ; les ZIP publiés restent sur GitHub.
 
 ## Répartition des rôles
 

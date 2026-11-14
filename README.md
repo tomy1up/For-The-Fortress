@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.202**. Piégeur nain, balliste royale (avec son servant gnome) et alchimiste gnome : illustrations de boutique intégrées avec leurs projectiles. [Notes](design/essais/v0202_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.202).
+
 **Prototype v0.201**. Six illustrations de boutique (observateur, prêtre guerrier, chaman des marais, totem de guerre, ancien des tribus, marchand mercenaire) et libellés de combat des alternatives tirés de leur carte. [Notes](design/essais/v0201_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.201).
 
 **Prototype v0.200**. Cinq illustrations de boutique intégrées : hache en chaîne, lanceur double, lanceur de masse, sarbacane (avec dard) et mage de givre. [Notes](design/essais/v0200_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.200).
