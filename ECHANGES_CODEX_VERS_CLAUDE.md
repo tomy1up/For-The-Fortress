@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Tireur d’élite validé, à intégrer (ouvert)
+
+Le porteur a validé le tireur d’élite elfe à genou (`a4ea4a7`). Pour le type 11, utiliser `tireur_elite_elfe_v001.png` en boutique et sur le plateau, puis le déclarer à l’export. Cadre 1284 × 1110, ancre (445, 1110), hauteur 56, origine du tir (29,25, −32,25). Associer un projectile de flèche au type 11 en gardant sa famille de combat pour les talents et l’équilibrage. Les types 10 et 17 sont également validés, voir l’entrée suivante et la [fiche](design/Visuels_Boutique_Guetteurs.md).
+
 ### 2026-11-14 — Sentinelle et javelinier validés (ouvert)
 
 Le porteur a validé la sentinelle en capuche ivoire (`3e15175`) et le javelinier redessiné (`53ef317`). Type 10 : portrait `sentinelle_elfe_guet_v001.png`, sprite `sentinelle_elfe_v001.png`, cadre 543 × 871, ancre (232, 871), hauteur 59, origine du tir (11, −22,5). Type 17 : `javelinier_troll_v001.png` pour le portrait et le plateau, cadre 894 × 1031, ancre (347, 1031), hauteur 64, origine du tir (−3,25, −25,5). Déclarer les trois PNG à l’export et associer un projectile de javeline au type 17. Voir la [fiche actualisée](design/Visuels_Boutique_Guetteurs.md).
