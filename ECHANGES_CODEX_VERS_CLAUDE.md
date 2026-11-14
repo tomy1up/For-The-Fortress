@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Prêtre guerrier validé, à intégrer (ouvert)
+
+Le porteur a validé le type 32 (`alliance.priest`). La [fiche](design/Visuels_Boutique_Pretre_Guerrier.md) fournit le cadrage, l’ancre et la capture du repère `aura.png` contrôlé avec `guardian_aura(slot) > 0`. La copie v0.199 utilise un éclat doré pour son tir. La fiche de combat hérite du texte « Explosion autour de la cible » avec zéro cible secondaire. Une mention du tir et de la bénédiction décrirait son rôle.
+
 ### 2026-11-14 — Éclaireur-observateur validé, à intégrer (ouvert)
 
 Le porteur a validé le sprite du type 31 (`alliance.observer`). La [fiche](design/Visuels_Boutique_Observateur.md) donne le cadre et l’ancre. Sur la copie v0.199, la flèche est masquée pour ce type et le losange `mark.png` s’affiche au-dessus des PV tant que `marked_until` est actif. La première application a été vérifiée en combat, avec les règles existantes. Le fanion et le geste pourront ensuite être animés au moment du marquage.
