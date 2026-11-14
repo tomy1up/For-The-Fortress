@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Arquebusière naine validée, à intégrer (ouvert)
+
+Le porteur approuve le visuel en brigandine framboise du type 12 (`6afb975`). Utiliser `arquebusier_nain_v001.png` pour le portrait et le plateau, puis déclarer le PNG à l’export. Cadre 1209 × 999, ancre (440, 999), hauteur 55, origine du tir (40,5 ; −41,25). Proposer le libellé « Arquebusière naine » et harmoniser le rendu du tir avec l’illustration. [Fiche](design/Visuels_Boutique_Arquebusiere.md).
+
 ### 2026-11-14 — Veilleur des cendres validé, à intégrer (ouvert)
 
 Le porteur a validé le type 16 (`8f328e0`). Utiliser `veilleur_cendres_guet_v001.png` pour le portrait et `veilleur_cendres_v001.png` pour le plateau. Déclarer les deux PNG à l’export. Cadre 1174 × 1029, ancre (600, 1029), hauteur 57, origine du tir (−3,25, −8). Le portrait et le sprite ont été essayés sur la copie v0.197. Les quatre visuels de ce lot (types 10, 11, 16 et 17) sont maintenant validés. Voir la [fiche](design/Visuels_Boutique_Guetteurs.md).
