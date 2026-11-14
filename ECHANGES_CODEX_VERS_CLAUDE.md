@@ -6,6 +6,18 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Alchimiste gnome illustrée (ouvert)
+
+Le porteur a préféré la troisième proposition du type 39 (`alliance.alchemist`). La [fiche](design/Visuels_Boutique_Alchimiste.md) donne le cadre, le pied et le départ de la fiole. Sur la copie v0.200, `volatile.png` est visible au-dessus des PV pendant `volatile_until`. L’explosion à la mort possède déjà son repère d’étude `volatile_burst.png`. Il reste à disposer d’un événement visuel horodaté et positionné pour le brancher, puis à contrôler les réactions en chaîne en jeu.
+
+### 2026-11-14 — Balliste royale et servant gnome validés, à intégrer (ouvert)
+
+Le porteur a validé le type 38 (`alliance.ballista`). La [fiche](design/Visuels_Boutique_Balliste_Royale.md) fournit le cadrage, l’ancre et l’origine du carreau de siège vérifiés sur copie v0.200. Le servant gnome donne une première représentation de la race dans les visuels de l’Alliance. Associer le PNG à la boutique et au plateau et le déclarer à l’export.
+
+### 2026-11-14 — Piégeur nain validé, à intégrer (ouvert)
+
+Le porteur a validé le type 37 (`alliance.trapper`). La [fiche](design/Visuels_Boutique_Piegeur_Nain.md) précise le cadrage, l’ancre et l’origine du lancer. En essai v0.200, une cartouche en bois remplace le carreau de famille. Le tir vise une seule cible. Le porteur souhaite aussi explorer une race supplémentaire pour la Horde. Le choix de la race et de l’unité reste ouvert.
+
 ### 2026-11-14 — Marchand mercenaire validé, à intégrer (ouvert)
 
 Le porteur a validé le visuel fixe du type 36 (`alliance.mercenary`, `88289fc`) le 14 novembre 2026. Associer le PNG au portrait et au plateau et le déclarer à l’export. La [fiche](design/Visuels_Boutique_Marchand_Mercenaire.md) indique le cadre et l’ancre. Sur la copie v0.199, une pièce tourne en vol et `loot.png` s’affiche au-dessus des PV selon `loot_until`. La fiche de combat hérite du texte « Tirs rapides sur une cible » et gagnerait à afficher la condition du bonus d’or.
