@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Mage de givre illustré (ouvert)
+
+Le porteur a bien accueilli le visuel fixe du type 30 (`alliance.frostmage`). La [fiche](design/Visuels_Boutique_Mage_Givre.md) donne le cadre et l’ancre vérifiés sur copie v0.198. Le projectile d’essai est un éclat cyan dirigé vers une cible. Le repère `effect.slow` proposé dans les effets de boutique peut signaler le ralentissement au sol. Le départ définitif reste à synchroniser avec l’animation du gantelet.
+
 ### 2026-11-14 — Sarbacane gobeline validée, à intégrer (ouvert)
 
 Visuel fixe du type 29 (`horde.blowgun`, `0230eef`) vérifié sur copie v0.198 et validé par le porteur le 14 novembre 2026. La [fiche](design/Visuels_Boutique_Sarbacane.md) donne le cadre, le pied et l’origine d’essai. Associer le PNG au portrait et au plateau, le déclarer à l’export et dessiner un dard direct depuis le bout du tube.
