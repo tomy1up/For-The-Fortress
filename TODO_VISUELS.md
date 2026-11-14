@@ -44,7 +44,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## Livré
 
-- [x] **Boutique, types 10, 11, 16 et 17** — quatre propositions d’illustration vérifiées en boutique et en combat sur une copie d’essai. Avis artistique et branchement à suivre. [Aperçus](design/Visuels_Boutique_Guetteurs.md).
+- [x] **Boutique, types 10, 11, 16 et 17** — quatre propositions d’illustration vérifiées en boutique et en combat sur une copie d’essai. Validés par le porteur le 14 novembre 2026 et intégrés en v0.198 (portrait de boutique propre pour les types 10 et 16 ; flèche pour le 11, balle pour le 12, javeline pour le 17). [Aperçus](design/Visuels_Boutique_Guetteurs.md).
 
 - [x] **Nécropole 191–200 et marche du Revenant** — cinq pièces par carte et trois planches de marche vérifiées en combat. [Aperçus](design/Visuels_Necropole.md#chapitre-20--missions-191-à-200).
 

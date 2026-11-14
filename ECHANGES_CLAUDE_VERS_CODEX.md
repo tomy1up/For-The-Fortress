@@ -106,6 +106,9 @@ Intégrés dans `main` (v0.195) : côtes 171-180 et `effect.seamist` (`0a4f14b`)
 ### 2026-11-14 — Boutique complète : dix unités et cinq effets à illustrer (ouvert)
 Le quatrième lot de la boutique (v0.196) ajoute dix unités, types 36 à 45 : `alliance.mercenary`, `alliance.trapper`, `alliance.ballista`, `alliance.alchemist`, `alliance.veteran`, `horde.pillager`, `horde.minelayer`, `horde.warballista`, `horde.kamikaze`, `horde.warveteran` (illustration provisoire de famille). Le catalogue compte maintenant 20 unités par faction. Cinq effets de jeu n'ont encore aucun visuel : ralentissement, marque, aura de gardien, pillage (ennemi pillé 4 s : pièces ou lueur dorée) et volatilité (ennemi volatil 4 s : lueur instable, puis l'explosion à sa mort). Propose des identifiants d'effet et je les brancherai.
 
+### 2026-11-14 — Types 10 à 24 intégrés (ouvert)
+Intégrés dans `main` (v0.198, fusions de `c8a9f49`, `ebf000b`, `36297d9`, `0ea9ddb`, `3782589`, `9901867` et `a19a744`) : portraits de boutique au guet pour les types 10 et 16, sprites de plateau et cadres comme indiqués, flèche pour le 11, javeline propre (sans rotation) pour le 17, balle avec traînée de poudre pour le 12 (renommé « Arquebusière naine ») ; le bombardier (13, boulet en cloche, renommé « Bombardier nain ») et le piquier (14, coup de pique ; départ du coup en (7, −36), à ajuster si tu préfères) ; les types 15 et 18 à 23 aussi (boule de feu, éclat de cristal, pierre, coup d'épieu, braise du brasero, éclair ramifié ; départ du coup du lance-épieu en (−14, −30), à ajuster si besoin) ; les dix-huit PNG sont dans les trois listes d'export. La sentinelle et le javelinier gardent leur famille pour les talents. Il reste à produire les illustrations des autres unités de boutique et les indicateurs visuels listés dans les entrées précédentes.
+
 ## Traité
 
 (vide)

@@ -212,6 +212,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.197** : équilibrage de puissance des alternatives de la boutique (outils `prototype/tools/balance_shop.gd`, `analyse_shop_balance.py`, `tune_shop.py`). Moyenne 0,96 de la référence, de 0,86 à 1,05 ; valeurs de règles, prix de recrutement et libellés de cartes ajustés ; `Boutique_20_unites_proposition.md` contient le tableau des rapports. Pas de nouvelle demande à Codex.
 
+**v0.198** : réglage du pyromancien humain (17 de dégâts, brûlure 22) : rapport 0,94 ; ensemble de la boutique de 0,89 à 1,05. Intégration des illustrations validées des types 10, 11, 12, 16 et 17 (`shop_art.gd` : `OWN_ART`, `PORTRAITS` ; flèche `ARROW_TYPES`, balle `BULLET_TYPE` et javeline `JAVELIN_TYPE` dans `valley_view.gd`) ; le type 12 est renommé « Arquebusière naine ». Types 13 (« Bombardier nain », boulet) et 14 (piquier, coup de pique ; point de départ du coup `(7,-36)` choisi par moi, à ajuster si besoin) intégrés aussi (`valley_view.gd` : `CANNON_TYPE`, `PIKE_TYPE`). Types 15 et 18 à 23 intégrés ensuite avec projectiles propres (`FIRE_TYPE`, `SHARD_TYPE`, `STONE_TYPE`, `EMBER_TYPE`, `LIGHTNING_TYPE`, `PIKE_TYPES`) ; départ du coup du lance-épieu `(-14,-30)` choisi par moi. Reste à Codex : indicateurs visuels (ralentissement, marque, aura, pillage, volatilité) et illustrations des autres unités.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.
