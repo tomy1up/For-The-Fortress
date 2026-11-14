@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Arbalète lourde proposée (ouvert)
+
+Le type 24 (`alliance.heavycrossbow`) a un visuel pour le portrait et le plateau. L’avis du porteur est attendu. Le cadre, l’ancre et le point de départ provisoire du carreau sont dans la [fiche](design/Visuels_Boutique_Arbalete_Lourde.md). Les multiplicateurs actuels contre les lourds et les petits sont à conserver.
+
 ### 2026-11-14 — Archer double, pose de plateau (ouvert)
 
 Le type 23 (`alliance.doublearcher`) a un nouveau visuel essayé en boutique et sur le plateau. Le porteur a donné un avis favorable à l’apparence. La variante de pose avec main au carquois est présentée dans la [fiche](design/Visuels_Boutique_Archer_Double.md), avec le cadre, l’ancre et la hauteur. Conserver le tir unique et le bonus sur cible blessée.
