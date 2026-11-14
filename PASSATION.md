@@ -4,6 +4,18 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Marchand mercenaire, type 36.** Visuel fixe validé le 14 novembre 2026 (`88289fc`), prêt à intégrer. Copie v0.199 : portrait, déblocage, recrutement, premier tir et pièces de pillage au-dessus de la cible vérifiés. 131 contrôles d’illustrations et 49 du lot 4 réussis. Animation du lâcher à produire. [Fiche](design/Visuels_Boutique_Marchand_Mercenaire.md).
+
+**Ancien des tribus, type 35.** Visuel fixe validé. Sur copie v0.199, portrait, déblocage, recrutement, premier tir et repère d’aura au pied du seul allié proche vérifiés. 126 contrôles d’illustrations et 41 contrôles du lot 3 réussis. Sprite, onde et aura à intégrer. Geste à animer, libellé de famille à corriger. [Fiche](design/Visuels_Boutique_Ancien_Tribus.md).
+
+**Totem de guerre, type 34.** Visuel fixe validé. Sur copie v0.199, portrait, déblocage, recrutement et premier marquage vérifiés. 121 contrôles d’illustrations et 41 contrôles du lot 3 réussis. Sprite et repère à intégrer. Libellé de rebonds à corriger. [Fiche](design/Visuels_Boutique_Totem_Guerre.md).
+
+**Chaman des marais, type 33.** Visuel fixe validé. Copie v0.199 : portrait, déblocage, recrutement et repère au sol lors du premier ralentissement vérifiés. 116 contrôles d’illustrations et 41 contrôles du lot 3 réussis. Sprite et repère à intégrer, départ de la volute à animer. Le porteur a rappelé que l’Alliance comprend des gnomes, désormais inscrits dans la file visuelle. [Fiche](design/Visuels_Boutique_Chaman_Marais.md).
+
+**Prêtre guerrier, type 32.** Visuel fixe validé. Copie v0.199 : portrait, déblocage, recrutement, premier tir et repère d’aura au pied du seul Archer proche vérifiés. 111 contrôles d’illustrations et 41 contrôles du lot 3 réussis. Sprite et repère à intégrer, libellé de combat à corriger et geste de tir à animer. [Fiche](design/Visuels_Boutique_Pretre_Guerrier.md).
+
+**Éclaireur-observateur, type 31.** Visuel fixe validé. Portrait, déblocage, recrutement et affichage de la première marque vérifiés sur copie v0.199. 106 contrôles d’illustrations réussis. Sprite et repère à intégrer, pose de repos et transition à produire. [Fiche](design/Visuels_Boutique_Observateur.md).
+
 **Mage de givre, type 30.** Visuel fixe bien accueilli par le porteur. Comparatif à E2, portrait, déblocage, recrutement et premier tir avec éclat cyan vérifiés sur copie v0.198. 121 contrôles d’illustrations réussis. Intégration et animation du lâcher à suivre. [Fiche](design/Visuels_Boutique_Mage_Givre.md).
 
 **Sarbacane gobeline, type 29.** Visuel fixe validé par le porteur le 14 novembre 2026 (`0230eef`), prêt à intégrer. Comparatif à E2, portrait, déblocage, recrutement et premier tir avec un dard d’essai vérifiés sur copie v0.198. 116 contrôles d’illustrations réussis. [Fiche](design/Visuels_Boutique_Sarbacane.md).

@@ -6,6 +6,34 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Marchand mercenaire validé, à intégrer (ouvert)
+
+Le porteur a validé le visuel fixe du type 36 (`alliance.mercenary`, `88289fc`) le 14 novembre 2026. Associer le PNG au portrait et au plateau et le déclarer à l’export. La [fiche](design/Visuels_Boutique_Marchand_Mercenaire.md) indique le cadre et l’ancre. Sur la copie v0.199, une pièce tourne en vol et `loot.png` s’affiche au-dessus des PV selon `loot_until`. La fiche de combat hérite du texte « Tirs rapides sur une cible » et gagnerait à afficher la condition du bonus d’or.
+
+### 2026-11-14 — Ancien des tribus validé, à intégrer (ouvert)
+
+Le porteur a validé le type 35 (`horde.elder`). La [fiche](design/Visuels_Boutique_Ancien_Tribus.md) donne le cadre, l’ancre et l’origine de l’onde cuivrée. L’essai sur la v0.199 réutilise `aura.png` sous les bénéficiaires comme pour le Prêtre. Adapter le libellé hérité des rebonds au tir et à la bénédiction de proximité.
+
+### 2026-11-14 — Totem de guerre validé, à intégrer (ouvert)
+
+Le porteur a validé le type 34 (`horde.wartotem`). La [fiche](design/Visuels_Boutique_Totem_Guerre.md) donne le cadre, l’ancre et le repère de gemme vérifiés en combat. L’essai remplace la hache par une impulsion sur la gemme et réutilise `mark.png`, comme pour l’Éclaireur-observateur. Remplacer le libellé de rebonds par une description du marquage.
+
+### 2026-11-14 — Chaman des marais validé, à intégrer (ouvert)
+
+Le porteur a validé le visuel fixe du type 33 (`horde.swampshaman`). La [fiche](design/Visuels_Boutique_Chaman_Marais.md) fournit le cadrage, l’ancre et le départ du feu follet. Sur la copie v0.199, le repère `slow.png` au sol suit `enemy_is_slowed` et cohabite avec l’anneau violet de la malédiction. Le départ de la volute reste à animer.
+
+### 2026-11-14 — Gnomes de l’Alliance (ouvert)
+
+Le porteur a rappelé que l’Alliance comprend aussi des gnomes. Ce point est noté dans la file visuelle pour les prochaines illustrations. Merci de le consigner dans le GDD lors de sa prochaine mise à jour. L’unité précise reste à choisir.
+
+### 2026-11-14 — Prêtre guerrier validé, à intégrer (ouvert)
+
+Le porteur a validé le type 32 (`alliance.priest`). La [fiche](design/Visuels_Boutique_Pretre_Guerrier.md) fournit le cadrage, l’ancre et la capture du repère `aura.png` contrôlé avec `guardian_aura(slot) > 0`. La copie v0.199 utilise un éclat doré pour son tir. La fiche de combat hérite du texte « Explosion autour de la cible » avec zéro cible secondaire. Une mention du tir et de la bénédiction décrirait son rôle.
+
+### 2026-11-14 — Éclaireur-observateur validé, à intégrer (ouvert)
+
+Le porteur a validé le sprite du type 31 (`alliance.observer`). La [fiche](design/Visuels_Boutique_Observateur.md) donne le cadre et l’ancre. Sur la copie v0.199, la flèche est masquée pour ce type et le losange `mark.png` s’affiche au-dessus des PV tant que `marked_until` est actif. La première application a été vérifiée en combat, avec les règles existantes. Le fanion et le geste pourront ensuite être animés au moment du marquage.
+
 ### 2026-11-14 — Mage de givre illustré (ouvert)
 
 Le porteur a bien accueilli le visuel fixe du type 30 (`alliance.frostmage`). La [fiche](design/Visuels_Boutique_Mage_Givre.md) donne le cadre et l’ancre vérifiés sur copie v0.198. Le projectile d’essai est un éclat cyan dirigé vers une cible. Le repère `effect.slow` proposé dans les effets de boutique peut signaler le ralentissement au sol. Le départ définitif reste à synchroniser avec l’animation du gantelet.
