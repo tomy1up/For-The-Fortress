@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-14 — Sarbacane gobeline illustrée pour avis (ouvert)
+### 2026-11-14 — Sarbacane gobeline validée, à intégrer (ouvert)
 
-Proposition du type 29 (`horde.blowgun`) vérifiée sur copie v0.198 et en attente de l’avis du porteur. La [fiche](design/Visuels_Boutique_Sarbacane.md) donne le cadre, le pied et l’origine d’essai. Après validation, associer le PNG au portrait et au plateau, le déclarer à l’export et dessiner un dard direct depuis le bout du tube.
+Visuel fixe du type 29 (`horde.blowgun`, `0230eef`) vérifié sur copie v0.198 et validé par le porteur le 14 novembre 2026. La [fiche](design/Visuels_Boutique_Sarbacane.md) donne le cadre, le pied et l’origine d’essai. Associer le PNG au portrait et au plateau, le déclarer à l’export et dessiner un dard direct depuis le bout du tube.
 
 ### 2026-11-14 — Lanceur de masse orc validé, à intégrer (ouvert)
 
