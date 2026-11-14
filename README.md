@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.198**. Réglage du pyromancien humain, l'alternative la plus faible de la boutique : 17 de dégâts, brûlure 22 (rapport 0,94 de la référence, ensemble de 0,89 à 1,05). [Notes](design/essais/v0198_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.198).
+
 **Prototype v0.197**. Équilibrage de puissance des 40 alternatives de la boutique : mesure sur cinq cartes, trois passes de réglage (moyenne 0,96 de la référence, de 0,86 à 1,05), règles et prix revus. [Notes](design/essais/v0197_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.197).
 
 **Prototype v0.196**. Boutique étendue, quatrième et dernier lot : dix alternatives (pillage, entrée et forteresse, réaction en chaîne, unité-pivot), de 1 080 à 1 300 PO ; le catalogue compte 20 unités par faction pour 14 970 PO, au moins les PO gagnés sur la campagne. [Notes](design/essais/v0196_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.196).

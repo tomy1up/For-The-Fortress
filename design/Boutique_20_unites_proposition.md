@@ -92,7 +92,7 @@ Archétypes 14 à 18 : pilleur, sapeur d'entrée, tourelle de forteresse, réact
 
 Mesure : chaque alternative remplace la troisième unité de l'armée de référence de sa faction (Alliance : archer, arbalétrier, arbalétrier ; Horde : deux haches et chaman) ; on cherche par dichotomie les PV ennemis maximaux (en % de la courbe normale) qu'elle bat, sur cinq cartes (Vallée du Gué, Passage d'ardoise, bassins du marais, entrée de la mine, jetée de la côte) et deux ordres d'emplacements, sans talents. Le rapport est seuil(unité) / seuil(référence) moyenné sur les dix essais : 1,00 = parité. Outil : `prototype/tools/balance_shop.gd`, `analyse_shop_balance.py` et `tune_shop.py` (réglage des fiches). Seuil au pas de 2 % : les rapports sont précis à environ ±0,02.
 
-Avant réglage, les quarante alternatives (vingt par faction, dont les quatre d'origine) étaient en moyenne à 0,93 de la référence, la plus faible à 0,77 (pyromancien). Après trois passes de réglage (dégâts, effets de règle et prix de recrutement), **la moyenne est de 0,96 de la référence, écart-type 0,04, de 0,86 (pyromancien) à 1,05 (sarbacane, lanceur double, traqueur)**. Les unités de soutien (ralentissement, marque, aura, pillage) restent un peu sous la parité parce que la mesure ne compte pas la totalité de leurs effets (or supplémentaire, ennemis ralentis plus longtemps sous le feu des autres) : écart accepté pour le prototype, à juger en jeu par le porteur. Valeurs de prototype à confirmer par le porteur en jeu.
+Avant réglage, les quarante alternatives (vingt par faction, dont les quatre d'origine) étaient en moyenne à 0,93 de la référence, la plus faible à 0,77 (pyromancien). Après trois passes de réglage (dégâts, effets de règle et prix de recrutement), **la moyenne est de 0,96 de la référence, écart-type 0,04, de 0,89 (prêtre guerrier) à 1,05 (sarbacane, lanceur double, traqueur)**. Les unités de soutien (ralentissement, marque, aura, pillage) restent un peu sous la parité parce que la mesure ne compte pas la totalité de leurs effets (or supplémentaire, ennemis ralentis plus longtemps sous le feu des autres) : écart accepté pour le prototype, à juger en jeu par le porteur. Valeurs de prototype à confirmer par le porteur en jeu.
 
 **Alliance**
 
@@ -112,7 +112,7 @@ Avant réglage, les quarante alternatives (vingt par faction, dont les quatre d'
 | Piquier humain | 0,98 | 0,84 | 1,10 |
 | Piégeur nain | 0,95 | 0,84 | 1,07 |
 | Prêtre guerrier | 0,89 | 0,81 | 1,00 |
-| Pyromancien humain | 0,86 | 0,81 | 0,92 |
+| Pyromancien humain | 0,94 | 0,89 | 0,99 |
 | Rôdeur elfe | 0,99 | 0,91 | 1,07 |
 | Sentinelle elfe | 0,93 | 0,86 | 1,00 |
 | Tireur d’élite elfe | 0,96 | 0,89 | 1,00 |
@@ -144,7 +144,7 @@ Avant réglage, les quarante alternatives (vingt par faction, dont les quatre d'
 | Traqueur troll | 1,05 | 1,00 | 1,13 |
 | Veilleur des cendres | 0,95 | 0,83 | 0,99 |
 
-Réglages principaux : dégâts propres relevés pour le mage de givre, le pyromancien (brûlure 16), le marchand, le pillard, les observateurs, les prêtres, les vétérans, les bombardes ; effets de règle renforcés (marque +55 %, aura +40 %, pillage +120 %, explosion 80, pivot +16 % par vague, tir croisé +85 % pour le lanceur double de la Horde) ; prix de recrutement revus pour 21 unités (de 60 à 100 or). Les libellés des cartes, les tests de lots 3 et 4 et ce document reprennent les nouvelles valeurs.
+Réglages principaux : dégâts propres relevés pour le mage de givre, le pyromancien (17 de dégâts, brûlure 22, relevé en v0.198 après une passe dédiée : 0,86 → 0,94), le marchand, le pillard, les observateurs, les prêtres, les vétérans, les bombardes ; effets de règle renforcés (marque +55 %, aura +40 %, pillage +120 %, explosion 80, pivot +16 % par vague, tir croisé +85 % pour le lanceur double de la Horde) ; prix de recrutement revus pour 21 unités (de 60 à 100 or). Les libellés des cartes, les tests de lots 3 et 4 et ce document reprennent les nouvelles valeurs.
 
 Limites : cinq cartes seulement, sans talents ni événements d'affixe ; les règles de position (piégeur, balliste) dépendent du tracé et sont donc mesurées sur cinq tracés seulement ; les cartes des chapitres tardifs (îles flottantes, nécropole) ne sont pas mesurées. À rejouer quand le porteur aura confirmé ou modifié des valeurs.
 
@@ -204,7 +204,7 @@ Les six premiers archétypes à règles existantes (guetteur, tireur d'élite, m
 | Alliance | Arquebusier nain | Archer elfe | 85 or | 420 PO | 30 missions | Rafale : un tir toutes les 0,3 s, 3,2 dégâts |
 | Alliance | Bombarde naine | Mage humain | 100 or | 480 PO | 40 missions | Explosion très large (5 voisins, rayon 1,6), lente |
 | Alliance | Piquier humain | Archer elfe | 55 or | 540 PO | 50 missions | Bon marché, portée courte (2,2) |
-| Alliance | Pyromancien humain | Mage humain | 85 or | 600 PO | 60 missions | Brûlure prolongée (16 par palier), impact faible |
+| Alliance | Pyromancien humain | Mage humain | 85 or | 600 PO | 60 missions | Brûlure prolongée (22 par palier), impact faible |
 | Horde | Veilleur des cendres | Lanceur de haches troll | 70 or | 300 PO | 10 missions | Longue vue : portée 7, tirs faibles et espacés |
 | Horde | Lanceur de javeline troll | Lanceur de haches troll | 105 or | 360 PO | 20 missions | Un coup décisif (56), recharge de 4,5 s |
 | Horde | Lance-éclats gobelin | Lanceur de haches troll | 85 or | 420 PO | 30 missions | Rafale : un tir toutes les 0,35 s, 3,5 dégâts |

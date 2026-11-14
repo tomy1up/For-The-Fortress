@@ -176,6 +176,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.197** : équilibrage de puissance des alternatives de la boutique (outils `prototype/tools/balance_shop.gd`, `analyse_shop_balance.py`, `tune_shop.py`). Moyenne 0,96 de la référence, de 0,86 à 1,05 ; valeurs de règles, prix de recrutement et libellés de cartes ajustés ; `Boutique_20_unites_proposition.md` contient le tableau des rapports. Pas de nouvelle demande à Codex.
 
+**v0.198** : réglage du pyromancien humain (17 de dégâts, brûlure 22) : rapport 0,94 ; ensemble de la boutique de 0,89 à 1,05. Aucune demande à Codex.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.
