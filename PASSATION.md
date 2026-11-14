@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Sarbacane gobeline, type 29.** Visuel fixe pour avis. Comparatif à E2, portrait, déblocage, recrutement et premier tir avec un dard d’essai vérifiés sur copie v0.198. 116 contrôles d’illustrations réussis. [Fiche](design/Visuels_Boutique_Sarbacane.md).
+
 **Lanceur de masse orc, type 28.** Visuel fixe validé. Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.198. 111 contrôles d’illustrations réussis. Sprite à intégrer. Projectile et geste de lâcher à réaliser. [Fiche](design/Visuels_Boutique_Lanceur_Masse.md).
 
 **Lanceur double troll, type 27.** Visuel fixe validé. Comparatif à E2 et contrôle du portrait, du déblocage, du recrutement et du premier tir sur copie v0.198. 106 contrôles d’illustrations réussis. Sprite à intégrer. Alternance des bras et raccords de lâcher à animer. [Fiche](design/Visuels_Boutique_Lanceur_Double.md).
