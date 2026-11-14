@@ -6,6 +6,22 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Poseur de mines validé, à intégrer (ouvert)
+
+Le porteur a validé le visuel fixe du type 42 (`horde.minelayer`, `471ebcc`). Le cadrage est documenté dans la [fiche](design/Visuels_Boutique_Poseur_Mines.md). Sur copie v0.202, un disque runique remplace le projectile de famille pour un tir sur une cible. Associer le PNG à la boutique et au plateau et le déclarer à l’export.
+
+### 2026-11-14 — Baliste de guerre et servant squelette illustrés (ouvert)
+
+Le porteur a bien accueilli le visuel du type 43 (`horde.warballista`) avec un servant squelette. La [fiche](design/Visuels_Boutique_Baliste_Guerre.md) donne le cadre, l’ancre et le départ du carreau d’essai vérifiés sur copie v0.201. Le carreau de siège reste un tir sur une seule cible. Tir et rechargement restent à animer.
+
+### 2026-11-14 — Pillard gobelin et piste du squelette jouable (ouvert)
+
+Le porteur a bien accueilli le sprite du type 41 (`horde.pillager`). La [fiche](design/Visuels_Boutique_Pillard_Gobelin.md) donne son cadrage, le départ du jeton et le repère `loot.png` contrôlé. Pour représenter les morts-vivants de la Horde, le porteur propose un squelette dans l’esprit de l’infanterie attaquante. Le servant de la Baliste de guerre est une piste à valider, en miroir visuel de la Balliste royale et de son servant gnome.
+
+### 2026-11-14 — Vétéran royal illustré (ouvert)
+
+La proposition masculine du type 40 (`alliance.veteran`) a reçu un retour favorable. La [fiche](design/Visuels_Boutique_Veteran_Royal.md) donne le cadrage, l’ancre et le point de départ vérifiés sur copie v0.201. Le carreau de famille convient à l’arbalète courte. Le tir et le rechargement seront à animer.
+
 ### 2026-11-14 — Alchimiste gnome illustrée (ouvert)
 
 Le porteur a préféré la troisième proposition du type 39 (`alliance.alchemist`). La [fiche](design/Visuels_Boutique_Alchimiste.md) donne le cadre, le pied et le départ de la fiole. Sur la copie v0.200, `volatile.png` est visible au-dessus des PV pendant `volatile_until`. L’explosion à la mort possède déjà son repère d’étude `volatile_burst.png`. Il reste à disposer d’un événement visuel horodaté et positionné pour le brancher, puis à contrôler les réactions en chaîne en jeu.
