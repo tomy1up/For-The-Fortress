@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**Ancien des tribus, type 35.** Visuel fixe validé. Sur copie v0.199, portrait, déblocage, recrutement, premier tir et repère d’aura au pied du seul allié proche vérifiés. 126 contrôles d’illustrations et 41 contrôles du lot 3 réussis. Sprite, onde et aura à intégrer. Geste à animer, libellé de famille à corriger. [Fiche](design/Visuels_Boutique_Ancien_Tribus.md).
+
 **Totem de guerre, type 34.** Visuel fixe validé. Sur copie v0.199, portrait, déblocage, recrutement et premier marquage vérifiés. 121 contrôles d’illustrations et 41 contrôles du lot 3 réussis. Sprite et repère à intégrer. Libellé de rebonds à corriger. [Fiche](design/Visuels_Boutique_Totem_Guerre.md).
 
 **Chaman des marais, type 33.** Visuel fixe validé. Copie v0.199 : portrait, déblocage, recrutement et repère au sol lors du premier ralentissement vérifiés. 116 contrôles d’illustrations et 41 contrôles du lot 3 réussis. Sprite et repère à intégrer, départ de la volute à animer. Le porteur a rappelé que l’Alliance comprend des gnomes, désormais inscrits dans la file visuelle. [Fiche](design/Visuels_Boutique_Chaman_Marais.md).

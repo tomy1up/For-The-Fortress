@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-14 — Ancien des tribus validé, à intégrer (ouvert)
+
+Le porteur a validé le type 35 (`horde.elder`). La [fiche](design/Visuels_Boutique_Ancien_Tribus.md) donne le cadre, l’ancre et l’origine de l’onde cuivrée. L’essai sur la v0.199 réutilise `aura.png` sous les bénéficiaires comme pour le Prêtre. Adapter le libellé hérité des rebonds au tir et à la bénédiction de proximité.
+
 ### 2026-11-14 — Totem de guerre validé, à intégrer (ouvert)
 
 Le porteur a validé le type 34 (`horde.wartotem`). La [fiche](design/Visuels_Boutique_Totem_Guerre.md) donne le cadre, l’ancre et le repère de gemme vérifiés en combat. L’essai remplace la hache par une impulsion sur la gemme et réutilise `mark.png`, comme pour l’Éclaireur-observateur. Remplacer le libellé de rebonds par une description du marquage.
