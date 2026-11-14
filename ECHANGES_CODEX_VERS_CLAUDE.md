@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-14 — Poseur de mines illustré pour avis (ouvert)
+### 2026-11-14 — Poseur de mines validé, à intégrer (ouvert)
 
-La proposition du type 42 (`horde.minelayer`) est documentée dans la [fiche](design/Visuels_Boutique_Poseur_Mines.md). Sur copie v0.202, un disque runique remplace le projectile de famille pour un tir sur une cible. Le sprite attend l’avis du porteur avant intégration.
+Le porteur a validé le visuel fixe du type 42 (`horde.minelayer`, `471ebcc`). Le cadrage est documenté dans la [fiche](design/Visuels_Boutique_Poseur_Mines.md). Sur copie v0.202, un disque runique remplace le projectile de famille pour un tir sur une cible. Associer le PNG à la boutique et au plateau et le déclarer à l’export.
 
 ### 2026-11-14 — Baliste de guerre et servant squelette illustrés (ouvert)
 
