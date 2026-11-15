@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.51 — 15 novembre 2026
+Game Design Document — Version 0.53 — 15 novembre 2026
 
 Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne de 200 missions, entièrement jouable (vingt chapitres, dix biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.206. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. La boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
 
 **Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.206. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.51 ; jeu de référence 0.214.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.53 ; jeu de référence 0.216.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -77,7 +77,7 @@ Nom de travail — disponibilité juridique à confirmer.
 63. [63 Biomes, nouveautés et affixes de combat](#s63)
 64. [64 Équilibrage des talents et mesure des cartes](#s64)
 65. [65 Cadre de travail, outils et production](#s65)
-66. [66 Journal des versions 0.110 à 0.214](#s66)
+66. [66 Journal des versions 0.110 à 0.216](#s66)
 
 <a id="s1"></a>
 
@@ -1799,6 +1799,10 @@ Version 0.50 — 15 novembre 2026 : jeu 0.213. Correction d’interface : le pan
 
 Version 0.51 — 15 novembre 2026 : jeu 0.214. **Finale de la Horde allégée** sur décision du porteur (MAJ-48) : à la mission 200, les ennemis de la Horde ont 85 % de la courbe de base (224 % au lieu de 238 %) ; mesure : 2 victoires sur 12 avant, 8 sur 12 après, contre 9 pour l’Alliance. Les autres missions (Horde −10 % dès la 150, Alliance inchangée) ne bougent pas. Réglage de prototype à confirmer.
 
+Version 0.52 — 15 novembre 2026 : jeu 0.215. Le coup d’épée du Fantassin squelette est un croissant clair qui balaie un arc devant lui, au lieu d’une seconde lame dessinée à côté de celle du sprite (effet dessiné par le code, contrôle visuel). Option de capture d’armée complète pour la régression visuelle ; contrôle possible du jeu exporté. Aucune règle de jeu modifiée.
+
+Version 0.53 — 15 novembre 2026 : jeu 0.216. **Marche du Capitaine orc en quatre vues dessinées** (lot de Codex validé par le porteur, « bien mieux ») : 24 poses par diagonale, sans miroir, la latéralité de l’équipement (bouclier à gauche, lame à droite) est conservée ; la vue suit la direction à l’écran et la phase de marche, liée à la distance, se conserve au virage. Format d’animation : nouvelle clé `directions: four` avec les vues `walk_nw`, `walk_ne`, `walk_sw`, `walk_se`. Les transitions de virage et la mort restent à produire. Aucune règle de jeu modifiée.
+
 <a id="s51"></a>
 
 ## 51 Maintenance du GDD
@@ -2091,7 +2095,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 15 novembre 2026 (GDD 0.51, jeu 0.214)
+### État au 15 novembre 2026 (GDD 0.53, jeu 0.216)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2113,7 +2117,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.51, jeu 0.214 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.53, jeu 0.216 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2390,7 +2394,7 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 
 <a id="s66"></a>
 
-## 66 Journal des versions 0.110 à 0.214
+## 66 Journal des versions 0.110 à 0.216
 
 | Versions | Contenu |
 | --- | --- |
@@ -2440,5 +2444,7 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.212 | Courbe de la Horde revue : PV d’ennemis −10 % dès la mission 150 ; GDD 0.49 |
 | 0.213 | Libellés des alternatives sans effet secondaire corrigés ; outils de régression visuelle et de parties aléatoires ; GDD 0.50 |
 | 0.214 | Finale de la Horde allégée (mission 200 : PV d’ennemis à 85 %) ; GDD 0.51 |
+| 0.215 | Coup d’épée du squelette en croissant ; régression visuelle étendue (armées, jeu exporté) ; GDD 0.52 |
+| 0.216 | Marche du Capitaine orc en quatre vues dessinées ; GDD 0.53 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

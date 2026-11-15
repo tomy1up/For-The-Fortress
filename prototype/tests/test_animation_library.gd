@@ -330,3 +330,21 @@ func verify_warning_rendering() -> void:
 	await process_frame
 	check(not bare._eruption_warning_sheet(),"Sans planche : repère provisoire conservé")
 	bare.free()
+	# Capitaine orc (v0.216) : quatre vues diagonales dessinées, sans miroir, phase de marche liée à la distance.
+	Library.clear_cache()
+	var captain: Dictionary = Library.spec_for("enemy.horde.garrison")
+	check(not captain.is_empty() and Library.is_four_view(captain) and Library.validation_error(captain,"enemy.horde.garrison") == "","Capitaine orc : description à quatre vues valide")
+	var expected := {Vector2(1,-1):"walk_ne",Vector2(-1,-1):"walk_nw",Vector2(1,1):"walk_se",Vector2(-1,1):"walk_sw"}
+	for direction in expected:
+		check(Library.enemy_state(captain,{"direction":direction}) == expected[direction],"Capitaine orc : la direction %s joue %s" % [str(direction),expected[direction]])
+	check(Library.enemy_state(captain,{"direction":Vector2.ZERO}) == "walk","Capitaine orc : sans direction, repli sur la marche de base")
+	var broken: Dictionary = captain.duplicate(true)
+	broken.animations.erase("walk_nw")
+	check(Library.validation_error(broken,"enemy.horde.garrison") != "","Capitaine orc : une vue diagonale manquante est refusée")
+	var stray: Dictionary = Library.spec_for("enemy.alliance.garrison").duplicate(true)
+	stray.animations["walk_ne"] = stray.animations.walk
+	check(Library.validation_error(stray,"enemy.alliance.garrison") != "","Une vue diagonale sans directions = four est refusée")
+	var phases: Array = []
+	for direction in expected:
+		phases.append(Library.frame_index(captain.animations[expected[direction]],Library.phase(captain.animations[expected[direction]],30.0,0.0,0.0)))
+	check(phases.all(func(index): return index == phases[0]),"Capitaine orc : la même distance donne la même image dans les quatre vues (phase conservée au virage)")

@@ -1434,7 +1434,8 @@ func _draw_sheet_walker(id: String, enemy: Dictionary, motion: Dictionary, scale
 	var anim: Dictionary = spec.animations[state]
 	var texture: Texture2D = SheetAnimations.texture_for(id,anim)
 	if texture == null: return
-	if SheetAnimations.base_facing(spec) < 0.0: draw_set_transform_matrix(body*Transform2D(Vector2(-1,0),Vector2(0,1),Vector2.ZERO))
+	if SheetAnimations.is_four_view(spec): draw_set_transform_matrix(body*Transform2D(Vector2(facing,0),Vector2(0,1),Vector2.ZERO)) # quatre vues dessinées : le miroir de la route est annulé, la latéralité de l'équipement est celle du dessin
+	elif SheetAnimations.base_facing(spec) < 0.0: draw_set_transform_matrix(body*Transform2D(Vector2(-1,0),Vector2(0,1),Vector2.ZERO))
 	var age: float = float(info.rise_age) if state == "rise" else float(info.hurt_age) if state == "hurt" else float(info.get("spawn_age",0.0))
 	var cycle: float = SheetAnimations.phase(anim,float(motion.get("travel",0.0))/scale,model.elapsed,age,fposmod(float(enemy.id)*0.37,1.0))
 	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle))
