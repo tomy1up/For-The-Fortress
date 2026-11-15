@@ -15,6 +15,9 @@ const LAYOUTS: Array = [[1,3,4],[2,4,5]]
 const EXTRA_SLOTS: Array = [[0,2,5],[0,1,3]]
 const EXTRA_WAVES: Array = [3,5,7]
 var six_defenders := false
+## Essai de courbe : facteur appliqué aux PV d'ennemis de la Horde seulement (HPK_HORDE, ex. 0.85) et mesure de l'armée de base seule (BASE_ONLY=1).
+var horde_hp_factor := 1.0
+var base_only := false
 const SEED := 42
 
 func ranks_for(faction: int, mission: int, tree: int) -> Array:
@@ -39,7 +42,7 @@ func ranks_for(faction: int, mission: int, tree: int) -> Array:
 func play(faction: int, mission: int, tree: int, layout: Array, alternative: int) -> int:
 	var definition: Dictionary = Catalogue.definition(mission)
 	var m = Model.new(true,Model.Maps.for_id(definition.map_id))
-	if not m.configure_wave_set(definition.get("wave_set_id","ford")) or not m.configure_enemy_hp(definition.hp_percent) or not m.configure_combat_affix(definition.get("combat_affix",{})): return -2
+	if not m.configure_wave_set(definition.get("wave_set_id","ford")) or not m.configure_enemy_hp(int(round(float(definition.hp_percent)*(horde_hp_factor if faction == 1 else 1.0)))) or not m.configure_combat_affix(definition.get("combat_affix",{})): return -2
 	if alternative >= 0 and not m.configure_auxiliary(alternative): return -2
 	var ranks: Array = ranks_for(faction,mission,tree)
 	if ranks.is_empty() or not Talents.valid(ranks): return -2
@@ -70,6 +73,8 @@ func play(faction: int, mission: int, tree: int, layout: Array, alternative: int
 
 func _initialize() -> void:
 	six_defenders = OS.get_environment("SIX") == "1"
+	base_only = OS.get_environment("BASE_ONLY") == "1"
+	if OS.get_environment("HPK_HORDE") != "": horde_hp_factor = float(OS.get_environment("HPK_HORDE"))
 	var missions: PackedStringArray = OS.get_environment("MISSIONS").split(",",false)
 	if missions.is_empty(): missions = PackedStringArray(["178","190","200"])
 	for text in missions:
@@ -77,7 +82,7 @@ func _initialize() -> void:
 		for faction in range(2):
 			var units: Array = [{"id":"base","type":-1}]
 			for card in Shop.for_faction(faction):
-				if int(card.type) >= 10 and int(card.get("unlock_missions",0)) <= mission: units.append({"id":card.id,"type":int(card.type)})
+				if not base_only and int(card.type) >= 10 and int(card.get("unlock_missions",0)) <= mission: units.append({"id":card.id,"type":int(card.type)})
 			for unit in units:
 				var runs := 0
 				var wins := 0

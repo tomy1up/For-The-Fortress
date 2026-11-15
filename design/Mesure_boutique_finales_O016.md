@@ -56,3 +56,17 @@ L'outil accepte `SIX=1` : trois renforts de mêmes familles que les deux premiè
 ## Suite possible (non engagée)
 
 Si le porteur le souhaite, étudier un ajustement de la courbe de difficulté de la Horde aux chapitres 18 à 20 (valeurs à lui soumettre avant tout changement).
+
+## Courbe de la Horde (décision du porteur : « la Horde doit être revue », 15 novembre 2026)
+
+Mesure avec l'armée de base à six défenseurs, huit missions de 150 à 200, PV des ennemis de la Horde multipliés par un facteur d'essai (outil : `HPK_HORDE`, `BASE_ONLY=1`, `SIX=1`). Résultat brut : `design/essais/Mesure_courbe_horde_brut.txt`. Victoires sur 6 parties par mission.
+
+| Mission | 150 | 160 | 170 | 178 | 185 | 190 | 195 | 200 | Total sur 48 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Alliance (référence) | 3 | 5 | 4 | 5 | 5 | 2 | 4 | 5 | 33 |
+| Horde, PV ×1,0 | 1 | 2 | 2 | 2 | 4 | 1 | 3 | 1 | 16 |
+| Horde, PV ×0,9 | 3 | 2 | 5 | 5 | 5 | 4 | 6 | 1 | 31 |
+| Horde, PV ×0,8 | 6 | 5 | 6 | 5 | 6 | 5 | 6 | 5 | 44 |
+| Horde, PV ×0,7 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 48 |
+
+Lecture : à PV égaux, la Horde gagne deux fois moins que l'Alliance aux chapitres 16 à 20. Une réduction d'environ 10 % des PV d'ennemis de la Horde la ramène au niveau de l'Alliance en moyenne (31 contre 33) ; la mission 200 reste mince (1 victoire sur 6 même à ×0,9). Échantillon réduit : indication de prototype, une seule graine.
