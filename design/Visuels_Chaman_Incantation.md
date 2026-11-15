@@ -38,3 +38,11 @@ Le porteur signale que la version précédente présente encore un changement de
 [Comparatif à taille native](essais/gestes_combat/chaman_incantation/garde_unique/Chaman_garde_avant_apres.gif)
 
 La nouvelle variante se trouve dans `garde_unique/defender.horde.shaman/`. Le geste est plus mesuré : le mouvement du bâton se lit par sa bascule et le départ de l’éclair. 24 images sur 0,48 s. L’éclair part à 0,12 s de (±33,25, −57,25) par rapport aux pieds sur la copie d’essai v0.208. Vérifications au Gué dans les deux sens à ×1 et ×2 et à temps figé. Validateur : 25 dossiers, zéro problème. Bibliothèque : 157 contrôles réussis. L’anneau de malédiction reste à synchroniser côté rendu.
+
+## Geste d’origine et gabarit raccordé
+
+Le porteur a écarté l’essai à partir d’un seul dessin de garde parce que le mouvement avait perdu son amplitude. Cette variante reprend les poses dessinées de préparation, de projection et d’accompagnement. Les poses ont été ramenées à une hauteur de corps comparable autour d’un même point d’appui, puis les poses de passage ont été recalculées. La reprise de garde prend plus de temps. L’image de garde sert aussi de début et de fin à la planche. Le même filtrage mipmap est appliqué au repos et à l’attaque.
+
+[Comparatif en jeu avec le geste d’origine](essais/gestes_combat/chaman_incantation/geste_et_gabarit/Chaman_geste_et_gabarit.gif)
+
+Variante à évaluer dans `geste_et_gabarit/defender.horde.shaman/`. 28 images de 496 × 400 px sur 0,56 s, ancre (190, 349), hauteur d’affichage 86,36 px pour le cadre avec marge. L’éclair part à 0,12 s de (±51,625, −58,875). Sur la copie v0.208, les captures à ×1 et ×2 montrent le retour à la garde pixel pour pixel sur le recadrage du corps à E2. Les deux sens et le temps figé ont été vérifiés. Validateur : 25 dossiers, zéro problème. Bibliothèque : 157 contrôles réussis. L’anneau de malédiction reste à synchroniser.
