@@ -9,6 +9,8 @@
 - **Rôle retenu : option A, fantassin d'os** (défense très bon marché, portée courte, cadence élevée, sans règle nouvelle). Décision du porteur, 15 novembre 2026. Stats de départ proposées (prototype à confirmer) : prix 40, dégâts 6, intervalle 0,6 s, portée 2,0 ; à régler avec `prototype/tools/balance_shop.gd`.
 - Rappel de la piste d'origine (14 novembre 2026) : un squelette dans l'esprit de l'infanterie attaquante morte-vivante ; le servant squelette de la Baliste de guerre en est un premier aperçu visuel.
 
+> Mise à jour du 15 novembre 2026 : le porteur exige le même nombre d'unités des deux côtés ; l'Alliance reçoit un Tirailleur gnome (type 47) en v0.208, ce qui règle la question de la parité ci-dessous.
+
 ## Ce que cela implique (constats, pas décisions)
 
 - Le catalogue de la Horde compte déjà 20 alternatives (types 8, 9, 16 à 21, 26 à 29, 33 à 36, 41 à 45 côté Horde). Un squelette serait la **21e** et le **type 46** : la parité de 20 unités par faction (décision du 13 novembre) serait rompue au profit de la Horde, sauf si l'Alliance reçoit une 21e unité ou si le squelette en remplace une.

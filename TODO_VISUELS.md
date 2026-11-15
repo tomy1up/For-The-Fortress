@@ -10,6 +10,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Nouvelle race de la Horde** — le porteur propose un squelette jouable inspiré de l’infanterie morte-vivante, en pendant du gnome de l’Alliance. Étudier un servant squelette pour la Baliste de guerre (type 43). Unité et visuel à valider.
   - **Décision du porteur, 15 novembre 2026 : le squelette jouable est une unité de boutique de la Horde (type 46 prévu), option A « fantassin d’os » : fantassin de mêlée à portée courte, attaque rapide, sans effet spécial.** Nom de travail « Fantassin squelette » (à confirmer). Besoin : sprite de défenseur au format des types 10 à 45 (cadrage, hauteur, point de départ du coup) et, si utile, animation d’attaque. Voir [la fiche](design/Horde_squelette_jouable.md).
+  - **Pendant côté Alliance (15 novembre 2026, parité exigée par le porteur) : « Tirailleur gnome » (type 47, `alliance.gnome`)**, petit tirailleur gnome à courte portée, tirs rapides, sans effet spécial ; même format de sprite que les types 10 à 45. Nom de travail.
 
 - [x] **Première représentation des gnomes de l’Alliance** — le servant de la Balliste royale a été validé le 14 novembre 2026. Sprite prêt à intégrer. [Fiche](design/Visuels_Boutique_Balliste_Royale.md).
 

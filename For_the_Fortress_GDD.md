@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.44 — 15 novembre 2026
+Game Design Document — Version 0.45 — 15 novembre 2026
 
 Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne de 200 missions, entièrement jouable (vingt chapitres, dix biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.206. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. La boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
 
 **Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.206. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.44 ; jeu de référence 0.207.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.45 ; jeu de référence 0.208.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -77,7 +77,7 @@ Nom de travail — disponibilité juridique à confirmer.
 63. [63 Biomes, nouveautés et affixes de combat](#s63)
 64. [64 Équilibrage des talents et mesure des cartes](#s64)
 65. [65 Cadre de travail, outils et production](#s65)
-66. [66 Journal des versions 0.110 à 0.207](#s66)
+66. [66 Journal des versions 0.110 à 0.208](#s66)
 
 <a id="s1"></a>
 
@@ -1660,6 +1660,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-43 | **L’Alliance des Royaumes comprend des gnomes** parmi ses peuples (avec les humains, elfes et nains déjà représentés) — V comme rappel, sans effet de règle ni d’unité à ce jour | Rappel du porteur, 14 novembre 2026, transmis par Codex ; à prendre en compte pour les futures unités et visuels de l’Alliance |
 | MAJ-44 | Le type 44 (`horde.kamikaze`, identifiant conservé) s’appelle **« Gobelin des braises »** au lieu de « Gobelin kamikaze » — V | Choix du porteur, 14 novembre 2026, parmi la proposition de Codex ; intégration de la revue de lisibilité des unités (mipmaps et cadrages) décidée le même jour |
 | MAJ-45 | **Fantassin squelette** (type 46, `horde.skeleton`) : unité de boutique de la Horde, **option A** « fantassin d’os » (défense très bon marché, portée courte, sans règle nouvelle) — V pour le rôle ; valeurs (40 PO de recrutement, 6 de dégâts, 0,6 s, portée 2,0), nom de travail, prix de boutique 1 350 PO et déblocage mission 190 — H (réglage de prototype à confirmer) | Choix du rôle par le porteur, 15 novembre 2026 ; nom, prix, déblocage et parité (Horde à 21 alternatives, Alliance à 20 pour l’instant) laissés au choix de l’agent, à confirmer ; fiche `design/Horde_squelette_jouable.md` |
+| MAJ-46 | **Parité de la boutique : le même nombre d’unités des deux côtés** — V ; **Tirailleur gnome** (type 47, `alliance.gnome`) ajouté à l’Alliance, 21 alternatives par faction — V pour le principe ; nom de travail, valeurs (45 PO, 6 de dégâts, 0,65 s, portée 2,6), prix 1 350 PO et déblocage mission 190 — H (réglage de prototype à confirmer) | Exigence du porteur, 15 novembre 2026 ; choix de l’unité laissé à l’agent, remplace la mention « Horde à 21, Alliance à 20 » de MAJ-45 |
 | MAJ-34 | **Le GDD est tenu à jour à chaque publication de version, par Claude Code** : décisions prises, décisions à prendre et noyau du jeu — V | Demande du porteur, 12 novembre 2026 ; étape ajoutée au cycle d’une version dans `AGENTS.md` |
 
 <a id="s49"></a>
@@ -1686,7 +1687,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-018 | Marges minces de la Horde aux finales des chapitres 3 et 4 (missions 30 et 40) ; mission 40 sur carte propre depuis la v0.178 | Remesure et éventuelle révision des tracés |
 | O-019 | Attribution et production du son | Décision du porteur |
 | O-020 | Habillage artistique restant : unités de la boutique (les illustrations des types 10 à 45, soit toutes les alternatives de la boutique étendue, sont validées par le porteur et intégrées de la v0.198 à la v0.204), indicateurs de ralentissement, de marque, de pillage, de volatilité et d’aura (branchés en v0.205, à juger en jeu), capitaine de garnison orc ; retouches selon le jugement du porteur sur les visuels intégrés en v0.191 à v0.195 | Livraisons de Codex et jugement du porteur |
-| O-021 | **Nouvelle race pour la Horde** (le porteur souhaite explorer cette piste, 14 novembre 2026) ; piste proposée : un **squelette jouable** inspiré de l’infanterie morte-vivante, dont le servant squelette de la baliste de guerre serait un premier aperçu visuel | Décision du porteur : race, rôle (unité de boutique, de départ ou ennemi retourné), nom, place dans les règles et dans la campagne ; 15 novembre 2026 : le porteur retient une **unité de boutique** et **un seul squelette d’abord** (fiche `design/Horde_squelette_jouable.md`) ; rôle retenu : **option A, fantassin d’os**, implémenté en v0.207 (MAJ-45) ; restent à confirmer par le porteur la parité 20/20 (Horde à 21), le nom, le prix et le déblocage ; race complète non décidée |
+| O-021 | **Nouvelle race pour la Horde** (le porteur souhaite explorer cette piste, 14 novembre 2026) ; piste proposée : un **squelette jouable** inspiré de l’infanterie morte-vivante, dont le servant squelette de la baliste de guerre serait un premier aperçu visuel | Décision du porteur : race, rôle (unité de boutique, de départ ou ennemi retourné), nom, place dans les règles et dans la campagne ; 15 novembre 2026 : le porteur retient une **unité de boutique** et **un seul squelette d’abord** (fiche `design/Horde_squelette_jouable.md`) ; rôle retenu : **option A, fantassin d’os**, implémenté en v0.207 (MAJ-45) ; la parité est assurée en v0.208 (MAJ-46) ; restent à confirmer par le porteur le nom, le prix et le déblocage ; race complète non décidée |
 
 <a id="s50"></a>
 
@@ -1781,6 +1782,8 @@ Version 0.42 — 14 novembre 2026 : jeu 0.205, repères d’effets de la boutiqu
 Version 0.43 — 14 novembre 2026 : jeu 0.206, revue de lisibilité des unités intégrée (mipmaps, 33 hauteurs et départs de tir de Codex) et type 44 renommé « Gobelin des braises » sur choix du porteur (MAJ-44). Valeurs et règles inchangées.
 
 Version 0.44 — 15 novembre 2026 : jeu 0.207, le **Fantassin squelette** (type 46, `horde.skeleton`) est ajouté à la boutique de la Horde sur choix du porteur (option A, MAJ-45) : 40 PO de recrutement, 6 de dégâts, intervalle 0,6 s, portée 2,0, sans règle nouvelle. Visuel provisoire en attendant Codex. Mesuré à 0,95 de la référence de la Horde (lance-épieu orc : 1,04). La Horde compte désormais 21 alternatives contre 20 pour l’Alliance.
+
+Version 0.45 — 15 novembre 2026 : jeu 0.208. Le porteur exige le **même nombre d’unités de boutique des deux côtés** (MAJ-46) : l’Alliance reçoit le **Tirailleur gnome** (type 47, `alliance.gnome`) face au fantassin squelette de la Horde ; 45 PO de recrutement, 6 de dégâts, intervalle 0,65 s, portée 2,6, sans règle nouvelle ; boutique 1 350 PO, mission 190 ; mesuré à 0,99 de la référence de l’Alliance. Visuel provisoire. Chaque faction compte 21 alternatives.
 
 <a id="s51"></a>
 
@@ -2074,7 +2077,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 15 novembre 2026 (GDD 0.44, jeu 0.207)
+### État au 15 novembre 2026 (GDD 0.45, jeu 0.208)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2096,7 +2099,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.44, jeu 0.207 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.45, jeu 0.208 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2373,7 +2376,7 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 
 <a id="s66"></a>
 
-## 66 Journal des versions 0.110 à 0.207
+## 66 Journal des versions 0.110 à 0.208
 
 | Versions | Contenu |
 | --- | --- |
@@ -2416,5 +2419,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.205 | Repères d’effets de la boutique branchés ; événements d’explosion exposés ; GDD 0.42 |
 | 0.206 | Lisibilité des unités sur le plateau ; type 44 renommé « Gobelin des braises » ; GDD 0.43 |
 | 0.207 | Fantassin squelette (type 46) dans la boutique de la Horde, visuel provisoire ; GDD 0.44 |
+| 0.208 | Tirailleur gnome (type 47) dans la boutique de l’Alliance : 21 unités par faction ; GDD 0.45 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

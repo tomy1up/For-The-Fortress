@@ -116,3 +116,7 @@ Intégrés dans `main` (v0.198, fusions de `c8a9f49`, `ebf000b`, `36297d9`, `0ea
 ### 2026-11-15 — Squelette jouable de la Horde : visuel demandé (ouvert)
 
 Le porteur a retenu un squelette comme unité de boutique de la Horde (type 46 prévu), option A : fantassin d'os, mêlée à portée courte, attaque rapide. Nom de travail « Fantassin squelette ». Détails dans `design/Horde_squelette_jouable.md` et `TODO_VISUELS.md`. Livrer un sprite au format des types 10 à 45 ; le code sera intégré par Claude Code une fois le rôle, la parité et le déblocage confirmés par le porteur.
+
+### 2026-11-15 — Tirailleur gnome (Alliance) : visuel demandé (ouvert)
+
+Le porteur veut le même nombre d'unités de boutique des deux côtés : l'Alliance reçoit un « Tirailleur gnome » (type 47, `alliance.gnome`, nom de travail) en pendant du fantassin squelette (type 46) de la Horde. Gnome à courte portée, tirs rapides, sans effet spécial ; sprite au format des types 10 à 45. Les deux unités utilisent des visuels provisoires dans la v0.208.

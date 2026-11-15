@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.208**. Tirailleur gnome (type 47) ajouté à l’Alliance : 21 unités de boutique par faction, visuel provisoire. [Notes](design/essais/v0208_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.208).
+
 **Prototype v0.207**. Fantassin squelette (type 46) ajouté à la boutique de la Horde, visuel provisoire. [Notes](design/essais/v0207_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.207).
 
 **Prototype v0.206**. Lisibilité des unités sur le plateau (mipmaps, 33 cadrages de Codex) et type 44 renommé « Gobelin des braises ». [Notes](design/essais/v0206_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.206).
