@@ -1785,7 +1785,7 @@ Version 0.44 — 15 novembre 2026 : jeu 0.207, le **Fantassin squelette** (type 
 
 Version 0.45 — 15 novembre 2026 : jeu 0.208. Le porteur exige le **même nombre d’unités de boutique des deux côtés** (MAJ-46) : l’Alliance reçoit le **Tirailleur gnome** (type 47, `alliance.gnome`) face au fantassin squelette de la Horde ; 45 PO de recrutement, 6 de dégâts, intervalle 0,65 s, portée 2,6, sans règle nouvelle ; boutique 1 350 PO, mission 190 ; mesuré à 0,99 de la référence de l’Alliance. Visuel provisoire. Chaque faction compte 21 alternatives.
 
-Version 0.46 — 15 novembre 2026 : jeu 0.209. Intégration de deux visuels de Codex validés par le porteur : le sprite du **Fantassin squelette** (type 46), avec un coup d’épée courte de mêlée à la place du lancer de hache hérité, et le **Capitaine orc** de la garnison (`enemy.horde.garrison`), qui remplace la silhouette provisoire du chef de guerre. Aucune règle ni valeur modifiée.
+Version 0.46 — 15 novembre 2026 : jeu 0.209. Intégration de deux visuels de Codex validés par le porteur : le sprite du **Fantassin squelette** (type 46), avec un coup d’épée courte de mêlée à la place du lancer de hache hérité, le sprite du **Tirailleur gnome** (type 47), avec un carreau court d’arbalète de poing (famille Archer conservée), et le **Capitaine orc** de la garnison (`enemy.horde.garrison`), qui remplace la silhouette provisoire du chef de guerre. Aucune règle ni valeur modifiée.
 
 <a id="s51"></a>
 
