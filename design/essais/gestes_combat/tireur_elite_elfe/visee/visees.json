@@ -1,0 +1,16 @@
+{
+  "pivot": [
+    127.4,
+    130.0
+  ],
+  "release": 0.27,
+  "pitches": {
+    "-24": "tir_haut_24.png",
+    "-16": "tir_haut_16.png",
+    "-8": "tir_haut_8.png",
+    "0": "tir_droit.png",
+    "8": "tir_bas_8.png",
+    "16": "tir_bas_16.png",
+    "24": "tir_bas_24.png"
+  }
+}

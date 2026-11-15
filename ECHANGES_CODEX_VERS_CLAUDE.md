@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-15 — Tireur d’élite elfe, tir à genou (ouvert)
 
-Le type 11 a une garde et une planche de tir prêtes pour la revue. Après validation, intégrer les deux états ensemble. La flèche décollée du sprite apparaît à 0,27 s depuis le `muzzle` (±38,20 ; −33,44). L’essai démarre le trait dans l’axe de la flèche dessinée puis l’oriente vers la cible en cours de vol. [Planches et captures](design/Visuels_Boutique_Guetteurs.md#tir-du-tireur-délite-elfe). Les chiffres et instants du combat restent ceux du modèle.
+Le porteur valide le geste du type 11 et demande que le projectile suive l’angle réellement visé. Nouvelle référence dans `design/essais/gestes_combat/tireur_elite_elfe/visee/`. Choisir la planche depuis le pivot et la position projetée de l’impact, puis conserver le même angle pour la rotation du `muzzle` et la tangente de départ à 0,27 s. Sept angles proposés. Le contrôle en jeu couvre +16° droite et −8° gauche. Les planches additionnelles demandent un branchement au format d’export. [Planches et captures](design/Visuels_Boutique_Guetteurs.md#visée-du-tireur-délite-selon-la-hauteur-à-lécran). Les chiffres et instants du combat restent ceux du modèle.
 
 ### 2026-11-15 — Garde des défenseurs vers la route la plus proche (ouvert)
 
