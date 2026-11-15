@@ -9,6 +9,11 @@ func check(ok: bool, message: String) -> void:
 	if not ok:
 		failures += 1
 		push_error(message)
+## Orientation de repos : face à la route la plus proche (1 si indéterminée).
+func rest_facing(scene, slot: int) -> float:
+	var road: float = scene.map_view.road_facing(scene.model.slots[slot],scene.map_view._all_route_points())
+	return road if road != 0.0 else 1.0
+
 func _initialize() -> void: call_deferred("run_checks")
 func signature(scene: Node) -> String:
 	return JSON.stringify([Report.build(scene.model),str(scene.model.rng.state),scene.model.defenders,scene.model.shots])
@@ -49,7 +54,7 @@ func run_checks() -> void:
 		var before: String = signature(scene)
 		var pose: Dictionary = scene.map_view.defender_pose(0)
 		check(pose.direction == -1.0 and pose.pulse == 0.0,"Conserver le dernier côté entre deux tirs, sans emprunter le tir voisin ou futur")
-		check(scene.map_view.defender_pose(2).direction == 1.0,"Un emplacement sans tir garde son orientation de repos")
+		check(scene.map_view.defender_pose(2).direction == rest_facing(scene,2),"Un emplacement sans tir garde son orientation de repos (face à la route la plus proche)")
 		for frame in range(3):scene.map_view.queue_redraw();await process_frame
 		check(signature(scene) == before,"Le rendu animé ne modifie ni combat, or, cibles, RNG ni rapport")
 		scene.model.shots.append({"type":type,"time":10.0,"slot":0,"from":Vector2(2,6),"to":Vector2(3,3)})
@@ -68,7 +73,7 @@ func run_checks() -> void:
 		scene.model.shots.clear()
 		check(scene.map_view.defender_pose(0).direction == -1.0,"La suppression des effets ne retourne pas le defenseur")
 		scene.model.reset();scene.model.select_faction(0 if type<3 else 1)
-		check(scene.map_view.defender_pose(0) == {"pulse":0.0,"direction":1.0},"Nouvelle partie : aucun état d’animation conservé")
+		check(scene.map_view.defender_pose(0) == {"pulse":0.0,"direction":rest_facing(scene,0)},"Nouvelle partie : aucun état d’animation conservé")
 		scene.queue_free();await process_frame
 	print("ATTACK_MOTION_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(0 if failures == 0 else 1)
