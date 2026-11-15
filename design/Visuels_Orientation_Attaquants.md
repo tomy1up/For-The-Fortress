@@ -25,3 +25,11 @@ Le porteur a demandé de conserver le bouclier devant le torse, sur le même ava
 [Les quatre segments à taille native](essais/garnison/orientations/v2/Capitaine_quatre_directions_sur_route.png) · [Deux virages en mouvement](essais/garnison/orientations/v2/Capitaine_pivots_sur_route.gif)
 
 L’essai utilise la chaussée réelle de la mission 62, Les Coulées Figées. Un Capitaine attaquant est placé sur le trajet existant dans la copie v0.208 puis avancé par sa distance le long de la route. La mission sert ici de banc d’essai car elle contient les quatre diagonales. Les quatre vues sont contrôlées en jeu à taille native. Deux virages sont rejoués en changement direct de pose. Le cycle de marche et les poses de transition restent à produire. Les 213 contrôles ciblés des visuels ennemis passent.
+
+## Garde serrée · panneau lisible de dos
+
+Le porteur a relevé que le bouclier des vues de dos était trop masqué et que la proposition avec un bras déporté ne respectait pas la garde approuvée. Les deux vues de dos ont été reprises avec le coude gauche rentré et le bouclier à hauteur de l’épaule et du genou, au contact de la silhouette. Le corps occulte la partie intérieure du panneau tout en laissant son bord extérieur continu. La bande rouge, le bord d’acier et les deux rivets qui restent visibles permettent de le reconnaître. Les deux vues de face réutilisent leurs PNG à l’identique.
+
+[Comparatif de la garde](essais/garnison/orientations/v3/Capitaine_bouclier_garde.png) · [Virages sur la chaussée](essais/garnison/orientations/v3/Capitaine_bouclier_en_virage.gif)
+
+Les vues ont été examinées en grand pour le contour et la prise, puis sur les quatre segments des Coulées Figées à taille native et aux deux coins du banc d’essai. Les 213 contrôles de la suite des visuels ennemis passent. La planche de garde reste proposée à la revue du porteur. Le changement de vue des captures est direct et la marche n’est pas animée.

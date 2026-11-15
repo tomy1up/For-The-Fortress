@@ -16,7 +16,7 @@ Le porteur a validé le second lancer et le retient comme référence pour les a
 
 ### 2026-11-15 — Attaquants, quatre vues indépendantes (ouvert)
 
-Le porteur exige la conservation de la latéralité des équipements dans les quatre orientations. Les vues de dos reprennent un bouclier plat devant le torse et occulté par le corps selon l’orientation. Les quatre vues fixes sont testées sur la chaussée de la mission 62, avec deux pivots directs. Une marche animée et une transition de virage restent à produire. À terme, sélectionner la vue selon les deux signes de la direction projetée, avec continuité de la phase de marche. [Cadrage](design/Visuels_Orientation_Attaquants.md).
+Le porteur exige la conservation de la latéralité des équipements dans les quatre orientations. La garde v3 conserve le coude rentré avec un bouclier plat serré contre le torse et un bord extérieur continu. Les poses de face sont celles du premier essai. Attendre le retour du porteur sur cette garde. Les quatre vues fixes sont testées sur la chaussée de la mission 62, avec deux pivots directs. Une marche animée et une transition de virage restent à produire. À terme, sélectionner la vue selon les deux signes de la direction projetée, avec continuité de la phase de marche. [Cadrage](design/Visuels_Orientation_Attaquants.md).
 
 ### 2026-11-15 — Tirailleur gnome validé (ouvert)
 
