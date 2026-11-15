@@ -284,6 +284,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.214** : mission 200 de la Horde à 85 % des PV de la courbe de base (`HORDE_FINALE_FACTOR`), sur décision du porteur après mesure (2 victoires sur 12 avant, 8 après). À confirmer en jeu.
 
+**Après la v0.214 (non publié)** : croissant de coup d'épée du squelette à la place de la lame dupliquée (`_draw_sword_strike`), option `--capture-full-army` et groupe `armies` de la régression visuelle (218 captures). Ces changements de `valley_view.gd` et `main.gd` partiront avec la prochaine version publiée (v0.215).
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

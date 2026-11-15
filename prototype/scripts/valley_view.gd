@@ -504,18 +504,18 @@ func _draw_pike_thrust(origin: Vector2, direction: Vector2, side: Vector2, progr
 	draw_colored_polygon(head,Color("dfeae6"))
 	draw_line(tip+direction*6.0,tip-direction*1.0,Color(1.0,1.0,1.0,0.6),1.0,true)
 
-## Coup d'épée courte du fantassin squelette : lame d'os qui balaie un arc devant lui, avec une traînée claire.
-func _draw_sword_strike(origin: Vector2, direction: Vector2, side: Vector2, progress: float) -> void:
+## Coup d'épée courte du fantassin squelette : croissant clair qui balaie un arc devant lui. L'épée elle-même est dans le sprite : on ne redessine pas de lame.
+func _draw_sword_strike(origin: Vector2, direction: Vector2, _side: Vector2, progress: float) -> void:
 	var t: float = clampf(progress,0.0,1.0)
-	var swing: float = lerpf(-0.9,0.9,t)
-	var blade: Vector2 = direction.rotated(swing)
-	var base: Vector2 = origin+direction*2.0
-	for trail in range(3):
-		var earlier: Vector2 = direction.rotated(swing-0.35*float(trail+1))
-		draw_line(base,base+earlier*(13.0-trail*2.0),Color(0.92,0.9,0.78,0.30-trail*0.08),2.4,true)
-	draw_line(base,base+blade*14.0,Color("1d2220"),3.4,true)
-	draw_line(base,base+blade*14.0,Color("e8e2cc"),2.0,true)
-	draw_line(base-blade*1.5+blade.orthogonal()*2.4,base-blade*1.5-blade.orthogonal()*2.4,Color("7b6a4a"),1.6,true)
+	var center: float = direction.angle()
+	var head: float = center+lerpf(-0.95,0.95,t)
+	var tail: float = head-0.9
+	var fade: float = 1.0-t*0.5
+	var radius: float = 15.0
+	var base: Vector2 = origin-direction*3.0
+	draw_arc(base,radius,tail,head,14,Color(0.96,0.93,0.82,0.38*fade),8.0,true)
+	draw_arc(base,radius,tail+0.25,head,12,Color(0.98,0.96,0.88,0.95*fade),3.4,true)
+	draw_circle(base+Vector2.from_angle(head)*radius,2.0,Color(1.0,1.0,0.95,fade),true,-1,true)
 
 ## Balle de l'arquebusière naine (type 12) : boule de plomb précédée d'un éclat de poudre, sans empennage de flèche.
 func _draw_bullet(point: Vector2, direction: Vector2) -> void:
