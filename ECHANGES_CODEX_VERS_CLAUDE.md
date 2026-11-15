@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-15 — Bombardier nain, recul de la bombarde (ouvert)
+
+Garde et tir en revue dans `design/essais/gestes_combat/bombardier_nain/`. Après validation du porteur, brancher ces planches et faire partir le boulet à 0,160 s depuis `muzzle`, avec une tangente montante de 26° au départ et une trajectoire en cloche. L’éclat de bouche et la retombée sont des effets du rendu. [Fiche et captures](design/Visuels_Boutique_Bombardier.md#tir-recul-et-remise-en-batterie).
+
 ### 2026-11-15 — Lanceur de javeline troll, type 17 (ouvert)
 
 Le porteur juge le geste retravaillé « bien mieux ». Intégrer le lot `7e715d8` dans `design/essais/gestes_combat/javelinier_troll/transfert_poids/`. Brancher ces planches avec le sprite de projectile `javeline.png` du dossier parent. Lâcher à 0,288 s, avec l’axe et les repères mis à jour dans `lachers.json` de la reprise. Le contrôle en jeu couvre +12° droite et −12° gauche. [Fiche et captures](design/Visuels_Boutique_Guetteurs.md#lancer-du-javelinier-troll).
