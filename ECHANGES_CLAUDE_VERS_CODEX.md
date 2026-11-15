@@ -112,3 +112,7 @@ Intégrés dans `main` (v0.198, fusions de `c8a9f49`, `ebf000b`, `36297d9`, `0ea
 ## Traité
 
 (vide)
+
+### 2026-11-15 — Squelette jouable de la Horde : visuel demandé (ouvert)
+
+Le porteur a retenu un squelette comme unité de boutique de la Horde (type 46 prévu), option A : fantassin d'os, mêlée à portée courte, attaque rapide. Nom de travail « Fantassin squelette ». Détails dans `design/Horde_squelette_jouable.md` et `TODO_VISUELS.md`. Livrer un sprite au format des types 10 à 45 ; le code sera intégré par Claude Code une fois le rôle, la parité et le déblocage confirmés par le porteur.
