@@ -6,6 +6,22 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-15 — Garde des défenseurs vers la route la plus proche (ouvert)
+
+Décision du porteur : orienter la garde au placement et entre les vagues vers le tronçon le plus proche. Dans `defender_pose`, choisir le point le plus proche de l’emplacement sur chaque segment (toutes les routes de `model.routes`, avec `model.path_points` en repli), puis utiliser la comparaison horizontale de `shot_facing` après projection. En combat, conserver la priorité et le côté du dernier tir. Le prototype de vérification couvre 24 cas sur les missions 1 et 94. [Fiche et captures](design/Visuels_Orientation_Defenseurs.md).
+
+### 2026-11-15 — Arquebusière naine, recul et retour en joue (ouvert)
+
+Le type 12 a une planche de repos et 12 poses sur 0,18 s pour `defender.alliance.arquebusier`. Le porteur juge le résultat « pas mal ». Planche à intégrer avec la garde. Dans l’essai, balle et bref éclat partent à 0,045 s depuis le `muzzle` du JSON, soit `(±43,687 ; −40,959)` depuis le pied. Le délai concerne le rendu. Les fichiers, le point de départ et les captures sont dans la [fiche](design/Visuels_Boutique_Arquebusiere.md#tir-et-retour-en-joue).
+
+### 2026-11-15 — Signal bref d’élimination, décision du porteur (ouvert)
+
+Le porteur retient un signal court pour dégager la route. Ennemis ordinaires : bref éclat et fondu d’environ 0,15 s. Élites : flexion et fondu d’environ 0,25 s. Regrouper les éclats proches lorsqu’ils se superposent. Les boss peuvent garder un traitement dédié. Pour le Capitaine orc, la référence sud-est (huit poses, 0,25 s) et le comparatif en groupe sont dans [la fiche](design/Visuels_Garnison.md#signal-bref-délimination). Utiliser la pose de marche courante comme repli pour toutes les directions sans planche. Conserver le choix de vue sans miroir et appliquer le signal uniquement au rendu. La chute longue reste une étude.
+
+### 2026-11-15 — Boutique limitée à 20 unités par faction (ouvert)
+
+Décision du porteur : retirer les 21es entrées de boutique, Fantassin squelette (`horde.skeleton`, type 46) et Tirailleur gnome (`alliance.gnome`, type 47). Retirer les deux entrées de la boutique et du choix de renfort. Contrôler les sauvegardes existantes avant le retrait, puisque la validation de l’inventaire dépend du catalogue. Prévoir une migration pour désélectionner les unités retirées et, si elles avaient été achetées, rendre une seule fois les PO enregistrées. Préserver la lecture des anciens rapports contenant les types 46 et 47. Les serviteurs des balistes et les unités de base restent en place. L’animation de frappe du type 46 et le tir du type 47 sortent de la file artistique.
+
 ### 2026-11-15 — Incantation du Chaman orc validée visuellement (ouvert)
 
 Sur copie v0.208, variante de 28 images sur 0,56 s pour `defender.horde.shaman`, dans `design/essais/gestes_combat/chaman_incantation/gabarit_constant/`. Elle reprend le geste validé et corrige localement le gabarit du torse. Utiliser les mipmaps sur la garde et l’attaque. Éclair décalé de 0,12 s, origine relative au pied `(±51.625,-58.875)`. L’anneau de malédiction apparaît avant l’éclair car il suit l’état de la cible. Le porteur a validé le geste et accueilli favorablement la correction du gabarit. Intégrer cette planche de garde et d’attaque avec le départ de l’éclair et la synchronisation de l’anneau côté rendu. [Fiche](design/Visuels_Chaman_Incantation.md).
@@ -17,14 +33,6 @@ Le porteur a validé le second lancer et le retient comme référence pour les a
 ### 2026-11-15 — Attaquants, quatre vues indépendantes (ouvert)
 
 Le 15 novembre, le porteur juge les appuis resserrés « bien mieux ». Retenir le lot `9fe2608` dans `design/essais/garnison/orientations/marche_appuis_compacts/` pour le branchement de `enemy.horde.garrison`. Le fichier `cadrage.json` fixe les 24 poses par orientation, l’ancre commune et la foulée de 11,54 px projetés à l’échelle de base. Choisir la vue d’après la direction projetée et maintenir la phase calculée sur la distance parcourue pendant le changement direct de vue. Les dessins gardent le bouclier à gauche et la hache à droite. Les captures de la mission 62 à ×1 et ×2 et la vérification des 96 poses sont dans la [fiche de cadrage](design/Visuels_Orientation_Attaquants.md). Les transitions dessinées des virages et la mort restent à produire.
-
-### 2026-11-15 — Tirailleur gnome validé (ouvert)
-
-Le porteur a validé le visuel fixe de `alliance.gnome` (type 47). Le PNG et l’import filtré sont prêts pour le portrait, le plateau et l’export. La [fiche](design/Visuels_Boutique_Tirailleur_Gnome.md) donne le cadre et le point de départ testés sur v0.208. Donner au tir le visuel du carreau court et conserver la famille Archer pour les talents.
-
-### 2026-11-15 — Fantassin squelette validé (ouvert)
-
-Le porteur a validé le sprite fixe du type 46 (`horde.skeleton`). Le PNG et son import filtré sont dans `prototype/assets/units/shop/`. [Fiche avec cadrage et capture](design/Visuels_Boutique_Fantassin_Squelette.md). À brancher au portrait, au plateau et à l’export. Le rendu actuel montre une hache lancée et le panneau affiche une ligne de rebond. Remplacer ces éléments par un coup d’épée de mêlée et son libellé. L’animation de frappe reste à produire.
 
 ### 2026-11-15 — Capitaine orc, visuel fixe validé (ouvert)
 
@@ -369,4 +377,14 @@ Contrôles réalisés sur `art/codex` à partir de `bf8c654`. Les [captures et r
 
 ## Traité
 
-(vide)
+### 2026-11-15 — Fantassin squelette, frappe de mêlée (traité)
+
+Animation de frappe archivée dans [la fiche](design/Visuels_Boutique_Fantassin_Squelette.md). Branchement annulé par la décision de retrait du type 46.
+
+### 2026-11-15 — Tirailleur gnome validé (traité)
+
+Visuel fixe documenté dans [la fiche](design/Visuels_Boutique_Tirailleur_Gnome.md). La demande est remplacée par le retrait du type 47.
+
+### 2026-11-15 — Fantassin squelette validé (traité)
+
+Visuel fixe documenté dans [la fiche](design/Visuels_Boutique_Fantassin_Squelette.md). La demande est remplacée par le retrait du type 46.

@@ -7,3 +7,5 @@ Visuel fixe du type 47 (`alliance.gnome`), validé par le porteur le 15 novembre
 PNG `tirailleur_gnome_v001.png`, import avec mipmaps. Cadre `Rect2(0,0,1105,1192)`, pied `Vector2(413,1192)`, hauteur 58 px, origine du tir `Vector2(31,-35)`. Portrait sur la dernière page de boutique, achat sur profil d’essai ayant terminé 190 missions, sélection, recrutement et premier tir vérifiés sur une copie v0.208. 211 contrôles d’illustrations réussis.
 
 Le rendu d’essai joue encore le projectile de la famille Archer. Utiliser le visuel du carreau court pour l’arbalète de poing en conservant la famille de talents. L’animation du tir et du réarmement reste à produire.
+
+**Archive.** Le 15 novembre 2026, le porteur a demandé le retrait de cette unité et fixé la boutique à 20 unités par faction. Cette fiche conserve les essais artistiques.
