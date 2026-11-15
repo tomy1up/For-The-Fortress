@@ -10,9 +10,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 Le porteur a validé le sprite fixe du type 46 (`horde.skeleton`). Le PNG et son import filtré sont dans `prototype/assets/units/shop/`. [Fiche avec cadrage et capture](design/Visuels_Boutique_Fantassin_Squelette.md). À brancher au portrait, au plateau et à l’export. Le rendu actuel montre une hache lancée et le panneau affiche une ligne de rebond. Remplacer ces éléments par un coup d’épée de mêlée et son libellé. L’animation de frappe reste à produire.
 
-### 2026-11-15 — Capitaine orc, rendu à taille native (ouvert)
+### 2026-11-15 — Capitaine orc, visuel fixe validé (ouvert)
 
-Le sprite distinct `capitaine_orc_v001.png` et son import figurent dans `assets/enemies/rosters/`. Testé dans une copie v0.208 sur la mission 94 avec la Garnison et le Chef de guerre à l’écran. Attendre le retour du porteur sur la silhouette fixe avant de brancher dans `enemy_art.gd` et de déclarer le PNG à l’export. Cadre `Rect2(0,0,1084,999)`, pied `Vector2(559,999)`, hauteur de base 34. [Fiche](design/Visuels_Garnison.md).
+Le sprite distinct `capitaine_orc_v001.png` et son import figurent dans `assets/enemies/rosters/`. Testé dans une copie v0.208 sur la mission 94 avec la Garnison et le Chef de guerre à l’écran. Le porteur a validé la silhouette fixe le 15 novembre. Brancher `enemy.horde.garrison` dans `enemy_art.gd` et déclarer le PNG à l’export. Cadre `Rect2(0,0,1084,999)`, pied `Vector2(559,999)`, hauteur de base 34. [Fiche](design/Visuels_Garnison.md).
 
 ### 2026-11-14 — Lisibilité native des unités, Alliance, Horde et neutres (ouvert)
 

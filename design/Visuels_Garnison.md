@@ -15,7 +15,7 @@ Les dessins de départ ont été produits avec les atlas des factions comme réf
 
 Contrôle de lisibilité sur des captures de La Brèche (mission 91), avec les tailles de référence du jeu : garde 44,2 px, capitaine 54,4 px et boss 57,8 px. Le matériel du capitaine peut dépasser la largeur du boss. La différence à lire est la forme de l’arme ou du bouclier, la silhouette moins haute et l’absence du grand plumet ou des cornes du boss. Le montage permet de comparer ces formes dans les deux factions. [Maquette sur le plateau](essais/garnison/Garnisons_sur_la_Breche.png)
 
-**Retour du porteur, 11 novembre 2026.** Il juge la version corrigée du capitaine humain « propre ». Ce retour concerne son illustration fixe. L’orc reste une proposition à examiner.
+**Retour du porteur, 11 novembre 2026.** Il juge la version corrigée du capitaine humain « propre ». Ce retour concerne son illustration fixe. Le retour sur l’orc est consigné dans l’essai v0.208 ci-dessous.
 
 Pour un essai intégré, Claude Code peut associer les PNG aux deux identités ci-dessus avec la hauteur de base de 34 px et le facteur de taille 1,6 déjà utilisé par la Garnison. Les portraits, la prévision de vague et l’affichage sur le plateau sont à contrôler dans les deux factions. La marche et la mort feront l’objet d’un lot après validation des silhouettes.
 
@@ -33,7 +33,7 @@ Le cycle utilise le sprite fixe retenu par le porteur. Le capitaine avance d’u
 
 Les trois planches de `enemy.alliance.garrison` contiennent chacune 24 poses de 376 × 324 px. Le cycle couvre 21 px projetés à l’échelle de base. La dérive résiduelle mesurée sur les semelles isolées pendant l’appui va de 0,08 à 0,35 px à cette échelle.
 
-À La Brèche (mission 91, vague 5, côté Horde), les trois diagonales du trajet ont été parcourues à ×1 et ×2, avec les 24 poses jouées à chaque vitesse. La scène de contrôle figée donne deux captures identiques autour du capitaine à 0,65 s d’intervalle. Le validateur et les quatre suites ciblées du lot passent. La marche du capitaine humain attend le retour visuel du porteur. L’illustration du capitaine orc reste à valider.
+À La Brèche (mission 91, vague 5, côté Horde), les trois diagonales du trajet ont été parcourues à ×1 et ×2, avec les 24 poses jouées à chaque vitesse. La scène de contrôle figée donne deux captures identiques autour du capitaine à 0,65 s d’intervalle. Le validateur et les quatre suites ciblées du lot passent. La marche du capitaine humain attend le retour visuel du porteur.
 
 [Extrait en combat](essais/capitaine_marche/Capitaine_en_combat.gif) · [Diagonales de La Brèche](essais/capitaine_marche/Capitaine_diagonales.jpg)
 
@@ -43,4 +43,4 @@ L’étude au bouclier rectangulaire a été branchée sur une copie de la v0.20
 
 [Comparatif avant et après](essais/garnison/Capitaine_orc_sur_le_plateau.png)
 
-Le PNG destiné au jeu est `prototype/assets/enemies/rosters/capitaine_orc_v001.png`. Import avec mipmaps, cadre `Rect2(0,0,1084,999)`, pied `Vector2(559,999)`, hauteur de base 34 px, soit 54,4 px avec le facteur du capitaine. Sur la copie d’essai, 213 contrôles des visuels ennemis et 4 546 du chapitre de la Garnison passent. L’illustration fixe est proposée à la validation du porteur. Le branchement et l’export reviennent à Claude après ce retour. Le cycle de marche et la mort restent à produire.
+Le PNG destiné au jeu est `prototype/assets/enemies/rosters/capitaine_orc_v001.png`. Import avec mipmaps, cadre `Rect2(0,0,1084,999)`, pied `Vector2(559,999)`, hauteur de base 34 px, soit 54,4 px avec le facteur du capitaine. Sur la copie d’essai, 213 contrôles des visuels ennemis et 4 546 du chapitre de la Garnison passent. Le porteur a validé l’illustration fixe du Capitaine orc le 15 novembre 2026. Le branchement et l’export reviennent à Claude. Le cycle de marche et la mort restent à produire.
