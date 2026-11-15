@@ -51,3 +51,11 @@ Le porteur a signalé une démarche en canard. Les quatre poses de base ont ét�
 [Comparatif avant et après sur la chaussée](essais/garnison/orientations/marche_axe/Capitaine_demarche_avant_apres.gif)
 
 Variante de 24 poses par orientation, cadres 320 × 288, ancre (160, 254), foulée de base 7 px projetés (11,2 px pour le Capitaine). Les 96 poses passent le contrôle de découpe. Comparaison sur les mêmes coins de la mission 62 et à la même vitesse de déplacement. La copie v0.208 a été vérifiée à ×1 et ×2 et à distance figée. Les 213 contrôles des visuels ennemis passent. Les virages utilisent encore un changement de vue direct. Cette démarche reste proposée à la revue du porteur.
+
+## Foulée allongée · diagonale descendante vers la droite
+
+Le test à pas courts donne une impression de piétinement. Sur cette diagonale, un cycle complet couvre 14,2 px projetés à l’échelle de base, soit 22,7 px pour le capitaine. Cette amplitude réduit le nombre de pas à vitesse égale. La jambe porteuse recule à la vitesse d’avancée du personnage pendant l’appui. La botte libre se dégage puis se repose devant. Le bassin monte et redescend légèrement au passage du poids d’une jambe à l’autre. Le dessin de la garde est conservé, bouclier serré devant le torse et lame à la main droite.
+
+[Comparatif à ×1](essais/garnison/orientations/marche_foulee/Capitaine_foulee_x1.gif) · [Comparatif à ×2](essais/garnison/orientations/marche_foulee/Capitaine_foulee_x2.gif)
+
+Les deux versions ont été capturées sur le même segment de la mission 62 à taille native dans la copie v0.208. La vitesse de base du capitaine reste à 0,6 unité logique par seconde. L’image reste identique à distance figée. Les 24 poses tiennent dans leurs cadres. Les tests du rendu ennemi (213 contrôles) et de la bibliothèque d’animations (157 contrôles) passent. Essai sur une seule diagonale, à valider par le porteur avant de décliner la marche.
