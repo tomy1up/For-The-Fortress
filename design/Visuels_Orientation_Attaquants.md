@@ -32,4 +32,4 @@ Le porteur a relevé que le bouclier des vues de dos était trop masqué et que 
 
 [Comparatif de la garde](essais/garnison/orientations/v3/Capitaine_bouclier_garde.png) · [Virages sur la chaussée](essais/garnison/orientations/v3/Capitaine_bouclier_en_virage.gif)
 
-Les vues ont été examinées en grand pour le contour et la prise, puis sur les quatre segments des Coulées Figées à taille native et aux deux coins du banc d’essai. Les 213 contrôles de la suite des visuels ennemis passent. La planche de garde reste proposée à la revue du porteur. Le changement de vue des captures est direct et la marche n’est pas animée.
+Les vues ont été examinées en grand pour le contour et la prise, puis sur les quatre segments des Coulées Figées à taille native et aux deux coins du banc d’essai. Les 213 contrôles de la suite des visuels ennemis passent. Le 15 novembre 2026, le porteur juge cette garde « bien mieux ». La v3 sert de référence pour animer les appuis et les virages. Le changement de vue des captures est direct et la marche n’est pas animée.
