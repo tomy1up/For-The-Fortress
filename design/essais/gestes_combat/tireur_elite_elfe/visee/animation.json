@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "id": "defender.alliance.marksman",
+  "display_height": 77.33333333333333,
+  "foot": [
+    127.4,
+    258.0
+  ],
+  "facing": "right",
+  "muzzle": [
+    273.6,
+    130.0
+  ],
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        336,
+        296
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "tir_droit.png",
+      "frames": 22,
+      "frame_size": [
+        336,
+        296
+      ],
+      "mode": "event",
+      "duration": 0.66
+    }
+  }
+}

@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-15 — Tireur d’élite elfe, tir à genou (ouvert)
+
+Le porteur valide le geste et la visée inclinée du type 11 (« propre, très bien »). Intégrer le lot `a2cdab9` dans `design/essais/gestes_combat/tireur_elite_elfe/visee/`. Choisir la planche depuis le pivot et la position projetée de l’impact, puis conserver le même angle pour la rotation du `muzzle` et la tangente de départ à 0,27 s. Sept angles proposés. Le contrôle en jeu couvre +16° droite et −8° gauche. Les planches additionnelles demandent un branchement au format d’export. [Planches et captures](design/Visuels_Boutique_Guetteurs.md#visée-du-tireur-délite-selon-la-hauteur-à-lécran). Les chiffres et instants du combat restent ceux du modèle.
+
 ### 2026-11-15 — Garde des défenseurs vers la route la plus proche (ouvert)
 
 Décision du porteur : orienter la garde au placement et entre les vagues vers le tronçon le plus proche. Dans `defender_pose`, choisir le point le plus proche de l’emplacement sur chaque segment (toutes les routes de `model.routes`, avec `model.path_points` en repli), puis utiliser la comparaison horizontale de `shot_facing` après projection. En combat, conserver la priorité et le côté du dernier tir. Le prototype de vérification couvre 24 cas sur les missions 1 et 94. [Fiche et captures](design/Visuels_Orientation_Defenseurs.md).
