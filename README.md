@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.218**. Estoc du Piquier humain à trois angles, éclat de contact à 0,256 s. [Notes](design/essais/v0218_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.218).
+
 **Prototype v0.217**. Boutique à 20 unités (squelette et gnome retirés, sauvegardes migrées), signal bref d'élimination, garde vers la route, visée du Tireur d'élite. [Notes](design/essais/v0217_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.217).
 
 **Prototype v0.216**. Marche du Capitaine orc en quatre vues dessinées, équipement du même côté à chaque virage. [Notes](design/essais/v0216_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.216).

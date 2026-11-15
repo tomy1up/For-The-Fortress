@@ -62,4 +62,15 @@ func run_checks() -> void:
 		check(not Library.spec_for(name).is_empty(),"%s : planches chargées et valides" % name)
 	var jspec: Dictionary = Library.spec_for("defender.horde.javelin")
 	check(Library.defender_state(jspec,{"attack_age":0.1,"pulse":1.0,"attack_variant":"attack_up12"}) == "attack_up12" and Library.defender_state(jspec,{"attack_age":0.1,"pulse":1.0,"attack_variant":"attack_down12"}) == "attack_down12","Javelinier : variantes inclinées jouées")
+	# Piquier humain (type 14) : trois inclinaisons, pointe tirée de contact.json, éclat de contact à 0,256 s ; la pique est dans les planches.
+	check(is_equal_approx(View.launch_delay({"type":14}),0.256),"Contact du piquier à 0,256 s")
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var pike: Dictionary = {"type":14,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var pp: int = View.aim_pitch(pike)
+			var ptip: Vector2 = View.PIKE_TIPS[pp]
+			check(pp in [-12,0,12] and View.shot_origin(pike).distance_to(View.project(from)+Vector2(ptip.x*View.shot_facing(pike),ptip.y)) < 0.001,"Piquier : pointe selon l'angle %d" % pp)
+			check(View.aim_variant(pp) in ["attack","attack_up12","attack_down12"],"Piquier : planche choisie par l'angle")
+	var pspec: Dictionary = Library.spec_for("defender.alliance.pikeman")
+	check(not pspec.is_empty() and pspec.animations.has("attack_up12") and pspec.animations.has("attack_down12"),"Piquier : planches chargées et valides")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

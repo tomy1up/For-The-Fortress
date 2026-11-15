@@ -239,14 +239,18 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 17: 0.288} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 17: 0.288} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
 const AIMED_TYPE := 11
 ## Lancer incliné du Javelinier troll (type 17, trois planches −12°, 0°, +12°, lâcher à 0,288 s) : points de départ de la pointe depuis le pied (`lachers.json`).
 ## Bombardier nain (type 13, lâcher à 0,16 s) : le boulet part à 26° au-dessus de l'horizontale puis suit une trajectoire en cloche.
-const TILTED_TYPES: Array[int] = [11,17]
+## Piquier humain (type 14, estoc à deux mains, contact à 0,256 s) : trois planches (−12°, 0°, +12°), la pique est dessinée dans les planches ; seul l'éclat de contact est
+## dessiné par le jeu, à la pointe donnée par angle (`contact.json`).
+const PIKEMAN_TYPE := 14
+const PIKE_TIPS: Dictionary = {-12:Vector2(49.6188,-37.8302),0:Vector2(50.294,-30.897),12:Vector2(49.6188,-23.9638)}
+const TILTED_TYPES: Array[int] = [11,14,17]
 const CURVED_TYPES: Array[int] = [11,13,17]
 const JAVELIN_PIVOT := Vector2(0.0,-41.3453)
 const JAVELIN_TIPS: Dictionary = {-12:Vector2(55.3409,-51.4028),0:Vector2(56.1005,-41.3453),12:Vector2(54.9211,-31.3319)}
@@ -261,8 +265,8 @@ const AIM_STEP := 8
 const AIM_LIMIT := 24
 
 static func aim_pitch(shot: Dictionary) -> int:
-	if int(shot.get("type",-1)) == JAVELIN_TYPE:
-		var hand: Vector2 = project(shot.from)+JAVELIN_PIVOT
+	if int(shot.get("type",-1)) in [JAVELIN_TYPE,PIKEMAN_TYPE]:
+		var hand: Vector2 = project(shot.from)+Vector2(0.0,float(step_tips(int(shot.type))[0].y))
 		var gap: Vector2 = project(shot.to)+Vector2(0,-12)-hand
 		var angle: float = rad_to_deg(atan2(gap.y,maxf(absf(gap.x),0.0001)))
 		return clampi(int(roundf(angle/float(JAVELIN_STEP)))*JAVELIN_STEP,-JAVELIN_STEP,JAVELIN_STEP)
@@ -270,6 +274,9 @@ static func aim_pitch(shot: Dictionary) -> int:
 	var delta: Vector2 = project(shot.to)+Vector2(0,-12)-pivot
 	var degrees: float = rad_to_deg(atan2(delta.y,maxf(absf(delta.x),0.0001)))
 	return clampi(int(roundf(degrees/float(AIM_STEP)))*AIM_STEP,-AIM_LIMIT,AIM_LIMIT)
+
+static func step_tips(type: int) -> Dictionary:
+	return PIKE_TIPS if type == PIKEMAN_TYPE else JAVELIN_TIPS
 
 static func aim_variant(pitch: int) -> String:
 	return "attack" if pitch == 0 else "attack_%s%d" % ["down" if pitch > 0 else "up",absi(pitch)]
@@ -280,8 +287,8 @@ static func aim_direction(shot: Dictionary) -> Vector2:
 	return Vector2(shot_facing(shot)*cos(angle),sin(angle))
 
 static func aimed_origin(shot: Dictionary) -> Vector2:
-	if int(shot.get("type",-1)) == JAVELIN_TYPE:
-		var tip: Vector2 = JAVELIN_TIPS[aim_pitch(shot)]
+	if int(shot.get("type",-1)) in [JAVELIN_TYPE,PIKEMAN_TYPE]:
+		var tip: Vector2 = step_tips(int(shot.type))[aim_pitch(shot)]
 		return project(shot.from)+Vector2(tip.x*shot_facing(shot),tip.y)
 	return project(shot.from)+AIM_PIVOT+aim_direction(shot)*AIM_LENGTH
 
@@ -330,6 +337,7 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	var direction: Vector2 = (target-origin).normalized()
 	if direction.is_zero_approx(): direction = Vector2.RIGHT
 	if int(shot.type) in CURVED_TYPES: direction = aimed_curve(shot,clampf(age/PROJECTILE_FLIGHT,0.0,1.0)).direction
+	if int(shot.type) == PIKEMAN_TYPE: direction = aim_direction(shot)
 	var side: Vector2 = direction.orthogonal()
 	if int(shot.type) == JAVELIN_TYPE:
 		_draw_javelin(point,direction,side,shot_facing(shot))
@@ -342,6 +350,9 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		return
 	if int(shot.type) == SWORD_TYPE:
 		_draw_sword_strike(origin,direction,side,age/PROJECTILE_FLIGHT)
+		return
+	if int(shot.type) == PIKEMAN_TYPE:
+		_draw_pike_contact(origin,direction,side,age/PROJECTILE_FLIGHT)
 		return
 	if int(shot.type) in PIKE_TYPES:
 		_draw_pike_thrust(origin,direction,side,age/PROJECTILE_FLIGHT)
@@ -565,7 +576,18 @@ func _draw_cannonball(point: Vector2, direction: Vector2) -> void:
 	draw_circle(point,4.6,Color("1d2224"),true,-1,true)
 	draw_circle(point+Vector2(-1.4,-1.4),1.6,Color("c7d2cf"),true,-1,true)
 
-## Coup de pique du piquier humain (type 14) : la pointe jaillit vers la cible sur 15 px puis se retire.
+## Éclat de contact du Piquier humain (type 14) : bref éclat à la pointe de la pique dessinée dans la planche (aucune pique dessinée par le jeu).
+func _draw_pike_contact(origin: Vector2, direction: Vector2, side: Vector2, progress: float) -> void:
+	var t: float = clampf(progress,0.0,1.0)
+	var fade: float = 1.0-t
+	draw_circle(origin,3.6*(1.0-0.4*t),Color(1.0,0.97,0.85,0.55*fade),true,-1,true)
+	for index in range(3):
+		var spread: float = (float(index)-1.0)*0.7
+		var ray: Vector2 = (direction.rotated(spread)*(4.0+7.0*t))
+		draw_line(origin+ray*0.4,origin+ray,Color(1.0,1.0,0.92,0.9*fade),1.4,true)
+	draw_circle(origin,1.6,Color(1.0,1.0,1.0,fade),true,-1,true)
+
+## Coup de pique de l'ancien rendu (lance-épieu orc, type 20) : la pointe jaillit vers la cible sur 15 px puis se retire.
 func _draw_pike_thrust(origin: Vector2, direction: Vector2, side: Vector2, progress: float) -> void:
 	var reach: float = sin(PI*clampf(progress,0.0,1.0))*15.0
 	var tip: Vector2 = origin+direction*reach
