@@ -110,6 +110,16 @@ static func definition(number: int) -> Dictionary:
 		result.merge({"title":titles[number-191],"available":true,"map_id":maps[number-191],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10,"wave_set_id":"necro_revenants"},true)
 	return result
 
+## Révision de la courbe de la Horde (décision du porteur, 15 novembre 2026, mesure dans `design/Mesure_boutique_finales_O016.md`) : à partir de la mission 150, les ennemis affrontés par la Horde ont 10 % de PV en moins (réglage de prototype à confirmer).
+const HORDE_HP_FROM := 150
+const HORDE_HP_FACTOR := 0.9
+
+## PV ennemis effectivement joués par une faction : `hp_percent` de la mission, réduit de 10 % pour la Horde à partir de la mission 150.
+static func faction_hp_percent(number: int, faction: int) -> int:
+	var base: int = int(definition(number).get("hp_percent",hp_percent_for(number)))
+	if faction == 1 and number >= HORDE_HP_FROM: return int(round(float(base)*HORDE_HP_FACTOR))
+	return base
+
 ## PV ennemis (en % de la référence) d'une mission : `99 + numéro` jusqu'à la mission 140, puis +1 % toutes les deux missions jusqu'à la mission 180 (décision du porteur, 12 novembre 2026), puis +1 % toutes les quatre missions (+0,25 % par mission, décision du porteur, 13 novembre 2026).
 static func hp_percent_for(number: int) -> int:
 	if number <= 140: return 99+number

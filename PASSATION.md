@@ -278,6 +278,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.211** : incantation animée du Chaman orc (planche `defender.horde.shaman`, `LAUNCH_DELAYS` type 5, départ (±51,625, −58,875), anneau de malédiction à l'arrivée via `curse_ring_visible`). Reste côté Codex : quatre orientations des attaquants (pilote Capitaine orc), animations des autres unités selon le modèle du Sapeur et du Chaman.
 
+**v0.212** : courbe de la Horde revue (PV d'ennemis ×0,9 dès la mission 150, `Catalogue.faction_hp_percent`), sur décision du porteur après mesure (`design/Mesure_boutique_finales_O016.md`). La mission 200 de la Horde reste mince (O-018) ; à confirmer en jeu.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

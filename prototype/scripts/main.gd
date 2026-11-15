@@ -2030,7 +2030,7 @@ func _launch_campaign_mission(id: String) -> void:
 	var definition: Dictionary = Model.Maps.for_id(candidate.map_id)
 	if definition.is_empty(): return
 	var prepared = Model.new(true,definition)
-	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(candidate.hp_percent) or not prepared.configure_wave_set(candidate.get("wave_set_id","ford")): return
+	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(CampaignCatalogue.faction_hp_percent(CampaignCatalogue.number_for(id),campaign_menu.faction)) or not prepared.configure_wave_set(candidate.get("wave_set_id","ford")): return
 	if not prepared.configure_combat_affix(candidate.get("combat_affix",{})): return
 	mission_definition = candidate
 	_choose_faction(campaign_menu.faction,prepared)
