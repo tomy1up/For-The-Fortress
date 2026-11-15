@@ -86,6 +86,7 @@ const ROSTER: Array[Dictionary] = [
 	{"name":"Baliste de guerre","price":105,"damage":36.0,"interval":3.5,"range":5.5,"exit_mult":1.8,"entrance_mult":0.4},
 	{"name":"Gobelin des braises","price":90,"damage":6.0,"interval":2.0,"range":4.0,"volatile_seconds":4.0,"volatile_damage":80.0,"volatile_radius":1.4},
 	{"name":"Chef de guerre vétéran","price":60,"damage":11.0,"interval":2.0,"range":4.0,"pivot_bonus":0.16},
+	{"name":"Fantassin squelette","price":40,"damage":6.0,"interval":0.6,"range":2.0},
 ]
 
 const ENEMY_TYPES: Array[Dictionary] = [

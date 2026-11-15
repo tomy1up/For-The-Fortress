@@ -24,7 +24,7 @@ func verify_catalogue() -> void:
 	var total_po := 0
 	for faction in range(2):
 		var cards: Array[Dictionary] = Shop.for_faction(faction)
-		check(cards.size() == 20,"Vingt alternatives par faction : deux d'origine et dix-huit des quatre premiers lots")
+		check(cards.size() == 20 + faction,"Vingt alternatives pour l'Alliance, vingt et une pour la Horde (fantassin squelette, v0.207)")
 		var seen: Dictionary = {}
 		var previous_po := 0
 		for card in cards:
@@ -33,13 +33,13 @@ func verify_catalogue() -> void:
 			check(card.family / 3 == faction and card.family >= 0 and card.family < 6,"%s : famille de talents de sa faction" % card.name)
 			check(Shop.BRANCHES.has(card.type) and Shop.BRANCHES[card.type].size() == 2 or card.type < 6,"%s : deux spécialisations" % card.name)
 			if card.type >= 10:
-				check(int(card.po) >= 300 and int(card.po) <= 1300 and int(card.po) >= previous_po and int(card.unlock_missions) >= 10,"%s : prix de 300 à 1300 PO croissants et déblocage après au moins 10 missions" % card.name)
+				check(int(card.po) >= 300 and int(card.po) <= 1350 and int(card.po) >= previous_po and int(card.unlock_missions) >= 10,"%s : prix de 300 à 1350 PO croissants et déblocage après au moins 10 missions" % card.name)
 				previous_po = int(card.po)
 				for branch in Shop.BRANCHES[card.type]:
 					var plain: bool = branch.damage > 0.0 and branch.interval > 0.0 and branch.range >= 1.5 and branch.has("name") and branch.has("description")
 					check(plain,"%s : spécialisation %s valide" % [card.name,branch.name])
 			total_po += int(card.po)
-	check(total_po == 2*(180+240+300+360+420+480+540+600+660+720+780+840+900+960+1020+1080+1140+1200+1250+1300),"Les prix des deux premiers lots suivent le barème proposé (%d PO au total)" % total_po)
+	check(total_po == 2*(180+240+300+360+420+480+540+600+660+720+780+840+900+960+1020+1080+1140+1200+1250+1300)+1350,"Les prix des deux premiers lots suivent le barème proposé (%d PO au total)" % total_po)
 	# Les unités du lot 1 n'écrasent aucune unité de départ : chacune a un défaut mesurable.
 	for card in Shop.CARDS:
 		if card.type < 10: continue
@@ -78,7 +78,7 @@ func verify_pages() -> void:
 		var scene = Main.new();root.add_child(scene);scene.set_process(false);scene.meta_profile = p;scene._open_campaign(faction)
 		scene.campaign_menu.shop_button.pressed.emit()
 		var shop = scene.shop_menu
-		check(shop.all_cards.size() == 20 and shop.cards.size() == 2 and shop.page == 0 and shop.previous_button.disabled and not shop.next_button.disabled and shop.page_label.text.contains("Page 1 / 10"),"La boutique s'ouvre à la première page de dix")
+		check(shop.all_cards.size() == 20+faction and shop.cards.size() == 2 and shop.page == 0 and shop.previous_button.disabled and not shop.next_button.disabled and shop.page_label.text.contains("Page 1 / %d" % (10+faction)),"La boutique s'ouvre à la première page de dix")
 		var first: String = shop.cards[0].id
 		shop.next_button.pressed.emit()
 		check(shop.page == 1 and shop.cards[0].id != first and not shop.previous_button.disabled,"Page suivante : deux autres cartes")
@@ -86,7 +86,7 @@ func verify_pages() -> void:
 		for index in range(shop.cards.size()):
 			check(Rect2(0,0,1280,800).encloses(shop.buy_buttons[index].get_global_rect()) and Rect2(0,0,1280,800).encloses(shop.next_button.get_global_rect()),"Les commandes de page tiennent dans la fenêtre")
 		for _i in range(12): shop.next_button.pressed.emit()
-		check(shop.page == 9 and shop.next_button.disabled,"La dernière page bloque « Suivantes »")
+		check(shop.page == 9+faction and shop.next_button.disabled,"La dernière page bloque « Suivantes »")
 		shop.close()
 		scene.free()
 

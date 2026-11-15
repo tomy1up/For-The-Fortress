@@ -22,7 +22,7 @@ const DEFENDER_IDS: Array[String] = [
 	"defender.horde.watcher","defender.horde.javelin","defender.horde.shardthrower","defender.horde.catapult","defender.horde.spearman","defender.horde.cinderburner",
 	"defender.alliance.lightning","defender.alliance.doublearcher","defender.alliance.heavycrossbow","defender.alliance.sling","defender.horde.chainaxe","defender.horde.doublethrower","defender.horde.maceman","defender.horde.blowgun",
 	"defender.alliance.frostmage","defender.alliance.observer","defender.alliance.priest","defender.horde.swampshaman","defender.horde.wartotem","defender.horde.elder",
-	"defender.alliance.mercenary","defender.alliance.trapper","defender.alliance.ballista","defender.alliance.alchemist","defender.alliance.veteran","defender.horde.pillager","defender.horde.minelayer","defender.horde.warballista","defender.horde.kamikaze","defender.horde.warveteran",
+	"defender.alliance.mercenary","defender.alliance.trapper","defender.alliance.ballista","defender.alliance.alchemist","defender.alliance.veteran","defender.horde.pillager","defender.horde.minelayer","defender.horde.warballista","defender.horde.kamikaze","defender.horde.warveteran","defender.horde.skeleton",
 ]
 
 static var _specs: Dictionary = {}
