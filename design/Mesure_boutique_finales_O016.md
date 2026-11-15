@@ -29,6 +29,30 @@ Outil : `prototype/tools/survey_shop_campaign.gd` (`MISSIONS=100,150,178,190,200
 - **Côté Alliance**, quelques alternatives ressortent (mission 190 : dix alternatives gagnent là où la base perd ; mission 200 : onze font moins bien que la base), ce qui indique des effets de composition plutôt qu'une supériorité générale.
 - **Côté Horde**, la politique à trois unités ne gagne presque jamais après la mission 100 : la mesure ne permet pas de conclure sur les marges de la Horde aux finales (O-016, O-018). Il faudrait une politique à six unités et plusieurs recrutements.
 
+
+## Seconde mesure : six défenseurs (même jour)
+
+L'outil accepte `SIX=1` : trois renforts de mêmes familles que les deux premières unités sont recrutés aux vagues 3, 5 et 7 si l'or le permet, et améliorés comme les autres. Résultat brut : `design/essais/Mesure_boutique_finales_O016_six_defenseurs_brut.txt`. Victoires sur 6 parties ; PV = PV de forteresse restants (moyenne sur les victoires).
+
+| Mission | Faction | Base (victoires, PV) | Alternatives : victoires moyennes | Meilleures / moins bonnes |
+| --- | --- | --- | --- | --- |
+| 100 | Alliance | 6, 22,8 | 6,0 | 0 / 0 |
+| 100 | Horde | 3, 16,7 | 3,3 | 5 / 2 |
+| 150 | Alliance | 3, 13,0 | 2,5 | 1 / 8 |
+| 150 | Horde | 1, 8,0 | 0,8 | 5 / 8 |
+| 178 | Alliance | 5, 20,0 | 4,0 | 0 / 13 |
+| 178 | Horde | 2, 9,5 | 1,6 | 2 / 7 |
+| 190 | Alliance | 2, 27,5 | 2,4 | 7 / 0 |
+| 190 | Horde | 1, 21,0 | 1,5 | 9 / 0 |
+| 200 | Alliance | 5, 11,4 | 3,9 | 0 / 11 |
+| 200 | Horde | 1, 7,0 | 0,5 | 0 / 10 |
+
+### Lecture
+
+- **Avec une vraie armée, l'unité de base tient les finales** côté Alliance (5 victoires sur 6 aux missions 178 et 200) : une alternative qui remplace la troisième unité est le plus souvent un peu moins bonne que la base aux missions 150, 178 et 200, ce qui respecte le principe « aucune remplaçante systématiquement supérieure » (CAMP-008). La mission 190 fait exception : sept alternatives de l'Alliance et neuf de la Horde y font mieux que la base, car la base y est faible dans cet échantillon.
+- **La Horde est la plus mince** : une victoire sur six à la mission 200 (7 PV restants avec la base) et aucune moyenne d'alternatives au-dessus de 1,6 victoire aux missions 178 à 200. Cela confirme les marges minces déjà notées (O-016, O-018) ; ce n'est pas causé par la boutique.
+- Échantillon réduit (6 parties par ligne, une seule graine) : indication, pas démonstration.
+
 ## Suite possible (non engagée)
 
-Étendre l'outil à six défenseurs (renforts de comparaison, déjà gérés par `survey_campaign_sample.gd`) pour mesurer de vraies marges de PV, puis, si besoin, proposer une révision de valeurs au porteur.
+Si le porteur le souhaite, étudier un ajustement de la courbe de difficulté de la Horde aux chapitres 18 à 20 (valeurs à lui soumettre avant tout changement).

@@ -11,6 +11,10 @@ const Experience = preload("res://scripts/talent_experience.gd")
 const Shop = preload("res://scripts/shop_catalogue.gd")
 const Survey = preload("res://tools/survey_campaign_sample.gd")
 const LAYOUTS: Array = [[1,3,4],[2,4,5]]
+## Emplacements des trois renforts (un joueur remplit ses six emplacements) : mêmes familles que les deux premières unités, recrutés aux vagues 3, 5 et 7 si l'or le permet.
+const EXTRA_SLOTS: Array = [[0,2,5],[0,1,3]]
+const EXTRA_WAVES: Array = [3,5,7]
+var six_defenders := false
 const SEED := 42
 
 func ranks_for(faction: int, mission: int, tree: int) -> Array:
@@ -45,11 +49,17 @@ func play(faction: int, mission: int, tree: int, layout: Array, alternative: int
 	var types: Array = Survey.natural_compositions(faction,tree)[0].duplicate()
 	var third: int = alternative if alternative >= 0 else faction*3+int(types[2])
 	if not m.buy(layout[0],faction*3+int(types[0])) or not m.buy(layout[1],faction*3+int(types[1])): return -2
+	var extras: Array = EXTRA_SLOTS[LAYOUTS.find(layout)] if six_defenders else []
+	var extra_types: Array = [int(types[0]),int(types[1]),int(types[0])]
+	var army: Array = layout.duplicate()
+	army.append_array(extras)
 	for wave in range(1,11):
 		if wave == 2: m.upgrade(layout[0])
 		if wave >= 4 and m.defenders[layout[2]].is_empty(): m.buy(layout[2],third)
+		for index in range(extras.size()):
+			if wave >= EXTRA_WAVES[index] and m.defenders[extras[index]].is_empty(): m.buy(extras[index],faction*3+extra_types[index])
 		if wave >= 5:
-			for slot in layout:
+			for slot in army:
 				if not m.defenders[slot].is_empty(): m.upgrade(slot,0 if m.defenders[slot].level == 3 else -1)
 		if not m.start(): return -2
 		while m.active: m.advance(300.0)
@@ -59,6 +69,7 @@ func play(faction: int, mission: int, tree: int, layout: Array, alternative: int
 	return m.fortress_hp if m.phase == "victory" else -1
 
 func _initialize() -> void:
+	six_defenders = OS.get_environment("SIX") == "1"
 	var missions: PackedStringArray = OS.get_environment("MISSIONS").split(",",false)
 	if missions.is_empty(): missions = PackedStringArray(["178","190","200"])
 	for text in missions:
