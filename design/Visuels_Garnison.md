@@ -54,3 +54,13 @@ Première proposition sur la diagonale descendante vers la droite. Le Capitaine 
 Sur une copie de la v0.216, un coup fatal contrôlé sur la route du haut de La Grande Salle (mission 94, Alliance) déclenche l’événement de mort du jeu. Le rendu est contrôlé à ×1, ×2 et à temps figé, avec pixels identiques au gel. Les 22 poses tiennent dans les cadres de 352 × 304 px. Validateur : 26 dossiers, 0 problème. Bibliothèque : 167 contrôles. Visuels ennemis : 213 contrôles.
 
 La planche et son entrée JSON sont dans [le dossier de revue](essais/garnison/mort_orc/). Le geste se joue une fois sur 0,82 s. Le rendu actuel de la mort accepte une seule direction et la retourne à gauche. L’intégration des quatre vues demande un choix de planche selon la direction du trajet avec la latéralité des équipements conservée. La proposition présentée couvre le sud-est seulement et attend l’avis du porteur.
+
+## Signal bref d’élimination
+
+Le 15 novembre, le porteur retient un signal court pour libérer la route en combat dense. Pour les ennemis courants, bref éclat et disparition en environ 0,15 s. Pour les élites, une flexion sur place peut accompagner la disparition en environ 0,25 s. Une chute dessinée peut rester réservée à un boss lorsque le contexte rend le geste lisible. Les éclats proches peuvent être regroupés lors d’éliminations simultanées.
+
+Pour le Capitaine orc, la planche de référence reprend le début de la flexion et la disparition, en huit poses sur 0,25 s. Elle conserve l’ancre et l’échelle du cycle de marche. La chute complète de 0,82 s est archivée. Comparatif sur la route supérieure de la mission 94, avec trois Capitaines éliminés simultanément et cinq ennemis qui poursuivent leur mouvement. À ×2, le signal court se termine en 0,125 s réel. Les survivants sont visibles dans la seconde moitié du plan pendant laquelle les trois chutes occupent encore la route dans l’autre version.
+
+[Comparatif à ×2](essais/garnison/mort_orc/signal_court/Capitaine_signal_x2.gif) · [Comparatif à ×1](essais/garnison/mort_orc/signal_court/Capitaine_signal_x1.gif)
+
+Contrôles à ×1, ×2 et temps figé sur une copie v0.216. Validateur : 26 dossiers, 0 problème. Bibliothèque : 167 contrôles. La planche couvre la diagonale sud-est. Le signal commun et le regroupement du bref éclat restent à intégrer côté rendu. Le fondu de la pose courante constitue le repli pour les orientations sans planche, ce qui conserve la latéralité du Capitaine.

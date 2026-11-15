@@ -6,10 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-15 — Chute du Capitaine orc, essai sud-est (ouvert)
+### 2026-11-15 — Signal bref d’élimination, décision du porteur (ouvert)
 
-Proposition dans `design/essais/garnison/mort_orc/` pour `enemy.horde.garrison`. 22 poses de 352 × 304, 0,82 s, même pied et même échelle que la marche v0.216. Vérifiée sur la mission 94 à ×1 et ×2 et à temps figé. La planche est en revue. Pour l’intégration des quatre vues, prévoir un choix de planche de mort selon la direction projetée de l’événement, en conservant la latéralité et le repli des autres ennemis sur leur rendu existant. [Fiche et captures](design/Visuels_Garnison.md#chute-du-capitaine-orc).
-
+Le porteur retient un signal court pour dégager la route. Ennemis ordinaires : bref éclat et fondu d’environ 0,15 s. Élites : flexion et fondu d’environ 0,25 s. Regrouper les éclats proches lorsqu’ils se superposent. Les boss peuvent garder un traitement dédié. Pour le Capitaine orc, la référence sud-est (huit poses, 0,25 s) et le comparatif en groupe sont dans [la fiche](design/Visuels_Garnison.md#signal-bref-délimination). Utiliser la pose de marche courante comme repli pour toutes les directions sans planche. Conserver le choix de vue sans miroir et appliquer le signal uniquement au rendu. La chute longue reste une étude.
 
 ### 2026-11-15 — Boutique limitée à 20 unités par faction (ouvert)
 

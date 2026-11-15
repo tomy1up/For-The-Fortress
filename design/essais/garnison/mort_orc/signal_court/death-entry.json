@@ -1,0 +1,10 @@
+{
+  "file": "death.png",
+  "frames": 8,
+  "frame_size": [
+    352,
+    304
+  ],
+  "mode": "event",
+  "duration": 0.25
+}
