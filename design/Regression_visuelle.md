@@ -23,7 +23,7 @@ python prototype/tests/visual_regression.py --update             # crée ou remp
 | `units` | Les 48 défenseurs (types 0 à 47) à la pose d'attaque (`unitNN_pose`) et en plein vol du projectile (`unitNN_shot`), seuls sur le Gué | 96 |
 | `menus` | Menu de campagne (neuf, terminé, talents, chapitre 20, sauvegarde bloquée) et boutique, pour chaque faction | 12 |
 | `missions` | Une mission par chapitre (3, 6, 7, 8, 9, 10, 11, 13, 15, 17, 20), deux défenseurs posés, vagues 1, 5 et 10, pour chaque faction | 66 |
-| `affixes` | Éruptions (mission 71, instants 3 à 17 s), tempête de sable (115), éboulement (135) et brume marine (175), à des instants de combat choisis, pour chaque faction | 56 |
+| `affixes` | Éruptions (mission 71, instants 3 à 17 s), tempête de sable (115), éboulement (135) et brume marine (175), à des instants de combat choisis, pour chaque faction | 28 |
 | `effects` | Élimination (une par faction), tic de dégâts, malédiction | 4 |
 
 - **Références** : vignettes 320 × 200 dans `design/essais/captures_reference/` (environ 7 Mo). Deux captures identiques donnent un écart de 0,00 ; les seuils sont donc serrés (moyenne 0,15 ; tuile de 20 × 20 px : 0,8), de façon à voir un projectile ou un effet déplacé. Exception : les traits de vent des Vents contraires (mission 31) suivent l'horloge réelle, tolérance de 2,0 sur cette mission.
