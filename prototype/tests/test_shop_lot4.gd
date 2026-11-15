@@ -30,7 +30,7 @@ func verify_catalogue() -> void:
 	for faction in range(2):
 		var total := 0
 		for card in Shop.for_faction(faction): total += int(card.po)
-		check(Shop.for_faction(faction).size() == 21 and total >= 14750,"Le catalogue de la faction %d compte %d unités pour %d PO, au moins les 14 750 PO gagnés" % [faction,Shop.for_faction(faction).size(),total])
+		check(Shop.for_faction(faction).size() == 20 and total >= 14750,"Le catalogue de la faction %d compte %d unités pour %d PO, au moins les 14 750 PO gagnés" % [faction,Shop.for_faction(faction).size(),total])
 
 ## Sapeur d'entrée et tourelle de forteresse : multiplicateur selon l'avancée de la cible sur sa route.
 func verify_progress_rules() -> void:

@@ -41,6 +41,10 @@ const CARDS: Array[Dictionary] = [
 	{"id":"horde.warballista","faction":1,"type":43,"family":3,"name":"Baliste de guerre","po":1200,"unlock_missions":160,"role":"Défense de la forteresse","tradeoff":"×1,8 contre les ennemis du dernier tiers du trajet, ×0,4 contre ceux du premier tiers.","stats":{"price":105,"damage":36.0,"interval":3.5,"range":5.5,"exit_mult":1.8,"entrance_mult":0.4}},
 	{"id":"horde.kamikaze","faction":1,"type":44,"family":4,"name":"Gobelin des braises","po":1250,"unlock_missions":170,"role":"Réaction en chaîne","tradeoff":"L'ennemi touché explose à sa mort (80 dégâts autour de lui dans les 4 s), mais le gobelin frappe peu.","stats":{"price":90,"damage":6.0,"interval":2.0,"range":4.0,"volatile_seconds":4.0,"volatile_damage":80.0,"volatile_radius":1.4}},
 	{"id":"horde.warveteran","faction":1,"type":45,"family":3,"name":"Chef de guerre vétéran","po":1300,"unlock_missions":180,"role":"Aguerri avec le temps","tradeoff":"+16 % de dégâts par vague survivée depuis son achat (jusqu'à +90 %), mais faible au début.","stats":{"price":60,"damage":11.0,"interval":2.0,"range":4.0,"pivot_bonus":0.16}},
+]
+## Unités retirées de la boutique (décision du porteur, 15 novembre 2026 : 20 unités par faction). Elles restent connues du modèle pour rejouer les anciens rapports
+## et migrer les anciennes sauvegardes, mais ne sont plus proposées ni achetables.
+const RETIRED: Array[Dictionary] = [
 	{"id":"horde.skeleton","faction":1,"type":46,"family":3,"name":"Fantassin squelette","po":1350,"unlock_missions":190,"role":"Défense d'os très bon marché","tradeoff":"Très peu cher et très rapide de près, mais portée minuscule et coups faibles (réglage de prototype à confirmer).","stats":{"price":40,"damage":6.0,"interval":0.6,"range":2.0}},
 	{"id":"alliance.gnome","faction":0,"type":47,"family":0,"name":"Tirailleur gnome","po":1350,"unlock_missions":190,"role":"Escarmouche très bon marché","tradeoff":"Peu cher et très rapide de près, mais portée courte et coups faibles (réglage de prototype à confirmer).","stats":{"price":45,"damage":6.0,"interval":0.65,"range":2.6}}
 ]
@@ -127,12 +131,21 @@ static func for_faction(faction: int) -> Array[Dictionary]:
 static func for_type(type: int) -> Dictionary:
 	for entry in CARDS:
 		if entry.type == type: return entry.duplicate(true)
+	for entry in RETIRED:
+		if entry.type == type: return entry.duplicate(true)
+	return {}
+
+static func retired_card(id: Variant) -> Dictionary:
+	if not id is String: return {}
+	for entry in RETIRED:
+		if entry.id == id: return entry.duplicate(true)
 	return {}
 
 static func valid_inventory(faction: int, owned: Variant, selected: Variant) -> bool:
 	if faction not in [0,1] or not owned is Dictionary or not selected is String or owned.size() > CARDS.size(): return false
 	for id in owned:
 		var entry: Dictionary = card(id)
+		if entry.is_empty(): entry = retired_card(id) # tolérée à la lecture : la migration du profil la rembourse
 		var paid: Variant = owned[id]
 		if entry.is_empty() or entry.faction != faction or not (paid is int or paid is float) or not is_finite(float(paid)) or paid != floorf(float(paid)) or paid < 0 or paid > 1000000000: return false
 	return selected.is_empty() or owned.has(selected)
