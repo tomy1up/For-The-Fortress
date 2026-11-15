@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**15 novembre — Sapeur gobelin.** Premier lancer rejeté. Nouvelle étude avec armé, lâcher et accompagnement, contrôlée sur copie v0.208 avec un décalage visuel de 0,12 s. Validateur : 24 dossiers, 0 problème. Bibliothèque : 156 contrôles réussis. [Fiche et boucle](design/Visuels_Sapeur_Lancer.md).
+**15 novembre — Sapeur gobelin.** Le porteur valide le lancer retravaillé comme référence de qualité pour les autres unités. Contrôlé sur copie v0.208 avec un décalage visuel de 0,12 s. La planche et la synchronisation du projectile doivent être intégrées ensemble par Claude. Validateur : 24 dossiers, 0 problème. Bibliothèque : 156 contrôles réussis. [Fiche et boucle](design/Visuels_Sapeur_Lancer.md).
 
 **15 novembre — Marche des attaquants.** Le porteur demande des orientations distinctes sur les quatre diagonales, sans permutation des mains. Comparaison changement de vue / poses de virage proposée sur le Capitaine orc. [Cadrage](design/Visuels_Orientation_Attaquants.md).
 
