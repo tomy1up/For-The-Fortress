@@ -18,7 +18,7 @@ var six_defenders := false
 ## Essai de courbe : facteur appliqué aux PV d'ennemis de la Horde seulement (HPK_HORDE, ex. 0.85) et mesure de l'armée de base seule (BASE_ONLY=1).
 var horde_hp_factor := 1.0
 var base_only := false
-const SEED := 42
+var seed_value := 42 # SEED=<n> pour une autre graine
 
 func ranks_for(faction: int, mission: int, tree: int) -> Array:
 	var ranks: Array = Talents.empty_ranks()
@@ -48,7 +48,7 @@ func play(faction: int, mission: int, tree: int, layout: Array, alternative: int
 	if ranks.is_empty() or not Talents.valid(ranks): return -2
 	m.meta_ranks = ranks
 	if not m.select_faction(faction): return -2
-	m.rng.seed = SEED
+	m.rng.seed = seed_value
 	var types: Array = Survey.natural_compositions(faction,tree)[0].duplicate()
 	var third: int = alternative if alternative >= 0 else faction*3+int(types[2])
 	if not m.buy(layout[0],faction*3+int(types[0])) or not m.buy(layout[1],faction*3+int(types[1])): return -2
@@ -74,6 +74,7 @@ func play(faction: int, mission: int, tree: int, layout: Array, alternative: int
 func _initialize() -> void:
 	six_defenders = OS.get_environment("SIX") == "1"
 	base_only = OS.get_environment("BASE_ONLY") == "1"
+	if OS.get_environment("SEED") != "": seed_value = int(OS.get_environment("SEED"))
 	if OS.get_environment("HPK_HORDE") != "": horde_hp_factor = float(OS.get_environment("HPK_HORDE"))
 	var missions: PackedStringArray = OS.get_environment("MISSIONS").split(",",false)
 	if missions.is_empty(): missions = PackedStringArray(["178","190","200"])

@@ -113,10 +113,14 @@ static func definition(number: int) -> Dictionary:
 ## Révision de la courbe de la Horde (décision du porteur, 15 novembre 2026, mesure dans `design/Mesure_boutique_finales_O016.md`) : à partir de la mission 150, les ennemis affrontés par la Horde ont 10 % de PV en moins (réglage de prototype à confirmer).
 const HORDE_HP_FROM := 150
 const HORDE_HP_FACTOR := 0.9
+## Finale de la campagne (mission 200) : la Horde y gagnait 2 parties sur 12 contre 9 pour l'Alliance ; PV d'ennemis à 85 % de la courbe de base pour elle seule (décision du porteur, 15 novembre 2026, réglage de prototype à confirmer).
+const HORDE_FINALE_MISSION := 200
+const HORDE_FINALE_FACTOR := 0.85
 
 ## PV ennemis effectivement joués par une faction : `hp_percent` de la mission, réduit de 10 % pour la Horde à partir de la mission 150.
 static func faction_hp_percent(number: int, faction: int) -> int:
 	var base: int = int(definition(number).get("hp_percent",hp_percent_for(number)))
+	if faction == 1 and number == HORDE_FINALE_MISSION: return int(round(float(base)*HORDE_FINALE_FACTOR))
 	if faction == 1 and number >= HORDE_HP_FROM: return int(round(float(base)*HORDE_HP_FACTOR))
 	return base
 

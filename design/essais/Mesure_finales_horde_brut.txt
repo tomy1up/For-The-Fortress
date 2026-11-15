@@ -1,0 +1,70 @@
+K=0.9 S=42
+SC mission=191 faction=1 unit=base runs=6 wins=4 hp=16.25 refused=0
+SC mission=193 faction=1 unit=base runs=6 wins=2 hp=1.50 refused=0
+SC mission=195 faction=1 unit=base runs=6 wins=6 hp=20.67 refused=0
+SC mission=197 faction=1 unit=base runs=6 wins=5 hp=18.40 refused=0
+SC mission=199 faction=1 unit=base runs=6 wins=5 hp=13.40 refused=0
+SC mission=200 faction=1 unit=base runs=6 wins=1 hp=18.00 refused=0
+K=0.85 S=42
+SC mission=191 faction=1 unit=base runs=6 wins=5 hp=16.00 refused=0
+SC mission=193 faction=1 unit=base runs=6 wins=3 hp=13.67 refused=0
+SC mission=195 faction=1 unit=base runs=6 wins=6 hp=23.50 refused=0
+SC mission=197 faction=1 unit=base runs=6 wins=5 hp=20.20 refused=0
+SC mission=199 faction=1 unit=base runs=6 wins=6 hp=17.00 refused=0
+SC mission=200 faction=1 unit=base runs=6 wins=4 hp=18.00 refused=0
+K=0.8 S=42
+SC mission=191 faction=1 unit=base runs=6 wins=5 hp=18.40 refused=0
+SC mission=193 faction=1 unit=base runs=6 wins=4 hp=13.75 refused=0
+SC mission=195 faction=1 unit=base runs=6 wins=6 hp=23.67 refused=0
+SC mission=197 faction=1 unit=base runs=6 wins=5 hp=24.20 refused=0
+SC mission=199 faction=1 unit=base runs=6 wins=6 hp=20.50 refused=0
+SC mission=200 faction=1 unit=base runs=6 wins=5 hp=17.00 refused=0
+K=0.75 S=42
+SC mission=191 faction=1 unit=base runs=6 wins=6 hp=21.67 refused=0
+SC mission=193 faction=1 unit=base runs=6 wins=4 hp=18.75 refused=0
+SC mission=195 faction=1 unit=base runs=6 wins=6 hp=27.17 refused=0
+SC mission=197 faction=1 unit=base runs=6 wins=6 hp=23.83 refused=0
+SC mission=199 faction=1 unit=base runs=6 wins=6 hp=23.67 refused=0
+SC mission=200 faction=1 unit=base runs=6 wins=6 hp=19.33 refused=0
+ALLIANCE S=42
+SC mission=191 faction=0 unit=base runs=6 wins=3 hp=18.67 refused=0
+SC mission=193 faction=0 unit=base runs=6 wins=1 hp=9.00 refused=0
+SC mission=195 faction=0 unit=base runs=6 wins=4 hp=28.25 refused=0
+SC mission=197 faction=0 unit=base runs=6 wins=5 hp=9.80 refused=0
+SC mission=199 faction=0 unit=base runs=6 wins=4 hp=8.00 refused=0
+SC mission=200 faction=0 unit=base runs=6 wins=5 hp=11.40 refused=0
+K=0.9 S=7
+SC mission=191 faction=1 unit=base runs=6 wins=4 hp=14.50 refused=0
+SC mission=193 faction=1 unit=base runs=6 wins=1 hp=2.00 refused=0
+SC mission=195 faction=1 unit=base runs=6 wins=6 hp=19.67 refused=0
+SC mission=197 faction=1 unit=base runs=6 wins=5 hp=17.60 refused=0
+SC mission=199 faction=1 unit=base runs=6 wins=5 hp=10.60 refused=0
+SC mission=200 faction=1 unit=base runs=6 wins=1 hp=18.00 refused=0
+K=0.85 S=7
+SC mission=191 faction=1 unit=base runs=6 wins=5 hp=14.00 refused=0
+SC mission=193 faction=1 unit=base runs=6 wins=2 hp=13.50 refused=0
+SC mission=195 faction=1 unit=base runs=6 wins=6 hp=21.67 refused=0
+SC mission=197 faction=1 unit=base runs=6 wins=5 hp=20.80 refused=0
+SC mission=199 faction=1 unit=base runs=6 wins=6 hp=16.00 refused=0
+SC mission=200 faction=1 unit=base runs=6 wins=4 hp=17.50 refused=0
+K=0.8 S=7
+SC mission=191 faction=1 unit=base runs=6 wins=6 hp=16.00 refused=0
+SC mission=193 faction=1 unit=base runs=6 wins=4 hp=12.75 refused=0
+SC mission=195 faction=1 unit=base runs=6 wins=6 hp=24.00 refused=0
+SC mission=197 faction=1 unit=base runs=6 wins=5 hp=24.80 refused=0
+SC mission=199 faction=1 unit=base runs=6 wins=6 hp=20.17 refused=0
+SC mission=200 faction=1 unit=base runs=6 wins=5 hp=18.40 refused=0
+K=0.75 S=7
+SC mission=191 faction=1 unit=base runs=6 wins=6 hp=22.00 refused=0
+SC mission=193 faction=1 unit=base runs=6 wins=4 hp=20.50 refused=0
+SC mission=195 faction=1 unit=base runs=6 wins=6 hp=27.17 refused=0
+SC mission=197 faction=1 unit=base runs=6 wins=6 hp=25.17 refused=0
+SC mission=199 faction=1 unit=base runs=6 wins=6 hp=24.50 refused=0
+SC mission=200 faction=1 unit=base runs=6 wins=6 hp=22.33 refused=0
+ALLIANCE S=7
+SC mission=191 faction=0 unit=base runs=6 wins=3 hp=14.33 refused=0
+SC mission=193 faction=0 unit=base runs=6 wins=1 hp=5.00 refused=0
+SC mission=195 faction=0 unit=base runs=6 wins=4 hp=20.75 refused=0
+SC mission=197 faction=0 unit=base runs=6 wins=4 hp=11.00 refused=0
+SC mission=199 faction=0 unit=base runs=6 wins=1 hp=15.00 refused=0
+SC mission=200 faction=0 unit=base runs=6 wins=4 hp=13.00 refused=0

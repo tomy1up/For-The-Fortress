@@ -12,6 +12,7 @@ from export_sources import verify_sources
 
 def horde_hp(base, number, camp):
     """PV d'ennemis joués : la Horde a 10 % de PV en moins à partir de la mission 150 (v0.212, arrondi comme Godot)."""
+    if camp==1 and number==200: return int(base*0.85+0.5)
     return int(base*0.9+0.5) if camp==1 and number>=150 else base
 
 parser = argparse.ArgumentParser(description=__doc__)

@@ -70,3 +70,17 @@ Mesure avec l'armée de base à six défenseurs, huit missions de 150 à 200, PV
 | Horde, PV ×0,7 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 48 |
 
 Lecture : à PV égaux, la Horde gagne deux fois moins que l'Alliance aux chapitres 16 à 20. Une réduction d'environ 10 % des PV d'ennemis de la Horde la ramène au niveau de l'Alliance en moyenne (31 contre 33) ; la mission 200 reste mince (1 victoire sur 6 même à ×0,9). Échantillon réduit : indication de prototype, une seule graine.
+
+## Finales de la Horde (missions 191 à 200, deuxième mesure du 15 novembre 2026)
+
+Même méthode (six défenseurs, armée de base, trois arbres, deux dispositions), deux graines (42 et 7), soit 12 parties par mission ; le facteur multiplie la courbe de base. Résultat brut : `design/essais/Mesure_finales_horde_brut.txt`. Le jeu applique depuis la v0.212 un facteur de 0,9.
+
+| Configuration | 191 | 193 | 195 | 197 | 199 | 200 | Total sur 72 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Alliance | 6 | 2 | 8 | 9 | 5 | 9 | 39 |
+| Horde ×0,9 (jeu v0.212) | 8 | 3 | 12 | 10 | 10 | **2** | 45 |
+| Horde ×0,85 | 10 | 5 | 12 | 10 | 12 | 8 | 57 |
+| Horde ×0,8 | 11 | 8 | 12 | 10 | 12 | 10 | 63 |
+| Horde ×0,75 | 12 | 8 | 12 | 12 | 12 | 12 | 68 |
+
+Lecture : avec ×0,9, la Horde est déjà au niveau de l'Alliance (ou plus aisée) sur les missions 191 à 199, mais la mission 200 est un point faible isolé (2 victoires sur 12 contre 9). Un facteur uniforme plus bas rendrait les autres missions trop faciles. **Décision du porteur (15 novembre 2026) : réduction propre à la mission 200 seule**, PV d'ennemis de la Horde à 85 % de la courbe de base (224 % au lieu de 238 %), soit 8 victoires sur 12 mesurées (v0.214).

@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.214**. Finale de la Horde allégée : mission 200 avec 15 % de PV d'ennemis en moins. [Notes](design/essais/v0214_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.214).
+
 **Prototype v0.213**. Libellés de stats corrigés pour les alternatives de boutique sans effet secondaire ; régression visuelle et parties aléatoires. [Notes](design/essais/v0213_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.213).
 
 **Prototype v0.212**. Courbe de la Horde revue : ennemis à 10 % de PV en moins dès la mission 150. [Notes](design/essais/v0212_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.212).
