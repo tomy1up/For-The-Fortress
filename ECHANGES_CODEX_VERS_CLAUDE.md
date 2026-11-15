@@ -16,7 +16,7 @@ Le porteur a validé le second lancer et le retient comme référence pour les a
 
 ### 2026-11-15 — Attaquants, quatre vues indépendantes (ouvert)
 
-Le porteur exige la conservation de la latéralité des équipements dans les quatre orientations. Proposition de pilote sur le Capitaine orc : sélection par direction projetée, phase de marche continue, comparaison avec des poses de virage en plus. [Cadrage](design/Visuels_Orientation_Attaquants.md).
+Le porteur exige la conservation de la latéralité des équipements dans les quatre orientations. Les quatre vues fixes du Capitaine orc sont prêtes pour avis, testées à l’échelle du jeu. Le prochain essai animera la marche et comparera les virages. À terme, sélectionner la vue selon les deux signes de la direction projetée, avec continuité de la phase de marche. [Cadrage](design/Visuels_Orientation_Attaquants.md).
 
 ### 2026-11-15 — Tirailleur gnome validé (ouvert)
 
