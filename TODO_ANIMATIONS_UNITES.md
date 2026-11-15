@@ -21,6 +21,8 @@ Choix de technique à arbitrer par le porteur, pilote à l'appui :
 
 ## 2. Contraintes communes
 
+- **Référence de qualité validée le 15 novembre 2026** : le [lancer retravaillé du Sapeur](design/Visuels_Sapeur_Lancer.md#lancer-retravaillé-après-retour-du-15-novembre). Pour une attaque, dessiner une préparation, un geste qui mobilise les appuis et le corps, puis un accompagnement adapté à l’arme. Garder l’objet en main jusqu’au lâcher et aligner le projectile, le contact ou la libération du sort avec la pose correspondante. Pour la marche, retrouver la même implication du corps en calant le transfert de poids sur les appuis et le déplacement. Contrôler la lecture à taille native, à ×1 et ×2.
+
 - Commencer chaque nouvelle unité par sa mécanique d’attaque, sa pose de garde et sa pose de contact ou de lâcher. Reprendre les unités déjà illustrées à partir de la [revue des gestes](design/Visuels_Gestes_Combat.md), qui relie les sprites des types 0 à 24 à leurs attaques et aux raccords visuels à produire.
 
 - Style cartoon retenu : `design/Assets_Alliance_v061.md`, `design/Assets_Horde_v060.md`, `design/Assets_Ennemis_v064.md`. Les nouvelles unités doivent rester cohérentes avec ces références et lisibles à la taille de jeu (hauteur d'affichage d'environ 34 px pour un ennemi standard, voir `FRAMES` dans `scripts/enemy_art.gd`).
@@ -52,7 +54,7 @@ Choix de technique à arbitrer par le porteur, pilote à l'appui :
 | Alliance | Arbalétrier nain | Image fixe + pose de réarmement | Idem, armement lent lisible |
 | Alliance | Mage humain | Image fixe | Idem, incantation, effet d'explosion |
 | Horde | Lanceur de haches troll | Image fixe | Idem, lancer et rebond |
-| Horde | Sapeur gobelin | Image fixe | Idem, lancer de charge |
+| Horde | Sapeur gobelin | Lancer retravaillé validé visuellement | Brancher ensemble la planche et le lancement du projectile, puis vérifier le rendu intégré |
 | Horde | Chaman orc | Image fixe | Idem, totem, malédiction |
 | Alliance (boutique) | Rôdeur elfe | Image fixe | Animation d'attaque rapide (intervalle 0,7 s) |
 | Alliance (boutique) | Mousquetaire nain | Image fixe (2 versions) | Tir lent à longue portée, fumée |
