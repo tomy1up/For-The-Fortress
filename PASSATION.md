@@ -86,7 +86,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 **Bombardier nain, type 13.** Visuel et nom approuvés par le porteur. Sur copie v0.197, 50 contrôles d’illustrations réussis, portrait et libellé vérifiés en boutique, recrutement et premier tir contrôlés. Le sprite, le libellé et le visuel de projectile sont à brancher. [Fiche](design/Visuels_Boutique_Bombardier.md).
 
-**Arquebusière naine, type 12.** Visuel aux deux tresses et à la brigandine framboise approuvé par le porteur le 14 novembre 2026 (`6afb975`). Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 45 contrôles d’illustrations réussis. Prête à intégrer. [Fiche](design/Visuels_Boutique_Arquebusiere.md).
+**Arquebusière naine, type 12.** Visuel fixe intégré. Nouvelle animation de recul et retour en joue en revue, 12 poses sur 0,18 s et planche de repos. Le bout du canon est calé à 0,045 s. Captures au Gué en E1 et E2, à ×1 et ×2, y compris à temps figé. Validateur : 27 dossiers, 0 problème. Bibliothèque : 168 contrôles. [Fiche et aperçus](design/Visuels_Boutique_Arquebusiere.md#tir-et-retour-en-joue).
 
 **Veilleur des cendres, type 16.** Le porteur a validé le portrait au guet et la pose de plateau accroupie (`8f328e0`, 14 novembre 2026). Copie v0.197 : rendu en boutique contrôlé, 40 contrôles d’illustrations réussis et six passages jusqu’au premier tir. Les deux poses sont prêtes à brancher. [Comparatif](design/essais/boutique_guetteurs/Troll_haches_javelinier_veilleur.jpg).
 

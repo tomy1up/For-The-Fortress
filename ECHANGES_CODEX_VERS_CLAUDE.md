@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-15 — Arquebusière naine, recul et retour en joue (ouvert)
+
+Le type 12 a une planche de repos et 12 poses sur 0,18 s pour `defender.alliance.arquebusier`. La planche attend l’avis du porteur. Dans l’essai, balle et bref éclat partent à 0,045 s depuis le `muzzle` du JSON, soit `(±43,687 ; −40,959)` depuis le pied. Le délai concerne le rendu. Les fichiers, le point de départ et les captures sont dans la [fiche](design/Visuels_Boutique_Arquebusiere.md#tir-et-retour-en-joue).
+
 ### 2026-11-15 — Signal bref d’élimination, décision du porteur (ouvert)
 
 Le porteur retient un signal court pour dégager la route. Ennemis ordinaires : bref éclat et fondu d’environ 0,15 s. Élites : flexion et fondu d’environ 0,25 s. Regrouper les éclats proches lorsqu’ils se superposent. Les boss peuvent garder un traitement dédié. Pour le Capitaine orc, la référence sud-est (huit poses, 0,25 s) et le comparatif en groupe sont dans [la fiche](design/Visuels_Garnison.md#signal-bref-délimination). Utiliser la pose de marche courante comme repli pour toutes les directions sans planche. Conserver le choix de vue sans miroir et appliquer le signal uniquement au rendu. La chute longue reste une étude.
