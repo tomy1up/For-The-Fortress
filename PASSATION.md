@@ -84,7 +84,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 **Pyromancien humain, type 15.** Visuel vermillon et safran, flamme au-dessus de la paume, approuvé par le porteur. Copie v0.197 : portrait, recrutement et premier tir vérifiés, 60 contrôles d’illustrations réussis. Sprite et projectile de feu à brancher par Claude Code. [Fiche](design/Visuels_Boutique_Pyromancien.md).
 
-**Piquier humain, type 14.** Nouvel estoc en revue avec armé, prise à deux mains et retour en garde. 20 poses sur 0,64 s par angle, contact à 0,256 s. Vérifié dans les deux sens sur la mission 94 à ×1, ×2 et à temps figé. Validateur : 31 dossiers, 0 problème. Bibliothèque : 172 contrôles. [Fiche et captures](design/Visuels_Boutique_Piquier.md#estoc-avec-prise-à-deux-mains).
+**Piquier humain, type 14.** Estoc à deux mains validé par le porteur le 15 novembre. Lot `9a7d3d8` prêt à intégrer. 20 poses sur 0,64 s par angle, contact à 0,256 s. Vérifié dans les deux sens sur la mission 94 à ×1, ×2 et à temps figé. Validateur : 31 dossiers, 0 problème. Bibliothèque : 172 contrôles. [Fiche et captures](design/Visuels_Boutique_Piquier.md#estoc-avec-prise-à-deux-mains).
 
 **Bombardier nain, type 13.** Le porteur donne un retour favorable au recul et à la remise en batterie. Lot `4ef598e` retenu pour intégration. 20 poses sur 0,64 s, départ du boulet à 0,160 s. Mission 94, tirs réels dans les deux sens à ×1 et ×2 et à temps figé. Validateur : 30 dossiers, 0 problème. Bibliothèque : 171 contrôles. [Fiche et captures](design/Visuels_Boutique_Bombardier.md#tir-recul-et-remise-en-batterie).
 

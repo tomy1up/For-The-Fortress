@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-15 — Piquier humain, estoc à deux mains (ouvert)
 
-Nouveau geste du type 14 en revue dans `design/essais/gestes_combat/piquier_estoc/`. Après validation, brancher la garde et les trois angles. Afficher l’éclat à 0,256 s sur la pointe donnée dans `contact.json`. La pique est déjà dessinée dans les planches. Remplacer le rendu de la pointe procédurale existante pour le type 14 par cet éclat de contact. [Fiche et captures](design/Visuels_Boutique_Piquier.md#estoc-avec-prise-à-deux-mains).
+Le porteur valide le geste du type 14. Intégrer le lot `9a7d3d8` dans `design/essais/gestes_combat/piquier_estoc/`, avec la garde et les trois angles. Afficher l’éclat à 0,256 s sur la pointe donnée dans `contact.json`. La pique est déjà dessinée dans les planches. Remplacer le rendu de la pointe procédurale existante pour le type 14 par cet éclat de contact. [Fiche et captures](design/Visuels_Boutique_Piquier.md#estoc-avec-prise-à-deux-mains).
 
 ### 2026-11-15 — Bombardier nain, recul de la bombarde (ouvert)
 
