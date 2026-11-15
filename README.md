@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.213**. Libellés de stats corrigés pour les alternatives de boutique sans effet secondaire ; régression visuelle et parties aléatoires. [Notes](design/essais/v0213_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.213).
+
 **Prototype v0.212**. Courbe de la Horde revue : ennemis à 10 % de PV en moins dès la mission 150. [Notes](design/essais/v0212_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.212).
 
 **Prototype v0.211**. Incantation animée du Chaman orc : l'éclair part à 0,12 s et l'anneau de malédiction apparaît à son arrivée. [Notes](design/essais/v0211_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.211).

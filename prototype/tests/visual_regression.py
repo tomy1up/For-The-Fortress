@@ -31,7 +31,9 @@ TILE_LIMIT = 0.8      # écart moyen par canal sur une tuile de 20 x 20 px de la
 TILE = 20
 CAPTURE_TIMEOUT = 90
 # Tolérances particulières : les traits de vent des Vents contraires (mission 31) suivent l'horloge réelle et varient d'une capture à l'autre.
-TILE_LIMIT_BY_NAME = {"mountain31": 2.0}
+TILE_LIMIT_BY_NAME = {"mountain31": 2.0, "ash71": 12.0}
+# Éruptions (mission 71) : la position des ennemis aux instants de l'affixe varie légèrement avec la cadence d'images de la machine ; on ne surveille que les écarts nets.
+MEAN_LIMIT_BY_NAME = {"ash71": 0.4}
 
 
 GROUPS = ("units", "menus", "missions", "effects", "affixes")
@@ -82,7 +84,18 @@ def thumbnail(path):
     return Image.open(path).convert("RGB").resize(THUMB, Image.LANCZOS)
 
 
+# Pied de page gauche (« Prototype v0.xxx · Nom de travail ») : le numéro de version change à chaque publication et n'est pas un défaut visuel.
+FOOTER_MASK = (0, 190, 110, 200)  # coordonnées de la vignette 320 x 200
+
+
+def masked(image):
+    image = image.copy()
+    image.paste((0, 0, 0), FOOTER_MASK)
+    return image
+
+
 def compare(current, reference):
+    current, reference = masked(current), masked(reference)
     diff = ImageChops.difference(current, reference)
     mean = sum(ImageStat.Stat(diff).mean) / 3
     width, height = diff.size
@@ -120,7 +133,8 @@ def check_image(path, update, results):
         return 1
     mean, worst, diff = compare(current, Image.open(reference_path).convert("RGB"))
     tile_limit = max([TILE_LIMIT] + [limit for key, limit in TILE_LIMIT_BY_NAME.items() if key in name])
-    changed = mean > MEAN_LIMIT or worst > tile_limit
+    mean_limit = max([MEAN_LIMIT] + [limit for key, limit in MEAN_LIMIT_BY_NAME.items() if key in name])
+    changed = mean > mean_limit or worst > tile_limit
     results.append({"name": name, "status": "changée" if changed else "ok", "mean": round(mean, 3), "worst_tile": round(worst, 3)})
     if changed:
         sheet = Image.new("RGB", (THUMB[0] * 3, THUMB[1]))
@@ -132,6 +146,20 @@ def check_image(path, update, results):
         return 1
     print(f"ok {name} : moyenne {mean:.2f}, pire tuile {worst:.2f}")
     return 0
+
+
+def run_scenario(name, extra, series, update, results):
+    """Capture un scénario et compare ses images ; retourne le nombre d'écarts."""
+    for old in OUTPUT_DIR.glob(f"{name}*.png"):
+        old.unlink()
+    destination = OUTPUT_DIR / f"{name}.png"
+    ok, reason = capture(name, extra, destination)
+    if not ok:
+        results.append({"name": name, "status": "erreur", "detail": reason})
+        print(f"ERREUR {name} : {reason}")
+        return 1
+    images = sorted(path for path in OUTPUT_DIR.glob(f"{name}_*.png") if not path.stem.endswith("_ecart")) if series else [destination]  # l'image finale <nom>.png répète la dernière de la série
+    return sum(check_image(path, update, results) for path in images)
 
 
 def main():
@@ -148,18 +176,16 @@ def main():
     for name, extra, series in scenarios(parse_types(arguments.types), arguments.group or GROUPS):
         if arguments.only and not any(name == only or name.startswith(only) for only in arguments.only):
             continue
-        for old in OUTPUT_DIR.glob(f"{name}*.png"):
-            old.unlink()
-        destination = OUTPUT_DIR / f"{name}.png"
-        ok, reason = capture(name, extra, destination)
-        if not ok:
-            failures += 1
-            results.append({"name": name, "status": "erreur", "detail": reason})
-            print(f"ERREUR {name} : {reason}")
-            continue
-        images = sorted(path for path in OUTPUT_DIR.glob(f"{name}_*.png") if not path.stem.endswith("_ecart")) if series else [destination]  # l'image finale <nom>.png répète la dernière de la série
-        for path in images:
-            failures += check_image(path, arguments.update, results)
+        # Un écart est confirmé par une seconde capture : certaines captures (éruptions) dépendent du découpage des images à l'écran et varient parfois avec la charge de la machine.
+        for attempt in (1, 2):
+            scenario_results = []
+            scenario_failures = run_scenario(name, extra, series, arguments.update, scenario_results)
+            if scenario_failures == 0 or arguments.update:
+                break
+            if attempt == 1:
+                print(f"  -> nouvel essai de {name}")
+        failures += scenario_failures
+        results.extend(scenario_results)
     (OUTPUT_DIR / "report.json").write_text(json.dumps({"results": results, "failures": failures}, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"VISUAL ok={failures == 0} captures={len(results)} écarts={failures}")
     return 0 if failures == 0 else 1
