@@ -91,3 +91,5 @@ Le porteur juge les appuis séparés plus cohérents et les jambes trop écarté
 Les axes des jambes restent distincts sur les 96 poses vérifiées. La marche est contrôlée à taille native, à ×1 et ×2, et à distance figée sur la mission 62 dans la copie v0.208. Les tests du rendu ennemi (213 contrôles) et de la bibliothèque d’animations (157 contrôles) passent.
 
 [Avant-après à vitesse normale](essais/garnison/orientations/marche_appuis_compacts/Capitaine_appuis_avant_apres.gif) · [Appuis resserrés à ×2](essais/garnison/orientations/marche_appuis_compacts/Capitaine_appuis_compacts_x2.gif)
+
+Le 15 novembre, le porteur juge cette version « bien mieux ». Les quatre planches du lot `9fe2608` sont retenues pour le branchement dans le prototype avec un changement direct de vue aux virages.
