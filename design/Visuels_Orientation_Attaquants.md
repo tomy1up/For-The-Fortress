@@ -67,3 +67,11 @@ Le porteur trouve la foulée plus naturelle et les jambes encore trop longues. L
 [Comparatif à ×1](essais/garnison/orientations/marche_foulee_compacte/Capitaine_jambes_x1.gif) · [Comparatif à ×2](essais/garnison/orientations/marche_foulee_compacte/Capitaine_jambes_x2.gif)
 
 Les 24 poses sont cadrées. Comparatif à taille native sur le même segment de la mission 62 dans la copie v0.208, à ×1 et ×2. Le contrôle à distance figée passe aux deux vitesses. La variante reste limitée à la diagonale descendante vers la droite.
+
+## Marche dans les quatre directions
+
+Le 15 novembre, le porteur juge la version aux jambes raccourcies « bien mieux ». La planche qui descend vers la droite est reprise telle quelle. Trois cycles distincts complètent la garde v3 avec le même rythme, le même cadrage et le même enchaînement gauche-droite. Les jambes sont dessinées à partir de leur propre vue. Le bouclier reste porté par le bras gauche, serré devant le torse, et la lame dans la main droite.
+
+[Déplacement à ×1](essais/garnison/orientations/marche_quatre_diagonales/Capitaine_quatre_diagonales_x1.gif) · [Déplacement à ×2](essais/garnison/orientations/marche_quatre_diagonales/Capitaine_quatre_diagonales_x2.gif) · [Deux virages directs](essais/garnison/orientations/marche_quatre_diagonales/Capitaine_virages_directs.gif)
+
+Contrôle à taille native sur quatre segments et deux coins de la mission 62 dans la copie v0.208, à ×1 et ×2 et à distance figée. Les 96 poses tiennent dans leurs cadres. La phase est calculée sur la distance projetée totale, avec un changement direct d’orientation aux coins. Les trois nouvelles vues attendent l’avis du porteur. Les poses intermédiaires de virage et la mort du capitaine restent à produire.
