@@ -46,6 +46,8 @@ python prototype/tests/run_regression.py --report dist/vXXXX-regression/report.j
 
 Chaque suite Godot imprime `TESTS checks=N failures=0` ; le rapport final est `REGRESSION ok=True ...`. Définir `PYTHONIOENCODING=utf-8` si la console déforme les accents.
 
+Régression visuelle du combat (écran de droite, hors `run_regression.py`) : `python prototype/tests/visual_regression.py` compare 96 captures de défenseurs aux références de `design/essais/captures_reference/` ; `--update` après avoir regardé un changement voulu. Détails et parties aléatoires : `design/Regression_visuelle.md`.
+
 Export Windows (la version doit correspondre à `project.godot`) :
 
 ```
