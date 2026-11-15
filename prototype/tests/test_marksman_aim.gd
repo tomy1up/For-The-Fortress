@@ -45,4 +45,21 @@ func run_checks() -> void:
 		check(Library.defender_state(spec,{"attack_age":0.1,"pulse":1.0,"attack_variant":name}) == name,"%s jouée pendant le geste" % name)
 		check(Library.defender_state(spec,{"attack_age":0.7,"pulse":0.0,"attack_variant":name}) == "idle","%s : retour à la garde après 0,66 s" % name)
 	check(Library.defender_state(spec,{"attack_age":0.1,"pulse":1.0}) == "attack","Sans variante : tir droit")
+	# Javelinier troll (type 17) : trois inclinaisons, origine de la pointe tirée de lachers.json, lâcher à 0,288 s ; Bombardier nain (type 13) : départ à 26°, lâcher à 0,16 s.
+	check(is_equal_approx(View.launch_delay({"type":17}),0.288) and is_equal_approx(View.launch_delay({"type":13}),0.16),"Lâchers différés du javelinier et du bombardier")
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var jav: Dictionary = {"type":17,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var jp: int = View.aim_pitch(jav)
+			var tip: Vector2 = View.JAVELIN_TIPS[jp]
+			check(jp in [-12,0,12] and View.shot_origin(jav).distance_to(View.project(from)+Vector2(tip.x*View.shot_facing(jav),tip.y)) < 0.001,"Javelinier : origine de la pointe selon l'angle %d" % jp)
+			check(View.aimed_curve(jav,0.0).direction.distance_to(View.aim_direction(jav)) < 0.001,"Javelinier : la javeline part dans l'axe de la pose")
+			var cannon: Dictionary = {"type":13,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var start: Vector2 = View.aimed_curve(cannon,0.0).direction
+			check(absf(rad_to_deg(asin(-start.y))-View.CANNON_ANGLE) < 0.01 and sign(start.x) == View.shot_facing(cannon),"Bombardier : le boulet part à 26° vers le haut, du côté du tir")
+			check(View.aimed_curve(cannon,1.0).point.distance_to(View.project(cannon.to)+Vector2(0,-12)) < 0.001,"Bombardier : la cloche rejoint l'impact")
+	for name in ["defender.horde.javelin","defender.alliance.bombard"]:
+		check(not Library.spec_for(name).is_empty(),"%s : planches chargées et valides" % name)
+	var jspec: Dictionary = Library.spec_for("defender.horde.javelin")
+	check(Library.defender_state(jspec,{"attack_age":0.1,"pulse":1.0,"attack_variant":"attack_up12"}) == "attack_up12" and Library.defender_state(jspec,{"attack_age":0.1,"pulse":1.0,"attack_variant":"attack_down12"}) == "attack_down12","Javelinier : variantes inclinées jouées")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

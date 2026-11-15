@@ -239,17 +239,33 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 17: 0.288} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
 const AIMED_TYPE := 11
+## Lancer incliné du Javelinier troll (type 17, trois planches −12°, 0°, +12°, lâcher à 0,288 s) : points de départ de la pointe depuis le pied (`lachers.json`).
+## Bombardier nain (type 13, lâcher à 0,16 s) : le boulet part à 26° au-dessus de l'horizontale puis suit une trajectoire en cloche.
+const TILTED_TYPES: Array[int] = [11,17]
+const CURVED_TYPES: Array[int] = [11,13,17]
+const JAVELIN_PIVOT := Vector2(0.0,-41.3453)
+const JAVELIN_TIPS: Dictionary = {-12:Vector2(55.3409,-51.4028),0:Vector2(56.1005,-41.3453),12:Vector2(54.9211,-31.3319)}
+const JAVELIN_STEP := 12
+const CANNON_ANGLE := 26.0
+const JAVELIN_TEXTURE: Texture2D = preload("res://assets/units/shop/javeline_v001.png")
+const JAVELIN_PIVOT_PX := Vector2(485.0,28.0) # pointe dans l'image source (495 x 60)
+const JAVELIN_SCALE := 0.12
 const AIM_PIVOT := Vector2(0.0,-33.44) # pivot de l'arc, depuis le pied
 const AIM_LENGTH := 38.2 # pivot -> pointe de la flèche encochée
 const AIM_STEP := 8
 const AIM_LIMIT := 24
 
 static func aim_pitch(shot: Dictionary) -> int:
+	if int(shot.get("type",-1)) == JAVELIN_TYPE:
+		var hand: Vector2 = project(shot.from)+JAVELIN_PIVOT
+		var gap: Vector2 = project(shot.to)+Vector2(0,-12)-hand
+		var angle: float = rad_to_deg(atan2(gap.y,maxf(absf(gap.x),0.0001)))
+		return clampi(int(roundf(angle/float(JAVELIN_STEP)))*JAVELIN_STEP,-JAVELIN_STEP,JAVELIN_STEP)
 	var pivot: Vector2 = project(shot.from)+AIM_PIVOT
 	var delta: Vector2 = project(shot.to)+Vector2(0,-12)-pivot
 	var degrees: float = rad_to_deg(atan2(delta.y,maxf(absf(delta.x),0.0001)))
@@ -259,15 +275,19 @@ static func aim_variant(pitch: int) -> String:
 	return "attack" if pitch == 0 else "attack_%s%d" % ["down" if pitch > 0 else "up",absi(pitch)]
 
 static func aim_direction(shot: Dictionary) -> Vector2:
+	if int(shot.get("type",-1)) == CANNON_TYPE: return Vector2(shot_facing(shot)*cos(deg_to_rad(CANNON_ANGLE)),-sin(deg_to_rad(CANNON_ANGLE)))
 	var angle: float = deg_to_rad(float(aim_pitch(shot)))
 	return Vector2(shot_facing(shot)*cos(angle),sin(angle))
 
 static func aimed_origin(shot: Dictionary) -> Vector2:
+	if int(shot.get("type",-1)) == JAVELIN_TYPE:
+		var tip: Vector2 = JAVELIN_TIPS[aim_pitch(shot)]
+		return project(shot.from)+Vector2(tip.x*shot_facing(shot),tip.y)
 	return project(shot.from)+AIM_PIVOT+aim_direction(shot)*AIM_LENGTH
 
 ## Trajet de la flèche : part dans l'axe du trait dessiné puis rejoint le point d'impact (courbe quadratique dont la tangente initiale est l'axe de visée).
 static func aimed_curve(shot: Dictionary, progress: float) -> Dictionary:
-	var origin: Vector2 = aimed_origin(shot)
+	var origin: Vector2 = shot_origin(shot)
 	var target: Vector2 = project(shot.to)+Vector2(0,-12)
 	var control: Vector2 = origin+aim_direction(shot)*(target-origin).length()*0.5
 	var inverse: float = 1.0-progress
@@ -276,7 +296,7 @@ static func aimed_curve(shot: Dictionary, progress: float) -> Dictionary:
 	return {"point":point,"direction":tangent}
 
 static func shot_origin(shot: Dictionary, pose_age: float = 0.0) -> Vector2:
-	if int(shot.get("type",-1)) == AIMED_TYPE: return aimed_origin(shot)
+	if int(shot.get("type",-1)) in TILTED_TYPES: return aimed_origin(shot)
 	# Points d'équipement des silhouettes, distincts du centre logique de portée.
 	var art = defender_art(int(shot.type))
 	var muzzle: Vector2 = art.MUZZLES[int(shot.type)]
@@ -294,7 +314,7 @@ static func projectile_position(shot: Dictionary, age: float) -> Vector2:
 	var origin: Vector2 = shot_origin(shot)
 	var target: Vector2 = project(shot.to)+Vector2(0,-12)
 	var point: Vector2 = origin.lerp(target,progress)
-	if int(shot.type) == AIMED_TYPE: return aimed_curve(shot,progress).point
+	if int(shot.type) in CURVED_TYPES: return aimed_curve(shot,progress).point
 	if Model.family(shot.type) in [3,4]: point.y -= sin(PI*progress)*(15.0 if Model.family(shot.type) == 4 else 8.0)
 	elif int(shot.type) == CANNON_TYPE: point.y -= sin(PI*progress)*12.0
 	elif int(shot.type) == VIAL_TYPE: point.y -= sin(PI*progress)*10.0
@@ -309,10 +329,10 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	var target: Vector2 = project(shot.to)+Vector2(0,-12)
 	var direction: Vector2 = (target-origin).normalized()
 	if direction.is_zero_approx(): direction = Vector2.RIGHT
-	if int(shot.type) == AIMED_TYPE: direction = aimed_curve(shot,clampf(age/PROJECTILE_FLIGHT,0.0,1.0)).direction
+	if int(shot.type) in CURVED_TYPES: direction = aimed_curve(shot,clampf(age/PROJECTILE_FLIGHT,0.0,1.0)).direction
 	var side: Vector2 = direction.orthogonal()
 	if int(shot.type) == JAVELIN_TYPE:
-		_draw_javelin(point,direction,side)
+		_draw_javelin(point,direction,side,shot_facing(shot))
 		return
 	if int(shot.type) == BULLET_TYPE:
 		_draw_bullet(point,direction)
@@ -575,7 +595,13 @@ func _draw_bullet(point: Vector2, direction: Vector2) -> void:
 	draw_circle(point+Vector2(-0.8,-0.8),1.0,Color("d8e2dc"),true,-1,true)
 
 ## Javeline du lanceur de javeline troll (type 17) : lance droite, sans rotation, au lieu de la hache de sa famille.
-func _draw_javelin(point: Vector2, direction: Vector2, side: Vector2) -> void:
+func _draw_javelin(point: Vector2, direction: Vector2, side: Vector2, facing: float = 1.0) -> void:
+	if JAVELIN_TEXTURE != null:
+		# Dessin du lot de Codex : le même sprite que la javeline tenue en main ; le reflet à gauche garde l'éclairage en haut.
+		draw_set_transform_matrix(Transform2D(direction,direction.orthogonal()*facing,point))
+		draw_texture_rect(JAVELIN_TEXTURE,Rect2(-JAVELIN_PIVOT_PX*JAVELIN_SCALE,Vector2(495.0,60.0)*JAVELIN_SCALE),false)
+		draw_set_transform(Vector2.ZERO)
+		return
 	var tail: Vector2 = point-direction*17.0
 	draw_line(tail,point,Color("1a2524"),3.6,true)
 	draw_line(tail,point,Color("c79a62"),2.0,true)
@@ -1285,7 +1311,7 @@ func defender_pose(slot: int) -> Dictionary:
 		pose.pulse = attack_pulse(age)
 		pose.attack_age = age
 		pose.direction = shot_facing(shot)
-		if int(shot.get("type",-1)) == AIMED_TYPE: pose.attack_variant = aim_variant(aim_pitch(shot))
+		if int(shot.get("type",-1)) in TILTED_TYPES: pose.attack_variant = aim_variant(aim_pitch(shot))
 		if shot.get("type", -1) == 0:
 			pose.archer_stage = AllianceArt.archer_shot_stage(age, defender.ready_at-shot.time)
 		elif shot.get("type", -1) == 1:
