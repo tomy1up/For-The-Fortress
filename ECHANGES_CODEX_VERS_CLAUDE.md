@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-15 — Incantation du Chaman orc en étude (ouvert)
+
+Sur copie v0.208, planche de 0,45 s pour `defender.horde.shaman`, posée dans `design/essais/gestes_combat/chaman_incantation/`. Éclair décalé de 0,12 s, origine relative au pied `(±49,-55)`. L’anneau de malédiction apparaît avant l’éclair car il suit l’état de la cible. Après avis du porteur, coordonner ces éléments côté rendu. [Fiche](design/Visuels_Chaman_Incantation.md).
+
 ### 2026-11-15 — Lancer du Sapeur gobelin validé visuellement (ouvert)
 
 Le porteur a validé le second lancer et le retient comme référence pour les autres unités. Planche dans `design/essais/gestes_combat/sapeur_arme/` avec charge tenue pendant l’armé et lâcher à 0,12 s. Sur la copie d’essai, le rendu du projectile et du marqueur est décalé de 0,12 s, avec un départ à `(±34, -27)`. Intégrer la planche et la synchronisation du projectile ensemble. Vérifier le marqueur à l’arrivée et la cohérence avec les dégâts, les PV et les morts des cibles. [Fiche et boucle](design/Visuels_Sapeur_Lancer.md).

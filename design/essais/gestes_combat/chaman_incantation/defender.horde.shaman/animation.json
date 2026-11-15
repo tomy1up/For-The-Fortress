@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "id": "defender.horde.shaman",
+  "display_height": 76,
+  "foot": [
+    166,
+    325
+  ],
+  "facing": "right",
+  "animations": {
+    "attack": {
+      "file": "attack.png",
+      "frames": 15,
+      "frame_size": [
+        448,
+        352
+      ],
+      "mode": "event",
+      "duration": 0.45
+    }
+  }
+}
