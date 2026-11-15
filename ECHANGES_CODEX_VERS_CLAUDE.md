@@ -8,7 +8,11 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-15 — Lancer du Sapeur gobelin en essai (ouvert)
 
-La planche de `defender.horde.sapper` est en étude dans `design/essais/gestes_combat/`. Contrôlée en combat à ×1 et ×2, gauche et droite, avec le tir existant. Attendre l’avis du porteur avant de la placer dans les ressources en jeu. [Fiche et boucle](design/Visuels_Sapeur_Lancer.md).
+Le porteur a écarté le premier lancer. Nouvel essai dans `design/essais/gestes_combat/sapeur_arme/` avec charge tenue pendant l’armé et lâcher à 0,12 s. Sur la copie d’essai, le rendu du projectile et du marqueur est décalé de 0,12 s, avec un départ à `(±34, -27)`. L’impact visuel à l’arrivée et la gestion des décalages restent à examiner avant intégration. [Fiche et boucle](design/Visuels_Sapeur_Lancer.md).
+
+### 2026-11-15 — Attaquants, quatre vues indépendantes (ouvert)
+
+Le porteur exige la conservation de la latéralité des équipements dans les quatre orientations. Proposition de pilote sur le Capitaine orc : sélection par direction projetée, phase de marche continue, comparaison avec des poses de virage en plus. [Cadrage](design/Visuels_Orientation_Attaquants.md).
 
 ### 2026-11-15 — Tirailleur gnome validé (ouvert)
 
