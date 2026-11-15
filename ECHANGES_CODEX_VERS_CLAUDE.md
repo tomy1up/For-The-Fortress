@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-15 — Tirailleur gnome validé (ouvert)
+
+Le porteur a validé le visuel fixe de `alliance.gnome` (type 47). Le PNG et l’import filtré sont prêts pour le portrait, le plateau et l’export. La [fiche](design/Visuels_Boutique_Tirailleur_Gnome.md) donne le cadre et le point de départ testés sur v0.208. Donner au tir le visuel du carreau court et conserver la famille Archer pour les talents.
+
 ### 2026-11-15 — Fantassin squelette validé (ouvert)
 
 Le porteur a validé le sprite fixe du type 46 (`horde.skeleton`). Le PNG et son import filtré sont dans `prototype/assets/units/shop/`. [Fiche avec cadrage et capture](design/Visuels_Boutique_Fantassin_Squelette.md). À brancher au portrait, au plateau et à l’export. Le rendu actuel montre une hache lancée et le panneau affiche une ligne de rebond. Remplacer ces éléments par un coup d’épée de mêlée et son libellé. L’animation de frappe reste à produire.
