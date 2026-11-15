@@ -18,16 +18,24 @@ func run_checks() -> void:
 	for family in range(6):
 		check(Bank.EVENTS.has(Bank.shot_event(family,family)) and Bank.EVENTS.has(Bank.impact_event(family)),"Chaque famille a ses événements de tir et d'impact au catalogue")
 	for event in Bank.EVENTS: check(Bank.EVENTS[event].has("files") and not Bank.EVENTS[event].files.is_empty() and Bank.gain_db(event) <= 0.0,"%s : fichiers et gain borné" % event)
+	# Sons installés (banques Kenney, CC0) : chaque événement du catalogue a au moins un fichier présent, et les noms listés existent tous.
+	for event in Bank.EVENTS:
+		check(not Bank.stream_path(event).is_empty(),"%s : au moins un fichier installé" % event)
+		for name in Bank.EVENTS[event].files: check(not Bank.resolve(name).is_empty(),"%s : fichier %s présent" % [event,name])
+		check(Bank.stream_path(event,0) != Bank.stream_path(event,1) or Bank.EVENTS[event].files.size() == 1,"%s : le numéro varie le fichier" % event)
 	# Fichiers absents : silence et aucune erreur.
 	check(Bank.stream_path("shot.bow").is_empty() or Bank.stream_path("shot.bow").begins_with(Bank.DIRECTORY),"Chemin vide ou dans le dossier des sons")
 	check(Bank.stream_path("inconnu").is_empty() and is_equal_approx(Bank.gain_db("inconnu"),0.0),"Événement inconnu : silence")
-	var player := Player.new();root.add_child(player)
+	var player := Player.new();player.dry = true;root.add_child(player)
 	await process_frame
-	check(not player.play("shot.bow") or player.played == 1,"Lecture sans fichier : silencieuse, sans erreur")
+	check(player.play("shot.bow") and player.played == 1 and not player.play("inconnu"),"Lecture d'un son installé ; événement inconnu silencieux")
 	Player.muted = true
 	check(not player.play("shot.bow"),"Coupure : rien n'est joué")
 	Player.muted = false
+	player.release()
 	player.free()
+	await process_frame
+	await process_frame
 	# Instants : un tir du Sapeur (lâcher différé de 0,12 s) sonne au lâcher, l'impact à l'arrivée.
 	var m = Model.new()
 	m.select_faction(1)

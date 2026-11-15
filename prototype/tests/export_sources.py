@@ -45,10 +45,10 @@ def animation_assets(project_root=None):
     """Planches et descriptions de assets/animations, images et decor.json de assets/decor, découverts sur disque."""
     root = Path(project_root) if project_root is not None else Path(__file__).resolve().parent.parent
     found = []
-    for name in ('animations', 'decor'):
+    for name in ('animations', 'decor', 'audio'):
         folder = root / 'assets' / name
         if folder.is_dir():
-            found += [path.relative_to(root).as_posix() for path in folder.rglob('*') if path.is_file() and path.suffix in ('.png', '.json')]
+            found += [path.relative_to(root).as_posix() for path in folder.rglob('*') if path.is_file() and path.suffix in ('.png', '.json', '.ogg')]
     return tuple(sorted(found))
 
 

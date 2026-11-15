@@ -8,9 +8,11 @@ static var muted: bool = false
 var _voices: Array[AudioStreamPlayer] = []
 var _next: int = 0
 var _cache: Dictionary = {}
+var dry: bool = false # tests : compte les sons sans lancer la lecture
 var played: int = 0 # nombre de sons réellement lancés (contrôle des tests)
 
 func _ready() -> void:
+	if DisplayServer.get_name() == "headless": dry = true # tests sans écran : pas de lecture réelle
 	for _index in range(VOICES):
 		var voice := AudioStreamPlayer.new()
 		add_child(voice)
@@ -28,9 +30,16 @@ func play(event: String, db: float = 0.0, index: int = 0) -> bool:
 	_next = (_next+1)%_voices.size()
 	voice.stream = stream
 	voice.volume_db = db+linear_to_db(clampf(volume,0.0,1.0))
-	voice.play()
+	if not dry: voice.play()
 	played += 1
 	return true
+
+## Libère les sons chargés (fin de partie, tests).
+func release() -> void:
+	for voice in _voices:
+		voice.stop()
+		voice.stream = null
+	_cache.clear()
 
 func play_all(entries: Array[Dictionary]) -> void:
 	for entry in entries: play(str(entry.event),float(entry.db),int(entry.index))
