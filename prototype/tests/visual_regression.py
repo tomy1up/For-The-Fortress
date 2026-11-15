@@ -34,7 +34,9 @@ CAPTURE_TIMEOUT = 90
 TILE_LIMIT_BY_NAME = {"mountain31": 2.0}
 
 
-GROUPS = ("units", "menus", "missions", "effects")
+GROUPS = ("units", "menus", "missions", "effects", "affixes")
+# Affixes de mission (variante main.gd, instants de combat en secondes simulées).
+AFFIX_VARIANTS = {"ash71play": "3,11,13.5,15,17", "dune115play": "6,12,20", "mine135play": "6,14,24", "coast175play": "6,12,20"}
 # Une mission par chapitre (variante `<nom>play` de main.gd : deux défenseurs posés), vagues 1, 5 et 10.
 MISSION_VARIANTS = ["mountain31play", "marsh51play", "volcano61play", "ash71play", "citadel87play", "garrison94play", "dune105play", "mine125play", "sky145play", "coast165play", "necro195play"]
 MISSION_TIMELINE = "1:3,5:6,10:4"
@@ -54,6 +56,9 @@ def scenarios(types, groups):
         if "missions" in groups:
             for variant in MISSION_VARIANTS:
                 yield f"mission_{faction}_{variant}", ["--capture-state=campaign_menu", f"--capture-faction={faction}", f"--capture-campaign={variant}", "--capture-mountain-defence", f"--capture-timeline={MISSION_TIMELINE}"], True
+        if "affixes" in groups:
+            for variant, instants in AFFIX_VARIANTS.items():
+                yield f"affix_{faction}_{variant}", ["--capture-state=campaign_menu", f"--capture-faction={faction}", f"--capture-campaign={variant}", "--capture-mountain-defence", f"--capture-timeline={instants}"], True
         if "effects" in groups:
             yield f"effect_{faction}_elimination", ["--capture-state=elimination", "--capture-type=%d" % (0 if faction == "alliance" else 3), "--capture-slot=1"], False
     if "effects" in groups:
