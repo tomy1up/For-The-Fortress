@@ -7,7 +7,7 @@ const VERSION := 1
 ## Noms d'animations connus, tous pilotés par le jeu depuis la v0.175.
 ## Ennemis : walk, hurt, spawn, death. Défenseurs : idle, attack, disabled, buy, level_up, sell.
 ## Variantes de marche selon la pente du trajet à l'écran (`walk_up` : le trajet monte, `walk_down` : il descend) ; `warning` : effet d'avertissement lié à un événement de jeu (mode progress).
-const NAMES: Array[String] = ["walk","walk_up","walk_down","idle","attack","disabled","death","hurt","spawn","buy","sell","level_up","warning","regen","storm","blocked","mist","rise"]
+const NAMES: Array[String] = ["walk","walk_up","walk_down","idle","attack","disabled","death","hurt","spawn","buy","sell","level_up","warning","regen","storm","blocked","mist","rise","walk_nw","walk_ne","walk_sw","walk_se"]
 ## Animations jouées une seule fois sur un événement : le mode `event` est obligatoire.
 const EVENT_ONLY: Array[String] = ["death","hurt","spawn","buy","sell","level_up","rise"]
 const MODES: Array[String] = ["distance","time","event","progress"]
@@ -49,12 +49,13 @@ static func validation_error(data: Variant, expected_id: String = "") -> String:
 	for key in ["version","id","display_height","foot","animations"]:
 		if not data.has(key): return "Champ obligatoire absent : %s." % key
 	for key in data:
-		if key not in ["version","id","display_height","foot","facing","muzzle","animations"]: return "Champ inconnu : %s." % str(key)
+		if key not in ["version","id","display_height","foot","facing","muzzle","animations","directions"]: return "Champ inconnu : %s." % str(key)
 	if not _is_whole(data.version) or int(data.version) != VERSION: return "Version de format non prise en charge."
 	if not data.id is String or (expected_id != "" and data.id != expected_id): return "Identifiant d'animation différent du dossier."
 	if not _is_number(data.display_height) or float(data.display_height) <= 0.0 or float(data.display_height) > 400.0: return "Hauteur d'affichage invalide."
 	if not _point(data.foot): return "Point d'appui invalide."
 	if data.has("facing") and data.facing not in ["right","left"]: return "Côté regardé par défaut invalide."
+	if data.has("directions") and data.directions != "four": return "directions : seule la valeur four (quatre vues diagonales sans miroir) est prise en charge."
 	if data.has("muzzle") and not _point(data.muzzle): return "Point de départ des projectiles invalide."
 	if not data.animations is Dictionary or data.animations.is_empty(): return "Aucune animation décrite."
 	for name in data.animations:
@@ -69,7 +70,14 @@ static func validation_error(data: Variant, expected_id: String = "") -> String:
 		if name != "warning" and data.animations[name].mode == "progress": return "%s : le mode progress est réservé à l'animation warning." % name
 		if name in EVENT_ONLY and data.animations[name].mode != "event": return "%s : cette animation se joue une fois sur un événement (mode event obligatoire)." % name
 		if name in ["death","hurt","spawn","buy","sell","level_up","rise"] and float(data.animations[name].duration) > 3.0: return "%s : durée limitée à 3 s." % name
-	for variant in ["walk_up","walk_down"]:
+	var four_names: Array = ["walk_nw","walk_ne","walk_sw","walk_se"]
+	if data.get("directions","") == "four":
+		for variant in four_names:
+			if not data.animations.has(variant): return "directions four : la vue %s est obligatoire." % variant
+	else:
+		for variant in four_names:
+			if data.animations.has(variant): return "%s : les vues diagonales demandent directions = four." % variant
+	for variant in ["walk_up","walk_down"] + four_names:
 		if not data.animations.has(variant): continue
 		if not data.animations.has("walk"): return "%s : la marche de base walk est obligatoire (repli quand la pente est nulle)." % variant
 		var base: Dictionary = data.animations.walk
@@ -172,9 +180,16 @@ static func enemy_state(spec: Dictionary, info: Dictionary) -> String:
 	if info.has("spawn_age") and _event_running(spec,"spawn",float(info.spawn_age)): return "spawn"
 	if not spec.animations.has("walk"): return ""
 	var direction: Vector2 = info.get("direction",Vector2.ZERO)
+	# Quatre vues sans miroir : la vue suit les signes de la direction à l'écran (la phase de marche, liée à la distance, se conserve au virage).
+	if is_four_view(spec) and absf(direction.x) > 0.000001 and absf(direction.y) > 0.000001:
+		return "walk_" + ("n" if direction.y < 0.0 else "s") + ("e" if direction.x > 0.0 else "w")
 	if direction.y < -0.000001 and spec.animations.has("walk_up"): return "walk_up"
 	if direction.y > 0.000001 and spec.animations.has("walk_down"): return "walk_down"
 	return "walk"
+
+## Vrai pour une unité à quatre vues diagonales dessinées (équipement asymétrique) : aucun miroir horizontal n'est appliqué.
+static func is_four_view(spec: Dictionary) -> bool:
+	return spec.get("directions","") == "four"
 
 ## Durée de la plus longue animation de mort chargée : fenêtre pendant laquelle un ennemi éliminé reste dessiné.
 static func death_window() -> float:
