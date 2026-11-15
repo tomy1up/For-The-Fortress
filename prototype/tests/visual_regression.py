@@ -75,7 +75,10 @@ def scenarios(types, groups):
 
 
 def capture(name, extra, destination):
-    command = [GODOT, "--path", str(PROJECTILE_PATH), "--screen", "1", "--", f"--capture={destination}", *extra]
+    if EXECUTABLE:
+        command = [EXECUTABLE, "--screen", "1", "--", f"--capture={destination}", *extra]  # jeu exporté : mêmes arguments, sans projet
+    else:
+        command = [GODOT, "--path", str(PROJECTILE_PATH), "--screen", "1", "--", f"--capture={destination}", *extra]
     try:
         run = subprocess.run(command, capture_output=True, timeout=CAPTURE_TIMEOUT)
     except subprocess.TimeoutExpired:
@@ -120,6 +123,7 @@ def parse_types(text):
 
 
 PROJECTILE_PATH = PROJECT
+EXECUTABLE = None  # chemin du jeu exporté (option --exe)
 
 
 def check_image(path, update, results):
@@ -173,7 +177,10 @@ def main():
     parser.add_argument("--only", action="append", help="limiter à une capture nommée (répétable, préfixe accepté pour les séries)")
     parser.add_argument("--types", default="0-47", help="types de défenseurs, ex. 0-47 ou 3,21,46")
     parser.add_argument("--group", action="append", choices=GROUPS, help="groupe de scénarios (répétable) ; tous par défaut")
+    parser.add_argument("--exe", help="jeu exporté à contrôler à la place des sources (For_the_Fortress.exe) : détecte les écarts propres à l'export")
     arguments = parser.parse_args()
+    global EXECUTABLE
+    EXECUTABLE = arguments.exe
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     REFERENCE_DIR.mkdir(parents=True, exist_ok=True)
     results = []

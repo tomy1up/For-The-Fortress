@@ -16,7 +16,10 @@ python prototype/tests/visual_regression.py --group menus        # un groupe : u
 python prototype/tests/visual_regression.py --types 40-47        # une plage de types (groupe units)
 python prototype/tests/visual_regression.py --only unit46_pose   # une capture, ou un préfixe (mission_horde_marsh51)
 python prototype/tests/visual_regression.py --update             # crée ou remplace les références
+python prototype/tests/visual_regression.py --exe <dossier export>/For_the_Fortress.exe --group units --group menus   # contrôle le jeu exporté
 ```
+
+**Jeu exporté** : l'option `--exe` lance les mêmes captures avec le jeu exporté au lieu des sources, pour détecter un écart propre à l'export (fichier non déclaré, planche chargée autrement). Premier essai le 15 novembre 2026 sur l'export v0.214 : 107 captures sur 108 identiques aux sources ; la seule différence (type 46, tir) vient du croissant de coup d'épée ajouté aux sources après cet export.
 
 | Groupe | Contenu | Captures |
 | --- | --- | --- |
