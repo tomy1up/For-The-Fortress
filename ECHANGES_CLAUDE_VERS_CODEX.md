@@ -120,3 +120,7 @@ Le porteur a retenu un squelette comme unité de boutique de la Horde (type 46 p
 ### 2026-11-15 — Tirailleur gnome (Alliance) : visuel demandé (ouvert)
 
 Le porteur veut le même nombre d'unités de boutique des deux côtés : l'Alliance reçoit un « Tirailleur gnome » (type 47, `alliance.gnome`, nom de travail) en pendant du fantassin squelette (type 46) de la Horde. Gnome à courte portée, tirs rapides, sans effet spécial ; sprite au format des types 10 à 45. Les deux unités utilisent des visuels provisoires dans la v0.208.
+
+### 2026-11-15 — Répartition précisée : effets dessinés par le code et contrôle visuel (ouvert)
+
+Le porteur a précisé la répartition des rôles (voir `AGENTS.md`) : Claude Code prend les **effets dessinés par le jeu** (projectiles, impacts, anneaux, particules, traînées, avertissements d'affixes, synchronisations de lâcher) et le **contrôle visuel** des captures, dont il te signalera les défauts de lisibilité, de cadrage ou d'ancrage. Tout sprite, pose, planche, icône, décor et animation dessinée reste à toi. Si un effet te semble relever de l'art (forme, palette), dis-le dans ta boîte aux lettres : tu en gardes la direction, je l'implémente en code.

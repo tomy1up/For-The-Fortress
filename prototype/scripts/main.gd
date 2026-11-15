@@ -288,7 +288,7 @@ func _ready() -> void:
 		elif argument == "--capture-faction=horde":
 			capture_faction = 1
 		elif argument.begins_with("--capture-type="):
-			capture_type = clampi(int(argument.trim_prefix("--capture-type=")), 0, 5)
+			capture_type = clampi(int(argument.trim_prefix("--capture-type=")), 0, 47)
 		elif argument.begins_with("--capture-slot="):
 			capture_slot = clampi(int(argument.trim_prefix("--capture-slot=")), 0, 5)
 		elif argument.begins_with("--capture-state="):
@@ -399,7 +399,9 @@ func _ready() -> void:
 		if capture_state in ["effects","damage_tick","elimination"]:
 			if capture_state == "damage_tick": capture_type = 5
 			model.reset()
-			model.select_faction(0 if capture_type < 3 else 1)
+			var effect_faction: int = (0 if capture_type < 3 else 1) if capture_type < 6 else (0 if capture_type < 8 else 1) if capture_type < 10 else int(Model.Shop.for_type(capture_type).faction)
+			if capture_type >= 6: model.configure_auxiliary(capture_type) # Alternatives de boutique (types 6 à 47) : capture visuelle de leur tir.
+			model.select_faction(effect_faction)
 			model.gold = 1000 # Fixture visuelle, pas une campagne jouée.
 			model.buy(capture_slot, capture_type)
 			model.wave = 1 if capture_state == "elimination" else 8
@@ -417,7 +419,7 @@ func _ready() -> void:
 				elif capture_type == 5 and not model.curses.is_empty(): found = true
 				elif not model.shots.is_empty():
 					var shot: Dictionary = model.shots[-1]
-					found = (capture_type < 2 or not shot.secondary.is_empty()) and model.elapsed-shot.time < 0.01
+					found = (capture_type < 2 or capture_type >= 6 or not shot.secondary.is_empty()) and model.elapsed-shot.time < 0.01
 				if found: break
 			assert(found, "La capture doit montrer un effet réellement résolu.")
 			if capture_state == "damage_tick":
@@ -847,8 +849,15 @@ func _capture_campaign_menu(camp: int) -> void:
 		if model.mist_enabled(): print("SEAMIST_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
 		if model.storm_enabled(): print("SANDSTORM_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
 		if "--capture-mountain-defence" in OS.get_cmdline_user_args():
-			model.buy(3,camp*3)
-			model.buy(4,camp*3+1)
+			if "--capture-full-army" in OS.get_cmdline_user_args():
+				# Armée complète pour le contrôle visuel : six défenseurs de niveaux variés (or d'essai, pas une campagne jouée).
+				model.gold = 5000
+				for slot in range(6):
+					model.buy(slot,camp*3+slot%3)
+					for _upgrade in range(slot%3): model.upgrade(slot)
+			else:
+				model.buy(3,camp*3)
+				model.buy(4,camp*3+1)
 			selected = 3
 			map_view.selected = 3
 			_update_interface()
@@ -2030,7 +2039,7 @@ func _launch_campaign_mission(id: String) -> void:
 	var definition: Dictionary = Model.Maps.for_id(candidate.map_id)
 	if definition.is_empty(): return
 	var prepared = Model.new(true,definition)
-	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(candidate.hp_percent) or not prepared.configure_wave_set(candidate.get("wave_set_id","ford")): return
+	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(CampaignCatalogue.faction_hp_percent(CampaignCatalogue.number_for(id),campaign_menu.faction)) or not prepared.configure_wave_set(candidate.get("wave_set_id","ford")): return
 	if not prepared.configure_combat_affix(candidate.get("combat_affix",{})): return
 	mission_definition = candidate
 	_choose_faction(campaign_menu.faction,prepared)
@@ -2252,9 +2261,10 @@ func _recruit_tooltip(type: int, error: String) -> String:
 func _compact_damage(stats: Dictionary, type: int) -> String:
 	type = Model.family(type)
 	var result: String = "Dégâts : %s" % _number(stats.damage)
-	if type in [2,4]: result += " · Explosion : %s × %d autres max." % [_number(stats.secondary_damage),stats.secondary_cap]
-	elif type == 3: result += " · Rebond : %s × %d max." % [_number(stats.secondary_damage),stats.secondary_cap]
-	elif type == 5: result += " · Malédiction : %s après 1 s et 2 s" % _number(stats.curse_damage)
+	# Alternatives de boutique sans effet secondaire (squelette, gnome) : ni rebond ni explosion a zero.
+	if type in [2,4] and int(stats.get("secondary_cap",0)) > 0: result += " · Explosion : %s × %d autres max." % [_number(stats.secondary_damage),stats.secondary_cap]
+	elif type == 3 and int(stats.get("secondary_cap",0)) > 0: result += " · Rebond : %s × %d max." % [_number(stats.secondary_damage),stats.secondary_cap]
+	elif type == 5 and float(stats.get("curse_damage",0.0)) > 0.0: result += " · Malédiction : %s après 1 s et 2 s" % _number(stats.curse_damage)
 	return result
 
 func _compact_upgrade(current: Dictionary, future: Dictionary, type: int) -> String:

@@ -276,6 +276,16 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.210** : lancer animé du Sapeur gobelin intégré (planche + `LAUNCH_DELAYS` dans `valley_view.gd`, départ (±34, −27), marqueur d'impact à l'arrivée). Réutilisable pour les autres unités (une entrée par type). À venir côté Codex : incantation du Chaman orc (`c5f4be1`, éclair à 0,12 s depuis (±49, −55), anneau de malédiction à caler sur l'éclair après validation), quatre orientations des attaquants.
 
+**v0.211** : incantation animée du Chaman orc (planche `defender.horde.shaman`, `LAUNCH_DELAYS` type 5, départ (±51,625, −58,875), anneau de malédiction à l'arrivée via `curse_ring_visible`). Reste côté Codex : quatre orientations des attaquants (pilote Capitaine orc), animations des autres unités selon le modèle du Sapeur et du Chaman.
+
+**v0.212** : courbe de la Horde revue (PV d'ennemis ×0,9 dès la mission 150, `Catalogue.faction_hp_percent`), sur décision du porteur après mesure (`design/Mesure_boutique_finales_O016.md`). La mission 200 de la Horde reste mince (O-018) ; à confirmer en jeu.
+
+**v0.213** : correction des libellés de stats des alternatives sans effet secondaire, capture d'effets étendue aux types 0 à 47, outils de contrôle (`design/Regression_visuelle.md` : 206 captures de référence, 120 parties aléatoires). À lancer avant une publication qui touche l'affichage : `python prototype/tests/visual_regression.py` (écran de droite).
+
+**v0.214** : mission 200 de la Horde à 85 % des PV de la courbe de base (`HORDE_FINALE_FACTOR`), sur décision du porteur après mesure (2 victoires sur 12 avant, 8 après). À confirmer en jeu.
+
+**Après la v0.214 (non publié)** : croissant de coup d'épée du squelette à la place de la lame dupliquée (`_draw_sword_strike`), option `--capture-full-army` et groupe `armies` de la régression visuelle (218 captures). Ces changements de `valley_view.gd` et `main.gd` partiront avec la prochaine version publiée (v0.215).
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

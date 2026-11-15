@@ -10,6 +10,11 @@ import subprocess
 import zipfile
 from export_sources import verify_sources
 
+def horde_hp(base, number, camp):
+    """PV d'ennemis joués : la Horde a 10 % de PV en moins à partir de la mission 150 (v0.212, arrondi comme Godot)."""
+    if camp==1 and number==200: return int(base*0.85+0.5)
+    return int(base*0.9+0.5) if camp==1 and number>=150 else base
+
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('archive',type=Path)
 parser.add_argument('--destination',required=True,type=Path)
@@ -433,7 +438,7 @@ for name,state,faction in cases:
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':map_id,'routes':routes,'hp_percent':239+((number-139)>>1),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':horde_hp(239+((number-139)>>1),number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
     elif '_campaign_menu_coast' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
@@ -449,7 +454,7 @@ for name,state,faction in cases:
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':map_id,'routes':routes,'hp_percent':239+((number-139)>>1),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':horde_hp(239+((number-139)>>1),number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
             if number>=171:
                 mist=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SEAMIST_SNAPSHOT=')))
                 assert mist['affix']=={'id':'seamist','interval':22,'warning':3,'duration':6,'gold_percent':30} and mist['visible'] and mist['text'].startswith('Brume marine')
@@ -468,7 +473,7 @@ for name,state,faction in cases:
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':map_id,'routes':routes,'hp_percent':259+((number-177)>>2),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':horde_hp(259+((number-177)>>2),number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
     elif '_campaign_menu_garrison' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1

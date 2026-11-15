@@ -15,7 +15,10 @@ func signature(scene: Node) -> String:
 func run_checks() -> void:
 	for type in range(6):
 		var delayed: float = View.launch_delay({"type":type})
-		check(is_equal_approx(delayed,0.12 if type == 4 else 0.0),"Seul le sapeur gobelin lâche sa charge à 0,12 s (type %d)" % type)
+		check(is_equal_approx(delayed,0.12 if type in [4,5] else 0.0),"Seuls le sapeur gobelin et le chaman orc différeront leur lâcher de 0,12 s (type %d)" % type)
+	var shaman_shot: Dictionary = {"type":5,"from":Vector2(2,6),"to":Vector2(3,3),"secondary":[]}
+	check(is_equal_approx(View.shot_origin(shaman_shot).x-View.project(shaman_shot.from).x,51.625) and is_equal_approx(View.shot_origin(shaman_shot).y-View.project(shaman_shot.from).y,-58.875),"Départ visuel de l’éclair du chaman à (±51,625, −58,875) des pieds")
+	check(is_equal_approx(View.curse_applied_at({"next_at":11.0,"ticks_left":2}),10.0) and is_equal_approx(View.curse_applied_at({"next_at":12.0,"ticks_left":1}),10.0),"L’instant de pose de la malédiction se déduit de ses tics")
 	var sapper_right: Dictionary = {"type":4,"from":Vector2(2,6),"to":Vector2(3,3),"secondary":[]}
 	var sapper_left: Dictionary = {"type":4,"from":Vector2(3,3),"to":Vector2(2,6),"secondary":[]}
 	check(is_equal_approx(View.shot_origin(sapper_right).x-View.project(sapper_right.from).x,34.0) and is_equal_approx(View.project(sapper_left.from).x-View.shot_origin(sapper_left).x,34.0) and is_equal_approx(View.shot_origin(sapper_right).y-View.project(sapper_right.from).y,-27.0),"Départ visuel du sapeur à (±34, −27) des pieds")

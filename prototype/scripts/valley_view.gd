@@ -225,7 +225,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12} # Sapeur gobelin : charge tenue pendant l'armé (v0.210).
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 static func shot_origin(shot: Dictionary, pose_age: float = 0.0) -> Vector2:
 	# Points d'équipement des silhouettes, distincts du centre logique de portée.
@@ -504,18 +504,18 @@ func _draw_pike_thrust(origin: Vector2, direction: Vector2, side: Vector2, progr
 	draw_colored_polygon(head,Color("dfeae6"))
 	draw_line(tip+direction*6.0,tip-direction*1.0,Color(1.0,1.0,1.0,0.6),1.0,true)
 
-## Coup d'épée courte du fantassin squelette : lame d'os qui balaie un arc devant lui, avec une traînée claire.
-func _draw_sword_strike(origin: Vector2, direction: Vector2, side: Vector2, progress: float) -> void:
+## Coup d'épée courte du fantassin squelette : croissant clair qui balaie un arc devant lui. L'épée elle-même est dans le sprite : on ne redessine pas de lame.
+func _draw_sword_strike(origin: Vector2, direction: Vector2, _side: Vector2, progress: float) -> void:
 	var t: float = clampf(progress,0.0,1.0)
-	var swing: float = lerpf(-0.9,0.9,t)
-	var blade: Vector2 = direction.rotated(swing)
-	var base: Vector2 = origin+direction*2.0
-	for trail in range(3):
-		var earlier: Vector2 = direction.rotated(swing-0.35*float(trail+1))
-		draw_line(base,base+earlier*(13.0-trail*2.0),Color(0.92,0.9,0.78,0.30-trail*0.08),2.4,true)
-	draw_line(base,base+blade*14.0,Color("1d2220"),3.4,true)
-	draw_line(base,base+blade*14.0,Color("e8e2cc"),2.0,true)
-	draw_line(base-blade*1.5+blade.orthogonal()*2.4,base-blade*1.5-blade.orthogonal()*2.4,Color("7b6a4a"),1.6,true)
+	var center: float = direction.angle()
+	var head: float = center+lerpf(-0.95,0.95,t)
+	var tail: float = head-0.9
+	var fade: float = 1.0-t*0.5
+	var radius: float = 15.0
+	var base: Vector2 = origin-direction*3.0
+	draw_arc(base,radius,tail,head,14,Color(0.96,0.93,0.82,0.38*fade),8.0,true)
+	draw_arc(base,radius,tail+0.25,head,12,Color(0.98,0.96,0.88,0.95*fade),3.4,true)
+	draw_circle(base+Vector2.from_angle(head)*radius,2.0,Color(1.0,1.0,0.95,fade),true,-1,true)
 
 ## Balle de l'arquebusière naine (type 12) : boule de plomb précédée d'un éclat de poudre, sans empennage de flèche.
 func _draw_bullet(point: Vector2, direction: Vector2) -> void:
@@ -598,9 +598,33 @@ func _draw_impact(shot: Dictionary, age: float) -> void:
 	if age < delay: return
 	if age < delay+PROJECTILE_FLIGHT:
 		var flight_color: Color = _impact_color(Model.family(shot.type))
+		if Model.family(shot.type) == 5: _draw_cast_bolt(shot,age,flight_color,1.0)
 		_draw_projectile(shot,age-delay,flight_color)
 		return
 	_draw_impact_body(shot,age-delay-PROJECTILE_FLIGHT,false)
+
+## Éclair du chaman : tracé brisé de la main (ou du crâne du bâton) jusqu'à la cible.
+func _draw_cast_bolt(shot: Dictionary, age: float, color: Color, alpha: float) -> void:
+	var origin: Vector2 = shot_origin(shot,age)
+	var target: Vector2 = project(shot.to)+Vector2(0,-12)
+	var direction: Vector2 = target-origin
+	var side: Vector2 = direction.normalized().orthogonal()
+	var bolt := PackedVector2Array([origin,origin+direction*0.3+side*4,origin+direction*0.55-side*4,origin+direction*0.78+side*3,target])
+	draw_polyline(bolt,Color(color,alpha*0.65),1.5,true)
+
+## Instant de pose d'une malédiction, déduit de ses tics (aucun état de simulation ajouté).
+static func curse_applied_at(curse: Dictionary) -> float:
+	return float(curse.next_at)-(3.0-float(curse.ticks_left))
+
+## L'anneau de malédiction d'un chaman orc apparaît avec l'arrivée de l'éclair, pas au départ du tir (rendu seul : la malédiction existe dès le tir).
+func curse_ring_visible(curse: Dictionary) -> bool:
+	var source_type := -1
+	for defender in model.defenders:
+		if not defender.is_empty() and int(defender.get("instance_id",-1)) == int(curse.source_id):
+			source_type = int(defender.type);break
+	var delay: float = float(LAUNCH_DELAYS.get(source_type,0.0))
+	if delay <= 0.0: return true
+	return model.elapsed-curse_applied_at(curse) >= delay+PROJECTILE_FLIGHT
 
 static func _impact_color(type: int) -> Color:
 	return [Color("f0d796"),Color("e1e9dc"),Color("90dceb"),Color("a8ddbd"),Color("f2b269"),Color("d1a3ed")][type]
@@ -616,12 +640,8 @@ func _draw_impact_body(shot: Dictionary, age: float, flight: bool) -> void:
 	var target: Vector2 = project(shot.to)+height
 	# L'impact est visible dès le tir : le déplacement bref ne retarde aucun dégât.
 	_draw_hit_marker(target,alpha,true,type,age)
-	if type == 5:
-		origin = shot_origin(shot, age)
-		var direction: Vector2 = target-origin
-		var side: Vector2 = direction.normalized().orthogonal()
-		var bolt := PackedVector2Array([origin,origin+direction*0.3+side*4,origin+direction*0.55-side*4,origin+direction*0.78+side*3,target])
-		draw_polyline(bolt,Color(color,alpha*0.65),1.5,true)
+	if type == 5 and flight:
+		_draw_cast_bolt(shot,age,color,alpha)
 	elif type in [0,1,2]:
 		draw_line(origin,target,Color(color,alpha*0.22),1 if type != 1 else 1.5,true)
 	elif flight:
@@ -1368,7 +1388,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	if enemy.id == inspected_enemy_id:
 		draw_arc(Vector2(0,3),14,0,TAU,32,Color("edcc80"),2,true)
 	for curse in model.curses:
-		if curse.enemy_id != enemy.id: continue
+		if curse.enemy_id != enemy.id or not curse_ring_visible(curse): continue
 		draw_arc(Vector2(0,-13),19,0,TAU,24,Color("be83d3"),1.5,true)
 		var mark := Vector2(0,-45)
 		draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]),Color("d6a1ef"))

@@ -338,40 +338,40 @@ func _refresh_detail() -> void:
 		start_button.text = "Jouer la mission %d" % number
 	scout_button.disabled = not definition.available
 	start_button.disabled = not Catalogue.unlocked(number,status)
-	if definition.available and not status.is_empty(): mission_detail.text += "\nPV ennemis : %d %% · Barème d’essai" % definition.hp_percent
+	if definition.available and not status.is_empty(): mission_detail.text += "\nPV ennemis : %d %% · Barème d’essai" % Catalogue.faction_hp_percent(number,faction)
 	mission_detail.tooltip_text = ""
 	if definition.get("combat_affix",{}).get("id","") == "seamist":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%
-Nouveau : Brume marine · or réduit" % [definition.waves,definition.hp_percent]
+Nouveau : Brume marine · or réduit" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, une brume marine réduit de %d %% l'or gagné par élimination pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.gold_percent),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.get("combat_affix",{}).get("id","") == "rockfall":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%
-Nouveau : Éboulement · entrée bloquée" % [definition.waves,definition.hp_percent]
+Nouveau : Éboulement · entrée bloquée" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, un éboulement bloque une entrée pendant %d s : les ennemis qui devaient y apparaître passent par l'entrée suivante. L'entrée touchée est signalée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.get("combat_affix",{}).get("id","") == "sandstorm":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Tempête de sable · portée réduite" % [definition.waves,definition.hp_percent]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Tempête de sable · portée réduite" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, une rafale réduit de %d %% la portée de tous les défenseurs pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.range_percent),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.get("combat_affix",{}).get("id","") == "eruptions":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Éruptions · défenseur désactivé" % [definition.waves,definition.hp_percent]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Éruptions · défenseur désactivé" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, un défenseur choisi au hasard est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.has("combat_affix"):
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nVents contraires · Cadence −10 %%" % [definition.waves,definition.hp_percent]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nVents contraires · Cadence −10 %%" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
 	if definition.get("wave_set_id","") == "ford_banks":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : tortue gardienne" % [definition.waves,definition.hp_percent]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : tortue gardienne" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Essai : la tortue encaisse 25 % des dégâts des voisins proches, dans la limite de ses PV. Ne protège ni les autres tortues ni les boss. Mêmes tracés que le chapitre 1 ; nouvelles rencontres. Valeurs provisoires."
 	if definition.get("wave_set_id","") == "necro_revenants":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : revenant · se relève une fois" % [definition.waves,definition.hp_percent]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : revenant · se relève une fois" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Essai : le revenant est un attaquant neutre (30 PV, vitesse 0,9) qui se relève une seule fois avec la moitié de ses PV maximum ; il apparaît à partir de la vague 4. Valeurs provisoires."
 	if definition.get("wave_set_id","") == "sky_eagles":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : aigle des cimes · groupes rapides" % [definition.waves,definition.hp_percent]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : aigle des cimes · groupes rapides" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Essai : l'aigle des cimes est un attaquant neutre rapide et fragile (14 PV, vitesse 1,5) qui arrive en groupes serrés à partir de la vague 3. Valeurs provisoires."
 	if definition.get("wave_set_id","") == "citadel_garrison":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Garnison · capitaine d'élite" % [definition.waves,definition.hp_percent]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Garnison · capitaine d'élite" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Essai : la Garnison est l'unité d'élite de la citadelle (520 PV, vitesse 0,6, −4 PV de forteresse) ; elle accompagne les vagues 5, 7, 9 et 10. Valeurs provisoires."
 	if definition.get("wave_set_id","") == "marsh_drowned":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%
-Nouveau : Gueule-de-Vase · eau régénérante" % [definition.waves,definition.hp_percent]
+Nouveau : Gueule-de-Vase · eau régénérante" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Essai : Gueule-de-Vase régénère %d %% de ses PV maximum par seconde dans les tronçons inondés de la carte, repérés en bleu sur le chemin. Valeurs provisoires." % roundi(Drowned.REGEN_PER_SECOND*100.0)
 	if status.is_empty():
 		mission_detail.text = "La progression n’est pas disponible."

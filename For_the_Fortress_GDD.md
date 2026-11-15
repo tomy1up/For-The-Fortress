@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.47 — 15 novembre 2026
+Game Design Document — Version 0.51 — 15 novembre 2026
 
 Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne de 200 missions, entièrement jouable (vingt chapitres, dix biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.206. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. La boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
 
 **Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.206. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.47 ; jeu de référence 0.210.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.51 ; jeu de référence 0.214.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -77,7 +77,7 @@ Nom de travail — disponibilité juridique à confirmer.
 63. [63 Biomes, nouveautés et affixes de combat](#s63)
 64. [64 Équilibrage des talents et mesure des cartes](#s64)
 65. [65 Cadre de travail, outils et production](#s65)
-66. [66 Journal des versions 0.110 à 0.210](#s66)
+66. [66 Journal des versions 0.110 à 0.214](#s66)
 
 <a id="s1"></a>
 
@@ -1661,6 +1661,8 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-44 | Le type 44 (`horde.kamikaze`, identifiant conservé) s’appelle **« Gobelin des braises »** au lieu de « Gobelin kamikaze » — V | Choix du porteur, 14 novembre 2026, parmi la proposition de Codex ; intégration de la revue de lisibilité des unités (mipmaps et cadrages) décidée le même jour |
 | MAJ-45 | **Fantassin squelette** (type 46, `horde.skeleton`) : unité de boutique de la Horde, **option A** « fantassin d’os » (défense très bon marché, portée courte, sans règle nouvelle) — V pour le rôle ; valeurs (40 PO de recrutement, 6 de dégâts, 0,6 s, portée 2,0), nom de travail, prix de boutique 1 350 PO et déblocage mission 190 — H (réglage de prototype à confirmer) | Choix du rôle par le porteur, 15 novembre 2026 ; nom, prix, déblocage et parité (Horde à 21 alternatives, Alliance à 20 pour l’instant) laissés au choix de l’agent, à confirmer ; fiche `design/Horde_squelette_jouable.md` |
 | MAJ-46 | **Parité de la boutique : le même nombre d’unités des deux côtés** — V ; **Tirailleur gnome** (type 47, `alliance.gnome`) ajouté à l’Alliance, 21 alternatives par faction — V pour le principe ; nom de travail, valeurs (45 PO, 6 de dégâts, 0,65 s, portée 2,6), prix 1 350 PO et déblocage mission 190 — H (réglage de prototype à confirmer) | Exigence du porteur, 15 novembre 2026 ; choix de l’unité laissé à l’agent, remplace la mention « Horde à 21, Alliance à 20 » de MAJ-45 |
+| MAJ-47 | **Courbe de la Horde revue : PV d’ennemis ×0,9 à partir de la mission 150** (`Catalogue.faction_hp_percent`) — V pour le principe et l’option (réduction de 10 %) ; valeur et seuil de mission — H (réglage de prototype à confirmer en jeu) | Décision du porteur, 15 novembre 2026 (« la Horde doit être revue », option « PV ennemis −10 % ») ; mesure de l’agent, fiche `design/Mesure_boutique_finales_O016.md` |
+| MAJ-48 | **Mission 200 de la Horde : PV d’ennemis à 85 % de la courbe de base** (au lieu de 90 % pour le reste des missions 150 à 199) — V pour la décision ; valeur — H (réglage de prototype à confirmer en jeu) | Décision du porteur, 15 novembre 2026 (option « mission 200 seule ») ; mesure `design/Mesure_boutique_finales_O016.md` |
 | MAJ-34 | **Le GDD est tenu à jour à chaque publication de version, par Claude Code** : décisions prises, décisions à prendre et noyau du jeu — V | Demande du porteur, 12 novembre 2026 ; étape ajoutée au cycle d’une version dans `AGENTS.md` |
 
 <a id="s49"></a>
@@ -1682,7 +1684,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-013 | Boutique étendue : catalogue de 20 unités par faction complet côté règles (v0.196) ; restent les indicateurs visuels des effets (ralentissement, marque, aura, pillage, volatilité), les illustrations de Codex pour 38 unités sur 40, le nombre d’unités alternatives par mission (une seule), la lisibilité d’une boutique de vingt unités (pagination provisoire), les libellés de bonus, l’équilibrage des valeurs d’essai | Production de Codex ; jugement du porteur |
 | O-014 | Mode infini, difficultés Héroïque et Mythique, règles de cumul des attaquants et affixes (CAMP-018 à CAMP-020), récompenses | Fin de la campagne normale |
 | O-015 | Confirmation en jeu des valeurs du revenant (chapitre 20) et de la brume marine (chapitre 18) ; la campagne de 200 missions est entièrement conçue et jouable (la toundra et glace est écartée) | Retours du porteur |
-| O-016 | Courbe de PV (264 % à la mission 200) : tient-elle avec 51 points de talent ? Marges mesurées avec la référence : 3 PV au chapitre 18 (mission 178 Horde), 12 PV au chapitre 19, 11 PV au chapitre 20 ; la puissance de la boutique n’est pas simulée | Boutique (O-013) ; retours en jeu |
+| O-016 | Courbe de PV (264 % à la mission 200) : tient-elle avec 51 points de talent ? Marges mesurées avec la référence : 3 PV au chapitre 18 (mission 178 Horde), 12 PV au chapitre 19, 11 PV au chapitre 20 ; première mesure de la boutique le 15 novembre 2026 (`design/Mesure_boutique_finales_O016.md`) : aucune alternative ne brise ni n’écrase la progression (à trois puis à six unités) ; avec six unités, l’Alliance tient les finales (5 victoires sur 6 aux missions 178 et 200 avec la base) et la Horde reste la plus mince (1 victoire sur 6 à la mission 200, 7 PV restants), indépendamment de la boutique ; ajustement éventuel de la Horde à soumettre au porteur | Boutique (O-013) ; retours en jeu |
 | O-017 | Confirmation en jeu des valeurs d’essai des affixes (Vents contraires, Éruptions, tempête de sable, éboulement) et de leur lisibilité | Retours du porteur ; habillage de Codex |
 | O-018 | Marges minces de la Horde aux finales des chapitres 3 et 4 (missions 30 et 40) ; mission 40 sur carte propre depuis la v0.178 | Remesure et éventuelle révision des tracés |
 | O-019 | Attribution et production du son | Décision du porteur |
@@ -1788,6 +1790,14 @@ Version 0.45 — 15 novembre 2026 : jeu 0.208. Le porteur exige le **même nombr
 Version 0.46 — 15 novembre 2026 : jeu 0.209. Intégration de deux visuels de Codex validés par le porteur : le sprite du **Fantassin squelette** (type 46), avec un coup d’épée courte de mêlée à la place du lancer de hache hérité, le sprite du **Tirailleur gnome** (type 47), avec un carreau court d’arbalète de poing (famille Archer conservée), et le **Capitaine orc** de la garnison (`enemy.horde.garrison`), qui remplace la silhouette provisoire du chef de guerre. Aucune règle ni valeur modifiée.
 
 Version 0.47 — 15 novembre 2026 : jeu 0.210. Premier geste de combat animé : le **lancer du Sapeur gobelin** (planche de Codex validée par le porteur le 15 novembre 2026, retenue comme référence de qualité pour les autres unités). La charge quitte la main à 0,12 s, avec un départ visuel à (±34, −27) des pieds, et le marqueur d’impact apparaît à l’arrivée du projectile. Les dégâts restent résolus à l’instant du tir : aucune règle de combat modifiée.
+
+Version 0.48 — 15 novembre 2026 : jeu 0.211. Incantation animée du **Chaman orc** (planche de Codex à gabarit constant, validée par le porteur le 15 novembre 2026) : l’éclair quitte le crâne du bâton à 0,12 s depuis (±51,625, −58,875) des pieds, et l’anneau de malédiction n’apparaît qu’à l’arrivée de l’éclair (rendu seul : la malédiction, ses dégâts et ses tics restent ceux du tir). Mipmaps activés sur la garde et l’attaque. Aucune règle de combat modifiée.
+
+Version 0.49 — 15 novembre 2026 : jeu 0.212. **Courbe de la Horde revue** sur décision du porteur (MAJ-47) : à partir de la mission 150, les ennemis affrontés par la Horde ont 10 % de PV en moins (mission 200 : 238 % au lieu de 264 %), l’Alliance et les 149 premières missions restant inchangées. La mesure (`design/Mesure_boutique_finales_O016.md`) donnait 16 victoires sur 48 à la Horde contre 33 à l’Alliance à PV égaux, et 31 à ×0,9. Réglage de prototype à confirmer ; la mission 200 reste mince.
+
+Version 0.50 — 15 novembre 2026 : jeu 0.213. Correction d’interface : le panneau des alternatives de boutique sans effet secondaire (Fantassin squelette, Tirailleur gnome…) n’affiche plus « Rebond : 0 × 0 max. » ni explosion ou malédiction à zéro. Outils de contrôle ajoutés (régression visuelle de 206 captures, parties aléatoires : `design/Regression_visuelle.md`) ; l’option de capture des effets couvre les types 0 à 47. Aucune règle de jeu modifiée.
+
+Version 0.51 — 15 novembre 2026 : jeu 0.214. **Finale de la Horde allégée** sur décision du porteur (MAJ-48) : à la mission 200, les ennemis de la Horde ont 85 % de la courbe de base (224 % au lieu de 238 %) ; mesure : 2 victoires sur 12 avant, 8 sur 12 après, contre 9 pour l’Alliance. Les autres missions (Horde −10 % dès la 150, Alliance inchangée) ne bougent pas. Réglage de prototype à confirmer.
 
 <a id="s51"></a>
 
@@ -2081,7 +2091,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 15 novembre 2026 (GDD 0.47, jeu 0.210)
+### État au 15 novembre 2026 (GDD 0.51, jeu 0.214)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2103,7 +2113,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.47, jeu 0.210 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.51, jeu 0.214 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2380,7 +2390,7 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 
 <a id="s66"></a>
 
-## 66 Journal des versions 0.110 à 0.210
+## 66 Journal des versions 0.110 à 0.214
 
 | Versions | Contenu |
 | --- | --- |
@@ -2426,5 +2436,9 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.208 | Tirailleur gnome (type 47) dans la boutique de l’Alliance : 21 unités par faction ; GDD 0.45 |
 | 0.209 | Sprite du Fantassin squelette (coup d’épée) et Capitaine orc de la garnison ; GDD 0.46 |
 | 0.210 | Lancer animé du Sapeur gobelin (lâcher à 0,12 s, marqueur à l’arrivée) ; GDD 0.47 |
+| 0.211 | Incantation animée du Chaman orc (éclair à 0,12 s, anneau de malédiction à l’arrivée) ; GDD 0.48 |
+| 0.212 | Courbe de la Horde revue : PV d’ennemis −10 % dès la mission 150 ; GDD 0.49 |
+| 0.213 | Libellés des alternatives sans effet secondaire corrigés ; outils de régression visuelle et de parties aléatoires ; GDD 0.50 |
+| 0.214 | Finale de la Horde allégée (mission 200 : PV d’ennemis à 85 %) ; GDD 0.51 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.
