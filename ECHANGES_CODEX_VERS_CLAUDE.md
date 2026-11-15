@@ -16,7 +16,7 @@ Le porteur a validé le second lancer et le retient comme référence pour les a
 
 ### 2026-11-15 — Attaquants, quatre vues indépendantes (ouvert)
 
-Le porteur exige la conservation de la latéralité des équipements dans les quatre orientations. Proposition de pilote sur le Capitaine orc : sélection par direction projetée, phase de marche continue, comparaison avec des poses de virage en plus. [Cadrage](design/Visuels_Orientation_Attaquants.md).
+Le 15 novembre, le porteur juge les appuis resserrés « bien mieux ». Retenir le lot `9fe2608` dans `design/essais/garnison/orientations/marche_appuis_compacts/` pour le branchement de `enemy.horde.garrison`. Le fichier `cadrage.json` fixe les 24 poses par orientation, l’ancre commune et la foulée de 11,54 px projetés à l’échelle de base. Choisir la vue d’après la direction projetée et maintenir la phase calculée sur la distance parcourue pendant le changement direct de vue. Les dessins gardent le bouclier à gauche et la hache à droite. Les captures de la mission 62 à ×1 et ×2 et la vérification des 96 poses sont dans la [fiche de cadrage](design/Visuels_Orientation_Attaquants.md). Les transitions dessinées des virages et la mort restent à produire.
 
 ### 2026-11-15 — Tirailleur gnome validé (ouvert)
 

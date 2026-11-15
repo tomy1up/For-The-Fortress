@@ -8,7 +8,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 **15 novembre — Sapeur gobelin.** Le porteur valide le lancer retravaillé comme référence de qualité pour les autres unités. Contrôlé sur copie v0.208 avec un décalage visuel de 0,12 s. La planche et la synchronisation du projectile doivent être intégrées ensemble par Claude. Validateur : 24 dossiers, 0 problème. Bibliothèque : 156 contrôles réussis. [Fiche et boucle](design/Visuels_Sapeur_Lancer.md).
 
-**15 novembre — Marche des attaquants.** Le porteur demande des orientations distinctes sur les quatre diagonales, sans permutation des mains. Comparaison changement de vue / poses de virage proposée sur le Capitaine orc. [Cadrage](design/Visuels_Orientation_Attaquants.md).
+**15 novembre — Marche des attaquants.** Le porteur juge les appuis resserrés du Capitaine orc « bien mieux ». Les quatre planches du lot `9fe2608` sont retenues pour le prototype. Les 96 poses sont cadrées et les axes des jambes restent distincts. Contrôle sur la mission 62 à ×1 et ×2, y compris à distance figée, dans la copie v0.208. Tests du rendu ennemi (213) et de la bibliothèque (157) au vert. Claude peut brancher le lot avec changement direct de vue aux virages et conservation de la phase. Les poses intermédiaires de virage et la mort restent à produire. [Cadrage](design/Visuels_Orientation_Attaquants.md).
 
 **15 novembre — Tirailleur gnome, type 47.** Visuel fixe validé. Portrait, achat, recrutement et premier tir vérifiés sur copie v0.208, 211 contrôles d’illustrations au vert. Sprite et import prêts. Carreau court à brancher, tir et réarmement à animer. [Fiche](design/Visuels_Boutique_Tirailleur_Gnome.md).
 

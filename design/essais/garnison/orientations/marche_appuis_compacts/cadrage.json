@@ -1,0 +1,21 @@
+{
+  "frames": 24,
+  "columns": 12,
+  "frame_size": [
+    352,
+    304
+  ],
+  "foot": [
+    174,
+    258
+  ],
+  "body_height": 218,
+  "display_height": 47.41284403669725,
+  "stride": 11.541284403669724,
+  "atlases": {
+    "no": "no.png",
+    "ne": "ne.png",
+    "so": "so.png",
+    "se": "se.png"
+  }
+}
