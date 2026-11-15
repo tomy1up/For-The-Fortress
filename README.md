@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.215**. Coup d'épée du squelette en croissant ; régression visuelle étendue aux armées complètes et au jeu exporté. [Notes](design/essais/v0215_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.215).
+
 **Prototype v0.214**. Finale de la Horde allégée : mission 200 avec 15 % de PV d'ennemis en moins. [Notes](design/essais/v0214_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.214).
 
 **Prototype v0.213**. Libellés de stats corrigés pour les alternatives de boutique sans effet secondaire ; régression visuelle et parties aléatoires. [Notes](design/essais/v0213_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.213).

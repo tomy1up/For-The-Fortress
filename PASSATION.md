@@ -286,6 +286,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **Après la v0.214 (non publié)** : croissant de coup d'épée du squelette à la place de la lame dupliquée (`_draw_sword_strike`), option `--capture-full-army` et groupe `armies` de la régression visuelle (218 captures). Ces changements de `valley_view.gd` et `main.gd` partiront avec la prochaine version publiée (v0.215).
 
+**v0.215** : croissant de coup d'épée du squelette, option `--capture-full-army`, régression visuelle sur les armées et sur le jeu exporté (`--exe`). En attente de Codex : quatre orientations des attaquants (diagonales du Capitaine orc à valider par le porteur avant branchement), gestes des autres unités, animation de frappe du squelette et de tir du gnome.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.
