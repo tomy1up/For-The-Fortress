@@ -55,7 +55,7 @@ Choix de technique à arbitrer par le porteur, pilote à l'appui :
 | Alliance | Mage humain | Image fixe | Idem, incantation, effet d'explosion |
 | Horde | Lanceur de haches troll | Image fixe | Idem, lancer et rebond |
 | Horde | Sapeur gobelin | Lancer retravaillé validé visuellement | Brancher ensemble la planche et le lancement du projectile, puis vérifier le rendu intégré |
-| Horde | Chaman orc | Image fixe | Idem, totem, malédiction |
+| Horde | Chaman orc | Incantation et gabarit corrigé validés visuellement | Brancher garde et attaque, puis synchroniser l’éclair et l’anneau |
 | Alliance (boutique) | Rôdeur elfe | Image fixe | Animation d'attaque rapide (intervalle 0,7 s) |
 | Alliance (boutique) | Mousquetaire nain | Image fixe (2 versions) | Tir lent à longue portée, fumée |
 | Horde (boutique) | Traqueur troll | Image fixe | Tir et rebond secondaire |

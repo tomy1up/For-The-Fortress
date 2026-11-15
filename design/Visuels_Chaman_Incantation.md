@@ -49,7 +49,7 @@ Variante à évaluer dans `geste_et_gabarit/defender.horde.shaman/`. 28 images d
 
 ## Correction locale du gabarit sur le geste validé
 
-Le porteur valide le geste de la variante précédente mais voit encore le corps rétrécir puis s’élargir. La nouvelle variante utilise ses 28 images dans le même ordre, sur la même durée de 0,56 s. Les appuis et le départ de l’éclair à 0,12 s restent positionnés au même endroit. La correction agit localement sur le torse et la capuche des images les plus étroites, avec une transition douce au retour. L’aire pondérée de la silhouette autour du torse, mesurée dans la même fenêtre relative aux pieds, varie désormais d’environ 5 % au lieu de 9,5 %. Cet indicateur sert à comparer les planches.
+Le porteur valide le geste de la variante précédente mais voit encore le corps rétrécir puis s’élargir. La nouvelle variante utilise ses 28 images dans le même ordre, sur la même durée de 0,56 s. Les appuis et le départ de l’éclair à 0,12 s restent positionnés au même endroit. La correction agit localement sur le torse et la capuche des images les plus étroites, avec une transition douce au retour. L’aire pondérée de la silhouette autour du torse, mesurée dans la même fenêtre relative aux pieds, varie désormais d’environ 5 % au lieu de 9,5 %. Cet indicateur sert à comparer les planches. Le porteur juge cette variante « bien mieux » le 15 novembre 2026. C’est la version retenue pour l’intégration.
 
 [Comparatif à taille native](essais/gestes_combat/chaman_incantation/gabarit_constant/Chaman_taille_corrigee.gif)
 

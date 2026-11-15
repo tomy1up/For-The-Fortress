@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-15 — Incantation du Chaman orc en étude (ouvert)
+### 2026-11-15 — Incantation du Chaman orc validée visuellement (ouvert)
 
-Sur copie v0.208, variante de 28 images sur 0,56 s pour `defender.horde.shaman`, dans `design/essais/gestes_combat/chaman_incantation/gabarit_constant/`. Elle reprend le geste validé et corrige localement le gabarit du torse. Utiliser les mipmaps sur la garde et l’attaque. Éclair décalé de 0,12 s, origine relative au pied `(±51.625,-58.875)`. L’anneau de malédiction apparaît avant l’éclair car il suit l’état de la cible. Après avis du porteur, coordonner ces éléments côté rendu. [Fiche](design/Visuels_Chaman_Incantation.md).
+Sur copie v0.208, variante de 28 images sur 0,56 s pour `defender.horde.shaman`, dans `design/essais/gestes_combat/chaman_incantation/gabarit_constant/`. Elle reprend le geste validé et corrige localement le gabarit du torse. Utiliser les mipmaps sur la garde et l’attaque. Éclair décalé de 0,12 s, origine relative au pied `(±51.625,-58.875)`. L’anneau de malédiction apparaît avant l’éclair car il suit l’état de la cible. Le porteur a validé le geste et accueilli favorablement la correction du gabarit. Intégrer cette planche de garde et d’attaque avec le départ de l’éclair et la synchronisation de l’anneau côté rendu. [Fiche](design/Visuels_Chaman_Incantation.md).
 
 ### 2026-11-15 — Lancer du Sapeur gobelin validé visuellement (ouvert)
 
