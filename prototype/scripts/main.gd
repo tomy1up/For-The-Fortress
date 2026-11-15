@@ -849,8 +849,15 @@ func _capture_campaign_menu(camp: int) -> void:
 		if model.mist_enabled(): print("SEAMIST_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
 		if model.storm_enabled(): print("SANDSTORM_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
 		if "--capture-mountain-defence" in OS.get_cmdline_user_args():
-			model.buy(3,camp*3)
-			model.buy(4,camp*3+1)
+			if "--capture-full-army" in OS.get_cmdline_user_args():
+				# Armée complète pour le contrôle visuel : six défenseurs de niveaux variés (or d'essai, pas une campagne jouée).
+				model.gold = 5000
+				for slot in range(6):
+					model.buy(slot,camp*3+slot%3)
+					for _upgrade in range(slot%3): model.upgrade(slot)
+			else:
+				model.buy(3,camp*3)
+				model.buy(4,camp*3+1)
 			selected = 3
 			map_view.selected = 3
 			_update_interface()
