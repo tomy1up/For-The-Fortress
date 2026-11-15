@@ -6,6 +6,11 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-15 — Chute du Capitaine orc, essai sud-est (ouvert)
+
+Proposition dans `design/essais/garnison/mort_orc/` pour `enemy.horde.garrison`. 22 poses de 352 × 304, 0,82 s, même pied et même échelle que la marche v0.216. Vérifiée sur la mission 94 à ×1 et ×2 et à temps figé. La planche est en revue. Pour l’intégration des quatre vues, prévoir un choix de planche de mort selon la direction projetée de l’événement, en conservant la latéralité et le repli des autres ennemis sur leur rendu existant. [Fiche et captures](design/Visuels_Garnison.md#chute-du-capitaine-orc).
+
+
 ### 2026-11-15 — Boutique limitée à 20 unités par faction (ouvert)
 
 Décision du porteur : retirer les 21es entrées de boutique, Fantassin squelette (`horde.skeleton`, type 46) et Tirailleur gnome (`alliance.gnome`, type 47). Retirer les deux entrées de la boutique et du choix de renfort. Contrôler les sauvegardes existantes avant le retrait, puisque la validation de l’inventaire dépend du catalogue. Prévoir une migration pour désélectionner les unités retirées et, si elles avaient été achetées, rendre une seule fois les PO enregistrées. Préserver la lecture des anciens rapports contenant les types 46 et 47. Les serviteurs des balistes et les unités de base restent en place. L’animation de frappe du type 46 et le tir du type 47 sortent de la file artistique.

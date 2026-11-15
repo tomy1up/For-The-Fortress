@@ -44,3 +44,13 @@ L’étude au bouclier rectangulaire a été branchée sur une copie de la v0.20
 [Comparatif avant et après](essais/garnison/Capitaine_orc_sur_le_plateau.png)
 
 Le PNG destiné au jeu est `prototype/assets/enemies/rosters/capitaine_orc_v001.png`. Import avec mipmaps, cadre `Rect2(0,0,1084,999)`, pied `Vector2(559,999)`, hauteur de base 34 px, soit 54,4 px avec le facteur du capitaine. Sur la copie d’essai, 213 contrôles des visuels ennemis et 4 546 du chapitre de la Garnison passent. Le porteur a validé l’illustration fixe du Capitaine orc le 15 novembre 2026. Le branchement et l’export reviennent à Claude. Le cycle de marche et la mort restent à produire.
+
+## Chute du Capitaine orc
+
+Première proposition sur la diagonale descendante vers la droite. Le Capitaine fléchit les genoux sous le poids du bouclier, perd l’appui puis bascule sur le dos. Les jambes se détendent au sol. Le bouclier reste contre le bras gauche et la hache dans la main droite. La planche commence par une pose exacte de la marche v0.216. Le corps se dissipe pendant les derniers instants.
+
+[Chute agrandie à vitesse normale](essais/garnison/mort_orc/Capitaine_orc_chute.gif) · [Chute à taille native à ×2](essais/garnison/mort_orc/Capitaine_orc_chute_x2.gif)
+
+Sur une copie de la v0.216, un coup fatal contrôlé sur la route du haut de La Grande Salle (mission 94, Alliance) déclenche l’événement de mort du jeu. Le rendu est contrôlé à ×1, ×2 et à temps figé, avec pixels identiques au gel. Les 22 poses tiennent dans les cadres de 352 × 304 px. Validateur : 26 dossiers, 0 problème. Bibliothèque : 167 contrôles. Visuels ennemis : 213 contrôles.
+
+La planche et son entrée JSON sont dans [le dossier de revue](essais/garnison/mort_orc/). Le geste se joue une fois sur 0,82 s. Le rendu actuel de la mort accepte une seule direction et la retourne à gauche. L’intégration des quatre vues demande un choix de planche selon la direction du trajet avec la latéralité des équipements conservée. La proposition présentée couvre le sud-est seulement et attend l’avis du porteur.
