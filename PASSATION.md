@@ -86,7 +86,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 **Piquier humain, type 14.** Visuel en gambison bleu clair avec pique verticale validé par le porteur le 14 novembre 2026 (`51cda5e`). Portrait, recrutement et première attaque vérifiés sur copie v0.197, avec 55 contrôles réussis. Sprite prêt à intégrer. Le rendu du coup de pique reste à brancher. [Fiche](design/Visuels_Boutique_Piquier.md).
 
-**Bombardier nain, type 13.** Recul de la bombarde et remise en batterie en revue. 20 poses sur 0,64 s, départ du boulet à 0,160 s. Mission 94, tirs réels dans les deux sens à ×1 et ×2 et à temps figé. Validateur : 30 dossiers, 0 problème. Bibliothèque : 171 contrôles. [Fiche et captures](design/Visuels_Boutique_Bombardier.md#tir-recul-et-remise-en-batterie).
+**Bombardier nain, type 13.** Le porteur donne un retour favorable au recul et à la remise en batterie. Lot `4ef598e` retenu pour intégration. 20 poses sur 0,64 s, départ du boulet à 0,160 s. Mission 94, tirs réels dans les deux sens à ×1 et ×2 et à temps figé. Validateur : 30 dossiers, 0 problème. Bibliothèque : 171 contrôles. [Fiche et captures](design/Visuels_Boutique_Bombardier.md#tir-recul-et-remise-en-batterie).
 
 **Arquebusière naine, type 12.** Visuel fixe intégré. Retour favorable du porteur sur le recul et le retour en joue, 12 poses sur 0,18 s et planche de repos. Le bout du canon est calé à 0,045 s. Captures au Gué en E1 et E2, à ×1 et ×2, y compris à temps figé. Validateur : 27 dossiers, 0 problème. Bibliothèque : 168 contrôles. [Fiche et aperçus](design/Visuels_Boutique_Arquebusiere.md#tir-et-retour-en-joue).
 
