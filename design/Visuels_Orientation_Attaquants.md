@@ -43,3 +43,11 @@ Les quatre vues de garde sont utilisées avec un cycle de 24 poses chacune. Les 
 Le [cadrage d’essai](essais/garnison/orientations/marche/cadrage.json) utilise des cadres de 320 × 288 px et une foulée de 10,5 px projetés à l’échelle de base, soit 16,8 px pour le capitaine. La phase est calculée à partir de la distance projetée. Aucun miroir. Les quatre planches ont passé le contrôle de découpe, 96 poses au total.
 
 Captures sur deux coins des Coulées Figées (mission 62), à ×1 et ×2, sur copie v0.208. Le Capitaine avance sur la chaussée existante à sa vitesse de référence de 0,6 unité logique par seconde à ×1. Les captures contrôlées à distance figée restent identiques. Les tests des visuels ennemis (213) et de la bibliothèque d’animations (157) passent sur la copie d’essai. Les planches restent dans le dossier de design. Leur sélection pour les quatre orientations requiert un branchement spécifique avec conservation de la phase. Un essai de transition entre les vues reste à produire.
+
+## Appuis resserrés et bottes dans l’axe
+
+Le porteur a signalé une démarche en canard. Les quatre poses de base ont été redessinées avec les bottes plus près de l’axe du corps et orientées davantage vers la marche. Le dessin conserve le coude gauche rentré, le bouclier près du torse et la lame à droite. Les pas sont plus courts, avec une reprise progressive de la jambe libre. La foulée reste liée à la distance parcourue.
+
+[Comparatif avant et après sur la chaussée](essais/garnison/orientations/marche_axe/Capitaine_demarche_avant_apres.gif)
+
+Variante de 24 poses par orientation, cadres 320 × 288, ancre (160, 254), foulée de base 7 px projetés (11,2 px pour le Capitaine). Les 96 poses passent le contrôle de découpe. Comparaison sur les mêmes coins de la mission 62 et à la même vitesse de déplacement. La copie v0.208 a été vérifiée à ×1 et ×2 et à distance figée. Les 213 contrôles des visuels ennemis passent. Les virages utilisent encore un changement de vue direct. Cette démarche reste proposée à la revue du porteur.
