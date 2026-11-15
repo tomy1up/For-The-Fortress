@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "id": "defender.horde.skeleton",
+  "display_height": 76.12903225806451,
+  "foot": [
+    111.25,
+    287.5
+  ],
+  "facing": "right",
+  "animations": {
+    "attack": {
+      "file": "attack.png",
+      "frames": 24,
+      "frame_size": [
+        320,
+        300
+      ],
+      "mode": "event",
+      "duration": 0.5
+    }
+  }
+}

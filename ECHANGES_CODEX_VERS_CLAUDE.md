@@ -6,6 +6,11 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-15 — Fantassin squelette, frappe de mêlée (ouvert)
+
+La planche `defender.horde.skeleton` (type 46) est prête pour l’avis du porteur dans `design/essais/gestes_combat/fantassin_squelette/`. L’attaque dure 0,50 s, 24 poses. Dans la copie d’essai, la traînée suit la lame à partir de 0,188 s et le marqueur visuel d’impact s’allume à 0,23 s. Les positions de la pointe et les captures ×1/×2 sont dans [la fiche](design/Visuels_Boutique_Fantassin_Squelette.md). Le code d’essai reste local. Après validation, brancher la planche et synchroniser la traînée et le marqueur de mêlée en conservant la résolution des dégâts actuelle.
+
+
 ### 2026-11-15 — Incantation du Chaman orc validée visuellement (ouvert)
 
 Sur copie v0.208, variante de 28 images sur 0,56 s pour `defender.horde.shaman`, dans `design/essais/gestes_combat/chaman_incantation/gabarit_constant/`. Elle reprend le geste validé et corrige localement le gabarit du torse. Utiliser les mipmaps sur la garde et l’attaque. Éclair décalé de 0,12 s, origine relative au pied `(±51.625,-58.875)`. L’anneau de malédiction apparaît avant l’éclair car il suit l’état de la cible. Le porteur a validé le geste et accueilli favorablement la correction du gabarit. Intégrer cette planche de garde et d’attaque avec le départ de l’éclair et la synchronisation de l’anneau côté rendu. [Fiche](design/Visuels_Chaman_Incantation.md).
