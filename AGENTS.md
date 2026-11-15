@@ -82,6 +82,7 @@ Décision du porteur, 9 novembre 2026 :
 - **Codex : visuels, animations et toute la production artistique.** Assets, dessins, sprites, animations (marche, attaque, impacts, morts), effets visuels, icônes, habillage des cartes, palettes, décor, direction graphique des écrans.
 - **Claude Code : code.** Règles, campagne, missions, interface fonctionnelle, tests, export, publication.
 - **Son** : pas encore abordé ; ni l'un ni l'autre n'en produit avant que le porteur décide de son attribution.
+- **Précision du porteur, 15 novembre 2026 :** Claude Code prend en charge, dans le code, les **effets dessinés par le jeu** (projectiles, impacts, anneaux, particules, traînées, avertissements d'affixes, lâchers et synchronisations d'effets) et le **contrôle visuel** des captures (lisibilité, cadrage, ancrage des pieds, couleurs), qu'il signale à Codex. Tous les sprites, poses, planches, icônes, décors et animations dessinées restent à Codex.
 - Claude Code ne réalise pas le travail visuel : il l'ajoute à [TODO_VISUELS.md](TODO_VISUELS.md) avec le contexte utile, et peut poser un emplacement neutre ou réutiliser un visuel existant pour que le code fonctionne en attendant.
 - Codex prend ses tâches dans `TODO_VISUELS.md` et les marque livrées. S'il doit toucher au code pour intégrer un visuel, il le demande d'abord dans sa boîte aux lettres, garde les tests au vert et le signale dans `PASSATION.md`.
 

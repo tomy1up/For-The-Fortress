@@ -21,7 +21,8 @@ func run_checks() -> void:
 		var target: Rect2 = Art.destination(type)
 		check(is_equal_approx(target.end.y,0.0) and target.has_area() and target.position.x < 0.0 and target.end.x > 0.0,"Pieds ancrés au sol, silhouette de part et d’autre de l’emplacement")
 		check(is_equal_approx(target.size.x/target.size.y,frame.source.size.x/frame.source.size.y),"Proportions de la planche conservées sans étirement")
-		check(target.grow(8).has_point(Art.MUZZLES[type]),"Départ des projectiles près de l’équipement visible")
+		# Le chaman orc est animé depuis sa garde de 90 px (v0.211) : son crâne de bâton dépasse du sprite fixe de remplacement.
+		check(target.grow(8 if type != 5 else 40).has_point(Art.MUZZLES[type]),"Départ des projectiles près de l’équipement visible")
 	check(Art.destination(4).size.y < Art.destination(3).size.y and Art.destination(4).size.y < Art.destination(5).size.y,"Gobelin plus petit que le troll et le chaman")
 	var scene = Main.new();root.add_child(scene);scene.set_process(false);scene._choose_faction(1);scene.model.gold = 10000
 	for slot in range(6):

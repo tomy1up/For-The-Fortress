@@ -225,7 +225,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12} # Sapeur gobelin : charge tenue pendant l'armé (v0.210).
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 static func shot_origin(shot: Dictionary, pose_age: float = 0.0) -> Vector2:
 	# Points d'équipement des silhouettes, distincts du centre logique de portée.
@@ -598,9 +598,33 @@ func _draw_impact(shot: Dictionary, age: float) -> void:
 	if age < delay: return
 	if age < delay+PROJECTILE_FLIGHT:
 		var flight_color: Color = _impact_color(Model.family(shot.type))
+		if Model.family(shot.type) == 5: _draw_cast_bolt(shot,age,flight_color,1.0)
 		_draw_projectile(shot,age-delay,flight_color)
 		return
 	_draw_impact_body(shot,age-delay-PROJECTILE_FLIGHT,false)
+
+## Éclair du chaman : tracé brisé de la main (ou du crâne du bâton) jusqu'à la cible.
+func _draw_cast_bolt(shot: Dictionary, age: float, color: Color, alpha: float) -> void:
+	var origin: Vector2 = shot_origin(shot,age)
+	var target: Vector2 = project(shot.to)+Vector2(0,-12)
+	var direction: Vector2 = target-origin
+	var side: Vector2 = direction.normalized().orthogonal()
+	var bolt := PackedVector2Array([origin,origin+direction*0.3+side*4,origin+direction*0.55-side*4,origin+direction*0.78+side*3,target])
+	draw_polyline(bolt,Color(color,alpha*0.65),1.5,true)
+
+## Instant de pose d'une malédiction, déduit de ses tics (aucun état de simulation ajouté).
+static func curse_applied_at(curse: Dictionary) -> float:
+	return float(curse.next_at)-(3.0-float(curse.ticks_left))
+
+## L'anneau de malédiction d'un chaman orc apparaît avec l'arrivée de l'éclair, pas au départ du tir (rendu seul : la malédiction existe dès le tir).
+func curse_ring_visible(curse: Dictionary) -> bool:
+	var source_type := -1
+	for defender in model.defenders:
+		if not defender.is_empty() and int(defender.get("instance_id",-1)) == int(curse.source_id):
+			source_type = int(defender.type);break
+	var delay: float = float(LAUNCH_DELAYS.get(source_type,0.0))
+	if delay <= 0.0: return true
+	return model.elapsed-curse_applied_at(curse) >= delay+PROJECTILE_FLIGHT
 
 static func _impact_color(type: int) -> Color:
 	return [Color("f0d796"),Color("e1e9dc"),Color("90dceb"),Color("a8ddbd"),Color("f2b269"),Color("d1a3ed")][type]
@@ -616,12 +640,8 @@ func _draw_impact_body(shot: Dictionary, age: float, flight: bool) -> void:
 	var target: Vector2 = project(shot.to)+height
 	# L'impact est visible dès le tir : le déplacement bref ne retarde aucun dégât.
 	_draw_hit_marker(target,alpha,true,type,age)
-	if type == 5:
-		origin = shot_origin(shot, age)
-		var direction: Vector2 = target-origin
-		var side: Vector2 = direction.normalized().orthogonal()
-		var bolt := PackedVector2Array([origin,origin+direction*0.3+side*4,origin+direction*0.55-side*4,origin+direction*0.78+side*3,target])
-		draw_polyline(bolt,Color(color,alpha*0.65),1.5,true)
+	if type == 5 and flight:
+		_draw_cast_bolt(shot,age,color,alpha)
 	elif type in [0,1,2]:
 		draw_line(origin,target,Color(color,alpha*0.22),1 if type != 1 else 1.5,true)
 	elif flight:
@@ -1368,7 +1388,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	if enemy.id == inspected_enemy_id:
 		draw_arc(Vector2(0,3),14,0,TAU,32,Color("edcc80"),2,true)
 	for curse in model.curses:
-		if curse.enemy_id != enemy.id: continue
+		if curse.enemy_id != enemy.id or not curse_ring_visible(curse): continue
 		draw_arc(Vector2(0,-13),19,0,TAU,24,Color("be83d3"),1.5,true)
 		var mark := Vector2(0,-45)
 		draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]),Color("d6a1ef"))
