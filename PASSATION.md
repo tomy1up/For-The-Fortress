@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**15 novembre — Chaman orc.** Incantation en étude, vérifiée au Gué dans les deux sens à ×1 et ×2 sur copie v0.208. Éclair calé sur la poussée du bâton, anneau de malédiction à synchroniser côté rendu. Validateur : 25 dossiers, 0 problème. Bibliothèque : 157 contrôles réussis. [Fiche et boucle](design/Visuels_Chaman_Incantation.md).
+**15 novembre — Chaman orc.** Incantation retravaillée après retour sur la fluidité. Nouvelle planche de 24 images, comparée à taille native à ×1 et ×2 sur copie v0.208 et à temps figé. Éclair calé sur la poussée du bâton, anneau de malédiction à synchroniser côté rendu. Validateur : 25 dossiers, 0 problème. Bibliothèque : 157 contrôles réussis. [Fiche et boucle](design/Visuels_Chaman_Incantation.md).
 
 **15 novembre — Sapeur gobelin.** Le porteur valide le lancer retravaillé comme référence de qualité pour les autres unités. Contrôlé sur copie v0.208 avec un décalage visuel de 0,12 s. La planche et la synchronisation du projectile doivent être intégrées ensemble par Claude. Validateur : 24 dossiers, 0 problème. Bibliothèque : 156 contrôles réussis. [Fiche et boucle](design/Visuels_Sapeur_Lancer.md).
 
