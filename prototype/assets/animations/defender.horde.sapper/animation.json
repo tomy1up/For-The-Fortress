@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "id": "defender.horde.sapper",
+  "display_height": 64,
+  "foot": [
+    153,
+    232
+  ],
+  "facing": "right",
+  "animations": {
+    "attack": {
+      "file": "attack.png",
+      "frames": 12,
+      "frame_size": [
+        320,
+        256
+      ],
+      "mode": "event",
+      "duration": 0.36
+    }
+  }
+}

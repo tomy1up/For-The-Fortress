@@ -14,6 +14,12 @@ func signature(scene: Node) -> String:
 	return JSON.stringify([Report.build(scene.model),str(scene.model.rng.state),scene.model.defenders,scene.model.shots])
 func run_checks() -> void:
 	for type in range(6):
+		var delayed: float = View.launch_delay({"type":type})
+		check(is_equal_approx(delayed,0.12 if type == 4 else 0.0),"Seul le sapeur gobelin lâche sa charge à 0,12 s (type %d)" % type)
+	var sapper_right: Dictionary = {"type":4,"from":Vector2(2,6),"to":Vector2(3,3),"secondary":[]}
+	var sapper_left: Dictionary = {"type":4,"from":Vector2(3,3),"to":Vector2(2,6),"secondary":[]}
+	check(is_equal_approx(View.shot_origin(sapper_right).x-View.project(sapper_right.from).x,34.0) and is_equal_approx(View.project(sapper_left.from).x-View.shot_origin(sapper_left).x,34.0) and is_equal_approx(View.shot_origin(sapper_right).y-View.project(sapper_right.from).y,-27.0),"Départ visuel du sapeur à (±34, −27) des pieds")
+	for type in range(6):
 		var shot: Dictionary = {"type":type,"from":Vector2(2,6),"to":Vector2(3,3),"secondary":[]}
 		var before: Dictionary = shot.duplicate(true)
 		var origin: Vector2 = View.shot_origin(shot)

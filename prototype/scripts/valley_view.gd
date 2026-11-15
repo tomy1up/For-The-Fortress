@@ -224,6 +224,8 @@ const EMBER_TYPE := 21 # Brûleur de cendres : braise partie de la grille du bra
 const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touchées.
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
+## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12} # Sapeur gobelin : charge tenue pendant l'armé (v0.210).
 
 static func shot_origin(shot: Dictionary, pose_age: float = 0.0) -> Vector2:
 	# Points d'équipement des silhouettes, distincts du centre logique de portée.
@@ -585,7 +587,25 @@ func _draw_hit_marker(point: Vector2, alpha: float, primary: bool, type: int, ag
 				draw_line(point+direction*(spread+2),point+direction*(spread+5),color,1.5,true)
 	if age < 0.08: draw_circle(point,2.5 if primary else 1.5,Color(color,alpha*0.8),true,-1,true)
 
+static func launch_delay(shot: Dictionary) -> float:
+	return float(LAUNCH_DELAYS.get(int(shot.get("type",-1)),0.0))
+
 func _draw_impact(shot: Dictionary, age: float) -> void:
+	var delay: float = launch_delay(shot)
+	if delay <= 0.0:
+		_draw_impact_body(shot,age,true)
+		return
+	if age < delay: return
+	if age < delay+PROJECTILE_FLIGHT:
+		var flight_color: Color = _impact_color(Model.family(shot.type))
+		_draw_projectile(shot,age-delay,flight_color)
+		return
+	_draw_impact_body(shot,age-delay-PROJECTILE_FLIGHT,false)
+
+static func _impact_color(type: int) -> Color:
+	return [Color("f0d796"),Color("e1e9dc"),Color("90dceb"),Color("a8ddbd"),Color("f2b269"),Color("d1a3ed")][type]
+
+func _draw_impact_body(shot: Dictionary, age: float, flight: bool) -> void:
 	var alpha: float = impact_opacity(age)
 	if alpha <= 0.0 or not shot.has("type"): return
 	var type: int = Model.family(shot.type)
@@ -604,11 +624,11 @@ func _draw_impact(shot: Dictionary, age: float) -> void:
 		draw_polyline(bolt,Color(color,alpha*0.65),1.5,true)
 	elif type in [0,1,2]:
 		draw_line(origin,target,Color(color,alpha*0.22),1 if type != 1 else 1.5,true)
-	else:
+	elif flight:
 		var trail := PackedVector2Array()
 		for index in range(9): trail.append(projectile_position(shot,PROJECTILE_FLIGHT*index/8.0))
 		draw_polyline(trail,Color(color,alpha*0.18),1,true)
-	_draw_projectile(shot,age,color)
+	if flight: _draw_projectile(shot,age,color)
 	if type in [2,4]:
 		var radius: float = shot.get("radius",1.0)
 		var ring := range_outline(shot.to,radius)

@@ -11,7 +11,7 @@ const FRAMES: Dictionary = {
 	4: {"source":Rect2(119,76,1190,1032),"foot":Vector2(682.016,1108),"height":48.0},
 	5: {"source":Rect2(158,24,1042,1187),"foot":Vector2(655.470,1211),"height":66.0},
 }
-const MUZZLES: Dictionary = {3:Vector2(-18,-37),4:Vector2(21,-28),5:Vector2(22,-47)}
+const MUZZLES: Dictionary = {3:Vector2(-18,-37),4:Vector2(34,-27),5:Vector2(22,-47)}
 
 static func destination(type: int) -> Rect2:
 	var frame: Dictionary = FRAMES[type]

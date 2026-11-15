@@ -274,6 +274,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.209** : intégration du sprite du Fantassin squelette (type 46, coup d'épée de mêlée `SWORD_TYPE` dans `valley_view.gd`) du Tirailleur gnome (type 47, carreau court `SHORT_BOLT_TYPE`) et du Capitaine orc (`enemy_art.gd`), tous validés par le porteur. Restent côté Codex : animation de frappe du squelette, animation de tir du Tirailleur gnome, marche et mort des capitaines.
 
+**v0.210** : lancer animé du Sapeur gobelin intégré (planche + `LAUNCH_DELAYS` dans `valley_view.gd`, départ (±34, −27), marqueur d'impact à l'arrivée). Réutilisable pour les autres unités (une entrée par type). À venir côté Codex : incantation du Chaman orc (`c5f4be1`, éclair à 0,12 s depuis (±49, −55), anneau de malédiction à caler sur l'éclair après validation), quatre orientations des attaquants.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.
