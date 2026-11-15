@@ -22,3 +22,11 @@ La première version tenait les poses plusieurs images d’affilée. Cette varia
 [Avant et après à taille native](essais/gestes_combat/chaman_incantation/fluide/Chaman_avant_apres.gif)
 
 Les captures du Gué ont été reprises sur la même copie v0.208, dans les deux sens à ×1 et ×2 et à temps figé autour de l’unité. Le validateur couvre 25 dossiers sans problème et les 157 contrôles de la bibliothèque passent. Un léger adoucissement du contour de la manche et du halo est visible sur certaines poses intermédiaires en grand. L’ordre d’apparition de l’anneau de malédiction reste à régler côté rendu. La variante de la planche se trouve dans `fluide/defender.horde.shaman/` et attend un avis visuel.
+
+## Proportions corrigées après retour du porteur
+
+Le porteur juge la variante fluide mais constate un changement de volume pendant le tir. Les poses d’attaque ont été recalées sur la tête et la carrure de la garde, puis les poses de passage ont été recalculées. Le bâton s’incline pendant la poussée. Les pieds, la prise et le départ de l’éclair restent ancrés dans la planche. La durée est de 0,48 s, avec le déclenchement visuel à 0,12 s.
+
+[Avant et après à taille native](essais/gestes_combat/chaman_incantation/volume/Chaman_proportions_avant_apres.gif)
+
+Nouvelle planche dans `volume/defender.horde.shaman/`. Contrôlée au Gué sur la copie v0.208 à ×1 et ×2 dans les deux sens, avec arrêt du temps simulé. Validateur : 25 dossiers, zéro problème. Bibliothèque : 157 contrôles réussis. L’anneau de malédiction apparaît encore avant l’éclair sur cette copie. La variante corrigée attend le retour du porteur.
