@@ -6,10 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-15 — Fantassin squelette, frappe de mêlée (ouvert)
+### 2026-11-15 — Boutique limitée à 20 unités par faction (ouvert)
 
-La planche `defender.horde.skeleton` (type 46) est prête pour l’avis du porteur dans `design/essais/gestes_combat/fantassin_squelette/`. L’attaque dure 0,50 s, 24 poses. Dans la copie d’essai, la traînée suit la lame à partir de 0,188 s et le marqueur visuel d’impact s’allume à 0,23 s. Les positions de la pointe et les captures ×1/×2 sont dans [la fiche](design/Visuels_Boutique_Fantassin_Squelette.md). Le code d’essai reste local. Après validation, brancher la planche et synchroniser la traînée et le marqueur de mêlée en conservant la résolution des dégâts actuelle.
-
+Décision du porteur : retirer les 21es entrées de boutique, Fantassin squelette (`horde.skeleton`, type 46) et Tirailleur gnome (`alliance.gnome`, type 47). Retirer les deux entrées de la boutique et du choix de renfort. Contrôler les sauvegardes existantes avant le retrait, puisque la validation de l’inventaire dépend du catalogue. Prévoir une migration pour désélectionner les unités retirées et, si elles avaient été achetées, rendre une seule fois les PO enregistrées. Préserver la lecture des anciens rapports contenant les types 46 et 47. Les serviteurs des balistes et les unités de base restent en place. L’animation de frappe du type 46 et le tir du type 47 sortent de la file artistique.
 
 ### 2026-11-15 — Incantation du Chaman orc validée visuellement (ouvert)
 
@@ -22,14 +21,6 @@ Le porteur a validé le second lancer et le retient comme référence pour les a
 ### 2026-11-15 — Attaquants, quatre vues indépendantes (ouvert)
 
 Le 15 novembre, le porteur juge les appuis resserrés « bien mieux ». Retenir le lot `9fe2608` dans `design/essais/garnison/orientations/marche_appuis_compacts/` pour le branchement de `enemy.horde.garrison`. Le fichier `cadrage.json` fixe les 24 poses par orientation, l’ancre commune et la foulée de 11,54 px projetés à l’échelle de base. Choisir la vue d’après la direction projetée et maintenir la phase calculée sur la distance parcourue pendant le changement direct de vue. Les dessins gardent le bouclier à gauche et la hache à droite. Les captures de la mission 62 à ×1 et ×2 et la vérification des 96 poses sont dans la [fiche de cadrage](design/Visuels_Orientation_Attaquants.md). Les transitions dessinées des virages et la mort restent à produire.
-
-### 2026-11-15 — Tirailleur gnome validé (ouvert)
-
-Le porteur a validé le visuel fixe de `alliance.gnome` (type 47). Le PNG et l’import filtré sont prêts pour le portrait, le plateau et l’export. La [fiche](design/Visuels_Boutique_Tirailleur_Gnome.md) donne le cadre et le point de départ testés sur v0.208. Donner au tir le visuel du carreau court et conserver la famille Archer pour les talents.
-
-### 2026-11-15 — Fantassin squelette validé (ouvert)
-
-Le porteur a validé le sprite fixe du type 46 (`horde.skeleton`). Le PNG et son import filtré sont dans `prototype/assets/units/shop/`. [Fiche avec cadrage et capture](design/Visuels_Boutique_Fantassin_Squelette.md). À brancher au portrait, au plateau et à l’export. Le rendu actuel montre une hache lancée et le panneau affiche une ligne de rebond. Remplacer ces éléments par un coup d’épée de mêlée et son libellé. L’animation de frappe reste à produire.
 
 ### 2026-11-15 — Capitaine orc, visuel fixe validé (ouvert)
 
@@ -374,4 +365,14 @@ Contrôles réalisés sur `art/codex` à partir de `bf8c654`. Les [captures et r
 
 ## Traité
 
-(vide)
+### 2026-11-15 — Fantassin squelette, frappe de mêlée (traité)
+
+Animation de frappe archivée dans [la fiche](design/Visuels_Boutique_Fantassin_Squelette.md). Branchement annulé par la décision de retrait du type 46.
+
+### 2026-11-15 — Tirailleur gnome validé (traité)
+
+Visuel fixe documenté dans [la fiche](design/Visuels_Boutique_Tirailleur_Gnome.md). La demande est remplacée par le retrait du type 47.
+
+### 2026-11-15 — Fantassin squelette validé (traité)
+
+Visuel fixe documenté dans [la fiche](design/Visuels_Boutique_Fantassin_Squelette.md). La demande est remplacée par le retrait du type 46.

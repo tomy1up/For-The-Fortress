@@ -8,6 +8,8 @@ Cadre `Rect2(0,0,1290,1116)`, pied `Vector2(470,1116)`, hauteur 59 px. PNG `fant
 
 Le rendu de combat de la v0.208 hérite encore de la hache lancée et du libellé de rebond. Prévoir un coup d’épée court, puis l’animation du bras et de l’épaule. La portée du modèle reste celle de l’unité de mêlée.
 
+**Archive.** Le 15 novembre 2026, le porteur a demandé le retrait de cette unité et fixé la boutique à 20 unités par faction. Cette fiche conserve les essais artistiques.
+
 ## Frappe à l’épée
 
 Le type 46 utilise un coup de mêlée dessiné par le jeu depuis la v0.209. L’essai y ajoute une planche d’attaque tirée du même sprite. Les bottes gardent leurs appuis. L’épaule arme le geste, le buste accompagne la coupe et la lame reste dans la main. La première et la dernière image de la planche sont identiques pixel pour pixel. L’attaque dure 0,50 s et compte 24 poses.
