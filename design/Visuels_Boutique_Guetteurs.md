@@ -40,3 +40,23 @@ Sept planches couvrent une visée horizontale ou des inclinaisons de ±8°, ±16
 Les planches de [la variante](essais/gestes_combat/tireur_elite_elfe/visee/) partagent le nouveau cadrage de 336 × 296. Le fichier `visees.json` documente le pivot, les angles et le lâcher à 0,27 s. L’intégration doit sélectionner une seule inclinaison, d’après le point touché à l’écran depuis le pivot à hauteur de flèche, et la conserver durant le geste et le départ du projectile. Les inclinaisons extrêmes ont été examinées sur les planches. Les cas en combat concernent les deux angles indiqués. Les planches additionnelles ont été chargées en local pour cet essai. Claude doit les brancher au format d’export pour le jeu.
 
 Le 15 novembre, le porteur valide la visée corrigée (« propre, très bien »). Les planches du lot `a2cdab9` sont retenues pour l’intégration.
+
+## Lancer du Javelinier troll
+
+Le type 17 reprend sa garde basse. Il recule l’épaule et lève la javeline par-dessous le menton, puis fait avancer le buste avec le bras. La main s’ouvre dans le prolongement du geste et retrouve la garde à la fin du cycle. Les bottes restent ancrées. Les trois planches partagent la pose de garde, le point d’appui et 20 poses sur 0,60 s. La première et la dernière image de chaque lancer sont identiques à la garde.
+
+[À taille native ×1](essais/gestes_combat/javelinier_troll/Javelinier_lancer_x1.gif) · [À taille native ×2](essais/gestes_combat/javelinier_troll/Javelinier_lancer_x2.gif) · [Vue agrandie](essais/gestes_combat/javelinier_troll/Javelinier_lancer_agrandi.gif)
+
+La javeline dans la main et celle en vol proviennent du même dessin rigide. L’essai part sur la première pose à main vide à 0,24 s, selon l’inclinaison de la lance (−12°, 0° ou +12°). Les points de départ de la pointe par rapport aux pieds sont dans `lachers.json`. Le PNG `javeline.png` mesure 495 × 60, pivot de pointe (485, 28), échelle 0,12 pixel de jeu par pixel source. En jeu, le reflet à gauche conserve la place de l’éclairage dans la silhouette en vol. La visée et l’impact sont des effets de rendu. Les dégâts restent résolus à l’événement de combat.
+
+La copie v0.216 met le Javelinier en E1 et E2, côté Horde, sur la mission 94, avec un Capitaine humain comme cible de contrôle. Les tirs incliné de +12° vers la droite et incliné de −12° vers la gauche ont été observés à ×1 et ×2 et à temps figé. La direction initiale du projectile suit l’axe de l’arme à moins de 0,6°. Les 60 poses tiennent dans leurs cadres. Validateur : 29 dossiers, 0 problème. Bibliothèque : 170 contrôles. Les planches attendent la revue du porteur. Les variantes d’angle et le dessin du projectile sont hors des ressources de la version publiée et doivent être branchés avec la garde et le lancer neutre.
+
+## Lancer du Javelinier avec transfert de poids
+
+Le 15 novembre, le porteur juge le premier lancer peu naturel. La reprise fait porter le geste par le bassin et les épaules. Le troll charge son appui arrière pendant l’armé, pousse vers le pied avant en levant son talon arrière, puis laisse son bras continuer sa course après le lâcher. La main libre se replie pour libérer la lecture du geste. Les extrémités du cycle reprennent la pose de garde à l’identique.
+
+La durée passe à 0,64 s, avec 20 poses par inclinaison. Le projectile commence à 0,288 s sur la première pose à main ouverte. La dernière pose tenue sert à caler la pointe et l’axe de départ. Les points recalés sont dans `transfert_poids/lachers.json`. La javeline en vol réutilise le dessin `javeline.png` du dossier parent.
+
+[Avant-après à ×1](essais/gestes_combat/javelinier_troll/transfert_poids/Javelinier_comparatif_x1.gif) · [Lancers corrigés à ×2](essais/gestes_combat/javelinier_troll/transfert_poids/Javelinier_corrige_x2.gif)
+
+Les 60 cadres contiennent l’arme et le personnage. Comparaison sur la mission 94, avec un Capitaine humain comme cible sur la route haute. Vérification en jeu à ×1 et ×2 du lancer descendant à droite et montant à gauche, de l’axe visuel au départ et de la stabilité des pixels à temps figé pendant l’armé et l’accompagnement. Validateur : 29 dossiers, 0 problème. Bibliothèque : 170 contrôles. Le porteur juge cette reprise « bien mieux » le 15 novembre. Le lot `7e715d8` est retenu pour intégration.

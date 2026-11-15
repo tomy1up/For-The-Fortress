@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "id": "defender.horde.javelin",
+  "facing": "right",
+  "display_height": 84.0,
+  "foot": [
+    169.20000000000002,
+    257.6
+  ],
+  "muzzle": [
+    356.20166666666665,
+    119.78233333333333
+  ],
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        392,
+        280
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 20,
+      "frame_size": [
+        392,
+        280
+      ],
+      "mode": "event",
+      "duration": 0.64
+    }
+  }
+}
