@@ -75,3 +75,11 @@ Le 15 novembre, le porteur juge la version aux jambes raccourcies « bien mieux 
 [Déplacement à ×1](essais/garnison/orientations/marche_quatre_diagonales/Capitaine_quatre_diagonales_x1.gif) · [Déplacement à ×2](essais/garnison/orientations/marche_quatre_diagonales/Capitaine_quatre_diagonales_x2.gif) · [Deux virages directs](essais/garnison/orientations/marche_quatre_diagonales/Capitaine_virages_directs.gif)
 
 Contrôle à taille native sur quatre segments et deux coins de la mission 62 dans la copie v0.208, à ×1 et ×2 et à distance figée. Les 96 poses tiennent dans leurs cadres. La phase est calculée sur la distance projetée totale, avec un changement direct d’orientation aux coins. Les trois nouvelles vues attendent l’avis du porteur. Les poses intermédiaires de virage et la mort du capitaine restent à produire.
+
+## Appuis séparés dans les quatre vues
+
+Le porteur a signalé que les jambes semblaient se croiser. Chaque pied a maintenant sa propre trajectoire de part et d’autre du sens de marche. En phase d’appui, le recul de la botte dans le dessin compense le déplacement sur le sol. Le pied libre se soulève moins. Le cycle couvre 13,26 px projetés à l’échelle de base, contre 14,19 px dans l’essai précédent. Le bassin conserve sa hauteur abaissée et les quatre gardes conservent leurs équipements.
+
+J’ai contrôlé les axes de chaque jambe, de la hanche au genou puis à la cheville, sur les 96 poses. Les deux chaînes restent distinctes. Vérification du cadrage et du rendu à taille native et agrandi sur la mission 62, à ×1 et ×2. La capture à distance figée reste identique. Les suites du rendu ennemi (213 contrôles) et de la bibliothèque d’animations (157 contrôles) passent sur la copie v0.208. Les quatre vues restent en revue avant branchement.
+
+[Boucle native ×1](essais/garnison/orientations/marche_appuis_separes/Capitaine_appuis_x1.gif) · [Boucle native ×2](essais/garnison/orientations/marche_appuis_separes/Capitaine_appuis_x2.gif) · [Vue agrandie à vitesse normale](essais/garnison/orientations/marche_appuis_separes/Capitaine_appuis_agrandis.gif)
