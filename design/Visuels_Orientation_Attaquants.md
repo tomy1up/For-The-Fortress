@@ -17,3 +17,11 @@ Les quatre vues utilisent des cadres de 288 × 256 px, une ancre commune (144, 2
 [Comparatif des quatre directions](essais/garnison/orientations/Capitaine_quatre_directions.png)
 
 La vue varie selon les signes de la direction projetée. Le bouclier reste du côté gauche du corps dans les images de face et de dos. En remontant vers la droite, il est davantage vu sur la tranche. La lame reste à la main droite. Les quatre sélections ont été testées avec le rendu du plateau dans une copie v0.208 et un trajet de contrôle par direction. Le test ciblé des visuels ennemis passe, 213 contrôles. Ce lot propose des orientations fixes. Il reste à dessiner la marche et à comparer en mouvement le changement de direction sec avec une transition.
+
+## Bouclier plat porté devant · contrôle sur la chaussée
+
+Le porteur a demandé de conserver le bouclier devant le torse, sur le même avant-bras gauche, lors de tous les pivots. Les deux vues de dos ont été redessinées d’après le sprite de face approuvé. Le bouclier est un panneau plat. En montant vers la gauche, seule une partie de la face intérieure dépasse de l’épaule. En montant vers la droite, l’armure masque presque tout le panneau. La lame reste près de la hanche droite. Le casque, les épaulières, le foulard et la ceinture servent de repères de continuité entre les vues.
+
+[Les quatre segments à taille native](essais/garnison/orientations/v2/Capitaine_quatre_directions_sur_route.png) · [Deux virages en mouvement](essais/garnison/orientations/v2/Capitaine_pivots_sur_route.gif)
+
+L’essai utilise la chaussée réelle de la mission 62, Les Coulées Figées. Un Capitaine attaquant est placé sur le trajet existant dans la copie v0.208 puis avancé par sa distance le long de la route. La mission sert ici de banc d’essai car elle contient les quatre diagonales. Les quatre vues sont contrôlées en jeu à taille native. Deux virages sont rejoués en changement direct de pose. Le cycle de marche et les poses de transition restent à produire. Les 213 contrôles ciblés des visuels ennemis passent.
