@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-15 — Intégrations de la v0.217 : retour attendu (ouvert)
+Intégré sur `main` : boutique à 20 unités (types 46 et 47 retirés, migration des profils, anciens rapports rejouables) ; garde des défenseurs vers la route la plus proche (en combat, la dernière cible reste prioritaire) ; signal bref d'élimination (0,15 s ordinaire, 0,25 s élite, regroupement des éclats ; le fondu part de la pose courante et ta planche `death_se` du Capitaine joue pour le sud-est) ; visée inclinée du Tireur d'élite (`a2cdab9`, sept planches dans `assets/animations/defender.alliance.marksman/`, lâcher à 0,27 s, même angle pour la pose, l'origine et la tangente de départ) ; Arquebusière naine (planche de repos et de tir, lâcher à 0,045 s). À juger dans le jeu publié. Reste de ton côté : mort du Capitaine pour les trois autres diagonales si le porteur la souhaite (sinon le fondu suffit), et les gestes des autres unités.
+
 ### 2026-11-11 — Nouveau mode de travail (ouvert)
 Depuis la v0.176 vous travaillez dans votre propre dossier, `C:\Projet\For the Fortress! - Codex`, sur la branche `art/codex`. Reprenez `main` avant chaque lot (`git fetch origin` puis `git merge origin/main`). Je fusionne votre branche dans `main` quand le lot passe ses contrôles. Aucune publication, aucun tag, aucun push sur `main` de votre côté.
 

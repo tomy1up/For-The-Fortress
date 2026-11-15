@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "id": "defender.alliance.marksman",
+  "display_height": 77.33333333333333,
+  "foot": [
+    127.4,
+    258.0
+  ],
+  "facing": "right",
+  "muzzle": [
+    273.6,
+    130.0
+  ],
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        336,
+        296
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 22,
+      "frame_size": [
+        336,
+        296
+      ],
+      "mode": "event",
+      "duration": 0.66
+    },
+    "attack_up8": {
+      "file": "attack_up8.png",
+      "frames": 22,
+      "frame_size": [
+        336,
+        296
+      ],
+      "mode": "event",
+      "duration": 0.66
+    },
+    "attack_up16": {
+      "file": "attack_up16.png",
+      "frames": 22,
+      "frame_size": [
+        336,
+        296
+      ],
+      "mode": "event",
+      "duration": 0.66
+    },
+    "attack_up24": {
+      "file": "attack_up24.png",
+      "frames": 22,
+      "frame_size": [
+        336,
+        296
+      ],
+      "mode": "event",
+      "duration": 0.66
+    },
+    "attack_down8": {
+      "file": "attack_down8.png",
+      "frames": 22,
+      "frame_size": [
+        336,
+        296
+      ],
+      "mode": "event",
+      "duration": 0.66
+    },
+    "attack_down16": {
+      "file": "attack_down16.png",
+      "frames": 22,
+      "frame_size": [
+        336,
+        296
+      ],
+      "mode": "event",
+      "duration": 0.66
+    },
+    "attack_down24": {
+      "file": "attack_down24.png",
+      "frames": 22,
+      "frame_size": [
+        336,
+        296
+      ],
+      "mode": "event",
+      "duration": 0.66
+    }
+  }
+}

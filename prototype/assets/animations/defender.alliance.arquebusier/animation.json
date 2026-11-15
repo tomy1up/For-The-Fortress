@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "id": "defender.alliance.arquebusier",
+  "display_height": 63.84,
+  "foot": [
+    124.0,
+    265.0
+  ],
+  "facing": "right",
+  "muzzle": [
+    315.611,
+    85.356
+  ],
+  "animations": {
+    "attack": {
+      "file": "attack.png",
+      "frames": 12,
+      "frame_size": [
+        352,
+        280
+      ],
+      "mode": "event",
+      "duration": 0.18
+    },
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        352,
+        280
+      ],
+      "mode": "time",
+      "fps": 1
+    }
+  }
+}

@@ -429,7 +429,7 @@ func _ready() -> void:
 				model.advance(0.12)
 				print("ELIMINATION_VISIBLE=",not map_view.recent_eliminations().is_empty())
 			if "--capture-attack-pose" in OS.get_cmdline_user_args(): model.advance(MapView.ATTACK_POSE_DURATION/2)
-			if "--capture-projectile" in OS.get_cmdline_user_args(): model.advance(MapView.PROJECTILE_FLIGHT/2)
+			if "--capture-projectile" in OS.get_cmdline_user_args(): model.advance(MapView.launch_delay({"type":capture_type})+MapView.PROJECTILE_FLIGHT/2) # lâcher différé compris
 			if "--capture-axe-bounce" in OS.get_cmdline_user_args():
 				var bounce_shot: Dictionary = model.shots.back()
 				var segments := MapView.secondary_segments(bounce_shot)
@@ -876,6 +876,7 @@ func _capture_timeline(base: String, entries: Array[Dictionary]) -> void:
 			if not model.prepare_next_wave(): return
 		if model.phase == "preparation" and not model.start(): return
 		if time > model.elapsed and model.active: model.advance(time-model.elapsed)
+		_capture_forced_kills()
 		_update_interface()
 		map_view.queue_redraw()
 		await RenderingServer.frame_post_draw
@@ -883,6 +884,16 @@ func _capture_timeline(base: String, entries: Array[Dictionary]) -> void:
 		var path: String = ("%s_t%05.2f.png" if wave_number == 0 else "%s_v%02d_t%05.2f.png") % ([base.get_basename(),time] if wave_number == 0 else [base.get_basename(),wave_number,time])
 		var error: Error = get_viewport().get_texture().get_image().save_png(path)
 		print("TIMELINE_FRAME=",JSON.stringify({"time":time,"wave":model.wave,"enemies":model.enemies.size(),"elapsed":model.elapsed,"phase":model.phase,"file":path,"result":error,"eruption":model.eruption_status() if model.eruption_enabled() else {}}))
+
+## Contrôle visuel du signal d'élimination : `--capture-kill=N,AGE` retire les N premiers ennemis à l'instant de l'image, puis laisse passer AGE secondes simulées.
+func _capture_forced_kills() -> void:
+	for argument in OS.get_cmdline_user_args():
+		if not argument.begins_with("--capture-kill="): continue
+		var parts: PackedStringArray = argument.trim_prefix("--capture-kill=").split(",")
+		var damage := {}
+		for index in range(mini(int(parts[0]),model.enemies.size())): damage[model.enemies[index].id] = 1000000.0
+		model._apply_damage(damage)
+		if parts.size() > 1 and model.active: model.advance(float(parts[1]))
 
 func _capture_sample_combat() -> void:
 	model.rng.seed = 42
