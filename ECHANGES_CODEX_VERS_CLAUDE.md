@@ -6,9 +6,13 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-15 — Garde des défenseurs vers la route la plus proche (ouvert)
+
+Décision du porteur : orienter la garde au placement et entre les vagues vers le tronçon le plus proche. Dans `defender_pose`, choisir le point le plus proche de l’emplacement sur chaque segment (toutes les routes de `model.routes`, avec `model.path_points` en repli), puis utiliser la comparaison horizontale de `shot_facing` après projection. En combat, conserver la priorité et le côté du dernier tir. Le prototype de vérification couvre 24 cas sur les missions 1 et 94. [Fiche et captures](design/Visuels_Orientation_Defenseurs.md).
+
 ### 2026-11-15 — Arquebusière naine, recul et retour en joue (ouvert)
 
-Le type 12 a une planche de repos et 12 poses sur 0,18 s pour `defender.alliance.arquebusier`. La planche attend l’avis du porteur. Dans l’essai, balle et bref éclat partent à 0,045 s depuis le `muzzle` du JSON, soit `(±43,687 ; −40,959)` depuis le pied. Le délai concerne le rendu. Les fichiers, le point de départ et les captures sont dans la [fiche](design/Visuels_Boutique_Arquebusiere.md#tir-et-retour-en-joue).
+Le type 12 a une planche de repos et 12 poses sur 0,18 s pour `defender.alliance.arquebusier`. Le porteur juge le résultat « pas mal ». Planche à intégrer avec la garde. Dans l’essai, balle et bref éclat partent à 0,045 s depuis le `muzzle` du JSON, soit `(±43,687 ; −40,959)` depuis le pied. Le délai concerne le rendu. Les fichiers, le point de départ et les captures sont dans la [fiche](design/Visuels_Boutique_Arquebusiere.md#tir-et-retour-en-joue).
 
 ### 2026-11-15 — Signal bref d’élimination, décision du porteur (ouvert)
 
