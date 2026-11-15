@@ -33,3 +33,13 @@ Le porteur a relevé que le bouclier des vues de dos était trop masqué et que 
 [Comparatif de la garde](essais/garnison/orientations/v3/Capitaine_bouclier_garde.png) · [Virages sur la chaussée](essais/garnison/orientations/v3/Capitaine_bouclier_en_virage.gif)
 
 Les vues ont été examinées en grand pour le contour et la prise, puis sur les quatre segments des Coulées Figées à taille native et aux deux coins du banc d’essai. Les 213 contrôles de la suite des visuels ennemis passent. Le 15 novembre 2026, le porteur juge cette garde « bien mieux ». La v3 sert de référence pour animer les appuis et les virages. Le changement de vue des captures est direct et la marche n’est pas animée.
+
+## Premier cycle de marche sur quatre diagonales
+
+Les quatre vues de garde sont utilisées avec un cycle de 24 poses chacune. Les semelles alternent une phase d’appui, qui compense l’avancée sur le chemin, et une phase de retour avec une levée modérée du pied. Les genoux suivent les bottes. Les épaules, le bouclier tenu serré et la lame suivent un balancement court du corps. Le même moment de la foulée est conservé entre les quatre vues. Le changement de vue au coin reste direct.
+
+[Marche et pivots à taille native](essais/garnison/orientations/marche/Capitaine_marche_sur_route.gif)
+
+Le [cadrage d’essai](essais/garnison/orientations/marche/cadrage.json) utilise des cadres de 320 × 288 px et une foulée de 10,5 px projetés à l’échelle de base, soit 16,8 px pour le capitaine. La phase est calculée à partir de la distance projetée. Aucun miroir. Les quatre planches ont passé le contrôle de découpe, 96 poses au total.
+
+Captures sur deux coins des Coulées Figées (mission 62), à ×1 et ×2, sur copie v0.208. Le Capitaine avance sur la chaussée existante à sa vitesse de référence de 0,6 unité logique par seconde à ×1. Les captures contrôlées à distance figée restent identiques. Les tests des visuels ennemis (213) et de la bibliothèque d’animations (157) passent sur la copie d’essai. Les planches restent dans le dossier de design. Leur sélection pour les quatre orientations requiert un branchement spécifique avec conservation de la phase. Un essai de transition entre les vues reste à produire.

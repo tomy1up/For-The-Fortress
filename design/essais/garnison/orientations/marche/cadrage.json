@@ -1,0 +1,14 @@
+{
+  "frames": 24,
+  "frame_size": [
+    320,
+    288
+  ],
+  "foot": [
+    160,
+    254
+  ],
+  "body_height": 218,
+  "display_height": 44.91743119266055,
+  "stride": 10.5
+}
