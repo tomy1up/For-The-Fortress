@@ -4,6 +4,8 @@ var highlighted_entries: Array[int] = []
 
 const Model = preload("res://scripts/valley_model.gd")
 const MarshArt = preload("res://scripts/marsh_art.gd")
+const SoundPlayer = preload("res://scripts/sound_player.gd")
+const SoundDirector = preload("res://scripts/sound_director.gd")
 const HordeArt = preload("res://scripts/horde_art.gd")
 const AllianceArt = preload("res://scripts/alliance_art.gd")
 const EnemyArt = preload("res://scripts/enemy_art.gd")
@@ -34,6 +36,8 @@ var _ghost_alpha: float = 1.0
 var _ghost_squash: float = 1.0
 const MAX_ELIMINATION_EFFECTS := 24
 var elimination_tail: float = 0.0
+var sound_player: Node = null
+var sound_director: RefCounted = null
 ## Suivi purement visuel des défenseurs (achat, passage de niveau, revente), cadencé en temps réel : le modèle ne bouge pas en préparation.
 var _seen_model: Object = null
 var _seen_defenders: Array[Dictionary] = []
@@ -71,6 +75,7 @@ func _init() -> void:
 
 func _process(delta: float) -> void:
 	_track_defenders()
+	_play_sounds()
 	if _sheet_animation_running(): queue_redraw()
 	royal_hurt_age = minf(2.0,royal_hurt_age+maxf(0.0,delta))
 	royal_rally_age = minf(2.0,royal_rally_age+maxf(0.0,delta))
@@ -80,6 +85,15 @@ func _process(delta: float) -> void:
 	elif elimination_tail < maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window()):
 		elimination_tail = minf(maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window()),elimination_tail+maxf(0.0,delta))
 		queue_redraw()
+
+## Sons de combat (banques libres, voir `sound_bank.gd`) : détectés d'après les événements du modèle, jamais écrits dans le modèle.
+func _play_sounds() -> void:
+	if model == null or not is_inside_tree(): return
+	if sound_player == null:
+		sound_player = SoundPlayer.new()
+		add_child(sound_player)
+		sound_director = SoundDirector.new(launch_delay,PROJECTILE_FLIGHT)
+	sound_player.play_all(sound_director.update(model))
 
 func recent_eliminations(window: float = BOSS_ELIMINATION_DURATION) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
