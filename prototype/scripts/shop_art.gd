@@ -5,7 +5,7 @@ const AllianceArt = preload("res://scripts/alliance_art.gd")
 const HordeArt = preload("res://scripts/horde_art.gd")
 const PROVISIONAL_FROM := 10
 ## Types de la boutique étendue qui ont déjà leur illustration propre (validée par le porteur le 14 novembre 2026).
-const OWN_ART: Array[int] = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45]
+const OWN_ART: Array[int] = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47]
 ## Portrait de boutique, quand il diffère du sprite posé sur le plateau (la sentinelle porte sa longue-vue à deux mains en boutique).
 const PORTRAITS: Dictionary = {
 	10: preload("res://assets/units/shop/sentinelle_elfe_guet_v001.png"),
@@ -46,8 +46,8 @@ const TEXTURES: Dictionary = {
 	43: preload("res://assets/units/shop/baliste_guerre_v001.png"),
 	44: preload("res://assets/units/shop/gobelin_kamikaze_v001.png"),
 	45: preload("res://assets/units/shop/chef_guerre_veteran_v001.png"),
-	46: HordeArt.TEXTURES[3], # Provisoire : fantassin squelette, en attendant le sprite de Codex.
-	47: AllianceArt.TEXTURES[0], # Provisoire : tirailleur gnome.
+	46: preload("res://assets/units/shop/fantassin_squelette_v001.png"),
+	47: preload("res://assets/units/shop/tirailleur_gnome_v001.png"),
 	30: preload("res://assets/units/shop/mage_givre_v001.png"),
 	31: preload("res://assets/units/shop/eclaireur_observateur_v001.png"),
 	32: preload("res://assets/units/shop/pretre_guerrier_v001.png"),
@@ -90,8 +90,8 @@ const FRAMES: Dictionary = {
 	43: {"source":Rect2(0,0,1583,820),"foot":Vector2(791.0,820),"height":44.0},
 	44: {"source":Rect2(0,0,1115,1113),"foot":Vector2(401.0,1113),"height":58.0},
 	45: {"source":Rect2(0,0,925,1149),"foot":Vector2(520.0,1149),"height":66.0},
-	46: HordeArt.FRAMES[3],
-	47: AllianceArt.FRAMES[0],
+	46: {"source":Rect2(0,0,1290,1116),"foot":Vector2(470.0,1116),"height":59.0},
+	47: {"source":Rect2(0,0,1105,1192),"foot":Vector2(413.0,1192),"height":58.0},
 	30: {"source":Rect2(0,0,957,1197),"foot":Vector2(287.0,1197),"height":64.0},
 	31: {"source":Rect2(0,0,1293,1072),"foot":Vector2(556.0,1072),"height":59.0},
 	32: {"source":Rect2(0,0,965,1452),"foot":Vector2(492.0,1452),"height":64.0},
@@ -99,7 +99,7 @@ const FRAMES: Dictionary = {
 	34: {"source":Rect2(0,0,675,1282),"foot":Vector2(317.0,1282),"height":62.0},
 	35: {"source":Rect2(0,0,952,1175),"foot":Vector2(447.0,1175),"height":64.0},
 }
-const MUZZLES: Dictionary = {6:Vector2(30,-40),7:Vector2(43,-31),8:Vector2(-27.5,-41.75),9:Vector2(-20.0,-43.0),10:Vector2(12.0,-24.5), 11:Vector2(30.25,-33.5), 12:Vector2(42.0,-42.75), 13:Vector2(31.25,-39.25), 14:Vector2(7.0,-36.0), 15:Vector2(27.0,-51.75), 16:Vector2(-3.75,-9.0), 17:Vector2(-3.25,-26.25), 18:Vector2(-24.0,-47.0), 19:Vector2(28.75,-49.0), 20:Vector2(-14.25,-30.5), 21:Vector2(31.75,-19.25),22:Vector2(22.0,-52.25),23:AllianceArt.MUZZLES[0],24:Vector2(35.0,-21.75),25:Vector2(-13.25,-56.5),26:Vector2(22.75,-19.5),27:Vector2(20.0,-41.0),28:Vector2(-18.5,-56.75),29:Vector2(43.25,-31.5),30:Vector2(33.0,-51.25),31:AllianceArt.MUZZLES[0],32:Vector2(-15.5,-50.75),33:Vector2(25.5,-58.0),34:Vector2(0.0,-51.5),35:Vector2(16.5,-32.0),36:Vector2(17.75,-48.75),37:Vector2(27.25,-24.0),38:Vector2(40.0,-31.0),39:Vector2(28.5,-35.0),40:Vector2(23.0,-38.75),41:Vector2(35.0,-41.5),42:Vector2(30.0,-26.25),43:Vector2(41.25,-27.5),44:Vector2(30.75,-43.75),45:Vector2(-25.5,-46.25),46:HordeArt.MUZZLES[3],47:AllianceArt.MUZZLES[0]}
+const MUZZLES: Dictionary = {6:Vector2(30,-40),7:Vector2(43,-31),8:Vector2(-27.5,-41.75),9:Vector2(-20.0,-43.0),10:Vector2(12.0,-24.5), 11:Vector2(30.25,-33.5), 12:Vector2(42.0,-42.75), 13:Vector2(31.25,-39.25), 14:Vector2(7.0,-36.0), 15:Vector2(27.0,-51.75), 16:Vector2(-3.75,-9.0), 17:Vector2(-3.25,-26.25), 18:Vector2(-24.0,-47.0), 19:Vector2(28.75,-49.0), 20:Vector2(-14.25,-30.5), 21:Vector2(31.75,-19.25),22:Vector2(22.0,-52.25),23:AllianceArt.MUZZLES[0],24:Vector2(35.0,-21.75),25:Vector2(-13.25,-56.5),26:Vector2(22.75,-19.5),27:Vector2(20.0,-41.0),28:Vector2(-18.5,-56.75),29:Vector2(43.25,-31.5),30:Vector2(33.0,-51.25),31:AllianceArt.MUZZLES[0],32:Vector2(-15.5,-50.75),33:Vector2(25.5,-58.0),34:Vector2(0.0,-51.5),35:Vector2(16.5,-32.0),36:Vector2(17.75,-48.75),37:Vector2(27.25,-24.0),38:Vector2(40.0,-31.0),39:Vector2(28.5,-35.0),40:Vector2(23.0,-38.75),41:Vector2(35.0,-41.5),42:Vector2(30.0,-26.25),43:Vector2(41.25,-27.5),44:Vector2(30.75,-43.75),45:Vector2(-25.5,-46.25),46:Vector2(38.0,-35.0),47:Vector2(31.0,-35.0)}
 
 static func portrait(type: int) -> Texture2D:
 	return PORTRAITS.get(type,TEXTURES[type])

@@ -204,6 +204,8 @@ static func secondary_segments(shot: Dictionary) -> Array[PackedVector2Array]:
 const ARROW_TYPES: Array[int] = [11] # Tireur d'élite elfe : flèche, bien que sa famille de combat reste celle de l'arbalétrier.
 const BULLET_TYPE := 12 # Arquebusière naine : balle de plomb et traînée de poudre, bien que sa famille de combat reste celle de l'archer.
 const CANNON_TYPE := 13 # Bombardier nain : boulet en cloche.
+const SHORT_BOLT_TYPE := 47 # Tirailleur gnome : carreau court d'arbalète de poing.
+const SWORD_TYPE := 46 # Fantassin squelette : coup d'épée courte, sans projectile lancé.
 const PIKE_TYPES: Array[int] = [14,20] # Piquier humain et lance-épieu orc : coup à courte portée, sans projectile lancé.
 const PEBBLE_TYPE := 25 # Fronde elfe : galet, bien que sa famille de combat reste celle de l'archer.
 const FIRE_TYPE := 15 # Pyromancien humain : boule de feu.
@@ -265,6 +267,9 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	if int(shot.type) == CANNON_TYPE:
 		_draw_cannonball(point,direction)
 		return
+	if int(shot.type) == SWORD_TYPE:
+		_draw_sword_strike(origin,direction,side,age/PROJECTILE_FLIGHT)
+		return
 	if int(shot.type) in PIKE_TYPES:
 		_draw_pike_thrust(origin,direction,side,age/PROJECTILE_FLIGHT)
 		return
@@ -285,6 +290,9 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		return
 	if int(shot.type) == RUNE_TYPE:
 		_draw_rune_disc(point,age)
+		return
+	if int(shot.type) == SHORT_BOLT_TYPE:
+		_draw_short_bolt(point,direction,side)
 		return
 	if int(shot.type) in BOLT_TYPES:
 		_draw_ballista_bolt(point,direction,side)
@@ -394,6 +402,15 @@ func _draw_rune_disc(point: Vector2, age: float) -> void:
 	draw_arc(point,3.2,spin,spin+TAU*0.75,10,Color("ffb04a"),1.4,true)
 	draw_circle(point,1.2,Color("ffe3a0"),true,-1,true)
 
+## Carreau court de l'arbalète de poing du tirailleur gnome : petit fût clair, pointe de fer, deux plumes.
+func _draw_short_bolt(point: Vector2, direction: Vector2, side: Vector2) -> void:
+	var tail: Vector2 = point-direction*9.0
+	draw_line(tail,point,Color("1a2524"),3.0,true)
+	draw_line(tail,point,Color("d9bf8a"),1.6,true)
+	draw_colored_polygon(PackedVector2Array([point+direction*4.0,point+side*2.0,point-side*2.0]),Color("d6dad8"))
+	draw_line(tail,tail+direction*3.0+side*2.0,Color("c0504a"),1.2,true)
+	draw_line(tail,tail+direction*3.0-side*2.0,Color("c0504a"),1.2,true)
+
 ## Fiole de l'alchimiste gnome : verre verdâtre qui tourne, liquide vif.
 func _draw_vial(point: Vector2, age: float) -> void:
 	var spin: float = age/PROJECTILE_FLIGHT*TAU
@@ -484,6 +501,19 @@ func _draw_pike_thrust(origin: Vector2, direction: Vector2, side: Vector2, progr
 	var head := PackedVector2Array([tip+direction*6.0,tip+side*2.6,tip-side*2.6])
 	draw_colored_polygon(head,Color("dfeae6"))
 	draw_line(tip+direction*6.0,tip-direction*1.0,Color(1.0,1.0,1.0,0.6),1.0,true)
+
+## Coup d'épée courte du fantassin squelette : lame d'os qui balaie un arc devant lui, avec une traînée claire.
+func _draw_sword_strike(origin: Vector2, direction: Vector2, side: Vector2, progress: float) -> void:
+	var t: float = clampf(progress,0.0,1.0)
+	var swing: float = lerpf(-0.9,0.9,t)
+	var blade: Vector2 = direction.rotated(swing)
+	var base: Vector2 = origin+direction*2.0
+	for trail in range(3):
+		var earlier: Vector2 = direction.rotated(swing-0.35*float(trail+1))
+		draw_line(base,base+earlier*(13.0-trail*2.0),Color(0.92,0.9,0.78,0.30-trail*0.08),2.4,true)
+	draw_line(base,base+blade*14.0,Color("1d2220"),3.4,true)
+	draw_line(base,base+blade*14.0,Color("e8e2cc"),2.0,true)
+	draw_line(base-blade*1.5+blade.orthogonal()*2.4,base-blade*1.5-blade.orthogonal()*2.4,Color("7b6a4a"),1.6,true)
 
 ## Balle de l'arquebusière naine (type 12) : boule de plomb précédée d'un éclat de poudre, sans empennage de flèche.
 func _draw_bullet(point: Vector2, direction: Vector2) -> void:
