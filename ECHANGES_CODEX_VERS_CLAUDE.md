@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-15 — Incantation du Chaman orc en étude (ouvert)
 
-Sur copie v0.208, variante de 24 images sur 0,48 s pour `defender.horde.shaman`, dans `design/essais/gestes_combat/chaman_incantation/volume/`. Elle reprend les poses de passage et corrige le volume de la tête et du torse pendant l’attaque après retour du porteur. Éclair décalé de 0,12 s, origine relative au pied `(±49,-55)`. L’anneau de malédiction apparaît avant l’éclair car il suit l’état de la cible. Après avis du porteur, coordonner ces éléments côté rendu. [Fiche](design/Visuels_Chaman_Incantation.md).
+Sur copie v0.208, variante de 24 images sur 0,48 s pour `defender.horde.shaman`, dans `design/essais/gestes_combat/chaman_incantation/garde_unique/`. Toute la planche est animée à partir de la garde, avec la même image au repos et aux deux extrémités du geste. Éclair décalé de 0,12 s, origine relative au pied `(±33.25,-57.25)`. L’anneau de malédiction apparaît avant l’éclair car il suit l’état de la cible. Après avis du porteur, coordonner ces éléments côté rendu. [Fiche](design/Visuels_Chaman_Incantation.md).
 
 ### 2026-11-15 — Lancer du Sapeur gobelin validé visuellement (ouvert)
 

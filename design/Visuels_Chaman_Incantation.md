@@ -30,3 +30,11 @@ Le porteur juge la variante fluide mais constate un changement de volume pendant
 [Avant et après à taille native](essais/gestes_combat/chaman_incantation/volume/Chaman_proportions_avant_apres.gif)
 
 Nouvelle planche dans `volume/defender.horde.shaman/`. Contrôlée au Gué sur la copie v0.208 à ×1 et ×2 dans les deux sens, avec arrêt du temps simulé. Validateur : 25 dossiers, zéro problème. Bibliothèque : 157 contrôles réussis. L’anneau de malédiction apparaît encore avant l’éclair sur cette copie. La variante corrigée attend le retour du porteur.
+
+## Garde et incantation à partir du même dessin
+
+Le porteur signale que la version précédente présente encore un changement de taille, surtout en fin d’attaque. La nouvelle planche anime un seul dessin, celui de la garde. La tête se déplace sans changer d’échelle, les pieds sont ancrés et le bâton pivote avec la main. Le début et la fin de l’attaque sont identiques au repos pixel pour pixel sur la planche. Deux comparaisons du corps en jeu (E2, ×1 et ×2) sont également identiques avant et après le sort.
+
+[Comparatif à taille native](essais/gestes_combat/chaman_incantation/garde_unique/Chaman_garde_avant_apres.gif)
+
+La nouvelle variante se trouve dans `garde_unique/defender.horde.shaman/`. Le geste est plus mesuré : le mouvement du bâton se lit par sa bascule et le départ de l’éclair. 24 images sur 0,48 s. L’éclair part à 0,12 s de (±33,25, −57,25) par rapport aux pieds sur la copie d’essai v0.208. Vérifications au Gué dans les deux sens à ×1 et ×2 et à temps figé. Validateur : 25 dossiers, zéro problème. Bibliothèque : 157 contrôles réussis. L’anneau de malédiction reste à synchroniser côté rendu.
