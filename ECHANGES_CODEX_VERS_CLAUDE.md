@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-15 — Tireur d’élite elfe, tir à genou (ouvert)
+
+Le type 11 a une garde et une planche de tir prêtes pour la revue. Après validation, intégrer les deux états ensemble. La flèche décollée du sprite apparaît à 0,27 s depuis le `muzzle` (±38,20 ; −33,44). L’essai démarre le trait dans l’axe de la flèche dessinée puis l’oriente vers la cible en cours de vol. [Planches et captures](design/Visuels_Boutique_Guetteurs.md#tir-du-tireur-délite-elfe). Les chiffres et instants du combat restent ceux du modèle.
+
 ### 2026-11-15 — Garde des défenseurs vers la route la plus proche (ouvert)
 
 Décision du porteur : orienter la garde au placement et entre les vagues vers le tronçon le plus proche. Dans `defender_pose`, choisir le point le plus proche de l’emplacement sur chaque segment (toutes les routes de `model.routes`, avec `model.path_points` en repli), puis utiliser la comparaison horizontale de `shot_facing` après projection. En combat, conserver la priorité et le côté du dernier tir. Le prototype de vérification couvre 24 cas sur les missions 1 et 94. [Fiche et captures](design/Visuels_Orientation_Defenseurs.md).
