@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "id": "defender.horde.shaman",
+  "display_height": 89.81818181818181,
+  "foot": [
+    198,
+    357
+  ],
+  "facing": "right",
+  "animations": {
+    "attack": {
+      "file": "attack.png",
+      "frames": 28,
+      "frame_size": [
+        512,
+        416
+      ],
+      "mode": "event",
+      "duration": 0.56
+    },
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        512,
+        416
+      ],
+      "mode": "time",
+      "fps": 1
+    }
+  },
+  "muzzle": [
+    437.13275146484375,
+    84.45132446289062
+  ]
+}
