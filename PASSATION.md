@@ -4,13 +4,15 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**15 novembre — Sapeur gobelin.** Essai de lancer en jeu sur copie v0.208 dans les deux sens à ×1 et ×2, temps figé contrôlé. Validateur : 24 dossiers, 0 problème. Bibliothèque : 156 contrôles réussis. Planches en étude dans le dossier de design en attendant le retour du porteur. [Fiche et boucle](design/Visuels_Sapeur_Lancer.md).
+
 **15 novembre — Tirailleur gnome, type 47.** Visuel fixe validé. Portrait, achat, recrutement et premier tir vérifiés sur copie v0.208, 211 contrôles d’illustrations au vert. Sprite et import prêts. Carreau court à brancher, tir et réarmement à animer. [Fiche](design/Visuels_Boutique_Tirailleur_Gnome.md).
 
 **15 novembre — Fantassin squelette, type 46.** Visuel fixe validé par le porteur. 206 contrôles d’illustrations, achat, recrutement et première attaque vérifiés sur la copie v0.208. Sprite et cadrage prêts. Le rendu du coup d’épée et le libellé de combat restent à intégrer. [Fiche](design/Visuels_Boutique_Fantassin_Squelette.md).
 
 **15 novembre — Capitaine orc, essai v0.208.** Illustration au bouclier réutilisée, import filtré et comparaison en jeu à taille native sur la mission 94. Visuel fixe validé par le porteur et prêt à intégrer. Marche et mort à produire. Les 213 contrôles du rendu ennemi et les 4 546 du chapitre passent sur la copie d’essai. Branche synchronisée avec la v0.208. La v0.206 intègre la revue de lisibilité. Le type 46 est validé et livré. Le type 47 est également validé et livré. [Fiche et comparatif](design/Visuels_Garnison.md).
 
-**Lisibilité plateau, deux camps et neutres.** 46 défenseurs et 19 identités d’attaquants capturés à taille native sur copie v0.202. Mipmaps testées sur les défenseurs et les planches des attaquants, 33 cadrages de boutique à transférer. Claude doit mettre à jour le test et vérifier les textures exportées. Le Capitaine orc partage encore la silhouette du Chef de guerre. L’essai du Sapeur est mis en attente. [Audit et preuves](design/Visuels_Lisibilite_Plateau.md).
+**Lisibilité plateau, deux camps et neutres.** 46 défenseurs et 19 identités d’attaquants capturés à taille native sur copie v0.202. Mipmaps testées sur les défenseurs et les planches des attaquants, 33 cadrages de boutique à transférer. Claude doit mettre à jour le test et vérifier les textures exportées. Le Capitaine orc partage encore la silhouette du Chef de guerre. [Audit et preuves](design/Visuels_Lisibilite_Plateau.md).
 
 **Chef de guerre vétéran, type 45.** Visuel fixe bien accueilli par le porteur. Portrait, déblocage, recrutement et premier lancer de hache vérifiés sur copie v0.202. 186 contrôles d’illustrations et 49 du lot 4 réussis. Dernière illustration fixe du catalogue de boutique. [Fiche](design/Visuels_Boutique_Chef_Guerre_Veteran.md).
 

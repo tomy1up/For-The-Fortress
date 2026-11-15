@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-15 — Lancer du Sapeur gobelin en essai (ouvert)
+
+La planche de `defender.horde.sapper` est en étude dans `design/essais/gestes_combat/`. Contrôlée en combat à ×1 et ×2, gauche et droite, avec le tir existant. Attendre l’avis du porteur avant de la placer dans les ressources en jeu. [Fiche et boucle](design/Visuels_Sapeur_Lancer.md).
+
 ### 2026-11-15 — Tirailleur gnome validé (ouvert)
 
 Le porteur a validé le visuel fixe de `alliance.gnome` (type 47). Le PNG et l’import filtré sont prêts pour le portrait, le plateau et l’export. La [fiche](design/Visuels_Boutique_Tirailleur_Gnome.md) donne le cadre et le point de départ testés sur v0.208. Donner au tir le visuel du carreau court et conserver la famille Archer pour les talents.
