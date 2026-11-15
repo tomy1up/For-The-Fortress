@@ -46,3 +46,11 @@ Le porteur a écarté l’essai à partir d’un seul dessin de garde parce que 
 [Comparatif en jeu avec le geste d’origine](essais/gestes_combat/chaman_incantation/geste_et_gabarit/Chaman_geste_et_gabarit.gif)
 
 Variante à évaluer dans `geste_et_gabarit/defender.horde.shaman/`. 28 images de 496 × 400 px sur 0,56 s, ancre (190, 349), hauteur d’affichage 86,36 px pour le cadre avec marge. L’éclair part à 0,12 s de (±51,625, −58,875). Sur la copie v0.208, les captures à ×1 et ×2 montrent le retour à la garde pixel pour pixel sur le recadrage du corps à E2. Les deux sens et le temps figé ont été vérifiés. Validateur : 25 dossiers, zéro problème. Bibliothèque : 157 contrôles réussis. L’anneau de malédiction reste à synchroniser.
+
+## Correction locale du gabarit sur le geste validé
+
+Le porteur valide le geste de la variante précédente mais voit encore le corps rétrécir puis s’élargir. La nouvelle variante utilise ses 28 images dans le même ordre, sur la même durée de 0,56 s. Les appuis et le départ de l’éclair à 0,12 s restent positionnés au même endroit. La correction agit localement sur le torse et la capuche des images les plus étroites, avec une transition douce au retour. L’aire pondérée de la silhouette autour du torse, mesurée dans la même fenêtre relative aux pieds, varie désormais d’environ 5 % au lieu de 9,5 %. Cet indicateur sert à comparer les planches.
+
+[Comparatif à taille native](essais/gestes_combat/chaman_incantation/gabarit_constant/Chaman_taille_corrigee.gif)
+
+La planche se trouve dans `gabarit_constant/defender.horde.shaman/`. Elle utilise des cadres de 512 × 416 px, un pied (198, 357) et une hauteur de cadre de 89,82 px. La marge supplémentaire conserve l’échelle du dessin. Les mipmaps sont actives dans l’essai. Contrôle au Gué à ×1 et ×2 dans les deux sens et à temps figé. Le corps revient à la même pose de garde pixel pour pixel sur le recadrage de contrôle E2. Validateur : 25 dossiers, zéro problème. Bibliothèque : 157 contrôles réussis. L’anneau de malédiction doit encore être synchronisé côté rendu.
