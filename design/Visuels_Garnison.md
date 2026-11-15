@@ -36,3 +36,11 @@ Les trois planches de `enemy.alliance.garrison` contiennent chacune 24 poses de 
 À La Brèche (mission 91, vague 5, côté Horde), les trois diagonales du trajet ont été parcourues à ×1 et ×2, avec les 24 poses jouées à chaque vitesse. La scène de contrôle figée donne deux captures identiques autour du capitaine à 0,65 s d’intervalle. Le validateur et les quatre suites ciblées du lot passent. La marche du capitaine humain attend le retour visuel du porteur. L’illustration du capitaine orc reste à valider.
 
 [Extrait en combat](essais/capitaine_marche/Capitaine_en_combat.gif) · [Diagonales de La Brèche](essais/capitaine_marche/Capitaine_diagonales.jpg)
+
+## Capitaine orc à taille native — essai v0.208
+
+L’étude au bouclier rectangulaire a été branchée sur une copie de la v0.208 pour `enemy.horde.garrison`. Sur la Grande Salle (mission 94, Alliance), cinq instants des vagues 5, 7 et 10 ont été rejoués avec les mêmes temps et nombres d’ennemis. À 24 secondes de la vague 10, les deux capitaines se distinguent du chef de guerre à taille native par le bouclier à bande rouge et le casque bas. Le comparatif est un recadrage de l’affichage 1 280 × 800.
+
+[Comparatif avant et après](essais/garnison/Capitaine_orc_sur_le_plateau.png)
+
+Le PNG destiné au jeu est `prototype/assets/enemies/rosters/capitaine_orc_v001.png`. Import avec mipmaps, cadre `Rect2(0,0,1084,999)`, pied `Vector2(559,999)`, hauteur de base 34 px, soit 54,4 px avec le facteur du capitaine. Sur la copie d’essai, 213 contrôles des visuels ennemis et 4 546 du chapitre de la Garnison passent. L’illustration fixe est proposée à la validation du porteur. Le branchement et l’export reviennent à Claude après ce retour. Le cycle de marche et la mort restent à produire.

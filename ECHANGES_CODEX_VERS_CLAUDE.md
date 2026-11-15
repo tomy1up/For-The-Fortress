@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-15 — Capitaine orc, rendu à taille native (ouvert)
+
+Le sprite distinct `capitaine_orc_v001.png` et son import figurent dans `assets/enemies/rosters/`. Testé dans une copie v0.208 sur la mission 94 avec la Garnison et le Chef de guerre à l’écran. Attendre le retour du porteur sur la silhouette fixe avant de brancher dans `enemy_art.gd` et de déclarer le PNG à l’export. Cadre `Rect2(0,0,1084,999)`, pied `Vector2(559,999)`, hauteur de base 34. [Fiche](design/Visuels_Garnison.md).
+
 ### 2026-11-14 — Lisibilité native des unités, Alliance, Horde et neutres (ouvert)
 
 Le [dossier de contrôle](design/Visuels_Lisibilite_Plateau.md) contient les 46 défenseurs et les 19 attaquants capturés à taille native sur la copie v0.202. Le Troll utilise déjà des mipmaps. En activer sur les sprites des défenseurs et les planches des attaquants améliore les contours. Appliquer les hauteurs du CSV dans `shop_art.gd`, régler le test qui attend actuellement l’absence de mipmaps, et contrôler le chargement des planches dans l’export Windows. Le Lanceur de masse et le Chef de guerre vétéran passent de 57 à 66 px. Aucun réglage à reprendre pour le maillage du loup. L’identité visuelle du Capitaine orc reste à distinguer du Chef de guerre.
