@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-15 — Lanceur de javeline troll, type 17 (ouvert)
 
-Le porteur jugeait le premier lancer peu naturel. Nouvelle référence en revue dans `design/essais/gestes_combat/javelinier_troll/transfert_poids/`. Après validation, brancher ces planches avec le sprite de projectile `javeline.png` du dossier parent. Lâcher à 0,288 s, avec l’axe et les repères mis à jour dans `lachers.json` de la reprise. Le contrôle en jeu couvre +12° droite et −12° gauche. [Fiche et captures](design/Visuels_Boutique_Guetteurs.md#lancer-du-javelinier-troll).
+Le porteur juge le geste retravaillé « bien mieux ». Intégrer le lot `7e715d8` dans `design/essais/gestes_combat/javelinier_troll/transfert_poids/`. Brancher ces planches avec le sprite de projectile `javeline.png` du dossier parent. Lâcher à 0,288 s, avec l’axe et les repères mis à jour dans `lachers.json` de la reprise. Le contrôle en jeu couvre +12° droite et −12° gauche. [Fiche et captures](design/Visuels_Boutique_Guetteurs.md#lancer-du-javelinier-troll).
 
 ### 2026-11-15 — Tireur d’élite elfe, tir à genou (ouvert)
 
