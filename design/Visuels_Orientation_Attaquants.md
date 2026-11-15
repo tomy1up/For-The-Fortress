@@ -59,3 +59,11 @@ Le test à pas courts donne une impression de piétinement. Sur cette diagonale,
 [Comparatif à ×1](essais/garnison/orientations/marche_foulee/Capitaine_foulee_x1.gif) · [Comparatif à ×2](essais/garnison/orientations/marche_foulee/Capitaine_foulee_x2.gif)
 
 Les deux versions ont été capturées sur le même segment de la mission 62 à taille native dans la copie v0.208. La vitesse de base du capitaine reste à 0,6 unité logique par seconde. L’image reste identique à distance figée. Les 24 poses tiennent dans leurs cadres. Les tests du rendu ennemi (213 contrôles) et de la bibliothèque d’animations (157 contrôles) passent. Essai sur une seule diagonale, à valider par le porteur avant de décliner la marche.
+
+## Jambes raccourcies · même foulée
+
+Le porteur trouve la foulée plus naturelle et les jambes encore trop longues. Le bassin est abaissé de 7 px dans la planche, soit environ 1,7 px sur le plateau. Les cuisses et les tibias absorbent cet écart. Le torse et la garde gardent leurs proportions. La trajectoire des bottes, l’amplitude et la phase du cycle sont reprises de l’essai précédent.
+
+[Comparatif à ×1](essais/garnison/orientations/marche_foulee_compacte/Capitaine_jambes_x1.gif) · [Comparatif à ×2](essais/garnison/orientations/marche_foulee_compacte/Capitaine_jambes_x2.gif)
+
+Les 24 poses sont cadrées. Comparatif à taille native sur le même segment de la mission 62 dans la copie v0.208, à ×1 et ×2. Le contrôle à distance figée passe aux deux vitesses. La variante reste limitée à la diagonale descendante vers la droite.
