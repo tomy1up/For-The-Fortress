@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.45 — 15 novembre 2026
+Game Design Document — Version 0.46 — 15 novembre 2026
 
 Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne de 200 missions, entièrement jouable (vingt chapitres, dix biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.206. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. La boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
 
 **Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.206. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.45 ; jeu de référence 0.208.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.46 ; jeu de référence 0.209.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -77,7 +77,7 @@ Nom de travail — disponibilité juridique à confirmer.
 63. [63 Biomes, nouveautés et affixes de combat](#s63)
 64. [64 Équilibrage des talents et mesure des cartes](#s64)
 65. [65 Cadre de travail, outils et production](#s65)
-66. [66 Journal des versions 0.110 à 0.208](#s66)
+66. [66 Journal des versions 0.110 à 0.209](#s66)
 
 <a id="s1"></a>
 
@@ -1785,6 +1785,8 @@ Version 0.44 — 15 novembre 2026 : jeu 0.207, le **Fantassin squelette** (type 
 
 Version 0.45 — 15 novembre 2026 : jeu 0.208. Le porteur exige le **même nombre d’unités de boutique des deux côtés** (MAJ-46) : l’Alliance reçoit le **Tirailleur gnome** (type 47, `alliance.gnome`) face au fantassin squelette de la Horde ; 45 PO de recrutement, 6 de dégâts, intervalle 0,65 s, portée 2,6, sans règle nouvelle ; boutique 1 350 PO, mission 190 ; mesuré à 0,99 de la référence de l’Alliance. Visuel provisoire. Chaque faction compte 21 alternatives.
 
+Version 0.46 — 15 novembre 2026 : jeu 0.209. Intégration de deux visuels de Codex validés par le porteur : le sprite du **Fantassin squelette** (type 46), avec un coup d’épée courte de mêlée à la place du lancer de hache hérité, et le **Capitaine orc** de la garnison (`enemy.horde.garrison`), qui remplace la silhouette provisoire du chef de guerre. Aucune règle ni valeur modifiée.
+
 <a id="s51"></a>
 
 ## 51 Maintenance du GDD
@@ -2077,7 +2079,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 15 novembre 2026 (GDD 0.45, jeu 0.208)
+### État au 15 novembre 2026 (GDD 0.46, jeu 0.209)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2099,7 +2101,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.45, jeu 0.208 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.46, jeu 0.209 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2376,7 +2378,7 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 
 <a id="s66"></a>
 
-## 66 Journal des versions 0.110 à 0.208
+## 66 Journal des versions 0.110 à 0.209
 
 | Versions | Contenu |
 | --- | --- |
@@ -2420,5 +2422,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.206 | Lisibilité des unités sur le plateau ; type 44 renommé « Gobelin des braises » ; GDD 0.43 |
 | 0.207 | Fantassin squelette (type 46) dans la boutique de la Horde, visuel provisoire ; GDD 0.44 |
 | 0.208 | Tirailleur gnome (type 47) dans la boutique de l’Alliance : 21 unités par faction ; GDD 0.45 |
+| 0.209 | Sprite du Fantassin squelette (coup d’épée) et Capitaine orc de la garnison ; GDD 0.46 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

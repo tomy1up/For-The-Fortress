@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.209**. Sprite du Fantassin squelette avec coup d'épée et Capitaine orc de la garnison, validés par le porteur. [Notes](design/essais/v0209_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.209).
+
 **Prototype v0.208**. Tirailleur gnome (type 47) ajouté à l’Alliance : 21 unités de boutique par faction, visuel provisoire. [Notes](design/essais/v0208_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.208).
 
 **Prototype v0.207**. Fantassin squelette (type 46) ajouté à la boutique de la Horde, visuel provisoire. [Notes](design/essais/v0207_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.207).

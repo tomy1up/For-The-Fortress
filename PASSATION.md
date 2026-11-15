@@ -264,6 +264,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.208** : le porteur veut la même taille de catalogue des deux côtés : Tirailleur gnome (type 47, `alliance.gnome`) pour l'Alliance, 45 PO de recrutement, 6 de dégâts, 0,65 s, portée 2,6, boutique 1 350 PO, mission 190 ; rapport 0,99 ; visuel provisoire (famille de l'archer), sprite à livrer par Codex. 21 alternatives par faction.
 
+**v0.209** : intégration du sprite du Fantassin squelette (type 46, coup d'épée de mêlée `SWORD_TYPE` dans `valley_view.gd`) et du Capitaine orc (`enemy_art.gd`), tous deux validés par le porteur. Restent côté Codex : animation de frappe du squelette, sprite du Tirailleur gnome (type 47, provisoire), marche et mort des capitaines.
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.

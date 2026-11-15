@@ -204,6 +204,7 @@ static func secondary_segments(shot: Dictionary) -> Array[PackedVector2Array]:
 const ARROW_TYPES: Array[int] = [11] # Tireur d'élite elfe : flèche, bien que sa famille de combat reste celle de l'arbalétrier.
 const BULLET_TYPE := 12 # Arquebusière naine : balle de plomb et traînée de poudre, bien que sa famille de combat reste celle de l'archer.
 const CANNON_TYPE := 13 # Bombardier nain : boulet en cloche.
+const SWORD_TYPE := 46 # Fantassin squelette : coup d'épée courte, sans projectile lancé.
 const PIKE_TYPES: Array[int] = [14,20] # Piquier humain et lance-épieu orc : coup à courte portée, sans projectile lancé.
 const PEBBLE_TYPE := 25 # Fronde elfe : galet, bien que sa famille de combat reste celle de l'archer.
 const FIRE_TYPE := 15 # Pyromancien humain : boule de feu.
@@ -264,6 +265,9 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		return
 	if int(shot.type) == CANNON_TYPE:
 		_draw_cannonball(point,direction)
+		return
+	if int(shot.type) == SWORD_TYPE:
+		_draw_sword_strike(origin,direction,side,age/PROJECTILE_FLIGHT)
 		return
 	if int(shot.type) in PIKE_TYPES:
 		_draw_pike_thrust(origin,direction,side,age/PROJECTILE_FLIGHT)
@@ -484,6 +488,19 @@ func _draw_pike_thrust(origin: Vector2, direction: Vector2, side: Vector2, progr
 	var head := PackedVector2Array([tip+direction*6.0,tip+side*2.6,tip-side*2.6])
 	draw_colored_polygon(head,Color("dfeae6"))
 	draw_line(tip+direction*6.0,tip-direction*1.0,Color(1.0,1.0,1.0,0.6),1.0,true)
+
+## Coup d'épée courte du fantassin squelette : lame d'os qui balaie un arc devant lui, avec une traînée claire.
+func _draw_sword_strike(origin: Vector2, direction: Vector2, side: Vector2, progress: float) -> void:
+	var t: float = clampf(progress,0.0,1.0)
+	var swing: float = lerpf(-0.9,0.9,t)
+	var blade: Vector2 = direction.rotated(swing)
+	var base: Vector2 = origin+direction*2.0
+	for trail in range(3):
+		var earlier: Vector2 = direction.rotated(swing-0.35*float(trail+1))
+		draw_line(base,base+earlier*(13.0-trail*2.0),Color(0.92,0.9,0.78,0.30-trail*0.08),2.4,true)
+	draw_line(base,base+blade*14.0,Color("1d2220"),3.4,true)
+	draw_line(base,base+blade*14.0,Color("e8e2cc"),2.0,true)
+	draw_line(base-blade*1.5+blade.orthogonal()*2.4,base-blade*1.5-blade.orthogonal()*2.4,Color("7b6a4a"),1.6,true)
 
 ## Balle de l'arquebusière naine (type 12) : boule de plomb précédée d'un éclat de poudre, sans empennage de flèche.
 func _draw_bullet(point: Vector2, direction: Vector2) -> void:

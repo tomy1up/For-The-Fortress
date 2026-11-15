@@ -1,6 +1,6 @@
 extends RefCounted
 ## Silhouettes dans quatre atlas transparents, sans données de combat.
-## Capitaine de garnison humain (face à la Horde) : visuel de Codex (v0.176). Le capitaine orc réutilise provisoirement la silhouette du chef de guerre.
+## Capitaine de garnison humain (face à la Horde) : visuel de Codex (v0.176). Le capitaine orc (Horde) est aussi un visuel de Codex, validé par le porteur le 15 novembre 2026 (v0.209).
 ## Gueule-de-Vase (ex-Noyé) : visuel de Codex (v0.176). Les cadres sont rognés au pied (quelques pixels transparents) et la hauteur ajustée pour garder l'échelle du cadre complet (34 px).
 const TEXTURES: Dictionary = {
 	"enemy.neutral.turtle": preload("res://assets/enemies/rosters/tortue_gardienne_v001.png"),
@@ -21,7 +21,7 @@ const TEXTURES: Dictionary = {
 	"enemy.horde.colossus": preload("res://assets/enemies/rosters/horde_v003.png"),
 	"enemy.horde.guard": preload("res://assets/enemies/rosters/horde_v003.png"),
 	"enemy.horde.warchief": preload("res://assets/enemies/rosters/horde_v003.png"),
-	"enemy.horde.garrison": preload("res://assets/enemies/rosters/horde_v003.png"),
+	"enemy.horde.garrison": preload("res://assets/enemies/rosters/capitaine_orc_v001.png"),
 }
 const FRAMES: Dictionary = {
 	"enemy.neutral.turtle": {"source":Rect2(90,265,1075,732),"foot":Vector2(650,997),"height":34.0},
@@ -42,7 +42,7 @@ const FRAMES: Dictionary = {
 	"enemy.horde.colossus": {"source":Rect2(866,200,370,399),"foot":Vector2(1045.418,599),"height":34.0},
 	"enemy.horde.guard": {"source":Rect2(1349,282,295,316),"foot":Vector2(1478.468,598),"height":34.0},
 	"enemy.horde.warchief": {"source":Rect2(1716,182,416,417),"foot":Vector2(1920.095,599),"height":34.0},
-	"enemy.horde.garrison": {"source":Rect2(1716,182,416,417),"foot":Vector2(1920.095,599),"height":34.0},
+	"enemy.horde.garrison": {"source":Rect2(0,0,1084,999),"foot":Vector2(559,999),"height":34.0},
 }
 
 static func destination(id: String) -> Rect2:
