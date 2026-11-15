@@ -83,3 +83,11 @@ Le porteur a signalé que les jambes semblaient se croiser. Chaque pied a mainte
 J’ai contrôlé les axes de chaque jambe, de la hanche au genou puis à la cheville, sur les 96 poses. Les deux chaînes restent distinctes. Vérification du cadrage et du rendu à taille native et agrandi sur la mission 62, à ×1 et ×2. La capture à distance figée reste identique. Les suites du rendu ennemi (213 contrôles) et de la bibliothèque d’animations (157 contrôles) passent sur la copie v0.208. Les quatre vues restent en revue avant branchement.
 
 [Boucle native ×1](essais/garnison/orientations/marche_appuis_separes/Capitaine_appuis_x1.gif) · [Boucle native ×2](essais/garnison/orientations/marche_appuis_separes/Capitaine_appuis_x2.gif) · [Vue agrandie à vitesse normale](essais/garnison/orientations/marche_appuis_separes/Capitaine_appuis_agrandis.gif)
+
+## Appuis resserrés
+
+Le porteur juge les appuis séparés plus cohérents et les jambes trop écartées. L’écart latéral des deux trajectoires d’appui est réduit de 17 %. Le pied libre revient dans la même ligne, sous le bassin. La foulée est légèrement raccourcie, à 11,54 px projetés à l’échelle de base. La vitesse de déplacement du capitaine, la hauteur du bassin et les proportions des jambes sont conservées.
+
+Les axes des jambes restent distincts sur les 96 poses vérifiées. La marche est contrôlée à taille native, à ×1 et ×2, et à distance figée sur la mission 62 dans la copie v0.208. Les tests du rendu ennemi (213 contrôles) et de la bibliothèque d’animations (157 contrôles) passent.
+
+[Avant-après à vitesse normale](essais/garnison/orientations/marche_appuis_compacts/Capitaine_appuis_avant_apres.gif) · [Appuis resserrés à ×2](essais/garnison/orientations/marche_appuis_compacts/Capitaine_appuis_compacts_x2.gif)
