@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "id": "defender.horde.spearman",
+  "facing": "right",
+  "foot": [
+    167.82978723404256,
+    231.0983606557377
+  ],
+  "display_height": 64.86707566462168,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        408,
+        254
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 20,
+      "frame_size": [
+        408,
+        254
+      ],
+      "mode": "event",
+      "duration": 0.8
+    },
+    "attack_up12": {
+      "file": "attack_up12.png",
+      "frames": 20,
+      "frame_size": [
+        408,
+        254
+      ],
+      "mode": "event",
+      "duration": 0.8
+    },
+    "attack_down12": {
+      "file": "attack_down12.png",
+      "frames": 20,
+      "frame_size": [
+        408,
+        254
+      ],
+      "mode": "event",
+      "duration": 0.8
+    },
+    "attack_close": {
+      "file": "attack_close.png",
+      "frames": 20,
+      "frame_size": [
+        408,
+        254
+      ],
+      "mode": "event",
+      "duration": 0.8
+    },
+    "attack_far": {
+      "file": "attack_far.png",
+      "frames": 20,
+      "frame_size": [
+        408,
+        254
+      ],
+      "mode": "event",
+      "duration": 0.8
+    },
+    "attack_close_up": {
+      "file": "attack_close_up.png",
+      "frames": 20,
+      "frame_size": [
+        408,
+        254
+      ],
+      "mode": "event",
+      "duration": 0.8
+    },
+    "attack_close_down": {
+      "file": "attack_close_down.png",
+      "frames": 20,
+      "frame_size": [
+        408,
+        254
+      ],
+      "mode": "event",
+      "duration": 0.8
+    }
+  }
+}

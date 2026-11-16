@@ -140,4 +140,20 @@ func run_checks() -> void:
 	var cspec: Dictionary = Library.spec_for("defender.horde.catapult")
 	check(not cspec.is_empty() and cspec.animations.has("attack_up") and cspec.animations.has("attack_down") and cspec.animations.has("idle_up") and cspec.animations.has("idle_down"),"Catapulte : six planches chargées et valides")
 	check(Library.defender_state(cspec,{"idle_variant":"idle_up"}) == "idle_up" and Library.defender_state(cspec,{"attack_age":0.2,"attack_variant":"attack_down","idle_variant":"idle_down"}) == "attack_down" and Library.defender_state(cspec,{"idle_variant":"idle_inconnu"}) == "idle","Catapulte : état de garde et d'attaque avec repli")
+	# Lance-épieu orc (type 20) : sept planches, choisie par la pointe la plus proche de l'impact projeté ; un éclat de contact à 0,28 s.
+	check(is_equal_approx(View.launch_delay({"type":20}),0.28),"Contact du lance-épieu à 0,28 s")
+	var spear_seen: Dictionary = {}
+	for dx in [-9.0,-6.0,-3.0,-1.0,1.0,3.0,6.0,9.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var spear: Dictionary = {"type":20,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var variant: String = View.spear_variant(spear)
+			spear_seen[variant] = true
+			var impact_point: Vector2 = View.project(spear.to)+Vector2(0,-12)
+			var nearest: float = INF
+			for candidate in View.SPEAR_POINTS: nearest = minf(nearest,View.spear_tip(spear,candidate).distance_to(impact_point))
+			check(is_equal_approx(View.spear_tip(spear,variant).distance_to(impact_point),nearest),"Lance-épieu : pointe la plus proche de l'impact (%s)" % variant)
+			check(View.shot_origin(spear).distance_to(View.spear_tip(spear,variant)) < 0.001,"Lance-épieu : éclat à la pointe de la planche")
+	check(spear_seen.size() >= 3,"Lance-épieu : plusieurs planches atteintes (%d)" % spear_seen.size())
+	var lspec: Dictionary = Library.spec_for("defender.horde.spearman")
+	check(not lspec.is_empty() and lspec.animations.has("attack_close") and lspec.animations.has("attack_far") and lspec.animations.has("attack_close_up") and lspec.animations.has("attack_close_down"),"Lance-épieu : sept planches chargées et valides")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

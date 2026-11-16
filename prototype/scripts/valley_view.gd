@@ -275,7 +275,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
@@ -309,6 +309,11 @@ const CATAPULT_DIAGONAL_RATIO := 0.16
 const CATAPULT_TEXTURE: Texture2D = preload("res://assets/units/shop/pierre_v001.png")
 const CATAPULT_PIVOT_PX := Vector2(93.0,59.0)
 const CATAPULT_SCALE := 0.106
+## Lance-épieu orc (type 20, estoc à deux mains, contact à 0,28 s) : sept planches ; celle retenue est celle dont la pointe au contact (`contact.json`, depuis le pied, signe
+## horizontal retourné pour un coup à gauche) est la plus proche de l'impact projeté. Un seul éclat de contact est dessiné à cette pointe, selon l'angle de la planche.
+const SPEARMAN_TYPE := 20
+const SPEAR_POINTS: Dictionary = {"attack":{"pitch":0,"point":Vector2(47.9702,-24.0115)},"attack_up12":{"pitch":-12,"point":Vector2(46.8385,-33.3695)},"attack_down12":{"pitch":12,"point":Vector2(47.1458,-14.6209)},
+	"attack_close":{"pitch":0,"point":Vector2(39.1025,-24.0115)},"attack_far":{"pitch":0,"point":Vector2(56.099,-24.0115)},"attack_close_up":{"pitch":-12,"point":Vector2(33.6424,-33.3695)},"attack_close_down":{"pitch":12,"point":Vector2(33.9497,-14.6209)}}
 const STEP_TYPES: Array[int] = [14,15,17]
 const TILTED_TYPES: Array[int] = [10,11,14,15,17,18]
 const CURVED_TYPES: Array[int] = [11,13,17]
@@ -354,6 +359,9 @@ static func aim_variant(pitch: int) -> String:
 	return "attack" if pitch == 0 else "attack_%s%d" % ["down" if pitch > 0 else "up",absi(pitch)]
 
 static func aim_direction(shot: Dictionary) -> Vector2:
+	if int(shot.get("type",-1)) == SPEARMAN_TYPE:
+		var spear_angle: float = deg_to_rad(float(SPEAR_POINTS[spear_variant(shot)].pitch))
+		return Vector2(shot_facing(shot)*cos(spear_angle),sin(spear_angle))
 	if int(shot.get("type",-1)) == CANNON_TYPE: return Vector2(shot_facing(shot)*cos(deg_to_rad(CANNON_ANGLE)),-sin(deg_to_rad(CANNON_ANGLE)))
 	var angle: float = deg_to_rad(float(aim_pitch(shot)))
 	return Vector2(shot_facing(shot)*cos(angle),sin(angle))
@@ -400,7 +408,21 @@ static func catapult_curve(shot: Dictionary, progress: float) -> Dictionary:
 	var tangent: Vector2 = ((control-origin)*inverse+(target-control)*progress).normalized()
 	return {"point":point,"direction":tangent}
 
+static func spear_tip(shot: Dictionary, variant: String) -> Vector2:
+	var point: Vector2 = SPEAR_POINTS[variant].point
+	return project(shot.from)+Vector2(point.x*shot_facing(shot),point.y)
+
+static func spear_variant(shot: Dictionary) -> String:
+	var impact: Vector2 = project(shot.to)+Vector2(0,-12)
+	var best: String = "attack"
+	var best_distance: float = INF
+	for variant in SPEAR_POINTS:
+		var distance: float = spear_tip(shot,variant).distance_to(impact)
+		if distance < best_distance-0.000001: best_distance = distance;best = variant
+	return best
+
 static func shot_origin(shot: Dictionary, pose_age: float = 0.0) -> Vector2:
+	if int(shot.get("type",-1)) == SPEARMAN_TYPE: return spear_tip(shot,spear_variant(shot))
 	if int(shot.get("type",-1)) == STONE_TYPE: return catapult_origin(shot)
 	if int(shot.get("type",-1)) in TILTED_TYPES: return aimed_origin(shot)
 	# Points d'équipement des silhouettes, distincts du centre logique de portée.
@@ -436,7 +458,7 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	var direction: Vector2 = (target-origin).normalized()
 	if direction.is_zero_approx(): direction = Vector2.RIGHT
 	if int(shot.type) in CURVED_TYPES: direction = aimed_curve(shot,clampf(age/PROJECTILE_FLIGHT,0.0,1.0)).direction
-	if int(shot.type) == PIKEMAN_TYPE: direction = aim_direction(shot)
+	if int(shot.type) in [PIKEMAN_TYPE,SPEARMAN_TYPE]: direction = aim_direction(shot)
 	var side: Vector2 = direction.orthogonal()
 	if int(shot.type) == JAVELIN_TYPE:
 		_draw_javelin(point,direction,side,shot_facing(shot))
@@ -453,7 +475,7 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	if int(shot.type) == SHARDTHROWER_TYPE:
 		_draw_crystal_shard(point,direction,shot_facing(shot))
 		return
-	if int(shot.type) == PIKEMAN_TYPE:
+	if int(shot.type) in [PIKEMAN_TYPE,SPEARMAN_TYPE]:
 		_draw_pike_contact(origin,direction,side,age/PROJECTILE_FLIGHT)
 		return
 	if int(shot.type) in PIKE_TYPES:
@@ -1492,6 +1514,7 @@ func defender_pose(slot: int) -> Dictionary:
 		pose.attack_age = age
 		pose.direction = shot_facing(shot)
 		if int(shot.get("type",-1)) in TILTED_TYPES: pose.attack_variant = aim_variant(aim_pitch(shot))
+		if int(shot.get("type",-1)) == SPEARMAN_TYPE: pose.attack_variant = spear_variant(shot)
 		if int(shot.get("type",-1)) == STONE_TYPE:
 			var view: String = catapult_view(shot.from,shot.to)
 			pose.attack_variant = "attack"+view
