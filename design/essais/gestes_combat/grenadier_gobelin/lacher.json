@@ -1,0 +1,12 @@
+{
+  "release": 0.42,
+  "center_from_foot": [
+    6.9685,
+    -24.129
+  ],
+  "projectile_center": [
+    64,
+    87
+  ],
+  "projectile_scale": 0.07021778584392015
+}

@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.horde.grenadier",
+  "facing": "right",
+  "display_height": 66.75499092558984,
+  "foot": [
+    172.5346062052506,
+    260.02305475504323
+  ],
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        352,
+        292
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 20,
+      "frame_size": [
+        352,
+        292
+      ],
+      "mode": "event",
+      "duration": 0.84
+    }
+  }
+}

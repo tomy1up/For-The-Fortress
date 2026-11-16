@@ -49,3 +49,13 @@ Revue du 14 novembre 2026 à partir de la v0.197 et des sprites de la branche ar
 Les premières études confrontent la garde du Piquier à sa pose de contact, et la Catapulte chargée à sa pose immédiatement après le départ de la pierre. Les deux poses sont lisibles à l’échelle du plateau dans le comparatif. Les pieds du Piquier et les patins de la Catapulte devront être alignés image par image avant de construire les transitions. Ces PNG d’étude attendent un avis artistique et ne sont pas chargés par le jeu. [Comparatif des poses](essais/gestes_combat/Piquier_et_Catapulte.jpg)
 
 En v0.197, le projectile est dessiné selon la famille de combat, puis placé à partir de `MUZZLES` et de la transformation d’attaque. Le `muzzle` des planches n’est pas utilisé par ce rendu. Le modèle résout le tir avant son animation. Pour les unités dont la garde et le lâcher ont des origines différentes, vérifier dans le jeu la synchronisation entre l’image, le point d’émission et l’effet. Si le rendu doit évoluer, convenir du raccord avec Claude Code en gardant le moment d’application des dégâts et le ciblage actuels.
+
+## Lancer du Grenadier gobelin
+
+Le Grenadier arme près de l’épaule, avance le buste en lançant à hauteur de poitrine et suit le geste bras ouvert. Il recharge à la ceinture. Le dessin de référence garde ses lunettes ambrées et ses grenades olive, avec les semelles ancrées pendant les vingt poses.
+
+[Voir le lancer en jeu à taille native](essais/gestes_combat/grenadier_gobelin/Grenadier_gobelin_en_jeu.gif)
+
+Type 9 et identifiant `defender.horde.grenadier`. La garde et l’attaque de 0,84 s utilisent des poses de 352 × 292. La 11e pose est la première à main vide. À cet instant, 0,42 s, faire partir `grenade.png` depuis `center_from_foot` dans `lacher.json`, réfléchi à gauche par rapport au pied. Le fichier indique aussi le centre de rotation du sprite et son échelle. Le rendu de déflagration déjà associé au tir reste calé à l’arrivée de l’arc existant.
+
+Essai sur copie v0.220, mission 94. Six tirs contrôlés de part et d’autre à ×1 et ×2, avec pose figée en pause. Les contrôles couvrent le départ et 17 positions de vol par tir, sur cible principale. Les 20 poses sont cadrées et les première et dernière images correspondent à la garde. Validateur à zéro problème sur 34 dossiers et suite animation à 175 contrôles réussis. L’appréciation artistique de cet essai appartient au porteur.
