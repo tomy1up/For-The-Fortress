@@ -197,4 +197,14 @@ func run_checks() -> void:
 			check(hp in [-24,-12,0,12,24,36] and View.shot_origin(heavy).distance_to(View.project(from)+Vector2(htip.x*View.shot_facing(heavy),htip.y)) < 0.001,"Arbalète lourde : départ depuis la pointe de la planche %d" % hp)
 	var hspec: Dictionary = Library.spec_for("defender.alliance.heavycrossbow")
 	check(not hspec.is_empty() and hspec.animations.has("attack_up24") and hspec.animations.has("attack_down36"),"Arbalète lourde : six planches chargées et valides")
+	# Fronde elfe (type 25) : cinq planches choisies par l'écart minimal, galet à 0,40 s depuis le repère de la planche, trajet rectiligne.
+	check(is_equal_approx(View.launch_delay({"type":25}),0.4),"Galet de la fronde à 0,40 s")
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var sling: Dictionary = {"type":25,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var gp: int = View.aim_pitch(sling)
+			var gtip: Vector2 = View.SLING_TIPS[gp]
+			check(gp in [-12,0,12,24,36] and View.shot_origin(sling).distance_to(View.project(from)+Vector2(gtip.x*View.shot_facing(sling),gtip.y)) < 0.001,"Fronde : départ du repère de la planche %d" % gp)
+	var gspec2: Dictionary = Library.spec_for("defender.alliance.sling")
+	check(not gspec2.is_empty() and gspec2.animations.has("attack_up12") and gspec2.animations.has("attack_down36"),"Fronde : cinq planches chargées et valides")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
