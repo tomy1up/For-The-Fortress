@@ -19,3 +19,11 @@ Trois inclinaisons, 20 poses sur 0,64 s. Le projectile prend le relais à 0,288 
 [À taille native ×1](essais/gestes_combat/pyromancien_incantation/Pyromancien_tir_x1.gif) · [À taille native ×2](essais/gestes_combat/pyromancien_incantation/Pyromancien_tir_x2.gif) · [Vue agrandie](essais/gestes_combat/pyromancien_incantation/Pyromancien_tir_agrandi.gif)
 
 Essai sur copie v0.216 à La Grande Salle (mission 94) avec un Capitaine orc placé sur la route haute. Lancer descendant vers la droite en E1 et lancer horizontal vers la gauche en E2, à ×1, ×2 et à temps figé. Les 60 poses tiennent dans leurs cadres. Validateur : 32 dossiers, 0 problème. Bibliothèque : 173 contrôles. [Planches en revue](essais/gestes_combat/pyromancien_incantation/). Le raccord des angles et du projectile reste à intégrer dans la version publiée.
+
+## Buste plus stable
+
+Le 16 novembre, le porteur juge le pivot du buste excessif. La reprise réduit l’inclinaison maximale d’environ 16° à 5° et atténue l’avance du buste. L’impulsion reste lisible dans l’épaule, l’avant-bras et la paume. Les centres du projectile, le lâcher à 0,288 s et les appuis sont conservés. Quelques pixels isolés près du gant ont été retirés.
+
+[Comparatif à ×1](essais/gestes_combat/pyromancien_incantation/buste_stable/Pyromancien_buste_comparatif.gif) · [Version corrigée à ×2](essais/gestes_combat/pyromancien_incantation/buste_stable/Pyromancien_buste_x2.gif)
+
+Comparaison de l’essai v0.216 avec la reprise sur une copie v0.219, sur la mission 94 dans les mêmes conditions. Départ dans les deux sens contrôlé à ×1, ×2 et à temps figé. Les trois planches sont au format `attack`, `attack_up12`, `attack_down12` de la bibliothèque actuelle. Les 60 poses sont cadrées et chaque cycle se raccorde à la garde. Validateur : 32 dossiers, 0 problème. Bibliothèque : 173 contrôles. La reprise attend l’avis du porteur.
