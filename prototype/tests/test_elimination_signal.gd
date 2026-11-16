@@ -43,4 +43,25 @@ func run_checks() -> void:
 	check(JSON.stringify([m.gold,m.fortress_hp,m.enemies]) == before and view._ghost_alpha == 1.0 and view._ghost_squash == 1.0,"Dessiner le signal ne modifie pas le combat et rétablit l'opacité")
 	check(view.recent_eliminations().size() == types.size(),"Toutes les éliminations récentes sont dessinées")
 	view.free()
+	# Recalage des dégâts sur l'arrivée du projectile (retour du porteur, 16 novembre 2026).
+	check(is_equal_approx(View.damage_landing_delay({"source_type":15,"component":"direct"}),0.288+View.PROJECTILE_FLIGHT),"Dégât direct du pyromancien : attend le lâcher puis le vol")
+	check(View.damage_landing_delay({"source_type":15,"component":"curse"}) == 0.0 and View.damage_landing_delay({"source_type":-1,"component":"direct"}) == 0.0 and View.damage_landing_delay({}) == 0.0,"Brûlure et origine inconnue : aucun décalage")
+	var sync = Model.new();sync.phase = "combat";sync.elapsed = 5.0
+	var victim: Dictionary = Model.make_enemy(0,1,0);victim.distance = 3.0;victim.hp = 30.0;victim.max_hp = 40.0
+	sync.enemies.assign([victim])
+	sync.damage_events.append({"time":5.0,"enemy_id":0,"hp_before":40.0,"hp_after":30.0,"source_type":15,"component":"direct"})
+	var sview := View.new();sview.model = sync
+	check(is_equal_approx(sview.visual_hp(victim),40.0),"Avant l'arrivée du projectile, la barre montre encore les PV d'avant")
+	sync.elapsed = 5.2
+	check(is_equal_approx(sview.visual_hp(victim),40.0) and sview.recent_enemy_damage(0).is_empty(),"À 0,2 s : ni baisse de la barre ni éclat de dégâts")
+	sync.elapsed = 5.5
+	check(is_equal_approx(sview.visual_hp(victim),30.0) and sview.recent_enemy_damage(0).size() == 1,"Après l'arrivée (0,408 s) : la barre baisse et l'éclat apparaît")
+	sync.elapsed = 5.0;sync.elimination_events.append({"time":5.0,"enemy_id":0,"type":1,"point":Vector2(2,2),"distance":3.0,"route_id":"","source_type":15,"component":"direct"})
+	sync.elapsed = 5.1
+	var pending: Array[Dictionary] = sview.recent_eliminations()
+	check(pending.size() == 1 and pending[0].age < 0.0,"Un ennemi tué reste à l'écran tant que le projectile n'est pas arrivé")
+	sync.elapsed = 5.45
+	pending = sview.recent_eliminations()
+	check(pending.size() == 1 and pending[0].age >= 0.0 and pending[0].age < 0.1,"Sa disparition commence à l'arrivée")
+	sview.free()
 	print("ELIMINATION_SIGNAL_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

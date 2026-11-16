@@ -1112,7 +1112,21 @@ func _purge_curses() -> void:
 			surviving.append(curse)
 	curses = surviving
 
+## Origine visuelle des dégâts de chaque ennemi (type du défenseur et composante) : observation pour le rendu, qui recale l'affichage sur l'arrivée du projectile. Sans effet de jeu.
+var _damage_sources: Dictionary = {}
+
+func _record_damage_sources(hits: Array) -> void:
+	_damage_sources.clear()
+	for hit in hits:
+		var composante: String = str(hit.get("component",""))
+		if _damage_sources.has(hit.enemy_id) and (composante == "curse" or _damage_sources[hit.enemy_id].component != "curse"): continue
+		var type: int = -1
+		for defender in defenders:
+			if not defender.is_empty() and int(defender.get("instance_id",-2)) == int(hit.get("source_id",-1)): type = int(defender.type);break
+		_damage_sources[hit.enemy_id] = {"source_type":type,"component":composante}
+
 func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
+	_record_damage_sources(hits)
 	if enemies.any(func(enemy): return enemy.get("type",1) == Banks.GUARD_TYPE):
 		var positions: Dictionary = {}
 		for enemy in enemies: positions[enemy.id] = enemy_position(enemy)
@@ -1130,7 +1144,8 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 		var hp_before: float = enemy.hp
 		enemy.hp -= damage.get(enemy.id, 0.0)
 		if enemy.hp < hp_before:
-			damage_events.append({"time":elapsed,"enemy_id":enemy.id,"hp_before":hp_before,"hp_after":maxf(0.0,enemy.hp)})
+			var origin: Dictionary = _damage_sources.get(enemy.id,{})
+			damage_events.append({"time":elapsed,"enemy_id":enemy.id,"hp_before":hp_before,"hp_after":maxf(0.0,enemy.hp),"source_type":int(origin.get("source_type",-1)),"component":str(origin.get("component",""))})
 		_settle_enemy(enemy,survivors,blasts)
 	# Réaction en chaîne : un ennemi marqué « volatile » qui meurt explose et blesse ses voisins ; les explosions peuvent en provoquer d'autres, chaque ennemi n'explose qu'une fois.
 	while not blasts.is_empty():
@@ -1161,7 +1176,8 @@ func _settle_enemy(enemy: Dictionary, survivors: Array[Dictionary], blasts: Arra
 		survivors.append(enemy)
 		return
 	if enemy.hp <= 0.0:
-		elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":enemy_position(enemy),"distance":enemy.distance,"route_id":str(enemy.get("route_id",""))})
+		var origin_of_death: Dictionary = _damage_sources.get(enemy.id,{})
+		elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":enemy_position(enemy),"distance":enemy.distance,"route_id":str(enemy.get("route_id","")),"source_type":int(origin_of_death.get("source_type",-1)),"component":str(origin_of_death.get("component",""))})
 		killed += 1
 		total_killed += 1
 		var base: int = enemy.get("reward", 3)

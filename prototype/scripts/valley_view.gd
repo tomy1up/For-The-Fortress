@@ -82,8 +82,8 @@ func _process(delta: float) -> void:
 	flag_phase = fmod(flag_phase+maxf(0.0,delta),TAU)
 	if model == null or model.active or model.phase not in ["finished","bonus","victory","defeat"]:
 		elimination_tail = 0.0
-	elif elimination_tail < maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window()):
-		elimination_tail = minf(maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window()),elimination_tail+maxf(0.0,delta))
+	elif elimination_tail < maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window())+0.5:
+		elimination_tail = minf(maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window())+0.5,elimination_tail+maxf(0.0,delta))
 		queue_redraw()
 
 ## Sons de combat (banques libres, voir `sound_bank.gd`) : détectés d'après les événements du modèle, jamais écrits dans le modèle.
@@ -95,14 +95,36 @@ func _play_sounds() -> void:
 		sound_director = SoundDirector.new(launch_delay,PROJECTILE_FLIGHT)
 	sound_player.play_all(sound_director.update(model))
 
+## Recalage visuel des dégâts (retour du porteur, 16 novembre 2026) : le coup est résolu à l'instant du tir, mais l'affichage (barre de vie, éclat, mort) attend l'arrivée du projectile
+## (lâcher différé puis vol). Les dégâts sur la durée (brûlure, malédiction) s'affichent à leur instant. Rendu seulement : le combat ne change pas.
+static func damage_landing_delay(event: Dictionary) -> float:
+	if str(event.get("component","")) == "curse" or int(event.get("source_type",-1)) < 0: return 0.0
+	return launch_delay({"type":int(event.source_type)})+PROJECTILE_FLIGHT
+
+## Âge visuel d'un événement de dégâts ou d'élimination (négatif tant que le projectile n'est pas arrivé).
+func event_age(event: Dictionary) -> float:
+	return model.elapsed-float(event.time)-damage_landing_delay(event)
+
+## PV affichés : les dégâts dont le projectile n'est pas encore arrivé ne sont pas encore retirés.
+func visual_hp(enemy: Dictionary) -> float:
+	var shown: float = float(enemy.hp)
+	if model == null: return shown
+	for index in range(model.damage_events.size()-1,-1,-1):
+		var event: Dictionary = model.damage_events[index]
+		if model.elapsed-float(event.time) > 1.0: break
+		if event.enemy_id == enemy.id and event_age(event) < 0.0 and model.elapsed >= float(event.time): shown += float(event.hp_before)-float(event.hp_after)
+	return shown
+
 func recent_eliminations(window: float = BOSS_ELIMINATION_DURATION) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	if model == null or model.phase not in ["combat","finished","bonus","victory","defeat"]: return result
 	for index in range(model.elimination_events.size()-1,-1,-1):
 		var event: Dictionary = model.elimination_events[index]
-		var age: float = model.elapsed-event.time+(0.0 if model.active else elimination_tail)
-		if age >= window: break
-		if age >= 0.0:
+		var raw_age: float = model.elapsed-event.time+(0.0 if model.active else elimination_tail)
+		var age: float = raw_age-damage_landing_delay(event)
+		if raw_age >= window+0.5: break
+		if age >= window: continue
+		if raw_age >= 0.0:
 			result.append({"event":event,"age":age})
 			if result.size() >= MAX_ELIMINATION_EFFECTS: break
 	return result
@@ -156,9 +178,9 @@ func recent_enemy_damage(enemy_id: int) -> Array[Dictionary]:
 	if model == null or not model.active: return recent
 	for index in range(model.damage_events.size()-1,-1,-1):
 		var event: Dictionary = model.damage_events[index]
-		var age: float = model.elapsed-event.time
-		if age >= DAMAGE_TRAIL_DURATION: break
-		if event.enemy_id == enemy_id and age >= 0.0: recent.append(event)
+		var age: float = event_age(event)
+		if model.elapsed-float(event.time) >= DAMAGE_TRAIL_DURATION+0.5: break
+		if event.enemy_id == enemy_id and age >= 0.0 and age < DAMAGE_TRAIL_DURATION: recent.append(event)
 	return recent
 
 ## Âge du dernier coup reçu par cet ennemi, ou une valeur négative s'il n'en a pas reçu récemment (animation `hurt`).
@@ -166,14 +188,14 @@ func last_hit_age(enemy_id: int) -> float:
 	if model == null or not model.active: return -1.0
 	for index in range(model.damage_events.size()-1,-1,-1):
 		var event: Dictionary = model.damage_events[index]
-		var age: float = model.elapsed-event.time
-		if age > 3.0: break
+		var age: float = event_age(event)
+		if model.elapsed-float(event.time) > 3.5: break
 		if event.enemy_id == enemy_id and age >= 0.0: return age
 	return -1.0
 
 func enemy_hit_strength(events: Array[Dictionary]) -> float:
 	var strength: float = 0.0
-	for event in events: strength = maxf(strength,damage_opacity(model.elapsed-event.time,HIT_FLASH_DURATION))
+	for event in events: strength = maxf(strength,damage_opacity(event_age(event),HIT_FLASH_DURATION))
 	return strength
 
 static func hit_reaction_pulse(age: float) -> float:
@@ -733,6 +755,41 @@ func _draw_cast_bolt(shot: Dictionary, age: float, color: Color, alpha: float) -
 static func curse_applied_at(curse: Dictionary) -> float:
 	return float(curse.next_at)-(3.0-float(curse.ticks_left))
 
+## Types qui infligent une brûlure (Pyromancien humain, Brûleur de cendres) : leurs dégâts sur la durée se dessinent en flammes, pas en anneau de malédiction.
+const FIRE_CURSE_TYPES: Array[int] = [15,21]
+const BURN_TICK_FLARE := 0.45
+
+func curse_source_type(curse: Dictionary) -> int:
+	for defender in model.defenders:
+		if not defender.is_empty() and int(defender.get("instance_id",-1)) == int(curse.source_id): return int(defender.type)
+	return -1
+
+## Brûlure en cours sur un ennemi : petites langues de flamme qui vacillent (dessinées dans le repère de l'ennemi, centré sur ses pieds).
+func _draw_burning(phase: float) -> void:
+	for index in range(3):
+		var wobble: float = sin(phase*9.0+float(index)*2.1)
+		var x: float = (float(index)-1.0)*5.5
+		var base: float = -9.0-float(index%2)*3.0
+		var height: float = 9.0+3.0*wobble
+		var outer := PackedVector2Array([Vector2(x-3.2,base),Vector2(x-1.0+wobble*0.8,base-height*0.55),Vector2(x+wobble,base-height),Vector2(x+1.6,base-height*0.5),Vector2(x+3.2,base)])
+		draw_colored_polygon(outer,Color(0.98,0.45,0.12,0.92))
+		var inner := PackedVector2Array([Vector2(x-1.6,base),Vector2(x+wobble*0.6,base-height*0.62),Vector2(x+1.6,base)])
+		draw_colored_polygon(inner,Color(1.0,0.86,0.32,0.95))
+
+## Éclat orange et nombre qui monte à chaque tic de brûlure (le tic réel du modèle ; amount = PV retirés).
+func _draw_burn_tick(center: Vector2, enemy: Dictionary, amount: float, age: float) -> void:
+	if age < 0.0 or age >= BURN_TICK_FLARE or amount <= 0.0: return
+	var t: float = age/BURN_TICK_FLARE
+	var scale: float = _enemy_scale(enemy)
+	var body: Vector2 = center+Vector2(0,-14.0*scale)
+	draw_circle(body,(7.0+9.0*t)*scale,Color(1.0,0.55,0.15,0.55*(1.0-t)),true,-1,true)
+	draw_arc(body,(10.0+8.0*t)*scale,0.0,TAU,20,Color(1.0,0.8,0.35,0.85*(1.0-t)),2.0,true)
+	var font: Font = ThemeDB.fallback_font
+	var text_point: Vector2 = center+Vector2(0,-39.0*scale-10.0-14.0*t)
+	var label: String = "-%d" % int(roundf(amount))
+	draw_string_outline(font,text_point+Vector2(-10,0),label,HORIZONTAL_ALIGNMENT_CENTER,20,13,4,Color(0.2,0.05,0.0,1.0-t))
+	draw_string(font,text_point+Vector2(-10,0),label,HORIZONTAL_ALIGNMENT_CENTER,20,13,Color(1.0,0.78,0.38,1.0-t))
+
 ## L'anneau de malédiction d'un chaman orc apparaît avec l'arrivée de l'éclair, pas au départ du tir (rendu seul : la malédiction existe dès le tir).
 func curse_ring_visible(curse: Dictionary) -> bool:
 	var source_type := -1
@@ -1144,15 +1201,18 @@ func _draw() -> void:
 				if Model.enemy_is_slowed(actor.enemy): draw_texture_rect(FX_SLOW,Rect2(actor.point+Vector2(-14.5,-5.0),Vector2(29,14)),false)
 				var feedback: Array[Dictionary] = recent_enemy_damage(actor.enemy.id)
 				_draw_pillager(actor.point, actor.enemy,enemy_hit_strength(feedback),enemy_reaction_pose(actor.enemy,feedback,model.elapsed))
-				var ratio: float = clampf(actor.enemy.hp / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
+				var ratio: float = clampf(visual_hp(actor.enemy) / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
 				var bar_position: Vector2 = actor.point + Vector2(-12, -39 * _enemy_scale(actor.enemy))
 				draw_rect(Rect2(bar_position, Vector2(24, 4)), Color("472f2a"))
 				draw_rect(Rect2(bar_position, Vector2(24 * ratio, 4)), Color("edcc80") if actor.enemy.id == inspected_enemy_id else Color("a1ba75"))
 				_draw_enemy_badges(actor.enemy,bar_position)
 				for event in feedback:
+					if str(event.get("component","")) == "curse" and int(event.get("source_type",-1)) in FIRE_CURSE_TYPES:
+						_draw_burn_tick(actor.point,actor.enemy,float(event.hp_before)-float(event.hp_after),event_age(event))
+				for event in feedback:
 					var span: Vector2 = damage_span(event,actor.enemy.get("max_hp",40.0))
 					if span.y > span.x:
-						draw_rect(Rect2(bar_position+Vector2(24*span.x,0),Vector2(24*(span.y-span.x),4)),Color(Color("f3dfba"),damage_opacity(model.elapsed-event.time)))
+						draw_rect(Rect2(bar_position+Vector2(24*span.x,0),Vector2(24*(span.y-span.x),4)),Color(Color("f3dfba"),damage_opacity(event_age(event))))
 		_draw_volatile_bursts()
 		_draw_eruption()
 		_draw_headwinds()
@@ -1189,10 +1249,14 @@ func _draw_eliminations() -> void:
 		var enemy := {"id":event.enemy_id,"type":type,"distance":float(event.get("distance",0.0)),"route_id":event.get("route_id",""),"hp":0.0}
 		var motion := EnemyWalkArt.path_motion(enemy.distance,model.enemy_route_points(enemy),AXIS)
 		var state: String = SheetAnimations.death_state(spec,motion.get("direction",Vector2.ZERO))
-		if state != "":
+		if state != "" and age >= 0.0:
 			_draw_sheet_death(id,state,event,age)
 			continue
 		var duration: float = elimination_duration(type)
+		if age < 0.0:
+			# Le projectile n'est pas encore arrivé : l'ennemi reste à l'écran, intact, à l'endroit de sa chute.
+			if type not in BOSS_TYPES: _draw_fading_enemy(enemy,event,0.0,duration,false,false)
+			continue
 		if age >= duration: continue
 		if type not in BOSS_TYPES: _draw_fading_enemy(enemy,event,age,duration,type in ELITE_TYPES)
 		var point: Vector2 = project(event.point)
@@ -1207,11 +1271,11 @@ func _draw_eliminations() -> void:
 			draw_circle(particle.point,particle.radius,Color(Color("d6c7a6"),particle.alpha))
 
 ## Pose courante de l'ennemi éliminé, qui s'éclaircit jusqu'à disparaître ; les élites fléchissent légèrement sur place.
-func _draw_fading_enemy(enemy: Dictionary, event: Dictionary, age: float, duration: float, flex: bool) -> void:
+func _draw_fading_enemy(enemy: Dictionary, event: Dictionary, age: float, duration: float, flex: bool, flash: bool = true) -> void:
 	var t: float = clampf(age/duration,0.0,1.0)
 	_ghost_alpha = 1.0-t
 	_ghost_squash = 1.0-0.14*sin(PI*t) if flex else 1.0
-	_draw_pillager(project(event.point),enemy,(1.0-t)*0.5,{})
+	_draw_pillager(project(event.point),enemy,(1.0-t)*0.5 if flash else 0.0,{})
 	_ghost_alpha = 1.0
 	_ghost_squash = 1.0
 
@@ -1578,6 +1642,9 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		draw_arc(Vector2(0,3),14,0,TAU,32,Color("edcc80"),2,true)
 	for curse in model.curses:
 		if curse.enemy_id != enemy.id or not curse_ring_visible(curse): continue
+		if curse_source_type(curse) in FIRE_CURSE_TYPES:
+			_draw_burning(model.elapsed+float(enemy.id)*0.37) # brûlure : flammes sur la cible
+			break
 		draw_arc(Vector2(0,-13),19,0,TAU,24,Color("be83d3"),1.5,true)
 		var mark := Vector2(0,-45)
 		draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]),Color("d6a1ef"))
