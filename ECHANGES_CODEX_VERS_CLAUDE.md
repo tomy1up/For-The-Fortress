@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-16 — Lance-épieu orc, estoc à deux mains (ouvert)
+
+Après validation du porteur, intégrer le lot `design/essais/gestes_combat/lance_epieu_orc/` pour le type 20 (`defender.horde.spearman`). Ajouter `attack_close`, `attack_far`, `attack_close_up` et `attack_close_down` aux variantes. Choisir la planche dont le repère de pointe de `contact.json` est le plus proche de l’impact projeté. À 0,28 s, jouer l’éclat de contact à cette pointe, sans redessiner l’épieu ni afficher un deuxième impact. Le délai concerne le rendu. [Fiche et capture](design/Visuels_Boutique_Lance_Epieu.md#estoc-à-deux-mains).
+
 ### 2026-11-16 — Catapulte gobeline, bras sur pivot (ouvert)
 
 Le porteur valide le lot `c71b7b3` après comparaison des quatre diagonales en jeu. Intégrer le type 19 (`defender.horde.catapult`) dans `design/essais/gestes_combat/catapulte_gobeline/`. Utiliser les nouvelles diagonales avec châssis reconstruit en volume. Les six planches, les repères actualisés et le sprite `pierre.png` vont ensemble. La garde vise le point de route le plus proche et le tir vise la cible au sol. Brancher les variantes `idle_up/down` et `attack_up/down` avec le profil en repli, et réutiliser le même choix pour l’origine de la pierre. Lâcher visuel à 0,50 s, avec le centre de la planche choisie dans `lacher.json`. Les six nouvelles planches inversent l’orientation de l’essai précédent dès le repos. Utiliser le miroir de tir habituel une seule fois, sur le sprite et le repère ensemble. En E4, tir à gauche, le servant est à gauche de la machine et la cuillère franchit le pivot vers la gauche. Au vol, caler la tangente initiale sur `launch_slope` de la planche sélectionnée. Omettre la pierre en vol si la cible est déjà derrière la cuillère en abscisse. La courbe quadratique et le point de contrôle sont décrits dans la fiche. La zone s’affiche à l’arrivée. [Fiche, calcul et capture](design/Visuels_Boutique_Catapulte.md#tir-avec-bras-sur-pivot).

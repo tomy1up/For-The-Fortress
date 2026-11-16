@@ -71,3 +71,11 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | Prise et lâcher | Pierre assise jusqu’à la première cuillère vide à 0,50 s. La trajectoire prolonge le dernier mouvement de la cuillère vers la cible. Bras et cuillère dépassent le pivot côté cible avant le lâcher. Sens horizontal du vol vérifié à 16 intervalles, avec impact et deux cibles secondaires par tir. |
 | Retour | La cuillère vide dépasse sa position de garde puis revient. Première et dernière poses identiques. |
 | En jeu | Six tirs sur la mission 94 après correction de l’orientation. Quatre diagonales à ×1 et deux à ×2, garde face à la route, pose contrôlée en pause. [Capture à taille native](essais/gestes_combat/catapulte_gobeline/Catapulte_gobeline_en_jeu.gif). Le porteur valide le lot `c71b7b3` après comparaison des quatre diagonales. |
+
+## Lance-épieu orc · 16 novembre 2026
+
+| Critère | Vérification sur la copie v0.223 |
+| --- | --- |
+| Appuis et prise | 140 poses cadrées, semelles fixes. Le buste participe à l’estoc et le manche reste dans les deux mains. |
+| Contact | Éclat à la pointe au bout de 0,28 s, position évaluée par rapport à l’ennemi. L’épieu reste visible dans la prise pendant le retrait. |
+| En jeu | Six coups, deux orientations et pause, à ×1 et ×2. [Capture de la mission 94](essais/gestes_combat/lance_epieu_orc/Lance_epieu_orc_en_jeu.gif). Avis du porteur en attente. |
