@@ -142,6 +142,10 @@ static func verify(data: Variant) -> Dictionary:
 		observed.boss_encounter.name = Model.ENEMY_TYPES[7].name
 		for bonus in observed.bonuses:
 			bonus.description = bonus.description.replace("ours, unités lourdes, gardes d’élite et boss","Brutes, Colosses, Élites et boss")
+	if _minor_version(str(data.get("game_version",""))) < 222:
+		# v0.222 : le texte de « Exercice de tir » (R-02) de la Horde cite désormais les alternatives de boutique du chaman.
+		for bonus in observed.bonuses:
+			bonus.description = bonus.description.replace("lanceur de haches troll, traqueur troll, sapeur gobelin, grenadier gobelin, Brûleur de cendres et Chaman des marais. Le chaman orc de base et ses spécialisations sont exclus.","lanceur de haches troll, traqueur troll, sapeur gobelin et grenadier gobelin. Le chaman et ses spécialisations sont exclus.")
 	for field in observed:
 		if field in ["game_version","engine_version"]: continue
 		if field == "arrivals_by_entry" and not data.has(field): continue # Optional detail absent from earlier route reports.
