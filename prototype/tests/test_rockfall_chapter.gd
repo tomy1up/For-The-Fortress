@@ -8,16 +8,16 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 131 à 140.
 const EXPECTED: Dictionary = {
-	131:{"map":"mine_pillars","length":38.0,"routes":2,"order":[2,3,4]},
-	132:{"map":"mine_vein","length":35.0,"routes":3,"order":[4,2,3]},
-	133:{"map":"mine_tunnel","length":38.0,"routes":2,"order":[2,3,4]},
-	134:{"map":"mine_arch","length":36.0,"routes":3,"order":[4,2,3]},
-	135:{"map":"mine_twins","length":38.0,"routes":2,"order":[4,2,3]},
-	136:{"map":"mine_abyss","length":33.0,"routes":3,"order":[4,2,3]},
-	137:{"map":"mine_sluice","length":38.0,"routes":2,"order":[4,2,3]},
-	138:{"map":"mine_crossing","length":35.0,"routes":2,"order":[2,3,4]},
-	139:{"map":"mine_crypt","length":35.0,"routes":3,"order":[4,2,3]},
-	140:{"map":"mine_core","length":33.0,"routes":3,"order":[4,2,3]},
+	131:{"map":"mine_pillars","length":36.0,"routes":2,"order":[3,4,2]},
+	132:{"map":"mine_vein","length":32.0,"routes":3,"order":[3,4,2]},
+	133:{"map":"mine_tunnel","length":34.0,"routes":3,"order":[3,4,2]},
+	134:{"map":"mine_arch","length":35.0,"routes":3,"order":[3,4,2]},
+	135:{"map":"mine_twins","length":35.0,"routes":2,"order":[3,4,2]},
+	136:{"map":"mine_abyss","length":41.0,"routes":2,"order":[3,4,2]},
+	137:{"map":"mine_sluice","length":33.0,"routes":2,"order":[3,4,2]},
+	138:{"map":"mine_crossing","length":38.0,"routes":3,"order":[3,4,2]},
+	139:{"map":"mine_crypt","length":32.0,"routes":3,"order":[3,4,2]},
+	140:{"map":"mine_core","length":37.0,"routes":2,"order":[3,4,2]},
 }
 const AFFIX := {"id":"rockfall","interval":18,"warning":3,"duration":7}
 var checks := 0

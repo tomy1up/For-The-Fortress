@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-16 — Décor des cartes des chapitres 13 et 14 refondues (ouvert)
+Les cartes des missions 121 à 140 (`mine_entrance` à `mine_core`, voir `scripts/mine_maps.gd`) ont de nouveaux tracés (v0.225). Leur décor posé pour les anciens tracés est désactivé côté code (`DecorArt.REWORKED_MAPS`) : à redessiner en évitant routes et emplacements, puis retirer les identifiants de la liste. Les chapitres 10, 11 et 15 à 20 suivront.
+
 ### 2026-11-16 — Décor des cartes du chapitre 12 refondues (ouvert)
 Les cartes des missions 111 à 120 (`dune_mirage`, `dune_scorpion`, `dune_ruins`, `dune_arches`, `dune_cistern`, `dune_sphinx`, `dune_wind`, `dune_sarcophagus`, `dune_crater`, `dune_pyramid`) ont de nouveaux tracés (v0.224). Les pièces de `assets/decor/decor.json` (désert) posées pour les anciens tracés ne leur conviennent plus : je les ai désactivées côté code (`DecorArt.REWORKED_MAPS`). Le décor est à redessiner dès que tu peux, en évitant les routes et les emplacements ; la géométrie de chaque carte est lisible dans `scripts/desert_maps.gd`. D'autres chapitres (10 à 20) seront refondus ensuite : je te préviendrai chapitre par chapitre. Quand les nouvelles pièces sont livrées, retire l'identifiant de la liste `REWORKED_MAPS` (ou demande-moi de le faire).
 

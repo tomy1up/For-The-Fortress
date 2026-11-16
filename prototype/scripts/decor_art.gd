@@ -61,7 +61,7 @@ static func overlay(decoration: String) -> Dictionary:
 ## Pièces de décor d'une carte, dans l'ordre de dessin : {"texture", "point" (logique), "destination" (pieds sur l'origine)}.
 ## Cartes refondues (v0.224, tracés nouveaux) : les pièces de décor posées à la main pour les anciens tracés ne leur conviennent plus ; elles sont désactivées
 ## jusqu'à ce que Codex en propose de nouvelles (voir ECHANGES_CLAUDE_VERS_CODEX.md).
-const REWORKED_MAPS: Array[String] = ["dune_mirage","dune_scorpion","dune_ruins","dune_arches","dune_cistern","dune_sphinx","dune_wind","dune_sarcophagus","dune_crater","dune_pyramid"]
+const REWORKED_MAPS: Array[String] = ["dune_mirage","dune_scorpion","dune_ruins","dune_arches","dune_cistern","dune_sphinx","dune_wind","dune_sarcophagus","dune_crater","dune_pyramid","mine_entrance","mine_shaft","mine_gallery","mine_crystals","mine_cart","mine_forge","mine_lake","mine_vault","mine_collapse","mine_heart","mine_pillars","mine_vein","mine_tunnel","mine_arch","mine_twins","mine_abyss","mine_sluice","mine_crossing","mine_crypt","mine_core"]
 
 static func props(map_id: String, decoration: String, played_faction: int) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []

@@ -8,16 +8,16 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 121 à 130.
 const EXPECTED: Dictionary = {
-	121:{"map":"mine_entrance","length":34.0,"routes":1,"order":[4,2,3]},
-	122:{"map":"mine_shaft","length":35.0,"routes":1,"order":[2,3,4]},
-	123:{"map":"mine_gallery","length":35.0,"routes":2,"order":[2,3,4]},
-	124:{"map":"mine_crystals","length":36.0,"routes":3,"order":[4,2,3]},
-	125:{"map":"mine_cart","length":31.0,"routes":1,"order":[4,2,3]},
+	121:{"map":"mine_entrance","length":41.0,"routes":1,"order":[3,4,2]},
+	122:{"map":"mine_shaft","length":54.0,"routes":1,"order":[3,4,2]},
+	123:{"map":"mine_gallery","length":34.0,"routes":2,"order":[3,4,2]},
+	124:{"map":"mine_crystals","length":34.0,"routes":3,"order":[3,4,2]},
+	125:{"map":"mine_cart","length":41.0,"routes":1,"order":[3,4,2]},
 	126:{"map":"mine_forge","length":32.0,"routes":2,"order":[3,4,2]},
-	127:{"map":"mine_lake","length":29.0,"routes":3,"order":[2,3,4]},
-	128:{"map":"mine_vault","length":32.0,"routes":2,"order":[4,2,3]},
-	129:{"map":"mine_collapse","length":32.0,"routes":1,"order":[2,3,4]},
-	130:{"map":"mine_heart","length":33.0,"routes":3,"order":[4,2,3]},
+	127:{"map":"mine_lake","length":30.0,"routes":2,"order":[3,4,2]},
+	128:{"map":"mine_vault","length":50.0,"routes":1,"order":[3,4,2]},
+	129:{"map":"mine_collapse","length":34.0,"routes":2,"order":[3,4,2]},
+	130:{"map":"mine_heart","length":35.0,"routes":2,"order":[3,4,2]},
 }
 var checks := 0
 var failures := 0

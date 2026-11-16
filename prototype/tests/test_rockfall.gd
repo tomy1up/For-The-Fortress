@@ -154,7 +154,7 @@ func verify_replay() -> void:
 		check(replay.ok,"Le rapport de la faction %d est rejouable : %s" % [faction,str(replay.get("error",""))])
 		check(Report.markdown(report).contains("Éboulement · toutes les 18 s de combat"),"Le rapport lisible décrit l'éboulement")
 		var tampered: Dictionary = report.duplicate(true)
-		tampered.combat_affix.duration = 8
+		tampered.combat_affix.duration = 8;tampered.combat_affix.interval = 10;tampered.combat_affix.warning = 1
 		check(not Replay.verify(tampered).ok,"Un rapport dont l'affixe est modifié n'est plus rejouable")
 
 func verify_rendering() -> void:

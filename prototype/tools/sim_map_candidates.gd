@@ -61,7 +61,10 @@ func play(definition: Dictionary, faction: int, mission: int) -> Dictionary:
 	m.select_faction(faction)
 	m.rng.seed = 7
 	var types: Array = [0,1,1] if faction == 0 else [3,3,5]
-	var slots := [3,4,2]
+	var slots: Array = [3,4,2]
+	if OS.get_environment("ORDER") != "":
+		slots = []
+		for part in OS.get_environment("ORDER").split(","): slots.append(int(part))
 	if not (m.buy(slots[0],types[0]) and m.buy(slots[1],types[1])): return {"result":"refus","hp":-1,"wave":0}
 	for wave in range(1,11):
 		if wave == 2: m.upgrade(slots[0])
