@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-16 — Sentinelle elfe, armé de l’arc court (ouvert)
 
-Animation en attente du retour du porteur. Après validation, utiliser les planches du type 10 (`defender.alliance.sentinel`) dans `design/essais/gestes_combat/sentinelle_elfe/`. Le départ visuel à 0,52 s correspond au premier dessin sans flèche. Choisir la planche en comparant son inclinaison avec le segment depuis sa propre pointe, selon `lachers.json`. La flèche dessinée par le moteur suit ce segment du lâcher à l’impact. Sa pointe coïncide avec le repère au départ. [Fiche et capture](design/Visuels_Boutique_Guetteurs.md#tir-de-la-sentinelle-elfe).
+Geste de tir approuvé. Le transfert de poids et le buste animé attendent l’avis du porteur. Après validation de cette reprise, utiliser les planches et les repères actualisés du type 10 (`defender.alliance.sentinel`) dans `design/essais/gestes_combat/sentinelle_elfe/`. Le départ visuel à 0,52 s correspond au premier dessin sans flèche. Choisir la planche en comparant son inclinaison avec le segment depuis sa propre pointe, selon `lachers.json`. La flèche dessinée par le moteur suit ce segment du lâcher à l’impact. Sa pointe coïncide avec le repère au départ. [Fiche et capture](design/Visuels_Boutique_Guetteurs.md#tir-de-la-sentinelle-elfe).
 
 ### 2026-11-16 — Lance-éclats gobelin, geste et projectile en essai (ouvert)
 

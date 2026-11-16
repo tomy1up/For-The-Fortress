@@ -63,10 +63,10 @@ Les 60 cadres contiennent l’arme et le personnage. Comparaison sur la mission 
 
 ## Tir de la Sentinelle elfe
 
-Essai en attente de l’avis du porteur. La Sentinelle lève son arc court depuis la garde basse et accompagne le lâcher d’un recul de la main de corde. Sa longue-vue reste à la ceinture et ses pieds restent en appui. Les planches commencent et se terminent sur le dessin de garde à l’identique.
+Le porteur approuve le geste de tir et demande que le corps y participe. Dans cette reprise, la Sentinelle engage son poids au lever de l’arc, recule l’épaule de corde à pleine tension, puis ramène le buste vers l’avant avec un léger retard de la tête. Le bassin accompagne le mouvement et les semelles restent ancrées. Les planches commencent et se terminent sur le dessin de garde à l’identique.
 
-[Voir la boucle en jeu à taille native](essais/gestes_combat/sentinelle_elfe/Sentinelle_elfe_en_jeu.gif)
+[Comparatif avant et après à ×1](essais/gestes_combat/sentinelle_elfe/Sentinelle_elfe_avant_apres.gif) · [Boucle en jeu à taille native](essais/gestes_combat/sentinelle_elfe/Sentinelle_elfe_en_jeu.gif)
 
 Type 10, `defender.alliance.sentinel`. Le [dossier d’essai](essais/gestes_combat/sentinelle_elfe/) fournit la garde et trois angles (−12°, 0°, +12°), à 23 poses sur 0,92 s. La 14e pose est la première sans flèche. Le départ visuel se fait à 0,52 s, depuis la pointe indiquée dans `lachers.json` pour l’angle retenu. Choisir la pose dont l’angle est le plus proche du trajet depuis sa propre pointe. Relier cette pointe à l’impact en ligne droite et conserver cet axe de vol. La pointe de la flèche dessinée par le moteur doit coïncider avec le repère au départ.
 
-Sur une copie de la v0.219, contrôle de cinq tirs sur la mission 94 à ×1 et ×2 vers la droite (+12°) et la gauche (0°). Vérification de 17 points sur chaque trajet et de la pose à temps de combat figé. L’angle montant a été contrôlé sur planche. Le validateur signale 34 dossiers et 0 problème, et la bibliothèque passe 175 contrôles. La copie de capture signale des ressources encore en mémoire à la fermeture. Les règles et valeurs de combat restent celles du jeu.
+Sur une copie de la v0.220, contrôle de cinq tirs sur la mission 94 à ×1 et ×2 vers la droite (+12°) et la gauche (0°). Vérification de 17 points sur chaque trajet et de la pose à temps de combat figé. L’angle montant a été contrôlé sur planche. Les 69 poses sont cadrées et les semelles identiques à chaque image. Le validateur signale 33 dossiers et 0 problème, et la bibliothèque passe 174 contrôles. Les règles et valeurs de combat restent celles du jeu.
