@@ -12,7 +12,7 @@ Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.197. Le
 
 ## Lancer du cristal
 
-Essai sur une copie de la v0.219, soumis à l’avis du porteur. Le geste part du poignet et de l’épaule. Les bottes restent en appui et le retour à la garde reprend exactement son dessin. La main tient l’éclat jusqu’à la neuvième pose (indice 8), puis l’ouvre pendant le suivi du geste.
+Le porteur valide l’essai sur la v0.219 après correction du virage sur le tir rapproché à droite. Le geste part du poignet et de l’épaule. Les bottes restent en appui et le retour à la garde reprend exactement son dessin. La main tient l’éclat jusqu’à la neuvième pose (indice 8), puis l’ouvre pendant le suivi du geste.
 
 [Voir les lancers en jeu, à taille native](essais/gestes_combat/lance_eclats_gobelin/Lance_eclats_jeu.gif)
 
