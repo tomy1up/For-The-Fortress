@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**16 novembre — Arbalète lourde, type 24.** Visée à genou, recul dans l’épaule et six inclinaisons. Départ du carreau à 0,44 s. Six tirs en mission 94 v0.226, dont un à bout portant, vérifiés à ×1 et ×2 avec pause. Validateur sans problème sur 40 dossiers et 181 contrôles de bibliothèque réussis. [Fiche et capture](design/Visuels_Boutique_Arbalete_Lourde.md#tir-à-genou-et-recul). Avis du porteur attendu.
+
 **16 novembre — Archer double, type 23.** Prise au carquois, relevé de l’arc ivoire et départ de la flèche à 0,60 s. Cinq inclinaisons, appuis fixes. Six tirs en mission 94 v0.223 à ×1 et ×2, dans les deux sens, avec pause. Validateur sans problème sur 39 dossiers, 180 contrôles réussis. [Fiche et capture](design/Visuels_Boutique_Archer_Double.md#prise-au-carquois-et-tir). Lot `226ec17` validé par le porteur le 16 novembre 2026, à intégrer par Claude.
 
 **16 novembre — Veilleur des cendres, type 16.** Lancer bas avec transfert d’appui et trois inclinaisons, longue-vue à la ceinture. Hachette lâchée à 0,36 s depuis la main, rotation sur un trajet rectiligne. Six tirs sur la mission 94 à ×1 et ×2, des deux côtés et avec pause. 38 dossiers valides et 179 contrôles réussis. [Fiche et capture](design/Visuels_Boutique_Guetteurs.md#lancer-du-veilleur-des-cendres). Lot `1779fe3` validé par le porteur le 16 novembre 2026, à intégrer par Claude.
