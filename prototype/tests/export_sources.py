@@ -36,7 +36,7 @@ SOURCE_PATHS = ('project.godot', 'export_presets.cfg', 'scenes/main.tscn',
 SOURCE_PATHS += ('scripts/bank_encounters.gd', 'assets/enemies/rosters/tortue_gardienne_v001.png', 'assets/enemies/rosters/tortue_gardienne_v001.png.import')
 SOURCE_PATHS += ('scripts/fortress_art.gd', 'assets/fortresses/forteresse_alliance_v001.png', 'assets/fortresses/forteresse_alliance_v001.png.import', 'assets/fortresses/forteresse_horde_v001.png', 'assets/fortresses/forteresse_horde_v001.png.import', 'assets/fortresses/roi_alliance_v001.png', 'assets/fortresses/roi_alliance_v001.png.import', 'assets/fortresses/roi_horde_v001.png', 'assets/fortresses/roi_horde_v001.png.import')
 SOURCE_PATHS += ('scripts/enemy_walk_art.gd', 'assets/enemies/animations/loup_corps_v002.png', 'assets/enemies/animations/loup_corps_v002.png.import')
-SOURCE_PATHS += ('assets/enemies/animations/loup_marche_v002.bin', 'scripts/route_geometry.gd', 'scripts/mission_scout.gd', 'distribution/Lancer_atelier_routes.cmd')
+SOURCE_PATHS += ('assets/enemies/animations/loup_marche_v002.bin', 'scripts/route_geometry.gd', 'scripts/mission_scout.gd', 'distribution/Lancer_atelier_routes.cmd','distribution/Lancer_essai_boutique.cmd')
 SOURCE_PATHS += ('scripts/marsh_art.gd','scripts/drowned_encounters.gd','scripts/drowned_maps.gd','scripts/volcanic_maps.gd','scripts/citadel_maps.gd','scripts/garrison_encounters.gd','scripts/animation_library.gd','scripts/decor_art.gd','scripts/desert_maps.gd','scripts/mine_maps.gd','scripts/sky_maps.gd','scripts/eagle_encounters.gd','scripts/coast_maps.gd','scripts/necro_maps.gd','scripts/revenant_encounters.gd')
 SOURCE_PATHS += ('assets/enemies/rosters/capitaine_humain_v001.png','assets/enemies/rosters/capitaine_humain_v001.png.import','assets/enemies/rosters/gueule_de_vase_v001.png','assets/enemies/rosters/gueule_de_vase_v001.png.import','assets/enemies/rosters/aigle_des_cimes_v001.png','assets/enemies/rosters/aigle_des_cimes_v001.png.import','assets/enemies/rosters/revenant_v001.png','assets/enemies/rosters/revenant_v001.png.import')
 
@@ -48,7 +48,7 @@ def animation_assets(project_root=None):
     for name in ('animations', 'decor', 'audio'):
         folder = root / 'assets' / name
         if folder.is_dir():
-            found += [path.relative_to(root).as_posix() for path in folder.rglob('*') if path.is_file() and path.suffix in ('.png', '.json', '.ogg')]
+            found += [path.relative_to(root).as_posix() for path in folder.rglob('*') if path.is_file() and path.suffix in ('.png', '.json', '.ogg', '.wav')]
     return tuple(sorted(found))
 
 

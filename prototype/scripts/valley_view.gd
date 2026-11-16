@@ -253,7 +253,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 17: 0.288} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
@@ -264,7 +264,11 @@ const AIMED_TYPE := 11
 ## dessiné par le jeu, à la pointe donnée par angle (`contact.json`).
 const PIKEMAN_TYPE := 14
 const PIKE_TIPS: Dictionary = {-12:Vector2(49.6188,-37.8302),0:Vector2(50.294,-30.897),12:Vector2(49.6188,-23.9638)}
-const TILTED_TYPES: Array[int] = [11,14,17]
+## Pyromancien humain (type 15, incantation, lâcher à 0,288 s) : trois planches (−12°, 0°, +12°), boule de feu lancée depuis le point donné par angle (`lachers.json`).
+const PYROMANCER_TYPE := 15
+const PYRO_TIPS: Dictionary = {-12:Vector2(32.8654,-50.375),0:Vector2(32.8465,-47.9359),12:Vector2(32.7376,-45.5035)}
+const STEP_TYPES: Array[int] = [14,15,17]
+const TILTED_TYPES: Array[int] = [11,14,15,17]
 const CURVED_TYPES: Array[int] = [11,13,17]
 const JAVELIN_PIVOT := Vector2(0.0,-41.3453)
 const JAVELIN_TIPS: Dictionary = {-12:Vector2(55.3409,-51.4028),0:Vector2(56.1005,-41.3453),12:Vector2(54.9211,-31.3319)}
@@ -279,7 +283,7 @@ const AIM_STEP := 8
 const AIM_LIMIT := 24
 
 static func aim_pitch(shot: Dictionary) -> int:
-	if int(shot.get("type",-1)) in [JAVELIN_TYPE,PIKEMAN_TYPE]:
+	if int(shot.get("type",-1)) in STEP_TYPES:
 		var hand: Vector2 = project(shot.from)+Vector2(0.0,float(step_tips(int(shot.type))[0].y))
 		var gap: Vector2 = project(shot.to)+Vector2(0,-12)-hand
 		var angle: float = rad_to_deg(atan2(gap.y,maxf(absf(gap.x),0.0001)))
@@ -290,7 +294,7 @@ static func aim_pitch(shot: Dictionary) -> int:
 	return clampi(int(roundf(degrees/float(AIM_STEP)))*AIM_STEP,-AIM_LIMIT,AIM_LIMIT)
 
 static func step_tips(type: int) -> Dictionary:
-	return PIKE_TIPS if type == PIKEMAN_TYPE else JAVELIN_TIPS
+	return PIKE_TIPS if type == PIKEMAN_TYPE else PYRO_TIPS if type == PYROMANCER_TYPE else JAVELIN_TIPS
 
 static func aim_variant(pitch: int) -> String:
 	return "attack" if pitch == 0 else "attack_%s%d" % ["down" if pitch > 0 else "up",absi(pitch)]
@@ -301,7 +305,7 @@ static func aim_direction(shot: Dictionary) -> Vector2:
 	return Vector2(shot_facing(shot)*cos(angle),sin(angle))
 
 static func aimed_origin(shot: Dictionary) -> Vector2:
-	if int(shot.get("type",-1)) in [JAVELIN_TYPE,PIKEMAN_TYPE]:
+	if int(shot.get("type",-1)) in STEP_TYPES:
 		var tip: Vector2 = step_tips(int(shot.type))[aim_pitch(shot)]
 		return project(shot.from)+Vector2(tip.x*shot_facing(shot),tip.y)
 	return project(shot.from)+AIM_PIVOT+aim_direction(shot)*AIM_LENGTH

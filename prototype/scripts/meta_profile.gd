@@ -350,6 +350,18 @@ func buy_shop_unit(faction: int, id: String) -> bool:
 	shop_notice = "" if saved else error
 	return saved
 
+## Profil d'essai (`--essai-boutique`) : toutes les unités de boutique des deux factions sont possédées, sans PO dépensées ; aucun effet sur le profil de jeu normal (autre fichier).
+func grant_all_shop_units() -> bool:
+	if blocked: return false
+	var next: Dictionary = data.duplicate(true)
+	var changed: bool = false
+	for faction in range(2):
+		for card in Shop.for_faction(faction):
+			if not next.banks[faction].shop_owned.has(card.id):
+				next.banks[faction].shop_owned[card.id] = 0
+				changed = true
+	return _commit(next) if changed else true
+
 func select_shop_unit(faction: int, id: String) -> bool:
 	if blocked or shop_locked or faction not in [0,1]: return false
 	if not id.is_empty() and not data.banks[faction].shop_owned.has(id): return false
