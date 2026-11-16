@@ -79,3 +79,11 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | Appuis et prise | 140 poses cadrées, semelles fixes. Le buste participe à l’estoc et le manche reste dans les deux mains. |
 | Contact | Éclat à la pointe au bout de 0,28 s, position évaluée par rapport à l’ennemi. L’épieu reste visible dans la prise pendant le retrait. |
 | En jeu | Six coups, deux orientations et pause, à ×1 et ×2. [Capture de la mission 94](essais/gestes_combat/lance_epieu_orc/Lance_epieu_orc_en_jeu.gif). Lot `a151adb` validé par le porteur. |
+
+## Brûleur de cendres · 16 novembre 2026
+
+| Critère | Vérification sur la copie v0.223 |
+| --- | --- |
+| Appuis et poids | Les semelles restent fixes dans les 60 poses. Le buste pousse la poignée et le bol suit avec un léger retard. |
+| Départ et brûlure | La braise part de la grille à 0,336 s. Les flammes sur l’ennemi apparaissent à l’impact. Les dégâts périodiques du jeu ont été observés. |
+| En jeu | Des deux côtés à ×1 et ×2, avec pose figée en pause. [Capture de la mission 94](essais/gestes_combat/bruleur_cendres/Bruleur_de_cendres_en_jeu.gif). Avis du porteur en attente. |
