@@ -80,7 +80,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 **Catapulte gobeline, type 19.** Visuel validé par le porteur le 14 novembre 2026 (`9b62adf`). Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.197, 70 contrôles d’illustrations réussis. Sprite et projectile de pierre à intégrer. [Fiche](design/Visuels_Boutique_Catapulte.md).
 
-**Lance-éclats gobelin, type 18.** Visuel au manteau prune et à l’éclat violet validé par le porteur. Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 65 contrôles d’illustrations réussis. Sprite et projectile de cristal à brancher. [Fiche](design/Visuels_Boutique_Lance_Eclats.md).
+**Lance-éclats gobelin, type 18.** Visuel fixe validé le 14 novembre. Lancer du cristal et suivi du geste disponibles en essai, en attente de validation du porteur. Trois angles sur 0,20 s, lâcher à 0,1125 s avec projectile assorti. Contrôle en combat dans les deux sens à ×1 et ×2, avec pause. Validateur sans problème et 174 contrôles de régression réussis. [Fiche et capture](design/Visuels_Boutique_Lance_Eclats.md#lancer-du-cristal).
 
 **16 novembre — Pyromancien humain, type 15.** Le porteur valide le geste avec une rotation du buste réduite d’environ 16° à 5°. Lot `788c066` prêt à intégrer. Trois inclinaisons, 20 poses sur 0,64 s et projectile à 0,288 s, avec les mêmes centres de départ. Mission 94, copie v0.219, tirs à ×1 et ×2 et à temps figé. Validateur : 32 dossiers, 0 problème. Bibliothèque : 173 contrôles. [Fiche et captures](design/Visuels_Boutique_Pyromancien.md#incantation-et-départ-de-la-flamme).
 

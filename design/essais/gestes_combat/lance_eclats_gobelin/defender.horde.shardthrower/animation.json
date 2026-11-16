@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "id": "defender.horde.shardthrower",
+  "facing": "right",
+  "display_height": 66.82268226822683,
+  "foot": [
+    192.0,
+    300.25
+  ],
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        384,
+        320
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack_up12": {
+      "file": "attack_up12.png",
+      "frames": 16,
+      "frame_size": [
+        384,
+        320
+      ],
+      "mode": "event",
+      "duration": 0.2
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 16,
+      "frame_size": [
+        384,
+        320
+      ],
+      "mode": "event",
+      "duration": 0.2
+    },
+    "attack_down12": {
+      "file": "attack_down12.png",
+      "frames": 16,
+      "frame_size": [
+        384,
+        320
+      ],
+      "mode": "event",
+      "duration": 0.2
+    }
+  }
+}

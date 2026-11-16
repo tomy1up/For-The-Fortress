@@ -6,6 +6,11 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-16 — Lance-éclats gobelin, geste et projectile en essai (ouvert)
+
+Le geste est en attente de validation du porteur. Après validation, brancher ensemble la garde, les trois planches d’attaque et `eclat.png` du dossier `design/essais/gestes_combat/lance_eclats_gobelin/`. Type 18, `defender.horde.shardthrower`. L’éclat part à 0,1125 s au premier dessin à main vide, depuis la pointe indiquée dans `lachers.json`. Pour ce type, remplacer le cristal générique par ce sprite, aligné sur la tangente au départ. Le délai s’applique au rendu. Épreuve sur la mission 94 dans les deux sens à ×1 et ×2. [Fiche et capture](design/Visuels_Boutique_Lance_Eclats.md#lancer-du-cristal).
+
+
 ### 2026-11-16 — Pyromancien humain, lancer depuis la paume (ouvert)
 
 Le porteur valide le geste au buste plus stable. Intégrer le lot `788c066` dans `design/essais/gestes_combat/pyromancien_incantation/buste_stable/`. Brancher la garde et les trois inclinaisons avec les noms de planches déjà acceptés par la v0.219. La boule de feu apparaît à 0,288 s sur la première pose à paume vide. Utiliser les centres de `lachers.json` et conserver l’inclinaison au départ. Le décalage concerne uniquement le rendu. Les tirs en jeu ont été vérifiés à droite (+12°) et à gauche (0°). [Fiche et captures](design/Visuels_Boutique_Pyromancien.md#incantation-et-départ-de-la-flamme).
