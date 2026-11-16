@@ -44,7 +44,7 @@ Pour la garde, utiliser la direction entre l’emplacement et le point le plus p
 
 Les deux paires de variantes demandent un branchement dans la bibliothèque. `lacher.json` donne le centre de la pierre pour chaque planche d’attaque. Utiliser le même choix de vue pour le sprite et le point de départ du projectile. Le repère de lâcher est recalculé dans les deux diagonales à partir du centre de la pierre sur la cuillère. L’arc parabolique décrit plus haut correspond à cet essai historique. Pour les planches courantes, appliquer les paramètres ci-dessous.
 
-Vérification sur la mission 94 en v0.220. Quatre diagonales à ×1 et deux à ×2, avec la garde, le changement de diagonale sur E1, la pause et deux cibles secondaires par tir. Les 48 poses diagonales sont cadrées et chaque planche retrouve sa propre garde exactement. Le validateur passe sur 35 dossiers et la bibliothèque passe 176 contrôles. La correction attend l’avis du porteur.
+Vérification sur la mission 94 en v0.220. Quatre diagonales à ×1 et deux à ×2, avec la garde, le changement de diagonale sur E1, la pause et deux cibles secondaires par tir. Les 48 poses diagonales sont cadrées et chaque planche retrouve sa propre garde exactement. Le validateur passe sur 35 dossiers et la bibliothèque passe 176 contrôles. Le porteur a ensuite validé le lot `c71b7b3`, avec l’engin entièrement retourné, après avoir vu les quatre diagonales de tir.
 
 ### Sens du coup de bras
 
