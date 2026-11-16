@@ -9,16 +9,16 @@ const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 111 à 120.
 const AFFIX := {"id":"sandstorm","interval":15,"warning":3,"duration":5,"range_percent":25}
 const EXPECTED: Dictionary = {
-	111:{"map":"dune_mirage","length":34.0,"routes":1},
-	112:{"map":"dune_scorpion","length":35.0,"routes":1},
-	113:{"map":"dune_ruins","length":38.0,"routes":2},
-	114:{"map":"dune_arches","length":36.0,"routes":3},
-	115:{"map":"dune_cistern","length":31.0,"routes":1},
+	111:{"map":"dune_mirage","length":39.0,"routes":1},
+	112:{"map":"dune_scorpion","length":39.0,"routes":1},
+	113:{"map":"dune_ruins","length":30.0,"routes":2},
+	114:{"map":"dune_arches","length":34.0,"routes":2},
+	115:{"map":"dune_cistern","length":45.0,"routes":1},
 	116:{"map":"dune_sphinx","length":35.0,"routes":2},
-	117:{"map":"dune_wind","length":35.0,"routes":3},
-	118:{"map":"dune_sarcophagus","length":38.0,"routes":2},
-	119:{"map":"dune_crater","length":32.0,"routes":1},
-	120:{"map":"dune_pyramid","length":33.0,"routes":3},
+	117:{"map":"dune_wind","length":33.0,"routes":3},
+	118:{"map":"dune_sarcophagus","length":50.0,"routes":1},
+	119:{"map":"dune_crater","length":43.0,"routes":1},
+	120:{"map":"dune_pyramid","length":31.0,"routes":3},
 }
 var checks := 0
 var failures := 0

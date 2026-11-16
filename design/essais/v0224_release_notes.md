@@ -1,0 +1,11 @@
+# Prototype v0.224 — Refonte des cartes, chapitre pilote 12 (missions 111 à 120)
+
+Suite au constat du porteur (16 novembre 2026) : chemins en zigzag sans utilité en début de plateau, et motifs des missions 100+ trop proches de ceux des premières missions. Analyse : 96 tracés différents seulement pour 200 missions (chapitres 1 et 2 identiques, chapitres 16 à 20 identiques, chapitres 10 à 15 partageant une douzaine de tracés), complexité qui ne croît pas régulièrement. Direction validée par le porteur sur le chapitre pilote.
+
+- **Dix nouvelles cartes pour les missions 111 à 120** (ids inchangés, géométrie refondue) : couloir en U, serpentin vertical, aller-retour sur trois niveaux, peigne à dents, trois entrées qui fusionnent en un tronc commun, deux entrées qui fusionnent, **deux routes qui se croisent puis fusionnent** (nouveauté). 5 cartes à une route, 3 à deux routes (pression alternée), 2 à trois routes ; 4 à 12 virages, plus riches vers la fin du chapitre.
+- **Chemin utile** : 92 à 100 % du trajet est à portée d'au moins un emplacement (contre 72 à 93 % pour les pires anciennes cartes) ; la première moitié du trajet est couverte à plus de 80 %.
+- **Équilibre calibré par simulation** (`tools/sim_map_candidates.gd`, qui reproduit exactement les résultats des tests de chapitre sur les anciennes cartes) : chaque nouvelle carte laisse à la forteresse des PV proches de ceux de l'ancienne carte de la même mission pour la composition de référence des deux factions (écart de 3 PV ou moins, sauf la mission 113 : 9 PV restants contre 17 pour l'Alliance). Outil de conception (Python, hors export) : `tools/map_forge/`.
+- **Décor** : les pièces posées à la main par Codex pour les anciens tracés sont désactivées sur ces dix cartes (`DecorArt.REWORKED_MAPS`) en attendant un nouveau décor ; demande dans `ECHANGES_CLAUDE_VERS_CODEX.md`.
+- **Anciens rapports de partie** : ils ne se rejouent plus sur ces dix cartes (tracés remplacés).
+- **Contrôles** : `test_sandstorm_chapter.gd` (4 776 contrôles) adapté aux nouvelles longueurs et nombres d'entrées, validations de cartes et de trajets, éclaireur et prévisions de routes.
+- Tracés et emplacements = propositions de prototype à confirmer en jeu.

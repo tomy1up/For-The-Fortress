@@ -167,6 +167,11 @@ var bonus_view_context: String = ""
 var bonus_close: Button
 var bonus_summary_button: Button
 var overview_open: bool = false
+## Choix de l'unité de boutique de la mission, avant la vague 1 (décision du porteur, 16 novembre 2026) : valable pour la mission seulement.
+var shop_pick_open: bool = false
+var shop_pick_panel: ColorRect
+var shop_pick_list: VBoxContainer
+var shop_pick_button: Button
 var autoplay_started: bool = false
 var countdown_wave: int = -1
 var countdown_remaining: float = -1.0
@@ -248,7 +253,9 @@ func _ready() -> void:
 		model = Model.new(true,definition)
 		mission_definition = {}
 	for argument in OS.get_cmdline_user_args():
-		if argument.begins_with("--capture="): isolated = true
+		if argument.begins_with("--capture="):
+			isolated = true
+			MapView.SoundPlayer.muted = true # captures et vérifications automatiques : aucun son sur les haut-parleurs
 	var shop_trial: bool = "--essai-boutique" in OS.get_cmdline_user_args() and not isolated
 	if shop_trial:
 		# Essai de la boutique : profil séparé (progression habituelle intacte) avec toutes les unités déjà possédées.
@@ -1008,7 +1015,7 @@ func _input(event: InputEvent) -> void:
 		map_view.queue_redraw()
 
 func _countdown_paused() -> bool:
-	return pending_slot >= 0 or overview_open
+	return pending_slot >= 0 or overview_open or shop_pick_open
 
 func _sync_countdown() -> void:
 	if model.phase == "bonus":
@@ -1052,7 +1059,7 @@ func _prepare_campaign_capture(state: String) -> void:
 		if wave < 10: model.prepare_next_wave()
 
 func _selection_blocked() -> bool:
-	return meta_menu.visible or choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open or summary_open
+	return meta_menu.visible or choosing_faction or pending_slot >= 0 or model.phase == "bonus" or overview_open or summary_open or shop_pick_open
 
 func _select_slot(slot: int) -> bool:
 	if _selection_blocked() or slot < 0 or slot >= model.slots.size(): return false
@@ -1081,7 +1088,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 		if choosing_faction or model.phase == "bonus": return
-		if pending_slot >= 0: _cancel_specialisation()
+		if shop_pick_open: _close_shop_pick()
+		elif pending_slot >= 0: _cancel_specialisation()
 		elif overview_open: _close_bonuses()
 		elif summary_open: _close_run_summary()
 		else: return
@@ -1223,6 +1231,7 @@ Cette lecture ne suspend pas le combat ni le départ automatique."
 	_build_faction_selector(screen)
 	_build_specialisation_selector(screen)
 	_build_bonus_selector(screen)
+	_build_shop_pick(screen)
 	_build_run_summary(screen)
 	screen.add_child(campaign_menu)
 	campaign_menu.mission_requested.connect(_launch_campaign_mission)
@@ -2093,7 +2102,75 @@ func _choose_faction(choice: int, replacement: RefCounted = null) -> void:
 		meta_run_id = prepared_run
 		meta_retry_remaining = 2.0 if meta_run_id <= 0 and meta_profile != null else 0.0
 		choosing_faction = false
+		# L'unité de boutique se choisit mission par mission : un éventuel choix fait dans la boutique ne vaut que pour cette mission.
+		if meta_profile != null: meta_profile.select_shop_unit(choice,"")
+		shop_pick_open = _shop_pick_available()
 		_update_interface()
+
+## Unités de boutique possédées par la faction en cours (profil de jeu ou d'essai).
+func _owned_shop_cards() -> Array[Dictionary]:
+	var cards: Array[Dictionary] = []
+	if meta_profile == null or meta_profile.blocked or model.faction not in [0,1]: return cards
+	var owned: Dictionary = meta_profile.data.banks[model.faction].shop_owned
+	for card in Model.Shop.for_faction(model.faction):
+		if owned.has(card.id): cards.append(card)
+	return cards
+
+## Le choix est possible tant que rien n'est acheté ni lancé (la configuration du combat est alors encore modifiable).
+func _shop_pick_available() -> bool:
+	return not choosing_faction and model.phase == "preparation" and model.wave == 1 and model.spawned == 0 and model.gold == Model.INITIAL_GOLD and model.action_history.all(func(entry): return entry.kind == "faction") and not _owned_shop_cards().is_empty()
+
+func _build_shop_pick(screen: Control) -> void:
+	shop_pick_panel = ColorRect.new()
+	shop_pick_panel.color = Color(0.02,0.04,0.035,0.92)
+	shop_pick_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	shop_pick_panel.visible = false
+	screen.add_child(shop_pick_panel)
+	var panel: Panel = _panel(shop_pick_panel,Rect2(230,90,820,620))
+	_label(panel,"Unité de boutique de cette mission",Vector2(28,22),Vector2(760,36),26,Color("e0dbbf"))
+	var note: Label = _label(panel,"Choisissez-la avant la vague 1. Elle s'ajoute à vos trois unités habituelles ; le choix est fixé pour la mission et n'est pas conservé pour la suivante.",Vector2(28,66),Vector2(764,48),15,Color("aabbb0"))
+	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	note.custom_minimum_size = Vector2(764,48)
+	note.size = Vector2(764,48)
+	var scroll := ScrollContainer.new()
+	scroll.position = Vector2(28,122)
+	scroll.size = Vector2(764,420)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	panel.add_child(scroll)
+	shop_pick_list = VBoxContainer.new()
+	shop_pick_list.custom_minimum_size.x = 740
+	shop_pick_list.add_theme_constant_override("separation",6)
+	scroll.add_child(shop_pick_list)
+	_button(panel,"Valider · Échap",Rect2(28,556,764,44),_close_shop_pick)
+	shop_pick_button = _button(screen,"Unité de boutique",Rect2(1086,576,170,26),_open_shop_pick)
+	shop_pick_button.add_theme_font_size_override("font_size",13)
+	shop_pick_button.tooltip_text = "Choisir ou changer l'unité de boutique de cette mission, tant que vous n'avez rien acheté."
+	shop_pick_button.visible = false
+
+func _refresh_shop_pick() -> void:
+	for child in shop_pick_list.get_children(): child.queue_free()
+	var current: int = model.auxiliary_type
+	var none_button := _button(shop_pick_list,("✔ " if current < 0 else "")+"Sans unité de boutique (trois unités habituelles)",Rect2(0,0,740,44),_pick_shop_unit.bind(-1))
+	none_button.custom_minimum_size = Vector2(740,44)
+	for card in _owned_shop_cards():
+		var button := _button(shop_pick_list,("✔ " if current == card.type else "")+"%s · %d or · %s" % [card.name,int(card.stats.price),card.role],Rect2(0,0,740,44),_pick_shop_unit.bind(int(card.type)))
+		button.custom_minimum_size = Vector2(740,44)
+		button.tooltip_text = str(card.tradeoff)
+
+func _open_shop_pick() -> void:
+	if not _shop_pick_available(): return
+	shop_pick_open = true
+	_update_interface()
+
+func _close_shop_pick() -> void:
+	shop_pick_open = false
+	_update_interface()
+
+func _pick_shop_unit(type: int) -> void:
+	if not _shop_pick_available(): return
+	if not model.change_auxiliary(type): return
+	map_view.queue_redraw()
+	_update_interface()
 
 func _build_specialisation_selector(screen: Control) -> void:
 	specialisation_panel = ColorRect.new()
@@ -2234,13 +2311,14 @@ func _shop_text_card(type: int) -> Dictionary:
 func _effect_text(stats: Dictionary, type: int) -> String:
 	var shop_card := _shop_text_card(type)
 	if not shop_card.is_empty(): return shop_card.tradeoff
+	var original_type: int = type
 	type = Model.family(type)
 	if type == 3:
 		return "%s rebond%s : %s dégâts chacun, distance < %s." % [stats.secondary_cap, "" if stats.secondary_cap == 1 else "s successifs", _number(stats.secondary_damage), _number(stats.radius)]
 	if type in [2, 4]:
 		return "Explosion : %s dégâts × %s cibles secondaires, rayon < %s." % [_number(stats.secondary_damage), stats.secondary_cap, _number(stats.radius)]
 	if type == 5:
-		return "Malédiction : %s dégâts à +1 s puis +2 s, même hors portée." % _number(stats.curse_damage)
+		return "%s : %s dégâts à +1 s puis +2 s, même hors portée." % [_curse_label(original_type),_number(stats.curse_damage)]
 	return ""
 
 func _recruit_role(type: int) -> String:
@@ -2279,20 +2357,26 @@ func _recruit_tooltip(type: int, error: String) -> String:
 	if not error.is_empty(): lines.append("Achat impossible : " + error)
 	return "\n".join(lines)
 
+## Dégâts sur la durée : « Brûlure » pour les unités de feu (Pyromancien humain, Brûleur de cendres), « Malédiction » pour les autres.
+func _curse_label(type: int) -> String:
+	return "Brûlure" if type in MapView.FIRE_CURSE_TYPES else "Malédiction"
+
 func _compact_damage(stats: Dictionary, type: int) -> String:
+	var original_type: int = type
 	type = Model.family(type)
 	var result: String = "Dégâts : %s" % _number(stats.damage)
 	# Alternatives de boutique sans effet secondaire (squelette, gnome) : ni rebond ni explosion a zero.
 	if type in [2,4] and int(stats.get("secondary_cap",0)) > 0: result += " · Explosion : %s × %d autres max." % [_number(stats.secondary_damage),stats.secondary_cap]
 	elif type == 3 and int(stats.get("secondary_cap",0)) > 0: result += " · Rebond : %s × %d max." % [_number(stats.secondary_damage),stats.secondary_cap]
-	elif type == 5 and float(stats.get("curse_damage",0.0)) > 0.0: result += " · Malédiction : %s après 1 s et 2 s" % _number(stats.curse_damage)
+	if float(stats.get("curse_damage",0.0)) > 0.0: result += " · %s : %s après 1 s et 2 s" % [_curse_label(original_type),_number(stats.curse_damage)]
 	return result
 
 func _compact_upgrade(current: Dictionary, future: Dictionary, type: int) -> String:
+	var original_type: int = type
 	type = Model.family(type)
 	var result: String = "Dégâts : %s → %s" % [_number(current.damage),_number(future.damage)]
-	if Model.family(type) in [2,3,4]: result += " · %s : %s → %s" % ["Rebond" if Model.family(type) == 3 else "Explosion",_number(current.secondary_damage),_number(future.secondary_damage)]
-	elif type == 5: result += " · Malédiction : %s → %s" % [_number(current.curse_damage),_number(future.curse_damage)]
+	if Model.family(type) in [2,3,4] and int(current.get("secondary_cap",0)) > 0: result += " · %s : %s → %s" % ["Rebond" if Model.family(type) == 3 else "Explosion",_number(current.secondary_damage),_number(future.secondary_damage)]
+	if float(current.get("curse_damage",0.0)) > 0.0: result += " · %s : %s → %s" % [_curse_label(original_type),_number(current.curse_damage),_number(future.curse_damage)]
 	return result
 
 func _toggle_inspection_numbers() -> void:
@@ -2587,7 +2671,11 @@ func _update_interface() -> void:
 	_sync_countdown()
 	guidance_label.text = _guidance_text()
 	map_view.preview_synergy_unit = {}
-	var modal: bool = meta_menu.visible or shop_menu.visible or choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase == "bonus"
+	var modal: bool = meta_menu.visible or shop_menu.visible or choosing_faction or pending_slot >= 0 or overview_open or summary_open or shop_pick_open or model.phase == "bonus"
+	if shop_pick_open and not _shop_pick_available(): shop_pick_open = false
+	shop_pick_panel.visible = shop_pick_open
+	if shop_pick_open: _refresh_shop_pick()
+	shop_pick_button.visible = _shop_pick_available() and not modal
 	campaign_menu.set_overlay_blocked(meta_menu.visible or shop_menu.visible or not campaign_menu.visible)
 	for control in faction_buttons+meta_buttons:
 		control.focus_mode = Control.FOCUS_NONE if meta_menu.visible or campaign_menu.visible else Control.FOCUS_ALL

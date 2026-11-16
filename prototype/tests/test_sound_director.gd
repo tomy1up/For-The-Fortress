@@ -17,19 +17,22 @@ func run_checks() -> void:
 	check(Bank.shot_event(0,0) == "shot.bow" and Bank.shot_event(1,1) == "shot.crossbow" and Bank.shot_event(13,1) == "shot.cannon" and Bank.shot_event(12,1) == "shot.gun" and Bank.shot_event(14,0) == "shot.melee","Événement de tir selon le type puis la famille")
 	for family in range(6):
 		check(Bank.EVENTS.has(Bank.shot_event(family,family)) and Bank.EVENTS.has(Bank.impact_event(family)),"Chaque famille a ses événements de tir et d'impact au catalogue")
-	for event in Bank.EVENTS: check(Bank.EVENTS[event].has("files") and not Bank.EVENTS[event].files.is_empty() and Bank.gain_db(event) <= 0.0,"%s : fichiers et gain borné" % event)
-	# Sons installés (banques Kenney, CC0) : chaque événement du catalogue a au moins un fichier présent, et les noms listés existent tous.
+	for event in Bank.EVENTS: check(Bank.EVENTS[event].has("files") and Bank.gain_db(event) <= 0.0,"%s : liste de fichiers et gain borné" % event)
+	# Sons retenus par le porteur (Freesound, CC0) : tous les fichiers listés existent ; les événements sans son restent silencieux.
+	var installed: Array[String] = ["shot.bow","shot.crossbow","shot.melee","impact.hit"]
 	for event in Bank.EVENTS:
-		check(not Bank.stream_path(event).is_empty(),"%s : au moins un fichier installé" % event)
 		for name in Bank.EVENTS[event].files: check(not Bank.resolve(name).is_empty(),"%s : fichier %s présent" % [event,name])
-		check(Bank.stream_path(event,0) != Bank.stream_path(event,1) or Bank.EVENTS[event].files.size() == 1,"%s : le numéro varie le fichier" % event)
+		if event in installed:
+			check(not Bank.stream_path(event).is_empty(),"%s : un son est installé" % event)
+			check(Bank.stream_path(event,0) != Bank.stream_path(event,1) or Bank.EVENTS[event].files.size() == 1,"%s : le numéro varie le fichier" % event)
+		else:
+			check(Bank.stream_path(event).is_empty(),"%s : silencieux (aucun son retenu)" % event)
 	# Fichiers absents : silence et aucune erreur.
 	check(Bank.stream_path("shot.bow").is_empty() or Bank.stream_path("shot.bow").begins_with(Bank.DIRECTORY),"Chemin vide ou dans le dossier des sons")
 	check(Bank.stream_path("inconnu").is_empty() and is_equal_approx(Bank.gain_db("inconnu"),0.0),"Événement inconnu : silence")
 	var player := Player.new();player.dry = true;root.add_child(player)
 	await process_frame
-	check(Player.muted and not player.play("shot.bow"),"Son coupé par défaut (décision du porteur, 16 novembre 2026)")
-	Player.muted = false
+	check(not Player.muted and not player.play("shot.gun"),"Son actif par défaut ; un événement sans son reste silencieux")
 	check(player.play("shot.bow") and player.played == 1 and not player.play("inconnu"),"Lecture d'un son installé ; événement inconnu silencieux")
 	Player.muted = true
 	check(not player.play("shot.bow"),"Coupure : rien n'est joué")

@@ -1,61 +1,26 @@
 # Crédits audio
 
-Décision du porteur, 16 novembre 2026 : le son vient de banques libres de droits, sans dépense ; Claude Code l'intègre (`AGENTS.md`). Les choix ci-dessous sont des **réglages de prototype à confirmer à l'écoute du porteur** : certains sons sont des substituts (aucun pack ne fournit de vrai son d'arc, d'arme à feu ou de magie).
+Décision du porteur, 16 novembre 2026 : le son vient de banques libres de droits, sans dépense ; Claude Code l'intègre (`AGENTS.md`). Les sons sont **choisis à l'écoute par le porteur** (page d'écoute régénérée par un script hors dépôt).
 
-## Source
+## Source et licence
 
-[Kenney](https://kenney.nl) — licence **Creative Commons CC0 1.0** (domaine public, aucune obligation de crédit ; crédit donné par courtoisie). Packs téléchargés le 16 novembre 2026 depuis les pages officielles (seuls `down_1`, `down_2`, `click_1` et `buy_1` en proviennent encore) :
+[Freesound](https://freesound.org) — sons sous licence **Creative Commons 0** (domaine public : aucune obligation de crédit ; crédit donné par courtoisie). Téléchargés le 16 novembre 2026 depuis le compte gratuit du porteur. Fichiers d'origine dans `C:/Projet/.tools/audio/freesound/` (hors dépôt).
 
-- [Impact Sounds](https://kenney.nl/assets/impact-sounds) (v1.0, 2019)
-- [RPG Audio](https://kenney.nl/assets/rpg-audio) (v1.0, 2014)
-- [Interface Sounds](https://kenney.nl/assets/interface-sounds) (v1.0, 2020)
+## Sons installés (`prototype/assets/audio/sfx/`)
 
-Les archives d'origine sont dans `C:/Projet/.tools/audio/` (hors dépôt) avec leur `License.txt`. Seuls les 20 fichiers utilisés sont copiés dans `prototype/assets/audio/sfx/`.
-
-[150 Combat Sound Effects](https://opengameart.org/content/150-combat-sound-effects) (OpenGameArt, untamedpixels) — licence **CC0** (compilation de plusieurs auteurs, détail dans `LICENSES.txt` de l'archive). Téléchargé le 16 novembre 2026 ; archive dans `C:/Projet/.tools/audio/oga_150-combat-sound-effects.zip`. Les premiers choix Kenney (sons d'interface utilisés comme tirs) ont été jugés inappropriés par le porteur le 16 novembre 2026 et remplacés. Les fichiers sont recoupés (durée maximale indiquée, fondu de 60 ms), ramenés en mono et normalisés.
-
-## Fichiers utilisés
-
-| Fichier du jeu | Événement | Pack | Fichier d'origine | Durée max. |
+| Fichier du jeu | Événement | Freesound | Auteur | Traitement |
 | --- | --- | --- | --- | --- |
-| `bow_1.wav` | tir d'arc (souffle de lame) | 150 Combat Sound Effects | `knife_slice_48kHz_16bit_0.51s_9438a1db_s03.wav` | 0.35 s |
-| `bow_2.wav` | tir d'arc (souffle de lame) | 150 Combat Sound Effects | `knife_slice2_48kHz_16bit_0.56s_d1b73212_s03.wav` | 0.35 s |
-| `crossbow_1.wav` | tir d'arbalète | 150 Combat Sound Effects | `draw_knife3_48kHz_16bit_0.48s_4353b697_s03.wav` | 0.3 s |
-| `crossbow_2.wav` | tir d'arbalète | 150 Combat Sound Effects | `knife_slice2_48kHz_16bit_0.56s_d1b73212_s03.wav` | 0.22 s |
-| `magic_1.wav` | tir magique | 150 Combat Sound Effects | `Fire Spell Impact 4_s06.wav` | 1.0 s |
-| `magic_2.wav` | tir magique | 150 Combat Sound Effects | `Lightning Spell Impact 3_s06.wav` | 1.0 s |
-| `throw_1.wav` | lancer (souffle) | 150 Combat Sound Effects | `Wind Spell Impact 2_s07.wav` | 0.6 s |
-| `throw_2.wav` | lancer (souffle) | 150 Combat Sound Effects | `Wind Spell Impact 5_s07.wav` | 0.6 s |
-| `gun_1.wav` | arme à feu | 150 Combat Sound Effects | `explosion_crunch_000_48kHz_16bit_0.78s_e875be4e_s04.wav` | 0.35 s |
-| `cannon_1.wav` | canon | 150 Combat Sound Effects | `low_frequency_explosion_001_48kHz_16bit_1s_a63b8c61_s04.wav` | 1.0 s |
-| `melee_1.wav` | coup de mêlée | 150 Combat Sound Effects | `impact_punch_heavy_001_48kHz_16bit_0.54s_fb104b0a_s02.wav` | 0.5 s |
-| `melee_2.wav` | coup de mêlée | 150 Combat Sound Effects | `impact_punch_heavy_002_48kHz_16bit_0.46s_565485a1_s02.wav` | 0.5 s |
-| `hit_1.wav` | impact | 150 Combat Sound Effects | `impact_punch_medium_001_48kHz_16bit_0.35s_bfeb7339_s02.wav` | 0.4 s |
-| `hit_2.wav` | impact | 150 Combat Sound Effects | `impact_punch_medium_003_48kHz_16bit_0.36s_a434f34d_s02.wav` | 0.4 s |
-| `hit_3.wav` | impact | 150 Combat Sound Effects | `impact_punch_medium_004_48kHz_16bit_0.44s_0fa50bbe_s02.wav` | 0.4 s |
-| `blast_1.wav` | explosion | 150 Combat Sound Effects | `explosion_crunch_002_48kHz_16bit_1.26s_e0852ce0_s04.wav` | 0.9 s |
-| `down_1.ogg`, `down_2.ogg` | élimination d'un ennemi | Kenney Impact Sounds | `impactSoft_medium_000/001.ogg` | — |
-| `click_1.ogg`, `buy_1.ogg` | interface (non déclenchés) | Kenney | `click_001.ogg`, `handleCoins.ogg` | — |
+| `bow_1.wav`, `bow_2.wav` | tir d'arc (Archer, Rôdeur, Sentinelle, Tireur d'élite) | [384917 « Bow Release (Bow and Arrow) 4 »](https://freesound.org/s/384917/) | Ali_6868 | mono, coupé à 1 s ; `bow_2` plus aigu (+7 %) |
+| `crossbow_1.wav`, `crossbow_2.wav` | tir d'arbalète (Arbalétrier, Mousquetaire…) | [163453 « Crossbow Shot »](https://freesound.org/s/163453/) | LeMudCrab | mono ; `crossbow_2` plus grave (−6 %) |
+| `melee_1.ogg` | coup de mêlée (Piquier, Lance-épieu) | [574820 « Slash2.ogg »](https://freesound.org/s/574820/) | Wenpire | tel quel |
+| `hit_1.wav`, `hit_2.wav` | impact d'un tir (familles archer, arbalétrier et haches) | [708223 « Arrow_Hit_1 »](https://freesound.org/s/708223/) | Mythmazter | mono, coupé à 0,6 s ; `hit_2` plus aigu (+8 %) |
 
-## Reste à décider
+Sons des essais précédents (Kenney et OpenGameArt) : écartés par le porteur le 16 novembre 2026 (« pas du tout appropriés »), retirés du dépôt.
 
-- Aucun vrai son d'arc (corde) dans les packs : le tir d'arc utilise un souffle de lame.
-- Musique : aucune source retenue.
-- Sons d'interface et emplacement du réglage de volume (à soumettre au porteur).
+## Événements sans son pour l'instant (silence)
 
-## En pause (décision du porteur, 16 novembre 2026)
+Magie, lancer (haches, javeline), arme à feu, canon, explosion, élimination d'un ennemi, sons d'interface. Piste retenue pour la suite : style fantasy / RPG (repère World of Warcraft), choisis à l'écoute sur une page d'écoute Freesound CC0.
 
-Le porteur juge que le son prend trop de temps alors que le jeu est loin d'être finalisé : le chantier est **suspendu**. Le son est **coupé par défaut** (`sound_player.gd`, `muted = true`) ; le système (catalogue, déclenchement aux instants du rendu, tests) reste en place.
+Musique : aucune source retenue.
 
-Les sons Kenney puis OpenGameArt ci-dessus ont été jugés inappropriés à l'écoute (« sonneries 8 bits », puis « pas réaliste et pas raccord »). Direction retenue : style **fantasy / RPG, repère World of Warcraft**, sons choisis **à l'oreille par le porteur** sur une page d'écoute (`dist/ecoute_sons/index.html`, extraits Freesound en CC0, régénérée par un script hors dépôt).
-
-Sons retenus par le porteur sur Freesound (CC0), **pas encore téléchargés** (un compte Freesound gratuit est nécessaire ; le porteur s'y connecte, l'agent télécharge) :
-
-| Événement | Freesound | 
-| --- | --- |
-| Tir d'arc | [384917](https://freesound.org/s/384917/) « Bow Release (Bow and Arrow) 4 » par Ali_6868 (variante proche retenue au tour précédent : [384916](https://freesound.org/s/384916/)) |
-| Tir d'arbalète | [163453](https://freesound.org/s/163453/) |
-| Coup de mêlée | [574820](https://freesound.org/s/574820/) |
-| Impact | [708223](https://freesound.org/s/708223/) |
-
-Restent sans son retenu : magie, lancer, arme à feu, canon, explosion, élimination (un second tour d'écoute est prêt dans la page).
+Epidemic Sound n'est pas utilisé : son offre « gratuite » est un essai, et ses plans Creator et Pro ne couvrent pas les jeux (constat du 16 novembre 2026).

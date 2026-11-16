@@ -21,7 +21,7 @@ func run_checks() -> void:
 	var m = Model.new();m.phase = "combat";m.elapsed = 1.0
 	var enemy: Dictionary = Model.make_enemy(0,1,0.0);m.enemies.assign([enemy])
 	m._apply_damage({0:8.0})
-	check(m.damage_events.size() == 1 and m.damage_events[0] == {"time":1.0,"enemy_id":0,"hp_before":40.0,"hp_after":32.0},"Observation exacte de la perte réelle, sans arrondi")
+	check(m.damage_events.size() == 1 and m.damage_events[0] == {"time":1.0,"enemy_id":0,"hp_before":40.0,"hp_after":32.0,"source_type":-1,"component":""},"Observation exacte de la perte réelle, sans arrondi")
 	m._apply_damage({});check(m.damage_events.size() == 1,"Aucun effet sur une cible non touchée")
 	m._apply_damage({0:100.0});check(m.damage_events.size() == 2 and m.damage_events[-1].hp_before == 32.0 and m.damage_events[-1].hp_after == 0.0 and m.enemies.is_empty(),"Surplus de dégâts sans faux PV perdus ni ennemi conservé")
 	check(m.killed == 1 and m.gold == Model.INITIAL_GOLD+3,"Une élimination et une seule récompense")

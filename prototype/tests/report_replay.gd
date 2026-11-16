@@ -57,6 +57,18 @@ static func talent_rules_for(version: String) -> int:
 	if minor < 168: return Model.MetaTalents.Expanded.RULES_HISTORICAL
 	return Model.MetaTalents.Expanded.RULES_V168 if minor == 168 else Model.MetaTalents.Expanded.RULES_CURRENT
 
+## La brûlure du Pyromancien humain s'applique depuis la v0.221 : les rapports plus anciens se rejouent sans elle.
+static func burn_rules_for(version: String) -> bool:
+	var parts: PackedStringArray = version.split(".")
+	if parts.size() < 2 or parts[0] != "0" or not parts[1].is_valid_int(): return true
+	return int(parts[1]) >= 221
+
+## Règles de la v0.222 (talents du Mage sur les dots du Pyromancien, Exercice de tir étendu aux alternatives du chaman, rayon d'aura de 4,2) : les rapports plus anciens se rejouent sans elles.
+static func rules_v222_for(version: String) -> bool:
+	var parts: PackedStringArray = version.split(".")
+	if parts.size() < 2 or parts[0] != "0" or not parts[1].is_valid_int(): return true
+	return int(parts[1]) >= 222
+
 static func verify(data: Variant) -> Dictionary:
 	if not data is Dictionary: return _fail("Le rapport doit être un objet JSON.")
 	if data.get("schema_version") != 2: return _fail("Seuls les rapports au format 2 sont pris en charge.")
@@ -72,6 +84,8 @@ static func verify(data: Variant) -> Dictionary:
 		definition = Model.Maps.from_data(data.map_definition)
 		if definition.is_empty(): return _fail("Définition de carte invalide.")
 	var model = Model.new(true,definition)
+	model.burn_for_all_curse_units = burn_rules_for(data.game_version)
+	model.rules_v222 = rules_v222_for(data.game_version)
 	model.talent_rules = talent_rules_for(data.game_version) # Chaque rapport garde les valeurs de talents de sa version.
 	if data.has("combat_affix") and not model.configure_combat_affix(data.combat_affix): return _fail("Affixe de combat invalide.")
 	if not model.routes.is_empty():
@@ -128,6 +142,10 @@ static func verify(data: Variant) -> Dictionary:
 		observed.boss_encounter.name = Model.ENEMY_TYPES[7].name
 		for bonus in observed.bonuses:
 			bonus.description = bonus.description.replace("ours, unités lourdes, gardes d’élite et boss","Brutes, Colosses, Élites et boss")
+	if _minor_version(str(data.get("game_version",""))) < 222:
+		# v0.222 : le texte de « Exercice de tir » (R-02) de la Horde cite désormais les alternatives de boutique du chaman.
+		for bonus in observed.bonuses:
+			bonus.description = bonus.description.replace("lanceur de haches troll, traqueur troll, sapeur gobelin, grenadier gobelin, Brûleur de cendres et Chaman des marais. Le chaman orc de base et ses spécialisations sont exclus.","lanceur de haches troll, traqueur troll, sapeur gobelin et grenadier gobelin. Le chaman et ses spécialisations sont exclus.")
 	for field in observed:
 		if field in ["game_version","engine_version"]: continue
 		if field == "arrivals_by_entry" and not data.has(field): continue # Optional detail absent from earlier route reports.

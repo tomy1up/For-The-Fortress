@@ -82,8 +82,8 @@ func _process(delta: float) -> void:
 	flag_phase = fmod(flag_phase+maxf(0.0,delta),TAU)
 	if model == null or model.active or model.phase not in ["finished","bonus","victory","defeat"]:
 		elimination_tail = 0.0
-	elif elimination_tail < maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window()):
-		elimination_tail = minf(maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window()),elimination_tail+maxf(0.0,delta))
+	elif elimination_tail < maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window())+0.5:
+		elimination_tail = minf(maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window())+0.5,elimination_tail+maxf(0.0,delta))
 		queue_redraw()
 
 ## Sons de combat (banques libres, voir `sound_bank.gd`) : détectés d'après les événements du modèle, jamais écrits dans le modèle.
@@ -95,14 +95,36 @@ func _play_sounds() -> void:
 		sound_director = SoundDirector.new(launch_delay,PROJECTILE_FLIGHT)
 	sound_player.play_all(sound_director.update(model))
 
+## Recalage visuel des dégâts (retour du porteur, 16 novembre 2026) : le coup est résolu à l'instant du tir, mais l'affichage (barre de vie, éclat, mort) attend l'arrivée du projectile
+## (lâcher différé puis vol). Les dégâts sur la durée (brûlure, malédiction) s'affichent à leur instant. Rendu seulement : le combat ne change pas.
+static func damage_landing_delay(event: Dictionary) -> float:
+	if str(event.get("component","")) == "curse" or int(event.get("source_type",-1)) < 0: return 0.0
+	return launch_delay({"type":int(event.source_type)})+PROJECTILE_FLIGHT
+
+## Âge visuel d'un événement de dégâts ou d'élimination (négatif tant que le projectile n'est pas arrivé).
+func event_age(event: Dictionary) -> float:
+	return model.elapsed-float(event.time)-damage_landing_delay(event)
+
+## PV affichés : les dégâts dont le projectile n'est pas encore arrivé ne sont pas encore retirés.
+func visual_hp(enemy: Dictionary) -> float:
+	var shown: float = float(enemy.hp)
+	if model == null: return shown
+	for index in range(model.damage_events.size()-1,-1,-1):
+		var event: Dictionary = model.damage_events[index]
+		if model.elapsed-float(event.time) > 1.0: break
+		if event.enemy_id == enemy.id and event_age(event) < 0.0 and model.elapsed >= float(event.time): shown += float(event.hp_before)-float(event.hp_after)
+	return shown
+
 func recent_eliminations(window: float = BOSS_ELIMINATION_DURATION) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	if model == null or model.phase not in ["combat","finished","bonus","victory","defeat"]: return result
 	for index in range(model.elimination_events.size()-1,-1,-1):
 		var event: Dictionary = model.elimination_events[index]
-		var age: float = model.elapsed-event.time+(0.0 if model.active else elimination_tail)
-		if age >= window: break
-		if age >= 0.0:
+		var raw_age: float = model.elapsed-event.time+(0.0 if model.active else elimination_tail)
+		var age: float = raw_age-damage_landing_delay(event)
+		if raw_age >= window+0.5: break
+		if age >= window: continue
+		if raw_age >= 0.0:
 			result.append({"event":event,"age":age})
 			if result.size() >= MAX_ELIMINATION_EFFECTS: break
 	return result
@@ -156,9 +178,9 @@ func recent_enemy_damage(enemy_id: int) -> Array[Dictionary]:
 	if model == null or not model.active: return recent
 	for index in range(model.damage_events.size()-1,-1,-1):
 		var event: Dictionary = model.damage_events[index]
-		var age: float = model.elapsed-event.time
-		if age >= DAMAGE_TRAIL_DURATION: break
-		if event.enemy_id == enemy_id and age >= 0.0: recent.append(event)
+		var age: float = event_age(event)
+		if model.elapsed-float(event.time) >= DAMAGE_TRAIL_DURATION+0.5: break
+		if event.enemy_id == enemy_id and age >= 0.0 and age < DAMAGE_TRAIL_DURATION: recent.append(event)
 	return recent
 
 ## Âge du dernier coup reçu par cet ennemi, ou une valeur négative s'il n'en a pas reçu récemment (animation `hurt`).
@@ -166,14 +188,14 @@ func last_hit_age(enemy_id: int) -> float:
 	if model == null or not model.active: return -1.0
 	for index in range(model.damage_events.size()-1,-1,-1):
 		var event: Dictionary = model.damage_events[index]
-		var age: float = model.elapsed-event.time
-		if age > 3.0: break
+		var age: float = event_age(event)
+		if model.elapsed-float(event.time) > 3.5: break
 		if event.enemy_id == enemy_id and age >= 0.0: return age
 	return -1.0
 
 func enemy_hit_strength(events: Array[Dictionary]) -> float:
 	var strength: float = 0.0
-	for event in events: strength = maxf(strength,damage_opacity(model.elapsed-event.time,HIT_FLASH_DURATION))
+	for event in events: strength = maxf(strength,damage_opacity(event_age(event),HIT_FLASH_DURATION))
 	return strength
 
 static func hit_reaction_pulse(age: float) -> float:
@@ -253,7 +275,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
@@ -267,8 +289,18 @@ const PIKE_TIPS: Dictionary = {-12:Vector2(49.6188,-37.8302),0:Vector2(50.294,-3
 ## Pyromancien humain (type 15, incantation, lâcher à 0,288 s) : trois planches (−12°, 0°, +12°), boule de feu lancée depuis le point donné par angle (`lachers.json`).
 const PYROMANCER_TYPE := 15
 const PYRO_TIPS: Dictionary = {-12:Vector2(32.8654,-50.375),0:Vector2(32.8465,-47.9359),12:Vector2(32.7376,-45.5035)}
+## Lance-éclats gobelin (type 18, cristal lancé en ligne droite, lâcher à 0,1125 s) : cinq planches (−36°, −12°, 0°, +12°, +36°). La planche est celle dont l'angle s'écarte le moins
+## de la droite entre sa propre pointe (`lachers.json`) et l'impact ; le cristal dessiné suit cette droite pendant tout le vol.
+const SHARDTHROWER_TYPE := 18
+const SHARD_TIPS: Dictionary = {-36:Vector2(16.1448,-34.5325),-12:Vector2(20.0201,-30.3707),0:Vector2(20.7757,-25.8869),12:Vector2(20.4848,-21.8582),36:Vector2(17.5151,-14.8514)}
+## Sentinelle elfe (type 10, tir avec transfert de poids, flèche à 0,52 s en trajet rectiligne) : trois planches (−12°, 0°, +12°), choisie comme celle du Lance-éclats.
+const SENTINEL_TYPE := 10
+const SENTINEL_TIPS: Dictionary = {-12:Vector2(21.9512,-42.0693),0:Vector2(22.1997,-39.3846),12:Vector2(21.7661,-36.6909)}
+const SHARD_TEXTURE: Texture2D = preload("res://assets/units/shop/eclat_v001.png")
+const SHARD_PIVOT_PX := Vector2(181.0,36.0)
+const SHARD_SCALE := 0.10441044104410441
 const STEP_TYPES: Array[int] = [14,15,17]
-const TILTED_TYPES: Array[int] = [11,14,15,17]
+const TILTED_TYPES: Array[int] = [10,11,14,15,17,18]
 const CURVED_TYPES: Array[int] = [11,13,17]
 const JAVELIN_PIVOT := Vector2(0.0,-41.3453)
 const JAVELIN_TIPS: Dictionary = {-12:Vector2(55.3409,-51.4028),0:Vector2(56.1005,-41.3453),12:Vector2(54.9211,-31.3319)}
@@ -283,6 +315,18 @@ const AIM_STEP := 8
 const AIM_LIMIT := 24
 
 static func aim_pitch(shot: Dictionary) -> int:
+	if int(shot.get("type",-1)) in [SHARDTHROWER_TYPE,SENTINEL_TYPE]:
+		var impact: Vector2 = project(shot.to)+Vector2(0,-12)
+		var facing_side: float = shot_facing(shot)
+		var best: int = 0
+		var best_error: float = INF
+		var tips: Dictionary = step_tips(int(shot.type))
+		for candidate in tips:
+			var tip: Vector2 = project(shot.from)+Vector2(tips[candidate].x*facing_side,tips[candidate].y)
+			var line: Vector2 = impact-tip
+			var error: float = absf(rad_to_deg(atan2(line.y,maxf(absf(line.x),0.0001)))-float(candidate))
+			if error < best_error: best_error = error;best = int(candidate)
+		return best
 	if int(shot.get("type",-1)) in STEP_TYPES:
 		var hand: Vector2 = project(shot.from)+Vector2(0.0,float(step_tips(int(shot.type))[0].y))
 		var gap: Vector2 = project(shot.to)+Vector2(0,-12)-hand
@@ -294,7 +338,7 @@ static func aim_pitch(shot: Dictionary) -> int:
 	return clampi(int(roundf(degrees/float(AIM_STEP)))*AIM_STEP,-AIM_LIMIT,AIM_LIMIT)
 
 static func step_tips(type: int) -> Dictionary:
-	return PIKE_TIPS if type == PIKEMAN_TYPE else PYRO_TIPS if type == PYROMANCER_TYPE else JAVELIN_TIPS
+	return PIKE_TIPS if type == PIKEMAN_TYPE else PYRO_TIPS if type == PYROMANCER_TYPE else SHARD_TIPS if type == SHARDTHROWER_TYPE else SENTINEL_TIPS if type == SENTINEL_TYPE else JAVELIN_TIPS
 
 static func aim_variant(pitch: int) -> String:
 	return "attack" if pitch == 0 else "attack_%s%d" % ["down" if pitch > 0 else "up",absi(pitch)]
@@ -305,7 +349,7 @@ static func aim_direction(shot: Dictionary) -> Vector2:
 	return Vector2(shot_facing(shot)*cos(angle),sin(angle))
 
 static func aimed_origin(shot: Dictionary) -> Vector2:
-	if int(shot.get("type",-1)) in STEP_TYPES:
+	if int(shot.get("type",-1)) in STEP_TYPES or int(shot.get("type",-1)) in [SHARDTHROWER_TYPE,SENTINEL_TYPE]:
 		var tip: Vector2 = step_tips(int(shot.type))[aim_pitch(shot)]
 		return project(shot.from)+Vector2(tip.x*shot_facing(shot),tip.y)
 	return project(shot.from)+AIM_PIVOT+aim_direction(shot)*AIM_LENGTH
@@ -368,6 +412,9 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		return
 	if int(shot.type) == SWORD_TYPE:
 		_draw_sword_strike(origin,direction,side,age/PROJECTILE_FLIGHT)
+		return
+	if int(shot.type) == SHARDTHROWER_TYPE:
+		_draw_crystal_shard(point,direction,shot_facing(shot))
 		return
 	if int(shot.type) == PIKEMAN_TYPE:
 		_draw_pike_contact(origin,direction,side,age/PROJECTILE_FLIGHT)
@@ -594,6 +641,12 @@ func _draw_cannonball(point: Vector2, direction: Vector2) -> void:
 	draw_circle(point,4.6,Color("1d2224"),true,-1,true)
 	draw_circle(point+Vector2(-1.4,-1.4),1.6,Color("c7d2cf"),true,-1,true)
 
+## Éclat de cristal du Lance-éclats (type 18) : le dessin du lot de Codex, orienté selon la droite de vol ; le reflet à gauche garde l'éclairage en haut.
+func _draw_crystal_shard(point: Vector2, direction: Vector2, facing: float) -> void:
+	draw_set_transform_matrix(Transform2D(direction,direction.orthogonal()*facing,point))
+	draw_texture_rect(SHARD_TEXTURE,Rect2(-SHARD_PIVOT_PX*SHARD_SCALE,SHARD_TEXTURE.get_size()*SHARD_SCALE),false)
+	draw_set_transform(Vector2.ZERO)
+
 ## Éclat de contact du Piquier humain (type 14) : bref éclat à la pointe de la pique dessinée dans la planche (aucune pique dessinée par le jeu).
 func _draw_pike_contact(origin: Vector2, direction: Vector2, side: Vector2, progress: float) -> void:
 	var t: float = clampf(progress,0.0,1.0)
@@ -665,6 +718,8 @@ func _draw_enemy_badges(enemy: Dictionary, bar_position: Vector2) -> void:
 	var textures := {"mark":FX_MARK,"loot":FX_LOOT,"volatile":FX_VOLATILE}
 	for index in range(badges.size()):
 		var center := Vector2(bar_position.x+12.0+(float(index)-float(badges.size()-1)*0.5)*FX_BADGE_SPACING,bar_position.y-10.0)
+		draw_circle(center,FX_BADGE_SIZE.x*0.62,Color(0.05,0.07,0.06,0.78),true,-1,true) # fond sombre : le marqueur reste lisible sur tous les décors
+		draw_arc(center,FX_BADGE_SIZE.x*0.62,0.0,TAU,20,FX_BADGE_COLORS[badges[index]],1.6,true)
 		draw_texture_rect(textures[badges[index]],Rect2(center-FX_BADGE_SIZE*0.5,FX_BADGE_SIZE),false)
 
 ## Explosions de réaction en chaîne : anneau bref et éclats, à la position de l'ennemi mort.
@@ -732,6 +787,41 @@ func _draw_cast_bolt(shot: Dictionary, age: float, color: Color, alpha: float) -
 ## Instant de pose d'une malédiction, déduit de ses tics (aucun état de simulation ajouté).
 static func curse_applied_at(curse: Dictionary) -> float:
 	return float(curse.next_at)-(3.0-float(curse.ticks_left))
+
+## Types qui infligent une brûlure (Pyromancien humain, Brûleur de cendres) : leurs dégâts sur la durée se dessinent en flammes, pas en anneau de malédiction.
+const FIRE_CURSE_TYPES: Array[int] = [15,21]
+const BURN_TICK_FLARE := 0.45
+
+func curse_source_type(curse: Dictionary) -> int:
+	for defender in model.defenders:
+		if not defender.is_empty() and int(defender.get("instance_id",-1)) == int(curse.source_id): return int(defender.type)
+	return -1
+
+## Brûlure en cours sur un ennemi : petites langues de flamme qui vacillent (dessinées dans le repère de l'ennemi, centré sur ses pieds).
+func _draw_burning(phase: float) -> void:
+	for index in range(3):
+		var wobble: float = sin(phase*9.0+float(index)*2.1)
+		var x: float = (float(index)-1.0)*5.5
+		var base: float = -9.0-float(index%2)*3.0
+		var height: float = 9.0+3.0*wobble
+		var outer := PackedVector2Array([Vector2(x-3.2,base),Vector2(x-1.0+wobble*0.8,base-height*0.55),Vector2(x+wobble,base-height),Vector2(x+1.6,base-height*0.5),Vector2(x+3.2,base)])
+		draw_colored_polygon(outer,Color(0.98,0.45,0.12,0.92))
+		var inner := PackedVector2Array([Vector2(x-1.6,base),Vector2(x+wobble*0.6,base-height*0.62),Vector2(x+1.6,base)])
+		draw_colored_polygon(inner,Color(1.0,0.86,0.32,0.95))
+
+## Éclat orange et nombre qui monte à chaque tic de brûlure (le tic réel du modèle ; amount = PV retirés).
+func _draw_burn_tick(center: Vector2, enemy: Dictionary, amount: float, age: float) -> void:
+	if age < 0.0 or age >= BURN_TICK_FLARE or amount <= 0.0: return
+	var t: float = age/BURN_TICK_FLARE
+	var scale: float = _enemy_scale(enemy)
+	var body: Vector2 = center+Vector2(0,-14.0*scale)
+	draw_circle(body,(7.0+9.0*t)*scale,Color(1.0,0.55,0.15,0.55*(1.0-t)),true,-1,true)
+	draw_arc(body,(10.0+8.0*t)*scale,0.0,TAU,20,Color(1.0,0.8,0.35,0.85*(1.0-t)),2.0,true)
+	var font: Font = ThemeDB.fallback_font
+	var text_point: Vector2 = center+Vector2(0,-39.0*scale-10.0-14.0*t)
+	var label: String = "-%d" % int(roundf(amount))
+	draw_string_outline(font,text_point+Vector2(-10,0),label,HORIZONTAL_ALIGNMENT_CENTER,20,13,4,Color(0.2,0.05,0.0,1.0-t))
+	draw_string(font,text_point+Vector2(-10,0),label,HORIZONTAL_ALIGNMENT_CENTER,20,13,Color(1.0,0.78,0.38,1.0-t))
 
 ## L'anneau de malédiction d'un chaman orc apparaît avec l'arrivée de l'éclair, pas au départ du tir (rendu seul : la malédiction existe dès le tir).
 func curse_ring_visible(curse: Dictionary) -> bool:
@@ -1138,21 +1228,24 @@ func _draw() -> void:
 			if actor.has("ghost"):
 				_draw_purchase_ghost(actor.ghost)
 			elif actor.has("defender"):
-				if model.guardian_aura(actor.slot) > 0.0: draw_texture_rect(FX_AURA,Rect2(actor.point+Vector2(-9.5,-1.0),Vector2(19,13)),false)
+				if model.guardian_aura(actor.slot) > 0.0: draw_texture_rect(FX_AURA,Rect2(actor.point+Vector2(-13.0,-3.0),Vector2(26,17)),false)
 				_draw_defender(actor.point, actor.defender.type, actor.defender.get("level", 1), actor.defender.get("branch", -1), defender_pose(actor.slot))
 			else:
-				if Model.enemy_is_slowed(actor.enemy): draw_texture_rect(FX_SLOW,Rect2(actor.point+Vector2(-14.5,-5.0),Vector2(29,14)),false)
+				if Model.enemy_is_slowed(actor.enemy): draw_texture_rect(FX_SLOW,Rect2(actor.point+Vector2(-19.0,-7.0),Vector2(38,19)),false)
 				var feedback: Array[Dictionary] = recent_enemy_damage(actor.enemy.id)
 				_draw_pillager(actor.point, actor.enemy,enemy_hit_strength(feedback),enemy_reaction_pose(actor.enemy,feedback,model.elapsed))
-				var ratio: float = clampf(actor.enemy.hp / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
+				var ratio: float = clampf(visual_hp(actor.enemy) / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
 				var bar_position: Vector2 = actor.point + Vector2(-12, -39 * _enemy_scale(actor.enemy))
 				draw_rect(Rect2(bar_position, Vector2(24, 4)), Color("472f2a"))
 				draw_rect(Rect2(bar_position, Vector2(24 * ratio, 4)), Color("edcc80") if actor.enemy.id == inspected_enemy_id else Color("a1ba75"))
 				_draw_enemy_badges(actor.enemy,bar_position)
 				for event in feedback:
+					if str(event.get("component","")) == "curse" and int(event.get("source_type",-1)) in FIRE_CURSE_TYPES:
+						_draw_burn_tick(actor.point,actor.enemy,float(event.hp_before)-float(event.hp_after),event_age(event))
+				for event in feedback:
 					var span: Vector2 = damage_span(event,actor.enemy.get("max_hp",40.0))
 					if span.y > span.x:
-						draw_rect(Rect2(bar_position+Vector2(24*span.x,0),Vector2(24*(span.y-span.x),4)),Color(Color("f3dfba"),damage_opacity(model.elapsed-event.time)))
+						draw_rect(Rect2(bar_position+Vector2(24*span.x,0),Vector2(24*(span.y-span.x),4)),Color(Color("f3dfba"),damage_opacity(event_age(event))))
 		_draw_volatile_bursts()
 		_draw_eruption()
 		_draw_headwinds()
@@ -1167,6 +1260,7 @@ func _draw() -> void:
 				_draw_impact(shot, model.elapsed - shot.time)
 		_draw_eliminations()
 		_draw_sold_defenders()
+	_draw_affix_banner()
 	for entry in entry_label_layouts():
 		var box:=StyleBoxFlat.new();box.bg_color=Color("10271f");box.border_color=entry.color
 		box.set_border_width_all(1);box.set_corner_radius_all(5)
@@ -1189,10 +1283,14 @@ func _draw_eliminations() -> void:
 		var enemy := {"id":event.enemy_id,"type":type,"distance":float(event.get("distance",0.0)),"route_id":event.get("route_id",""),"hp":0.0}
 		var motion := EnemyWalkArt.path_motion(enemy.distance,model.enemy_route_points(enemy),AXIS)
 		var state: String = SheetAnimations.death_state(spec,motion.get("direction",Vector2.ZERO))
-		if state != "":
+		if state != "" and age >= 0.0:
 			_draw_sheet_death(id,state,event,age)
 			continue
 		var duration: float = elimination_duration(type)
+		if age < 0.0:
+			# Le projectile n'est pas encore arrivé : l'ennemi reste à l'écran, intact, à l'endroit de sa chute.
+			if type not in BOSS_TYPES: _draw_fading_enemy(enemy,event,0.0,duration,false,false)
+			continue
 		if age >= duration: continue
 		if type not in BOSS_TYPES: _draw_fading_enemy(enemy,event,age,duration,type in ELITE_TYPES)
 		var point: Vector2 = project(event.point)
@@ -1207,11 +1305,11 @@ func _draw_eliminations() -> void:
 			draw_circle(particle.point,particle.radius,Color(Color("d6c7a6"),particle.alpha))
 
 ## Pose courante de l'ennemi éliminé, qui s'éclaircit jusqu'à disparaître ; les élites fléchissent légèrement sur place.
-func _draw_fading_enemy(enemy: Dictionary, event: Dictionary, age: float, duration: float, flex: bool) -> void:
+func _draw_fading_enemy(enemy: Dictionary, event: Dictionary, age: float, duration: float, flex: bool, flash: bool = true) -> void:
 	var t: float = clampf(age/duration,0.0,1.0)
 	_ghost_alpha = 1.0-t
 	_ghost_squash = 1.0-0.14*sin(PI*t) if flex else 1.0
-	_draw_pillager(project(event.point),enemy,(1.0-t)*0.5,{})
+	_draw_pillager(project(event.point),enemy,(1.0-t)*0.5 if flash else 0.0,{})
 	_ghost_alpha = 1.0
 	_ghost_squash = 1.0
 
@@ -1276,8 +1374,9 @@ const FX_LOOT := preload("res://assets/effects/shop/loot.png")
 const FX_VOLATILE := preload("res://assets/effects/shop/volatile.png")
 const FX_AURA := preload("res://assets/effects/shop/aura.png")
 const FX_BURST := preload("res://assets/effects/shop/volatile_burst.png")
-const FX_BADGE_SIZE := Vector2(16,16)
-const FX_BADGE_SPACING := 18.0
+const FX_BADGE_SIZE := Vector2(22,22) # lisibilité (v0.223) : 16 px était trop petit dans une grosse bataille
+const FX_BADGE_SPACING := 26.0
+const FX_BADGE_COLORS: Dictionary = {"mark":Color(1.0,0.45,0.62),"loot":Color(1.0,0.82,0.3),"volatile":Color(1.0,0.55,0.15)}
 const FX_BURST_DURATION := 0.45
 const ROCKFALL_EFFECT_ID := "effect.rockfall"
 const SEAMIST_EFFECT_ID := "effect.seamist"
@@ -1578,6 +1677,9 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		draw_arc(Vector2(0,3),14,0,TAU,32,Color("edcc80"),2,true)
 	for curse in model.curses:
 		if curse.enemy_id != enemy.id or not curse_ring_visible(curse): continue
+		if curse_source_type(curse) in FIRE_CURSE_TYPES:
+			_draw_burning(model.elapsed+float(enemy.id)*0.37) # brûlure : flammes sur la cible
+			break
 		draw_arc(Vector2(0,-13),19,0,TAU,24,Color("be83d3"),1.5,true)
 		var mark := Vector2(0,-45)
 		draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]),Color("d6a1ef"))
@@ -1846,6 +1948,63 @@ func _draw_eruption() -> void:
 		for index in range(5):
 			var drift := Vector2(sin(index*2.1+model.elapsed*1.3)*9.0,-14.0-index*4.0+cos(index*1.7+model.elapsed)*2.0)
 			draw_circle(center+drift,10.0-index,Color(0.36,0.34,0.33,0.55))
+
+## Bandeau d'affixe de la mission (lisibilité, v0.223) : annonce, compte à rebours et effet de l'événement en cours, au-dessus du plateau.
+## Retourne {} sans affixe actif ; sinon {"text", "state" ("warning", "active" ou "permanent"), "fraction" (temps restant / durée de la phase)}.
+static func affix_banner(model) -> Dictionary:
+	if model == null or model.combat_affix.is_empty(): return {}
+	var id: String = str(model.combat_affix.get("id",""))
+	if id == "headwinds":
+		return {"text":"Vents contraires · cadence −%d %%" % (100-int(model.combat_affix.cadence_percent)),"state":"permanent","fraction":1.0}
+	var status: Dictionary = {}
+	var name: String = ""
+	var effect: String = ""
+	match id:
+		"eruptions":
+			status = model.eruption_status();name = "Éruption"
+			if not status.is_empty(): effect = "E%d %s" % [int(status.slot)+1,"sera désactivé" if status.state == "warning" else "désactivé"]
+		"sandstorm":
+			status = model.storm_status();name = "Tempête de sable";effect = "portée −%d %%" % int(model.combat_affix.range_percent)
+		"seamist":
+			status = model.mist_status();name = "Brume marine";effect = "or −%d %%" % int(model.combat_affix.gold_percent)
+		"rockfall":
+			status = model.rockfall_status();name = "Éboulement"
+			if not status.is_empty():
+				for index in range(model.routes.size()):
+					if str(model.routes[index].id) == str(status.route_id): effect = "entrée %d %s" % [index+1,"sera bloquée" if status.state == "warning" else "bloquée"]
+	if status.is_empty(): return {}
+	var remaining: float = maxf(0.0,float(status.remaining))
+	var warning: bool = status.state == "warning"
+	var phase_length: float = float(model.combat_affix.warning) if warning else float(model.combat_affix.duration)
+	var text: String = ("%s dans %d s" % [name,int(ceil(remaining))]) if warning else ("%s · encore %d s" % [name,int(ceil(remaining))])
+	if not effect.is_empty(): text += " · " + effect
+	return {"text":text,"state":str(status.state),"fraction":clampf(remaining/phase_length,0.0,1.0) if phase_length > 0.0 else 0.0}
+
+func _draw_affix_banner() -> void:
+	var banner: Dictionary = affix_banner(model)
+	if banner.is_empty(): return
+	var font: Font = ThemeDB.fallback_font
+	var size := Vector2(430,34)
+	var area := Rect2(Vector2(640.0-size.x*0.5,112.0),size)
+	var warning: bool = banner.state == "warning"
+	var pulse: float = 0.5+0.5*sin(Time.get_ticks_msec()/1000.0*8.0)
+	var accent: Color = Color(1.0,0.62,0.16) if warning else Color(0.95,0.32,0.26) if banner.state == "active" else Color(0.6,0.8,0.95)
+	var box := StyleBoxFlat.new()
+	box.bg_color = Color(0.07,0.09,0.08,0.88)
+	box.border_color = Color(accent,0.55+0.45*pulse) if warning else accent
+	box.set_border_width_all(2)
+	box.set_corner_radius_all(7)
+	draw_style_box(box,area)
+	# Pictogramme : triangle d'alerte (annonce), disque plein (en cours), vague (permanent).
+	var icon: Vector2 = area.position+Vector2(20,17)
+	if banner.state == "permanent":
+		draw_arc(icon,7.0,0.0,TAU,16,accent,2.0,true)
+	else:
+		draw_colored_polygon(PackedVector2Array([icon+Vector2(0,-9),icon+Vector2(9,7),icon+Vector2(-9,7)]),accent)
+		draw_string(font,icon+Vector2(-3,6),"!",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color(0.1,0.07,0.04))
+	draw_string(font,area.position+Vector2(38,22),str(banner.text),HORIZONTAL_ALIGNMENT_LEFT,size.x-48.0,15,Color(0.97,0.95,0.88))
+	if banner.state != "permanent":
+		draw_rect(Rect2(area.position+Vector2(8,size.y-6),Vector2((size.x-16.0)*float(banner.fraction),3)),accent)
 
 func _draw_valley_water() -> void:
 	# La rivière et le pont sont des éléments visuels, sans collision.

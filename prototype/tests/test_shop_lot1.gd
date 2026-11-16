@@ -100,11 +100,11 @@ func verify_combat() -> void:
 			var types: Array = model.available_types()
 			check(types.size() == 4 and types[3] == card.type,"%s : quatrième type de la mission" % card.name)
 			check(model.buy(3,card.type) and model.defenders[3].type == card.type,"%s : recrutée à l'emplacement 4" % card.name)
-			for wave in range(1,4):
+			for wave in range(1,11): # jusqu'à la fin de la partie : un rapport ne se construit que sur une partie terminée
 				model.start();model.advance(10000)
 				if model.phase == "defeat": break
 				if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
-				if wave < 3: model.prepare_next_wave()
+				if wave < 10: model.prepare_next_wave()
 			var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
 			var replay: Dictionary = Replay.verify(report)
 			check(replay.ok,"%s : rapport de combat rejouable (%s)" % [card.name,str(replay.get("error",""))])
