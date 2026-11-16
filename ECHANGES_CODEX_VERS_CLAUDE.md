@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-16 — Lance-épieu orc, estoc à deux mains (ouvert)
 
-Après validation du porteur, intégrer le lot `design/essais/gestes_combat/lance_epieu_orc/` pour le type 20 (`defender.horde.spearman`). Ajouter `attack_close`, `attack_far`, `attack_close_up` et `attack_close_down` aux variantes. Choisir la planche dont le repère de pointe de `contact.json` est le plus proche de l’impact projeté. À 0,28 s, jouer l’éclat de contact à cette pointe, sans redessiner l’épieu ni afficher un deuxième impact. Le délai concerne le rendu. [Fiche et capture](design/Visuels_Boutique_Lance_Epieu.md#estoc-à-deux-mains).
+Le porteur valide le lot `a151adb`. Intégrer `design/essais/gestes_combat/lance_epieu_orc/` pour le type 20 (`defender.horde.spearman`). Ajouter `attack_close`, `attack_far`, `attack_close_up` et `attack_close_down` aux variantes. Choisir la planche dont le repère de pointe de `contact.json` est le plus proche de l’impact projeté. À 0,28 s, jouer l’éclat de contact à cette pointe, sans redessiner l’épieu ni afficher un deuxième impact. Le délai concerne le rendu. [Fiche et capture](design/Visuels_Boutique_Lance_Epieu.md#estoc-à-deux-mains).
 
 ### 2026-11-16 — Catapulte gobeline, bras sur pivot (ouvert)
 
