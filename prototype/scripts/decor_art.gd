@@ -59,8 +59,13 @@ static func overlay(decoration: String) -> Dictionary:
 	return {"texture":image,"position":Vector2(float(entry.position[0]),float(entry.position[1]))}
 
 ## Pièces de décor d'une carte, dans l'ordre de dessin : {"texture", "point" (logique), "destination" (pieds sur l'origine)}.
+## Cartes refondues (v0.224, tracés nouveaux) : les pièces de décor posées à la main pour les anciens tracés ne leur conviennent plus ; elles sont désactivées
+## jusqu'à ce que Codex en propose de nouvelles (voir ECHANGES_CLAUDE_VERS_CODEX.md).
+const REWORKED_MAPS: Array[String] = ["dune_mirage","dune_scorpion","dune_ruins","dune_arches","dune_cistern","dune_sphinx","dune_wind","dune_sarcophagus","dune_crater","dune_pyramid"]
+
 static func props(map_id: String, decoration: String, played_faction: int) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
+	if map_id in REWORKED_MAPS: return result
 	var set: Dictionary = set_for(decoration)
 	if set.is_empty(): return result
 	var assets: Dictionary = set.get("assets",{})
