@@ -275,7 +275,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
@@ -299,6 +299,9 @@ const SENTINEL_TIPS: Dictionary = {-12:Vector2(21.9512,-42.0693),0:Vector2(22.19
 ## Brûleur de cendres (type 21, poussée du brasero, braise à 0,336 s) : trois planches (−12°, 0°, +12°), la braise part de la grille donnée par planche (`lachers.json`). Pas de trait de malédiction ;
 ## si la cible est derrière la grille en abscisse, le vol est omis (impact et flammes à l'arrivée seulement).
 const EMBER_GRATE: Dictionary = {-12:Vector2(38.2931,-21.8431),0:Vector2(37.3524,-20.0139),12:Vector2(36.1413,-18.3476)}
+## Mage de la foudre (type 22, charge puis éclair en chaîne, départ à 0,32 s) : trois planches (−12°, 0°, +12°), l'éclair part de la main avancée donnée par planche (`lachers.json`).
+## Une seule chaîne relie la cible principale et les cibles secondaires réellement touchées, avec des ramifications et un éclat sur chaque cible touchée (pas d'anneau de zone).
+const LIGHTNING_HANDS: Dictionary = {-12:Vector2(33.7671,-54.6456),0:Vector2(33.5726,-52.1781),12:Vector2(33.2027,-49.7461)}
 const SHARD_TEXTURE: Texture2D = preload("res://assets/units/shop/eclat_v001.png")
 const SHARD_PIVOT_PX := Vector2(181.0,36.0)
 const SHARD_SCALE := 0.10441044104410441
@@ -317,8 +320,8 @@ const CATAPULT_SCALE := 0.106
 const SPEARMAN_TYPE := 20
 const SPEAR_POINTS: Dictionary = {"attack":{"pitch":0,"point":Vector2(47.9702,-24.0115)},"attack_up12":{"pitch":-12,"point":Vector2(46.8385,-33.3695)},"attack_down12":{"pitch":12,"point":Vector2(47.1458,-14.6209)},
 	"attack_close":{"pitch":0,"point":Vector2(39.1025,-24.0115)},"attack_far":{"pitch":0,"point":Vector2(56.099,-24.0115)},"attack_close_up":{"pitch":-12,"point":Vector2(33.6424,-33.3695)},"attack_close_down":{"pitch":12,"point":Vector2(33.9497,-14.6209)}}
-const STEP_TYPES: Array[int] = [14,15,17,21]
-const TILTED_TYPES: Array[int] = [10,11,14,15,17,18,21]
+const STEP_TYPES: Array[int] = [14,15,17,21,22]
+const TILTED_TYPES: Array[int] = [10,11,14,15,17,18,21,22]
 const CURVED_TYPES: Array[int] = [11,13,17]
 const JAVELIN_PIVOT := Vector2(0.0,-41.3453)
 const JAVELIN_TIPS: Dictionary = {-12:Vector2(55.3409,-51.4028),0:Vector2(56.1005,-41.3453),12:Vector2(54.9211,-31.3319)}
@@ -356,7 +359,7 @@ static func aim_pitch(shot: Dictionary) -> int:
 	return clampi(int(roundf(degrees/float(AIM_STEP)))*AIM_STEP,-AIM_LIMIT,AIM_LIMIT)
 
 static func step_tips(type: int) -> Dictionary:
-	return PIKE_TIPS if type == PIKEMAN_TYPE else PYRO_TIPS if type == PYROMANCER_TYPE else SHARD_TIPS if type == SHARDTHROWER_TYPE else SENTINEL_TIPS if type == SENTINEL_TYPE else EMBER_GRATE if type == EMBER_TYPE else JAVELIN_TIPS
+	return PIKE_TIPS if type == PIKEMAN_TYPE else PYRO_TIPS if type == PYROMANCER_TYPE else SHARD_TIPS if type == SHARDTHROWER_TYPE else SENTINEL_TIPS if type == SENTINEL_TYPE else EMBER_GRATE if type == EMBER_TYPE else LIGHTNING_HANDS if type == LIGHTNING_TYPE else JAVELIN_TIPS
 
 static func aim_variant(pitch: int) -> String:
 	return "attack" if pitch == 0 else "attack_%s%d" % ["down" if pitch > 0 else "up",absi(pitch)]
@@ -678,6 +681,21 @@ func _draw_lightning(shot: Dictionary, origin: Vector2, target: Vector2, age: fl
 		var path := _jagged_path(link[0],link[1],int(age*60.0))
 		draw_polyline(path,Color(0.55,0.75,1.0,0.45*fade),5.0,true)
 		draw_polyline(path,Color(0.92,0.97,1.0,fade),1.8,true)
+		# Ramifications : brèves branches de part et d'autre du tracé principal.
+		for index in range(1,path.size()-1,2):
+			var forward: Vector2 = (path[index+1]-path[index-1]).normalized()
+			var side_sign: float = 1.0 if (index/2+int(age*60.0)) % 2 == 0 else -1.0
+			var tip: Vector2 = path[index]+(forward*0.5+forward.orthogonal()*side_sign).normalized()*7.0
+			draw_line(path[index],tip,Color(0.55,0.75,1.0,0.4*fade),3.0,true)
+			draw_line(path[index],tip,Color(0.92,0.97,1.0,0.85*fade),1.1,true)
+	# Éclat sur chaque cible réellement touchée.
+	for hit in [target]+chains.slice(1).map(func(link): return link[1]):
+		var flare: float = fade
+		draw_circle(hit,5.0,Color(0.55,0.75,1.0,0.35*flare),true,-1,true)
+		draw_circle(hit,2.4,Color(0.95,0.99,1.0,flare),true,-1,true)
+		for ray in range(4):
+			var spoke: Vector2 = Vector2.RIGHT.rotated(ray*PI/2.0+PI/4.0)
+			draw_line(hit+spoke*3.0,hit+spoke*7.0,Color(0.92,0.97,1.0,0.8*flare),1.2,true)
 
 static func _jagged_path(from: Vector2, to: Vector2, seed_value: int) -> PackedVector2Array:
 	var path := PackedVector2Array([from])
@@ -912,7 +930,7 @@ func _draw_impact_body(shot: Dictionary, age: float, flight: bool) -> void:
 		for index in range(9): trail.append(projectile_position(shot,PROJECTILE_FLIGHT*index/8.0))
 		draw_polyline(trail,Color(color,alpha*0.18),1,true)
 	if flight: _draw_projectile(shot,age,color)
-	if type in [2,4]:
+	if type in [2,4] and int(shot.type) != LIGHTNING_TYPE:
 		var radius: float = shot.get("radius",1.0)
 		var ring := range_outline(shot.to,radius)
 		# Rayon exact, remplissage discret ; seules les victimes réelles sont marquées.

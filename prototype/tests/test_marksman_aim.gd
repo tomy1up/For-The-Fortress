@@ -166,4 +166,14 @@ func run_checks() -> void:
 			check(ep in [-12,0,12] and View.shot_origin(ember).distance_to(View.project(from)+Vector2(grate.x*View.shot_facing(ember),grate.y)) < 0.001,"Brûleur : braise partie de la grille de la planche %d" % ep)
 	var espec: Dictionary = Library.spec_for("defender.horde.cinderburner")
 	check(not espec.is_empty() and espec.animations.has("attack_up12") and espec.animations.has("attack_down12"),"Brûleur : trois planches chargées et valides")
+	# Mage de la foudre (type 22) : trois planches, éclair parti de la main de la planche à 0,32 s.
+	check(is_equal_approx(View.launch_delay({"type":22}),0.32),"Éclair du mage de la foudre à 0,32 s")
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var bolt: Dictionary = {"type":22,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var lp: int = View.aim_pitch(bolt)
+			var hand: Vector2 = View.LIGHTNING_HANDS[lp]
+			check(lp in [-12,0,12] and View.shot_origin(bolt).distance_to(View.project(from)+Vector2(hand.x*View.shot_facing(bolt),hand.y)) < 0.001,"Mage de la foudre : éclair parti de la main de la planche %d" % lp)
+	var gspec: Dictionary = Library.spec_for("defender.alliance.lightning")
+	check(not gspec.is_empty() and gspec.animations.has("attack_up12") and gspec.animations.has("attack_down12"),"Mage de la foudre : trois planches chargées et valides")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

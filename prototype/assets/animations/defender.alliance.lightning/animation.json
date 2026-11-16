@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "id": "defender.alliance.lightning",
+  "facing": "right",
+  "foot": [
+    105.74006116207951,
+    302.52799999999996
+  ],
+  "display_height": 77.46478873239437,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        284,
+        326
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 20,
+      "frame_size": [
+        284,
+        326
+      ],
+      "mode": "event",
+      "duration": 0.8
+    },
+    "attack_up12": {
+      "file": "attack_up12.png",
+      "frames": 20,
+      "frame_size": [
+        284,
+        326
+      ],
+      "mode": "event",
+      "duration": 0.8
+    },
+    "attack_down12": {
+      "file": "attack_down12.png",
+      "frames": 20,
+      "frame_size": [
+        284,
+        326
+      ],
+      "mode": "event",
+      "duration": 0.8
+    }
+  }
+}
