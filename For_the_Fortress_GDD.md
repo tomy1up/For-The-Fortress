@@ -1836,7 +1836,7 @@ Version 0.60 — 16 novembre 2026 : jeu 0.223. **Lisibilité** (MAJ-60, habillag
 
 Version 0.61 — 16 novembre 2026 : jeu 0.224. **Refonte des cartes** (MAJ-61) : l’analyse montre 96 tracés différents pour 200 missions et une complexité qui ne croît pas ; chapitre pilote 12 refondu (dix tracés nouveaux dont des routes qui se croisent, équilibre calibré par simulation, décor à refaire par Codex). Les chapitres 10 à 20 suivront.
 
-Version 0.62 — 16 novembre 2026 : jeu 0.225. **Refonte des cartes, chapitres 13 et 14** (MAJ-62) : vingt tracés nouveaux (une à trois routes, fusions, croisements), calibrés par simulation sur les PV restants des anciennes cartes ; ordre d’emplacements de référence unifié à 3, 4, 2 dans les tests ; décor à refaire par Codex. Chapitres 10, 11 et 15 à 20 à suivre.
+Version 0.62 — 16 novembre 2026 : jeu 0.225. **Refonte des cartes, chapitres 13 et 14** (MAJ-62) : vingt tracés nouveaux (une à trois routes, fusions, croisements), calibrés par simulation sur les PV restants des anciennes cartes ; ordre d’emplacements de référence unifié à 3, 4, 2 dans les tests ; décor à refaire par Codex. Chapitres 10, 11 et 15 à 20 à suivre. Intégration des gestes validés de la Catapulte gobeline (19), du Lance-épieu orc (20) et du Brûleur de cendres (21) : rendu seulement, aucune règle modifiée.
 
 <a id="s51"></a>
 
