@@ -47,6 +47,26 @@
       ],
       "mode": "event",
       "duration": 0.2
+    },
+    "attack_up36": {
+      "file": "attack_up36.png",
+      "frames": 16,
+      "frame_size": [
+        384,
+        320
+      ],
+      "mode": "event",
+      "duration": 0.2
+    },
+    "attack_down36": {
+      "file": "attack_down36.png",
+      "frames": 16,
+      "frame_size": [
+        384,
+        320
+      ],
+      "mode": "event",
+      "duration": 0.2
     }
   }
 }

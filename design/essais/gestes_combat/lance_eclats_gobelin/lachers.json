@@ -1,6 +1,10 @@
 {
   "release": 0.1125,
   "tip_from_foot": {
+    "-36": [
+      16.1448,
+      -34.5325
+    ],
     "-12": [
       20.0201,
       -30.3707
@@ -12,12 +16,18 @@
     "12": [
       20.4848,
       -21.8582
+    ],
+    "36": [
+      17.5151,
+      -14.8514
     ]
   },
   "pitches": {
     "-12": "attack_up12.png",
     "0": "attack.png",
-    "12": "attack_down12.png"
+    "12": "attack_down12.png",
+    "-36": "attack_up36.png",
+    "36": "attack_down36.png"
   },
   "projectile_pivot": [
     181,
