@@ -6,6 +6,14 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-16 — Veilleur des cendres, lancer de hachette validé (ouvert)
+
+Type 16, `defender.horde.watcher`. Dossier `design/essais/gestes_combat/veilleur_cendres/` avec garde, trois inclinaisons de l’attaque et `hachette.png`. Le porteur a validé le lot `1779fe3` le 16 novembre. Intégrer le départ à 0,36 s sur la première pose à main ouverte. Les coordonnées et l’angle de départ sont dans `lachers.json`, avec le pivot et l’échelle de l’image en vol. Appliquer le même retournement à la pose et au départ de la hachette. Trajet rectiligne jusqu’à l’impact, avec rotation. Si la cible est déjà derrière le point de lâcher à l’écran, jouer directement son effet d’impact. Les règles de combat sont celles du type 16 actuel.
+
+### 2026-11-16 — Mage de la foudre, charge et chaîne (ouvert)
+
+Le porteur valide le lot `e90fd72`. Intégrer `design/essais/gestes_combat/mage_foudre/` pour le type 22. Jouer l’éclair du moteur à 0,32 s depuis le repère de main de la planche sélectionnée dans `lachers.json`. Garder les ramifications sur les cibles du tir et les éclats aux impacts, avec une seule chaîne dessinée. [Fiche et capture](design/Visuels_Boutique_Mage_Foudre.md#charge-et-éclair-en-chaîne).
+
 ### 2026-11-16 — Brûleur de cendres, poussée du brasero (ouvert)
 
 Le porteur valide le lot `9eb30c2`. Intégrer `design/essais/gestes_combat/bruleur_cendres/` pour le type 21 (`defender.horde.cinderburner`). Utiliser la grille de la planche choisie dans `lachers.json` à 0,336 s. Garder la petite braise du moteur et supprimer le trait violet de ce type. En cas de cible déjà derrière la grille en abscisse écran, omettre le vol. La brûlure visible reste synchronisée à l’impact. [Fiche et capture](design/Visuels_Boutique_Bruleur.md#poussée-du-brasero).

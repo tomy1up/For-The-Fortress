@@ -4,6 +4,10 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**16 novembre — Veilleur des cendres, type 16.** Lancer bas avec transfert d’appui et trois inclinaisons, longue-vue à la ceinture. Hachette lâchée à 0,36 s depuis la main, rotation sur un trajet rectiligne. Six tirs sur la mission 94 à ×1 et ×2, des deux côtés et avec pause. 38 dossiers valides et 179 contrôles réussis. [Fiche et capture](design/Visuels_Boutique_Guetteurs.md#lancer-du-veilleur-des-cendres). Lot `1779fe3` validé par le porteur le 16 novembre 2026, à intégrer par Claude.
+
+**16 novembre — Mage de la foudre, type 22.** Charge bleu pâle entre les mains, transfert de poids et trois inclinaisons. Décharge depuis la main à 0,32 s avec chaîne vers les cibles touchées. Six tirs à ×1 et ×2 dans les deux sens sur la mission 94, avec pause. 37 dossiers valides et 178 contrôles réussis. [Fiche et capture](design/Visuels_Boutique_Mage_Foudre.md#charge-et-éclair-en-chaîne). Lot `e90fd72` validé par le porteur, à intégrer par Claude.
+
 **16 novembre — Brûleur de cendres, type 21.** Poussée à deux mains et balancement retardé du brasero. Trois inclinaisons et braise partie de la grille à 0,336 s. Vues gauche et droite, ×1 et ×2, pause, brûlure à l’impact et dégâts périodiques vérifiés sur la mission 94. 36 dossiers valides et 177 contrôles de bibliothèque réussis. [Fiche et capture](design/Visuels_Boutique_Bruleur.md#poussée-du-brasero). Lot `9eb30c2` validé par le porteur, à intégrer par Claude.
 
 **16 novembre — Lance-épieu orc, type 20.** Estoc à deux mains, transfert de poids et sept variations d’angle et de distance. Contact visuel à 0,28 s depuis la pointe de la planche. Six coups contrôlés à ×1 et ×2, vers la gauche et la droite, en mission 94 v0.223 avec pause. 35 dossiers valides et 176 contrôles de bibliothèque réussis. [Fiche et vidéo](design/Visuels_Boutique_Lance_Epieu.md#estoc-à-deux-mains). Lot `a151adb` validé par le porteur, à intégrer par Claude.

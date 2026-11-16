@@ -87,3 +87,19 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | Appuis et poids | Les semelles restent fixes dans les 60 poses. Le buste pousse la poignée et le bol suit avec un léger retard. |
 | Départ et brûlure | La braise part de la grille à 0,336 s. Les flammes sur l’ennemi apparaissent à l’impact. Les dégâts périodiques du jeu ont été observés. |
 | En jeu | Des deux côtés à ×1 et ×2, avec pose figée en pause. [Capture de la mission 94](essais/gestes_combat/bruleur_cendres/Bruleur_de_cendres_en_jeu.gif). Lot `9eb30c2` validé par le porteur. |
+
+## Mage de la foudre · 16 novembre 2026
+
+| Critère | Vérification sur la copie v0.223 |
+| --- | --- |
+| Appuis et geste | Les semelles restent identiques dans les 60 poses. Les mains resserrent l’arc puis l’épaule accompagne la décharge. |
+| Éclair | Part à 0,32 s depuis la main avancée. La chaîne atteint les points du tir et chaque impact testé correspond à un ennemi touché. |
+| En jeu | Six tirs dans les deux sens à ×1 et ×2, avec pause, sur la mission 94. [Capture à taille réelle](essais/gestes_combat/mage_foudre/Mage_de_la_foudre_en_jeu.gif). Lot `e90fd72` validé par le porteur. |
+
+## Veilleur des cendres · 16 novembre 2026
+
+| Critère | Vérification sur la copie v0.223 |
+| --- | --- |
+| Appuis et geste | Les semelles sont stables sur les 63 poses. L’épaule avance au lancer et la longue-vue reste à la ceinture. |
+| Lâcher | Première pose à main ouverte à 0,36 s. Le départ suit la pose et la hachette tourne en ligne droite jusqu’à l’impact. |
+| En jeu | Six tirs sur la mission 94 à ×1 et ×2, des deux côtés, avec contrôle de la pause. [Capture à taille réelle](essais/gestes_combat/veilleur_cendres/Veilleur_des_cendres_en_jeu.gif). L’angle neutre a été contrôlé sur planche. Lot `1779fe3` validé par le porteur. |
