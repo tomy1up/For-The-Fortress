@@ -119,3 +119,11 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | Appuis et recul | Semelles stables sur les 168 poses. Le recul remonte dans l’épaule avant la reprise de garde. |
 | Carreau | Départ à 0,44 s depuis la pointe dessinée. Trajet rectiligne, avec impact seul à bout portant quand le départ projeté dépasse la cible. |
 | En jeu | Six tirs sur le nouveau tracé de la mission 94 à ×1 et ×2, des deux côtés et avec pause. [Capture](essais/gestes_combat/arbalete_lourde/Arbalete_lourde_en_jeu.gif). Lot `aa7462b` validé par le porteur. |
+
+## Fronde elfe · 16 novembre 2026
+
+| Critère | Vérification sur la copie v0.226 |
+| --- | --- |
+| Appuis et geste | Les semelles sont fixes dans les 105 poses. L’épaule entraîne la rotation et la poche vide accompagne le bras devant le corps. |
+| Lâcher | Le galet part de la poche à 0,40 s. Un brin est libéré et le vol se prolonge en ligne droite vers un seul impact. |
+| En jeu | Dix tirs sur la mission 94 refondue, des deux côtés à ×1 et ×2, avec pause. [Capture à taille réelle](essais/gestes_combat/fronde_elfe/Fronde_elfe_en_jeu.gif). Avis du porteur attendu. |

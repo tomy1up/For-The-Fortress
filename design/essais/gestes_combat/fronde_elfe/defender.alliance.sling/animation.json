@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "id": "defender.alliance.sling",
+  "facing": "right",
+  "foot": [
+    191.62025316455697,
+    382.6127167630058
+  ],
+  "display_height": 98.85714285714285,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        360,
+        394
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 21,
+      "frame_size": [
+        360,
+        394
+      ],
+      "mode": "event",
+      "duration": 0.84
+    },
+    "attack_up12": {
+      "file": "attack_up12.png",
+      "frames": 21,
+      "frame_size": [
+        360,
+        394
+      ],
+      "mode": "event",
+      "duration": 0.84
+    },
+    "attack_down12": {
+      "file": "attack_down12.png",
+      "frames": 21,
+      "frame_size": [
+        360,
+        394
+      ],
+      "mode": "event",
+      "duration": 0.84
+    },
+    "attack_down24": {
+      "file": "attack_down24.png",
+      "frames": 21,
+      "frame_size": [
+        360,
+        394
+      ],
+      "mode": "event",
+      "duration": 0.84
+    },
+    "attack_down36": {
+      "file": "attack_down36.png",
+      "frames": 21,
+      "frame_size": [
+        360,
+        394
+      ],
+      "mode": "event",
+      "duration": 0.84
+    }
+  }
+}
