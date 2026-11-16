@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-16 — Archer double, prise au carquois et tir validés (ouvert)
+
+Type 23, `defender.alliance.doublearcher`. Garde et cinq planches dans `design/essais/gestes_combat/archer_double/`. Le porteur a validé le lot `226ec17` le 16 novembre. Intégrer le départ à 0,60 s. `lachers.json` donne la pointe depuis le pied sur la dernière flèche encochée. Choisir la pose (0°, ±12°, ±36°) la plus proche de la droite entre son propre repère et la cible. Appliquer le même retournement à la planche et à la pointe. La flèche dessinée suit cette droite avec un axe constant. Conserver le tir unique et le bonus sur cible blessée.
+
 ### 2026-11-16 — Veilleur des cendres, lancer de hachette validé (ouvert)
 
 Type 16, `defender.horde.watcher`. Dossier `design/essais/gestes_combat/veilleur_cendres/` avec garde, trois inclinaisons de l’attaque et `hachette.png`. Le porteur a validé le lot `1779fe3` le 16 novembre. Intégrer le départ à 0,36 s sur la première pose à main ouverte. Les coordonnées et l’angle de départ sont dans `lachers.json`, avec le pivot et l’échelle de l’image en vol. Appliquer le même retournement à la pose et au départ de la hachette. Trajet rectiligne jusqu’à l’impact, avec rotation. Si la cible est déjà derrière le point de lâcher à l’écran, jouer directement son effet d’impact. Les règles de combat sont celles du type 16 actuel.

@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "id": "defender.alliance.doublearcher",
+  "facing": "right",
+  "foot": [
+    147.56944444444446,
+    368.14939759036145
+  ],
+  "display_height": 73.83246849518162,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        340,
+        392
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 24,
+      "frame_size": [
+        340,
+        392
+      ],
+      "mode": "event",
+      "duration": 0.96
+    },
+    "attack_up12": {
+      "file": "attack_up12.png",
+      "frames": 24,
+      "frame_size": [
+        340,
+        392
+      ],
+      "mode": "event",
+      "duration": 0.96
+    },
+    "attack_down12": {
+      "file": "attack_down12.png",
+      "frames": 24,
+      "frame_size": [
+        340,
+        392
+      ],
+      "mode": "event",
+      "duration": 0.96
+    },
+    "attack_up36": {
+      "file": "attack_up36.png",
+      "frames": 24,
+      "frame_size": [
+        340,
+        392
+      ],
+      "mode": "event",
+      "duration": 0.96
+    },
+    "attack_down36": {
+      "file": "attack_down36.png",
+      "frames": 24,
+      "frame_size": [
+        340,
+        392
+      ],
+      "mode": "event",
+      "duration": 0.96
+    }
+  }
+}
