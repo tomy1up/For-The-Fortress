@@ -1233,7 +1233,7 @@ static func node(faction: int, index: int) -> Dictionary:
 	for type in effect.get("types",[]): units.append(UNIT_NAMES[type])
 	for component in ["direct","secondary","curse","range"]:
 		if not effect.has(component): continue
-		var title: String = {"direct":"tirs directs","secondary":"rebonds" if effect.get("types",[]) == [3] else "explosions","curse":"malédictions","range":"portée"}[component]
+		var title: String = {"direct":"tirs directs","secondary":"rebonds" if effect.get("types",[]) == [3] else "explosions et dégâts sur la durée" if faction == 0 and 2 in effect.get("types",[]) else "explosions","curse":"dégâts sur la durée (malédictions, brûlures)","range":"portée"}[component]
 		lines.append("%s : %s +%s%s par rang." % [" / ".join(units),title,Previous.number(effect[component]*(1 if component == "range" else 100)),"" if component == "range" else " %"])
 	return {"index":index,"tree":position.x,"local":local,"major":local in [9,18],"name":name,"description":"\n".join(lines),"row":ROWS[local],"maximum":MAX_RANKS[local],"effect":effect}
 

@@ -72,10 +72,10 @@ const ROSTER: Array[Dictionary] = [
 	{"name":"Sarbacane gobeline","price":75,"damage":8.5,"interval":0.9,"range":4.5,"heavy_mult":0.5,"fast_mult":1.8},
 	{"name":"Mage de givre","price":85,"damage":12.0,"interval":1.6,"range":4.2,"slow_seconds":3.0},
 	{"name":"Éclaireur-observateur","price":60,"damage":3.0,"interval":1.5,"range":5.0,"mark_seconds":4.0,"mark_bonus":0.55},
-	{"name":"Prêtre guerrier","price":80,"damage":9.0,"interval":2.0,"range":3.5,"aura_radius":3.6,"aura_bonus":0.4},
+	{"name":"Prêtre guerrier","price":80,"damage":9.0,"interval":2.0,"range":3.5,"aura_radius":4.2,"aura_bonus":0.4},
 	{"name":"Chaman des marais","price":90,"damage":5.0,"interval":1.8,"range":4.2,"curse_damage":4.0,"slow_seconds":3.0},
 	{"name":"Totem de guerre","price":60,"damage":3.0,"interval":1.5,"range":5.0,"mark_seconds":4.0,"mark_bonus":0.55},
-	{"name":"Ancien des tribus","price":80,"damage":9.0,"interval":2.0,"range":3.5,"aura_radius":3.6,"aura_bonus":0.4},
+	{"name":"Ancien des tribus","price":80,"damage":9.0,"interval":2.0,"range":3.5,"aura_radius":4.2,"aura_bonus":0.4},
 	{"name":"Marchand mercenaire","price":70,"damage":8.0,"interval":1.8,"range":3.5,"loot_seconds":4.0,"loot_bonus":1.2},
 	{"name":"Piégeur nain","price":80,"damage":22.0,"interval":2.4,"range":3.8,"entrance_mult":1.8,"exit_mult":0.4},
 	{"name":"Balliste royale","price":95,"damage":36.0,"interval":3.5,"range":5.5,"entrance_mult":0.4,"exit_mult":1.8},
@@ -115,6 +115,11 @@ var rng := RandomNumberGenerator.new()
 var synergies_enabled: bool = true # Désactivé uniquement dans les références historiques de test.
 var faction: int = 0
 var meta_ranks: Array = MetaTalents.empty_ranks()
+## Règles de la v0.222 (décisions du porteur, 16 novembre 2026), fausses pour rejouer un rapport plus ancien : les talents de l'arbre du Mage s'appliquent aussi aux dégâts sur la durée
+## (dots) du Pyromancien humain ; le bonus « Exercice de tir » (R-02) profite aussi aux alternatives de boutique du chaman ; l'aura des gardiens porte à AURA_RADIUS.
+var rules_v222: bool = true
+const AURA_RADIUS := 4.2 # plus petit rayon qui garantit un voisin sur chacune des 181 cartes de la campagne (distance maximale entre deux emplacements voisins : 4,12)
+const LEGACY_AURA_RADIUS := 3.6
 ## Brûlure des unités à `curse_damage` hors famille du chaman (Pyromancien humain), appliquée depuis la v0.221 (décision du porteur, 16 novembre 2026) ; faux pour rejouer un ancien rapport.
 var burn_for_all_curse_units: bool = true
 var talent_rules: int = MetaTalents.Expanded.RULES_CURRENT # Jeu de règles des arbres de talents ; un autre jeu sert à rejouer un ancien rapport.
@@ -634,6 +639,8 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	stats.price = base_recruit_cost(defender.type)
 	var synergy: Dictionary = synergy_effects(slot,branch_override,candidate)
 	var meta: Dictionary = MetaTalents.effects(faction,meta_ranks,defender.type,talent_rules)
+	# Dégâts sur la durée du Pyromancien : ils progressent avec les talents d'explosion du Mage (v0.222).
+	if rules_v222 and float(meta.curse) == 0.0 and family(defender.type) == 2 and float(ROSTER[defender.type].get("curse_damage",0.0)) > 0.0: meta.curse = float(meta.secondary)
 	var common: float = (0.10 if 0 in active_bonuses else 0.0) + (0.15 if 6 in active_bonuses and level <= 2 else 0.0) + (0.12 if 7 in active_bonuses and level >= 3 else 0.0) + guardian_aura(slot) + pivot_bonus(defender)
 	stats.reference_damage = stats.damage
 	stats.reference_secondary = stats.secondary_damage
@@ -645,7 +652,7 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	stats.secondary_damage = stats.reference_secondary * (1.0+stats.secondary_bonus)
 	stats.curse_damage = stats.reference_curse * (1.0+stats.curse_bonus)
 	stats.range += synergy.range + meta.range + (0.5 if 2 in active_bonuses else 0.0)
-	if 1 in active_bonuses and family(defender.type) != 5: stats.interval /= 1.12
+	if 1 in active_bonuses and (family(defender.type) != 5 or (rules_v222 and defender.type >= 6)): stats.interval /= 1.12 # v0.222 : les alternatives de boutique du chaman en profitent
 	if combat_affix.get("id","") == "headwinds": stats.interval /= float(combat_affix.cadence_percent)/100.0
 	if 4 in active_bonuses and family(defender.type) in [2,3,4]: stats.radius += 0.2
 	stats.synergies = synergy.codes
@@ -663,7 +670,7 @@ func guardian_aura(slot: int) -> float:
 	for other in range(defenders.size()):
 		if other == slot or defenders[other].is_empty(): continue
 		var guard: Dictionary = ROSTER[defenders[other].type]
-		if float(guard.get("aura_bonus",0.0)) > 0.0 and slots[slot].distance_to(slots[other]) <= float(guard.get("aura_radius",0.0))+EPS: bonus += float(guard.aura_bonus)
+		if float(guard.get("aura_bonus",0.0)) > 0.0 and slots[slot].distance_to(slots[other]) <= (float(guard.get("aura_radius",0.0)) if rules_v222 else LEGACY_AURA_RADIUS)+EPS: bonus += float(guard.aura_bonus)
 	return bonus
 
 func damage_for(stats: Dictionary, component: String, victim: Dictionary) -> float:

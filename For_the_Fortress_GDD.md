@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.58 — 16 novembre 2026
+Game Design Document — Version 0.59 — 16 novembre 2026
 
 Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne de 200 missions, entièrement jouable (vingt chapitres, dix biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.206. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. La boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
 
 **Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.206. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.58 ; jeu de référence 0.221.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.59 ; jeu de référence 0.222.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -1668,6 +1668,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-51 | **Orientation par défaut des défenseurs : face au tronçon de route le plus proche** au placement et entre les vagues ; en combat, la dernière cible garde la priorité — V | Décision du porteur, 15 novembre 2026 ; `valley_view.gd` (`road_facing`), `tests/test_defender_facing.gd` |
 | MAJ-52 | **Visée inclinée du Tireur d’élite elfe (type 11)** : sept planches (0°, ±8°, ±16°, ±24°), un seul angle pour la pose, l’origine de la flèche et sa direction de départ ; lâcher à 0,27 s — V (geste validé par le porteur) ; angles et lâcher — rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `a2cdab9` ; `tests/test_marksman_aim.gd` |
 | MAJ-53 | **Estoc du Piquier humain (type 14)** : trois planches (−12°, 0°, +12°), la pique est dessinée dans les planches, éclat de contact à 0,256 s à la pointe donnée par angle — V (geste validé par le porteur) ; rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `9a7d3d8` ; `tests/test_marksman_aim.gd` |
+| MAJ-59 | **Trois règles issues de l’audit** : (1) les talents du Mage augmentent aussi les dégâts sur la durée du Pyromancien (« dots ») ; (2) « Exercice de tir » (R-02) : texte explicite, bonus étendu au Brûleur de cendres et au Chaman des marais ; (3) aura du Prêtre guerrier et de l’Ancien des tribus : rayon 4,2 au lieu de 3,6, cartes inchangées — V (décisions du porteur) ; valeurs — H (à confirmer en jeu) | Décisions du porteur, 16 novembre 2026 ; `valley_model.gd` (`rules_v222`), `tests/test_rules_v222.gd` |
 | MAJ-58 | **Brûlure du Pyromancien humain appliquée** (22 dégâts sur la durée, comme le Brûleur de cendres) ; les rapports d’avant la v0.221 se rejouent sans brûlure — V (décision du porteur : « il est plus logique qu’un pyromancien applique de la brûlure ») ; équilibre à surveiller en jeu (mesure : aucun écart sur 18 parties) | Décision du porteur, 16 novembre 2026 ; `valley_model.gd` (`burn_for_all_curse_units`), `tests/test_pyromancer_burn.gd`, `tests/test_unit_effects.gd` |
 | MAJ-57 | **Dégâts, éclats et morts recalés sur l’arrivée du projectile** (barre de vie, éclat, disparition) ; brûlure dessinée en flammes avec le nombre de PV à chaque tic — V (retour du porteur) ; rendu seulement | Retour du porteur, 16 novembre 2026 ; `valley_view.gd` (`event_age`, `visual_hp`) |
 | MAJ-56 | **Choix de l’unité de boutique dans la mission, avant la vague 1, valable pour la mission seulement** (non conservé pour la suivante) — V | Demande du porteur, 16 novembre 2026 ; `main.gd` (`_build_shop_pick`), `valley_model.gd` (`change_auxiliary`), `tests/test_shop_pick.gd` |
@@ -1700,9 +1701,9 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-019 | Son : attribution tranchée le 16 novembre 2026 (Claude Code, banques libres) ; reste la musique, les sons d’interface, de vrais sons d’arc, d’arme à feu et de magie, et l’emplacement du réglage de volume | Écoute et décisions du porteur |
 | O-020 | Habillage artistique restant : unités de la boutique (les illustrations des types 10 à 45, soit toutes les alternatives de la boutique étendue, sont validées par le porteur et intégrées de la v0.198 à la v0.204), indicateurs de ralentissement, de marque, de pillage, de volatilité et d’aura (branchés en v0.205, à juger en jeu), capitaine de garnison orc ; retouches selon le jugement du porteur sur les visuels intégrés en v0.191 à v0.195 | Livraisons de Codex et jugement du porteur |
 | O-022 | **Brûlure du Pyromancien humain : tranchée le 16 novembre 2026** (appliquée, MAJ-58) | Décision du porteur ; équilibre à confirmer en jeu |
-| O-023 | **Talents et brûlure du Pyromancien** : les talents de l'arbre du Mage (famille 2) améliorent ses tirs directs et ses explosions, mais aucun ne s'applique à la brûlure du Pyromancien humain (les talents de malédiction n'existent que pour le Chaman). Faut-il qu'un talent du Mage améliore aussi la brûlure ? (constat de l'audit du 16 novembre 2026) | Décision du porteur |
-| O-024 | **Bonus « Exercice de tir » (R-02)** : il exclut le Chaman orc et ses alternatives de boutique, donc aussi le Brûleur de cendres et le Chaman des marais ; sa description ne cite que « le chaman et ses branches ». Faut-il préciser le texte ou inclure ces deux unités ? (audit du 16 novembre 2026) | Décision du porteur |
-| O-025 | **Aura du Prêtre guerrier et de l'Ancien des tribus** : rayon de 3,6 cases, alors que les emplacements des cartes des premiers chapitres sont à 4,1 cases ou plus l'un de l'autre : l'aura n'y touche personne (elle fonctionne sur les cartes aux emplacements rapprochés). Adapter le rayon ou les cartes ? (audit du 16 novembre 2026) | Décision du porteur |
+| O-023 | **Talents et dots du Pyromancien : tranchée le 16 novembre 2026** (les talents du Mage s’appliquent aussi aux dégâts sur la durée, MAJ-59) | Décision du porteur ; valeurs à confirmer en jeu |
+| O-024 | **Exercice de tir (R-02) : tranchée le 16 novembre 2026** (texte explicite, alternatives du chaman incluses, MAJ-59) | Décision du porteur ; valeurs à confirmer en jeu |
+| O-025 | **Aura du Prêtre et de l’Ancien : tranchée le 16 novembre 2026** (rayon 4,2, cartes inchangées, MAJ-59) | Décision du porteur ; valeurs à confirmer en jeu |
 | O-021 | **Nouvelle race pour la Horde : tranchée le 15 novembre 2026 (paire squelette/gnome ensuite retirée de la boutique, MAJ-49)** — pas de race complète pour l’instant ; la piste est close par le squelette de la Horde face au gnome de l’Alliance (Fantassin squelette et Tirailleur gnome, v0.207 et v0.208, MAJ-45 et MAJ-46). Une race complète pourra être rouverte plus tard sur décision du porteur | Réponse du porteur, 15 novembre 2026 : la question est close par la paire squelette (Horde) contre gnome (Alliance) ; fiche `design/Horde_squelette_jouable.md` |
 
 <a id="s50"></a>
@@ -1825,6 +1826,8 @@ Version 0.56 — 16 novembre 2026 : jeu 0.219. **Premiers sons de combat** (MAJ-
 Version 0.57 — 16 novembre 2026 : jeu 0.220. **Incantation du Pyromancien humain** (lot de Codex validé par le porteur : trois angles, lâcher à 0,288 s, rendu seulement). **Mode d’essai de la boutique** (`--essai-boutique`, MAJ-55) : toutes les unités possédées dans un profil séparé, pour tester les effets sans refaire la campagne. Le son est coupé par défaut sur demande du porteur (chantier en pause, MAJ-54 inchangée). Aucune règle de combat modifiée.
 
 Version 0.58 — 16 novembre 2026 : jeu 0.221. **Choix de l’unité de boutique dans la mission** (MAJ-56) : avant la vague 1, au début de chaque mission, et non conservé d’une mission à l’autre. **Dégâts et morts recalés sur l’arrivée du projectile** (MAJ-57, rendu seulement) et rendu de la brûlure en flammes. **Lancer du Lance-éclats gobelin** et **tir de la Sentinelle elfe** (lots de Codex validés). **Brûlure du Pyromancien appliquée** sur décision du porteur (MAJ-58 ; elle n’était jamais appliquée par le modèle) avec jeu de règles daté pour les anciens rapports ; audits automatiques (`test_unit_effects.gd` pour les 46 unités, `test_bonus_effects.gd` pour les douze bonus de partie) : aucune autre incohérence de règle, trois questions de conception ouvertes (O-023 à O-025).
+
+Version 0.59 — 16 novembre 2026 : jeu 0.222. **Les trois questions de l’audit sont tranchées par le porteur** (MAJ-59) : les talents du Mage s’appliquent aussi aux dégâts sur la durée du Pyromancien (notion de « dots »), le bonus « Exercice de tir » (R-02) est explicite et inclut les alternatives de boutique du chaman, l’aura du Prêtre et de l’Ancien passe à 4,2 cases (cartes inchangées). Règles datées : les anciens rapports se rejouent avec les anciennes règles.
 
 <a id="s51"></a>
 
@@ -2118,7 +2121,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 16 novembre 2026 (GDD 0.58, jeu 0.221)
+### État au 16 novembre 2026 (GDD 0.59, jeu 0.222)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2140,7 +2143,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.58, jeu 0.221 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.59, jeu 0.222 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2474,5 +2477,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.219 | Premiers sons de combat (banques libres) ; GDD 0.56 |
 | 0.220 | Incantation du Pyromancien ; mode d’essai de la boutique ; son coupé ; GDD 0.57 |
 | 0.221 | Choix de l’unité de boutique dans la mission ; dégâts recalés sur l’impact ; Lance-éclats ; GDD 0.58 |
+| 0.222 | Audit des unités et des bonus : dots du Pyromancien et talents du Mage, Exercice de tir étendu, aura à 4,2 cases ; GDD 0.59 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

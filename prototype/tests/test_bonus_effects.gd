@@ -34,7 +34,7 @@ func run_checks() -> void:
 			check(is_equal_approx(ratio(r1.damage,base.damage),1.10) and (base.secondary_damage == 0.0 or is_equal_approx(ratio(r1.secondary_damage,base.secondary_damage),1.10)) and (base.curse_damage == 0.0 or is_equal_approx(ratio(r1.curse_damage,base.curse_damage),1.10)),"R-01 : +10 %% à tous les dégâts (%s)" % name)
 			# R-02 : +12 % de fréquence d'attaque, hors chaman et ses alternatives.
 			var r2: Dictionary = stats_with(type,faction,[1])
-			check(is_equal_approx(ratio(base.interval,r2.interval),1.0 if family == 5 else 1.12),"R-02 : fréquence +12 %% (%s)" % name)
+			check(is_equal_approx(ratio(base.interval,r2.interval),1.0 if family == 5 and type < 6 else 1.12),"R-02 : fréquence +12 %% (%s)" % name)
 			# R-03 : portée +0,5.
 			check(is_equal_approx(stats_with(type,faction,[2]).range-base.range,0.5),"R-03 : portée +0,5 (%s)" % name)
 			# R-04 : +20 % aux dégâts des explosions et des rebonds ; R-05 : +0,2 au rayon.

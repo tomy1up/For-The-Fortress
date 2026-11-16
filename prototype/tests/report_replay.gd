@@ -63,6 +63,12 @@ static func burn_rules_for(version: String) -> bool:
 	if parts.size() < 2 or parts[0] != "0" or not parts[1].is_valid_int(): return true
 	return int(parts[1]) >= 221
 
+## Règles de la v0.222 (talents du Mage sur les dots du Pyromancien, Exercice de tir étendu aux alternatives du chaman, rayon d'aura de 4,2) : les rapports plus anciens se rejouent sans elles.
+static func rules_v222_for(version: String) -> bool:
+	var parts: PackedStringArray = version.split(".")
+	if parts.size() < 2 or parts[0] != "0" or not parts[1].is_valid_int(): return true
+	return int(parts[1]) >= 222
+
 static func verify(data: Variant) -> Dictionary:
 	if not data is Dictionary: return _fail("Le rapport doit être un objet JSON.")
 	if data.get("schema_version") != 2: return _fail("Seuls les rapports au format 2 sont pris en charge.")
@@ -79,6 +85,7 @@ static func verify(data: Variant) -> Dictionary:
 		if definition.is_empty(): return _fail("Définition de carte invalide.")
 	var model = Model.new(true,definition)
 	model.burn_for_all_curse_units = burn_rules_for(data.game_version)
+	model.rules_v222 = rules_v222_for(data.game_version)
 	model.talent_rules = talent_rules_for(data.game_version) # Chaque rapport garde les valeurs de talents de sa version.
 	if data.has("combat_affix") and not model.configure_combat_affix(data.combat_affix): return _fail("Affixe de combat invalide.")
 	if not model.routes.is_empty():
