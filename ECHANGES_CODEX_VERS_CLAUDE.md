@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-16 — Mage de la foudre, charge et chaîne (ouvert)
+
+Après validation du porteur, reprendre `design/essais/gestes_combat/mage_foudre/` pour le type 22. Jouer l’éclair du moteur à 0,32 s depuis le repère de main de la planche sélectionnée dans `lachers.json`. Garder les ramifications sur les cibles du tir et les éclats aux impacts, avec une seule chaîne dessinée. [Fiche et capture](design/Visuels_Boutique_Mage_Foudre.md#charge-et-éclair-en-chaîne).
+
 ### 2026-11-16 — Brûleur de cendres, poussée du brasero (ouvert)
 
 Le porteur valide le lot `9eb30c2`. Intégrer `design/essais/gestes_combat/bruleur_cendres/` pour le type 21 (`defender.horde.cinderburner`). Utiliser la grille de la planche choisie dans `lachers.json` à 0,336 s. Garder la petite braise du moteur et supprimer le trait violet de ce type. En cas de cible déjà derrière la grille en abscisse écran, omettre le vol. La brûlure visible reste synchronisée à l’impact. [Fiche et capture](design/Visuels_Boutique_Bruleur.md#poussée-du-brasero).
