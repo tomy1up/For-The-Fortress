@@ -212,6 +212,19 @@ func configure_auxiliary(value: Variant) -> bool:
 	if not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
 	auxiliary_type = int(value);auxiliary_base_cost = -1;return true
 
+## Change l'unité de boutique de la mission après le choix de faction, tant que rien n'est acheté ni lancé (décision du porteur, 16 novembre 2026).
+## Le rapport enregistre la configuration finale : le rejeu retrouve la même unité dès le départ.
+func change_auxiliary(value: Variant) -> bool:
+	if not (value is int or value is float) or not is_finite(float(value)) or value != floorf(float(value)): return false
+	var type: int = int(value)
+	if type != -1 and (Shop.for_type(type).is_empty() or Shop.for_type(type).faction != faction): return false
+	if phase != "preparation" or wave != 1 or spawned != 0 or gold != INITIAL_GOLD or not bonuses.is_empty(): return false
+	for kind in action_history:
+		if kind.kind != "faction": return false
+	for defender in defenders:
+		if not defender.is_empty(): return false
+	auxiliary_type = type;auxiliary_base_cost = -1;return true
+
 func configure_auxiliary_cost(value: Variant) -> bool:
 	if not (value is int or value is float) or not is_finite(float(value)) or value != floorf(float(value)) or value < 1 or value > 1000000: return false
 	if auxiliary_type < 0 or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
