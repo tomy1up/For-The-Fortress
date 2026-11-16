@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "id": "defender.alliance.sentinel",
+  "facing": "right",
+  "display_height": 70.53960964408726,
+  "foot": [
+    144.4,
+    365.20000000000005
+  ],
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        352,
+        384
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 23,
+      "frame_size": [
+        352,
+        384
+      ],
+      "mode": "event",
+      "duration": 0.92
+    },
+    "attack_up12": {
+      "file": "attack_up12.png",
+      "frames": 23,
+      "frame_size": [
+        352,
+        384
+      ],
+      "mode": "event",
+      "duration": 0.92
+    },
+    "attack_down12": {
+      "file": "attack_down12.png",
+      "frames": 23,
+      "frame_size": [
+        352,
+        384
+      ],
+      "mode": "event",
+      "duration": 0.92
+    }
+  }
+}

@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**16 novembre — Sentinelle elfe, type 10.** Tir à l’arc court prêt pour avis du porteur. Trois inclinaisons sur 0,92 s, lâcher à 0,52 s, flèche rectiligne. Cinq tirs avec pose contrôlée à temps figé dans les deux sens à ×1 et ×2 sur la mission 94. Validateur sans problème et 175 contrôles de bibliothèque réussis. [Fiche et capture](design/Visuels_Boutique_Guetteurs.md#tir-de-la-sentinelle-elfe).
+
 **15 novembre — Chaman orc.** Le porteur valide le geste et accueille favorablement le gabarit corrigé (`59be9cd`). Variante de 28 images à intégrer avec la synchronisation du sort. Garde identique pixel pour pixel. Captures à taille native à ×1 et ×2 sur copie v0.208 et à temps figé. Éclair calé sur la poussée du bâton, anneau de malédiction à synchroniser côté rendu. Validateur : 25 dossiers, 0 problème. Bibliothèque : 157 contrôles réussis. [Fiche et boucle](design/Visuels_Chaman_Incantation.md).
 
 **15 novembre — Sapeur gobelin.** Le porteur valide le lancer retravaillé comme référence de qualité pour les autres unités. Contrôlé sur copie v0.208 avec un décalage visuel de 0,12 s. La planche et la synchronisation du projectile doivent être intégrées ensemble par Claude. Validateur : 24 dossiers, 0 problème. Bibliothèque : 156 contrôles réussis. [Fiche et boucle](design/Visuels_Sapeur_Lancer.md).
@@ -80,7 +82,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 **Catapulte gobeline, type 19.** Visuel validé par le porteur le 14 novembre 2026 (`9b62adf`). Portrait, déblocage, recrutement et premier tir vérifiés sur copie v0.197, 70 contrôles d’illustrations réussis. Sprite et projectile de pierre à intégrer. [Fiche](design/Visuels_Boutique_Catapulte.md).
 
-**Lance-éclats gobelin, type 18.** Visuel au manteau prune et à l’éclat violet validé par le porteur. Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 65 contrôles d’illustrations réussis. Sprite et projectile de cristal à brancher. [Fiche](design/Visuels_Boutique_Lance_Eclats.md).
+**Lance-éclats gobelin, type 18.** Visuel fixe validé le 14 novembre. Lancer du cristal validé par le porteur après correction de la trajectoire. Lot `ad201ec` à intégrer par Claude. Cinq angles sur 0,20 s, lâcher à 0,1125 s avec projectile assorti. Trajet rectiligne et orientation fixe du cristal après le retour du porteur sur le tir rapproché à droite. Contrôle en combat dans les deux sens à ×1 et ×2, avec pause. Validateur sans problème et 174 contrôles de régression réussis. [Fiche et capture](design/Visuels_Boutique_Lance_Eclats.md#lancer-du-cristal).
 
 **16 novembre — Pyromancien humain, type 15.** Le porteur valide le geste avec une rotation du buste réduite d’environ 16° à 5°. Lot `788c066` prêt à intégrer. Trois inclinaisons, 20 poses sur 0,64 s et projectile à 0,288 s, avec les mêmes centres de départ. Mission 94, copie v0.219, tirs à ×1 et ×2 et à temps figé. Validateur : 32 dossiers, 0 problème. Bibliothèque : 173 contrôles. [Fiche et captures](design/Visuels_Boutique_Pyromancien.md#incantation-et-départ-de-la-flamme).
 

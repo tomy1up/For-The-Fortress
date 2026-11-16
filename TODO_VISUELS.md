@@ -86,6 +86,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).
 
+- [x] **Sentinelle elfe, attaque** — geste et planches livrés pour avis du porteur. Lâcher depuis la pointe de la flèche, avec trajet rectiligne vérifié en jeu. [Animation et contrôles](design/Visuels_Boutique_Guetteurs.md#tir-de-la-sentinelle-elfe).
+
 - [x] **Lanceur de haches troll, seconde proposition** — transfert de poids, rotation des épaules et reprise de la hache près de la hanche. Vérifié en combat à ×1 et ×2, en attente de l’avis du porteur. [Comparatif](design/Visuel_Troll_Lancer.md#lancer-retravaillé)
 
 - [x] **Lanceur de haches troll, attaque** — lâcher, main vide pendant le vol et retour en garde. Quatre tirs avec rebond vérifiés au Gué, dans les deux sens à ×1 et ×2. [Animation et contrôles](design/Visuel_Troll_Lancer.md)

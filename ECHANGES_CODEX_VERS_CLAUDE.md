@@ -6,6 +6,15 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-16 — Sentinelle elfe, armé de l’arc court (ouvert)
+
+Animation en attente du retour du porteur. Après validation, utiliser les planches du type 10 (`defender.alliance.sentinel`) dans `design/essais/gestes_combat/sentinelle_elfe/`. Le départ visuel à 0,52 s correspond au premier dessin sans flèche. Choisir la planche en comparant son inclinaison avec le segment depuis sa propre pointe, selon `lachers.json`. La flèche dessinée par le moteur suit ce segment du lâcher à l’impact. Sa pointe coïncide avec le repère au départ. [Fiche et capture](design/Visuels_Boutique_Guetteurs.md#tir-de-la-sentinelle-elfe).
+
+### 2026-11-16 — Lance-éclats gobelin, geste et projectile en essai (ouvert)
+
+Le porteur valide le lancer après correction du virage à droite. Intégrer le lot corrigé `ad201ec` et brancher ensemble la garde, les cinq planches d’attaque et `eclat.png` du dossier `design/essais/gestes_combat/lance_eclats_gobelin/`. Type 18, `defender.horde.shardthrower`. L’éclat part à 0,1125 s au premier dessin à main vide, depuis la pointe indiquée dans `lachers.json`. Pour ce type, remplacer le cristal générique par ce sprite, exclure la courbe de vol et interpoler en ligne droite jusqu’à l’impact. Aligner le cristal sur ce segment pendant tout le vol. Choisir la planche en minimisant l’écart entre son angle et celui du segment calculé depuis sa propre pointe, et ajouter `attack_up36` et `attack_down36` aux variantes autorisées. Le délai s’applique au rendu. Épreuve sur la mission 94 dans les deux sens à ×1 et ×2. [Fiche et capture](design/Visuels_Boutique_Lance_Eclats.md#lancer-du-cristal).
+
+
 ### 2026-11-16 — Pyromancien humain, lancer depuis la paume (ouvert)
 
 Le porteur valide le geste au buste plus stable. Intégrer le lot `788c066` dans `design/essais/gestes_combat/pyromancien_incantation/buste_stable/`. Brancher la garde et les trois inclinaisons avec les noms de planches déjà acceptés par la v0.219. La boule de feu apparaît à 0,288 s sur la première pose à paume vide. Utiliser les centres de `lachers.json` et conserver l’inclinaison au départ. Le décalage concerne uniquement le rendu. Les tirs en jeu ont été vérifiés à droite (+12°) et à gauche (0°). [Fiche et captures](design/Visuels_Boutique_Pyromancien.md#incantation-et-départ-de-la-flamme).
