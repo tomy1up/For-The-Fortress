@@ -82,7 +82,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 **Lance-éclats gobelin, type 18.** Visuel au manteau prune et à l’éclat violet validé par le porteur. Portrait, recrutement et premier tir vérifiés sur copie v0.197, avec 65 contrôles d’illustrations réussis. Sprite et projectile de cristal à brancher. [Fiche](design/Visuels_Boutique_Lance_Eclats.md).
 
-**Pyromancien humain, type 15.** Visuel vermillon et safran, flamme au-dessus de la paume, approuvé par le porteur. Copie v0.197 : portrait, recrutement et premier tir vérifiés, 60 contrôles d’illustrations réussis. Sprite et projectile de feu à brancher par Claude Code. [Fiche](design/Visuels_Boutique_Pyromancien.md).
+**16 novembre — Pyromancien humain, type 15.** Le porteur valide le geste avec une rotation du buste réduite d’environ 16° à 5°. Lot `788c066` prêt à intégrer. Trois inclinaisons, 20 poses sur 0,64 s et projectile à 0,288 s, avec les mêmes centres de départ. Mission 94, copie v0.219, tirs à ×1 et ×2 et à temps figé. Validateur : 32 dossiers, 0 problème. Bibliothèque : 173 contrôles. [Fiche et captures](design/Visuels_Boutique_Pyromancien.md#incantation-et-départ-de-la-flamme).
 
 **Piquier humain, type 14.** Estoc à deux mains validé par le porteur le 15 novembre. Lot `9a7d3d8` prêt à intégrer. 20 poses sur 0,64 s par angle, contact à 0,256 s. Vérifié dans les deux sens sur la mission 94 à ×1, ×2 et à temps figé. Validateur : 31 dossiers, 0 problème. Bibliothèque : 172 contrôles. [Fiche et captures](design/Visuels_Boutique_Piquier.md#estoc-avec-prise-à-deux-mains).
 
