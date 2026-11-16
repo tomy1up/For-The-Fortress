@@ -48,7 +48,7 @@ def animation_assets(project_root=None):
     for name in ('animations', 'decor', 'audio'):
         folder = root / 'assets' / name
         if folder.is_dir():
-            found += [path.relative_to(root).as_posix() for path in folder.rglob('*') if path.is_file() and path.suffix in ('.png', '.json', '.ogg')]
+            found += [path.relative_to(root).as_posix() for path in folder.rglob('*') if path.is_file() and path.suffix in ('.png', '.json', '.ogg', '.wav')]
     return tuple(sorted(found))
 
 

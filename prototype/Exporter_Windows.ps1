@@ -69,7 +69,7 @@ foreach ($resourcePath in $sourcePaths) {
 foreach ($rawRoot in @('assets\animations','assets\decor','assets\audio')) {
     $rawFolder = Join-Path $PSScriptRoot $rawRoot
     if (Test-Path $rawFolder) {
-        foreach ($rawFile in (Get-ChildItem -Path $rawFolder -Recurse -File | Where-Object { $_.Extension -in @('.png','.json','.ogg') } | Sort-Object FullName)) {
+        foreach ($rawFile in (Get-ChildItem -Path $rawFolder -Recurse -File | Where-Object { $_.Extension -in @('.png','.json','.ogg','.wav') } | Sort-Object FullName)) {
             $sourcePaths += $rawFile.FullName.Substring($PSScriptRoot.Length + 1)
         }
     }
