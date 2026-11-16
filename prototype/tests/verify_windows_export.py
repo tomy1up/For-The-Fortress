@@ -33,7 +33,7 @@ with zipfile.ZipFile(archive) as z:
         candidate=(destination/entry.filename).resolve()
         assert candidate.is_relative_to(destination),'Chemin ZIP hors dossier de contrôle'
         if not entry.is_dir(): members.append(entry.filename.replace('\\','/'))
-    assert len(members)==6,members
+    assert len(members)==7,members
     assert len({name.split('/')[0] for name in members})==1
     assert {Path(name).name for name in members}=={'For_the_Fortress.exe','LIRE_MOI.txt','Fiche_essai_joueur.md','LICENCES_GODOT.txt','VERSION.json','Lancer_atelier_routes.cmd','Lancer_essai_boutique.cmd'}
     z.extractall(destination)
