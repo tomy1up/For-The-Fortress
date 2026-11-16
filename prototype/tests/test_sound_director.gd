@@ -28,6 +28,8 @@ func run_checks() -> void:
 	check(Bank.stream_path("inconnu").is_empty() and is_equal_approx(Bank.gain_db("inconnu"),0.0),"Événement inconnu : silence")
 	var player := Player.new();player.dry = true;root.add_child(player)
 	await process_frame
+	check(Player.muted and not player.play("shot.bow"),"Son coupé par défaut (décision du porteur, 16 novembre 2026)")
+	Player.muted = false
 	check(player.play("shot.bow") and player.played == 1 and not player.play("inconnu"),"Lecture d'un son installé ; événement inconnu silencieux")
 	Player.muted = true
 	check(not player.play("shot.bow"),"Coupure : rien n'est joué")
