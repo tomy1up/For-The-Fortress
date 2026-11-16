@@ -7,10 +7,10 @@ const VERSION := 1
 ## Noms d'animations connus, tous pilotés par le jeu depuis la v0.175.
 ## Ennemis : walk, hurt, spawn, death. Défenseurs : idle, attack, disabled, buy, level_up, sell.
 ## Variantes de marche selon la pente du trajet à l'écran (`walk_up` : le trajet monte, `walk_down` : il descend) ; `warning` : effet d'avertissement lié à un événement de jeu (mode progress).
-const NAMES: Array[String] = ["walk","walk_up","walk_down","idle","attack","disabled","death","hurt","spawn","buy","sell","level_up","warning","regen","storm","blocked","mist","rise","walk_nw","walk_ne","walk_sw","walk_se","death_nw","death_ne","death_sw","death_se","attack_up12","attack_down12","attack_up8","attack_up16","attack_up24","attack_down8","attack_down16","attack_down24"]
+const NAMES: Array[String] = ["walk","walk_up","walk_down","idle","attack","disabled","death","hurt","spawn","buy","sell","level_up","warning","regen","storm","blocked","mist","rise","walk_nw","walk_ne","walk_sw","walk_se","death_nw","death_ne","death_sw","death_se","attack_up36","attack_down36","attack_up12","attack_down12","attack_up8","attack_up16","attack_up24","attack_down8","attack_down16","attack_down24"]
 ## Animations jouées une seule fois sur un événement : le mode `event` est obligatoire.
-const ATTACK_VARIANTS: Array[String] = ["attack_up12","attack_down12","attack_up8","attack_up16","attack_up24","attack_down8","attack_down16","attack_down24"] # attaque inclinée selon la hauteur de la cible à l'écran (Tireur d'élite elfe)
-const EVENT_ONLY: Array[String] = ["attack_up12","attack_down12","attack_up8","attack_up16","attack_up24","attack_down8","attack_down16","attack_down24","death","death_nw","death_ne","death_sw","death_se","hurt","spawn","buy","sell","level_up","rise"]
+const ATTACK_VARIANTS: Array[String] = ["attack_up36","attack_down36","attack_up12","attack_down12","attack_up8","attack_up16","attack_up24","attack_down8","attack_down16","attack_down24"] # attaque inclinée selon la hauteur de la cible à l'écran (Tireur d'élite elfe)
+const EVENT_ONLY: Array[String] = ["attack_up36","attack_down36","attack_up12","attack_down12","attack_up8","attack_up16","attack_up24","attack_down8","attack_down16","attack_down24","death","death_nw","death_ne","death_sw","death_se","hurt","spawn","buy","sell","level_up","rise"]
 const MODES: Array[String] = ["distance","time","event","progress"]
 const MAX_FRAMES := 64
 const MAX_FRAME_SIDE := 1024

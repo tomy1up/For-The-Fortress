@@ -83,4 +83,35 @@ func run_checks() -> void:
 			check(fp in [-12,0,12] and View.shot_origin(fire).distance_to(View.project(from)+Vector2(ftip.x*View.shot_facing(fire),ftip.y)) < 0.001,"Pyromancien : départ selon l'angle %d" % fp)
 	var fspec: Dictionary = Library.spec_for("defender.alliance.pyromancer")
 	check(not fspec.is_empty() and fspec.animations.has("attack_up12") and fspec.animations.has("attack_down12"),"Pyromancien : planches chargées et valides")
+	# Lance-éclats gobelin (type 18) : cinq planches, choisie pour minimiser l'écart entre son angle et la droite pointe -> impact ; lâcher à 0,1125 s.
+	check(is_equal_approx(View.launch_delay({"type":18}),0.1125),"Lâcher du lance-éclats à 0,1125 s")
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var shard: Dictionary = {"type":18,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var sp: int = View.aim_pitch(shard)
+			check(sp in [-36,-12,0,12,36],"Lance-éclats : angle de planche valide (%d)" % sp)
+			var stip: Vector2 = View.SHARD_TIPS[sp]
+			check(View.shot_origin(shard).distance_to(View.project(from)+Vector2(stip.x*View.shot_facing(shard),stip.y)) < 0.001,"Lance-éclats : départ depuis la pointe de la planche %d" % sp)
+			# La planche choisie est celle qui s'écarte le moins de la droite pointe -> impact.
+			var impact: Vector2 = View.project(shard.to)+Vector2(0,-12)
+			var errors: Dictionary = {}
+			for candidate in View.SHARD_TIPS:
+				var origin: Vector2 = View.project(from)+Vector2(View.SHARD_TIPS[candidate].x*View.shot_facing(shard),View.SHARD_TIPS[candidate].y)
+				var line: Vector2 = impact-origin
+				errors[candidate] = absf(rad_to_deg(atan2(line.y,maxf(absf(line.x),0.0001)))-float(candidate))
+			var least: float = INF
+			for candidate in errors: least = minf(least,errors[candidate])
+			check(is_equal_approx(errors[sp],least),"Lance-éclats : écart minimal pour la planche choisie")
+	var sspec: Dictionary = Library.spec_for("defender.horde.shardthrower")
+	check(not sspec.is_empty() and sspec.animations.has("attack_up36") and sspec.animations.has("attack_down36"),"Lance-éclats : cinq planches chargées et valides")
+	# Sentinelle elfe (type 10) : trois planches, choisie par l'écart minimal entre son angle et la droite pointe -> impact ; flèche à 0,52 s.
+	check(is_equal_approx(View.launch_delay({"type":10}),0.52),"Lâcher de la sentinelle à 0,52 s")
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var sentinel: Dictionary = {"type":10,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var np: int = View.aim_pitch(sentinel)
+			var ntip: Vector2 = View.SENTINEL_TIPS[np]
+			check(np in [-12,0,12] and View.shot_origin(sentinel).distance_to(View.project(from)+Vector2(ntip.x*View.shot_facing(sentinel),ntip.y)) < 0.001,"Sentinelle : départ depuis la pointe de la planche %d" % np)
+	var nspec: Dictionary = Library.spec_for("defender.alliance.sentinel")
+	check(not nspec.is_empty() and nspec.animations.has("attack_up12") and nspec.animations.has("attack_down12"),"Sentinelle : planches chargées et valides")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

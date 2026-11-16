@@ -275,7 +275,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
@@ -289,8 +289,18 @@ const PIKE_TIPS: Dictionary = {-12:Vector2(49.6188,-37.8302),0:Vector2(50.294,-3
 ## Pyromancien humain (type 15, incantation, lâcher à 0,288 s) : trois planches (−12°, 0°, +12°), boule de feu lancée depuis le point donné par angle (`lachers.json`).
 const PYROMANCER_TYPE := 15
 const PYRO_TIPS: Dictionary = {-12:Vector2(32.8654,-50.375),0:Vector2(32.8465,-47.9359),12:Vector2(32.7376,-45.5035)}
+## Lance-éclats gobelin (type 18, cristal lancé en ligne droite, lâcher à 0,1125 s) : cinq planches (−36°, −12°, 0°, +12°, +36°). La planche est celle dont l'angle s'écarte le moins
+## de la droite entre sa propre pointe (`lachers.json`) et l'impact ; le cristal dessiné suit cette droite pendant tout le vol.
+const SHARDTHROWER_TYPE := 18
+const SHARD_TIPS: Dictionary = {-36:Vector2(16.1448,-34.5325),-12:Vector2(20.0201,-30.3707),0:Vector2(20.7757,-25.8869),12:Vector2(20.4848,-21.8582),36:Vector2(17.5151,-14.8514)}
+## Sentinelle elfe (type 10, tir avec transfert de poids, flèche à 0,52 s en trajet rectiligne) : trois planches (−12°, 0°, +12°), choisie comme celle du Lance-éclats.
+const SENTINEL_TYPE := 10
+const SENTINEL_TIPS: Dictionary = {-12:Vector2(21.9512,-42.0693),0:Vector2(22.1997,-39.3846),12:Vector2(21.7661,-36.6909)}
+const SHARD_TEXTURE: Texture2D = preload("res://assets/units/shop/eclat_v001.png")
+const SHARD_PIVOT_PX := Vector2(181.0,36.0)
+const SHARD_SCALE := 0.10441044104410441
 const STEP_TYPES: Array[int] = [14,15,17]
-const TILTED_TYPES: Array[int] = [11,14,15,17]
+const TILTED_TYPES: Array[int] = [10,11,14,15,17,18]
 const CURVED_TYPES: Array[int] = [11,13,17]
 const JAVELIN_PIVOT := Vector2(0.0,-41.3453)
 const JAVELIN_TIPS: Dictionary = {-12:Vector2(55.3409,-51.4028),0:Vector2(56.1005,-41.3453),12:Vector2(54.9211,-31.3319)}
@@ -305,6 +315,18 @@ const AIM_STEP := 8
 const AIM_LIMIT := 24
 
 static func aim_pitch(shot: Dictionary) -> int:
+	if int(shot.get("type",-1)) in [SHARDTHROWER_TYPE,SENTINEL_TYPE]:
+		var impact: Vector2 = project(shot.to)+Vector2(0,-12)
+		var facing_side: float = shot_facing(shot)
+		var best: int = 0
+		var best_error: float = INF
+		var tips: Dictionary = step_tips(int(shot.type))
+		for candidate in tips:
+			var tip: Vector2 = project(shot.from)+Vector2(tips[candidate].x*facing_side,tips[candidate].y)
+			var line: Vector2 = impact-tip
+			var error: float = absf(rad_to_deg(atan2(line.y,maxf(absf(line.x),0.0001)))-float(candidate))
+			if error < best_error: best_error = error;best = int(candidate)
+		return best
 	if int(shot.get("type",-1)) in STEP_TYPES:
 		var hand: Vector2 = project(shot.from)+Vector2(0.0,float(step_tips(int(shot.type))[0].y))
 		var gap: Vector2 = project(shot.to)+Vector2(0,-12)-hand
@@ -316,7 +338,7 @@ static func aim_pitch(shot: Dictionary) -> int:
 	return clampi(int(roundf(degrees/float(AIM_STEP)))*AIM_STEP,-AIM_LIMIT,AIM_LIMIT)
 
 static func step_tips(type: int) -> Dictionary:
-	return PIKE_TIPS if type == PIKEMAN_TYPE else PYRO_TIPS if type == PYROMANCER_TYPE else JAVELIN_TIPS
+	return PIKE_TIPS if type == PIKEMAN_TYPE else PYRO_TIPS if type == PYROMANCER_TYPE else SHARD_TIPS if type == SHARDTHROWER_TYPE else SENTINEL_TIPS if type == SENTINEL_TYPE else JAVELIN_TIPS
 
 static func aim_variant(pitch: int) -> String:
 	return "attack" if pitch == 0 else "attack_%s%d" % ["down" if pitch > 0 else "up",absi(pitch)]
@@ -327,7 +349,7 @@ static func aim_direction(shot: Dictionary) -> Vector2:
 	return Vector2(shot_facing(shot)*cos(angle),sin(angle))
 
 static func aimed_origin(shot: Dictionary) -> Vector2:
-	if int(shot.get("type",-1)) in STEP_TYPES:
+	if int(shot.get("type",-1)) in STEP_TYPES or int(shot.get("type",-1)) in [SHARDTHROWER_TYPE,SENTINEL_TYPE]:
 		var tip: Vector2 = step_tips(int(shot.type))[aim_pitch(shot)]
 		return project(shot.from)+Vector2(tip.x*shot_facing(shot),tip.y)
 	return project(shot.from)+AIM_PIVOT+aim_direction(shot)*AIM_LENGTH
@@ -390,6 +412,9 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		return
 	if int(shot.type) == SWORD_TYPE:
 		_draw_sword_strike(origin,direction,side,age/PROJECTILE_FLIGHT)
+		return
+	if int(shot.type) == SHARDTHROWER_TYPE:
+		_draw_crystal_shard(point,direction,shot_facing(shot))
 		return
 	if int(shot.type) == PIKEMAN_TYPE:
 		_draw_pike_contact(origin,direction,side,age/PROJECTILE_FLIGHT)
@@ -615,6 +640,12 @@ func _draw_cannonball(point: Vector2, direction: Vector2) -> void:
 		draw_circle(point-direction*(5.0+puff*5.0),3.5-puff*0.8,Color(0.78,0.78,0.74,0.32-puff*0.08),true,-1,true)
 	draw_circle(point,4.6,Color("1d2224"),true,-1,true)
 	draw_circle(point+Vector2(-1.4,-1.4),1.6,Color("c7d2cf"),true,-1,true)
+
+## Éclat de cristal du Lance-éclats (type 18) : le dessin du lot de Codex, orienté selon la droite de vol ; le reflet à gauche garde l'éclairage en haut.
+func _draw_crystal_shard(point: Vector2, direction: Vector2, facing: float) -> void:
+	draw_set_transform_matrix(Transform2D(direction,direction.orthogonal()*facing,point))
+	draw_texture_rect(SHARD_TEXTURE,Rect2(-SHARD_PIVOT_PX*SHARD_SCALE,SHARD_TEXTURE.get_size()*SHARD_SCALE),false)
+	draw_set_transform(Vector2.ZERO)
 
 ## Éclat de contact du Piquier humain (type 14) : bref éclat à la pointe de la pique dessinée dans la planche (aucune pique dessinée par le jeu).
 func _draw_pike_contact(origin: Vector2, direction: Vector2, side: Vector2, progress: float) -> void:
