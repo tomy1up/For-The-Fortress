@@ -2,25 +2,29 @@
   "release": 0.5,
   "center_from_foot": {
     "attack": [
-      0.0327,
-      -62.6431
+      1.2766,
+      -62.7006
     ],
     "attack_up": [
-      -0.1737,
-      -60.9451
+      3.112,
+      -62.63
     ],
     "attack_down": [
-      -0.1737,
-      -61.1188
+      -3.4376,
+      -62.3185
     ]
+  },
+  "launch_slope": {
+    "attack": -0.0319,
+    "attack_up": -0.4569,
+    "attack_down": 0.3032
   },
   "projectile_center": [
     93,
     59
   ],
   "projectile_scale": 0.106,
-  "arc_minimum": 16,
-  "arc_height_factor": 0.46,
+  "flight_control_fraction": 0.44,
   "diagonal_minimum_y": 5,
   "diagonal_ratio": 0.16
 }
