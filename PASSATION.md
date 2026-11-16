@@ -4,7 +4,9 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**16 novembre — Fronde elfe, type 25.** Rotation au-dessus de la tête, lâcher à 0,40 s et accompagnement avec la poche vide. Cinq inclinaisons. Dix tirs en mission 94 v0.226, dans les deux sens à ×1 et ×2, avec pause. Validateur sans problème sur 41 dossiers et 182 contrôles de bibliothèque réussis. [Fiche et capture](design/Visuels_Boutique_Fronde.md#rotation-et-lâcher-du-galet). Avis du porteur attendu.
+**17 novembre — Hache en chaîne, type 26.** Cinq inclinaisons, geste depuis la hanche et départ à 0,52 s. Hache à deux lobes réutilisée pour les ricochets dans l’ordre des impacts. Dix tirs sur la mission 94 v0.226 à ×1 et ×2, dans les deux sens, avec pause. Trois ricochets vérifiés au premier tir des quatre scénarios. 42 dossiers valides et 183 contrôles de bibliothèque réussis. [Fiche et capture](design/Visuels_Boutique_Hache_En_Chaine.md#lancer-de-la-hache-et-ricochets). Lot `f0b6867` validé par le porteur le 17 novembre 2026, à intégrer par Claude.
+
+**16 novembre — Fronde elfe, type 25.** Rotation au-dessus de la tête, lâcher à 0,40 s et accompagnement avec la poche vide. Cinq inclinaisons. Dix tirs en mission 94 v0.226, dans les deux sens à ×1 et ×2, avec pause. Validateur sans problème sur 41 dossiers et 182 contrôles de bibliothèque réussis. [Fiche et capture](design/Visuels_Boutique_Fronde.md#rotation-et-lâcher-du-galet). Lot `a683912` validé par le porteur le 16 novembre 2026, à intégrer par Claude.
 
 **16 novembre — Arbalète lourde, type 24.** Visée à genou, recul dans l’épaule et six inclinaisons. Départ du carreau à 0,44 s. Six tirs en mission 94 v0.226, dont un à bout portant, vérifiés à ×1 et ×2 avec pause. Validateur sans problème sur 40 dossiers et 181 contrôles de bibliothèque réussis. [Fiche et capture](design/Visuels_Boutique_Arbalete_Lourde.md#tir-à-genou-et-recul). Lot `aa7462b` validé par le porteur le 16 novembre 2026, à intégrer par Claude.
 

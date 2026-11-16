@@ -126,4 +126,12 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | --- | --- |
 | Appuis et geste | Les semelles sont fixes dans les 105 poses. L’épaule entraîne la rotation et la poche vide accompagne le bras devant le corps. |
 | Lâcher | Le galet part de la poche à 0,40 s. Un brin est libéré et le vol se prolonge en ligne droite vers un seul impact. |
-| En jeu | Dix tirs sur la mission 94 refondue, des deux côtés à ×1 et ×2, avec pause. [Capture à taille réelle](essais/gestes_combat/fronde_elfe/Fronde_elfe_en_jeu.gif). Avis du porteur attendu. |
+| En jeu | Dix tirs sur la mission 94 refondue, des deux côtés à ×1 et ×2, avec pause. [Capture à taille réelle](essais/gestes_combat/fronde_elfe/Fronde_elfe_en_jeu.gif). Lot `a683912` validé par le porteur. |
+
+## Hache en chaîne · 17 novembre 2026
+
+| Critère | Vérification sur la copie v0.226 |
+| --- | --- |
+| Appuis et geste | Les semelles restent stables dans les 120 poses. La hache remonte depuis la hanche et le bras accompagne le lâcher. |
+| Lâcher et rebonds | Départ à 0,52 s depuis la hache tenue. La même hache suit l’ordre des impacts enregistrés par le jeu. Trois rebonds vérifiés au premier tir de chaque scénario. |
+| En jeu | Dix tirs sur la mission 94, dans les deux sens à ×1 et ×2, avec pause. [Capture à taille réelle](essais/gestes_combat/hache_en_chaine/Hache_en_chaine_en_jeu.gif). Lot `f0b6867` validé par le porteur. |
