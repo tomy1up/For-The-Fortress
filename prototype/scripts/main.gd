@@ -253,7 +253,9 @@ func _ready() -> void:
 		model = Model.new(true,definition)
 		mission_definition = {}
 	for argument in OS.get_cmdline_user_args():
-		if argument.begins_with("--capture="): isolated = true
+		if argument.begins_with("--capture="):
+			isolated = true
+			MapView.SoundPlayer.muted = true # captures et vérifications automatiques : aucun son sur les haut-parleurs
 	var shop_trial: bool = "--essai-boutique" in OS.get_cmdline_user_args() and not isolated
 	if shop_trial:
 		# Essai de la boutique : profil séparé (progression habituelle intacte) avec toutes les unités déjà possédées.

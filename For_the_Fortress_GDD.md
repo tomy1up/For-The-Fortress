@@ -1830,7 +1830,7 @@ Version 0.58 — 16 novembre 2026 : jeu 0.221. **Choix de l’unité de boutique
 
 Version 0.59 — 16 novembre 2026 : jeu 0.222. **Les trois questions de l’audit sont tranchées par le porteur** (MAJ-59) : les talents du Mage s’appliquent aussi aux dégâts sur la durée du Pyromancien (notion de « dots »), le bonus « Exercice de tir » (R-02) est explicite et inclut les alternatives de boutique du chaman, l’aura du Prêtre et de l’Ancien passe à 4,2 cases (cartes inchangées). Règles datées : les anciens rapports se rejouent avec les anciennes règles.
 
-Version 0.60 — 16 novembre 2026 : jeu 0.223. **Lisibilité** (MAJ-60, habillage de prototype à confirmer) : bandeau d’affixe avec compte à rebours et effet pour chaque événement de mission, marqueurs d’effets de boutique plus grands et contrastés. Aucune règle modifiée.
+Version 0.60 — 16 novembre 2026 : jeu 0.223. **Lisibilité** (MAJ-60, habillage de prototype à confirmer) : bandeau d’affixe avec compte à rebours et effet pour chaque événement de mission, marqueurs d’effets de boutique plus grands et contrastés ; **quatre sons choisis à l’écoute par le porteur** (arc, arbalète, mêlée, impact ; Freesound CC0), les autres événements restant silencieux. Aucune règle modifiée.
 
 <a id="s51"></a>
 

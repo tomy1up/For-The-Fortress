@@ -1,5 +1,6 @@
 extends RefCounted
 ## Catalogue des effets sonores (décision du porteur, 16 novembre 2026 : banques libres de droits uniquement, voir `design/Credits_audio.md`).
+## Seuls les sons choisis à l'écoute par le porteur sont installés (Freesound, CC0) ; un événement sans fichier reste silencieux.
 ## Chaque événement sonore porte une liste de fichiers possibles (tirage au hasard stable, jamais dans le modèle de jeu) ; un fichier absent est ignoré :
 ## le jeu reste silencieux plutôt que d'échouer tant que les sons ne sont pas installés.
 const DIRECTORY := "res://assets/audio/sfx/"
@@ -8,16 +9,17 @@ const EXTENSIONS: Array[String] = ["ogg","wav"]
 const EVENTS: Dictionary = {
 	"shot.bow":{"files":["bow_1","bow_2"],"db":-6.0},
 	"shot.crossbow":{"files":["crossbow_1","crossbow_2"],"db":-6.0},
-	"shot.magic":{"files":["magic_1","magic_2"],"db":-8.0},
-	"shot.throw":{"files":["throw_1","throw_2"],"db":-6.0},
-	"shot.gun":{"files":["gun_1"],"db":-4.0},
-	"shot.cannon":{"files":["cannon_1"],"db":-3.0},
-	"shot.melee":{"files":["melee_1","melee_2"],"db":-6.0},
-	"impact.hit":{"files":["hit_1","hit_2","hit_3"],"db":-10.0},
-	"impact.blast":{"files":["blast_1"],"db":-6.0},
-	"enemy.down":{"files":["down_1","down_2"],"db":-9.0},
-	"ui.click":{"files":["click_1"],"db":-8.0},
-	"ui.buy":{"files":["buy_1"],"db":-6.0},
+	"shot.melee":{"files":["melee_1"],"db":-6.0},
+	"impact.hit":{"files":["hit_1","hit_2"],"db":-9.0},
+	# Sans son retenu par le porteur pour l'instant (silence) : magie, lancer, arme à feu, canon, explosion, élimination, interface.
+	"shot.magic":{"files":[],"db":-8.0},
+	"shot.throw":{"files":[],"db":-6.0},
+	"shot.gun":{"files":[],"db":-4.0},
+	"shot.cannon":{"files":[],"db":-3.0},
+	"impact.blast":{"files":[],"db":-6.0},
+	"enemy.down":{"files":[],"db":-9.0},
+	"ui.click":{"files":[],"db":-8.0},
+	"ui.buy":{"files":[],"db":-6.0},
 }
 ## Familles de combat : 0 archer, 1 arbalétrier, 2 mage, 3 haches, 4 sapeur (explosion), 5 chaman.
 const SHOT_BY_FAMILY: Array[String] = ["shot.bow","shot.crossbow","shot.magic","shot.throw","shot.throw","shot.magic"]
