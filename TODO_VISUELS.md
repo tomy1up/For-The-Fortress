@@ -86,7 +86,9 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).
 
-- [x] **Grenadier gobelin, attaque** — planche, sprite de grenade et raccord en jeu livrés pour avis du porteur. [Animation et preuve](design/Visuels_Gestes_Combat.md#lancer-du-grenadier-gobelin).
+- [x] **Catapulte gobeline, attaque** — bras sur pivot, châssis reconstruit en volume dans les diagonales, garde vers la route et tir selon la cible. Lot `c71b7b3` validé par le porteur et prêt à intégrer. [Animation et contrôles](design/Visuels_Boutique_Catapulte.md#tir-avec-bras-sur-pivot).
+
+- [x] **Grenadier gobelin, attaque** — retour favorable du porteur sur le lot `db3d428`, prêt à intégrer avec le sprite de grenade. [Animation et preuve](design/Visuels_Gestes_Combat.md#lancer-du-grenadier-gobelin).
 
 - [x] **Sentinelle elfe, attaque** — geste et reprise des appuis et du buste approuvés. Lot `b9aecf9` à intégrer. Lâcher depuis la pointe de la flèche, avec trajet rectiligne vérifié en jeu. [Animation et contrôles](design/Visuels_Boutique_Guetteurs.md#tir-de-la-sentinelle-elfe).
 

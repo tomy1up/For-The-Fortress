@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "id": "defender.horde.catapult",
+  "facing": "right",
+  "display_height": 97.58730158730158,
+  "foot": [
+    168.77598152424943,
+    275.07193396226415
+  ],
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        336,
+        329
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 24,
+      "frame_size": [
+        336,
+        329
+      ],
+      "mode": "event",
+      "duration": 1.2
+    },
+    "idle_up": {
+      "file": "idle_up.png",
+      "frames": 1,
+      "frame_size": [
+        336,
+        329
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack_up": {
+      "file": "attack_up.png",
+      "frames": 24,
+      "frame_size": [
+        336,
+        329
+      ],
+      "mode": "event",
+      "duration": 1.2
+    },
+    "idle_down": {
+      "file": "idle_down.png",
+      "frames": 1,
+      "frame_size": [
+        336,
+        329
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack_down": {
+      "file": "attack_down.png",
+      "frames": 24,
+      "frame_size": [
+        336,
+        329
+      ],
+      "mode": "event",
+      "duration": 1.2
+    }
+  }
+}

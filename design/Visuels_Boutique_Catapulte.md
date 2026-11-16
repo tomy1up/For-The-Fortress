@@ -25,3 +25,31 @@ La planche d'étude passe à 20 images sur 0,8 s. La cuillère vide descend apr�
 Sur une copie v0.197, le premier tir a été capturé dans les deux orientations au Gué, à ×1 et ×2. Dans les quatre cas, le cadrage de la Catapulte est identique sur deux images successives avec simulation arrêtée. Validateur : zéro problème sur 24 dossiers. Test de bibliothèque : 156 contrôles réussis.
 
 [Captures en jeu côte à côte](essais/gestes_combat/Catapulte_retour_v002.gif). Essai soumis à validation visuelle du porteur.
+
+## Tir avec bras sur pivot
+
+La pierre reste dans la cuillère pendant que le servant arme le bras. Le bras pivote d’un bloc, le servant ramène sa main vers lui et ses épaules suivent la détente. La cuillère vide dépasse sa position de garde, revient et se recharge. Les patins et les pieds ont la même position tout au long des 24 poses. La première et la dernière pose reprennent la garde au pixel près.
+
+[Voir les quatre diagonales à taille native et à ×1](essais/gestes_combat/catapulte_gobeline/Catapulte_gobeline_en_jeu.gif) · [Voir deux diagonales à ×2](essais/gestes_combat/catapulte_gobeline/Catapulte_gobeline_x2.gif)
+
+Type 19, `defender.horde.catapult`. Les planches sont dans `design/essais/gestes_combat/catapulte_gobeline/`. Le cycle dure 1,20 s. Le lâcher visuel à 0,50 s correspond à la première cuillère vide. Orienter `pierre.png` depuis le centre indiqué par `lacher.json`, en retournant le décalage horizontal pour un tir à gauche. Le fichier donne aussi les paramètres de l’arc visuel d’essai. Relier le centre de départ à l’impact et retirer une hauteur verticale de `4 × h × progression × (1 − progression)`, avec `h` à 16 px minimum ou 46 % du dénivelé si celui-ci impose davantage. Le rendu de zone se joue à l’arrivée. Les valeurs et le traitement des dégâts restent ceux du modèle.
+
+Essai sur copie v0.220, mission 94. Quatre tirs, aux deux vitesses et des deux côtés, avec deux cibles secondaires enregistrées par tir. L’arc monte dès le départ et rejoint l’impact sur les 17 positions vérifiées. La pose se fige en pause. Validateur à zéro problème sur 35 dossiers et bibliothèque à 176 contrôles réussis.
+
+### Orientation vers la route et la cible
+
+Le porteur a demandé que le châssis vise la route, puis a rejeté l’effet de cisaillement de la première proposition en diagonale. Le châssis des deux vues inclinées a été reconstruit en volume. Ses deux rangées de patins reposent dans le plan du plateau, le bras pivote et la cuillère conserve son volume. Le servant conserve son dessin debout et la vue de profil reprend les deux planches précédentes à l’identique. [Avant et après sur E4](essais/gestes_combat/catapulte_gobeline/Catapulte_gobeline_avant_apres.gif).
+
+Pour la garde, utiliser la direction entre l’emplacement et le point le plus proche sur la route. En combat, utiliser la dernière cible, puis figer le choix de vue et le côté sur la position au moment où le tir est enregistré. Choisir `idle_up` et `attack_up` si la cible au sol est au-dessus à l’écran, `idle_down` et `attack_down` si elle est en dessous. Dans l’essai, le profil est sélectionné pour un écart vertical inférieur à `max(5 px, 0,16 × |écart horizontal|)`. Le signe horizontal donne le côté. La garde prend la vue correspondante à la fin du geste. Le changement de vue se fait directement au changement de direction.
+
+Les deux paires de variantes demandent un branchement dans la bibliothèque. `lacher.json` donne le centre de la pierre pour chaque planche d’attaque. Utiliser le même choix de vue pour le sprite et le point de départ du projectile. Le repère de lâcher est recalculé dans les deux diagonales à partir du centre de la pierre sur la cuillère. L’arc parabolique décrit plus haut correspond à cet essai historique. Pour les planches courantes, appliquer les paramètres ci-dessous.
+
+Vérification sur la mission 94 en v0.220. Quatre diagonales à ×1 et deux à ×2, avec la garde, le changement de diagonale sur E1, la pause et deux cibles secondaires par tir. Les 48 poses diagonales sont cadrées et chaque planche retrouve sa propre garde exactement. Le validateur passe sur 35 dossiers et la bibliothèque passe 176 contrôles. Le porteur a ensuite validé le lot `c71b7b3`, avec l’engin entièrement retourné, après avoir vu les quatre diagonales de tir.
+
+### Sens du coup de bras
+
+Le porteur accueille favorablement le châssis et relève une impression de contresens au lancer à gauche. La reprise sépare le recul de préparation, une courte tenue, puis le mouvement chargé vers la cible. La dernière pose chargée et les deux poses suivantes projettent le haut du bras du même côté du pivot que la cible. Le porteur a demandé d’inverser l’engin de la vue précédente. Les six planches sont reconstruites dans cette orientation, y compris la garde. Sur E4, le servant passe à gauche et la cuillère chargée à droite. Le bras franchit le pivot vers la gauche au tir. Le moteur applique un seul retournement selon le côté de la cible au dessin et au repère de lâcher. À 0,50 s, la pierre poursuit ce dernier mouvement au moment où la cuillère se vide. Les trois gardes sont identiques à celles du lot précédent.
+
+Dans `lacher.json`, `center_from_foot` donne l’origine par planche et `launch_slope` le rapport entre le mouvement vertical et l’avancée horizontale de la pierre. Partir de cette origine, puis utiliser une courbe quadratique jusqu’à la cible. Le point de contrôle est placé à `flight_control_fraction` (0,44) de l’écart horizontal jusqu’à la cible. Sa composante verticale depuis l’origine vaut la valeur absolue de ce déplacement horizontal multipliée par la pente de la planche. Si la cible est déjà derrière la cuillère en abscisse, afficher l’effet de zone à la cible en omettant la pierre en vol. L’effet de zone des autres tirs se joue à l’arrivée.
+
+Sur six tirs en mission 94, vérification de la tangente au départ, de l’avancée horizontale à 16 intervalles et de l’arrivée à l’impact. Les quatre diagonales sont couvertes à ×1 et deux à ×2. Les 72 poses retrouvent exactement leur garde respective. Validateur à zéro problème sur 35 dossiers et 176 contrôles de bibliothèque réussis. [Orientation précédente et engin retourné sur E4](essais/gestes_combat/catapulte_gobeline/Catapulte_gobeline_retournee.gif).

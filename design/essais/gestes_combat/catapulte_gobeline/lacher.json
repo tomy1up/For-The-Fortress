@@ -1,0 +1,30 @@
+{
+  "release": 0.5,
+  "center_from_foot": {
+    "attack": [
+      28.1625,
+      -45.6041
+    ],
+    "attack_up": [
+      24.9855,
+      -31.5008
+    ],
+    "attack_down": [
+      24.9855,
+      -56.4851
+    ]
+  },
+  "launch_slope": {
+    "attack": 1.6297,
+    "attack_up": 2.352,
+    "attack_down": 1.352
+  },
+  "projectile_center": [
+    93,
+    59
+  ],
+  "projectile_scale": 0.106,
+  "flight_control_fraction": 0.44,
+  "diagonal_minimum_y": 5,
+  "diagonal_ratio": 0.16
+}
