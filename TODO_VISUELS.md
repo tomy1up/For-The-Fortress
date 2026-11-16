@@ -86,6 +86,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).
 
+- [x] **Lance-épieu orc, attaque** — estoc en plusieurs inclinaisons et distances, avec repère de contact. Lot `a151adb` validé par le porteur, à intégrer. [Animation et contrôles](design/Visuels_Boutique_Lance_Epieu.md#estoc-à-deux-mains).
+
 - [x] **Catapulte gobeline, attaque** — bras sur pivot, châssis reconstruit en volume dans les diagonales, garde vers la route et tir selon la cible. Lot `c71b7b3` validé par le porteur et prêt à intégrer. [Animation et contrôles](design/Visuels_Boutique_Catapulte.md#tir-avec-bras-sur-pivot).
 
 - [x] **Grenadier gobelin, attaque** — retour favorable du porteur sur le lot `db3d428`, prêt à intégrer avec le sprite de grenade. [Animation et preuve](design/Visuels_Gestes_Combat.md#lancer-du-grenadier-gobelin).

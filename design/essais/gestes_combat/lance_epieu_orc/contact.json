@@ -1,0 +1,54 @@
+{
+  "impact": 0.28,
+  "variants": {
+    "attack": {
+      "pitch": 0,
+      "point": [
+        47.9702,
+        -24.0115
+      ]
+    },
+    "attack_up12": {
+      "pitch": -12,
+      "point": [
+        46.8385,
+        -33.3695
+      ]
+    },
+    "attack_down12": {
+      "pitch": 12,
+      "point": [
+        47.1458,
+        -14.6209
+      ]
+    },
+    "attack_close": {
+      "pitch": 0,
+      "point": [
+        39.1025,
+        -24.0115
+      ]
+    },
+    "attack_far": {
+      "pitch": 0,
+      "point": [
+        56.099,
+        -24.0115
+      ]
+    },
+    "attack_close_up": {
+      "pitch": -12,
+      "point": [
+        33.6424,
+        -33.3695
+      ]
+    },
+    "attack_close_down": {
+      "pitch": 12,
+      "point": [
+        33.9497,
+        -14.6209
+      ]
+    }
+  }
+}
