@@ -86,6 +86,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).
 
+- [x] **Veilleur des cendres, attaque** — lancer bas, garde et trois inclinaisons, hachette et repères de départ. Essai en jeu à ×1 et ×2. [Animation et contrôles](design/Visuels_Boutique_Guetteurs.md#lancer-du-veilleur-des-cendres). Avis visuel attendu.
 - [x] **Mage de la foudre, attaque** — charge et décharge dans les deux sens, repères de main et contrôle des ramifications en jeu. Lot `e90fd72` validé par le porteur. [Animation et contrôles](design/Visuels_Boutique_Mage_Foudre.md#charge-et-éclair-en-chaîne).
 
 - [x] **Brûleur de cendres, attaque** — poussée du brasero, repères de grille et départ de braise validés par le porteur. Lot `9eb30c2` à intégrer. [Animation et contrôles](design/Visuels_Boutique_Bruleur.md#poussée-du-brasero).

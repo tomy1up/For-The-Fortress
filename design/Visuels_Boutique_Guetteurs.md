@@ -70,3 +70,13 @@ Le porteur valide le geste de tir et la reprise avec transfert de poids (`b9aecf
 Type 10, `defender.alliance.sentinel`. Le [dossier d’essai](essais/gestes_combat/sentinelle_elfe/) fournit la garde et trois angles (−12°, 0°, +12°), à 23 poses sur 0,92 s. La 14e pose est la première sans flèche. Le départ visuel se fait à 0,52 s, depuis la pointe indiquée dans `lachers.json` pour l’angle retenu. Choisir la pose dont l’angle est le plus proche du trajet depuis sa propre pointe. Relier cette pointe à l’impact en ligne droite et conserver cet axe de vol. La pointe de la flèche dessinée par le moteur doit coïncider avec le repère au départ.
 
 Sur une copie de la v0.220, contrôle de cinq tirs sur la mission 94 à ×1 et ×2 vers la droite (+12°) et la gauche (0°). Vérification de 17 points sur chaque trajet et de la pose à temps de combat figé. L’angle montant a été contrôlé sur planche. Les 69 poses sont cadrées et les semelles identiques à chaque image. Le validateur signale 33 dossiers et 0 problème, et la bibliothèque passe 174 contrôles. Les règles et valeurs de combat restent celles du jeu.
+
+## Lancer du Veilleur des cendres
+
+Le Veilleur, type 16, arme la hachette près de la hanche. Il charge sur sa jambe arrière puis avance l’épaule pour le lancer. Les doigts s’ouvrent au départ et le bras poursuit son geste avant de reprendre la garde. La longue-vue reste à la ceinture.
+
+[Animation sur la mission 94 à taille réelle](essais/gestes_combat/veilleur_cendres/Veilleur_des_cendres_en_jeu.gif)
+
+Le dossier `veilleur_cendres` contient la garde de `defender.horde.watcher` et trois planches de 21 poses sur 0,84 s, pour −12°, 0° et +12°. La dernière pose avec hachette s’affiche à 0,32 s. Le vol commence sur la première pose à main ouverte, à 0,36 s. Les points et angles de départ depuis la garde orientée, ainsi que le pivot et l’échelle de `hachette.png`, sont dans `lachers.json`. Choisir l’inclinaison d’après le trajet depuis son propre point de départ. Retourner le repère de départ et son angle avec la pose. La hachette tourne sur elle-même le long d’un segment direct jusqu’à l’impact. Lorsque l’impact est déjà derrière le point de lâcher à l’écran, jouer l’effet d’impact seul.
+
+Sur la copie v0.223, six tirs à gauche et à droite à ×1 et ×2, avec vérification de la pause et de 17 points par trajet. L’angle neutre a été vérifié sur planche. Les 63 poses gardent le même cadrage, des semelles stables et une reprise de garde identique. Le validateur relève zéro problème sur 38 dossiers et les 179 contrôles de la bibliothèque passent. Le moteur signale deux objets et une ressource encore en mémoire à la fermeture de la scène d’essai. Le geste attend l’avis du porteur.
