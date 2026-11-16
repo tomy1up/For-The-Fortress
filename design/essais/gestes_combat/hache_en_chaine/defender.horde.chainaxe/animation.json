@@ -1,0 +1,72 @@
+{
+  "id": "defender.horde.chainaxe",
+  "version": 1,
+  "facing": "right",
+  "foot": [
+    151.7560975609756,
+    313.74904458598724
+  ],
+  "display_height": 82.08298755186722,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        340,
+        326
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 24,
+      "frame_size": [
+        340,
+        326
+      ],
+      "mode": "event",
+      "duration": 0.96
+    },
+    "attack_up12": {
+      "file": "attack_up12.png",
+      "frames": 24,
+      "frame_size": [
+        340,
+        326
+      ],
+      "mode": "event",
+      "duration": 0.96
+    },
+    "attack_down12": {
+      "file": "attack_down12.png",
+      "frames": 24,
+      "frame_size": [
+        340,
+        326
+      ],
+      "mode": "event",
+      "duration": 0.96
+    },
+    "attack_down24": {
+      "file": "attack_down24.png",
+      "frames": 24,
+      "frame_size": [
+        340,
+        326
+      ],
+      "mode": "event",
+      "duration": 0.96
+    },
+    "attack_down36": {
+      "file": "attack_down36.png",
+      "frames": 24,
+      "frame_size": [
+        340,
+        326
+      ],
+      "mode": "event",
+      "duration": 0.96
+    }
+  }
+}
