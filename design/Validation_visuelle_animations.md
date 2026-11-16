@@ -67,7 +67,7 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 
 | Critère | Vérification sur la copie v0.220 |
 | --- | --- |
-| Appuis et mécanisme | Bras et cuillère pivotent ensemble. La bande du bas, patins et pieds compris, est identique sur les 24 poses. |
+| Appuis et mécanisme | Bras et cuillère pivotent ensemble. Dans les vues diagonales, la nouvelle projection place deux rangées de patins sur un même plan. Le châssis et les pieds du servant ne se déplacent pas durant le tir. |
 | Prise et lâcher | Pierre assise jusqu’à la première cuillère vide à 0,50 s. Trajet montant au départ, impact et deux cibles secondaires par tir. |
 | Retour | La cuillère vide dépasse sa position de garde puis revient. Première et dernière poses identiques. |
 | En jeu | Six tirs sur la mission 94 après correction de l’orientation. Quatre diagonales à ×1 et deux à ×2, garde face à la route, pose contrôlée en pause. [Capture à taille native](essais/gestes_combat/catapulte_gobeline/Catapulte_gobeline_en_jeu.gif). Avis du porteur en attente. |
