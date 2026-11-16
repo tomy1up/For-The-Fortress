@@ -110,4 +110,4 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | --- | --- |
 | Appuis et geste | Pieds stables et garde identique au début et à la fin des 120 poses. Prise au carquois et relevé de l’arc visibles à taille native. |
 | Lâcher | La flèche quitte l’arc à 0,60 s à partir de la pointe dessinée. Le vol suit le segment jusqu’à l’impact. |
-| En jeu | Six tirs sur la mission 94 à ×1 et ×2, en descente à droite et en visée neutre à gauche, avec pause. Les trois autres angles ont été contrôlés sur planche. [Capture](essais/gestes_combat/archer_double/Archer_double_en_jeu.gif). Avis du porteur attendu. |
+| En jeu | Six tirs sur la mission 94 à ×1 et ×2, en descente à droite et en visée neutre à gauche, avec pause. Les trois autres angles ont été contrôlés sur planche. [Capture](essais/gestes_combat/archer_double/Archer_double_en_jeu.gif). Lot `226ec17` validé par le porteur. |
