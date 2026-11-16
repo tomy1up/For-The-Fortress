@@ -115,6 +115,8 @@ var rng := RandomNumberGenerator.new()
 var synergies_enabled: bool = true # Désactivé uniquement dans les références historiques de test.
 var faction: int = 0
 var meta_ranks: Array = MetaTalents.empty_ranks()
+## Brûlure des unités à `curse_damage` hors famille du chaman (Pyromancien humain), appliquée depuis la v0.221 (décision du porteur, 16 novembre 2026) ; faux pour rejouer un ancien rapport.
+var burn_for_all_curse_units: bool = true
 var talent_rules: int = MetaTalents.Expanded.RULES_CURRENT # Jeu de règles des arbres de talents ; un autre jeu sert à rejouer un ancien rapport.
 var next_instance_id: int = 0
 var curses: Array[Dictionary] = []
@@ -1051,7 +1053,7 @@ func _resolve_instant() -> void:
 				# Les explosions restent centrées sur l'impact ; les ricochets avancent.
 				if family(defender.type) == 3:
 					origin = victim
-		elif family(defender.type) == 5:
+		if family(defender.type) == 5 or (burn_for_all_curse_units and family(defender.type) == 2 and float(stats.get("curse_damage",0.0)) > 0.0):
 			applications.append({"source_id": defender.instance_id, "enemy_id": primary.id, "damage": damage_for(stats,"curse",primary)})
 		shots.append(shot)
 		defender.ready_at = elapsed + stats.interval

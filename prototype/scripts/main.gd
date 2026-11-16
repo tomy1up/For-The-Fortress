@@ -2309,13 +2309,14 @@ func _shop_text_card(type: int) -> Dictionary:
 func _effect_text(stats: Dictionary, type: int) -> String:
 	var shop_card := _shop_text_card(type)
 	if not shop_card.is_empty(): return shop_card.tradeoff
+	var original_type: int = type
 	type = Model.family(type)
 	if type == 3:
 		return "%s rebond%s : %s dégâts chacun, distance < %s." % [stats.secondary_cap, "" if stats.secondary_cap == 1 else "s successifs", _number(stats.secondary_damage), _number(stats.radius)]
 	if type in [2, 4]:
 		return "Explosion : %s dégâts × %s cibles secondaires, rayon < %s." % [_number(stats.secondary_damage), stats.secondary_cap, _number(stats.radius)]
 	if type == 5:
-		return "Malédiction : %s dégâts à +1 s puis +2 s, même hors portée." % _number(stats.curse_damage)
+		return "%s : %s dégâts à +1 s puis +2 s, même hors portée." % [_curse_label(original_type),_number(stats.curse_damage)]
 	return ""
 
 func _recruit_role(type: int) -> String:
@@ -2354,20 +2355,26 @@ func _recruit_tooltip(type: int, error: String) -> String:
 	if not error.is_empty(): lines.append("Achat impossible : " + error)
 	return "\n".join(lines)
 
+## Dégâts sur la durée : « Brûlure » pour les unités de feu (Pyromancien humain, Brûleur de cendres), « Malédiction » pour les autres.
+func _curse_label(type: int) -> String:
+	return "Brûlure" if type in MapView.FIRE_CURSE_TYPES else "Malédiction"
+
 func _compact_damage(stats: Dictionary, type: int) -> String:
+	var original_type: int = type
 	type = Model.family(type)
 	var result: String = "Dégâts : %s" % _number(stats.damage)
 	# Alternatives de boutique sans effet secondaire (squelette, gnome) : ni rebond ni explosion a zero.
 	if type in [2,4] and int(stats.get("secondary_cap",0)) > 0: result += " · Explosion : %s × %d autres max." % [_number(stats.secondary_damage),stats.secondary_cap]
 	elif type == 3 and int(stats.get("secondary_cap",0)) > 0: result += " · Rebond : %s × %d max." % [_number(stats.secondary_damage),stats.secondary_cap]
-	elif type == 5 and float(stats.get("curse_damage",0.0)) > 0.0: result += " · Malédiction : %s après 1 s et 2 s" % _number(stats.curse_damage)
+	if float(stats.get("curse_damage",0.0)) > 0.0: result += " · %s : %s après 1 s et 2 s" % [_curse_label(original_type),_number(stats.curse_damage)]
 	return result
 
 func _compact_upgrade(current: Dictionary, future: Dictionary, type: int) -> String:
+	var original_type: int = type
 	type = Model.family(type)
 	var result: String = "Dégâts : %s → %s" % [_number(current.damage),_number(future.damage)]
-	if Model.family(type) in [2,3,4]: result += " · %s : %s → %s" % ["Rebond" if Model.family(type) == 3 else "Explosion",_number(current.secondary_damage),_number(future.secondary_damage)]
-	elif type == 5: result += " · Malédiction : %s → %s" % [_number(current.curse_damage),_number(future.curse_damage)]
+	if Model.family(type) in [2,3,4] and int(current.get("secondary_cap",0)) > 0: result += " · %s : %s → %s" % ["Rebond" if Model.family(type) == 3 else "Explosion",_number(current.secondary_damage),_number(future.secondary_damage)]
+	if float(current.get("curse_damage",0.0)) > 0.0: result += " · %s : %s → %s" % [_curse_label(original_type),_number(current.curse_damage),_number(future.curse_damage)]
 	return result
 
 func _toggle_inspection_numbers() -> void:

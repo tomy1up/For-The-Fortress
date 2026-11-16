@@ -57,6 +57,12 @@ static func talent_rules_for(version: String) -> int:
 	if minor < 168: return Model.MetaTalents.Expanded.RULES_HISTORICAL
 	return Model.MetaTalents.Expanded.RULES_V168 if minor == 168 else Model.MetaTalents.Expanded.RULES_CURRENT
 
+## La brûlure du Pyromancien humain s'applique depuis la v0.221 : les rapports plus anciens se rejouent sans elle.
+static func burn_rules_for(version: String) -> bool:
+	var parts: PackedStringArray = version.split(".")
+	if parts.size() < 2 or parts[0] != "0" or not parts[1].is_valid_int(): return true
+	return int(parts[1]) >= 221
+
 static func verify(data: Variant) -> Dictionary:
 	if not data is Dictionary: return _fail("Le rapport doit être un objet JSON.")
 	if data.get("schema_version") != 2: return _fail("Seuls les rapports au format 2 sont pris en charge.")
@@ -72,6 +78,7 @@ static func verify(data: Variant) -> Dictionary:
 		definition = Model.Maps.from_data(data.map_definition)
 		if definition.is_empty(): return _fail("Définition de carte invalide.")
 	var model = Model.new(true,definition)
+	model.burn_for_all_curse_units = burn_rules_for(data.game_version)
 	model.talent_rules = talent_rules_for(data.game_version) # Chaque rapport garde les valeurs de talents de sa version.
 	if data.has("combat_affix") and not model.configure_combat_affix(data.combat_affix): return _fail("Affixe de combat invalide.")
 	if not model.routes.is_empty():

@@ -49,6 +49,7 @@ func play(faction: int, mission: int, tree: int, layout: Array, alternative: int
 	m.meta_ranks = ranks
 	if not m.select_faction(faction): return -2
 	m.rng.seed = seed_value
+	m.burn_for_all_curse_units = OS.get_environment("NOBURN") != "1" # NOBURN=1 : règles d'avant la v0.221 (sans brûlure du Pyromancien)
 	var types: Array = Survey.natural_compositions(faction,tree)[0].duplicate()
 	var third: int = alternative if alternative >= 0 else faction*3+int(types[2])
 	if not m.buy(layout[0],faction*3+int(types[0])) or not m.buy(layout[1],faction*3+int(types[1])): return -2
