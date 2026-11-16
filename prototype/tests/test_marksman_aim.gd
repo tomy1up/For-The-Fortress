@@ -187,4 +187,14 @@ func run_checks() -> void:
 			check(not (23 in View.CURVED_TYPES),"Archer double : trajet rectiligne")
 	var dspec: Dictionary = Library.spec_for("defender.alliance.doublearcher")
 	check(not dspec.is_empty() and dspec.animations.has("attack_up36") and dspec.animations.has("attack_down36"),"Archer double : cinq planches chargées et valides")
+	# Arbalète lourde (type 24) : six planches choisies par l'écart minimal, carreau à 0,44 s depuis la pointe, trajet rectiligne.
+	check(is_equal_approx(View.launch_delay({"type":24}),0.44),"Carreau de l'arbalète lourde à 0,44 s")
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var heavy: Dictionary = {"type":24,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var hp: int = View.aim_pitch(heavy)
+			var htip: Vector2 = View.HEAVY_CROSSBOW_TIPS[hp]
+			check(hp in [-24,-12,0,12,24,36] and View.shot_origin(heavy).distance_to(View.project(from)+Vector2(htip.x*View.shot_facing(heavy),htip.y)) < 0.001,"Arbalète lourde : départ depuis la pointe de la planche %d" % hp)
+	var hspec: Dictionary = Library.spec_for("defender.alliance.heavycrossbow")
+	check(not hspec.is_empty() and hspec.animations.has("attack_up24") and hspec.animations.has("attack_down36"),"Arbalète lourde : six planches chargées et valides")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

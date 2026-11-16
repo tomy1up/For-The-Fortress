@@ -10,16 +10,16 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 151 à 160.
 const EXPECTED: Dictionary = {
-	151:{"map":"sky_aerie","length":46.0,"routes":1,"order":[3,4,2]},
-	152:{"map":"sky_nest","length":47.0,"routes":1,"order":[3,4,2]},
-	153:{"map":"sky_twinpeaks","length":44.0,"routes":2,"order":[3,4,2]},
-	154:{"map":"sky_triplenest","length":42.0,"routes":3,"order":[3,4,2]},
-	155:{"map":"sky_ledge","length":43.0,"routes":1,"order":[3,4,2]},
-	156:{"map":"sky_col","length":41.0,"routes":2,"order":[3,4,2]},
-	157:{"map":"sky_raptors","length":41.0,"routes":3,"order":[3,4,2]},
-	158:{"map":"sky_roost","length":44.0,"routes":2,"order":[3,4,2]},
-	159:{"map":"sky_azurefall","length":44.0,"routes":1,"order":[3,4,2]},
-	160:{"map":"sky_throne","length":39.0,"routes":3,"order":[3,4,2]},
+	151:{"map":"sky_aerie","length":38.0,"routes":1,"order":[3,4,2]},
+	152:{"map":"sky_nest","length":49.0,"routes":1,"order":[3,4,2]},
+	153:{"map":"sky_twinpeaks","length":34.0,"routes":2,"order":[3,4,2]},
+	154:{"map":"sky_triplenest","length":38.0,"routes":3,"order":[3,4,2]},
+	155:{"map":"sky_ledge","length":50.0,"routes":1,"order":[3,4,2]},
+	156:{"map":"sky_col","length":40.0,"routes":2,"order":[3,4,2]},
+	157:{"map":"sky_raptors","length":36.0,"routes":3,"order":[3,4,2]},
+	158:{"map":"sky_roost","length":38.0,"routes":2,"order":[3,4,2]},
+	159:{"map":"sky_azurefall","length":47.0,"routes":1,"order":[3,4,2]},
+	160:{"map":"sky_throne","length":36.0,"routes":3,"order":[3,4,2]},
 }
 var checks := 0
 var failures := 0

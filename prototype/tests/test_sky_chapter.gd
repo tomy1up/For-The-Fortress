@@ -8,16 +8,16 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 141 à 150.
 const EXPECTED: Dictionary = {
-	141:{"map":"sky_pontoon","length":34.0,"routes":1,"order":[3,4,2]},
-	142:{"map":"sky_mistbridge","length":35.0,"routes":1,"order":[3,4,2]},
-	143:{"map":"sky_cloudgate","length":38.0,"routes":2,"order":[3,4,2]},
+	141:{"map":"sky_pontoon","length":55.0,"routes":1,"order":[3,4,2]},
+	142:{"map":"sky_mistbridge","length":52.0,"routes":1,"order":[3,4,2]},
+	143:{"map":"sky_cloudgate","length":35.0,"routes":2,"order":[3,4,2]},
 	144:{"map":"sky_spires","length":36.0,"routes":3,"order":[3,4,2]},
-	145:{"map":"sky_gardens","length":31.0,"routes":1,"order":[3,4,2]},
-	146:{"map":"sky_belvedere","length":35.0,"routes":2,"order":[3,4,2]},
-	147:{"map":"sky_updrafts","length":35.0,"routes":3,"order":[3,4,2]},
-	148:{"map":"sky_dome","length":38.0,"routes":2,"order":[3,4,2]},
-	149:{"map":"sky_fallen","length":32.0,"routes":1,"order":[3,4,2]},
-	150:{"map":"sky_summit","length":33.0,"routes":3,"order":[3,4,2]},
+	145:{"map":"sky_gardens","length":41.0,"routes":1,"order":[3,4,2]},
+	146:{"map":"sky_belvedere","length":38.0,"routes":2,"order":[3,4,2]},
+	147:{"map":"sky_updrafts","length":38.0,"routes":3,"order":[3,4,2]},
+	148:{"map":"sky_dome","length":34.0,"routes":2,"order":[3,4,2]},
+	149:{"map":"sky_fallen","length":50.0,"routes":1,"order":[3,4,2]},
+	150:{"map":"sky_summit","length":36.0,"routes":3,"order":[3,4,2]},
 }
 var checks := 0
 var failures := 0
