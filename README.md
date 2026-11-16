@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.223**. Lisibilité : bandeau d'affixe avec compte à rebours, marqueurs d'effets plus grands. [Notes](design/essais/v0223_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.223).
+
 **Prototype v0.222**. Audit des unités et des bonus : dots du Pyromancien et talents du Mage, Exercice de tir étendu, aura à 4,2 cases. [Notes](design/essais/v0222_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.222).
 
 **Prototype v0.221**. Choix de l'unité de boutique dans la mission, dégâts recalés sur l'impact, Lance-éclats gobelin. [Notes](design/essais/v0221_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.221).

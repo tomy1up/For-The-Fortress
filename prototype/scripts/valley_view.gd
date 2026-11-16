@@ -718,6 +718,8 @@ func _draw_enemy_badges(enemy: Dictionary, bar_position: Vector2) -> void:
 	var textures := {"mark":FX_MARK,"loot":FX_LOOT,"volatile":FX_VOLATILE}
 	for index in range(badges.size()):
 		var center := Vector2(bar_position.x+12.0+(float(index)-float(badges.size()-1)*0.5)*FX_BADGE_SPACING,bar_position.y-10.0)
+		draw_circle(center,FX_BADGE_SIZE.x*0.62,Color(0.05,0.07,0.06,0.78),true,-1,true) # fond sombre : le marqueur reste lisible sur tous les décors
+		draw_arc(center,FX_BADGE_SIZE.x*0.62,0.0,TAU,20,FX_BADGE_COLORS[badges[index]],1.6,true)
 		draw_texture_rect(textures[badges[index]],Rect2(center-FX_BADGE_SIZE*0.5,FX_BADGE_SIZE),false)
 
 ## Explosions de réaction en chaîne : anneau bref et éclats, à la position de l'ennemi mort.
@@ -1226,10 +1228,10 @@ func _draw() -> void:
 			if actor.has("ghost"):
 				_draw_purchase_ghost(actor.ghost)
 			elif actor.has("defender"):
-				if model.guardian_aura(actor.slot) > 0.0: draw_texture_rect(FX_AURA,Rect2(actor.point+Vector2(-9.5,-1.0),Vector2(19,13)),false)
+				if model.guardian_aura(actor.slot) > 0.0: draw_texture_rect(FX_AURA,Rect2(actor.point+Vector2(-13.0,-3.0),Vector2(26,17)),false)
 				_draw_defender(actor.point, actor.defender.type, actor.defender.get("level", 1), actor.defender.get("branch", -1), defender_pose(actor.slot))
 			else:
-				if Model.enemy_is_slowed(actor.enemy): draw_texture_rect(FX_SLOW,Rect2(actor.point+Vector2(-14.5,-5.0),Vector2(29,14)),false)
+				if Model.enemy_is_slowed(actor.enemy): draw_texture_rect(FX_SLOW,Rect2(actor.point+Vector2(-19.0,-7.0),Vector2(38,19)),false)
 				var feedback: Array[Dictionary] = recent_enemy_damage(actor.enemy.id)
 				_draw_pillager(actor.point, actor.enemy,enemy_hit_strength(feedback),enemy_reaction_pose(actor.enemy,feedback,model.elapsed))
 				var ratio: float = clampf(visual_hp(actor.enemy) / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
@@ -1258,6 +1260,7 @@ func _draw() -> void:
 				_draw_impact(shot, model.elapsed - shot.time)
 		_draw_eliminations()
 		_draw_sold_defenders()
+	_draw_affix_banner()
 	for entry in entry_label_layouts():
 		var box:=StyleBoxFlat.new();box.bg_color=Color("10271f");box.border_color=entry.color
 		box.set_border_width_all(1);box.set_corner_radius_all(5)
@@ -1371,8 +1374,9 @@ const FX_LOOT := preload("res://assets/effects/shop/loot.png")
 const FX_VOLATILE := preload("res://assets/effects/shop/volatile.png")
 const FX_AURA := preload("res://assets/effects/shop/aura.png")
 const FX_BURST := preload("res://assets/effects/shop/volatile_burst.png")
-const FX_BADGE_SIZE := Vector2(16,16)
-const FX_BADGE_SPACING := 18.0
+const FX_BADGE_SIZE := Vector2(22,22) # lisibilité (v0.223) : 16 px était trop petit dans une grosse bataille
+const FX_BADGE_SPACING := 26.0
+const FX_BADGE_COLORS: Dictionary = {"mark":Color(1.0,0.45,0.62),"loot":Color(1.0,0.82,0.3),"volatile":Color(1.0,0.55,0.15)}
 const FX_BURST_DURATION := 0.45
 const ROCKFALL_EFFECT_ID := "effect.rockfall"
 const SEAMIST_EFFECT_ID := "effect.seamist"
@@ -1944,6 +1948,63 @@ func _draw_eruption() -> void:
 		for index in range(5):
 			var drift := Vector2(sin(index*2.1+model.elapsed*1.3)*9.0,-14.0-index*4.0+cos(index*1.7+model.elapsed)*2.0)
 			draw_circle(center+drift,10.0-index,Color(0.36,0.34,0.33,0.55))
+
+## Bandeau d'affixe de la mission (lisibilité, v0.223) : annonce, compte à rebours et effet de l'événement en cours, au-dessus du plateau.
+## Retourne {} sans affixe actif ; sinon {"text", "state" ("warning", "active" ou "permanent"), "fraction" (temps restant / durée de la phase)}.
+static func affix_banner(model) -> Dictionary:
+	if model == null or model.combat_affix.is_empty(): return {}
+	var id: String = str(model.combat_affix.get("id",""))
+	if id == "headwinds":
+		return {"text":"Vents contraires · cadence −%d %%" % (100-int(model.combat_affix.cadence_percent)),"state":"permanent","fraction":1.0}
+	var status: Dictionary = {}
+	var name: String = ""
+	var effect: String = ""
+	match id:
+		"eruptions":
+			status = model.eruption_status();name = "Éruption"
+			if not status.is_empty(): effect = "E%d %s" % [int(status.slot)+1,"sera désactivé" if status.state == "warning" else "désactivé"]
+		"sandstorm":
+			status = model.storm_status();name = "Tempête de sable";effect = "portée −%d %%" % int(model.combat_affix.range_percent)
+		"seamist":
+			status = model.mist_status();name = "Brume marine";effect = "or −%d %%" % int(model.combat_affix.gold_percent)
+		"rockfall":
+			status = model.rockfall_status();name = "Éboulement"
+			if not status.is_empty():
+				for index in range(model.routes.size()):
+					if str(model.routes[index].id) == str(status.route_id): effect = "entrée %d %s" % [index+1,"sera bloquée" if status.state == "warning" else "bloquée"]
+	if status.is_empty(): return {}
+	var remaining: float = maxf(0.0,float(status.remaining))
+	var warning: bool = status.state == "warning"
+	var phase_length: float = float(model.combat_affix.warning) if warning else float(model.combat_affix.duration)
+	var text: String = ("%s dans %d s" % [name,int(ceil(remaining))]) if warning else ("%s · encore %d s" % [name,int(ceil(remaining))])
+	if not effect.is_empty(): text += " · " + effect
+	return {"text":text,"state":str(status.state),"fraction":clampf(remaining/phase_length,0.0,1.0) if phase_length > 0.0 else 0.0}
+
+func _draw_affix_banner() -> void:
+	var banner: Dictionary = affix_banner(model)
+	if banner.is_empty(): return
+	var font: Font = ThemeDB.fallback_font
+	var size := Vector2(430,34)
+	var area := Rect2(Vector2(640.0-size.x*0.5,112.0),size)
+	var warning: bool = banner.state == "warning"
+	var pulse: float = 0.5+0.5*sin(Time.get_ticks_msec()/1000.0*8.0)
+	var accent: Color = Color(1.0,0.62,0.16) if warning else Color(0.95,0.32,0.26) if banner.state == "active" else Color(0.6,0.8,0.95)
+	var box := StyleBoxFlat.new()
+	box.bg_color = Color(0.07,0.09,0.08,0.88)
+	box.border_color = Color(accent,0.55+0.45*pulse) if warning else accent
+	box.set_border_width_all(2)
+	box.set_corner_radius_all(7)
+	draw_style_box(box,area)
+	# Pictogramme : triangle d'alerte (annonce), disque plein (en cours), vague (permanent).
+	var icon: Vector2 = area.position+Vector2(20,17)
+	if banner.state == "permanent":
+		draw_arc(icon,7.0,0.0,TAU,16,accent,2.0,true)
+	else:
+		draw_colored_polygon(PackedVector2Array([icon+Vector2(0,-9),icon+Vector2(9,7),icon+Vector2(-9,7)]),accent)
+		draw_string(font,icon+Vector2(-3,6),"!",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color(0.1,0.07,0.04))
+	draw_string(font,area.position+Vector2(38,22),str(banner.text),HORIZONTAL_ALIGNMENT_LEFT,size.x-48.0,15,Color(0.97,0.95,0.88))
+	if banner.state != "permanent":
+		draw_rect(Rect2(area.position+Vector2(8,size.y-6),Vector2((size.x-16.0)*float(banner.fraction),3)),accent)
 
 func _draw_valley_water() -> void:
 	# La rivière et le pont sont des éléments visuels, sans collision.
