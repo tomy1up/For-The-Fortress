@@ -399,6 +399,8 @@ func _ready() -> void:
 		if capture_state in ["effects","damage_tick","elimination"]:
 			if capture_state == "damage_tick": capture_type = 5
 			model.reset()
+			for argument in OS.get_cmdline_user_args():
+				if argument.begins_with("--capture-hp-percent="): model.configure_enemy_hp(int(argument.trim_prefix("--capture-hp-percent="))) # cibles robustes : les marqueurs d'effet restent visibles
 			var effect_faction: int = (0 if capture_type < 3 else 1) if capture_type < 6 else (0 if capture_type < 8 else 1) if capture_type < 10 else int(Model.Shop.for_type(capture_type).faction)
 			if capture_type >= 6: model.configure_auxiliary(capture_type) # Alternatives de boutique (types 6 à 47) : capture visuelle de leur tir.
 			model.select_faction(effect_faction)
@@ -429,6 +431,8 @@ func _ready() -> void:
 				model.advance(0.12)
 				print("ELIMINATION_VISIBLE=",not map_view.recent_eliminations().is_empty())
 			if "--capture-attack-pose" in OS.get_cmdline_user_args(): model.advance(MapView.ATTACK_POSE_DURATION/2)
+			for argument in OS.get_cmdline_user_args():
+				if argument.begins_with("--capture-after="): model.advance(float(argument.trim_prefix("--capture-after="))) # contrôle des marqueurs d'effet quelques instants après l'impact
 			if "--capture-projectile" in OS.get_cmdline_user_args(): model.advance(MapView.launch_delay({"type":capture_type})+MapView.PROJECTILE_FLIGHT/2) # lâcher différé compris
 			if "--capture-axe-bounce" in OS.get_cmdline_user_args():
 				var bounce_shot: Dictionary = model.shots.back()
