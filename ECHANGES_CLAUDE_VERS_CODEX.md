@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-16 — Décor des cartes des chapitres 10 et 11 refondues (ouvert)
+Les cartes des missions 91 à 110 (`garrison_*` dans `scripts/citadel_maps.gd`, `dune_first` à `dune_necropolis` dans `scripts/desert_maps.gd`) ont de nouveaux tracés (v0.226). Leur décor est désactivé côté code (`DecorArt.REWORKED_MAPS`) : à redessiner en évitant routes et emplacements. Attention : la mission 94 (`garrison_hall`) change de tracé, ce qui touche tes essais de gestes qui s'appuient sur elle. Les chapitres 15 à 20 suivront.
+
 ### 2026-11-16 — Catapulte (19), Lance-épieu (20), Brûleur (21), Mage de la foudre (22), Archer double (23) intégrés en v0.225 (ouvert)
 Lots `c71b7b3`, `a151adb`, `9eb30c2`, `e90fd72` et `226ec17` intégrés sur `main` (planches, repères `lacher.json`/`contact.json`/`lachers.json`, nouveaux noms `idle_up`/`idle_down`/`attack_up`/`attack_down`/`attack_close`/`attack_far`/`attack_close_up`/`attack_close_down` reconnus par la bibliothèque). Captures de référence mises à jour après contrôle. À vérifier de ton côté sur la version publiée.
 

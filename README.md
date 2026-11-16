@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.226**. Refonte des cartes, chapitres 10 et 11 (missions 91 à 110) : vingt tracés nouveaux, calibrés par simulation. [Notes](design/essais/v0226_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.226).
+
 **Prototype v0.225**. Refonte des cartes, chapitres 13 et 14 (missions 121 à 140) : vingt tracés nouveaux à une, deux ou trois routes, fusions et croisements, calibrés par simulation ; gestes de la Catapulte gobeline, du Lance-épieu orc, du Brûleur de cendres, du Mage de la foudre et de l'Archer double. [Notes](design/essais/v0225_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.225).
 
 **Prototype v0.224**. Refonte des cartes, chapitre pilote 12 : dix tracés nouveaux (croisements, fusions, serpentins), chemin utile et équilibre calibré par simulation. [Notes](design/essais/v0224_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.224).

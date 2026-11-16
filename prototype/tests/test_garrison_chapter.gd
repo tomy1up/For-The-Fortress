@@ -8,16 +8,16 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 91 à 100.
 const EXPECTED: Dictionary = {
-	91:{"map":"garrison_breach","length":34.0,"routes":1},
-	92:{"map":"garrison_siege","length":35.0,"routes":1},
-	93:{"map":"garrison_machicolations","length":38.0,"routes":2},
-	94:{"map":"garrison_hall","length":36.0,"routes":3},
-	95:{"map":"garrison_barracks","length":31.0,"routes":1},
-	96:{"map":"garrison_watchtower","length":35.0,"routes":2},
+	91:{"map":"garrison_breach","length":42.0,"routes":1},
+	92:{"map":"garrison_siege","length":48.0,"routes":1},
+	93:{"map":"garrison_machicolations","length":33.0,"routes":2},
+	94:{"map":"garrison_hall","length":35.0,"routes":3},
+	95:{"map":"garrison_barracks","length":50.0,"routes":1},
+	96:{"map":"garrison_watchtower","length":29.0,"routes":2},
 	97:{"map":"garrison_armoury","length":35.0,"routes":3},
-	98:{"map":"garrison_stairs","length":38.0,"routes":2},
-	99:{"map":"garrison_throne","length":32.0,"routes":1},
-	100:{"map":"garrison_heart","length":33.0,"routes":3},
+	98:{"map":"garrison_stairs","length":33.0,"routes":2},
+	99:{"map":"garrison_throne","length":43.0,"routes":1},
+	100:{"map":"garrison_heart","length":38.0,"routes":3},
 }
 var checks := 0
 var failures := 0

@@ -8,15 +8,15 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 101 à 110.
 const EXPECTED: Dictionary = {
-	101:{"map":"dune_first","length":24.0,"routes":1},
-	102:{"map":"dune_oasis","length":29.0,"routes":1},
-	103:{"map":"dune_canyon","length":29.0,"routes":2},
-	104:{"map":"dune_columns","length":27.0,"routes":3},
-	105:{"map":"dune_caravans","length":25.0,"routes":1},
-	106:{"map":"dune_temple","length":32.0,"routes":2},
-	107:{"map":"dune_well","length":29.0,"routes":3},
+	101:{"map":"dune_first","length":48.0,"routes":1},
+	102:{"map":"dune_oasis","length":33.0,"routes":1},
+	103:{"map":"dune_canyon","length":32.0,"routes":2},
+	104:{"map":"dune_columns","length":31.0,"routes":3},
+	105:{"map":"dune_caravans","length":43.0,"routes":1},
+	106:{"map":"dune_temple","length":29.0,"routes":2},
+	107:{"map":"dune_well","length":32.0,"routes":3},
 	108:{"map":"dune_obelisks","length":32.0,"routes":2},
-	109:{"map":"dune_sea","length":28.0,"routes":1},
+	109:{"map":"dune_sea","length":50.0,"routes":1},
 	110:{"map":"dune_necropolis","length":29.0,"routes":3},
 }
 var checks := 0
