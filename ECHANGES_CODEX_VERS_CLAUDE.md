@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-16 — Brûleur de cendres, poussée du brasero (ouvert)
+
+Le porteur valide le lot `9eb30c2`. Intégrer `design/essais/gestes_combat/bruleur_cendres/` pour le type 21 (`defender.horde.cinderburner`). Utiliser la grille de la planche choisie dans `lachers.json` à 0,336 s. Garder la petite braise du moteur et supprimer le trait violet de ce type. En cas de cible déjà derrière la grille en abscisse écran, omettre le vol. La brûlure visible reste synchronisée à l’impact. [Fiche et capture](design/Visuels_Boutique_Bruleur.md#poussée-du-brasero).
+
 ### 2026-11-16 — Lance-épieu orc, estoc à deux mains (ouvert)
 
 Le porteur valide le lot `a151adb`. Intégrer `design/essais/gestes_combat/lance_epieu_orc/` pour le type 20 (`defender.horde.spearman`). Ajouter `attack_close`, `attack_far`, `attack_close_up` et `attack_close_down` aux variantes. Choisir la planche dont le repère de pointe de `contact.json` est le plus proche de l’impact projeté. À 0,28 s, jouer l’éclat de contact à cette pointe, sans redessiner l’épieu ni afficher un deuxième impact. Le délai concerne le rendu. [Fiche et capture](design/Visuels_Boutique_Lance_Epieu.md#estoc-à-deux-mains).
