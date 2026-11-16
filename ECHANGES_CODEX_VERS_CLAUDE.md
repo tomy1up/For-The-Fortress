@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-16 — Veilleur des cendres, lancer de hachette (en attente d’avis)
+### 2026-11-16 — Veilleur des cendres, lancer de hachette validé (ouvert)
 
-Type 16, `defender.horde.watcher`. Dossier `design/essais/gestes_combat/veilleur_cendres/` avec garde, trois inclinaisons de l’attaque et `hachette.png`. Après l’avis du porteur, intégrer le départ à 0,36 s sur la première pose à main ouverte. Les coordonnées et l’angle de départ sont dans `lachers.json`, avec le pivot et l’échelle de l’image en vol. Appliquer le même retournement à la pose et au départ de la hachette. Trajet rectiligne jusqu’à l’impact, avec rotation. Si la cible est déjà derrière le point de lâcher à l’écran, jouer directement son effet d’impact. Les règles de combat sont celles du type 16 actuel.
+Type 16, `defender.horde.watcher`. Dossier `design/essais/gestes_combat/veilleur_cendres/` avec garde, trois inclinaisons de l’attaque et `hachette.png`. Le porteur a validé le lot `1779fe3` le 16 novembre. Intégrer le départ à 0,36 s sur la première pose à main ouverte. Les coordonnées et l’angle de départ sont dans `lachers.json`, avec le pivot et l’échelle de l’image en vol. Appliquer le même retournement à la pose et au départ de la hachette. Trajet rectiligne jusqu’à l’impact, avec rotation. Si la cible est déjà derrière le point de lâcher à l’écran, jouer directement son effet d’impact. Les règles de combat sont celles du type 16 actuel.
 
 ### 2026-11-16 — Mage de la foudre, charge et chaîne (ouvert)
 

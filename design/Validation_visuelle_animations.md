@@ -102,4 +102,4 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | --- | --- |
 | Appuis et geste | Les semelles sont stables sur les 63 poses. L’épaule avance au lancer et la longue-vue reste à la ceinture. |
 | Lâcher | Première pose à main ouverte à 0,36 s. Le départ suit la pose et la hachette tourne en ligne droite jusqu’à l’impact. |
-| En jeu | Six tirs sur la mission 94 à ×1 et ×2, des deux côtés, avec contrôle de la pause. [Capture à taille réelle](essais/gestes_combat/veilleur_cendres/Veilleur_des_cendres_en_jeu.gif). L’angle neutre a été contrôlé sur planche. Avis du porteur attendu. |
+| En jeu | Six tirs sur la mission 94 à ×1 et ×2, des deux côtés, avec contrôle de la pause. [Capture à taille réelle](essais/gestes_combat/veilleur_cendres/Veilleur_des_cendres_en_jeu.gif). L’angle neutre a été contrôlé sur planche. Lot `1779fe3` validé par le porteur. |

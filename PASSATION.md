@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**16 novembre — Veilleur des cendres, type 16.** Lancer bas avec transfert d’appui et trois inclinaisons, longue-vue à la ceinture. Hachette lâchée à 0,36 s depuis la main, rotation sur un trajet rectiligne. Six tirs sur la mission 94 à ×1 et ×2, des deux côtés et avec pause. 38 dossiers valides et 179 contrôles réussis. [Fiche et capture](design/Visuels_Boutique_Guetteurs.md#lancer-du-veilleur-des-cendres). Avis du porteur attendu.
+**16 novembre — Veilleur des cendres, type 16.** Lancer bas avec transfert d’appui et trois inclinaisons, longue-vue à la ceinture. Hachette lâchée à 0,36 s depuis la main, rotation sur un trajet rectiligne. Six tirs sur la mission 94 à ×1 et ×2, des deux côtés et avec pause. 38 dossiers valides et 179 contrôles réussis. [Fiche et capture](design/Visuels_Boutique_Guetteurs.md#lancer-du-veilleur-des-cendres). Lot `1779fe3` validé par le porteur le 16 novembre 2026, à intégrer par Claude.
 
 **16 novembre — Mage de la foudre, type 22.** Charge bleu pâle entre les mains, transfert de poids et trois inclinaisons. Décharge depuis la main à 0,32 s avec chaîne vers les cibles touchées. Six tirs à ×1 et ×2 dans les deux sens sur la mission 94, avec pause. 37 dossiers valides et 178 contrôles réussis. [Fiche et capture](design/Visuels_Boutique_Mage_Foudre.md#charge-et-éclair-en-chaîne). Lot `e90fd72` validé par le porteur, à intégrer par Claude.
 
