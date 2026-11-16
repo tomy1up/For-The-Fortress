@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-16 — Mage de la foudre, charge et chaîne (ouvert)
 
-Après validation du porteur, reprendre `design/essais/gestes_combat/mage_foudre/` pour le type 22. Jouer l’éclair du moteur à 0,32 s depuis le repère de main de la planche sélectionnée dans `lachers.json`. Garder les ramifications sur les cibles du tir et les éclats aux impacts, avec une seule chaîne dessinée. [Fiche et capture](design/Visuels_Boutique_Mage_Foudre.md#charge-et-éclair-en-chaîne).
+Le porteur valide le lot `e90fd72`. Intégrer `design/essais/gestes_combat/mage_foudre/` pour le type 22. Jouer l’éclair du moteur à 0,32 s depuis le repère de main de la planche sélectionnée dans `lachers.json`. Garder les ramifications sur les cibles du tir et les éclats aux impacts, avec une seule chaîne dessinée. [Fiche et capture](design/Visuels_Boutique_Mage_Foudre.md#charge-et-éclair-en-chaîne).
 
 ### 2026-11-16 — Brûleur de cendres, poussée du brasero (ouvert)
 

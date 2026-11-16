@@ -94,4 +94,4 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | --- | --- |
 | Appuis et geste | Les semelles restent identiques dans les 60 poses. Les mains resserrent l’arc puis l’épaule accompagne la décharge. |
 | Éclair | Part à 0,32 s depuis la main avancée. La chaîne atteint les points du tir et chaque impact testé correspond à un ennemi touché. |
-| En jeu | Six tirs dans les deux sens à ×1 et ×2, avec pause, sur la mission 94. [Capture à taille réelle](essais/gestes_combat/mage_foudre/Mage_de_la_foudre_en_jeu.gif). Avis du porteur en attente. |
+| En jeu | Six tirs dans les deux sens à ×1 et ×2, avec pause, sur la mission 94. [Capture à taille réelle](essais/gestes_combat/mage_foudre/Mage_de_la_foudre_en_jeu.gif). Lot `e90fd72` validé par le porteur. |
