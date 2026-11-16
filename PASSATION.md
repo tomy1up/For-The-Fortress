@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**16 novembre — Grenadier gobelin, type 9.** Lancer court avec mouvement du buste, suivi du bras et recharge à la ceinture. Lâcher à 0,42 s avec sprite assorti. Copie v0.220, mission 94, six tirs dans les deux sens à ×1 et ×2 avec pause. Validateur sans problème et 175 contrôles de bibliothèque réussis. [Animation et repères](design/Visuels_Gestes_Combat.md#lancer-du-grenadier-gobelin). Attend l’avis du porteur.
+
 **16 novembre — Sentinelle elfe, type 10.** Le porteur approuve le geste de tir et la reprise des appuis et du buste. Intégration du lot `b9aecf9` à faire par Claude. Trois inclinaisons sur 0,92 s, lâcher à 0,52 s, flèche rectiligne. Cinq tirs avec pose contrôlée à temps figé dans les deux sens à ×1 et ×2 sur la mission 94, copie v0.220. Validateur sans problème et 174 contrôles de bibliothèque réussis. [Fiche et capture](design/Visuels_Boutique_Guetteurs.md#tir-de-la-sentinelle-elfe).
 
 **15 novembre — Chaman orc.** Le porteur valide le geste et accueille favorablement le gabarit corrigé (`59be9cd`). Variante de 28 images à intégrer avec la synchronisation du sort. Garde identique pixel pour pixel. Captures à taille native à ×1 et ×2 sur copie v0.208 et à temps figé. Éclair calé sur la poussée du bâton, anneau de malédiction à synchroniser côté rendu. Validateur : 25 dossiers, 0 problème. Bibliothèque : 157 contrôles réussis. [Fiche et boucle](design/Visuels_Chaman_Incantation.md).

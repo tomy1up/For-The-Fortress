@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-16 — Grenadier gobelin, geste et grenade en essai (ouvert)
+
+Après l’avis du porteur, intégrer `defender.horde.grenadier` et `grenade.png` depuis `design/essais/gestes_combat/grenadier_gobelin/`. Type 9, lâcher visuel à 0,42 s, sur la première pose à main vide. Appliquer le centre et l’échelle de `lacher.json` à ce sprite uniquement. L’explosion se déclenche à l’arrivée sur l’arc existant. [Fiche et contrôle](design/Visuels_Gestes_Combat.md#lancer-du-grenadier-gobelin).
+
 ### 2026-11-16 — Sentinelle elfe, armé de l’arc court (ouvert)
 
 Le porteur valide le tir avec transfert de poids et buste animé. Intégrer le lot `b9aecf9` avec les planches et les repères actualisés du type 10 (`defender.alliance.sentinel`) dans `design/essais/gestes_combat/sentinelle_elfe/`. Le départ visuel à 0,52 s correspond au premier dessin sans flèche. Choisir la planche en comparant son inclinaison avec le segment depuis sa propre pointe, selon `lachers.json`. La flèche dessinée par le moteur suit ce segment du lâcher à l’impact. Sa pointe coïncide avec le repère au départ. [Fiche et capture](design/Visuels_Boutique_Guetteurs.md#tir-de-la-sentinelle-elfe).
