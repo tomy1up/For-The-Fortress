@@ -176,4 +176,15 @@ func run_checks() -> void:
 			check(lp in [-12,0,12] and View.shot_origin(bolt).distance_to(View.project(from)+Vector2(hand.x*View.shot_facing(bolt),hand.y)) < 0.001,"Mage de la foudre : éclair parti de la main de la planche %d" % lp)
 	var gspec: Dictionary = Library.spec_for("defender.alliance.lightning")
 	check(not gspec.is_empty() and gspec.animations.has("attack_up12") and gspec.animations.has("attack_down12"),"Mage de la foudre : trois planches chargées et valides")
+	# Archer double (type 23) : cinq planches choisies par l'écart minimal, flèche à 0,60 s depuis la pointe encochée, trajet rectiligne.
+	check(is_equal_approx(View.launch_delay({"type":23}),0.6),"Flèche de l'archer double à 0,60 s")
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var twin: Dictionary = {"type":23,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var tp: int = View.aim_pitch(twin)
+			var ttip: Vector2 = View.DOUBLE_ARCHER_TIPS[tp]
+			check(tp in [-36,-12,0,12,36] and View.shot_origin(twin).distance_to(View.project(from)+Vector2(ttip.x*View.shot_facing(twin),ttip.y)) < 0.001,"Archer double : départ depuis la pointe de la planche %d" % tp)
+			check(not (23 in View.CURVED_TYPES),"Archer double : trajet rectiligne")
+	var dspec: Dictionary = Library.spec_for("defender.alliance.doublearcher")
+	check(not dspec.is_empty() and dspec.animations.has("attack_up36") and dspec.animations.has("attack_down36"),"Archer double : cinq planches chargées et valides")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
