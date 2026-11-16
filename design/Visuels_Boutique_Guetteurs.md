@@ -63,7 +63,7 @@ Les 60 cadres contiennent l’arme et le personnage. Comparaison sur la mission 
 
 ## Tir de la Sentinelle elfe
 
-Le porteur approuve le geste de tir et demande que le corps y participe. Dans cette reprise, la Sentinelle engage son poids au lever de l’arc, recule l’épaule de corde à pleine tension, puis ramène le buste vers l’avant avec un léger retard de la tête. Le bassin accompagne le mouvement et les semelles restent ancrées. Les planches commencent et se terminent sur le dessin de garde à l’identique.
+Le porteur valide le geste de tir et la reprise avec transfert de poids (`b9aecf9`). la Sentinelle engage son poids au lever de l’arc, recule l’épaule de corde à pleine tension, puis ramène le buste vers l’avant avec un léger retard de la tête. Le bassin accompagne le mouvement et les semelles restent ancrées. Les planches commencent et se terminent sur le dessin de garde à l’identique.
 
 [Comparatif avant et après à ×1](essais/gestes_combat/sentinelle_elfe/Sentinelle_elfe_avant_apres.gif) · [Boucle en jeu à taille native](essais/gestes_combat/sentinelle_elfe/Sentinelle_elfe_en_jeu.gif)
 
