@@ -118,4 +118,4 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | --- | --- |
 | Appuis et recul | Semelles stables sur les 168 poses. Le recul remonte dans l’épaule avant la reprise de garde. |
 | Carreau | Départ à 0,44 s depuis la pointe dessinée. Trajet rectiligne, avec impact seul à bout portant quand le départ projeté dépasse la cible. |
-| En jeu | Six tirs sur le nouveau tracé de la mission 94 à ×1 et ×2, des deux côtés et avec pause. [Capture](essais/gestes_combat/arbalete_lourde/Arbalete_lourde_en_jeu.gif). Avis du porteur attendu. |
+| En jeu | Six tirs sur le nouveau tracé de la mission 94 à ×1 et ×2, des deux côtés et avec pause. [Capture](essais/gestes_combat/arbalete_lourde/Arbalete_lourde_en_jeu.gif). Lot `aa7462b` validé par le porteur. |

@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-16 — Arbalète lourde, tir à genou et recul (en attente d’avis)
+### 2026-11-16 — Arbalète lourde, tir à genou et recul validés (ouvert)
 
-Type 24, `defender.alliance.heavycrossbow`. Lot dans `design/essais/gestes_combat/arbalete_lourde/`. Après l’avis du porteur, brancher la garde et les six inclinaisons. Le carreau part à 0,44 s depuis la pointe relevée dans `lachers.json`. Choisir parmi les repères dont la cible se trouve vers l’avant celui qui donne le plus petit écart entre l’inclinaison dessinée et le trajet vers l’impact. Le repère suit le retournement de la planche. Préserver un trajet rectiligne et aligner la pointe du carreau dessinée en vol sur le repère au départ. Si la cible est déjà derrière ce repère à l’écran, jouer l’impact seul. Premier contrôle sur la mission 94 refondue en v0.226, des deux côtés à ×1 et ×2. Le tir unique et les multiplicateurs du type 24 sont ceux du jeu.
+Type 24, `defender.alliance.heavycrossbow`. Lot dans `design/essais/gestes_combat/arbalete_lourde/`. Le porteur a validé le lot `aa7462b` le 16 novembre. Brancher la garde et les six inclinaisons. Le carreau part à 0,44 s depuis la pointe relevée dans `lachers.json`. Choisir parmi les repères dont la cible se trouve vers l’avant celui qui donne le plus petit écart entre l’inclinaison dessinée et le trajet vers l’impact. Le repère suit le retournement de la planche. Préserver un trajet rectiligne et aligner la pointe du carreau dessinée en vol sur le repère au départ. Si la cible est déjà derrière ce repère à l’écran, jouer l’impact seul. Premier contrôle sur la mission 94 refondue en v0.226, des deux côtés à ×1 et ×2. Le tir unique et les multiplicateurs du type 24 sont ceux du jeu.
 
 ### 2026-11-16 — Archer double, prise au carquois et tir validés (ouvert)
 
