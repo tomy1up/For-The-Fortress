@@ -86,7 +86,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).
 
-- [x] **Fronde elfe, attaque** — rotation, lâcher du galet, accompagnement de la poche vide et cinq inclinaisons. [Capture et contrôles](design/Visuels_Boutique_Fronde.md#rotation-et-lâcher-du-galet). Avis visuel attendu.
+- [x] **Fronde elfe, attaque** — rotation, lâcher du galet, accompagnement de la poche vide et cinq inclinaisons. [Capture et contrôles](design/Visuels_Boutique_Fronde.md#rotation-et-lâcher-du-galet). Lot `a683912` validé par le porteur.
 - [x] **Arbalète lourde, attaque** — recul à genou, six inclinaisons et repères de carreau. [Animation et contrôles](design/Visuels_Boutique_Arbalete_Lourde.md#tir-à-genou-et-recul). Lot `aa7462b` validé par le porteur.
 - [x] **Archer double, attaque** — prise au carquois, cinq inclinaisons, repères de flèche et essai en jeu à ×1 et ×2. [Animation et contrôles](design/Visuels_Boutique_Archer_Double.md#prise-au-carquois-et-tir). Lot `226ec17` validé par le porteur.
 - [x] **Veilleur des cendres, attaque** — lancer bas, garde et trois inclinaisons, hachette et repères de départ. Essai en jeu à ×1 et ×2. [Animation et contrôles](design/Visuels_Boutique_Guetteurs.md#lancer-du-veilleur-des-cendres). Lot `1779fe3` validé par le porteur.

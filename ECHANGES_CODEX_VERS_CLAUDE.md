@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-16 — Fronde elfe, rotation et lâcher du galet (en attente d’avis)
+### 2026-11-16 — Fronde elfe, rotation et lâcher du galet validés (ouvert)
 
-Type 25, `defender.alliance.sling`. Lot dans `design/essais/gestes_combat/fronde_elfe/` avec garde et cinq inclinaisons. Après l’avis du porteur, synchroniser le galet existant à 0,40 s avec la première pose à poche vide. `lachers.json` donne le centre du galet pour chaque planche depuis le pied. Choisir l’inclinaison la plus proche du trajet vers l’impact depuis son propre repère. Retourner ensemble pose et repère, puis garder le vol rectiligne et l’impact unique. Le bonus contre les rapides et le malus contre les lourds restent ceux du catalogue.
+Type 25, `defender.alliance.sling`. Lot dans `design/essais/gestes_combat/fronde_elfe/` avec garde et cinq inclinaisons. Le porteur a validé le lot `a683912` le 16 novembre. Synchroniser le galet existant à 0,40 s avec la première pose à poche vide. `lachers.json` donne le centre du galet pour chaque planche depuis le pied. Choisir l’inclinaison la plus proche du trajet vers l’impact depuis son propre repère. Retourner ensemble pose et repère, puis garder le vol rectiligne et l’impact unique. Le bonus contre les rapides et le malus contre les lourds restent ceux du catalogue.
 
 ### 2026-11-16 — Arbalète lourde, tir à genou et recul validés (ouvert)
 
