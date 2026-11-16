@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "id": "defender.alliance.bombard",
+  "facing": "right",
+  "display_height": 68.53493013972056,
+  "foot": [
+    188.5,
+    270.5
+  ],
+  "muzzle": [
+    319.4149800539561,
+    102.46936403026012
+  ],
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        384,
+        296
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 20,
+      "frame_size": [
+        384,
+        296
+      ],
+      "mode": "event",
+      "duration": 0.64
+    }
+  }
+}

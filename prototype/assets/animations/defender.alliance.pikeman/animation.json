@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "id": "defender.alliance.pikeman",
+  "facing": "right",
+  "display_height": 78.96995708154506,
+  "foot": [
+    157.4,
+    300.40000000000003
+  ],
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        400,
+        320
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 20,
+      "frame_size": [
+        400,
+        320
+      ],
+      "mode": "event",
+      "duration": 0.64
+    },
+    "attack_up12": {
+      "file": "attack_up12.png",
+      "frames": 20,
+      "frame_size": [
+        400,
+        320
+      ],
+      "mode": "event",
+      "duration": 0.64
+    },
+    "attack_down12": {
+      "file": "attack_down12.png",
+      "frames": 20,
+      "frame_size": [
+        400,
+        320
+      ],
+      "mode": "event",
+      "duration": 0.64
+    }
+  }
+}

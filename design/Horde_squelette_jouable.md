@@ -1,5 +1,8 @@
 # Horde : squelette jouable (piste O-021)
 
+> **Archive (15 novembre 2026).** Le porteur a fixé la boutique à 20 unités par faction : le Fantassin squelette et le Tirailleur gnome sont retirés en v0.217 (MAJ-49 du GDD). Cette fiche garde l'historique de l'essai.
+
+
 **Statut : cadrage de conception, rien n'est implémenté. Toutes les valeurs et propositions sont des réglages de prototype à confirmer.**
 
 ## Décisions du porteur (15 novembre 2026)

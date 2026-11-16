@@ -4,6 +4,8 @@ var highlighted_entries: Array[int] = []
 
 const Model = preload("res://scripts/valley_model.gd")
 const MarshArt = preload("res://scripts/marsh_art.gd")
+const SoundPlayer = preload("res://scripts/sound_player.gd")
+const SoundDirector = preload("res://scripts/sound_director.gd")
 const HordeArt = preload("res://scripts/horde_art.gd")
 const AllianceArt = preload("res://scripts/alliance_art.gd")
 const EnemyArt = preload("res://scripts/enemy_art.gd")
@@ -22,9 +24,20 @@ const IMPACT_DURATION := 0.32 # Secondes de simulation, comme les autres effets 
 const DAMAGE_TRAIL_DURATION := 0.40
 const HIT_FLASH_DURATION := 0.16
 const HIT_REACTION_DURATION := 0.28
-const ELIMINATION_DURATION := 0.45
+## Signal bref d'élimination (décision du porteur, 15 novembre 2026, réglages de prototype à confirmer) : bref éclat et fondu d'environ 0,15 s pour les ennemis
+## ordinaires, flexion et fondu de 0,25 s pour les élites, traitement long conservé pour les boss. Rendu seulement : aucun effet sur le combat.
+const ELIMINATION_DURATION := 0.15
+const ELITE_ELIMINATION_DURATION := 0.25
+const BOSS_ELIMINATION_DURATION := 0.45
+const ELITE_TYPES: Array[int] = [3,5,6,10]
+const BOSS_TYPES: Array[int] = [7]
+const BURST_MERGE_DISTANCE := 20.0 # px d'écran : des éclats plus proches (et simultanés) n'en forment qu'un
+var _ghost_alpha: float = 1.0
+var _ghost_squash: float = 1.0
 const MAX_ELIMINATION_EFFECTS := 24
 var elimination_tail: float = 0.0
+var sound_player: Node = null
+var sound_director: RefCounted = null
 ## Suivi purement visuel des défenseurs (achat, passage de niveau, revente), cadencé en temps réel : le modèle ne bouge pas en préparation.
 var _seen_model: Object = null
 var _seen_defenders: Array[Dictionary] = []
@@ -62,17 +75,27 @@ func _init() -> void:
 
 func _process(delta: float) -> void:
 	_track_defenders()
+	_play_sounds()
 	if _sheet_animation_running(): queue_redraw()
 	royal_hurt_age = minf(2.0,royal_hurt_age+maxf(0.0,delta))
 	royal_rally_age = minf(2.0,royal_rally_age+maxf(0.0,delta))
 	flag_phase = fmod(flag_phase+maxf(0.0,delta),TAU)
 	if model == null or model.active or model.phase not in ["finished","bonus","victory","defeat"]:
 		elimination_tail = 0.0
-	elif elimination_tail < maxf(ELIMINATION_DURATION,SheetAnimations.death_window()):
-		elimination_tail = minf(maxf(ELIMINATION_DURATION,SheetAnimations.death_window()),elimination_tail+maxf(0.0,delta))
+	elif elimination_tail < maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window()):
+		elimination_tail = minf(maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window()),elimination_tail+maxf(0.0,delta))
 		queue_redraw()
 
-func recent_eliminations(window: float = ELIMINATION_DURATION) -> Array[Dictionary]:
+## Sons de combat (banques libres, voir `sound_bank.gd`) : détectés d'après les événements du modèle, jamais écrits dans le modèle.
+func _play_sounds() -> void:
+	if model == null or not is_inside_tree(): return
+	if sound_player == null:
+		sound_player = SoundPlayer.new()
+		add_child(sound_player)
+		sound_director = SoundDirector.new(launch_delay,PROJECTILE_FLIGHT)
+	sound_player.play_all(sound_director.update(model))
+
+func recent_eliminations(window: float = BOSS_ELIMINATION_DURATION) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	if model == null or model.phase not in ["combat","finished","bonus","victory","defeat"]: return result
 	for index in range(model.elimination_events.size()-1,-1,-1):
@@ -84,11 +107,16 @@ func recent_eliminations(window: float = ELIMINATION_DURATION) -> Array[Dictiona
 			if result.size() >= MAX_ELIMINATION_EFFECTS: break
 	return result
 
-static func elimination_particles(event: Dictionary, age: float) -> Array[Dictionary]:
+static func elimination_duration(type: int) -> float:
+	return BOSS_ELIMINATION_DURATION if type in BOSS_TYPES else ELITE_ELIMINATION_DURATION if type in ELITE_TYPES else ELIMINATION_DURATION
+
+## Éclat d'une élimination ; `crowd` éliminations simultanées proches se regroupent en un seul éclat un peu plus large.
+static func elimination_particles(event: Dictionary, age: float, crowd: int = 1) -> Array[Dictionary]:
 	var particles: Array[Dictionary] = []
-	if age < 0.0 or age >= ELIMINATION_DURATION: return particles
-	var t: float = age/ELIMINATION_DURATION
-	var scale: float = 1.5 if event.type == 7 else 1.0
+	var duration: float = elimination_duration(int(event.type))
+	if age < 0.0 or age >= duration: return particles
+	var t: float = age/duration
+	var scale: float = (1.5 if event.type in BOSS_TYPES else 1.0)*(1.0+0.3*float(clampi(crowd,1,4)-1))
 	var center: Vector2 = project(event.point)+Vector2(0,-10*scale)
 	for index in range(5):
 		var angle: float = index*TAU/5+fmod(float(event.enemy_id)*0.61,TAU)
@@ -225,9 +253,71 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 17: 0.288} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+
+## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
+## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
+const AIMED_TYPE := 11
+## Lancer incliné du Javelinier troll (type 17, trois planches −12°, 0°, +12°, lâcher à 0,288 s) : points de départ de la pointe depuis le pied (`lachers.json`).
+## Bombardier nain (type 13, lâcher à 0,16 s) : le boulet part à 26° au-dessus de l'horizontale puis suit une trajectoire en cloche.
+## Piquier humain (type 14, estoc à deux mains, contact à 0,256 s) : trois planches (−12°, 0°, +12°), la pique est dessinée dans les planches ; seul l'éclat de contact est
+## dessiné par le jeu, à la pointe donnée par angle (`contact.json`).
+const PIKEMAN_TYPE := 14
+const PIKE_TIPS: Dictionary = {-12:Vector2(49.6188,-37.8302),0:Vector2(50.294,-30.897),12:Vector2(49.6188,-23.9638)}
+const TILTED_TYPES: Array[int] = [11,14,17]
+const CURVED_TYPES: Array[int] = [11,13,17]
+const JAVELIN_PIVOT := Vector2(0.0,-41.3453)
+const JAVELIN_TIPS: Dictionary = {-12:Vector2(55.3409,-51.4028),0:Vector2(56.1005,-41.3453),12:Vector2(54.9211,-31.3319)}
+const JAVELIN_STEP := 12
+const CANNON_ANGLE := 26.0
+const JAVELIN_TEXTURE: Texture2D = preload("res://assets/units/shop/javeline_v001.png")
+const JAVELIN_PIVOT_PX := Vector2(485.0,28.0) # pointe dans l'image source (495 x 60)
+const JAVELIN_SCALE := 0.12
+const AIM_PIVOT := Vector2(0.0,-33.44) # pivot de l'arc, depuis le pied
+const AIM_LENGTH := 38.2 # pivot -> pointe de la flèche encochée
+const AIM_STEP := 8
+const AIM_LIMIT := 24
+
+static func aim_pitch(shot: Dictionary) -> int:
+	if int(shot.get("type",-1)) in [JAVELIN_TYPE,PIKEMAN_TYPE]:
+		var hand: Vector2 = project(shot.from)+Vector2(0.0,float(step_tips(int(shot.type))[0].y))
+		var gap: Vector2 = project(shot.to)+Vector2(0,-12)-hand
+		var angle: float = rad_to_deg(atan2(gap.y,maxf(absf(gap.x),0.0001)))
+		return clampi(int(roundf(angle/float(JAVELIN_STEP)))*JAVELIN_STEP,-JAVELIN_STEP,JAVELIN_STEP)
+	var pivot: Vector2 = project(shot.from)+AIM_PIVOT
+	var delta: Vector2 = project(shot.to)+Vector2(0,-12)-pivot
+	var degrees: float = rad_to_deg(atan2(delta.y,maxf(absf(delta.x),0.0001)))
+	return clampi(int(roundf(degrees/float(AIM_STEP)))*AIM_STEP,-AIM_LIMIT,AIM_LIMIT)
+
+static func step_tips(type: int) -> Dictionary:
+	return PIKE_TIPS if type == PIKEMAN_TYPE else JAVELIN_TIPS
+
+static func aim_variant(pitch: int) -> String:
+	return "attack" if pitch == 0 else "attack_%s%d" % ["down" if pitch > 0 else "up",absi(pitch)]
+
+static func aim_direction(shot: Dictionary) -> Vector2:
+	if int(shot.get("type",-1)) == CANNON_TYPE: return Vector2(shot_facing(shot)*cos(deg_to_rad(CANNON_ANGLE)),-sin(deg_to_rad(CANNON_ANGLE)))
+	var angle: float = deg_to_rad(float(aim_pitch(shot)))
+	return Vector2(shot_facing(shot)*cos(angle),sin(angle))
+
+static func aimed_origin(shot: Dictionary) -> Vector2:
+	if int(shot.get("type",-1)) in [JAVELIN_TYPE,PIKEMAN_TYPE]:
+		var tip: Vector2 = step_tips(int(shot.type))[aim_pitch(shot)]
+		return project(shot.from)+Vector2(tip.x*shot_facing(shot),tip.y)
+	return project(shot.from)+AIM_PIVOT+aim_direction(shot)*AIM_LENGTH
+
+## Trajet de la flèche : part dans l'axe du trait dessiné puis rejoint le point d'impact (courbe quadratique dont la tangente initiale est l'axe de visée).
+static func aimed_curve(shot: Dictionary, progress: float) -> Dictionary:
+	var origin: Vector2 = shot_origin(shot)
+	var target: Vector2 = project(shot.to)+Vector2(0,-12)
+	var control: Vector2 = origin+aim_direction(shot)*(target-origin).length()*0.5
+	var inverse: float = 1.0-progress
+	var point: Vector2 = origin*inverse*inverse+control*2.0*inverse*progress+target*progress*progress
+	var tangent: Vector2 = ((control-origin)*inverse+(target-control)*progress).normalized()
+	return {"point":point,"direction":tangent}
 
 static func shot_origin(shot: Dictionary, pose_age: float = 0.0) -> Vector2:
+	if int(shot.get("type",-1)) in TILTED_TYPES: return aimed_origin(shot)
 	# Points d'équipement des silhouettes, distincts du centre logique de portée.
 	var art = defender_art(int(shot.type))
 	var muzzle: Vector2 = art.MUZZLES[int(shot.type)]
@@ -245,6 +335,7 @@ static func projectile_position(shot: Dictionary, age: float) -> Vector2:
 	var origin: Vector2 = shot_origin(shot)
 	var target: Vector2 = project(shot.to)+Vector2(0,-12)
 	var point: Vector2 = origin.lerp(target,progress)
+	if int(shot.type) in CURVED_TYPES: return aimed_curve(shot,progress).point
 	if Model.family(shot.type) in [3,4]: point.y -= sin(PI*progress)*(15.0 if Model.family(shot.type) == 4 else 8.0)
 	elif int(shot.type) == CANNON_TYPE: point.y -= sin(PI*progress)*12.0
 	elif int(shot.type) == VIAL_TYPE: point.y -= sin(PI*progress)*10.0
@@ -259,9 +350,11 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	var target: Vector2 = project(shot.to)+Vector2(0,-12)
 	var direction: Vector2 = (target-origin).normalized()
 	if direction.is_zero_approx(): direction = Vector2.RIGHT
+	if int(shot.type) in CURVED_TYPES: direction = aimed_curve(shot,clampf(age/PROJECTILE_FLIGHT,0.0,1.0)).direction
+	if int(shot.type) == PIKEMAN_TYPE: direction = aim_direction(shot)
 	var side: Vector2 = direction.orthogonal()
 	if int(shot.type) == JAVELIN_TYPE:
-		_draw_javelin(point,direction,side)
+		_draw_javelin(point,direction,side,shot_facing(shot))
 		return
 	if int(shot.type) == BULLET_TYPE:
 		_draw_bullet(point,direction)
@@ -271,6 +364,9 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		return
 	if int(shot.type) == SWORD_TYPE:
 		_draw_sword_strike(origin,direction,side,age/PROJECTILE_FLIGHT)
+		return
+	if int(shot.type) == PIKEMAN_TYPE:
+		_draw_pike_contact(origin,direction,side,age/PROJECTILE_FLIGHT)
 		return
 	if int(shot.type) in PIKE_TYPES:
 		_draw_pike_thrust(origin,direction,side,age/PROJECTILE_FLIGHT)
@@ -494,7 +590,18 @@ func _draw_cannonball(point: Vector2, direction: Vector2) -> void:
 	draw_circle(point,4.6,Color("1d2224"),true,-1,true)
 	draw_circle(point+Vector2(-1.4,-1.4),1.6,Color("c7d2cf"),true,-1,true)
 
-## Coup de pique du piquier humain (type 14) : la pointe jaillit vers la cible sur 15 px puis se retire.
+## Éclat de contact du Piquier humain (type 14) : bref éclat à la pointe de la pique dessinée dans la planche (aucune pique dessinée par le jeu).
+func _draw_pike_contact(origin: Vector2, direction: Vector2, side: Vector2, progress: float) -> void:
+	var t: float = clampf(progress,0.0,1.0)
+	var fade: float = 1.0-t
+	draw_circle(origin,3.6*(1.0-0.4*t),Color(1.0,0.97,0.85,0.55*fade),true,-1,true)
+	for index in range(3):
+		var spread: float = (float(index)-1.0)*0.7
+		var ray: Vector2 = (direction.rotated(spread)*(4.0+7.0*t))
+		draw_line(origin+ray*0.4,origin+ray,Color(1.0,1.0,0.92,0.9*fade),1.4,true)
+	draw_circle(origin,1.6,Color(1.0,1.0,1.0,fade),true,-1,true)
+
+## Coup de pique de l'ancien rendu (lance-épieu orc, type 20) : la pointe jaillit vers la cible sur 15 px puis se retire.
 func _draw_pike_thrust(origin: Vector2, direction: Vector2, side: Vector2, progress: float) -> void:
 	var reach: float = sin(PI*clampf(progress,0.0,1.0))*15.0
 	var tip: Vector2 = origin+direction*reach
@@ -524,7 +631,13 @@ func _draw_bullet(point: Vector2, direction: Vector2) -> void:
 	draw_circle(point+Vector2(-0.8,-0.8),1.0,Color("d8e2dc"),true,-1,true)
 
 ## Javeline du lanceur de javeline troll (type 17) : lance droite, sans rotation, au lieu de la hache de sa famille.
-func _draw_javelin(point: Vector2, direction: Vector2, side: Vector2) -> void:
+func _draw_javelin(point: Vector2, direction: Vector2, side: Vector2, facing: float = 1.0) -> void:
+	if JAVELIN_TEXTURE != null:
+		# Dessin du lot de Codex : le même sprite que la javeline tenue en main ; le reflet à gauche garde l'éclairage en haut.
+		draw_set_transform_matrix(Transform2D(direction,direction.orthogonal()*facing,point))
+		draw_texture_rect(JAVELIN_TEXTURE,Rect2(-JAVELIN_PIVOT_PX*JAVELIN_SCALE,Vector2(495.0,60.0)*JAVELIN_SCALE),false)
+		draw_set_transform(Vector2.ZERO)
+		return
 	var tail: Vector2 = point-direction*17.0
 	draw_line(tail,point,Color("1a2524"),3.6,true)
 	draw_line(tail,point,Color("c79a62"),2.0,true)
@@ -1048,13 +1161,7 @@ func _draw() -> void:
 				draw_line(project(from)+Vector2(0,-12),project(to)+Vector2(0,-12),Color(0.83,0.96,0.52,(1.0-age/0.4)*0.85),2,true)
 			for shot in model.shots:
 				_draw_impact(shot, model.elapsed - shot.time)
-		for effect in recent_eliminations(maxf(ELIMINATION_DURATION,SheetAnimations.death_window())):
-			var death_id: String = enemy_art_id({"type":effect.event.type},model.faction)
-			if SheetAnimations.has_animation(death_id,"death"):
-				_draw_sheet_death(death_id,effect.event,effect.age)
-			elif effect.age < ELIMINATION_DURATION:
-				for particle in elimination_particles(effect.event,effect.age):
-					draw_circle(particle.point,particle.radius,Color(Color("d6c7a6"),particle.alpha))
+		_draw_eliminations()
 		_draw_sold_defenders()
 	for entry in entry_label_layouts():
 		var box:=StyleBoxFlat.new();box.bg_color=Color("10271f");box.border_color=entry.color
@@ -1064,6 +1171,50 @@ func _draw() -> void:
 		if not entry.detail.is_empty(): draw_string(font,entry.area.position+Vector2(8,35),entry.detail,HORIZONTAL_ALIGNMENT_LEFT,-1,12,INK)
 	if not breach_feedback.is_empty(): _draw_breach_feedback()
 	walking_meshes.end_frame()
+
+## Éliminations récentes : planche de mort quand l'ennemi en a une pour sa direction, sinon fondu de sa pose courante (orientation et équipement conservés)
+## et bref éclat, regroupé quand plusieurs ennemis ordinaires tombent au même endroit au même moment.
+func _draw_eliminations() -> void:
+	var bursts: Array[Dictionary] = []
+	for effect in recent_eliminations(maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window())):
+		var event: Dictionary = effect.event
+		var age: float = effect.age
+		var type: int = int(event.type)
+		var id: String = enemy_art_id({"type":type},model.faction)
+		var spec: Dictionary = SheetAnimations.spec_for(id)
+		var enemy := {"id":event.enemy_id,"type":type,"distance":float(event.get("distance",0.0)),"route_id":event.get("route_id",""),"hp":0.0}
+		var motion := EnemyWalkArt.path_motion(enemy.distance,model.enemy_route_points(enemy),AXIS)
+		var state: String = SheetAnimations.death_state(spec,motion.get("direction",Vector2.ZERO))
+		if state != "":
+			_draw_sheet_death(id,state,event,age)
+			continue
+		var duration: float = elimination_duration(type)
+		if age >= duration: continue
+		if type not in BOSS_TYPES: _draw_fading_enemy(enemy,event,age,duration,type in ELITE_TYPES)
+		var point: Vector2 = project(event.point)
+		var merged: bool = false
+		if type not in BOSS_TYPES and type not in ELITE_TYPES:
+			for burst in bursts:
+				if burst.point.distance_to(point) < BURST_MERGE_DISTANCE and absf(float(burst.age)-age) < 0.08:
+					burst.crowd += 1;merged = true;break
+		if not merged: bursts.append({"event":event,"age":age,"point":point,"crowd":1})
+	for burst in bursts:
+		for particle in elimination_particles(burst.event,burst.age,burst.crowd):
+			draw_circle(particle.point,particle.radius,Color(Color("d6c7a6"),particle.alpha))
+
+## Pose courante de l'ennemi éliminé, qui s'éclaircit jusqu'à disparaître ; les élites fléchissent légèrement sur place.
+func _draw_fading_enemy(enemy: Dictionary, event: Dictionary, age: float, duration: float, flex: bool) -> void:
+	var t: float = clampf(age/duration,0.0,1.0)
+	_ghost_alpha = 1.0-t
+	_ghost_squash = 1.0-0.14*sin(PI*t) if flex else 1.0
+	_draw_pillager(project(event.point),enemy,(1.0-t)*0.5,{})
+	_ghost_alpha = 1.0
+	_ghost_squash = 1.0
+
+func _enemy_tint(hit_strength: float) -> Color:
+	var color: Color = EnemyArt.tint(hit_strength)
+	color.a = _ghost_alpha
+	return color
 
 func entry_label_layouts() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
@@ -1141,11 +1292,44 @@ static func attack_pulse(age: float) -> float:
 	if age < 0.0 or age >= ATTACK_POSE_DURATION: return 0.0
 	return sin(PI * age / ATTACK_POSE_DURATION)
 
+## Chemins de toutes les routes de la carte (le chemin unique en repli).
+func _all_route_points() -> Array:
+	var result: Array = []
+	if model == null: return result
+	if model.routes.is_empty(): result.append(model.path_points)
+	else:
+		for route in model.routes: result.append(route.path_points)
+	return result
+
+## Côté (-1 gauche, +1 droite, 0 si indéterminé) vers lequel un défenseur placé en `slot_point` fait face par défaut : le point le plus proche
+## de la route, cherché sur chaque tronçon de chaque route en coordonnées du plateau, puis comparé à l'écran. Les égalités gardent l'ordre de la carte.
+static func road_facing(slot_point: Vector2, routes: Array) -> float:
+	var best_distance: float = INF
+	var best_point: Vector2 = slot_point
+	for points in routes:
+		for index in range(points.size()-1):
+			var start: Vector2 = points[index]
+			var segment: Vector2 = points[index+1]-start
+			var length_squared: float = segment.length_squared()
+			var along: float = 0.0 if length_squared <= 0.0 else clampf((slot_point-start).dot(segment)/length_squared,0.0,1.0)
+			var nearest: Vector2 = start+segment*along
+			var distance: float = slot_point.distance_squared_to(nearest)
+			if distance < best_distance-0.000001:
+				best_distance = distance;best_point = nearest
+	if best_distance == INF: return 0.0
+	var dx: float = project(best_point).x-project(slot_point).x
+	if absf(dx) < 0.01: return 0.0
+	return -1.0 if dx < 0.0 else 1.0
+
 func defender_pose(slot: int) -> Dictionary:
 	var pose: Dictionary = {"pulse":0.0,"direction":1.0}
 	if model == null or slot < 0 or slot >= model.defenders.size(): return pose
 	var defender: Dictionary = model.defenders[slot]
-	if defender.has("last_target_position"):
+	# Garde par défaut (décision du porteur, 15 novembre 2026) : face au tronçon de route le plus proche, au placement et entre les vagues.
+	# Pendant la vague, la direction de la dernière cible garde la priorité.
+	var road: float = road_facing(model.slots[slot],_all_route_points())
+	if road != 0.0: pose.direction = road
+	if defender.has("last_target_position") and (model.active or road == 0.0):
 		pose.direction = shot_facing({"from": model.slots[slot], "to": defender.last_target_position})
 	var event: Dictionary = _defender_events.get(slot,{})
 	if not event.is_empty():
@@ -1163,6 +1347,7 @@ func defender_pose(slot: int) -> Dictionary:
 		pose.pulse = attack_pulse(age)
 		pose.attack_age = age
 		pose.direction = shot_facing(shot)
+		if int(shot.get("type",-1)) in TILTED_TYPES: pose.attack_variant = aim_variant(aim_pitch(shot))
 		if shot.get("type", -1) == 0:
 			pose.archer_stage = AllianceArt.archer_shot_stage(age, defender.ready_at-shot.time)
 		elif shot.get("type", -1) == 1:
@@ -1247,7 +1432,7 @@ func _draw_sheet_defender(center: Vector2, id: String, spec: Dictionary, pose: D
 	if texture == null: return
 	var side: float = float(pose.get("direction",1.0))*SheetAnimations.base_facing(spec)
 	draw_set_transform(center,0.0,Vector2(side,1.0))
-	var age: float = float(pose.get(state+"_age",0.0))
+	var age: float = float(pose.get("attack_age" if state.begins_with("attack") else state+"_age",0.0))
 	var cycle: float = SheetAnimations.phase(anim,0.0,Time.get_ticks_msec()/1000.0,age)
 	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle))
 	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
@@ -1385,7 +1570,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		preview = wolf_turn_preview.call(enemy.distance, route_points, enemy.id, scale)
 	center = preview.get("center", center)
 	draw_set_transform(center,0.0,Vector2.ONE*scale)
-	if enemy.id == inspected_enemy_id:
+	if enemy.id == inspected_enemy_id and _ghost_alpha >= 1.0:
 		draw_arc(Vector2(0,3),14,0,TAU,32,Color("edcc80"),2,true)
 	for curse in model.curses:
 		if curse.enemy_id != enemy.id or not curse_ring_visible(curse): continue
@@ -1393,24 +1578,25 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 		var mark := Vector2(0,-45)
 		draw_colored_polygon(PackedVector2Array([mark+Vector2(0,-5),mark+Vector2(4,0),mark+Vector2(0,5),mark+Vector2(-4,0)]),Color("d6a1ef"))
 		break
-	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25),true,-1,true)
-	_draw_regeneration_swirl(enemy)
+	draw_circle(Vector2(0,3),10,Color(0,0,0,0.25*_ghost_alpha),true,-1,true)
+	if _ghost_alpha >= 1.0: _draw_regeneration_swirl(enemy)
 	var body: Transform2D = enemy_body_transform(enemy,facing,pose,model.elapsed,model.active and not walking and not sheet_walk, motion.get("direction", Vector2.ZERO))
+	if _ghost_squash != 1.0: body = body.scaled_local(Vector2(1.0,_ghost_squash))
 	body.origin += center
 	draw_set_transform_matrix(body)
 	if preview.has("texture"):
 		draw_set_transform(body.origin, 0.0, Vector2(preview.get("facing", 1.0), 1.0)*scale)
-		draw_mesh(preview.mesh, preview.texture, Transform2D.IDENTITY, EnemyArt.tint(hit_strength))
+		draw_mesh(preview.mesh, preview.texture, Transform2D.IDENTITY, _enemy_tint(hit_strength))
 	elif walking:
 		var phase: float=EnemyWalkArt.phase_for(preview.get("travel", motion.travel),enemy.id,scale)
 		var orientation: Vector2 = preview.get("direction", motion.direction)
 		var ground := Vector2(absf(orientation.x), orientation.y)
-		draw_mesh(walking_meshes.mesh_for(enemy.id,phase,ground),EnemyWalkArt.TEXTURE,Transform2D.IDENTITY,EnemyArt.tint(hit_strength))
+		draw_mesh(walking_meshes.mesh_for(enemy.id,phase,ground),EnemyWalkArt.TEXTURE,Transform2D.IDENTITY,_enemy_tint(hit_strength))
 	elif sheet_walk:
 		_draw_sheet_walker(id,enemy,motion,scale,facing,body,hit_strength)
 	else:
-		draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,EnemyArt.tint(hit_strength))
-	if enemy.type == Model.Banks.GUARD_TYPE and model.active:
+		draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,_enemy_tint(hit_strength))
+	if enemy.type == Model.Banks.GUARD_TYPE and model.active and _ghost_alpha >= 1.0:
 		for index in range(model.protection_events.size()-1,-1,-1):
 			var event: Dictionary = model.protection_events[index]
 			var age: float = model.elapsed-event.time
@@ -1439,7 +1625,7 @@ func _draw_sheet_walker(id: String, enemy: Dictionary, motion: Dictionary, scale
 	var age: float = float(info.rise_age) if state == "rise" else float(info.hurt_age) if state == "hurt" else float(info.get("spawn_age",0.0))
 	var cycle: float = SheetAnimations.phase(anim,float(motion.get("travel",0.0))/scale,model.elapsed,age,fposmod(float(enemy.id)*0.37,1.0))
 	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle))
-	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region,EnemyArt.tint(hit_strength))
+	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region,_enemy_tint(hit_strength))
 
 ## Pièces de décor posées sur le plateau (portails, remparts, basalte…), sous les unités et l'interface.
 func _draw_decor_props(definition: Dictionary) -> void:
@@ -1569,16 +1755,16 @@ func _draw_regeneration_swirl(enemy: Dictionary) -> void:
 	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
 
 ## Mort d'un ennemi par planche : jouée une fois à l'endroit de l'élimination, dans le sens du chemin.
-func _draw_sheet_death(id: String, event: Dictionary, age: float) -> void:
+func _draw_sheet_death(id: String, state: String, event: Dictionary, age: float) -> void:
 	var spec: Dictionary = SheetAnimations.spec_for(id)
-	var anim: Dictionary = spec.animations.death
+	var anim: Dictionary = spec.animations[state]
 	if age < 0.0 or age >= float(anim.duration): return
 	var texture: Texture2D = SheetAnimations.texture_for(id,anim)
 	if texture == null: return
 	var enemy := {"type":event.type,"route_id":event.get("route_id","")}
 	var route_points: Array[Vector2] = model.enemy_route_points(enemy)
 	var motion := EnemyWalkArt.path_motion(float(event.get("distance",0.0)),route_points,AXIS)
-	var side: float = route_facing(motion.direction)*SheetAnimations.base_facing(spec)
+	var side: float = 1.0 if SheetAnimations.is_four_view(spec) else route_facing(motion.direction)*SheetAnimations.base_facing(spec) # quatre vues : pas de miroir
 	draw_set_transform(project(event.point),0.0,Vector2(side,1.0)*_enemy_scale(enemy))
 	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,0.0,age)))
 	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)

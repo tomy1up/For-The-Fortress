@@ -67,6 +67,10 @@ def scenarios(types, groups):
             for variant, instants in AFFIX_VARIANTS.items():
                 yield f"affix_{faction}_{variant}", ["--capture-state=campaign_menu", f"--capture-faction={faction}", f"--capture-campaign={variant}", "--capture-mountain-defence", f"--capture-timeline={instants}"], True
         if "effects" in groups:
+            # Signal bref d'élimination (v0.217) : élites de la garnison (vague 10) et foule d'ennemis ordinaires (vague 5), quelques centièmes de seconde après le coup fatal.
+            base = ["--capture-state=campaign_menu", f"--capture-faction={faction}", "--capture-campaign=garrison94play", "--capture-mountain-defence", "--capture-full-army"]
+            yield f"effect_{faction}_kill_elite", base + ["--capture-timeline=10:6", "--capture-kill=2,0.06"], True
+            yield f"effect_{faction}_kill_crowd", base + ["--capture-timeline=5:6", "--capture-kill=6,0.05"], True
             yield f"effect_{faction}_elimination", ["--capture-state=elimination", "--capture-type=%d" % (0 if faction == "alliance" else 3), "--capture-slot=1"], False
     if "effects" in groups:
         # Ces deux états imposent le type 5 (chaman) quel que soit le camp : une seule capture suffit.

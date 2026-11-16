@@ -106,7 +106,15 @@ func _legacy_json(file_path: String) -> bool:
 	return false
 
 func _accept_loaded(value: Dictionary) -> bool:
-	if value.schema == SCHEMA_VERSION: data = value;return true
+	if value.schema == SCHEMA_VERSION:
+		if not _has_retired_units(value): data = value;return true
+		# Unités retirées de la boutique (v0.217) : on archive le profil, on les désélectionne et on rembourse une seule fois les PO enregistrées.
+		if not _archive_previous(value,".v216.bak",SCHEMA_VERSION): return false
+		var upgraded: Dictionary = value.duplicate(true)
+		var refunded: int = _refund_retired_units(upgraded)
+		if not _commit(upgraded): blocked = true;return false
+		migration_notice = "Boutique limitée à 20 unités : Fantassin squelette et Tirailleur gnome retirés, %d PO remboursées." % refunded
+		return true
 	if value.schema == 6:
 		if not _archive_previous(value,".v098.bak",6): return false
 		var upgraded: Dictionary = value.duplicate(true)
@@ -168,6 +176,26 @@ func _accept_loaded(value: Dictionary) -> bool:
 		blocked = true;return false
 	migration_notice = "Arbres mis à jour : vos points investis ont été rendus gratuitement."
 	return true
+
+static func _has_retired_units(value: Dictionary) -> bool:
+	for item in value.banks:
+		if item is Dictionary and item.get("shop_owned") is Dictionary:
+			for id in item.shop_owned:
+				if not Shop.retired_card(id).is_empty(): return true
+	return false
+
+## Retire des banques les unités de boutique retirées : désélection si besoin, remboursement unique des PO réellement payées. Retourne le total remboursé.
+static func _refund_retired_units(value: Dictionary) -> int:
+	var total: int = 0
+	for item in value.banks:
+		for id in item.shop_owned.keys():
+			if Shop.retired_card(id).is_empty(): continue
+			var paid: int = int(item.shop_owned[id])
+			item.shop_owned.erase(id)
+			item.resource = mini(int(item.resource)+paid,1000000000)
+			total += paid
+			if item.shop_selected == id: item.shop_selected = ""
+	return total
 
 static func _convert_linked_ranks(value: Dictionary) -> bool:
 	var refunded: bool = false

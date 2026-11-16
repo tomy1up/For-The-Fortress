@@ -58,6 +58,16 @@
       ],
       "mode": "distance",
       "stride": 11.541284403669724
+    },
+    "death_se": {
+      "file": "death_se.png",
+      "frames": 8,
+      "frame_size": [
+        352,
+        304
+      ],
+      "mode": "event",
+      "duration": 0.25
     }
   }
 }

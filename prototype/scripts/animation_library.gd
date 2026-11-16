@@ -7,9 +7,10 @@ const VERSION := 1
 ## Noms d'animations connus, tous pilotés par le jeu depuis la v0.175.
 ## Ennemis : walk, hurt, spawn, death. Défenseurs : idle, attack, disabled, buy, level_up, sell.
 ## Variantes de marche selon la pente du trajet à l'écran (`walk_up` : le trajet monte, `walk_down` : il descend) ; `warning` : effet d'avertissement lié à un événement de jeu (mode progress).
-const NAMES: Array[String] = ["walk","walk_up","walk_down","idle","attack","disabled","death","hurt","spawn","buy","sell","level_up","warning","regen","storm","blocked","mist","rise","walk_nw","walk_ne","walk_sw","walk_se"]
+const NAMES: Array[String] = ["walk","walk_up","walk_down","idle","attack","disabled","death","hurt","spawn","buy","sell","level_up","warning","regen","storm","blocked","mist","rise","walk_nw","walk_ne","walk_sw","walk_se","death_nw","death_ne","death_sw","death_se","attack_up12","attack_down12","attack_up8","attack_up16","attack_up24","attack_down8","attack_down16","attack_down24"]
 ## Animations jouées une seule fois sur un événement : le mode `event` est obligatoire.
-const EVENT_ONLY: Array[String] = ["death","hurt","spawn","buy","sell","level_up","rise"]
+const ATTACK_VARIANTS: Array[String] = ["attack_up12","attack_down12","attack_up8","attack_up16","attack_up24","attack_down8","attack_down16","attack_down24"] # attaque inclinée selon la hauteur de la cible à l'écran (Tireur d'élite elfe)
+const EVENT_ONLY: Array[String] = ["attack_up12","attack_down12","attack_up8","attack_up16","attack_up24","attack_down8","attack_down16","attack_down24","death","death_nw","death_ne","death_sw","death_se","hurt","spawn","buy","sell","level_up","rise"]
 const MODES: Array[String] = ["distance","time","event","progress"]
 const MAX_FRAMES := 64
 const MAX_FRAME_SIDE := 1024
@@ -69,7 +70,7 @@ static func validation_error(data: Variant, expected_id: String = "") -> String:
 		if name == "warning" and data.animations[name].mode != "progress": return "warning : l'avertissement suit la progression d'un événement du jeu (mode progress obligatoire)."
 		if name != "warning" and data.animations[name].mode == "progress": return "%s : le mode progress est réservé à l'animation warning." % name
 		if name in EVENT_ONLY and data.animations[name].mode != "event": return "%s : cette animation se joue une fois sur un événement (mode event obligatoire)." % name
-		if name in ["death","hurt","spawn","buy","sell","level_up","rise"] and float(data.animations[name].duration) > 3.0: return "%s : durée limitée à 3 s." % name
+		if name in ["death","death_nw","death_ne","death_sw","death_se","hurt","spawn","buy","sell","level_up","rise"] and float(data.animations[name].duration) > 3.0: return "%s : durée limitée à 3 s." % name
 	var four_names: Array = ["walk_nw","walk_ne","walk_sw","walk_se"]
 	if data.get("directions","") == "four":
 		for variant in four_names:
@@ -83,6 +84,12 @@ static func validation_error(data: Variant, expected_id: String = "") -> String:
 		var base: Dictionary = data.animations.walk
 		var other: Dictionary = data.animations[variant]
 		if other.mode != base.mode or int(other.frames) != int(base.frames) or other.get("stride",0) != base.get("stride",0) or other.get("fps",0) != base.get("fps",0): return "%s : même mode, même nombre d'images et même foulée que walk (la phase du pas se conserve au virage)." % variant
+	for variant in ATTACK_VARIANTS:
+		if not data.animations.has(variant): continue
+		if not data.animations.has("attack"): return "%s : l'attaque de base attack est obligatoire." % variant
+		var main: Dictionary = data.animations.attack
+		var tilted: Dictionary = data.animations[variant]
+		if tilted.mode != main.mode or int(tilted.frames) != int(main.frames) or tilted.get("duration",0) != main.get("duration",0): return "%s : même mode, même nombre d'images et même durée que attack." % variant
 	var first_size: Array = data.animations.values()[0].frame_size
 	for name in data.animations:
 		var size: Array = data.animations[name].frame_size
@@ -161,7 +168,9 @@ static func defender_state(spec: Dictionary, pose: Dictionary) -> String:
 	if pose.has("attack_age") and spec.animations.has("attack"):
 		var attack: Dictionary = spec.animations.attack
 		# Une animation d'attaque événementielle va au bout de sa durée ; sinon elle suit l'impulsion de tir (0,26 s).
-		if (attack.mode == "event" and float(pose.attack_age) < float(attack.duration)) or (attack.mode != "event" and float(pose.get("pulse",0.0)) > 0.0): wanted.append("attack")
+		if (attack.mode == "event" and float(pose.attack_age) < float(attack.duration)) or (attack.mode != "event" and float(pose.get("pulse",0.0)) > 0.0):
+			wanted.append(str(pose.get("attack_variant","attack")))
+			wanted.append("attack")
 	if pose.has("buy_age") and _event_running(spec,"buy",float(pose.buy_age)): wanted.append("buy")
 	if pose.has("level_up_age") and _event_running(spec,"level_up",float(pose.level_up_age)): wanted.append("level_up")
 	wanted.append("idle")
@@ -187,6 +196,16 @@ static func enemy_state(spec: Dictionary, info: Dictionary) -> String:
 	if direction.y > 0.000001 and spec.animations.has("walk_down"): return "walk_down"
 	return "walk"
 
+## Animation de mort à jouer pour un ennemi éliminé en se déplaçant dans `direction` (à l'écran), ou "" : l'unité à quatre vues n'a que les planches
+## dessinées pour certaines diagonales (death_se…) ; les autres diagonales retombent sur le fondu de la pose courante, qui conserve l'orientation et l'équipement.
+static func death_state(spec: Dictionary, direction: Vector2) -> String:
+	if spec.is_empty(): return ""
+	if is_four_view(spec):
+		if absf(direction.x) <= 0.000001 or absf(direction.y) <= 0.000001: return ""
+		var variant: String = "death_" + ("n" if direction.y < 0.0 else "s") + ("e" if direction.x > 0.0 else "w")
+		return variant if spec.animations.has(variant) else ""
+	return "death" if spec.animations.has("death") else ""
+
 ## Vrai pour une unité à quatre vues diagonales dessinées (équipement asymétrique) : aucun miroir horizontal n'est appliqué.
 static func is_four_view(spec: Dictionary) -> bool:
 	return spec.get("directions","") == "four"
@@ -195,7 +214,9 @@ static func is_four_view(spec: Dictionary) -> bool:
 static func death_window() -> float:
 	var longest: float = 0.0
 	for spec in _specs.values():
-		if not spec.is_empty() and spec.animations.has("death"): longest = maxf(longest,float(spec.animations.death.duration))
+		if spec.is_empty(): continue
+		for name in ["death","death_nw","death_ne","death_sw","death_se"]:
+			if spec.animations.has(name): longest = maxf(longest,float(spec.animations[name].duration))
 	return longest
 
 ## Description chargée et contrôlée, ou `{}` : absente, invalide, ou planche manquante / de mauvaise taille.
