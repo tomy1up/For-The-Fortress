@@ -2,22 +2,22 @@
   "release": 0.5,
   "center_from_foot": {
     "attack": [
-      1.2766,
-      -62.7006
+      24.9222,
+      -54.6268
     ],
     "attack_up": [
-      3.112,
-      -62.63
+      21.729,
+      -63.8796
     ],
     "attack_down": [
-      -3.4376,
-      -62.3185
+      21.729,
+      -42.1517
     ]
   },
   "launch_slope": {
-    "attack": -0.0319,
-    "attack_up": -0.4569,
-    "attack_down": 0.3032
+    "attack": 0.8151,
+    "attack_up": 0.4262,
+    "attack_down": 1.4262
   },
   "projectile_center": [
     93,
