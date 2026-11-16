@@ -1,9 +1,10 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.219 — 16 novembre 2026
+Version : 0.220 — 16 novembre 2026
 
 ATELIER A DEUX ENTREES
 
 Lancer Lancer_atelier_routes.cmd pour essayer deux chemins convergents.
+Lancer Lancer_essai_boutique.cmd pour tester la boutique : toutes les unites sont deja possedees et se choisissent comme renfort. Ce mode utilise un profil separe : votre progression n'est pas touchee.
 Choisir sa faction, puis recruter et jouer les dix vagues habituelles.
 Cet atelier ne lit pas le profil joueur et ne donne ni PO ni XP.
 Le trace et l'alternance des entrees sont des essais provisoires.

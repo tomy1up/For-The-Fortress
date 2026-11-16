@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "id": "defender.alliance.pyromancer",
+  "facing": "right",
+  "display_height": 81.29874476987447,
+  "foot": [
+    149.5,
+    348.75
+  ],
+  "muzzle": [
+    298.18017992424245,
+    131.76742234848487
+  ],
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        384,
+        368
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 20,
+      "frame_size": [
+        384,
+        368
+      ],
+      "mode": "event",
+      "duration": 0.64
+    },
+    "attack_up12": {
+      "file": "attack_up12.png",
+      "frames": 20,
+      "frame_size": [
+        384,
+        368
+      ],
+      "mode": "event",
+      "duration": 0.64
+    },
+    "attack_down12": {
+      "file": "attack_down12.png",
+      "frames": 20,
+      "frame_size": [
+        384,
+        368
+      ],
+      "mode": "event",
+      "duration": 0.64
+    }
+  }
+}

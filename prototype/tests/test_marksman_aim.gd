@@ -73,4 +73,14 @@ func run_checks() -> void:
 			check(View.aim_variant(pp) in ["attack","attack_up12","attack_down12"],"Piquier : planche choisie par l'angle")
 	var pspec: Dictionary = Library.spec_for("defender.alliance.pikeman")
 	check(not pspec.is_empty() and pspec.animations.has("attack_up12") and pspec.animations.has("attack_down12"),"Piquier : planches chargées et valides")
+	# Pyromancien humain (type 15) : trois inclinaisons, départ de la boule de feu tiré de lachers.json, lâcher à 0,288 s.
+	check(is_equal_approx(View.launch_delay({"type":15}),0.288),"Lâcher du pyromancien à 0,288 s")
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var fire: Dictionary = {"type":15,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var fp: int = View.aim_pitch(fire)
+			var ftip: Vector2 = View.PYRO_TIPS[fp]
+			check(fp in [-12,0,12] and View.shot_origin(fire).distance_to(View.project(from)+Vector2(ftip.x*View.shot_facing(fire),ftip.y)) < 0.001,"Pyromancien : départ selon l'angle %d" % fp)
+	var fspec: Dictionary = Library.spec_for("defender.alliance.pyromancer")
+	check(not fspec.is_empty() and fspec.animations.has("attack_up12") and fspec.animations.has("attack_down12"),"Pyromancien : planches chargées et valides")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

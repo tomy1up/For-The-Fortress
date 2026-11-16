@@ -1,12 +1,12 @@
 # For the Fortress!
 
-Game Design Document — Version 0.56 — 16 novembre 2026
+Game Design Document — Version 0.57 — 16 novembre 2026
 
 Document de référence pour concevoir et développer For the Fortress!, destiné au porteur du projet et aux personnes qui participeront à sa réalisation. Cette version consolide le combat, la campagne de 200 missions, entièrement jouable (vingt chapitres, dix biomes), la progression persistante par faction, les affixes de combat et le prototype Windows 0.206. Un atelier distinct permet de tester deux entrées convergentes. La démarche du loup est approuvée pour le prototype ; son orientation corrigée et le premier cycle du sanglier restent à examiner. La Gardienne, les rencontres et les réglages économiques restent à l’essai. La boutique, le mode infini, les difficultés avancées et les cartes à plusieurs forteresses restent à développer.
 
 **Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.206. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.56 ; jeu de référence 0.219.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.57 ; jeu de référence 0.220.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -1668,6 +1668,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-51 | **Orientation par défaut des défenseurs : face au tronçon de route le plus proche** au placement et entre les vagues ; en combat, la dernière cible garde la priorité — V | Décision du porteur, 15 novembre 2026 ; `valley_view.gd` (`road_facing`), `tests/test_defender_facing.gd` |
 | MAJ-52 | **Visée inclinée du Tireur d’élite elfe (type 11)** : sept planches (0°, ±8°, ±16°, ±24°), un seul angle pour la pose, l’origine de la flèche et sa direction de départ ; lâcher à 0,27 s — V (geste validé par le porteur) ; angles et lâcher — rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `a2cdab9` ; `tests/test_marksman_aim.gd` |
 | MAJ-53 | **Estoc du Piquier humain (type 14)** : trois planches (−12°, 0°, +12°), la pique est dessinée dans les planches, éclat de contact à 0,256 s à la pointe donnée par angle — V (geste validé par le porteur) ; rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `9a7d3d8` ; `tests/test_marksman_aim.gd` |
+| MAJ-55 | **Mode d’essai de la boutique (`--essai-boutique`)** : toutes les unités de boutique possédées et sélectionnables dans un profil séparé, sans toucher à la progression normale — V (demande du porteur) ; outil d’essai, pas une règle de jeu | Demande du porteur, 16 novembre 2026 ; `meta_profile.gd::grant_all_shop_units`, `Lancer_essai_boutique.cmd` |
 | MAJ-54 | **Son : attribution à Claude Code par banques libres de droits uniquement, sans dépense** — V pour la décision ; choix des fichiers et gains — H (à confirmer à l’écoute) | Décision du porteur, 16 novembre 2026 ; `design/Credits_audio.md`, `AGENTS.md` |
 | MAJ-34 | **Le GDD est tenu à jour à chaque publication de version, par Claude Code** : décisions prises, décisions à prendre et noyau du jeu — V | Demande du porteur, 12 novembre 2026 ; étape ajoutée au cycle d’une version dans `AGENTS.md` |
 
@@ -1812,7 +1813,9 @@ Version 0.54 — 15 novembre 2026 : jeu 0.217. **Boutique à 20 unités par fact
 
 Version 0.55 — 16 novembre 2026 : jeu 0.218. **Estoc du Piquier humain** (lot de Codex validé par le porteur) : trois angles dessinés, pique intégrée aux planches, éclat de contact à 0,256 s (rendu seulement, aucune règle modifiée).
 
-Version 0.56 — 16 novembre 2026 : jeu 0.219. **Premiers sons de combat** (MAJ-54) : le porteur confie le son à Claude Code, par banques libres de droits uniquement (Kenney, CC0) ; tirs, impacts et éliminations sonnent aux instants du rendu. Choix à confirmer à l’écoute ; musique et interface non traitées (O-019 en partie traitée). Aucune règle de combat modifiée.
+Version 0.56 — 16 novembre 2026 : jeu 0.219. **Premiers sons de combat** (MAJ-54) : le porteur confie le son à Claude Code, par banques libres de droits uniquement (Kenney, CC0) ; tirs, impacts et éliminations sonnent aux instants du rendu. Choix à confirmer à l’écoute ; musique et interface non traitées (O-019 en partie traitée).
+
+Version 0.57 — 16 novembre 2026 : jeu 0.220. **Incantation du Pyromancien humain** (lot de Codex validé par le porteur : trois angles, lâcher à 0,288 s, rendu seulement). **Mode d’essai de la boutique** (`--essai-boutique`, MAJ-55) : toutes les unités possédées dans un profil séparé, pour tester les effets sans refaire la campagne. Le son est coupé par défaut sur demande du porteur (chantier en pause, MAJ-54 inchangée). Aucune règle de combat modifiée.
 
 <a id="s51"></a>
 
@@ -2106,7 +2109,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 16 novembre 2026 (GDD 0.56, jeu 0.219)
+### État au 16 novembre 2026 (GDD 0.57, jeu 0.220)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2128,7 +2131,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.56, jeu 0.219 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.57, jeu 0.220 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2460,5 +2463,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.217 | Boutique à 20 unités, signal d’élimination, garde vers la route, visée du Tireur d’élite ; GDD 0.54 |
 | 0.218 | Estoc du Piquier humain à trois angles ; GDD 0.55 |
 | 0.219 | Premiers sons de combat (banques libres) ; GDD 0.56 |
+| 0.220 | Incantation du Pyromancien ; mode d’essai de la boutique ; son coupé ; GDD 0.57 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

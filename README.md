@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.220**. Incantation du Pyromancien humain ; mode d'essai de la boutique (toutes les unités possédées, profil séparé). [Notes](design/essais/v0220_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.220).
+
 **Prototype v0.219**. Premiers sons de combat (banques libres Kenney, CC0) : tirs, impacts, éliminations. [Notes](design/essais/v0219_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.219).
 
 **Prototype v0.218**. Estoc du Piquier humain à trois angles, éclat de contact à 0,256 s. [Notes](design/essais/v0218_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.218).

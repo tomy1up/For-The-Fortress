@@ -249,7 +249,12 @@ func _ready() -> void:
 		mission_definition = {}
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture="): isolated = true
-	if not isolated: meta_profile = MetaProfile.new()
+	var shop_trial: bool = "--essai-boutique" in OS.get_cmdline_user_args() and not isolated
+	if shop_trial:
+		# Essai de la boutique : profil séparé (progression habituelle intacte) avec toutes les unités déjà possédées.
+		meta_profile = MetaProfile.new("user://progression_essai_boutique_v1.json")
+		meta_profile.grant_all_shop_units()
+	elif not isolated: meta_profile = MetaProfile.new()
 	get_window().title = "%s · v%s" % ["For the Fortress! — "+model.map_definition.title,ProjectSettings.get_setting("application/config/version")]
 	map_view.model = model
 	add_child(map_view)
@@ -257,6 +262,7 @@ func _ready() -> void:
 	if route_workshop:
 		version_label.text = "Atelier routes · Aucun gain de progression"
 		print("ROUTE_WORKSHOP=",JSON.stringify({"isolated":meta_profile==null,"routes":model.routes.size(),"mission_empty":mission_definition.is_empty(),"map_id":model.map_definition.id}))
+	if shop_trial: version_label.text = "Essai boutique · toutes les unités possédées · profil séparé"
 	_update_interface()
 	var capture_path: String = ""
 	var capture_state: String = "combat"

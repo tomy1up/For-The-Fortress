@@ -1,6 +1,6 @@
 param(
     [string]$EnginePath = '',
-    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.219',
+    [ValidatePattern('^\d+\.\d+(\.\d+)?$')][string]$Version = '0.220',
     [string]$OutputRoot = ''
 )
 $ErrorActionPreference = 'Stop'
@@ -52,7 +52,7 @@ $sourcePaths += @('assets\units\alliance\arbaletrier_rearmement_v001.png','asset
 $sourcePaths += @('scripts\fortress_art.gd','assets\fortresses\forteresse_alliance_v001.png','assets\fortresses\forteresse_alliance_v001.png.import','assets\fortresses\forteresse_horde_v001.png','assets\fortresses\forteresse_horde_v001.png.import','assets\fortresses\roi_alliance_v001.png','assets\fortresses\roi_alliance_v001.png.import','assets\fortresses\roi_horde_v001.png','assets\fortresses\roi_horde_v001.png.import')
 $sourcePaths += @('scripts\enemy_walk_art.gd','assets\enemies\animations\loup_corps_v002.png','assets\enemies\animations\loup_corps_v002.png.import')
 $sourcePaths += @('assets\enemies\animations\loup_marche_v002.bin','scripts\route_geometry.gd')
-$sourcePaths += @('scripts\mission_scout.gd','distribution\Lancer_atelier_routes.cmd')
+$sourcePaths += @('scripts\mission_scout.gd','distribution\Lancer_atelier_routes.cmd','distribution\Lancer_essai_boutique.cmd')
 $sourcePaths += @('scripts\marsh_art.gd','scripts\drowned_encounters.gd','scripts\drowned_maps.gd','scripts\volcanic_maps.gd','scripts\citadel_maps.gd','scripts\garrison_encounters.gd','scripts\animation_library.gd','scripts\decor_art.gd','scripts\desert_maps.gd','scripts\mine_maps.gd','scripts\sky_maps.gd','scripts\eagle_encounters.gd','scripts\coast_maps.gd','scripts\necro_maps.gd','scripts\revenant_encounters.gd')
 $sourcePaths += @('assets\enemies\rosters\capitaine_humain_v001.png','assets\enemies\rosters\capitaine_humain_v001.png.import','assets\enemies\rosters\gueule_de_vase_v001.png','assets\enemies\rosters\gueule_de_vase_v001.png.import','assets\enemies\rosters\aigle_des_cimes_v001.png','assets\enemies\rosters\aigle_des_cimes_v001.png.import','assets\enemies\rosters\revenant_v001.png','assets\enemies\rosters\revenant_v001.png.import')
 # Every declared runtime resource must be selected explicitly by this preset.
@@ -87,6 +87,7 @@ if (-not (Test-Path -LiteralPath $executable -PathType Leaf)) { throw 'Executabl
 Assert-FortressSourceSnapshot -Expected $sources -Actual (Get-FortressSourceSnapshot -ProjectRoot $PSScriptRoot -RelativePaths $sourcePaths)
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'distribution\LIRE_MOI.txt') -Destination $artifactFolder
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'distribution\Lancer_atelier_routes.cmd') -Destination $artifactFolder
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'distribution\Lancer_essai_boutique.cmd') -Destination $artifactFolder
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'distribution\LICENCES_GODOT.txt') -Destination $artifactFolder
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot '..\design\Fiche_essai_joueur.md') -Destination $artifactFolder
 $manifest = [ordered]@{
