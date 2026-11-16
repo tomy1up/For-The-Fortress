@@ -8,16 +8,16 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 181 à 190.
 const EXPECTED: Dictionary = {
-	181:{"map":"necro_gate","length":46.0,"routes":1,"order":[3,4,2]},
-	182:{"map":"necro_road","length":47.0,"routes":1,"order":[3,4,2]},
-	183:{"map":"necro_graveyard","length":44.0,"routes":2,"order":[3,4,2]},
-	184:{"map":"necro_crypts","length":42.0,"routes":3,"order":[3,4,2]},
-	185:{"map":"necro_fen","length":50.0,"routes":1,"order":[3,4,2]},
-	186:{"map":"necro_hill","length":41.0,"routes":2,"order":[3,4,2]},
-	187:{"map":"necro_mausoleums","length":41.0,"routes":3,"order":[3,4,2]},
-	188:{"map":"necro_ossuary","length":44.0,"routes":2,"order":[3,4,2]},
-	189:{"map":"necro_stelae","length":44.0,"routes":1,"order":[3,4,2]},
-	190:{"map":"necro_royal","length":39.0,"routes":3,"order":[3,4,2]},
+	181:{"map":"necro_gate","length":45.0,"routes":1,"order":[3,4,2]},
+	182:{"map":"necro_road","length":50.0,"routes":1,"order":[3,4,2]},
+	183:{"map":"necro_graveyard","length":40.0,"routes":2,"order":[3,4,2]},
+	184:{"map":"necro_crypts","length":38.0,"routes":3,"order":[3,4,2]},
+	185:{"map":"necro_fen","length":41.0,"routes":1,"order":[3,4,2]},
+	186:{"map":"necro_hill","length":39.0,"routes":2,"order":[3,4,2]},
+	187:{"map":"necro_mausoleums","length":39.0,"routes":3,"order":[3,4,2]},
+	188:{"map":"necro_ossuary","length":41.0,"routes":2,"order":[3,4,2]},
+	189:{"map":"necro_stelae","length":50.0,"routes":1,"order":[3,4,2]},
+	190:{"map":"necro_royal","length":38.0,"routes":3,"order":[3,4,2]},
 }
 var checks := 0
 var failures := 0

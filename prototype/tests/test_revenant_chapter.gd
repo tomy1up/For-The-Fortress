@@ -10,16 +10,16 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 191 à 200.
 const EXPECTED: Dictionary = {
-	191:{"map":"necro_tombgate","length":46.0,"routes":1,"order":[3,4,2]},
-	192:{"map":"necro_wake","length":47.0,"routes":1,"order":[3,4,2]},
+	191:{"map":"necro_tombgate","length":50.0,"routes":1,"order":[3,4,2]},
+	192:{"map":"necro_wake","length":41.0,"routes":1,"order":[3,4,2]},
 	193:{"map":"necro_catacombs","length":44.0,"routes":2,"order":[3,4,2]},
-	194:{"map":"necro_bonefield","length":42.0,"routes":3,"order":[3,4,2]},
+	194:{"map":"necro_bonefield","length":36.0,"routes":3,"order":[3,4,2]},
 	195:{"map":"necro_mire","length":50.0,"routes":1,"order":[3,4,2]},
-	196:{"map":"necro_gallows","length":41.0,"routes":2,"order":[3,4,2]},
-	197:{"map":"necro_twintombs","length":41.0,"routes":3,"order":[3,4,2]},
-	198:{"map":"necro_charnel","length":44.0,"routes":2,"order":[3,4,2]},
-	199:{"map":"necro_obelisks","length":44.0,"routes":1,"order":[3,4,2]},
-	200:{"map":"necro_throne","length":39.0,"routes":3,"order":[3,4,2]},
+	196:{"map":"necro_gallows","length":42.0,"routes":2,"order":[3,4,2]},
+	197:{"map":"necro_twintombs","length":37.0,"routes":3,"order":[3,4,2]},
+	198:{"map":"necro_charnel","length":42.0,"routes":2,"order":[3,4,2]},
+	199:{"map":"necro_obelisks","length":39.0,"routes":1,"order":[3,4,2]},
+	200:{"map":"necro_throne","length":38.0,"routes":3,"order":[3,4,2]},
 }
 var checks := 0
 var failures := 0

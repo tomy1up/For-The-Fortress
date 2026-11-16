@@ -8,16 +8,16 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 161 à 170.
 const EXPECTED: Dictionary = {
-	161:{"map":"coast_jetty","length":46.0,"routes":1,"order":[3,4,2]},
-	162:{"map":"coast_lighthouse","length":47.0,"routes":1,"order":[3,4,2]},
-	163:{"map":"coast_reefs","length":44.0,"routes":2,"order":[3,4,2]},
-	164:{"map":"coast_wrecks","length":42.0,"routes":3,"order":[3,4,2]},
+	161:{"map":"coast_jetty","length":50.0,"routes":1,"order":[3,4,2]},
+	162:{"map":"coast_lighthouse","length":41.0,"routes":1,"order":[3,4,2]},
+	163:{"map":"coast_reefs","length":38.0,"routes":2,"order":[3,4,2]},
+	164:{"map":"coast_wrecks","length":35.0,"routes":3,"order":[3,4,2]},
 	165:{"map":"coast_quay","length":50.0,"routes":1,"order":[3,4,2]},
-	166:{"map":"coast_cliff","length":41.0,"routes":2,"order":[3,4,2]},
-	167:{"map":"coast_coves","length":41.0,"routes":3,"order":[3,4,2]},
-	168:{"map":"coast_harbor","length":44.0,"routes":2,"order":[3,4,2]},
-	169:{"map":"coast_skerry","length":44.0,"routes":1,"order":[3,4,2]},
-	170:{"map":"coast_cape","length":39.0,"routes":3,"order":[3,4,2]},
+	166:{"map":"coast_cliff","length":36.0,"routes":2,"order":[3,4,2]},
+	167:{"map":"coast_coves","length":38.0,"routes":3,"order":[3,4,2]},
+	168:{"map":"coast_harbor","length":40.0,"routes":2,"order":[3,4,2]},
+	169:{"map":"coast_skerry","length":39.0,"routes":1,"order":[3,4,2]},
+	170:{"map":"coast_cape","length":35.0,"routes":3,"order":[3,4,2]},
 }
 var checks := 0
 var failures := 0

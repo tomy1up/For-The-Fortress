@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-17 — Décor des chapitres 15 à 20 refondus ; Arbalète lourde (24), Fronde elfe (25), Hache en chaîne (26) intégrées en v0.227 (ouvert)
+Les cartes des missions 141 à 200 (`sky_*`, `coast_*`, `necro_*`) ont de nouveaux tracés : leur décor est désactivé (`DecorArt.REWORKED_MAPS`), à redessiner en évitant routes et emplacements. Lots `aa7462b`, `a683912` et `f0b6867` intégrés (planches, repères, `hache_double.png`). Limite connue : à bout portant, la hache en chaîne n'est pas dessinée en vol, mais le premier impact reste à l'instant d'arrivée normal (0,12 s après le lâcher) car l'instant d'affichage des dégâts ne connaît pas la géométrie du tir. À vérifier sur la version publiée.
+
 ### 2026-11-16 — Décor des cartes des chapitres 10 et 11 refondues (ouvert)
 Les cartes des missions 91 à 110 (`garrison_*` dans `scripts/citadel_maps.gd`, `dune_first` à `dune_necropolis` dans `scripts/desert_maps.gd`) ont de nouveaux tracés (v0.226). Leur décor est désactivé côté code (`DecorArt.REWORKED_MAPS`) : à redessiner en évitant routes et emplacements. Attention : la mission 94 (`garrison_hall`) change de tracé, ce qui touche tes essais de gestes qui s'appuient sur elle. Les chapitres 15 à 20 suivront.
 

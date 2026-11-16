@@ -444,7 +444,7 @@ for name,state,faction in cases:
         camp=0 if faction=='alliance' else 1
         number=int(name.rsplit('_',1)[1].removeprefix('coast').removesuffix('play').removesuffix('completed'))
         map_id=['coast_jetty','coast_lighthouse','coast_reefs','coast_wrecks','coast_quay','coast_cliff','coast_coves','coast_harbor','coast_skerry','coast_cape','coast_beacon','coast_causeway','coast_chalk','coast_graveyard','coast_shoal','coast_phantom','coast_twinrocks','coast_arsenal','coast_storm','coast_citadel'][number-161]
-        routes={163:2,164:3,166:2,167:3,168:2,170:3,173:2,174:3,176:2,177:3,178:2,180:3}.get(number,0)
+        routes={163:2,164:3,166:2,167:3,168:2,170:3,173:2,174:2,176:2,177:3,178:2,180:3}.get(number,0)
         assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
         assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==((number-1)//10+1,number,map_id,routes or 1)
         won_missions=number if name.endswith('completed') else number-1

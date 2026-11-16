@@ -207,4 +207,15 @@ func run_checks() -> void:
 			check(gp in [-12,0,12,24,36] and View.shot_origin(sling).distance_to(View.project(from)+Vector2(gtip.x*View.shot_facing(sling),gtip.y)) < 0.001,"Fronde : départ du repère de la planche %d" % gp)
 	var gspec2: Dictionary = Library.spec_for("defender.alliance.sling")
 	check(not gspec2.is_empty() and gspec2.animations.has("attack_up12") and gspec2.animations.has("attack_down36"),"Fronde : cinq planches chargées et valides")
+	# Hache en chaîne (type 26) : cinq planches choisies par l'écart minimal, hache lâchée à 0,52 s depuis le repère de la planche, ricochets de 0,068 s.
+	check(is_equal_approx(View.launch_delay({"type":26}),0.52) and is_equal_approx(View.CHAIN_AXE_BOUNCE,0.068),"Hache en chaîne : lâcher à 0,52 s, ricochets de 0,068 s")
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var chain: Dictionary = {"type":26,"from":from,"to":from+Vector2(dx,dy),"slot":0,"secondary":[from+Vector2(dx+1.0,dy),from+Vector2(dx+2.0,dy+1.0)]}
+			var cp: int = View.aim_pitch(chain)
+			var ctip: Vector2 = View.CHAIN_AXE_TIPS[cp]
+			check(cp in [-12,0,12,24,36] and View.shot_origin(chain).distance_to(View.project(from)+Vector2(ctip.x*View.shot_facing(chain),ctip.y)) < 0.001,"Hache en chaîne : départ du repère de la planche %d" % cp)
+			check(View.secondary_segments(chain).size() == 2 and View.secondary_segments(chain)[1][0].is_equal_approx(View.project(chain.secondary[0])),"Hache en chaîne : ricochets dans l'ordre de shot.secondary")
+	var xspec: Dictionary = Library.spec_for("defender.horde.chainaxe")
+	check(not xspec.is_empty() and xspec.animations.has("attack_up12") and xspec.animations.has("attack_down36"),"Hache en chaîne : cinq planches chargées et valides")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.227**. Refonte des cartes, chapitres 15 à 20 (missions 141 à 200) : soixante tracés nouveaux, la refonte de la campagne est terminée ; gestes de l'Arbalète lourde, de la Fronde elfe et de la Hache en chaîne. [Notes](design/essais/v0227_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.227).
+
 **Prototype v0.226**. Refonte des cartes, chapitres 10 et 11 (missions 91 à 110) : vingt tracés nouveaux, calibrés par simulation. [Notes](design/essais/v0226_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.226).
 
 **Prototype v0.225**. Refonte des cartes, chapitres 13 et 14 (missions 121 à 140) : vingt tracés nouveaux à une, deux ou trois routes, fusions et croisements, calibrés par simulation ; gestes de la Catapulte gobeline, du Lance-épieu orc, du Brûleur de cendres, du Mage de la foudre et de l'Archer double. [Notes](design/essais/v0225_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.225).

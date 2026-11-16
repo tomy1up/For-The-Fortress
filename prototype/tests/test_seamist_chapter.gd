@@ -8,16 +8,16 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 171 à 180.
 const EXPECTED: Dictionary = {
-	171:{"map":"coast_beacon","length":46.0,"routes":1,"order":[3,4,2]},
-	172:{"map":"coast_causeway","length":47.0,"routes":1,"order":[3,4,2]},
-	173:{"map":"coast_chalk","length":44.0,"routes":2,"order":[3,4,2]},
-	174:{"map":"coast_graveyard","length":42.0,"routes":3,"order":[3,4,2]},
-	175:{"map":"coast_shoal","length":50.0,"routes":1,"order":[3,4,2]},
-	176:{"map":"coast_phantom","length":41.0,"routes":2,"order":[3,4,2]},
-	177:{"map":"coast_twinrocks","length":41.0,"routes":3,"order":[3,4,2]},
-	178:{"map":"coast_arsenal","length":44.0,"routes":2,"order":[3,4,2]},
-	179:{"map":"coast_storm","length":44.0,"routes":1,"order":[3,4,2]},
-	180:{"map":"coast_citadel","length":42.0,"routes":3,"order":[3,4,2]},
+	171:{"map":"coast_beacon","length":43.0,"routes":1,"order":[3,4,2]},
+	172:{"map":"coast_causeway","length":43.0,"routes":1,"order":[3,4,2]},
+	173:{"map":"coast_chalk","length":40.0,"routes":2,"order":[3,4,2]},
+	174:{"map":"coast_graveyard","length":39.0,"routes":2,"order":[3,4,2]},
+	175:{"map":"coast_shoal","length":52.0,"routes":1,"order":[3,4,2]},
+	176:{"map":"coast_phantom","length":38.0,"routes":2,"order":[3,4,2]},
+	177:{"map":"coast_twinrocks","length":38.0,"routes":3,"order":[3,4,2]},
+	178:{"map":"coast_arsenal","length":42.0,"routes":2,"order":[3,4,2]},
+	179:{"map":"coast_storm","length":50.0,"routes":1,"order":[3,4,2]},
+	180:{"map":"coast_citadel","length":35.0,"routes":3,"order":[3,4,2]},
 }
 const AFFIX := {"id":"seamist","interval":22,"warning":3,"duration":6,"gold_percent":30}
 var checks := 0
