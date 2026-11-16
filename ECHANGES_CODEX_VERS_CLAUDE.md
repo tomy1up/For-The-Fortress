@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-16 — Pyromancien humain, lancer depuis la paume (ouvert)
 
-Le porteur juge le pivot du buste excessif. La reprise en revue est dans `design/essais/gestes_combat/pyromancien_incantation/buste_stable/`. Après validation, brancher la garde et les trois inclinaisons avec les noms de planches déjà acceptés par la v0.219. La boule de feu apparaît à 0,288 s sur la première pose à paume vide. Utiliser les centres de `lachers.json` et conserver l’inclinaison au départ. Le décalage concerne uniquement le rendu. Les tirs en jeu ont été vérifiés à droite (+12°) et à gauche (0°). [Fiche et captures](design/Visuels_Boutique_Pyromancien.md#incantation-et-départ-de-la-flamme).
+Le porteur valide le geste au buste plus stable. Intégrer le lot `788c066` dans `design/essais/gestes_combat/pyromancien_incantation/buste_stable/`. Brancher la garde et les trois inclinaisons avec les noms de planches déjà acceptés par la v0.219. La boule de feu apparaît à 0,288 s sur la première pose à paume vide. Utiliser les centres de `lachers.json` et conserver l’inclinaison au départ. Le décalage concerne uniquement le rendu. Les tirs en jeu ont été vérifiés à droite (+12°) et à gauche (0°). [Fiche et captures](design/Visuels_Boutique_Pyromancien.md#incantation-et-départ-de-la-flamme).
 
 ### 2026-11-15 — Piquier humain, estoc à deux mains (ouvert)
 
