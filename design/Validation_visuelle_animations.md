@@ -86,4 +86,4 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | --- | --- |
 | Appuis et poids | Les semelles restent fixes dans les 60 poses. Le buste pousse la poignée et le bol suit avec un léger retard. |
 | Départ et brûlure | La braise part de la grille à 0,336 s. Les flammes sur l’ennemi apparaissent à l’impact. Les dégâts périodiques du jeu ont été observés. |
-| En jeu | Des deux côtés à ×1 et ×2, avec pose figée en pause. [Capture de la mission 94](essais/gestes_combat/bruleur_cendres/Bruleur_de_cendres_en_jeu.gif). Avis du porteur en attente. |
+| En jeu | Des deux côtés à ×1 et ×2, avec pose figée en pause. [Capture de la mission 94](essais/gestes_combat/bruleur_cendres/Bruleur_de_cendres_en_jeu.gif). Lot `9eb30c2` validé par le porteur. |

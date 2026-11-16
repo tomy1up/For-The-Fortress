@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**16 novembre — Brûleur de cendres, type 21.** Poussée à deux mains et balancement retardé du brasero. Trois inclinaisons et braise partie de la grille à 0,336 s. Vues gauche et droite, ×1 et ×2, pause, brûlure à l’impact et dégâts périodiques vérifiés sur la mission 94. 36 dossiers valides et 177 contrôles de bibliothèque réussis. [Fiche et capture](design/Visuels_Boutique_Bruleur.md#poussée-du-brasero). Attend l’avis du porteur.
+**16 novembre — Brûleur de cendres, type 21.** Poussée à deux mains et balancement retardé du brasero. Trois inclinaisons et braise partie de la grille à 0,336 s. Vues gauche et droite, ×1 et ×2, pause, brûlure à l’impact et dégâts périodiques vérifiés sur la mission 94. 36 dossiers valides et 177 contrôles de bibliothèque réussis. [Fiche et capture](design/Visuels_Boutique_Bruleur.md#poussée-du-brasero). Lot `9eb30c2` validé par le porteur, à intégrer par Claude.
 
 **16 novembre — Lance-épieu orc, type 20.** Estoc à deux mains, transfert de poids et sept variations d’angle et de distance. Contact visuel à 0,28 s depuis la pointe de la planche. Six coups contrôlés à ×1 et ×2, vers la gauche et la droite, en mission 94 v0.223 avec pause. 35 dossiers valides et 176 contrôles de bibliothèque réussis. [Fiche et vidéo](design/Visuels_Boutique_Lance_Epieu.md#estoc-à-deux-mains). Lot `a151adb` validé par le porteur, à intégrer par Claude.
 

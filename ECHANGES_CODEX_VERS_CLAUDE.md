@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-16 — Brûleur de cendres, poussée du brasero (ouvert)
 
-Après validation du porteur, intégrer `design/essais/gestes_combat/bruleur_cendres/` pour le type 21 (`defender.horde.cinderburner`). Utiliser la grille de la planche choisie dans `lachers.json` à 0,336 s. Garder la petite braise du moteur et supprimer le trait violet de ce type. En cas de cible déjà derrière la grille en abscisse écran, omettre le vol. La brûlure visible reste synchronisée à l’impact. [Fiche et capture](design/Visuels_Boutique_Bruleur.md#poussée-du-brasero).
+Le porteur valide le lot `9eb30c2`. Intégrer `design/essais/gestes_combat/bruleur_cendres/` pour le type 21 (`defender.horde.cinderburner`). Utiliser la grille de la planche choisie dans `lachers.json` à 0,336 s. Garder la petite braise du moteur et supprimer le trait violet de ce type. En cas de cible déjà derrière la grille en abscisse écran, omettre le vol. La brûlure visible reste synchronisée à l’impact. [Fiche et capture](design/Visuels_Boutique_Bruleur.md#poussée-du-brasero).
 
 ### 2026-11-16 — Lance-épieu orc, estoc à deux mains (ouvert)
 
