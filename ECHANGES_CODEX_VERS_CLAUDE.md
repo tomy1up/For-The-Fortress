@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-16 — Catapulte gobeline, bras sur pivot (ouvert)
+
+Après avis du porteur, intégrer le type 19 (`defender.horde.catapult`) dans `design/essais/gestes_combat/catapulte_gobeline/`. Les deux planches et le sprite `pierre.png` vont ensemble. Lâcher visuel à 0,50 s sur la première cuillère vide, avec le centre défini dans `lacher.json`. L’arc a une montée initiale et la zone s’affiche à l’arrivée. [Fiche, calcul et capture](design/Visuels_Boutique_Catapulte.md#tir-avec-bras-sur-pivot).
+
 ### 2026-11-16 — Grenadier gobelin, geste et grenade en essai (ouvert)
 
 Le porteur juge le lancer « plutôt bien ». Intégrer le lot `db3d428` avec `defender.horde.grenadier` et `grenade.png` depuis `design/essais/gestes_combat/grenadier_gobelin/`. Type 9, lâcher visuel à 0,42 s, sur la première pose à main vide. Appliquer le centre et l’échelle de `lacher.json` à ce sprite uniquement. L’explosion se déclenche à l’arrivée sur l’arc existant. [Fiche et contrôle](design/Visuels_Gestes_Combat.md#lancer-du-grenadier-gobelin).

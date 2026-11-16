@@ -62,3 +62,12 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | Prise et lâcher | La grenade quitte la main à 0,42 s, sur la première pose à main vide. L’arc rejoint l’impact et le bras poursuit le geste. |
 | Retour | La main revient vers la ceinture puis la dernière pose rejoint la garde à l’identique. |
 | En jeu | Six tirs sur la mission 94, dans les deux sens à ×1 et ×2, pose contrôlée en pause. [Capture à taille native](essais/gestes_combat/grenadier_gobelin/Grenadier_gobelin_en_jeu.gif). Retour favorable du porteur sur le lancer. |
+
+## Catapulte gobeline · 16 novembre 2026
+
+| Critère | Vérification sur la copie v0.220 |
+| --- | --- |
+| Appuis et mécanisme | Bras et cuillère pivotent ensemble. La bande du bas, patins et pieds compris, est identique sur les 24 poses. |
+| Prise et lâcher | Pierre assise jusqu’à la première cuillère vide à 0,50 s. Trajet montant au départ, impact et deux cibles secondaires par tir. |
+| Retour | La cuillère vide dépasse sa position de garde puis revient. Première et dernière poses identiques. |
+| En jeu | Quatre tirs sur la mission 94, des deux côtés à ×1 et ×2, pose contrôlée en pause. [Capture à taille native](essais/gestes_combat/catapulte_gobeline/Catapulte_gobeline_en_jeu.gif). Avis du porteur en attente. |

@@ -25,3 +25,13 @@ La planche d'étude passe à 20 images sur 0,8 s. La cuillère vide descend apr�
 Sur une copie v0.197, le premier tir a été capturé dans les deux orientations au Gué, à ×1 et ×2. Dans les quatre cas, le cadrage de la Catapulte est identique sur deux images successives avec simulation arrêtée. Validateur : zéro problème sur 24 dossiers. Test de bibliothèque : 156 contrôles réussis.
 
 [Captures en jeu côte à côte](essais/gestes_combat/Catapulte_retour_v002.gif). Essai soumis à validation visuelle du porteur.
+
+## Tir avec bras sur pivot
+
+La pierre reste dans la cuillère pendant que le servant arme le bras. Le bras pivote d’un bloc, le servant ramène sa main vers lui et ses épaules suivent la détente. La cuillère vide dépasse sa position de garde, revient et se recharge. Les patins et les pieds ont la même position tout au long des 24 poses. La première et la dernière pose reprennent la garde au pixel près.
+
+[Voir quatre tirs à taille native](essais/gestes_combat/catapulte_gobeline/Catapulte_gobeline_en_jeu.gif)
+
+Type 19, `defender.horde.catapult`. Les planches sont dans `design/essais/gestes_combat/catapulte_gobeline/`. Le cycle dure 1,20 s. Le lâcher visuel à 0,50 s correspond à la première cuillère vide. Orienter `pierre.png` depuis le centre indiqué par `lacher.json`, en retournant le décalage horizontal pour un tir à gauche. Le fichier donne aussi les paramètres de l’arc visuel d’essai. Relier le centre de départ à l’impact et retirer une hauteur verticale de `4 × h × progression × (1 − progression)`, avec `h` à 16 px minimum ou 46 % du dénivelé si celui-ci impose davantage. Le rendu de zone se joue à l’arrivée. Les valeurs et le traitement des dégâts restent ceux du modèle.
+
+Essai sur copie v0.220, mission 94. Quatre tirs, aux deux vitesses et des deux côtés, avec deux cibles secondaires enregistrées par tir. L’arc monte dès le départ et rejoint l’impact sur les 17 positions vérifiées. La pose se fige en pause. Validateur à zéro problème sur 35 dossiers et bibliothèque à 176 contrôles réussis. Attend l’avis visuel du porteur.

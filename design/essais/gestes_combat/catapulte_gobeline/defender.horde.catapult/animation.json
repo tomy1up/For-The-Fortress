@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.horde.catapult",
+  "facing": "right",
+  "display_height": 77.33333333333333,
+  "foot": [
+    168.77598152424943,
+    252.26190476190476
+  ],
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        336,
+        260
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 24,
+      "frame_size": [
+        336,
+        260
+      ],
+      "mode": "event",
+      "duration": 1.2
+    }
+  }
+}
