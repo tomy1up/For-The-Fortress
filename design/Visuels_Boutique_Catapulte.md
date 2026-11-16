@@ -30,8 +30,18 @@ Sur une copie v0.197, le premier tir a été capturé dans les deux orientations
 
 La pierre reste dans la cuillère pendant que le servant arme le bras. Le bras pivote d’un bloc, le servant ramène sa main vers lui et ses épaules suivent la détente. La cuillère vide dépasse sa position de garde, revient et se recharge. Les patins et les pieds ont la même position tout au long des 24 poses. La première et la dernière pose reprennent la garde au pixel près.
 
-[Voir quatre tirs à taille native](essais/gestes_combat/catapulte_gobeline/Catapulte_gobeline_en_jeu.gif)
+[Voir les quatre diagonales à taille native et à ×1](essais/gestes_combat/catapulte_gobeline/Catapulte_gobeline_en_jeu.gif) · [Voir deux diagonales à ×2](essais/gestes_combat/catapulte_gobeline/Catapulte_gobeline_x2.gif)
 
 Type 19, `defender.horde.catapult`. Les planches sont dans `design/essais/gestes_combat/catapulte_gobeline/`. Le cycle dure 1,20 s. Le lâcher visuel à 0,50 s correspond à la première cuillère vide. Orienter `pierre.png` depuis le centre indiqué par `lacher.json`, en retournant le décalage horizontal pour un tir à gauche. Le fichier donne aussi les paramètres de l’arc visuel d’essai. Relier le centre de départ à l’impact et retirer une hauteur verticale de `4 × h × progression × (1 − progression)`, avec `h` à 16 px minimum ou 46 % du dénivelé si celui-ci impose davantage. Le rendu de zone se joue à l’arrivée. Les valeurs et le traitement des dégâts restent ceux du modèle.
 
-Essai sur copie v0.220, mission 94. Quatre tirs, aux deux vitesses et des deux côtés, avec deux cibles secondaires enregistrées par tir. L’arc monte dès le départ et rejoint l’impact sur les 17 positions vérifiées. La pose se fige en pause. Validateur à zéro problème sur 35 dossiers et bibliothèque à 176 contrôles réussis. Attend l’avis visuel du porteur.
+Essai sur copie v0.220, mission 94. Quatre tirs, aux deux vitesses et des deux côtés, avec deux cibles secondaires enregistrées par tir. L’arc monte dès le départ et rejoint l’impact sur les 17 positions vérifiées. La pose se fige en pause. Validateur à zéro problème sur 35 dossiers et bibliothèque à 176 contrôles réussis.
+
+### Orientation vers la route et la cible
+
+Le porteur a demandé que le châssis soit dirigé vers la route et que la pierre parte dans le sens visé. Les nouvelles planches placent les patins dans le plan du plateau en diagonale, avec le servant debout à côté. Le bras et la cuillère suivent cette orientation, avec la même phase de tir et le même point d’appui. Le profil reste disponible pour une visée presque horizontale.
+
+Pour la garde, utiliser la direction entre l’emplacement et le point le plus proche sur la route. En combat, utiliser la dernière cible, puis figer le choix de vue et le côté sur la position au moment où le tir est enregistré. Choisir `idle_up` et `attack_up` si la cible au sol est au-dessus à l’écran, `idle_down` et `attack_down` si elle est en dessous. Dans l’essai, le profil est sélectionné pour un écart vertical inférieur à `max(5 px, 0,16 × |écart horizontal|)`. Le signe horizontal donne le côté. La garde prend la vue correspondante à la fin du geste. Le changement de vue se fait directement au changement de direction.
+
+Les deux paires de variantes demandent un branchement dans la bibliothèque. `lacher.json` donne le centre de la pierre pour chaque planche d’attaque. Utiliser le même choix de vue pour le sprite et le point de départ du projectile. Le lâcher et l’arc gardent les valeurs de l’essai précédent.
+
+Vérification sur la mission 94 en v0.220. Quatre diagonales à ×1 et deux à ×2, avec la garde, le changement de diagonale sur E1, la pause et deux cibles secondaires par tir. Les 72 poses sont cadrées et chaque planche retrouve sa propre garde exactement. La correction attend l’avis du porteur.

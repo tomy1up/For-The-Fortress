@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**16 novembre — Catapulte gobeline, type 19.** Essai à bras pivotant, 24 poses, départ à 0,50 s et pierre assortie sur arc montant. Le servant accompagne le tir et les patins restent fixes. Quatre tirs à ×1 et ×2 dans les deux sens sur mission 94, deux impacts secondaires par tir, pause contrôlée. Validateur sans problème et 176 contrôles réussis. [Visualisation et repères](design/Visuels_Boutique_Catapulte.md#tir-avec-bras-sur-pivot). Attend l’avis du porteur.
+**16 novembre — Catapulte gobeline, type 19.** Essai à bras pivotant avec garde vers la route la plus proche et tir orienté vers la cible. Trois vues, 24 poses par tir, départ à 0,50 s et pierre sur arc montant. Six tirs sur la mission 94, quatre diagonales à ×1 et deux à ×2, avec deux impacts secondaires par tir et pause contrôlée. Validateur sans problème et 176 contrôles réussis. [Visualisation et repères](design/Visuels_Boutique_Catapulte.md#tir-avec-bras-sur-pivot). Attend l’avis du porteur.
 
 **16 novembre — Grenadier gobelin, type 9.** Retour favorable du porteur sur `db3d428`, à intégrer par Claude. Lancer court avec mouvement du buste, suivi du bras et recharge à la ceinture. Lâcher à 0,42 s avec sprite assorti. Copie v0.220, mission 94, six tirs dans les deux sens à ×1 et ×2 avec pause. Validateur sans problème et 175 contrôles de bibliothèque réussis. [Animation et repères](design/Visuels_Gestes_Combat.md#lancer-du-grenadier-gobelin).
 

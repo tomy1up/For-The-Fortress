@@ -1,14 +1,26 @@
 {
   "release": 0.5,
-  "center_from_foot": [
-    0.0328,
-    -62.6431
-  ],
+  "center_from_foot": {
+    "attack": [
+      0.0327,
+      -62.6431
+    ],
+    "attack_up": [
+      0.0268,
+      -62.6562
+    ],
+    "attack_down": [
+      0.0268,
+      -62.6299
+    ]
+  },
   "projectile_center": [
     93,
     59
   ],
   "projectile_scale": 0.106,
   "arc_minimum": 16,
-  "arc_height_factor": 0.46
+  "arc_height_factor": 0.46,
+  "diagonal_minimum_y": 5,
+  "diagonal_ratio": 0.16
 }
