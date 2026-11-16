@@ -42,3 +42,20 @@ Les archives d'origine sont dans `C:/Projet/.tools/audio/` (hors dépôt) avec l
 - Aucun vrai son d'arc (corde) dans les packs : le tir d'arc utilise un souffle de lame.
 - Musique : aucune source retenue.
 - Sons d'interface et emplacement du réglage de volume (à soumettre au porteur).
+
+## En pause (décision du porteur, 16 novembre 2026)
+
+Le porteur juge que le son prend trop de temps alors que le jeu est loin d'être finalisé : le chantier est **suspendu**. Le son est **coupé par défaut** (`sound_player.gd`, `muted = true`) ; le système (catalogue, déclenchement aux instants du rendu, tests) reste en place.
+
+Les sons Kenney puis OpenGameArt ci-dessus ont été jugés inappropriés à l'écoute (« sonneries 8 bits », puis « pas réaliste et pas raccord »). Direction retenue : style **fantasy / RPG, repère World of Warcraft**, sons choisis **à l'oreille par le porteur** sur une page d'écoute (`dist/ecoute_sons/index.html`, extraits Freesound en CC0, régénérée par un script hors dépôt).
+
+Sons retenus par le porteur sur Freesound (CC0), **pas encore téléchargés** (un compte Freesound gratuit est nécessaire ; le porteur s'y connecte, l'agent télécharge) :
+
+| Événement | Freesound | 
+| --- | --- |
+| Tir d'arc | [384917](https://freesound.org/s/384917/) « Bow Release (Bow and Arrow) 4 » par Ali_6868 (variante proche retenue au tour précédent : [384916](https://freesound.org/s/384916/)) |
+| Tir d'arbalète | [163453](https://freesound.org/s/163453/) |
+| Coup de mêlée | [574820](https://freesound.org/s/574820/) |
+| Impact | [708223](https://freesound.org/s/708223/) |
+
+Restent sans son retenu : magie, lancer, arme à feu, canon, explosion, élimination (un second tour d'écoute est prêt dans la page).

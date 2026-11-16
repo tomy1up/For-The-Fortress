@@ -292,6 +292,8 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.216** : marche du Capitaine orc en quatre vues (`directions: four`, planches converties en bandes, vue choisie par les signes de la direction, miroir annulé). En attente de Codex : transitions de virage et mort du capitaine, extension aux autres attaquants, gestes des autres unités, animation de frappe du squelette et de tir du gnome.
 
+**Après la v0.219 (non publié, commits locaux `b9d80b7`, `84cb7c7`)** : sons Kenney puis OpenGameArt rejetés à l'écoute ; son **coupé par défaut** ; chantier son **en pause** à la demande du porteur (16 novembre 2026). Sélections Freesound et suite dans `design/Credits_audio.md`.
+
 **v0.219** : premiers sons (`sound_bank.gd`, `sound_player.gd`, `sound_director.gd`, `assets/audio/sfx/`, `design/Credits_audio.md`). Le son est attribué à Claude Code (banques libres, `AGENTS.md`). Non écouté par l'agent ; sons d'interface, musique et réglage de volume à faire.
 
 **v0.218** : estoc du Piquier humain (type 14 ajouté à `TILTED_TYPES`, `PIKE_TIPS`, éclat `_draw_pike_contact`, lâcher à 0,256 s).
