@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "id": "defender.horde.cinderburner",
+  "facing": "right",
+  "foot": [
+    115.31034482758622,
+    289.03846153846155
+  ],
+  "display_height": 74.78651685393258,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        352,
+        315
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 20,
+      "frame_size": [
+        352,
+        315
+      ],
+      "mode": "event",
+      "duration": 0.84
+    },
+    "attack_up12": {
+      "file": "attack_up12.png",
+      "frames": 20,
+      "frame_size": [
+        352,
+        315
+      ],
+      "mode": "event",
+      "duration": 0.84
+    },
+    "attack_down12": {
+      "file": "attack_down12.png",
+      "frames": 20,
+      "frame_size": [
+        352,
+        315
+      ],
+      "mode": "event",
+      "duration": 0.84
+    }
+  }
+}

@@ -156,4 +156,14 @@ func run_checks() -> void:
 	check(spear_seen.size() >= 3,"Lance-épieu : plusieurs planches atteintes (%d)" % spear_seen.size())
 	var lspec: Dictionary = Library.spec_for("defender.horde.spearman")
 	check(not lspec.is_empty() and lspec.animations.has("attack_close") and lspec.animations.has("attack_far") and lspec.animations.has("attack_close_up") and lspec.animations.has("attack_close_down"),"Lance-épieu : sept planches chargées et valides")
+	# Brûleur de cendres (type 21) : trois planches, braise partie de la grille de la planche à 0,336 s, sans trait de malédiction.
+	check(is_equal_approx(View.launch_delay({"type":21}),0.336),"Braise du brûleur à 0,336 s")
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var ember: Dictionary = {"type":21,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var ep: int = View.aim_pitch(ember)
+			var grate: Vector2 = View.EMBER_GRATE[ep]
+			check(ep in [-12,0,12] and View.shot_origin(ember).distance_to(View.project(from)+Vector2(grate.x*View.shot_facing(ember),grate.y)) < 0.001,"Brûleur : braise partie de la grille de la planche %d" % ep)
+	var espec: Dictionary = Library.spec_for("defender.horde.cinderburner")
+	check(not espec.is_empty() and espec.animations.has("attack_up12") and espec.animations.has("attack_down12"),"Brûleur : trois planches chargées et valides")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
