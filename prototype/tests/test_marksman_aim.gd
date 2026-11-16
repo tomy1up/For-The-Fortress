@@ -114,4 +114,30 @@ func run_checks() -> void:
 			check(np in [-12,0,12] and View.shot_origin(sentinel).distance_to(View.project(from)+Vector2(ntip.x*View.shot_facing(sentinel),ntip.y)) < 0.001,"Sentinelle : départ depuis la pointe de la planche %d" % np)
 	var nspec: Dictionary = Library.spec_for("defender.alliance.sentinel")
 	check(not nspec.is_empty() and nspec.animations.has("attack_up12") and nspec.animations.has("attack_down12"),"Sentinelle : planches chargées et valides")
+	# Catapulte gobeline (type 19) : trois vues selon la hauteur de la cible au sol, départ de la pierre tiré de lacher.json, lâcher à 0,50 s, courbe quadratique.
+	check(is_equal_approx(View.launch_delay({"type":19}),0.5),"Lâcher de la catapulte à 0,50 s")
+	var views: Dictionary = {}
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var stone: Dictionary = {"type":19,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var view: String = View.catapult_view(stone.from,stone.to)
+			views[view] = true
+			check(view in ["","_up","_down"],"Catapulte : vue valide")
+			var gap: Vector2 = View.project(stone.to)-View.project(from)
+			var limit: float = maxf(5.0,0.16*absf(gap.x))
+			check((view == "_up") == (gap.y < -limit) and (view == "_down") == (gap.y > limit),"Catapulte : vue selon l'écart vertical à l'écran")
+			var center: Vector2 = View.CATAPULT_CENTERS[view]
+			check(View.shot_origin(stone).distance_to(View.project(from)+Vector2(center.x*View.shot_facing(stone),center.y)) < 0.001,"Catapulte : pierre partie du centre de la planche %s" % view)
+			var start: Dictionary = View.catapult_curve(stone,0.0)
+			var arrival: Dictionary = View.catapult_curve(stone,1.0)
+			check(start.point.distance_to(View.shot_origin(stone)) < 0.001 and arrival.point.distance_to(View.project(stone.to)+Vector2(0,-12)) < 0.001,"Catapulte : la courbe va du centre à l'impact")
+			if View.catapult_stone_flies(stone):
+				var slope: float = -float(start.direction.y)/maxf(absf(start.direction.x),0.0001)
+				check(absf(slope-float(View.CATAPULT_SLOPES[view])) < 0.01,"Catapulte : tangente initiale à la pente de la planche %s" % view)
+			else:
+				check((View.project(stone.to).x-View.shot_origin(stone).x)*View.shot_facing(stone) <= 0.0,"Catapulte : cible derrière la cuillère, pierre omise")
+	check(views.size() == 3,"Catapulte : les trois vues sont atteintes")
+	var cspec: Dictionary = Library.spec_for("defender.horde.catapult")
+	check(not cspec.is_empty() and cspec.animations.has("attack_up") and cspec.animations.has("attack_down") and cspec.animations.has("idle_up") and cspec.animations.has("idle_down"),"Catapulte : six planches chargées et valides")
+	check(Library.defender_state(cspec,{"idle_variant":"idle_up"}) == "idle_up" and Library.defender_state(cspec,{"attack_age":0.2,"attack_variant":"attack_down","idle_variant":"idle_down"}) == "attack_down" and Library.defender_state(cspec,{"idle_variant":"idle_inconnu"}) == "idle","Catapulte : état de garde et d'attaque avec repli")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

@@ -275,7 +275,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
@@ -299,6 +299,16 @@ const SENTINEL_TIPS: Dictionary = {-12:Vector2(21.9512,-42.0693),0:Vector2(22.19
 const SHARD_TEXTURE: Texture2D = preload("res://assets/units/shop/eclat_v001.png")
 const SHARD_PIVOT_PX := Vector2(181.0,36.0)
 const SHARD_SCALE := 0.10441044104410441
+## Catapulte gobeline (type 19, bras sur pivot, lâcher à 0,50 s) : trois planches (profil, vue du dessus « up », vue du dessous « down ») selon la hauteur de la cible au sol à l'écran.
+## La pierre part du centre donné par planche (`lacher.json`, depuis le pied, côté horizontal retourné pour un tir à gauche) et suit une courbe quadratique dont la tangente initiale a la pente de la planche.
+const CATAPULT_CENTERS: Dictionary = {"":Vector2(28.1625,-45.6041),"_up":Vector2(24.9855,-31.5008),"_down":Vector2(24.9855,-56.4851)}
+const CATAPULT_SLOPES: Dictionary = {"":1.6297,"_up":2.352,"_down":1.352}
+const CATAPULT_CONTROL := 0.44
+const CATAPULT_DIAGONAL_MIN := 5.0
+const CATAPULT_DIAGONAL_RATIO := 0.16
+const CATAPULT_TEXTURE: Texture2D = preload("res://assets/units/shop/pierre_v001.png")
+const CATAPULT_PIVOT_PX := Vector2(93.0,59.0)
+const CATAPULT_SCALE := 0.106
 const STEP_TYPES: Array[int] = [14,15,17]
 const TILTED_TYPES: Array[int] = [10,11,14,15,17,18]
 const CURVED_TYPES: Array[int] = [11,13,17]
@@ -364,7 +374,34 @@ static func aimed_curve(shot: Dictionary, progress: float) -> Dictionary:
 	var tangent: Vector2 = ((control-origin)*inverse+(target-control)*progress).normalized()
 	return {"point":point,"direction":tangent}
 
+## Vue de la Catapulte gobeline : « » (profil), « _up » ou « _down », d'après l'écart vertical entre l'emplacement et le point visé au sol, à l'écran.
+static func catapult_view(from_board: Vector2, to_board: Vector2) -> String:
+	var gap: Vector2 = project(to_board)-project(from_board)
+	var limit: float = maxf(CATAPULT_DIAGONAL_MIN,CATAPULT_DIAGONAL_RATIO*absf(gap.x))
+	if gap.y < -limit: return "_up"
+	if gap.y > limit: return "_down"
+	return ""
+
+static func catapult_origin(shot: Dictionary) -> Vector2:
+	var center: Vector2 = CATAPULT_CENTERS[catapult_view(shot.from,shot.to)]
+	return project(shot.from)+Vector2(center.x*shot_facing(shot),center.y)
+
+## La pierre n'est pas dessinée en vol quand la cible est déjà derrière la cuillère en abscisse (la zone s'affiche seulement à l'arrivée).
+static func catapult_stone_flies(shot: Dictionary) -> bool:
+	return (project(shot.to).x-catapult_origin(shot).x)*shot_facing(shot) > 0.0
+
+static func catapult_curve(shot: Dictionary, progress: float) -> Dictionary:
+	var origin: Vector2 = catapult_origin(shot)
+	var target: Vector2 = project(shot.to)+Vector2(0,-12)
+	var reach: float = (target.x-origin.x)*CATAPULT_CONTROL
+	var control: Vector2 = origin+Vector2(reach,-absf(reach)*float(CATAPULT_SLOPES[catapult_view(shot.from,shot.to)]))
+	var inverse: float = 1.0-progress
+	var point: Vector2 = origin*inverse*inverse+control*2.0*inverse*progress+target*progress*progress
+	var tangent: Vector2 = ((control-origin)*inverse+(target-control)*progress).normalized()
+	return {"point":point,"direction":tangent}
+
 static func shot_origin(shot: Dictionary, pose_age: float = 0.0) -> Vector2:
+	if int(shot.get("type",-1)) == STONE_TYPE: return catapult_origin(shot)
 	if int(shot.get("type",-1)) in TILTED_TYPES: return aimed_origin(shot)
 	# Points d'équipement des silhouettes, distincts du centre logique de portée.
 	var art = defender_art(int(shot.type))
@@ -384,10 +421,10 @@ static func projectile_position(shot: Dictionary, age: float) -> Vector2:
 	var target: Vector2 = project(shot.to)+Vector2(0,-12)
 	var point: Vector2 = origin.lerp(target,progress)
 	if int(shot.type) in CURVED_TYPES: return aimed_curve(shot,progress).point
+	if int(shot.type) == STONE_TYPE: return catapult_curve(shot,progress).point
 	if Model.family(shot.type) in [3,4]: point.y -= sin(PI*progress)*(15.0 if Model.family(shot.type) == 4 else 8.0)
 	elif int(shot.type) == CANNON_TYPE: point.y -= sin(PI*progress)*12.0
 	elif int(shot.type) == VIAL_TYPE: point.y -= sin(PI*progress)*10.0
-	elif int(shot.type) == STONE_TYPE: point.y -= sin(PI*progress)*16.0
 	elif int(shot.type) == EMBER_TYPE: point.y -= sin(PI*progress)*6.0
 	return point
 
@@ -465,7 +502,7 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		_draw_dart(point,direction,side)
 		return
 	if int(shot.type) == STONE_TYPE:
-		_draw_stone(point,age)
+		if catapult_stone_flies(shot): _draw_stone(point,shot_facing(shot))
 		return
 	if int(shot.type) == LIGHTNING_TYPE:
 		_draw_lightning(shot,origin,target,age)
@@ -597,17 +634,11 @@ func _draw_dart(point: Vector2, direction: Vector2, side: Vector2) -> void:
 	draw_line(point-direction*11.0,point-direction*8.0-side*2.0,Color("c0504a"),1.2,true)
 	draw_circle(point,1.6,Color("2f3a34"),true,-1,true)
 
-## Pierre de la catapulte gobeline : roc irrégulier qui tourne pendant sa cloche.
-func _draw_stone(point: Vector2, age: float) -> void:
-	var spin: float = age/PROJECTILE_FLIGHT*TAU
-	var rock := PackedVector2Array()
-	for corner in range(7):
-		var radius := 5.4 if corner % 2 == 0 else 4.2
-		rock.append(point+Vector2(radius,0).rotated(spin+corner*TAU/7.0))
-	draw_colored_polygon(rock,Color("8c8f86"))
-	rock.append(rock[0])
-	draw_polyline(rock,Color("2c2f2c"),1.2,true)
-	draw_circle(point+Vector2(-1.6,-1.6),1.3,Color("c9ccc2"),true,-1,true)
+## Pierre de la catapulte gobeline : le dessin du lot de Codex (`pierre.png`), retourné une seule fois selon le côté du tir.
+func _draw_stone(point: Vector2, facing: float) -> void:
+	draw_set_transform(point,0.0,Vector2(facing,1.0))
+	draw_texture_rect(CATAPULT_TEXTURE,Rect2(-CATAPULT_PIVOT_PX*CATAPULT_SCALE,CATAPULT_TEXTURE.get_size()*CATAPULT_SCALE),false)
+	draw_set_transform(Vector2.ZERO)
 
 ## Éclair du mage de la foudre : tracé brisé depuis la main avancée jusqu'à la cible, puis vers les cibles secondaires réellement touchées.
 func _draw_lightning(shot: Dictionary, origin: Vector2, target: Vector2, age: float) -> void:
@@ -1407,6 +1438,14 @@ func _all_route_points() -> Array:
 ## Côté (-1 gauche, +1 droite, 0 si indéterminé) vers lequel un défenseur placé en `slot_point` fait face par défaut : le point le plus proche
 ## de la route, cherché sur chaque tronçon de chaque route en coordonnées du plateau, puis comparé à l'écran. Les égalités gardent l'ordre de la carte.
 static func road_facing(slot_point: Vector2, routes: Array) -> float:
+	var best_point: Vector2 = road_point(slot_point,routes)
+	if best_point == slot_point and routes.is_empty(): return 0.0
+	var dx: float = project(best_point).x-project(slot_point).x
+	if absf(dx) < 0.01: return 0.0
+	return -1.0 if dx < 0.0 else 1.0
+
+## Point de route le plus proche de `slot_point` (le point lui-même si aucune route).
+static func road_point(slot_point: Vector2, routes: Array) -> Vector2:
 	var best_distance: float = INF
 	var best_point: Vector2 = slot_point
 	for points in routes:
@@ -1419,10 +1458,7 @@ static func road_facing(slot_point: Vector2, routes: Array) -> float:
 			var distance: float = slot_point.distance_squared_to(nearest)
 			if distance < best_distance-0.000001:
 				best_distance = distance;best_point = nearest
-	if best_distance == INF: return 0.0
-	var dx: float = project(best_point).x-project(slot_point).x
-	if absf(dx) < 0.01: return 0.0
-	return -1.0 if dx < 0.0 else 1.0
+	return best_point
 
 func defender_pose(slot: int) -> Dictionary:
 	var pose: Dictionary = {"pulse":0.0,"direction":1.0}
@@ -1434,6 +1470,11 @@ func defender_pose(slot: int) -> Dictionary:
 	if road != 0.0: pose.direction = road
 	if defender.has("last_target_position") and (model.active or road == 0.0):
 		pose.direction = shot_facing({"from": model.slots[slot], "to": defender.last_target_position})
+	if int(defender.get("type",-1)) == STONE_TYPE:
+		# Catapulte : vue de garde selon la dernière cible, sinon le point de route le plus proche.
+		var watched: Vector2 = road_point(model.slots[slot],_all_route_points())
+		if defender.has("last_target_position") and (model.active or road == 0.0): watched = defender.last_target_position
+		pose.idle_variant = "idle"+catapult_view(model.slots[slot],watched)
 	var event: Dictionary = _defender_events.get(slot,{})
 	if not event.is_empty():
 		pose[str(event.kind)+"_age"] = Time.get_ticks_msec()/1000.0-float(event.start)
@@ -1451,6 +1492,10 @@ func defender_pose(slot: int) -> Dictionary:
 		pose.attack_age = age
 		pose.direction = shot_facing(shot)
 		if int(shot.get("type",-1)) in TILTED_TYPES: pose.attack_variant = aim_variant(aim_pitch(shot))
+		if int(shot.get("type",-1)) == STONE_TYPE:
+			var view: String = catapult_view(shot.from,shot.to)
+			pose.attack_variant = "attack"+view
+			pose.idle_variant = "idle"+view
 		if shot.get("type", -1) == 0:
 			pose.archer_stage = AllianceArt.archer_shot_stage(age, defender.ready_at-shot.time)
 		elif shot.get("type", -1) == 1:
