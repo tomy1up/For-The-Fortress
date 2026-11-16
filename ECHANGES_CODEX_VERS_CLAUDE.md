@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-17 — Hache en chaîne, lancer et ricochets (en attente d’avis)
+### 2026-11-17 — Hache en chaîne, lancer et ricochets validés (ouvert)
 
-Type 26, `defender.horde.chainaxe`. Garde, cinq inclinaisons, `hache_double.png` et repères dans `design/essais/gestes_combat/hache_en_chaine/`. Après l’avis du porteur, faire partir la hache à 0,52 s depuis le repère de `lachers.json`. Retourner ensemble la planche et le repère, et reprendre le pivot, l’échelle et l’angle du dessin. Essai avec un premier trajet rectiligne sur 0,12 s, puis 0,068 s par ricochet dans l’ordre de `shot.secondary`, avec un soulèvement de 3 px. Employer la même hache sur toute la trajectoire. Placer un éclat à chaque arrivée, puis laisser s’effacer la traînée. À bout portant, si le premier impact est derrière le repère à l’écran, commencer l’effet par cet impact et poursuivre les ricochets. La résolution des dégâts est celle du type 26.
+Type 26, `defender.horde.chainaxe`. Garde, cinq inclinaisons, `hache_double.png` et repères dans `design/essais/gestes_combat/hache_en_chaine/`. Le porteur a validé le lot `f0b6867` le 17 novembre. Faire partir la hache à 0,52 s depuis le repère de `lachers.json`. Retourner ensemble la planche et le repère, et reprendre le pivot, l’échelle et l’angle du dessin. Essai avec un premier trajet rectiligne sur 0,12 s, puis 0,068 s par ricochet dans l’ordre de `shot.secondary`, avec un soulèvement de 3 px. Employer la même hache sur toute la trajectoire. Placer un éclat à chaque arrivée, puis laisser s’effacer la traînée. À bout portant, si le premier impact est derrière le repère à l’écran, commencer l’effet par cet impact et poursuivre les ricochets. La résolution des dégâts est celle du type 26.
 
 ### 2026-11-16 — Fronde elfe, rotation et lâcher du galet validés (ouvert)
 

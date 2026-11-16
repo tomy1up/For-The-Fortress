@@ -134,4 +134,4 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | --- | --- |
 | Appuis et geste | Les semelles restent stables dans les 120 poses. La hache remonte depuis la hanche et le bras accompagne le lâcher. |
 | Lâcher et rebonds | Départ à 0,52 s depuis la hache tenue. La même hache suit l’ordre des impacts enregistrés par le jeu. Trois rebonds vérifiés au premier tir de chaque scénario. |
-| En jeu | Dix tirs sur la mission 94, dans les deux sens à ×1 et ×2, avec pause. [Capture à taille réelle](essais/gestes_combat/hache_en_chaine/Hache_en_chaine_en_jeu.gif). Avis du porteur attendu. |
+| En jeu | Dix tirs sur la mission 94, dans les deux sens à ×1 et ×2, avec pause. [Capture à taille réelle](essais/gestes_combat/hache_en_chaine/Hache_en_chaine_en_jeu.gif). Lot `f0b6867` validé par le porteur. |
