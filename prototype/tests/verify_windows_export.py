@@ -391,7 +391,7 @@ for name,state,faction in cases:
         camp=0 if faction=='alliance' else 1
         number=int(name.rsplit('_',1)[1].removeprefix('dune').removesuffix('play').removesuffix('completed'))
         map_id=['dune_first','dune_oasis','dune_canyon','dune_columns','dune_caravans','dune_temple','dune_well','dune_obelisks','dune_sea','dune_necropolis','dune_mirage','dune_scorpion','dune_ruins','dune_arches','dune_cistern','dune_sphinx','dune_wind','dune_sarcophagus','dune_crater','dune_pyramid'][number-101]
-        routes={103:2,104:3,106:2,107:3,108:2,110:3,113:2,114:3,116:2,117:3,118:2,120:3}.get(number,0)
+        routes={103:2,104:3,106:2,107:3,108:2,110:3,113:2,114:2,116:2,117:3,120:3}.get(number,0)
         assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
         assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==((number-1)//10+1,number,map_id,routes or 1)
         won_missions=number if name.endswith('completed') else number-1
@@ -411,7 +411,7 @@ for name,state,faction in cases:
         camp=0 if faction=='alliance' else 1
         number=int(name.rsplit('_',1)[1].removeprefix('mine').removesuffix('play').removesuffix('completed'))
         map_id=['mine_entrance','mine_shaft','mine_gallery','mine_crystals','mine_cart','mine_forge','mine_lake','mine_vault','mine_collapse','mine_heart','mine_pillars','mine_vein','mine_tunnel','mine_arch','mine_twins','mine_abyss','mine_sluice','mine_crossing','mine_crypt','mine_core'][number-121]
-        routes={123:2,124:3,126:2,127:3,128:2,130:3,131:2,132:3,133:2,134:3,135:2,136:3,137:2,138:3,139:2,140:3}.get(number,0)
+        routes={123:2,124:3,126:2,127:2,129:2,130:2,131:2,132:3,133:3,134:3,135:2,136:2,137:2,138:3,139:3,140:2}.get(number,0)
         assert snap['isolated'] and snap['faction']==camp and snap['menu'] and not snap['disabled']
         assert (snap['chapter'],snap['selected'],snap['preview_map'],snap['preview_routes'])==((number-1)//10+1,number,map_id,routes or 1)
         won_missions=number if name.endswith('completed') else number-1
@@ -572,12 +572,12 @@ for name,state,faction in cases:
         selection = int(variant[7:]) if variant.startswith('terrain') else 2 if variant in ['returned','terrain2','locked2'] else 1
         assert (snap['chapter'],snap['selected'])==((20,200) if variant=='future' else (1,selection))
         assert snap['po']==60*successes and snap['xp']==(10100 if variant=='returned' else 100*successes)
-        assert snap['preview_map']==('' if variant=='future' else ['valley_ford','ford_woods','ford_heights','ford_turns','ford_glade','ford_pass','ford_switchbacks','ford_trail','ford_approach','ford_ramparts'][selection-1])
-        assert snap['preview_slots']==(0 if variant=='future' else 6)
-        assert snap['preview_segments']==(0 if variant=='future' else [7,7,7,7,8,8,7,8,8,8][selection-1])
+        assert snap['preview_map']==('necro_throne' if variant=='future' else ['valley_ford','ford_woods','ford_heights','ford_turns','ford_glade','ford_pass','ford_switchbacks','ford_trail','ford_approach','ford_ramparts'][selection-1])
+        assert snap['preview_slots']==6
+        assert snap['preview_segments']==(12 if variant=='future' else [7,7,7,7,8,8,7,8,8,8][selection-1])
         assert snap['chapter_visible'], (name, 'Le chapitre sélectionné doit rester dans la liste visible')
         expected_states=['completed']*successes+['available']+['locked']*(9-successes)
-        assert snap['mission_states']==(['future']*10 if variant=='future' else ['unavailable']*10 if variant=='blocked' else expected_states)
+        assert snap['mission_states']==(['locked']*10 if variant=='future' else ['unavailable']*10 if variant=='blocked' else expected_states)
         if variant=='blocked': assert snap['start_label']=='Progression indisponible'
     if name in ['alliance_purchase','horde_purchase','alliance_crossbow_purchase','alliance_mage_purchase','horde_sapper_purchase','horde_shaman_purchase']:
         ghost=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('PURCHASE_GHOST_SNAPSHOT=')))

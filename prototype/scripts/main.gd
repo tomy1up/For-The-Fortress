@@ -459,7 +459,7 @@ func _ready() -> void:
 				var reload_pose := map_view.defender_pose(capture_slot)
 				print("CROSSBOW_RELOAD=", JSON.stringify({"active":reload_pose.get("crossbow_reload", false),"pulse":reload_pose.pulse,"isolated":meta_profile == null or meta_profile.path.is_empty()}))
 			if "--capture-hit-motion" in OS.get_cmdline_user_args():
-				model.advance(0.045)
+				model.advance(MapView.launch_delay({"type":capture_type})+MapView.PROJECTILE_FLIGHT+0.045) # l'affichage du coup attend l'arrivée du projectile (v0.222)
 				var reacting: Array[Dictionary] = []
 				for enemy in model.enemies:
 					var pose: Dictionary = MapView.enemy_reaction_pose(enemy,map_view.recent_enemy_damage(enemy.id),model.elapsed)

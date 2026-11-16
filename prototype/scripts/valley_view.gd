@@ -225,7 +225,7 @@ static func enemy_reaction_pose(enemy: Dictionary, events: Array[Dictionary], no
 		var lost: float = maxf(0.0,float(event.hp_before)-float(event.hp_after))
 		if lost <= 0.0 or enemy.get("max_hp",0.0) <= 0.0: continue
 		var fraction: float = clampf(lost/float(enemy.max_hp),0.0,1.0)
-		var pulse: float = hit_reaction_pulse(now-event.time)*(0.35+0.65*sqrt(fraction))
+		var pulse: float = hit_reaction_pulse(now-float(event.time)-damage_landing_delay(event))*(0.35+0.65*sqrt(fraction))
 		strength = maxf(strength,pulse) # Les coups simultanés ne cumulent pas leur recul.
 	strength *= enemy_reaction_weight(int(enemy.get("type",1)))
 	return {"strength":strength,"offset":Vector2(-3.5*strength,0.7*strength),"rotation":-0.105*strength}
