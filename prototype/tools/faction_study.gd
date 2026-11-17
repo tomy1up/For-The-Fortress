@@ -1,0 +1,74 @@
+extends SceneTree
+## Étude de l'équilibre entre factions (v0.232) : pour chaque mission, chaque faction, chacun des trois arbres de talents (points réels de la mission, dépensés dans cet arbre) et chacune des dix compositions
+## de trois unités de base (combinaisons avec répétition des trois unités de la faction, achetées de la moins chère à la plus chère : deux à l'ouverture, la troisième à la vague 2 ; emplacements 3, 4 puis 2 ; mêmes améliorations
+## que les tests de chapitre), relève le résultat, les PV de forteresse restants et les PV maximaux. 30 parties par faction et par mission au lieu d'une seule composition.
+## Usage : FIRST=1 LAST=200 [FACTIONS=0,1] [SAME_HP=1] godot --headless --path prototype --script res://tools/faction_study.gd
+## Sortie : lignes « STUDY mission faction arbre composition résultat PV_restants PV_maximaux ».
+const Model = preload("res://scripts/valley_model.gd")
+const Catalogue = preload("res://scripts/campaign_catalogue.gd")
+const Talents = preload("res://scripts/meta_talents_linked.gd")
+const Experience = preload("res://scripts/talent_experience.gd")
+
+func ranks_for(tree: int, faction: int, mission: int) -> Array:
+	var first: int = Talents.index_for(tree,0)
+	var xp := 0
+	for previous in range(1,mission): xp += int(Catalogue.definition(previous).xp)
+	var points: int = Experience.points_for_xp(xp)
+	var ranks: Array = Talents.empty_ranks()
+	var priority: Array = [5,7,9,16,18]
+	priority.append_array(range(21))
+	for index in [first,first,first,first,first,Talents.index_for(tree,1)]:
+		if Talents.allocation_error(ranks,index,points,faction).is_empty(): ranks[index] += 1
+	while Talents.spent(ranks) < points:
+		var allocated := false
+		for local in priority:
+			var index: int = Talents.index_for(tree,local)
+			if Talents.allocation_error(ranks,index,points,faction).is_empty():
+				ranks[index] += 1;allocated = true;break
+		if not allocated: break
+	return ranks
+
+func play(mission: int, faction: int, tree: int, types: Array) -> Dictionary:
+	var catalogue: Dictionary = Catalogue.definition(mission)
+	var m = Model.new(true,Model.Maps.for_id(str(catalogue.map_id)))
+	m.configure_wave_set(catalogue.get("wave_set_id","ford"))
+	# SAME_HP=1 : mêmes PV d'ennemis pour les deux factions (sans la réduction propre à la Horde), pour mesurer ce que cette réduction change.
+	m.configure_enemy_hp(Catalogue.faction_hp_percent(mission,0 if OS.get_environment("SAME_HP") == "1" else faction))
+	m.configure_combat_affix(catalogue.get("combat_affix",{}))
+	m.meta_ranks = ranks_for(tree,faction,mission)
+	m.select_faction(faction)
+	m.rng.seed = 7
+	var slots := [3,4,2]
+	types = types.duplicate()
+	types.sort_custom(func(x, y): return m.purchase_cost(x) < m.purchase_cost(y)) # les deux moins chères à l'ouverture, la plus chère à la vague 2
+	if not (m.buy(slots[0],types[0]) and m.buy(slots[1],types[1])): return {"result":"refus","hp":-1,"max":m.max_hp}
+	for wave in range(1,11):
+		if wave == 2: m.upgrade(slots[0])
+		if wave >= 2 and m.defenders[slots[2]].is_empty(): m.buy(slots[2],types[2])
+		if wave >= 5:
+			for slot in slots:
+				if not m.defenders[slot].is_empty(): m.upgrade(slot,0 if m.defenders[slot].level == 3 else -1)
+		if not m.start(): break
+		m.advance(10000)
+		if m.phase == "defeat": break
+		if m.phase == "bonus": m.choose_bonus(m.bonus_offer[0])
+		if wave < 10: m.prepare_next_wave()
+	return {"result":m.phase,"hp":m.fortress_hp,"max":m.max_hp}
+
+func _initialize() -> void:
+	var first: int = int(OS.get_environment("FIRST"))
+	var last: int = int(OS.get_environment("LAST"))
+	var factions: Array = [0,1]
+	if OS.get_environment("FACTIONS") != "":
+		factions = []
+		for part in OS.get_environment("FACTIONS").split(","): factions.append(int(part))
+	for mission in range(first,last+1):
+		for faction in factions:
+			var base: int = 0 if faction == 0 else 3
+			for tree in range(3):
+				for a in range(3):
+					for b in range(a,3):
+						for c in range(b,3):
+							var outcome: Dictionary = play(mission,faction,tree,[base+a,base+b,base+c])
+							print("STUDY %d %d %d %d%d%d %s %d %d" % [mission,faction,tree,a,b,c,outcome.result,outcome.hp,outcome.max])
+	quit()
