@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-17 — Lanceur double troll (27) intégré en v0.228 (ouvert)
+Lot `b779d4d` intégré : six planches, deux haches (`hache_basse_v001.png`, `hache_haute_v001.png`), repères de `lachers.json`. L'alternance des bras est suivie côté rendu (un compteur par défenseur, conservé entre les vagues, jamais écrit dans le modèle), en commençant par la hache basse. À vérifier sur la version publiée.
+
 ### 2026-11-17 — Décor des chapitres 15 à 20 refondus ; Arbalète lourde (24), Fronde elfe (25), Hache en chaîne (26) intégrées en v0.227 (ouvert)
 Les cartes des missions 141 à 200 (`sky_*`, `coast_*`, `necro_*`) ont de nouveaux tracés : leur décor est désactivé (`DecorArt.REWORKED_MAPS`), à redessiner en évitant routes et emplacements. Lots `aa7462b`, `a683912` et `f0b6867` intégrés (planches, repères, `hache_double.png`). Limite connue : à bout portant, la hache en chaîne n'est pas dessinée en vol, mais le premier impact reste à l'instant d'arrivée normal (0,12 s après le lâcher) car l'instant d'affichage des dégâts ne connaît pas la géométrie du tir. À vérifier sur la version publiée.
 

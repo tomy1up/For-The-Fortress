@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.228**. Geste du Lanceur double troll (type 27) : deux haches lancées en alternance, une par bras, à chaque tir. [Notes](design/essais/v0228_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.228).
+
 **Prototype v0.227**. Refonte des cartes, chapitres 15 à 20 (missions 141 à 200) : soixante tracés nouveaux, la refonte de la campagne est terminée ; gestes de l'Arbalète lourde, de la Fronde elfe et de la Hache en chaîne. [Notes](design/essais/v0227_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.227).
 
 **Prototype v0.226**. Refonte des cartes, chapitres 10 et 11 (missions 91 à 110) : vingt tracés nouveaux, calibrés par simulation. [Notes](design/essais/v0226_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.226).
