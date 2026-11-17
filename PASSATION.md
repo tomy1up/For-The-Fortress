@@ -324,6 +324,12 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
+## État au 17 novembre 2026 — Claude Code (v0.228 en attente de publication)
+
+- Publiées : v0.224 à v0.227 (refonte des cartes terminée, chapitres 10 à 20 ; gestes 19 à 26).
+- **v0.228 (Lanceur double troll, type 27) : commitée sur `main`, régression complète verte (159 817 contrôles Godot, 17 tests Python), export construit dans `dist/v0228-validation`, mais NON poussée, NON taguée, NON publiée** : la vérification de l'export (`verify_windows_export.py`, environ 1 050 cas) a été interrompue par l'arrêt du PC. À faire : `python prototype/tests/verify_windows_export.py dist/v0228-validation/For_the_Fortress_v0.228_Windows_x64.zip --destination dist/v0228-verification --screen 1 --background --source-project prototype` (si le dossier d'export manque, refaire l'export), puis tag annoté `v0.228`, push de `main` et du tag, `gh release create v0.228 …` (ZIP et `.sha256`, notes `design/essais/v0228_release_notes.md`), nettoyage de `dist/` (garder v0.227 et v0.228).
+- Reste à intégrer côté code : Veilleur de cendres (type 16, lot Codex `1779fe3`, déjà fusionné dans `main` côté assets).
+
 ## Prochaines étapes possibles
 
 - Visuels (Codex) : attendre le retour du porteur sur le pilote avant de poursuivre la mission d'ensemble dans `TODO_ANIMATIONS_UNITES.md` et l’habillage dans `TODO_VISUELS.md`.
