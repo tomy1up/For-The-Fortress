@@ -40,6 +40,9 @@ var sound_player: Node = null
 var sound_director: RefCounted = null
 ## Suivi purement visuel des défenseurs (achat, passage de niveau, revente), cadencé en temps réel : le modèle ne bouge pas en préparation.
 var _seen_model: Object = null
+var _arm_counts: Dictionary = {} # tirs vus par défenseur (instance_id), pour l'alternance des bras du Lanceur double troll
+var _shot_arms: Dictionary = {}
+var _arm_last_id: int = 0
 var _seen_defenders: Array[Dictionary] = []
 var _defender_events: Dictionary = {}
 var _sold_ghosts: Array[Dictionary] = []
@@ -75,6 +78,7 @@ func _init() -> void:
 
 func _process(delta: float) -> void:
 	_track_defenders()
+	_track_double_arms()
 	_play_sounds()
 	if _sheet_animation_running(): queue_redraw()
 	royal_hurt_age = minf(2.0,royal_hurt_age+maxf(0.0,delta))
@@ -275,7 +279,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32, 23: 0.6, 24: 0.44, 25: 0.4, 26: 0.52} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32, 23: 0.6, 24: 0.44, 25: 0.4, 26: 0.52, 27: 0.48} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
@@ -323,6 +327,18 @@ const CHAIN_AXE_BOUNCE := 0.068
 const CHAIN_AXE_TEXTURE: Texture2D = preload("res://assets/units/shop/hache_double_v001.png")
 const CHAIN_AXE_PIVOT_PX := Vector2(574.0,207.0)
 const CHAIN_AXE_SCALE := 0.05228215767634855
+## Lanceur double troll (type 27, deux haches lancées en alternance, départ à 0,48 s) : six planches, trois par bras (bras bas : `attack`, `attack_up`, `attack_down` ; bras haut : `attack_close`,
+## `attack_close_up`, `attack_close_down`). Le bras alterne à chaque tir enregistré de chaque défenseur, en commençant par la hache basse, et l'alternance se poursuit entre les vagues (état de rendu seulement,
+## jamais écrit dans le modèle). La planche est celle du bras actif dont l'inclinaison suit le mieux le trajet depuis son propre centre (`lachers.json`, retourné avec la planche) ; la hache du bras tourne
+## le long du trajet rectiligne ; un seul projectile par tir ; à bout portant, si l'impact est déjà derrière le point de lâcher, la hache n'est pas dessinée en vol.
+const DOUBLE_THROWER_TYPE := 27
+const DOUBLE_THROWER_POSES: Dictionary = {
+	"attack":{"arm":0,"pitch":0,"center":Vector2(11.2731,-45.148),"angle":-203.0},"attack_up":{"arm":0,"pitch":-12,"center":Vector2(9.5483,-47.5518),"angle":-215.0},"attack_down":{"arm":0,"pitch":24,"center":Vector2(13.5929,-39.8767),"angle":-179.0},
+	"attack_close":{"arm":1,"pitch":0,"center":Vector2(25.3151,-45.4138),"angle":48.0},"attack_close_up":{"arm":1,"pitch":-12,"center":Vector2(24.3075,-48.8412),"angle":36.0},"attack_close_down":{"arm":1,"pitch":24,"center":Vector2(26.1978,-38.2167),"angle":72.0}}
+const DOUBLE_THROWER_SCALE := 0.05585106382978723
+const DOUBLE_THROWER_AXES: Array = [
+	{"texture":preload("res://assets/units/shop/hache_basse_v001.png"),"pivot":Vector2(67.0,84.0)},
+	{"texture":preload("res://assets/units/shop/hache_haute_v001.png"),"pivot":Vector2(119.0,63.0)}]
 const SHARD_TEXTURE: Texture2D = preload("res://assets/units/shop/eclat_v001.png")
 const SHARD_PIVOT_PX := Vector2(181.0,36.0)
 const SHARD_SCALE := 0.10441044104410441
@@ -448,7 +464,25 @@ static func spear_variant(shot: Dictionary) -> String:
 		if distance < best_distance-0.000001: best_distance = distance;best = variant
 	return best
 
+static func double_variant(shot: Dictionary) -> String:
+	var impact: Vector2 = project(shot.to)+Vector2(0,-12)
+	var facing_side: float = shot_facing(shot)
+	var best: String = "attack_close" if int(shot.get("arm",0)) == 1 else "attack"
+	var best_error: float = INF
+	for variant in DOUBLE_THROWER_POSES:
+		var pose: Dictionary = DOUBLE_THROWER_POSES[variant]
+		if int(pose.arm) != int(shot.get("arm",0)): continue
+		var line: Vector2 = impact-(project(shot.from)+Vector2(pose.center.x*facing_side,pose.center.y))
+		var error: float = absf(rad_to_deg(atan2(line.y,maxf(absf(line.x),0.0001)))-float(pose.pitch))
+		if error < best_error: best_error = error;best = variant
+	return best
+
+static func double_origin(shot: Dictionary) -> Vector2:
+	var center: Vector2 = DOUBLE_THROWER_POSES[double_variant(shot)].center
+	return project(shot.from)+Vector2(center.x*shot_facing(shot),center.y)
+
 static func shot_origin(shot: Dictionary, pose_age: float = 0.0) -> Vector2:
+	if int(shot.get("type",-1)) == DOUBLE_THROWER_TYPE: return double_origin(shot)
 	if int(shot.get("type",-1)) == SPEARMAN_TYPE: return spear_tip(shot,spear_variant(shot))
 	if int(shot.get("type",-1)) == STONE_TYPE: return catapult_origin(shot)
 	if int(shot.get("type",-1)) in TILTED_TYPES: return aimed_origin(shot)
@@ -500,6 +534,9 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		_draw_sword_strike(origin,direction,side,age/PROJECTILE_FLIGHT)
 		return
 	if int(shot.type) == HEAVY_CROSSBOW_TYPE and (target.x-origin.x)*shot_facing(shot) <= 0.0: return # cible derrière la pointe : impact seul
+	if int(shot.type) == DOUBLE_THROWER_TYPE:
+		if (target.x-origin.x)*shot_facing(shot) > 0.0: _draw_double_axe(point,shot,age)
+		return
 	if int(shot.type) == SHARDTHROWER_TYPE:
 		_draw_crystal_shard(point,direction,shot_facing(shot))
 		return
@@ -837,6 +874,40 @@ func _draw_chain_axe(point: Vector2, shot: Dictionary, age: float) -> void:
 	draw_set_transform(point,(start_angle+age/PROJECTILE_FLIGHT*TAU)*facing,Vector2(facing,1.0))
 	draw_texture_rect(CHAIN_AXE_TEXTURE,Rect2(-CHAIN_AXE_PIVOT_PX*CHAIN_AXE_SCALE,CHAIN_AXE_TEXTURE.get_size()*CHAIN_AXE_SCALE),false)
 	draw_set_transform(Vector2.ZERO)
+
+func _draw_double_axe(point: Vector2, shot: Dictionary, age: float) -> void:
+	var facing: float = shot_facing(shot)
+	var axe: Dictionary = DOUBLE_THROWER_AXES[int(shot.get("arm",0))]
+	var start_angle: float = deg_to_rad(float(DOUBLE_THROWER_POSES[double_variant(shot)].angle))
+	draw_set_transform(point,(start_angle+age/PROJECTILE_FLIGHT*TAU)*facing,Vector2(facing,1.0))
+	draw_texture_rect(axe.texture,Rect2(-axe.pivot*DOUBLE_THROWER_SCALE,axe.texture.get_size()*DOUBLE_THROWER_SCALE),false)
+	draw_set_transform(Vector2.ZERO)
+
+## Bras actif du Lanceur double troll pour un tir : alternance par défenseur suivie côté rendu (voir `_track_double_arms`).
+func with_arm(shot: Dictionary) -> Dictionary:
+	if int(shot.get("type",-1)) != DOUBLE_THROWER_TYPE: return shot
+	var copy: Dictionary = shot.duplicate()
+	copy.arm = int(_shot_arms.get("%d:%.5f" % [int(shot.get("slot",-1)),float(shot.get("time",0.0))],0))
+	return copy
+
+func _track_double_arms() -> void:
+	if model == null:
+		_arm_counts.clear();_shot_arms.clear();_arm_last_id = 0
+		return
+	if model.next_instance_id < _arm_last_id: _arm_counts.clear();_shot_arms.clear()
+	_arm_last_id = model.next_instance_id
+	if model.shots.is_empty():
+		_shot_arms.clear()
+		return
+	for shot in model.shots:
+		if int(shot.get("type",-1)) != DOUBLE_THROWER_TYPE: continue
+		var key: String = "%d:%.5f" % [int(shot.get("slot",-1)),float(shot.get("time",0.0))]
+		if _shot_arms.has(key): continue
+		var slot: int = int(shot.get("slot",-1))
+		var id: int = int(model.defenders[slot].get("instance_id",-1)) if slot >= 0 and slot < model.defenders.size() and not model.defenders[slot].is_empty() else -1
+		var count: int = int(_arm_counts.get(id,0))
+		_shot_arms[key] = count%2
+		_arm_counts[id] = count+1
 
 func _draw_spinning_axe(point: Vector2, age: float) -> void:
 	var rotation: float = age/PROJECTILE_FLIGHT*TAU
@@ -1364,7 +1435,7 @@ func _draw() -> void:
 				var to: Vector2 = protection_positions.get(event.get("guardian_id", -1),event.to)
 				draw_line(project(from)+Vector2(0,-12),project(to)+Vector2(0,-12),Color(0.83,0.96,0.52,(1.0-age/0.4)*0.85),2,true)
 			for shot in model.shots:
-				_draw_impact(shot, model.elapsed - shot.time)
+				_draw_impact(with_arm(shot), model.elapsed - shot.time)
 		_draw_eliminations()
 		_draw_sold_defenders()
 	_draw_affix_banner()
@@ -1561,7 +1632,7 @@ func defender_pose(slot: int) -> Dictionary:
 		pose.disabled_age = float(model.combat_affix.duration)-float(eruption.remaining)
 	# Garder le côté du dernier tir de cet emplacement après la fin du mouvement.
 	for index in range(model.shots.size()-1,-1,-1):
-		var shot: Dictionary = model.shots[index]
+		var shot: Dictionary = with_arm(model.shots[index])
 		var age: float = model.elapsed-shot.time
 		if shot.slot != slot or age < 0.0: continue
 		pose.pulse = attack_pulse(age)
@@ -1569,6 +1640,7 @@ func defender_pose(slot: int) -> Dictionary:
 		pose.direction = shot_facing(shot)
 		if int(shot.get("type",-1)) in TILTED_TYPES: pose.attack_variant = aim_variant(aim_pitch(shot))
 		if int(shot.get("type",-1)) == SPEARMAN_TYPE: pose.attack_variant = spear_variant(shot)
+		if int(shot.get("type",-1)) == DOUBLE_THROWER_TYPE: pose.attack_variant = double_variant(shot)
 		if int(shot.get("type",-1)) == STONE_TYPE:
 			var view: String = catapult_view(shot.from,shot.to)
 			pose.attack_variant = "attack"+view

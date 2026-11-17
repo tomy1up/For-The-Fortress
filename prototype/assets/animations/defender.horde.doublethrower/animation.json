@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "id": "defender.horde.doublethrower",
+  "facing": "right",
+  "foot": [
+    162.56842105263158,
+    337.3411764705882
+  ],
+  "display_height": 85.45212765957446,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        352,
+        354
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 23,
+      "frame_size": [
+        352,
+        354
+      ],
+      "mode": "event",
+      "duration": 0.92
+    },
+    "attack_up": {
+      "file": "attack_up.png",
+      "frames": 23,
+      "frame_size": [
+        352,
+        354
+      ],
+      "mode": "event",
+      "duration": 0.92
+    },
+    "attack_down": {
+      "file": "attack_down.png",
+      "frames": 23,
+      "frame_size": [
+        352,
+        354
+      ],
+      "mode": "event",
+      "duration": 0.92
+    },
+    "attack_close": {
+      "file": "attack_close.png",
+      "frames": 23,
+      "frame_size": [
+        352,
+        354
+      ],
+      "mode": "event",
+      "duration": 0.92
+    },
+    "attack_close_up": {
+      "file": "attack_close_up.png",
+      "frames": 23,
+      "frame_size": [
+        352,
+        354
+      ],
+      "mode": "event",
+      "duration": 0.92
+    },
+    "attack_close_down": {
+      "file": "attack_close_down.png",
+      "frames": 23,
+      "frame_size": [
+        352,
+        354
+      ],
+      "mode": "event",
+      "duration": 0.92
+    }
+  }
+}

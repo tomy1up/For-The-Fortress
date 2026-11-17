@@ -218,4 +218,50 @@ func run_checks() -> void:
 			check(View.secondary_segments(chain).size() == 2 and View.secondary_segments(chain)[1][0].is_equal_approx(View.project(chain.secondary[0])),"Hache en chaîne : ricochets dans l'ordre de shot.secondary")
 	var xspec: Dictionary = Library.spec_for("defender.horde.chainaxe")
 	check(not xspec.is_empty() and xspec.animations.has("attack_up12") and xspec.animations.has("attack_down36"),"Hache en chaîne : cinq planches chargées et valides")
+	# Lanceur double troll (type 27) : bras alternés, planche du bras actif choisie par l'écart minimal, hache à 0,48 s depuis le centre de la planche.
+	check(is_equal_approx(View.launch_delay({"type":27}),0.48),"Hache du lanceur double à 0,48 s")
+	for arm in [0,1]:
+		for dx in [-8.0,-3.0,3.0,8.0]:
+			for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+				var twin_axe: Dictionary = {"type":27,"from":from,"to":from+Vector2(dx,dy),"slot":0,"arm":arm}
+				var variant27: String = View.double_variant(twin_axe)
+				var pose27: Dictionary = View.DOUBLE_THROWER_POSES[variant27]
+				check(int(pose27.arm) == arm and (arm == 1) == variant27.begins_with("attack_close"),"Lanceur double : planche du bras %d (%s)" % [arm,variant27])
+				check(View.shot_origin(twin_axe).distance_to(View.project(from)+Vector2(pose27.center.x*View.shot_facing(twin_axe),pose27.center.y)) < 0.001,"Lanceur double : hache partie du centre de la planche %s" % variant27)
+	var tspec: Dictionary = Library.spec_for("defender.horde.doublethrower")
+	check(not tspec.is_empty() and tspec.animations.has("attack_close_up") and tspec.animations.has("attack_down"),"Lanceur double : six planches chargées et valides")
+	# Alternance suivie côté rendu : un seul état par défenseur, poursuivi entre les vagues, jamais écrit dans le modèle.
+	var tracker := View.new()
+	var tracked = View.Model.new(true,View.Model.Maps.for_id("valley_ford"))
+	tracked.configure_auxiliary(27);tracked.select_faction(1)
+	check(tracked.buy(3,27),"Lanceur double : recruté")
+	tracker.model = tracked
+	var arms: Array = []
+	var seen_keys: Dictionary = {}
+	var continued: bool = true
+	var inside: bool = true
+	for wave in range(1,3):
+		tracked.start();seen_keys.clear()
+		var wave_arms: Array = []
+		var start_count: int = int(tracker._arm_counts.get(int(tracked.defenders[3].instance_id),0))
+		for step in range(900):
+			tracked.advance(0.5)
+			tracker._track_double_arms()
+			for shot in tracked.shots:
+				if int(shot.type) != 27: continue
+				var key: String = "%d:%.5f" % [int(shot.slot),float(shot.time)]
+				check(not shot.has("arm"),"Lanceur double : le modèle n'est pas modifié")
+				if not seen_keys.has(key):
+					seen_keys[key] = true
+					wave_arms.append(tracker.with_arm(shot).arm)
+			if tracked.phase != "combat": break
+		for index in range(1,wave_arms.size()): inside = inside and wave_arms[index] == 1-wave_arms[index-1]
+		continued = continued and int(tracker._arm_counts.get(int(tracked.defenders[3].instance_id),0)) > start_count
+		arms.append_array(wave_arms)
+		tracked.advance(10000)
+		if tracked.phase == "bonus": tracked.choose_bonus(tracked.bonus_offer[0])
+		if wave < 2: tracked.prepare_next_wave()
+	check(arms.size() >= 4 and inside and continued,"Lanceur double : alternance basse, haute, basse… à chaque tir, compteur conservé entre les vagues")
+	check(arms.size() >= 2 and arms[0] == 0,"Lanceur double : commence par la hache basse")
+	tracker.free()
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
