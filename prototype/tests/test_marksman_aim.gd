@@ -264,4 +264,14 @@ func run_checks() -> void:
 	check(arms.size() >= 4 and inside and continued,"Lanceur double : alternance basse, haute, basse… à chaque tir, compteur conservé entre les vagues")
 	check(arms.size() >= 2 and arms[0] == 0,"Lanceur double : commence par la hache basse")
 	tracker.free()
+	# Veilleur des cendres (type 16) : trois planches choisies par l'écart minimal, hachette à 0,36 s depuis le point de la planche.
+	check(is_equal_approx(View.launch_delay({"type":16}),0.36),"Hachette du veilleur à 0,36 s")
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0]:
+			var hatchet: Dictionary = {"type":16,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var wp: int = View.aim_pitch(hatchet)
+			var wtip: Vector2 = View.WATCHER_TIPS[wp]
+			check(wp in [-12,0,12] and View.shot_origin(hatchet).distance_to(View.project(from)+Vector2(wtip.x*View.shot_facing(hatchet),wtip.y)) < 0.001,"Veilleur : départ du point de la planche %d" % wp)
+	var wspec: Dictionary = Library.spec_for("defender.horde.watcher")
+	check(not wspec.is_empty() and wspec.animations.has("attack_up12") and wspec.animations.has("attack_down12"),"Veilleur : trois planches chargées et valides")
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
