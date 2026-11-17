@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-17 — Veilleur des cendres (16) intégré en v0.229 (ouvert)
+Lot `1779fe3` intégré : trois planches, `hachette.png` (`hachette_v001.png`), repères de `lachers.json`, départ à 0,36 s, hachette en rotation sur un trajet rectiligne, impact seul si la cible est derrière le point de lâcher. À vérifier sur la version publiée.
+
 ### 2026-11-17 — Lanceur double troll (27) intégré en v0.228 (ouvert)
 Lot `b779d4d` intégré : six planches, deux haches (`hache_basse_v001.png`, `hache_haute_v001.png`), repères de `lachers.json`. L'alternance des bras est suivie côté rendu (un compteur par défenseur, conservé entre les vagues, jamais écrit dans le modèle), en commençant par la hache basse. À vérifier sur la version publiée.
 
