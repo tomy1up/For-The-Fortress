@@ -12,7 +12,7 @@ func check(ok: bool, message: String) -> void:
 func close(a: float, b: float) -> bool:
 	return absf(a-b) < 0.00000001
 func fixture(faction: int = 0) -> RefCounted:
-	var m = Model.new()
+	var m = Model.new(); m.rules_v232 = false # Références historiques : douze bonus, choix après les vagues 3, 6 et 9
 	m.select_faction(faction)
 	m.gold = 10000 # Budget de vérification, jamais attribué par le parcours normal.
 	return m
@@ -54,7 +54,7 @@ func run_checks() -> void:
 	# Offres uniformes sans remise : reproductibles avec une graine donnée.
 	var a = fixture(); var b = fixture()
 	a.rng.seed = 12345; b.rng.seed = 12345
-	for wave in [3,6,9]:
+	for wave in a.bonus_waves():
 		finish_fixture(a,wave); finish_fixture(b,wave)
 		check(a.phase == "bonus" and a.bonus_offer == b.bonus_offer,"Tirage déterministe sous graine")
 		var distinct: Dictionary = {}
@@ -174,8 +174,8 @@ func run_checks() -> void:
 			check(m.wave == wave and m.start(),"Lancement ordonné campagne de contrôle")
 			m.advance(300)
 			check(m.killed == counts[wave-1] and m.escaped == 0,"Tous les profils résolus sans arrivée en campagne de contrôle")
-			if wave in [3,6,9]:
-				check(m.phase == "bonus", "Choix uniquement après 3/6/9")
+			if wave in m.bonus_waves():
+				check(m.phase == "bonus", "Choix uniquement après les vagues de choix")
 				m.choose_bonus(Model.reference_bonus(m.bonus_offer))
 			if wave < 10:
 				check(m.phase == "finished" and m.prepare_next_wave() and m.elapsed == 0 and m.enemies.is_empty() and m.curses.is_empty(),"Transition conserve défense, remet le temps à zéro")
@@ -223,7 +223,7 @@ func run_checks() -> void:
 		m._resolve_instant()
 		check(m.phase == ("defeat" if fortress == 20 else "victory") and m.fortress_hp == fortress-20 and m.total_income == 0,"Arrivée du boss et priorité défaite")
 	# L'interface suit les phases réelles et impose le choix avant la suite.
-	var scene = Main.new(); root.add_child(scene); scene.set_process(false); scene._choose_faction(0)
+	var scene = Main.new(); root.add_child(scene); scene.set_process(false); scene._choose_faction(0); scene.model.rules_v232 = false
 	finish_fixture(scene.model,3); scene._update_interface()
 	check(scene.bonus_panel.visible and scene.start_button.disabled and scene.bonus_close.visible == false,"Offre obligatoire affichée")
 	var gold_before: int = scene.model.gold

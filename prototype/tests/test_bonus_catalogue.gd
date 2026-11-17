@@ -186,4 +186,14 @@ func run_checks() -> void:
 		var blasts: Array[Dictionary] = []
 		gold._settle_enemy(enemy,survivors,blasts)
 		check(gold.gold-gold_before == roundi(float(reward)*1.25),"R-36 : %d or → %d or" % [reward,gold.gold-gold_before])
+	# Rythme des choix : après les vagues 2, 4, 6 et 8 (règles v0.232), 3, 6 et 9 avant.
+	for rules in [true,false]:
+		var rhythm: Array = []
+		for wave in range(1,11):
+			var r = fresh(0)
+			r.rules_v232 = rules
+			r.wave = wave;r.phase = "combat";r.spawn_schedule.clear();r.spawned = 0;r.enemies.clear()
+			r._resolve_instant()
+			if r.phase == "bonus": rhythm.append(wave)
+		check(rhythm == ([2,4,6,8] if rules else [3,6,9]),"Vagues de choix %s : %s" % [str(rules),str(rhythm)])
 	print("BONUS_CATALOGUE_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)

@@ -1054,7 +1054,7 @@ func _prepare_campaign_capture(state: String) -> void:
 			model.advance(5)
 			return
 		model.advance(300)
-		if state == "bonus" and wave == 3: return
+		if state == "bonus" and wave == model.bonus_waves()[0]: return
 		if model.phase == "defeat": return
 		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
 		if (state == "forecast" and wave == 8) or (state == "forecast_boss" and wave == 9): return
@@ -1202,7 +1202,7 @@ Cette lecture ne suspend pas le combat ni le départ automatique."
 	reset_button = _button(side, "Nouvel essai", Rect2(22, 532, 234, 40), _reset)
 	summary_button = _button(side,"Bilan",Rect2(144,532,112,40),_show_run_summary)
 	summary_button.tooltip_text = "Voir le résultat de chaque vague et les améliorations de cette partie."
-	bonus_summary_button = _button(side, "Bonus acquis · 0/3", Rect2(22, 582, 234, 32), _show_bonuses)
+	bonus_summary_button = _button(side, "Bonus acquis · 0/4", Rect2(22, 582, 234, 32), _show_bonuses)
 	bonus_summary_button.add_theme_font_size_override("font_size", 13)
 	var info := _panel(screen, Rect2(330, 608, 926, 152))
 	title_label = _label(info, "CONSTRUIRE · ALLIANCE", Vector2(24, 12), Vector2(690, 24), 13, Color("cdb47e"))
@@ -1437,8 +1437,8 @@ func _build_run_summary(screen: Control) -> void:
 	for index in range(6):
 		summary_army.append(_label(summary_wave_content,"",Vector2(24,472+16*index),Vector2(610,18),12,Color("bbcbbf")))
 		summary_army[-1].size.y = 18
-	for index in range(3):
-		summary_bonuses.append(_label(summary_wave_content,"",Vector2(650,472+30*index),Vector2(298,28),13,Color("bbcbbf")))
+	for index in range(4):
+		summary_bonuses.append(_label(summary_wave_content,"",Vector2(650,472+25*index),Vector2(298,24),13,Color("bbcbbf")))
 		summary_bonuses[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	summary_wave_arrivals = _label(summary_wave_content,"",Vector2(24,574),Vector2(924,20),13,Color("cdb47e"))
 	summary_wave_arrivals.size.y = 20
@@ -2749,7 +2749,7 @@ func _update_interface() -> void:
 		"defeat": status_label.text = "Forteresse détruite\nRelancez un nouvel essai"
 	if countdown_remaining >= 0.0:
 		status_label.text = "Vague %d terminée\n%s" % [model.wave,"Décompte suspendu" if _countdown_paused() else "Préparation : %d s" % ceili(countdown_remaining)]
-	bonus_summary_button.text = "Bonus acquis · %d/3" % model.bonuses.size()
+	bonus_summary_button.text = "Bonus acquis · %d/%d" % [model.bonuses.size(),model.bonus_waves().size()]
 	bonus_summary_button.disabled = modal
 	_update_bonus_panel()
 	tally_label.text = _combat_tally_text()

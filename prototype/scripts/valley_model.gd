@@ -896,6 +896,12 @@ func choose_bonus(code: int) -> bool:
 	_record_action("bonus_choice",{"offered":offered,"chosen":code})
 	return true
 
+## Vagues après lesquelles le joueur choisit un bonus : 3, 6 et 9 avant la v0.232 ; 2, 4, 6 et 8 depuis (quatre choix, réglage de prototype à confirmer).
+const BONUS_WAVES_LEGACY: Array[int] = [3,6,9]
+const BONUS_WAVES: Array[int] = [2,4,6,8]
+func bonus_waves() -> Array[int]:
+	return BONUS_WAVES if rules_v232 else BONUS_WAVES_LEGACY
+
 ## Effet immédiat d'un bonus sur la forteresse : variation du maximum et des PV actuels (Maçonnerie renforcée +4, Pari risqué −4, Forteresse blindée +8).
 func bonus_fortress_change(code: int) -> Dictionary:
 	if code == 8: return {"max":4,"current":4}
@@ -1213,7 +1219,7 @@ func _resolve_instant() -> void:
 	elif spawned == spawn_schedule.size() and enemies.is_empty():
 		if wave == 10:
 			phase = "victory"
-		elif wave in [3,6,9]:
+		elif wave in bonus_waves():
 			_offer_bonus()
 		else:
 			phase = "finished"

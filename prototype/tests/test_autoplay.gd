@@ -13,6 +13,7 @@ func scene_for(faction: int = 0) -> Node:
 	root.add_child(scene)
 	scene.set_process(false)
 	scene._choose_faction(faction)
+	scene.model.rules_v232 = false # Références historiques : choix après les vagues 3, 6 et 9, douze bonus
 	return scene
 func _initialize() -> void:
 	call_deferred("run_checks")
@@ -88,9 +89,9 @@ func run_checks() -> void:
 			check(scene.model.wave == wave and scene.model.active,"Vague successive lancée automatiquement")
 			scene._process(1000)
 			if wave == 10: break
-			if wave in [3,6,9]:
+			if wave in scene.model.bonus_waves():
 				scene._process(1000)
-				check(scene.model.phase == "bonus" and scene.countdown_remaining == -1,"Offre après 3/6/9 attend le joueur")
+				check(scene.model.phase == "bonus" and scene.countdown_remaining == -1,"Offre après les vagues de choix attend le joueur")
 				scene._choose_bonus(scene.model.bonus_offer.find(scene.Model.reference_bonus(scene.model.bonus_offer)))
 			check(scene.countdown_remaining == 30,"Délai complet avant chaque vague")
 			if wave+1 >= 4 and scene.model.defenders[2].is_empty():
@@ -106,7 +107,7 @@ func run_checks() -> void:
 			scene._process(29.9)
 			check(scene.model.wave == wave and not scene.model.active,"La préparation ne finit pas en avance")
 			scene._process(0.2)
-		check(scene.model.phase == "victory" and scene.model.fortress_hp == [18,15][faction] and scene.model.gold == [189,182][faction],"Mêmes références financées avec enchaînement automatique")
+		check(scene.model.phase == "victory" and scene.model.fortress_hp == [14,12][faction] and scene.model.gold == [192,189][faction],"Mêmes références financées avec enchaînement automatique")
 		check(scene.countdown_remaining == -1 and not scene.autoplay_started,"Victoire désarme l'automatisme")
 		check(not scene.countdown_bar.visible,"Les deux factions terminent sans barre de préparation")
 		scene._process(10000)

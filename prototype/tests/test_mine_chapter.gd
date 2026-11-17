@@ -66,7 +66,7 @@ func verify_map(number: int) -> void:
 	view.free()
 
 func play(model: Model, types: Array, slots: Array) -> void:
-	model.rng.seed = 7
+	model.rng.seed = 7;model.rules_v232 = false # Références historiques : tirage de douze bonus
 	check(model.buy(slots[0],types[0]) and model.buy(slots[1],types[1]),"Recrutement initial dans le budget normal")
 	for wave in range(1,11):
 		if wave == 2: model.upgrade(slots[0])
@@ -106,6 +106,7 @@ func verify_mission(camp: int, number: int) -> void:
 	print("MINE_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])
 	var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
+	if not model.rules_v232: report.game_version = "0.231" # Références historiques : tirage de douze bonus
 	var replay: Dictionary = Replay.verify(report)
 	check(replay.ok,"Mission %d : le rapport est rejouable : %s" % [number,str(replay.get("error",""))])
 	check(not report.has("wave_set_id") and not report.has("combat_affix") and report.map_definition.decoration == "mine","Mission %d : le rapport conserve la carte des souterrains et les rencontres standard" % number)
