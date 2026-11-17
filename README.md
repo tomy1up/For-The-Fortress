@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.231**. Outillage : régression et vérification d'export en parallèle (environ quatre fois plus rapides), captures reproductibles, fiches des chapitres 10 à 20 mises à jour, rapport de courbe de difficulté des 200 missions. Aucun changement de jeu. [Notes](design/essais/v0231_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.231).
+
 **Prototype v0.230**. Tir à bout portant : impact et baisse de vie au lâcher quand le projectile n'a pas de vol visible ; contrôles visuels des ricochets, des bras alternés et de la chaîne de foudre. [Notes](design/essais/v0230_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.230).
 
 **Prototype v0.229**. Geste du Veilleur des cendres (type 16) : lancer de hachette. [Notes](design/essais/v0229_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.229).
