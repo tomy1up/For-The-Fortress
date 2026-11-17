@@ -434,7 +434,11 @@ func _ready() -> void:
 				elif capture_type == 5 and not model.curses.is_empty(): found = true
 				elif not model.shots.is_empty():
 					var shot: Dictionary = model.shots[-1]
-					found = (capture_type < 2 or capture_type >= 6 or not shot.secondary.is_empty()) and model.elapsed-shot.time < 0.01
+					var needs_secondary: bool = "--capture-secondary" in OS.get_cmdline_user_args() # contrôle des chaînes et ricochets : un tir qui touche réellement des cibles secondaires
+					var shot_number: int = 1
+					for argument in OS.get_cmdline_user_args():
+						if argument.begins_with("--capture-shot-number="): shot_number = int(argument.trim_prefix("--capture-shot-number=")) # n-ième tir de la capture (alternance des bras du Lanceur double)
+					found = (((capture_type < 2 or capture_type >= 6) and not needs_secondary) or not shot.secondary.is_empty()) and model.shots.size() >= shot_number and model.elapsed-shot.time < 0.01
 				if found: break
 			assert(found, "La capture doit montrer un effet réellement résolu.")
 			if capture_state == "damage_tick":

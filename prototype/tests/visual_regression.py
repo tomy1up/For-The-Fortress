@@ -76,6 +76,13 @@ def scenarios(types, groups):
         # Ces deux états imposent le type 5 (chaman) quel que soit le camp : une seule capture suffit.
         yield "effect_damage_tick", ["--capture-state=damage_tick", "--capture-slot=1"], False
         yield "effect_curse", ["--capture-state=curse", "--capture-type=5", "--capture-slot=1"], False
+        # Gestes à plusieurs temps (v0.230 ; la capture d'effet retient le deuxième tir au plus tôt : tir n° 2 = bras haut, tir n° 3 = bras bas) : ricochets de la Hache en chaîne, bras alternés du Lanceur double troll, chaîne du Mage de la foudre sur plusieurs cibles.
+        solid = ["--capture-state=effects", "--capture-slot=1", "--capture-hp-percent=800"]
+        yield "effect_chainaxe_bounce1", solid + ["--capture-type=26", "--capture-secondary", "--capture-after=0.67"], False
+        yield "effect_chainaxe_bounce2", solid + ["--capture-type=26", "--capture-secondary", "--capture-after=0.74"], False
+        yield "effect_doublethrower_arm_low", solid + ["--capture-type=27", "--capture-shot-number=3", "--capture-projectile"], False
+        yield "effect_doublethrower_arm_high", solid + ["--capture-type=27", "--capture-shot-number=2", "--capture-projectile"], False
+        yield "effect_lightning_chain", solid + ["--capture-type=22", "--capture-secondary", "--capture-projectile"], False
 
 
 def capture(name, extra, destination):

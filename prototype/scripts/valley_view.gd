@@ -903,8 +903,10 @@ func _draw_double_axe(point: Vector2, shot: Dictionary, age: float) -> void:
 ## Bras actif du Lanceur double troll pour un tir : alternance par défenseur suivie côté rendu (voir `_track_double_arms`).
 func with_arm(shot: Dictionary) -> Dictionary:
 	if int(shot.get("type",-1)) != DOUBLE_THROWER_TYPE: return shot
+	var key: String = "%d:%.5f" % [int(shot.get("slot",-1)),float(shot.get("time",0.0))]
+	if not _shot_arms.has(key): _track_double_arms() # tir pas encore vu par `_process` (première image d'une capture)
 	var copy: Dictionary = shot.duplicate()
-	copy.arm = int(_shot_arms.get("%d:%.5f" % [int(shot.get("slot",-1)),float(shot.get("time",0.0))],0))
+	copy.arm = int(_shot_arms.get(key,0))
 	return copy
 
 func _track_double_arms() -> void:
