@@ -1,4 +1,3 @@
-18:54:15
 STUDY 1 0 0 000 defeat 0 20
 STUDY 1 0 0 001 victory 20 20
 STUDY 1 0 0 002 victory 20 20
