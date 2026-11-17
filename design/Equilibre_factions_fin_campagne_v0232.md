@@ -43,7 +43,7 @@ FIRST=1 LAST=200 [SAME_HP=1] godot --headless --path prototype --script res://to
 
 1. **Missions 1 à 100 : puissances similaires.** Écart moyen de la meilleure marge (Horde − Alliance) : +3 points sur les missions 1 à 90, avec des avantages qui alternent d'un chapitre à l'autre (chapitre 5 en faveur de la Horde, chapitre 6 en faveur de l'Alliance). C'est le comportement voulu : pas d'écart énorme, des variations d'un chapitre à l'autre.
 
-2. **Missions 101 à 200 : un avantage net et régulier de la Horde.** Écart moyen de la meilleure marge : +18 points sur les chapitres 11 à 15 et +23 points sur les chapitres 16 à 20. Sur les 100 missions des chapitres 11 à 20, la Horde a une meilleure marge nettement supérieure (plus de 5 points) sur 77 missions, l'Alliance sur 0. Le constat tient avec les trois lectures (marge moyenne, meilleure marge, composition de référence du rapport de courbe de difficulté) : il ne dépend pas d'une composition particulière.
+2. **Missions 101 à 200, avec les seules unités de base : un avantage net et régulier de la Horde (à nuancer : voir le complément avec les unités de boutique plus bas).** Écart moyen de la meilleure marge : +18 points sur les chapitres 11 à 15 et +23 points sur les chapitres 16 à 20. Sur les 100 missions des chapitres 11 à 20, la Horde a une meilleure marge nettement supérieure (plus de 5 points) sur 77 missions, l'Alliance sur 0. Le constat tient avec les trois lectures (marge moyenne, meilleure marge, composition de référence du rapport de courbe de difficulté) : il ne dépend pas d'une composition particulière.
 
 3. **Largeur des arbres.** Meilleure marge moyenne par arbre de talents sur les missions 91 à 200 : Alliance 21 / 75 / 26 %, Horde 90 / 33 / 90 % (arbres d'indice 0, 1, 2). Avec les seules unités de base, **la Horde a deux arbres très performants, l'Alliance un seul** ; le meilleur arbre de l'Alliance (75 %) reste en dessous des deux meilleurs de la Horde (90 %). Une partie de l'écart tient donc à ce que les deux autres arbres de l'Alliance ne sont pas exploités par ses unités de base : l'ajout des unités de boutique pourrait réduire l'écart, ce que cette étude ne mesure pas.
 
@@ -51,11 +51,42 @@ FIRST=1 LAST=200 [SAME_HP=1] godot --headless --path prototype --script res://to
 
 5. **Mises en garde.** (a) Les arbres sont dépensés dans un seul arbre par partie, alors qu'un joueur peut répartir ses points. (b) Les chapitres 4 et 8 ont des marges très basses pour les deux factions (ces chapitres ont été réglés avec des compositions et des évolutions propres à chaque mission). (c) Les nombres sont des moyennes de simulations sans variation aléatoire : un joueur humain fera moins bien ou mieux selon son jeu.
 
+## Complément : avec les unités de boutique (40 missions échantillonnées)
+
+**Méthode** : les missions 3, 8, 13, …, 198 (deux par chapitre). Pour chaque faction, chaque unité de boutique déjà débloquée à cette mission (`unlock_missions` ≤ missions précédentes réussies, sans condition de PO), chaque arbre de talents et les dix compositions de trois unités parmi les trois de base et l'unité de boutique contenant au moins une unité de boutique : 27 480 parties valides (`design/essais/equilibre_factions/parties_boutique.txt`, lignes « STUDYAUX mission faction arbre type_boutique composition résultat PV_restants PV_maximaux »). Limites : une seule unité de boutique par partie (comme dans le jeu), mêmes achats scriptés, pas de choix de bonus ni de répartition libre des talents.
+
+| Chapitre | Meilleure marge A (base + boutique) | Meilleure marge H | Combinaisons gagnantes A | Combinaisons gagnantes H | Meilleur quart A | Meilleur quart H |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | 100 % | 100 % | 94 % | 63 % | 99 % | 100 % |
+| 2 | 100 % | 100 % | 56 % | 29 % | 85 % | 72 % |
+| 3 | 90 % | 100 % | 50 % | 29 % | 74 % | 82 % |
+| 4 | 48 % | 92 % | 17 % | 13 % | 27 % | 28 % |
+| 5 | 92 % | 100 % | 42 % | 17 % | 71 % | 41 % |
+| 6 | 86 % | 91 % | 18 % | 10 % | 27 % | 21 % |
+| 7 | 99 % | 100 % | 29 % | 18 % | 66 % | 43 % |
+| 8 | 90 % | 83 % | 19 % | 9 % | 32 % | 19 % |
+| 9 | 100 % | 100 % | 38 % | 22 % | 71 % | 64 % |
+| 10 | 100 % | 85 % | 30 % | 22 % | 56 % | 56 % |
+| 11 | 100 % | 100 % | 39 % | 26 % | 68 % | 81 % |
+| 12 | 98 % | 97 % | 8 % | 15 % | 15 % | 38 % |
+| 13 | 100 % | 100 % | 27 % | 20 % | 52 % | 58 % |
+| 14 | 100 % | 100 % | 18 % | 21 % | 31 % | 65 % |
+| 15 | 100 % | 97 % | 12 % | 17 % | 18 % | 43 % |
+| 16 | 100 % | 100 % | 13 % | 28 % | 28 % | 83 % |
+| 17 | 100 % | 100 % | 21 % | 31 % | 44 % | 89 % |
+| 18 | 100 % | 100 % | 16 % | 25 % | 35 % | 84 % |
+| 19 | 100 % | 100 % | 20 % | 28 % | 44 % | 86 % |
+| 20 | 100 % | 100 % | 19 % | 27 % | 35 % | 77 % |
+
+**Lecture** : la **meilleure marge** atteint ou frôle 100 % pour les deux factions dès qu'une unité de boutique est jouée (Alliance 100 % / Horde 100 % sur les missions 151 à 200) : un joueur qui choisit bien l'unité, l'arbre et la composition ne perd presque rien, **dans les deux camps ; le plafond est comparable**. Cette mesure sature donc et ne départage plus les factions ; les deux autres colonnes mesurent la **largeur** de ce qui fonctionne (part de combinaisons gagnantes, moyenne du meilleur quart des combinaisons). Sur ces lectures : missions 1 à 90, l'Alliance est en avance (combinaisons gagnantes 34 % contre 19 %) ; missions 91 à 150, les factions sont proches (21 % contre 20 % de combinaisons gagnantes, meilleur quart 40 % contre 57 %) ; missions 151 à 200, **la Horde garde l'avantage de largeur** (combinaisons gagnantes 18 % contre 28 %, meilleur quart 38 % contre 84 %).
+
+**Conclusion mise à jour** : l'avantage « net » de la Horde observé avec les seules unités de base **s'atténue fortement dès qu'on joue une unité de boutique** : le meilleur résultat atteignable est comparable pour les deux factions. Ce qui reste, aux chapitres 12 à 20, est une **différence de tolérance** : la Horde réussit avec beaucoup plus de combinaisons d'unités, d'arbres et d'unités de boutique que l'Alliance, qui exige des choix plus précis. Si le porteur veut des factions « assez similaires » au sens de la facilité de réussite, c'est cette largeur qui diverge ; au sens de la puissance maximale, l'écart de plafond reste faible (de -4 à +7 points de meilleure marge selon la période, porté par quelques missions des chapitres 4, 8 et 10 de l'échantillon). À arbitrer par le porteur (O-026).
+
 ## Pistes (à décider par le porteur ; rien n'est modifié)
 
 Ces pistes sont des options de réglage, pas des recommandations validées. Toute valeur ou habillage modifié serait « réglage de prototype à confirmer ».
 
-- **Compléter l'étude avant toute décision** : ajouter les 20 unités de boutique par faction (une unité de boutique choisie par mission, comme dans le jeu) et la répartition libre des points de talents. C'est la mesure qui manque pour dire si l'écart des chapitres 11 à 20 est réel pour un joueur qui joue tout l'arsenal.
+- **Ne régler que si la largeur compte** : avec les unités de boutique, la puissance maximale est la même ; seule la tolérance diverge aux chapitres 12 à 20. Si le porteur juge cela acceptable, aucun réglage n'est nécessaire ; sinon, les leviers sont la puissance des arbres et des unités de boutique de l'Alliance ou les PV de forteresse (décision de règles).
 
 - **Retirer ou réduire la réduction de PV de la Horde** (v0.212) : effet limité (voir constat 4) ; à n'envisager qu'avec d'autres leviers.
 
@@ -63,5 +94,5 @@ Ces pistes sont des options de réglage, pas des recommandations validées. Tout
 
 ## Données
 
-Parties brutes : `design/essais/equilibre_factions/parties.txt` (12 000 lignes « STUDY mission faction arbre composition résultat PV_restants PV_maximaux », composition = indices des trois unités, « refus » = composition non achetable à l'ouverture) et `parties_sans_reduction_horde.txt` (Horde sans la réduction de PV d'ennemis, missions 150 à 200) ; les agrégats ci-dessus se recalculent à partir d'elles.
+Parties brutes : `design/essais/equilibre_factions/parties.txt` (12 000 lignes « STUDY mission faction arbre composition résultat PV_restants PV_maximaux », composition = indices des trois unités, « refus » = composition non achetable à l'ouverture) `parties_boutique.txt` (étude avec unités de boutique, 40 missions) et `parties_sans_reduction_horde.txt` (Horde sans la réduction de PV d'ennemis, missions 150 à 200) ; les agrégats ci-dessus se recalculent à partir d'elles.
 

@@ -2,12 +2,14 @@ extends SceneTree
 ## Étude de l'équilibre entre factions (v0.232) : pour chaque mission, chaque faction, chacun des trois arbres de talents (points réels de la mission, dépensés dans cet arbre) et chacune des dix compositions
 ## de trois unités de base (combinaisons avec répétition des trois unités de la faction, achetées de la moins chère à la plus chère : deux à l'ouverture, la troisième à la vague 2 ; emplacements 3, 4 puis 2 ; mêmes améliorations
 ## que les tests de chapitre), relève le résultat, les PV de forteresse restants et les PV maximaux. 30 parties par faction et par mission au lieu d'une seule composition.
+## Avec AUX=1 et MISSIONS=3,8,13,… : mode unités de boutique (voir `run_auxiliary`).
 ## Usage : FIRST=1 LAST=200 [FACTIONS=0,1] [SAME_HP=1] godot --headless --path prototype --script res://tools/faction_study.gd
 ## Sortie : lignes « STUDY mission faction arbre composition résultat PV_restants PV_maximaux ».
 const Model = preload("res://scripts/valley_model.gd")
 const Catalogue = preload("res://scripts/campaign_catalogue.gd")
 const Talents = preload("res://scripts/meta_talents_linked.gd")
 const Experience = preload("res://scripts/talent_experience.gd")
+const Shop = preload("res://scripts/shop_catalogue.gd")
 
 func ranks_for(tree: int, faction: int, mission: int) -> Array:
 	var first: int = Talents.index_for(tree,0)
@@ -28,13 +30,14 @@ func ranks_for(tree: int, faction: int, mission: int) -> Array:
 		if not allocated: break
 	return ranks
 
-func play(mission: int, faction: int, tree: int, types: Array) -> Dictionary:
+func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = -1) -> Dictionary:
 	var catalogue: Dictionary = Catalogue.definition(mission)
 	var m = Model.new(true,Model.Maps.for_id(str(catalogue.map_id)))
 	m.configure_wave_set(catalogue.get("wave_set_id","ford"))
 	# SAME_HP=1 : mêmes PV d'ennemis pour les deux factions (sans la réduction propre à la Horde), pour mesurer ce que cette réduction change.
 	m.configure_enemy_hp(Catalogue.faction_hp_percent(mission,0 if OS.get_environment("SAME_HP") == "1" else faction))
 	m.configure_combat_affix(catalogue.get("combat_affix",{}))
+	if auxiliary >= 0: m.configure_auxiliary(auxiliary)
 	m.meta_ranks = ranks_for(tree,faction,mission)
 	m.select_faction(faction)
 	m.rng.seed = 7
@@ -55,6 +58,24 @@ func play(mission: int, faction: int, tree: int, types: Array) -> Dictionary:
 		if wave < 10: m.prepare_next_wave()
 	return {"result":m.phase,"hp":m.fortress_hp,"max":m.max_hp}
 
+func run_auxiliary(missions: Array, factions: Array) -> void:
+	# AUX=1 : avec une unité de boutique (déjà débloquée à cette mission : `unlock_missions` <= missions précédentes réussies), compositions de trois unités parmi les trois de base et l'unité de boutique,
+	# contenant au moins une unité de boutique (10 compositions), pour chaque arbre. Sortie : « STUDYAUX mission faction arbre type_boutique composition résultat PV_restants PV_maximaux » (indices 0 à 2 : unités de base, 3 : boutique).
+	for mission in missions:
+		for faction in factions:
+			var base: int = 0 if faction == 0 else 3
+			for card in Shop.for_faction(faction):
+				if int(card.get("unlock_missions",0)) > mission-1: continue
+				for tree in range(3):
+					for a in range(4):
+						for b in range(a,4):
+							for c in range(b,4):
+								if c != 3: continue # au moins une unité de boutique (indice 3, le plus grand)
+								var types: Array = []
+								for index in [a,b,c]: types.append(int(card.type) if index == 3 else base+index)
+								var outcome: Dictionary = play(mission,faction,tree,types,int(card.type))
+								print("STUDYAUX %d %d %d %d %d%d%d %s %d %d" % [mission,faction,tree,int(card.type),a,b,c,outcome.result,outcome.hp,outcome.max])
+
 func _initialize() -> void:
 	var first: int = int(OS.get_environment("FIRST"))
 	var last: int = int(OS.get_environment("LAST"))
@@ -62,6 +83,12 @@ func _initialize() -> void:
 	if OS.get_environment("FACTIONS") != "":
 		factions = []
 		for part in OS.get_environment("FACTIONS").split(","): factions.append(int(part))
+	if OS.get_environment("AUX") == "1":
+		var missions: Array = []
+		for part in OS.get_environment("MISSIONS").split(","): missions.append(int(part))
+		run_auxiliary(missions,factions)
+		quit()
+		return
 	for mission in range(first,last+1):
 		for faction in factions:
 			var base: int = 0 if faction == 0 else 3
