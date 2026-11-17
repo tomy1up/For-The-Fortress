@@ -574,7 +574,7 @@ for name,state,faction in cases:
         assert snap['po']==60*successes and snap['xp']==(10100 if variant=='returned' else 100*successes)
         assert snap['preview_map']==('necro_throne' if variant=='future' else ['valley_ford','ford_woods','ford_heights','ford_turns','ford_glade','ford_pass','ford_switchbacks','ford_trail','ford_approach','ford_ramparts'][selection-1])
         assert snap['preview_slots']==6
-        assert snap['preview_segments']==(12 if variant=='future' else [7,7,7,7,8,8,7,8,8,8][selection-1])
+        assert snap['preview_segments']==(11 if variant=='future' else [7,7,7,7,8,8,7,8,8,8][selection-1])
         assert snap['chapter_visible'], (name, 'Le chapitre sélectionné doit rester dans la liste visible')
         expected_states=['completed']*successes+['available']+['locked']*(9-successes)
         assert snap['mission_states']==(['locked']*10 if variant=='future' else ['unavailable']*10 if variant=='blocked' else expected_states)
