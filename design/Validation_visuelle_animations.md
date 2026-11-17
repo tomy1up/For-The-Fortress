@@ -135,3 +135,11 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | Appuis et geste | Les semelles restent stables dans les 120 poses. La hache remonte depuis la hanche et le bras accompagne le lâcher. |
 | Lâcher et rebonds | Départ à 0,52 s depuis la hache tenue. La même hache suit l’ordre des impacts enregistrés par le jeu. Trois rebonds vérifiés au premier tir de chaque scénario. |
 | En jeu | Dix tirs sur la mission 94, dans les deux sens à ×1 et ×2, avec pause. [Capture à taille réelle](essais/gestes_combat/hache_en_chaine/Hache_en_chaine_en_jeu.gif). Lot `f0b6867` validé par le porteur. |
+
+## Lanceur double troll · 17 novembre 2026
+
+| Critère | Vérification sur la copie v0.226 |
+| --- | --- |
+| Appuis et geste | Les 138 poses gardent le même ancrage. L’autre hache reste visible en main pendant le geste. |
+| Alternance | Chaque défenseur enchaîne la hache basse puis la haute. Départ d’une seule hache à 0,48 s, depuis le repère du bras actif. |
+| En jeu | Huit tirs sur la mission 94 à ×1 et ×2, des deux côtés, avec pause. Les deux bras ont été vérifiés à +24°. [Capture à taille réelle](essais/gestes_combat/lanceur_double_troll/Lanceur_double_troll_en_jeu.gif). Retour favorable du porteur sur le lot `b779d4d`. |

@@ -1,0 +1,76 @@
+{
+  "release": 0.48,
+  "shots": {
+    "attack": {
+      "center": [
+        11.2731,
+        -45.148
+      ],
+      "angle": -203.0,
+      "arm": 0,
+      "pitch": 0
+    },
+    "attack_up": {
+      "center": [
+        9.5483,
+        -47.5518
+      ],
+      "angle": -215.0,
+      "arm": 0,
+      "pitch": -12
+    },
+    "attack_down": {
+      "center": [
+        13.5929,
+        -39.8767
+      ],
+      "angle": -179.0,
+      "arm": 0,
+      "pitch": 24
+    },
+    "attack_close": {
+      "center": [
+        25.3151,
+        -45.4138
+      ],
+      "angle": 48.0,
+      "arm": 1,
+      "pitch": 0
+    },
+    "attack_close_up": {
+      "center": [
+        24.3075,
+        -48.8412
+      ],
+      "angle": 36.0,
+      "arm": 1,
+      "pitch": -12
+    },
+    "attack_close_down": {
+      "center": [
+        26.1978,
+        -38.2167
+      ],
+      "angle": 72.0,
+      "arm": 1,
+      "pitch": 24
+    }
+  },
+  "projectile_scale": 0.05585106382978723,
+  "projectiles": [
+    {
+      "file": "hache_basse.png",
+      "pivot": [
+        67.0,
+        84.0
+      ]
+    },
+    {
+      "file": "hache_haute.png",
+      "pivot": [
+        119.0,
+        63.0
+      ]
+    }
+  ]
+}
