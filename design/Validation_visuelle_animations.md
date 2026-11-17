@@ -142,4 +142,4 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | --- | --- |
 | Appuis et geste | Les 138 poses gardent le même ancrage. L’autre hache reste visible en main pendant le geste. |
 | Alternance | Chaque défenseur enchaîne la hache basse puis la haute. Départ d’une seule hache à 0,48 s, depuis le repère du bras actif. |
-| En jeu | Huit tirs sur la mission 94 à ×1 et ×2, des deux côtés, avec pause. Les deux bras ont été vérifiés à +24°. [Capture à taille réelle](essais/gestes_combat/lanceur_double_troll/Lanceur_double_troll_en_jeu.gif). Avis du porteur attendu. |
+| En jeu | Huit tirs sur la mission 94 à ×1 et ×2, des deux côtés, avec pause. Les deux bras ont été vérifiés à +24°. [Capture à taille réelle](essais/gestes_combat/lanceur_double_troll/Lanceur_double_troll_en_jeu.gif). Retour favorable du porteur sur le lot `b779d4d`. |

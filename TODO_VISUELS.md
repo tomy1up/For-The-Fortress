@@ -86,7 +86,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).
 
-- [x] **Lanceur double troll, attaque** — deux bras alternés, trois inclinaisons par bras et repères de lancer. [Capture et contrôles](design/Visuels_Boutique_Lanceur_Double.md#deux-bras-alternés). Avis visuel attendu.
+- [x] **Lanceur double troll, attaque** — deux bras alternés, trois inclinaisons par bras et repères de lancer. [Capture et contrôles](design/Visuels_Boutique_Lanceur_Double.md#deux-bras-alternés). Retour favorable du porteur sur le lot `b779d4d`.
 - [x] **Hache en chaîne, attaque** — lancer depuis la hanche, cinq inclinaisons, hache à deux lobes et ricochets. [Capture et contrôles](design/Visuels_Boutique_Hache_En_Chaine.md#lancer-de-la-hache-et-ricochets). Lot `f0b6867` validé par le porteur.
 - [x] **Fronde elfe, attaque** — rotation, lâcher du galet, accompagnement de la poche vide et cinq inclinaisons. [Capture et contrôles](design/Visuels_Boutique_Fronde.md#rotation-et-lâcher-du-galet). Lot `a683912` validé par le porteur.
 - [x] **Arbalète lourde, attaque** — recul à genou, six inclinaisons et repères de carreau. [Animation et contrôles](design/Visuels_Boutique_Arbalete_Lourde.md#tir-à-genou-et-recul). Lot `aa7462b` validé par le porteur.
