@@ -47,6 +47,7 @@ var _seen_defenders: Array[Dictionary] = []
 var _defender_events: Dictionary = {}
 var _sold_ghosts: Array[Dictionary] = []
 var flag_phase: float = 0.0
+var frozen_ambient: bool = false # captures et vérifications automatiques : le battement du fanion ne dépend plus du nombre d'images écoulées (images reproductibles)
 var model: RefCounted:
 	set(value):
 		model = value
@@ -83,7 +84,7 @@ func _process(delta: float) -> void:
 	if _sheet_animation_running(): queue_redraw()
 	royal_hurt_age = minf(2.0,royal_hurt_age+maxf(0.0,delta))
 	royal_rally_age = minf(2.0,royal_rally_age+maxf(0.0,delta))
-	flag_phase = fmod(flag_phase+maxf(0.0,delta),TAU)
+	if not frozen_ambient: flag_phase = fmod(flag_phase+maxf(0.0,delta),TAU)
 	if model == null or model.active or model.phase not in ["finished","bonus","victory","defeat"]:
 		elimination_tail = 0.0
 	elif elimination_tail < maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window())+0.5:
@@ -2113,6 +2114,10 @@ func _draw_sheet_death(id: String, state: String, event: Dictionary, age: float)
 	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
 	draw_set_transform(Vector2.ZERO)
 
+## Horloge des animations d'ambiance (pulsation du bandeau d'affixe, traînées des vents contraires) : figée pendant les captures automatiques.
+func _ambient_clock() -> float:
+	return 0.0 if frozen_ambient else Time.get_ticks_msec()/1000.0
+
 ## Défenseurs revendus : l'animation `sell` joue à leur ancien emplacement.
 func _draw_sold_defenders() -> void:
 	var now: float = Time.get_ticks_msec()/1000.0
@@ -2128,7 +2133,7 @@ func _draw_sold_defenders() -> void:
 func _draw_headwinds() -> void:
 	if model == null or model.combat_affix.get("id","") != "headwinds": return
 	var board := Vector2(model.map_definition.size)
-	var clock: float = Time.get_ticks_msec()/1000.0
+	var clock: float = _ambient_clock()
 	for index in range(16):
 		var lane: float = fposmod(float(index)*0.381966,1.0)
 		var progress: float = fposmod(clock*0.22+float(index)*0.137,1.0)
@@ -2224,7 +2229,7 @@ func _draw_affix_banner() -> void:
 	var size := Vector2(430,34)
 	var area := Rect2(Vector2(640.0-size.x*0.5,112.0),size)
 	var warning: bool = banner.state == "warning"
-	var pulse: float = 0.5+0.5*sin(Time.get_ticks_msec()/1000.0*8.0)
+	var pulse: float = 0.5+0.5*sin(_ambient_clock()*8.0)
 	var accent: Color = Color(1.0,0.62,0.16) if warning else Color(0.95,0.32,0.26) if banner.state == "active" else Color(0.6,0.8,0.95)
 	var box := StyleBoxFlat.new()
 	box.bg_color = Color(0.07,0.09,0.08,0.88)

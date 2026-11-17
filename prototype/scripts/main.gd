@@ -256,6 +256,7 @@ func _ready() -> void:
 		if argument.begins_with("--capture="):
 			isolated = true
 			MapView.SoundPlayer.muted = true # captures et vérifications automatiques : aucun son sur les haut-parleurs
+			map_view.frozen_ambient = true # et fanions immobiles, pour des images reproductibles
 	var shop_trial: bool = "--essai-boutique" in OS.get_cmdline_user_args() and not isolated
 	if shop_trial:
 		# Essai de la boutique : profil séparé (progression habituelle intacte) avec toutes les unités déjà possédées.

@@ -17,16 +17,18 @@ Le 12 novembre 2026, le porteur retient **l'aigle des cimes** comme nouveauté d
 
 | Mission | Carte | Entrées | Trajet principal | PV ennemis | PV restants A / H |
 | --- | --- | --- | --- | --- | --- |
-| 151 | L'Aire des Aigles | 1 | 46 | 245 % | 20 / 29 |
-| 152 | Le Nid de Brume | 1 | 47 | 245 % | 20 / 29 |
-| 153 | Les Pitons Jumeaux | 2 | 44 | 246 % | 20 / 23 |
-| 154 | Les Trois Aires | 3 | 42 | 246 % | 20 / 29 |
-| 155 | La Corniche Ventée | 1 | 43 | 247 % | 8 / 6 |
-| 156 | Le Col du Ciel | 2 | 41 | 247 % | 20 / 24 |
-| 157 | Les Rapaces | 3 | 41 | 248 % | 20 / 24 |
-| 158 | Le Perchoir | 2 | 44 | 248 % | 20 / 23 |
-| 159 | La Chute d'Azur | 1 | 44 | 249 % | 19 / 28 |
-| 160 | Le Trône des Nuées | 3 | 39 | 249 % | 17 / 29 |
+| 151 | L'Aire des Aigles | 1 | 38 | 245 % | 20 / 29 |
+| 152 | Le Nid de Brume | 1 | 49 | 245 % | 20 / 29 |
+| 153 | Les Pitons Jumeaux | 2 | 34 | 246 % | 15 / 27 |
+| 154 | Les Trois Aires | 3 | 38 | 246 % | 19 / 29 |
+| 155 | La Corniche Ventée | 1 | 50 | 247 % | 7 / 27 |
+| 156 | Le Col du Ciel | 2 | 40 | 247 % | 20 / 29 |
+| 157 | Les Rapaces | 3 | 36 | 248 % | 20 / 28 |
+| 158 | Le Perchoir | 2 | 38 | 248 % | 20 / 29 |
+| 159 | La Chute d'Azur | 1 | 47 | 249 % | 19 / 29 |
+| 160 | Le Trône des Nuées | 3 | 36 | 249 % | 18 / 29 |
+
+*Refonte des cartes (v0.227) : tracés, nombres d'entrées, trajets et PV restants ci-dessus remplacent ceux de la conception d'origine ; la méthode de réglage décrite plus bas (simulation avec talents réels, armée de référence) reste celle d'origine, appliquée à ces nouveaux tracés par `tools/sim_map_candidates.gd` (la mesure retient la composition de référence des tests de chapitre). Tracés et emplacements = propositions de prototype à confirmer en jeu. Voir `design/essais/refonte_cartes/` et le GDD (MAJ-61 à MAJ-64).*
 
 Les marges sont larges presque partout (20 PV = aucune perte) : la mission 155 est la plus serrée (8 PV côté Alliance, 6 côté Horde). L'aigle rend le chapitre plus facile que le 15 sur ces tracés prolongés ; à rééquilibrer si le porteur le souhaite.
 

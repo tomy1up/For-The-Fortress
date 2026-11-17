@@ -17,16 +17,18 @@ Cartes dans `prototype/scripts/desert_maps.gd`. Les formes reprennent celles des
 
 | Mission | Carte | Entrées | Trajets | PV restants A / H |
 | --- | --- | --- | --- | --- |
-| 101 | Les Premières Dunes | 1 | 24 | 13 / 20 |
-| 102 | L'Oasis Asséchée | 1 | 29 | 16 / 29 |
-| 103 | Le Canyon Rouge | 2, pression alternée | 29 / 29 | 14 / 28 |
-| 104 | Les Colonnes Brisées | 3 | 27 / 24 / 27 | 12 / 8 |
-| 105 | La Route des Caravanes | 1 | 25 | 14 / 14 |
-| 106 | Le Temple Ensablé | 2, pression alternée | 32 / 32 | 15 / 26 |
-| 107 | Le Puits Perdu | 3 | 29 / 26 / 29 | 13 / 18 |
+| 101 | Les Premières Dunes | 1 | 48 | 18 / 28 |
+| 102 | L'Oasis Asséchée | 1 | 33 | 16 / 29 |
+| 103 | Le Canyon Rouge | 2, pression alternée | 32 / 32 | 14 / 28 |
+| 104 | Les Colonnes Brisées | 3 | 31 / 28 / 31 | 12 / 13 |
+| 105 | La Route des Caravanes | 1 | 43 | 20 / 29 |
+| 106 | Le Temple Ensablé | 2, pression alternée | 29 / 29 | 13 / 19 |
+| 107 | Le Puits Perdu | 3 | 32 / 29 / 35 | 13 / 23 |
 | 108 | Les Obélisques | 2, pression alternée | 32 / 32 | 16 / 28 |
-| 109 | La Mer de Sable | 1 | 28 | 16 / 19 |
-| 110 | La Nécropole Ancienne | 3 | 29 / 26 / 29 | 10 / 25 |
+| 109 | La Mer de Sable | 1 | 50 | 14 / 21 |
+| 110 | La Nécropole Ancienne | 3 | 29 / 27 / 32 | 12 / 24 |
+
+*Refonte des cartes (v0.226) : tracés, nombres d'entrées, trajets et PV restants ci-dessus remplacent ceux de la conception d'origine ; la méthode de réglage décrite plus bas (simulation avec talents réels, armée de référence) reste celle d'origine, appliquée à ces nouveaux tracés par `tools/sim_map_candidates.gd` (la mesure retient la composition de référence des tests de chapitre). Tracés et emplacements = propositions de prototype à confirmer en jeu. Voir `design/essais/refonte_cartes/` et le GDD (MAJ-61 à MAJ-64).*
 
 ## Méthode de réglage
 

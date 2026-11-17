@@ -13,16 +13,18 @@
 
 | Mission | Carte | Entrées | Trajet principal | PV ennemis | PV restants A / H |
 | --- | --- | --- | --- | --- | --- |
-| 141 | Le Ponton des Nuées | 1 | 34 | 240 % | 20 / 29 |
-| 142 | Le Pont de Brume | 1 | 35 | 240 % | 13 / 12 |
-| 143 | La Porte des Nuages | 2 | 38 | 241 % | 13 / 12 |
-| 144 | Les Flèches d'Azur | 3 | 36 | 241 % | 14 / 13 |
-| 145 | Les Jardins Suspendus | 1 | 31 | 242 % | 12 / 21 |
-| 146 | Le Belvédère | 2 | 35 | 242 % | 13 / 17 |
-| 147 | Les Courants Ascendants | 3 | 35 | 243 % | 7 / 21 |
-| 148 | Le Dôme Céleste | 2 | 38 | 243 % | 11 / 18 |
-| 149 | L'Île Effondrée | 1 | 32 | 244 % | 12 / 25 |
-| 150 | La Citadelle des Cimes | 3 | 33 | 244 % | 9 / 24 |
+| 141 | Le Ponton des Nuées | 1 | 55 | 240 % | 20 / 29 |
+| 142 | Le Pont de Brume | 1 | 52 | 240 % | 17 / 9 |
+| 143 | La Porte des Nuages | 2 | 35 | 241 % | 14 / 23 |
+| 144 | Les Flèches d'Azur | 3 | 36 | 241 % | 14 / 12 |
+| 145 | Les Jardins Suspendus | 1 | 41 | 242 % | 13 / 29 |
+| 146 | Le Belvédère | 2 | 38 | 242 % | 13 / 24 |
+| 147 | Les Courants Ascendants | 3 | 38 | 243 % | 7 / 22 |
+| 148 | Le Dôme Céleste | 2 | 34 | 243 % | 12 / 16 |
+| 149 | L'Île Effondrée | 1 | 50 | 244 % | 13 / 25 |
+| 150 | La Citadelle des Cimes | 3 | 36 | 244 % | 9 / 29 |
+
+*Refonte des cartes (v0.227) : tracés, nombres d'entrées, trajets et PV restants ci-dessus remplacent ceux de la conception d'origine ; la méthode de réglage décrite plus bas (simulation avec talents réels, armée de référence) reste celle d'origine, appliquée à ces nouveaux tracés par `tools/sim_map_candidates.gd` (la mesure retient la composition de référence des tests de chapitre). Tracés et emplacements = propositions de prototype à confirmer en jeu. Voir `design/essais/refonte_cartes/` et le GDD (MAJ-61 à MAJ-64).*
 
 Les marges sont plus minces que celles du chapitre 14 (la plus fine : mission 147, 7 PV côté Alliance). Si la boutique ne compense pas la hausse de PV, la courbe devra être revue (O-016).
 

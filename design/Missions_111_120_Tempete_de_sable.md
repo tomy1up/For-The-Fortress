@@ -22,16 +22,18 @@ PV ennemis `99 + numéro` % (de 210 % à 219 %), rencontres standard du Gué, **
 
 | Mission | Carte | Entrées | Trajets | PV restants A / H |
 | --- | --- | --- | --- | --- |
-| 111 | Le Mirage | 1 | 34 | 20 / 29 |
-| 112 | La Vallée des Scorpions | 1 | 35 | 16 / 26 |
-| 113 | Les Ruines Englouties | 2, pression alternée | 38 / 38 | 17 / 22 |
-| 114 | Les Arches de Grès | 3 | 36 / 32 / 36 | 14 / 14 |
-| 115 | La Citerne Perdue | 1 | 31 | 16 / 26 |
-| 116 | Le Sphinx Brisé | 2, pression alternée | 35 / 35 | 15 / 22 |
-| 117 | Le Col des Vents de Sable | 3 | 35 / 32 / 35 | 10 / 16 |
-| 118 | La Salle du Sarcophage | 2, pression alternée | 38 / 38 | 15 / 17 |
-| 119 | Le Cratère de Verre | 1 | 32 | 16 / 29 |
-| 120 | La Pyramide Ensablée | 3 | 33 / 32 / 33 | 8 / 23 |
+| 111 | Le Mirage | 1 | 39 | 20 / 29 |
+| 112 | La Vallée des Scorpions | 1 | 39 | 18 / 26 |
+| 113 | Les Ruines Englouties | 2, pression alternée | 30 / 28 | 9 / 18 |
+| 114 | Les Arches de Grès | 2, pression alternée | 34 / 24 | 14 / 14 |
+| 115 | La Citerne Perdue | 1 | 45 | 17 / 29 |
+| 116 | Le Sphinx Brisé | 2, pression alternée | 35 / 32 | 14 / 22 |
+| 117 | Le Col des Vents de Sable | 3 | 33 / 30 / 34 | 7 / 15 |
+| 118 | La Salle du Sarcophage | 1 | 50 | 13 / 17 |
+| 119 | Le Cratère de Verre | 1 | 43 | 16 / 26 |
+| 120 | La Pyramide Ensablée | 3 | 31 / 28 / 32 | 8 / 24 |
+
+*Refonte des cartes (v0.224) : tracés, nombres d'entrées, trajets et PV restants ci-dessus remplacent ceux de la conception d'origine ; la méthode de réglage décrite plus bas (simulation avec talents réels, armée de référence) reste celle d'origine, appliquée à ces nouveaux tracés par `tools/sim_map_candidates.gd` (la mesure retient la composition de référence des tests de chapitre). Tracés et emplacements = propositions de prototype à confirmer en jeu. Voir `design/essais/refonte_cartes/` et le GDD (MAJ-61 à MAJ-64).*
 
 ## Méthode de réglage
 

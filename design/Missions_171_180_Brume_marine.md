@@ -18,16 +18,18 @@ Le 12 novembre 2026, le porteur retient l'option « côtes et récifs » avec so
 
 | Mission | Carte | Entrées | Trajet principal | PV ennemis | PV restants A / H |
 | --- | --- | --- | --- | --- | --- |
-| 171 | Le Phare des Brumes | 1 | 46 | 255 % | 13 / 12 |
-| 172 | La Digue Noyée | 1 | 47 | 255 % | 9 / 29 |
-| 173 | Les Falaises Blanches | 2 | 44 | 256 % | 11 / 8 |
-| 174 | Le Cimetière des Navires | 3 | 42 | 256 % | 13 / 29 |
-| 175 | Le Banc de Sable | 1 | 50 | 257 % | 15 / 25 |
-| 176 | La Baie Fantôme | 2 | 41 | 257 % | 6 / 6 |
-| 177 | Les Écueils Jumeaux | 3 | 41 | 258 % | 11 / 15 |
-| 178 | L'Arsenal Englouti | 2 | 44 | 258 % | 11 / 3 |
-| 179 | Le Cap des Tempêtes | 1 | 44 | 259 % | 9 / 19 |
-| 180 | La Citadelle des Embruns | 3 | 42 | 259 % | 13 / 29 |
+| 171 | Le Phare des Brumes | 1 | 43 | 255 % | 13 / 29 |
+| 172 | La Digue Noyée | 1 | 43 | 255 % | 10 / 29 |
+| 173 | Les Falaises Blanches | 2 | 40 | 256 % | 13 / 25 |
+| 174 | Le Cimetière des Navires | 2 | 39 | 256 % | 6 / 29 |
+| 175 | Le Banc de Sable | 1 | 52 | 257 % | 16 / 29 |
+| 176 | La Baie Fantôme | 2 | 38 | 257 % | 7 / 29 |
+| 177 | Les Écueils Jumeaux | 3 | 38 | 258 % | 6 / 29 |
+| 178 | L'Arsenal Englouti | 2 | 42 | 258 % | 11 / 29 |
+| 179 | Le Cap des Tempêtes | 1 | 50 | 259 % | 10 / 29 |
+| 180 | La Citadelle des Embruns | 3 | 35 | 259 % | 11 / 18 |
+
+*Refonte des cartes (v0.227) : tracés, nombres d'entrées, trajets et PV restants ci-dessus remplacent ceux de la conception d'origine ; la méthode de réglage décrite plus bas (simulation avec talents réels, armée de référence) reste celle d'origine, appliquée à ces nouveaux tracés par `tools/sim_map_candidates.gd` (la mesure retient la composition de référence des tests de chapitre). Tracés et emplacements = propositions de prototype à confirmer en jeu. Voir `design/essais/refonte_cartes/` et le GDD (MAJ-61 à MAJ-64).*
 
 **Marges minces** : missions 176 (6 / 6), 178 (Horde : 3 PV) et 173 (Horde : 8 PV). À 255-259 % de PV avec la brume, la référence est près de sa limite : c'est la question O-016 du GDD (courbe de PV), à trancher avec le porteur si les chapitres 19 et 20 ne tiennent plus.
 

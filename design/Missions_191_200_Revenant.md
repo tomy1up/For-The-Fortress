@@ -18,16 +18,18 @@ Le 13 novembre 2026, le porteur retient le **revenant**, attaquant qui se relèv
 
 | Mission | Carte | Entrées | Trajet principal | PV ennemis | PV restants A / H |
 | --- | --- | --- | --- | --- | --- |
-| 191 | La Porte des Tombeaux | 1 | 46 | 262 % | 13 / 22 |
-| 192 | La Veillée Funèbre | 1 | 47 | 262 % | 16 / 26 |
-| 193 | Les Catacombes | 2 | 44 | 263 % | 15 / 14 |
-| 194 | Le Champ d'Ossements | 3 | 42 | 263 % | 15 / 14 |
-| 195 | Le Bourbier des Âmes | 1 | 50 | 263 % | 18 / 29 |
-| 196 | Le Gibet Oublié | 2 | 41 | 263 % | 13 / 13 |
-| 197 | Les Tombes Jumelles | 3 | 41 | 264 % | 13 / 12 |
-| 198 | Le Charnier | 2 | 44 | 264 % | 15 / 14 |
-| 199 | Les Obélisques Noirs | 1 | 44 | 264 % | 11 / 22 |
-| 200 | Le Trône du Roi Mort | 3 | 39 | 264 % | 13 / 24 |
+| 191 | La Porte des Tombeaux | 1 | 50 | 262 % | 13 / 29 |
+| 192 | La Veillée Funèbre | 1 | 41 | 262 % | 16 / 29 |
+| 193 | Les Catacombes | 2 | 44 | 263 % | 14 / 26 |
+| 194 | Le Champ d'Ossements | 3 | 36 | 263 % | 6 / 26 |
+| 195 | Le Bourbier des Âmes | 1 | 50 | 263 % | 19 / 29 |
+| 196 | Le Gibet Oublié | 2 | 42 | 263 % | 13 / 29 |
+| 197 | Les Tombes Jumelles | 3 | 37 | 264 % | 9 / 29 |
+| 198 | Le Charnier | 2 | 42 | 264 % | 15 / 20 |
+| 199 | Les Obélisques Noirs | 1 | 39 | 264 % | 12 / 29 |
+| 200 | Le Trône du Roi Mort | 3 | 38 | 264 % | 12 / 29 |
+
+*Refonte des cartes (v0.227) : tracés, nombres d'entrées, trajets et PV restants ci-dessus remplacent ceux de la conception d'origine ; la méthode de réglage décrite plus bas (simulation avec talents réels, armée de référence) reste celle d'origine, appliquée à ces nouveaux tracés par `tools/sim_map_candidates.gd` (la mesure retient la composition de référence des tests de chapitre). Tracés et emplacements = propositions de prototype à confirmer en jeu. Voir `design/essais/refonte_cartes/` et le GDD (MAJ-61 à MAJ-64).*
 
 Marges correctes (minimum 11 PV, mission 199).
 

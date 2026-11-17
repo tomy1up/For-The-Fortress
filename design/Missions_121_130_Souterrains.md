@@ -17,16 +17,18 @@
 
 | Mission | Carte | Entrées | Trajets | PV restants A / H |
 | --- | --- | --- | --- | --- |
-| 121 | L'Entrée de la Mine | 1 | 34 | 20 / 29 |
-| 122 | Le Puits Principal | 1 | 35 | 18 / 25 |
-| 123 | La Galerie des Échos | 2, pression alternée | 35 / 35 | 16 / 28 |
-| 124 | La Grotte aux Cristaux | 3 | 36 / 36 / 36 | 15 / 29 |
-| 125 | Les Rails Abandonnés | 1 | 31 | 20 / 29 |
-| 126 | La Forge Souterraine | 2, pression alternée | 32 / 32 | 13 / 22 |
-| 127 | Le Lac Noir | 3 | 29 / 29 / 29 | 6 / 18 |
-| 128 | La Chambre Forte | 2, pression alternée | 32 / 32 | 16 / 24 |
-| 129 | L'Éboulis | 1 | 32 | 20 / 29 |
-| 130 | Le Cœur de la Montagne | 3 | 33 / 33 / 33 | 17 / 25 |
+| 121 | L'Entrée de la Mine | 1 | 41 | 20 / 29 |
+| 122 | Le Puits Principal | 1 | 54 | 16 / 25 |
+| 123 | La Galerie des Échos | 2, pression alternée | 34 / 33 | 15 / 22 |
+| 124 | La Grotte aux Cristaux | 3 | 34 / 31 / 35 | 15 / 23 |
+| 125 | Les Rails Abandonnés | 1 | 41 | 20 / 29 |
+| 126 | La Forge Souterraine | 2, pression alternée | 32 / 34 | 13 / 24 |
+| 127 | Le Lac Noir | 2, pression alternée | 30 / 32 | 7 / 22 |
+| 128 | La Chambre Forte | 1 | 50 | 14 / 13 |
+| 129 | L'Éboulis | 2, pression alternée | 34 / 34 | 18 / 27 |
+| 130 | Le Cœur de la Montagne | 2, pression alternée | 35 / 24 | 17 / 26 |
+
+*Refonte des cartes (v0.225) : tracés, nombres d'entrées, trajets et PV restants ci-dessus remplacent ceux de la conception d'origine ; la méthode de réglage décrite plus bas (simulation avec talents réels, armée de référence) reste celle d'origine, appliquée à ces nouveaux tracés par `tools/sim_map_candidates.gd` (la mesure retient la composition de référence des tests de chapitre). Tracés et emplacements = propositions de prototype à confirmer en jeu. Voir `design/essais/refonte_cartes/` et le GDD (MAJ-61 à MAJ-64).*
 
 La carte 127 reste la plus serrée côté Alliance (6 PV).
 

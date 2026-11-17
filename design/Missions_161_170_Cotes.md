@@ -16,16 +16,18 @@ Le 12 novembre 2026, le porteur retient **côtes et récifs** (port abandonné, 
 
 | Mission | Carte | Entrées | Trajet principal | PV ennemis | PV restants A / H |
 | --- | --- | --- | --- | --- | --- |
-| 161 | La Jetée Abandonnée | 1 | 46 | 250 % | 18 / 25 |
-| 162 | Le Phare Éteint | 1 | 47 | 250 % | 16 / 29 |
-| 163 | Les Récifs Blancs | 2 | 44 | 251 % | 17 / 20 |
-| 164 | La Baie des Épaves | 3 | 42 | 251 % | 18 / 29 |
+| 161 | La Jetée Abandonnée | 1 | 50 | 250 % | 18 / 29 |
+| 162 | Le Phare Éteint | 1 | 41 | 250 % | 15 / 29 |
+| 163 | Les Récifs Blancs | 2 | 38 | 251 % | 14 / 29 |
+| 164 | La Baie des Épaves | 3 | 35 | 251 % | 11 / 29 |
 | 165 | Le Quai des Brumes | 1 | 50 | 252 % | 18 / 29 |
-| 166 | La Falaise du Guet | 2 | 41 | 252 % | 12 / 17 |
-| 167 | Les Criques Jumelles | 3 | 41 | 253 % | 15 / 29 |
-| 168 | Le Port Englouti | 2 | 44 | 253 % | 17 / 17 |
-| 169 | L'Écueil Noir | 1 | 44 | 254 % | 13 / 27 |
-| 170 | La Forteresse du Cap | 3 | 39 | 254 % | 14 / 25 |
+| 166 | La Falaise du Guet | 2 | 36 | 252 % | 17 / 29 |
+| 167 | Les Criques Jumelles | 3 | 38 | 253 % | 14 / 29 |
+| 168 | Le Port Englouti | 2 | 40 | 253 % | 17 / 29 |
+| 169 | L'Écueil Noir | 1 | 39 | 254 % | 14 / 29 |
+| 170 | La Forteresse du Cap | 3 | 35 | 254 % | 7 / 29 |
+
+*Refonte des cartes (v0.227) : tracés, nombres d'entrées, trajets et PV restants ci-dessus remplacent ceux de la conception d'origine ; la méthode de réglage décrite plus bas (simulation avec talents réels, armée de référence) reste celle d'origine, appliquée à ces nouveaux tracés par `tools/sim_map_candidates.gd` (la mesure retient la composition de référence des tests de chapitre). Tracés et emplacements = propositions de prototype à confirmer en jeu. Voir `design/essais/refonte_cartes/` et le GDD (MAJ-61 à MAJ-64).*
 
 ## Contrôles
 

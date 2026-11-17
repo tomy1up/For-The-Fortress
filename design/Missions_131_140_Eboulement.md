@@ -19,16 +19,18 @@ Le 12 novembre 2026, le porteur valide le biome « souterrains et mines », puis
 
 | Mission | Carte | Entrées | Trajet principal | PV restants A / H |
 | --- | --- | --- | --- | --- |
-| 131 | Les Piliers Fissurés | 2 | 38 | 18 / 27 |
-| 132 | La Veine Oubliée | 3 | 35 | 16 / 26 |
-| 133 | Le Tunnel Éventré | 2 | 38 | 18 / 22 |
-| 134 | La Voûte Instable | 3 | 36 | 17 / 29 |
-| 135 | Les Galeries Jumelles | 2 | 38 | 16 / 24 |
-| 136 | Le Gouffre Noir | 3 | 33 | 16 / 25 |
-| 137 | L'Écluse Souterraine | 2 | 38 | 16 / 24 |
-| 138 | Le Carrefour des Éboulis | 2 | 35 | 16 / 23 |
-| 139 | La Crypte des Mineurs | 3 | 35 | 16 / 24 |
-| 140 | Le Cœur Effondré | 3 | 33 | 14 / 25 |
+| 131 | Les Piliers Fissurés | 2 | 36 | 16 / 27 |
+| 132 | La Veine Oubliée | 3 | 32 | 13 / 24 |
+| 133 | Le Tunnel Éventré | 3 | 34 | 16 / 25 |
+| 134 | La Voûte Instable | 3 | 35 | 15 / 25 |
+| 135 | Les Galeries Jumelles | 2 | 35 | 15 / 25 |
+| 136 | Le Gouffre Noir | 2 | 41 | 14 / 24 |
+| 137 | L'Écluse Souterraine | 2 | 33 | 16 / 22 |
+| 138 | Le Carrefour des Éboulis | 3 | 38 | 17 / 22 |
+| 139 | La Crypte des Mineurs | 3 | 32 | 14 / 20 |
+| 140 | Le Cœur Effondré | 2 | 37 | 13 / 25 |
+
+*Refonte des cartes (v0.225) : tracés, nombres d'entrées, trajets et PV restants ci-dessus remplacent ceux de la conception d'origine ; la méthode de réglage décrite plus bas (simulation avec talents réels, armée de référence) reste celle d'origine, appliquée à ces nouveaux tracés par `tools/sim_map_candidates.gd` (la mesure retient la composition de référence des tests de chapitre). Tracés et emplacements = propositions de prototype à confirmer en jeu. Voir `design/essais/refonte_cartes/` et le GDD (MAJ-61 à MAJ-64).*
 
 ## Contrôles
 

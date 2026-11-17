@@ -20,16 +20,18 @@ Cartes dans `prototype/scripts/citadel_maps.gd` (décor `citadel`, habillage par
 
 | Mission | Carte | Entrées | Trajets |
 | --- | --- | --- | --- |
-| 91 | La Brèche | 1 | 34 |
-| 92 | Le Siège | 1 | 35 |
-| 93 | Les Mâchicoulis | 2, pression alternée | 38 / 38 |
-| 94 | La Grande Salle | 3 | 36 / 32 / 36 |
-| 95 | Les Casernes | 1 | 31 |
-| 96 | La Tour de Guet | 2, pression alternée | 35 / 35 |
-| 97 | L'Armurerie | 3 | 35 / 32 / 35 |
-| 98 | Les Escaliers | 2, pression alternée | 38 / 38 |
-| 99 | La Salle du Trône | 1 | 32 |
-| 100 | Le Cœur de la Citadelle | 3 | 33 / 32 / 33 |
+| 91 | La Brèche | 1 | 42 |
+| 92 | Le Siège | 1 | 48 |
+| 93 | Les Mâchicoulis | 2, pression alternée | 33 / 32 |
+| 94 | La Grande Salle | 3 | 35 / 31 / 34 |
+| 95 | Les Casernes | 1 | 50 |
+| 96 | La Tour de Guet | 2, pression alternée | 29 / 31 |
+| 97 | L'Armurerie | 3 | 35 / 32 / 36 |
+| 98 | Les Escaliers | 2, pression alternée | 33 / 33 |
+| 99 | La Salle du Trône | 1 | 43 |
+| 100 | Le Cœur de la Citadelle | 3 | 38 / 33 / 36 |
+
+*Refonte des cartes (v0.226) : tracés, nombres d'entrées, trajets et PV restants ci-dessus remplacent ceux de la conception d'origine ; la méthode de réglage décrite plus bas (simulation avec talents réels, armée de référence) reste celle d'origine, appliquée à ces nouveaux tracés par `tools/sim_map_candidates.gd` (la mesure retient la composition de référence des tests de chapitre). Tracés et emplacements = propositions de prototype à confirmer en jeu. Voir `design/essais/refonte_cartes/` et le GDD (MAJ-61 à MAJ-64).*
 
 ## Méthode de réglage
 

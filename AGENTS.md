@@ -39,7 +39,7 @@ Jouer depuis les sources : `prototype/Lancer_le_prototype.cmd`, ou Godot avec `-
 Tests (Godot + Python + contrats du GDD) :
 
 ```
-python prototype/tests/run_regression.py                                  # tout (105 suites, long)
+python prototype/tests/run_regression.py                                  # tout (142 suites, environ 9 minutes : six suites en parallèle par défaut, --jobs 1 pour le mode séquentiel)
 python prototype/tests/run_regression.py --test test_marsh_campaign.gd    # suite ciblée, répétable
 python prototype/tests/run_regression.py --report dist/vXXXX-regression/report.json --timeout 120
 ```
@@ -55,7 +55,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File prototype/Exporter_Windows.p
 python prototype/tests/verify_windows_export.py dist/v0XXX-validation/For_the_Fortress_v0.XXX_Windows_x64.zip --destination dist/v0XXX-verification --screen 1 --background --source-project prototype [--case NOM ...]
 ```
 
-`verify_windows_export.py` contrôle le contenu du ZIP, les empreintes des sources et lance des captures ; inspecter les captures pertinentes avant de publier.
+`verify_windows_export.py` contrôle le contenu du ZIP, les empreintes des sources et lance des captures ; inspecter les captures pertinentes avant de publier. Les cas (1 050) tournent quatre par quatre par défaut (`--jobs`, environ 15 minutes au lieu d'une heure). Courbe de difficulté des 200 missions : `design/Courbe_difficulte_v0230.md` (`prototype/tools/difficulty_curve.gd`).
 
 Captures avec défenseurs d'une mission (après export, depuis le dossier vérifié) : lancer `For_the_Fortress.exe --screen 1 -- "--capture=<png>" --capture-state=campaign_menu --capture-faction=<alliance|horde> --capture-campaign=marsh<N>play --capture-mountain-defence` (`mountain<N>play` pour les Ardoises). Sans `--minimized` : une fenêtre réduite peut ne jamais enregistrer l'image et rester bloquée.
 

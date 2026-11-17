@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from gdd_contracts import check_contracts
 
 
@@ -61,6 +62,7 @@ def main(argv=None):
     parser.add_argument('--report', type=Path, help='Rapport JSON local ; les journaux sont enregistrés à côté.')
     parser.add_argument('--test', action='append', help='Nom exact d’une suite .gd ; répétable. Sans filtre : toutes les suites.')
     parser.add_argument('--timeout', type=float, default=30, help='Secondes maximales par suite (défaut : 30).')
+    parser.add_argument('--jobs', type=int, default=max(1, min(6, (os.cpu_count() or 2) // 3)), help='Suites Godot lancées en parallèle (défaut : un tiers des cœurs, 6 au plus ; 1 pour l’ancien mode séquentiel).')
     args = parser.parse_args(argv)
     project = Path(__file__).resolve().parents[1]
     try:
@@ -90,7 +92,7 @@ def main(argv=None):
         if version.returncode != 0 or not version.stdout.strip():
             raise ValueError('Impossible de lire la version du moteur ; utiliser le binaire console sous Windows.')
         report['engine_version'] = version.stdout.strip()
-        for script in scripts:
+        def run_suite(script):
             start = time.monotonic()
             try:
                 result = subprocess.run([str(engine), '--headless', '--path', str(project), '--quit-after', '120', '--script', 'res://tests/' + script],
@@ -103,12 +105,17 @@ def main(argv=None):
                 log = error
             if logs:
                 (logs / (script + '.log')).write_text(log, encoding='utf-8')
-            report['suites'].append({'script': script, 'ok': ok, 'checks': checks, 'error': error,
-                                     'exit_code': code, 'seconds': round(time.monotonic() - start, 3)})
-            report['godot_checks'] += checks
             print(('OK ' if ok else 'ÉCHEC ') + script + ' : ' + str(checks), flush=True)
             if not ok:
-                print(error + '\n' + log[-3000:], file=sys.stderr)
+                print(error + chr(10) + log[-3000:], file=sys.stderr, flush=True)
+            return {'script': script, 'ok': ok, 'checks': checks, 'error': error,
+                    'exit_code': code, 'seconds': round(time.monotonic() - start, 3)}
+        # Suites indépendantes (chacune a son processus et ses fichiers temporaires uniques) : lancées en parallèle, rapport dans l'ordre alphabétique.
+        with ThreadPoolExecutor(max_workers=max(1, args.jobs)) as pool:
+            results = list(pool.map(run_suite, scripts))
+        for entry in results:
+            report['suites'].append(entry)
+            report['godot_checks'] += entry['checks']
         python = subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', str(project / 'tests'), '-p', 'test_*.py'],
                                 cwd=project.parent, capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=args.timeout)
         python_log = python.stdout + python.stderr

@@ -8,6 +8,7 @@ import re
 import struct
 import subprocess
 import zipfile
+from concurrent.futures import ThreadPoolExecutor
 from export_sources import verify_sources
 
 def horde_hp(base, number, camp):
@@ -22,6 +23,7 @@ parser.add_argument('--screen',type=int,help='Écran réservé aux essais graphi
 parser.add_argument('--background',action='store_true',help='Ouvrir les captures avec une fenêtre minimisée pour laisser la main au joueur.')
 parser.add_argument('--source-project',type=Path,help='Comparer les sources déclarées aux fichiers de ce projet local.')
 parser.add_argument('--case',action='append',dest='selected_cases',help='Limiter la vérification aux cas nommés ; répétable. Sans option, tous les cas sont exécutés.')
+parser.add_argument('--jobs',type=int,default=4,help='Cas lancés en parallèle (défaut : 4 ; 1 pour l’ancien mode séquentiel).')
 args=parser.parse_args()
 assert os.name=='nt','Ce contrôle lance le binaire Windows sur Windows.'
 archive=args.archive.resolve()
@@ -179,7 +181,7 @@ if args.selected_cases:
     unknown=set(args.selected_cases)-{name for name,_,_ in cases}
     assert not unknown,'Cas de vérification inconnus : '+', '.join(sorted(unknown))
     cases=[case for case in cases if case[0] in args.selected_cases]
-for name,state,faction in cases:
+def run_case(name,state,faction):
     log=destination/(name+'.log')
     command=[str(exe),'--log-file',str(log)]
     if state is None: command+=['--headless','--quit-after','3']
@@ -268,7 +270,15 @@ for name,state,faction in cases:
     completed=subprocess.run(command,cwd=folder,capture_output=True,text=True,encoding='utf-8',errors='replace',startupinfo=startup,timeout=30)
     text=completed.stdout+completed.stderr+(log.read_text(encoding='utf-8') if log.exists() else '')
     (destination/(name+'_process.txt')).write_text(text,encoding='utf-8')
-    assert completed.returncode==0,(name,completed.returncode,text[-3000:])
+    return completed.returncode,text
+# Cas indépendants (un processus du jeu exporté chacun, journaux et captures à noms uniques) : lancés en parallèle, puis contrôlés dans l'ordre.
+with ThreadPoolExecutor(max_workers=max(1,args.jobs)) as pool:
+    outcomes=dict(zip([case[0] for case in cases],pool.map(lambda case: run_case(*case),cases)))
+for name,state,faction in cases:
+    log=destination/(name+'.log')
+    image=destination/(name+'.png')
+    returncode,text=outcomes[name]
+    assert returncode==0,(name,returncode,text[-3000:])
     assert 'ERROR:' not in text and 'SCRIPT ERROR' not in text,(name,text[-3000:])
     if '_routes' in name:
         snapshot=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ROUTE_WORKSHOP=')))
@@ -772,7 +782,7 @@ for name,state,faction in cases:
             assert snapshot=={'isolated':True,'count':4,'faction':0 if faction=='alliance' else 1,'motion_schema':3}
         header=image.read_bytes()[:24]
         assert header[:8]==b'\x89PNG\r\n\x1a\n' and struct.unpack('>II',header[16:24])==(1280,800)
-    results.append({'case':name,'exit_code':completed.returncode,'capture':state is not None})
+    results.append({'case':name,'exit_code':returncode,'capture':state is not None})
 report={'archive_sha256':hashlib.file_digest(archive.open('rb'),'sha256').hexdigest(),
         'scope':'selected' if args.selected_cases else 'all','available_cases':available_case_count,
         'executable_sha256':exe_hash,'files':members,'tests':results,
