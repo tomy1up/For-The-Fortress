@@ -1,0 +1,6 @@
+# Prototype v0.230 — Tir à bout portant et contrôles des gestes
+
+- **Tir à bout portant** : pour la Catapulte gobeline, le Veilleur des cendres, le Brûleur de cendres, l'Arbalète lourde, la Hache en chaîne et le Lanceur double troll, quand la cible est déjà derrière le point de lâcher à l'écran, le projectile n'est pas dessiné en vol et l'impact est joué au lâcher (durée de vol nulle) ; la baisse de vie affichée, le recul de l'ennemi, le signal d'élimination et les flammes du Brûleur suivent le même instant. Rendu seulement : le combat ne change pas, et rien n'est ajouté au modèle ni aux rapports (le tir est retrouvé d'après son type et son instant).
+- **Alternance des bras du Lanceur double** : l'état suivi côté rendu est maintenant établi dès la première image dessinée (captures, reprise d'une partie).
+- **Contrôles visuels ajoutés** (régression visuelle, groupe `effects`, 227 captures en tout) : deux instants de ricochet de la Hache en chaîne, les deux bras du Lanceur double troll, la chaîne du Mage de la foudre sur plusieurs cibles (options `--capture-secondary` et `--capture-shot-number`).
+- **Contrôles** : régression complète 159 856 contrôles Godot, 17 tests Python ; 109 captures d'unités et d'effets inchangées.

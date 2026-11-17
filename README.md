@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.230**. Tir à bout portant : impact et baisse de vie au lâcher quand le projectile n'a pas de vol visible ; contrôles visuels des ricochets, des bras alternés et de la chaîne de foudre. [Notes](design/essais/v0230_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.230).
+
 **Prototype v0.229**. Geste du Veilleur des cendres (type 16) : lancer de hachette. [Notes](design/essais/v0229_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.229).
 
 **Prototype v0.228**. Geste du Lanceur double troll (type 27) : deux haches lancées en alternance, une par bras, à chaque tir. [Notes](design/essais/v0228_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.228).
