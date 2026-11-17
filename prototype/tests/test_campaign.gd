@@ -176,7 +176,7 @@ func run_checks() -> void:
 			check(m.killed == counts[wave-1] and m.escaped == 0,"Tous les profils résolus sans arrivée en campagne de contrôle")
 			if wave in [3,6,9]:
 				check(m.phase == "bonus", "Choix uniquement après 3/6/9")
-				m.choose_bonus(m.bonus_offer[0])
+				m.choose_bonus(Model.reference_bonus(m.bonus_offer))
 			if wave < 10:
 				check(m.phase == "finished" and m.prepare_next_wave() and m.elapsed == 0 and m.enemies.is_empty() and m.curses.is_empty(),"Transition conserve défense, remet le temps à zéro")
 		check(m.phase == "victory" and m.total_killed == 182 and m.total_income == 770 and m.bonuses.size() == 3,"Victoire, 182 éliminations et 770 or de récompenses")
@@ -195,7 +195,7 @@ func run_checks() -> void:
 	check(runs[0].gold == runs[1].gold and runs[1].gold == runs[2].gold and runs[0].fortress_hp == runs[2].fortress_hp,"Vague 8 : mêmes gains et PV aux deux vitesses")
 	# Références financées réellement : départ à 150, aucun achat ou niveau gratuit.
 	for faction in range(2):
-		m = Model.new(); m.select_faction(faction); m.rng.seed = 42
+		m = Model.new(); m.select_faction(faction); m.rng.seed = 42; m.rules_v232 = false # Références historiques : tirage de douze bonus
 		m.buy(0,faction*3); m.buy(1,faction*3+1)
 		for wave in range(1,11):
 			if wave >= 4 and m.defenders[2].is_empty(): m.buy(2,faction*3+2)
@@ -207,7 +207,7 @@ func run_checks() -> void:
 			check(m.phase != "defeat" and m.killed+m.escaped == counts[wave-1],"Référence financée : survie et résolution complète")
 			if m.phase == "bonus":
 				print("FUNDED_OFFER faction=%d wave=%d indices=%s selected=%s" % [faction,wave,str(m.bonus_offer),Data.BONUSES[m.bonus_offer[0]].code])
-				m.choose_bonus(m.bonus_offer[0])
+				m.choose_bonus(Model.reference_bonus(m.bonus_offer))
 			if wave < 10: check(m.prepare_next_wave(),"Référence financée : préparation suivante")
 		var paid: int = 0
 		for defender in m.defenders:

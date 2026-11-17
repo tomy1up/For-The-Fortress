@@ -61,7 +61,7 @@ func run_checks() -> void:
 			check(model.start(),"Vague lancée normalement")
 			model.advance(10000)
 			if model.phase=="defeat": break
-			if model.phase=="bonus": model.choose_bonus(model.bonus_offer[0])
+			if model.phase=="bonus": model.choose_bonus(Main.Model.reference_bonus(model.bonus_offer))
 			if wave<10: model.prepare_next_wave()
 		check(model.phase=="victory","Une politique gagnante dans chaque faction sans revenu ajouté")
 		check(Replay.verify(JSON.parse_string(JSON.stringify(Main.RunReport.build(model)))).ok,"Le combat de campagne multitrajet est rejouable")

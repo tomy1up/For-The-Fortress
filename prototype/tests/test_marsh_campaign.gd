@@ -74,7 +74,7 @@ func play(model: RefCounted, types: Array) -> void:
 				if not model.defenders[slot].is_empty(): model.upgrade(slot,0 if model.defenders[slot].level==3 else -1)
 		check(model.start(),"Vague de marais lancée par les règles normales");model.advance(10000)
 		if model.phase=="defeat": break
-		if model.phase=="bonus": model.choose_bonus(model.bonus_offer[0])
+		if model.phase=="bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
 		if wave<10: model.prepare_next_wave()
 	var spent := 0
 	for action in model.action_history:

@@ -66,7 +66,7 @@ func verify_map(number: int) -> void:
 	view.free()
 
 func play(model: Model, types: Array) -> void:
-	var slots := [3,4,2];model.rng.seed = 7
+	var slots := [3,4,2];model.rng.seed = 7;model.rules_v232 = false # Références historiques : tirage de douze bonus
 	check(model.buy(slots[0],types[0]) and model.buy(slots[1],types[1]),"Recrutement initial dans le budget normal")
 	for wave in range(1,11):
 		if wave == 2: model.upgrade(slots[0])
@@ -77,7 +77,7 @@ func play(model: Model, types: Array) -> void:
 		check(model.start(),"Vague lancée par les règles normales")
 		model.advance(10000)
 		if model.phase == "defeat": break
-		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+		if model.phase == "bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
 		if wave < 10: model.prepare_next_wave()
 
 func verify_mission(camp: int, number: int) -> void:
@@ -105,7 +105,7 @@ func verify_mission(camp: int, number: int) -> void:
 	play(model,[0,1,1] if camp == 0 else [3,3,5])
 	print("VOLCANIC_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])
-	var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
+	var report: Dictionary = _report(model)
 	var replay: Dictionary = Replay.verify(report)
 	check(replay.ok,"Mission %d : le rapport est rejouable : %s" % [number,str(replay.get("error",""))])
 	check(not report.has("wave_set_id") and not report.has("combat_affix") and report.map_definition.decoration == "volcanic","Mission %d : le rapport conserve la carte volcanique et les rencontres standard" % number)
@@ -116,3 +116,9 @@ func verify_mission(camp: int, number: int) -> void:
 	if number < 70: check(game.campaign_menu.chapter == 7 and game.campaign_menu.nodes.slice(0,number-60).all(func(node):return node.state == "completed") and game.campaign_menu.nodes[number-60].state == "available","Mission %d : retour sur le chapitre avec la suivante disponible" % number)
 	else: check(game.campaign_menu.chapter == 8 and game.campaign_menu.nodes[0].state == "available" and game.campaign_menu.nodes.slice(1).all(func(node):return node.state == "locked"),"La fin du chapitre 7 propose la mission 71 sans la lancer")
 	game.free()
+
+## Rapport rejouable : un modèle aux anciennes règles de tirage (douze bonus) porte la version antérieure à la 0.232.
+func _report(model) -> Dictionary:
+	var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
+	if not model.rules_v232: report.game_version = "0.231"
+	return report

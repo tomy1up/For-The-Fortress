@@ -50,7 +50,7 @@ func run_checks() -> void:
 	check(not scene.countdown_bar.visible,"Aucune barre de délai pendant un choix obligatoire")
 	scene._process(10000); scene._start()
 	check(scene.model.wave == 3 and scene.model.phase == "bonus" and scene.model.bonuses.is_empty(),"Le choix n'expire pas et le lancement forcé reste bloqué")
-	scene._choose_bonus(0)
+	scene._choose_bonus(scene.model.bonus_offer.find(scene.Model.reference_bonus(scene.model.bonus_offer)))
 	check(scene.model.phase == "finished" and scene.countdown_remaining == 30,"Après choix, trente secondes entières")
 	check(scene.countdown_bar.visible and scene.countdown_bar.value == 30,"Après choix : barre réarmée au délai complet")
 	scene._process(12); scene.model.phase = "defeat"; scene._reset(); scene._choose_faction(1); scene._process(1000)
@@ -91,7 +91,7 @@ func run_checks() -> void:
 			if wave in [3,6,9]:
 				scene._process(1000)
 				check(scene.model.phase == "bonus" and scene.countdown_remaining == -1,"Offre après 3/6/9 attend le joueur")
-				scene._choose_bonus(0)
+				scene._choose_bonus(scene.model.bonus_offer.find(scene.Model.reference_bonus(scene.model.bonus_offer)))
 			check(scene.countdown_remaining == 30,"Délai complet avant chaque vague")
 			if wave+1 >= 4 and scene.model.defenders[2].is_empty():
 				scene.selected = 2; scene._buy(2)
@@ -106,7 +106,7 @@ func run_checks() -> void:
 			scene._process(29.9)
 			check(scene.model.wave == wave and not scene.model.active,"La préparation ne finit pas en avance")
 			scene._process(0.2)
-		check(scene.model.phase == "victory" and scene.model.fortress_hp == [14,12][faction] and scene.model.gold == [192,189][faction],"Mêmes références financées avec enchaînement automatique")
+		check(scene.model.phase == "victory" and scene.model.fortress_hp == [18,15][faction] and scene.model.gold == [189,182][faction],"Mêmes références financées avec enchaînement automatique")
 		check(scene.countdown_remaining == -1 and not scene.autoplay_started,"Victoire désarme l'automatisme")
 		check(not scene.countdown_bar.visible,"Les deux factions terminent sans barre de préparation")
 		scene._process(10000)

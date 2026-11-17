@@ -48,9 +48,9 @@ func run_checks() -> void:
 		check(model.start(),"Vague démarrée")
 		model.advance(10000)
 		while model.phase != "defeat":
-			if model.phase=="bonus": model.choose_bonus(model.bonus_offer[0])
+			if model.phase=="bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
 			model.prepare_next_wave();model.start();model.advance(10000)
-		var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
+		var report: Dictionary = _report(model)
 		check(report.has("combat_affix")==not affix.is_empty(),"Seuls les nouveaux combats affectés enregistrent un affixe")
 		check(Replay.verify(report).ok,"Rapport avec ou sans affixe rejouable")
 		if not affix.is_empty():
@@ -123,7 +123,7 @@ func run_checks() -> void:
 		check(model.gold==150+model.total_income-spent and model.gold>=0,"Tous les recrutements et améliorations sont financés par les revenus du combat")
 		if camp==1 and mission==32:
 			check(model.defenders.filter(func(unit):return not unit.is_empty()).size()==4 and model.defenders.filter(func(unit):return unit.get("type",-1)==3).size()==2 and model.defenders.filter(func(unit):return unit.get("type",-1)==4).size()==2,"Défense à quatre unités conforme à la limite de deux exemplaires par type")
-		check(Replay.verify(JSON.parse_string(JSON.stringify(Report.build(model)))).ok,"Rapport complet de mission affectée rejouable")
+		check(Replay.verify(_report(model)).ok,"Rapport complet de mission affectée rejouable")
 		game._sync_meta_rewards(true);game._sync_meta_rewards(true);game._update_interface()
 		check(profile.campaign_status(camp).completed==mission and profile.data.banks[camp].xp==100*mission and profile.data.banks[camp].resource==60*mission,"Crédit unique de première victoire")
 		check(profile.data.banks[camp].points==Profile.Experience.points_for_xp(100*mission),"Points de talents acquis selon la courbe d'XP de la faction")
@@ -162,7 +162,7 @@ func run_checks() -> void:
 	quit(1 if failures else 0)
 
 func play_policy(model: RefCounted, types: Array, slots: Array, extra: Array, seed_value: int = 7) -> void:
-	model.rng.seed = seed_value
+	model.rng.seed = seed_value;model.rules_v232 = false # Références historiques : tirage de douze bonus
 	var army_slots: Array = slots.duplicate()
 	for recruit in extra: army_slots.append(recruit[0])
 	check(model.buy(slots[0],types[0]) and model.buy(slots[1],types[1]),"Défense initiale dans le budget normal")
@@ -177,5 +177,11 @@ func play_policy(model: RefCounted, types: Array, slots: Array, extra: Array, se
 		check(model.start(),"Départ d'une vague sous Vents contraires")
 		model.advance(10000)
 		if model.phase=="defeat": break
-		if model.phase=="bonus": model.choose_bonus(model.bonus_offer[0])
+		if model.phase=="bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
 		if wave<10: model.prepare_next_wave()
+
+## Rapport rejouable : un modèle aux anciennes règles de tirage (douze bonus) porte la version antérieure à la 0.232.
+func _report(model) -> Dictionary:
+	var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
+	if not model.rules_v232: report.game_version = "0.231"
+	return report

@@ -21,7 +21,9 @@ func _initialize() -> void:
 			if pair.card == card.id and pair.mission == mission and pair.layout == 1 and pair.policy == "renfort" and pair.branch == 1 and pair.talent_mode == "famille" and pair.seed == 42: reference = pair;break
 		check(not reference.is_empty(),"Scénario de référence retrouvé dans le relevé validé")
 		for alternative in [false,true]:
+			Survey.legacy_bonus_pool = true # L'archive date d'avant le catalogue de 36 bonus.
 			var normal: Dictionary = Survey.run_case(card,mission,1,"renfort",1,"famille",42,alternative,300.0,false,false,90 if card.type == 9 else -1)
+			Survey.legacy_bonus_pool = false
 			check(Replay._difference(JSON.parse_string(JSON.stringify(normal)),reference["alternative" if alternative else "base"],"historique").is_empty(),"La politique historique reste exactement identique")
 			for branch in range(2):
 				var slow: Dictionary = Survey.run_case(card,mission,1,"renfort",branch,"famille",42,alternative,0.05,true,true)
@@ -30,3 +32,4 @@ func _initialize() -> void:
 				check(Replay._difference(slow.report,fast.report,"rapport").is_empty(),"Priorité et épargne identiques à petits et grands pas")
 				check(Replay.verify(fast.report).ok,"Le rapport avec priorité du quatrième défenseur se rejoue")
 	print("SHOP_PRIORITY_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
+

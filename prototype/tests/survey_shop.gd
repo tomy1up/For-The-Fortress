@@ -47,6 +47,8 @@ static func _audit(ok: bool,message: String,state: Dictionary) -> void:
 	if not ok and state.failures.size() < 100: state.failures.append(message)
 
 ## Vrai pour rejouer les relevés historiques de la boutique avec les valeurs de talents d'origine.
+## Vrai pour rejouer l'archive historique avec le tirage de douze bonus des versions antérieures à la 0.232.
+static var legacy_bonus_pool: bool = false
 static var historical_talents: bool = false
 
 static func run_case(card: Dictionary,mission: int,layout_index: int,policy: String,branch: int,talent_mode: String,seed_value: int,alternative: bool,step: float = 300.0,include_report: bool = false,priority_extra: bool = false,historical_cost: int = -1) -> Dictionary:
@@ -57,6 +59,7 @@ static func run_case(card: Dictionary,mission: int,layout_index: int,policy: Str
 	var ranks: Array = family_ranks(card,budget.points) if talent_mode == "famille" else Talents.empty_ranks()
 	_audit(Talents.valid(ranks) and Talents.spent(ranks) <= budget.points,"Talents valides et accessibles avec les premières victoires antérieures",state)
 	var m = Model.new(true,Model.Maps.for_id(entry.map_id))
+	m.rules_v232 = not (legacy_bonus_pool or historical_talents) # Les rapports historiques (version 0.167) rejouent le tirage de douze bonus
 	_audit(m.configure_enemy_hp(entry.hp_percent) and m.configure_auxiliary(card.type if alternative else -1),"Règles de mission et choix d’unité configurés",state)
 	if historical_cost > 0 and alternative: m.configure_auxiliary_cost(historical_cost)
 	if historical_talents: m.talent_rules = Model.MetaTalents.Expanded.RULES_HISTORICAL

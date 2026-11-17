@@ -79,6 +79,7 @@ func run_checks() -> void:
 	# Rejeu d'une partie avec aura et dots : ancien rapport (0.221) rejoué avec les anciennes règles, rapport actuel avec les nouvelles.
 	for active in [false,true]:
 		var m = Model.new(true,Model.Maps.for_id("ford_woods"))
+		m.rules_v232 = false # Le rapport porte une version antérieure à la 0.232 : tirage de douze bonus.
 		m.rules_v222 = active
 		m.configure_auxiliary(32);m.select_faction(0);m.rng.seed = 9
 		m.buy(0,32);m.buy(1,0)

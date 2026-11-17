@@ -14,8 +14,8 @@ func check(ok: bool, message: String) -> void:
 		failures += 1
 		push_error(message)
 func _initialize() -> void: call_deferred("run_checks")
-func campaign(faction: int, seed: int = 42, prefer_robust: bool = false) -> RefCounted:
-	var m = Model.new();m.select_faction(faction);m.rng.seed = seed
+func campaign(faction: int, seed: int = 42, prefer_robust: bool = false, legacy: bool = false) -> RefCounted:
+	var m = Model.new();m.select_faction(faction);m.rng.seed = seed;m.rules_v232 = not legacy # Rapports historiques (légende) : tirage de douze bonus
 	m.buy(0,faction*3);m.buy(1,faction*3+1)
 	for wave in range(1,11):
 		if wave >= 4 and m.defenders[2].is_empty(): m.buy(2,faction*3+2)
@@ -79,13 +79,13 @@ func run_checks() -> void:
 		check(Report.markdown(report).contains("Catalogue des attaquants") and Replay.verify(report).ok,"Catalogue exporté et vérifié au rejeu")
 		var altered: Dictionary = report.duplicate(true);altered.enemy_catalog[1].origin = "alliance" if faction == 0 else "horde"
 		check(not Replay.verify(altered).ok,"Rejeu : détecter une origine falsifiée")
-		var legacy: Dictionary = report.duplicate(true);legacy.erase("enemy_catalog");legacy.game_version = "0.64";legacy.boss_encounter.name = Model.ENEMY_TYPES[7].name
+		var legacy: Dictionary = JSON.parse_string(JSON.stringify(Report.build(campaign(faction,42,false,true))));legacy.erase("enemy_catalog");legacy.game_version = "0.64";legacy.boss_encounter.name = Model.ENEMY_TYPES[7].name
 		for bonus in legacy.bonuses:bonus.description = bonus.description.replace("ours, unités lourdes, gardes d’élite et boss","Brutes, Colosses, Élites et boss")
 		check(Replay.verify(legacy).ok,"Rapport historique avec anciens noms de profils toujours vérifiable")
-		var robust = campaign(faction,0,true)
+		var robust = campaign(faction,0,true,true)
 		for seed in range(1,32):
 			if 11 in robust.bonuses: break
-			robust = campaign(faction,seed,true)
+			robust = campaign(faction,seed,true,true)
 		check(11 in robust.bonuses,"Contrôle de migration avec un R-12 réellement proposé et acquis")
 		var old_bonus_report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(robust)))
 		old_bonus_report.erase("enemy_catalog");old_bonus_report.game_version = "0.64";old_bonus_report.boss_encounter.name = Model.ENEMY_TYPES[7].name

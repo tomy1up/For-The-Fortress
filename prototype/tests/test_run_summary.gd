@@ -17,7 +17,7 @@ func run_checks() -> void:
 	for faction in range(2):
 		var scene = Main.new(); root.add_child(scene); scene.set_process(false); scene._choose_faction(faction)
 		var m = scene.model
-		m.rng.seed = 42
+		m.rng.seed = 42; m.rules_v232 = false # Références historiques : tirage de douze bonus
 		check(not scene.summary_button.visible and m.wave_history.is_empty(),"Aucun bilan ni relevé avant le premier combat")
 		scene._show_run_summary()
 		check(not scene.summary_open,"Bilan indisponible avant fin de partie")
@@ -44,7 +44,7 @@ func run_checks() -> void:
 			m.advance(1000)
 			check(m.wave_history == saved,"Pas de duplication en attente après la vague")
 			if wave == 10: break
-			if m.phase == "bonus": m.choose_bonus(m.bonus_offer[0])
+			if m.phase == "bonus": m.choose_bonus(Model.reference_bonus(m.bonus_offer))
 			check(m.wave_history == saved,"Choisir un nouveau bonus ne réécrit pas la vague précédente")
 			m.prepare_next_wave()
 		check(m.phase == "victory" and m.fortress_hp == [14,12][faction] and m.gold == [192,189][faction],"Résultats financés normalement inchangés")

@@ -44,6 +44,7 @@ func run_checks() -> void:
 	# Rejeu : un rapport d'avant la v0.221 est rejoué sans brûlure, un rapport actuel avec.
 	for active in [false,true]:
 		var m = Model.new(true,Model.Maps.for_id("valley_ford"))
+		m.rules_v232 = false # Le rapport porte une version antérieure à la 0.232 : tirage de douze bonus.
 		m.burn_for_all_curse_units = active
 		m.configure_auxiliary(15);m.select_faction(0);m.rng.seed = 5
 		m.buy(3,15);m.buy(0,0);m.buy(1,1)

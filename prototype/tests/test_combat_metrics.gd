@@ -86,7 +86,7 @@ func run_checks() -> void:
 		check(simulations[0].wave_history[0].performance == simulations[1].wave_history[0].performance,"Mesures identiques indépendamment des images affichées")
 	# Deux campagnes normales : aucun changement de résultat ou de budget.
 	for faction in range(2):
-		m = Model.new(); m.select_faction(faction); m.rng.seed = 42
+		m = Model.new(); m.select_faction(faction); m.rng.seed = 42; m.rules_v232 = false # Références historiques : tirage de douze bonus
 		m.buy(0,faction*3); m.buy(1,faction*3+1)
 		for wave in range(1,11):
 			if wave >= 4 and m.defenders[2].is_empty(): m.buy(2,faction*3+2)
@@ -96,7 +96,7 @@ func run_checks() -> void:
 			var record: Dictionary = m.wave_history[-1]
 			check(record.performance.size() == record.army.size(),"Chaque défenseur présent possède son relevé, même sans attaque")
 			if wave == 10: break
-			if m.phase == "bonus": m.choose_bonus(m.bonus_offer[0])
+			if m.phase == "bonus": m.choose_bonus(Model.reference_bonus(m.bonus_offer))
 			m.prepare_next_wave()
 		check(m.phase == "victory" and m.fortress_hp == [14,12][faction] and m.gold == [192,189][faction],"Références financées normalement inchangées")
 		rows = Report.performance(m)

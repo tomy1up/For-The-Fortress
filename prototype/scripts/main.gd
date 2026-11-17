@@ -3126,6 +3126,16 @@ func _update_bonus_panel() -> void:
 func _bonus_audience_text(code: int) -> String:
 	if code == 8: return "Effet immédiat."
 	if code in [9,10]: return "Pour vos prochains achats."
+	if code >= Model.Campaign.LEGACY_BONUS_COUNT:
+		var kind: String = Model.Campaign.BONUSES[code].audience
+		if kind == "purchases": return "Pour vos prochains achats."
+		if code in [Model.B_GAMBLE,Model.B_FORTRESS]: return "Effet immédiat sur la forteresse."
+		var preview: Dictionary = model.bonus_preview(code)
+		var touched: int = 0
+		for unit in preview.get("units",[]):
+			if not _bonus_unit_changes(code,unit).is_empty(): touched += 1
+		if touched == 0: return "Tous vos défenseurs, selon la cible visée." if kind == "all" else "Aucun défenseur actuel concerné."
+		return "%d défenseur%s concerné%s actuellement." % [touched,"s" if touched > 1 else "","s" if touched > 1 else ""]
 	var count: int = 0
 	for unit in model.defenders:
 		if unit.is_empty() or unit.type not in model.available_types(): continue
@@ -3137,6 +3147,9 @@ func _bonus_audience_text(code: int) -> String:
 	return "Aucun défenseur actuel concerné." if count == 0 else "%d défenseur%s concerné%s actuellement." % [count,"s" if count > 1 else "","s" if count > 1 else ""]
 
 func _bonus_card_content(code: int) -> Dictionary:
+	if code >= Model.Campaign.LEGACY_BONUS_COUNT:
+		var data: Dictionary = Model.Campaign.BONUSES[code]
+		return {"effect":data.effect,"scope":data.scope,"note":data.note}
 	var alliance: bool = model.faction == 0
 	match code:
 		0: return {"effect":"+10 % à tous les dégâts","scope":"Tous vos défenseurs.","note":"Actuels et futurs."}
@@ -3153,12 +3166,36 @@ func _bonus_card_content(code: int) -> Dictionary:
 		11: return {"effect":"Dégâts +20 %","scope":"Ours, unités lourdes, gardes d’élite et boss.","note":"Priorité des cibles inchangée."}
 	return {"effect":"","scope":"","note":""}
 
+## Lignes de changement de statistiques d'un défenseur pour un bonus (aperçu avant/après), vides s'il n'est pas concerné.
+func _bonus_unit_changes(code: int, unit: Dictionary) -> Array[String]:
+	var changes: Array[String] = []
+	var labels: Dictionary = {"damage":"Dégâts directs","secondary_damage":"Rebonds" if Model.family(unit.type) == 3 else "Explosion","curse_damage":"Malédiction","interval":"Intervalle (s)","range":"Portée","radius":"Distance de rebond" if Model.family(unit.type) == 3 else "Rayon d’explosion","secondary_cap":"Cibles secondaires","mark_bonus":"Marque","loot_bonus":"Pillage","volatile_damage":"Charge volatile","slow_seconds":"Ralentissement (s)"}
+	for field in labels:
+		if not unit.before.has(field) or not unit.after.has(field): continue
+		if not is_equal_approx(float(unit.before[field]),float(unit.after[field])):
+			changes.append("%s : %s → %s" % [labels[field],_number(float(unit.before[field])),_number(float(unit.after[field]))])
+	return changes
+
 func _bonus_impact_text(code: int) -> String:
 	var preview: Dictionary = model.bonus_preview(code)
 	if preview.is_empty(): return "Ce bonus est déjà actif."
+	if code == Model.B_MARKET:
+		var market: Array[String] = ["Prochains achats :"]
+		for purchase in preview.purchases:
+			market.append("%s : %d → %d or" % [Model.ROSTER[purchase.type].get("short_name",Model.ROSTER[purchase.type].name),purchase.before,purchase.after])
+		market.append("
+Prochaines améliorations :")
+		for index in range(3):
+			market.append("%s : %d → %d or" % [["Niveau 2","Niveau 3","Spécialisation"][index],preview.upgrades[index].before,preview.upgrades[index].after])
+		market.append("Aucun remboursement des achats passés.")
+		return "
+".join(market)
 	if code == 8:
 		return "PV actuels : %d → %d\nPV maximum : %d → %d\n\nEffet immédiat, sans soin automatique ensuite." % [preview.hp_before,preview.hp_after,preview.max_before,preview.max_after]
 	var lines: Array[String] = []
+	if code in [Model.B_GAMBLE,Model.B_FORTRESS]:
+		lines.append("PV actuels : %d → %d
+PV maximum : %d → %d" % [preview.hp_before,preview.hp_after,preview.max_before,preview.max_after])
 	if code == 9:
 		lines.append("Prochaines améliorations uniquement :")
 		for index in range(3):
@@ -3179,13 +3216,13 @@ func _bonus_impact_text(code: int) -> String:
 				if not is_equal_approx(unit.large_before[component],unit.large_after[component]):
 					changes.append("%s : %s → %s" % [{"direct":"Dégâts directs","secondary":"Rebonds" if Model.family(unit.type) == 3 else "Explosion","curse":"Malédiction"}[component],_number(unit.large_before[component]),_number(unit.large_after[component])])
 		else:
-			for field in ["damage","secondary_damage","curse_damage","interval","range","radius"]:
-				if not is_equal_approx(unit.before[field],unit.after[field]):
-					var label: String = {"damage":"Dégâts directs","secondary_damage":"Rebonds" if Model.family(unit.type) == 3 else "Explosion","curse_damage":"Malédiction","interval":"Intervalle (s)","range":"Portée","radius":"Distance de rebond" if Model.family(unit.type) == 3 else "Rayon d’explosion"}[field]
-					changes.append("%s : %s → %s" % [label,_number(unit.before[field]),_number(unit.after[field])])
+			changes = _bonus_unit_changes(code,unit)
 		if changes.is_empty(): continue
 		affected += 1
 		lines.append("E%d · %s\n%s" % [unit.slot+1,Model.ROSTER[unit.type].get("short_name",Model.ROSTER[unit.type].name),"\n".join(changes)])
 	if affected == 0:
-		lines.append("Aucun défenseur actuel concerné.\nPeut servir aux futures recrues selon ses conditions.")
+		if code >= Model.Campaign.LEGACY_BONUS_COUNT and Model.Campaign.BONUSES[code].audience == "all" and code not in [Model.B_GAMBLE,Model.B_FORTRESS]:
+			lines.append("%s\n%s\nS’applique à tous vos défenseurs, selon la cible visée." % [Model.Campaign.BONUSES[code].scope,Model.Campaign.BONUSES[code].note])
+		else:
+			lines.append("Aucun défenseur actuel concerné.\nPeut servir aux futures recrues selon ses conditions.")
 	return "\n\n".join(lines)

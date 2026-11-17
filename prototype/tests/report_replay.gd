@@ -69,6 +69,12 @@ static func rules_v222_for(version: String) -> bool:
 	if parts.size() < 2 or parts[0] != "0" or not parts[1].is_valid_int(): return true
 	return int(parts[1]) >= 222
 
+## Règles de la v0.232 (catalogue de 36 bonus) : les rapports plus anciens ne tirent que parmi les douze premiers.
+static func rules_v232_for(version: String) -> bool:
+	var parts: PackedStringArray = version.split(".")
+	if parts.size() < 2 or parts[0] != "0" or not parts[1].is_valid_int(): return true
+	return int(parts[1]) >= 232
+
 static func verify(data: Variant) -> Dictionary:
 	if not data is Dictionary: return _fail("Le rapport doit être un objet JSON.")
 	if data.get("schema_version") != 2: return _fail("Seuls les rapports au format 2 sont pris en charge.")
@@ -86,6 +92,7 @@ static func verify(data: Variant) -> Dictionary:
 	var model = Model.new(true,definition)
 	model.burn_for_all_curse_units = burn_rules_for(data.game_version)
 	model.rules_v222 = rules_v222_for(data.game_version)
+	model.rules_v232 = rules_v232_for(data.game_version)
 	model.talent_rules = talent_rules_for(data.game_version) # Chaque rapport garde les valeurs de talents de sa version.
 	if data.has("combat_affix") and not model.configure_combat_affix(data.combat_affix): return _fail("Affixe de combat invalide.")
 	if not model.routes.is_empty():
@@ -110,7 +117,7 @@ static func verify(data: Variant) -> Dictionary:
 		if index >= model.action_history.size():
 			var required: Array = {"faction":["faction"],"buy":["slot","type"],"upgrade":["slot","branch"],"sell":["slot"],"bonus_choice":["chosen"]}.get(action.kind,[])
 			for field in required:
-				var bounds: Array = {"faction":[0,1],"slot":[0,5],"type":[0,Model.ROSTER.size()-1],"branch":[-1,1],"chosen":[0,11]}[field]
+				var bounds: Array = {"faction":[0,1],"slot":[0,5],"type":[0,Model.ROSTER.size()-1],"branch":[-1,1],"chosen":[0,Model.Campaign.BONUSES.size()-1]}[field]
 				if not _integer(action.get(field),bounds[0],bounds[1]): return _fail("Action %d : champ %s invalide." % [index+1,field])
 			var accepted: bool = false
 			match action.kind:

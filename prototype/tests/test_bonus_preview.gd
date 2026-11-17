@@ -28,14 +28,14 @@ func run_checks() -> void:
 	for faction in range(2):
 		for branch in range(2):
 			for boosted in [false,true]:
-				for code in range(12):
+				for code in range(Model.Campaign.BONUSES.size()):
 					var m = Model.new(); m.select_faction(faction); m.gold = 10000
 					for slot in range(6):
 						m.buy(slot,faction*3+slot%3)
 						var level: int = [1,2,3,4,4,3][slot]
 						for upgrade in range(level-1): m.upgrade(slot,branch if upgrade == 2 else -1)
 					if boosted:
-						for existing in range(12):
+						for existing in range(Model.Campaign.BONUSES.size()):
 							if existing != code: m.bonuses.append(existing)
 					m._refresh_windows(); m.fortress_hp = 13; m.phase = "bonus"; m.bonus_offer.assign([code])
 					var original: String = signature(m)
@@ -55,7 +55,7 @@ func run_checks() -> void:
 					preview.units[0].after.damage = -100
 					check(signature(m) == original and m.bonus_preview(code).units[0].after.damage > 0,"Résultat modifiable sans alias avec la partie ou un autre aperçu")
 	var m = Model.new()
-	check(m.bonus_preview(-1).is_empty() and m.bonus_preview(12).is_empty(),"Codes invalides refusés")
+	check(m.bonus_preview(-1).is_empty() and m.bonus_preview(Model.Campaign.BONUSES.size()).is_empty(),"Codes invalides refusés")
 	m.bonuses.assign([0])
 	check(m.bonus_preview(0).is_empty(),"Bonus acquis non proposé comme nouveau gain")
 	for faction in range(2):
