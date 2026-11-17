@@ -105,9 +105,29 @@ static func damage_landing_delay(event: Dictionary) -> float:
 	if str(event.get("component","")) == "curse" or int(event.get("source_type",-1)) < 0: return 0.0
 	return launch_delay({"type":int(event.source_type)})+PROJECTILE_FLIGHT
 
+## Types dont le projectile n'est pas dessiné en vol quand la cible est déjà derrière le point de lâcher à l'écran (à bout portant) : l'impact est alors joué au lâcher, sans attendre le vol.
+const NO_FLIGHT_TYPES: Array[int] = [16,19,21,24,26,27]
+
+## Durée de vol visible d'un tir : nulle à bout portant pour les types ci-dessus (le tir passé doit porter la clé `arm` pour le type 27, voir `with_arm`).
+static func flight_time(shot: Dictionary) -> float:
+	if int(shot.get("type",-1)) in NO_FLIGHT_TYPES and (project(shot.to).x-shot_origin(shot).x)*shot_facing(shot) <= 0.0: return 0.0
+	return PROJECTILE_FLIGHT
+
+## Vol visible du tir qui a produit un événement (retrouvé d'après son type et son instant), PROJECTILE_FLIGHT par défaut.
+func flight_for(source_type: int, time: float) -> float:
+	if model == null or source_type not in NO_FLIGHT_TYPES: return PROJECTILE_FLIGHT
+	for shot in model.shots:
+		if int(shot.get("type",-1)) == source_type and absf(float(shot.get("time",-1.0))-time) < 0.0005: return flight_time(with_arm(shot))
+	return PROJECTILE_FLIGHT
+
+## Délai entre le tir et l'arrivée visible du projectile pour un événement (comme `damage_landing_delay`, avec la géométrie du tir quand elle est connue).
+func landing_delay(event: Dictionary) -> float:
+	if str(event.get("component","")) == "curse" or int(event.get("source_type",-1)) < 0: return 0.0
+	return launch_delay({"type":int(event.source_type)})+flight_for(int(event.source_type),float(event.time))
+
 ## Âge visuel d'un événement de dégâts ou d'élimination (négatif tant que le projectile n'est pas arrivé).
 func event_age(event: Dictionary) -> float:
-	return model.elapsed-float(event.time)-damage_landing_delay(event)
+	return model.elapsed-float(event.time)-landing_delay(event)
 
 ## PV affichés : les dégâts dont le projectile n'est pas encore arrivé ne sont pas encore retirés.
 func visual_hp(enemy: Dictionary) -> float:
@@ -125,7 +145,7 @@ func recent_eliminations(window: float = BOSS_ELIMINATION_DURATION) -> Array[Dic
 	for index in range(model.elimination_events.size()-1,-1,-1):
 		var event: Dictionary = model.elimination_events[index]
 		var raw_age: float = model.elapsed-event.time+(0.0 if model.active else elimination_tail)
-		var age: float = raw_age-damage_landing_delay(event)
+		var age: float = raw_age-landing_delay(event)
 		if raw_age >= window+0.5: break
 		if age >= window: continue
 		if raw_age >= 0.0:
@@ -184,7 +204,10 @@ func recent_enemy_damage(enemy_id: int) -> Array[Dictionary]:
 		var event: Dictionary = model.damage_events[index]
 		var age: float = event_age(event)
 		if model.elapsed-float(event.time) >= DAMAGE_TRAIL_DURATION+0.5: break
-		if event.enemy_id == enemy_id and age >= 0.0 and age < DAMAGE_TRAIL_DURATION: recent.append(event)
+		if event.enemy_id == enemy_id and age >= 0.0 and age < DAMAGE_TRAIL_DURATION:
+			var annotated: Dictionary = event.duplicate()
+			annotated["landing_delay"] = landing_delay(event) # géométrie du tir connue ici (voir `flight_for`), pas dans la fonction statique de réaction
+			recent.append(annotated)
 	return recent
 
 ## Âge du dernier coup reçu par cet ennemi, ou une valeur négative s'il n'en a pas reçu récemment (animation `hurt`).
@@ -229,7 +252,7 @@ static func enemy_reaction_pose(enemy: Dictionary, events: Array[Dictionary], no
 		var lost: float = maxf(0.0,float(event.hp_before)-float(event.hp_after))
 		if lost <= 0.0 or enemy.get("max_hp",0.0) <= 0.0: continue
 		var fraction: float = clampf(lost/float(enemy.max_hp),0.0,1.0)
-		var pulse: float = hit_reaction_pulse(now-float(event.time)-damage_landing_delay(event))*(0.35+0.65*sqrt(fraction))
+		var pulse: float = hit_reaction_pulse(now-float(event.time)-float(event.get("landing_delay",damage_landing_delay(event))))*(0.35+0.65*sqrt(fraction))
 		strength = maxf(strength,pulse) # Les coups simultanés ne cumulent pas leur recul.
 	strength *= enemy_reaction_weight(int(enemy.get("type",1)))
 	return {"strength":strength,"offset":Vector2(-3.5*strength,0.7*strength),"rotation":-0.105*strength}
@@ -964,12 +987,13 @@ func _draw_impact(shot: Dictionary, age: float) -> void:
 		_draw_impact_body(shot,age,true)
 		return
 	if age < delay: return
-	if age < delay+PROJECTILE_FLIGHT:
+	var flight: float = flight_time(shot)
+	if age < delay+flight:
 		var flight_color: Color = _impact_color(Model.family(shot.type))
 		if Model.family(shot.type) == 5 and int(shot.type) != EMBER_TYPE: _draw_cast_bolt(shot,age,flight_color,1.0)
 		_draw_projectile(shot,age-delay,flight_color)
 		return
-	_draw_impact_body(shot,age-delay-PROJECTILE_FLIGHT,false)
+	_draw_impact_body(shot,age-delay-flight,false)
 
 ## Éclair du chaman : tracé brisé de la main (ou du crâne du bâton) jusqu'à la cible.
 func _draw_cast_bolt(shot: Dictionary, age: float, color: Color, alpha: float) -> void:
@@ -1027,7 +1051,7 @@ func curse_ring_visible(curse: Dictionary) -> bool:
 			source_type = int(defender.type);break
 	var delay: float = float(LAUNCH_DELAYS.get(source_type,0.0))
 	if delay <= 0.0: return true
-	return model.elapsed-curse_applied_at(curse) >= delay+PROJECTILE_FLIGHT
+	return model.elapsed-curse_applied_at(curse) >= delay+flight_for(source_type,curse_applied_at(curse))
 
 static func _impact_color(type: int) -> Color:
 	return [Color("f0d796"),Color("e1e9dc"),Color("90dceb"),Color("a8ddbd"),Color("f2b269"),Color("d1a3ed")][type]

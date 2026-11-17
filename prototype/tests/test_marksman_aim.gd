@@ -274,4 +274,27 @@ func run_checks() -> void:
 			check(wp in [-12,0,12] and View.shot_origin(hatchet).distance_to(View.project(from)+Vector2(wtip.x*View.shot_facing(hatchet),wtip.y)) < 0.001,"Veilleur : départ du point de la planche %d" % wp)
 	var wspec: Dictionary = Library.spec_for("defender.horde.watcher")
 	check(not wspec.is_empty() and wspec.animations.has("attack_up12") and wspec.animations.has("attack_down12"),"Veilleur : trois planches chargées et valides")
+	# Tir à bout portant : pour les types sans vol visible derrière le point de lâcher, l'impact est joué au lâcher (durée de vol nulle) ; sinon le vol dure PROJECTILE_FLIGHT.
+	for type_id in [16,19,21,24,26,27]:
+		var far: Dictionary = {"type":type_id,"from":from,"to":from+Vector2(8.0,2.0),"slot":0,"arm":0}
+		var behind: Dictionary = {"type":type_id,"from":from,"to":from+Vector2(0.0,0.0),"slot":0,"arm":0}
+		behind.to = from+Vector2(-0.2,-0.2)
+		check(is_equal_approx(View.flight_time(far),View.PROJECTILE_FLIGHT),"Type %d : vol normal quand la cible est devant" % type_id)
+		var origin_x: float = View.shot_origin(behind).x
+		var expected: float = 0.0 if (View.project(behind.to).x-origin_x)*View.shot_facing(behind) <= 0.0 else View.PROJECTILE_FLIGHT
+		check(is_equal_approx(View.flight_time(behind),expected),"Type %d : vol nul à bout portant derrière le point de lâcher" % type_id)
+	check(is_equal_approx(View.flight_time({"type":0,"from":from,"to":from,"slot":0}),View.PROJECTILE_FLIGHT),"Autres types : vol inchangé")
+	# L'affichage des dégâts suit le vol réellement visible : à bout portant derrière le point de lâcher, il arrive au lâcher ; sinon après le vol.
+	var landing_view := View.new()
+	var landing_model = View.Model.new(true,View.Model.Maps.for_id("valley_ford"))
+	landing_view.model = landing_model
+	var close_shot: Dictionary = {"type":26,"from":from,"to":from+Vector2(-0.2,-0.2),"slot":0,"time":1.0,"arm":0}
+	var open_shot: Dictionary = {"type":26,"from":from,"to":from+Vector2(8.0,2.0),"slot":0,"time":2.0,"arm":0}
+	landing_model.shots.append(close_shot);landing_model.shots.append(open_shot)
+	var close_event: Dictionary = {"time":1.0,"source_type":26,"component":"direct"}
+	var open_event: Dictionary = {"time":2.0,"source_type":26,"component":"direct"}
+	check(is_equal_approx(landing_view.landing_delay(open_event),0.52+View.PROJECTILE_FLIGHT),"Dégâts : arrivée après le vol quand la cible est devant")
+	check(is_equal_approx(landing_view.landing_delay(close_event),0.52+View.flight_time(close_shot)),"Dégâts : arrivée au lâcher à bout portant (vol %f)" % View.flight_time(close_shot))
+	check(is_equal_approx(landing_view.landing_delay({"time":1.0,"source_type":0,"component":"direct"}),View.damage_landing_delay({"source_type":0,"component":"direct"})),"Dégâts : autres types inchangés")
+	landing_view.free()
 	print("MARKSMAN_AIM_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
