@@ -324,9 +324,10 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 17 novembre 2026 — Claude Code (v0.230 publiée)
+## État au 17 novembre 2026 — Claude Code (v0.231 publiée)
 
-- Publiées : v0.224 à v0.230 (refonte des cartes terminée, chapitres 10 à 20 ; gestes des types 16 et 19 à 27). Régression complète verte (159 817 contrôles Godot, 17 tests Python), export vérifié sur 1 050 cas.
+- Publiées : v0.224 à v0.231 (refonte des cartes terminée, chapitres 10 à 20 ; gestes des types 16 et 19 à 27). Régression complète verte (159 817 contrôles Godot, 17 tests Python), export vérifié sur 1 050 cas.
+- À mener : étude multi-compositions de l'équilibre entre factions en fin de campagne (le porteur, 17 novembre 2026 : pas d'écart énorme entre les factions, mais une seule composition ne permet pas de conclure ; voir `design/Courbe_difficulte_v0230.md`).
 - Reste à intégrer côté code : les gestes des types 28 à 47 à mesure que Codex les livre.
 - Décor des cartes refondues (chapitres 10 à 20, 60+ cartes) à redessiner par Codex : désactivé dans `DecorArt.REWORKED_MAPS` en attendant.
 
