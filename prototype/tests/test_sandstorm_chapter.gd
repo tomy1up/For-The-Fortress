@@ -31,7 +31,7 @@ func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
 	var Catalogue = Main.CampaignCatalogue
 	check(Catalogue.available_count() == 200 and Catalogue.definition(111).available and Catalogue.definition(120).available and Catalogue.definition(201).get("available",false) == false and Catalogue.runtime("campaign.201").is_empty(),"Cent vingt missions jouables, la 201 reste à venir")
-	check(Model.valid_enemy_hp_percent(264) and not Model.valid_enemy_hp_percent(265),"Les PV ennemis montent jusqu'à 264 %")
+	check(Model.valid_enemy_hp_percent(264) and Model.valid_enemy_hp_percent(400) and not Model.valid_enemy_hp_percent(401),"Les PV ennemis montent jusqu'à 400 %")
 	for number in range(111,121):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 12 and definition.map_id == EXPECTED[number].map and definition.hp_percent == 99+number and definition.po == 70 and definition.xp == 0 and definition.waves == 10,"Mission %d : carte, PV à 210 %% et plus, 70 PO sans XP" % number)
@@ -99,10 +99,10 @@ func verify_mission(camp: int, number: int) -> void:
 		check(allocated,"Les points accessibles sont répartis légalement")
 		if not allocated: break
 	game._open_campaign(camp,12);game.campaign_menu._select(number-111)
-	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % (99+number)) and game.campaign_menu.mission_detail.text.contains("Tempête de sable") and game.campaign_menu.mission_detail.tooltip_text.contains("25 %") and game.campaign_menu.rewards.text.contains("70 PO") and not game.campaign_menu.rewards.text.contains("XP"),"Mission %d : la fiche annonce la tempête de sable, 70 PO sans XP" % number)
+	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and game.campaign_menu.mission_detail.text.contains("Tempête de sable") and game.campaign_menu.mission_detail.tooltip_text.contains("25 %") and game.campaign_menu.rewards.text.contains("70 PO") and not game.campaign_menu.rewards.text.contains("XP"),"Mission %d : la fiche annonce la tempête de sable, 70 PO sans XP" % number)
 	game.campaign_menu._launch()
 	var model: Model = game.model
-	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == 99+number and model.gold == 150 and model.combat_affix == AFFIX and game.affix_label.visible and game.affix_label.text.begins_with("Tempête de sable") and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
+	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix == AFFIX and game.affix_label.visible and game.affix_label.text.begins_with("Tempête de sable") and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
 	play(model,[0,1,1] if camp == 0 else [3,3,5])
 	print("SANDSTORM_CHAPTER_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])

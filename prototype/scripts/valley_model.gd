@@ -286,8 +286,11 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	entry.merge(details.duplicate(true))
 	action_history.append(entry)
 
+## Limite des PV ennemis : 264 % jusqu'à la v0.231, 400 % depuis le rééquilibrage de la v0.232 (les anciens rapports restent valides).
+const MAX_ENEMY_HP_PERCENT := 400
+
 static func valid_enemy_hp_percent(value: Variant) -> bool:
-	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= 264
+	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= MAX_ENEMY_HP_PERCENT
 
 func configure_combat_affix(value: Variant) -> bool:
 	if not value is Dictionary or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false

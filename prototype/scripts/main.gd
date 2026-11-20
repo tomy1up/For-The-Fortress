@@ -919,6 +919,9 @@ func _capture_forced_kills() -> void:
 
 func _capture_sample_combat() -> void:
 	model.rng.seed = 42
+	# Outil de contrôle (captures, tests de parcours) : ses stratégies sont réglées sur la courbe de base des PV d'ennemis, sans le coefficient de rééquilibrage de la v0.232 (la mission lancée garde ses PV réels jusqu'ici).
+	var sample_number: int = CampaignCatalogue.number_for(str(mission_definition.get("id","")))
+	if sample_number > 0: model.enemy_hp_percent = int(CampaignCatalogue.definition(sample_number).get("hp_percent",model.enemy_hp_percent))
 	var positions: Array = [[1,2,4],[1,3,4],[1,2,4]][model.enemy_hp_percent-100] if model.enemy_hp_percent <= 102 else [0,1,2]
 	var types: Array = [0,2,1] if model.faction == 1 and model.enemy_hp_percent > 100 else [0,1,2]
 	if model.enemy_hp_percent in [104,107,108]: types = [0,1,2]

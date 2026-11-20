@@ -324,12 +324,14 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 17 novembre 2026 — Claude Code (v0.231 publiée)
+## État au 20 novembre 2026 — Claude Code (v0.232 en publication)
 
-- Publiées : v0.224 à v0.231 (refonte des cartes terminée, chapitres 10 à 20 ; gestes des types 16 et 19 à 27). Régression complète verte (159 817 contrôles Godot, 17 tests Python), export vérifié sur 1 050 cas.
-- À mener : étude multi-compositions de l'équilibre entre factions en fin de campagne (le porteur, 17 novembre 2026 : pas d'écart énorme entre les factions, mais une seule composition ne permet pas de conclure ; voir `design/Courbe_difficulte_v0230.md`).
-- Reste à intégrer côté code : les gestes des types 28 à 47 à mesure que Codex les livre.
-- Décor des cartes refondues (chapitres 10 à 20, 60+ cartes) à redessiner par Codex : désactivé dans `DecorArt.REWORKED_MAPS` en attendant.
+- **v0.232** : catalogue de 36 bonus (R-13 à R-36, `design/Bonus_catalogue_v0232.md`) et quatre choix par partie (vagues 2, 4, 6, 8) ; rééquilibrage des PV d'ennemis par mission et par faction (`REBALANCE_PERCENT`, `design/Rebalancage_bonus_v0232.md`) pour la cible du porteur (meilleure composition à 40-70 % de marge). Anciens rapports rejoués avec leurs règles (`rules_v232`).
+- Régression complète verte avant documentation : 143 suites, 179 190 contrôles Godot, 17 tests Python. GDD 0.69 (md et docx).
+- Les suites de campagne choisissent leurs bonus avec `Model.reference_bonus` (première offre sans contrepartie). `Main._capture_sample_combat` joue sur la courbe de PV de base (outil de contrôle).
+- Outil `tools/faction_study.gd` : `SEED`, `LEGACY`, `POLICY` (`safe`, `ref`), `MISSIONS`, `HPMUL`, `REFONLY`. Une étude complète (200 missions × 2 factions × 30 compositions) prend une dizaine de minutes sans autre programme lourd ouvert.
+- À juger par le porteur (O-028) : difficulté ressentie, chapitre 13 de la Horde trop facile (93 %), chapitre 4 de la Horde dur (42 %), rythme de quatre choix, noms et valeurs des 24 nouveaux bonus. Second lot du catalogue (rareté, relance) : O-027.
+- Reste à intégrer côté code : les gestes des types 28 à 47 à mesure que Codex les livre. Décor des cartes refondues (chapitres 10 à 20) à redessiner par Codex : désactivé dans `DecorArt.REWORKED_MAPS` en attendant.
 
 ## Prochaines étapes possibles
 

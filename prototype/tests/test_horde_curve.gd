@@ -10,11 +10,18 @@ func check(ok: bool, message: String) -> void:
 		push_error(message)
 func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
+	# Courbe de base (15 novembre 2026) : Horde -10 % à partir de la mission 150, -15 % à la mission 200 ; puis coefficient de rééquilibrage v0.232 (20 novembre 2026), propre à chaque faction.
 	for number in range(1,Catalogue.TOTAL_MISSIONS+1):
 		var reference: int = Catalogue.hp_percent_for(number)
-		check(Catalogue.faction_hp_percent(number,0) == reference,"Mission %d : l’Alliance garde les PV de référence" % number)
-		if number < 150: check(Catalogue.faction_hp_percent(number,1) == reference,"Mission %d : la Horde garde les PV de référence avant la mission 150" % number)
-		else: check(Catalogue.faction_hp_percent(number,1) == int(round(reference*(0.85 if number == 200 else 0.9))) and Catalogue.faction_hp_percent(number,1) < reference,"Mission %d : PV de la Horde réduits de 10 %% (15 %% à la mission 200)" % number)
-	check(Catalogue.faction_hp_percent(200,0) == 264 and Catalogue.faction_hp_percent(200,1) == 224,"Valeurs de la mission 200 : 264 % (Alliance) et 224 % (Horde)")
+		for faction in [0,1]:
+			var base: float = float(reference)
+			if faction == 1 and number == 200: base = float(int(round(reference*0.85)))
+			elif faction == 1 and number >= 150: base = float(int(round(reference*0.9)))
+			var played: int = Catalogue.faction_hp_percent(number,faction)
+			check(played == int(round(base*Catalogue.rebalance_percent(number,faction)/100.0)),"Mission %d, faction %d : PV joués = courbe de base x coefficient de rééquilibrage" % [number,faction])
+			check(played >= 100 and played <= 400,"Mission %d, faction %d : PV joués dans les limites valides" % [number,faction])
+	for faction in [0,1]:
+		check(Catalogue.REBALANCE_PERCENT[faction].size() == Catalogue.TOTAL_MISSIONS,"Faction %d : un coefficient de rééquilibrage par mission" % faction)
+		for number in range(1,Catalogue.TOTAL_MISSIONS+1): check(Catalogue.REBALANCE_PERCENT[faction][number-1] >= 100 and Catalogue.REBALANCE_PERCENT[faction][number-1] <= 200,"Faction %d, mission %d : coefficient entre 100 et 200 %%" % [faction,number])
 	print("HORDE_CURVE_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(0 if failures == 0 else 1)

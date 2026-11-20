@@ -25,7 +25,7 @@ static func play(model: RefCounted, step: float = 300.0) -> void:
 		model.start()
 		while model.active: model.advance(step)
 		if model.phase == "defeat": return
-		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+		if model.phase == "bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
 		if wave < 10: model.prepare_next_wave()
 func run_checks() -> void:
 	var ids: Dictionary = {}
@@ -77,7 +77,7 @@ func run_checks() -> void:
 			var expected_points: int = (number-1)*51/100
 			check(p.data.banks[faction].points == expected_points,"Seule l’XP des victoires antérieures est utilisable au départ")
 			menu._launch()
-			check(not scene.choosing_faction and scene.model.map_definition.id == Catalogue.definition(number).map_id and scene.model.enemy_hp_percent == 99+number,"La nouvelle mission lance le bon terrain et ses PV")
+			check(not scene.choosing_faction and scene.model.map_definition.id == Catalogue.definition(number).map_id and scene.model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,scene.model.faction),"La nouvelle mission lance le bon terrain et ses PV")
 			check(scene.model.gold == 150 and scene.model.fortress_hp == scene.model.max_hp and scene.model.defenders.all(func(unit): return unit.is_empty()) and scene.model.bonuses.is_empty(),"Forteresse, défense et économie de combat repartent à neuf")
 			check(scene.model.meta_ranks[0] == expected_points,"Les points investis avant la mission sont appliqués")
 			scene._capture_sample_combat();scene._show_run_summary()

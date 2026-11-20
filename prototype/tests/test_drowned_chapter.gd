@@ -34,7 +34,7 @@ func run_checks() -> void:
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.map_id == EXPECTED[number].map and definition.wave_set_id == "marsh_drowned" and definition.hp_percent == 99+number and definition.po == 60 and definition.xp == 100 and definition.waves == 10 and not definition.has("combat_affix"),"Mission %d : carte, rencontres du Noyé, PV et gains habituels" % number)
 		await verify_map(number)
-	check(Model.valid_enemy_hp_percent(159) and Model.valid_enemy_hp_percent(264) and not Model.valid_enemy_hp_percent(265),"Les PV ennemis montent jusqu'à 264 %")
+	check(Model.valid_enemy_hp_percent(159) and Model.valid_enemy_hp_percent(264) and Model.valid_enemy_hp_percent(400) and not Model.valid_enemy_hp_percent(401),"Les PV ennemis montent jusqu'à 400 %")
 	for number in range(52,61):
 		for camp in range(2): await verify_mission(camp,number)
 	print("DROWNED_CHAPTER_TESTS checks=%d failures=%d" % [checks,failures])
@@ -90,7 +90,7 @@ func play(model: Model, types: Array) -> void:
 		check(model.start(),"Vague lancée par les règles normales")
 		model.advance(10000)
 		if model.phase == "defeat": break
-		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+		if model.phase == "bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
 		if wave < 10: model.prepare_next_wave()
 
 func verify_mission(camp: int, number: int) -> void:
@@ -114,7 +114,7 @@ func verify_mission(camp: int, number: int) -> void:
 	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("Gueule-de-Vase"),"Mission %d : la fiche annonce le Noyé" % number)
 	game.campaign_menu._launch()
 	var model: Model = game.model
-	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "marsh_drowned" and model.enemy_hp_percent == 99+number and model.gold == 150 and model.combat_affix.is_empty() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
+	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "marsh_drowned" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix.is_empty() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
 	play(model,[0,1,1] if camp == 0 else [3,3,5])
 	print("DROWNED_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])

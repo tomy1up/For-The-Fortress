@@ -45,7 +45,7 @@ func verify_catalogue() -> void:
 	check(Model.Enemies.for_profile(13,0).is_empty(),"Un profil inconnu reste refusé")
 	var forecast: Dictionary = Model.wave_forecast(2,0,150,"marsh_drowned")
 	check(forecast.groups[0].type == 9 and forecast.groups[0].count == 1 and forecast.groups[0].name == "Gueule-de-Vase" and Model.wave_forecast(2,0,150,"inconnu").is_empty(),"La prévision de la vague 2 annonce un Noyé")
-	check(Model.valid_enemy_hp_percent(150) and Model.valid_enemy_hp_percent(264) and not Model.valid_enemy_hp_percent(265),"Les PV ennemis montent jusqu'à 264 %")
+	check(Model.valid_enemy_hp_percent(150) and Model.valid_enemy_hp_percent(264) and Model.valid_enemy_hp_percent(400) and not Model.valid_enemy_hp_percent(401),"Les PV ennemis montent jusqu'à 400 %")
 
 func verify_flood_rules() -> void:
 	var stretches: Array = [{"route":"","from":2.0,"to":5.0},{"route":"","from":8.0,"to":9.0},{"route":"b","from":0.0,"to":4.0}]
@@ -136,7 +136,7 @@ func play(model: Model, types: Array) -> void:
 		check(model.start(),"Vague lancée par les règles normales")
 		model.advance(10000)
 		if model.phase == "defeat": break
-		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+		if model.phase == "bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
 		if wave < 10: model.prepare_next_wave()
 
 func verify_timeline() -> void:
@@ -180,7 +180,7 @@ func verify_campaign(camp: int) -> void:
 	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("Gueule-de-Vase") and game.campaign_menu.mission_detail.tooltip_text.contains("%d %%" % roundi(Drowned.REGEN_PER_SECOND*100.0)),"La fiche de la mission 51 annonce le Noyé")
 	game.campaign_menu._launch()
 	var model: Model = game.model
-	check(not game.choosing_faction and game.mission_definition.id == "campaign.051" and model.map_definition.id == "marsh_stagnant" and model.wave_set_id == "marsh_drowned" and model.enemy_hp_percent == 150 and model.gold == 150 and model.combat_affix.is_empty(),"La mission 51 démarre par le parcours normal avec ses rencontres")
+	check(not game.choosing_faction and game.mission_definition.id == "campaign.051" and model.map_definition.id == "marsh_stagnant" and model.wave_set_id == "marsh_drowned" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(51,model.faction) and model.gold == 150 and model.combat_affix.is_empty(),"La mission 51 démarre par le parcours normal avec ses rencontres")
 	var forecast: Dictionary = model.forecast_for_routes(2)
 	check(not forecast.is_empty() and forecast.groups[0].name == "Gueule-de-Vase","La prévision de la vague 2 annonce le Noyé")
 	play(model,[0,1,1] if camp == 0 else [3,3,5])

@@ -25,7 +25,7 @@ static func play(model: RefCounted, positions: Array, step: float = 300.0) -> vo
 		model.start()
 		while model.active: model.advance(step)
 		if model.phase == "defeat": return
-		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+		if model.phase == "bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
 		if wave < 10: model.prepare_next_wave()
 func run_checks() -> void:
 	for percent in [100,101,102]:
@@ -36,7 +36,7 @@ func run_checks() -> void:
 				check(is_equal_approx(scaled.hp,base.hp*percent/100.0) and scaled.hp == scaled.max_hp,"Les PV initiaux et maximum appliquent exactement le pourcentage demandé")
 				for key in ["speed","reward","fortress_damage","identity_id","origin"]: check(scaled[key] == base[key],"Vitesse, gains, dégâts à la forteresse et identité de faction inchangés")
 	var m = Model.new()
-	for invalid in [0,99,265,100.5,true,"101",null,INF]: check(not m.configure_enemy_hp(invalid) and m.enemy_hp_percent == 100,"Réglage absent, non entier ou hors de l’échantillon refusé sans effet")
+	for invalid in [0,99,401,100.5,true,"101",null,INF]: check(not m.configure_enemy_hp(invalid) and m.enemy_hp_percent == 100,"Réglage absent, non entier ou hors de l’échantillon refusé sans effet")
 	check(m.configure_enemy_hp(101) and m.select_faction(0) and not m.configure_enemy_hp(102),"Le pourcentage est configuré avant le départ puis figé")
 	m.start();m.advance(0)
 	check(not m.enemies.is_empty() and m.enemies[0].max_hp == Model.scaled_enemy_hp(m.enemies[0].type,101),"Le moteur applique les PV réglés aux apparitions réelles")
@@ -85,7 +85,7 @@ func run_checks() -> void:
 				menu._launch()
 				while scene.model.phase not in ["victory","defeat"]:
 					scene.model.start();scene.model.advance(300)
-					if scene.model.phase == "bonus": scene.model.choose_bonus(scene.model.bonus_offer[0])
+					if scene.model.phase == "bonus": scene.model.choose_bonus(Model.reference_bonus(scene.model.bonus_offer))
 					if scene.model.phase == "finished": scene.model.prepare_next_wave()
 				scene._sync_meta_rewards(true);scene._update_interface();scene._show_run_summary()
 				check(scene.model.phase == "defeat" and p.data.banks[faction].xp == 100 and p.data.banks[faction].resource == 60 and p.campaign_status(faction).completed == 1,"Perdre la deuxième mission ne retire pas la première récompense et ne donne aucun nouveau gain")
@@ -94,7 +94,7 @@ func run_checks() -> void:
 				scene._summary_to_campaign();menu._select(number-1)
 				check(menu.visible and not menu.start_button.disabled,"Après la défaite, la mission reste accessible pour une nouvelle tentative")
 			menu._launch()
-			check(not scene.choosing_faction and scene.model.map_definition.id == Catalogue.definition(number).map_id and scene.model.enemy_hp_percent == 99+number,"Le parcours lance la bonne géométrie et le bon réglage")
+			check(not scene.choosing_faction and scene.model.map_definition.id == Catalogue.definition(number).map_id and scene.model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,scene.model.faction),"Le parcours lance la bonne géométrie et le bon réglage")
 			check(scene.map_view.model == scene.model and scene.map_caption.text == scene.model.map_definition.title.to_upper() and root.title.contains(scene.model.map_definition.title),"Carte dessinée, titre de fenêtre et en-tête suivent la mission sélectionnée")
 			check(scene.model.gold == 150 and scene.model.fortress_hp == scene.model.max_hp and scene.model.bonuses.is_empty() and scene.model.defenders.all(func(unit): return unit.is_empty()),"Chaque mission de la série repart à neuf")
 			if number == 3: check(scene.model.meta_ranks[0] == 1,"Le talent acquis après la seconde victoire est actif au départ de la troisième mission")

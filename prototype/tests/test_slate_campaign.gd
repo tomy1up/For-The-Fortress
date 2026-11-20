@@ -37,7 +37,7 @@ func run_checks() -> void:
 		var model = game.model
 		var route_count: int = {24:0,26:3,27:0,29:3}.get(mission_number,2)
 		check(not game.choosing_faction and game.mission_definition.id==Main.CampaignCatalogue.id_for(mission_number) and model.routes.size()==route_count,"La mission démarre par le parcours normal")
-		check(model.enemy_hp_percent==99+mission_number and model.gold==150 and model.fortress_hp==model.max_hp and model.bonuses.is_empty(),"Paramètres et remise à neuf avec les talents actifs")
+		check(model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(mission_number,model.faction) and model.gold==150 and model.fortress_hp==model.max_hp and model.bonuses.is_empty(),"Paramètres et remise à neuf avec les talents actifs")
 		model.rng.seed = 7
 		var slots: Array = [3,4,2]
 		if faction==1 and mission_number in [22,28]:
@@ -63,6 +63,7 @@ func run_checks() -> void:
 			if model.phase=="defeat": break
 			if model.phase=="bonus": model.choose_bonus(Main.Model.reference_bonus(model.bonus_offer))
 			if wave<10: model.prepare_next_wave()
+		print("SLATE_RESULT=",faction,",",mission_number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 		check(model.phase=="victory","Une politique gagnante dans chaque faction sans revenu ajouté")
 		check(Replay.verify(JSON.parse_string(JSON.stringify(Main.RunReport.build(model)))).ok,"Le combat de campagne multitrajet est rejouable")
 		game._sync_meta_rewards(true)

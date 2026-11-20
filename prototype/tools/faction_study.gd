@@ -36,6 +36,12 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 	m.configure_wave_set(catalogue.get("wave_set_id","ford"))
 	# SAME_HP=1 : mêmes PV d'ennemis pour les deux factions (sans la réduction propre à la Horde), pour mesurer ce que cette réduction change.
 	m.configure_enemy_hp(Catalogue.faction_hp_percent(mission,0 if OS.get_environment("SAME_HP") == "1" else faction))
+	# HPMUL=150 : multiplie les PV d'ennemis de la mission (calibrage du rééquilibrage, sans passer par la validation 100-264 %).
+	# (le multiplicateur s'applique aux PV d'avant rééquilibrage : on retire d'abord le coefficient de `Catalogue.rebalance_percent`)
+	if OS.get_environment("HPMUL") != "":
+		var played_faction: int = 0 if OS.get_environment("SAME_HP") == "1" else faction
+		var before: float = float(m.enemy_hp_percent)*100.0/Catalogue.rebalance_percent(mission,played_faction)
+		m.enemy_hp_percent = int(round(before*float(OS.get_environment("HPMUL"))/100.0))
 	m.configure_combat_affix(catalogue.get("combat_affix",{}))
 	if auxiliary >= 0: m.configure_auxiliary(auxiliary)
 	m.meta_ranks = ranks_for(tree,faction,mission)
@@ -61,6 +67,7 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 
 ## POLICY=safe : écarte les bonus à contrepartie (Pari risqué, Forteresse blindée, Élite sacrifiée : codes 19, 23 et 24) quand une autre offre existe ; sinon la première offre, comme avant.
 func _pick(m) -> int:
+	if OS.get_environment("POLICY") == "ref": return Model.reference_bonus(m.bonus_offer) # choix de bonus des tests de chapitre
 	if OS.get_environment("POLICY") == "safe":
 		for code in m.bonus_offer:
 			if not int(code) in [19,23,24]: return int(code)
@@ -101,6 +108,15 @@ func _initialize() -> void:
 	if OS.get_environment("MISSIONS") != "":
 		list = []
 		for part in OS.get_environment("MISSIONS").split(","): list.append(int(part))
+	if OS.get_environment("REFONLY") == "1":
+		# REFONLY=1 : seulement la composition de référence des tests de chapitre (Alliance 0,1,1 ; Horde 3,3,5), dans l'arbre qu'ils emploient. Sortie : « REF mission faction résultat PV_restants PV_maximaux ».
+		for mission in list:
+			for faction in factions:
+				var reference_tree: int = Talents.coordinates(5 if faction == 0 else 0).x
+				var outcome: Dictionary = play(mission,faction,reference_tree,[0,1,1] if faction == 0 else [3,3,5])
+				print("REF %d %d %s %d %d" % [mission,faction,outcome.result,outcome.hp,outcome.max])
+		quit()
+		return
 	for mission in list:
 		for faction in factions:
 			var base: int = 0 if faction == 0 else 3

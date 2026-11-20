@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.232**. Bonus : 36 bonus au lieu de 12 (rôle, contrepartie, situation et synergie) et quatre choix par partie (vagues 2, 4, 6 et 8). Rééquilibrage des PV d'ennemis mission par mission : la meilleure composition finit avec 40 à 70 % de ses PV de forteresse (cible du porteur), au lieu de 100 % ; réglages à confirmer en partie réelle. [Notes](design/essais/v0232_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.232).
+
 **Prototype v0.231**. Outillage : régression et vérification d'export en parallèle (environ quatre fois plus rapides), captures reproductibles, fiches des chapitres 10 à 20 mises à jour, rapport de courbe de difficulté des 200 missions. Aucun changement de jeu. [Notes](design/essais/v0231_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.231).
 
 **Prototype v0.230**. Tir à bout portant : impact et baisse de vie au lâcher quand le projectile n'a pas de vol visible ; contrôles visuels des ricochets, des bras alternés et de la chaîne de foudre. [Notes](design/essais/v0230_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.230).

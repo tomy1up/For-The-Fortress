@@ -92,7 +92,7 @@ func run_checks() -> void:
 		var id: int = scene.meta_profile.begin_mission(0,Catalogue.id_for(number),60,10,100)
 		scene.meta_profile.credit_mission(id,0,10,true)
 	scene._open_campaign(0);scene._launch_campaign_mission("campaign.011")
-	check(scene.model.wave_set_id == Banks.ID and scene.model.enemy_hp_percent == 110 and scene.model.faction == 0 and not scene.choosing_faction,"Le vrai parcours lance la mission 11 avec les bonnes rencontres")
+	check(scene.model.wave_set_id == Banks.ID and scene.model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(11,0) and scene.model.faction == 0 and not scene.choosing_faction,"Le vrai parcours lance la mission 11 avec les bonnes rencontres")
 	scene.model.wave = 2;scene.forecast_wave = -1;scene._update_wave_forecast()
 	check(scene.forecast_data.groups[0].type == 8 and "25 %" in scene.forecast_rows[0].tooltip_text,"L’aperçu explique la nouvelle capacité avant la vague")
 	scene.queue_free();await process_frame

@@ -32,7 +32,7 @@ func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
 	var Catalogue = Main.CampaignCatalogue
 	check(Catalogue.available_count() == 200 and Catalogue.definition(151).available and Catalogue.definition(160).available and Catalogue.definition(201).get("available",false) == false and Catalogue.runtime("campaign.201").is_empty(),"Deux cents missions jouables, la 201 reste à venir")
-	check(Model.valid_enemy_hp_percent(264) and not Model.valid_enemy_hp_percent(265),"Les PV ennemis montent jusqu'à 264 %")
+	check(Model.valid_enemy_hp_percent(264) and Model.valid_enemy_hp_percent(400) and not Model.valid_enemy_hp_percent(401),"Les PV ennemis montent jusqu'à 400 %")
 	for number in range(151,161):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 16 and definition.map_id == EXPECTED[number].map and definition.hp_percent == Main.CampaignCatalogue.hp_percent_for(number) and definition.po == 90 and definition.xp == 0 and definition.waves == 10,"Mission %d : carte, PV à 245 %% et plus, 90 PO sans XP" % number)
@@ -86,7 +86,7 @@ func play(model: Model, types: Array, slots: Array) -> void:
 		check(model.start(),"Vague lancée par les règles normales")
 		model.advance(10000)
 		if model.phase == "defeat": break
-		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+		if model.phase == "bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
 		if wave < 10: model.prepare_next_wave()
 
 func verify_mission(camp: int, number: int) -> void:

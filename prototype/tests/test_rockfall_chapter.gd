@@ -31,7 +31,7 @@ func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
 	var Catalogue = Main.CampaignCatalogue
 	check(Catalogue.available_count() == 200 and Catalogue.definition(131).available and Catalogue.definition(140).available and Catalogue.definition(201).get("available",false) == false and Catalogue.runtime("campaign.201").is_empty(),"Deux cents missions jouables, la 201 reste à venir")
-	check(Model.valid_enemy_hp_percent(264) and not Model.valid_enemy_hp_percent(265),"Les PV ennemis montent jusqu'à 264 %")
+	check(Model.valid_enemy_hp_percent(264) and Model.valid_enemy_hp_percent(400) and not Model.valid_enemy_hp_percent(401),"Les PV ennemis montent jusqu'à 400 %")
 	for number in range(131,141):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 14 and definition.map_id == EXPECTED[number].map and definition.hp_percent == 99+number and definition.po == 80 and definition.xp == 0 and definition.waves == 10,"Mission %d : carte, PV à 230 %% et plus, 80 PO sans XP" % number)
@@ -78,7 +78,7 @@ func play(model: Model, types: Array, slots: Array) -> void:
 		check(model.start(),"Vague lancée par les règles normales")
 		model.advance(10000)
 		if model.phase == "defeat": break
-		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+		if model.phase == "bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
 		if wave < 10: model.prepare_next_wave()
 
 func verify_mission(camp: int, number: int) -> void:
@@ -99,10 +99,10 @@ func verify_mission(camp: int, number: int) -> void:
 		check(allocated,"Les points accessibles sont répartis légalement")
 		if not allocated: break
 	game._open_campaign(camp,14);game.campaign_menu._select(number-131)
-	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % (99+number)) and game.campaign_menu.mission_detail.text.contains("Nouveau : Éboulement") and game.campaign_menu.rewards.text.contains("80 PO") and not game.campaign_menu.rewards.text.contains("XP"),"Mission %d : fiche standard, 80 PO sans mention d'XP" % number)
+	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and game.campaign_menu.mission_detail.text.contains("Nouveau : Éboulement") and game.campaign_menu.rewards.text.contains("80 PO") and not game.campaign_menu.rewards.text.contains("XP"),"Mission %d : fiche standard, 80 PO sans mention d'XP" % number)
 	game.campaign_menu._launch()
 	var model: Model = game.model
-	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == 99+number and model.gold == 150 and model.combat_affix.id == "rockfall" and model.rockfall_enabled() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
+	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix.id == "rockfall" and model.rockfall_enabled() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
 	play(model,[0,1,1] if camp == 0 else [3,3,5],EXPECTED[number].order)
 	print("ROCKFALL_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])

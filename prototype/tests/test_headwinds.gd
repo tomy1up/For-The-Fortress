@@ -93,7 +93,7 @@ func run_checks() -> void:
 		game.campaign_menu._select(mission-31)
 		check(not game.campaign_menu.start_button.disabled,"Mission accessible après sa précédente")
 		game.campaign_menu._launch()
-		check(game.model.combat_affix==AFFIX and game.model.enemy_hp_percent==99+mission and game.model.gold==150,"Affixe appliqué par le lancement réel de campagne")
+		check(game.model.combat_affix==AFFIX and game.model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(mission,game.model.faction) and game.model.gold==150,"Affixe appliqué par le lancement réel de campagne")
 		check(game.affix_label.visible and game.affix_label.text.contains("−10 %"),"Affixe visible pendant la préparation")
 		var model = game.model
 		model.rng.seed = 7
