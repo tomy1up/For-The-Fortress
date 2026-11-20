@@ -40,7 +40,8 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 	if auxiliary >= 0: m.configure_auxiliary(auxiliary)
 	m.meta_ranks = ranks_for(tree,faction,mission)
 	m.select_faction(faction)
-	m.rng.seed = 7
+	m.rng.seed = int(OS.get_environment("SEED")) if OS.get_environment("SEED") != "" else 7
+	if OS.get_environment("LEGACY") == "1": m.rules_v232 = false # anciennes règles : douze bonus, choix après les vagues 3, 6 et 9
 	var slots := [3,4,2]
 	types = types.duplicate()
 	types.sort_custom(func(x, y): return m.purchase_cost(x) < m.purchase_cost(y)) # les deux moins chères à l'ouverture, la plus chère à la vague 2
@@ -54,9 +55,16 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 		if not m.start(): break
 		m.advance(10000)
 		if m.phase == "defeat": break
-		if m.phase == "bonus": m.choose_bonus(m.bonus_offer[0])
+		if m.phase == "bonus": m.choose_bonus(_pick(m))
 		if wave < 10: m.prepare_next_wave()
 	return {"result":m.phase,"hp":m.fortress_hp,"max":m.max_hp}
+
+## POLICY=safe : écarte les bonus à contrepartie (Pari risqué, Forteresse blindée, Élite sacrifiée : codes 19, 23 et 24) quand une autre offre existe ; sinon la première offre, comme avant.
+func _pick(m) -> int:
+	if OS.get_environment("POLICY") == "safe":
+		for code in m.bonus_offer:
+			if not int(code) in [19,23,24]: return int(code)
+	return int(m.bonus_offer[0])
 
 func run_auxiliary(missions: Array, factions: Array) -> void:
 	# AUX=1 : avec une unité de boutique (déjà débloquée à cette mission : `unlock_missions` <= missions précédentes réussies), compositions de trois unités parmi les trois de base et l'unité de boutique,
@@ -89,7 +97,11 @@ func _initialize() -> void:
 		run_auxiliary(missions,factions)
 		quit()
 		return
-	for mission in range(first,last+1):
+	var list: Array = range(first,last+1)
+	if OS.get_environment("MISSIONS") != "":
+		list = []
+		for part in OS.get_environment("MISSIONS").split(","): list.append(int(part))
+	for mission in list:
 		for faction in factions:
 			var base: int = 0 if faction == 0 else 3
 			for tree in range(3):
