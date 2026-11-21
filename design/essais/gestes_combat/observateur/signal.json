@@ -1,6 +1,6 @@
 {
   "display_delay": 0.32,
-  "attack_frame_zero_based": 8,
+  "attack_frame_zero_based": 10,
   "badge": "mark",
   "projectile": false
 }

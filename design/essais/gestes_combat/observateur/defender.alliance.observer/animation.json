@@ -20,7 +20,7 @@
     },
     "attack": {
       "file": "attack.png",
-      "frames": 20,
+      "frames": 25,
       "frame_size": [
         334,
         334
