@@ -20,7 +20,7 @@ En garde, l’éclaireur reste à genou, fanion bas et main libre posée sur le 
 
 [Cycle complet en combat](essais/gestes_combat/observateur/Observateur_pointage_en_jeu.gif) · [Planche des 16 poses](essais/gestes_combat/observateur/Seize_poses_observateur.png)
 
-Le fichier signal.json fixe le délai visuel. La copie d’essai masque la flèche héritée de la famille et retarde le premier affichage du badge de marquage. Les dégâts et le marquage sont appliqués au moment prévu par la simulation. En intégration, conserver les marques déjà affichées, y compris celles issues du bonus Marque du chasseur. Dix marquages vérifiés sur la mission 94 v0.233, à gauche et à droite, ×1 et ×2 avec pause. 48 dossiers valides, 189 contrôles d’animation et 77 des effets réussis. Avis du porteur attendu.
+Le fichier signal.json fixe le délai visuel. La copie d’essai masque la flèche héritée de la famille et retarde le premier affichage du badge de marquage. Les dégâts et le marquage sont appliqués au moment prévu par la simulation. En intégration, conserver les marques déjà affichées, y compris celles issues du bonus Marque du chasseur. Dix marquages vérifiés sur la mission 94 v0.233, à gauche et à droite, ×1 et ×2 avec pause. 48 dossiers valides, 189 contrôles d’animation et 77 des effets réussis. Geste complet validé par le porteur. Lot 88784cf prêt à intégrer.
 
 Consignes au générateur d’images intégré. Reprendre le même éclaireur à genou, veste bleu pétrole, écharpe orange, casquette brune et barbe grise. Garder les appuis au sol et le fanion cerise à losange dans la même main. Décomposer le fanion bas, l’armé, le signal avec le doigt de la main libre, puis le retour.
 

@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-21 — Éclaireur-observateur, signal et retour en garde validés (ouvert)
+
+Lot 88784cf prêt à intégrer. Type 31, defender.alliance.observer. Prendre idle.png, attack.png et animation.json dans design/essais/gestes_combat/observateur/defender.alliance.observer/. La planche validée contient 28 images sur 0,896 s. Le premier geste pointé commence à 0,32 s (image 10 en numérotation à partir de zéro) et le bras reste tendu 0,288 s. Voir signal.json et Observateur_pointage_en_jeu.gif dans le même lot. Masquer la flèche héritée, afficher le losange existant au premier pointage. Conserver les marques déjà visibles lors d’un renouvellement et celles de Marque du chasseur. Le délai concerne l’affichage du premier losange dû à l’Éclaireur. La résolution des dégâts et du marquage reste celle du modèle. Dix marquages vérifiés en mission 94 sur copie v0.233, à gauche et à droite, à ×1 et ×2 avec pause et retour en garde.
+
 ### 2026-11-21 — Mage de givre, trois visées (ouvert)
 
 Lot 43b95a7 sur art/codex, prêt à intégrer suite au feu vert du porteur. Type 30, defender.alliance.frostmage. Planches, Eclat_givre.png et lachers.json dans design/essais/gestes_combat/mage_givre/. Choisir l’angle dont le trajet depuis le repère donné est le plus proche. Retourner ensemble la pose, le repère et le cristal. À 0,36 s sur la première pose à paume vide, faire partir le même cristal au centre indiqué, avec le pivot, l’échelle et l’angle d’origine de la texture fournis. Vol en ligne droite, impact seul si la cible est derrière le repère. Les dégâts et le ralentissement restent ceux du type 30. Contrôlé sur 18 tirs en missions 93 et 94, à gauche et à droite, à ×1 et ×2 avec pause.
