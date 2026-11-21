@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.horde.wartotem",
+  "facing": "right",
+  "foot": [
+    126,
+    335
+  ],
+  "display_height": 71.47770700636943,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        254,
+        362
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 24,
+      "frame_size": [
+        254,
+        362
+      ],
+      "duration": 0.72,
+      "mode": "event"
+    }
+  }
+}

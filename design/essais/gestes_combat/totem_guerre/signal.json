@@ -1,0 +1,17 @@
+{
+  "release": 0.3,
+  "arrival": 0.42,
+  "muzzle": [
+    -0.250984,
+    -51.070203
+  ],
+  "projectile": {
+    "file": "Impulsion_totem.png",
+    "pivot": [
+      40,
+      40
+    ],
+    "scale": 0.138
+  },
+  "badge": "mark"
+}
