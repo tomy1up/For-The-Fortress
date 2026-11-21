@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-21 — Balliste royale, animation stabilisée validée (ouvert)
+
+Lot 6b93bd1 validé par le porteur. Type 38, defender.alliance.ballista. Les planches et lacher.json sont dans design/essais/gestes_combat/balliste_royale/. La première image à rail vide est l’image 12 à partir de zéro, à 0,32 s. Faire partir le carreau de siège existant depuis le repère de lacher.json, retourné avec la pose, sur un trajet rectiligne. Si la cible est déjà derrière la glissière à l’écran, jouer l’impact seul. Les dégâts et multiplicateurs de progression gardent leur fonctionnement. Essai en mission 94 en visée quasi horizontale à gauche et à droite, à ×1 et ×2 avec pause.
+
 ### 2026-11-21 — Piégeur nain, lancer de cartouche validé (ouvert)
 
 Lot 4fb5e10 validé par le porteur. Type 37, defender.alliance.trapper. Les planches, Cartouche_piegeur.png et lacher.json sont dans design/essais/gestes_combat/piegeur_nain/. Faire partir la cartouche à 0,36 s (image 9 à partir de zéro, première main ouverte), depuis le repère retourné avec la pose. Utiliser la cartouche de 12 px de large, avec un tour dans le sens du lancer et un arc visuel de 16 px sur le temps de vol actuel. Si la cible est déjà derrière la main à l’écran, jouer l’impact seul. Conserver les dégâts et leurs multiplicateurs selon l’avancée de la cible. Six tirs vérifiés sur la mission 94, dans les deux sens, à ×1 et ×2 avec pause.
