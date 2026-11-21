@@ -148,6 +148,6 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 
 | Critère | Vérification sur la copie v0.233 |
 | --- | --- |
-| Prise et appuis | Le poing et le manche pivotent ensemble jusqu’au lâcher. Les semelles sont fixes sur les 130 poses. [Détail de la prise](essais/gestes_combat/lanceur_masse_orc/Prise_de_la_masse.png). |
-| Lâcher | La masse part à 0,56 s, sur la première pose à main ouverte, puis tourne sur un trajet rectiligne jusqu’à un seul impact. |
+| Prise et appuis | La prise approuvée reste identique sur les 14 premières poses de chaque inclinaison. Les semelles sont fixes sur les 130 poses. [Détail de la prise](essais/gestes_combat/lanceur_masse_orc/Prise_de_la_masse.png). |
+| Lâcher | La masse part à 0,56 s. Le bras accompagne le départ, redescend et se replie avec une fermeture progressive des doigts. La masse tourne sur un trajet rectiligne jusqu’à un seul impact. |
 | En jeu | Six tirs sur deux routes de la mission 94, des deux côtés à ×1 et ×2, avec pause. [Capture à taille réelle](essais/gestes_combat/lanceur_masse_orc/Lanceur_masse_orc_en_jeu.gif). Avis du porteur attendu. |
