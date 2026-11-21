@@ -3,8 +3,8 @@
   "id": "defender.alliance.ballista",
   "facing": "right",
   "foot": [
-    169,
-    233
+    113,
+    155
   ],
   "display_height": 60.33802816901409,
   "animations": {
@@ -12,18 +12,18 @@
       "file": "idle.png",
       "frames": 1,
       "frame_size": [
-        336,
-        252
+        224,
+        168
       ],
       "fps": 1,
       "mode": "time"
     },
     "attack": {
       "file": "attack.png",
-      "frames": 24,
+      "frames": 36,
       "frame_size": [
-        336,
-        252
+        224,
+        168
       ],
       "duration": 0.96,
       "mode": "event"

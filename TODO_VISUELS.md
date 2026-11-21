@@ -89,7 +89,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 - [x] **Ancien des tribus, attaque** — frappe du tambour et départ de l’onde cuivrée au contact, à 0,36 s. [Essai en jeu](design/Visuels_Boutique_Ancien_Tribus.md#frappe-du-tambour). Lot b1b0f16 validé, à intégrer.
 - [x] **Totem de guerre, attaque** — charge de la gemme et impulsion rose à 0,30 s, losange à l’arrivée. [Essai en jeu](design/Visuels_Boutique_Totem_Guerre.md#charge-de-la-gemme-et-impulsion). Lot b36a4eb validé, à intégrer.
 - [x] **Chaman des marais, attaque** — formation du feu follet dans le bol et départ à 0,40 s. [Essai en jeu](design/Visuels_Boutique_Chaman_Marais.md#rituel-du-feu-follet). Lot a89ce33 validé, à intégrer.
-- [ ] **Balliste royale, attaque** — départ du carreau à 0,32 s et réarmement. [Essai en jeu](design/Visuels_Boutique_Balliste_Royale.md#recul-et-réarmement). Avis sur l’essai corrigé attendu.
+- [ ] **Balliste royale, attaque** — départ du carreau à 0,32 s et réarmement. [Essai en jeu](design/Visuels_Boutique_Balliste_Royale.md#recul-et-réarmement). Six intermédiaires ajoutés. Avis sur la fluidité attendu.
 - [x] **Piégeur nain, attaque** — lancer de la cartouche par le bas, départ à 0,36 s. [Essai en jeu](design/Visuels_Boutique_Piegeur_Nain.md#lancer-de-la-cartouche). Lot 4fb5e10 validé, à intégrer.
 - [x] **Marchand mercenaire, attaque** — pièce sortie de la sacoche et lancée à 0,40 s. [Essai en jeu](design/Visuels_Boutique_Marchand_Mercenaire.md#lancer-de-la-pièce). Lot bcf83a3 validé, à intégrer.
 - [x] **Prêtre guerrier, attaque** — éclat doré à 0,32 s, trois angles. [Captures en jeu et contrôle des 15 poses](design/Visuels_Boutique_Pretre_Guerrier.md#trois-inclinaisons-de-tir). Utiliser les planches à deux bras du lot c2d19e8.
