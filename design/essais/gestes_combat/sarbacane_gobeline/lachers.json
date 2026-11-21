@@ -1,0 +1,29 @@
+{
+  "release": 0.24,
+  "shots": {
+    "0": {
+      "state": "attack",
+      "pitch": -2.0,
+      "muzzle": [
+        34.3862,
+        -31.2049
+      ]
+    },
+    "-24": {
+      "state": "attack_up",
+      "pitch": -22.36,
+      "muzzle": [
+        30.9147,
+        -39.0668
+      ]
+    },
+    "16": {
+      "state": "attack_down",
+      "pitch": 16.28,
+      "muzzle": [
+        30.861,
+        -23.4418
+      ]
+    }
+  }
+}
