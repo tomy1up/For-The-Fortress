@@ -162,7 +162,7 @@ func run_checks() -> void:
 	quit(1 if failures else 0)
 
 func play_policy(model: RefCounted, types: Array, slots: Array, extra: Array, seed_value: int = 7) -> void:
-	model.rng.seed = seed_value;model.rules_v232 = false # Références historiques : tirage de douze bonus
+	model.rng.seed = seed_value # Règles de bonus actuelles depuis la v0.235 (douze bonus historiques auparavant)
 	var army_slots: Array = slots.duplicate()
 	for recruit in extra: army_slots.append(recruit[0])
 	check(model.buy(slots[0],types[0]) and model.buy(slots[1],types[1]),"Défense initiale dans le budget normal")

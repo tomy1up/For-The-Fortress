@@ -6,6 +6,7 @@ const Profile = preload("res://scripts/meta_profile.gd")
 const Talents = preload("res://scripts/meta_talents_linked.gd")
 const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
+const Reference = preload("res://tests/reference_army.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 61 à 70.
 const EXPECTED: Dictionary = {
 	61:{"map":"volcano_threshold","length":34.0,"routes":1},
@@ -66,7 +67,7 @@ func verify_map(number: int) -> void:
 	view.free()
 
 func play(model: Model, types: Array) -> void:
-	var slots := [3,4,2];model.rng.seed = 7;model.rules_v232 = false # Références historiques : tirage de douze bonus
+	var slots := [3,4,2];model.rng.seed = 7 # Règles de bonus actuelles depuis la v0.235 (douze bonus historiques auparavant)
 	check(model.buy(slots[0],types[0]) and model.buy(slots[1],types[1]),"Recrutement initial dans le budget normal")
 	for wave in range(1,11):
 		if wave == 2: model.upgrade(slots[0])
@@ -86,7 +87,7 @@ func verify_mission(camp: int, number: int) -> void:
 	for previous in range(1,number):
 		var run: int = profile.begin_mission(camp,Main.CampaignCatalogue.id_for(previous),60,10,100)
 		check(profile.credit_mission(run,camp,10,true),"Parcours préalable de la faction préparé par le service normal")
-	var first: int = 5 if camp == 0 else 0
+	var first: int = Reference.first_talent(camp,number)
 	var tree: int = Talents.coordinates(first).x
 	for index in [first,first,first,first,first,Talents.index_for(tree,1)]: check(profile.allocate(camp,index),"Rangs initiaux financés par l'XP acquise")
 	var priority: Array = [5,7,9,16,18]
@@ -102,7 +103,7 @@ func verify_mission(camp: int, number: int) -> void:
 	game.campaign_menu._launch()
 	var model: Model = game.model
 	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix.is_empty() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
-	play(model,[0,1,1] if camp == 0 else [3,3,5])
+	play(model,Reference.types(camp,number))
 	print("VOLCANIC_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])
 	var report: Dictionary = _report(model)

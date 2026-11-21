@@ -10,6 +10,7 @@ const Catalogue = preload("res://scripts/campaign_catalogue.gd")
 const Talents = preload("res://scripts/meta_talents_linked.gd")
 const Experience = preload("res://scripts/talent_experience.gd")
 const Shop = preload("res://scripts/shop_catalogue.gd")
+const Reference = preload("res://tests/reference_army.gd")
 
 func ranks_for(tree: int, faction: int, mission: int) -> Array:
 	var first: int = Talents.index_for(tree,0)
@@ -110,11 +111,13 @@ func _initialize() -> void:
 		list = []
 		for part in OS.get_environment("MISSIONS").split(","): list.append(int(part))
 	if OS.get_environment("REFONLY") == "1":
-		# REFONLY=1 : seulement la composition de référence des tests de chapitre (Alliance 0,1,1 ; Horde 3,3,5), dans l'arbre qu'ils emploient. Sortie : « REF mission faction résultat PV_restants PV_maximaux ».
+		# REFONLY=1 : seulement la composition de référence des tests de chapitre (`tests/reference_army.gd`), dans l'arbre qu'ils emploient ; OLDREF=1 : deux haches et un chaman (arbre 0) sur toute la campagne, référence de la Horde jusqu'à la v0.234.
+		# Sortie : « REF mission faction résultat PV_restants PV_maximaux ».
 		for mission in list:
 			for faction in factions:
-				var reference_tree: int = Talents.coordinates(5 if faction == 0 else 0).x
-				var outcome: Dictionary = play(mission,faction,reference_tree,[0,1,1] if faction == 0 else [3,3,5])
+				var old_reference: bool = faction == 1 and OS.get_environment("OLDREF") == "1"
+				var reference_tree: int = Talents.coordinates(0 if old_reference else Reference.first_talent(faction,mission)).x
+				var outcome: Dictionary = play(mission,faction,reference_tree,[3,3,5] if old_reference else Reference.types(faction,mission))
 				print("REF %d %d %s %d %d" % [mission,faction,outcome.result,outcome.hp,outcome.max])
 		quit()
 		return

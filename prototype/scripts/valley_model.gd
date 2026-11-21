@@ -1305,6 +1305,9 @@ func _resolve_instant() -> void:
 			primary.volatile_until = elapsed+float(stats.volatile_seconds)
 			primary.volatile_damage = maxf(float(primary.get("volatile_damage",0.0)),float(stats.get("volatile_damage",0.0)))
 			primary.volatile_radius = maxf(float(primary.get("volatile_radius",0.0)),float(stats.get("volatile_radius",1.0)))
+		# Marque posée par ce tir : « new » si la cible n'était pas marquée, « renewed » sinon (lu par la vue pour le losange de l'Éclaireur-observateur, sans effet sur le combat).
+		var mark_state: String = "renewed" if float(primary.get("marked_until",-1.0)) > elapsed else "new"
+		var placed_mark: bool = float(stats.get("mark_seconds",0.0)) > 0.0 or B_HUNTMARK in bonuses
 		if float(stats.get("mark_seconds",0.0)) > 0.0:
 			primary.marked_until = elapsed+float(stats.mark_seconds)
 			primary.mark_bonus = maxf(float(primary.get("mark_bonus",0.0)),float(stats.get("mark_bonus",0.0)))
@@ -1314,6 +1317,7 @@ func _resolve_instant() -> void:
 			primary.mark_bonus = maxf(float(primary.get("mark_bonus",0.0)),0.10)
 		var shot: Dictionary = {"time": elapsed, "slot": slot, "type": defender.type,
 			"target_id": primary.id, "from": slots[slot], "to": impact, "secondary": [], "radius": stats.radius}
+		if placed_mark: shot.mark = mark_state
 		event_log.append("%.9f tir E%d cible %d" % [elapsed, slot + 1, primary.id])
 		if family(defender.type) in [2, 3, 4]:
 			var hit_ids: Array[int] = [primary.id]

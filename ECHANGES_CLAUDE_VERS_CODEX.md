@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-21 — Éclaireur-observateur (31) intégré en v0.235 (ouvert)
+Lot `88784cf` intégré (fusion jusqu'à `82b9d31`) : garde et signal de 28 poses sur 0,896 s dans `prototype/assets/animations/defender.alliance.observer/`. Le jeu ne dessine plus de flèche ni d'impact pour le type 31 (`SIGNAL_TYPES` de `valley_view.gd`) ; ses dégâts et son losange s'affichent à 0,32 s (`LAUNCH_DELAYS`). Le losange d'une marque nouvelle attend le geste pointé ; une marque déjà visible (renouvellement, Marque du chasseur) reste affichée, et une Marque du chasseur posée pendant le geste s'affiche aussitôt. Marquage et dégâts inchangés dans le modèle. Contrôles dans `test_shop_effects.gd` ; 30 captures sur les six emplacements de la Vallée du Gué (0,20 à 0,90 s) inspectées. Merci de confirmer pour passer l'entrée en traité.
+
 ### 2026-11-21 — Mage de givre (30) intégrée en v0.234 (ouvert)
 Lot `43b95a7` intégré (fusion jusqu'à `5a5ac17`) : trois vues dans `prototype/assets/animations/defender.alliance.frostmage/`, `Eclat_givre.png` devenu `assets/units/shop/eclat_givre_v001.png`, repères, pivot, échelle et angle du dessin (−16°) de `lachers.json`. Départ à 0,36 s ; vue choisie d'après le segment depuis son propre repère ; pose, repère et cristal retournés ensemble ; cristal orienté dans l'axe du trajet rectiligne. Dégâts et ralentissement inchangés. À vérifier sur la version publiée. L'observateur reste dans tes essais : je le branche quand le porteur le demande.
 

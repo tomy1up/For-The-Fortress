@@ -92,7 +92,7 @@ Décision du porteur, 9 novembre 2026 :
 
 - Les trois arbres de chaque faction doivent se valoir pendant toute l'aventure (décision du porteur, 10 novembre 2026). Fiche et méthode : `design/Equilibrage_arbres_talents_v0168.md` ; test de parité : `prototype/tests/test_talent_balance.gd`.
 - Les facteurs d'équilibrage sont dans `TREE_SCALE` (`meta_talents_expanded.gd`) ; les anciens jeux de valeurs restent dans `TREE_SCALE_V168` et `RULES_HISTORICAL`. Toute modification des effets de talents change le résultat des anciens rapports : garder l'ancien tableau, ajouter un jeu de règles (`RULES_*`) et un seuil de version dans `Replay.talent_rules_for`.
-- Alliance et Horde doivent avoir la même puissance de talents (décision du porteur, 10 novembre 2026) : les cartes sont réglées pour la stratégie de référence de la Horde (deux haches et un chaman) ; la référence de l'Alliance est archer, arbalétrier, arbalétrier.
+- Alliance et Horde doivent avoir la même puissance de talents (décision du porteur, 10 novembre 2026) : les cartes sont réglées pour la stratégie de référence de chaque faction, définie dans `prototype/tests/reference_army.gd`. Alliance : archer, arbalétrier, arbalétrier. Horde : deux haches et un chaman jusqu'au chapitre 7, puis deux sapeurs et un chaman (arbre Démolition) à partir de la mission 71 (référence changée sur décision du porteur, 21 novembre 2026, O-028).
 - Juger un arbre avec son armée naturelle (l'unité qu'il améliore achetée à l'ouverture) et mesurer sa puissance par recherche du PV ennemi maximal battu, pas avec des compositions fixes qui favorisent un arbre.
 
 ## Travail à deux : copies séparées, zones de fichiers, boîtes aux lettres

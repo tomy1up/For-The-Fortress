@@ -8,6 +8,7 @@ const Talents = preload("res://scripts/meta_talents_linked.gd")
 const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 const Scout = preload("res://scripts/mission_scout.gd")
+const Reference = preload("res://tests/reference_army.gd")
 var checks := 0
 var failures := 0
 func check(value: bool, message: String) -> void:
@@ -165,7 +166,7 @@ func verify_campaign(camp: int) -> void:
 	for number in range(1,51):
 		var run: int = profile.begin_mission(camp,Main.CampaignCatalogue.id_for(number),60,10,100)
 		check(profile.credit_mission(run,camp,10,true),"Parcours préalable de la faction préparé par le service normal")
-	var first: int = 5 if camp == 0 else 0
+	var first: int = Reference.first_talent(camp,51)
 	var tree: int = Talents.coordinates(first).x
 	for index in [first,first,first,first,first,Talents.index_for(tree,1)]: check(profile.allocate(camp,index),"Rangs initiaux financés par l'XP acquise")
 	var priority: Array = [5,7,9,16,18]
@@ -183,7 +184,7 @@ func verify_campaign(camp: int) -> void:
 	check(not game.choosing_faction and game.mission_definition.id == "campaign.051" and model.map_definition.id == "marsh_stagnant" and model.wave_set_id == "marsh_drowned" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(51,model.faction) and model.gold == 150 and model.combat_affix.is_empty(),"La mission 51 démarre par le parcours normal avec ses rencontres")
 	var forecast: Dictionary = model.forecast_for_routes(2)
 	check(not forecast.is_empty() and forecast.groups[0].name == "Gueule-de-Vase","La prévision de la vague 2 annonce le Noyé")
-	play(model,[0,1,1] if camp == 0 else [3,3,5])
+	play(model,Reference.types(camp,51))
 	print("DROWNED_RESULT=",camp,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Une composition accessible gagne dans chaque faction")
 	var replay: Dictionary = Replay.verify(JSON.parse_string(JSON.stringify(Report.build(model))))
