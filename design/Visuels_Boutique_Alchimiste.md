@@ -14,9 +14,9 @@ Pour l’animation, retirer la fiole du sprite au lâcher, suivre le mouvement d
 
 ## Lancer de la fiole
 
-L’Alchimiste arme le bras près de la tempe, tend l’avant-bras vers la cible et ouvre les doigts à 0,40 s. La main revient vide, puis remonte avec une nouvelle fiole. Onze dessins distincts sur 36 images et 0,96 s. La première pose à main ouverte est l’image 15 à partir de zéro. La garde mesure 58 px. Les poses conservent la même hauteur du corps et un écartement des semelles à moins d’un pixel de la garde.
+L’Alchimiste arme le bras près de la tempe, tend l’avant-bras vers la cible et ouvre les doigts à 0,40 s. La main revient vide, puis remonte avec une nouvelle fiole. Quatre intermédiaires ajoutés après le retour du porteur, juste avant et après le lâcher, pendant le repli et pendant la recharge. Quinze dessins distincts sur 48 images et 0,96 s. La première pose à main ouverte est l’image 20 à partir de zéro. Le passage de l’image 19 à l’image 20 a été vérifié en jeu à 0,40 s. La garde mesure 58 px. Les poses conservent la même hauteur du corps et un écartement des semelles à moins d’un pixel de la garde.
 
-[Essai en jeu](essais/gestes_combat/alchimiste_gnome/Alchimiste_gnome_en_jeu.gif) · [Planche des onze poses](essais/gestes_combat/alchimiste_gnome/Planche_alchimiste_gnome.png)
+[Essai en jeu](essais/gestes_combat/alchimiste_gnome/Alchimiste_gnome_en_jeu.gif) · [Planche des quinze poses](essais/gestes_combat/alchimiste_gnome/Planche_alchimiste_gnome.png)
 
 L’essai utilise la fiole ambrée dessinée, avec un tour sur l’arc existant de 10 px. Le repère de lacher.json est mesuré au niveau des doigts et suit le retournement. Six tirs vérifiés en mission 94 sur copie v0.235, à ×1 et ×2 dans les deux sens, avec pause. La volatilité et le badge sont confirmés sur la cible. Le badge reste affiché dès la résolution du tir dans cet essai. Validateur à zéro problème sur 49 dossiers, 190 contrôles d’animation, 77 des effets d’unités et 28 de boutique réussis. L’essai attend l’avis du porteur.
 
