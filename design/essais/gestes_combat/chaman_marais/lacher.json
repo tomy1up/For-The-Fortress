@@ -1,0 +1,15 @@
+{
+  "release": 0.4,
+  "muzzle": [
+    14.3921,
+    -48.139
+  ],
+  "projectile": {
+    "file": "Feu_follet.png",
+    "pivot": [
+      52.5,
+      72.5
+    ],
+    "scale": 0.05517241379310345
+  }
+}

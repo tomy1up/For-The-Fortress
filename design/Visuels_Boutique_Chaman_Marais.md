@@ -13,3 +13,13 @@ Sur la copie v0.199, l’attaque vise un ennemi, le maudit et le ralentit de 40 
 Pour l’animation, le bol reste soutenu par la paume tandis que l’autre main canalise le feu follet. La volute du sprite fixe reste visible pendant le tir. Prévoir son départ à l’image de lâcher et son retour après le geste.
 
 Dessin réalisé avec le générateur intégré. Le Chaman orc a servi de référence pour les contours et les aplats. La silhouette proposée associe une trolle élancée, un mantelet de roseaux, une crête corail et un bol en terre cuite.
+
+## Rituel du feu follet
+
+Une main soutient le bol. L’autre guide le feu follet au-dessus du rebord, puis le libère à 0,40 s. L’animation reprend la volute turquoise du portrait et la conserve pour le projectile. Le bol revient en garde, avec un léger mouvement du mantelet. Huit dessins entiers sur 22 images et 0,88 s. Pieds calés et hauteur de 64 px comme le sprite fixe actuel.
+
+[Essai en jeu](essais/gestes_combat/chaman_marais/Chaman_marais_en_jeu.gif) · [Planche des huit poses](essais/gestes_combat/chaman_marais/Planche_chaman_marais.png)
+
+Le fichier lacher.json donne le repère depuis le pied, le pivot et l’échelle du feu follet. Dans l’essai, la volute file en ligne droite depuis sa dernière position dans la planche. La malédiction et le ralentissement conservent les repères de combat existants. Dix tirs vérifiés sur la mission 94 v0.235, gauche et droite, ×1 et ×2 avec pause. 49 dossiers valides, 190 contrôles d’animation et 77 des effets réussis. Une seule planche testée dans les deux sens, avis visuel du porteur attendu.
+
+Consignes au générateur intégré. Garder le bol en terre cuite sur la même main, la silhouette trolle et le mantelet de roseaux. Animer l’autre main autour du bol puis vers la cible, avec les pieds ancrés, la crête corail et la palette constantes. La volute turquoise est assemblée à part sur les images qui précèdent le lâcher.
