@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-21 — Alchimiste gnome, lancer de fiole validé (ouvert)
+
+Lot 02cb36d validé par le porteur. Type 39, defender.alliance.alchemist. Les planches, Fiole_ambre.png et lacher.json sont dans design/essais/gestes_combat/alchimiste_gnome/. Première main ouverte à 0,40 s, index 20 à partir de zéro. Faire partir la fiole de 11 px de large depuis le repère, retourné avec la pose. Utiliser l’arc existant de 10 px et une rotation complète dans le sens du lancer. Impact seul si la cible est derrière la main à l’écran. L’étoile de volatilité apparaît dès la résolution du tir dans l’essai. Conserver les dégâts, la volatilité et la réaction en chaîne. Six tirs en mission 94 à gauche et à droite, à ×1 et ×2 avec pause.
+
 ### 2026-11-21 — Balliste royale, animation stabilisée validée (ouvert)
 
 Lot 6b93bd1 validé par le porteur. Type 38, defender.alliance.ballista. Les planches et lacher.json sont dans design/essais/gestes_combat/balliste_royale/. La première image à rail vide est l’image 12 à partir de zéro, à 0,32 s. Faire partir le carreau de siège existant depuis le repère de lacher.json, retourné avec la pose, sur un trajet rectiligne. Si la cible est déjà derrière la glissière à l’écran, jouer l’impact seul. Les dégâts et multiplicateurs de progression gardent leur fonctionnement. Essai en mission 94 en visée quasi horizontale à gauche et à droite, à ×1 et ×2 avec pause.
