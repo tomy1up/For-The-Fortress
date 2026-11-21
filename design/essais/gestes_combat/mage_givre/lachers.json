@@ -1,0 +1,38 @@
+{
+  "release": 0.36,
+  "projectile": {
+    "file": "Eclat_givre.png",
+    "pivot": [
+      28.5,
+      14.0
+    ],
+    "scale": 0.137045,
+    "art_angle_degrees": -16
+  },
+  "shots": {
+    "-16": {
+      "state": "attack",
+      "pitch": -16,
+      "muzzle": [
+        29.482,
+        -49.1733
+      ]
+    },
+    "-32": {
+      "state": "attack_up",
+      "pitch": -32,
+      "muzzle": [
+        24.3925,
+        -55.0642
+      ]
+    },
+    "22": {
+      "state": "attack_down",
+      "pitch": 22,
+      "muzzle": [
+        28.7396,
+        -40.0906
+      ]
+    }
+  }
+}

@@ -6,6 +6,14 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-21 — Mage de givre, trois visées (ouvert)
+
+Lot 43b95a7 sur art/codex, prêt à intégrer suite au feu vert du porteur. Type 30, defender.alliance.frostmage. Planches, Eclat_givre.png et lachers.json dans design/essais/gestes_combat/mage_givre/. Choisir l’angle dont le trajet depuis le repère donné est le plus proche. Retourner ensemble la pose, le repère et le cristal. À 0,36 s sur la première pose à paume vide, faire partir le même cristal au centre indiqué, avec le pivot, l’échelle et l’angle d’origine de la texture fournis. Vol en ligne droite, impact seul si la cible est derrière le repère. Les dégâts et le ralentissement restent ceux du type 30. Contrôlé sur 18 tirs en missions 93 et 94, à gauche et à droite, à ×1 et ×2 avec pause.
+
+### 2026-11-21 — Sarbacane gobeline, trois visées (ouvert)
+
+Lot 112ffcd prêt à intégrer suite au feu vert du porteur. Type 29, defender.horde.blowgun. Planches et lachers.json dans design/essais/gestes_combat/sarbacane_gobeline/. Choisir la visée qui aligne le mieux le tube avec la cible depuis son repère, puis retourner ensemble pose et repère. Faire partir le dard existant à 0,24 s au premier souffle, sur un trajet rectiligne. Si l’impact est déjà derrière le bout du tube à l’écran, jouer seulement l’impact. Les règles de combat restent celles du type 29. Contrôlé sur 18 tirs en mission 94, à gauche et à droite, à ×1 et ×2 avec pause.
+
 ### 2026-11-21 — Lanceur de masse orc, cinq inclinaisons validées (ouvert)
 
 Type 28, `defender.horde.maceman`. Le porteur a demandé une autre méthode après les essais par articulation. Le dossier `design/essais/gestes_combat/lanceur_masse_orc/poses_entieres/` contient douze dessins, dont six intermédiaires ajoutés après le retour du porteur. La dernière pose avant le lâcher ne dure plus qu’une image. Le lâcher est à 0,56 s. La palette de la pose masse levée a été ajustée après le signalement d’un clignotement. L’angle neutre a été retenu par le porteur. Les captures montrent désormais 0°, −12°, +12°, +24° et +36° dans les deux sens à ×1 et ×2. Le porteur a validé le lot 5238ec8 pour cette version. Intégrer le dossier de planches et le fichier lachers.json dans poses_entieres. Le projectile masse.png peut être repris de la racine du lot. Les valeurs de tir et la résolution des dégâts ne changent pas.

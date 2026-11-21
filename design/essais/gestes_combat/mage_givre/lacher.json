@@ -1,0 +1,16 @@
+{
+  "release": 0.36,
+  "muzzle": [
+    29.482,
+    -49.1733
+  ],
+  "projectile": {
+    "file": "Eclat_givre.png",
+    "pivot": [
+      28.5,
+      14.0
+    ],
+    "scale": 0.137045,
+    "art_angle_degrees": -16
+  }
+}

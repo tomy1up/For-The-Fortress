@@ -20,6 +20,16 @@ Six dessins entiers pour la garde, l’inspiration, les joues gonflées, le souf
 
 [Planche des six poses](essais/gestes_combat/sarbacane_gobeline/Planche_sarbacane.png) · [Sarbacane en jeu](essais/gestes_combat/sarbacane_gobeline/Sarbacane_gobeline_en_jeu.gif)
 
-Une inclinaison presque horizontale, testée sur 16 tirs de la mission 94 v0.233 dans les deux sens, à ×1 et ×2 avec pause. Les départs et trajets ont été vérifiés sur la copie instrumentée. Zéro problème sur 46 dossiers, 187 contrôles d’animation et 77 des effets réussis. Aucun changement de code dans le dépôt pour cet essai. Avis visuel du porteur attendu.
+Une inclinaison presque horizontale, testée sur 16 tirs de la mission 94 v0.233 dans les deux sens, à ×1 et ×2 avec pause. Les départs et trajets ont été vérifiés sur la copie instrumentée. Zéro problème sur 46 dossiers, 187 contrôles d’animation et 77 des effets réussis. Aucun changement de code dans le dépôt pour cet essai. Le porteur a retenu ce geste pour décliner les tirs en montée et en descente.
 
 Consignes au générateur d’images intégré. Reprendre la gobeline et sa sarbacane turquoise de référence. Garder le même ancrage, les mains sur le tube, la palette du costume et des ombres nettes. À l’inspiration, soulever un peu le buste et gonfler les joues. Au souffle, projeter le buste de quelques pixels et plisser les yeux. Rouvrir les yeux et reprendre l’appui initial. Aucun dard dessiné sur la planche, afin de synchroniser le projectile depuis le tube.
+
+## Trois inclinaisons de tir
+
+Le geste presque horizontal reste la référence. Les vues vers le haut et vers le bas utilisent chacune un dessin intermédiaire à l’aller et au retour, entre la garde commune et l’angle de tir. Les deux mains gardent le tube en bouche. La hauteur, les appuis, les 14 images sur 0,56 s et le souffle à 0,24 s sont communs. Les angles dessinés sont d’environ −22°, −2° et +16°. Le fichier lachers.json indique pour chaque vue le nom de la planche, l’angle du tube et le repère de son ouverture depuis le pied.
+
+[Visées en jeu à ×1](essais/gestes_combat/sarbacane_gobeline/Sarbacane_gobeline_angles_x1.gif) · [Visées en jeu à ×2](essais/gestes_combat/sarbacane_gobeline/Sarbacane_gobeline_angles_x2.gif) · [Dessins des deux inclinaisons](essais/gestes_combat/sarbacane_gobeline/Sarbacane_poses_inclinees.png)
+
+La copie instrumentée de la v0.233 choisit la pose dont le tube est le plus proche de l’axe ouverture-vers-impact. Elle retourne ensemble le repère et la pose, puis dessine le dard en ligne droite. 18 tirs observés sur la mission 94, pour les trois inclinaisons, vers la droite et la gauche, à ×1 et ×2. Pause et trajectoire vérifiées, avec un écart au tube de 5,5° au maximum sur les premiers tirs de l’essai. Validateur à zéro problème sur 46 dossiers, 187 contrôles d’animation et 77 des effets réussis. Le porteur a donné le feu vert pour poursuivre après présentation des trois visées. Lot 112ffcd prêt à intégrer.
+
+Consignes au générateur d’images intégré. Reprendre les poses validées avec les mêmes bottes, les mains au contact et la sarbacane droite. Incliner le tube avec les avant-bras et le regard en gardant les genoux et les pieds en place. Dessiner l’inspiration, le souffle et la reprise de visée pour les deux angles, plus une pose à mi-course dans chaque sens.

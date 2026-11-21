@@ -86,7 +86,9 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).
 
-- [ ] **Sarbacane gobeline, attaque** — inspiration, souffle et départ du dard à 0,24 s dans une première inclinaison. [Essai en jeu](design/Visuels_Boutique_Sarbacane.md#inspiration-et-tir). Avis sur le geste avant déclinaison.
+- [ ] **Éclaireur-observateur, signal** — fanion levé et cible désignée à 0,32 s. [Essai](design/Visuels_Boutique_Observateur.md#signal-au-fanion). Avis sur le geste et le losange.
+- [x] **Mage de givre, attaque** — trois inclinaisons, cristal synchronisé à 0,36 s, départ par pose. [Captures](design/Visuels_Boutique_Mage_Givre.md#trois-inclinaisons-de-tir). Lot 43b95a7 prêt à intégrer.
+- [x] **Sarbacane gobeline, attaque** — trois inclinaisons, départ à 0,24 s et repères du tube par vue. [Essai en jeu](design/Visuels_Boutique_Sarbacane.md#trois-inclinaisons-de-tir). Lot 112ffcd prêt à intégrer.
 - [x] **Lanceur de masse orc, attaque** — cinq inclinaisons en poses entières et lâcher à 0,56 s. Lot 5238ec8 validé pour cette version, à intégrer. [Captures et contrôles](design/Visuels_Boutique_Lanceur_Masse.md#cinq-inclinaisons-en-poses-entières).
 - [x] **Lanceur double troll, attaque** — deux bras alternés, trois inclinaisons par bras et repères de lancer. [Capture et contrôles](design/Visuels_Boutique_Lanceur_Double.md#deux-bras-alternés). Retour favorable du porteur sur le lot `b779d4d`.
 - [x] **Hache en chaîne, attaque** — lancer depuis la hanche, cinq inclinaisons, hache à deux lobes et ricochets. [Capture et contrôles](design/Visuels_Boutique_Hache_En_Chaine.md#lancer-de-la-hache-et-ricochets). Lot `f0b6867` validé par le porteur.

@@ -13,3 +13,13 @@ Son action inflige 3 dégâts de base et marque l’ennemi pendant 4 s. Les autr
 Le sprite fixe présente déjà le signal. Pour l’animer, partir du fanion abaissé et faire apparaître le losange au moment où l’observateur lève le fanion et désigne la cible. L’intégration du losange et la pose de repos restent à faire.
 
 Dessin réalisé avec le générateur intégré. La Sentinelle a servi de référence pour les contours et aplats, avec une nouvelle silhouette humaine à genou et un fanion à losange.
+
+## Signal au fanion
+
+En garde, l’éclaireur reste à genou, fanion bas et main libre posée sur le genou. Il relève le fanion, se tourne légèrement et désigne l’ennemi. Le losange se dévoile au premier geste pointé à 0,32 s. Le fanion revient en garde et le losange reste sur la cible marquée. Six dessins entiers, 20 images sur 0,80 s. Hauteur de 59 px hors fanion.
+
+[Signal en combat](essais/gestes_combat/observateur/Observateur_en_jeu.gif) · [Planche des six poses](essais/gestes_combat/observateur/Planche_observateur.png)
+
+Le fichier signal.json fixe le délai visuel. La copie d’essai masque la flèche héritée de la famille et retarde le premier affichage du badge de marquage. Les dégâts et le marquage sont appliqués au moment prévu par la simulation. En intégration, conserver les marques déjà affichées, y compris celles issues du bonus Marque du chasseur. Dix marquages vérifiés sur la mission 94 v0.233, à gauche et à droite, ×1 et ×2 avec pause. 48 dossiers valides, 189 contrôles d’animation et 77 des effets réussis. Avis du porteur attendu.
+
+Consignes au générateur d’images intégré. Reprendre le même éclaireur à genou, veste bleu pétrole, écharpe orange, casquette brune et barbe grise. Garder les appuis au sol et le fanion cerise à losange dans la même main. Décomposer le fanion bas, l’armé, le signal avec le doigt de la main libre, puis le retour.
