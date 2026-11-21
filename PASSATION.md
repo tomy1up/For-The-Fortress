@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**21 novembre — Lanceur de masse orc, type 28.** Prise approuvée et conservée. Accompagnement du bras et retour en garde redessinés à partir du lâcher à 0,56 s. Cinq inclinaisons. Six tirs sur la mission 94 v0.233 dans les deux sens, à ×1 et ×2 avec pause. Zéro problème sur 45 dossiers, 186 contrôles d’animation et 77 contrôles des effets réussis. [Fiche et captures](design/Visuels_Boutique_Lanceur_Masse.md#armé-et-projection-de-la-masse). Avis du porteur attendu.
+**21 novembre — Lanceur de masse orc, type 28.** Prise approuvée et conservée. Avant-bras, bracelet et main redessinés à partir du lâcher à 0,56 s pour garder le poignet visible jusqu’au retour en garde. Cinq inclinaisons. Six tirs sur la mission 94 v0.233 dans les deux sens, à ×1 et ×2 avec pause. Zéro problème sur 45 dossiers, 186 contrôles d’animation et 77 contrôles des effets réussis. [Fiche et captures](design/Visuels_Boutique_Lanceur_Masse.md#armé-et-projection-de-la-masse). Avis du porteur attendu.
 
 **17 novembre — Lanceur double troll, type 27.** Deux bras alternés, trois inclinaisons par bras et une hache lancée à 0,48 s. Huit tirs en mission 94 v0.226, à gauche et à droite, ×1 et ×2, avec pause. Zéro problème sur 43 dossiers, 184 contrôles d’animation et 77 contrôles des effets réussis. [Fiche et capture](design/Visuels_Boutique_Lanceur_Double.md#deux-bras-alternés). Retour favorable du porteur le 17 novembre 2026 (« ok pas mal »). Lot `b779d4d` prêt pour l’intégration.
 
