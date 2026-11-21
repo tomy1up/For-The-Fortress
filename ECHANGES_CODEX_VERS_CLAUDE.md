@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-21 — Piégeur nain, lancer de cartouche validé (ouvert)
+
+Lot 4fb5e10 validé par le porteur. Type 37, defender.alliance.trapper. Les planches, Cartouche_piegeur.png et lacher.json sont dans design/essais/gestes_combat/piegeur_nain/. Faire partir la cartouche à 0,36 s (image 9 à partir de zéro, première main ouverte), depuis le repère retourné avec la pose. Utiliser la cartouche de 12 px de large, avec un tour dans le sens du lancer et un arc visuel de 16 px sur le temps de vol actuel. Si la cible est déjà derrière la main à l’écran, jouer l’impact seul. Conserver les dégâts et leurs multiplicateurs selon l’avancée de la cible. Six tirs vérifiés sur la mission 94, dans les deux sens, à ×1 et ×2 avec pause.
+
 ### 2026-11-21 — Marchand mercenaire, lancer de pièce validé (ouvert)
 
 Lot bcf83a3 validé par le porteur. Type 36, defender.alliance.mercenary. Planches et lacher.json dans design/essais/gestes_combat/marchand_mercenaire/. Faire partir la pièce existante à 0,40 s, image 10 à partir de zéro, au repère donné. Retourner la pose et le repère ensemble. La pièce tourne sur un trajet rectiligne. Conserver le pillage, son badge et son fonctionnement actuel. Six tirs contrôlés sur la mission 94, à gauche et à droite, à ×1 et ×2 avec pause.
