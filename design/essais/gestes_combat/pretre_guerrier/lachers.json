@@ -1,0 +1,30 @@
+{
+  "release": 0.32,
+  "projectile": "gold_shard",
+  "shots": {
+    "0": {
+      "state": "attack",
+      "pitch": -5,
+      "muzzle": [
+        23.5577,
+        -46.1523
+      ]
+    },
+    "-24": {
+      "state": "attack_up",
+      "pitch": -24,
+      "muzzle": [
+        20.3931,
+        -54.0541
+      ]
+    },
+    "20": {
+      "state": "attack_down",
+      "pitch": 20,
+      "muzzle": [
+        21.6216,
+        -41.2776
+      ]
+    }
+  }
+}
