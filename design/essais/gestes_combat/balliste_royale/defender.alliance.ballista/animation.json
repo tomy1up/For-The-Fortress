@@ -3,10 +3,10 @@
   "id": "defender.alliance.ballista",
   "facing": "right",
   "foot": [
-    113,
-    155
+    108,
+    150
   ],
-  "display_height": 60.33802816901409,
+  "display_height": 60.85227272727272,
   "animations": {
     "idle": {
       "file": "idle.png",
