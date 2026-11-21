@@ -324,13 +324,13 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 21 novembre 2026 — Claude Code (v0.232 publiée)
+## État au 21 novembre 2026 — Claude Code (v0.233 en publication)
 
-- **v0.232** : catalogue de 36 bonus (R-13 à R-36, `design/Bonus_catalogue_v0232.md`) et quatre choix par partie (vagues 2, 4, 6, 8) ; rééquilibrage des PV d'ennemis par mission et par faction (`REBALANCE_PERCENT`, `design/Rebalancage_bonus_v0232.md`) pour la cible du porteur (meilleure composition à 40-70 % de marge). Anciens rapports rejoués avec leurs règles (`rules_v232`).
-- Régression complète verte : 143 suites, 179 202 contrôles Godot, 17 tests Python ; paquet vérifié (1 050 cas). GDD 0.69 (md et docx). Corrigés à la vérification : quatrième bonus acquis masqué, PV de l'éclaireur de mission, consoles du lanceur de tests qui volaient le focus (`CREATE_NO_WINDOW`).
-- Les suites de campagne choisissent leurs bonus avec `Model.reference_bonus` (première offre sans contrepartie). `Main._capture_sample_combat` joue sur la courbe de PV de base (outil de contrôle).
-- Outil `tools/faction_study.gd` : `SEED`, `LEGACY`, `POLICY` (`safe`, `ref`), `MISSIONS`, `HPMUL`, `REFONLY`. Une étude complète (200 missions × 2 factions × 30 compositions) prend une dizaine de minutes sans autre programme lourd ouvert.
-- À juger par le porteur (O-028) : difficulté ressentie, chapitre 13 de la Horde trop facile (93 %), chapitre 4 de la Horde dur (42 %), rythme de quatre choix, noms et valeurs des 24 nouveaux bonus. Second lot du catalogue (rareté, relance) : O-027.
+- **v0.233** (second lot du catalogue, décision du porteur du 21 novembre 2026) : 60 bonus dont 16 rares et 8 épiques (R-37 à R-60), tirage par rareté selon le rang du choix (`Campaign.RARITY_WEIGHTS`), une relance gratuite par partie (`reroll_bonus`, action `bonus_reroll` rejouée). Règles `rules_v233`, anciens rapports rejoués avec leur tirage. Fiche : `design/Bonus_rarete_relance_v0233.md`.
+- v0.232 publiée : 36 bonus, quatre choix, rééquilibrage des PV par mission (`design/Rebalancage_bonus_v0232.md`).
+- **Mesure du second lot** : la meilleure marge de la Horde passe de 66 % à 86 % (19 missions de nouveau à 100 %), celle de l'Alliance de 64 % à 69 %. Les rares de zone et de durée favorisent l'armée de base de la Horde. **Prochaine étape : équilibrage** (O-028), le porteur l'a placé après la pose de la base.
+- Coefficients abaissés pour les suites de campagne : mission 3 Alliance (116 %), missions 23 et 177 Horde (103 et 128 %).
+- Outils : `tools/faction_study.gd` (`SEED`, `LEGACY`, `V232`, `POLICY`, `MISSIONS`, `HPMUL`, `REFONLY`) ; captures d'offres imposées `--capture-offer=a,b,c` (état `bonus`). Le lanceur de tests ne crée plus de console (`CREATE_NO_WINDOW`).
 - Reste à intégrer côté code : les gestes des types 28 à 47 à mesure que Codex les livre. Décor des cartes refondues (chapitres 10 à 20) à redessiner par Codex : désactivé dans `DecorArt.REWORKED_MAPS` en attendant.
 
 ## Prochaines étapes possibles

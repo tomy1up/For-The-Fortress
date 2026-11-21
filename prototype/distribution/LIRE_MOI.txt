@@ -1,5 +1,5 @@
 FOR THE FORTRESS! — PROTOTYPE WINDOWS
-Version : 0.232 — 17 novembre 2026
+Version : 0.233 — 21 novembre 2026
 
 ATELIER A DEUX ENTREES
 
@@ -88,7 +88,9 @@ JOUER
    Les cinq dernières secondes sont rappelées dans l’en-tête avant le départ.
    Une annonce de deux secondes indique ensuite chaque départ, sans pause du combat.
    La finale annonce le boss adverse ; sa jauge reste visible séparément.
-5. Après les vagues 3, 6 et 9, choisir un bonus de la partie en cours.
+5. Après les vagues 2, 4, 6 et 8, choisir un bonus de la partie en cours parmi trois.
+   Les bonus sont communs, rares ou épiques ; les rares et épiques sont plus fréquents en fin de partie.
+   Une relance gratuite par partie remplace les trois offres.
 6. Après la victoire finale ou la défaite, consulter le bilan puis revenir au parcours.
    Le nom de la mission reste visible dans chaque onglet du bilan.
    Dans Vagues, cliquer une ligne affiche la défense et les bonus de son départ.

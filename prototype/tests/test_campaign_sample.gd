@@ -27,6 +27,7 @@ static func play(model: RefCounted, positions: Array, step: float = 300.0) -> vo
 		if model.phase == "defeat": return
 		if model.phase == "bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
 		if wave < 10: model.prepare_next_wave()
+	print("SAMPLE_PLAY=",model.faction,",",model.enemy_hp_percent,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 func run_checks() -> void:
 	for percent in [100,101,102]:
 		for type in range(8):
@@ -99,7 +100,7 @@ func run_checks() -> void:
 			check(scene.model.gold == 150 and scene.model.fortress_hp == scene.model.max_hp and scene.model.bonuses.is_empty() and scene.model.defenders.all(func(unit): return unit.is_empty()),"Chaque mission de la série repart à neuf")
 			if number == 3: check(scene.model.meta_ranks[0] == 1,"Le talent acquis après la seconde victoire est actif au départ de la troisième mission")
 			play(scene.model,POSITIONS[number-1]);scene._sync_meta_rewards(true);scene._update_interface();scene._show_run_summary()
-			check(scene.model.phase == "victory" and p.data.banks[faction].xp == 100*number and p.data.banks[faction].resource == 60*number,"Les premières victoires successives versent PO et XP une seule fois")
+			check(scene.model.phase == "victory" and p.data.banks[faction].xp == 100*number and p.data.banks[faction].resource == 60*number,"Les premières victoires successives versent PO et XP une seule fois (mission %d : %s, %d XP, %d PO)" % [number,scene.model.phase,p.data.banks[faction].xp,p.data.banks[faction].resource])
 			scene._summary_to_campaign()
 			check(scene.campaign_menu.visible and scene.campaign_menu.status.completed == number and JSON.stringify(p.data.banks[1-faction]) == other,"Retour au parcours et réussites indépendantes pour l’autre faction")
 			if number == 2:

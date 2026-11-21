@@ -157,6 +157,8 @@ var bonus_names: Array[Label] = []
 var bonus_descriptions: Array[Label] = []
 var bonus_buttons: Array[Button] = []
 var bonus_cards: Array[Panel] = []
+var bonus_rarity_labels: Array[Label] = [] # Rareté des bonus rares et épiques (règles v0.233)
+var bonus_reroll: Button # Relance gratuite des trois offres, une par partie (règles v0.233)
 var bonus_effects: Array[Label] = []
 var bonus_scopes: Array[Label] = []
 var bonus_notes: Array[Label] = []
@@ -583,6 +585,14 @@ func _ready() -> void:
 		if capture_state == "bonus_preview": bonus_title.text = "CONTRÔLE BONUS · BUDGET IMPOSÉ"
 		if capture_state == "defender_catalogue": faction_label.text = "DÉFENSEURS · BUDGET IMPOSÉ"
 		if "--capture-synergy-preview" in OS.get_cmdline_user_args() and capture_state == "specialisation": faction_label.text = "APERÇU SYNERGIES · BUDGET IMPOSÉ"
+		for argument in OS.get_cmdline_user_args():
+			# Capture de contrôle seulement : offres de bonus imposées (indices séparés par des virgules), pour vérifier l'affichage des raretés.
+			if argument.begins_with("--capture-offer=") and model.phase == "bonus":
+				var forced: Array[int] = []
+				for part in argument.trim_prefix("--capture-offer=").split(","): forced.append(int(part))
+				if forced.size() == 3 and forced.all(func(code): return code >= 0 and code < Model.Campaign.BONUSES.size() and code not in model.bonuses): 
+					model.bonus_offer.assign(forced)
+					_update_interface()
 		for argument in OS.get_cmdline_user_args():
 			if argument.begins_with("--capture-details="): _open_bonus_details(int(argument.trim_prefix("--capture-details=")))
 		if "--capture-specialisation-numbers" in OS.get_cmdline_user_args():
@@ -2996,6 +3006,8 @@ func _build_bonus_selector(screen: Control) -> void:
 		var x: int = 28+index*348
 		bonus_cards.append(_panel(panel,Rect2(x,126,328,464)))
 		bonus_names.append(_label(panel,"",Vector2(x,148),Vector2(328,54),18,Color("e0dbbf")))
+		bonus_rarity_labels.append(_label(panel,"",Vector2(x+210,130),Vector2(100,18),13,Color("8fb8e8")))
+		bonus_rarity_labels[-1].horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		bonus_names[-1].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		bonus_effects.append(_label(panel,"",Vector2(x+18,218),Vector2(292,78),25,Color("e6c987")))
 		bonus_scopes.append(_label(panel,"",Vector2(x+18,310),Vector2(292,60),16,Color("e0e7db")))
@@ -3021,6 +3033,7 @@ func _build_bonus_selector(screen: Control) -> void:
 		bonus_impacts.append(impact)
 		bonus_buttons.append(_button(panel,"Choisir ce bonus",Rect2(x+18,532,292,48),_choose_bonus.bind(index)))
 	bonus_close = _button(panel,"Fermer · Échap",Rect2(442,408,196,36),_close_bonuses)
+	bonus_reroll = _button(panel,"Relancer les offres",Rect2(784,26,268,40),_reroll_bonus)
 	bonus_details_back = _button(panel,"Retour · Échap",Rect2(28,532,240,48),_close_bonus_details)
 
 func _show_bonuses() -> void:
@@ -3047,6 +3060,15 @@ func _close_bonus_details() -> void:
 	_update_interface()
 	if previous >= 0 and previous < bonus_detail_buttons.size() and bonus_detail_buttons[previous].is_visible_in_tree():
 		bonus_detail_buttons[previous].grab_focus()
+
+## Couleurs des raretés de bonus (habillage fonctionnel de prototype, à confirmer) : rare bleu, épique violet.
+const BONUS_RARITY_COLORS: Dictionary = {"rare":Color("8fb8e8"),"epic":Color("d6a6f0")}
+
+func _reroll_bonus() -> void:
+	if model.phase != "bonus" or bonus_detail_index >= 0: return
+	if model.reroll_bonus():
+		bonus_impact_keys.assign(["","","",""])
+		_update_interface()
 
 func _choose_bonus(index: int) -> void:
 	if model.phase != "bonus" or index < 0 or index >= model.bonus_offer.size(): return
@@ -3090,10 +3112,16 @@ func _update_bonus_panel() -> void:
 		bonus_names[index].position = Vector2(x+18,148)
 		bonus_names[index].size = Vector2(inner,56)
 		bonus_names[index].add_theme_font_size_override("font_size",20)
+		var rarity: String = Model.Campaign.bonus_rarity(entries[index]) if index < entries.size() else ""
+		bonus_names[index].add_theme_color_override("font_color",BONUS_RARITY_COLORS.get(rarity,Color("e0dbbf")))
+		bonus_rarity_labels[index].visible = listed and rarity in ["rare","epic"]
+		bonus_rarity_labels[index].text = {"rare":"Rare","epic":"Épique"}.get(rarity,"")
+		bonus_rarity_labels[index].add_theme_color_override("font_color",BONUS_RARITY_COLORS.get(rarity,Color("e0dbbf")))
+		bonus_rarity_labels[index].position = Vector2(x+card_width-118,131)
 		bonus_effects[index].visible = listed
 		bonus_effects[index].position = Vector2(x+18,218 if choosing else 206)
 		bonus_effects[index].size = Vector2(inner,78 if choosing else 60)
-		bonus_effects[index].add_theme_font_size_override("font_size",25 if choosing else 19)
+		bonus_effects[index].add_theme_font_size_override("font_size",25 if choosing else 17 if four_columns else 19)
 		bonus_scopes[index].visible = listed
 		bonus_scopes[index].position = Vector2(x+18,310 if choosing else 274)
 		bonus_scopes[index].size = Vector2(inner,60 if choosing else 48)
@@ -3136,6 +3164,11 @@ func _update_bonus_panel() -> void:
 				bonus_impacts[index].text = card.scope+"\n\n"+_bonus_audience_text(entries[index])+"\n"+card.note
 	bonus_close.visible = not choosing and not detailed
 	bonus_details_back.visible = detailed
+	var rerolls: int = model.rerolls_available()
+	bonus_reroll.visible = choosing and not detailed and model.rules_v232 and model.rules_v233
+	bonus_reroll.disabled = rerolls <= 0
+	bonus_reroll.text = "Relancer les offres · gratuit" if rerolls > 0 else "Relance déjà utilisée"
+	bonus_reroll.tooltip_text = "Remplace les trois offres par trois autres. Une relance gratuite par partie." if rerolls > 0 else "La relance gratuite de cette partie a déjà servi."
 
 func _bonus_audience_text(code: int) -> String:
 	if code == 8: return "Effet immédiat."
@@ -3143,6 +3176,14 @@ func _bonus_audience_text(code: int) -> String:
 	if code >= Model.Campaign.LEGACY_BONUS_COUNT:
 		var kind: String = Model.Campaign.BONUSES[code].audience
 		if kind == "purchases": return "Pour vos prochains achats."
+		if kind == "fortress": return "Effet sur votre forteresse."
+		if kind == "gold": return "Effet sur votre or."
+		if kind == "enemies": return "Tous les ennemis de la partie."
+		if code in [Model.B_PROMOTION,Model.B_ASCENSION]:
+			var promoted: int = 0
+			for unit in model.defenders:
+				if Model.promoted_level(code,unit) > 0: promoted += 1
+			return "Aucun défenseur actuel concerné." if promoted == 0 else "%d défenseur%s promu%s maintenant." % [promoted,"s" if promoted > 1 else "","s" if promoted > 1 else ""]
 		if code in [Model.B_GAMBLE,Model.B_FORTRESS]: return "Effet immédiat sur la forteresse."
 		var preview: Dictionary = model.bonus_preview(code)
 		var touched: int = 0
@@ -3207,7 +3248,19 @@ Prochaines améliorations :")
 	if code == 8:
 		return "PV actuels : %d → %d\nPV maximum : %d → %d\n\nEffet immédiat, sans soin automatique ensuite." % [preview.hp_before,preview.hp_after,preview.max_before,preview.max_after]
 	var lines: Array[String] = []
-	if code in [Model.B_GAMBLE,Model.B_FORTRESS]:
+	if int(preview.get("gold_after",preview.get("gold_before",0))) != int(preview.get("gold_before",0)):
+		lines.append("Or : %d → %d" % [preview.gold_before,preview.gold_after])
+	if code in [Model.B_LEVY,Model.B_ROYAL]:
+		for purchase in preview.purchases:
+			lines.append("%s : %d → %d or" % [Model.ROSTER[purchase.type].get("short_name",Model.ROSTER[purchase.type].name),purchase.before,purchase.after])
+		for index in range(3):
+			lines.append("%s : %d → %d or" % [["Niveau 2","Niveau 3","Spécialisation"][index],preview.upgrades[index].before,preview.upgrades[index].after])
+		lines.append("Aucun remboursement des achats passés.")
+		return "\n".join(lines)
+	if code in [Model.B_REPAIRS,Model.B_INTEREST,Model.B_GATE,Model.B_LASTSTAND,Model.B_CALTROPS,Model.B_EXECUTE,Model.B_BOUNTY,Model.B_TREASURE]:
+		if code != Model.B_TREASURE: lines.append(Model.Campaign.BONUSES[code].description)
+		return "\n\n".join(lines)
+	if code in [Model.B_GAMBLE,Model.B_FORTRESS,Model.B_BASTION]:
 		lines.append("PV actuels : %d → %d
 PV maximum : %d → %d" % [preview.hp_before,preview.hp_after,preview.max_before,preview.max_after])
 	if code == 9:
@@ -3231,11 +3284,14 @@ PV maximum : %d → %d" % [preview.hp_before,preview.hp_after,preview.max_before
 					changes.append("%s : %s → %s" % [{"direct":"Dégâts directs","secondary":"Rebonds" if Model.family(unit.type) == 3 else "Explosion","curse":"Malédiction"}[component],_number(unit.large_before[component]),_number(unit.large_after[component])])
 		else:
 			changes = _bonus_unit_changes(code,unit)
+		if int(unit.get("level_after",0)) > int(model.defenders[unit.slot].level): changes.push_front("Niveau : %d → %d" % [model.defenders[unit.slot].level,unit.level_after])
 		if changes.is_empty(): continue
 		affected += 1
 		lines.append("E%d · %s\n%s" % [unit.slot+1,Model.ROSTER[unit.type].get("short_name",Model.ROSTER[unit.type].name),"\n".join(changes)])
 	if affected == 0:
-		if code >= Model.Campaign.LEGACY_BONUS_COUNT and Model.Campaign.BONUSES[code].audience == "all" and code not in [Model.B_GAMBLE,Model.B_FORTRESS]:
+		if code >= Model.Campaign.LEGACY_BONUS_COUNT and Model.Campaign.BONUSES[code].audience in ["enemies","fortress","gold"]:
+			lines.append(Model.Campaign.BONUSES[code].description)
+		elif code >= Model.Campaign.LEGACY_BONUS_COUNT and Model.Campaign.BONUSES[code].audience == "all" and code not in [Model.B_GAMBLE,Model.B_FORTRESS]:
 			lines.append("%s\n%s\nS’applique à tous vos défenseurs, selon la cible visée." % [Model.Campaign.BONUSES[code].scope,Model.Campaign.BONUSES[code].note])
 		else:
 			lines.append("Aucun défenseur actuel concerné.\nPeut servir aux futures recrues selon ses conditions.")

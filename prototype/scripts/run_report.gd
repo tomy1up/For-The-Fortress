@@ -188,10 +188,10 @@ static func markdown(report: Dictionary) -> String:
 	lines.append("\n## Journal des décisions\n")
 	for action in report.actions:
 		var detail: String = str(action.kind)
-		if action.kind in ["bonus_offer","bonus_choice"]:
+		if action.kind in ["bonus_offer","bonus_choice","bonus_reroll"]:
 			var names: Array[String] = []
 			for code in action.offered: names.append(Model.Campaign.BONUSES[int(code)].code + " · " + Model.Campaign.BONUSES[int(code)].name)
-			detail = ("Bonus proposés : " if action.kind == "bonus_offer" else "Choix parmi : ") + "; ".join(names)
+			detail = ("Bonus proposés : " if action.kind == "bonus_offer" else "Relance, nouvelles offres : " if action.kind == "bonus_reroll" else "Choix parmi : ") + "; ".join(names)
 			if action.kind == "bonus_choice": detail += " → " + Model.Campaign.BONUSES[int(action.chosen)].name
 		elif action.kind in ["buy","upgrade","sell"]:
 			detail = ("Achat" if action.kind == "buy" else "Amélioration" if action.kind == "upgrade" else "Vente") + " E%d · %s" % [action.slot+1,Model.ROSTER[int(action.type)].name]

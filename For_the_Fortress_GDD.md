@@ -1,6 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.69 — 20 novembre 2026
+Game Design Document — Version 0.70 — 21 novembre 2026
+
+Version 0.233 du jeu (21 novembre 2026) : **second lot du catalogue** (MAJ-70) — 60 bonus, dont 16 rares et 8 épiques aux effets nouveaux (or, forteresse, promotions, ralentissements, exécution…), offres tirées par rareté (environ 70 % de communs, 25 % de rares, 5 % d'épiques, plus de rares en fin de partie) et une relance gratuite par partie. Valeurs à confirmer en partie réelle ; l'équilibrage suivra (O-028).
 
 Version 0.232 du jeu (20 novembre 2026) : **catalogue de 36 bonus et quatre choix par partie** (MAJ-68), puis **rééquilibrage des PV d'ennemis** mission par mission pour que la meilleure composition finisse avec 40 à 70 % de ses PV de forteresse (cible du porteur, MAJ-69) : plus aucune réussite à 100 % pour l'Alliance, deux missions pour la Horde ; la meilleure marge varie de 37 points selon le tirage des bonus. Coefficients et noms de bonus à confirmer en partie réelle (O-028).
 
@@ -10,7 +12,7 @@ Document de référence pour concevoir et développer For the Fortress!, destin�
 
 **Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.206. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.69 ; jeu de référence 0.232.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.70 ; jeu de référence 0.233.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -345,16 +347,18 @@ Tester les gains par ennemi retenus en section 9 et la limite H de deux exemplai
 ### Améliorations pendant une partie
 Après certaines vagues, le joueur choisit une amélioration parmi trois propositions aléatoires — V. Les bonus obtenus restent actifs jusqu’à la fin de la partie — V. **Depuis la v0.232, les sélections ont lieu après les vagues 2, 4, 6 et 8, soit quatre moments de choix — H (réglage de prototype à confirmer, MAJ-68).** Jusqu’à la v0.231, elles avaient lieu après les vagues 3, 6 et 9 (trois choix) ; les rapports de ces versions se rejouent avec ce rythme.
 
-**Depuis la v0.232, le prototype utilise 36 bonus** : les douze bonus approuvés (R-01 à R-12, sections 25 et 26) et un premier lot élargi de 24 bonus (R-13 à R-36, section 26) de trois familles, demandées par le porteur le 17 novembre 2026 (MAJ-67) : bonus de rôle (unités rapides, lentes, de longue ou courte portée, à effets de soutien), bonus à contrepartie, bonus de situation et de synergie. Les valeurs et les noms restent H. La cible commerciale d’environ 60 bonus reste C ; la rareté et la relance forment le second lot (O-027). Les trois offres sont distinctes et les bonus déjà sélectionnés sont exclus.
+**Depuis la v0.233, le prototype utilise 60 bonus** (36 communs, 16 rares, 8 épiques, MAJ-70). En v0.232, il en utilisait 36 : les douze bonus approuvés (R-01 à R-12, sections 25 et 26) et un premier lot élargi de 24 bonus (R-13 à R-36, section 26) de trois familles, demandées par le porteur le 17 novembre 2026 (MAJ-67) : bonus de rôle (unités rapides, lentes, de longue ou courte portée, à effets de soutien), bonus à contrepartie, bonus de situation et de synergie. Les valeurs et les noms restent H. La cible d’environ 60 bonus est atteinte en v0.233 avec le second lot : rareté (commun, rare, épique ; environ 70 / 25 / 5 %, plus de rares en fin de partie) et une relance gratuite par partie qui remplace les trois offres (sections 26 et 27, `design/Bonus_rarete_relance_v0233.md`). Les trois offres sont distinctes et les bonus déjà sélectionnés sont exclus.
 
 | Règle de génération | État |
 | --- | --- |
 | Trois propositions par choix | V |
 | Tirage aléatoire | V |
 | Poids égaux ; 36 bonus éligibles aux deux factions ; aucune rareté | H (v0.232) |
+| Rareté de chaque carte selon le rang du choix (80/18/2 % au 1er choix, 56/34/10 % au 4e), puis poids égaux dans la rareté ; 60 bonus | H (v0.233, cadre V : porteur, 21 novembre 2026) |
+| Une relance gratuite par partie, qui remplace les trois offres | V (porteur, 21 novembre 2026) |
 | Trois offres distinctes ; bonus choisi exclu des tirages suivants | V |
 | Pourcentages de dégâts additionnés selon les composantes ; voir section 27 | V |
-| Catalogue de 36, 35, 34 puis 33 entrées avant les quatre tirages (12, 11, 10 avant la v0.232) | Calcul dérivé |
+| Catalogue de 60, 59, 58 puis 57 entrées avant les quatre tirages (36 à 33 en v0.232 ; 12, 11, 10 avant) | Calcul dérivé |
 
 ### Les trois mécanismes de synergie
 | Mécanisme validé | Intention | Règle du prototype |
@@ -1000,16 +1004,50 @@ Premier lot demandé par le porteur (MAJ-67, 17 novembre 2026), réalisé en v0.
 
 Six bonus portent une contrepartie (R-20 à R-25). La politique de choix de référence des tests et des études (`Model.reference_bonus`) écarte R-20, R-21, R-22, R-23, R-24 et R-25 quand une autre offre existe.
 
+### Second lot de la v0.233 : bonus rares et épiques (R-37 à R-60)
+Décision du porteur, 21 novembre 2026 (MAJ-70) : bonus « à part, uniques et plus marquants », effets doublés ou capacités nouvelles. Noms et valeurs H. Aucun n'a de contrepartie. Fiche : `design/Bonus_rarete_relance_v0233.md`.
+
+| Code | Nom provisoire | Rareté | Effet de référence — H |
+| --- | --- | --- | --- |
+| R-37 | Lames runiques | Rare | +20 % à tous les dégâts et +10 % de cadence |
+| R-38 | Écho des ricochets | Rare | +2 victimes secondaires et +25 % aux dégâts secondaires des unités à effet de zone |
+| R-39 | Malédiction tenace | Rare | Dégâts sur la durée : trois échéances au lieu de deux |
+| R-40 | Chausse-trappes | Rare | Chaque ennemi ralenti 2 s à son apparition (vitesse ×0,6) |
+| R-41 | Réparations | Rare | +2 PV de forteresse à chaque vague gagnée, sans dépasser le maximum |
+| R-42 | Trésor de guerre | Rare | +100 or immédiatement |
+| R-43 | Intérêts | Rare | +10 % de l’or possédé à chaque vague gagnée (25 au plus) |
+| R-44 | Promotion | Rare | Défenseurs actuels de niveau 1 → niveau 2, gratuitement |
+| R-45 | Exécution | Rare | Un ennemi touché sous 10 % de ses PV est achevé, sauf le boss |
+| R-46 | Tueur de géants | Rare | +40 % contre les ennemis lourds et le boss |
+| R-47 | Herse | Rare | À chaque vague, le premier ennemi qui atteint la forteresse ne fait aucun dégât |
+| R-48 | Tir de couverture | Rare | Longue portée : +1 de portée et +15 % de dégâts |
+| R-49 | Rage du désespoir | Rare | +3 % de dégâts par PV de forteresse perdu (+45 % au plus) |
+| R-50 | Levée en masse | Rare | −30 % aux achats, améliorations et spécialisations futurs |
+| R-51 | Marque du chasseur | Rare | Tout tir direct marque sa cible 3 s : +10 % de dégâts reçus |
+| R-52 | Prime de guerre | Rare | +2 or par élimination |
+| R-53 | Dernier souffle | Épique | Une fois par partie, la forteresse évite une défaite (1 PV puis +10 PV) |
+| R-54 | Armée d’élite | Épique | +35 % à tous les dégâts et +20 % de cadence |
+| R-55 | Ascension | Épique | Défenseurs actuels de niveau 1 ou 2 → niveau 3, gratuitement |
+| R-56 | Frénésie sanguinaire | Épique | +1 % de dégâts par ennemi éliminé dans la partie (+50 % au plus) |
+| R-57 | Forteresse imprenable | Épique | +12 PV maximum et soin complet |
+| R-58 | Pluie de feu | Épique | +2 victimes secondaires, +0,5 de rayon ou de rebond, +40 % aux dégâts secondaires |
+| R-59 | Fortune royale | Épique | +150 or et −20 % aux prix futurs |
+| R-60 | Temps suspendu | Épique | Ennemis ralentis 4 s à l’apparition ; ralentissements de vos unités +50 % |
+
+Les promotions gratuites ne changent pas l’or payé (revente inchangée). Les réductions de prix se multiplient entre elles (arrondi supérieur). Les cadences se multiplient ; les pourcentages de dégâts s’additionnent avec ceux de la section 27.
+
 <a id="s27"></a>
 
 ## 27 Tirage et cumul des bonus
 
 ### Tirage et application
-- Tous les bonus du catalogue (douze jusqu’à la v0.231, 36 depuis la v0.232) sont accessibles dès le premier choix aux deux factions, sans condition de déploiement, niveau ou branche. Chaque bonus a un bénéficiaire potentiel dans chaque roster.
+- Tous les bonus du catalogue (douze jusqu’à la v0.231, 36 en v0.232, 60 depuis la v0.233) sont accessibles dès le premier choix aux deux factions, sans condition de déploiement, niveau ou branche. Chaque bonus a un bénéficiaire potentiel dans chaque roster.
+- **Depuis la v0.233**, chaque carte tire d’abord sa rareté selon le rang du choix (commun, rare, épique : 80/18/2 % au 1er choix, 72/24/4 %, 64/29/7 %, 56/34/10 % au 4e), puis un bonus de cette rareté avec des poids égaux ; si la rareté est épuisée, une rareté voisine. Avant la v0.233, le tirage était uniforme.
+- **Relance (v0.233)** : une fois par partie, gratuitement, le joueur remplace les trois offres par trois autres, tirées de la même façon en évitant les offres remplacées.
 - Tirer trois codes distincts, avec poids égaux, sans remise à l’intérieur de cette offre.
 - Après sélection, retirer uniquement le bonus choisi du catalogue de la partie. Il ne peut plus être offert ni sélectionné une seconde fois.
 - Les deux offres non choisies retournent dans le catalogue disponible et peuvent réapparaître plus tard.
-- Pas de relance, de rareté, de coût de sélection ou de cumul de plusieurs copies du même bonus pour ce prototype.
+- Pas de coût de sélection ni de cumul de plusieurs copies du même bonus pour ce prototype ; relance et rareté depuis la v0.233 (ci-dessus).
 - Choisir un seul bonus avant de reprendre la préparation et de lancer la vague suivante. Ses effets commencent dès la sélection, y compris les réductions de prix utilisables pendant cette même préparation.
 - Réinitialiser tous les choix et effets à la fin de la partie.
 
@@ -1704,6 +1742,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-51 | **Orientation par défaut des défenseurs : face au tronçon de route le plus proche** au placement et entre les vagues ; en combat, la dernière cible garde la priorité — V | Décision du porteur, 15 novembre 2026 ; `valley_view.gd` (`road_facing`), `tests/test_defender_facing.gd` |
 | MAJ-52 | **Visée inclinée du Tireur d’élite elfe (type 11)** : sept planches (0°, ±8°, ±16°, ±24°), un seul angle pour la pose, l’origine de la flèche et sa direction de départ ; lâcher à 0,27 s — V (geste validé par le porteur) ; angles et lâcher — rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `a2cdab9` ; `tests/test_marksman_aim.gd` |
 | MAJ-53 | **Estoc du Piquier humain (type 14)** : trois planches (−12°, 0°, +12°), la pique est dessinée dans les planches, éclat de contact à 0,256 s à la pointe donnée par angle — V (geste validé par le porteur) ; rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `9a7d3d8` ; `tests/test_marksman_aim.gd` |
+| MAJ-70 | **Second lot du catalogue de bonus** : trois raretés (commun, rare, épique ; environ 70 / 25 / 5 %, plus de rares en fin de partie), une relance gratuite par partie qui remplace les trois offres, 24 bonus rares et épiques R-37 à R-60 aux effets uniques (60 bonus au total) ; anciens rapports rejoués avec leurs règles — cadre V (porteur, 21 novembre 2026 : « on fait tout maintenant […] faire l'équilibrage et les ajustements par la suite »), noms, valeurs et pondérations H | Décision du porteur, 21 novembre 2026 ; `design/Bonus_rarete_relance_v0233.md` |
 | MAJ-69 | **Rééquilibrage des PV d'ennemis pour les bonus élargis** : cible du porteur (20 novembre 2026), la meilleure composition d'une mission finit avec 40 à 70 % de ses PV de forteresse ; coefficient par mission et par faction (100 à 150 %) appliqué à la courbe de base, mesuré sur les 200 missions et ajusté pour que la composition de référence gagne ; limite des PV portée à 400 % ; vérification : meilleure marge moyenne 64 % (Alliance) et 66 % (Horde), plus aucune mission à 100 % pour l'Alliance — cible V, coefficients H (réglage de prototype à confirmer) | Décision du porteur, 20 novembre 2026 ; `design/Rebalancage_bonus_v0232.md` |
 | MAJ-68 | **Catalogue de bonus élargi à 36 (premier lot, R-13 à R-36) et quatre choix par partie** (après les vagues 2, 4, 6 et 8) : bonus de rôle, à contrepartie, de situation et de synergie ; anciens rapports rejoués avec les douze bonus et les choix 3, 6, 9 ; étude : le catalogue ajoute de la variance (12 points de marge selon le tirage) mais ne baissait pas le plafond (100 % de marge pour la meilleure composition) — périmètre V (porteur, 17 novembre 2026), noms, valeurs et rythme H | Demande du porteur, 17 novembre 2026 ; `design/Bonus_catalogue_v0232.md` |
 | MAJ-67 | **Écart de largeur entre factions jugé acceptable** ; le porteur souhaite que l'aléa des bonus (choix toutes les 3 vagues) casse la maîtrise parfaite et demande d'en augmenter fortement le nombre (12 aujourd'hui) — étude du catalogue à proposer (O-027) — V (direction) | Précision du porteur, 17 novembre 2026 |
@@ -1749,8 +1788,8 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-022 | **Brûlure du Pyromancien humain : tranchée le 16 novembre 2026** (appliquée, MAJ-58) | Décision du porteur ; équilibre à confirmer en jeu |
 | O-023 | **Talents et dots du Pyromancien : tranchée le 16 novembre 2026** (les talents du Mage s’appliquent aussi aux dégâts sur la durée, MAJ-59) | Décision du porteur ; valeurs à confirmer en jeu |
 | O-024 | **Exercice de tir (R-02) : tranchée le 16 novembre 2026** (texte explicite, alternatives du chaman incluses, MAJ-59) | Décision du porteur ; valeurs à confirmer en jeu |
-| O-028 | **Rééquilibrage de la v0.232 à juger en partie réelle** : la cible (40 à 70 % de marge pour la meilleure composition) est mesurée sur une stratégie fixe ; le porteur doit dire si la difficulté ressentie convient, si le chapitre 13 de la Horde (93 %) doit être durci et le chapitre 4 de la Horde (42 %, missions 32 et 40 très dures) allégé, et confirmer le rythme de quatre choix et les noms et valeurs des 24 nouveaux bonus | Essai du porteur sur la v0.232 |
-| O-027 | **Catalogue de bonus : premier lot réalisé en v0.232** (36 bonus, quatre choix, MAJ-68). Reste le second lot : rareté, relance du tirage, et poursuite vers la cible commerciale d'environ 60 bonus (section 8) | Décision du porteur (périmètre du second lot) |
+| O-028 | **Rééquilibrage de la v0.232 à juger en partie réelle** : la cible (40 à 70 % de marge pour la meilleure composition) est mesurée sur une stratégie fixe ; le porteur doit dire si la difficulté ressentie convient, si le chapitre 13 de la Horde (93 %) doit être durci et le chapitre 4 de la Horde (42 %, missions 32 et 40 très dures) allégé, confirmer le rythme de quatre choix et les noms et valeurs des 48 bonus ajoutés en v0.232 et v0.233, ainsi que les pondérations de rareté ; **équilibrage complet avec les rares et épiques à faire** (le porteur l'a placé après la pose de la base) | Essai du porteur sur la v0.232 |
+| O-027 | **Catalogue de bonus : réalisé** (36 bonus en v0.232, 60 avec rareté et relance en v0.233, MAJ-68 et MAJ-70). Restent ouverts : d'autres sources de relance (bonus, talent, boutique) si le porteur en veut | Décision du porteur |
 | O-026 | **Équilibre entre factions en fin de campagne : écart jugé acceptable par le porteur (17 novembre 2026), aucun réglage ; le porteur observe qu'une réussite à 100 % pour qui connaît les bonnes unités est peu satisfaisante et attend la variété des bonus (voir O-027).** Mesures : L'étude multi-compositions (`design/Equilibre_factions_fin_campagne_v0232.md`) montre, avec les seules unités de base, un avantage net de la Horde aux chapitres 11 à 20 (+18 points de meilleure marge aux chapitres 11 à 15, +23 aux chapitres 16 à 20) ; **avec une unité de boutique, la puissance maximale devient comparable (100 % pour les deux factions en fin de campagne) et il reste une différence de largeur** : aux chapitres 12 à 20, la Horde réussit avec plus de combinaisons d'unités, d'arbres et d'unités de boutique (27 % contre 18 % de combinaisons gagnantes en fin de campagne) ; l'Alliance a l'avantage de largeur aux chapitres 1 à 9. La réduction de PV d'ennemis de la Horde (v0.212) n'explique que 5 points de l'écart avec les unités de base. Le porteur veut des puissances assez similaires : à lui de dire si la largeur compte, ou seulement la puissance maximale | Étude du 17 novembre 2026 ; décision du porteur attendue |
 | O-025 | **Aura du Prêtre et de l’Ancien : tranchée le 16 novembre 2026** (rayon 4,2, cartes inchangées, MAJ-59) | Décision du porteur ; valeurs à confirmer en jeu |
 | O-021 | **Nouvelle race pour la Horde : tranchée le 15 novembre 2026 (paire squelette/gnome ensuite retirée de la boutique, MAJ-49)** — pas de race complète pour l’instant ; la piste est close par le squelette de la Horde face au gnome de l’Alliance (Fantassin squelette et Tirailleur gnome, v0.207 et v0.208, MAJ-45 et MAJ-46). Une race complète pourra être rouverte plus tard sur décision du porteur | Réponse du porteur, 15 novembre 2026 : la question est close par la paire squelette (Horde) contre gnome (Alliance) ; fiche `design/Horde_squelette_jouable.md` |
@@ -1897,6 +1936,8 @@ Version 0.67 — 17 novembre 2026 : jeu 0.230. Tir à bout portant (Catapulte, V
 Version 0.68 — 17 novembre 2026 : jeu 0.231. Outillage seulement : régression (6 suites à la fois, 8 min 30 au lieu de 25) et vérification d'export (4 cas à la fois, environ 15 minutes au lieu d'une heure) en parallèle ; captures reproductibles (fanion et bandeau d'affixe figés pendant les captures automatiques) ; fiches `design/Missions_091…200` mises à jour avec les cartes refondues ; rapport `design/Courbe_difficulte_v0230.md` (PV de forteresse restants pour la composition de référence sur les 200 missions : écart apparent entre factions aux chapitres 16 à 20, non concluant avec une seule composition). Aucune règle modifiée, aucun changement du jeu joué normalement.
 
 Version 0.69 — 20 novembre 2026 : jeu 0.232. **Bonus élargis et rééquilibrage** : catalogue de 36 bonus (24 nouveaux de rôle, à contrepartie, de situation et de synergie, sections 8, 26 et 27), quatre choix par partie après les vagues 2, 4, 6 et 8 (MAJ-68) ; PV d'ennemis multipliés par un coefficient par mission et par faction pour que la meilleure composition finisse avec 40 à 70 % de ses PV de forteresse (cible du porteur, MAJ-69, section 62) ; anciens rapports rejoués avec leurs règles ; O-027 mis à jour, O-028 ouvert.
+
+Version 0.70 — 21 novembre 2026 : jeu 0.233. **Second lot du catalogue de bonus** (MAJ-70) : trois raretés (commun, rare, épique) et tirage par rareté selon le rang du choix (sections 8 et 27) ; relance gratuite unique par partie ; 24 bonus rares et épiques R-37 à R-60 (section 26) ; trois coefficients de rééquilibrage abaissés pour les suites de campagne (section 62) ; O-027 clos pour ce lot, O-028 élargi.
 
 <a id="s51"></a>
 
@@ -2190,7 +2231,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 20 novembre 2026 (GDD 0.69, jeu 0.232)
+### État au 21 novembre 2026 (GDD 0.70, jeu 0.233)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2212,7 +2253,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.69, jeu 0.232 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.70, jeu 0.233 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2421,7 +2462,7 @@ Les PV ennemis valent `99 + numéro de mission` pour cent des PV de référence 
 ### Rééquilibrage de la v0.232 (bonus élargis)
 **Cible décidée par le porteur le 20 novembre 2026 (MAJ-69) : la meilleure composition d’une mission doit finir avec 40 à 70 % de ses PV de forteresse.** Depuis la v0.232, les PV ennemis joués valent la courbe ci-dessus (réduction de la Horde comprise) multipliée par un coefficient propre à chaque mission et à chaque faction, entre 100 et 150 % (`REBALANCE_PERCENT`, `campaign_catalogue.gd`) — H, réglage de prototype à confirmer. Les coefficients ont été mesurés mission par mission pour ramener la meilleure marge des 30 compositions de l’étude à environ 55 %, sans que la composition de référence des tests (Alliance archer et deux arbalétriers, Horde deux haches et un chaman) descende sous 25 % de marge, puis ajustés pour que chaque suite de campagne passe. Aucun coefficient n’allège une mission. Les PV de la colonne « PV ennemis » du tableau ci-dessus sont ceux de la courbe de base ; la fiche de mission du jeu affiche les PV réellement joués. La limite de validité passe de 264 à 400 %.
 
-Vérification sur 36 000 parties (200 missions, deux factions, 30 compositions, trois tirages de bonus) : meilleure marge moyenne 64 % (Alliance) et 66 % (Horde), médianes 66 et 68 % ; 119 missions de l’Alliance et 99 de la Horde dans la cible ; plus aucune mission à 100 % pour l’Alliance, deux pour la Horde (avant : presque toutes). La meilleure marge varie de 37 points en moyenne selon le tirage des bonus. Toutes compositions confondues, le taux de victoire passe à 17 % (Alliance) et 14 % (Horde). Écarts restants : chapitre 13 de la Horde au-dessus de la cible (93 %), chapitre 4 de la Horde en dessous (42 %). Fiche : `design/Rebalancage_bonus_v0232.md`.
+Vérification sur 36 000 parties (200 missions, deux factions, 30 compositions, trois tirages de bonus) : meilleure marge moyenne 64 % (Alliance) et 66 % (Horde), médianes 66 et 68 % ; 119 missions de l’Alliance et 99 de la Horde dans la cible ; plus aucune mission à 100 % pour l’Alliance, deux pour la Horde (avant : presque toutes). La meilleure marge varie de 37 points en moyenne selon le tirage des bonus. Toutes compositions confondues, le taux de victoire passe à 17 % (Alliance) et 14 % (Horde). Écarts restants : chapitre 13 de la Horde au-dessus de la cible (93 %), chapitre 4 de la Horde en dessous (42 %). Fiche : `design/Rebalancage_bonus_v0232.md`. En v0.233, le nouveau tirage (raretés) change les bonus obtenus par les stratégies fixes des tests : trois coefficients ont été abaissés de 6 points pour que les suites de campagne passent (mission 3 de l’Alliance : 116 % ; missions 23 et 177 de la Horde : 103 et 128 %). L’équilibrage complet avec les bonus rares et épiques reste à faire (O-028) : mesure sur 36 000 parties, la meilleure marge passe à 68,5 % pour l’Alliance (+5 points) mais à **85,5 % pour la Horde** (+19 points, 19 missions de nouveau gagnées à 100 %) ; plusieurs rares et épiques renforcent surtout les unités à effet de zone et à dégâts sur la durée, majoritaires dans l’armée de base de la Horde.
 
 ### Récompenses de première victoire
 PO : 60 jusqu’au chapitre 10, puis 60 + 5 par chapitre au-delà du dixième (MAJ-31, H). XP : 100 par mission jusqu’à la mission 100, aucune ensuite. Les PO financent la boutique (section 57) ; leur usage après la mission 100 reste ouvert (O-013).
@@ -2562,5 +2603,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.230 | Tir à bout portant et contrôles visuels des gestes ; GDD 0.67 |
 | 0.231 | Outillage (contrôles en parallèle, captures reproductibles), fiches des chapitres 10 à 20, courbe de difficulté ; GDD 0.68 |
 | 0.232 | Catalogue de 36 bonus et quatre choix par partie ; rééquilibrage des PV d'ennemis par mission (cible 40 à 70 % de marge pour la meilleure composition) ; GDD 0.69 |
+| 0.233 | Second lot de bonus : 60 bonus dont 16 rares et 8 épiques, tirage par rareté, relance gratuite par partie ; quatre bonus acquis visibles ; GDD 0.70 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

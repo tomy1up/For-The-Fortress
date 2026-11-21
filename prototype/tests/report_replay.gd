@@ -75,6 +75,12 @@ static func rules_v232_for(version: String) -> bool:
 	if parts.size() < 2 or parts[0] != "0" or not parts[1].is_valid_int(): return true
 	return int(parts[1]) >= 232
 
+## Règles de la v0.233 (rareté des offres, relance, bonus rares et épiques) : les rapports plus anciens tirent uniformément parmi les 36 premiers bonus, sans relance.
+static func rules_v233_for(version: String) -> bool:
+	var parts: PackedStringArray = version.split(".")
+	if parts.size() < 2 or parts[0] != "0" or not parts[1].is_valid_int(): return true
+	return int(parts[1]) >= 233
+
 static func verify(data: Variant) -> Dictionary:
 	if not data is Dictionary: return _fail("Le rapport doit être un objet JSON.")
 	if data.get("schema_version") != 2: return _fail("Seuls les rapports au format 2 sont pris en charge.")
@@ -93,6 +99,7 @@ static func verify(data: Variant) -> Dictionary:
 	model.burn_for_all_curse_units = burn_rules_for(data.game_version)
 	model.rules_v222 = rules_v222_for(data.game_version)
 	model.rules_v232 = rules_v232_for(data.game_version)
+	model.rules_v233 = rules_v233_for(data.game_version)
 	model.talent_rules = talent_rules_for(data.game_version) # Chaque rapport garde les valeurs de talents de sa version.
 	if data.has("combat_affix") and not model.configure_combat_affix(data.combat_affix): return _fail("Affixe de combat invalide.")
 	if not model.routes.is_empty():
@@ -112,7 +119,7 @@ static func verify(data: Variant) -> Dictionary:
 	for index in range(actions.size()):
 		var action: Variant = actions[index]
 		if not action is Dictionary or not action.get("kind") is String: return _fail("Action %d mal formée." % (index+1))
-		if action.kind not in ["faction","buy","upgrade","sell","wave_prepare","wave_start","wave_end","bonus_offer","bonus_choice"]:
+		if action.kind not in ["faction","buy","upgrade","sell","wave_prepare","wave_start","wave_end","bonus_offer","bonus_choice","bonus_reroll"]:
 			return _fail("Action %d inconnue." % (index+1))
 		if index >= model.action_history.size():
 			var required: Array = {"faction":["faction"],"buy":["slot","type"],"upgrade":["slot","branch"],"sell":["slot"],"bonus_choice":["chosen"]}.get(action.kind,[])
@@ -127,6 +134,7 @@ static func verify(data: Variant) -> Dictionary:
 				"sell": accepted = model.sell(int(action.slot))
 				"wave_prepare": accepted = model.prepare_next_wave()
 				"bonus_choice": accepted = model.choose_bonus(int(action.chosen))
+				"bonus_reroll": accepted = model.reroll_bonus()
 				"wave_start":
 					accepted = model.start()
 					if accepted: model.advance(10000)

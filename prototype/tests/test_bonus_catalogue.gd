@@ -33,11 +33,11 @@ func unit_types(faction: int) -> Array:
 
 func run_checks() -> void:
 	var data = Model.Campaign
-	check(data.BONUSES.size() == 36 and data.LEGACY_BONUS_COUNT == 12,"Le catalogue compte 36 bonus dont les 12 historiques")
-	for index in range(36):
+	check(data.BONUSES.size() == 60 and data.LEGACY_BONUS_COUNT == 12 and data.V232_BONUS_COUNT == 36,"Le catalogue compte 60 bonus : 12 historiques, 36 jusqu'à la v0.232 (rares et épiques : test_bonus_rarity.gd)")
+	for index in range(60):
 		var entry: Dictionary = data.BONUSES[index]
 		check(entry.code == "R-%02d" % (index+1) and not str(entry.name).is_empty() and not str(entry.description).is_empty(),"Bonus %d : code, nom et description" % (index+1))
-		if index >= 12: check(str(entry.get("effect","")) != "" and str(entry.get("scope","")) != "" and str(entry.get("note","")) != "" and entry.get("audience","") in ["all","units","immediate","purchases","upgrades"],"Bonus %d : fiche de carte complète" % (index+1))
+		if index >= 12: check(str(entry.get("effect","")) != "" and str(entry.get("scope","")) != "" and str(entry.get("note","")) != "" and entry.get("audience","") in ["all","units","immediate","purchases","upgrades","fortress","gold","enemies"],"Bonus %d : fiche de carte complète" % (index+1))
 	# Tirage : douze bonus historiques d'un côté, 36 de l'autre, trois offres distinctes, sans doublon avec les bonus pris.
 	var old = fresh(0)
 	old.rules_v232 = false

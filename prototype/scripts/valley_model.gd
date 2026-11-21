@@ -145,6 +145,38 @@ const B_MORALE := 32
 const B_FASTHUNT := 33
 const B_SMALLHUNT := 34
 const B_LOOT := 35
+## Règles de la v0.233 (second lot, décision du porteur, 21 novembre 2026) : rareté des offres (commun, rare, épique, plus de rares en fin de partie), une relance gratuite par partie,
+## et 24 bonus rares et épiques (R-37 à R-60). Faux pour rejouer un rapport plus ancien (tirage uniforme parmi les 36 premiers bonus, sans relance).
+var rules_v233: bool = true
+const B_RUNIC := 36
+const B_ECHO := 37
+const B_TENACIOUS := 38
+const B_CALTROPS := 39
+const B_REPAIRS := 40
+const B_TREASURE := 41
+const B_INTEREST := 42
+const B_PROMOTION := 43
+const B_EXECUTE := 44
+const B_GIANTS := 45
+const B_GATE := 46
+const B_COVER := 47
+const B_DESPAIR := 48
+const B_LEVY := 49
+const B_HUNTMARK := 50
+const B_BOUNTY := 51
+const B_LASTSTAND := 52
+const B_ELITEARMY := 53
+const B_ASCENSION := 54
+const B_BLOODLUST := 55
+const B_BASTION := 56
+const B_FIRESTORM := 57
+const B_ROYAL := 58
+const B_STASIS := 59
+## Relances gratuites des offres de bonus par partie (règles v0.233).
+const REROLLS_PER_RUN := 1
+var rerolls_left: int = 0
+var last_stand_used: bool = false # Dernier souffle (R-53) : une fois par partie.
+var gate_wave: int = -1 # Herse (R-47) : vague où le premier passage a déjà été bloqué.
 const AURA_RADIUS := 4.2 # plus petit rayon qui garantit un voisin sur chacune des 181 cartes de la campagne (distance maximale entre deux emplacements voisins : 4,12)
 const LEGACY_AURA_RADIUS := 3.6
 ## Brûlure des unités à `curse_damage` hors famille du chaman (Pyromancien humain), appliquée depuis la v0.221 (décision du porteur, 16 novembre 2026) ; faux pour rejouer un ancien rapport.
@@ -209,6 +241,9 @@ func reset() -> void:
 	completed_time = 0.0
 	bonuses.clear()
 	bonus_offer.clear()
+	rerolls_left = REROLLS_PER_RUN
+	last_stand_used = false
+	gate_wave = -1
 	spawn_schedule = Campaign.schedule(wave,wave_set_id)
 	fortress_hp = INITIAL_HP
 	elapsed = 0.0
@@ -677,7 +712,7 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	stats.reference_secondary = stats.secondary_damage
 	stats.reference_curse = stats.curse_damage
 	stats.direct_bonus = common + synergy.direct + meta.direct + (0.15 if 5 in active_bonuses else 0.0)
-	stats.secondary_bonus = common + synergy.secondary + meta.secondary + (0.20 if 3 in active_bonuses and family(defender.type) in [2,3,4] else 0.0)
+	stats.secondary_bonus = common + synergy.secondary + meta.secondary + (0.20 if 3 in active_bonuses and family(defender.type) in [2,3,4] else 0.0) + float(extra_bonus.secondary)
 	stats.curse_bonus = common + synergy.curse + meta.curse + float(extra_bonus.curse)
 	stats.damage = stats.reference_damage * (1.0+stats.direct_bonus)
 	stats.secondary_damage = stats.reference_secondary * (1.0+stats.secondary_bonus)
@@ -688,17 +723,20 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	if 4 in active_bonuses and family(defender.type) in [2,3,4]: stats.radius += 0.2
 	if float(extra_bonus.range) != 0.0: stats.range = maxf(1.0,stats.range+float(extra_bonus.range))
 	if float(extra_bonus.rate) != 1.0: stats.interval /= float(extra_bonus.rate)
-	if int(extra_bonus.cap) > 0 and int(stats.secondary_cap) > 0: stats.secondary_cap += int(extra_bonus.cap)
+	if int(extra_bonus.cap) > 0 and int(stats.secondary_cap) > 0:
+		stats.secondary_cap += int(extra_bonus.cap)
+		stats.radius += float(extra_bonus.radius) # Pluie de feu (R-58) : rayon et distance de rebond des unités à effet de zone
 	if float(extra_bonus.support) != 1.0:
 		for key in ["mark_bonus","loot_bonus","volatile_damage","slow_seconds"]:
 			if stats.has(key): stats[key] = float(stats[key])*float(extra_bonus.support)
+	if float(extra_bonus.slow) != 1.0 and stats.has("slow_seconds"): stats.slow_seconds = float(stats.slow_seconds)*float(extra_bonus.slow) # Temps suspendu (R-60)
 	stats.synergies = synergy.codes
 	return stats
 
 ## Effets des bonus R-13 à R-36 sur un défenseur (règles v0.232) : gain commun à tous les dégâts, gain de malédiction, portée, cadence (facteur), cibles secondaires et force des soutiens.
 ## Les rôles se lisent sur les valeurs de base du roster, jamais sur les valeurs déjà modifiées.
 func _extra_bonus_effects(slot: int, defender: Dictionary, level: int, active_bonuses: Array) -> Dictionary:
-	var result: Dictionary = {"common":0.0,"curse":0.0,"range":0.0,"rate":1.0,"cap":0,"support":1.0}
+	var result: Dictionary = {"common":0.0,"curse":0.0,"range":0.0,"rate":1.0,"cap":0,"support":1.0,"secondary":0.0,"radius":0.0,"slow":1.0}
 	var any: bool = false
 	for code in active_bonuses:
 		if code >= Campaign.LEGACY_BONUS_COUNT:
@@ -711,14 +749,14 @@ func _extra_bonus_effects(slot: int, defender: Dictionary, level: int, active_bo
 	var common: float = 0.0
 	if B_RAPID in active_bonuses and base_interval <= 1.3+EPS: common += 0.25
 	if B_SLOW in active_bonuses and base_interval >= 2.4-EPS: common += 0.25
-	if B_BARRAGE in active_bonuses: result.cap = 1
+	if B_BARRAGE in active_bonuses: result.cap += 1
 	if B_CURSE in active_bonuses and float(reference.get("curse_damage",0.0)) > 0.0: result.curse = 0.35
 	if B_FAR in active_bonuses and base_range >= 4.5-EPS: common += 0.20
 	if B_CLOSE in active_bonuses and base_range <= 3.6+EPS: common += 0.25
 	if B_SUPPORT in active_bonuses and (reference.has("aura_bonus") or reference.has("mark_bonus") or reference.has("slow_seconds") or reference.has("loot_bonus") or reference.has("volatile_damage")): result.support = 1.3
 	if B_GAMBLE in active_bonuses: common += 0.30
 	if B_FRENZY in active_bonuses:
-		result.rate = 1.25
+		result.rate *= 1.25
 		result.range -= 0.5
 	if B_LONG in active_bonuses:
 		result.range += 1.0
@@ -738,6 +776,27 @@ func _extra_bonus_effects(slot: int, defender: Dictionary, level: int, active_bo
 			common += 0.25
 			result.range += 0.5
 		if B_MIXED in active_bonuses: common += 0.05*float(mini(4,types.size()))
+	# Rares et épiques (règles v0.233).
+	var group: bool = int(reference.get("secondary_cap",0)) > 0
+	if B_RUNIC in active_bonuses:
+		common += 0.20
+		result.rate *= 1.10
+	if B_ECHO in active_bonuses:
+		result.cap += 2
+		if group: result.secondary += 0.25
+	if B_COVER in active_bonuses and base_range >= 4.5-EPS:
+		common += 0.15
+		result.range += 1.0
+	if B_DESPAIR in active_bonuses: common += minf(0.45,0.03*float(maxi(0,max_hp-fortress_hp)))
+	if B_ELITEARMY in active_bonuses:
+		common += 0.35
+		result.rate *= 1.20
+	if B_BLOODLUST in active_bonuses: common += minf(0.50,0.01*float(total_killed))
+	if B_FIRESTORM in active_bonuses:
+		result.cap += 2
+		result.radius += 0.5
+		if group: result.secondary += 0.40
+	if B_STASIS in active_bonuses: result.slow = 1.5
 	result.common = common
 	return result
 
@@ -813,6 +872,7 @@ func _victim_bonus(component: String, victim: Dictionary, active_bonuses: Array)
 		if B_FINISH in active_bonuses and float(victim.hp) < 0.5*float(victim.max_hp)-EPS: extra += 0.30
 	if B_FASTHUNT in active_bonuses and int(victim.get("type",-1)) in FAST_ENEMY_TYPES: extra += 0.30
 	if B_SMALLHUNT in active_bonuses and int(victim.get("type",-1)) in SMALL_ENEMY_TYPES: extra += 0.25
+	if B_GIANTS in active_bonuses and int(victim.get("type",-1)) in HEAVY_ENEMY_TYPES: extra += 0.40 # Tueur de géants (R-46), boss compris
 	return extra
 
 func _refresh_windows() -> void:
@@ -829,6 +889,11 @@ func purchase_cost(type: int) -> int:
 	return _discounted_cost(base_recruit_cost(type),10,bonuses)
 
 func _discounted_cost(base: float, discount_code: int, active_bonuses: Array) -> int:
+	if B_LEVY in active_bonuses or B_ROYAL in active_bonuses:
+		# Levée en masse (R-50, −30 %) et Fortune royale (R-59, −20 %) : achats et améliorations ; multipliés avec R-10, R-11 et R-23. Arrondi supérieur.
+		var reduced: float = (0.9 if discount_code in active_bonuses else 1.0)*(0.7 if B_LEVY in active_bonuses else 1.0)*(0.8 if B_ROYAL in active_bonuses else 1.0)
+		if B_MARKET in active_bonuses: reduced *= 0.75 if discount_code == 10 else 1.15
+		return maxi(1,int(ceil(base*reduced-0.000000001)))
 	if B_MARKET in active_bonuses:
 		# Marché noir (R-23) : achats −25 %, améliorations +15 % ; marge d'un milliardième contre les erreurs d'arrondi des flottants.
 		var factor: float = (0.9 if discount_code in active_bonuses else 1.0)*(0.75 if discount_code == 10 else 1.15)
@@ -844,16 +909,28 @@ func bonus_preview(code: int) -> Dictionary:
 	for slot in range(defenders.size()):
 		if defenders[slot].is_empty(): continue
 		var before: Dictionary = get_stats(slot)
-		var after: Dictionary = _stats_with_bonuses(slot,-1,{},projected)
+		var promoted: int = promoted_level(code,defenders[slot])
+		var candidate: Dictionary = {}
+		if promoted > 0:
+			candidate = defenders[slot].duplicate(true)
+			candidate.level = promoted
+		# Les statistiques « après » se lisent avec la forteresse telle qu'elle sera après le choix (Rage du désespoir dépend des PV perdus) ; état rétabli aussitôt.
+		var saved_hp: Array[int] = [max_hp,fortress_hp]
+		var fortress: Dictionary = bonus_fortress_change(code)
+		max_hp += int(fortress.max)
+		fortress_hp = clampi(fortress_hp+int(fortress.current),1,max_hp)
+		var after: Dictionary = _stats_with_bonuses(slot,-1,candidate,projected)
+		max_hp = saved_hp[0]
+		fortress_hp = saved_hp[1]
 		var large_before: Dictionary = {}
 		var large_after: Dictionary = {}
 		for component in ["direct","secondary","curse"]:
 			large_before[component] = damage_for(before,component,{"type":7})
 			large_after[component] = _damage_with_bonuses(after,component,{"type":7},projected)
 		var level: int = defenders[slot].level
-		units.append({"slot":slot,"type":defenders[slot].type,"before":before,"after":after,
+		units.append({"slot":slot,"type":defenders[slot].type,"before":before,"after":after,"level_after":promoted if promoted > 0 else level,
 			"large_before":large_before,"large_after":large_after,
-			"upgrade_before":upgrade_cost(slot),"upgrade_after":_discounted_cost(Progression.UPGRADE_COSTS[level-1],9,projected) if level < 4 else 0})
+			"upgrade_before":upgrade_cost(slot),"upgrade_after":_discounted_cost(Progression.UPGRADE_COSTS[(promoted if promoted > 0 else level)-1],9,projected) if (promoted if promoted > 0 else level) < 4 else 0})
 	var purchases: Array[Dictionary] = []
 	for type in available_types():
 		purchases.append({"type":type,"before":purchase_cost(type),"after":_discounted_cost(base_recruit_cost(type),10,projected)})
@@ -862,7 +939,8 @@ func bonus_preview(code: int) -> Dictionary:
 		upgrades.append({"before":_discounted_cost(cost,9,bonuses),"after":_discounted_cost(cost,9,projected)})
 	return {"units":units,"purchases":purchases,"upgrades":upgrades,
 		"hp_before":fortress_hp,"hp_after":clampi(fortress_hp+int(bonus_fortress_change(code).current),1,max_hp+int(bonus_fortress_change(code).max)),
-		"max_before":max_hp,"max_after":max_hp+int(bonus_fortress_change(code).max)}
+		"max_before":max_hp,"max_after":max_hp+int(bonus_fortress_change(code).max),
+		"gold_before":gold,"gold_after":gold+bonus_gold_change(code)}
 
 func prepare_next_wave() -> bool:
 	if phase != "finished" or wave >= 10: return false
@@ -894,6 +972,10 @@ func choose_bonus(code: int) -> bool:
 	var change: Dictionary = bonus_fortress_change(code)
 	max_hp += int(change.max)
 	fortress_hp = clampi(fortress_hp+int(change.current),1,max_hp)
+	gold += bonus_gold_change(code)
+	for slot in range(defenders.size()):
+		var promoted: int = promoted_level(code,defenders[slot])
+		if promoted > 0: defenders[slot].level = promoted # Promotion (R-44) et Ascension (R-55) : gratuites, l'or payé (et donc la revente) ne change pas.
 	_refresh_windows()
 	phase = "finished"
 	_record_action("bonus_choice",{"offered":offered,"chosen":code})
@@ -910,7 +992,22 @@ func bonus_fortress_change(code: int) -> Dictionary:
 	if code == 8: return {"max":4,"current":4}
 	if code == B_GAMBLE: return {"max":-4,"current":-4}
 	if code == B_FORTRESS: return {"max":8,"current":8}
+	if code == B_BASTION: return {"max":12,"current":max_hp+12-fortress_hp} # Forteresse imprenable (R-57) : soin complet
 	return {"max":0,"current":0}
+
+## Or reçu immédiatement au choix d'un bonus : Trésor de guerre (R-42) +100, Fortune royale (R-59) +150.
+static func bonus_gold_change(code: int) -> int:
+	if code == B_TREASURE: return 100
+	if code == B_ROYAL: return 150
+	return 0
+
+## Niveau gratuit donné par un bonus à un défenseur actuel (0 : aucun) : Promotion (R-44) niveau 1 → 2, Ascension (R-55) niveaux 1-2 → 3.
+static func promoted_level(code: int, defender: Dictionary) -> int:
+	if defender.is_empty(): return 0
+	var level: int = int(defender.get("level",1))
+	if code == B_PROMOTION and level == 1: return 2
+	if code == B_ASCENSION and level <= 2: return 3
+	return 0
 
 ## Politique de choix de référence des essais automatiques (non jouée) : le premier bonus proposé qui ne comporte aucune contrepartie ; sinon le premier proposé.
 static func reference_bonus(offer: Array) -> int:
@@ -920,16 +1017,58 @@ static func reference_bonus(offer: Array) -> int:
 
 func _offer_bonus() -> void:
 	var state_before: String = str(rng.state)
-	var pool: Array[int] = []
-	for code in range(Campaign.BONUSES.size() if rules_v232 else Campaign.LEGACY_BONUS_COUNT):
-		if code not in bonuses: pool.append(code)
-	bonus_offer.clear()
-	for index in range(3):
-		var selected_index: int = rng.randi_range(0,pool.size()-1)
-		bonus_offer.append(pool[selected_index])
-		pool.remove_at(selected_index)
+	bonus_offer.assign(_draw_offers([]))
 	phase = "bonus"
 	_record_action("bonus_offer",{"offered":bonus_offer.duplicate(),"rng_state_before":state_before,"rng_state_after":str(rng.state)})
+
+## Trois offres distinctes, jamais un bonus déjà pris. Avant la v0.233 : tirage uniforme (12 bonus avant la v0.232, 36 ensuite), inchangé pour rejouer les anciens rapports.
+## Depuis la v0.233 : chaque carte tire d'abord sa rareté (`Campaign.RARITY_WEIGHTS` selon le rang du choix), puis un bonus de cette rareté ; à défaut, une rareté voisine.
+## `excluded` (relance) : bonus à éviter si possible, ici les trois offres remplacées.
+func _draw_offers(excluded: Array) -> Array[int]:
+	var offer: Array[int] = []
+	if not rules_v232 or not rules_v233:
+		var pool: Array[int] = []
+		for code in range(Campaign.V232_BONUS_COUNT if rules_v232 else Campaign.LEGACY_BONUS_COUNT):
+			if code not in bonuses: pool.append(code)
+		for index in range(3):
+			var selected_index: int = rng.randi_range(0,pool.size()-1)
+			offer.append(pool[selected_index])
+			pool.remove_at(selected_index)
+		return offer
+	var rank: int = clampi(bonus_waves().find(wave),0,Campaign.RARITY_WEIGHTS.size()-1)
+	var weights: Array = Campaign.RARITY_WEIGHTS[rank]
+	for index in range(3):
+		var roll: int = rng.randi_range(0,99)
+		var tier: int = 0 if roll < int(weights[0]) else 1 if roll < int(weights[0])+int(weights[1]) else 2
+		var candidates: Array[int] = []
+		for attempt in [tier,tier-1,tier-2,tier+1,tier+2]:
+			if attempt < 0 or attempt > 2: continue
+			candidates = _offer_candidates(Campaign.RARITIES[attempt],offer,excluded)
+			if not candidates.is_empty(): break
+		if candidates.is_empty(): candidates = _offer_candidates("",offer,[])
+		offer.append(candidates[rng.randi_range(0,candidates.size()-1)])
+	return offer
+
+func _offer_candidates(rarity: String, offer: Array, excluded: Array) -> Array[int]:
+	var result: Array[int] = []
+	for code in range(Campaign.BONUSES.size()):
+		if code in bonuses or code in offer or code in excluded: continue
+		if rarity.is_empty() or Campaign.bonus_rarity(code) == rarity: result.append(code)
+	return result
+
+## Relance (règles v0.233) : remplace les trois offres par trois autres, une fois par partie, sans coût. Le tirage suit les mêmes raretés que l'offre remplacée.
+func reroll_bonus() -> bool:
+	if phase != "bonus" or not rules_v232 or not rules_v233 or rerolls_left <= 0: return false
+	var previous: Array[int] = bonus_offer.duplicate()
+	var state_before: String = str(rng.state)
+	bonus_offer.assign(_draw_offers(previous))
+	rerolls_left -= 1
+	_record_action("bonus_reroll",{"previous":previous,"offered":bonus_offer.duplicate(),"rng_state_before":state_before,"rng_state_after":str(rng.state)})
+	return true
+
+## Relances encore disponibles dans cette partie (0 sous les anciennes règles).
+func rerolls_available() -> int:
+	return rerolls_left if rules_v232 and rules_v233 else 0
 
 func upgrade_cost(slot: int) -> int:
 	if slot < 0 or slot >= defenders.size() or defenders[slot].is_empty():
@@ -1102,6 +1241,9 @@ func _resolve_instant() -> void:
 		var entry: Dictionary = spawn_schedule[spawned]
 		var enemy: Dictionary = make_enemy(spawned, entry.type, entry.time,faction,enemy_hp_percent)
 		if not routes.is_empty(): enemy.route_id = spawn_route_id(spawned,entry)
+		# Chausse-trappes (R-40, 2 s) et Temps suspendu (R-60, 4 s) : ralenti dès l'apparition.
+		var entry_slow: float = 4.0 if B_STASIS in bonuses else 2.0 if B_CALTROPS in bonuses else 0.0
+		if entry_slow > 0.0: _slow_enemy(enemy,entry_slow)
 		enemies.append(enemy)
 		spawned += 1
 	_update_positions()
@@ -1166,6 +1308,10 @@ func _resolve_instant() -> void:
 		if float(stats.get("mark_seconds",0.0)) > 0.0:
 			primary.marked_until = elapsed+float(stats.mark_seconds)
 			primary.mark_bonus = maxf(float(primary.get("mark_bonus",0.0)),float(stats.get("mark_bonus",0.0)))
+		elif B_HUNTMARK in bonuses:
+			# Marque du chasseur (R-51) : tout tir direct marque sa cible 3 s, +10 % de dégâts des autres défenseurs ; une marque plus forte ou plus longue est conservée.
+			primary.marked_until = maxf(float(primary.get("marked_until",-1.0)),elapsed+3.0)
+			primary.mark_bonus = maxf(float(primary.get("mark_bonus",0.0)),0.10)
 		var shot: Dictionary = {"time": elapsed, "slot": slot, "type": defender.type,
 			"target_id": primary.id, "from": slots[slot], "to": impact, "secondary": [], "radius": stats.radius}
 		event_log.append("%.9f tir E%d cible %d" % [elapsed, slot + 1, primary.id])
@@ -1209,17 +1355,27 @@ func _resolve_instant() -> void:
 				var route_id: String = enemy.route_id
 				arrivals_by_route[route_id] = arrivals_by_route.get(route_id, 0)+1
 				wave_arrivals_by_route[route_id] = wave_arrivals_by_route.get(route_id, 0)+1
-			arrival_damage += enemy.get("fortress_damage", 1)
+			if B_GATE in bonuses and gate_wave != wave:
+				# Herse (R-47) : le premier ennemi qui atteint la forteresse dans la vague ne lui inflige aucun dégât.
+				gate_wave = wave
+				event_log.append("%.9f herse %d" % [elapsed, enemy.id])
+			else: arrival_damage += enemy.get("fortress_damage", 1)
 			event_log.append("%.9f arrivee %d" % [elapsed, enemy.id])
 		else:
 			survivors.append(enemy)
 	enemies = survivors
 	_purge_curses()
 	fortress_hp = maxi(0, fortress_hp - arrival_damage)
+	if fortress_hp == 0 and B_LASTSTAND in bonuses and not last_stand_used:
+		# Dernier souffle (R-53) : une fois par partie, la forteresse reste debout à 1 PV et regagne 10 PV.
+		last_stand_used = true
+		fortress_hp = mini(max_hp,1+10)
+		event_log.append("%.9f dernier souffle" % elapsed)
 	# 5. Défaite prioritaire sur le choix, la fin et la victoire.
 	if fortress_hp == 0:
 		phase = "defeat"
 	elif spawned == spawn_schedule.size() and enemies.is_empty():
+		_wave_cleared_bonuses()
 		if wave == 10:
 			phase = "victory"
 		elif wave in bonus_waves():
@@ -1227,6 +1383,18 @@ func _resolve_instant() -> void:
 		else:
 			phase = "finished"
 	if not active: _finish_wave_record()
+
+## Effets de fin de vague gagnée : Réparations (R-41, +2 PV sans dépasser le maximum) et Intérêts (R-43, +10 % de l'or possédé, 25 au plus, arrondi inférieur, compté dans les gains).
+func _wave_cleared_bonuses() -> void:
+	if B_REPAIRS in bonuses and fortress_hp < max_hp:
+		fortress_hp = mini(max_hp,fortress_hp+2)
+		event_log.append("%.9f réparations" % elapsed)
+	if B_INTEREST in bonuses:
+		var interest: int = mini(25,int(floor(float(gold)*0.10)))
+		if interest > 0:
+			gold += interest
+			total_income += interest
+			event_log.append("%.9f intérêts +%d" % [elapsed, interest])
 
 func _finish_wave_record() -> void:
 	if _wave_record.is_empty() or _wave_record.wave != wave: return
@@ -1282,6 +1450,10 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 	for enemy in enemies:
 		var hp_before: float = enemy.hp
 		enemy.hp -= damage.get(enemy.id, 0.0)
+		# Exécution (R-45) : un ennemi touché qui tombe sous 10 % de ses PV maximum est achevé, sauf le boss.
+		if B_EXECUTE in bonuses and enemy.hp < hp_before and enemy.hp > 0.0 and enemy.hp < 0.10*float(enemy.max_hp)-EPS and int(enemy.get("type",1)) != 7:
+			enemy.hp = 0.0
+			event_log.append("%.9f exécution %d" % [elapsed, enemy.id])
 		if enemy.hp < hp_before:
 			var origin: Dictionary = _damage_sources.get(enemy.id,{})
 			damage_events.append({"time":elapsed,"enemy_id":enemy.id,"hp_before":hp_before,"hp_after":maxf(0.0,enemy.hp),"source_type":int(origin.get("source_type",-1)),"component":str(origin.get("component",""))})
@@ -1320,6 +1492,7 @@ func _settle_enemy(enemy: Dictionary, survivors: Array[Dictionary], blasts: Arra
 		killed += 1
 		total_killed += 1
 		var base: int = enemy.get("reward", 3)
+		if B_BOUNTY in bonuses: base += 2 # Prime de guerre (R-52), avant les autres modificateurs d'or
 		if float(enemy.get("loot_until",-1.0)) >= elapsed-EPS: base = roundi(float(base)*(1.0+float(enemy.get("loot_bonus",0.0))))
 		if B_LOOT in bonuses: base = roundi(float(base)*1.25) # Prime de butin (R-36)
 		var reward: int = kill_reward(base)
@@ -1341,7 +1514,7 @@ func _apply_curse(source_id: int, enemy_id: int, damage: float) -> void:
 		if curse.source_id != source_id or curse.enemy_id != enemy_id:
 			surviving.append(curse)
 	surviving.append({"source_id": source_id, "enemy_id": enemy_id,
-		"damage": damage, "next_at": elapsed + 1.0, "ticks_left": 2})
+		"damage": damage, "next_at": elapsed + 1.0, "ticks_left": 3 if B_TENACIOUS in bonuses else 2}) # Malédiction tenace (R-39) : une échéance de plus
 	curses = surviving
 
 static func _add_damage(damage: Dictionary, id: int, amount: float) -> void:
