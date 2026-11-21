@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-21 — Lanceur de masse orc, cinq inclinaisons validées (ouvert)
+
+Type 28, `defender.horde.maceman`. Le porteur a demandé une autre méthode après les essais par articulation. Le dossier `design/essais/gestes_combat/lanceur_masse_orc/poses_entieres/` contient douze dessins, dont six intermédiaires ajoutés après le retour du porteur. La dernière pose avant le lâcher ne dure plus qu’une image. Le lâcher est à 0,56 s. La palette de la pose masse levée a été ajustée après le signalement d’un clignotement. L’angle neutre a été retenu par le porteur. Les captures montrent désormais 0°, −12°, +12°, +24° et +36° dans les deux sens à ×1 et ×2. Le porteur a validé le lot 5238ec8 pour cette version. Intégrer le dossier de planches et le fichier lachers.json dans poses_entieres. Le projectile masse.png peut être repris de la racine du lot. Les valeurs de tir et la résolution des dégâts ne changent pas.
+
 ### 2026-11-17 — Lanceur double troll, deux bras alternés (ouvert)
 
 Type 27, `defender.horde.doublethrower`. Garde, six planches et les deux haches dans `design/essais/gestes_combat/lanceur_double_troll/`. Retour favorable du porteur le 17 novembre sur le lot `b779d4d`. Alterner par défenseur au tir suivant. La hache basse commence, avec `attack`, `attack_up`, `attack_down`. La hache haute suit, avec `attack_close`, `attack_close_up`, `attack_close_down`. Conserver la main sélectionnée avec le tir et conserver l’alternance entre les vagues. Rotation et départ à 0,48 s depuis le repère de `lachers.json`, avec l’image associée au bras. Retourner ensemble pose et repère, puis garder un trajet rectiligne et un seul impact. Conserver le bonus du type 27 sur cible blessée. L’essai local utilise un champ de rendu par tir, sans changement des calculs de combat.

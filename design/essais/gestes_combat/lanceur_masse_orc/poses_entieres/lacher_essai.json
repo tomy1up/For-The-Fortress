@@ -1,0 +1,17 @@
+{
+  "release": 0.56,
+  "shots": {
+    "0": {
+      "center": [
+        24.7959,
+        -56.3749
+      ],
+      "angle": 13
+    }
+  },
+  "projectile_pivot": [
+    278.0,
+    148.0
+  ],
+  "projectile_scale": 0.06407766990291262
+}
