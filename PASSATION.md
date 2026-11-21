@@ -324,7 +324,7 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 21 novembre 2026 — Claude Code (v0.233 en publication)
+## État au 21 novembre 2026 — Claude Code (v0.233 publiée)
 
 - **v0.233** (second lot du catalogue, décision du porteur du 21 novembre 2026) : 60 bonus dont 16 rares et 8 épiques (R-37 à R-60), tirage par rareté selon le rang du choix (`Campaign.RARITY_WEIGHTS`), une relance gratuite par partie (`reroll_bonus`, action `bonus_reroll` rejouée). Règles `rules_v233`, anciens rapports rejoués avec leur tirage. Fiche : `design/Bonus_rarete_relance_v0233.md`.
 - v0.232 publiée : 36 bonus, quatre choix, rééquilibrage des PV par mission (`design/Rebalancage_bonus_v0232.md`).
