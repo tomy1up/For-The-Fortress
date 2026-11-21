@@ -108,14 +108,19 @@ static func damage_landing_delay(event: Dictionary) -> float:
 
 ## Types dont le projectile n'est pas dessiné en vol quand la cible est déjà derrière le point de lâcher à l'écran (à bout portant) : l'impact est alors joué au lâcher, sans attendre le vol.
 const NO_FLIGHT_TYPES: Array[int] = [16,19,21,24,26,27,28]
+## Types sans projectile ni impact (v0.235) : l'Éclaireur-observateur désigne sa cible au fanion ; ses dégâts et son losange s'affichent au geste pointé (délai de `LAUNCH_DELAYS`).
+const SIGNAL_TYPES: Array[int] = [31]
+const OBSERVER_TYPE := 31
 
 ## Durée de vol visible d'un tir : nulle à bout portant pour les types ci-dessus (le tir passé doit porter la clé `arm` pour le type 27, voir `with_arm`).
 static func flight_time(shot: Dictionary) -> float:
+	if int(shot.get("type",-1)) in SIGNAL_TYPES: return 0.0
 	if int(shot.get("type",-1)) in NO_FLIGHT_TYPES and (project(shot.to).x-shot_origin(shot).x)*shot_facing(shot) <= 0.0: return 0.0
 	return PROJECTILE_FLIGHT
 
 ## Vol visible du tir qui a produit un événement (retrouvé d'après son type et son instant), PROJECTILE_FLIGHT par défaut.
 func flight_for(source_type: int, time: float) -> float:
+	if source_type in SIGNAL_TYPES: return 0.0
 	if model == null or source_type not in NO_FLIGHT_TYPES: return PROJECTILE_FLIGHT
 	for shot in model.shots:
 		if int(shot.get("type",-1)) == source_type and absf(float(shot.get("time",-1.0))-time) < 0.0005: return flight_time(with_arm(shot))
@@ -303,7 +308,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32, 23: 0.6, 24: 0.44, 25: 0.4, 26: 0.52, 27: 0.48, 16: 0.36, 28: 0.56, 30: 0.36, 29: 0.24} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32, 23: 0.6, 24: 0.44, 25: 0.4, 26: 0.52, 27: 0.48, 16: 0.36, 28: 0.56, 30: 0.36, 29: 0.24, 31: 0.32} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
@@ -918,15 +923,32 @@ func _draw_javelin(point: Vector2, direction: Vector2, side: Vector2, facing: fl
 	draw_line(tail,tail+direction*5.0-side*3.0,Color("e0b44a"),1.4,true)
 
 ## Pastilles d'état au-dessus de la barre de PV, dans l'ordre marque, pillage, volatilité, centrées avec 18 px d'entraxe.
-static func enemy_badges(enemy: Dictionary, elapsed: float) -> Array[String]:
+## `shots` (les tirs de la vague) : le losange d'une marque nouvelle de l'Éclaireur-observateur attend son geste pointé.
+static func enemy_badges(enemy: Dictionary, elapsed: float, shots: Array = []) -> Array[String]:
 	var badges: Array[String] = []
-	if float(enemy.get("marked_until",-1.0)) > elapsed: badges.append("mark")
+	if float(enemy.get("marked_until",-1.0)) > elapsed and not observer_mark_pending(enemy,elapsed,shots): badges.append("mark")
 	if float(enemy.get("loot_until",-1.0)) >= elapsed: badges.append("loot")
 	if float(enemy.get("volatile_until",-1.0)) >= elapsed and not enemy.get("exploded",false): badges.append("volatile")
 	return badges
 
+## Losange de l'Éclaireur-observateur (lot Codex 88784cf, v0.235) : une marque qu'il pose sur une cible non marquée s'affiche au premier geste pointé, 0,32 s après le tir.
+## Une marque déjà visible (renouvellement, Marque du chasseur) le reste ; une marque posée entre-temps par un autre tir (Marque du chasseur, autre marqueur) s'affiche aussitôt.
+## Rendu seulement : le modèle applique la marque et son bonus dès le tir.
+static func observer_mark_pending(enemy: Dictionary, elapsed: float, shots: Array) -> bool:
+	var id: int = int(enemy.get("id",-1))
+	for shot in shots:
+		if int(shot.get("type",-1)) != OBSERVER_TYPE or int(shot.get("target_id",-2)) != id or str(shot.get("mark","")) != "new": continue
+		var placed: float = float(shot.get("time",0.0))
+		if elapsed < placed or elapsed-placed >= float(LAUNCH_DELAYS[OBSERVER_TYPE]): continue
+		var revealed := false
+		for other in shots:
+			if int(other.get("type",-1)) != OBSERVER_TYPE and int(other.get("target_id",-2)) == id and other.has("mark") and float(other.get("time",0.0)) >= placed and float(other.get("time",0.0)) <= elapsed:
+				revealed = true;break
+		if not revealed: return true
+	return false
+
 func _draw_enemy_badges(enemy: Dictionary, bar_position: Vector2) -> void:
-	var badges: Array[String] = enemy_badges(enemy,model.elapsed)
+	var badges: Array[String] = enemy_badges(enemy,model.elapsed,model.shots)
 	var textures := {"mark":FX_MARK,"loot":FX_LOOT,"volatile":FX_VOLATILE}
 	for index in range(badges.size()):
 		var center := Vector2(bar_position.x+12.0+(float(index)-float(badges.size()-1)*0.5)*FX_BADGE_SPACING,bar_position.y-10.0)
@@ -1044,6 +1066,7 @@ static func launch_delay(shot: Dictionary) -> float:
 	return float(LAUNCH_DELAYS.get(int(shot.get("type",-1)),0.0))
 
 func _draw_impact(shot: Dictionary, age: float) -> void:
+	if int(shot.get("type",-1)) in SIGNAL_TYPES: return # ni flèche héritée de la famille, ni impact : le losange suffit
 	var delay: float = launch_delay(shot)
 	if delay <= 0.0:
 		_draw_impact_body(shot,age,true)

@@ -2,7 +2,7 @@
 
 Game Design Document — Version 0.72 — 21 novembre 2026
 
-Version 0.235 du jeu (21 novembre 2026) : **nouvelle composition de référence de la Horde** (MAJ-72) — deux sapeurs et un chaman (arbre Démolition) à partir de la mission 71, à la place de deux haches et un chaman ; suites des chapitres 4, 7 et 13 jouées avec les règles de bonus actuelles ; PV de la Horde recalibrés : meilleure marge moyenne 59 % (69 % en v0.234), 174 missions sur 200 dans la cible. L'Alliance ne change pas.
+Version 0.235 du jeu (21 novembre 2026) : **nouvelle composition de référence de la Horde** (MAJ-72) — deux sapeurs et un chaman (arbre Démolition) à partir de la mission 71, à la place de deux haches et un chaman ; suites des chapitres 4, 7 et 13 jouées avec les règles de bonus actuelles ; PV de la Horde recalibrés : meilleure marge moyenne 59 % (69 % en v0.234), 174 missions sur 200 dans la cible. L'Alliance ne change pas. Animation de l'Éclaireur-observateur (signal au fanion, losange affiché au geste pointé à 0,32 s).
 
 Version 0.234 du jeu (21 novembre 2026) : **recalibrage des PV d'ennemis avec les 60 bonus** (MAJ-71) — coefficients remesurés mission par mission et faction par faction sur trois tirages de bonus ; meilleure marge moyenne 56 % pour l'Alliance et 69 % pour la Horde (69 et 86 % en v0.233). La Horde reste au-dessus de la cible là où sa composition de référence ne gagnerait plus (O-028). Animations du Lanceur de masse orc (cinq inclinaisons en poses entières, masse lâchée à 0,56 s) de la Mage de givre (trois visées, cristal lancé à 0,36 s) et de la Sarbacane gobeline (trois visées, dard soufflé à 0,24 s).
 
@@ -1947,7 +1947,7 @@ Version 0.70 — 21 novembre 2026 : jeu 0.233. **Second lot du catalogue de bonu
 
 Version 0.71 — 21 novembre 2026 : jeu 0.234. **Recalibrage des PV d'ennemis avec les 60 bonus** (MAJ-71, section 62) : même cible, meilleure marge moyennée sur trois tirages de bonus, grille affinée par pas de 5 %, garde-fou de la composition de référence, ajustement par les suites de campagne ; la mission 1 reste à 100 %. Gestes du Lanceur de masse orc (type 28, cinq inclinaisons en poses entières, départ à 0,56 s) de la Mage de givre (type 30, trois visées, cristal en ligne droite à 0,36 s) et de la Sarbacane gobeline (type 29, trois visées, dard en ligne droite à 0,24 s) ; rendu seulement. O-028 mis à jour (Horde au-dessus de la cible là où sa composition de référence la bride).
 
-Version 0.72 — 21 novembre 2026 : jeu 0.235. **Nouvelle composition de référence de la Horde** (MAJ-72, sections 62 et 64) : deux sapeurs et un chaman, arbre Démolition, à partir de la mission 71 ; suites des chapitres 4, 7 et 13 aux règles de bonus actuelles ; coefficients de la Horde des missions 31-40 et 61-200 recalculés (moyenne 126,7 %) ; O-028 mis à jour (décision prise sur la référence, dépendance de la Horde au tirage des bonus à surveiller).
+Version 0.72 — 21 novembre 2026 : jeu 0.235. **Nouvelle composition de référence de la Horde** (MAJ-72, sections 62 et 64) : deux sapeurs et un chaman, arbre Démolition, à partir de la mission 71 ; suites des chapitres 4, 7 et 13 aux règles de bonus actuelles ; coefficients de la Horde des missions 31-40 et 61-200 recalculés (moyenne 126,7 %) ; O-028 mis à jour (décision prise sur la référence, dépendance de la Horde au tirage des bonus à surveiller). Geste de l'Éclaireur-observateur (type 31, signal au fanion, sans projectile ; losange d'une marque nouvelle affiché au geste pointé à 0,32 s, marques déjà visibles conservées ; rendu seulement).
 
 <a id="s51"></a>
 
@@ -2625,6 +2625,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.232 | Catalogue de 36 bonus et quatre choix par partie ; rééquilibrage des PV d'ennemis par mission (cible 40 à 70 % de marge pour la meilleure composition) ; GDD 0.69 |
 | 0.233 | Second lot de bonus : 60 bonus dont 16 rares et 8 épiques, tirage par rareté, relance gratuite par partie ; quatre bonus acquis visibles ; GDD 0.70 |
 | 0.234 | Recalibrage des PV d'ennemis avec les 60 bonus (trois tirages) : meilleure marge moyenne 56 % (Alliance) et 69 % (Horde) ; Lanceur de masse orc (cinq inclinaisons) , Mage de givre et Sarbacane gobeline (trois visées) animés ; GDD 0.71 |
-| 0.235 | Nouvelle référence de la Horde à partir de la mission 71 (deux sapeurs et un chaman), suites des chapitres 4, 7 et 13 aux règles de bonus actuelles ; meilleure marge moyenne de la Horde 59 % (69 % en v0.234) ; GDD 0.72 |
+| 0.235 | Nouvelle référence de la Horde à partir de la mission 71 (deux sapeurs et un chaman), suites des chapitres 4, 7 et 13 aux règles de bonus actuelles ; meilleure marge moyenne de la Horde 59 % (69 % en v0.234) ; Éclaireur-observateur animé ; GDD 0.72 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.
