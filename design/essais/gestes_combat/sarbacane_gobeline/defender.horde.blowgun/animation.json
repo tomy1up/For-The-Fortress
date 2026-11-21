@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.horde.blowgun",
+  "facing": "right",
+  "foot": [
+    98,
+    232
+  ],
+  "display_height": 62.801088,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        272,
+        244
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 14,
+      "frame_size": [
+        272,
+        244
+      ],
+      "duration": 0.56,
+      "mode": "event"
+    }
+  }
+}
