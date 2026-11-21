@@ -1,12 +1,13 @@
 extends SceneTree
 ## Mesure de l'équilibre de cartes candidates (refonte des cartes, v0.224) : joue la composition de référence des tests de chapitre (emplacements 3, 4 puis 2 ; Alliance archer, arbalétrier, arbalétrier ;
-## Horde deux haches et un chaman ; talents réels de la mission) sur chaque carte d'un fichier JSON et imprime les PV de forteresse restants.
+## Horde deux haches et un chaman, puis deux sapeurs et un chaman à partir de la mission 71 (`tests/reference_army.gd`) ; talents réels de la mission) sur chaque carte d'un fichier JSON et imprime les PV de forteresse restants.
 ## Usage : CANDIDATES=chemin.json MISSION=114 [AFFIX=sandstorm] godot --headless --path prototype --script res://tools/sim_map_candidates.gd
 ## Entrée : [{"id":"c0","routes":[[[x,y],...],...],"slots":[[x,y],...6],"alternating":true|false}] ; ou {"old":"dune_arches"} pour mesurer une carte existante.
 ## Sortie : lignes « SIM index faction résultat pv vague ».
 const Model = preload("res://scripts/valley_model.gd")
 const Catalogue = preload("res://scripts/campaign_catalogue.gd")
 const Talents = preload("res://scripts/meta_talents_linked.gd")
+const Reference = preload("res://tests/reference_army.gd")
 const Experience = preload("res://scripts/talent_experience.gd")
 
 func vectors(points: Array) -> Array[Vector2]:
@@ -32,7 +33,7 @@ func definition_for(entry: Dictionary) -> Dictionary:
 
 func ranks_for(faction: int, mission: int) -> Array:
 	# Mêmes talents que les tests de chapitre : cinq rangs de la première ligne du premier arbre, puis la priorité habituelle.
-	var first: int = 5 if faction == 0 else 0
+	var first: int = Reference.first_talent(faction,mission)
 	var tree: int = Talents.coordinates(first).x
 	var xp := 0
 	for previous in range(1,mission): xp += int(Catalogue.definition(previous).xp)
@@ -60,7 +61,7 @@ func play(definition: Dictionary, faction: int, mission: int) -> Dictionary:
 	m.meta_ranks = ranks_for(faction,mission)
 	m.select_faction(faction)
 	m.rng.seed = 7
-	var types: Array = [0,1,1] if faction == 0 else [3,3,5]
+	var types: Array = Reference.types(faction,mission)
 	var slots: Array = [3,4,2]
 	if OS.get_environment("ORDER") != "":
 		slots = []

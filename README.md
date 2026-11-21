@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.235**. Difficulté de la Horde : nouvelle composition de référence des tests à partir de la mission 71 (deux sapeurs et un chaman, décision du porteur) et suites des chapitres 4, 7 et 13 jouées avec les règles de bonus actuelles ; PV recalibrés, meilleure marge moyenne 59 % (69 % en v0.234), 174 missions sur 200 dans la cible. Réglages à confirmer en partie réelle. [Notes](design/essais/v0235_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.235).
+
 **Prototype v0.234**. Difficulté : PV d'ennemis recalibrés avec les 60 bonus (moyenne sur trois tirages) ; meilleure marge moyenne 56 % pour l'Alliance et 69 % pour la Horde (69 et 86 % en v0.233), réglages à confirmer en partie réelle. Animations : lancer en poses entières du Lanceur de masse orc (cinq inclinaisons), cristal de la Mage de givre et souffle de la Sarbacane gobeline (trois visées chacune). [Notes](design/essais/v0234_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.234).
 
 **Prototype v0.233**. Bonus : 60 bonus dont 16 rares et 8 épiques aux effets nouveaux (or, forteresse, promotions, ralentissements…), offres tirées par rareté (plus de rares en fin de partie) et une relance gratuite par partie. La Horde en profite nettement plus que l'Alliance : équilibrage à suivre. [Notes](design/essais/v0233_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.233).

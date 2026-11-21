@@ -1,6 +1,6 @@
 extends SceneTree
 ## Courbe de difficulté de la campagne : pour chaque mission et chaque faction, joue la composition de référence des tests de chapitre (emplacements 3, 4 puis 2 ; Alliance archer, arbalétrier, arbalétrier ;
-## Horde deux haches et un chaman ; talents réels de la mission, mêmes règles de partie que le jeu) et relève le résultat, les PV de forteresse restants et la vague atteinte.
+## Horde deux haches et un chaman, puis deux sapeurs et un chaman à partir de la mission 71 (`tests/reference_army.gd`) ; talents réels de la mission, mêmes règles de partie que le jeu) et relève le résultat, les PV de forteresse restants et la vague atteinte.
 ## Les PV restants (sur les PV maximaux de la forteresse, 20 plus les bonus de talents de la faction) mesurent la marge : plus ils sont bas, plus la mission est serrée pour cette composition. Un changement d'une carte ou d'un réglage se lit directement sur la courbe.
 ## Avec ORDERS=all, les six ordres des trois emplacements 2, 3, 4 sont essayés et le meilleur est retenu (les anciens chapitres ont été réglés avec des ordres propres à chaque mission).
 ## Usage : FIRST=1 LAST=200 [FACTIONS=0,1] [ORDERS=all] godot --headless --path prototype --script res://tools/difficulty_curve.gd
@@ -8,10 +8,11 @@ extends SceneTree
 const Model = preload("res://scripts/valley_model.gd")
 const Catalogue = preload("res://scripts/campaign_catalogue.gd")
 const Talents = preload("res://scripts/meta_talents_linked.gd")
+const Reference = preload("res://tests/reference_army.gd")
 const Experience = preload("res://scripts/talent_experience.gd")
 
 func ranks_for(faction: int, mission: int) -> Array:
-	var first: int = 5 if faction == 0 else 0
+	var first: int = Reference.first_talent(faction,mission)
 	var tree: int = Talents.coordinates(first).x
 	var xp := 0
 	for previous in range(1,mission): xp += int(Catalogue.definition(previous).xp)
@@ -39,7 +40,7 @@ func play(mission: int, faction: int, slots: Array = [3,4,2]) -> Dictionary:
 	m.meta_ranks = ranks_for(faction,mission)
 	m.select_faction(faction)
 	m.rng.seed = 7
-	var types: Array = [0,1,1] if faction == 0 else [3,3,5]
+	var types: Array = Reference.types(faction,mission)
 	if not (m.buy(slots[0],types[0]) and m.buy(slots[1],types[1])): return {"result":"refus","hp":-1,"wave":0,"max":0}
 	for wave in range(1,11):
 		if wave == 2: m.upgrade(slots[0])

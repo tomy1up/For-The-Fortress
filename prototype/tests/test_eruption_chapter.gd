@@ -6,6 +6,7 @@ const Profile = preload("res://scripts/meta_profile.gd")
 const Talents = preload("res://scripts/meta_talents_linked.gd")
 const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
+const Reference = preload("res://tests/reference_army.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 61 à 70.
 const AFFIX := {"id":"eruptions","interval":14,"warning":3,"duration":5}
 ## Longueur mesurée du premier trajet, nombre d'entrées et ordre d'achat de référence des missions 71 à 80 (l'éruption désigne un emplacement occupé : l'ordre fait partie de la mesure).
@@ -88,7 +89,7 @@ func verify_mission(camp: int, number: int) -> void:
 	for previous in range(1,number):
 		var run: int = profile.begin_mission(camp,Main.CampaignCatalogue.id_for(previous),60,10,100)
 		check(profile.credit_mission(run,camp,10,true),"Parcours préalable de la faction préparé par le service normal")
-	var first: int = 5 if camp == 0 else 0
+	var first: int = Reference.first_talent(camp,number)
 	var tree: int = Talents.coordinates(first).x
 	for index in [first,first,first,first,first,Talents.index_for(tree,1)]: check(profile.allocate(camp,index),"Rangs initiaux financés par l'XP acquise")
 	var priority: Array = [5,7,9,16,18]
@@ -104,7 +105,7 @@ func verify_mission(camp: int, number: int) -> void:
 	game.campaign_menu._launch()
 	var model: Model = game.model
 	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix == AFFIX and game.affix_label.visible and game.affix_label.text.begins_with("Éruptions") and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
-	play(model,[0,1,1] if camp == 0 else [3,3,5],EXPECTED[number].order)
+	play(model,Reference.types(camp,number),EXPECTED[number].order)
 	print("ERUPTION_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])
 	var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))

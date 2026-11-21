@@ -6,6 +6,7 @@ const Profile = preload("res://scripts/meta_profile.gd")
 const Talents = preload("res://scripts/meta_talents_linked.gd")
 const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
+const Reference = preload("res://tests/reference_army.gd")
 var checks := 0
 var failures := 0
 func check(value: bool, message: String) -> void:
@@ -34,7 +35,7 @@ func run_checks() -> void:
 		for number in range(1,mission):
 			var run: int = profile.begin_mission(camp,Main.CampaignCatalogue.id_for(number),60,10,100)
 			check(profile.credit_mission(run,camp,10,true),"Parcours préalable de la faction préparé par le service normal")
-		var first: int = 5 if camp==0 else 0
+		var first: int = Reference.first_talent(camp,mission)
 		var tree: int = Talents.coordinates(first).x
 		for index in [first,first,first,first,first,Talents.index_for(tree,1)]: check(profile.allocate(camp,index),"Rangs initiaux financés par l'XP acquise")
 		var priority: Array = [5,7,9,16,18] if mission>41 else []
@@ -48,7 +49,7 @@ func run_checks() -> void:
 		game._open_campaign(camp,5);game.campaign_menu._select(mission-41);game.campaign_menu._launch()
 		check(not game.choosing_faction and game.mission_definition.id==Main.CampaignCatalogue.id_for(mission),"La mission des marais démarre par le parcours normal")
 		check(game.model.combat_affix.is_empty() and not game.affix_label.visible and game.model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(mission,game.model.faction) and game.model.gold==150 and game.model.fortress_hp==game.model.max_hp,"Nouveau biome sans vent, avec ses paramètres et une forteresse intacte")
-		var types: Array = [0,1,1] if camp==0 else [3,3,5]
+		var types: Array = Reference.types(camp,mission)
 		play(game.model,types)
 		check(game.model.phase=="victory","Une composition accessible gagne dans chaque faction (mission %d, faction %d)" % [mission,camp])
 		var replay: Dictionary = Replay.verify(JSON.parse_string(JSON.stringify(Report.build(game.model))))
