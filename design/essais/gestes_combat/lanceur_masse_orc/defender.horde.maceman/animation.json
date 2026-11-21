@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "id": "defender.horde.maceman",
+  "facing": "right",
+  "foot": [
+    155.65591397849462,
+    239.4
+  ],
+  "display_height": 97.39805825242719,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        308,
+        252
+      ],
+      "mode": "time",
+      "fps": 1
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 26,
+      "frame_size": [
+        308,
+        252
+      ],
+      "mode": "event",
+      "duration": 1.04
+    },
+    "attack_up12": {
+      "file": "attack_up12.png",
+      "frames": 26,
+      "frame_size": [
+        308,
+        252
+      ],
+      "mode": "event",
+      "duration": 1.04
+    },
+    "attack_down12": {
+      "file": "attack_down12.png",
+      "frames": 26,
+      "frame_size": [
+        308,
+        252
+      ],
+      "mode": "event",
+      "duration": 1.04
+    },
+    "attack_down24": {
+      "file": "attack_down24.png",
+      "frames": 26,
+      "frame_size": [
+        308,
+        252
+      ],
+      "mode": "event",
+      "duration": 1.04
+    },
+    "attack_down36": {
+      "file": "attack_down36.png",
+      "frames": 26,
+      "frame_size": [
+        308,
+        252
+      ],
+      "mode": "event",
+      "duration": 1.04
+    }
+  }
+}

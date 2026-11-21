@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-21 — Lanceur de masse orc, prise et projection (en attente d’avis)
+
+Type 28, `defender.horde.maceman`. Garde, cinq inclinaisons et `masse.png` dans `design/essais/gestes_combat/lanceur_masse_orc/`. La prise et les repères ont été corrigés pour faire pivoter le manche et le poing ensemble. Après l’avis du porteur, faire partir la masse à 0,56 s sur la première pose à main ouverte. Utiliser le repère propre à la pose dans `lachers.json`, ainsi que l’angle, le pivot et l’échelle. Retourner ensemble la planche et le repère. Faire tourner le projectile le long d’un segment jusqu’à l’impact unique. Si la cible est déjà derrière le départ projeté, jouer l’impact seul. Conserver les multiplicateurs actuels du type 28.
+
 ### 2026-11-17 — Lanceur double troll, deux bras alternés (ouvert)
 
 Type 27, `defender.horde.doublethrower`. Garde, six planches et les deux haches dans `design/essais/gestes_combat/lanceur_double_troll/`. Retour favorable du porteur le 17 novembre sur le lot `b779d4d`. Alterner par défenseur au tir suivant. La hache basse commence, avec `attack`, `attack_up`, `attack_down`. La hache haute suit, avec `attack_close`, `attack_close_up`, `attack_close_down`. Conserver la main sélectionnée avec le tir et conserver l’alternance entre les vagues. Rotation et départ à 0,48 s depuis le repère de `lachers.json`, avec l’image associée au bras. Retourner ensemble pose et repère, puis garder un trajet rectiligne et un seul impact. Conserver le bonus du type 27 sur cible blessée. L’essai local utilise un champ de rendu par tir, sans changement des calculs de combat.

@@ -143,3 +143,11 @@ La vérification de pause est réalisée avec la scène de contrôle figée. Le 
 | Appuis et geste | Les 138 poses gardent le même ancrage. L’autre hache reste visible en main pendant le geste. |
 | Alternance | Chaque défenseur enchaîne la hache basse puis la haute. Départ d’une seule hache à 0,48 s, depuis le repère du bras actif. |
 | En jeu | Huit tirs sur la mission 94 à ×1 et ×2, des deux côtés, avec pause. Les deux bras ont été vérifiés à +24°. [Capture à taille réelle](essais/gestes_combat/lanceur_double_troll/Lanceur_double_troll_en_jeu.gif). Retour favorable du porteur sur le lot `b779d4d`. |
+
+## Lanceur de masse orc · 21 novembre 2026
+
+| Critère | Vérification sur la copie v0.233 |
+| --- | --- |
+| Prise et appuis | Le poing et le manche pivotent ensemble jusqu’au lâcher. Les semelles sont fixes sur les 130 poses. [Détail de la prise](essais/gestes_combat/lanceur_masse_orc/Prise_de_la_masse.png). |
+| Lâcher | La masse part à 0,56 s, sur la première pose à main ouverte, puis tourne sur un trajet rectiligne jusqu’à un seul impact. |
+| En jeu | Six tirs sur deux routes de la mission 94, des deux côtés à ×1 et ×2, avec pause. [Capture à taille réelle](essais/gestes_combat/lanceur_masse_orc/Lanceur_masse_orc_en_jeu.gif). Avis du porteur attendu. |

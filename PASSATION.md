@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**21 novembre — Lanceur de masse orc, type 28.** Prise corrigée pour faire pivoter le poing et le manche ensemble. Cinq inclinaisons et départ à 0,56 s. Six tirs sur la mission 94 v0.233 dans les deux sens, à ×1 et ×2 avec pause. Zéro problème sur 45 dossiers, 186 contrôles d’animation et 77 contrôles des effets réussis. [Fiche et captures](design/Visuels_Boutique_Lanceur_Masse.md#armé-et-projection-de-la-masse). Avis du porteur attendu.
+
 **17 novembre — Lanceur double troll, type 27.** Deux bras alternés, trois inclinaisons par bras et une hache lancée à 0,48 s. Huit tirs en mission 94 v0.226, à gauche et à droite, ×1 et ×2, avec pause. Zéro problème sur 43 dossiers, 184 contrôles d’animation et 77 contrôles des effets réussis. [Fiche et capture](design/Visuels_Boutique_Lanceur_Double.md#deux-bras-alternés). Retour favorable du porteur le 17 novembre 2026 (« ok pas mal »). Lot `b779d4d` prêt pour l’intégration.
 
 **17 novembre — Hache en chaîne, type 26.** Cinq inclinaisons, geste depuis la hanche et départ à 0,52 s. Hache à deux lobes réutilisée pour les ricochets dans l’ordre des impacts. Dix tirs sur la mission 94 v0.226 à ×1 et ×2, dans les deux sens, avec pause. Trois ricochets vérifiés au premier tir des quatre scénarios. 42 dossiers valides et 183 contrôles de bibliothèque réussis. [Fiche et capture](design/Visuels_Boutique_Hache_En_Chaine.md#lancer-de-la-hache-et-ricochets). Lot `f0b6867` validé par le porteur le 17 novembre 2026, à intégrer par Claude.
