@@ -30,6 +30,6 @@ La visée de référence est presque horizontale (−5°). Deux vues (−24° et
 
 Sur copie instrumentée de la v0.235, 18 tirs contrôlés en mission 94. Les trois vues jouent des deux côtés à ×1 et ×2. Le contrôle vérifie pause, sélection de planche, vol rectiligne et bénédiction passive de +40 % sur le défenseur voisin. 49 dossiers valides, 190 contrôles d’animation et 77 des effets réussis. Le porteur a signalé un troisième bras sur une planche d’essai. Les six dessins en cause ont été écartés avant l’assemblage du lot c2d19e8. Les 61 images de la garde et des trois planches couvrent 15 dessins distincts, tous contrôlés. Une main tient le livre à la hanche pendant que l’autre lance l’éclat et revient en garde. Les fichiers vérifiés sont identiques à ceux de la copie jouée.
 
-[Voir les 15 poses contrôlées](essais/gestes_combat/pretre_guerrier/Controle_toutes_les_poses.png)
+[Voir les 15 poses contrôlées](essais/gestes_combat/pretre_guerrier/Controle_toutes_les_poses.png) · Contrôle validé par le porteur le 21 novembre 2026.
 
 Consignes au générateur intégré. Reprendre le Prêtre de référence, la manche du bras libre traverse la cuirasse pour viser plus haut ou plus bas. L’autre main garde le livre à la hanche. Les semelles et le torse restent au même niveau. L’éclat est ajouté devant la main vide juste avant le lâcher.
