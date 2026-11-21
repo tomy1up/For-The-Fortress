@@ -36,7 +36,7 @@ La planche a été créée avec le générateur d’images intégré à partir d
 
 ## Cinq inclinaisons en poses entières
 
-Le porteur a retenu l’angle neutre et demandé la déclinaison. Quatre séries de dessins couvrent −12°, +12°, +24° et +36°. Seul le cœur du geste varie selon l’inclinaison : élan, masse en main, ouverture des doigts et accompagnement. Les pieds, la durée, l’armé initial et le retour final reprennent le cycle de référence. Le lâcher reste à 0,56 s. Le fichier lachers.json de poses_entieres fournit le centre de la masse, l’angle de sa silhouette au départ et les paramètres du projectile existant.
+Le porteur a validé les cinq inclinaisons en poses entières pour cette version (lot 5238ec8). Quatre séries de dessins couvrent −12°, +12°, +24° et +36°. Seul le cœur du geste varie selon l’inclinaison : élan, masse en main, ouverture des doigts et accompagnement. Les pieds, la durée, l’armé initial et le retour final reprennent le cycle de référence. Le lâcher reste à 0,56 s. Le fichier lachers.json de poses_entieres fournit le centre de la masse, l’angle de sa silhouette au départ et les paramètres du projectile existant.
 
 [Comparatif des poses](essais/gestes_combat/lanceur_masse_orc/poses_entieres/Comparatif_angles.png) · [Mission 94 à ×1](essais/gestes_combat/lanceur_masse_orc/poses_entieres/Lanceur_masse_orc_angles_x1.gif) · [Mission 94 à ×2](essais/gestes_combat/lanceur_masse_orc/poses_entieres/Lanceur_masse_orc_angles_x2.gif)
 
