@@ -11,10 +11,24 @@ import zipfile
 from concurrent.futures import ThreadPoolExecutor
 from export_sources import verify_sources
 
+def _rebalance_table():
+    """Coefficients de rééquilibrage de la v0.232 (`REBALANCE_PERCENT` de `campaign_catalogue.gd`), lus dans les sources du jeu."""
+    text=(Path(__file__).resolve().parents[1]/'scripts'/'campaign_catalogue.gd').read_text(encoding='utf-8')
+    block=text[text.index('const REBALANCE_PERCENT := ['):]
+    rows=re.findall(r'\[([0-9,]+)\]',block[:block.index(']\n]')+3])
+    return [[int(v) for v in row.split(',')] for row in rows[:2]]
+REBALANCE=_rebalance_table()
+
 def horde_hp(base, number, camp):
-    """PV d'ennemis joués : la Horde a 10 % de PV en moins à partir de la mission 150 (v0.212, arrondi comme Godot)."""
-    if camp==1 and number==200: return int(base*0.85+0.5)
-    return int(base*0.9+0.5) if camp==1 and number>=150 else base
+    """PV d'ennemis joués : la Horde a 10 % de PV en moins à partir de la mission 150 (v0.212), puis coefficient de rééquilibrage de la v0.232 (arrondis comme Godot)."""
+    if camp==1 and number==200: base=int(base*0.85+0.5)
+    elif camp==1 and number>=150: base=int(base*0.9+0.5)
+    return int(base*REBALANCE[camp][number-1]/100+0.5)
+
+def played_hp(number, camp):
+    """PV d'ennemis réellement joués d'une mission de campagne (courbe de base `99 + numéro` jusqu'à 140, puis ralentie)."""
+    base=99+number if number<=140 else 239+((number-139)>>1) if number<=180 else 259+((number-177)>>2)
+    return horde_hp(base,number,camp)
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('archive',type=Path)
@@ -357,7 +371,7 @@ for name,state,faction in cases:
         else: assert snap['marked']==0 and snap['final_disabled']
         if context=='1': assert snap['bonuses']==['Aucun bonus'] and all('Niveau 1' in line for line in snap['army'])
         if context=='4': assert len(snap['bonuses'])==1 and snap['bonuses']!=['Aucun bonus']
-        if context=='final': assert len(snap['bonuses'])==3 and snap['heading']=='Défense finale'
+        if context=='final': assert len(snap['bonuses'])==4 and snap['heading']=='Défense finale'
         if context=='defeat': assert snap['tab']==0 and snap['selected']==1 and snap['army']==['Aucun défenseur']
     if state=="campaign_sample":
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SAMPLE_SNAPSHOT=')))
@@ -395,7 +409,7 @@ for name,state,faction in cases:
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':played_hp(number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
     elif '_campaign_menu_dune' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
@@ -412,7 +426,7 @@ for name,state,faction in cases:
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':played_hp(number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
             if number>=111:
                 storm=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SANDSTORM_SNAPSHOT=')))
                 assert storm['affix']=={'id':'sandstorm','interval':15,'warning':3,'duration':5,'range_percent':25} and storm['visible'] and storm['text'].startswith('Tempête de sable')
@@ -432,7 +446,7 @@ for name,state,faction in cases:
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':played_hp(number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
     elif '_campaign_menu_sky' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
@@ -498,7 +512,7 @@ for name,state,faction in cases:
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':played_hp(number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
     elif '_campaign_menu_citadel' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
@@ -513,7 +527,7 @@ for name,state,faction in cases:
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':played_hp(number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
     elif '_campaign_menu_ash' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
@@ -528,7 +542,7 @@ for name,state,faction in cases:
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':played_hp(number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
             eruptions=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ERUPTIONS_SNAPSHOT=')))
             assert eruptions['affix']=={'id':'eruptions','interval':14,'warning':3,'duration':5} and eruptions['visible'] and eruptions['text'].startswith('Éruptions')
     elif '_campaign_menu_marsh' in name:
@@ -548,7 +562,7 @@ for name,state,faction in cases:
             assert marsh['isolated'] and marsh['map']==map_id and marsh['decoration']=='marsh'
             assert marsh['scenery_count']>0 and marsh['affix_empty'] and not marsh['affix_visible']
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':played_hp(number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
     elif name.endswith(('_campaign_menu_slate','_campaign_menu_slateplay','_campaign_menu_ridges','_campaign_menu_ridgesplay')) or '_campaign_menu_mountain' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
@@ -566,7 +580,7 @@ for name,state,faction in cases:
         if name.endswith('completed'): assert snap['start_label']=='Rejouer sans nouveau gain' and snap['fresh']
         if name.endswith('play'):
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
-            assert launch=={'map':map_id,'routes':routes,'hp_percent':99+number,'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
+            assert launch=={'map':map_id,'routes':routes,'hp_percent':played_hp(number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
             if number>=31:
                 affix=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('HEADWINDS_SNAPSHOT=')))
                 assert affix=={'affix':{'id':'headwinds','cadence_percent':90},'visible':True,'text':'Vents contraires · −10 % de cadence'}
@@ -739,7 +753,7 @@ for name,state,faction in cases:
         assert run_report['boss_encounter']['status']=='killed' and abs(run_report['boss_encounter']['removed_hp']-600)<0.000001
         assert 0<run_report['boss_encounter']['resolved_seconds']<=run_report['waves'][-1]['seconds']
         assert abs(sum(unit['boss_hp'] for unit in run_report['performance'])-600)<0.000001
-        assert len([action for action in run_report['actions'] if action['kind']=='bonus_choice'])==3
+        assert len([action for action in run_report['actions'] if action['kind']=='bonus_choice'])==4  # v0.232 : quatre choix de bonus (vagues 2, 4, 6 et 8)
         assert 'Bonus proposés' in (report_folder/'rapport.md').read_text(encoding='utf-8')
     if state:
         assert 'UI_VERSION='+manifest['version'] in text,(name,'Version embarquée différente du paquet')
@@ -756,7 +770,7 @@ for name,state,faction in cases:
             first={1:1,0:2,2:3,3:4,4:5,5:6,6:7,7:10,8:2}
             if number>1: first[0]=2
             for e,text_row in zip(snapshot['entries'],snapshot['details']):
-                assert abs(e['max_hp']-base_hp[e['type']]*(99+number)/100)<0.000001
+                assert abs(e['max_hp']-base_hp[e['type']]*played_hp(number,camp)/100)<0.000001
                 assert e['first_wave']==first[e['type']] and 'Forteresse :' in text_row
             assert ('25 %' in snapshot['note'])==(number>10)
         if state=='shop_menu':

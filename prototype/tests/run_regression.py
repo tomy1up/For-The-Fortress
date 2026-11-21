@@ -87,8 +87,11 @@ def main(argv=None):
         args.report = args.report.resolve()
         logs = args.report.parent / (args.report.stem + '_logs')
         logs.mkdir(parents=True, exist_ok=True)
+    # Sous Windows, aucune fenêtre de console pour les processus lancés : sinon chacune vole le focus du clavier et de la souris au joueur.
+    # Les sorties restent lues par tube ; les résultats ne changent pas.
+    hidden = {'creationflags': getattr(subprocess, 'CREATE_NO_WINDOW', 0)}
     try:
-        version = subprocess.run([str(engine), '--version'], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=10)
+        version = subprocess.run([str(engine), '--version'], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=10, **hidden)
         if version.returncode != 0 or not version.stdout.strip():
             raise ValueError('Impossible de lire la version du moteur ; utiliser le binaire console sous Windows.')
         report['engine_version'] = version.stdout.strip()
@@ -96,7 +99,7 @@ def main(argv=None):
             start = time.monotonic()
             try:
                 result = subprocess.run([str(engine), '--headless', '--path', str(project), '--quit-after', '120', '--script', 'res://tests/' + script],
-                                        capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=args.timeout)
+                                        capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=args.timeout, **hidden)
                 log = result.stdout + result.stderr
                 ok, checks, error = classify(result.returncode, log)
                 code = result.returncode
@@ -117,7 +120,7 @@ def main(argv=None):
             report['suites'].append(entry)
             report['godot_checks'] += entry['checks']
         python = subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', str(project / 'tests'), '-p', 'test_*.py'],
-                                cwd=project.parent, capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=args.timeout)
+                                cwd=project.parent, capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=args.timeout, **hidden)
         python_log = python.stdout + python.stderr
         count = re.search(r'Ran (\d+) tests?', python_log)
         python_ok = python.returncode == 0 and count is not None and int(count[1]) > 0 and re.search(r'^OK\s*$', python_log, re.MULTILINE) is not None

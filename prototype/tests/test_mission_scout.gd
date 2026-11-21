@@ -39,7 +39,7 @@ func run_checks() -> void:
 				var entry: Dictionary=scout.entries[index];var source: Dictionary=Model.enemy_definition(expected[index].type)
 				check(entry.type==expected[index].type and entry.first_wave==expected[index].first,"L’ordre et la première vague suivent la vraie séquence")
 				check(entry.total==expected[index].total and entry.last_wave==expected[index].last and entry.wave_counts==expected[index].wave_counts,"Les effectifs et la derniere vague suivent les groupes de combat")
-				check(is_equal_approx(entry.max_hp,source.hp*(99+number)/100.0) and entry.fortress_damage==source.fortress_damage,"PV de mission et danger de passage exacts")
+				check(is_equal_approx(entry.max_hp,source.hp*Main.CampaignCatalogue.faction_hp_percent(number,camp)/100.0) and entry.fortress_damage==source.fortress_damage,"PV réellement joués par la faction et danger de passage exacts")
 				check(entry.origin in ["neutral","horde" if camp==0 else "alliance"],"Les attaquants humains sont du camp adverse et la faune reste neutre")
 				var card: Panel=scout.cards[index]
 				var wave_lines := PackedStringArray()

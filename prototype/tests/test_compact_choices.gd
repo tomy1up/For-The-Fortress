@@ -76,5 +76,23 @@ func run_checks() -> void:
 		scene._choose_branch(0); scene._choose_branch(0)
 		check(scene.model.defenders[0].level == 4 and scene.model.gold == gold-price,"Confirmation explicite : prix réel payé une seule fois")
 		scene.free()
+	# v0.232 : quatre choix par partie, donc jusqu'à quatre bonus acquis, tous visibles dans « Vos bonus de partie ».
+	for faction in range(2):
+		var scene = Main.new(); root.add_child(scene); scene.set_process(false); scene._choose_faction(faction)
+		scene.model.bonuses.assign([17,21,22,9]) # deux lignes d'effet (Tir tendu, Marché noir) comprises
+		scene.overview_open = true; scene._update_interface(); await process_frame
+		var shown: int = 0
+		var inside: bool = true
+		var apart: bool = true
+		for index in range(4):
+			if scene.bonus_cards[index].visible: shown += 1
+			inside = inside and scene.bonus_cards[index].position.x >= 0 and scene.bonus_cards[index].position.x+scene.bonus_cards[index].size.x <= scene.bonus_body.size.x
+			if index > 0: apart = apart and scene.bonus_cards[index].position.x >= scene.bonus_cards[index-1].position.x+scene.bonus_cards[index-1].size.x
+			var effect: Label = scene.bonus_effects[index]
+			check(effect.position.y+effect.get_line_count()*effect.get_line_height() <= scene.bonus_scopes[index].position.y,"Bonus acquis %d : l'effet ne déborde pas sur la portée" % index)
+		check(shown == 4 and inside and apart,"Quatre bonus acquis : quatre cartes visibles, côte à côte, dans le panneau")
+		scene._open_bonus_details(3)
+		check(scene.bonus_detail_index == 3 and scene.bonus_descriptions[3].visible and scene.bonus_title.text == Main.Model.Campaign.BONUSES[9].name,"Le quatrième bonus acquis ouvre ses détails")
+		scene.free()
 	print("COMPACT_CHOICES_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(0 if failures == 0 else 1)

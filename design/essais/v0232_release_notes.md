@@ -26,9 +26,16 @@ Les noms, valeurs, le rythme des choix et les coefficients de PV sont des régla
 - La limite de validité des PV d'ennemis passe de 264 à 400 %.
 - Fiche : `design/Rebalancage_bonus_v0232.md`.
 
+## Corrections
+
+- **Quatre bonus acquis visibles** : le panneau « Vos bonus de partie » n'avait que trois emplacements ; le quatrième bonus (désormais possible avec quatre choix) était masqué. Avec quatre bonus, les cartes passent sur quatre colonnes ; les effets sur deux lignes (Tir tendu, Marché noir) ne chevauchent plus leur portée.
+- **Éclaireur de mission** (« Voir les ennemis ») : il affichait les PV de la courbe de base au lieu des PV réellement joués par la faction (la réduction de la Horde n'y apparaissait pas non plus). Il affiche maintenant les PV joués, rééquilibrage compris.
+- **Tests sans fenêtres de console** : le lanceur de régression ne fait plus apparaître de console à chaque suite (elles prenaient le focus du clavier et de la souris pendant les contrôles). Résultats inchangés.
+
 ## Contrôles
 
-- Régression complète : 143 suites sur 143, 179 190 contrôles Godot et 17 tests Python.
+- Régression complète : 143 suites sur 143, 179 202 contrôles Godot et 17 tests Python.
+- Paquet Windows vérifié : 1 050 cas, 513 contrôles des sources ; captures inspectées (choix de bonus après la vague 2, quatre bonus acquis, fiche de mission, éclaireur).
 - Les suites de campagne jouent avec le choix de bonus de référence (première offre sans contrepartie) au lieu de la première offre.
 - Outil d'étude `tools/faction_study.gd` : graine (`SEED`), anciennes règles (`LEGACY`), politique de choix (`POLICY`), liste de missions (`MISSIONS`), multiplicateur de PV (`HPMUL`) et composition de référence seule (`REFONLY`).
 

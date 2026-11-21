@@ -28,7 +28,7 @@ static func encounter_data(number: int,camp: int) -> Array[Dictionary]:
 				existing.last_wave = wave
 				existing.wave_counts[wave] = existing.wave_counts.get(wave, 0)+1
 				continue
-			var enemy: Dictionary=Model.make_enemy(0,spawn.type,0,camp,definition.hp_percent)
+			var enemy: Dictionary=Model.make_enemy(0,spawn.type,0,camp,Catalogue.faction_hp_percent(number,camp)) # PV réellement joués par cette faction (réduction de la Horde et rééquilibrage v0.232)
 			enemy.first_wave = wave
 			enemy.last_wave = wave
 			enemy.total = 1
@@ -105,7 +105,7 @@ func _show_wave(wave: int) -> void:
 			total += count
 			visible_entries.append(enemy)
 	var scope := "%d vagues" % definition.waves if wave == 0 else "Vague %d sur %d" % [wave, definition.waves]
-	subtitle.text="%s · %s · %d ennemis prévus · PV : %d %%"%[definition.title,scope,total,definition.hp_percent]
+	subtitle.text="%s · %s · %d ennemis prévus · PV : %d %%"%[definition.title,scope,total,Catalogue.faction_hp_percent(mission_number,faction)]
 	for index in range(cards.size()):
 		var card: Panel=cards[index];card.visible=index<visible_entries.size()
 		if not card.visible: continue

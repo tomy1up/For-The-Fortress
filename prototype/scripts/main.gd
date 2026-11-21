@@ -149,8 +149,8 @@ var bonus_body: Panel
 var bonus_impacts: Array[Label] = []
 var bonus_impact_titles: Array[Label] = []
 var bonus_impact_scrollers: Array[ScrollContainer] = []
-var bonus_contexts: Array[String] = ["","",""]
-var bonus_impact_keys: Array[String] = ["","",""]
+var bonus_contexts: Array[String] = ["","","",""]
+var bonus_impact_keys: Array[String] = ["","","",""]
 var bonus_title: Label
 var bonus_subtitle: Label
 var bonus_names: Array[Label] = []
@@ -946,6 +946,8 @@ func _capture_campaign_sample(camp: int) -> void:
 	for number in range(1,target+1):
 		_open_campaign(camp);campaign_menu._select(number-1);campaign_menu._launch()
 		if choosing_faction: push_error("Mission de contrôle non lancée.");return
+		# Échantillon de contrôle : courbe de PV de base (sans le coefficient de rééquilibrage de la v0.232), pour garder des captures et des stratégies fixes.
+		model.enemy_hp_percent = int(CampaignCatalogue.definition(number).get("hp_percent",model.enemy_hp_percent))
 		if number == target and stage == "preparation": break
 		if number == target and stage == "inspection":
 			model.start();model.advance(1)
@@ -2495,8 +2497,8 @@ func _reset() -> void:
 	purchase_quiet_rect = Rect2()
 	breach_remaining = 0.0
 	map_view.breach_feedback = {}
-	bonus_contexts.assign(["","",""])
-	bonus_impact_keys.assign(["","",""])
+	bonus_contexts.assign(["","","",""])
+	bonus_impact_keys.assign(["","","",""])
 	bonus_detail_index = -1
 	bonus_view_context = ""
 	for scroll in bonus_impact_scrollers: scroll.scroll_vertical = 0
@@ -2989,7 +2991,8 @@ func _build_bonus_selector(screen: Control) -> void:
 	bonus_title = _label(panel,"",Vector2(28,24),Vector2(1024,40),26,Color("e0dbbf"))
 	bonus_subtitle = _label(panel,"",Vector2(28,78),Vector2(1024,46),15,Color("aabbb0"))
 	bonus_subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	for index in range(3):
+	# Quatre emplacements : trois offres au choix, jusqu'à quatre bonus acquis (quatre choix par partie depuis la v0.232).
+	for index in range(4):
 		var x: int = 28+index*348
 		bonus_cards.append(_panel(panel,Rect2(x,126,328,464)))
 		bonus_names.append(_label(panel,"",Vector2(x,148),Vector2(328,54),18,Color("e0dbbf")))
@@ -3071,26 +3074,34 @@ func _update_bonus_panel() -> void:
 	bonus_subtitle.text = "Règle complète et effet sur votre défense." if detailed and choosing else "Ce bonus reste actif pour cette partie." if detailed else "Vague %d terminée · Prenez votre temps. Après le choix : 30 s de préparation." % model.wave if choosing else "Aucun bonus acquis." if entries.is_empty() else "Actifs jusqu’à la fin de cette partie."
 	# Le choix suspend le combat ; recalculer uniquement si une donnée d’aperçu change.
 	var impact_key: String = JSON.stringify([model.faction,model.wave,model.bonus_offer,model.bonuses,model.defenders,model.gold,model.fortress_hp,model.max_hp,model.synergies_enabled]) if choosing else ""
-	for index in range(3):
-		var x: int = 28+index*348
+	# Quatre bonus acquis : cartes plus étroites pour tenir sur une ligne ; sinon trois colonnes.
+	var four_columns: bool = not choosing and entries.size() > 3
+	var step: int = 262 if four_columns else 348
+	var card_width: int = 246 if four_columns else 328
+	for index in range(4):
+		var x: int = 28+index*step
+		var inner: int = card_width-36
 		var listed: bool = index < entries.size() and not detailed
 		var selected_detail: bool = detailed and index == bonus_detail_index
 		bonus_cards[index].visible = listed
-		bonus_cards[index].size.y = 464 if choosing else 250
+		bonus_cards[index].position.x = x
+		bonus_cards[index].size = Vector2(card_width,464 if choosing else 250)
 		bonus_names[index].visible = listed
 		bonus_names[index].position = Vector2(x+18,148)
-		bonus_names[index].size = Vector2(292,56)
+		bonus_names[index].size = Vector2(inner,56)
 		bonus_names[index].add_theme_font_size_override("font_size",20)
 		bonus_effects[index].visible = listed
-		bonus_effects[index].position.y = 218 if choosing else 210
-		bonus_effects[index].size.y = 78 if choosing else 54
-		bonus_effects[index].add_theme_font_size_override("font_size",25 if choosing else 21)
+		bonus_effects[index].position = Vector2(x+18,218 if choosing else 206)
+		bonus_effects[index].size = Vector2(inner,78 if choosing else 60)
+		bonus_effects[index].add_theme_font_size_override("font_size",25 if choosing else 19)
 		bonus_scopes[index].visible = listed
-		bonus_scopes[index].position.y = 310 if choosing else 270
-		bonus_scopes[index].size.y = 60 if choosing else 48
+		bonus_scopes[index].position = Vector2(x+18,310 if choosing else 274)
+		bonus_scopes[index].size = Vector2(inner,60 if choosing else 48)
 		bonus_notes[index].visible = listed and choosing
+		bonus_notes[index].position.x = x+18
 		bonus_detail_buttons[index].visible = listed
-		bonus_detail_buttons[index].position.y = 468 if choosing else 330
+		bonus_detail_buttons[index].position = Vector2(x+18,468 if choosing else 330)
+		bonus_detail_buttons[index].size.x = inner
 		bonus_descriptions[index].visible = selected_detail
 		bonus_descriptions[index].position = Vector2(28,96)
 		bonus_descriptions[index].size = Vector2(1024,88)
