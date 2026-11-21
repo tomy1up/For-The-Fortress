@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**21 novembre — Ancien des tribus, type 35.** Huit poses de frappe au tambour. Départ de l’onde cuivrée au contact à 0,36 s. Six tirs vérifiés en mission 94 v0.235, aux deux vitesses et dans les deux sens avec pause. Aura de +40 % vérifiée sur le Lanceur de haches voisin. 49 dossiers valides, 190 contrôles d’animation et 77 des effets réussis. [Essai en jeu](design/Visuels_Boutique_Ancien_Tribus.md#frappe-du-tambour). Avis du porteur attendu.
+
 **21 novembre — Totem de guerre, type 34.** Essai de charge de la gemme, impulsion rose à 0,30 s et apparition du premier losange à l’arrivée à 0,42 s. Dix tirs vérifiés en mission 94 v0.235, gauche et droite à ×1 et ×2 avec pause. 49 dossiers valides, 190 contrôles d’animation, 77 des effets d’unités et 28 des effets de boutique réussis. [Capture et repères](design/Visuels_Boutique_Totem_Guerre.md#charge-de-la-gemme-et-impulsion). Lot b36a4eb validé, prêt à intégrer.
 
 **21 novembre — Chaman des marais, type 33.** Geste validé. Six dessins intermédiaires ajoutés à la demande du porteur. 14 poses distinctes sur 33 images, formation et départ du même feu follet à 0,40 s. Dix tirs en mission 94 v0.235 dans les deux sens à ×1 et ×2 avec pause. Ralentissement et malédiction vérifiés sur la cible. 49 dossiers valides, 190 contrôles d’animation et 77 des effets réussis. [Essai et repères](design/Visuels_Boutique_Chaman_Marais.md#rituel-du-feu-follet). Les intermédiaires ont été validés. Après le retour du porteur sur quatre poses, reprise du contour et du raccord d’origine de la main. La volute passe derrière la main. Lot a89ce33 validé, prêt à intégrer.
