@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-21 — Lanceur de masse orc, prise et projection (en attente d’avis)
 
-Type 28, `defender.horde.maceman`. Garde, cinq inclinaisons et `masse.png` dans `design/essais/gestes_combat/lanceur_masse_orc/`. La prise est approuvée. La reprise de l’avant-bras et de la main après le lâcher remplace les cinq planches des lots `8b7fc89` et `b5b8b9d`. Les repères du projectile restent identiques. Après l’avis du porteur, faire partir la masse à 0,56 s sur la première pose à main ouverte. Utiliser le repère propre à la pose dans `lachers.json`, ainsi que l’angle, le pivot et l’échelle. Retourner ensemble la planche et le repère. Faire tourner le projectile le long d’un segment jusqu’à l’impact unique. Si la cible est déjà derrière le départ projeté, jouer l’impact seul. Conserver les multiplicateurs actuels du type 28.
+Type 28, `defender.horde.maceman`. Garde, cinq inclinaisons et `masse.png` dans `design/essais/gestes_combat/lanceur_masse_orc/`. La prise est approuvée. La reprise du retour du bras remplace les cinq planches des lots `8b7fc89`, `b5b8b9d` et `f0a84fe`. Les repères du projectile restent identiques. Après l’avis du porteur, faire partir la masse à 0,56 s sur la première pose à main ouverte. Utiliser le repère propre à la pose dans `lachers.json`, ainsi que l’angle, le pivot et l’échelle. Retourner ensemble la planche et le repère. Faire tourner le projectile le long d’un segment jusqu’à l’impact unique. Si la cible est déjà derrière le départ projeté, jouer l’impact seul. Conserver les multiplicateurs actuels du type 28.
 
 ### 2026-11-17 — Lanceur double troll, deux bras alternés (ouvert)
 
