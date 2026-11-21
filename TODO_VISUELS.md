@@ -86,7 +86,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).
 
-- [ ] **Mage de givre, attaque** — formation, lâcher et retour à la garde, avec cristal dessiné et synchronisé. [Essai](design/Visuels_Boutique_Mage_Givre.md#formation-et-projection-du-cristal). Avis sur le geste à une inclinaison.
+- [ ] **Mage de givre, attaque** — trois inclinaisons, cristal synchronisé à 0,36 s, départ par pose. [Captures](design/Visuels_Boutique_Mage_Givre.md#trois-inclinaisons-de-tir). Geste de référence validé, avis sur haute et basse avant intégration.
 - [x] **Sarbacane gobeline, attaque** — trois inclinaisons, départ à 0,24 s et repères du tube par vue. [Essai en jeu](design/Visuels_Boutique_Sarbacane.md#trois-inclinaisons-de-tir). Lot 112ffcd prêt à intégrer.
 - [x] **Lanceur de masse orc, attaque** — cinq inclinaisons en poses entières et lâcher à 0,56 s. Lot 5238ec8 validé pour cette version, à intégrer. [Captures et contrôles](design/Visuels_Boutique_Lanceur_Masse.md#cinq-inclinaisons-en-poses-entières).
 - [x] **Lanceur double troll, attaque** — deux bras alternés, trois inclinaisons par bras et repères de lancer. [Capture et contrôles](design/Visuels_Boutique_Lanceur_Double.md#deux-bras-alternés). Retour favorable du porteur sur le lot `b779d4d`.

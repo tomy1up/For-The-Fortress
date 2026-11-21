@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**21 novembre — Mage de givre, type 30.** Essai en huit dessins entiers, formation et départ du même éclat à 0,36 s. Dix tirs en mission 94 v0.233 dans les deux sens à ×1 et ×2 avec pause. Le ralentissement est appliqué dans la simulation. 47 dossiers valides, 188 contrôles d’animation et 77 des effets réussis. [Essai et repères](design/Visuels_Boutique_Mage_Givre.md#formation-et-projection-du-cristal). Avis du porteur sur le geste.
+**21 novembre — Mage de givre, type 30.** Essai en huit dessins entiers, formation et départ du même éclat à 0,36 s. Dix tirs en mission 94 v0.233 dans les deux sens à ×1 et ×2 avec pause. Le ralentissement est appliqué dans la simulation. 47 dossiers valides, 188 contrôles d’animation et 77 des effets réussis. Le porteur a validé le geste de référence. Deux visées ajoutées, −32° et +22°. 18 tirs sur les missions 93 et 94, pause et ralentissement vérifiés. [Captures des trois visées](design/Visuels_Boutique_Mage_Givre.md#trois-inclinaisons-de-tir). Avis du porteur sur les deux nouvelles visées.
 
 **21 novembre — Sarbacane gobeline, type 29.** Le porteur a retenu le geste presque horizontal. Deux angles ajoutés, environ −22° et +16°. 18 tirs en mission 94 v0.233, des deux côtés à ×1 et ×2 avec pause. Validateur à zéro problème sur 46 dossiers, 187 contrôles d’animation et 77 des effets réussis. [Captures des trois visées](design/Visuels_Boutique_Sarbacane.md#trois-inclinaisons-de-tir). Le porteur a donné son feu vert pour poursuivre. Lot 112ffcd prêt à intégrer.
 

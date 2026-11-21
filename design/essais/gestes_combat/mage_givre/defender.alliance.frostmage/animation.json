@@ -27,6 +27,26 @@
       ],
       "duration": 0.72,
       "mode": "event"
+    },
+    "attack_up": {
+      "file": "attack_up.png",
+      "frames": 18,
+      "frame_size": [
+        280,
+        308
+      ],
+      "duration": 0.72,
+      "mode": "event"
+    },
+    "attack_down": {
+      "file": "attack_down.png",
+      "frames": 18,
+      "frame_size": [
+        280,
+        308
+      ],
+      "duration": 0.72,
+      "mode": "event"
     }
   }
 }
