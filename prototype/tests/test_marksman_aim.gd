@@ -274,8 +274,33 @@ func run_checks() -> void:
 			check(wp in [-12,0,12] and View.shot_origin(hatchet).distance_to(View.project(from)+Vector2(wtip.x*View.shot_facing(hatchet),wtip.y)) < 0.001,"Veilleur : départ du point de la planche %d" % wp)
 	var wspec: Dictionary = Library.spec_for("defender.horde.watcher")
 	check(not wspec.is_empty() and wspec.animations.has("attack_up12") and wspec.animations.has("attack_down12"),"Veilleur : trois planches chargées et valides")
+	# Lanceur de masse orc (type 28) : cinq planches choisies par l'écart minimal, masse lâchée à 0,56 s depuis le repère de la planche, vol rectiligne.
+	check(is_equal_approx(View.launch_delay({"type":28}),0.56),"Masse du lanceur à 0,56 s")
+	var mace_pitches: Dictionary = {}
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0,9.0]:
+			var mace: Dictionary = {"type":28,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var mp: int = View.aim_pitch(mace)
+			mace_pitches[mp] = true
+			var mtip: Vector2 = View.MACE_TIPS[mp]
+			var morigin: Vector2 = View.project(from)+Vector2(mtip.x*View.shot_facing(mace),mtip.y)
+			check(mp in [-12,0,12,24,36] and View.shot_origin(mace).distance_to(morigin) < 0.001,"Lanceur de masse : départ du repère de la planche %d" % mp)
+			check(View.aim_variant(mp) in ["attack","attack_up12","attack_down12","attack_down24","attack_down36"] and View.MACE_ANGLES.has(mp),"Lanceur de masse : planche et angle de départ connus (%d)" % mp)
+			var mtarget: Vector2 = View.project(mace.to)+Vector2(0,-12)
+			var straight: bool = true
+			for step in range(1,17):
+				var progress: float = float(step)/16.0
+				straight = straight and View.projectile_position(mace,progress*View.PROJECTILE_FLIGHT).distance_to(morigin.lerp(mtarget,progress)) < 0.001
+			check(straight,"Lanceur de masse : vol rectiligne du repère à l'impact (planche %d)" % mp)
+	check(mace_pitches.size() >= 4,"Lanceur de masse : plusieurs inclinaisons employées selon la cible (%s)" % str(mace_pitches.keys()))
+	var mspec: Dictionary = Library.spec_for("defender.horde.maceman")
+	check(not mspec.is_empty() and mspec.animations.has("attack_up12") and mspec.animations.has("attack_down12") and mspec.animations.has("attack_down24") and mspec.animations.has("attack_down36"),"Lanceur de masse : cinq planches chargées et valides")
+	if not mspec.is_empty():
+		for variant in ["attack","attack_up12","attack_down12","attack_down24","attack_down36"]:
+			var animation: Dictionary = mspec.animations[variant]
+			check(int(animation.frames) == 26 and is_equal_approx(float(animation.duration),1.04) and str(animation.mode) == "event","Lanceur de masse : %s en 26 poses sur 1,04 s, lâcher sur la pose 14" % variant)
 	# Tir à bout portant : pour les types sans vol visible derrière le point de lâcher, l'impact est joué au lâcher (durée de vol nulle) ; sinon le vol dure PROJECTILE_FLIGHT.
-	for type_id in [16,19,21,24,26,27]:
+	for type_id in [16,19,21,24,26,27,28]:
 		var far: Dictionary = {"type":type_id,"from":from,"to":from+Vector2(8.0,2.0),"slot":0,"arm":0}
 		var behind: Dictionary = {"type":type_id,"from":from,"to":from+Vector2(0.0,0.0),"slot":0,"arm":0}
 		behind.to = from+Vector2(-0.2,-0.2)

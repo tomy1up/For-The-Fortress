@@ -107,7 +107,7 @@ static func damage_landing_delay(event: Dictionary) -> float:
 	return launch_delay({"type":int(event.source_type)})+PROJECTILE_FLIGHT
 
 ## Types dont le projectile n'est pas dessiné en vol quand la cible est déjà derrière le point de lâcher à l'écran (à bout portant) : l'impact est alors joué au lâcher, sans attendre le vol.
-const NO_FLIGHT_TYPES: Array[int] = [16,19,21,24,26,27]
+const NO_FLIGHT_TYPES: Array[int] = [16,19,21,24,26,27,28]
 
 ## Durée de vol visible d'un tir : nulle à bout portant pour les types ci-dessus (le tir passé doit porter la clé `arm` pour le type 27, voir `with_arm`).
 static func flight_time(shot: Dictionary) -> float:
@@ -303,7 +303,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32, 23: 0.6, 24: 0.44, 25: 0.4, 26: 0.52, 27: 0.48, 16: 0.36} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32, 23: 0.6, 24: 0.44, 25: 0.4, 26: 0.52, 27: 0.48, 16: 0.36, 28: 0.56} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
@@ -370,6 +370,16 @@ const WATCHER_TIPS: Dictionary = {-12:Vector2(21.4933,-22.5124),0:Vector2(20.396
 const WATCHER_TEXTURE: Texture2D = preload("res://assets/units/shop/hachette_v001.png")
 const WATCHER_PIVOT_PX := Vector2(119.0,37.0)
 const WATCHER_SCALE := 0.12427184466019417
+## Lanceur de masse orc (type 28, lancer en poses entières, départ à 0,56 s sur la première pose à main ouverte ; lot de Codex `5238ec8` validé par le porteur le 21 novembre 2026) :
+## cinq planches (−12°, 0°, +12°, +24°, +36°) choisies comme celles du Lance-éclats d'après le segment depuis leur propre repère (`lachers.json` de `poses_entieres`, centre de la masse tenue
+## depuis le pied, retourné avec la planche) ; la masse (`masse.png`) part de l'angle de sa silhouette dans la planche et tourne pendant un vol rectiligne jusqu'à l'impact unique ;
+## si l'impact est déjà derrière le repère à l'écran, seul l'impact est joué. Multiplicateurs contre les lourds et les petits inchangés (modèle).
+const MACEMAN_TYPE := 28
+const MACE_TIPS: Dictionary = {-12:Vector2(26.1379,-53.0788),0:Vector2(24.7959,-56.3749),12:Vector2(27.846,-45.2976),24:Vector2(26.5175,-35.6184),36:Vector2(22.1455,-24.9904)}
+const MACE_ANGLES: Dictionary = {-12:23.6,0:13.0,12:41.44,24:52.83,36:71.48}
+const MACE_TEXTURE: Texture2D = preload("res://assets/units/shop/masse_v001.png")
+const MACE_PIVOT_PX := Vector2(278.0,148.0)
+const MACE_SCALE := 0.06407766990291262
 const SHARD_TEXTURE: Texture2D = preload("res://assets/units/shop/eclat_v001.png")
 const SHARD_PIVOT_PX := Vector2(181.0,36.0)
 const SHARD_SCALE := 0.10441044104410441
@@ -389,7 +399,7 @@ const SPEARMAN_TYPE := 20
 const SPEAR_POINTS: Dictionary = {"attack":{"pitch":0,"point":Vector2(47.9702,-24.0115)},"attack_up12":{"pitch":-12,"point":Vector2(46.8385,-33.3695)},"attack_down12":{"pitch":12,"point":Vector2(47.1458,-14.6209)},
 	"attack_close":{"pitch":0,"point":Vector2(39.1025,-24.0115)},"attack_far":{"pitch":0,"point":Vector2(56.099,-24.0115)},"attack_close_up":{"pitch":-12,"point":Vector2(33.6424,-33.3695)},"attack_close_down":{"pitch":12,"point":Vector2(33.9497,-14.6209)}}
 const STEP_TYPES: Array[int] = [14,15,17,21,22]
-const TILTED_TYPES: Array[int] = [10,11,14,15,17,18,21,22,23,24,25,26,16]
+const TILTED_TYPES: Array[int] = [10,11,14,15,17,18,21,22,23,24,25,26,16,28]
 const CURVED_TYPES: Array[int] = [11,13,17]
 const JAVELIN_PIVOT := Vector2(0.0,-41.3453)
 const JAVELIN_TIPS: Dictionary = {-12:Vector2(55.3409,-51.4028),0:Vector2(56.1005,-41.3453),12:Vector2(54.9211,-31.3319)}
@@ -404,7 +414,7 @@ const AIM_STEP := 8
 const AIM_LIMIT := 24
 
 static func aim_pitch(shot: Dictionary) -> int:
-	if int(shot.get("type",-1)) in [SHARDTHROWER_TYPE,SENTINEL_TYPE,DOUBLE_ARCHER_TYPE,HEAVY_CROSSBOW_TYPE,PEBBLE_TYPE,CHAIN_AXE_TYPE,WATCHER_TYPE]:
+	if int(shot.get("type",-1)) in [SHARDTHROWER_TYPE,SENTINEL_TYPE,DOUBLE_ARCHER_TYPE,HEAVY_CROSSBOW_TYPE,PEBBLE_TYPE,CHAIN_AXE_TYPE,WATCHER_TYPE,MACEMAN_TYPE]:
 		var impact: Vector2 = project(shot.to)+Vector2(0,-12)
 		var facing_side: float = shot_facing(shot)
 		var best: int = 0
@@ -427,7 +437,7 @@ static func aim_pitch(shot: Dictionary) -> int:
 	return clampi(int(roundf(degrees/float(AIM_STEP)))*AIM_STEP,-AIM_LIMIT,AIM_LIMIT)
 
 static func step_tips(type: int) -> Dictionary:
-	return PIKE_TIPS if type == PIKEMAN_TYPE else PYRO_TIPS if type == PYROMANCER_TYPE else SHARD_TIPS if type == SHARDTHROWER_TYPE else SENTINEL_TIPS if type == SENTINEL_TYPE else EMBER_GRATE if type == EMBER_TYPE else LIGHTNING_HANDS if type == LIGHTNING_TYPE else DOUBLE_ARCHER_TIPS if type == DOUBLE_ARCHER_TYPE else HEAVY_CROSSBOW_TIPS if type == HEAVY_CROSSBOW_TYPE else SLING_TIPS if type == PEBBLE_TYPE else CHAIN_AXE_TIPS if type == CHAIN_AXE_TYPE else WATCHER_TIPS if type == WATCHER_TYPE else JAVELIN_TIPS
+	return PIKE_TIPS if type == PIKEMAN_TYPE else PYRO_TIPS if type == PYROMANCER_TYPE else SHARD_TIPS if type == SHARDTHROWER_TYPE else SENTINEL_TIPS if type == SENTINEL_TYPE else EMBER_GRATE if type == EMBER_TYPE else LIGHTNING_HANDS if type == LIGHTNING_TYPE else DOUBLE_ARCHER_TIPS if type == DOUBLE_ARCHER_TYPE else HEAVY_CROSSBOW_TIPS if type == HEAVY_CROSSBOW_TYPE else SLING_TIPS if type == PEBBLE_TYPE else CHAIN_AXE_TIPS if type == CHAIN_AXE_TYPE else WATCHER_TIPS if type == WATCHER_TYPE else MACE_TIPS if type == MACEMAN_TYPE else JAVELIN_TIPS
 
 static func aim_variant(pitch: int) -> String:
 	return "attack" if pitch == 0 else "attack_%s%d" % ["down" if pitch > 0 else "up",absi(pitch)]
@@ -441,7 +451,7 @@ static func aim_direction(shot: Dictionary) -> Vector2:
 	return Vector2(shot_facing(shot)*cos(angle),sin(angle))
 
 static func aimed_origin(shot: Dictionary) -> Vector2:
-	if int(shot.get("type",-1)) in STEP_TYPES or int(shot.get("type",-1)) in [SHARDTHROWER_TYPE,SENTINEL_TYPE,DOUBLE_ARCHER_TYPE,HEAVY_CROSSBOW_TYPE,PEBBLE_TYPE,CHAIN_AXE_TYPE,WATCHER_TYPE]:
+	if int(shot.get("type",-1)) in STEP_TYPES or int(shot.get("type",-1)) in [SHARDTHROWER_TYPE,SENTINEL_TYPE,DOUBLE_ARCHER_TYPE,HEAVY_CROSSBOW_TYPE,PEBBLE_TYPE,CHAIN_AXE_TYPE,WATCHER_TYPE,MACEMAN_TYPE]:
 		var tip: Vector2 = step_tips(int(shot.type))[aim_pitch(shot)]
 		return project(shot.from)+Vector2(tip.x*shot_facing(shot),tip.y)
 	return project(shot.from)+AIM_PIVOT+aim_direction(shot)*AIM_LENGTH
@@ -536,6 +546,7 @@ static func projectile_position(shot: Dictionary, age: float) -> Vector2:
 	var point: Vector2 = origin.lerp(target,progress)
 	if int(shot.type) in CURVED_TYPES: return aimed_curve(shot,progress).point
 	if int(shot.type) == STONE_TYPE: return catapult_curve(shot,progress).point
+	if int(shot.type) == MACEMAN_TYPE: return point # vol rectiligne de la masse
 	if Model.family(shot.type) in [3,4]: point.y -= sin(PI*progress)*(15.0 if Model.family(shot.type) == 4 else 8.0)
 	elif int(shot.type) == CANNON_TYPE: point.y -= sin(PI*progress)*12.0
 	elif int(shot.type) == VIAL_TYPE: point.y -= sin(PI*progress)*10.0
@@ -567,6 +578,9 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	if int(shot.type) == HEAVY_CROSSBOW_TYPE and (target.x-origin.x)*shot_facing(shot) <= 0.0: return # cible derrière la pointe : impact seul
 	if int(shot.type) == WATCHER_TYPE:
 		if (target.x-origin.x)*shot_facing(shot) > 0.0: _draw_hatchet(point,shot,age)
+		return
+	if int(shot.type) == MACEMAN_TYPE:
+		if (target.x-origin.x)*shot_facing(shot) > 0.0: _draw_mace(point,shot,age)
 		return
 	if int(shot.type) == DOUBLE_THROWER_TYPE:
 		if (target.x-origin.x)*shot_facing(shot) > 0.0: _draw_double_axe(point,shot,age)
@@ -914,6 +928,14 @@ func _draw_hatchet(point: Vector2, shot: Dictionary, age: float) -> void:
 	var start_angle: float = deg_to_rad(float(aim_pitch(shot)))
 	draw_set_transform(point,(start_angle+age/PROJECTILE_FLIGHT*TAU)*facing,Vector2(facing,1.0))
 	draw_texture_rect(WATCHER_TEXTURE,Rect2(-WATCHER_PIVOT_PX*WATCHER_SCALE,WATCHER_TEXTURE.get_size()*WATCHER_SCALE),false)
+	draw_set_transform(Vector2.ZERO)
+
+## Masse du Lanceur de masse orc : part de l'angle de sa silhouette dans la planche choisie, puis un tour complet pendant le vol ; retournée une seule fois selon le côté du tir.
+func _draw_mace(point: Vector2, shot: Dictionary, age: float) -> void:
+	var facing: float = shot_facing(shot)
+	var start_angle: float = deg_to_rad(float(MACE_ANGLES[aim_pitch(shot)]))
+	draw_set_transform(point,(start_angle+age/PROJECTILE_FLIGHT*TAU)*facing,Vector2(facing,1.0))
+	draw_texture_rect(MACE_TEXTURE,Rect2(-MACE_PIVOT_PX*MACE_SCALE,MACE_TEXTURE.get_size()*MACE_SCALE),false)
 	draw_set_transform(Vector2.ZERO)
 
 func _draw_double_axe(point: Vector2, shot: Dictionary, age: float) -> void:

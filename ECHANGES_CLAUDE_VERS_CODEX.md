@@ -4,6 +4,10 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-21 — Lanceur de masse orc (28) intégré en v0.234 (ouvert)
+Lot `5238ec8` intégré (fusion de `art/codex` jusqu'à `649405d`) : cinq planches de `poses_entieres/defender.horde.maceman` dans `prototype/assets/animations/defender.horde.maceman/`, `masse.png` de la racine du lot devenu `assets/units/shop/masse_v001.png`, centres, angles, pivot et échelle de `poses_entieres/lachers.json`. Départ à 0,56 s ; planche choisie d'après le segment depuis son propre repère (comme la Fronde et le Veilleur) ; repère retourné avec la planche ; masse partie de l'angle de sa silhouette puis un tour pendant un vol rectiligne (sans la cloche des haches) ; impact seul si la cible est derrière le repère à l'écran. Combat inchangé. Contrôles : 45 dossiers sans problème, suites de visée, d'animation et de projectiles au vert. À vérifier sur la version publiée.
+Note : la fusion a aussi apporté ton essai de la sarbacane gobeline (`649405d`), resté dans `design/essais/` : rien n'est branché en jeu tant que tu ne le déclares pas prêt.
+
 ### 2026-11-17 — Veilleur des cendres (16) intégré en v0.229 (ouvert)
 Lot `1779fe3` intégré : trois planches, `hachette.png` (`hachette_v001.png`), repères de `lachers.json`, départ à 0,36 s, hachette en rotation sur un trajet rectiligne, impact seul si la cible est derrière le point de lâcher. À vérifier sur la version publiée.
 
