@@ -274,8 +274,88 @@ func run_checks() -> void:
 			check(wp in [-12,0,12] and View.shot_origin(hatchet).distance_to(View.project(from)+Vector2(wtip.x*View.shot_facing(hatchet),wtip.y)) < 0.001,"Veilleur : départ du point de la planche %d" % wp)
 	var wspec: Dictionary = Library.spec_for("defender.horde.watcher")
 	check(not wspec.is_empty() and wspec.animations.has("attack_up12") and wspec.animations.has("attack_down12"),"Veilleur : trois planches chargées et valides")
+	# Lanceur de masse orc (type 28) : cinq planches choisies par l'écart minimal, masse lâchée à 0,56 s depuis le repère de la planche, vol rectiligne.
+	check(is_equal_approx(View.launch_delay({"type":28}),0.56),"Masse du lanceur à 0,56 s")
+	var mace_pitches: Dictionary = {}
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-2.0,0.0,2.0,6.0,9.0]:
+			var mace: Dictionary = {"type":28,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var mp: int = View.aim_pitch(mace)
+			mace_pitches[mp] = true
+			var mtip: Vector2 = View.MACE_TIPS[mp]
+			var morigin: Vector2 = View.project(from)+Vector2(mtip.x*View.shot_facing(mace),mtip.y)
+			check(mp in [-12,0,12,24,36] and View.shot_origin(mace).distance_to(morigin) < 0.001,"Lanceur de masse : départ du repère de la planche %d" % mp)
+			check(View.aim_variant(mp) in ["attack","attack_up12","attack_down12","attack_down24","attack_down36"] and View.MACE_ANGLES.has(mp),"Lanceur de masse : planche et angle de départ connus (%d)" % mp)
+			var mtarget: Vector2 = View.project(mace.to)+Vector2(0,-12)
+			var straight: bool = true
+			for step in range(1,17):
+				var progress: float = float(step)/16.0
+				straight = straight and View.projectile_position(mace,progress*View.PROJECTILE_FLIGHT).distance_to(morigin.lerp(mtarget,progress)) < 0.001
+			check(straight,"Lanceur de masse : vol rectiligne du repère à l'impact (planche %d)" % mp)
+	check(mace_pitches.size() >= 4,"Lanceur de masse : plusieurs inclinaisons employées selon la cible (%s)" % str(mace_pitches.keys()))
+	var mspec: Dictionary = Library.spec_for("defender.horde.maceman")
+	check(not mspec.is_empty() and mspec.animations.has("attack_up12") and mspec.animations.has("attack_down12") and mspec.animations.has("attack_down24") and mspec.animations.has("attack_down36"),"Lanceur de masse : cinq planches chargées et valides")
+	if not mspec.is_empty():
+		for variant in ["attack","attack_up12","attack_down12","attack_down24","attack_down36"]:
+			var animation: Dictionary = mspec.animations[variant]
+			check(int(animation.frames) == 26 and is_equal_approx(float(animation.duration),1.04) and str(animation.mode) == "event","Lanceur de masse : %s en 26 poses sur 1,04 s, lâcher sur la pose 14" % variant)
+	# Mage de givre (type 30) : trois vues nommées (−32°, −16°, +22°) choisies par l'écart minimal, cristal à 0,36 s depuis le repère de la vue, retourné avec la pose, en ligne droite.
+	check(is_equal_approx(View.launch_delay({"type":30}),0.36),"Cristal du mage de givre à 0,36 s")
+	var frost_views: Dictionary = {}
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-3.0,-1.0,0.0,2.0,6.0]:
+			var frost: Dictionary = {"type":30,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var fp: int = View.aim_pitch(frost)
+			var ftip: Vector2 = View.FROST_TIPS[fp]
+			var forigin: Vector2 = View.project(from)+Vector2(ftip.x*View.shot_facing(frost),ftip.y)
+			frost_views[View.tilted_variant(frost)] = true
+			check(fp in [-32,-16,22] and View.shot_origin(frost).distance_to(forigin) < 0.001,"Mage de givre : départ du repère de la vue %d" % fp)
+			check(View.tilted_variant(frost) == {-32:"attack_up",-16:"attack",22:"attack_down"}[fp],"Mage de givre : planche nommée de la vue %d" % fp)
+			var ftarget: Vector2 = View.project(frost.to)+Vector2(0,-12)
+			var fline: bool = true
+			for step in range(1,9): fline = fline and View.projectile_position(frost,View.PROJECTILE_FLIGHT*step/8.0).distance_to(forigin.lerp(ftarget,step/8.0)) < 0.001
+			check(fline,"Mage de givre : cristal en ligne droite (vue %d)" % fp)
+			# L'axe du cristal dessiné (−16° dans l'image) suit le trajet après retournement et rotation.
+			var fdir: Vector2 = (ftarget-forigin).normalized()
+			var facing: float = View.shot_facing(frost)
+			var art: Vector2 = Vector2.from_angle(deg_to_rad(View.FROST_ART_ANGLE))
+			var drawn: Vector2 = Transform2D(View.frost_rotation(fdir,facing)*facing,Vector2(facing,1.0),0.0,Vector2.ZERO).basis_xform(art).normalized()
+			check(drawn.distance_to(fdir) < 0.001,"Mage de givre : cristal orienté dans l'axe du trajet (%.1f, %.1f)" % [dx,dy])
+	check(frost_views.size() == 3,"Mage de givre : les trois vues sont employées selon la cible (%s)" % str(frost_views.keys()))
+	check(not (30 in View.SHARD_TYPES) and not (30 in View.NO_FLIGHT_TYPES),"Mage de givre : cristal du lot, vol toujours dessiné")
+	var frost_spec: Dictionary = Library.spec_for("defender.alliance.frostmage")
+	check(not frost_spec.is_empty() and frost_spec.animations.has("attack_up") and frost_spec.animations.has("attack_down") and int(frost_spec.animations.attack.frames) == 18 and is_equal_approx(float(frost_spec.animations.attack.duration),0.72),"Mage de givre : trois vues de 18 poses sur 0,72 s chargées et valides")
+	# Sarbacane gobeline (type 29) : trois vues dont le tube est à −22,36°, −2° et +16,28° ; vue au tube le plus proche de l'axe ouverture-impact, dard à 0,24 s en ligne droite.
+	check(is_equal_approx(View.launch_delay({"type":29}),0.24),"Dard de la sarbacane à 0,24 s")
+	var blow_views: Dictionary = {}
+	for dx in [-8.0,-3.0,3.0,8.0]:
+		for dy in [-6.0,-3.0,-1.0,0.0,2.0,6.0]:
+			var dart: Dictionary = {"type":29,"from":from,"to":from+Vector2(dx,dy),"slot":0}
+			var bp: int = View.aim_pitch(dart)
+			var btip: Vector2 = View.BLOWGUN_TIPS[bp]
+			var borigin: Vector2 = View.project(from)+Vector2(btip.x*View.shot_facing(dart),btip.y)
+			var btarget: Vector2 = View.project(dart.to)+Vector2(0,-12)
+			blow_views[View.tilted_variant(dart)] = true
+			check(bp in [-24,0,16] and View.shot_origin(dart).distance_to(borigin) < 0.001,"Sarbacane : départ de l'ouverture du tube de la vue %d" % bp)
+			check(View.tilted_variant(dart) == {-24:"attack_up",0:"attack",16:"attack_down"}[bp],"Sarbacane : planche nommée de la vue %d" % bp)
+			# Aucune autre vue n'a un tube plus proche de l'axe depuis sa propre ouverture.
+			var chosen_error: float = INF
+			var best_error: float = INF
+			for candidate in View.BLOWGUN_TIPS:
+				var tip: Vector2 = View.project(from)+Vector2(View.BLOWGUN_TIPS[candidate].x*View.shot_facing(dart),View.BLOWGUN_TIPS[candidate].y)
+				var axis: Vector2 = btarget-tip
+				var error: float = absf(rad_to_deg(atan2(axis.y,maxf(absf(axis.x),0.0001)))-float(View.BLOWGUN_PITCHES[candidate]))
+				best_error = minf(best_error,error)
+				if int(candidate) == bp: chosen_error = error
+			check(is_equal_approx(chosen_error,best_error),"Sarbacane : vue au tube le plus proche de l'axe (%.1f, %.1f)" % [dx,dy])
+			var bline: bool = true
+			for step in range(1,9): bline = bline and View.projectile_position(dart,View.PROJECTILE_FLIGHT*step/8.0).distance_to(borigin.lerp(btarget,step/8.0)) < 0.001
+			check(bline,"Sarbacane : dard en ligne droite (vue %d)" % bp)
+	check(blow_views.size() == 3,"Sarbacane : les trois vues sont employées selon la cible (%s)" % str(blow_views.keys()))
+	var blow_spec: Dictionary = Library.spec_for("defender.horde.blowgun")
+	check(not blow_spec.is_empty() and blow_spec.animations.has("attack_up") and blow_spec.animations.has("attack_down") and int(blow_spec.animations.attack.frames) == 14 and is_equal_approx(float(blow_spec.animations.attack.duration),0.56),"Sarbacane : trois vues de 14 poses sur 0,56 s chargées et valides")
 	# Tir à bout portant : pour les types sans vol visible derrière le point de lâcher, l'impact est joué au lâcher (durée de vol nulle) ; sinon le vol dure PROJECTILE_FLIGHT.
-	for type_id in [16,19,21,24,26,27]:
+	for type_id in [16,19,21,24,26,27,28]:
 		var far: Dictionary = {"type":type_id,"from":from,"to":from+Vector2(8.0,2.0),"slot":0,"arm":0}
 		var behind: Dictionary = {"type":type_id,"from":from,"to":from+Vector2(0.0,0.0),"slot":0,"arm":0}
 		behind.to = from+Vector2(-0.2,-0.2)

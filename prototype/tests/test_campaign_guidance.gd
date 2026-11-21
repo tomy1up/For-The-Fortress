@@ -40,7 +40,7 @@ func run_checks() -> void:
 		for number in [1,2]:
 			scene._open_campaign(faction);scene.campaign_menu._launch()
 			Sample.play(scene.model,Sample.POSITIONS[number-1]);scene._show_run_summary()
-			check(scene.model.phase == "victory" and scene.summary_subtitle.text.contains("Mission %d" % number) and scene.summary_subtitle.text.contains(scene.model.map_definition.title),"Le bilan essentiel identifie la mission réellement terminée")
+			check(scene.model.phase == "victory" and scene.summary_subtitle.text.contains("Mission %d" % number) and scene.summary_subtitle.text.contains(scene.model.map_definition.title),"Le bilan essentiel identifie la mission réellement terminée (mission %d, faction %d)" % [number,faction])
 			for tab in range(4):
 				scene._set_summary_tab(tab)
 				check(scene.summary_subtitle.text.contains(scene.model.map_definition.title),"Le nom de la carte reste visible dans chaque onglet du bilan")

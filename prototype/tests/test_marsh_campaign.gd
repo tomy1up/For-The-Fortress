@@ -50,7 +50,7 @@ func run_checks() -> void:
 		check(game.model.combat_affix.is_empty() and not game.affix_label.visible and game.model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(mission,game.model.faction) and game.model.gold==150 and game.model.fortress_hp==game.model.max_hp,"Nouveau biome sans vent, avec ses paramètres et une forteresse intacte")
 		var types: Array = [0,1,1] if camp==0 else [3,3,5]
 		play(game.model,types)
-		check(game.model.phase=="victory","Une composition accessible gagne dans chaque faction")
+		check(game.model.phase=="victory","Une composition accessible gagne dans chaque faction (mission %d, faction %d)" % [mission,camp])
 		var replay: Dictionary = Replay.verify(JSON.parse_string(JSON.stringify(Report.build(game.model))))
 		check(replay.ok,"Le rapport avec décoration marais est rejouable")
 		game._sync_meta_rewards(true);game._sync_meta_rewards(true)
