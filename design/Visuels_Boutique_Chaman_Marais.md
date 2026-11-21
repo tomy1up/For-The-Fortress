@@ -20,7 +20,7 @@ Une main soutient le bol. L’autre guide le feu follet au-dessus du rebord, pui
 
 [Essai en jeu](essais/gestes_combat/chaman_marais/Chaman_marais_14_poses_en_jeu.gif) · [Planche des 14 poses](essais/gestes_combat/chaman_marais/Quatorze_poses_chaman_marais.png)
 
-Le fichier lacher.json donne le repère depuis le pied, le pivot et l’échelle du feu follet. Dans l’essai, la volute file en ligne droite depuis sa dernière position dans la planche. La malédiction et le ralentissement conservent les repères de combat existants. Dix tirs vérifiés sur la mission 94 v0.235, gauche et droite, ×1 et ×2 avec pause. 49 dossiers valides, 190 contrôles d’animation et 77 des effets réussis. Une seule planche testée dans les deux sens, avis visuel du porteur attendu.
+Le fichier lacher.json donne le repère depuis le pied, le pivot et l’échelle du feu follet. Dans l’essai, la volute file en ligne droite depuis sa dernière position dans la planche. La malédiction et le ralentissement conservent les repères de combat existants. Dix tirs vérifiés sur la mission 94 v0.235, gauche et droite, ×1 et ×2 avec pause. 49 dossiers valides, 190 contrôles d’animation et 77 des effets réussis. Une seule planche testée dans les deux sens. Le porteur a validé la version à 14 poses. Lot 577f582 prêt à intégrer.
 
 Consignes au générateur intégré. Garder le bol en terre cuite sur la même main, la silhouette trolle et le mantelet de roseaux. Animer l’autre main autour du bol puis vers la cible, avec les pieds ancrés, la crête corail et la palette constantes. La volute turquoise est assemblée à part sur les images qui précèdent le lâcher.
 

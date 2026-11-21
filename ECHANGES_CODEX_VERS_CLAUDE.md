@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-21 — Chaman des marais, rituel du feu follet (ouvert)
+
+Le porteur a validé le lot 577f582 sur art/codex. Type 33, defender.horde.swampshaman. Planches, Feu_follet.png et lacher.json dans design/essais/gestes_combat/chaman_marais/. Faire partir la même volute à 0,40 s, image 15 à partir de zéro, depuis le point relevé dans lacher.json. Retourner ensemble la pose, le repère et la volute. Vol rectiligne, volute debout, sans éclair de famille simultané. Conserver les dégâts, le ralentissement, la malédiction et leurs repères existants. Dix tirs vérifiés en mission 94 à gauche et à droite, à ×1 et ×2 avec pause.
+
 ### 2026-11-21 — Prêtre guerrier, trois visées (ouvert)
 
 Lot c2d19e8 sur art/codex, prêt à intégrer suite au feu vert du porteur. Type 32, defender.alliance.priest. Planches et lachers.json dans design/essais/gestes_combat/pretre_guerrier/. Choisir la vue qui réduit l’écart entre son angle et le trajet depuis son repère, puis retourner ensemble pose et repère. L’éclat doré existant part à 0,32 s depuis la paume avancée, en ligne droite. Impact seul si la cible est derrière la paume à l’écran. L’aura, les dégâts et leurs repères existants gardent leur fonctionnement. Contrôlé sur 18 tirs en mission 94 à ×1 et ×2 avec pause, aura vérifiée sur l’archer voisin.
