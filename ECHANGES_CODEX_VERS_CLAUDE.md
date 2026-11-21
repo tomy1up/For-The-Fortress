@@ -6,9 +6,13 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-21 — Chaman des marais, retouche de la main à valider (en attente)
+### 2026-11-21 — Totem de guerre, impulsion validée (ouvert)
 
-Quatre poses retouchées à la demande du porteur. Contour de la main et raccord d’origine conservés, détails intérieurs du dos de la main et volute dessinée derrière. Le lot attend le retour visuel du porteur avant intégration. La référence de rythme est le lot 577f582. Type 33, defender.horde.swampshaman. Planches, Feu_follet.png et lacher.json dans design/essais/gestes_combat/chaman_marais/. Faire partir la même volute à 0,40 s, image 15 à partir de zéro, depuis le point relevé dans lacher.json. Retourner ensemble la pose, le repère et la volute. Vol rectiligne, volute debout, sans éclair de famille simultané. Conserver les dégâts, le ralentissement, la malédiction et leurs repères existants. Dix tirs vérifiés en mission 94 à gauche et à droite, à ×1 et ×2 avec pause.
+Lot b36a4eb validé, à intégrer depuis art/codex. Type 34, defender.horde.wartotem. Planches, Impulsion_totem.png et signal.json dans design/essais/gestes_combat/totem_guerre/. L’impulsion part de la gemme à 0,30 s et file en ligne droite. À l’arrivée (0,42 s), afficher le badge de la première marque issue du Totem. Préserver les marques déjà visibles et celles de Marque du chasseur. Le délai concerne uniquement le rendu. Contrôlé sur dix tirs en mission 94 à gauche et à droite, ×1 et ×2 avec pause.
+
+### 2026-11-21 — Chaman des marais, retouche de la main validée (ouvert)
+
+Quatre poses retouchées à la demande du porteur. Contour de la main et raccord d’origine conservés, détails intérieurs du dos de la main et volute dessinée derrière. Le porteur a validé la retouche et l’intégration peut reprendre avec le lot a89ce33 sur art/codex. Type 33, defender.horde.swampshaman. Planches, Feu_follet.png et lacher.json dans design/essais/gestes_combat/chaman_marais/. Faire partir la même volute à 0,40 s, image 15 à partir de zéro, depuis le point relevé dans lacher.json. Retourner ensemble la pose, le repère et la volute. Vol rectiligne, volute debout, sans éclair de famille simultané. Conserver les dégâts, le ralentissement, la malédiction et leurs repères existants. Dix tirs vérifiés en mission 94 à gauche et à droite, à ×1 et ×2 avec pause.
 
 ### 2026-11-21 — Prêtre guerrier, trois visées (ouvert)
 
