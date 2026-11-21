@@ -86,10 +86,10 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).
 
-- [ ] **Ancien des tribus, attaque** — frappe du tambour et départ de l’onde cuivrée au contact, à 0,36 s. [Essai en jeu](design/Visuels_Boutique_Ancien_Tribus.md#frappe-du-tambour). Avis du porteur attendu.
+- [x] **Ancien des tribus, attaque** — frappe du tambour et départ de l’onde cuivrée au contact, à 0,36 s. [Essai en jeu](design/Visuels_Boutique_Ancien_Tribus.md#frappe-du-tambour). Lot b1b0f16 validé, à intégrer.
 - [x] **Totem de guerre, attaque** — charge de la gemme et impulsion rose à 0,30 s, losange à l’arrivée. [Essai en jeu](design/Visuels_Boutique_Totem_Guerre.md#charge-de-la-gemme-et-impulsion). Lot b36a4eb validé, à intégrer.
 - [x] **Chaman des marais, attaque** — formation du feu follet dans le bol et départ à 0,40 s. [Essai en jeu](design/Visuels_Boutique_Chaman_Marais.md#rituel-du-feu-follet). Lot a89ce33 validé, à intégrer.
-- [x] **Prêtre guerrier, attaque** — éclat doré à 0,32 s, trois angles. [Captures en jeu](design/Visuels_Boutique_Pretre_Guerrier.md#trois-inclinaisons-de-tir). Lot c2d19e8 prêt à intégrer.
+- [x] **Prêtre guerrier, attaque** — éclat doré à 0,32 s, trois angles. [Captures en jeu et contrôle des 15 poses](design/Visuels_Boutique_Pretre_Guerrier.md#trois-inclinaisons-de-tir). Utiliser les planches à deux bras du lot c2d19e8.
 - [x] **Éclaireur-observateur, signal** — fanion levé et cible désignée à 0,32 s. Pointage maintenu 0,288 s. Lot 88784cf validé par le porteur, à intégrer. [Contrôles et capture](design/Visuels_Boutique_Observateur.md#signal-au-fanion).
 - [x] **Mage de givre, attaque** — trois inclinaisons, cristal synchronisé à 0,36 s, départ par pose. [Captures](design/Visuels_Boutique_Mage_Givre.md#trois-inclinaisons-de-tir). Lot 43b95a7 prêt à intégrer.
 - [x] **Sarbacane gobeline, attaque** — trois inclinaisons, départ à 0,24 s et repères du tube par vue. [Essai en jeu](design/Visuels_Boutique_Sarbacane.md#trois-inclinaisons-de-tir). Lot 112ffcd prêt à intégrer.

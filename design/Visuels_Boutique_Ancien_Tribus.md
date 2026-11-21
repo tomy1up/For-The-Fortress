@@ -18,6 +18,6 @@ L’Ancien arme sa mailloche et l’amène sur la membrane tout en gardant le ta
 
 [Essai en jeu](essais/gestes_combat/ancien_tribus/Ancien_tribus_en_jeu.gif) · [Planche des huit poses](essais/gestes_combat/ancien_tribus/Planche_ancien_tribus.png)
 
-Le fichier lacher.json donne le repère sur la membrane. La copie instrumentée fait partir l’onde cuivrée existante en ligne droite depuis ce point. Six tirs contrôlés en mission 94 v0.235, à gauche et à droite, à ×1 et ×2 avec pause. Le Lanceur de haches voisin bénéficie du chevron au sol et de +40 % de dégâts durant l’essai. 49 dossiers valides, 190 contrôles d’animation et 77 des effets réussis. Une seule planche dans les deux sens, avis visuel du porteur attendu.
+Le fichier lacher.json donne le repère sur la membrane. La copie instrumentée fait partir l’onde cuivrée existante en ligne droite depuis ce point. Six tirs contrôlés en mission 94 v0.235, à gauche et à droite, à ×1 et ×2 avec pause. Le Lanceur de haches voisin bénéficie du chevron au sol et de +40 % de dégâts durant l’essai. 49 dossiers valides, 190 contrôles d’animation et 77 des effets réussis. La même planche est utilisée dans les deux sens. Le porteur l’a validée le 21 novembre 2026.
 
 Consignes au générateur intégré. Reprendre le vieil orc, sa barbe tressée, le poncho terracotta et le tambour à main. Garder le tambour à la hanche, les bottes au sol et la mailloche dans la même main. Dessiner l’armé, l’approche, le contact de la tête rembourrée avec la membrane, le rebond et le retour en garde.

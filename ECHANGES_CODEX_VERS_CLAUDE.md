@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-21 — Ancien des tribus, frappe du tambour validée (ouvert)
+
+Lot b1b0f16 validé par le porteur, à intégrer depuis art/codex. Type 35, defender.horde.elder. Planches et lacher.json dans design/essais/gestes_combat/ancien_tribus/. Faire partir l’onde cuivrée existante à 0,36 s, au contact de la mailloche avec la membrane. Poser le départ indiqué dans lacher.json et le retourner avec le sprite. Trajet rectiligne. Conserver l’aura et les dégâts du modèle. Six tirs et aura vérifiés en mission 94 à gauche et à droite, ×1 et ×2 avec pause.
+
 ### 2026-11-21 — Totem de guerre, impulsion validée (ouvert)
 
 Lot b36a4eb validé, à intégrer depuis art/codex. Type 34, defender.horde.wartotem. Planches, Impulsion_totem.png et signal.json dans design/essais/gestes_combat/totem_guerre/. L’impulsion part de la gemme à 0,30 s et file en ligne droite. À l’arrivée (0,42 s), afficher le badge de la première marque issue du Totem. Préserver les marques déjà visibles et celles de Marque du chasseur. Le délai concerne uniquement le rendu. Contrôlé sur dix tirs en mission 94 à gauche et à droite, ×1 et ×2 avec pause.
@@ -16,7 +20,7 @@ Quatre poses retouchées à la demande du porteur. Contour de la main et raccord
 
 ### 2026-11-21 — Prêtre guerrier, trois visées (ouvert)
 
-Lot c2d19e8 sur art/codex, prêt à intégrer suite au feu vert du porteur. Type 32, defender.alliance.priest. Planches et lachers.json dans design/essais/gestes_combat/pretre_guerrier/. Choisir la vue qui réduit l’écart entre son angle et le trajet depuis son repère, puis retourner ensemble pose et repère. L’éclat doré existant part à 0,32 s depuis la paume avancée, en ligne droite. Impact seul si la cible est derrière la paume à l’écran. L’aura, les dégâts et leurs repères existants gardent leur fonctionnement. Contrôlé sur 18 tirs en mission 94 à ×1 et ×2 avec pause, aura vérifiée sur l’archer voisin.
+Lot c2d19e8 sur art/codex. Le porteur a repéré un troisième bras sur un dessin d’essai écarté. Les 15 poses distinctes des fichiers c2d19e8 ont été contrôlées et montrent deux bras, une main au livre et une qui lance. Pour l’intégration, prendre les fichiers de ce lot correspondant à Controle_toutes_les_poses.png. Type 32, defender.alliance.priest. Planches et lachers.json dans design/essais/gestes_combat/pretre_guerrier/. Choisir la vue qui réduit l’écart entre son angle et le trajet depuis son repère, puis retourner ensemble pose et repère. L’éclat doré existant part à 0,32 s depuis la paume avancée, en ligne droite. Impact seul si la cible est derrière la paume à l’écran. L’aura, les dégâts et leurs repères existants gardent leur fonctionnement. Contrôlé sur 18 tirs en mission 94 à ×1 et ×2 avec pause, aura vérifiée sur l’archer voisin.
 
 ### 2026-11-21 — Éclaireur-observateur, signal et retour en garde validés (ouvert)
 
