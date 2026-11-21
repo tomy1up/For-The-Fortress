@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.alliance.observer",
+  "facing": "right",
+  "foot": [
+    150,
+    309
+  ],
+  "display_height": 73.80524344569288,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        334,
+        334
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 20,
+      "frame_size": [
+        334,
+        334
+      ],
+      "duration": 0.8,
+      "mode": "event"
+    }
+  }
+}
