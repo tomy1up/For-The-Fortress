@@ -16,10 +16,12 @@ Dessin réalisé avec le générateur intégré. Le Chaman orc a servi de réfé
 
 ## Rituel du feu follet
 
-Une main soutient le bol. L’autre guide le feu follet au-dessus du rebord, puis le libère à 0,40 s. L’animation reprend la volute turquoise du portrait et la conserve pour le projectile. Le bol revient en garde, avec un léger mouvement du mantelet. Huit dessins entiers sur 22 images et 0,88 s. Pieds calés et hauteur de 64 px comme le sprite fixe actuel.
+Une main soutient le bol. L’autre guide le feu follet au-dessus du rebord, puis le libère à 0,40 s. L’animation reprend la volute turquoise du portrait et la conserve pour le projectile. Le bol revient en garde, avec un léger mouvement du mantelet. Le porteur a validé le geste, avec davantage d’intermédiaires pour la fluidité. Six dessins s’ajoutent entre les huit poses d’origine, pour 14 dessins distincts sur 33 images et 0,88 s. Le lâcher reste à 0,40 s. Pieds calés et hauteur de 64 px comme le sprite fixe actuel.
 
-[Essai en jeu](essais/gestes_combat/chaman_marais/Chaman_marais_en_jeu.gif) · [Planche des huit poses](essais/gestes_combat/chaman_marais/Planche_chaman_marais.png)
+[Essai en jeu](essais/gestes_combat/chaman_marais/Chaman_marais_14_poses_en_jeu.gif) · [Planche des 14 poses](essais/gestes_combat/chaman_marais/Quatorze_poses_chaman_marais.png)
 
 Le fichier lacher.json donne le repère depuis le pied, le pivot et l’échelle du feu follet. Dans l’essai, la volute file en ligne droite depuis sa dernière position dans la planche. La malédiction et le ralentissement conservent les repères de combat existants. Dix tirs vérifiés sur la mission 94 v0.235, gauche et droite, ×1 et ×2 avec pause. 49 dossiers valides, 190 contrôles d’animation et 77 des effets réussis. Une seule planche testée dans les deux sens, avis visuel du porteur attendu.
 
 Consignes au générateur intégré. Garder le bol en terre cuite sur la même main, la silhouette trolle et le mantelet de roseaux. Animer l’autre main autour du bol puis vers la cible, avec les pieds ancrés, la crête corail et la palette constantes. La volute turquoise est assemblée à part sur les images qui précèdent le lâcher.
+
+Consignes au générateur intégré pour les intermédiaires. Même Chamane avec les pieds calés et la paume au contact du bol. Ajouter les positions entre garde et recueil, recueil et formation, formation et feu follet formé, lâcher et accompagnement, accompagnement et abaissement, abaissement et retour. Les cases sont rééchantillonnées à 246 × 252 px pour garder la planche sous 8 192 px de large. Même taille sur le plateau et même repère de lâcher.
