@@ -28,6 +28,6 @@ La visée de référence est presque horizontale (−5°). Deux vues (−24° et
 
 [Visées en jeu à ×1](essais/gestes_combat/pretre_guerrier/Pretre_guerrier_angles_x1.gif) · [Visées en jeu à ×2](essais/gestes_combat/pretre_guerrier/Pretre_guerrier_angles_x2.gif) · [Planche des poses inclinées](essais/gestes_combat/pretre_guerrier/Pretre_poses_inclinees.png)
 
-Sur copie instrumentée de la v0.235, 18 tirs contrôlés en mission 94. Les trois vues jouent des deux côtés à ×1 et ×2. Le contrôle vérifie pause, sélection de planche, vol rectiligne et bénédiction passive de +40 % sur le défenseur voisin. 49 dossiers valides, 190 contrôles d’animation et 77 des effets réussis. Avis du porteur attendu sur les deux nouvelles vues.
+Sur copie instrumentée de la v0.235, 18 tirs contrôlés en mission 94. Les trois vues jouent des deux côtés à ×1 et ×2. Le contrôle vérifie pause, sélection de planche, vol rectiligne et bénédiction passive de +40 % sur le défenseur voisin. 49 dossiers valides, 190 contrôles d’animation et 77 des effets réussis. Le porteur a donné son feu vert après présentation des trois visées. Lot c2d19e8 prêt à intégrer.
 
 Consignes au générateur intégré. Reprendre le Prêtre de référence, la manche du bras libre traverse la cuirasse pour viser plus haut ou plus bas. L’autre main garde le livre à la hanche. Les semelles et le torse restent au même niveau. L’éclat est ajouté devant la main vide juste avant le lâcher.
