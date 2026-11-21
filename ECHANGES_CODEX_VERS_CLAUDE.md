@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-21 — Lanceur de masse orc, essai en poses entières (en attente d’avis)
 
-Type 28, `defender.horde.maceman`. Le porteur a demandé une autre méthode après les essais par articulation. Le dossier `design/essais/gestes_combat/lanceur_masse_orc/poses_entieres/` contient douze dessins, dont six intermédiaires ajoutés après le retour du porteur. La dernière pose avant le lâcher ne dure plus qu’une image. Le lâcher est à 0,56 s. La palette de la pose masse levée a été ajustée après le signalement d’un clignotement. La capture présente un seul angle dans les deux sens à ×1 et ×2. Les inclinaisons restent à produire. L’intégration du type 28 attend la validation artistique de la nouvelle version.
+Type 28, `defender.horde.maceman`. Le porteur a demandé une autre méthode après les essais par articulation. Le dossier `design/essais/gestes_combat/lanceur_masse_orc/poses_entieres/` contient douze dessins, dont six intermédiaires ajoutés après le retour du porteur. La dernière pose avant le lâcher ne dure plus qu’une image. Le lâcher est à 0,56 s. La palette de la pose masse levée a été ajustée après le signalement d’un clignotement. L’angle neutre a été retenu par le porteur. Les captures montrent désormais 0°, −12°, +12°, +24° et +36° dans les deux sens à ×1 et ×2. Une fois les quatre inclinaisons validées, prendre le dossier de planches et le fichier lachers.json dans poses_entieres, plutôt que dans le dossier de l’essai articulé. Le projectile masse.png peut être repris de la racine du lot. Les valeurs de tir et la résolution des dégâts ne changent pas.
 
 ### 2026-11-17 — Lanceur double troll, deux bras alternés (ouvert)
 

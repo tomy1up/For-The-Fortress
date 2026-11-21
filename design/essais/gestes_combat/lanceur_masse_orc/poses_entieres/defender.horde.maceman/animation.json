@@ -27,6 +27,46 @@
       ],
       "mode": "event",
       "duration": 1.04
+    },
+    "attack_up12": {
+      "file": "attack_up12.png",
+      "frames": 26,
+      "frame_size": [
+        308,
+        252
+      ],
+      "mode": "event",
+      "duration": 1.04
+    },
+    "attack_down12": {
+      "file": "attack_down12.png",
+      "frames": 26,
+      "frame_size": [
+        308,
+        252
+      ],
+      "mode": "event",
+      "duration": 1.04
+    },
+    "attack_down24": {
+      "file": "attack_down24.png",
+      "frames": 26,
+      "frame_size": [
+        308,
+        252
+      ],
+      "mode": "event",
+      "duration": 1.04
+    },
+    "attack_down36": {
+      "file": "attack_down36.png",
+      "frames": 26,
+      "frame_size": [
+        308,
+        252
+      ],
+      "mode": "event",
+      "duration": 1.04
     }
   }
 }
