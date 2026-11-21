@@ -18,7 +18,7 @@ Le Marchand tient sa sacoche d’une main. De l’autre, il prend la pièce, lè
 
 [Essai en jeu](essais/gestes_combat/marchand_mercenaire/Marchand_mercenaire_en_jeu.gif) · [Planche des huit poses](essais/gestes_combat/marchand_mercenaire/Planche_marchand_mercenaire.png)
 
-Le fichier lacher.json donne le point de départ depuis le pied. La pièce existante part depuis ce repère, retourné avec la pose, et tourne en vol sur un segment direct. Six tirs en mission 94 sur copie v0.235, à gauche et à droite, à ×1 et ×2 avec pause. Le test confirme le badge de pillage, le bonus de +120 % de la cible et le trajet. Le badge apparaît dès le déclenchement du tir dans l’essai, conformément au rendu actuel. La planche attend l’avis du porteur.
+Le fichier lacher.json donne le point de départ depuis le pied. La pièce existante part depuis ce repère, retourné avec la pose, et tourne en vol sur un segment direct. Six tirs en mission 94 sur copie v0.235, à gauche et à droite, à ×1 et ×2 avec pause. Le test confirme le badge de pillage, le bonus de +120 % de la cible et le trajet. Le badge apparaît dès le déclenchement du tir dans l’essai, conformément au rendu actuel. Le porteur a validé la planche le 21 novembre 2026.
 
 Contrôles en jeu et tests ciblés. 49 dossiers d’animation valides, 190 contrôles de bibliothèque, 77 des effets d’unités et 28 de boutique réussis. Godot signale des ressources encore en mémoire à la fermeture du banc d’essai. Le banc se termine avec son marqueur de réussite.
 

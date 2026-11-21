@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-21 — Marchand mercenaire, lancer de pièce validé (ouvert)
+
+Lot bcf83a3 validé par le porteur. Type 36, defender.alliance.mercenary. Planches et lacher.json dans design/essais/gestes_combat/marchand_mercenaire/. Faire partir la pièce existante à 0,40 s, image 10 à partir de zéro, au repère donné. Retourner la pose et le repère ensemble. La pièce tourne sur un trajet rectiligne. Conserver le pillage, son badge et son fonctionnement actuel. Six tirs contrôlés sur la mission 94, à gauche et à droite, à ×1 et ×2 avec pause.
+
 ### 2026-11-21 — Ancien des tribus, frappe du tambour validée (ouvert)
 
 Lot b1b0f16 validé par le porteur, à intégrer depuis art/codex. Type 35, defender.horde.elder. Planches et lacher.json dans design/essais/gestes_combat/ancien_tribus/. Faire partir l’onde cuivrée existante à 0,36 s, au contact de la mailloche avec la membrane. Poser le départ indiqué dans lacher.json et le retourner avec le sprite. Trajet rectiligne. Conserver l’aura et les dégâts du modèle. Six tirs et aura vérifiés en mission 94 à gauche et à droite, ×1 et ×2 avec pause.
