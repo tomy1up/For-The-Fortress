@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.alliance.trapper",
+  "facing": "right",
+  "foot": [
+    129,
+    286
+  ],
+  "display_height": 72.36312895017647,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        300,
+        304
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 22,
+      "frame_size": [
+        300,
+        304
+      ],
+      "duration": 0.88,
+      "mode": "event"
+    }
+  }
+}

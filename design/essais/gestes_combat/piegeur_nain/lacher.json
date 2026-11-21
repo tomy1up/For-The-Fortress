@@ -1,0 +1,13 @@
+{
+  "release": 0.36,
+  "muzzle": [
+    31.3447,
+    -41.4565
+  ],
+  "projectile": {
+    "file": "Cartouche_piegeur.png",
+    "width": 12,
+    "arc_height": 16,
+    "turns": 1
+  }
+}

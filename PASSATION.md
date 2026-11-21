@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**21 novembre — Piégeur nain, type 37.** Lancer par le bas en huit poses, 22 images sur 0,88 s. Cartouche au bois brun et à sangle orange, départ à 0,36 s sur la main ouverte, trajectoire en cloche et rotation. Six tirs vérifiés en mission 94 v0.235 dans les deux sens, à ×1 et ×2 avec pause. Multiplicateurs de progression vérifiés. 49 dossiers valides, 190 contrôles d’animation, 77 des effets d’unités et 28 de boutique réussis. [Planche et capture](design/Visuels_Boutique_Piegeur_Nain.md#lancer-de-la-cartouche). Avis du porteur attendu.
+
 **21 novembre — Marchand mercenaire, type 36.** Essai du lancer de pièce. Huit poses distinctes sur 22 images et 0,88 s. Pièce lâchée à 0,40 s à l’ouverture des doigts. Six tirs en mission 94 sur copie v0.235, à gauche et à droite, à ×1 et ×2 avec pause. Le trajet rectiligne, le badge de pillage et son bonus de +120 % sont vérifiés. 49 dossiers valides, 190 contrôles d’animation, 77 des effets d’unités et 28 de la boutique réussis. [Essai et planche](design/Visuels_Boutique_Marchand_Mercenaire.md#lancer-de-la-pièce). Lot bcf83a3 validé le 21 novembre 2026, à intégrer par Claude Code.
 
 **21 novembre — Ancien des tribus, type 35.** Huit poses de frappe au tambour. Départ de l’onde cuivrée au contact à 0,36 s. Six tirs vérifiés en mission 94 v0.235, aux deux vitesses et dans les deux sens avec pause. Aura de +40 % vérifiée sur le Lanceur de haches voisin. 49 dossiers valides, 190 contrôles d’animation et 77 des effets réussis. [Essai en jeu](design/Visuels_Boutique_Ancien_Tribus.md#frappe-du-tambour). Lot b1b0f16 validé par le porteur, à intégrer par Claude Code.
