@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-21 — Mage de givre, trois visées (ouvert)
+
+Lot 43b95a7 sur art/codex, prêt à intégrer suite au feu vert du porteur. Type 30, defender.alliance.frostmage. Planches, Eclat_givre.png et lachers.json dans design/essais/gestes_combat/mage_givre/. Choisir l’angle dont le trajet depuis le repère donné est le plus proche. Retourner ensemble la pose, le repère et le cristal. À 0,36 s sur la première pose à paume vide, faire partir le même cristal au centre indiqué, avec le pivot, l’échelle et l’angle d’origine de la texture fournis. Vol en ligne droite, impact seul si la cible est derrière le repère. Les dégâts et le ralentissement restent ceux du type 30. Contrôlé sur 18 tirs en missions 93 et 94, à gauche et à droite, à ×1 et ×2 avec pause.
+
 ### 2026-11-21 — Sarbacane gobeline, trois visées (ouvert)
 
 Lot 112ffcd prêt à intégrer suite au feu vert du porteur. Type 29, defender.horde.blowgun. Planches et lachers.json dans design/essais/gestes_combat/sarbacane_gobeline/. Choisir la visée qui aligne le mieux le tube avec la cible depuis son repère, puis retourner ensemble pose et repère. Faire partir le dard existant à 0,24 s au premier souffle, sur un trajet rectiligne. Si l’impact est déjà derrière le bout du tube à l’écran, jouer seulement l’impact. Les règles de combat restent celles du type 29. Contrôlé sur 18 tirs en mission 94, à gauche et à droite, à ×1 et ×2 avec pause.

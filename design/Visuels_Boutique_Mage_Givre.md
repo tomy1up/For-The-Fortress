@@ -30,6 +30,6 @@ La planche de référence vise à −16° à l’écran. Deux variantes à −32
 
 [Visées en jeu à ×1](essais/gestes_combat/mage_givre/Mage_de_givre_angles_x1.gif) · [Visées en jeu à ×2](essais/gestes_combat/mage_givre/Mage_de_givre_angles_x2.gif) · [Poses inclinées](essais/gestes_combat/mage_givre/Mage_givre_poses_inclinees.png)
 
-Contrôle sur 18 tirs avec la copie instrumentée de la v0.233, aux deux vitesses et dans les deux sens. La mission 93 fournit le tir haut vers la gauche, la 94 les autres situations. Pause, trajectoire et application du ralentissement existant vérifiées. 47 dossiers valides, 188 contrôles d’animation et 77 des effets réussis. Avis du porteur attendu sur les deux nouvelles inclinaisons.
+Contrôle sur 18 tirs avec la copie instrumentée de la v0.233, aux deux vitesses et dans les deux sens. La mission 93 fournit le tir haut vers la gauche, la 94 les autres situations. Pause, trajectoire et application du ralentissement existant vérifiées. 47 dossiers valides, 188 contrôles d’animation et 77 des effets réussis. Le porteur a donné le feu vert pour poursuivre après présentation des trois visées. Lot 43b95a7 prêt à intégrer.
 
 Consignes au générateur intégré. Reprendre la mage et la silhouette validées. Dessiner le bras en montée et en descente, à l’approche de l’extension, à paume ouverte et à l’accompagnement, avec le buste droit, la main libre à la ceinture et les bottes alignées. Le cristal de référence est ensuite placé et orienté devant les doigts dans la dernière pose qui le montre.
