@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-21 — Chaman des marais, rituel du feu follet (ouvert)
+### 2026-11-21 — Chaman des marais, retouche de la main à valider (en attente)
 
-Le porteur a validé le lot 577f582 sur art/codex. Type 33, defender.horde.swampshaman. Planches, Feu_follet.png et lacher.json dans design/essais/gestes_combat/chaman_marais/. Faire partir la même volute à 0,40 s, image 15 à partir de zéro, depuis le point relevé dans lacher.json. Retourner ensemble la pose, le repère et la volute. Vol rectiligne, volute debout, sans éclair de famille simultané. Conserver les dégâts, le ralentissement, la malédiction et leurs repères existants. Dix tirs vérifiés en mission 94 à gauche et à droite, à ×1 et ×2 avec pause.
+Quatre poses retouchées à la demande du porteur. Contour de la main et raccord d’origine conservés, détails intérieurs du dos de la main et volute dessinée derrière. Le lot attend le retour visuel du porteur avant intégration. La référence de rythme est le lot 577f582. Type 33, defender.horde.swampshaman. Planches, Feu_follet.png et lacher.json dans design/essais/gestes_combat/chaman_marais/. Faire partir la même volute à 0,40 s, image 15 à partir de zéro, depuis le point relevé dans lacher.json. Retourner ensemble la pose, le repère et la volute. Vol rectiligne, volute debout, sans éclair de famille simultané. Conserver les dégâts, le ralentissement, la malédiction et leurs repères existants. Dix tirs vérifiés en mission 94 à gauche et à droite, à ×1 et ×2 avec pause.
 
 ### 2026-11-21 — Prêtre guerrier, trois visées (ouvert)
 

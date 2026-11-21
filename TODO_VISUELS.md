@@ -87,7 +87,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 - [x] **Fantassin humain, marche** — trois planches de 20 images, quatre diagonales vérifiées à ×1 et ×2 sur Les Coulées Figées. À juger en jeu par le porteur. [Aperçu](design/Visuel_Fantassin_Marche.md).
 
 - [ ] **Totem de guerre, attaque** — charge de la gemme et impulsion rose à 0,30 s, losange à l’arrivée. [Essai en jeu](design/Visuels_Boutique_Totem_Guerre.md#charge-de-la-gemme-et-impulsion). Avis du porteur attendu.
-- [x] **Chaman des marais, attaque** — formation du feu follet dans le bol et départ à 0,40 s. [Essai en jeu](design/Visuels_Boutique_Chaman_Marais.md#rituel-du-feu-follet). Lot 577f582 validé par le porteur, à intégrer.
+- [ ] **Chaman des marais, attaque** — formation du feu follet dans le bol et départ à 0,40 s. [Essai en jeu](design/Visuels_Boutique_Chaman_Marais.md#rituel-du-feu-follet). Geste validé, retouche de la main à valider avant intégration.
 - [x] **Prêtre guerrier, attaque** — éclat doré à 0,32 s, trois angles. [Captures en jeu](design/Visuels_Boutique_Pretre_Guerrier.md#trois-inclinaisons-de-tir). Lot c2d19e8 prêt à intégrer.
 - [x] **Éclaireur-observateur, signal** — fanion levé et cible désignée à 0,32 s. Pointage maintenu 0,288 s. Lot 88784cf validé par le porteur, à intégrer. [Contrôles et capture](design/Visuels_Boutique_Observateur.md#signal-au-fanion).
 - [x] **Mage de givre, attaque** — trois inclinaisons, cristal synchronisé à 0,36 s, départ par pose. [Captures](design/Visuels_Boutique_Mage_Givre.md#trois-inclinaisons-de-tir). Lot 43b95a7 prêt à intégrer.
