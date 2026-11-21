@@ -1,0 +1,9 @@
+{
+  "release": 0.32,
+  "muzzle": [
+    24.2743,
+    -29.8902
+  ],
+  "projectile": "siege_bolt",
+  "flight": "linear"
+}
