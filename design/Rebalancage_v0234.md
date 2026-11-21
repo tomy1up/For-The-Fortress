@@ -51,7 +51,7 @@ Meilleure marge moyenne par chapitre en v0.234 :
 | Horde | 70 | 56 | 78 | 72 | 64 | 59 | 90 | 67 | 60 | 58 | 66 | 71 | 95 | 73 | 64 | 73 | 63 | 71 | 71 | 66 |
 
 - Moyenne par tirage : Alliance 77 %, 34 % et 57 % ; Horde 79 %, 43 % et 86 %. Écart moyen de la meilleure marge entre tirages pour une même mission : 44 points (Alliance) et 46 points (Horde).
-- Régression complète : 144 suites sur 144, 197 077 contrôles Godot et 17 tests Python.
+- Régression complète : 144 suites sur 144, 197 278 contrôles Godot et 17 tests Python.
 
 ## Limites et points à surveiller
 

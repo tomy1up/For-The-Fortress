@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "id": "defender.alliance.frostmage",
+  "facing": "right",
+  "foot": [
+    130,
+    294
+  ],
+  "display_height": 74.38490566037736,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        280,
+        308
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 18,
+      "frame_size": [
+        280,
+        308
+      ],
+      "duration": 0.72,
+      "mode": "event"
+    },
+    "attack_up": {
+      "file": "attack_up.png",
+      "frames": 18,
+      "frame_size": [
+        280,
+        308
+      ],
+      "duration": 0.72,
+      "mode": "event"
+    },
+    "attack_down": {
+      "file": "attack_down.png",
+      "frames": 18,
+      "frame_size": [
+        280,
+        308
+      ],
+      "duration": 0.72,
+      "mode": "event"
+    }
+  }
+}

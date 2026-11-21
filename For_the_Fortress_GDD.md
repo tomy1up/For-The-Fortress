@@ -2,7 +2,7 @@
 
 Game Design Document — Version 0.71 — 21 novembre 2026
 
-Version 0.234 du jeu (21 novembre 2026) : **recalibrage des PV d'ennemis avec les 60 bonus** (MAJ-71) — coefficients remesurés mission par mission et faction par faction sur trois tirages de bonus ; meilleure marge moyenne 56 % pour l'Alliance et 69 % pour la Horde (69 et 86 % en v0.233). La Horde reste au-dessus de la cible là où sa composition de référence ne gagnerait plus (O-028). Animation en poses entières du Lanceur de masse orc (cinq inclinaisons, masse lâchée à 0,56 s).
+Version 0.234 du jeu (21 novembre 2026) : **recalibrage des PV d'ennemis avec les 60 bonus** (MAJ-71) — coefficients remesurés mission par mission et faction par faction sur trois tirages de bonus ; meilleure marge moyenne 56 % pour l'Alliance et 69 % pour la Horde (69 et 86 % en v0.233). La Horde reste au-dessus de la cible là où sa composition de référence ne gagnerait plus (O-028). Animations du Lanceur de masse orc (cinq inclinaisons en poses entières, masse lâchée à 0,56 s) de la Mage de givre (trois visées, cristal lancé à 0,36 s) et de la Sarbacane gobeline (trois visées, dard soufflé à 0,24 s).
 
 Version 0.233 du jeu (21 novembre 2026) : **second lot du catalogue** (MAJ-70) — 60 bonus, dont 16 rares et 8 épiques aux effets nouveaux (or, forteresse, promotions, ralentissements, exécution…), offres tirées par rareté (environ 70 % de communs, 25 % de rares, 5 % d'épiques, plus de rares en fin de partie) et une relance gratuite par partie. Valeurs à confirmer en partie réelle ; l'équilibrage suivra (O-028).
 
@@ -1942,7 +1942,7 @@ Version 0.69 — 20 novembre 2026 : jeu 0.232. **Bonus élargis et rééquilibra
 
 Version 0.70 — 21 novembre 2026 : jeu 0.233. **Second lot du catalogue de bonus** (MAJ-70) : trois raretés (commun, rare, épique) et tirage par rareté selon le rang du choix (sections 8 et 27) ; relance gratuite unique par partie ; 24 bonus rares et épiques R-37 à R-60 (section 26) ; trois coefficients de rééquilibrage abaissés pour les suites de campagne (section 62) ; O-027 clos pour ce lot, O-028 élargi.
 
-Version 0.71 — 21 novembre 2026 : jeu 0.234. **Recalibrage des PV d'ennemis avec les 60 bonus** (MAJ-71, section 62) : même cible, meilleure marge moyennée sur trois tirages de bonus, grille affinée par pas de 5 %, garde-fou de la composition de référence, ajustement par les suites de campagne ; la mission 1 reste à 100 %. Geste du Lanceur de masse orc (type 28, cinq inclinaisons en poses entières, départ à 0,56 s ; rendu seulement). O-028 mis à jour (Horde au-dessus de la cible là où sa composition de référence la bride).
+Version 0.71 — 21 novembre 2026 : jeu 0.234. **Recalibrage des PV d'ennemis avec les 60 bonus** (MAJ-71, section 62) : même cible, meilleure marge moyennée sur trois tirages de bonus, grille affinée par pas de 5 %, garde-fou de la composition de référence, ajustement par les suites de campagne ; la mission 1 reste à 100 %. Gestes du Lanceur de masse orc (type 28, cinq inclinaisons en poses entières, départ à 0,56 s) de la Mage de givre (type 30, trois visées, cristal en ligne droite à 0,36 s) et de la Sarbacane gobeline (type 29, trois visées, dard en ligne droite à 0,24 s) ; rendu seulement. O-028 mis à jour (Horde au-dessus de la cible là où sa composition de référence la bride).
 
 <a id="s51"></a>
 
@@ -2614,6 +2614,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.231 | Outillage (contrôles en parallèle, captures reproductibles), fiches des chapitres 10 à 20, courbe de difficulté ; GDD 0.68 |
 | 0.232 | Catalogue de 36 bonus et quatre choix par partie ; rééquilibrage des PV d'ennemis par mission (cible 40 à 70 % de marge pour la meilleure composition) ; GDD 0.69 |
 | 0.233 | Second lot de bonus : 60 bonus dont 16 rares et 8 épiques, tirage par rareté, relance gratuite par partie ; quatre bonus acquis visibles ; GDD 0.70 |
-| 0.234 | Recalibrage des PV d'ennemis avec les 60 bonus (trois tirages) : meilleure marge moyenne 56 % (Alliance) et 69 % (Horde) ; Lanceur de masse orc animé en cinq inclinaisons ; GDD 0.71 |
+| 0.234 | Recalibrage des PV d'ennemis avec les 60 bonus (trois tirages) : meilleure marge moyenne 56 % (Alliance) et 69 % (Horde) ; Lanceur de masse orc (cinq inclinaisons) , Mage de givre et Sarbacane gobeline (trois visées) animés ; GDD 0.71 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.
