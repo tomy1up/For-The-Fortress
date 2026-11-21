@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.alliance.priest",
+  "facing": "right",
+  "foot": [
+    124,
+    286
+  ],
+  "display_height": 74.69287469287468,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        286,
+        304
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 20,
+      "frame_size": [
+        286,
+        304
+      ],
+      "duration": 0.8,
+      "mode": "event"
+    }
+  }
+}
