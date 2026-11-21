@@ -31,3 +31,9 @@ Valeurs de prototype à confirmer en partie réelle.
 - Régression complète : 144 suites sur 144, 197 278 contrôles Godot et 17 tests Python.
 - Nouveaux contrôles des types 28, 29 et 30 dans `test_marksman_aim.gd` : instant de départ, repère de chaque inclinaison, vol rectiligne, orientation du cristal, planches chargées.
 - Validateur des animations : 47 dossiers, aucun problème.
+- Paquet Windows vérifié : 1 050 cas, 534 sources comparées.
+- Contrôle visuel : 54 captures des trois gestes (six emplacements de la Vallée du Gué, juste avant le départ, au départ et en vol) ; captures des missions dans les deux factions.
+
+## Limite connue
+
+- Sarbacane : quand la cible est presque à la verticale de la gobeline (par exemple depuis E3, E4 ou E6 de la Vallée du Gué vers l'entrée), le dard part nettement plus pentu que le tube de la vue la plus inclinée (−22°). Une vue plus inclinée est à demander à Codex si le porteur le juge gênant.
