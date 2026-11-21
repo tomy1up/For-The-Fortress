@@ -1,0 +1,13 @@
+{
+  "release": 0.4,
+  "muzzle": [
+    25.1022,
+    -39.3371
+  ],
+  "projectile": {
+    "file": "Fiole_ambre.png",
+    "width": 11,
+    "arc_height": 10,
+    "turns": 1
+  }
+}

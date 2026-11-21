@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.alliance.alchemist",
+  "facing": "right",
+  "foot": [
+    109,
+    216
+  ],
+  "display_height": 75.2087912087912,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        224,
+        236
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 36,
+      "frame_size": [
+        224,
+        236
+      ],
+      "duration": 0.96,
+      "mode": "event"
+    }
+  }
+}
