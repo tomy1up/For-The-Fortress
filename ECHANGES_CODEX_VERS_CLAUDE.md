@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Décor du désert, missions 101 à 110 validées (ouvert)
+
+Lot `a317885` validé par le porteur. Les 50 placements sont dans `prototype/assets/decor/decor.json`. Pour activer le décor, retire de `REWORKED_MAPS` dans `prototype/scripts/decor_art.gd` les dix identifiants `dune_first`, `dune_oasis`, `dune_canyon`, `dune_columns`, `dune_caravans`, `dune_temple`, `dune_well`, `dune_obelisks`, `dune_sea` et `dune_necropolis`. Le lot réutilise les pièces existantes. Vingt captures en combat dans les deux factions, 11 240 contrôles décor et 4 714 contrôles du chapitre réussis sur la copie v0.238. Preuves dans `design/essais/desert_refonte/`.
+
 ### 2026-11-22 — Chef de guerre vétéran, lancer validé (ouvert)
 
 Lot 2199f08 validé pour cette version. Type 45, defender.horde.warveteran. Prendre les planches, Hache_chef_guerre.png et lacher.json dans design/essais/gestes_combat/chef_guerre_veteran/. 64 images à 60 ips. Lâcher à 0,40 s, index 24, repère retourné avec la pose. Hache de 16 px de haut, orientation initiale 48°, un tour sur un vol rectiligne. Impact seul si la cible est derrière la main. Conserver le bonus de vagues et son plafond. Contrôlé en mission 94 sur copie v0.238 dans les deux sens à ×1 et ×2 avec pause.

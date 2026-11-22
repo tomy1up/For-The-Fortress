@@ -39,7 +39,7 @@ Les dix cartes réutilisent le grès, les colonnes brisées et les murs du dése
 
 Les 50 emplacements ont été vérifiés contre les chaussées, les entrées, les six cases de défense et la forteresse. Les vingt captures montrent la vague 5 dans les deux factions sur une copie de la v0.238. Un rocher des Premières Dunes a été déplacé après inspection pour le distinguer du défenseur en E5. Les suites décor et chapitre du désert passent avec 11 240 et 4 714 contrôles respectivement.
 
-Le lot attend l’avis du porteur. Après validation, l’activation consiste à retirer les dix identifiants `dune_first` à `dune_necropolis` de `REWORKED_MAPS` dans `decor_art.gd`.
+Le porteur a validé le lot a317885 le 22 novembre 2026. L’activation par Claude Code consiste à retirer les dix identifiants `dune_first` à `dune_necropolis` de `REWORKED_MAPS` dans `decor_art.gd`.
 
 - [Missions 101 à 104](essais/desert_refonte/Desert_101_104.jpg)
 - [Missions 105 à 107](essais/desert_refonte/Desert_105_107.jpg)
