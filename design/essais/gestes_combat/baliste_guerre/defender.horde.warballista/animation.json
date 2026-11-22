@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.horde.warballista",
+  "facing": "right",
+  "foot": [
+    66,
+    72
+  ],
+  "display_height": 55.69620253164557,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        136,
+        80
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 60,
+      "frame_size": [
+        136,
+        80
+      ],
+      "duration": 0.96,
+      "mode": "event"
+    }
+  }
+}
