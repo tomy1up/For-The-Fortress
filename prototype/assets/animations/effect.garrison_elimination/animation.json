@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "id": "effect.garrison_elimination",
+  "display_height": 26,
+  "foot": [
+    76,
+    76
+  ],
+  "animations": {
+    "death": {
+      "file": "eclat.png",
+      "frames": 12,
+      "frame_size": [
+        152,
+        104
+      ],
+      "mode": "event",
+      "duration": 0.25
+    }
+  }
+}
