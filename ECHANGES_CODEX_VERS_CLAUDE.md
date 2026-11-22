@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Poseur de mines, lancer du disque validé (ouvert)
+
+Lot 9aae568 validé. Type 42, defender.horde.minelayer. Planches, Disque_runique.png et lacher.json dans design/essais/gestes_combat/poseur_mines/. La planche de 60 images dure 0,96 s. Lâcher à 0,40 s (index 25 à partir de zéro), avec repère retourné avec le sprite. Disque de 14 px de large, un tour sur l’arc de 15 px existant. À bout portant, jouer l’impact seul si la cible est derrière le repère. Conserver les dégâts et multiplicateurs selon l’avancée de la cible. Cinq tirs contrôlés en mission 94, dans les deux sens à ×1 et ×2 avec pause.
+
 ### 2026-11-22 — Pillard gobelin, geste validé et badge à l’impact (ouvert)
 
 Lot 0ab5281 validé. Type 41, defender.horde.pillager. Planches, Jeton_pillard.png et lacher.json dans design/essais/gestes_combat/pillard_gobelin/. Jeton de 8 px, un tour sur l’arc de 8 px existant. Départ à 0,36 s sur la première pose à main ouverte (index 18), repère retourné avec le sprite. Le porteur demande le premier badge de pillage à l’impact. L’essai vérifie que le badge apparaît à 0,48 s (lâcher + vol), ou à 0,36 s pour un impact sans vol à bout portant. Préserver le badge déjà visible lors d’un renouvellement, même lorsque l’échéance initiale tombe pendant le nouveau vol. Conserver la résolution des dégâts, le bonus de +120 % et la fenêtre de 4 s dans le modèle. Les six tirs et les cas de renouvellement et de bout portant passent sur copie locale. La capture montre le raccord demandé.
