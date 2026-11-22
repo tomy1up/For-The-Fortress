@@ -1,0 +1,13 @@
+{
+  "release": 0.4,
+  "muzzle": [
+    37.8149,
+    -31.0235
+  ],
+  "projectile": {
+    "file": "Disque_runique.png",
+    "width": 14,
+    "arc_height": 15,
+    "turns": 1
+  }
+}
