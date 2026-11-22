@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**22 novembre — Marais, missions 41 à 45.** Vingt bassins redessinés dans leurs limites, saule, roseaux et deux ruines dont l’arche compacte du Cloître. Vingt captures en combat sur copie v0.240, avec et sans l’habillage dans les deux factions. 4 448 contrôles du chapitre et 13 580 du décor réussis. Avis du porteur attendu. [Fiche](design/Visuels_Marais_41_45.md).
+**22 novembre — Marais, missions 41 à 45.** Vingt bassins redessinés dans leurs limites, saule, roseaux et deux ruines dont l’arche compacte du Cloître. Vingt captures en combat sur copie v0.240, avec et sans l’habillage dans les deux factions. 4 448 contrôles du chapitre et 13 580 du décor réussis. Lot 5ae3c06 validé par le porteur le 22 novembre 2026, à brancher par Claude Code. [Fiche](design/Visuels_Marais_41_45.md).
 
 **22 novembre — Dégâts des forteresses.** Six calques pour l’Alliance et la Horde, trois degrés de dégâts par faction. Essai sur copie v0.240, vingt captures dont quatre après des arrivées d’ennemis calculées par le modèle. 36 contrôles de condition et 438 contrôles des événements royaux réussis. Lot c81b52a validé par le porteur le 22 novembre 2026, à intégrer par Claude Code dans `_draw_fortress`. [Fiche](design/Visuels_Degats_Forteresses.md).
 

@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-22 — Bassins et ruines des marais, missions 41 à 45 (ouvert)
 
-Neuf PNG de décor dans `prototype/assets/decor/marais/`, avec références d’implantation dans `design/essais/marais_41_45/Implantation.json`. Attendre le retour du porteur. Le calque de bassins remplace le dessin de `MarshArt.draw_ground` sur les cinq cartes, en amont des routes. Les quatre sprites remplacent le dessin des objets dans leurs cadres actuels. Consulter le tableau d’implantation et prévoir les neuf fichiers dans les listes d’export. Le Seuil utilise les rectangles de `MarshArt.POOLS`. Garder l’arche en ruine sur `marsh_cloister` comme dans l’essai. [Fiche](design/Visuels_Marais_41_45.md).
+Neuf PNG de décor dans `prototype/assets/decor/marais/`, avec références d’implantation dans `design/essais/marais_41_45/Implantation.json`. Lot 5ae3c06 validé par le porteur le 22 novembre 2026. Le calque de bassins remplace le dessin de `MarshArt.draw_ground` sur les cinq cartes, en amont des routes. Les quatre sprites remplacent le dessin des objets dans leurs cadres actuels. Consulter le tableau d’implantation et prévoir les neuf fichiers dans les listes d’export. Le Seuil utilise les rectangles de `MarshArt.POOLS`. Garder l’arche en ruine sur `marsh_cloister` comme dans l’essai. [Fiche](design/Visuels_Marais_41_45.md).
 
 ### 2026-11-22 — Calques de dégâts des forteresses (ouvert)
 
