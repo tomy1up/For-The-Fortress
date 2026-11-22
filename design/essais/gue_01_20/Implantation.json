@@ -1,0 +1,69 @@
+{
+  "props": {
+    "pin_du_gue": {
+      "file": "pin_du_gue.png",
+      "rect": [
+        -16,
+        -46,
+        32,
+        60
+      ]
+    },
+    "pin_du_bois": {
+      "file": "pin_du_bois.png",
+      "rect": [
+        -16,
+        -46,
+        32,
+        60
+      ]
+    },
+    "rocher_moussu": {
+      "file": "rocher_moussu.png",
+      "rect": [
+        -13,
+        -14,
+        26,
+        23
+      ]
+    },
+    "buisson_fleuri": {
+      "file": "buisson_fleuri.png",
+      "rect": [
+        -13,
+        -14,
+        26,
+        23
+      ]
+    },
+    "fougeres": {
+      "file": "fougeres.png",
+      "rect": [
+        -13,
+        -14,
+        26,
+        23
+      ]
+    }
+  },
+  "overlays": {
+    "riviere_du_gue": {
+      "file": "riviere_du_gue.png",
+      "rect": [
+        540,
+        245,
+        318,
+        166
+      ]
+    },
+    "pont_du_gue": {
+      "file": "pont_du_gue.png",
+      "rect": [
+        605,
+        327,
+        80,
+        56
+      ]
+    }
+  }
+}

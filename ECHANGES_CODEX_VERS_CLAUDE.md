@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-23 — Décor du Gué 1–20 (en attente du porteur)
+
+Sept PNG dans `prototype/assets/decor/gue/`. Réutiliser les ancrages existants. Sur `valley_ford`, le calque de rivière passe sous la chaussée et le pont passe au-dessus de la chaussée et sous les unités. Les captures de la v0.241, les dix identifiants et les coordonnées des sept pièces sont dans la [fiche](design/Visuels_Gue_01_20.md).
+
 ### 2026-11-22 — Décor des Ardoises 21–40 (ouvert)
 
 Six PNG dans `prototype/assets/decor/ardoises/` et paramètres dans `design/essais/ardoises_21_40/Implantation.json`. Le décor réutilise les placements de `scenery_for` pour onze identifiants. Les pièces restent dans les emprises de `scenery_bounds`. Les vues incluent le chapitre 4 avec les rafales actives. Lot 6ecb5d3 validé le 22 novembre 2026. Brancher les sprites par carte et déclarer les six PNG dans les listes d’export. [Fiche](design/Visuels_Ardoises_21_40.md).
