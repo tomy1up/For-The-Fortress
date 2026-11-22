@@ -1,12 +1,12 @@
 # Vents contraires · Rafales au sol
 
-Proposition du 22 novembre 2026 pour le chapitre 4. Des traînées gris bleuté rasent les ardoises de droite à gauche avec des grains de poussière. Les rafales s’atténuent aux bords du plateau et passent derrière les silhouettes. Un premier essai trop léger à taille native a été renforcé. La cadence reste réduite de 10 % pendant la mission.
+Habillage du chapitre 4 validé par le porteur le 22 novembre 2026 (lot 208a6aa). Des traînées gris bleuté rasent les ardoises de droite à gauche avec des grains de poussière. Les rafales s’atténuent aux bords du plateau et passent derrière les silhouettes. Un premier essai trop léger à taille native a été renforcé. La cadence reste réduite de 10 % pendant la mission.
 
 ![En combat à taille native sur la mission 36](essais/vents_contraires/Vents_contraires_mission_36.gif)
 
 ## Intégration
 
-La planche `effect.headwinds/rafales.png` contient 60 images transparentes de 256 × 140 à 24 images/s. La boucle dure 2,50 s. La description emploie `idle` en mode `time`. Sur la copie d’essai, la planche est étirée sur le rectangle des quatre coins projetés du plateau et dessinée avant les éléments du décor et les unités, en combat. Sa phase suit `model.elapsed`. Le bandeau reste visible en préparation. Les traînées provisoires servent de repli. L’activation du visuel se fait dans `_draw_headwinds` par Claude Code après retour du porteur.
+La planche `effect.headwinds/rafales.png` contient 60 images transparentes de 256 × 140 à 24 images/s. La boucle dure 2,50 s. La description emploie `idle` en mode `time`. Sur la copie d’essai, la planche est étirée sur le rectangle des quatre coins projetés du plateau et dessinée avant les éléments du décor et les unités, en combat. Sa phase suit `model.elapsed`. Le bandeau reste visible en préparation. Les traînées provisoires servent de repli. L’activation du visuel se fait dans `_draw_headwinds` par Claude Code.
 
 ## Contrôles
 
