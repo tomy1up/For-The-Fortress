@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.horde.elder",
+  "facing": "right",
+  "foot": [
+    145,
+    290
+  ],
+  "display_height": 78.92747742371803,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        292,
+        310
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 22,
+      "frame_size": [
+        292,
+        310
+      ],
+      "duration": 0.88,
+      "mode": "event"
+    }
+  }
+}

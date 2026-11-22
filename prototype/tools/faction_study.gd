@@ -54,7 +54,12 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 	types = types.duplicate()
 	types.sort_custom(func(x, y): return m.purchase_cost(x) < m.purchase_cost(y)) # les deux moins chères à l'ouverture, la plus chère à la vague 2
 	if not (m.buy(slots[0],types[0]) and m.buy(slots[1],types[1])): return {"result":"refus","hp":-1,"max":m.max_hp}
-	for wave in range(1,11):
+	_play_waves(m,1,slots,types,OS.get_environment("POLICY") == "look")
+	return {"result":m.phase,"hp":m.fortress_hp,"max":m.max_hp}
+
+## Suite de la partie à partir de la vague `first` (achats et améliorations fixes). `look` : choix de bonus guidé par simulation (voir `_look_pick`).
+func _play_waves(m, first: int, slots: Array, types: Array, look: bool) -> void:
+	for wave in range(first,11):
 		if wave == 2: m.upgrade(slots[0])
 		if wave >= 2 and m.defenders[slots[2]].is_empty(): m.buy(slots[2],types[2])
 		if wave >= 5:
@@ -63,11 +68,43 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 		if not m.start(): break
 		m.advance(10000)
 		if m.phase == "defeat": break
-		if m.phase == "bonus": m.choose_bonus(_pick(m))
+		if m.phase == "bonus":
+			if look: _look_pick(m,wave,slots,types)
+			else: m.choose_bonus(_pick(m))
 		if wave < 10: m.prepare_next_wave()
-	return {"result":m.phase,"hp":m.fortress_hp,"max":m.max_hp}
 
-## POLICY=safe : écarte les bonus à contrepartie (Pari risqué, Forteresse blindée, Élite sacrifiée : codes 19, 23 et 24) quand une autre offre existe ; sinon la première offre, comme avant.
+## POLICY=look (v0.236) : à chaque choix, chaque offre est essayée sur une copie de la partie, jouée jusqu'au bout avec la première offre aux choix suivants ;
+## si la relance est disponible, les trois offres relancées sont essayées aussi. L'offre retenue est celle qui finit avec le plus de PV de forteresse (à défaut, la vague la plus avancée).
+## La copie garde le même hasard : c'est un joueur averti qui voit l'issue de chaque offre, borne haute d'un joueur qui choisit bien ses bonus.
+func _look_pick(m, wave: int, slots: Array, types: Array) -> void:
+	var best_code: int = int(m.bonus_offer[0]);var best_score: float = -INF;var best_reroll := false
+	for branch in ([false,true] if m.rerolls_available() > 0 else [false]):
+		var base = _clone(m)
+		if branch and not base.reroll_bonus(): continue
+		for code in base.bonus_offer.duplicate():
+			var trial = _clone(base)
+			trial.choose_bonus(int(code))
+			if wave < 10: trial.prepare_next_wave()
+			if wave < 10: _play_waves(trial,wave+1,slots,types,false)
+			var score: float = (1000.0 if trial.phase == "victory" else 0.0)+float(trial.fortress_hp)*10.0+float(trial.wave)
+			if score > best_score: best_score = score;best_code = int(code);best_reroll = branch
+	if best_reroll: m.reroll_bonus()
+	m.choose_bonus(best_code)
+
+## Copie complète d'une partie en cours (variables du script, tableaux et dictionnaires recopiés, générateur aléatoire au même état).
+func _clone(m):
+	var copy = Model.new(true,m.map_definition)
+	for property in m.get_property_list():
+		if not (int(property.usage) & PROPERTY_USAGE_SCRIPT_VARIABLE): continue
+		var value = m.get(property.name)
+		if value is RandomNumberGenerator:
+			var generator := RandomNumberGenerator.new();generator.seed = value.seed;generator.state = value.state
+			copy.set(property.name,generator)
+		elif value is Array or value is Dictionary: copy.set(property.name,value.duplicate(true))
+		else: copy.set(property.name,value)
+	return copy
+
+## POLICY=look : choix guidé par simulation (`_look_pick`). POLICY=safe : écarte les bonus à contrepartie (Pari risqué, Forteresse blindée, Élite sacrifiée : codes 19, 23 et 24) quand une autre offre existe ; sinon la première offre, comme avant.
 func _pick(m) -> int:
 	if OS.get_environment("POLICY") == "ref": return Model.reference_bonus(m.bonus_offer) # choix de bonus des tests de chapitre
 	if OS.get_environment("POLICY") == "safe":

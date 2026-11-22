@@ -21,6 +21,12 @@ func _initialize() -> void:
 		var shot: Dictionary = {"type":type,"from":Vector2(2,6),"to":Vector2(3,3)}
 		var right: Vector2 = View.shot_origin(shot)-View.project(shot.from)
 		shot.to = Vector2(1,7)
+		if View.SINGLE_MUZZLES.has(type):
+			# Repère de départ fourni avec l'animation de Codex (v0.236) : celui de la pose animée, retourné avec elle.
+			var tip: Vector2 = View.SINGLE_MUZZLES[type]
+			var first := {"type":type,"from":Vector2(2,6),"to":Vector2(3,3)}
+			check(right.is_equal_approx(Vector2(tip.x*View.shot_facing(first),tip.y)) and (View.shot_origin(shot)-View.project(shot.from)).is_equal_approx(Vector2(tip.x*View.shot_facing(shot),tip.y)) and View.shot_facing(first) != View.shot_facing(shot),"Origine des projectiles au repère de l'animation et symétrique (type %d)" % type)
+			continue
 		check(type in View.TILTED_TYPES or type in [View.STONE_TYPE,View.SPEARMAN_TYPE,View.DOUBLE_THROWER_TYPE] or (right.is_equal_approx(Art.MUZZLES[type]) and (View.shot_origin(shot)-View.project(shot.from)).is_equal_approx(Vector2(-right.x,right.y))),"Origine des projectiles propre à la nouvelle arme et symétrique")
 	check(Art.portrait(10) == Art.PORTRAITS[10] and Art.portrait(10) != Art.TEXTURES[10] and Art.portrait(16) == Art.PORTRAITS[16] and Art.portrait(16) != Art.TEXTURES[16] and Art.portrait(17) == Art.TEXTURES[17],"Portrait de boutique propre à la sentinelle et au veilleur, sprite commun pour le javelinier")
 	print("SHOP_ART_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
