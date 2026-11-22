@@ -8,6 +8,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [ ] **Nouveaux tracés des citadelles, missions 91 à 100** — 53 emplacements adaptés et contrôlés en combat dans les deux factions. [Captures](design/Visuels_Citadelles.md#décors-adaptés-aux-nouveaux-tracés-des-missions-91-à-100). Avis du porteur attendu avant activation.
+
 - **Décision du porteur, 15 novembre 2026.** La boutique est limitée à 20 unités par faction. Le Fantassin squelette (46) et le Tirailleur gnome (47) sont retirés du catalogue par Claude. Leurs visuels restent dans les archives de design et leurs animations sortent de la file.
 
 - [x] **Première représentation des gnomes de l’Alliance** — le servant de la Balliste royale a été validé le 14 novembre 2026. Sprite prêt à intégrer. [Fiche](design/Visuels_Boutique_Balliste_Royale.md).

@@ -40,3 +40,13 @@ Les 34 captures ont été prises dans Godot sur l’écran de droite, dans les d
 Le Pont-levis, mission 82, sert actuellement de témoin sans placement dans `test_decor_art.gd`. Ses six placements ont été essayés en mémoire dans les deux factions et attendent le déplacement de ce témoin vers un identifiant sans décor. [Captures de l’essai](essais/citadelles_extension/Citadelle_82_essai.jpg) · [Placements prêts à intégrer](essais/citadelles_extension/Pont_levis_placements.json).
 
 Vérifications sur le lot actif. Le validateur d’animations a trouvé zéro problème. La régression ciblée a passé les suites décor et Garnison, soit 15 779 contrôles Godot et 17 tests Python.
+
+## Décors adaptés aux nouveaux tracés des missions 91 à 100
+
+Le lot du 22 novembre 2026 réutilise les portails, remparts, tours et étendards des deux factions. Les 53 emplacements ont été contrôlés contre la chaussée, les entrées, les six cases de défense et la forteresse. Sur la Grande Salle, un portail et deux tours rythment la bordure en laissant dégagées les trois entrées. Dans L’Armurerie, les remparts occupent un espace intérieur et l’étendard a été déplacé vers la bordure opposée à l’entrée basse.
+
+Les vingt captures ont été prises sur la vague 5 dans une copie de la v0.238 avec les dix décors activés. Les suites décor et Garnison passent, avec respectivement 11 418 et 4 474 contrôles. Le lot attend la validation visuelle du porteur. Pour l’activation après validation, retirer uniquement les dix identifiants garrison_* de REWORKED_MAPS dans decor_art.gd.
+
+- [Missions 91 à 94](essais/citadelles_refonte/Citadelles_91_94.jpg)
+- [Missions 95 à 97](essais/citadelles_refonte/Citadelles_95_97.jpg)
+- [Missions 98 à 100](essais/citadelles_refonte/Citadelles_98_100.jpg)
