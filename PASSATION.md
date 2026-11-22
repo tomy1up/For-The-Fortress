@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**22 novembre — Pillard gobelin, type 41.** Douze poses, 48 images sur 0,96 s. Jeton de bronze à trois encoches lancé à 0,36 s, sur l’arc existant. Sac et appuis calés. Six tirs en mission 94 à gauche et à droite, à ×1 et ×2 avec pause. Badge et bonus de pillage vérifiés. 49 dossiers valides, 190 contrôles d’animation, 77 des effets et 28 de boutique réussis. [Planche et capture](design/Visuels_Boutique_Pillard_Gobelin.md#lancer-du-jeton). Avis du porteur attendu.
+**22 novembre — Pillard gobelin, type 41.** Douze poses, 48 images sur 0,96 s. Jeton de bronze à trois encoches lancé à 0,36 s, sur l’arc existant. Sac et appuis calés. Six tirs en mission 94 à gauche et à droite, à ×1 et ×2 avec pause. Badge et bonus de pillage vérifiés. 49 dossiers valides, 190 contrôles d’animation, 77 des effets et 28 de boutique réussis. [Planche et capture](design/Visuels_Boutique_Pillard_Gobelin.md#lancer-du-jeton). Lot 0ab5281 validé le 22 novembre 2026. Le porteur demande le badge à l’impact. Raccord visuel vérifié sur copie locale, à intégrer par Claude Code.
 
 **21 novembre — Vétéran royal, type 40.** Douze poses, 48 images sur 0,96 s. Carreau à 0,36 s à la sortie de l’arbalète, puis réarmement. Taille et appuis calés. Un détail bleu reste visible au rail après le tir dans la planche d’essai. Six tirs en mission 94 à ×1 et ×2 avec pause dans les deux sens. Bonus de vagues vérifié. 49 dossiers valides, 190 contrôles d’animation, 77 des effets et 28 de boutique réussis. [Planche et capture](design/Visuels_Boutique_Veteran_Royal.md#tir-et-réarmement). Lot 20550ee validé par le porteur, à intégrer par Claude Code.
 

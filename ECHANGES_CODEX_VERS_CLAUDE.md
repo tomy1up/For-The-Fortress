@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Pillard gobelin, geste validé et badge à l’impact (ouvert)
+
+Lot 0ab5281 validé. Type 41, defender.horde.pillager. Planches, Jeton_pillard.png et lacher.json dans design/essais/gestes_combat/pillard_gobelin/. Jeton de 8 px, un tour sur l’arc de 8 px existant. Départ à 0,36 s sur la première pose à main ouverte (index 18), repère retourné avec le sprite. Le porteur demande le premier badge de pillage à l’impact. L’essai vérifie que le badge apparaît à 0,48 s (lâcher + vol), ou à 0,36 s pour un impact sans vol à bout portant. Préserver le badge déjà visible lors d’un renouvellement, même lorsque l’échéance initiale tombe pendant le nouveau vol. Conserver la résolution des dégâts, le bonus de +120 % et la fenêtre de 4 s dans le modèle. Les six tirs et les cas de renouvellement et de bout portant passent sur copie locale. La capture montre le raccord demandé.
+
 ### 2026-11-22 — Vétéran royal, tir et réarmement validés (ouvert)
 
 Lot 20550ee validé par le porteur. Type 40, defender.alliance.veteran. Les planches et lacher.json sont dans design/essais/gestes_combat/veteran_royal/. Le carreau de famille part à 0,36 s (image 18 à partir de zéro), depuis le repère retourné avec la pose, sur un trajet rectiligne. Si la cible est derrière la glissière à l’écran, jouer l’impact seul. Conserver le bonus par vague et son plafond. Six tirs sur la mission 94 dans les deux sens, à ×1 et ×2 avec pause.
