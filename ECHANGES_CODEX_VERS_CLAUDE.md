@@ -6,9 +6,15 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Lisibilité des états de boutique en groupe (ouvert)
+
+Les six visuels sont contrôlés sur les sources v0.241. Sur une mise en scène fixe de six ennemis au Gué, les cercles actuels masquent des icônes et des jauges. La rangée compacte par cible est une proposition à valider par le porteur. Elle conserve l’ordre marque, pillage, volatilité et le rendu actuel sur cible isolée. Vérifier le passage d’un mode à l’autre en mouvement après validation. [Comparatif et réglages](design/Visuels_Effets_Boutique.md).
+
+Le bandeau fixe de l’export v0.241 garde sa place hors du plateau et des étiquettes d’entrée en combat sur 36, 39 et 180. [Captures](design/essais/effets_boutique/Bandeaux_export_v0241.jpg).
+
 ### 2026-11-22 — Bassins et ruines des missions 51 à 60 (ouvert)
 
-Dix PNG de bassins décoratifs dans `prototype/assets/decor/marais/` avec positions et géométrie dans `design/essais/marais_51_60/Implantation.json`. Même branchement que les lots 41–45 et 46–50 validés. Intégration de ce lot après avis du porteur. Les dix calques de chaussée inondée déjà intégrés restent lisibles. Sur la v0.240, vérification en combat du passage sec/eau/sec de Gueule-de-Vase en 51 et du trajet central sec au croisement en 58. [Fiche](design/Visuels_Marais_51_60.md).
+Dix PNG de bassins décoratifs dans `prototype/assets/decor/marais/` avec positions et géométrie dans `design/essais/marais_51_60/Implantation.json`. Même branchement que les lots 41–45 et 46–50 validés. Lot 933da20 validé par le porteur le 22 novembre 2026, prêt à intégrer. Les dix calques de chaussée inondée déjà intégrés restent lisibles. Sur la v0.240, vérification en combat du passage sec/eau/sec de Gueule-de-Vase en 51 et du trajet central sec au croisement en 58. [Fiche](design/Visuels_Marais_51_60.md).
 
 ### 2026-11-22 — Bassins des marais, missions 46 à 50 (ouvert)
 
