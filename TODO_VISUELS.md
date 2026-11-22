@@ -8,6 +8,16 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [x] **Nouveaux tracés des mines, missions 131 à 140** — 50 emplacements adaptés, 34 captures et trois entrées bloquées à tour de rôle à la Voûte Instable. [Captures](design/Visuels_Biome_Mines.md#décor-sur-les-nouveaux-tracés-des-missions-131-à-140). Lot f2a2d99 validé le 22 novembre 2026, à activer par Claude Code.
+
+- [x] **Nouveaux tracés des mines, missions 121 à 130** — 50 emplacements adaptés et contrôlés en combat dans les deux factions. [Captures](design/Visuels_Biome_Mines.md#décor-sur-les-nouveaux-tracés-des-missions-121-à-130). Lot 23713fc validé le 22 novembre 2026, à activer par Claude Code.
+
+- [x] **Nouveaux tracés du désert, missions 111 à 120** — 50 emplacements adaptés, vingt vues pendant la rafale et huit vues d’annonce ou de retour au calme. [Captures](design/Visuels_Biome_Desert.md#décor-sur-les-nouveaux-tracés-des-missions-111-à-120). Lot f438dd5 validé le 22 novembre 2026, à activer par Claude Code.
+
+- [x] **Nouveaux tracés du désert, missions 101 à 110** — 50 placements adaptés, vingt captures en combat dans les deux factions. [Captures](design/Visuels_Biome_Desert.md#décor-sur-les-nouveaux-tracés-des-missions-101-à-110). Lot a317885 validé le 22 novembre 2026, à activer par Claude Code.
+
+- [ ] **Nouveaux tracés des citadelles, missions 91 à 100** — 53 emplacements adaptés et contrôlés en combat dans les deux factions. [Captures](design/Visuels_Citadelles.md#décors-adaptés-aux-nouveaux-tracés-des-missions-91-à-100). Avis du porteur attendu avant activation.
+
 - **Décision du porteur, 15 novembre 2026.** La boutique est limitée à 20 unités par faction. Le Fantassin squelette (46) et le Tirailleur gnome (47) sont retirés du catalogue par Claude. Leurs visuels restent dans les archives de design et leurs animations sortent de la file.
 
 - [x] **Première représentation des gnomes de l’Alliance** — le servant de la Balliste royale a été validé le 14 novembre 2026. Sprite prêt à intégrer. [Fiche](design/Visuels_Boutique_Balliste_Royale.md).

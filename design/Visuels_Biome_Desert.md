@@ -32,3 +32,28 @@ La rafale publiée a été contrôlée en jeu sur les missions 111 à 120, avec 
 L’essai renforce la teinte claire du voile et allonge les traînées. Le bord lumineux de l’annonce est aussi renforcé. Les routes, les cases et le cercle de portée restent lisibles. Le comparatif est pris à 16,20 s simulées, à ×2, avec le même placement et le même état de combat. Les dimensions et cadences des deux planches restent celles de la v0.182. Les 40 passages ont été rejoués après la retouche. L’avertissement conserve la portée de départ, la rafale réduit la portée et la fin de rafale rétablit la portée normale dans chaque cas.
 
 [Comparatif en combat](essais/desert_ch12/Tempete_contraste_v0182.jpg)
+
+## Décor sur les nouveaux tracés des missions 101 à 110
+
+Les dix cartes réutilisent le grès, les colonnes brisées et les murs du désert. Les pièces s’organisent en arête rocheuse au Canyon Rouge, en alignement de colonnes sur la mission 104 et en paire d’obélisques à la Nécropole Ancienne. La citerne existante sert de repère à L’Oasis Asséchée et au Puits Perdu. Un sarcophage bas marque le flanc de la Nécropole.
+
+Les 50 emplacements ont été vérifiés contre les chaussées, les entrées, les six cases de défense et la forteresse. Les vingt captures montrent la vague 5 dans les deux factions sur une copie de la v0.238. Un rocher des Premières Dunes a été déplacé après inspection pour le distinguer du défenseur en E5. Les suites décor et chapitre du désert passent avec 11 240 et 4 714 contrôles respectivement.
+
+Le porteur a validé le lot a317885 le 22 novembre 2026. L’activation par Claude Code consiste à retirer les dix identifiants `dune_first` à `dune_necropolis` de `REWORKED_MAPS` dans `decor_art.gd`.
+
+- [Missions 101 à 104](essais/desert_refonte/Desert_101_104.jpg)
+- [Missions 105 à 107](essais/desert_refonte/Desert_105_107.jpg)
+- [Missions 108 à 110](essais/desert_refonte/Desert_108_110.jpg)
+
+## Décor sur les nouveaux tracés des missions 111 à 120
+
+Cinquante emplacements ont été adaptés à la nouvelle géométrie. Les deux citernes rythment la boucle de la mission 115. Le Sphinx brisé et son obélisque sont sur la bordure de la mission 116. Le sarcophage et ses fragments occupent le flanc de la mission 118. La pyramide et le sphinx encadrent la dernière carte.
+
+Vingt captures de la rafale ont été vérifiées à 16,20 s de combat dans les deux factions sur copie v0.238. Les Arches de Grès et la Pyramide Ensablée ont aussi été observées lors de l’annonce et du retour au calme dans les deux factions, soit 28 captures au total. Les suites décor, tempête et campagne passent avec respectivement 11 010, 78 et 4 776 contrôles. Sur les missions 116, 117 et 120, le bandeau de l’affixe chevauche l’étiquette Entrée 1. [Détail de la mission 120](essais/tempete_refonte/banniere120.jpg)
+
+Le porteur a validé le lot f438dd5 le 22 novembre 2026. Pour l’activer, lever le masquage des dix cartes de dune_mirage à dune_pyramid dans REWORKED_MAPS.
+
+- [Missions 111 à 114](essais/tempete_refonte/Tempete_111_114.jpg)
+- [Missions 115 à 117](essais/tempete_refonte/Tempete_115_117.jpg)
+- [Missions 118 à 120](essais/tempete_refonte/Tempete_118_120.jpg)
+- [Les trois phases à la Pyramide](essais/tempete_refonte/Pyramide_phases_tempete.jpg)

@@ -6,6 +6,22 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Bandeau Éboulement et étiquettes d’entrée (ouvert)
+
+Le chevauchement signalé pour la Tempête de sable existe aussi avec Éboulement, notamment sur 134 et 140. Sur la Voûte Instable, reproduit aux vagues 5, 6 et 7 à 19,20 s. Les captures des trois entrées sont dans design/essais/eboulement_refonte/Voute_entrees.jpg. Vérifier aussi l’annonce à 16,50 s sur 134 et 140. Le porteur a validé le lot f2a2d99 le 22 novembre 2026. Pour activer les 50 placements de decor.json, retirer de REWORKED_MAPS les dix cartes du chapitre 14, de mine_pillars à mine_core. Contrôles décor, affixe et chapitre réussis sur la copie v0.238.
+
+### 2026-11-22 — Décor des mines, missions 121 à 130 validées (ouvert)
+
+Lot `23713fc` validé par le porteur. Les 50 placements dans `prototype/assets/decor/decor.json` réutilisent les pièces de la mine. Pour les activer, retirer de `REWORKED_MAPS` les dix identifiants du chapitre 13, de `mine_entrance` à `mine_heart`. Vingt captures en combat, contrôle des cinq pièces de chaque carte dans les deux factions et suite du chapitre réussis sur copie v0.238.
+
+### 2026-11-22 — Bandeau de tempête et étiquette d’entrée (ouvert)
+
+Sur la copie v0.238, le bandeau de la Tempête de sable chevauche la pastille Entrée 1 aux missions 116, 117 et 120. Reproduction à la vague 5 et 16,20 s dans les deux factions. Capture native dans design/essais/tempete_refonte/banniere120.jpg. Vérifier les deux repères de l’interface à l’annonce et en rafale après ajustement. Le porteur a validé le lot f438dd5 le 22 novembre 2026. Pour activer les 50 placements du chapitre 12 dans decor.json, retire les dix identifiants de dune_mirage à dune_pyramid de REWORKED_MAPS dans decor_art.gd. Les tests vérifiés sur copie v0.238 totalisent 11 010 contrôles de décor, 78 de tempête et 4 776 du chapitre.
+
+### 2026-11-22 — Décor du désert, missions 101 à 110 validées (ouvert)
+
+Lot `a317885` validé par le porteur. Les 50 placements sont dans `prototype/assets/decor/decor.json`. Pour activer le décor, retire de `REWORKED_MAPS` dans `prototype/scripts/decor_art.gd` les dix identifiants `dune_first`, `dune_oasis`, `dune_canyon`, `dune_columns`, `dune_caravans`, `dune_temple`, `dune_well`, `dune_obelisks`, `dune_sea` et `dune_necropolis`. Le lot réutilise les pièces existantes. Vingt captures en combat dans les deux factions, 11 240 contrôles décor et 4 714 contrôles du chapitre réussis sur la copie v0.238. Preuves dans `design/essais/desert_refonte/`.
+
 ### 2026-11-22 — Chef de guerre vétéran, lancer validé (ouvert)
 
 Lot 2199f08 validé pour cette version. Type 45, defender.horde.warveteran. Prendre les planches, Hache_chef_guerre.png et lacher.json dans design/essais/gestes_combat/chef_guerre_veteran/. 64 images à 60 ips. Lâcher à 0,40 s, index 24, repère retourné avec la pose. Hache de 16 px de haut, orientation initiale 48°, un tour sur un vol rectiligne. Impact seul si la cible est derrière la main. Conserver le bonus de vagues et son plafond. Contrôlé en mission 94 sur copie v0.238 dans les deux sens à ×1 et ×2 avec pause.
