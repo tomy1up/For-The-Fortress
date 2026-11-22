@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "id": "effect.headwinds",
+  "display_height": 140,
+  "foot": [
+    128,
+    70
+  ],
+  "animations": {
+    "idle": {
+      "file": "rafales.png",
+      "frames": 60,
+      "frame_size": [
+        256,
+        140
+      ],
+      "mode": "time",
+      "fps": 24
+    }
+  }
+}

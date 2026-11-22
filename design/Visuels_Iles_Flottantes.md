@@ -27,3 +27,23 @@ Sur les sources de la v0.191, les 26 passages en vague 3 ont parcouru les 24 pos
 - [Aigle en combat](essais/iles_ch16/Aigle_en_combat.gif)
 - [Missions 151 à 155](essais/iles_ch16/Iles_151_155.jpg)
 - [Missions 156 à 160](essais/iles_ch16/Iles_156_160.jpg)
+
+## Décor sur les nouveaux tracés des missions 141 à 150
+
+Les dix cartes réutilisent les pièces de la cité céleste sur 50 emplacements adaptés. Le Pont de Brume regroupe les vestiges dans sa boucle. Deux tours se détachent sur les Flèches d’Azur, puis trois jardinières ponctuent les Jardins Suspendus. Le dôme et l’arche servent de repères en 148. Les fragments de roche ont été éloignés du défenseur sur les Courants Ascendants après une première capture.
+
+Les vingt vues finales datent de la vague 5 sur une copie de la v0.238 dans les deux factions. Les ancres sont à au moins 1,25 unité des routes, 1,45 des cases et 2,65 des entrées. Les silhouettes projetées ont aussi été contrôlées contre les routes, la forteresse et les étiquettes d’entrée. Les suites décor et chapitre passent avec 11 390 et 5 580 contrôles. Le porteur a validé le lot 60d2efe le 22 novembre 2026. L’activation par Claude Code passe par le retrait des dix identifiants de sky_pontoon à sky_summit de REWORKED_MAPS.
+
+- [Missions 141 à 144](essais/iles_refonte/Iles_141_144.jpg)
+- [Missions 145 à 147](essais/iles_refonte/Iles_145_147.jpg)
+- [Missions 148 à 150](essais/iles_refonte/Iles_148_150.jpg)
+
+## Décor sur les nouveaux tracés des missions 151 à 160
+
+Les 50 emplacements réutilisent les rochers, arches, tours et ruines de la cité céleste. Les Pitons Jumeaux sont ponctués de deux tours, les Trois Aires conservent trois départs dégagés et le Trône des Nuées rassemble l’arche, le dôme et la flèche. Après inspection, les tours en 158 et 160 ont été rapprochées de l’intérieur du plateau pour que leurs bases se lisent mieux.
+
+Les vingt vues finales montrent la vague 3 à 19,20 s, avec les aigles en vol dans les deux factions sur copie v0.238. Les tests de décor et de campagne passent avec 11 390 et 5 786 contrôles. La suite du déplacement des ennemis passe 1 278 contrôles. Le lot attend l’avis du porteur. Après validation, l’activation par Claude Code passe par le retrait des dix identifiants de sky_aerie à sky_throne de REWORKED_MAPS.
+
+- [Missions 151 à 154](essais/aigles_refonte/Iles_151_154.jpg)
+- [Missions 155 à 157](essais/aigles_refonte/Iles_155_157.jpg)
+- [Missions 158 à 160](essais/aigles_refonte/Iles_158_160.jpg)

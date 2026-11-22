@@ -6,6 +6,22 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Vents contraires, rafales au sol et bandeau sur les routes (ouvert)
+
+Le porteur a validé le lot 208a6aa le 22 novembre 2026. La planche `effect.headwinds/idle` est sous `prototype/assets/animations/`. 60 images de 256 × 140 à 24 ips. Pour l’intégrer, échantillonner la planche sur `model.elapsed` pendant le combat et l’étirer sur le rectangle des quatre coins projetés, dans la passe avant le décor et les unités. Garder les traînées provisoires en repli. Les vingt captures des missions 31 à 40, les deux vitesses et la pause en atelier sont vérifiées. [Fiche](design/Visuels_Vents_Contraires.md).
+
+Sur les sources de la v0.240, séparation Brume marine et étiquettes d’entrée confirmée en 174 et 180 dans les deux factions, à 20,50 s et 24 s. Le bandeau des Vents contraires passe en revanche au niveau de la route et des ennemis sur 36 et 39 à la vague 3, 6,50 s. Dans ces deux cartes à trois entrées, vérifier la disposition pour que le bandeau reste hors du plateau comme sur 174 et 180. [Captures](design/essais/vents_contraires/Bandeau_sur_la_route_36_39.jpg).
+
+### 2026-11-22 — Refonte du littoral et de la nécropole, bandeau Brume marine (ouvert)
+
+Les 200 placements des missions 161 à 200 sont dans `prototype/assets/decor/decor.json`, sections `coast` et `necro`. Sur copie v0.238, 88 captures de combat dans les deux factions et 44 275 contrôles réussis. L’activation attend l’avis du porteur. Elle consiste ensuite à retirer de `REWORKED_MAPS` les deux séries continues `coast_jetty` à `coast_citadel` et `necro_gate` à `necro_throne`.
+
+Le bandeau de Brume marine chevauche Entrée 1 en 174 et 180. Son bord inférieur touche Entrée 2 en 173 et 178. Reproduction à la vague 5, à 24 s dans les deux factions et aussi à 20,50 s en 174 et 180. Le même conflit existe avec Tempête de sable et Éboulement. Vérifier un emplacement commun pour les bandeaux qui laisse libres les pastilles sur les cartes à plusieurs entrées. [Comparatif natif](design/essais/cotes_necropole_refonte/Verification_bandeau.jpg).
+
+### 2026-11-22 — Décor des îles flottantes, missions 141 à 150 validées (ouvert)
+
+Lot `60d2efe` validé par le porteur. Les 50 placements sont dans `prototype/assets/decor/decor.json`. Pour les activer, retirer de `REWORKED_MAPS` les dix identifiants du chapitre 15, de `sky_pontoon` à `sky_summit`. Vingt vues en combat dans les deux factions, 11 390 contrôles de décor et 5 580 contrôles du chapitre réussis sur copie v0.238.
+
 ### 2026-11-22 — Bandeau Éboulement et étiquettes d’entrée (ouvert)
 
 Le chevauchement signalé pour la Tempête de sable existe aussi avec Éboulement, notamment sur 134 et 140. Sur la Voûte Instable, reproduit aux vagues 5, 6 et 7 à 19,20 s. Les captures des trois entrées sont dans design/essais/eboulement_refonte/Voute_entrees.jpg. Vérifier aussi l’annonce à 16,50 s sur 134 et 140. Le porteur a validé le lot f2a2d99 le 22 novembre 2026. Pour activer les 50 placements de decor.json, retirer de REWORKED_MAPS les dix cartes du chapitre 14, de mine_pillars à mine_core. Contrôles décor, affixe et chapitre réussis sur la copie v0.238.
