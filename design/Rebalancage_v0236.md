@@ -44,6 +44,6 @@ La marge chute brutalement avec les PV ennemis. Par exemple, la mission 121 de l
 
 Constats :
 - **La dépendance de la Horde au tirage vient de la stratégie « première offre ».** Quand le bonus est bien choisi, les deux factions se valent (89 et 91 %) et aucune mission n'est perdue, même sur le tirage le moins favorable.
-- **Bien choisir ses bonus rend la campagne beaucoup plus facile** : la meilleure composition finit vers 90 % de marge, bien au-dessus de la cible. Cette mesure est une borne haute : un vrai joueur ne voit pas l'issue de chaque offre. La cible de 40 à 70 % reste mesurée avec la première offre ; la mesurer avec un choix guidé demanderait de durcir fortement toutes les missions. C'est une décision du porteur (O-028).
+- **Bien choisir ses bonus rend la campagne beaucoup plus facile** : la meilleure composition finit vers 90 % de marge, bien au-dessus de la cible. Cette mesure est une borne haute : un vrai joueur ne voit pas l'issue de chaque offre. La cible de 40 à 70 % reste mesurée avec la première offre ; la mesurer avec un choix guidé demanderait de durcir fortement toutes les missions. C'est une décision du porteur (O-028), tranchée le 22 novembre 2026 : la cible reste mesurée avec la première offre (MAJ-79, `design/Joueur_avise_v0239.md`).
 
 Données : `design/essais/equilibre_bonus/parties_v236_{7,8,9}.txt` (première offre), `parties_v236_look_{7,8,9}.txt` (choix guidé), `table_v235_final.json`, `rebalance_table.json`.
