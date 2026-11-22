@@ -107,7 +107,7 @@ static func damage_landing_delay(event: Dictionary) -> float:
 	return launch_delay({"type":int(event.source_type)})+PROJECTILE_FLIGHT
 
 ## Types dont le projectile n'est pas dessiné en vol quand la cible est déjà derrière le point de lâcher à l'écran (à bout portant) : l'impact est alors joué au lâcher, sans attendre le vol.
-const NO_FLIGHT_TYPES: Array[int] = [16,19,21,24,26,27,28,32,40,41,42,44]
+const NO_FLIGHT_TYPES: Array[int] = [16,19,21,24,26,27,28,32,38,40,41,42,43,44,45]
 ## Types sans projectile ni impact (v0.235) : l'Éclaireur-observateur désigne sa cible au fanion ; ses dégâts et son losange s'affichent au geste pointé (délai de `LAUNCH_DELAYS`).
 const SIGNAL_TYPES: Array[int] = [31]
 const OBSERVER_TYPE := 31
@@ -302,6 +302,11 @@ const BOLT_TYPES: Array[int] = [38,43] # Balliste royale et baliste de guerre : 
 const RUNE_TYPE := 42 # Poseur de mines : disque runique.
 ## Braise du Gobelin des braises (lot Codex d9fea47, v0.238) : 8 px de large, vol rectiligne, pointe vers la cible selon l'axe du dessin, retournée avec la pose avant la rotation.
 const KAMIKAZE_TYPE := 44
+## Hache du Chef de guerre vétéran (lot Codex 2199f08, v0.239) : 16 px de haut, départ à 48° puis un tour complet sur un vol rectiligne, retournée avec la pose.
+const WARVETERAN_TYPE := 45
+const WARVETERAN_AXE_TEXTURE: Texture2D = preload("res://assets/units/shop/hache_chef_guerre_v001.png")
+const WARVETERAN_AXE_HEIGHT := 16.0
+const WARVETERAN_AXE_ANGLE := 48.0
 const EMBER_SHARD_TEXTURE: Texture2D = preload("res://assets/units/shop/braise_facette_v001.png")
 const EMBER_SHARD_WIDTH := 8.0
 const EMBER_SHARD_AXIS := Vector2(80.0,-149.0)
@@ -320,8 +325,11 @@ const TOTEM_TYPE := 34 # Totem de guerre : impulsion partie de la gemme.
 const PILLAGER_TYPE := 41
 const TOKEN_TEXTURE: Texture2D = preload("res://assets/units/shop/jeton_pillard_v001.png")
 const TOKEN_WIDTH := 8.0
-## Point de départ des types à vue unique (lots Codex v0.236), en pixels d'écran depuis l'emplacement, tir vers la droite : main de la Chamane des marais (`lacher.json`), gemme du Totem (`signal.json`).
-const SINGLE_MUZZLES: Dictionary = {33: Vector2(14.3921,-48.139), 34: Vector2(-0.250984,-51.070203), 35: Vector2(13.45841,-32.28643), 36: Vector2(28.4303,-42.361), 37: Vector2(31.3447,-41.4565), 39: Vector2(25.1022,-39.3371), 40: Vector2(24.8734,-51.3522), 41: Vector2(37.9061,-34.5103), 42: Vector2(37.8149,-31.0235), 44: Vector2(27.1743,-39.7095)} # 44 : main du Gobelin des braises (lot d9fea47) ; 42 : 42 : main ouverte du Poseur de mines (lot 9aae568) ; 41 : 41 : main ouverte du Pillard gobelin (lot 0ab5281) ; 40 : 40 : sortie de la glissière de l'arbalète du Vétéran royal (lot 20550ee) ; 39 : main ouverte de l'Alchimiste gnome (lot 02cb36d) ; 37 : main ouverte du Piégeur nain (lot 4fb5e10) ; 35 : contact de la mailloche avec le tambour de l'Ancien des tribus ; 36 : pièce lancée par le Marchand mercenaire (lot fa8d42c)
+## Repères de lâcher d'un seul point, en pixels d'écran depuis l'emplacement (tir vers la droite), retournés avec la pose (lacher.json des lots de Codex) :
+## 33 lanceur d'éclats, 34 sapeur armé, 35 contact de la mailloche de l'Ancien des tribus, 36 pièce du Marchand mercenaire (fa8d42c), 37 main du Piégeur nain (4fb5e10),
+## 38 rail de la Balliste royale (6b93bd1), 39 main de l'Alchimiste gnome (02cb36d), 40 glissière du Vétéran royal (20550ee), 41 main du Pillard gobelin (0ab5281),
+## 42 main du Poseur de mines (9aae568), 43 rail de la Baliste de guerre (8372ff5), 44 main du Gobelin des braises (d9fea47), 45 main du Chef de guerre vétéran (2199f08).
+const SINGLE_MUZZLES: Dictionary = {33: Vector2(14.3921,-48.139), 34: Vector2(-0.250984,-51.070203), 35: Vector2(13.45841,-32.28643), 36: Vector2(28.4303,-42.361), 37: Vector2(31.3447,-41.4565), 39: Vector2(25.1022,-39.3371), 40: Vector2(24.8734,-51.3522), 41: Vector2(37.9061,-34.5103), 42: Vector2(37.8149,-31.0235), 44: Vector2(27.1743,-39.7095), 45: Vector2(16.4023,-45.4077), 38: Vector2(25.6449,-29.8466), 43: Vector2(33.4177,-27.1519)}
 const ELDER_TYPE := 35
 ## Prêtre guerrier (lot Codex c2d19e8, v0.236) : trois vues nommées ; paume avancée de chaque vue et angle réellement dessiné (`lachers.json`).
 const PRIEST_TIPS: Dictionary = {-24: Vector2(20.3931,-54.0541), 0: Vector2(23.5577,-46.1523), 20: Vector2(21.6216,-41.2776)}
@@ -341,7 +349,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32, 23: 0.6, 24: 0.44, 25: 0.4, 26: 0.52, 27: 0.48, 16: 0.36, 28: 0.56, 30: 0.36, 29: 0.24, 31: 0.32, 33: 0.4, 34: 0.3, 32: 0.32, 35: 0.36, 36: 0.4, 37: 0.36, 39: 0.4, 40: 0.36, 41: 0.36, 42: 0.4, 44: 0.4} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32, 23: 0.6, 24: 0.44, 25: 0.4, 26: 0.52, 27: 0.48, 16: 0.36, 28: 0.56, 30: 0.36, 29: 0.24, 31: 0.32, 33: 0.4, 34: 0.3, 32: 0.32, 35: 0.36, 36: 0.4, 37: 0.36, 39: 0.4, 40: 0.36, 41: 0.36, 42: 0.4, 44: 0.4, 45: 0.4, 38: 0.32, 43: 0.32} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
@@ -614,7 +622,7 @@ static func projectile_position(shot: Dictionary, age: float) -> Vector2:
 	var point: Vector2 = origin.lerp(target,progress)
 	if int(shot.type) in CURVED_TYPES: return aimed_curve(shot,progress).point
 	if int(shot.type) == STONE_TYPE: return catapult_curve(shot,progress).point
-	if int(shot.type) in [MACEMAN_TYPE,DART_TYPE,WISP_TYPE,TOTEM_TYPE,ELDER_TYPE,KAMIKAZE_TYPE]: return point # vol rectiligne de la masse, du dard, du feu follet, de l'impulsion du totem et de l'onde de l'ancien
+	if int(shot.type) in [MACEMAN_TYPE,DART_TYPE,WISP_TYPE,TOTEM_TYPE,ELDER_TYPE,KAMIKAZE_TYPE,WARVETERAN_TYPE] or int(shot.type) in BOLT_TYPES: return point # vol rectiligne de la masse, du dard, du feu follet, de l'impulsion du totem, de l'onde de l'ancien, de la braise, de la hache du chef de guerre et des carreaux de siège
 	if Model.family(shot.type) in [3,4]: point.y -= sin(PI*progress)*(15.0 if Model.family(shot.type) == 4 else 8.0)
 	elif int(shot.type) == CANNON_TYPE: point.y -= sin(PI*progress)*12.0
 	elif int(shot.type) == CARTRIDGE_TYPE: point.y -= sin(PI*progress)*CARTRIDGE_ARC
@@ -680,6 +688,9 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		return
 	if int(shot.type) == CARTRIDGE_TYPE:
 		_draw_cartridge(point,shot,age)
+		return
+	if int(shot.type) == WARVETERAN_TYPE:
+		_draw_warveteran_axe(point,shot,age)
 		return
 	if int(shot.type) == KAMIKAZE_TYPE:
 		_draw_ember_shard(point,direction,shot_facing(shot))
@@ -786,7 +797,7 @@ func _draw_cartridge(point: Vector2, shot: Dictionary, age: float) -> void:
 	draw_texture_rect(CARTRIDGE_TEXTURE,Rect2(-CARTRIDGE_TEXTURE.get_size()*scale*0.5,CARTRIDGE_TEXTURE.get_size()*scale),false)
 	draw_set_transform(Vector2.ZERO)
 
-## Gros carreau de la balliste royale : long fût, pointe de fer et empennage.
+## Gros carreau de siège de la Balliste royale et de la Baliste de guerre : long fût, pointe de fer et empennage (vol rectiligne depuis le rail, v0.239).
 func _draw_ballista_bolt(point: Vector2, direction: Vector2, side: Vector2) -> void:
 	var tail: Vector2 = point-direction*20.0
 	draw_line(tail,point,Color("1a2524"),4.4,true)
@@ -795,6 +806,14 @@ func _draw_ballista_bolt(point: Vector2, direction: Vector2, side: Vector2) -> v
 	draw_colored_polygon(head,Color("d6dad8"))
 	draw_line(tail,tail+direction*6.0+side*3.4,Color("e4e0cf"),1.6,true)
 	draw_line(tail,tail+direction*6.0-side*3.4,Color("e4e0cf"),1.6,true)
+
+## Hache du Chef de guerre vétéran : le dessin du lot de Codex (`Hache_chef_guerre.png`), départ à 48° puis un tour complet pendant le vol, retournée avec la pose.
+func _draw_warveteran_axe(point: Vector2, shot: Dictionary, age: float) -> void:
+	var facing: float = shot_facing(shot)
+	var scale: float = WARVETERAN_AXE_HEIGHT/WARVETERAN_AXE_TEXTURE.get_size().y
+	draw_set_transform(point,(deg_to_rad(WARVETERAN_AXE_ANGLE)+clampf(age/PROJECTILE_FLIGHT,0.0,1.0)*TAU)*facing,Vector2(facing,1.0))
+	draw_texture_rect(WARVETERAN_AXE_TEXTURE,Rect2(-WARVETERAN_AXE_TEXTURE.get_size()*scale*0.5,WARVETERAN_AXE_TEXTURE.get_size()*scale),false)
+	draw_set_transform(Vector2.ZERO)
 
 ## Braise du Gobelin des braises : le dessin du lot de Codex (`Braise_facette.png`), retourné avec la pose puis tourné pour que l'axe du dessin pointe sur la cible.
 static func ember_shard_rotation(direction: Vector2, facing: float) -> float:
@@ -2411,8 +2430,10 @@ static func affix_banner(model) -> Dictionary:
 
 ## Place du bandeau d'affixe (v0.239) : centré en haut du plateau ; s'il touche une étiquette d'entrée (6 px de marge), il glisse d'abord sur le côté, puis au-dessus
 ## ou au-dessous des étiquettes (missions 116, 117 et 120 de la Tempête de sable). Les étiquettes ne dépendent que de la carte : la place reste la même pendant l'annonce et la rafale.
+## Il évite aussi le bloc d'informations en haut à droite (faction et vague, talents, invite et fiche d'ennemi de main.gd : 898 à 1256 px, 33 à 286 px), que la fiche couvrirait au survol.
 const AFFIX_BANNER_SIZE := Vector2(430,34)
 const AFFIX_BANNER_MARGIN := 6.0
+const AFFIX_BANNER_HUD := Rect2(892,24,368,268)
 static func affix_banner_area(labels: Array) -> Rect2:
 	var obstacles: Array[Rect2] = []
 	for label in labels: obstacles.append(Rect2(label.area).grow(AFFIX_BANNER_MARGIN))
@@ -2420,6 +2441,7 @@ static func affix_banner_area(labels: Array) -> Rect2:
 	for obstacle in obstacles:
 		if obstacle.position.y-AFFIX_BANNER_SIZE.y >= 56.0: rows.append(obstacle.position.y-AFFIX_BANNER_SIZE.y)
 		rows.append(obstacle.end.y)
+	obstacles.append(AFFIX_BANNER_HUD)
 	for y in rows:
 		for step in range(0,41):
 			for side in ([0.0] if step == 0 else [-1.0,1.0]):
