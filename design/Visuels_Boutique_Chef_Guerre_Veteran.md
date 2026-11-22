@@ -14,7 +14,7 @@ Le sprite est fixe. Au prochain passage sur l’animation, faire accompagner le 
 
 ## Lancer de la hache
 
-Le Chef de guerre abaisse la hache, arme au-dessus de l’épaule et avance le bras. La main s’ouvre au lâcher à 0,40 s, redescend vers la ceinture et revient en garde. Les 24 dessins de référence de l’essai précédent restent identiques au pixel près. Les 32 vues intermédiaires ont été calculées avec [RIFE](https://github.com/nihui/rife-ncnn-vulkan) et vérifiées à taille de jeu. Les contours de la hache ont été nettoyés sur deux images de l’armé, et une vue de passage devant la tête a été remplacée. Les images de lâcher et de reprise sont conservées. La planche dure 0,96 s et comporte 56 images distinctes sur 60.
+Le Chef de guerre lève la hache directement depuis sa garde. Le temps pris par l’abaissement initial est redistribué au passage de la main au-dessus du front. Après la poussée, la main redescend vers la ceinture et remonte en garde. Le lot reprend les dessins précédents et utilise des intermédiaires calculés avec [RIFE](https://github.com/nihui/rife-ncnn-vulkan) puis corrigés aux passages sensibles. La planche dure 1,00 s avec 60 images dont 59 distinctes. Le lâcher reste à 0,40 s, au passage des index 23 à 24.
 
 [Essai en jeu, GIF à cadence fixe](essais/gestes_combat/chef_guerre_veteran/Chef_guerre_veteran_en_jeu.gif) · [Vidéo à 60 ips](essais/gestes_combat/chef_guerre_veteran/Chef_guerre_veteran_60ips.mp4) · [Planche de contrôle du geste](essais/gestes_combat/chef_guerre_veteran/Planche_chef_guerre_veteran.png)
 
