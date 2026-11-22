@@ -3,8 +3,8 @@
   "id": "defender.horde.minelayer",
   "facing": "right",
   "foot": [
-    61,
-    164
+    49,
+    132
   ],
   "display_height": 76.78676470588236,
   "animations": {
@@ -12,18 +12,18 @@
       "file": "idle.png",
       "frames": 1,
       "frame_size": [
-        168,
-        177
+        136,
+        143
       ],
       "fps": 1,
       "mode": "time"
     },
     "attack": {
       "file": "attack.png",
-      "frames": 48,
+      "frames": 60,
       "frame_size": [
-        168,
-        177
+        136,
+        143
       ],
       "duration": 0.96,
       "mode": "event"

@@ -14,9 +14,9 @@ Pour l’animation, préparer le lancer à hauteur de hanche, ouvrir la main au 
 
 ## Lancer du disque
 
-La gobeline cale sa caisse et ramène le disque contre la hanche. Elle pousse l’avant-bras, ouvre la main à 0,40 s, puis revient vide vers la caisse pour reprendre un disque. Douze dessins distincts sur 48 images et 0,96 s. L’image 20 à partir de zéro est la première à main ouverte. Le genou et l’appui avant sont calés. La garde mesure 59 px.
+La gobeline cale sa caisse et ramène le disque contre la hanche. Elle pousse l’avant-bras, ouvre la main à 0,40 s, puis revient vide vers la caisse pour reprendre un disque. Huit dessins intermédiaires ajoutés après le retour du porteur, sur la préparation, le lâcher, le repli et la recharge. Vingt dessins distincts sur 60 images et 0,96 s. L’image 25 à partir de zéro est la première à main ouverte. La bibliothèque confirme le passage de l’image 24 à l’image 25 autour du lâcher à 0,40 s. Le genou et l’appui avant sont calés. La garde mesure 59 px.
 
-[Essai en jeu](essais/gestes_combat/poseur_mines/Poseur_mines_en_jeu.gif) · [Planche des douze poses](essais/gestes_combat/poseur_mines/Planche_poseur_mines.png)
+[Essai en jeu](essais/gestes_combat/poseur_mines/Poseur_mines_en_jeu.gif) · [Planche des vingt poses](essais/gestes_combat/poseur_mines/Planche_poseur_mines.png)
 
 Le disque de pierre à rune orange fait un tour sur l’arc visuel de 15 px existant. Le repère dans lacher.json est mesuré au bout de la main et suit le retournement. Le disque disparaît à l’impact. Cinq tirs en mission 94 sur copie v0.236, dans les deux sens à ×1 et ×2 avec pause. L’essai confirme les trois multiplicateurs selon l’avancée de la cible. Validateur à zéro problème sur 56 dossiers, 197 contrôles d’animation, 77 des effets et 93 de boutique réussis. L’essai attend l’avis du porteur.
 
