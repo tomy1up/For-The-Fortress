@@ -37,3 +37,13 @@ Les vingt vues finales datent de la vague 5 sur une copie de la v0.238 dans les 
 - [Missions 141 à 144](essais/iles_refonte/Iles_141_144.jpg)
 - [Missions 145 à 147](essais/iles_refonte/Iles_145_147.jpg)
 - [Missions 148 à 150](essais/iles_refonte/Iles_148_150.jpg)
+
+## Décor sur les nouveaux tracés des missions 151 à 160
+
+Les 50 emplacements réutilisent les rochers, arches, tours et ruines de la cité céleste. Les Pitons Jumeaux sont ponctués de deux tours, les Trois Aires conservent trois départs dégagés et le Trône des Nuées rassemble l’arche, le dôme et la flèche. Après inspection, les tours en 158 et 160 ont été rapprochées de l’intérieur du plateau pour que leurs bases se lisent mieux.
+
+Les vingt vues finales montrent la vague 3 à 19,20 s, avec les aigles en vol dans les deux factions sur copie v0.238. Les tests de décor et de campagne passent avec 11 390 et 5 786 contrôles. La suite du déplacement des ennemis passe 1 278 contrôles. Le lot attend l’avis du porteur. Après validation, l’activation par Claude Code passe par le retrait des dix identifiants de sky_aerie à sky_throne de REWORKED_MAPS.
+
+- [Missions 151 à 154](essais/aigles_refonte/Iles_151_154.jpg)
+- [Missions 155 à 157](essais/aigles_refonte/Iles_155_157.jpg)
+- [Missions 158 à 160](essais/aigles_refonte/Iles_158_160.jpg)

@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**22 novembre — Îles des aigles, missions 151 à 160.** 50 emplacements adaptés et vingt vues de la vague 3 avec aigles dans les deux factions sur copie v0.238. Tours déplacées en 158 et 160 et captures reprises. 11 390 contrôles de décor, 5 786 du chapitre et 1 278 du mouvement des ennemis réussis. Avis du porteur attendu avant activation. [Captures](design/Visuels_Iles_Flottantes.md#décor-sur-les-nouveaux-tracés-des-missions-151-à-160).
+
 **22 novembre — Îles flottantes, missions 141 à 150.** 50 emplacements adaptés aux nouveaux tracés. Vingt captures en combat dans les deux factions sur copie v0.238, dont deux reprises après déplacement des rochers en 147. 11 390 contrôles décor incluant les îles et 5 580 contrôles du chapitre réussis. Lot 60d2efe validé par le porteur le 22 novembre 2026, à activer par Claude Code. [Captures](design/Visuels_Iles_Flottantes.md#décor-sur-les-nouveaux-tracés-des-missions-141-à-150).
 
 **22 novembre — Éboulement, décors des missions 131 à 140.** 50 emplacements adaptés aux nouveaux tracés. 34 captures en combat dans les deux factions sur copie v0.238, dont les blocages des trois entrées de la Voûte Instable. 12 000 contrôles décor incluant les mines, 498 contrôles Éboulement et 5 746 du chapitre réussis. Chevauchement bandeau–étiquettes confirmé en 134 et 140, consigné pour Claude. Lot f2a2d99 validé par le porteur le 22 novembre 2026, à activer par Claude Code. [Captures](design/Visuels_Biome_Mines.md#décor-sur-les-nouveaux-tracés-des-missions-131-à-140).
