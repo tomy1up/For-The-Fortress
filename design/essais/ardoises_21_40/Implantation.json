@@ -1,0 +1,115 @@
+{
+  "assets": {
+    "pin_ardoises": {
+      "file": "pin_ardoises.png",
+      "box": [
+        -16,
+        -46,
+        32,
+        60
+      ]
+    },
+    "pin_des_cretes": {
+      "file": "pin_des_cretes.png",
+      "box": [
+        -16,
+        -46,
+        32,
+        60
+      ]
+    },
+    "cairn": {
+      "file": "cairn.png",
+      "box": [
+        -13,
+        -14,
+        26,
+        23
+      ]
+    },
+    "eboulis": {
+      "file": "eboulis.png",
+      "box": [
+        -13,
+        -14,
+        26,
+        23
+      ]
+    },
+    "dalles": {
+      "file": "dalles.png",
+      "box": [
+        -13,
+        -14,
+        26,
+        23
+      ]
+    },
+    "lichen": {
+      "file": "lichen.png",
+      "box": [
+        -13,
+        -14,
+        26,
+        23
+      ]
+    }
+  },
+  "maps": {
+    "slate_pass": [
+      "lichen",
+      "dalles",
+      "pin_ardoises"
+    ],
+    "slate_ridges": [
+      "dalles",
+      "eboulis",
+      "pin_des_cretes"
+    ],
+    "slate_scree": [
+      "eboulis",
+      "dalles",
+      "pin_des_cretes"
+    ],
+    "slate_ravine": [
+      "dalles",
+      "lichen",
+      "pin_ardoises"
+    ],
+    "slate_gates": [
+      "cairn",
+      "dalles",
+      "pin_des_cretes"
+    ],
+    "slate_crossing": [
+      "cairn",
+      "lichen",
+      "pin_ardoises"
+    ],
+    "slate_laces": [
+      "eboulis",
+      "lichen",
+      "pin_des_cretes"
+    ],
+    "slate_cirque": [
+      "lichen",
+      "dalles",
+      "pin_ardoises"
+    ],
+    "slate_high_passages": [
+      "cairn",
+      "eboulis",
+      "pin_des_cretes"
+    ],
+    "slate_bastion": [
+      "cairn",
+      "dalles",
+      "pin_ardoises"
+    ],
+    "slate_bastion_winds": [
+      "eboulis",
+      "cairn",
+      "pin_des_cretes"
+    ]
+  }
+}
