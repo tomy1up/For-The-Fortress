@@ -30,3 +30,14 @@ Les 26 passages en vague 4 sur les sources de la v0.193 couvrent les deux factio
 - [Aperçu isolé de la relève](essais/necro_ch20/Releve_apercu.gif)
 - [Missions 191 à 195](essais/necro_ch20/Necropole_191_195.jpg)
 - [Missions 196 à 200](essais/necro_ch20/Necropole_196_200.jpg)
+
+## Décors sur les nouveaux tracés des missions 181 à 200
+
+Les arches, mausolées, stèles, ossements, arbres morts et obélisques sont repositionnés pour les nouveaux parcours. Il y a cinq pièces par carte. Les cryptes vont par paire sur les missions 184, 187 et 197. Trois obélisques à rune verte marquent la mission 199.
+
+Quarante captures couvrent les vingt missions à ×1 dans les deux factions sur une copie de la v0.238. Les missions 191 à 200 ont été saisies à la vague 4 à 24,50 s, avec des Revenants en combat. Les contrôles de géométrie (19 230 pour les deux biomes), des chapitres 19 (6 362) et 20 (6 562) et du Revenant (28) passent. Avis du porteur attendu avant activation des décors.
+
+- [Missions 181 à 185, Alliance et Horde](essais/cotes_necropole_refonte/Missions_181_185.jpg)
+- [Missions 186 à 190, Alliance et Horde](essais/cotes_necropole_refonte/Missions_186_190.jpg)
+- [Missions 191 à 195, Alliance et Horde](essais/cotes_necropole_refonte/Missions_191_195.jpg)
+- [Missions 196 à 200, Alliance et Horde](essais/cotes_necropole_refonte/Missions_196_200.jpg)

@@ -27,3 +27,18 @@ Chaque carte a été contrôlée avant l’alerte, pendant l’avertissement, so
 - [La Brume marine en quatre états](essais/Brume_marine/Brume_quatre_etats.jpg)
 - [Missions 171 à 175](essais/Brume_marine/Cotes_171_175.jpg)
 - [Missions 176 à 180](essais/Brume_marine/Cotes_176_180.jpg)
+
+## Décors sur les nouveaux tracés des missions 161 à 180
+
+Les jetées, phares, épaves, casiers et arches sont repositionnés pour les nouveaux parcours du littoral. Il y a cinq pièces par carte. Les trois épaves distinguent la mission 174. Le phare et l’arche marquent la Citadelle des Embruns à l’est du plateau.
+
+Sur une copie de la v0.238 avec les 40 décors du littoral et de la nécropole activés, 48 captures couvrent les vingt missions dans les deux factions. Les missions 171 à 180 montrent le plateau sous la Brume marine. Sur 174 et 180, l’avertissement, la brume active et la dissipation ont été contrôlés séparément. Les contrôles de géométrie (19 230 pour les deux biomes), de la Brume marine (59) et des chapitres 17 (5 920) et 18 (6 114) passent.
+
+Le bandeau chevauche Entrée 1 sur 174 et 180, et effleure ou recouvre le bord d’Entrée 2 sur 173 et 178. Les étiquettes d’Entrée 1 sont aussi serrées contre le bandeau sur 173, 176, 177 et 178. Ce défaut de l’interface est signalé à Claude Code. Avis du porteur attendu avant activation des décors.
+
+- [Missions 161 à 165, Alliance et Horde](essais/cotes_necropole_refonte/Missions_161_165.jpg)
+- [Missions 166 à 170, Alliance et Horde](essais/cotes_necropole_refonte/Missions_166_170.jpg)
+- [Missions 171 à 175, Alliance et Horde](essais/cotes_necropole_refonte/Missions_171_175.jpg)
+- [Missions 176 à 180, Alliance et Horde](essais/cotes_necropole_refonte/Missions_176_180.jpg)
+- [Avertissement, brume et dissipation](essais/cotes_necropole_refonte/Brume_marine_en_combat.jpg)
+- [Bandeau et étiquettes à taille native](essais/cotes_necropole_refonte/Verification_bandeau.jpg)

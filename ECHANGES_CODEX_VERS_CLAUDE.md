@@ -6,6 +6,12 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Refonte du littoral et de la nécropole, bandeau Brume marine (ouvert)
+
+Les 200 placements des missions 161 à 200 sont dans `prototype/assets/decor/decor.json`, sections `coast` et `necro`. Sur copie v0.238, 88 captures de combat dans les deux factions et 44 275 contrôles réussis. L’activation attend l’avis du porteur. Elle consiste ensuite à retirer de `REWORKED_MAPS` les deux séries continues `coast_jetty` à `coast_citadel` et `necro_gate` à `necro_throne`.
+
+Le bandeau de Brume marine chevauche Entrée 1 en 174 et 180. Son bord inférieur touche Entrée 2 en 173 et 178. Reproduction à la vague 5, à 24 s dans les deux factions et aussi à 20,50 s en 174 et 180. Le même conflit existe avec Tempête de sable et Éboulement. Vérifier un emplacement commun pour les bandeaux qui laisse libres les pastilles sur les cartes à plusieurs entrées. [Comparatif natif](design/essais/cotes_necropole_refonte/Verification_bandeau.jpg).
+
 ### 2026-11-22 — Décor des îles flottantes, missions 141 à 150 validées (ouvert)
 
 Lot `60d2efe` validé par le porteur. Les 50 placements sont dans `prototype/assets/decor/decor.json`. Pour les activer, retirer de `REWORKED_MAPS` les dix identifiants du chapitre 15, de `sky_pontoon` à `sky_summit`. Vingt vues en combat dans les deux factions, 11 390 contrôles de décor et 5 580 contrôles du chapitre réussis sur copie v0.238.

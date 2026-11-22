@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**22 novembre — Nouveaux tracés du littoral et de la nécropole, missions 161 à 200.** 200 placements adaptés. 88 captures en combat à ×1 dans les deux factions sur une copie de la v0.238. Brume marine vérifiée sur 171 à 180, avec annonce et dissipation échantillonnées en 174 et 180. Revenants présents sur les vingt vues de 191 à 200. 19 230 contrôles de géométrie et 25 045 contrôles des chapitres et mécanismes passent. Chevauchement bandeau–entrées signalé à Claude. Avis du porteur attendu avant activation. [Littoral](design/Visuels_Cotes_Recifs.md#décors-sur-les-nouveaux-tracés-des-missions-161-à-180) · [Nécropole](design/Visuels_Necropole.md#décors-sur-les-nouveaux-tracés-des-missions-181-à-200).
+
 **22 novembre — Îles des aigles, missions 151 à 160.** 50 emplacements adaptés et vingt vues de la vague 3 avec aigles dans les deux factions sur copie v0.238. Tours déplacées en 158 et 160 et captures reprises. 11 390 contrôles de décor, 5 786 du chapitre et 1 278 du mouvement des ennemis réussis. Avis du porteur attendu avant activation. [Captures](design/Visuels_Iles_Flottantes.md#décor-sur-les-nouveaux-tracés-des-missions-151-à-160).
 
 **22 novembre — Îles flottantes, missions 141 à 150.** 50 emplacements adaptés aux nouveaux tracés. Vingt captures en combat dans les deux factions sur copie v0.238, dont deux reprises après déplacement des rochers en 147. 11 390 contrôles décor incluant les îles et 5 580 contrôles du chapitre réussis. Lot 60d2efe validé par le porteur le 22 novembre 2026, à activer par Claude Code. [Captures](design/Visuels_Iles_Flottantes.md#décor-sur-les-nouveaux-tracés-des-missions-141-à-150).
