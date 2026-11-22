@@ -1,6 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.76 — 22 novembre 2026
+Game Design Document — Version 0.77 — 22 novembre 2026
+
+Version 0.240 du jeu (22 novembre 2026) : **étiquettes d'entrée écartées les unes des autres** en préparation (MAJ-78) ; elles se chevauchaient sur 38 missions des chapitres 6 à 20.
 
 Version 0.239 du jeu (22 novembre 2026) : gestes du Chef de guerre vétéran (hache à 0,40 s), de la Balliste royale et de la Baliste de guerre (carreau de siège à 0,32 s) ; **décor refait des chapitres 11 à 14** (missions 101 à 140, MAJ-76) ; **bandeau d'affixe écarté des étiquettes d'entrée** (MAJ-77) ; mesure d'un joueur avisé sans voyance pour O-028 : meilleure marge vers 84 % (Alliance) et 80 % (Horde).
 
@@ -1754,6 +1756,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-51 | **Orientation par défaut des défenseurs : face au tronçon de route le plus proche** au placement et entre les vagues ; en combat, la dernière cible garde la priorité — V | Décision du porteur, 15 novembre 2026 ; `valley_view.gd` (`road_facing`), `tests/test_defender_facing.gd` |
 | MAJ-52 | **Visée inclinée du Tireur d’élite elfe (type 11)** : sept planches (0°, ±8°, ±16°, ±24°), un seul angle pour la pose, l’origine de la flèche et sa direction de départ ; lâcher à 0,27 s — V (geste validé par le porteur) ; angles et lâcher — rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `a2cdab9` ; `tests/test_marksman_aim.gd` |
 | MAJ-53 | **Estoc du Piquier humain (type 14)** : trois planches (−12°, 0°, +12°), la pique est dessinée dans les planches, éclat de contact à 0,256 s à la pointe donnée par angle — V (geste validé par le porteur) ; rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `9a7d3d8` ; `tests/test_marksman_aim.gd` |
+| MAJ-78 | **Étiquettes d'entrée écartées les unes des autres** : en préparation, avec les effectifs annoncés, les étiquettes d'entrées voisines se chevauchaient (46 cas sur 38 missions des chapitres 6 à 20) et le survol désignait parfois la mauvaise entrée ; dans l'ordre des entrées, une étiquette qui en touche une autre se place juste à côté, au-dessus ou au-dessous d'elle (4 px d'écart), au plus près de sa place d'origine (40 px au plus), dans la zone de carte et hors du bloc d'informations en haut à droite ; au combat, les étiquettes gardent leur place — H (placement de prototype à confirmer) | Correction demandée par le porteur, 22 novembre 2026 ; `design/essais/v0240_release_notes.md` |
 | MAJ-77 | **Bandeau d'affixe écarté des étiquettes d'entrée** : le bandeau garde sa place habituelle (en haut, centré) et ne se décale que s'il recouvre une étiquette d'entrée : sur le côté s'il y a la place, sans passer sous le bloc d'informations en haut à droite (faction, talents, fiche d'ennemi), sinon juste au-dessus ou au-dessous des étiquettes ; correctif des chevauchements signalés sur la Tempête de sable (116, 117, 120) et l'Éboulement (134, 140), où il passe au-dessus de « Entrée 1 », contrôlé sur toutes les missions à affixe — H (placement de prototype à confirmer) | Signalement du porteur relayé par Codex, 22 novembre 2026 ; `design/essais/v0239_release_notes.md` |
 | MAJ-76 | **Décor refait des chapitres 11 à 14** (missions 101 à 140, cartes refondues en v0.224 à v0.226) : placements de Codex activés (lots a317885, f438dd5, 23713fc, f2a2d99) — V (porteur, 22 novembre 2026, relayé par Codex) | Validation du porteur, 22 novembre 2026 ; `design/essais/v0239_release_notes.md` |
 | MAJ-75 | **Badge de volatilité du Gobelin des braises à l'impact** de la braise (0,52 s avec vol, 0,40 s sans vol à bout portant), badge déjà visible conservé au renouvellement ; explosion et fenêtre de 4 s inchangées — V (porteur, 22 novembre 2026, relayé par Codex), rendu seulement | Décision du porteur, 22 novembre 2026 ; `design/essais/v0238_release_notes.md` |
@@ -1969,6 +1972,8 @@ Version 0.74 — 22 novembre 2026 : jeu 0.237. Gestes du Vétéran royal (type 4
 Version 0.75 — 22 novembre 2026 : jeu 0.238. Gestes du Poseur de mines (type 42, disque runique à 0,40 s, un tour sur l'arc de 15 px) et du Gobelin des braises (type 44, braise à 0,40 s en ligne droite, pointe vers la cible), impact seul derrière le repère ; badge de volatilité du Gobelin à l'impact (MAJ-75) ; rendu seulement.
 
 Version 0.76 — 22 novembre 2026 : jeu 0.239. Gestes du Chef de guerre vétéran (type 45, hache de 16 px lâchée à 0,40 s, départ à 48° et un tour sur un vol rectiligne), de la Balliste royale (type 38) et de la Baliste de guerre (type 43) (carreau de siège à 0,32 s en ligne droite depuis le rail), impact seul derrière la main ou la glissière ; rendu seulement. Décor refait des chapitres 11 à 14 activé (MAJ-76, sections 56 et 63). Bandeau d'affixe écarté des étiquettes d'entrée (MAJ-77). Mesure du joueur avisé sans voyance (`tools/faction_study.gd`, `POLICY=wise`) ; O-028 mis à jour.
+
+Version 0.77 — 22 novembre 2026 : jeu 0.240. Étiquettes d'entrée écartées les unes des autres en préparation (MAJ-78, `valley_view.gd::separate_entry_labels`) : plus aucun chevauchement sur les 114 missions à plusieurs entrées, pour chaque entrée principale possible ; rendu et survol seulement.
 
 <a id="s51"></a>
 
@@ -2262,7 +2267,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 22 novembre 2026 (GDD 0.76, jeu 0.239)
+### État au 22 novembre 2026 (GDD 0.77, jeu 0.240)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2284,7 +2289,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.76, jeu 0.239 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.77, jeu 0.240 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2656,5 +2661,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.237 | Vétéran royal et Pillard gobelin animés ; badge de pillage du Pillard à l'impact du jeton ; GDD 0.74 |
 | 0.238 | Poseur de mines et Gobelin des braises animés ; badge de volatilité du Gobelin à l'impact ; GDD 0.75 |
 | 0.239 | Chef de guerre vétéran, Balliste royale et Baliste de guerre animés ; décor refait des chapitres 11 à 14 ; bandeau d'affixe écarté des étiquettes d'entrée ; mesure du joueur avisé sans voyance ; GDD 0.76 |
+| 0.240 | Étiquettes d'entrée écartées les unes des autres en préparation ; GDD 0.77 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

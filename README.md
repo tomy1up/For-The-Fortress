@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.240**. Les étiquettes d'entrée ne se recouvrent plus en préparation (38 missions des chapitres 6 à 20). [Notes](design/essais/v0240_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.240).
+
 **Prototype v0.239**. Animations : lancer de hache du Chef de guerre vétéran, tir de la Balliste royale et de la Baliste de guerre. Décor refait des chapitres 11 à 14. Le bandeau d'affixe ne recouvre plus les étiquettes d'entrée. Mesure d'un joueur avisé pour la décision sur la difficulté. [Notes](design/essais/v0239_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.239).
 
 **Prototype v0.238**. Animations : disque runique du Poseur de mines, braise du Gobelin des braises ; le badge de volatilité du Gobelin apparaît à l'impact. [Notes](design/essais/v0238_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.238).

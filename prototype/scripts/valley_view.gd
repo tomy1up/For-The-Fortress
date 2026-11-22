@@ -1770,7 +1770,36 @@ func entry_label_layouts() -> Array[Dictionary]:
 		var height: float=24.0 if detail.is_empty() else 44.0
 		var origin: Vector2=project(model.routes[index].path_points[0])+Vector2(-width/2.0,-76.0-height)
 		result.append({"area":Rect2(origin,Vector2(width,height)),"title":title,"detail":detail,"color":entry_color(index)})
+	var areas: Array[Rect2] = []
+	for entry in result: areas.append(entry.area)
+	var separated: Array[Rect2] = separate_entry_labels(areas)
+	for index in range(result.size()): result[index].area = separated[index]
 	return result
+
+## Étiquettes d'entrée écartées les unes des autres (v0.240) : avec les effectifs annoncés en préparation, les étiquettes d'entrées voisines se chevauchaient
+## (46 cas sur 38 missions des chapitres 6 à 20), et le survol désignait alors la mauvaise entrée. Dans l'ordre des entrées, une étiquette garde sa place
+## si elle ne touche aucune étiquette déjà posée ; sinon elle prend, parmi les places collées à gauche, à droite, au-dessus ou au-dessous d'une étiquette
+## déjà posée, la plus proche de sa place d'origine qui reste dans la zone de carte, hors du bloc d'informations en haut à droite, sans toucher d'autre étiquette.
+const ENTRY_LABEL_GAP := 4.0
+const ENTRY_LABEL_ZONE := Rect2(330,64,926,530)
+static func separate_entry_labels(areas: Array[Rect2]) -> Array[Rect2]:
+	var placed: Array[Rect2] = []
+	var touches := func(area: Rect2) -> bool: return placed.any(func(other: Rect2) -> bool: return other.grow(ENTRY_LABEL_GAP-0.5).intersects(area))
+	for area in areas:
+		var best: Rect2 = area
+		if touches.call(area):
+			var best_distance: float = INF
+			for other in placed:
+				for position in [Vector2(other.position.x-ENTRY_LABEL_GAP-area.size.x,area.position.y),Vector2(other.end.x+ENTRY_LABEL_GAP,area.position.y),
+						Vector2(area.position.x,other.position.y-ENTRY_LABEL_GAP-area.size.y),Vector2(area.position.x,other.end.y+ENTRY_LABEL_GAP)]:
+					var candidate := Rect2(position,area.size)
+					if not ENTRY_LABEL_ZONE.encloses(candidate) or candidate.intersects(AFFIX_BANNER_HUD) or touches.call(candidate): continue
+					var distance: float = candidate.position.distance_to(area.position)
+					if distance < best_distance:
+						best_distance = distance
+						best = candidate
+		placed.append(best)
+	return placed
 
 static func entry_color(index: int) -> Color:
 	return [Color("e5c779"),Color("83c4c6"),Color("c8a6e3")][index%3]
