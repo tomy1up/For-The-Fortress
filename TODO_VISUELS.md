@@ -8,7 +8,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
-- [ ] **Nouveaux tracés des îles flottantes, missions 141 à 150** — 50 emplacements adaptés, vingt vues de combat dans les deux factions. [Captures](design/Visuels_Iles_Flottantes.md#décor-sur-les-nouveaux-tracés-des-missions-141-à-150). Avis du porteur attendu avant activation.
+- [x] **Nouveaux tracés des îles flottantes, missions 141 à 150** — 50 emplacements adaptés, vingt vues de combat dans les deux factions. [Captures](design/Visuels_Iles_Flottantes.md#décor-sur-les-nouveaux-tracés-des-missions-141-à-150). Lot 60d2efe validé le 22 novembre 2026, à activer par Claude Code.
 
 - [x] **Nouveaux tracés des mines, missions 131 à 140** — 50 emplacements adaptés, 34 captures et trois entrées bloquées à tour de rôle à la Voûte Instable. [Captures](design/Visuels_Biome_Mines.md#décor-sur-les-nouveaux-tracés-des-missions-131-à-140). Lot f2a2d99 validé le 22 novembre 2026, à activer par Claude Code.
 

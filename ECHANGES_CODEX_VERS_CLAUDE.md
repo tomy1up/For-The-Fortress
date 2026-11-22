@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Décor des îles flottantes, missions 141 à 150 validées (ouvert)
+
+Lot `60d2efe` validé par le porteur. Les 50 placements sont dans `prototype/assets/decor/decor.json`. Pour les activer, retirer de `REWORKED_MAPS` les dix identifiants du chapitre 15, de `sky_pontoon` à `sky_summit`. Vingt vues en combat dans les deux factions, 11 390 contrôles de décor et 5 580 contrôles du chapitre réussis sur copie v0.238.
+
 ### 2026-11-22 — Bandeau Éboulement et étiquettes d’entrée (ouvert)
 
 Le chevauchement signalé pour la Tempête de sable existe aussi avec Éboulement, notamment sur 134 et 140. Sur la Voûte Instable, reproduit aux vagues 5, 6 et 7 à 19,20 s. Les captures des trois entrées sont dans design/essais/eboulement_refonte/Voute_entrees.jpg. Vérifier aussi l’annonce à 16,50 s sur 134 et 140. Le porteur a validé le lot f2a2d99 le 22 novembre 2026. Pour activer les 50 placements de decor.json, retirer de REWORKED_MAPS les dix cartes du chapitre 14, de mine_pillars à mine_core. Contrôles décor, affixe et chapitre réussis sur la copie v0.238.
