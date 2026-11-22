@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**22 novembre — Mines, missions 121 à 130.** 50 emplacements adaptés sur les nouveaux tracés et vingt captures en combat dans les deux factions sur copie v0.238. Retouches de lisibilité en 124 et 127. 11 130 contrôles décor incluant les mines et 5 024 contrôles du chapitre réussis. Avis du porteur attendu avant activation. [Captures](design/Visuels_Biome_Mines.md#décor-sur-les-nouveaux-tracés-des-missions-121-à-130).
+
 **22 novembre — Tempête de sable, décors des missions 111 à 120.** 50 emplacements adaptés et 28 captures en combat sur copie v0.238. Les 20 scènes en rafale couvrent les deux factions. 11 010 contrôles de décor, 78 de tempête et 4 776 du chapitre réussis. Chevauchement bandeau de tempête et Entrée 1 sur 116, 117 et 120 signalé à Claude Code. Lot f438dd5 validé par le porteur le 22 novembre 2026, à activer par Claude Code. [Captures](design/Visuels_Biome_Desert.md#décor-sur-les-nouveaux-tracés-des-missions-111-à-120).
 
 **22 novembre — Décor du désert, missions 101 à 110.** 50 emplacements adaptés aux nouveaux tracés, avec citerne à L’Oasis Asséchée et au Puits Perdu et sarcophage à la Nécropole Ancienne. Vingt captures à la vague 5 dans les deux factions sur copie v0.238, dont deux reprises après le déplacement d’un rocher en 101. 11 240 contrôles décor et 4 714 contrôles du chapitre réussis. Lot a317885 validé par le porteur le 22 novembre 2026, prêt à activer par Claude Code. [Captures](design/Visuels_Biome_Desert.md#décor-sur-les-nouveaux-tracés-des-missions-101-à-110).

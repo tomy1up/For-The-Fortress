@@ -4544,221 +4544,221 @@
     {
      "object": "etai",
      "xy": [
-      1.75,
-      3.5
-     ]
-    },
-    {
-     "object": "chariot",
-     "xy": [
-      9.75,
-      1.0
-     ]
-    },
-    {
-     "object": "rails",
-     "xy": [
-      14.5,
-      2.0
-     ]
-    },
-    {
-     "object": "cristaux_retour",
-     "xy": [
-      7.75,
-      8.75
-     ]
-    },
-    {
-     "object": "stalagmites",
-     "xy": [
-      11.5,
-      8.5
-     ]
-    }
-   ],
-   "mine_shaft": [
-    {
-     "object": "stalagmites_retour",
-     "xy": [
       6.0,
-      1.75
+      0.5
      ]
     },
     {
      "object": "etai",
      "xy": [
-      1.5,
-      6.75
+      8.8,
+      0.6
+     ]
+    },
+    {
+     "object": "rails",
+     "xy": [
+      4.3,
+      7.8
      ]
     },
     {
      "object": "chariot_retour",
      "xy": [
-      15.25,
-      1.25
+      6.6,
+      7.5
+     ]
+    },
+    {
+     "object": "stalagmites",
+     "xy": [
+      13.5,
+      0.3
+     ]
+    }
+   ],
+   "mine_shaft": [
+    {
+     "object": "etai",
+     "xy": [
+      6.6,
+      3.3
+     ]
+    },
+    {
+     "object": "chariot",
+     "xy": [
+      8.3,
+      3.4
+     ]
+    },
+    {
+     "object": "rails_retour",
+     "xy": [
+      12.5,
+      3.8
+     ]
+    },
+    {
+     "object": "stalagmites_retour",
+     "xy": [
+      5.1,
+      7.8
      ]
     },
     {
      "object": "cristaux",
      "xy": [
-      12.75,
-      3.75
-     ]
-    },
-    {
-     "object": "rails",
-     "xy": [
-      9.5,
-      9.0
+      12.0,
+      7.2
      ]
     }
    ],
    "mine_gallery": [
     {
-     "object": "cristaux",
+     "object": "etai",
      "xy": [
-      6.0,
-      1.75
-     ]
-    },
-    {
-     "object": "stalagmites_retour",
-     "xy": [
-      1.5,
-      6.75
+      9.2,
+      0.7
      ]
     },
     {
      "object": "rails_retour",
      "xy": [
       11.0,
-      2.0
+      0.6
      ]
     },
     {
-     "object": "etai",
+     "object": "stalagmites_retour",
      "xy": [
-      13.25,
-      1.0
+      2.6,
+      4.0
+     ]
+    },
+    {
+     "object": "cristaux",
+     "xy": [
+      9.8,
+      8.6
      ]
     },
     {
      "object": "stalagmites",
      "xy": [
-      8.25,
-      9.25
+      14.0,
+      8.9
      ]
     }
    ],
    "mine_crystals": [
     {
+     "object": "cristaux",
+     "xy": [
+      4.2,
+      0.7
+     ]
+    },
+    {
      "object": "cristaux_retour",
      "xy": [
-      5.25,
-      1.0
+      7.1,
+      0.6
      ]
     },
     {
      "object": "cristaux",
      "xy": [
-      1.5,
-      7.75
-     ]
-    },
-    {
-     "object": "stalagmites",
-     "xy": [
-      11.0,
-      2.0
-     ]
-    },
-    {
-     "object": "cristaux",
-     "xy": [
-      13.25,
-      1.0
-     ]
-    },
-    {
-     "object": "etai",
-     "xy": [
-      10.25,
-      9.0
-     ]
-    }
-   ],
-   "mine_cart": [
-    {
-     "object": "rails_retour",
-     "xy": [
-      1.5,
-      7.75
-     ]
-    },
-    {
-     "object": "chariot",
-     "xy": [
-      11.5,
-      1.5
-     ]
-    },
-    {
-     "object": "rails",
-     "xy": [
-      14.0,
-      1.5
-     ]
-    },
-    {
-     "object": "etai",
-     "xy": [
-      8.5,
-      9.25
+      5.2,
+      6.9
      ]
     },
     {
      "object": "stalagmites_retour",
      "xy": [
-      16.5,
-      1.25
+      10.8,
+      8.5
+     ]
+    },
+    {
+     "object": "cristaux_retour",
+     "xy": [
+      7.7,
+      9.5
      ]
     }
    ],
-   "mine_forge": [
+   "mine_cart": [
     {
-     "object": "rails_retour",
+     "object": "rails",
      "xy": [
-      6.0,
-      2.25
-     ]
-    },
-    {
-     "object": "etai",
-     "xy": [
-      1.5,
-      7.75
-     ]
-    },
-    {
-     "object": "forge",
-     "xy": [
-      11.5,
-      1.0
-     ]
-    },
-    {
-     "object": "cristaux",
-     "xy": [
-      12.5,
-      5.5
+      8.2,
+      0.7
      ]
     },
     {
      "object": "chariot",
      "xy": [
-      9.5,
-      9.0
+      9.8,
+      0.7
+     ]
+    },
+    {
+     "object": "rails_retour",
+     "xy": [
+      11.6,
+      0.7
+     ]
+    },
+    {
+     "object": "chariot_retour",
+     "xy": [
+      13.0,
+      0.7
+     ]
+    },
+    {
+     "object": "etai",
+     "xy": [
+      3.7,
+      8.8
+     ]
+    }
+   ],
+   "mine_forge": [
+    {
+     "object": "forge",
+     "xy": [
+      10.0,
+      9.3
+     ]
+    },
+    {
+     "object": "etai",
+     "xy": [
+      8.0,
+      9.3
+     ]
+    },
+    {
+     "object": "chariot",
+     "xy": [
+      11.5,
+      9.3
+     ]
+    },
+    {
+     "object": "stalagmites",
+     "xy": [
+      8.9,
+      0.6
+     ]
+    },
+    {
+     "object": "cristaux",
+     "xy": [
+      16.1,
+      0.3
      ]
     }
    ],
@@ -4766,73 +4766,73 @@
     {
      "object": "bassin",
      "xy": [
-      6.0,
-      2.25
+      8.2,
+      7.1
      ]
     },
     {
      "object": "bassin",
      "xy": [
-      10.25,
-      1.0
+      10.4,
+      8.7
+     ]
+    },
+    {
+     "object": "stalagmites_retour",
+     "xy": [
+      7.5,
+      0.7
      ]
     },
     {
      "object": "cristaux_retour",
      "xy": [
-      15.25,
-      1.25
-     ]
-    },
-    {
-     "object": "stalagmites",
-     "xy": [
-      9.5,
-      9.0
+      12.5,
+      0.6
      ]
     },
     {
      "object": "etai",
      "xy": [
-      12.25,
-      9.0
+      12.8,
+      9.4
      ]
     }
    ],
    "mine_vault": [
     {
-     "object": "stalagmites",
+     "object": "etai",
      "xy": [
-      6.0,
-      2.25
+      6.7,
+      0.8
      ]
     },
     {
      "object": "forge",
      "xy": [
-      1.5,
-      7.75
+      7.3,
+      3.1
      ]
     },
     {
-     "object": "chariot_retour",
+     "object": "chariot",
      "xy": [
-      12.5,
-      1.5
+      5.8,
+      3.3
+     ]
+    },
+    {
+     "object": "cristaux",
+     "xy": [
+      2.0,
+      8.6
      ]
     },
     {
      "object": "cristaux_retour",
      "xy": [
-      15.25,
-      1.25
-     ]
-    },
-    {
-     "object": "etai",
-     "xy": [
-      10.25,
-      9.0
+      13.5,
+      0.3
      ]
     }
    ],
@@ -4840,73 +4840,73 @@
     {
      "object": "stalagmites_retour",
      "xy": [
-      5.0,
-      1.25
-     ]
-    },
-    {
-     "object": "cristaux",
-     "xy": [
-      1.5,
-      7.75
-     ]
-    },
-    {
-     "object": "rails_retour",
-     "xy": [
-      12.5,
-      1.5
+      8.9,
+      0.6
      ]
     },
     {
      "object": "stalagmites",
      "xy": [
-      15.25,
-      1.25
+      11.4,
+      0.6
      ]
     },
     {
-     "object": "chariot",
-     "xy": [
-      9.5,
-      9.0
-     ]
-    }
-   ],
-   "mine_heart": [
-    {
      "object": "stalagmites_retour",
      "xy": [
-      1.25,
-      6.75
+      16.1,
+      0.3
      ]
     },
     {
      "object": "etai",
      "xy": [
-      8.0,
-      1.0
+      10.2,
+      8.8
      ]
     },
     {
-     "object": "forge",
+     "object": "rails",
      "xy": [
-      9.5,
-      3.0
+      11.9,
+      9.5
      ]
-    },
+    }
+   ],
+   "mine_heart": [
     {
      "object": "cristaux",
      "xy": [
-      11.5,
-      1.5
+      9.0,
+      0.6
      ]
     },
     {
      "object": "cristaux_retour",
      "xy": [
-      9.5,
-      9.25
+      10.7,
+      0.6
+     ]
+    },
+    {
+     "object": "forge",
+     "xy": [
+      13.2,
+      0.6
+     ]
+    },
+    {
+     "object": "stalagmites",
+     "xy": [
+      8.7,
+      8.9
+     ]
+    },
+    {
+     "object": "chariot_retour",
+     "xy": [
+      10.7,
+      9.4
      ]
     }
    ]

@@ -29,3 +29,13 @@ Un anneau ambre en pointillés s’accentue à l’approche du blocage. Pendant 
 Contrôles sur les sources v0.190 avec le branchement `77e54d3`. Les dix cartes ont été contrôlées dans les deux factions à ×1, et les 131, 134 et 140 également à ×2. Les 26 passages ont couvert l’entrée ouverte, l’avertissement, le blocage et la réouverture. Le second éboulement a été contrôlé sur ces trois cartes aux deux vitesses et dans les deux factions, avec un changement d’entrée visible. Le validateur couvre 20 dossiers sans problème et les six suites ciblées passent (29 196 contrôles Godot et 17 tests Python). L’habillage est prêt pour intégration et avis visuel du porteur.
 
 [Extrait en combat](essais/mines_ch14/Eboulement_en_combat.gif) · [Quatre états à ×2](essais/mines_ch14/Eboulement_quatre_etats.jpg)
+
+## Décor sur les nouveaux tracés des missions 121 à 130
+
+Les dix cartes réutilisent les pièces des mines sur 50 emplacements adaptés. Deux étais marquent l’entrée, les rails et chariots s’alignent sur la mission 125 et le foyer de la Forge Souterraine est groupé avec un chariot et un étai. Le Lac Noir conserve ses deux bassins décoratifs. Un cristal et un étai ont été déplacés après inspection sur les missions 124 et 127 pour dégager les silhouettes.
+
+Les vingt vues finales ont été capturées sur la vague 5 dans les deux factions, sur une copie de la v0.238. Les contrôles de décor incluent les 50 pièces visibles dans chaque faction, leurs ancres et leurs marges des routes et des cases dans la copie de test. Cette suite passe 11 130 contrôles, et la suite du chapitre en passe 5 024. Le lot attend l’avis du porteur. Pour l’activer après validation, retirer uniquement les dix identifiants de mine_entrance à mine_heart de REWORKED_MAPS.
+
+- [Missions 121 à 124](essais/mines_refonte/Mines_121_124.jpg)
+- [Missions 125 à 127](essais/mines_refonte/Mines_125_127.jpg)
+- [Missions 128 à 130](essais/mines_refonte/Mines_128_130.jpg)
