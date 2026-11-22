@@ -1,6 +1,6 @@
 # Joueur avisé sans voyance — mesure pour O-028 (v0.239)
 
-**Statut.** Mesure demandée par le porteur le 22 novembre 2026 (« Oui, mesure-le ») pour éclairer O-028. Elle complète le choix guidé de la v0.236 (`design/Rebalancage_v0236.md`), qui était une borne haute. **Aucune décision n'est prise** : la cible reste 40 à 70 % de marge pour la meilleure composition, mesurée avec la première offre (MAJ-69, MAJ-73), et les coefficients restent des réglages de prototype à confirmer.
+**Statut.** Mesure demandée par le porteur le 22 novembre 2026 (« Oui, mesure-le ») pour éclairer O-028. Elle complète le choix guidé de la v0.236 (`design/Rebalancage_v0236.md`), qui était une borne haute. **Décision du porteur, 22 novembre 2026 : « Garder la cible »** (MAJ-79). La cible reste 40 à 70 % de marge pour la meilleure composition, mesurée avec la première offre (MAJ-69, MAJ-73), sans recalibrage pour le joueur avisé. Les coefficients restent des réglages de prototype à confirmer en jeu.
 
 ## Méthode
 
@@ -37,6 +37,10 @@ Moyenne par chapitre, joueur avisé : 81 à 91 % pour l'Alliance ; 71 à 91 % po
 
 Viser 40 à 70 % de marge pour le joueur avisé demanderait de remonter les PV ennemis de presque toutes les missions, puis de refaire tout l'ajustement par les suites de campagne. La référence de chaque faction (`tests/reference_army.gd`), qui doit toujours gagner avec la première offre, bride déjà une partie des missions : il faudrait aussi qu'elle joue en joueur avisé.
 
-Une mesure avisée complète coûte environ 4 h 30 de calcul par passe (200 missions). La décision reste au porteur (O-028).
+Une mesure avisée complète coûte environ 4 h 30 de calcul par passe (200 missions).
+
+## Décision
+
+Le porteur garde la cible actuelle pour le mode normal (22 novembre 2026, réponse à O-028). Aucune mission n'est recalibrée. Piste proposée par Claude Code, non décidée : se servir de cette mesure pour régler les difficultés Héroïque et Mythique (O-014).
 
 Données : `design/essais/equilibre_bonus/parties_v238_wise_{7,8,9}.txt` (joueur avisé), `parties_v236_{7,8,9}.txt` (première offre), `parties_v236_look_{7,8,9}.txt` (choix guidé).
