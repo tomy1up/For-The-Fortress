@@ -107,7 +107,7 @@ static func damage_landing_delay(event: Dictionary) -> float:
 	return launch_delay({"type":int(event.source_type)})+PROJECTILE_FLIGHT
 
 ## Types dont le projectile n'est pas dessiné en vol quand la cible est déjà derrière le point de lâcher à l'écran (à bout portant) : l'impact est alors joué au lâcher, sans attendre le vol.
-const NO_FLIGHT_TYPES: Array[int] = [16,19,21,24,26,27,28,32]
+const NO_FLIGHT_TYPES: Array[int] = [16,19,21,24,26,27,28,32,40,41]
 ## Types sans projectile ni impact (v0.235) : l'Éclaireur-observateur désigne sa cible au fanion ; ses dégâts et son losange s'affichent au geste pointé (délai de `LAUNCH_DELAYS`).
 const SIGNAL_TYPES: Array[int] = [31]
 const OBSERVER_TYPE := 31
@@ -308,8 +308,12 @@ const COIN_TYPE := 36 # Marchand mercenaire : pièce d'or.
 const GOLD_SHARD_TYPE := 32 # Prêtre guerrier : éclat doré.
 const WISP_TYPE := 33 # Chaman des marais : feu follet.
 const TOTEM_TYPE := 34 # Totem de guerre : impulsion partie de la gemme.
+## Pillard gobelin (lot Codex 0ab5281, v0.237) : jeton de 8 px, un tour sur l'arc existant de la famille (8 px), retourné avec la pose ; badge de pillage à l'impact.
+const PILLAGER_TYPE := 41
+const TOKEN_TEXTURE: Texture2D = preload("res://assets/units/shop/jeton_pillard_v001.png")
+const TOKEN_WIDTH := 8.0
 ## Point de départ des types à vue unique (lots Codex v0.236), en pixels d'écran depuis l'emplacement, tir vers la droite : main de la Chamane des marais (`lacher.json`), gemme du Totem (`signal.json`).
-const SINGLE_MUZZLES: Dictionary = {33: Vector2(14.3921,-48.139), 34: Vector2(-0.250984,-51.070203), 35: Vector2(13.45841,-32.28643), 36: Vector2(28.4303,-42.361), 37: Vector2(31.3447,-41.4565), 39: Vector2(25.1022,-39.3371)} # 39 : main ouverte de l'Alchimiste gnome (lot 02cb36d) ; 37 : main ouverte du Piégeur nain (lot 4fb5e10) ; 35 : contact de la mailloche avec le tambour de l'Ancien des tribus ; 36 : pièce lancée par le Marchand mercenaire (lot fa8d42c)
+const SINGLE_MUZZLES: Dictionary = {33: Vector2(14.3921,-48.139), 34: Vector2(-0.250984,-51.070203), 35: Vector2(13.45841,-32.28643), 36: Vector2(28.4303,-42.361), 37: Vector2(31.3447,-41.4565), 39: Vector2(25.1022,-39.3371), 40: Vector2(24.8734,-51.3522), 41: Vector2(37.9061,-34.5103)} # 41 : main ouverte du Pillard gobelin (lot 0ab5281) ; 40 : 40 : sortie de la glissière de l'arbalète du Vétéran royal (lot 20550ee) ; 39 : main ouverte de l'Alchimiste gnome (lot 02cb36d) ; 37 : main ouverte du Piégeur nain (lot 4fb5e10) ; 35 : contact de la mailloche avec le tambour de l'Ancien des tribus ; 36 : pièce lancée par le Marchand mercenaire (lot fa8d42c)
 const ELDER_TYPE := 35
 ## Prêtre guerrier (lot Codex c2d19e8, v0.236) : trois vues nommées ; paume avancée de chaque vue et angle réellement dessiné (`lachers.json`).
 const PRIEST_TIPS: Dictionary = {-24: Vector2(20.3931,-54.0541), 0: Vector2(23.5577,-46.1523), 20: Vector2(21.6216,-41.2776)}
@@ -329,7 +333,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32, 23: 0.6, 24: 0.44, 25: 0.4, 26: 0.52, 27: 0.48, 16: 0.36, 28: 0.56, 30: 0.36, 29: 0.24, 31: 0.32, 33: 0.4, 34: 0.3, 32: 0.32, 35: 0.36, 36: 0.4, 37: 0.36, 39: 0.4} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32, 23: 0.6, 24: 0.44, 25: 0.4, 26: 0.52, 27: 0.48, 16: 0.36, 28: 0.56, 30: 0.36, 29: 0.24, 31: 0.32, 33: 0.4, 34: 0.3, 32: 0.32, 35: 0.36, 36: 0.4, 37: 0.36, 39: 0.4, 40: 0.36, 41: 0.36} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
@@ -681,6 +685,9 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 	if int(shot.type) == VIAL_TYPE:
 		_draw_vial(point,shot,age)
 		return
+	if int(shot.type) == PILLAGER_TYPE:
+		_draw_token(point,shot,age)
+		return
 	if int(shot.type) == COIN_TYPE:
 		_draw_coin(point,age)
 		return
@@ -801,6 +808,14 @@ func _draw_vial(point: Vector2, shot: Dictionary, age: float) -> void:
 	var scale: float = VIAL_WIDTH/VIAL_TEXTURE.get_size().x
 	draw_set_transform(point,clampf(age/PROJECTILE_FLIGHT,0.0,1.0)*TAU*facing,Vector2(facing,1.0))
 	draw_texture_rect(VIAL_TEXTURE,Rect2(-VIAL_TEXTURE.get_size()*scale*0.5,VIAL_TEXTURE.get_size()*scale),false)
+	draw_set_transform(Vector2.ZERO)
+
+## Jeton du Pillard gobelin : le dessin du lot de Codex (`Jeton_pillard.png`), 8 px de large, un tour complet pendant le vol, retourné avec la pose.
+func _draw_token(point: Vector2, shot: Dictionary, age: float) -> void:
+	var facing: float = shot_facing(shot)
+	var scale: float = TOKEN_WIDTH/TOKEN_TEXTURE.get_size().x
+	draw_set_transform(point,clampf(age/PROJECTILE_FLIGHT,0.0,1.0)*TAU*facing,Vector2(facing,1.0))
+	draw_texture_rect(TOKEN_TEXTURE,Rect2(-TOKEN_TEXTURE.get_size()*scale*0.5,TOKEN_TEXTURE.get_size()*scale),false)
 	draw_set_transform(Vector2.ZERO)
 
 ## Pièce du marchand mercenaire : disque d'or qui tourne sur lui-même.
@@ -957,7 +972,7 @@ func _draw_javelin(point: Vector2, direction: Vector2, side: Vector2, facing: fl
 static func enemy_badges(enemy: Dictionary, elapsed: float, shots: Array = []) -> Array[String]:
 	var badges: Array[String] = []
 	if float(enemy.get("marked_until",-1.0)) > elapsed and not mark_display_pending(enemy,elapsed,shots): badges.append("mark")
-	if float(enemy.get("loot_until",-1.0)) >= elapsed: badges.append("loot")
+	if float(enemy.get("loot_until",-1.0)) >= elapsed and not loot_display_pending(enemy,elapsed,shots): badges.append("loot")
 	if float(enemy.get("volatile_until",-1.0)) >= elapsed and not enemy.get("exploded",false): badges.append("volatile")
 	return badges
 
@@ -966,6 +981,23 @@ static func enemy_badges(enemy: Dictionary, elapsed: float, shots: Array = []) -
 ## depuis la pose de la marque : une marque posée entre-temps par un autre tir (Marque du chasseur, autre marqueur sans délai) s'affiche aussitôt. Une marque déjà visible
 ## (renouvellement, Marque du chasseur) le reste. Rendu seulement : le modèle applique la marque et son bonus dès le tir.
 const MARK_DISPLAY_DELAYS: Dictionary = {31: 0.32, 34: 0.42}
+
+## Badge de pillage du Pillard gobelin (v0.237, demande du porteur) : un pillage nouveau s'affiche à l'impact du jeton (0,36 s + vol, soit 0,48 s, ou 0,36 s sans vol à bout portant).
+## Un badge déjà visible le reste lors d'un renouvellement ; un pillage posé entre-temps par le Marchand mercenaire s'affiche aussitôt, comme avant. Rendu seulement.
+const LOOT_DISPLAY_TYPES: Array[int] = [41]
+
+static func loot_display_pending(enemy: Dictionary, elapsed: float, shots: Array) -> bool:
+	var id: int = int(enemy.get("id",-1))
+	var placed := -INF
+	for shot in shots:
+		if int(shot.get("target_id",-2)) == id and str(shot.get("loot","")) == "new" and float(shot.get("time",0.0)) <= elapsed: placed = maxf(placed,float(shot.get("time",0.0)))
+	if placed == -INF: return false
+	var shown := INF
+	for shot in shots:
+		var time: float = float(shot.get("time",0.0))
+		if int(shot.get("target_id",-2)) == id and shot.has("loot") and time >= placed and time <= elapsed:
+			shown = minf(shown,time+(launch_delay(shot)+flight_time(shot) if int(shot.get("type",-1)) in LOOT_DISPLAY_TYPES else 0.0))
+	return elapsed < shown
 
 static func mark_display_pending(enemy: Dictionary, elapsed: float, shots: Array) -> bool:
 	var id: int = int(enemy.get("id",-1))

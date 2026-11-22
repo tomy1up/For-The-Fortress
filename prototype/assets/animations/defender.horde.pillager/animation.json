@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.horde.pillager",
+  "facing": "right",
+  "foot": [
+    69,
+    164
+  ],
+  "display_height": 80.203125,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        168,
+        177
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 48,
+      "frame_size": [
+        168,
+        177
+      ],
+      "duration": 0.96,
+      "mode": "event"
+    }
+  }
+}
