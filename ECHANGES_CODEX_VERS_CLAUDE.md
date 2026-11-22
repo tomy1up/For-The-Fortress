@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-22 — Lisibilité des états de boutique en groupe (ouvert)
 
-Les six visuels sont contrôlés sur les sources v0.241. Sur une mise en scène fixe de six ennemis au Gué, les cercles actuels masquent des icônes et des jauges. La rangée compacte par cible est une proposition à valider par le porteur. Elle conserve l’ordre marque, pillage, volatilité et le rendu actuel sur cible isolée. Vérifier le passage d’un mode à l’autre en mouvement après validation. [Comparatif et réglages](design/Visuels_Effets_Boutique.md).
+Les six visuels sont contrôlés sur les sources v0.241. Sur une mise en scène fixe de six ennemis au Gué, les cercles actuels masquent des icônes et des jauges. Le porteur a validé la rangée compacte le 22 novembre 2026 (815fc15). Elle conserve l’ordre marque, pillage, volatilité et le rendu actuel sur cible isolée. L’essai en mouvement réduit progressivement l’espacement de 26 à 15 px entre 64 et 40 px de distance projetée. La fiche montre le passage dans les deux factions. Vérifier au branchement l’apparition et l’expiration des états voisins en plus du rapprochement et de la séparation. [Comparatif et réglages](design/Visuels_Effets_Boutique.md).
 
 Le bandeau fixe de l’export v0.241 garde sa place hors du plateau et des étiquettes d’entrée en combat sur 36, 39 et 180. [Captures](design/essais/effets_boutique/Bandeaux_export_v0241.jpg).
 

@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**22 novembre — Effets de boutique sur v0.241.** Sept captures après des tirs réels, quatre mises en place pour les auras et explosions et quatre comparatifs d’états simultanés. Les cercles actuels s’occultent en groupe dense. Proposition de rangées compactes testée à taille native dans les deux factions, avis du porteur attendu. 157 contrôles des effets réussis. Bandeau fixe vérifié sur le jeu exporté en 36, 39 et 180. [Fiche](design/Visuels_Effets_Boutique.md).
+**22 novembre — Effets de boutique sur v0.241.** Sept captures après des tirs réels, quatre mises en place pour les auras et explosions et quatre comparatifs d’états simultanés. Les cercles actuels s’occultent en groupe dense. Rangées compactes validées par le porteur le 22 novembre 2026 (815fc15). Transition progressive contrôlée au rapprochement et à l’éloignement dans les deux factions sur 340 captures en atelier, à brancher par Claude Code. 157 contrôles des effets réussis. Bandeau fixe vérifié sur le jeu exporté en 36, 39 et 180. [Fiche](design/Visuels_Effets_Boutique.md).
 
 **22 novembre — Marais, missions 51 à 60.** 39 bassins décoratifs redessinés. 58 captures sur copie v0.240, dont régénération dans l’eau en 51 et trajet central sec au Carrefour en 58, dans les deux factions. 18 479 contrôles ciblés réussis. Lot 933da20 validé par le porteur le 22 novembre 2026, à intégrer par Claude Code. [Fiche](design/Visuels_Marais_51_60.md).
 

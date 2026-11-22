@@ -25,9 +25,20 @@ Les cercles individuels permettent de distinguer facilement les effets sur un en
 
 ![Affichage actuel et rangées compactes](essais/effets_boutique/Etats_simultanes_comparatif.jpg)
 
-La proposition conserve les grandes pastilles pour les ennemis isolés. En groupe, chaque cible porte une seule rangée de symboles sur fond sombre reliée à sa jauge. L’ordre reste marque, pillage, volatilité. Une rangée de trois occupe 50 px dans l’essai, contre environ 79 px pour les trois cercles actuels. Le seuil d’essai est de 48 px entre deux ennemis porteurs d’un état. Les signes sont plus petits à taille native. Après avis du porteur, faire vérifier la transition de taille pendant le mouvement, en particulier quand deux groupes se rejoignent puis se séparent.
+La proposition conserve les grandes pastilles pour les ennemis isolés. En groupe, chaque cible porte une seule rangée de symboles sur fond sombre reliée à sa jauge. L’ordre reste marque, pillage, volatilité. Une rangée de trois occupe 50 px dans l’essai, contre environ 79 px pour les trois cercles actuels. Le seuil d’essai est de 48 px entre deux ennemis porteurs d’un état. Les signes sont plus petits à taille native. Le porteur a validé le regroupement compact le 22 novembre 2026 (lot 815fc15).
 
 Les 157 contrôles des états et projectiles de boutique passent sur les sources de la v0.241. La rangée compacte a été essayée uniquement dans une copie locale.
+
+## Transition en mouvement
+
+À la Vallée du Gué, une cible portant deux états rattrape un ennemi qui en porte trois. Les deux cibles se séparent en sortie de virage. La trajectoire, les PV et les états sont pilotés pour la comparaison. Le rendu vient de Godot sur une copie de la v0.241.
+
+La variante testée passe progressivement des cercles à la rangée compacte entre 64 et 40 px de distance projetée. Chaque symbole reste visible pendant la transition. L’espacement entre symboles passe de 26 à 15 px. Le fond de rangée apparaît pendant que les bordures des cercles s’atténuent. Les bornes sont des valeurs d’essai.
+
+85 images à 24 images/s pour chacune des deux factions et chacun des deux rendus. Le relevé passe par les deux extrêmes et par 30 images intermédiaires par séquence. Contrôle cible des 157 règles et ressources toujours au vert. Dans cet essai les états restent actifs pendant tout le passage. Le raccord lorsque l’état d’une cible voisine s’applique ou expire reste à vérifier au branchement.
+
+- [Comparatif animé Alliance](essais/effets_boutique/Repères_alliance_en_mouvement.gif)
+- [Comparatif animé Horde](essais/effets_boutique/Repères_horde_en_mouvement.gif)
 
 ## Bandeaux d’affixe
 
