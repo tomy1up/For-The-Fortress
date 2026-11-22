@@ -17,6 +17,8 @@ func run_checks() -> void:
 	verify_props()
 	verify_margins()
 	verify_water()
+	verify_marsh_layers()
+	verify_all_active()
 	await verify_rendering()
 	print("DECOR_ART_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
@@ -70,7 +72,7 @@ func verify_props() -> void:
 ## Les pièces de toutes les cartes décrites ne chevauchent ni la chaussée ni les emplacements (volcan et citadelle, deux camps).
 func verify_margins() -> void:
 	var counted := 0
-	for decoration in ["volcanic","citadel","desert"]:
+	for decoration in ["volcanic","citadel","desert","mine","sky","coast","necro"]: # Toutes les cartes décorées depuis la v0.242.
 		var placements: Dictionary = Decor.set_for(decoration).get("placements",{})
 		for id in placements:
 			var board: Dictionary = Model.Maps.for_id(str(id))
@@ -134,3 +136,51 @@ func verify_water() -> void:
 		var flooded: Array = board.flooded
 		check(flooded.size() == entry.flooded.size(),"Même nombre de tronçons inondés (%s)" % id)
 		for index in range(mini(flooded.size(),entry.flooded.size())): check(is_equal_approx(float(flooded[index].from),float(entry.flooded[index].from)) and is_equal_approx(float(flooded[index].to),float(entry.flooded[index].to)),"Tronçon %d de %s identique" % [index,id])
+
+## Marais 41 à 50 (v0.242, lots 5ae3c06 et 65638f3 de Codex) : calque de bassins par carte et quatre pièces dessinées ; missions 51 à 60 inchangées.
+func verify_marsh_layers() -> void:
+	const MarshArt = preload("res://scripts/marsh_art.gd")
+	var expected: Array = []
+	for number in range(41,51): expected.append(str(Catalogue.definition(number).map_id))
+	check(MarshArt.POOL_LAYERS.keys().size() == 10 and expected.all(func(id) -> bool: return MarshArt.POOL_LAYERS.has(id)),"Un calque de bassins pour chacune des cartes des missions 41 à 50")
+	var references: Dictionary = {}
+	for lot in ["marais_41_45","marais_46_50"]:
+		var path: String = ProjectSettings.globalize_path("res://").path_join("../design/essais/%s/Implantation.json" % lot)
+		if FileAccess.file_exists(path): references.merge(JSON.parse_string(FileAccess.get_file_as_string(path)).pools)
+	check(references.size() == 10,"Implantations de Codex lues pour les dix cartes")
+	for id in expected:
+		var definition: Dictionary = Model.Maps.for_id(id)
+		var layer: Dictionary = MarshArt.pool_layer(id)
+		check(not layer.is_empty() and layer.texture.get_size() == layer.area.size*2.0,"Calque de bassins de %s dessiné au double de sa taille d'affichage" % id)
+		if layer.is_empty(): continue
+		var water: Array = definition.get("water_areas",MarshArt.POOLS)
+		if references.has(id):
+			var reference: Dictionary = references[id]
+			check(layer.area == Rect2(reference.position[0],reference.position[1],reference.size[0],reference.size[1]),"Position et taille du calque de %s conformes à l'implantation" % id)
+			check(water.size() == reference.water_areas.size() and range(water.size()).all(func(i: int) -> bool: return Rect2(water[i]).is_equal_approx(Rect2(reference.water_areas[i][0],reference.water_areas[i][1],reference.water_areas[i][2],reference.water_areas[i][3]))),"Les bassins de %s n'ont pas bougé depuis le dessin" % id)
+		for pool in water:
+			var rect: Rect2 = pool
+			for corner in [rect.position,Vector2(rect.end.x,rect.position.y),rect.end,Vector2(rect.position.x,rect.end.y)]:
+				check(layer.area.grow(1.0).has_point(View.project(corner)),"Le calque de %s couvre ses bassins" % id)
+		for item in View.scenery_for(definition):
+			check(MarshArt.prop_texture(id,item.kind,int(item.order)) != null,"Pièce dessinée pour chaque objet de %s (%s)" % [id,item.kind])
+	for kind in ["willow","reeds"]: check(MarshArt.prop_key("marsh_court",kind,4) == kind and MarshArt.prop_key("marsh_nave",kind,3) == kind,"Saule et roseaux gardent leur pièce")
+	check(MarshArt.prop_key("marsh_court","ruin",4) == "ruin_fallen" and MarshArt.prop_key("marsh_court","ruin",5) == "ruin","Arche ou mur effondré selon la parité de l'ordre de placement")
+	check(MarshArt.prop_key("marsh_cloister","ruin",4) == "ruin" and MarshArt.prop_key("marsh_nave","ruin",5) == "ruin_fallen","Arche au Cloître submergé, mur effondré à la Nef")
+	for key in MarshArt.PROP_FILES:
+		var texture: Texture2D = Decor.texture(MarshArt.PROP_FILES[key])
+		var frame: Rect2 = MarshArt.bounds(Vector2.ZERO,"ruin" if key == "ruin_fallen" else key)
+		check(texture != null and absf(texture.get_width()/float(texture.get_height())-frame.size.x/frame.size.y) < 0.02,"Pièce %s au format de son cadre" % key)
+	for number in range(51,61):
+		var id: String = str(Catalogue.definition(number).map_id)
+		check(MarshArt.pool_layer(id).is_empty() and MarshArt.prop_texture(id,"ruin",2) == null,"Mission %d : bassins et objets vectoriels en attendant l'avis du porteur" % number)
+	check(MarshArt.prop_texture("valley_ford","willow",1) == null,"Pas de pièce des marais hors des missions 41 à 50")
+
+## Plus aucune carte refondue sans décor (v0.242) : garnison, aire de l'aigle, côtes et nécropole ont leurs pièces.
+func verify_all_active() -> void:
+	check(Decor.REWORKED_MAPS.is_empty(),"Aucune carte refondue n'est privée de décor")
+	for number in [91,100,151,160,161,180,181,200]:
+		var definition: Dictionary = Catalogue.definition(number)
+		var board: Dictionary = Model.Maps.for_id(str(definition.map_id))
+		for faction in [0,1]:
+			check(not Decor.props(str(definition.map_id),str(board.decoration),faction).is_empty(),"Mission %d : décor refait affiché (faction %d)" % [number,faction])

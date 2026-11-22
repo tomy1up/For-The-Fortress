@@ -1510,7 +1510,9 @@ static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
 func _draw_terrain_detail(item: Dictionary) -> void:
 	var center: Vector2 = project(item.point)
 	if item.kind in ["willow","ruin","reeds"]:
-		MarshArt.draw_detail(self,center,item.kind)
+		var art: Texture2D = MarshArt.prop_texture(str(model.map_definition.get("id","")) if model != null else "",item.kind,int(item.get("order",0)))
+		if art != null: draw_texture_rect(art,MarshArt.bounds(center,item.kind),false) # Pièces dessinées par Codex (missions 41 à 50).
+		else: MarshArt.draw_detail(self,center,item.kind)
 		return
 	if item.kind == "pine": _draw_tree(center);return
 	if item.kind == "rock":
@@ -1547,7 +1549,10 @@ func _draw() -> void:
 		var face_color: Color = edge[2] if palette.is_empty() else palette.face_right if edge[0] == corners[1] else palette.face_left
 		draw_colored_polygon(PackedVector2Array([first,last,last+Vector2(0,16),first+Vector2(0,16)]),face_color)
 	polygon(corners, palette.ground if not palette.is_empty() else MarshArt.GROUND if marsh else Color("3d3837") if volcanic else Color("55555d") if citadel else Color("4a5b65") if mountain else Color("3a513e"))
-	if marsh: MarshArt.draw_ground(self,project,false,definition.get("water_areas",MarshArt.POOLS))
+	if marsh:
+		var ponds: Dictionary = MarshArt.pool_layer(str(definition.get("id","")))
+		if ponds.is_empty(): MarshArt.draw_ground(self,project,false,definition.get("water_areas",MarshArt.POOLS))
+		else: draw_texture_rect(ponds.texture,ponds.area,false) # Bassins dessinés par Codex (missions 41 à 50), avant la chaussée.
 	for x in range(board.x+1):
 		draw_line(project(Vector2(x, 0)), project(Vector2(x, board.y)), Color(0.75, 0.86, 0.7, 0.055), 1)
 	for y in range(board.y+1):

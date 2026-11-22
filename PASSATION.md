@@ -386,7 +386,14 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 22 novembre 2026 — Claude Code (v0.241 publiée)
+## État au 22 novembre 2026 — Claude Code (v0.242 en cours de vérification)
+
+- **v0.242** (validation du porteur : « tous », puis lot 46–50 confirmé), fusion de `art/codex` jusqu'à `933da20` :
+  - `DecorArt.REWORKED_MAPS` est vide : décor des chapitres 10 et 16 à 20 actif (MAJ-84). `test_decor_art.gd` contrôle aussi les marges des décors mine, sky, coast et necro (38 177 contrôles).
+  - Marais 41 à 50 (MAJ-85) : `marsh_art.gd` (`POOL_LAYERS`, `pool_layer`, `prop_key`, `prop_texture`) ; `valley_view.gd` dessine le calque à la place de `draw_ground` et les pièces dans `MarshArt.bounds`. Les PNG sont au double de la taille d'affichage. Bassins 51 à 60 (`933da20`) fusionnés, non branchés, en attente du porteur.
+  - GDD 0.79 (MAJ-84, MAJ-85), `.docx` régénéré.
+
+### v0.241 (publiée)
 
 - **v0.241** (lots de Codex validés par le porteur, fusion de `art/codex` jusqu'à `5ae3c06`) :
   - **Rafales des Vents contraires** (`208a6aa`) : `valley_view.gd::_draw_headwinds_sheet` (`headwinds_sheet_visible`, `headwinds_area`, `headwinds_frame`), dessinée avant le décor et les unités, en combat seulement, image donnée par `model.elapsed`. `_draw_headwinds` ne sert plus que de repli si la planche manque. Contrôles dans `test_headwinds.gd`.
@@ -396,7 +403,7 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
   - GDD 0.78 (MAJ-80 à MAJ-83), `.docx` régénéré : le script `docx20.py` lit maintenant la couverture et le titre de la section 56 dans le `.md`.
   - Après un `--import` de Godot, les `.import` des nouvelles images sont réécrits en fins de ligne LF, sans changer de contenu (`git diff` vide). Il faut les laisser ainsi. Les restaurer avec `git checkout` fait échouer l'export : Godot les réécrit pendant la compilation et l'exporteur signale `SOURCE_CHANGED`.
 - Contrôles v0.241 : régression 144/144 (206 730 contrôles Godot, 17 tests Python), paquet 1 050 cas et 620 contrôles de sources ; captures du paquet inspectées : états de la forteresse, chapitre 15, bandeau et rafales (missions 31 à 40 et missions à affixe signalées). L'effacement du bandeau pendant l'annonce de vague n'est pas visible en capture (le mode capture n'affiche pas l'annonce) : vérifié par `test_affix_banner.gd` seulement.
-- En attente du porteur : décor du chapitre 10 (`60d007d`), du chapitre 16 (`a1ba5d3`), des côtes et de la nécropole (`8fb925c`), bassins des marais 41 à 45 (`5ae3c06`). Place commune du bandeau (MAJ-82) validée par le porteur après publication (« c'est bon pour moi »).
+- Place commune du bandeau (MAJ-82) validée par le porteur après publication (« c'est bon pour moi »).
 - **O-028 tranchée** le 22 novembre 2026 (« Garder la cible », MAJ-79), consignée hors version (commit `1b437f5`).
 
 ### v0.240 (publiée)

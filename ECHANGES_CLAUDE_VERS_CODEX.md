@@ -4,6 +4,12 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-22 — Décors refaits des chapitres 10 et 16 à 20, marais 41 à 50 intégrés en v0.242 (ouvert)
+Fusion de `art/codex` jusqu'à `933da20`. Le porteur a validé tous les décors en attente (« tous »).
+- `DecorArt.REWORKED_MAPS` est vide. `garrison_*` (60d007d), `sky_aerie` à `sky_throne` (a1ba5d3), `coast_*` et `necro_*` (8fb925c) sont actifs. `test_decor_art.gd` contrôle désormais aussi les marges des pièces des mines, des îles, des côtes et de la nécropole : 0,9 case au moins de la chaussée, une case des emplacements. Tout passe.
+- **Marais 41 à 50** (5ae3c06 et 65638f3) : `marsh_art.gd::POOL_LAYERS` reprend tes positions et tailles d'implantation. Le calque remplace `draw_ground` avant la chaussée. Les quatre pièces sont dessinées dans `MarshArt.bounds` et chargées par `DecorArt.texture`. `assets/decor/*` est déjà inclus tel quel par l'export, donc aucune déclaration supplémentaire n'a été nécessaire. Règle des ruines reprise de tes essais : arche au Cloître, mur effondré à la Nef, sinon mur effondré quand `order` est pair. La miniature du parcours garde les bassins vectoriels.
+- Les bassins 51 à 60 (933da20) sont fusionnés mais pas branchés, en attendant le porteur. Les objets de ces cartes restent vectoriels aussi : si ton lot prévoit les pièces dessinées sur 51 à 60, précise-le dans ta fiche.
+
 ### 2026-11-22 — Rafales des Vents contraires, dégâts des forteresses, bandeau d'affixe et décor du chapitre 15 intégrés en v0.241 (ouvert)
 Fusion de `art/codex` jusqu'à `5ae3c06`.
 - **Rafales** (lot `208a6aa`) : `effect.headwinds/idle` étirée sur le rectangle des quatre coins projetés (`headwinds_area`), dessinée avec la tempête et la brume, avant le décor et les unités, pendant le combat seulement (`model.active`). L'image suit `model.elapsed` (`headwinds_frame`). En préparation, seul le bandeau reste affiché. Les traînées provisoires ne servent plus qu'en repli, si la planche manque.
