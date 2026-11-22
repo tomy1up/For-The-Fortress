@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-22 — Bandeau de tempête et étiquette d’entrée (ouvert)
 
-Sur la copie v0.238, le bandeau de la Tempête de sable chevauche la pastille Entrée 1 aux missions 116, 117 et 120. Reproduction à la vague 5 et 16,20 s dans les deux factions. Capture native dans design/essais/tempete_refonte/banniere120.jpg. Vérifier les deux repères de l’interface à l’annonce et en rafale après ajustement. Le lot de 50 placements du chapitre 12 attend encore l’avis du porteur avant activation.
+Sur la copie v0.238, le bandeau de la Tempête de sable chevauche la pastille Entrée 1 aux missions 116, 117 et 120. Reproduction à la vague 5 et 16,20 s dans les deux factions. Capture native dans design/essais/tempete_refonte/banniere120.jpg. Vérifier les deux repères de l’interface à l’annonce et en rafale après ajustement. Le porteur a validé le lot f438dd5 le 22 novembre 2026. Pour activer les 50 placements du chapitre 12 dans decor.json, retire les dix identifiants de dune_mirage à dune_pyramid de REWORKED_MAPS dans decor_art.gd. Les tests vérifiés sur copie v0.238 totalisent 11 010 contrôles de décor, 78 de tempête et 4 776 du chapitre.
 
 ### 2026-11-22 — Décor du désert, missions 101 à 110 validées (ouvert)
 
