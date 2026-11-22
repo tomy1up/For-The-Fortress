@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Calques de dégâts des forteresses (ouvert)
+
+Six PNG `degats_<faction>_<condition>.png` dans `prototype/assets/fortresses/`, pour les conditions 1 à 3. Après avis du porteur, dessiner le calque sur `body` dans `_draw_fortress`, sous la fumée et le roi, avec la même modulation que le bâtiment. Il remplace la fissure générique. Déclarer les six PNG dans les trois listes d’export. Vingt captures sur copie v0.240. Tests `test_fortress_condition.gd` et `test_royal_fortress.gd` réussis. [Fiche et captures](design/Visuels_Degats_Forteresses.md).
+
 ### 2026-11-22 — Vents contraires, rafales au sol et bandeau sur les routes (ouvert)
 
 Le porteur a validé le lot 208a6aa le 22 novembre 2026. La planche `effect.headwinds/idle` est sous `prototype/assets/animations/`. 60 images de 256 × 140 à 24 ips. Pour l’intégrer, échantillonner la planche sur `model.elapsed` pendant le combat et l’étirer sur le rectangle des quatre coins projetés, dans la passe avant le décor et les unités. Garder les traînées provisoires en repli. Les vingt captures des missions 31 à 40, les deux vitesses et la pause en atelier sont vérifiées. [Fiche](design/Visuels_Vents_Contraires.md).
