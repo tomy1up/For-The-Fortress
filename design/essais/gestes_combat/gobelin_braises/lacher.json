@@ -1,0 +1,16 @@
+{
+  "release": 0.4,
+  "muzzle": [
+    27.1743,
+    -39.7095
+  ],
+  "projectile": {
+    "file": "Braise_facette.png",
+    "width": 8,
+    "flight": "linear",
+    "art_axis": [
+      80,
+      -149
+    ]
+  }
+}
