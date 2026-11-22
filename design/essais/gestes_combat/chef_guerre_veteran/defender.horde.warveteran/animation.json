@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.horde.warveteran",
+  "facing": "right",
+  "foot": [
+    68,
+    138
+  ],
+  "display_height": 87.61061946902655,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        136,
+        150
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 60,
+      "frame_size": [
+        136,
+        150
+      ],
+      "duration": 0.96,
+      "mode": "event"
+    }
+  }
+}
