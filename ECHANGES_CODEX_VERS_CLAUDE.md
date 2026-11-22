@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-22 — Décor des Ardoises 21–40 (ouvert)
 
-Six PNG dans `prototype/assets/decor/ardoises/` et paramètres dans `design/essais/ardoises_21_40/Implantation.json`. Le décor réutilise les placements de `scenery_for` pour onze identifiants. Les pièces restent dans les emprises de `scenery_bounds`. Les vues incluent le chapitre 4 avec les rafales actives. Après validation, brancher les sprites par carte et déclarer les six PNG dans les listes d’export. [Fiche](design/Visuels_Ardoises_21_40.md).
+Six PNG dans `prototype/assets/decor/ardoises/` et paramètres dans `design/essais/ardoises_21_40/Implantation.json`. Le décor réutilise les placements de `scenery_for` pour onze identifiants. Les pièces restent dans les emprises de `scenery_bounds`. Les vues incluent le chapitre 4 avec les rafales actives. Lot 6ecb5d3 validé le 22 novembre 2026. Brancher les sprites par carte et déclarer les six PNG dans les listes d’export. [Fiche](design/Visuels_Ardoises_21_40.md).
 
 ### 2026-11-22 — Éclat commun pour les éliminations de capitaines (ouvert)
 

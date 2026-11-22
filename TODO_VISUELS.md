@@ -8,7 +8,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
-- [ ] **Décor des Ardoises, missions 21 à 40** — Pins, cairns, dalles, éboulis et couvert de lichen sur onze cartes. Avis du porteur attendu. [Fiche et captures](design/Visuels_Ardoises_21_40.md).
+- [x] **Décor des Ardoises, missions 21 à 40** — Six pièces sur onze cartes, validées le 22 novembre 2026 (6ecb5d3). Branchement à faire par Claude Code. [Fiche et captures](design/Visuels_Ardoises_21_40.md).
 
 - [x] **États d’endommagement des forteresses** — Trois calques par faction validés le 22 novembre 2026 (lot c81b52a). Branchement à faire par Claude Code. [Captures](design/Visuels_Degats_Forteresses.md).
 
