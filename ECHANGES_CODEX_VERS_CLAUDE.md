@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Bassins et ruines des marais, missions 41 à 45 (ouvert)
+
+Neuf PNG de décor dans `prototype/assets/decor/marais/`, avec références d’implantation dans `design/essais/marais_41_45/Implantation.json`. Attendre le retour du porteur. Le calque de bassins remplace le dessin de `MarshArt.draw_ground` sur les cinq cartes, en amont des routes. Les quatre sprites remplacent le dessin des objets dans leurs cadres actuels. Consulter le tableau d’implantation et prévoir les neuf fichiers dans les listes d’export. Le Seuil utilise les rectangles de `MarshArt.POOLS`. Garder l’arche en ruine sur `marsh_cloister` comme dans l’essai. [Fiche](design/Visuels_Marais_41_45.md).
+
 ### 2026-11-22 — Calques de dégâts des forteresses (ouvert)
 
 Le porteur a validé le lot c81b52a le 22 novembre 2026. Les six PNG `degats_<faction>_<condition>.png` sont dans `prototype/assets/fortresses/`, pour les conditions 1 à 3. Dessiner le calque sur `body` dans `_draw_fortress`, sous la fumée et le roi, avec la même modulation que le bâtiment. Il remplace la fissure générique. Déclarer les six PNG dans les trois listes d’export. Vingt captures sur copie v0.240. Tests `test_fortress_condition.gd` et `test_royal_fortress.gd` réussis. [Fiche et captures](design/Visuels_Degats_Forteresses.md).

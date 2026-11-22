@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**22 novembre — Marais, missions 41 à 45.** Vingt bassins redessinés dans leurs limites, saule, roseaux et deux ruines dont l’arche compacte du Cloître. Vingt captures en combat sur copie v0.240, avec et sans l’habillage dans les deux factions. 4 448 contrôles du chapitre et 13 580 du décor réussis. Avis du porteur attendu. [Fiche](design/Visuels_Marais_41_45.md).
+
 **22 novembre — Dégâts des forteresses.** Six calques pour l’Alliance et la Horde, trois degrés de dégâts par faction. Essai sur copie v0.240, vingt captures dont quatre après des arrivées d’ennemis calculées par le modèle. 36 contrôles de condition et 438 contrôles des événements royaux réussis. Lot c81b52a validé par le porteur le 22 novembre 2026, à intégrer par Claude Code dans `_draw_fortress`. [Fiche](design/Visuels_Degats_Forteresses.md).
 
 **22 novembre — Vents contraires, missions 31 à 40.** Rafales au sol proposées, boucle de 60 images à 24 ips. Vérifiées sur copie de la v0.240 dans les deux factions, à ×1 et ×2 et en pause dans l’atelier. 63 dossiers d’animation sans problème et 6 870 contrôles ciblés réussis. Chevauchement Brume marine–Entrée 1 corrigé en 174 et 180. Le bandeau permanent de Vents contraires passe sur la chaussée en 36 et 39, signalement à Claude Code. Lot 208a6aa validé par le porteur le 22 novembre 2026, à brancher par Claude Code. [Fiche](design/Visuels_Vents_Contraires.md).
