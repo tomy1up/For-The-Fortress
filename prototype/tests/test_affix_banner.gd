@@ -56,4 +56,64 @@ func run_checks() -> void:
 		await process_frame
 		check(true,"Dessin du bandeau")
 		view.free()
+	verify_banner_clearance()
+	verify_entry_labels_apart()
 	print("AFFIX_BANNER_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
+
+## Étiquettes d'entrée écartées les unes des autres (v0.240) : avec les effectifs de préparation, les étiquettes d'entrées voisines se chevauchaient
+## (46 cas sur 38 missions des chapitres 6 à 20). Contrôle de toutes les missions à plusieurs entrées, pour chaque entrée principale possible et sans entrée principale.
+func verify_entry_labels_apart() -> void:
+	const Catalogue = preload("res://scripts/campaign_catalogue.gd")
+	var view = View.new()
+	var moved: Array[int] = []
+	for number in range(1,201):
+		var m = Model.new(true,Model.Maps.for_id(str(Catalogue.definition(number).map_id)))
+		if m.routes.size() < 2: continue
+		view.model = m
+		for busiest in range(-2,m.routes.size()):
+			var forecast: Array[Dictionary] = []
+			if busiest > -2:
+				for index in range(m.routes.size()): forecast.append({"route_id":m.routes[index].id,"count":12 if index == busiest else 8})
+			view.entry_forecast = forecast
+			var labels: Array = view.entry_label_layouts()
+			var context: String = "Mission %d, %s" % [number,"combat" if busiest == -2 else "préparation sans entrée principale" if busiest == -1 else "préparation, entrée %d principale" % (busiest+1)]
+			for i in range(labels.size()):
+				var natural := Rect2(view.project(m.routes[i].path_points[0])+Vector2(-labels[i].area.size.x/2.0,-76.0-labels[i].area.size.y),labels[i].area.size)
+				var shift: float = Rect2(labels[i].area).position.distance_to(natural.position)
+				check(shift <= 40.0,"%s : l'étiquette « Entrée %d » reste près de son point d'entrée" % [context,i+1])
+				if busiest == -2: check(shift <= 1.01,"%s : l'étiquette « Entrée %d » garde sa place au combat" % [context,i+1])
+				if shift > 1.01 and number not in moved: moved.append(number)
+				check(View.ENTRY_LABEL_ZONE.encloses(labels[i].area),"%s : l'étiquette « Entrée %d » reste dans la zone de carte" % [context,i+1])
+				for j in range(i+1,labels.size()):
+					check(not Rect2(labels[i].area).grow(View.ENTRY_LABEL_GAP-0.5).intersects(labels[j].area),"%s : les étiquettes « Entrée %d » et « Entrée %d » ne se chevauchent pas" % [context,i+1,j+1])
+	for number in [60,117,134,170,200]: check(number in moved,"Mission %d : une étiquette d'entrée s'écarte de sa voisine en préparation" % number)
+	var apart: Array[Rect2] = View.separate_entry_labels([Rect2(530,81,148,44),Rect2(504,108,92,44)])
+	check(apart[0] == Rect2(530,81,148,44) and apart[1] == Rect2(504,129,92,44),"Mission 134 : « Entrée 2 » passe juste sous « Entrée 1 · principale », à 4 px")
+	print("ENTRY_LABELS_MOVED=",moved)
+	view.free()
+
+## Le bandeau d'affixe ne chevauche aucune étiquette d'entrée (v0.239, signalé sur les missions 116, 117 et 120 de la Tempête de sable), pour toutes les missions à affixe, avec ou sans le décompte d'ennemis.
+func verify_banner_clearance() -> void:
+	const Catalogue = preload("res://scripts/campaign_catalogue.gd")
+	var view = View.new()
+	var moved: Array[int] = []
+	for number in range(1,201):
+		var entry: Dictionary = Catalogue.definition(number)
+		if entry.get("combat_affix",{}).is_empty(): continue
+		var m = Model.new(true,Model.Maps.for_id(str(entry.map_id)))
+		view.model = m
+		for with_counts in [false,true]:
+			var forecast: Array[Dictionary] = []
+			if with_counts:
+				for route in m.routes: forecast.append({"route_id":route.id,"count":12})
+			view.entry_forecast = forecast
+			var labels: Array = view.entry_label_layouts()
+			var area: Rect2 = View.affix_banner_area(labels)
+			check(labels.all(func(label) -> bool: return not Rect2(label.area).grow(View.AFFIX_BANNER_MARGIN-0.5).intersects(area)),"Mission %d : le bandeau d'affixe laisse de la place aux étiquettes d'entrée" % number)
+			check(area.position.x >= 320.0 and area.end.x <= 1260.0 and area.position.y >= 56.0,"Mission %d : le bandeau reste au-dessus du plateau, hors des panneaux" % number)
+			check(not area.intersects(Rect2(898,33,358,253)),"Mission %d : le bandeau laisse libres la fiche d'ennemi et les informations en haut à droite" % number)
+			if not with_counts and not area.position.is_equal_approx(Vector2(425,112)): moved.append(number)
+	for number in [116,117,120,134,140]: check(number in moved,"Mission %d : le bandeau s'écarte de l'étiquette « Entrée 1 »" % number)
+	check(View.affix_banner_area([]) == Rect2(Vector2(425,112),View.AFFIX_BANNER_SIZE),"Sans étiquette : place habituelle")
+	print("BANNER_MOVED=",moved)
+	view.free()

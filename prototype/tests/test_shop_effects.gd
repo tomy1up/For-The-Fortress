@@ -22,6 +22,8 @@ func run_checks() -> void:
 	verify_pillager_token()
 	verify_minelayer_disc()
 	verify_kamikaze_ember()
+	verify_warveteran_axe()
+	verify_siege_bolts()
 	verify_explosion_events()
 	verify_resources()
 	print("SHOP_EFFECTS_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
@@ -276,6 +278,38 @@ func verify_kamikaze_ember() -> void:
 	check(View.enemy_badges(enemy,5.1,[renewed]) == ["volatile"],"Renouvellement : le badge déjà visible reste affiché")
 	var vial := {"time":5.0,"slot":3,"type":View.VIAL_TYPE,"target_id":7,"from":Vector2(3,2),"to":Vector2(4,3),"secondary":[],"radius":1.4,"volatile":"new"}
 	check(View.enemy_badges(enemy,5.0,[vial]) == ["volatile"],"Alchimiste gnome : badge immédiat, comme avant")
+
+## Chef de guerre vétéran (type 45, lot 2199f08, passation 3d7ec18), v0.239 : hache à 0,40 s (index 24 sur 64), vol rectiligne, impact seul derrière la main.
+func verify_warveteran_axe() -> void:
+	var chief: int = Shop.card("horde.warveteran").type
+	check(chief == View.WARVETERAN_TYPE and is_equal_approx(float(View.LAUNCH_DELAYS[chief]),0.40) and chief in View.NO_FLIGHT_TYPES,"Chef de guerre vétéran : hache lâchée à 0,40 s, impact seul derrière la main")
+	var spec: Dictionary = Library.spec_for("defender.horde.warveteran")
+	check(not spec.is_empty() and int(spec.animations.attack.frames) == 64 and is_equal_approx(24.0*float(spec.animations.attack.duration)/64.0,0.40),"Lancer de 64 images à 60 ips chargé, lâcher sur l'image 24")
+	var tip: Vector2 = View.SINGLE_MUZZLES[chief]
+	for target in [Vector2(9,5),Vector2(1,5)]:
+		var shot := {"time":1.0,"slot":2,"type":chief,"target_id":3,"from":Vector2(5,5),"to":target,"secondary":[],"radius":1.0}
+		var origin: Vector2 = View.project(shot.from)+Vector2(tip.x*View.shot_facing(shot),tip.y)
+		check(View.shot_origin(shot).is_equal_approx(origin) and View.flight_time(shot) == View.PROJECTILE_FLIGHT,"Hache partie de la main, repère retourné avec la pose")
+		check(View.projectile_position(shot,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(origin.lerp(View.project(shot.to)+Vector2(0,-12),0.5)),"Hache en vol rectiligne")
+	var close := {"time":1.0,"slot":2,"type":chief,"target_id":3,"from":Vector2(5,5),"to":Vector2(5.2,5.2),"secondary":[],"radius":1.0}
+	check(View.flight_time(close) == 0.0,"Cible derrière la main : impact seul")
+	check(is_equal_approx(View.WARVETERAN_AXE_HEIGHT,16.0) and is_equal_approx(View.WARVETERAN_AXE_ANGLE,48.0),"Hache de 16 px de haut, départ à 48°")
+
+## Balliste royale (type 38, lot 6b93bd1) et Baliste de guerre (type 43, lot 8372ff5), v0.239 : carreau de siège à 0,32 s sur le rail vide, vol rectiligne, impact seul derrière la glissière.
+func verify_siege_bolts() -> void:
+	for spec_case in [["alliance.ballista","defender.alliance.ballista",36,12],["horde.warballista","defender.horde.warballista",60,20]]:
+		var kind: int = Shop.card(str(spec_case[0])).type
+		check(kind in View.BOLT_TYPES and is_equal_approx(float(View.LAUNCH_DELAYS[kind]),0.32) and kind in View.NO_FLIGHT_TYPES,"%s : carreau lâché à 0,32 s, impact seul derrière la glissière" % spec_case[0])
+		var spec: Dictionary = Library.spec_for(str(spec_case[1]))
+		check(not spec.is_empty() and int(spec.animations.attack.frames) == int(spec_case[2]) and is_equal_approx(float(spec_case[3])*float(spec.animations.attack.duration)/float(spec_case[2]),0.32),"%s : planche chargée, rail vide à l'image %d" % [spec_case[0],spec_case[3]])
+		var tip: Vector2 = View.SINGLE_MUZZLES[kind]
+		for target in [Vector2(9,5),Vector2(1,5)]:
+			var shot := {"time":1.0,"slot":2,"type":kind,"target_id":3,"from":Vector2(5,5),"to":target,"secondary":[],"radius":1.0}
+			var origin: Vector2 = View.project(shot.from)+Vector2(tip.x*View.shot_facing(shot),tip.y)
+			check(View.shot_origin(shot).is_equal_approx(origin) and View.flight_time(shot) == View.PROJECTILE_FLIGHT,"%s : carreau parti du rail, repère retourné avec la pose" % spec_case[0])
+			check(View.projectile_position(shot,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(origin.lerp(View.project(shot.to)+Vector2(0,-12),0.5)),"%s : vol rectiligne" % spec_case[0])
+		var close := {"time":1.0,"slot":2,"type":kind,"target_id":3,"from":Vector2(5,5),"to":Vector2(5.2,5.2),"secondary":[],"radius":1.0}
+		check(View.flight_time(close) == 0.0,"%s : cible derrière la glissière, impact seul" % spec_case[0])
 
 func verify_explosion_events() -> void:
 	var model := Model.new(true)
