@@ -40,4 +40,11 @@ Habillages de Codex validés par le porteur le 22 novembre 2026. Rendu seulement
 
 ## Contrôles
 
-À compléter après la vérification.
+- **Régression complète** : 144 suites sur 144, 232 019 contrôles Godot, 17 tests Python.
+  - `test_decor_art.gd` (38 827 contrôles) vérifie les calques des marais et les pièces des Ardoises par rapport aux implantations de Codex. Il vérifie aussi les marges de toutes les pièces de décor, désormais aux chapitres 13 à 20 compris.
+  - `test_shop_effects.gd` (174) vérifie les repères compacts et leur raccord quand un état voisin apparaît, expire ou disparaît, en pause et à une nouvelle vague.
+  - `test_revenant.gd` (44) vérifie l'appui tenu puis raccordé pendant la relève, avec une règle de combat inchangée.
+  - `test_elimination_effects.gd` (55) vérifie l'éclat des capitaines et leur regroupement.
+- **Paquet Windows vérifié** : 1 050 cas réussis, 643 contrôles de sources, empreinte `977baf0f…fd46`.
+- **Captures inspectées dans le paquet** : préparation des missions 23 à 40 (Ardoises), 41 à 60 (marais), 91 à 100, 151 à 160, 161 à 180 et 181 à 200.
+- **Limite** : les repères compacts, la relève du Revenant et l'éclat des capitaines ne sont pas couverts par les captures automatiques. Ils sont vérifiés par les tests seulement.

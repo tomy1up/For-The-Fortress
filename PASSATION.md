@@ -394,7 +394,7 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 22 novembre 2026 — Claude Code (v0.242 en cours de vérification)
+## État au 23 novembre 2026 — Claude Code (v0.242 publiée)
 
 - **v0.242** (validation du porteur : « tous », puis lot 46–50 confirmé), fusion de `art/codex` jusqu'à `933da20` :
   - `DecorArt.REWORKED_MAPS` est vide : décor des chapitres 10 et 16 à 20 actif (MAJ-84). `test_decor_art.gd` contrôle aussi les marges des décors mine, sky, coast et necro (38 177 contrôles).
@@ -403,6 +403,7 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
   - Éclat des capitaines de garnison (MAJ-88, lot `17c7c760`, fusion jusqu'à `e33a0154`) : `GARRISON_GLINT_ID`, `merge_glint`, `glint_scale` dans `_draw_eliminations`, à la place des particules du type 10. Contrôles dans `test_elimination_effects.gd` (55).
   - Décor des Ardoises 21 à 40 (MAJ-89, lot `6ecb5d3`, fusion jusqu'à `e4d7eee3`) : `DecorArt.SLATE_ASSETS`, `SLATE_MAPS`, `slate_prop`, dessinés dans `_draw_terrain_detail`. Contrôles dans `test_decor_art.gd` (38 827).
   - Décor du Gué 1 à 20 (`3feb9b09`) : **non fusionné**, en attente de l'avis du porteur.
+- Contrôles v0.242 : régression 144/144 (232 019 contrôles Godot, 17 tests Python), paquet 1 050 cas et 643 contrôles de sources ; captures de préparation inspectées (Ardoises, marais, chapitres 10 et 16 à 20). Repères compacts, relève du Revenant et éclat des capitaines : tests seulement, pas de capture.
   - GDD 0.79 (MAJ-84, MAJ-85), `.docx` régénéré.
 
 ### v0.241 (publiée)
