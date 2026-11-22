@@ -392,7 +392,7 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 - **v0.242** (validation du porteur : « tous », puis lot 46–50 confirmé), fusion de `art/codex` jusqu'à `933da20` :
   - `DecorArt.REWORKED_MAPS` est vide : décor des chapitres 10 et 16 à 20 actif (MAJ-84). `test_decor_art.gd` contrôle aussi les marges des décors mine, sky, coast et necro (38 177 contrôles).
-  - Marais 41 à 50 (MAJ-85) : `marsh_art.gd` (`POOL_LAYERS`, `pool_layer`, `prop_key`, `prop_texture`) ; `valley_view.gd` dessine le calque à la place de `draw_ground` et les pièces dans `MarshArt.bounds`. Les PNG sont au double de la taille d'affichage. Bassins 51 à 60 (`933da20`) fusionnés, non branchés, en attente du porteur.
+  - Marais 41 à 60 (MAJ-85, lot 51–60 validé ensuite par le porteur) : `marsh_art.gd` (`POOL_LAYERS`, `pool_layer`, `prop_key`, `prop_texture`) ; `valley_view.gd` dessine le calque à la place de `draw_ground` et les pièces dans `MarshArt.bounds`. Les PNG sont au double de la taille d'affichage. Rangées compactes des effets de boutique (`815fc15`, documents seulement) fusionnées, en attente du porteur.
   - GDD 0.79 (MAJ-84, MAJ-85), `.docx` régénéré.
 
 ### v0.241 (publiée)

@@ -52,6 +52,7 @@ var model: RefCounted:
 	set(value):
 		model = value
 		reset_royal_animation()
+		_badge_blend.clear()
 		terrain_details.assign(scenery_for(model.map_definition) if model != null else [])
 var terrain_details: Array[Dictionary] = []
 var selected: int = -1
@@ -1069,14 +1070,69 @@ static func mark_display_pending(enemy: Dictionary, elapsed: float, shots: Array
 			shown = minf(shown,time+float(MARK_DISPLAY_DELAYS.get(int(shot.get("type",-1)),0.0)))
 	return elapsed < shown
 
+## Repères compacts des effets de boutique (lots 815fc15 et eb15ffb de Codex, validés par le porteur le 22 novembre 2026) : quand une autre cible
+## porteuse d'un état passe à moins de 64 px (distance projetée), les cercles s'effacent au profit d'une rangée sur fond sombre reliée à la jauge ;
+## l'espacement passe de 26 à 15 px et les symboles de 22 à 14 px, entièrement à 40 px. Quand un état voisin apparaît, expire ou meurt avec sa cible,
+## le passage se fait en BADGE_BLEND_TIME secondes de combat (il suit la vitesse et s'arrête avec la pause). Bornes : réglages de prototype à confirmer.
+const BADGE_COMPACT_FAR := 64.0
+const BADGE_COMPACT_NEAR := 40.0
+const BADGE_COMPACT_SPACING := 15.0
+const BADGE_COMPACT_SIZE := 14.0
+const BADGE_BLEND_TIME := 0.25
+var _badge_blend: Dictionary = {} # id d'ennemi -> {"value", "time"} : compacité affichée et temps de combat de la dernière image
+
+static func badge_compactness(nearest: float) -> float:
+	return 1.0-smoothstep(BADGE_COMPACT_NEAR,BADGE_COMPACT_FAR,nearest)
+
+static func blend_compactness(previous: float, target: float, dt: float) -> float:
+	return move_toward(previous,target,maxf(0.0,dt)/BADGE_BLEND_TIME)
+
+## Compacité visée : distance projetée à la plus proche autre cible qui affiche un état.
+func badge_target(enemy: Dictionary) -> float:
+	var nearest := INF
+	var here: Vector2 = project(model.enemy_position(enemy))
+	for other in model.enemies:
+		if other.id == enemy.id or float(other.get("hp",0.0)) <= 0.0 or enemy_badges(other,model.elapsed,model.shots).is_empty(): continue
+		nearest = minf(nearest,here.distance_to(project(model.enemy_position(other))))
+	return badge_compactness(nearest)
+
+## Compacité affichée : suit la cible sans saut quand un état voisin apparaît ou expire. Une cible qui reçoit son premier état part directement de la valeur visée.
+func badge_compactness_now(enemy: Dictionary) -> float:
+	var target: float = badge_target(enemy)
+	var previous: Dictionary = _badge_blend.get(enemy.id,{})
+	var value: float = target
+	if not previous.is_empty() and model.elapsed >= float(previous.time):
+		value = blend_compactness(float(previous.value),target,model.elapsed-float(previous.time))
+	_badge_blend[enemy.id] = {"value":value,"time":model.elapsed}
+	return value
+
 func _draw_enemy_badges(enemy: Dictionary, bar_position: Vector2) -> void:
 	var badges: Array[String] = enemy_badges(enemy,model.elapsed,model.shots)
+	if badges.is_empty():
+		_badge_blend.erase(enemy.id)
+		return
 	var textures := {"mark":FX_MARK,"loot":FX_LOOT,"volatile":FX_VOLATILE}
+	var compactness: float = badge_compactness_now(enemy)
+	var group_center: Vector2 = bar_position+Vector2(12,lerpf(-10.0,-13.0,compactness))
+	if compactness > 0.0:
+		var half_width: float = maxf(8.0,badges.size()*7.5+2.5)
+		var fill := Color(0.035,0.085,0.08,0.93*compactness)
+		draw_rect(Rect2(group_center+Vector2(-half_width+8,-8),Vector2(maxf(0.0,half_width*2-16),16)),fill)
+		draw_circle(group_center+Vector2(-half_width+8,0),8,fill,true,-1,true)
+		draw_circle(group_center+Vector2(half_width-8,0),8,fill,true,-1,true)
+		draw_line(group_center+Vector2(0,8),bar_position+Vector2(12,-1),Color(0.75,0.79,0.71,0.8*compactness),1.0,true)
+	var spacing: float = lerpf(FX_BADGE_SPACING,BADGE_COMPACT_SPACING,compactness)
+	var size: float = lerpf(FX_BADGE_SIZE.x,BADGE_COMPACT_SIZE,compactness)
 	for index in range(badges.size()):
-		var center := Vector2(bar_position.x+12.0+(float(index)-float(badges.size()-1)*0.5)*FX_BADGE_SPACING,bar_position.y-10.0)
-		draw_circle(center,FX_BADGE_SIZE.x*0.62,Color(0.05,0.07,0.06,0.78),true,-1,true) # fond sombre : le marqueur reste lisible sur tous les décors
-		draw_arc(center,FX_BADGE_SIZE.x*0.62,0.0,TAU,20,FX_BADGE_COLORS[badges[index]],1.6,true)
-		draw_texture_rect(textures[badges[index]],Rect2(center-FX_BADGE_SIZE*0.5,FX_BADGE_SIZE),false)
+		var center: Vector2 = group_center+Vector2((float(index)-float(badges.size()-1)*0.5)*spacing,0)
+		if compactness < 1.0: # Cercles des cibles isolées (fond sombre : le marqueur reste lisible sur tous les décors), effacés en groupe.
+			var fade: float = 1.0-compactness
+			draw_circle(center,FX_BADGE_SIZE.x*0.62,Color(0.05,0.07,0.06,0.78*fade),true,-1,true)
+			draw_arc(center,FX_BADGE_SIZE.x*0.62,0.0,TAU,20,Color(FX_BADGE_COLORS[badges[index]],fade),1.6,true)
+		var inset: float = (7.0 if badges[index] == "loot" else 3.0)*compactness # Recadrage de l'essai de Codex : symbole plus serré en rangée.
+		var texture: Texture2D = textures[badges[index]]
+		var source := Rect2(Vector2.ONE*inset,texture.get_size()-Vector2.ONE*2.0*inset)
+		draw_texture_rect_region(texture,Rect2(center-Vector2.ONE*size*0.5,Vector2.ONE*size),source)
 
 ## Explosions de réaction en chaîne : anneau bref et éclats, à la position de l'ennemi mort.
 func _draw_volatile_bursts() -> void:

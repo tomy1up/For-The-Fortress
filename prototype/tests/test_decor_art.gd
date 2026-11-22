@@ -137,17 +137,17 @@ func verify_water() -> void:
 		check(flooded.size() == entry.flooded.size(),"Même nombre de tronçons inondés (%s)" % id)
 		for index in range(mini(flooded.size(),entry.flooded.size())): check(is_equal_approx(float(flooded[index].from),float(entry.flooded[index].from)) and is_equal_approx(float(flooded[index].to),float(entry.flooded[index].to)),"Tronçon %d de %s identique" % [index,id])
 
-## Marais 41 à 50 (v0.242, lots 5ae3c06 et 65638f3 de Codex) : calque de bassins par carte et quatre pièces dessinées ; missions 51 à 60 inchangées.
+## Marais 41 à 60 (v0.242, lots 5ae3c06, 65638f3 et 933da20 de Codex) : calque de bassins par carte et quatre pièces dessinées.
 func verify_marsh_layers() -> void:
 	const MarshArt = preload("res://scripts/marsh_art.gd")
 	var expected: Array = []
-	for number in range(41,51): expected.append(str(Catalogue.definition(number).map_id))
-	check(MarshArt.POOL_LAYERS.keys().size() == 10 and expected.all(func(id) -> bool: return MarshArt.POOL_LAYERS.has(id)),"Un calque de bassins pour chacune des cartes des missions 41 à 50")
+	for number in range(41,61): expected.append(str(Catalogue.definition(number).map_id))
+	check(MarshArt.POOL_LAYERS.keys().size() == 20 and expected.all(func(id) -> bool: return MarshArt.POOL_LAYERS.has(id)),"Un calque de bassins pour chacune des cartes des missions 41 à 60")
 	var references: Dictionary = {}
-	for lot in ["marais_41_45","marais_46_50"]:
+	for lot in ["marais_41_45","marais_46_50","marais_51_60"]:
 		var path: String = ProjectSettings.globalize_path("res://").path_join("../design/essais/%s/Implantation.json" % lot)
 		if FileAccess.file_exists(path): references.merge(JSON.parse_string(FileAccess.get_file_as_string(path)).pools)
-	check(references.size() == 10,"Implantations de Codex lues pour les dix cartes")
+	check(references.size() == 20,"Implantations de Codex lues pour les vingt cartes")
 	for id in expected:
 		var definition: Dictionary = Model.Maps.for_id(id)
 		var layer: Dictionary = MarshArt.pool_layer(id)
@@ -171,10 +171,7 @@ func verify_marsh_layers() -> void:
 		var texture: Texture2D = Decor.texture(MarshArt.PROP_FILES[key])
 		var frame: Rect2 = MarshArt.bounds(Vector2.ZERO,"ruin" if key == "ruin_fallen" else key)
 		check(texture != null and absf(texture.get_width()/float(texture.get_height())-frame.size.x/frame.size.y) < 0.02,"Pièce %s au format de son cadre" % key)
-	for number in range(51,61):
-		var id: String = str(Catalogue.definition(number).map_id)
-		check(MarshArt.pool_layer(id).is_empty() and MarshArt.prop_texture(id,"ruin",2) == null,"Mission %d : bassins et objets vectoriels en attendant l'avis du porteur" % number)
-	check(MarshArt.prop_texture("valley_ford","willow",1) == null,"Pas de pièce des marais hors des missions 41 à 50")
+	check(MarshArt.prop_texture("valley_ford","willow",1) == null and MarshArt.pool_layer("slate_pass").is_empty(),"Pas de pièce ni de bassin des marais hors des missions 41 à 60")
 
 ## Plus aucune carte refondue sans décor (v0.242) : garnison, aire de l'aigle, côtes et nécropole ont leurs pièces.
 func verify_all_active() -> void:
