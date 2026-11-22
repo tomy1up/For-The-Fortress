@@ -4,16 +4,16 @@
   "facing": "right",
   "foot": [
     68,
-    138
+    154
   ],
-  "display_height": 87.61061946902655,
+  "display_height": 96.95575221238938,
   "animations": {
     "idle": {
       "file": "idle.png",
       "frames": 1,
       "frame_size": [
         136,
-        150
+        166
       ],
       "fps": 1,
       "mode": "time"
@@ -23,7 +23,7 @@
       "frames": 60,
       "frame_size": [
         136,
-        150
+        166
       ],
       "duration": 0.96,
       "mode": "event"

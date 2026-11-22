@@ -14,9 +14,9 @@ Le sprite est fixe. Au prochain passage sur l’animation, faire accompagner le 
 
 ## Lancer de la hache
 
-Le Chef de guerre arme au-dessus de l’épaule, projette la hache et ouvre la main à 0,40 s, à l’image 25 à partir de zéro. Il ramène la main vide jusqu’à la ceinture et reprend une hache. Vingt poses distinctes sur 60 images et 0,96 s, dont des intermédiaires au passage de l’épaule et pendant le repli. Les appuis sont calés et la garde mesure 66 px.
+Le Chef de guerre arme au-dessus de l’épaule, projette la hache et ouvre la main à 0,40 s, à l’image 25 à partir de zéro. Il ramène la main vide jusqu’à la ceinture et reprend une hache. Vingt-sept poses distinctes sur 60 images et 0,96 s. Sept nouveaux dessins remplacent des images répétées à la demande du porteur. L’armé passe au-dessus de la tête avant le lâcher, puis la main ouverte accompagne le mouvement et la hache suivante remonte vers la garde. Le passage de l’image 24 à l’image 25 est contrôlé autour de 0,40 s. Les appuis sont calés et la garde mesure 66 px.
 
-[Essai en jeu](essais/gestes_combat/chef_guerre_veteran/Chef_guerre_veteran_en_jeu.gif) · [Planche des vingt poses](essais/gestes_combat/chef_guerre_veteran/Planche_chef_guerre_veteran.png)
+[Essai en jeu](essais/gestes_combat/chef_guerre_veteran/Chef_guerre_veteran_en_jeu.gif) · [Planche des vingt-sept poses](essais/gestes_combat/chef_guerre_veteran/Planche_chef_guerre_veteran.png)
 
 La hache courte à manche bordeaux commence tournée selon la pose de lâcher, puis fait un tour sur un segment rectiligne. Le repère et la texture suivent le retournement. Les réglages correspondent à lacher.json. À bout portant, jouer l’impact seul si la cible est derrière la main. Six tirs en mission 94 sur copie v0.237, dans les deux sens à ×1 et ×2 avec pause. Pour le bonus des vagues, le contrôle vérifie le départ à zéro, le premier palier et le plafond de +90 %. Validateur à zéro problème sur 58 dossiers, 199 contrôles d’animation, 77 des effets d’unités et 113 de boutique réussis. Le jeu de test se ferme avec son marqueur de réussite et un signalement de ressource encore chargée. L’essai attend l’avis du porteur.
 
