@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**22 novembre — Éboulement, décors des missions 131 à 140.** 50 emplacements adaptés aux nouveaux tracés. 34 captures en combat dans les deux factions sur copie v0.238, dont les blocages des trois entrées de la Voûte Instable. 12 000 contrôles décor incluant les mines, 498 contrôles Éboulement et 5 746 du chapitre réussis. Chevauchement bandeau–étiquettes confirmé en 134 et 140, consigné pour Claude. Avis du porteur attendu avant activation. [Captures](design/Visuels_Biome_Mines.md#décor-sur-les-nouveaux-tracés-des-missions-131-à-140).
+**22 novembre — Éboulement, décors des missions 131 à 140.** 50 emplacements adaptés aux nouveaux tracés. 34 captures en combat dans les deux factions sur copie v0.238, dont les blocages des trois entrées de la Voûte Instable. 12 000 contrôles décor incluant les mines, 498 contrôles Éboulement et 5 746 du chapitre réussis. Chevauchement bandeau–étiquettes confirmé en 134 et 140, consigné pour Claude. Lot f2a2d99 validé par le porteur le 22 novembre 2026, à activer par Claude Code. [Captures](design/Visuels_Biome_Mines.md#décor-sur-les-nouveaux-tracés-des-missions-131-à-140).
 
 **22 novembre — Mines, missions 121 à 130.** 50 emplacements adaptés sur les nouveaux tracés et vingt captures en combat dans les deux factions sur copie v0.238. Retouches de lisibilité en 124 et 127. 11 130 contrôles décor incluant les mines et 5 024 contrôles du chapitre réussis. Lot 23713fc validé par le porteur le 22 novembre 2026, à activer par Claude Code. [Captures](design/Visuels_Biome_Mines.md#décor-sur-les-nouveaux-tracés-des-missions-121-à-130).
 

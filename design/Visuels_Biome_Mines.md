@@ -46,7 +46,7 @@ Cinquante emplacements sont adaptés à la nouvelle géométrie. Les étais ryth
 
 Les 34 captures en combat sur copie v0.238 couvrent la vague 5 dans les deux factions sur chaque carte. La Voûte Instable et le Cœur Effondré sont également montrés à l’annonce, à la réouverture et sur des vagues suivantes. Les vagues 5 à 7 de la Voûte Instable montrent le blocage successif de ses trois entrées. Les suites décor, éboulement et chapitre passent avec 12 000, 498 et 5 746 contrôles respectivement.
 
-Le bandeau Éboulement chevauche des étiquettes d’entrée, notamment en 134 et 140. Le point a été consigné pour Claude Code. Le lot de décor attend l’avis du porteur avant le retrait des dix identifiants de mine_pillars à mine_core de REWORKED_MAPS.
+Le bandeau Éboulement chevauche des étiquettes d’entrée, notamment en 134 et 140. Le point a été consigné pour Claude Code. Le porteur a validé le lot f2a2d99 le 22 novembre 2026. L’activation par Claude Code passe par le retrait des dix identifiants de mine_pillars à mine_core de REWORKED_MAPS.
 
 - [Missions 131 à 134](essais/eboulement_refonte/Eboulement_131_134.jpg)
 - [Missions 135 à 137](essais/eboulement_refonte/Eboulement_135_137.jpg)
