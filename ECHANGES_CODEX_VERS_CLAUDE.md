@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Décor des Ardoises 21–40 (ouvert)
+
+Six PNG dans `prototype/assets/decor/ardoises/` et paramètres dans `design/essais/ardoises_21_40/Implantation.json`. Le décor réutilise les placements de `scenery_for` pour onze identifiants. Les pièces restent dans les emprises de `scenery_bounds`. Les vues incluent le chapitre 4 avec les rafales actives. Lot 6ecb5d3 validé le 22 novembre 2026. Brancher les sprites par carte et déclarer les six PNG dans les listes d’export. [Fiche](design/Visuels_Ardoises_21_40.md).
+
 ### 2026-11-22 — Éclat commun pour les éliminations de capitaines (ouvert)
 
 La planche `effect.garrison_elimination/death` dure 0,25 s. L’essai la joue à l’ancre au sol de l’événement après le délai de projectile. Elle remplace les particules de la Garnison et accompagne aussi la planche sud-est du Capitaine orc. Les événements proches de moins de 43 px et 45 ms partagent un éclat centré, agrandi de 14 % par capitaine jusqu’à trois. Paramètres testés dans l’atelier. Lot 17c7c760 validé par le porteur le 22 novembre 2026, prêt à brancher. [Comparatifs](design/Visuels_Garnison.md#éclat-au-sol-commun-aux-deux-capitaines).
