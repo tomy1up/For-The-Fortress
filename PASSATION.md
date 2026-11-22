@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**23 novembre — Décor du Gué, missions 1 à 20.** Cinq pièces pour dix plateaux, plus rivière et pont pour les missions 1 et 11. 48 captures en combat et trois suites ciblées réussies sur copie v0.241. Lot présenté au porteur, intégration en attente de son avis. [Fiche](design/Visuels_Gue_01_20.md).
+**23 novembre — Décor du Gué, missions 1 à 20.** Cinq pièces pour dix plateaux, plus rivière et pont pour les missions 1 et 11. 48 captures en combat et trois suites ciblées réussies sur copie v0.241. Lot 3feb9b09 validé par le porteur le 23 novembre 2026, à intégrer par Claude Code. [Fiche](design/Visuels_Gue_01_20.md).
 
 **22 novembre — Décor des Ardoises, missions 21 à 40.** Six pièces pour onze plateaux, avec 48 captures en combat dans les deux factions sur copie v0.241. 2 021 vérifications d’emprise sur les onze cartes et quatre suites ciblées réussies, soit 14 397 contrôles. Lot 6ecb5d3 validé le 22 novembre 2026, à intégrer par Claude Code. [Fiche](design/Visuels_Ardoises_21_40.md).
 

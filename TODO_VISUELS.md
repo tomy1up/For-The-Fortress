@@ -8,7 +8,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
-- [ ] **Décor du Gué, missions 1 à 20** — Sept images et essai sur les dix plateaux des deux premiers chapitres, en attente de l’avis du porteur. [Fiche et captures](design/Visuels_Gue_01_20.md).
+- [x] **Décor du Gué, missions 1 à 20** — Sept images sur dix plateaux, validées le 23 novembre 2026 (3feb9b09). Branchement à faire par Claude Code. [Fiche et captures](design/Visuels_Gue_01_20.md).
 
 - [x] **Décor des Ardoises, missions 21 à 40** — Six pièces sur onze cartes, validées le 22 novembre 2026 (6ecb5d3). Branchement à faire par Claude Code. [Fiche et captures](design/Visuels_Ardoises_21_40.md).
 

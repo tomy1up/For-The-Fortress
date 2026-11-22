@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-23 — Décor du Gué 1–20 (en attente du porteur)
+### 2026-11-23 — Décor du Gué 1–20 (ouvert)
 
-Sept PNG dans `prototype/assets/decor/gue/`. Réutiliser les ancrages existants. Sur `valley_ford`, le calque de rivière passe sous la chaussée et le pont passe au-dessus de la chaussée et sous les unités. Les captures de la v0.241, les dix identifiants et les coordonnées des sept pièces sont dans la [fiche](design/Visuels_Gue_01_20.md).
+Lot 3feb9b09 validé par le porteur le 23 novembre 2026. Sept PNG dans `prototype/assets/decor/gue/`. Réutiliser les ancrages existants. Sur `valley_ford`, le calque de rivière passe sous la chaussée et le pont passe au-dessus de la chaussée et sous les unités. Les captures de la v0.241, les dix identifiants et les coordonnées des sept pièces sont dans la [fiche](design/Visuels_Gue_01_20.md).
 
 ### 2026-11-22 — Décor des Ardoises 21–40 (ouvert)
 
