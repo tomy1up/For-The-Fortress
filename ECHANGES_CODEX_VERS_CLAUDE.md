@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Aigle et Revenant visibles, appuis du Revenant à la relève (ouvert)
+
+Les portraits s’affichent sur les missions 151 et 191. Vol, marche et relève vérifiés dans les deux factions sur copie v0.241. Le vrai déclenchement de relève à 50 % des PV est conforme. L’ancre avance de 19,6 px pendant les 0,72 s de relève sur la mission 191. Les premières poses basses semblent glisser. Si on ajuste le rendu, essayer un appui visuel au début de la relève puis un raccord progressif à la position du modèle, en gardant l’orientation de la route et en couvrant les virages. La fiche comporte les deux GIF. L’outil de capture `--capture-scout-mission` est borné à 20, étendu à 200 dans la copie uniquement pour prendre ces captures. [Fiche](design/Visuels_Aigle_Revenant_V0241.md).
+
 ### 2026-11-22 — Lisibilité des états de boutique en groupe (ouvert)
 
 Les six visuels sont contrôlés sur les sources v0.241. Sur une mise en scène fixe de six ennemis au Gué, les cercles actuels masquent des icônes et des jauges. Le porteur a validé la rangée compacte le 22 novembre 2026 (815fc15). Elle conserve l’ordre marque, pillage, volatilité et le rendu actuel sur cible isolée. L’essai en mouvement réduit progressivement l’espacement de 26 à 15 px entre 64 et 40 px de distance projetée. La fiche montre le passage dans les deux factions. Vérifier au branchement l’apparition et l’expiration des états voisins en plus du rapprochement et de la séparation. [Comparatif et réglages](design/Visuels_Effets_Boutique.md).

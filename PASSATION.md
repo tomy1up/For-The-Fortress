@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**22 novembre — Aigle des cimes et Revenant, v0.241.** Portraits, vol, marche et relève présents et vérifiés. Essai de filtrage comparé en jeu, les détails du Revenant s’adoucissent. Réglages publiés conservés. Après un coup fatal le revenant récupère 50 % de ses PV et avance de 19,6 px pendant sa relève, ce qui produit un glissement. Constat transmis à Claude Code. Six suites et 8 784 contrôles réussis. [Fiche](design/Visuels_Aigle_Revenant_V0241.md).
+
 **22 novembre — Effets de boutique sur v0.241.** Sept captures après des tirs réels, quatre mises en place pour les auras et explosions et quatre comparatifs d’états simultanés. Les cercles actuels s’occultent en groupe dense. Rangées compactes validées par le porteur le 22 novembre 2026 (815fc15). Transition progressive contrôlée au rapprochement et à l’éloignement dans les deux factions sur 340 captures en atelier, à brancher par Claude Code. 157 contrôles des effets réussis. Bandeau fixe vérifié sur le jeu exporté en 36, 39 et 180. [Fiche](design/Visuels_Effets_Boutique.md).
 
 **22 novembre — Marais, missions 51 à 60.** 39 bassins décoratifs redessinés. 58 captures sur copie v0.240, dont régénération dans l’eau en 51 et trajet central sec au Carrefour en 58, dans les deux factions. 18 479 contrôles ciblés réussis. Lot 933da20 validé par le porteur le 22 novembre 2026, à intégrer par Claude Code. [Fiche](design/Visuels_Marais_51_60.md).
