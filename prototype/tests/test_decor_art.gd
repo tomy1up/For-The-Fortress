@@ -20,6 +20,7 @@ func run_checks() -> void:
 	verify_marsh_layers()
 	verify_all_active()
 	verify_slate_props()
+	verify_ford_props()
 	await verify_rendering()
 	print("DECOR_ART_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
@@ -213,3 +214,41 @@ func verify_slate_props() -> void:
 	check(Decor.slate_prop("slate_pass","shrub",1).is_empty() and Decor.slate_prop("valley_ford","pine",1).is_empty() and Decor.slate_prop("marsh_basins","rock",1).is_empty(),"Pas de pièce des Ardoises ailleurs")
 	check(Decor.slate_prop("slate_pass","rock",0).scale == 1.0 and Decor.slate_prop("slate_pass","rock",1).scale == 0.89 and Decor.slate_prop("slate_pass","rock",5).scale == 0.95,"Échelle 1, 0,89 ou 0,95 selon l'ordre")
 	check(Decor.slate_prop("slate_pass","rock",1).facing == -1.0 and Decor.slate_prop("slate_pass","rock",7).facing == 1.0,"Miroir quand l'ordre modulo 5 est inférieur à 2")
+
+## Décor du Gué, missions 1 à 20 (v0.243, lot 3feb9b09 de Codex) : cinq pièces sur les objets et arbres fixes, rivière et pont sur la carte d'ouverture.
+func verify_ford_props() -> void:
+	var path: String = ProjectSettings.globalize_path("res://").path_join("../design/essais/gue_01_20/Implantation.json")
+	if FileAccess.file_exists(path):
+		var reference: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(path))
+		for key in reference.props: check(Decor.FORD_ASSETS.has(key) and Decor.FORD_ASSETS[key][1] == Rect2(reference.props[key].rect[0],reference.props[key].rect[1],reference.props[key].rect[2],reference.props[key].rect[3]),"Cadre de %s conforme à l'implantation" % key)
+		for key in reference.overlays: check(Decor.FORD_OVERLAYS.has(key) and Decor.FORD_OVERLAYS[key][1] == Rect2(reference.overlays[key].rect[0],reference.overlays[key].rect[1],reference.overlays[key].rect[2],reference.overlays[key].rect[3]),"Rectangle de %s conforme à l'implantation" % key)
+	for key in Decor.FORD_ASSETS:
+		var image: Texture2D = Decor.texture(str(Decor.FORD_ASSETS[key][0]))
+		check(image != null and image.get_size() == Decor.FORD_ASSETS[key][1].size*4.0,"Pièce %s dessinée au quadruple de son cadre" % key)
+	for key in Decor.FORD_OVERLAYS:
+		var image: Texture2D = Decor.texture(str(Decor.FORD_OVERLAYS[key][0]))
+		check(image != null and image.get_size() == Decor.FORD_OVERLAYS[key][1].size*2.0,"Calque %s dessiné au double de sa taille" % key)
+	var maps: Dictionary = {}
+	for number in range(1,21):
+		var definition: Dictionary = Model.Maps.for_id(str(Catalogue.definition(number).map_id))
+		maps[definition.id] = true
+		for item in View.scenery_for(definition):
+			var piece: Dictionary = Decor.ford_prop(str(definition.id),item.kind,int(item.order))
+			check(not piece.is_empty(),"Mission %d : pièce dessinée pour chaque %s" % [number,item.kind])
+			if piece.is_empty(): continue
+			var rect: Rect2 = piece.rect
+			var scale: float = float(piece.scale)
+			var drawn := Rect2(View.project(item.point)+Vector2((rect.position.x if float(piece.facing) > 0.0 else -rect.end.x)*scale,rect.position.y*scale),rect.size*scale)
+			check(View.scenery_bounds(item).grow(0.01).encloses(drawn),"Mission %d : pièce dans le cadre de l'objet, même réduite ou retournée" % number)
+		for index in range(definition.trees.size()):
+			check(not Decor.ford_tree(str(definition.id),index).is_empty(),"Mission %d : arbre fixe dessiné" % number)
+	check(maps.size() == 10 and maps.keys().all(func(id) -> bool: return Decor.ford_map(str(id))),"Dix cartes du Gué habillées")
+	check(Decor.ford_prop("ford_glade","pine",2).texture == Decor.texture("gue/pin_du_bois.png") and Decor.ford_prop("ford_glade","pine",3).texture == Decor.texture("gue/pin_du_gue.png"),"Pins du bois et du gué selon la parité de l'ordre")
+	check(Decor.ford_prop("ford_glade","shrub",2).texture == Decor.texture("gue/buisson_fleuri.png") and Decor.ford_prop("ford_glade","shrub",3).texture == Decor.texture("gue/fougeres.png") and Decor.ford_prop("ford_glade","rock",3).texture == Decor.texture("gue/rocher_moussu.png"),"Buisson fleuri, fougères et roche moussue")
+	check(is_equal_approx(float(Decor.ford_prop("ford_glade","rock",0).scale),0.91) and is_equal_approx(float(Decor.ford_prop("ford_glade","rock",1).scale),0.955) and is_equal_approx(float(Decor.ford_prop("ford_glade","rock",2).scale),1.0),"Taille 0,91, 0,955 ou 1 selon l'ordre")
+	check(Decor.ford_prop("ford_glade","rock",6).facing == -1.0 and Decor.ford_prop("ford_glade","rock",7).facing == 1.0,"Miroir quand l'ordre modulo 5 est inférieur à 2")
+	check(Decor.ford_prop("slate_pass","rock",1).is_empty() and Decor.ford_tree("marsh_basins",0).is_empty() and Decor.ford_overlay("ford_woods","riviere_du_gue").is_empty(),"Pièces du Gué limitées aux missions 1 à 20, rivière et pont à la carte d'ouverture")
+	var river: Rect2 = Decor.ford_overlay("valley_ford","riviere_du_gue").rect
+	for corner in [Vector2(5.86,0),Vector2(7.14,0),Vector2(7.14,10),Vector2(5.86,10)]: check(river.has_point(View.project(corner)),"La rivière dessinée couvre le lit de la rivière d'origine")
+	var bridge: Rect2 = Decor.ford_overlay("valley_ford","pont_du_gue").rect
+	for corner in [Vector2(5.8,6.55),Vector2(7.2,6.55),Vector2(7.2,7.45),Vector2(5.8,7.45)]: check(bridge.has_point(View.project(corner)),"Le pont dessiné couvre le tablier d'origine")

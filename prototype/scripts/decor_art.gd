@@ -90,6 +90,38 @@ static func slate_prop(map_id: String, kind: String, order: int) -> Dictionary:
 	if image == null: return {}
 	return {"texture":image,"rect":asset[1],"scale":SLATE_SCALES[order%3],"facing":-1.0 if order%5 < 2 else 1.0}
 
+## Décor du Gué, missions 1 à 20 (lot 3feb9b09 de Codex, validé par le porteur le 23 novembre 2026) : sur les dix cartes des chapitres 1 et 2, les pins,
+## rochers et buissons de `scenery_for` et les arbres fixes des cartes prennent cinq pièces dessinées (deux pins, roche moussue, buisson fleuri, fougères),
+## réduites à 0,91, 0,955 ou 1 selon leur ordre modulo 3 et tournées en miroir si l'ordre modulo 5 est inférieur à 2. Sur la carte d'ouverture
+## (`valley_ford`, missions 1 et 11), la rivière dessinée passe sous la chaussée et le pont au-dessus, avant les unités.
+const FORD_ASSETS := {"pin_du_gue":["gue/pin_du_gue.png",Rect2(-16,-46,32,60)], "pin_du_bois":["gue/pin_du_bois.png",Rect2(-16,-46,32,60)], "rocher_moussu":["gue/rocher_moussu.png",Rect2(-13,-14,26,23)], "buisson_fleuri":["gue/buisson_fleuri.png",Rect2(-13,-14,26,23)], "fougeres":["gue/fougeres.png",Rect2(-13,-14,26,23)]}
+const FORD_OVERLAYS := {"riviere_du_gue":["gue/riviere_du_gue.png",Rect2(540,245,318,166)], "pont_du_gue":["gue/pont_du_gue.png",Rect2(605,327,80,56)]}
+
+static func ford_map(map_id: String) -> bool:
+	return map_id == "valley_ford" or map_id.begins_with("ford_")
+
+static func _ford_piece(key: String, order: int) -> Dictionary:
+	var image: Texture2D = texture(str(FORD_ASSETS[key][0]))
+	if image == null: return {}
+	return {"texture":image,"rect":FORD_ASSETS[key][1],"scale":0.91+0.045*float(posmod(order,3)),"facing":-1.0 if posmod(order,5) < 2 else 1.0}
+
+## Pièce d'un objet de `scenery_for` : pin du bois ou du gué selon la parité de l'ordre, roche moussue, buisson fleuri ou fougères ; {} hors du Gué.
+static func ford_prop(map_id: String, kind: String, order: int) -> Dictionary:
+	if not ford_map(map_id) or kind not in ["pine","rock","shrub"]: return {}
+	var key: String = ("pin_du_bois" if order%2 == 0 else "pin_du_gue") if kind == "pine" else "rocher_moussu" if kind == "rock" else "buisson_fleuri" if order%2 == 0 else "fougeres"
+	return _ford_piece(key,order)
+
+## Pièce d'un arbre fixe de la carte (`definition.trees`), selon son rang.
+static func ford_tree(map_id: String, index: int) -> Dictionary:
+	if not ford_map(map_id): return {}
+	return _ford_piece("pin_du_gue" if index%2 == 0 else "pin_du_bois",index)
+
+## Calque de la carte d'ouverture (rivière ou pont), en coordonnées d'écran : {"texture", "rect"} ou {}.
+static func ford_overlay(map_id: String, key: String) -> Dictionary:
+	if map_id != "valley_ford" or not FORD_OVERLAYS.has(key): return {}
+	var image: Texture2D = texture(str(FORD_OVERLAYS[key][0]))
+	return {"texture":image,"rect":FORD_OVERLAYS[key][1]} if image != null else {}
+
 static func props(map_id: String, decoration: String, played_faction: int) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	if map_id in REWORKED_MAPS: return result

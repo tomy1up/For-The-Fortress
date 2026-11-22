@@ -396,7 +396,11 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 23 novembre 2026 — Claude Code (v0.242 publiée)
+## État au 23 novembre 2026 — Claude Code (v0.243 en cours de vérification)
+
+- **v0.243** (validation du porteur : « Oui, intègre-le ») : décor du Gué 1 à 20 (MAJ-90, lot `3feb9b09`, fusion jusqu'à `3feb9b09`). `DecorArt.FORD_ASSETS`, `FORD_OVERLAYS`, `ford_prop`, `ford_tree`, `ford_overlay` ; `valley_view.gd` dessine la rivière à la place de `_draw_valley_water`, le pont à la place de `_draw_valley_bridge`, les arbres fixes et les objets avec `_draw_scaled_piece`. Contrôles dans `test_decor_art.gd` (39 207). GDD 0.80.
+
+### v0.242 (publiée)
 
 - **v0.242** (validation du porteur : « tous », puis lot 46–50 confirmé), fusion de `art/codex` jusqu'à `933da20` :
   - `DecorArt.REWORKED_MAPS` est vide : décor des chapitres 10 et 16 à 20 actif (MAJ-84). `test_decor_art.gd` contrôle aussi les marges des décors mine, sky, coast et necro (38 177 contrôles).

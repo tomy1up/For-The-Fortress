@@ -1,6 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.79 — 22 novembre 2026
+Game Design Document — Version 0.80 — 23 novembre 2026
+
+Version 0.243 du jeu (23 novembre 2026) : **décor du Gué dessiné** (missions 1 à 20 : pins, roche, buissons, fougères, rivière et pont de la carte d'ouverture, MAJ-90) : toutes les cartes de la campagne ont désormais un décor dessiné.
 
 Version 0.242 du jeu (22 novembre 2026) : **décor refait des chapitres 10 et 16 à 20** (garnison, aire de l'aigle, côtes, nécropole, MAJ-84) : toutes les cartes refondues ont leur décor ; **bassins et pièces dessinés des marais**, missions 41 à 60 (MAJ-85) ; **repères compacts des effets de boutique** quand plusieurs cibles proches portent des états (MAJ-86) ; **relève du Revenant sans glissement** (MAJ-87) ; **éclat au sol des capitaines de garnison** (MAJ-88) ; **pins et ardoises dessinés** sur les missions 21 à 40 (MAJ-89).
 
@@ -1760,6 +1762,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-51 | **Orientation par défaut des défenseurs : face au tronçon de route le plus proche** au placement et entre les vagues ; en combat, la dernière cible garde la priorité — V | Décision du porteur, 15 novembre 2026 ; `valley_view.gd` (`road_facing`), `tests/test_defender_facing.gd` |
 | MAJ-52 | **Visée inclinée du Tireur d’élite elfe (type 11)** : sept planches (0°, ±8°, ±16°, ±24°), un seul angle pour la pose, l’origine de la flèche et sa direction de départ ; lâcher à 0,27 s — V (geste validé par le porteur) ; angles et lâcher — rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `a2cdab9` ; `tests/test_marksman_aim.gd` |
 | MAJ-53 | **Estoc du Piquier humain (type 14)** : trois planches (−12°, 0°, +12°), la pique est dessinée dans les planches, éclat de contact à 0,256 s à la pointe donnée par angle — V (geste validé par le porteur) ; rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `9a7d3d8` ; `tests/test_marksman_aim.gd` |
+| MAJ-90 | **Décor du Gué, missions 1 à 20** : sur les dix cartes des chapitres 1 et 2, pins, rochers, buissons et arbres fixes prennent cinq pièces dessinées (pin du gué, pin du bois, roche moussue, buisson fleuri, fougères), aux mêmes places, parfois réduites ou retournées en miroir dans leurs cadres ; sur la carte d'ouverture (missions 1 et 11), rivière dessinée sous la chaussée et pont au-dessus, avant les unités ; routes et règles inchangées — V (porteur, 23 novembre 2026 : « Oui, intègre-le », lot 3feb9b09) ; rendu seulement | Validation du porteur, 23 novembre 2026 ; `design/Visuels_Gue_01_20.md`, `decor_art.gd` (`FORD_ASSETS`, `ford_prop`, `ford_tree`, `ford_overlay`) |
 | MAJ-89 | **Pins et ardoises des missions 21 à 40** : sur les onze cartes des Ardoises, les pins et rochers vectoriels prennent six pièces dessinées (deux pins, cairn, éboulis, dalles, lichen) choisies par carte, aux mêmes places, parfois réduites ou retournées en miroir dans leurs cadres ; couleurs du plateau, routes et emplacements inchangés — V (porteur, 22 novembre 2026, lot 6ecb5d3) ; rendu seulement | Validation du porteur, 22 novembre 2026 ; `design/Visuels_Ardoises_21_40.md`, `decor_art.gd` (`SLATE_MAPS`, `slate_prop`) |
 | MAJ-88 | **Éclat au sol des capitaines de garnison** (humain et orc, type 10) : un éclat ambré de 0,25 s au point d'appui, à l'instant visuel de l'élimination (après le vol du projectile), remplace les particules génériques ; flexion, fondu et planche de mort conservés ; des éliminations proches (moins de 43 px et 45 ms) partagent un éclat centré, agrandi de 14 % par capitaine jusqu'à trois — V (porteur, 22 novembre 2026, lot 17c7c760) ; seuils de regroupement — H (réglages de prototype à confirmer) ; rendu seulement | Validation du porteur, 22 novembre 2026 ; `design/Visuels_Garnison.md`, `valley_view.gd` (`merge_glint`, `glint_scale`) |
 | MAJ-87 | **Appui du Revenant pendant sa relève** : le moteur le fait toujours avancer pendant les 0,72 s de relève (règle inchangée, relève à 50 % des PV) ; l'affichage tient son appui au point de chute pendant les poses basses (0,27 s), puis le raccorde progressivement à sa position de marche le long de la route, virages et orientation compris ; auparavant ses poses basses glissaient d'environ 20 px — H (réglage de prototype à confirmer) ; rendu seulement (tirs et survol gardent la position du moteur) | Demande du porteur relayée par Codex, 22 novembre 2026 (lot 7cdfeaf) ; `valley_view.gd` (`display_distance`, `rise_weight`), `valley_model.gd` (`risen_distance`) |
@@ -1993,6 +1996,8 @@ Version 0.77 — 22 novembre 2026 : jeu 0.240. Étiquettes d'entrée écartées 
 Version 0.78 — 22 novembre 2026 : jeu 0.241. Rafales au sol des Vents contraires (MAJ-80, `valley_view.gd::_draw_headwinds_sheet`) et calques de dégâts des forteresses (MAJ-81, `fortress_art.gd::damage_overlay`), lots de Codex validés par le porteur ; place commune du bandeau d'affixe en haut de l'écran (MAJ-82, remplace MAJ-77) ; décor refait du chapitre 15 activé (MAJ-83) ; décision O-028 consignée (MAJ-79).
 
 Version 0.79 — 22 novembre 2026 : jeu 0.242. Décor refait des chapitres 10 et 16 à 20 activé (MAJ-84, `DecorArt.REWORKED_MAPS` vide) ; bassins et pièces dessinés des marais 41 à 60 (MAJ-85, `marsh_art.gd::POOL_LAYERS`, `pool_layer`, `prop_texture`) ; repères compacts des effets de boutique (MAJ-86, raccord en 0,25 s quand un état voisin apparaît ou expire) ; appui du Revenant tenu pendant sa relève (MAJ-87) ; éclat d'élimination des capitaines de garnison (MAJ-88, `merge_glint`) ; pins et ardoises des missions 21 à 40 (MAJ-89, `DecorArt.slate_prop`) ; place commune du bandeau validée par le porteur (MAJ-82).
+
+Version 0.80 — 23 novembre 2026 : jeu 0.243. Décor du Gué dessiné sur les missions 1 à 20 (MAJ-90, `DecorArt.ford_prop`, `ford_tree`, `ford_overlay`).
 
 <a id="s51"></a>
 
@@ -2286,7 +2291,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 22 novembre 2026 (GDD 0.79, jeu 0.242)
+### État au 23 novembre 2026 (GDD 0.80, jeu 0.243)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2308,7 +2313,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.79, jeu 0.242 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.80, jeu 0.243 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2568,7 +2573,7 @@ Toutes les valeurs sont des réglages de prototype à confirmer (H), sauf celles
 | **Capitaine de garnison** humain ou orc (type 10), élite propre à la citadelle | 10 | 520 PV de base (élite ordinaire 360, boss 600), vitesse 0,6, −4 PV de forteresse, 26 or ; une ou deux Garnisons aux vagues 5, 7, 9 et 10 à la place des brutes et de l’élite | `design/Missions_091_100_Garnison.md` |
 
 ### Décor et ambiance
-Chaque biome a son décor : Gué, Ardoises, marais (eau décorative et tronçons inondés), terres volcaniques, citadelle (propre à la faction adverse), désert, souterrains, îles flottantes, côtes et récifs, nécropole (palettes provisoires ; biomes confirmés les 12 et 13 novembre 2026). Le décor est défini par données (`prototype/assets/decor/decor.json`, `design/Format_decor.md`) ; les animations sont définies par planches d’images (`design/Format_animations.md`). Un biome sans habillage reçoit une palette provisoire. Les cartes refondues en v0.224 à v0.227 (MAJ-61 à MAJ-64) restent sans décor tant que Codex n'a pas refait leurs placements (`DecorArt.REWORKED_MAPS`) : chapitres 11 à 14 refaits et actifs depuis la v0.239 (MAJ-76) ; chapitre 15 (îles flottantes) refait et actif depuis la v0.241 (MAJ-83) ; chapitres 10 et 16 à 20 refaits et actifs depuis la v0.242 (MAJ-84) : toutes les cartes refondues ont leur décor. Marais : bassins et pièces dessinés par Codex sur les missions 41 à 60 (v0.242, MAJ-85). Ardoises : pins et rochers dessinés sur les missions 21 à 40 (v0.242, MAJ-89) ; décor du Gué (missions 1 à 20) livré, en attente de l'avis du porteur. La production artistique revient à Codex (section 65).
+Chaque biome a son décor : Gué, Ardoises, marais (eau décorative et tronçons inondés), terres volcaniques, citadelle (propre à la faction adverse), désert, souterrains, îles flottantes, côtes et récifs, nécropole (palettes provisoires ; biomes confirmés les 12 et 13 novembre 2026). Le décor est défini par données (`prototype/assets/decor/decor.json`, `design/Format_decor.md`) ; les animations sont définies par planches d’images (`design/Format_animations.md`). Un biome sans habillage reçoit une palette provisoire. Les cartes refondues en v0.224 à v0.227 (MAJ-61 à MAJ-64) restent sans décor tant que Codex n'a pas refait leurs placements (`DecorArt.REWORKED_MAPS`) : chapitres 11 à 14 refaits et actifs depuis la v0.239 (MAJ-76) ; chapitre 15 (îles flottantes) refait et actif depuis la v0.241 (MAJ-83) ; chapitres 10 et 16 à 20 refaits et actifs depuis la v0.242 (MAJ-84) : toutes les cartes refondues ont leur décor. Marais : bassins et pièces dessinés par Codex sur les missions 41 à 60 (v0.242, MAJ-85). Ardoises : pins et rochers dessinés sur les missions 21 à 40 (v0.242, MAJ-89). Gué : pièces dessinées sur les missions 1 à 20, rivière et pont de la carte d'ouverture (v0.243, MAJ-90). La production artistique revient à Codex (section 65).
 
 <a id="s64"></a>
 
@@ -2685,5 +2690,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.240 | Étiquettes d'entrée écartées les unes des autres en préparation ; GDD 0.77 |
 | 0.241 | Rafales des Vents contraires, dégâts des forteresses, place commune du bandeau d'affixe, décor du chapitre 15 ; GDD 0.78 |
 | 0.242 | Décor refait des chapitres 10 et 16 à 20, bassins et pièces des marais 41 à 60, repères compacts des effets de boutique, relève du Revenant, éclat des capitaines, décor des Ardoises ; GDD 0.79 |
+| 0.243 | Décor du Gué dessiné (missions 1 à 20) ; GDD 0.80 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

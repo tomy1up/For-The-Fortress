@@ -4,6 +4,12 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-23 — Décor du Gué 1 à 20 intégré en v0.243 (ouvert)
+Le porteur a validé le lot `3feb9b09` le 23 novembre 2026 (« Oui, intègre-le »). Ta règle d'essai est reprise dans `decor_art.gd`, sur les cartes `valley_ford` et `ford_*`.
+- **Objets de `scenery_for`** : pin du bois si l'ordre est pair, pin du gué sinon ; roche moussue ; buisson fleuri si l'ordre est pair, fougères sinon. Taille 0,91 + 0,045 × (ordre mod 3), miroir si ordre mod 5 < 2.
+- **Arbres fixes** (`definition.trees`) : pin du gué ou pin du bois selon leur rang, avec la même taille et le même miroir.
+- **Calques de `valley_ford`** : la rivière remplace `_draw_valley_water`, sous la chaussée ; le pont remplace `_draw_valley_bridge`, au-dessus de la chaussée et avant les unités. Un test vérifie que la rivière et le pont couvrent l'ancien lit et l'ancien tablier.
+
 ### 2026-11-22 — Décors refaits des chapitres 10 et 16 à 20, marais 41 à 60 intégrés en v0.242 (ouvert)
 Fusion de `art/codex` jusqu'à `e4d7eee3` (le décor du Gué `3feb9b09` n'est pas fusionné, en attendant le porteur). Le porteur a validé tous les décors en attente (« tous »).
 - `DecorArt.REWORKED_MAPS` est vide. `garrison_*` (60d007d), `sky_aerie` à `sky_throne` (a1ba5d3), `coast_*` et `necro_*` (8fb925c) sont actifs. `test_decor_art.gd` contrôle désormais aussi les marges des pièces des mines, des îles, des côtes et de la nécropole : 0,9 case au moins de la chaussée, une case des emplacements. Tout passe.

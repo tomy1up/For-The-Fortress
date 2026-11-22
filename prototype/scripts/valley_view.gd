@@ -1563,13 +1563,19 @@ static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
 	result.sort_custom(func(a: Dictionary,b: Dictionary) -> bool: return project(a.point).y < project(b.point).y)
 	return result
 
+## Pièce de décor dessinée autour de son point d'appui, réduite et éventuellement retournée en miroir dans son cadre.
+func _draw_scaled_piece(center: Vector2, piece: Dictionary) -> void:
+	draw_set_transform(center,0.0,Vector2(float(piece.facing)*float(piece.scale),float(piece.scale)))
+	draw_texture_rect(piece.texture,piece.rect,false)
+	draw_set_transform(Vector2.ZERO)
+
 func _draw_terrain_detail(item: Dictionary) -> void:
 	var center: Vector2 = project(item.point)
-	var slate: Dictionary = DecorArt.slate_prop(str(model.map_definition.get("id","")) if model != null else "",item.kind,int(item.get("order",0)))
-	if not slate.is_empty(): # Pins et ardoises dessinés par Codex (missions 21 à 40).
-		draw_set_transform(center,0.0,Vector2(float(slate.facing)*float(slate.scale),float(slate.scale)))
-		draw_texture_rect(slate.texture,slate.rect,false)
-		draw_set_transform(Vector2.ZERO)
+	var map_id: String = str(model.map_definition.get("id","")) if model != null else ""
+	var piece: Dictionary = DecorArt.slate_prop(map_id,item.kind,int(item.get("order",0))) # Pins et ardoises dessinés par Codex (missions 21 à 40).
+	if piece.is_empty(): piece = DecorArt.ford_prop(map_id,item.kind,int(item.get("order",0))) # Décor du Gué dessiné par Codex (missions 1 à 20).
+	if not piece.is_empty():
+		_draw_scaled_piece(center,piece)
 		return
 	if item.kind in ["willow","ruin","reeds"]:
 		var art: Texture2D = MarshArt.prop_texture(str(model.map_definition.get("id","")) if model != null else "",item.kind,int(item.get("order",0)))
@@ -1619,7 +1625,10 @@ func _draw() -> void:
 		draw_line(project(Vector2(x, 0)), project(Vector2(x, board.y)), Color(0.75, 0.86, 0.7, 0.055), 1)
 	for y in range(board.y+1):
 		draw_line(project(Vector2(0, y)), project(Vector2(board.x, y)), Color(0.75, 0.86, 0.7, 0.055), 1)
-	if definition.decoration == "valley": _draw_valley_water()
+	if definition.decoration == "valley":
+		var river: Dictionary = DecorArt.ford_overlay(str(definition.get("id","")),"riviere_du_gue")
+		if river.is_empty(): _draw_valley_water()
+		else: draw_texture_rect(river.texture,river.rect,false) # Rivière dessinée par Codex, sous la chaussée.
 	var ash: Dictionary = DecorArt.overlay(str(definition.decoration))
 	if not ash.is_empty(): draw_texture(ash.texture,ash.position) # Cendres : après la couleur du sol, avant la chaussée.
 	var screen_routes: Array[PackedVector2Array] = []
@@ -1656,9 +1665,14 @@ func _draw() -> void:
 			highlighted_segments[segment] = tint
 	for segment: Vector4 in highlighted_segments:
 		draw_line(Vector2(segment.x, segment.y), Vector2(segment.z, segment.w), highlighted_segments[segment], 5.0, true)
-	if definition.decoration == "valley": _draw_valley_bridge()
-	for tree in definition.trees:
-		_draw_tree(project(tree))
+	if definition.decoration == "valley":
+		var bridge: Dictionary = DecorArt.ford_overlay(str(definition.get("id","")),"pont_du_gue")
+		if bridge.is_empty(): _draw_valley_bridge()
+		else: draw_texture_rect(bridge.texture,bridge.rect,false) # Pont dessiné par Codex, au-dessus de la chaussée, avant les unités.
+	for index in range(definition.trees.size()):
+		var pine: Dictionary = DecorArt.ford_tree(str(definition.get("id","")),index)
+		if pine.is_empty(): _draw_tree(project(definition.trees[index]))
+		else: _draw_scaled_piece(project(definition.trees[index]),pine)
 	for item in terrain_details: _draw_terrain_detail(item)
 	var preview: Dictionary = purchase_preview if not purchase_preview.is_empty() else upgrade_preview
 	if model != null and selected >= 0 and not preview.is_empty():
