@@ -7,6 +7,10 @@
   "projectile": {
     "file": "Braise_facette.png",
     "width": 8,
-    "flight": "linear"
+    "flight": "linear",
+    "art_axis": [
+      80,
+      -149
+    ]
   }
 }
