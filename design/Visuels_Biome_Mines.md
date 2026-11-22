@@ -39,3 +39,17 @@ Les vingt vues finales ont été capturées sur la vague 5 dans les deux faction
 - [Missions 121 à 124](essais/mines_refonte/Mines_121_124.jpg)
 - [Missions 125 à 127](essais/mines_refonte/Mines_125_127.jpg)
 - [Missions 128 à 130](essais/mines_refonte/Mines_128_130.jpg)
+
+## Décor sur les nouveaux tracés des missions 131 à 140
+
+Cinquante emplacements sont adaptés à la nouvelle géométrie. Les étais rythment les Piliers Fissurés et la Voûte Instable. Les rails et chariots longent les Galeries Jumelles. Les bassins repèrent le Gouffre Noir et l’Écluse Souterraine. Sur les dix cartes, les pièces gardent leurs distances avec les routes, les cases et les entrées où se dessine l’éboulement.
+
+Les 34 captures en combat sur copie v0.238 couvrent la vague 5 dans les deux factions sur chaque carte. La Voûte Instable et le Cœur Effondré sont également montrés à l’annonce, à la réouverture et sur des vagues suivantes. Les vagues 5 à 7 de la Voûte Instable montrent le blocage successif de ses trois entrées. Les suites décor, éboulement et chapitre passent avec 12 000, 498 et 5 746 contrôles respectivement.
+
+Le bandeau Éboulement chevauche des étiquettes d’entrée, notamment en 134 et 140. Le point a été consigné pour Claude Code. Le lot de décor attend l’avis du porteur avant le retrait des dix identifiants de mine_pillars à mine_core de REWORKED_MAPS.
+
+- [Missions 131 à 134](essais/eboulement_refonte/Eboulement_131_134.jpg)
+- [Missions 135 à 137](essais/eboulement_refonte/Eboulement_135_137.jpg)
+- [Missions 138 à 140](essais/eboulement_refonte/Eboulement_138_140.jpg)
+- [Annonce, blocage et réouverture au Cœur Effondré](essais/eboulement_refonte/Coeur_phases_eboulement.jpg)
+- [Trois entrées bloquées sur trois vagues à la Voûte Instable](essais/eboulement_refonte/Voute_entrees.jpg)

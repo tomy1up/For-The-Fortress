@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Bandeau Éboulement et étiquettes d’entrée (ouvert)
+
+Le chevauchement signalé pour la Tempête de sable existe aussi avec Éboulement, notamment sur 134 et 140. Sur la Voûte Instable, reproduit aux vagues 5, 6 et 7 à 19,20 s. Les captures des trois entrées sont dans design/essais/eboulement_refonte/Voute_entrees.jpg. Vérifier aussi l’annonce à 16,50 s sur 134 et 140. Les décors du chapitre 14 attendent encore l’avis du porteur.
+
 ### 2026-11-22 — Décor des mines, missions 121 à 130 validées (ouvert)
 
 Lot `23713fc` validé par le porteur. Les 50 placements dans `prototype/assets/decor/decor.json` réutilisent les pièces de la mine. Pour les activer, retirer de `REWORKED_MAPS` les dix identifiants du chapitre 13, de `mine_entrance` à `mine_heart`. Vingt captures en combat, contrôle des cinq pièces de chaque carte dans les deux factions et suite du chapitre réussis sur copie v0.238.
