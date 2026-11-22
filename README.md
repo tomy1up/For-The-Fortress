@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.238**. Animations : disque runique du Poseur de mines, braise du Gobelin des braises ; le badge de volatilité du Gobelin apparaît à l'impact. [Notes](design/essais/v0238_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.238).
+
 **Prototype v0.237**. Animations : tir et réarmement du Vétéran royal, lancer de jeton du Pillard gobelin ; le badge de pillage du Pillard apparaît à l'impact du jeton. [Notes](design/essais/v0237_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.237).
 
 **Prototype v0.236**. Difficulté : recalibrage terminé, 185 missions de l'Alliance et 174 de la Horde dans la cible ; nouvelle mesure avec un choix de bonus guidé (la meilleure armée finit vers 90 % de marge dans les deux factions). Animations : Prêtre guerrier, Chamane des marais, Totem de guerre, Ancien des tribus, Marchand mercenaire, Piégeur nain et Alchimiste gnome. Réglages à confirmer en partie réelle. [Notes](design/essais/v0236_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.236).

@@ -1,6 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.74 — 22 novembre 2026
+Game Design Document — Version 0.75 — 22 novembre 2026
+
+Version 0.238 du jeu (22 novembre 2026) : gestes du Poseur de mines (disque runique à 0,40 s) et du Gobelin des braises (braise à 0,40 s, pointe vers la cible) ; **badge de volatilité du Gobelin affiché à l'impact** (MAJ-75), rendu seulement.
 
 Version 0.237 du jeu (22 novembre 2026) : gestes du Vétéran royal (carreau à 0,36 s) et du Pillard gobelin (jeton à 0,36 s) ; **badge de pillage du Pillard affiché à l'impact du jeton** (MAJ-74), rendu seulement.
 
@@ -20,7 +22,7 @@ Document de référence pour concevoir et développer For the Fortress!, destin�
 
 **Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.206. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.74 ; jeu de référence 0.237.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.75 ; jeu de référence 0.238.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -1750,6 +1752,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-51 | **Orientation par défaut des défenseurs : face au tronçon de route le plus proche** au placement et entre les vagues ; en combat, la dernière cible garde la priorité — V | Décision du porteur, 15 novembre 2026 ; `valley_view.gd` (`road_facing`), `tests/test_defender_facing.gd` |
 | MAJ-52 | **Visée inclinée du Tireur d’élite elfe (type 11)** : sept planches (0°, ±8°, ±16°, ±24°), un seul angle pour la pose, l’origine de la flèche et sa direction de départ ; lâcher à 0,27 s — V (geste validé par le porteur) ; angles et lâcher — rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `a2cdab9` ; `tests/test_marksman_aim.gd` |
 | MAJ-53 | **Estoc du Piquier humain (type 14)** : trois planches (−12°, 0°, +12°), la pique est dessinée dans les planches, éclat de contact à 0,256 s à la pointe donnée par angle — V (geste validé par le porteur) ; rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `9a7d3d8` ; `tests/test_marksman_aim.gd` |
+| MAJ-75 | **Badge de volatilité du Gobelin des braises à l'impact** de la braise (0,52 s avec vol, 0,40 s sans vol à bout portant), badge déjà visible conservé au renouvellement ; explosion et fenêtre de 4 s inchangées — V (porteur, 22 novembre 2026, relayé par Codex), rendu seulement | Décision du porteur, 22 novembre 2026 ; `design/essais/v0238_release_notes.md` |
 | MAJ-74 | **Badge de pillage du Pillard gobelin à l'impact** du jeton (0,48 s avec vol, 0,36 s sans vol à bout portant), badge déjà visible conservé au renouvellement ; bonus de +120 % et fenêtre de 4 s inchangés — V (porteur, 22 novembre 2026, relayé par Codex), rendu seulement | Décision du porteur, 22 novembre 2026 ; `design/essais/v0237_release_notes.md` |
 | MAJ-73 | **Fin du recalibrage** des PV d'ennemis pour les deux factions (table de départ, ajustement par les suites par pas de 3 points) et mesure avec un choix de bonus guidé — demande V (porteur, 21 novembre 2026 : « Finir l'équilibrage »), coefficients H | Décision du porteur, 21 novembre 2026 ; `design/Rebalancage_v0236.md` |
 | MAJ-72 | **Nouvelle composition de référence de la Horde** pour les suites de campagne : deux sapeurs et un chaman (arbre Démolition) à la place de deux haches et un chaman, à partir de la mission 71 ; suites des chapitres 4, 7 et 13 aux règles de bonus actuelles ; coefficients de la Horde recalculés — changement de référence V (porteur, 21 novembre 2026 : « Changer la référence »), mission de bascule et coefficients H | Décision du porteur, 21 novembre 2026 ; `design/Rebalancage_v0235.md` |
@@ -1958,6 +1961,8 @@ Version 0.72 — 21 novembre 2026 : jeu 0.235. **Nouvelle composition de référ
 Version 0.73 — 21 novembre 2026 : jeu 0.236. **Fin du recalibrage** (MAJ-73, section 62) : table de départ pour les deux factions, ajustée par les suites de campagne par pas de 3 points ; Alliance 54,7 % de meilleure marge moyenne (185 missions dans la cible), Horde 58,5 % (174). Choix de bonus guidé (`POLICY=look`) : borne haute vers 90 % de marge, dépendance au tirage de la Horde expliquée par la stratégie « première offre » ; O-028 mis à jour. Gestes des types 32 à 37 et 39 (rendu seulement ; losange du Totem de guerre à l'arrivée de son impulsion, à 0,42 s).
 
 Version 0.74 — 22 novembre 2026 : jeu 0.237. Gestes du Vétéran royal (type 40, carreau à 0,36 s, impact seul derrière la glissière) et du Pillard gobelin (type 41, jeton à 0,36 s sur l'arc de 8 px) ; badge de pillage du Pillard à l'impact (MAJ-74) : 0,48 s avec vol, 0,36 s sans vol, badge déjà visible conservé au renouvellement ; rendu seulement.
+
+Version 0.75 — 22 novembre 2026 : jeu 0.238. Gestes du Poseur de mines (type 42, disque runique à 0,40 s, un tour sur l'arc de 15 px) et du Gobelin des braises (type 44, braise à 0,40 s en ligne droite, pointe vers la cible), impact seul derrière le repère ; badge de volatilité du Gobelin à l'impact (MAJ-75) ; rendu seulement.
 
 <a id="s51"></a>
 
@@ -2251,7 +2256,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 22 novembre 2026 (GDD 0.74, jeu 0.237)
+### État au 22 novembre 2026 (GDD 0.75, jeu 0.238)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2273,7 +2278,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.74, jeu 0.237 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.75, jeu 0.238 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2643,5 +2648,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.235 | Nouvelle référence de la Horde à partir de la mission 71 (deux sapeurs et un chaman), suites des chapitres 4, 7 et 13 aux règles de bonus actuelles ; meilleure marge moyenne de la Horde 59 % (69 % en v0.234) ; Éclaireur-observateur animé ; GDD 0.72 |
 | 0.236 | Fin du recalibrage (Alliance 185 missions dans la cible, Horde 174), mesure avec choix de bonus guidé ; Prêtre guerrier, Chamane des marais, Totem de guerre, Ancien des tribus, Marchand mercenaire, Piégeur nain et Alchimiste gnome animés ; GDD 0.73 |
 | 0.237 | Vétéran royal et Pillard gobelin animés ; badge de pillage du Pillard à l'impact du jeton ; GDD 0.74 |
+| 0.238 | Poseur de mines et Gobelin des braises animés ; badge de volatilité du Gobelin à l'impact ; GDD 0.75 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

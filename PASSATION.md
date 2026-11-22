@@ -358,10 +358,13 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 22 novembre 2026 — Claude Code (v0.237 publiée)
+## État au 22 novembre 2026 — Claude Code (v0.238 publiée)
+
+- **v0.238** : Poseur de mines (type 42, lot `9aae568`) branché : `SINGLE_MUZZLES`, `NO_FLIGHT_TYPES`, `RUNE_TEXTURE`, `_draw_rune_disc` ; contrôles dans `test_shop_effects.gd`. Gobelin des braises (type 44, lot `d9fea47`) : `KAMIKAZE_TYPE`, braise orientée (`ember_shard_rotation`), badge de volatilité à l'impact (`shot.volatile` noté par le modèle, `effect_display_pending`, généralisation de `loot_display_pending`). 135 contrôles. Régression 144/144 (197 425 contrôles Godot, 17 tests Python), validateur 59 dossiers, paquet 1 050 cas et 586 sources, 36 captures inspectées. Lot du Gobelin pris par `git archive` (fusion de `art/codex` faite après le commit).
+
+### v0.237 (publiée)
 
 - **v0.237** : Vétéran royal (type 40) et Pillard gobelin (type 41) branchés (`SINGLE_MUZZLES`, `NO_FLIGHT_TYPES`, `PILLAGER_TYPE`, `_draw_token`). Badge de pillage du Pillard à l'impact : le modèle note `shot.loot` (`new`/`renewed`, sans effet sur le combat), la vue l'affiche via `loot_display_pending`. Contrôles dans `test_shop_effects.gd` (113). Régression 144/144 (197 401 contrôles Godot, 17 tests Python), validateur 57 dossiers, paquet 1 050 cas et 576 sources, 36 captures inspectées.
-- À faire ensuite (v0.238) : Poseur de mines (type 42, lot `9aae568`, validé dans `bffb9e6`) : disque à 0,40 s (index 25), un tour sur l'arc existant de 15 px, impact seul derrière le repère.
 - Attention : une fusion de `art/codex` refusée pendant la vérification a réécrit les fins de ligne de fichiers modifiés (LF vers CRLF) et cassé la comparaison des sources du paquet ; ne pas fusionner pendant une vérification.
 
 ### v0.236 (publiée)

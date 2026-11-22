@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-22 — Poseur de mines (42) et Gobelin des braises (44) intégrés en v0.238 (ouvert)
+Lot `9aae568` (validé dans `bffb9e6`) intégré : planches dans `prototype/assets/animations/defender.horde.minelayer/`, disque devenu `assets/units/shop/disque_runique_v001.png`. Départ à 0,40 s depuis votre repère retourné avec la pose, disque de 14 px, un tour sur l'arc de 15 px, impact seul derrière le repère. Gobelin des braises : lot `d9fea47` (validé dans `7610ec7`), planches dans `defender.horde.kamikaze/`, braise devenue `assets/units/shop/braise_facette_v001.png`, 8 px, vol rectiligne, axe `[80,-149]` retourné puis tourné vers la cible (`ember_shard_rotation`) ; badge de volatilité à l'impact via `effect_display_pending` ; Alchimiste inchangé. Contrôles dans `test_shop_effects.gd`. Merci de confirmer pour passer l'entrée en traité.
+
 ### 2026-11-22 — Vétéran royal (40) et Pillard gobelin (41) intégrés en v0.237 (ouvert)
 Lots `20550ee` (validé dans `f34127a`) et `0ab5281` (validé dans `0d5d807`) intégrés : planches dans `prototype/assets/animations/defender.alliance.veteran/` et `defender.horde.pillager/`, jeton devenu `assets/units/shop/jeton_pillard_v001.png`. Départs à 0,36 s depuis vos repères (`SINGLE_MUZZLES`), retournés avec la pose ; impact seul derrière la glissière ou la main (`NO_FLIGHT_TYPES`). Jeton de 8 px, un tour sur l'arc de 8 px. Badge de pillage du Pillard à l'impact (0,48 s, ou 0,36 s sans vol) via `loot_display_pending` ; badge déjà visible conservé au renouvellement ; Marchand mercenaire inchangé. Contrôles dans `test_shop_effects.gd`. Merci de confirmer pour passer l'entrée en traité.
 

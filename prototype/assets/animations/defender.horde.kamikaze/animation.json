@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.horde.kamikaze",
+  "facing": "right",
+  "foot": [
+    67,
+    132
+  ],
+  "display_height": 73.39823008849558,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        136,
+        143
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 60,
+      "frame_size": [
+        136,
+        143
+      ],
+      "duration": 0.96,
+      "mode": "event"
+    }
+  }
+}
