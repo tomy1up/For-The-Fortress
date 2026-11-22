@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**22 novembre — Éclat d’élimination de la Garnison.** Planche commune de 12 images sur 0,25 s pour les deux capitaines. 20 séquences, 280 images comparées dans les quatre diagonales et avec trois éliminations simultanées, sur copie v0.241. Validateur à zéro problème sur 64 dossiers et 480 contrôles ciblés réussis. Avis du porteur attendu. [Fiche](design/Visuels_Garnison.md#éclat-au-sol-commun-aux-deux-capitaines).
+
 **22 novembre — Aigle des cimes et Revenant, v0.241.** Portraits, vol, marche et relève présents et vérifiés. Essai de filtrage comparé en jeu, les détails du Revenant s’adoucissent. Réglages publiés conservés. Après un coup fatal le revenant récupère 50 % de ses PV et avance de 19,6 px pendant sa relève, ce qui produit un glissement. Constat transmis à Claude Code. Six suites et 8 784 contrôles réussis. [Fiche](design/Visuels_Aigle_Revenant_V0241.md).
 
 **22 novembre — Effets de boutique sur v0.241.** Sept captures après des tirs réels, quatre mises en place pour les auras et explosions et quatre comparatifs d’états simultanés. Les cercles actuels s’occultent en groupe dense. Rangées compactes validées par le porteur le 22 novembre 2026 (815fc15). Transition progressive contrôlée au rapprochement et à l’éloignement dans les deux factions sur 340 captures en atelier, à brancher par Claude Code. 157 contrôles des effets réussis. Bandeau fixe vérifié sur le jeu exporté en 36, 39 et 180. [Fiche](design/Visuels_Effets_Boutique.md).

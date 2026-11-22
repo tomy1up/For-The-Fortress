@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Éclat commun pour les éliminations de capitaines (ouvert)
+
+La planche `effect.garrison_elimination/death` dure 0,25 s. L’essai la joue à l’ancre au sol de l’événement après le délai de projectile. Elle remplace les particules de la Garnison et accompagne aussi la planche sud-est du Capitaine orc. Les événements proches de moins de 43 px et 45 ms partagent un éclat centré, agrandi de 14 % par capitaine jusqu’à trois. Paramètres testés dans l’atelier uniquement. Attendre la validation du porteur. [Comparatifs](design/Visuels_Garnison.md#éclat-au-sol-commun-aux-deux-capitaines).
+
 ### 2026-11-22 — Aigle et Revenant visibles, appuis du Revenant à la relève (ouvert)
 
 Les portraits s’affichent sur les missions 151 et 191. Vol, marche et relève vérifiés dans les deux factions sur copie v0.241. Le vrai déclenchement de relève à 50 % des PV est conforme. L’ancre avance de 19,6 px pendant les 0,72 s de relève sur la mission 191. Les premières poses basses semblent glisser. Si on ajuste le rendu, essayer un appui visuel au début de la relève puis un raccord progressif à la position du modèle, en gardant l’orientation de la route et en couvrant les virages. La fiche comporte les deux GIF. L’outil de capture `--capture-scout-mission` est borné à 20, étendu à 200 dans la copie uniquement pour prendre ces captures. [Fiche](design/Visuels_Aigle_Revenant_V0241.md).

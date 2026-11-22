@@ -64,3 +64,15 @@ Pour le Capitaine orc, la planche de référence reprend le début de la flexion
 [Comparatif à ×2](essais/garnison/mort_orc/signal_court/Capitaine_signal_x2.gif) · [Comparatif à ×1](essais/garnison/mort_orc/signal_court/Capitaine_signal_x1.gif)
 
 Contrôles à ×1, ×2 et temps figé sur une copie v0.216. Validateur : 26 dossiers, 0 problème. Bibliothèque : 167 contrôles. La planche couvre la diagonale sud-est. Le signal commun et le regroupement du bref éclat restent à intégrer côté rendu. Le fondu de la pose courante constitue le repli pour les orientations sans planche, ce qui conserve la latéralité du Capitaine.
+
+### Éclat au sol commun aux deux capitaines
+
+Proposition du 22 novembre 2026 sur copie de la v0.241. Le capitaine conserve sa flexion ou la disparition de sa pose. Un éclat ambré au ras des bottes souligne l’élimination dans les quatre diagonales, sur les deux factions. Un arc discontinu qui s’élargit et quelques traits s’effacent avec le personnage. La planche de douze images dure 0,25 s et utilise le dossier `effect.garrison_elimination`. Dans l’essai, une seule planche est dessinée au centre quand trois capitaines tombent au même instant à courte distance.
+
+La première version de l’éclat se confondait avec les dalles claires. Le contraste des traits a été renforcé avant les captures. L’éclat reste volontairement plus petit qu’une unité pour laisser les survivants visibles. Le branchement proposé utilise l’instant visuel de l’élimination et remplace les particules ordinaires de la Garnison. L’effet peut accompagner la planche sud-est du Capitaine orc et le fondu du rendu courant. Les seuils d’essai sont 43 px et 45 ms entre les événements proches, avec un agrandissement de 14 % par capitaine supplémentaire jusqu’à trois.
+
+Les vingt séquences totalisent 280 images sur les missions 92 et 94 dans les deux factions, avec et sans éclat. Dans l’atelier, le modèle traite le coup fatal et les quatre survivants poursuivent leur déplacement. Le cas dense élimine trois capitaines au même instant. À 0,30 s, les pixels autour du groupe sont identiques dans les deux rendus, sans trace de l’éclat. Le validateur passe sur 64 dossiers. Les suites Garnison (206 contrôles), signal (22), effets d’élimination (47) et bibliothèque d’animations (205) passent. Avis du porteur attendu avant branchement.
+
+- [Les quatre diagonales](essais/garnison/signal_commun/Capitaines_quatre_directions.jpg)
+- [Trois capitaines orcs, comparatif](essais/garnison/signal_commun/Garnison_alliance_signal_court.gif)
+- [Trois capitaines humains, comparatif](essais/garnison/signal_commun/Garnison_horde_signal_court.gif)
