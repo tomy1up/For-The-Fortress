@@ -89,6 +89,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 - [x] **Ancien des tribus, attaque** — frappe du tambour et départ de l’onde cuivrée au contact, à 0,36 s. [Essai en jeu](design/Visuels_Boutique_Ancien_Tribus.md#frappe-du-tambour). Lot b1b0f16 validé, à intégrer.
 - [x] **Totem de guerre, attaque** — charge de la gemme et impulsion rose à 0,30 s, losange à l’arrivée. [Essai en jeu](design/Visuels_Boutique_Totem_Guerre.md#charge-de-la-gemme-et-impulsion). Lot b36a4eb validé, à intégrer.
 - [x] **Chaman des marais, attaque** — formation du feu follet dans le bol et départ à 0,40 s. [Essai en jeu](design/Visuels_Boutique_Chaman_Marais.md#rituel-du-feu-follet). Lot a89ce33 validé, à intégrer.
+- [ ] **Pillard gobelin, attaque** — jeton à trois encoches et lâcher à 0,36 s. [Essai en jeu](design/Visuels_Boutique_Pillard_Gobelin.md#lancer-du-jeton). Avis du porteur attendu.
 - [x] **Vétéran royal, attaque** — mise en joue et départ du carreau à 0,36 s. [Essai en jeu](design/Visuels_Boutique_Veteran_Royal.md#tir-et-réarmement). Lot 20550ee validé, à intégrer.
 - [x] **Alchimiste gnome, attaque** — fiole ambrée lâchée à 0,40 s, quinze poses et retour au porte-fioles. [Essai en jeu](design/Visuels_Boutique_Alchimiste.md#lancer-de-la-fiole). Lot 02cb36d validé, à intégrer.
 - [x] **Balliste royale, attaque** — départ du carreau à 0,32 s et réarmement. [Essai en jeu](design/Visuels_Boutique_Balliste_Royale.md#recul-et-réarmement). Lot stabilisé 6b93bd1 validé, à intégrer.
