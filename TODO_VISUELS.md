@@ -8,7 +8,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
-- [ ] **États d’endommagement des forteresses** — Trois calques par faction, avec raccord au tremblement existant. Essai en jeu sur copie v0.240, avis du porteur attendu. [Captures](design/Visuels_Degats_Forteresses.md).
+- [x] **États d’endommagement des forteresses** — Trois calques par faction validés le 22 novembre 2026 (lot c81b52a). Branchement à faire par Claude Code. [Captures](design/Visuels_Degats_Forteresses.md).
 
 - [ ] **Nouveaux tracés du littoral, missions 161 à 180** — 100 placements adaptés, 48 captures de combat dans les deux factions. Alerte, active et dissipation de la Brume marine vérifiées en 174 et 180. [Captures](design/Visuels_Cotes_Recifs.md#décors-sur-les-nouveaux-tracés-des-missions-161-à-180). Avis du porteur attendu avant activation.
 

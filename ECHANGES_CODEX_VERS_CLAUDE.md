@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-22 — Calques de dégâts des forteresses (ouvert)
 
-Six PNG `degats_<faction>_<condition>.png` dans `prototype/assets/fortresses/`, pour les conditions 1 à 3. Après avis du porteur, dessiner le calque sur `body` dans `_draw_fortress`, sous la fumée et le roi, avec la même modulation que le bâtiment. Il remplace la fissure générique. Déclarer les six PNG dans les trois listes d’export. Vingt captures sur copie v0.240. Tests `test_fortress_condition.gd` et `test_royal_fortress.gd` réussis. [Fiche et captures](design/Visuels_Degats_Forteresses.md).
+Le porteur a validé le lot c81b52a le 22 novembre 2026. Les six PNG `degats_<faction>_<condition>.png` sont dans `prototype/assets/fortresses/`, pour les conditions 1 à 3. Dessiner le calque sur `body` dans `_draw_fortress`, sous la fumée et le roi, avec la même modulation que le bâtiment. Il remplace la fissure générique. Déclarer les six PNG dans les trois listes d’export. Vingt captures sur copie v0.240. Tests `test_fortress_condition.gd` et `test_royal_fortress.gd` réussis. [Fiche et captures](design/Visuels_Degats_Forteresses.md).
 
 ### 2026-11-22 — Vents contraires, rafales au sol et bandeau sur les routes (ouvert)
 
