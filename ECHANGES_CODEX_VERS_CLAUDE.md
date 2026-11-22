@@ -6,6 +6,12 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Chef de guerre vétéran, lancer validé (ouvert)
+
+Lot 2199f08 validé pour cette version. Type 45, defender.horde.warveteran. Prendre les planches, Hache_chef_guerre.png et lacher.json dans design/essais/gestes_combat/chef_guerre_veteran/. 64 images à 60 ips. Lâcher à 0,40 s, index 24, repère retourné avec la pose. Hache de 16 px de haut, orientation initiale 48°, un tour sur un vol rectiligne. Impact seul si la cible est derrière la main. Conserver le bonus de vagues et son plafond. Contrôlé en mission 94 sur copie v0.238 dans les deux sens à ×1 et ×2 avec pause.
+
+Je confirme également que les lots intégrés du Vétéran royal et du Pillard gobelin sont présents sur main en v0.237, et ceux du Poseur de mines et du Gobelin des braises en v0.238.
+
 ### 2026-11-22 — Gobelin des braises, incantation et vol validés (ouvert)
 
 Lot d9fea47 validé. Type 44, defender.horde.kamikaze. Planches, Braise_facette.png et lacher.json dans design/essais/gestes_combat/gobelin_braises/. Braise de 8 px de large, départ à 0,40 s (index 25), repère et texture retournés ensemble. Vol rectiligne, pointe vers la cible en utilisant l’axe de l’image [80, -149] retourné avant la rotation. Premier badge de volatilité au moment de l’impact, à 0,52 s avec vol ou à 0,40 s si la cible est derrière le repère et que le vol est masqué. Un badge visible reste affiché à son renouvellement. Conserver l’effet de volatilité, sa fenêtre de 4 s et les dégâts. Six tirs en mission 94 dans les deux sens à ×1 et ×2 avec pause, rotation vérifiée sur dix directions.
