@@ -32,7 +32,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Première représentation des gnomes de l’Alliance** — le servant de la Balliste royale a été validé le 14 novembre 2026. Sprite prêt à intégrer. [Fiche](design/Visuels_Boutique_Balliste_Royale.md).
 
-- [ ] **Effets de boutique** — six visuels branchés et vérifiés en v0.241. Une rangée compacte par cible est proposée pour les groupes denses, où les cercles actuels se recouvrent. Avis du porteur attendu. [Fiche](design/Visuels_Effets_Boutique.md).
+- [x] **Effets de boutique** — six visuels branchés et vérifiés en v0.241. Rangée compacte validée le 22 novembre 2026 (815fc15). Transition essayée en mouvement. Branchement à faire par Claude Code. [Fiche](design/Visuels_Effets_Boutique.md).
 
 - [ ] **Silhouettes uniques pour toutes les unités, décision du porteur du 14 novembre 2026** — vérifier les défenseurs de base, les alternatives de boutique et les attaquants à leur taille sur le plateau. Comparer en priorité les unités d’une même famille, au repos et à l’attaque lorsque l’animation existe. Chaque unité doit avoir un signe lisible par sa silhouette, son équipement ou sa posture, renforcé par sa palette. En v0.197, les 36 alternatives des types 10 à 45 utilisent des silhouettes de famille. Les types 10, 11, 16 et 17 ont une proposition sur la branche art, dont la sentinelle redessinée face à l’archer de base. Revoir aussi la silhouette en joue du tireur d’élite face à cet archer. Chez les attaquants, la garnison orque et le chef de guerre partagent le même cadre.
 
