@@ -1298,6 +1298,8 @@ func _resolve_instant() -> void:
 		_add_damage(damage, primary.id, direct_damage)
 		hits.append({"source_id":defender.instance_id,"enemy_id":primary.id,"component":"direct","amount":direct_damage})
 		if float(stats.get("slow_seconds",0.0)) > 0.0: _slow_enemy(primary,float(stats.slow_seconds))
+		# Pillage posé par ce tir : « new » si la cible n'était pas pillée, « renewed » sinon (lu par la vue pour le badge du Pillard gobelin, sans effet sur le combat).
+		var loot_state: String = "renewed" if float(primary.get("loot_until",-1.0)) >= elapsed else "new"
 		if float(stats.get("loot_seconds",0.0)) > 0.0:
 			primary.loot_until = elapsed+float(stats.loot_seconds)
 			primary.loot_bonus = maxf(float(primary.get("loot_bonus",0.0)),float(stats.get("loot_bonus",0.0)))
@@ -1318,6 +1320,7 @@ func _resolve_instant() -> void:
 		var shot: Dictionary = {"time": elapsed, "slot": slot, "type": defender.type,
 			"target_id": primary.id, "from": slots[slot], "to": impact, "secondary": [], "radius": stats.radius}
 		if placed_mark: shot.mark = mark_state
+		if float(stats.get("loot_seconds",0.0)) > 0.0: shot.loot = loot_state
 		event_log.append("%.9f tir E%d cible %d" % [elapsed, slot + 1, primary.id])
 		if family(defender.type) in [2, 3, 4]:
 			var hit_ids: Array[int] = [primary.id]

@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.alliance.veteran",
+  "facing": "right",
+  "foot": [
+    78,
+    165
+  ],
+  "display_height": 77.88,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        168,
+        177
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 48,
+      "frame_size": [
+        168,
+        177
+      ],
+      "duration": 0.96,
+      "mode": "event"
+    }
+  }
+}

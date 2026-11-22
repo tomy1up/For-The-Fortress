@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.237**. Animations : tir et réarmement du Vétéran royal, lancer de jeton du Pillard gobelin ; le badge de pillage du Pillard apparaît à l'impact du jeton. [Notes](design/essais/v0237_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.237).
+
 **Prototype v0.236**. Difficulté : recalibrage terminé, 185 missions de l'Alliance et 174 de la Horde dans la cible ; nouvelle mesure avec un choix de bonus guidé (la meilleure armée finit vers 90 % de marge dans les deux factions). Animations : Prêtre guerrier, Chamane des marais, Totem de guerre, Ancien des tribus, Marchand mercenaire, Piégeur nain et Alchimiste gnome. Réglages à confirmer en partie réelle. [Notes](design/essais/v0236_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.236).
 
 **Prototype v0.235**. Difficulté de la Horde : nouvelle composition de référence des tests à partir de la mission 71 (deux sapeurs et un chaman, décision du porteur) et suites des chapitres 4, 7 et 13 jouées avec les règles de bonus actuelles ; PV recalibrés, meilleure marge moyenne 59 % (69 % en v0.234), 174 missions sur 200 dans la cible. Réglages à confirmer en partie réelle. Animation : signal au fanion de l'Éclaireur-observateur, losange affiché au geste pointé. [Notes](design/essais/v0235_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.235).

@@ -352,12 +352,17 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 22 novembre 2026 — Claude Code (v0.236 publiée)
+## État au 22 novembre 2026 — Claude Code (v0.237 publiée)
+
+- **v0.237** : Vétéran royal (type 40) et Pillard gobelin (type 41) branchés (`SINGLE_MUZZLES`, `NO_FLIGHT_TYPES`, `PILLAGER_TYPE`, `_draw_token`). Badge de pillage du Pillard à l'impact : le modèle note `shot.loot` (`new`/`renewed`, sans effet sur le combat), la vue l'affiche via `loot_display_pending`. Contrôles dans `test_shop_effects.gd` (113). Régression 144/144 (197 401 contrôles Godot, 17 tests Python), validateur 57 dossiers, paquet 1 050 cas et 576 sources, 36 captures inspectées.
+- À faire ensuite (v0.238) : Poseur de mines (type 42, lot `9aae568`, validé dans `bffb9e6`) : disque à 0,40 s (index 25), un tour sur l'arc existant de 15 px, impact seul derrière le repère.
+- Attention : une fusion de `art/codex` refusée pendant la vérification a réécrit les fins de ligne de fichiers modifiés (LF vers CRLF) et cassé la comparaison des sources du paquet ; ne pas fusionner pendant une vérification.
+
+### v0.236 (publiée)
 
 - **v0.236, recalibrage terminé** (demande du porteur : « Finir l'équilibrage ») : table de départ pour les deux factions (cible 55 %, plafond de la référence de la mission), ajustée par dix suites de campagne par pas de 3 points (`scratchpad iter236`). Alliance : 12 missions relevées (chapitres 7 et 13 surtout) ; Horde : 9. Mesure : Alliance 54,7 % (185 missions dans la cible), Horde 58,5 % (174). Fiche : `design/Rebalancage_v0236.md`.
 - **Choix de bonus guidé** dans `tools/faction_study.gd` (`POLICY=look`, copie exacte de partie `_clone`, vérifiée sur dix parties) : meilleure marge vers 90 % dans les deux factions, aucune mission perdue sur aucun tirage. La dépendance de la Horde au tirage vient de la stratégie « première offre ». Question au porteur (O-028) : faut-il viser la cible avec un joueur qui choisit bien ses bonus ?
 - Contrôles v0.236 : régression 144/144 (197 379 contrôles Godot, 17 tests Python), validateur 55 dossiers, paquet 1 050 cas et 568 sources, 126 captures des gestes inspectées, PV de la mission 125 vérifiés dans les deux factions.
-- **À faire ensuite (v0.237)** : Vétéran royal (type 40, lot `20550ee`, validé dans `f34127a`) déjà fusionné dans `design/essais/gestes_combat/veteran_royal/` ; script d'intégration prêt (carreau à 0,36 s, repère `(24.8734,-51.3522)`, impact seul derrière la glissière).
 - **Gestes intégrés** : types 32 (Prêtre, trois vues `PRIEST_*`), 33 (Chamane, feu follet), 34 (Totem, impulsion et losange à 0,42 s), 35 (Ancien, onde), 36 (Marchand, pièce), 37 (Piégeur, cartouche en arc), 39 (Alchimiste, fiole ambrée). Repères dans `SINGLE_MUZZLES` ; losange différé généralisé (`MARK_DISPLAY_DELAYS`, `mark_display_pending`). Le Vétéran royal (`design/essais/gestes_combat/veteran_royal/`) n'est pas branché.
 
 ### v0.235 (publiée)

@@ -18,6 +18,8 @@ func run_checks() -> void:
 	verify_mercenary_coin()
 	verify_trapper_cartridge()
 	verify_alchemist_vial()
+	verify_veteran_bolt()
+	verify_pillager_token()
 	verify_explosion_events()
 	verify_resources()
 	print("SHOP_EFFECTS_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
@@ -178,6 +180,59 @@ func verify_alchemist_vial() -> void:
 		var origin: Vector2 = View.project(shot.from)+Vector2(tip.x*View.shot_facing(shot),tip.y)
 		check(View.shot_origin(shot).is_equal_approx(origin),"Fiole partie de la main ouverte, repère retourné avec la pose")
 		check(View.projectile_position(shot,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(origin.lerp(View.project(shot.to)+Vector2(0,-12),0.5)-Vector2(0,10)),"Fiole : arc existant de 10 px")
+
+## Vétéran royal (type 40, lot 20550ee, validé dans f34127a), v0.237 : carreau à 0,36 s (image 18) depuis la glissière, en ligne droite ; impact seul si la cible est derrière.
+func verify_veteran_bolt() -> void:
+	var veteran: int = Shop.card("alliance.veteran").type
+	check(veteran == 40 and is_equal_approx(float(View.LAUNCH_DELAYS[veteran]),0.36) and veteran in View.NO_FLIGHT_TYPES,"Vétéran royal : carreau à 0,36 s, impact seul derrière la glissière")
+	var spec: Dictionary = Library.spec_for("defender.alliance.veteran")
+	check(not spec.is_empty() and int(spec.animations.attack.frames) == 48 and is_equal_approx(float(spec.animations.attack.duration),0.96) and is_equal_approx(18.0*0.96/48.0,0.36),"Tir et réarmement de 48 images sur 0,96 s chargés, départ sur l'image 18")
+	var tip: Vector2 = View.SINGLE_MUZZLES[veteran]
+	for target in [Vector2(9,5),Vector2(1,5),Vector2(5,9)]:
+		var shot := {"time":1.0,"slot":2,"type":veteran,"target_id":3,"from":Vector2(5,5),"to":target,"secondary":[],"radius":0.0}
+		var origin: Vector2 = View.project(shot.from)+Vector2(tip.x*View.shot_facing(shot),tip.y)
+		var impact: Vector2 = View.project(shot.to)+Vector2(0,-12)
+		check(View.shot_origin(shot).is_equal_approx(origin),"Carreau parti de la glissière, repère retourné avec la pose")
+		if (impact.x-origin.x)*View.shot_facing(shot) > 0.0:
+			check(View.flight_time(shot) == View.PROJECTILE_FLIGHT and View.projectile_position(shot,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(origin.lerp(impact,0.5)),"Carreau en ligne droite")
+		else: check(View.flight_time(shot) == 0.0,"Cible derrière la glissière : impact seul")
+
+## Pillard gobelin (type 41, lot 0ab5281, validé dans 0d5d807), v0.237 : jeton à 0,36 s, un tour sur l'arc de 8 px, badge de pillage à l'impact.
+func verify_pillager_token() -> void:
+	var pillager: int = Shop.card("horde.pillager").type
+	check(pillager == View.PILLAGER_TYPE and is_equal_approx(float(View.LAUNCH_DELAYS[pillager]),0.36) and pillager in View.NO_FLIGHT_TYPES,"Pillard gobelin : jeton lancé à 0,36 s, impact seul à bout portant")
+	var spec: Dictionary = Library.spec_for("defender.horde.pillager")
+	check(not spec.is_empty() and int(spec.animations.attack.frames) == 48 and is_equal_approx(float(spec.animations.attack.duration),0.96) and is_equal_approx(18.0*0.96/48.0,0.36),"Lancer de 48 images sur 0,96 s chargé, départ sur l'image 18")
+	var tip: Vector2 = View.SINGLE_MUZZLES[pillager]
+	var ahead := {"time":5.0,"slot":2,"type":pillager,"target_id":6,"from":Vector2(5,5),"to":Vector2(9,5),"secondary":[],"radius":0.0,"loot":"new"}
+	var origin: Vector2 = View.project(ahead.from)+Vector2(tip.x,tip.y)
+	check(View.shot_origin(ahead).is_equal_approx(origin) and View.flight_time(ahead) == View.PROJECTILE_FLIGHT,"Jeton parti de la main ouverte, avec vol vers une cible devant")
+	check(View.projectile_position(ahead,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(origin.lerp(View.project(ahead.to)+Vector2(0,-12),0.5)-Vector2(0,8)),"Jeton : arc existant de 8 px")
+	var enemy: Dictionary = Model.make_enemy(1,1,0.0,-1,100);enemy.id = 6;enemy.loot_until = 9.0
+	check(View.enemy_badges(enemy,5.47,[ahead]).is_empty() and View.enemy_badges(enemy,5.48,[ahead]) == ["loot"],"Pillage nouveau : badge à l'impact du jeton (0,48 s)")
+	var close: Dictionary = ahead.duplicate();close.to = Vector2(5.2,5.2) # cible juste sous le pillard : derrière sa main à l'écran
+	check(View.flight_time(close) == 0.0 and View.enemy_badges(enemy,5.35,[close]).is_empty() and View.enemy_badges(enemy,5.36,[close]) == ["loot"],"Sans vol à bout portant : badge à 0,36 s")
+	var renewed: Dictionary = ahead.duplicate();renewed.loot = "renewed"
+	check(View.enemy_badges(enemy,5.1,[renewed]) == ["loot"],"Renouvellement : le badge déjà visible reste affiché")
+	var merchant := {"time":5.2,"slot":3,"type":View.COIN_TYPE,"target_id":6,"from":Vector2(3,2),"to":Vector2(4,3),"secondary":[],"radius":0.0,"loot":"renewed"}
+	check(View.enemy_badges(enemy,5.19,[ahead,merchant]).is_empty() and View.enemy_badges(enemy,5.2,[ahead,merchant]) == ["loot"],"Pillage du Marchand pendant le vol du jeton : affiché aussitôt")
+	var coin := {"time":5.0,"slot":3,"type":View.COIN_TYPE,"target_id":6,"from":Vector2(3,2),"to":Vector2(4,3),"secondary":[],"radius":0.0,"loot":"new"}
+	check(View.enemy_badges(enemy,5.0,[coin]) == ["loot"],"Marchand mercenaire : badge immédiat, comme avant")
+	# Moteur : le tir du Pillard note l'état du pillage posé, sans changer le pillage.
+	var model := Model.new(true)
+	check(model.configure_auxiliary(pillager),"Pillard gobelin accepté comme renfort")
+	model.select_faction(1);model.gold = 2000
+	model.buy(3,pillager)
+	model.start()
+	var fired: Dictionary = {}
+	for step in range(4000):
+		model.advance(0.05)
+		for shot in model.shots:
+			if int(shot.type) == pillager and fired.is_empty(): fired = shot
+		if not fired.is_empty() or not model.active: break
+	check(not fired.is_empty() and str(fired.get("loot","")) == "new","Le premier jeton pose un pillage nouveau")
+	for alive in model.enemies:
+		if int(alive.id) == int(fired.get("target_id",-1)): check(is_equal_approx(float(alive.loot_until),float(fired.time)+4.0),"Le pillage dure toujours 4 s dès le tir")
 
 func verify_explosion_events() -> void:
 	var model := Model.new(true)

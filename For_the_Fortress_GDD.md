@@ -1,6 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.73 — 21 novembre 2026
+Game Design Document — Version 0.74 — 22 novembre 2026
+
+Version 0.237 du jeu (22 novembre 2026) : gestes du Vétéran royal (carreau à 0,36 s) et du Pillard gobelin (jeton à 0,36 s) ; **badge de pillage du Pillard affiché à l'impact du jeton** (MAJ-74), rendu seulement.
 
 Version 0.236 du jeu (21 novembre 2026) : **fin du recalibrage** (MAJ-73) — 185 missions de l'Alliance et 174 de la Horde dans la cible (meilleure marge moyenne 55 et 59 %) ; nouvelle mesure avec un choix de bonus guidé : la meilleure armée finit vers 90 % de marge dans les deux factions et aucune mission n'est perdue, même sur le tirage le moins favorable (O-028). Gestes du Prêtre guerrier, de la Chamane des marais, du Totem de guerre, de l'Ancien des tribus, du Marchand mercenaire, du Piégeur nain et de l'Alchimiste gnome.
 
@@ -18,7 +20,7 @@ Document de référence pour concevoir et développer For the Fortress!, destin�
 
 **Lecture :** les sections 1 à 46 décrivent le socle de combat et sa réalisation ; les sections 47 à 51 organisent le périmètre, les décisions et leur suivi ; les sections 52 à 56 détaillent la campagne, les talents, la sauvegarde et l’état vérifié ; la section 57 rassemble la boutique et ses alternatives ; la section 58 prépare les succès ; la section 59 décrit le chapitre 2 et la Gardienne à l’essai ; la section 60 présente les animations et les souverains ; la section 61 décrit l’atelier des routes convergentes et sa règle de ciblage ; les sections 62 à 66 consolident, depuis la version 0.18 (mises à jour à chaque version), la campagne de 200 missions et ses chapitres, les biomes et leurs affixes, la courbe de difficulté et les récompenses, l’équilibrage des talents et des cartes, le cadre de travail et le journal des versions 0.110 à 0.206. **Pour retrouver une décision passée : le registre de la section 48 (identifiants DEC, CAMP et MAJ), puis la section 62 pour la campagne et la section 63 pour les affixes.** Les calculs du socle portent sur les six défenseurs de départ, sans talents persistants sauf indication contraire. Les spécialisations de niveau 4 et les arbres persistants sont deux systèmes distincts.
 
-**Version documentaire 0.73 ; jeu de référence 0.236.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
+**Version documentaire 0.74 ; jeu de référence 0.237.** Une fonctionnalité réalisée n’implique pas l’approbation définitive de ses réglages. Les statistiques, prix, cartes et effets proposés restent H lorsqu’ils n’ont pas été validés comme valeurs définitives. Les documents datés restent des sources historiques ; les règles consolidées prévalent en cas de contradiction.
 
 Nom de travail — disponibilité juridique à confirmer.
 
@@ -1748,6 +1750,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-51 | **Orientation par défaut des défenseurs : face au tronçon de route le plus proche** au placement et entre les vagues ; en combat, la dernière cible garde la priorité — V | Décision du porteur, 15 novembre 2026 ; `valley_view.gd` (`road_facing`), `tests/test_defender_facing.gd` |
 | MAJ-52 | **Visée inclinée du Tireur d’élite elfe (type 11)** : sept planches (0°, ±8°, ±16°, ±24°), un seul angle pour la pose, l’origine de la flèche et sa direction de départ ; lâcher à 0,27 s — V (geste validé par le porteur) ; angles et lâcher — rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `a2cdab9` ; `tests/test_marksman_aim.gd` |
 | MAJ-53 | **Estoc du Piquier humain (type 14)** : trois planches (−12°, 0°, +12°), la pique est dessinée dans les planches, éclat de contact à 0,256 s à la pointe donnée par angle — V (geste validé par le porteur) ; rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `9a7d3d8` ; `tests/test_marksman_aim.gd` |
+| MAJ-74 | **Badge de pillage du Pillard gobelin à l'impact** du jeton (0,48 s avec vol, 0,36 s sans vol à bout portant), badge déjà visible conservé au renouvellement ; bonus de +120 % et fenêtre de 4 s inchangés — V (porteur, 22 novembre 2026, relayé par Codex), rendu seulement | Décision du porteur, 22 novembre 2026 ; `design/essais/v0237_release_notes.md` |
 | MAJ-73 | **Fin du recalibrage** des PV d'ennemis pour les deux factions (table de départ, ajustement par les suites par pas de 3 points) et mesure avec un choix de bonus guidé — demande V (porteur, 21 novembre 2026 : « Finir l'équilibrage »), coefficients H | Décision du porteur, 21 novembre 2026 ; `design/Rebalancage_v0236.md` |
 | MAJ-72 | **Nouvelle composition de référence de la Horde** pour les suites de campagne : deux sapeurs et un chaman (arbre Démolition) à la place de deux haches et un chaman, à partir de la mission 71 ; suites des chapitres 4, 7 et 13 aux règles de bonus actuelles ; coefficients de la Horde recalculés — changement de référence V (porteur, 21 novembre 2026 : « Changer la référence »), mission de bascule et coefficients H | Décision du porteur, 21 novembre 2026 ; `design/Rebalancage_v0235.md` |
 | MAJ-71 | **Recalibrage des PV d’ennemis avec les 60 bonus** : coefficients par mission et par faction remesurés avec les règles de la v0.233 (moyenne sur trois tirages de bonus, grille par pas de 5 %), même cible (MAJ-69), mission 1 à 100 % — demande V (porteur, 21 novembre 2026 : « Oui, équilibrer »), coefficients H | Décision du porteur, 21 novembre 2026 ; `design/Rebalancage_v0234.md` |
@@ -1953,6 +1956,8 @@ Version 0.71 — 21 novembre 2026 : jeu 0.234. **Recalibrage des PV d'ennemis av
 Version 0.72 — 21 novembre 2026 : jeu 0.235. **Nouvelle composition de référence de la Horde** (MAJ-72, sections 62 et 64) : deux sapeurs et un chaman, arbre Démolition, à partir de la mission 71 ; suites des chapitres 4, 7 et 13 aux règles de bonus actuelles ; coefficients de la Horde des missions 31-40 et 61-200 recalculés (moyenne 126,7 %) ; O-028 mis à jour (décision prise sur la référence, dépendance de la Horde au tirage des bonus à surveiller). Geste de l'Éclaireur-observateur (type 31, signal au fanion, sans projectile ; losange d'une marque nouvelle affiché au geste pointé à 0,32 s, marques déjà visibles conservées ; rendu seulement).
 
 Version 0.73 — 21 novembre 2026 : jeu 0.236. **Fin du recalibrage** (MAJ-73, section 62) : table de départ pour les deux factions, ajustée par les suites de campagne par pas de 3 points ; Alliance 54,7 % de meilleure marge moyenne (185 missions dans la cible), Horde 58,5 % (174). Choix de bonus guidé (`POLICY=look`) : borne haute vers 90 % de marge, dépendance au tirage de la Horde expliquée par la stratégie « première offre » ; O-028 mis à jour. Gestes des types 32 à 37 et 39 (rendu seulement ; losange du Totem de guerre à l'arrivée de son impulsion, à 0,42 s).
+
+Version 0.74 — 22 novembre 2026 : jeu 0.237. Gestes du Vétéran royal (type 40, carreau à 0,36 s, impact seul derrière la glissière) et du Pillard gobelin (type 41, jeton à 0,36 s sur l'arc de 8 px) ; badge de pillage du Pillard à l'impact (MAJ-74) : 0,48 s avec vol, 0,36 s sans vol, badge déjà visible conservé au renouvellement ; rendu seulement.
 
 <a id="s51"></a>
 
@@ -2246,7 +2251,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 21 novembre 2026 (GDD 0.73, jeu 0.236)
+### État au 22 novembre 2026 (GDD 0.74, jeu 0.237)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2268,7 +2273,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.73, jeu 0.236 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.74, jeu 0.237 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2637,5 +2642,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.234 | Recalibrage des PV d'ennemis avec les 60 bonus (trois tirages) : meilleure marge moyenne 56 % (Alliance) et 69 % (Horde) ; Lanceur de masse orc (cinq inclinaisons) , Mage de givre et Sarbacane gobeline (trois visées) animés ; GDD 0.71 |
 | 0.235 | Nouvelle référence de la Horde à partir de la mission 71 (deux sapeurs et un chaman), suites des chapitres 4, 7 et 13 aux règles de bonus actuelles ; meilleure marge moyenne de la Horde 59 % (69 % en v0.234) ; Éclaireur-observateur animé ; GDD 0.72 |
 | 0.236 | Fin du recalibrage (Alliance 185 missions dans la cible, Horde 174), mesure avec choix de bonus guidé ; Prêtre guerrier, Chamane des marais, Totem de guerre, Ancien des tribus, Marchand mercenaire, Piégeur nain et Alchimiste gnome animés ; GDD 0.73 |
+| 0.237 | Vétéran royal et Pillard gobelin animés ; badge de pillage du Pillard à l'impact du jeton ; GDD 0.74 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.
