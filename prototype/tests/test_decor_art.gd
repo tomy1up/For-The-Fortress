@@ -19,6 +19,7 @@ func run_checks() -> void:
 	verify_water()
 	verify_marsh_layers()
 	verify_all_active()
+	verify_slate_props()
 	await verify_rendering()
 	print("DECOR_ART_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
@@ -181,3 +182,34 @@ func verify_all_active() -> void:
 		var board: Dictionary = Model.Maps.for_id(str(definition.map_id))
 		for faction in [0,1]:
 			check(not Decor.props(str(definition.map_id),str(board.decoration),faction).is_empty(),"Mission %d : décor refait affiché (faction %d)" % [number,faction])
+
+## Pins et ardoises des missions 21 à 40 (v0.242, lot 6ecb5d3 de Codex) : pièces dessinées sur les pins et rochers de `scenery_for`, dans leurs cadres.
+func verify_slate_props() -> void:
+	var path: String = ProjectSettings.globalize_path("res://").path_join("../design/essais/ardoises_21_40/Implantation.json")
+	if FileAccess.file_exists(path):
+		var reference: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(path))
+		check(reference.maps.keys().size() == Decor.SLATE_MAPS.size() and reference.maps.keys().all(func(id) -> bool: return Decor.SLATE_MAPS.get(id,[]) == reference.maps[id]),"Choix de pièces par carte conformes à l'implantation de Codex")
+		for key in reference.assets: check(Decor.SLATE_ASSETS[key][1] == Rect2(reference.assets[key].box[0],reference.assets[key].box[1],reference.assets[key].box[2],reference.assets[key].box[3]),"Cadre de la pièce %s conforme" % key)
+	for key in Decor.SLATE_ASSETS:
+		var image: Texture2D = Decor.texture(str(Decor.SLATE_ASSETS[key][0]))
+		check(image != null and image.get_size() == Decor.SLATE_ASSETS[key][1].size*4.0,"Pièce %s dessinée au quadruple de son cadre" % key)
+	var maps: Dictionary = {}
+	for number in range(21,41):
+		var definition: Dictionary = Model.Maps.for_id(str(Catalogue.definition(number).map_id))
+		maps[definition.id] = true
+		var scenery: Array[Dictionary] = View.scenery_for(definition)
+		check(not scenery.is_empty(),"Mission %d : décor présent" % number)
+		for item in scenery:
+			var prop: Dictionary = Decor.slate_prop(str(definition.id),item.kind,int(item.order))
+			check(not prop.is_empty(),"Mission %d : pièce dessinée pour chaque %s" % [number,item.kind])
+			if prop.is_empty(): continue
+			var options: Array = Decor.SLATE_MAPS[definition.id]
+			var expected: String = options[2] if item.kind == "pine" else options[int(item.order)%2]
+			check(prop.texture == Decor.texture(str(Decor.SLATE_ASSETS[expected][0])),"Mission %d : pin de la carte ou rocher selon la parité de l'ordre" % number)
+			var rect: Rect2 = prop.rect
+			var drawn := Rect2(View.project(item.point)+Vector2(rect.position.x*float(prop.scale)*(1.0 if float(prop.facing) > 0.0 else -1.0)-(rect.size.x*float(prop.scale) if float(prop.facing) < 0.0 else 0.0),rect.position.y*float(prop.scale)),rect.size*float(prop.scale))
+			check(View.scenery_bounds(item).grow(0.01).encloses(drawn),"Mission %d : pièce dans le cadre de l'objet, même réduite ou retournée" % number)
+	check(maps.size() == 11 and maps.keys().all(func(id) -> bool: return Decor.SLATE_MAPS.has(id)),"Onze cartes des Ardoises habillées")
+	check(Decor.slate_prop("slate_pass","shrub",1).is_empty() and Decor.slate_prop("valley_ford","pine",1).is_empty() and Decor.slate_prop("marsh_basins","rock",1).is_empty(),"Pas de pièce des Ardoises ailleurs")
+	check(Decor.slate_prop("slate_pass","rock",0).scale == 1.0 and Decor.slate_prop("slate_pass","rock",1).scale == 0.89 and Decor.slate_prop("slate_pass","rock",5).scale == 0.95,"Échelle 1, 0,89 ou 0,95 selon l'ordre")
+	check(Decor.slate_prop("slate_pass","rock",1).facing == -1.0 and Decor.slate_prop("slate_pass","rock",7).facing == 1.0,"Miroir quand l'ordre modulo 5 est inférieur à 2")

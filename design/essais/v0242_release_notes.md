@@ -1,4 +1,4 @@
-# Prototype v0.242 — Tous les décors refaits, marais dessinés, repères compacts, relève du Revenant
+# Prototype v0.242 — Décors refaits et dessinés (Ardoises, marais, chapitres 10 et 16 à 20), repères compacts, relève du Revenant
 
 Habillages de Codex validés par le porteur le 22 novembre 2026. Rendu seulement : aucune règle de jeu ne change.
 
@@ -10,6 +10,11 @@ Habillages de Codex validés par le porteur le 22 novembre 2026. Rendu seulement
   - les côtes et récifs, missions 161 à 180 (lot 8fb925c) ;
   - la nécropole, missions 181 à 200 (lot 8fb925c).
 - Les placements de Codex, adaptés aux routes refondues, sont activés. Toutes les cartes refondues ont désormais leur décor.
+
+## Ardoises, missions 21 à 40
+
+- **Pins et rochers dessinés** (lot 6ecb5d3) : six pièces dessinées remplacent les formes géométriques : deux pins, un cairn, des éboulis, des dalles et des dalles à lichen. Chaque carte a sa sélection, et les pièces sont parfois réduites ou retournées en miroir. Les crêtes reçoivent un pin incliné, les cairns marquent les portes et les passages. Les positions, les routes et les emplacements ne changent pas.
+- Le décor du Gué (missions 1 à 20) est livré par Codex et attend l'avis du porteur.
 
 ## Marais, missions 41 à 60
 

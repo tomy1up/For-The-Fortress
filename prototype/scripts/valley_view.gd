@@ -1565,6 +1565,12 @@ static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
 
 func _draw_terrain_detail(item: Dictionary) -> void:
 	var center: Vector2 = project(item.point)
+	var slate: Dictionary = DecorArt.slate_prop(str(model.map_definition.get("id","")) if model != null else "",item.kind,int(item.get("order",0)))
+	if not slate.is_empty(): # Pins et ardoises dessinés par Codex (missions 21 à 40).
+		draw_set_transform(center,0.0,Vector2(float(slate.facing)*float(slate.scale),float(slate.scale)))
+		draw_texture_rect(slate.texture,slate.rect,false)
+		draw_set_transform(Vector2.ZERO)
+		return
 	if item.kind in ["willow","ruin","reeds"]:
 		var art: Texture2D = MarshArt.prop_texture(str(model.map_definition.get("id","")) if model != null else "",item.kind,int(item.get("order",0)))
 		if art != null: draw_texture_rect(art,MarshArt.bounds(center,item.kind),false) # Pièces dessinées par Codex (missions 41 à 50).

@@ -63,6 +63,33 @@ static func overlay(decoration: String) -> Dictionary:
 ## jusqu'à ce que Codex en propose de nouvelles (voir ECHANGES_CLAUDE_VERS_CODEX.md).
 const REWORKED_MAPS: Array[String] = [] # Toutes les cartes refondues ont leur décor depuis la v0.242.
 
+## Pins et ardoises des missions 21 à 40 (lot 6ecb5d3 de Codex, validé par le porteur le 22 novembre 2026) : sur les onze cartes des Ardoises, les pins et
+## rochers de `scenery_for` prennent les pièces dessinées de leur carte (pin pour les pins, rocher selon la parité de l'ordre de placement), réduites
+## (1, 0,89 ou 0,95 selon l'ordre modulo 3) et parfois tournées en miroir (ordre modulo 5 inférieur à 2), dans les cadres de `scenery_bounds`.
+const SLATE_ASSETS := {"pin_ardoises":["ardoises/pin_ardoises.png",Rect2(-16,-46,32,60)], "pin_des_cretes":["ardoises/pin_des_cretes.png",Rect2(-16,-46,32,60)], "cairn":["ardoises/cairn.png",Rect2(-13,-14,26,23)], "eboulis":["ardoises/eboulis.png",Rect2(-13,-14,26,23)], "dalles":["ardoises/dalles.png",Rect2(-13,-14,26,23)], "lichen":["ardoises/lichen.png",Rect2(-13,-14,26,23)]}
+const SLATE_MAPS := {
+	"slate_pass":["lichen","dalles","pin_ardoises"],
+	"slate_ridges":["dalles","eboulis","pin_des_cretes"],
+	"slate_scree":["eboulis","dalles","pin_des_cretes"],
+	"slate_ravine":["dalles","lichen","pin_ardoises"],
+	"slate_gates":["cairn","dalles","pin_des_cretes"],
+	"slate_crossing":["cairn","lichen","pin_ardoises"],
+	"slate_laces":["eboulis","lichen","pin_des_cretes"],
+	"slate_cirque":["lichen","dalles","pin_ardoises"],
+	"slate_high_passages":["cairn","eboulis","pin_des_cretes"],
+	"slate_bastion":["cairn","dalles","pin_ardoises"],
+	"slate_bastion_winds":["eboulis","cairn","pin_des_cretes"]}
+const SLATE_SCALES: Array[float] = [1.0,0.89,0.95]
+
+## Pièce dessinée d'un pin ou d'un rocher des Ardoises : {"texture", "rect" (autour du point d'appui), "scale", "facing"} ou {} (dessin vectoriel).
+static func slate_prop(map_id: String, kind: String, order: int) -> Dictionary:
+	if not SLATE_MAPS.has(map_id) or kind not in ["pine","rock"]: return {}
+	var options: Array = SLATE_MAPS[map_id]
+	var asset: Array = SLATE_ASSETS[options[2] if kind == "pine" else options[order%2]]
+	var image: Texture2D = texture(str(asset[0]))
+	if image == null: return {}
+	return {"texture":image,"rect":asset[1],"scale":SLATE_SCALES[order%3],"facing":-1.0 if order%5 < 2 else 1.0}
+
 static func props(map_id: String, decoration: String, played_faction: int) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	if map_id in REWORKED_MAPS: return result
