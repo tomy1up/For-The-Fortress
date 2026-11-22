@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-22 — Bassins des marais, missions 46 à 50 (ouvert)
 
-Cinq PNG dans `prototype/assets/decor/marais/` pour les 18 bassins de `marsh_causeway`, `marsh_fords`, `marsh_islets`, `marsh_nave` et `marsh_sanctuary`. Même branchement que le lot 41–45 validé. Réutiliser ses quatre pièces avec le mur effondré à la Nef. Les paramètres des calques sont dans `design/essais/marais_46_50/Implantation.json`. Prévoir les cinq fichiers dans les listes d’export après retour du porteur. [Fiche](design/Visuels_Marais_46_50.md).
+Cinq PNG dans `prototype/assets/decor/marais/` pour les 18 bassins de `marsh_causeway`, `marsh_fords`, `marsh_islets`, `marsh_nave` et `marsh_sanctuary`. Même branchement que le lot 41–45 validé. Réutiliser ses quatre pièces avec le mur effondré à la Nef. Les paramètres des calques sont dans `design/essais/marais_46_50/Implantation.json`. Lot 65638f3 validé par le porteur le 22 novembre 2026. Prévoir les cinq fichiers dans les listes d’export. [Fiche](design/Visuels_Marais_46_50.md).
 
 ### 2026-11-22 — Bassins et ruines des marais, missions 41 à 45 (ouvert)
 
