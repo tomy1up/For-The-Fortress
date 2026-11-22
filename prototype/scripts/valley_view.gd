@@ -2409,12 +2409,32 @@ static func affix_banner(model) -> Dictionary:
 	if not effect.is_empty(): text += " · " + effect
 	return {"text":text,"state":str(status.state),"fraction":clampf(remaining/phase_length,0.0,1.0) if phase_length > 0.0 else 0.0}
 
+## Place du bandeau d'affixe (v0.239) : centré en haut du plateau ; s'il touche une étiquette d'entrée (6 px de marge), il glisse d'abord sur le côté, puis au-dessus
+## ou au-dessous des étiquettes (missions 116, 117 et 120 de la Tempête de sable). Les étiquettes ne dépendent que de la carte : la place reste la même pendant l'annonce et la rafale.
+const AFFIX_BANNER_SIZE := Vector2(430,34)
+const AFFIX_BANNER_MARGIN := 6.0
+static func affix_banner_area(labels: Array) -> Rect2:
+	var obstacles: Array[Rect2] = []
+	for label in labels: obstacles.append(Rect2(label.area).grow(AFFIX_BANNER_MARGIN))
+	var rows: Array[float] = [112.0]
+	for obstacle in obstacles:
+		if obstacle.position.y-AFFIX_BANNER_SIZE.y >= 56.0: rows.append(obstacle.position.y-AFFIX_BANNER_SIZE.y)
+		rows.append(obstacle.end.y)
+	for y in rows:
+		for step in range(0,41):
+			for side in ([0.0] if step == 0 else [-1.0,1.0]):
+				var x: float = 640.0-AFFIX_BANNER_SIZE.x*0.5+side*float(step)*10.0
+				if x < 320.0 or x+AFFIX_BANNER_SIZE.x > 1260.0: continue
+				var area := Rect2(Vector2(x,y),AFFIX_BANNER_SIZE)
+				if obstacles.all(func(obstacle: Rect2) -> bool: return not obstacle.intersects(area)): return area
+	return Rect2(Vector2(640.0-AFFIX_BANNER_SIZE.x*0.5,112.0),AFFIX_BANNER_SIZE)
+
 func _draw_affix_banner() -> void:
 	var banner: Dictionary = affix_banner(model)
 	if banner.is_empty(): return
 	var font: Font = ThemeDB.fallback_font
-	var size := Vector2(430,34)
-	var area := Rect2(Vector2(640.0-size.x*0.5,112.0),size)
+	var size := AFFIX_BANNER_SIZE
+	var area: Rect2 = affix_banner_area(entry_label_layouts())
 	var warning: bool = banner.state == "warning"
 	var pulse: float = 0.5+0.5*sin(_ambient_clock()*8.0)
 	var accent: Color = Color(1.0,0.62,0.16) if warning else Color(0.95,0.32,0.26) if banner.state == "active" else Color(0.6,0.8,0.95)

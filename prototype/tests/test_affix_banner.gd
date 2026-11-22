@@ -56,4 +56,30 @@ func run_checks() -> void:
 		await process_frame
 		check(true,"Dessin du bandeau")
 		view.free()
+	verify_banner_clearance()
 	print("AFFIX_BANNER_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
+
+## Le bandeau d'affixe ne chevauche aucune étiquette d'entrée (v0.239, signalé sur les missions 116, 117 et 120 de la Tempête de sable), pour toutes les missions à affixe, avec ou sans le décompte d'ennemis.
+func verify_banner_clearance() -> void:
+	const Catalogue = preload("res://scripts/campaign_catalogue.gd")
+	var view = View.new()
+	var moved: Array[int] = []
+	for number in range(1,201):
+		var entry: Dictionary = Catalogue.definition(number)
+		if entry.get("combat_affix",{}).is_empty(): continue
+		var m = Model.new(true,Model.Maps.for_id(str(entry.map_id)))
+		view.model = m
+		for with_counts in [false,true]:
+			var forecast: Array[Dictionary] = []
+			if with_counts:
+				for route in m.routes: forecast.append({"route_id":route.id,"count":12})
+			view.entry_forecast = forecast
+			var labels: Array = view.entry_label_layouts()
+			var area: Rect2 = View.affix_banner_area(labels)
+			check(labels.all(func(label) -> bool: return not Rect2(label.area).grow(View.AFFIX_BANNER_MARGIN-0.5).intersects(area)),"Mission %d : le bandeau d'affixe laisse de la place aux étiquettes d'entrée" % number)
+			check(area.position.x >= 320.0 and area.end.x <= 1260.0 and area.position.y >= 56.0,"Mission %d : le bandeau reste au-dessus du plateau, hors des panneaux" % number)
+			if not with_counts and not area.position.is_equal_approx(Vector2(425,112)): moved.append(number)
+	for number in [116,117,120]: check(number in moved,"Mission %d : le bandeau s'écarte de l'étiquette « Entrée 1 »" % number)
+	check(View.affix_banner_area([]) == Rect2(Vector2(425,112),View.AFFIX_BANNER_SIZE),"Sans étiquette : place habituelle")
+	print("BANNER_MOVED=",moved)
+	view.free()

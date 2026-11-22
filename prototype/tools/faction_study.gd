@@ -54,7 +54,7 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 	types = types.duplicate()
 	types.sort_custom(func(x, y): return m.purchase_cost(x) < m.purchase_cost(y)) # les deux moins chères à l'ouverture, la plus chère à la vague 2
 	if not (m.buy(slots[0],types[0]) and m.buy(slots[1],types[1])): return {"result":"refus","hp":-1,"max":m.max_hp}
-	_play_waves(m,1,slots,types,OS.get_environment("POLICY") == "look")
+	_play_waves(m,1,slots,types,OS.get_environment("POLICY") in ["look","wise"])
 	return {"result":m.phase,"hp":m.fortress_hp,"max":m.max_hp}
 
 ## Suite de la partie à partir de la vague `first` (achats et améliorations fixes). `look` : choix de bonus guidé par simulation (voir `_look_pick`).
@@ -69,7 +69,8 @@ func _play_waves(m, first: int, slots: Array, types: Array, look: bool) -> void:
 		m.advance(10000)
 		if m.phase == "defeat": break
 		if m.phase == "bonus":
-			if look: _look_pick(m,wave,slots,types)
+			if look and OS.get_environment("POLICY") == "wise": _wise_pick(m,wave,slots,types)
+			elif look: _look_pick(m,wave,slots,types)
 			else: m.choose_bonus(_pick(m))
 		if wave < 10: m.prepare_next_wave()
 
@@ -91,6 +92,35 @@ func _look_pick(m, wave: int, slots: Array, types: Array) -> void:
 	if best_reroll: m.reroll_bonus()
 	m.choose_bonus(best_code)
 
+## POLICY=wise (v0.238) : joueur avisé sans voyance. Comme `look`, chaque offre est essayée sur une copie jouée jusqu'au bout, mais la copie reçoit un autre tirage aléatoire :
+## les offres des choix suivants ne sont pas celles de la vraie partie (le hasard du modèle ne sert qu'aux offres de bonus). La relance est jugée sur un tirage d'offres fictif,
+## puis, si elle est retenue, les vraies nouvelles offres sont jugées de la même façon. Le joueur sait ce que fait chaque bonus pour son armée, sans connaître la suite des tirages.
+func _wise_score(base, code: int, wave: int, slots: Array, types: Array, salt: int) -> float:
+	var trial = _clone(base)
+	trial.rng.seed = hash([str(base.rng.state),code,salt,wave])
+	trial.choose_bonus(code)
+	if wave < 10:
+		trial.prepare_next_wave()
+		_play_waves(trial,wave+1,slots,types,false)
+	return (1000.0 if trial.phase == "victory" else 0.0)+float(trial.fortress_hp)*10.0+float(trial.wave)
+
+func _wise_best(m, wave: int, slots: Array, types: Array, salt: int) -> Dictionary:
+	var best := {"code":int(m.bonus_offer[0]),"score":-INF}
+	for code in m.bonus_offer.duplicate():
+		var score: float = _wise_score(m,int(code),wave,slots,types,salt)
+		if score > float(best.score): best = {"code":int(code),"score":score}
+	return best
+
+func _wise_pick(m, wave: int, slots: Array, types: Array) -> void:
+	var best: Dictionary = _wise_best(m,wave,slots,types,1)
+	if m.rerolls_available() > 0:
+		var guess = _clone(m)
+		guess.rng.seed = hash([str(m.rng.state),"relance",wave])
+		if guess.reroll_bonus() and float(_wise_best(guess,wave,slots,types,2).score) > float(best.score):
+			m.reroll_bonus()
+			best = _wise_best(m,wave,slots,types,3)
+	m.choose_bonus(int(best.code))
+
 ## Copie complète d'une partie en cours (variables du script, tableaux et dictionnaires recopiés, générateur aléatoire au même état).
 func _clone(m):
 	var copy = Model.new(true,m.map_definition)
@@ -104,7 +134,7 @@ func _clone(m):
 		else: copy.set(property.name,value)
 	return copy
 
-## POLICY=look : choix guidé par simulation (`_look_pick`). POLICY=safe : écarte les bonus à contrepartie (Pari risqué, Forteresse blindée, Élite sacrifiée : codes 19, 23 et 24) quand une autre offre existe ; sinon la première offre, comme avant.
+## POLICY=look : choix guidé par simulation (`_look_pick`). POLICY=wise : joueur avisé sans voyance (`_wise_pick`). POLICY=safe : écarte les bonus à contrepartie (Pari risqué, Forteresse blindée, Élite sacrifiée : codes 19, 23 et 24) quand une autre offre existe ; sinon la première offre, comme avant.
 func _pick(m) -> int:
 	if OS.get_environment("POLICY") == "ref": return Model.reference_bonus(m.bonus_offer) # choix de bonus des tests de chapitre
 	if OS.get_environment("POLICY") == "safe":
