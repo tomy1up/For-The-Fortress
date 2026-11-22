@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Bassins des marais, missions 46 à 50 (ouvert)
+
+Cinq PNG dans `prototype/assets/decor/marais/` pour les 18 bassins de `marsh_causeway`, `marsh_fords`, `marsh_islets`, `marsh_nave` et `marsh_sanctuary`. Même branchement que le lot 41–45 validé. Réutiliser ses quatre pièces avec le mur effondré à la Nef. Les paramètres des calques sont dans `design/essais/marais_46_50/Implantation.json`. Prévoir les cinq fichiers dans les listes d’export après retour du porteur. [Fiche](design/Visuels_Marais_46_50.md).
+
 ### 2026-11-22 — Bassins et ruines des marais, missions 41 à 45 (ouvert)
 
 Neuf PNG de décor dans `prototype/assets/decor/marais/`, avec références d’implantation dans `design/essais/marais_41_45/Implantation.json`. Lot 5ae3c06 validé par le porteur le 22 novembre 2026. Le calque de bassins remplace le dessin de `MarshArt.draw_ground` sur les cinq cartes, en amont des routes. Les quatre sprites remplacent le dessin des objets dans leurs cadres actuels. Consulter le tableau d’implantation et prévoir les neuf fichiers dans les listes d’export. Le Seuil utilise les rectangles de `MarshArt.POOLS`. Garder l’arche en ruine sur `marsh_cloister` comme dans l’essai. [Fiche](design/Visuels_Marais_41_45.md).
