@@ -1762,8 +1762,31 @@ func _draw() -> void:
 
 ## Éliminations récentes : planche de mort quand l'ennemi en a une pour sa direction, sinon fondu de sa pose courante (orientation et équipement conservés)
 ## et bref éclat, regroupé quand plusieurs ennemis ordinaires tombent au même endroit au même moment.
+## Éclat au sol commun aux deux capitaines de garnison (lot 17c7c760 de Codex, validé par le porteur le 22 novembre 2026) : la planche
+## `effect.garrison_elimination/death` (0,25 s) se joue au point d'appui à l'instant visuel de l'élimination (après le vol du projectile) et remplace
+## les particules génériques de la Garnison ; la flexion, le fondu et la planche de mort du capitaine sont conservés. Des éliminations proches
+## (moins de 43 px et 45 ms d'écart) partagent un éclat centré, agrandi de 14 % par capitaine supplémentaire jusqu'à trois.
+const GARRISON_GLINT_ID := "effect.garrison_elimination"
+const GLINT_MERGE_DISTANCE := 43.0
+const GLINT_MERGE_TIME := 0.045
+const GLINT_GROWTH := 0.14
+
+static func merge_glint(glints: Array[Dictionary], point: Vector2, age: float) -> void:
+	for glint in glints:
+		if glint.point.distance_to(point) >= GLINT_MERGE_DISTANCE or absf(float(glint.age)-age) >= GLINT_MERGE_TIME: continue
+		glint.point = (glint.point*float(glint.count)+point)/float(glint.count+1)
+		glint.count += 1
+		return
+	glints.append({"point":point,"age":age,"count":1})
+
+static func glint_scale(count: int) -> float:
+	return 1.0+GLINT_GROWTH*float(clampi(count,1,3)-1)
+
 func _draw_eliminations() -> void:
 	var bursts: Array[Dictionary] = []
+	var glints: Array[Dictionary] = []
+	var glint_spec: Dictionary = SheetAnimations.spec_for(GARRISON_GLINT_ID)
+	var glint_duration: float = float(glint_spec.animations.death.duration) if not glint_spec.is_empty() and glint_spec.animations.has("death") and SheetAnimations.texture_for(GARRISON_GLINT_ID,glint_spec.animations.death) != null else 0.0
 	for effect in recent_eliminations(maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window())):
 		var event: Dictionary = effect.event
 		var age: float = effect.age
@@ -1773,6 +1796,7 @@ func _draw_eliminations() -> void:
 		var enemy := {"id":event.enemy_id,"type":type,"distance":float(event.get("distance",0.0)),"route_id":event.get("route_id",""),"hp":0.0}
 		var motion := EnemyWalkArt.path_motion(enemy.distance,model.enemy_route_points(enemy),AXIS)
 		var state: String = SheetAnimations.death_state(spec,motion.get("direction",Vector2.ZERO))
+		if type == Model.Garrison.TYPE and glint_duration > 0.0 and age >= 0.0 and age < glint_duration: merge_glint(glints,project(event.point),age)
 		if state != "" and age >= 0.0:
 			_draw_sheet_death(id,state,event,age)
 			continue
@@ -1783,6 +1807,7 @@ func _draw_eliminations() -> void:
 			continue
 		if age >= duration: continue
 		if type not in BOSS_TYPES: _draw_fading_enemy(enemy,event,age,duration,type in ELITE_TYPES)
+		if type == Model.Garrison.TYPE and glint_duration > 0.0: continue # L'éclat remplace les particules génériques.
 		var point: Vector2 = project(event.point)
 		var merged: bool = false
 		if type not in BOSS_TYPES and type not in ELITE_TYPES:
@@ -1793,6 +1818,12 @@ func _draw_eliminations() -> void:
 	for burst in bursts:
 		for particle in elimination_particles(burst.event,burst.age,burst.crowd):
 			draw_circle(particle.point,particle.radius,Color(Color("d6c7a6"),particle.alpha))
+	for glint in glints:
+		var anim: Dictionary = glint_spec.animations.death
+		var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,0.0,float(glint.age))))
+		var rect: Rect2 = SheetAnimations.destination(glint_spec,anim)
+		var scale: float = glint_scale(int(glint.count))
+		draw_texture_rect_region(SheetAnimations.texture_for(GARRISON_GLINT_ID,anim),Rect2(glint.point+rect.position*scale,rect.size*scale),region)
 
 ## Pose courante de l'ennemi éliminé, qui s'éclaircit jusqu'à disparaître ; les élites fléchissent légèrement sur place.
 func _draw_fading_enemy(enemy: Dictionary, event: Dictionary, age: float, duration: float, flex: bool, flash: bool = true) -> void:

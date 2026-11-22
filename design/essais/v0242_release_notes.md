@@ -28,6 +28,11 @@ Habillages de Codex validés par le porteur le 22 novembre 2026. Rendu seulement
 - **Relève sans glissement** (signalé par Codex, lot 7cdfeaf). Le Revenant continue d'avancer pendant ses 0,72 s de relève : la règle de combat ne change pas, et il se relève toujours avec 50 % de ses PV. Ses premières poses basses glissaient pourtant d'environ 20 px sur la route.
 - Son appui reste maintenant au point de chute pendant les poses basses (0,27 s). Il rejoint ensuite progressivement sa position de marche le long de la route, virages compris. Les tirs et le survol gardent sa position réelle. Réglage de prototype à confirmer.
 
+## Garnison
+
+- **Éclat d'élimination des capitaines** (lot 17c7c760) : quand un capitaine de garnison, humain ou orc, tombe, un éclat ambré de 0,25 s marque le sol à ses pieds, au moment où le projectile arrive. Il remplace les particules génériques. Le capitaine garde sa flexion, son fondu ou sa planche de mort.
+- Des capitaines tombés presque ensemble, à moins de 43 px et 45 ms d'écart, partagent un seul éclat centré, un peu plus grand. Les seuils sont des réglages de prototype à confirmer.
+
 ## Contrôles
 
 À compléter après la vérification.

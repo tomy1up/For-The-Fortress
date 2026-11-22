@@ -55,5 +55,33 @@ func run_checks() -> void:
 	m._apply_curse(m.defenders[1].instance_id,0,2.0)
 	var shot_count: int = m.shots.size();m.advance(1.0)
 	check(m.elimination_events.size() == 1 and m.elimination_events[0].enemy_id == 0 and m.shots.size() == shot_count,"Un tick létal déclenche aussi la dissipation sans nouveau tir")
+	verify_garrison_glint()
 	print("ELIMINATION_EFFECTS_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(0 if failures == 0 else 1)
+
+## Éclat au sol des capitaines de garnison (v0.242, lot 17c7c760 de Codex) : planche de 0,25 s au point d'appui après le vol du projectile,
+## à la place des particules génériques ; regroupement des éliminations proches en un éclat centré, agrandi de 14 % par capitaine jusqu'à trois.
+func verify_garrison_glint() -> void:
+	const Library = preload("res://scripts/animation_library.gd")
+	var spec: Dictionary = Library.spec_for(View.GARRISON_GLINT_ID)
+	check(not spec.is_empty() and spec.animations.has("death"),"Planche de l'éclat chargée")
+	if spec.is_empty(): return
+	var anim: Dictionary = spec.animations.death
+	check(int(anim.frames) == 12 and str(anim.mode) == "event" and is_equal_approx(float(anim.duration),0.25) and Library.texture_for(View.GARRISON_GLINT_ID,anim) != null,"Éclat : douze images en 0,25 s")
+	var glints: Array[Dictionary] = []
+	View.merge_glint(glints,Vector2(500,300),0.10)
+	View.merge_glint(glints,Vector2(530,300),0.12)
+	View.merge_glint(glints,Vector2(515,320),0.13)
+	check(glints.size() == 1 and int(glints[0].count) == 3 and glints[0].point.is_equal_approx(Vector2(515,306.6666667)),"Trois capitaines tombés ensemble : un seul éclat, centré")
+	View.merge_glint(glints,Vector2(600,300),0.10)
+	View.merge_glint(glints,Vector2(515,306),0.20)
+	check(glints.size() == 3,"Capitaine éloigné de 43 px ou plus, ou tombé 45 ms plus tard : éclat séparé")
+	check(View.glint_scale(1) == 1.0 and is_equal_approx(View.glint_scale(2),1.14) and is_equal_approx(View.glint_scale(3),1.28) and is_equal_approx(View.glint_scale(6),1.28),"Agrandi de 14 % par capitaine, jusqu'à trois")
+	var source: String = FileAccess.get_file_as_string("res://scripts/valley_view.gd")
+	var start: int = source.find("func _draw_eliminations() -> void:")
+	var body: String = source.substr(start,source.find("\nfunc ",start+10)-start)
+	var collect: int = body.find("if type == Model.Garrison.TYPE and glint_duration > 0.0 and age >= 0.0 and age < glint_duration: merge_glint(glints,project(event.point),age)")
+	var skip: int = body.find("if type == Model.Garrison.TYPE and glint_duration > 0.0: continue")
+	check(collect >= 0 and collect < body.find("_draw_sheet_death(id,state,event,age)"),"L'éclat accompagne aussi la planche de mort du capitaine, après l'arrivée du projectile")
+	check(skip > body.find("_draw_fading_enemy(enemy,event,age,duration,type in ELITE_TYPES)") and skip < body.find("bursts.append"),"Flexion et fondu conservés, particules génériques remplacées")
+	check(body.find("for glint in glints:") > body.find("for burst in bursts:"),"Éclats dessinés au point d'appui avec les autres éliminations")
