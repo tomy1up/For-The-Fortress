@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-22 — Bassins et ruines des missions 51 à 60 (ouvert)
 
-Dix PNG de bassins décoratifs dans `prototype/assets/decor/marais/` avec positions et géométrie dans `design/essais/marais_51_60/Implantation.json`. Même branchement que les lots 41–45 et 46–50 validés. Intégration de ce lot après avis du porteur. Les dix calques de chaussée inondée déjà intégrés restent lisibles. Sur la v0.240, vérification en combat du passage sec/eau/sec de Gueule-de-Vase en 51 et du trajet central sec au croisement en 58. [Fiche](design/Visuels_Marais_51_60.md).
+Dix PNG de bassins décoratifs dans `prototype/assets/decor/marais/` avec positions et géométrie dans `design/essais/marais_51_60/Implantation.json`. Même branchement que les lots 41–45 et 46–50 validés. Lot 933da20 validé par le porteur le 22 novembre 2026, prêt à intégrer. Les dix calques de chaussée inondée déjà intégrés restent lisibles. Sur la v0.240, vérification en combat du passage sec/eau/sec de Gueule-de-Vase en 51 et du trajet central sec au croisement en 58. [Fiche](design/Visuels_Marais_51_60.md).
 
 ### 2026-11-22 — Bassins des marais, missions 46 à 50 (ouvert)
 
