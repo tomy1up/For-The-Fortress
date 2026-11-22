@@ -2105,9 +2105,8 @@ func _draw_fortress(anchor: Vector2) -> void:
 	var brightness: float = 1.0-condition*0.13
 	if royal_hurt_age < 0.15: brightness += 0.22*(1.0-royal_hurt_age/0.15)
 	draw_texture_rect_region(FortressArt.BUILDINGS[faction],body,FortressArt.SOURCES[faction],Color(brightness,brightness,brightness,1))
-	if condition > 0:
-		var crack := PackedVector2Array([center+offset+Vector2(-12,-39),center+offset+Vector2(-8,-31),center+offset+Vector2(-11,-23),center+offset+Vector2(-6,-13)])
-		draw_polyline(crack,Color("352f25"),1.6,true)
+	var damage: Texture2D = FortressArt.damage_overlay(faction,condition) # Remplace la fissure générique (v0.241).
+	if damage != null: draw_texture_rect(damage,body,false,Color(brightness,brightness,brightness,1))
 	if condition >= 2:
 		for index in range(3):
 			var t: float = fmod(flag_phase/TAU+float(index)/3.0,1.0)

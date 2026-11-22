@@ -2,6 +2,13 @@ extends RefCounted
 ## Illustrations originales ; aucun état de combat ni générateur aléatoire.
 const BUILDINGS: Array = [preload("res://assets/fortresses/forteresse_alliance_v001.png"),preload("res://assets/fortresses/forteresse_horde_v001.png")]
 const KINGS: Array = [preload("res://assets/fortresses/roi_alliance_v001.png"),preload("res://assets/fortresses/roi_horde_v001.png")]
+## Calques de dégâts (lot c81b52a de Codex, validé par le porteur le 22 novembre 2026) : un par faction et par état (endommagée, en danger,
+## détruite), au cadre de la région `SOURCES` de l'illustration, posés sur le bâtiment avec sa luminosité, sous la fumée et le roi.
+const DAMAGE: Array = [
+	[preload("res://assets/fortresses/degats_alliance_1.png"),preload("res://assets/fortresses/degats_alliance_2.png"),preload("res://assets/fortresses/degats_alliance_3.png")],
+	[preload("res://assets/fortresses/degats_horde_1.png"),preload("res://assets/fortresses/degats_horde_2.png"),preload("res://assets/fortresses/degats_horde_3.png")]]
+static func damage_overlay(faction: int, condition: int) -> Texture2D:
+	return DAMAGE[side(faction)][condition-1] if condition >= 1 and condition <= 3 else null
 const SOURCES: Array = [Rect2(103,86,1115,1054),Rect2(57,53,1213,1128)]
 const ROOFS: Array[Vector2] = [Vector2(700,320),Vector2(700,325)]
 const KING_HEIGHT := 33.0

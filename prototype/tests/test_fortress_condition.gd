@@ -25,5 +25,30 @@ func run_checks() -> void:
 		check(scene.model.choose_bonus(8) and scene.model.fortress_hp == 8 and scene.model.max_hp == 24 and View.fortress_condition(scene.model.fortress_hp,scene.model.max_hp) == 1,"Soin de R-09 reflété immédiatement sans état critique figé")
 		scene.model.reset();check(View.fortress_condition(scene.model.fortress_hp,scene.model.max_hp) == 0,"Nouvelle partie : forteresse saine sans ancien dommage")
 		scene.free()
+	verify_damage_overlays()
 	print("FORTRESS_CONDITION_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(0 if failures == 0 else 1)
+
+## Calques de dégâts (v0.241, lot c81b52a de Codex) : un calque par faction et par état, au cadre de l'illustration, à la place de la fissure générique,
+## posé sur le bâtiment avec sa luminosité et dessiné avant la fumée et le roi.
+func verify_damage_overlays() -> void:
+	const FortressArt = preload("res://scripts/fortress_art.gd")
+	for faction in range(2):
+		check(FortressArt.damage_overlay(faction,0) == null and FortressArt.damage_overlay(faction,4) == null,"Forteresse intacte : aucun calque de dégâts")
+		var source: Rect2 = FortressArt.SOURCES[faction]
+		var seen: Array = []
+		for condition in range(1,4):
+			var overlay: Texture2D = FortressArt.damage_overlay(faction,condition)
+			check(overlay != null and overlay not in seen,"Calque propre à l'état %d (faction %d)" % [condition,faction])
+			if overlay == null: continue
+			seen.append(overlay)
+			check(overlay.get_size() == Vector2([368,368][faction],[348,342][faction]),"Calque de %d × %d px (faction %d)" % [368,[348,342][faction],faction])
+			check(absf(overlay.get_size().x/overlay.get_size().y-source.size.x/source.size.y) < 0.01,"Calque au cadre de la région affichée de l'illustration (faction %d)" % faction)
+	check(FortressArt.damage_overlay(2,1) == FortressArt.damage_overlay(0,1),"Une faction inconnue reprend l'habillage de l'Alliance, comme le bâtiment")
+	var source_text: String = FileAccess.get_file_as_string("res://scripts/valley_view.gd")
+	var start: int = source_text.find("func _draw_fortress(anchor: Vector2) -> void:")
+	var body: String = source_text.substr(start,source_text.find("\nfunc ",start+10)-start)
+	var building: int = body.find("draw_texture_rect_region(FortressArt.BUILDINGS[faction]")
+	var overlay_call: int = body.find("draw_texture_rect(damage,body,false,Color(brightness,brightness,brightness,1))")
+	check(building >= 0 and overlay_call > building and overlay_call < body.find("for index in range(3):") and overlay_call < body.find("FortressArt.KINGS[faction]"),"Calque posé sur le bâtiment, avec sa luminosité, avant la fumée et le roi")
+	check(not body.contains("352f25"),"La fissure générique est remplacée")
