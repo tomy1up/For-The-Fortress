@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**22 novembre — Marais, missions 51 à 60.** 39 bassins décoratifs redessinés. 58 captures sur copie v0.240, dont régénération dans l’eau en 51 et trajet central sec au Carrefour en 58, dans les deux factions. 18 479 contrôles ciblés réussis. Les bassins attendent l’avis du porteur. [Fiche](design/Visuels_Marais_51_60.md).
+
 **22 novembre — Marais, missions 46 à 50.** Dix-huit bassins adaptés et quatre pièces réutilisées du lot 41–45, dont le pan de mur effondré pour la Nef. Vingt-quatre vues de combat sur copie v0.240, dont quatre à 13 s aux jonctions de 47 et 50 dans les deux factions. 4 448 contrôles du chapitre et 13 580 du décor réussis. Lot 65638f3 validé par le porteur le 22 novembre 2026, à intégrer par Claude Code. [Fiche](design/Visuels_Marais_46_50.md).
 
 **22 novembre — Marais, missions 41 à 45.** Vingt bassins redessinés dans leurs limites, saule, roseaux et deux ruines dont l’arche compacte du Cloître. Vingt captures en combat sur copie v0.240, avec et sans l’habillage dans les deux factions. 4 448 contrôles du chapitre et 13 580 du décor réussis. Lot 5ae3c06 validé par le porteur le 22 novembre 2026, à brancher par Claude Code. [Fiche](design/Visuels_Marais_41_45.md).
