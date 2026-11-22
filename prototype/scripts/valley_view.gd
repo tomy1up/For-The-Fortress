@@ -107,7 +107,7 @@ static func damage_landing_delay(event: Dictionary) -> float:
 	return launch_delay({"type":int(event.source_type)})+PROJECTILE_FLIGHT
 
 ## Types dont le projectile n'est pas dessiné en vol quand la cible est déjà derrière le point de lâcher à l'écran (à bout portant) : l'impact est alors joué au lâcher, sans attendre le vol.
-const NO_FLIGHT_TYPES: Array[int] = [16,19,21,24,26,27,28]
+const NO_FLIGHT_TYPES: Array[int] = [16,19,21,24,26,27,28,32]
 ## Types sans projectile ni impact (v0.235) : l'Éclaireur-observateur désigne sa cible au fanion ; ses dégâts et son losange s'affichent au geste pointé (délai de `LAUNCH_DELAYS`).
 const SIGNAL_TYPES: Array[int] = [31]
 const OBSERVER_TYPE := 31
@@ -294,12 +294,33 @@ const PEBBLE_TYPE := 25 # Fronde elfe : galet, bien que sa famille de combat res
 const FIRE_TYPE := 15 # Pyromancien humain : boule de feu.
 const SHARD_TYPES: Array[int] = [18] # Lance-éclats gobelin : éclat de cristal dessiné par le jeu (le Mage de givre a son cristal depuis la v0.234).
 const CARTRIDGE_TYPE := 37 # Piégeur nain : cartouche en bois.
+## Cartouche du Piégeur nain (lot Codex 4fb5e10, v0.236) : 12 px de large à l'écran, un tour complet sur un arc de 16 px, retournée avec la pose.
+const CARTRIDGE_TEXTURE: Texture2D = preload("res://assets/units/shop/cartouche_piegeur_v001.png")
+const CARTRIDGE_WIDTH := 12.0
+const CARTRIDGE_ARC := 16.0
 const BOLT_TYPES: Array[int] = [38,43] # Balliste royale et baliste de guerre : gros carreau de siège.
 const RUNE_TYPE := 42 # Poseur de mines : disque runique.
 const VIAL_TYPE := 39 # Alchimiste gnome : fiole.
+## Fiole ambrée de l'Alchimiste gnome (lot Codex 02cb36d, v0.236) : 11 px de large, un tour complet sur l'arc existant (10 px), retournée avec la pose.
+const VIAL_TEXTURE: Texture2D = preload("res://assets/units/shop/fiole_ambre_v001.png")
+const VIAL_WIDTH := 11.0
 const COIN_TYPE := 36 # Marchand mercenaire : pièce d'or.
 const GOLD_SHARD_TYPE := 32 # Prêtre guerrier : éclat doré.
 const WISP_TYPE := 33 # Chaman des marais : feu follet.
+const TOTEM_TYPE := 34 # Totem de guerre : impulsion partie de la gemme.
+## Point de départ des types à vue unique (lots Codex v0.236), en pixels d'écran depuis l'emplacement, tir vers la droite : main de la Chamane des marais (`lacher.json`), gemme du Totem (`signal.json`).
+const SINGLE_MUZZLES: Dictionary = {33: Vector2(14.3921,-48.139), 34: Vector2(-0.250984,-51.070203), 35: Vector2(13.45841,-32.28643), 36: Vector2(28.4303,-42.361), 37: Vector2(31.3447,-41.4565), 39: Vector2(25.1022,-39.3371)} # 39 : main ouverte de l'Alchimiste gnome (lot 02cb36d) ; 37 : main ouverte du Piégeur nain (lot 4fb5e10) ; 35 : contact de la mailloche avec le tambour de l'Ancien des tribus ; 36 : pièce lancée par le Marchand mercenaire (lot fa8d42c)
+const ELDER_TYPE := 35
+## Prêtre guerrier (lot Codex c2d19e8, v0.236) : trois vues nommées ; paume avancée de chaque vue et angle réellement dessiné (`lachers.json`).
+const PRIEST_TIPS: Dictionary = {-24: Vector2(20.3931,-54.0541), 0: Vector2(23.5577,-46.1523), 20: Vector2(21.6216,-41.2776)}
+const PRIEST_PITCHES: Dictionary = {-24: -24.0, 0: -5.0, 20: 20.0}
+const PRIEST_VARIANTS: Dictionary = {-24: "attack_up", 0: "attack", 20: "attack_down"}
+const WISP_TEXTURE: Texture2D = preload("res://assets/units/shop/feu_follet_v001.png")
+const WISP_PIVOT_PX := Vector2(52.5,72.5)
+const WISP_SCALE := 0.05517241379310345
+const TOTEM_PULSE_TEXTURE: Texture2D = preload("res://assets/units/shop/impulsion_totem_v001.png")
+const TOTEM_PULSE_PIVOT_PX := Vector2(40.0,40.0)
+const TOTEM_PULSE_SCALE := 0.138
 const PULSE_TYPES: Array[int] = [34,35] # Totem de guerre et ancien des tribus : impulsion, onde cuivrée.
 const DART_TYPE := 29 # Sarbacane gobeline : dard.
 const STONE_TYPE := 19 # Catapulte gobeline : pierre en cloche.
@@ -308,7 +329,7 @@ const LIGHTNING_TYPE := 22 # Mage de la foudre : éclair jusqu'aux cibles touch�
 const JAVELIN_TYPE := 17 # Lanceur de javeline troll : projectile de lance, pas de hache.
 const PROJECTILE_FLIGHT := 0.12 # Habillage du tir déjà résolu ; aucune attente de dégâts.
 ## Lâcher différé de certains gestes (secondes après le tir) : le projectile quitte la main à ce moment et le marqueur d'impact apparaît à son arrivée. Les dégâts restent résolus à l'instant du tir.
-const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32, 23: 0.6, 24: 0.44, 25: 0.4, 26: 0.52, 27: 0.48, 16: 0.36, 28: 0.56, 30: 0.36, 29: 0.24, 31: 0.32} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
+const LAUNCH_DELAYS: Dictionary = {4: 0.12, 5: 0.12, 11: 0.27, 12: 0.045, 13: 0.16, 14: 0.256, 15: 0.288, 17: 0.288, 18: 0.1125, 10: 0.52, 19: 0.5, 20: 0.28, 21: 0.336, 22: 0.32, 23: 0.6, 24: 0.44, 25: 0.4, 26: 0.52, 27: 0.48, 16: 0.36, 28: 0.56, 30: 0.36, 29: 0.24, 31: 0.32, 33: 0.4, 34: 0.3, 32: 0.32, 35: 0.36, 36: 0.4, 37: 0.36, 39: 0.4} # Sapeur gobelin (v0.210) : charge tenue pendant l'armé ; chaman orc (v0.211) : éclair libéré depuis le crâne du bâton.
 
 ## Visée inclinée du Tireur d'élite elfe (décision du porteur, 15 novembre 2026) : sept planches (0°, ±8°, ±16°, ±24°) ; l'angle est choisi une fois d'après la
 ## position à l'écran de la cible vue depuis le pivot de l'arc, puis sert à la pose, à l'origine de la flèche et à sa direction de départ. Positif : vers le bas.
@@ -420,7 +441,7 @@ const SPEARMAN_TYPE := 20
 const SPEAR_POINTS: Dictionary = {"attack":{"pitch":0,"point":Vector2(47.9702,-24.0115)},"attack_up12":{"pitch":-12,"point":Vector2(46.8385,-33.3695)},"attack_down12":{"pitch":12,"point":Vector2(47.1458,-14.6209)},
 	"attack_close":{"pitch":0,"point":Vector2(39.1025,-24.0115)},"attack_far":{"pitch":0,"point":Vector2(56.099,-24.0115)},"attack_close_up":{"pitch":-12,"point":Vector2(33.6424,-33.3695)},"attack_close_down":{"pitch":12,"point":Vector2(33.9497,-14.6209)}}
 const STEP_TYPES: Array[int] = [14,15,17,21,22]
-const TILTED_TYPES: Array[int] = [10,11,14,15,17,18,21,22,23,24,25,26,16,28,30,29]
+const TILTED_TYPES: Array[int] = [10,11,14,15,17,18,21,22,23,24,25,26,16,28,30,29,32]
 const CURVED_TYPES: Array[int] = [11,13,17]
 const JAVELIN_PIVOT := Vector2(0.0,-41.3453)
 const JAVELIN_TIPS: Dictionary = {-12:Vector2(55.3409,-51.4028),0:Vector2(56.1005,-41.3453),12:Vector2(54.9211,-31.3319)}
@@ -435,7 +456,7 @@ const AIM_STEP := 8
 const AIM_LIMIT := 24
 
 static func aim_pitch(shot: Dictionary) -> int:
-	if int(shot.get("type",-1)) in [SHARDTHROWER_TYPE,SENTINEL_TYPE,DOUBLE_ARCHER_TYPE,HEAVY_CROSSBOW_TYPE,PEBBLE_TYPE,CHAIN_AXE_TYPE,WATCHER_TYPE,MACEMAN_TYPE,FROST_TYPE,DART_TYPE]:
+	if int(shot.get("type",-1)) in [SHARDTHROWER_TYPE,SENTINEL_TYPE,DOUBLE_ARCHER_TYPE,HEAVY_CROSSBOW_TYPE,PEBBLE_TYPE,CHAIN_AXE_TYPE,WATCHER_TYPE,MACEMAN_TYPE,FROST_TYPE,DART_TYPE,GOLD_SHARD_TYPE]:
 		var impact: Vector2 = project(shot.to)+Vector2(0,-12)
 		var facing_side: float = shot_facing(shot)
 		var best: int = 0
@@ -459,15 +480,16 @@ static func aim_pitch(shot: Dictionary) -> int:
 
 ## Angle réellement dessiné d'une planche inclinée : celui de son nom, sauf pour la Sarbacane gobeline (angle du tube dans `lachers.json`).
 static func drawn_pitch(type: int, pitch: int) -> float:
-	return float(BLOWGUN_PITCHES[pitch]) if type == DART_TYPE else float(pitch)
+	return float(BLOWGUN_PITCHES[pitch]) if type == DART_TYPE else float(PRIEST_PITCHES[pitch]) if type == GOLD_SHARD_TYPE else float(pitch)
 
 static func step_tips(type: int) -> Dictionary:
-	return PIKE_TIPS if type == PIKEMAN_TYPE else PYRO_TIPS if type == PYROMANCER_TYPE else SHARD_TIPS if type == SHARDTHROWER_TYPE else SENTINEL_TIPS if type == SENTINEL_TYPE else EMBER_GRATE if type == EMBER_TYPE else LIGHTNING_HANDS if type == LIGHTNING_TYPE else DOUBLE_ARCHER_TIPS if type == DOUBLE_ARCHER_TYPE else HEAVY_CROSSBOW_TIPS if type == HEAVY_CROSSBOW_TYPE else SLING_TIPS if type == PEBBLE_TYPE else CHAIN_AXE_TIPS if type == CHAIN_AXE_TYPE else WATCHER_TIPS if type == WATCHER_TYPE else MACE_TIPS if type == MACEMAN_TYPE else FROST_TIPS if type == FROST_TYPE else BLOWGUN_TIPS if type == DART_TYPE else JAVELIN_TIPS
+	return PIKE_TIPS if type == PIKEMAN_TYPE else PYRO_TIPS if type == PYROMANCER_TYPE else SHARD_TIPS if type == SHARDTHROWER_TYPE else SENTINEL_TIPS if type == SENTINEL_TYPE else EMBER_GRATE if type == EMBER_TYPE else LIGHTNING_HANDS if type == LIGHTNING_TYPE else DOUBLE_ARCHER_TIPS if type == DOUBLE_ARCHER_TYPE else HEAVY_CROSSBOW_TIPS if type == HEAVY_CROSSBOW_TYPE else SLING_TIPS if type == PEBBLE_TYPE else CHAIN_AXE_TIPS if type == CHAIN_AXE_TYPE else WATCHER_TIPS if type == WATCHER_TYPE else MACE_TIPS if type == MACEMAN_TYPE else FROST_TIPS if type == FROST_TYPE else BLOWGUN_TIPS if type == DART_TYPE else PRIEST_TIPS if type == GOLD_SHARD_TYPE else JAVELIN_TIPS
 
 ## Planche inclinée d'un tir : nommée par son angle (`attack_up12`…), sauf les trois vues nommées du Mage de givre.
 static func tilted_variant(shot: Dictionary) -> String:
 	if int(shot.get("type",-1)) == FROST_TYPE: return str(FROST_VARIANTS[aim_pitch(shot)])
 	if int(shot.get("type",-1)) == DART_TYPE: return str(BLOWGUN_VARIANTS[aim_pitch(shot)])
+	if int(shot.get("type",-1)) == GOLD_SHARD_TYPE: return str(PRIEST_VARIANTS[aim_pitch(shot)])
 	return aim_variant(aim_pitch(shot))
 
 static func aim_variant(pitch: int) -> String:
@@ -482,7 +504,7 @@ static func aim_direction(shot: Dictionary) -> Vector2:
 	return Vector2(shot_facing(shot)*cos(angle),sin(angle))
 
 static func aimed_origin(shot: Dictionary) -> Vector2:
-	if int(shot.get("type",-1)) in STEP_TYPES or int(shot.get("type",-1)) in [SHARDTHROWER_TYPE,SENTINEL_TYPE,DOUBLE_ARCHER_TYPE,HEAVY_CROSSBOW_TYPE,PEBBLE_TYPE,CHAIN_AXE_TYPE,WATCHER_TYPE,MACEMAN_TYPE,FROST_TYPE,DART_TYPE]:
+	if int(shot.get("type",-1)) in STEP_TYPES or int(shot.get("type",-1)) in [SHARDTHROWER_TYPE,SENTINEL_TYPE,DOUBLE_ARCHER_TYPE,HEAVY_CROSSBOW_TYPE,PEBBLE_TYPE,CHAIN_AXE_TYPE,WATCHER_TYPE,MACEMAN_TYPE,FROST_TYPE,DART_TYPE,GOLD_SHARD_TYPE]:
 		var tip: Vector2 = step_tips(int(shot.type))[aim_pitch(shot)]
 		return project(shot.from)+Vector2(tip.x*shot_facing(shot),tip.y)
 	return project(shot.from)+AIM_PIVOT+aim_direction(shot)*AIM_LENGTH
@@ -558,6 +580,9 @@ static func shot_origin(shot: Dictionary, pose_age: float = 0.0) -> Vector2:
 	if int(shot.get("type",-1)) == SPEARMAN_TYPE: return spear_tip(shot,spear_variant(shot))
 	if int(shot.get("type",-1)) == STONE_TYPE: return catapult_origin(shot)
 	if int(shot.get("type",-1)) in TILTED_TYPES: return aimed_origin(shot)
+	if SINGLE_MUZZLES.has(int(shot.get("type",-1))):
+		var tip: Vector2 = SINGLE_MUZZLES[int(shot.type)]
+		return project(shot.from)+Vector2(tip.x*shot_facing(shot),tip.y)
 	# Points d'équipement des silhouettes, distincts du centre logique de portée.
 	var art = defender_art(int(shot.type))
 	var muzzle: Vector2 = art.MUZZLES[int(shot.type)]
@@ -577,9 +602,10 @@ static func projectile_position(shot: Dictionary, age: float) -> Vector2:
 	var point: Vector2 = origin.lerp(target,progress)
 	if int(shot.type) in CURVED_TYPES: return aimed_curve(shot,progress).point
 	if int(shot.type) == STONE_TYPE: return catapult_curve(shot,progress).point
-	if int(shot.type) in [MACEMAN_TYPE,DART_TYPE]: return point # vol rectiligne de la masse et du dard
+	if int(shot.type) in [MACEMAN_TYPE,DART_TYPE,WISP_TYPE,TOTEM_TYPE,ELDER_TYPE]: return point # vol rectiligne de la masse, du dard, du feu follet, de l'impulsion du totem et de l'onde de l'ancien
 	if Model.family(shot.type) in [3,4]: point.y -= sin(PI*progress)*(15.0 if Model.family(shot.type) == 4 else 8.0)
 	elif int(shot.type) == CANNON_TYPE: point.y -= sin(PI*progress)*12.0
+	elif int(shot.type) == CARTRIDGE_TYPE: point.y -= sin(PI*progress)*CARTRIDGE_ARC
 	elif int(shot.type) == VIAL_TYPE: point.y -= sin(PI*progress)*10.0
 	elif int(shot.type) == EMBER_TYPE: point.y -= sin(PI*progress)*6.0
 	return point
@@ -641,7 +667,7 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		_draw_shard(point,direction,side)
 		return
 	if int(shot.type) == CARTRIDGE_TYPE:
-		_draw_cartridge(point,direction,side)
+		_draw_cartridge(point,shot,age)
 		return
 	if int(shot.type) == RUNE_TYPE:
 		_draw_rune_disc(point,age)
@@ -653,7 +679,7 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		_draw_ballista_bolt(point,direction,side)
 		return
 	if int(shot.type) == VIAL_TYPE:
-		_draw_vial(point,age)
+		_draw_vial(point,shot,age)
 		return
 	if int(shot.type) == COIN_TYPE:
 		_draw_coin(point,age)
@@ -662,10 +688,11 @@ func _draw_projectile(shot: Dictionary, age: float, color: Color) -> void:
 		_draw_shard(point,direction,side,Color("f3d27a"))
 		return
 	if int(shot.type) == WISP_TYPE:
-		_draw_wisp(point,age)
+		_draw_wisp(point,shot_facing(shot))
 		return
 	if int(shot.type) in PULSE_TYPES:
-		_draw_pulse(point,age,Color("d99a5b") if int(shot.type) == 35 else Color("e8c87a"))
+		if int(shot.type) == TOTEM_TYPE: _draw_totem_pulse(point)
+		else: _draw_pulse(point,age,Color("d99a5b"))
 		return
 	if int(shot.type) == DART_TYPE:
 		_draw_dart(point,direction,side)
@@ -734,12 +761,12 @@ func _draw_shard(point: Vector2, direction: Vector2, side: Vector2, fill: Color 
 	draw_line(point-direction*5.0,point+direction*3.0,Color(1.0,1.0,1.0,0.6),0.9,true)
 
 ## Cartouche en bois du piégeur nain : petit cylindre cerclé de fer.
-func _draw_cartridge(point: Vector2, direction: Vector2, side: Vector2) -> void:
-	var back: Vector2 = point-direction*6.0
-	draw_line(back,point,Color("1f2420"),5.0,true)
-	draw_line(back,point,Color("b98a4e"),3.4,true)
-	draw_line(back+direction*2.0+side*2.0,back+direction*2.0-side*2.0,Color("6b6f72"),1.2,true)
-	draw_line(point-direction*1.0+side*2.0,point-direction*1.0-side*2.0,Color("6b6f72"),1.2,true)
+func _draw_cartridge(point: Vector2, shot: Dictionary, age: float) -> void:
+	var facing: float = shot_facing(shot)
+	var scale: float = CARTRIDGE_WIDTH/CARTRIDGE_TEXTURE.get_size().x
+	draw_set_transform(point,clampf(age/PROJECTILE_FLIGHT,0.0,1.0)*TAU*facing,Vector2(facing,1.0))
+	draw_texture_rect(CARTRIDGE_TEXTURE,Rect2(-CARTRIDGE_TEXTURE.get_size()*scale*0.5,CARTRIDGE_TEXTURE.get_size()*scale),false)
+	draw_set_transform(Vector2.ZERO)
 
 ## Gros carreau de la balliste royale : long fût, pointe de fer et empennage.
 func _draw_ballista_bolt(point: Vector2, direction: Vector2, side: Vector2) -> void:
@@ -769,13 +796,12 @@ func _draw_short_bolt(point: Vector2, direction: Vector2, side: Vector2) -> void
 	draw_line(tail,tail+direction*3.0-side*2.0,Color("c0504a"),1.2,true)
 
 ## Fiole de l'alchimiste gnome : verre verdâtre qui tourne, liquide vif.
-func _draw_vial(point: Vector2, age: float) -> void:
-	var spin: float = age/PROJECTILE_FLIGHT*TAU
-	var axis := Vector2(0,-1).rotated(spin)
-	draw_circle(point,6.5,Color(0.55,1.0,0.4,0.2),true,-1,true)
-	draw_line(point-axis*3.0,point+axis*3.5,Color("cfe9d8"),4.6,true)
-	draw_line(point-axis*3.0,point+axis*1.0,Color("7ee05a"),3.2,true)
-	draw_line(point+axis*3.5,point+axis*5.5,Color("8a6a3a"),2.0,true)
+func _draw_vial(point: Vector2, shot: Dictionary, age: float) -> void:
+	var facing: float = shot_facing(shot)
+	var scale: float = VIAL_WIDTH/VIAL_TEXTURE.get_size().x
+	draw_set_transform(point,clampf(age/PROJECTILE_FLIGHT,0.0,1.0)*TAU*facing,Vector2(facing,1.0))
+	draw_texture_rect(VIAL_TEXTURE,Rect2(-VIAL_TEXTURE.get_size()*scale*0.5,VIAL_TEXTURE.get_size()*scale),false)
+	draw_set_transform(Vector2.ZERO)
 
 ## Pièce du marchand mercenaire : disque d'or qui tourne sur lui-même.
 func _draw_coin(point: Vector2, age: float) -> void:
@@ -786,11 +812,15 @@ func _draw_coin(point: Vector2, age: float) -> void:
 	draw_set_transform(Vector2.ZERO,0.0,Vector2.ONE)
 
 ## Feu follet du chaman des marais : lueur verte qui palpite.
-func _draw_wisp(point: Vector2, age: float) -> void:
-	var pulse: float = 1.0+sin(age*60.0)*0.15
-	draw_circle(point,8.0*pulse,Color(0.35,0.9,0.5,0.20),true,-1,true)
-	draw_circle(point,4.4*pulse,Color("6fe08c"),true,-1,true)
-	draw_circle(point,2.0,Color("eafff0"),true,-1,true)
+## Feu follet de la Chamane des marais : la volute du lot de Codex (`Feu_follet.png`), debout, retournée avec la pose selon le côté du tir.
+func _draw_wisp(point: Vector2, facing: float) -> void:
+	draw_set_transform(point,0.0,Vector2(facing,1.0))
+	draw_texture_rect(WISP_TEXTURE,Rect2(-WISP_PIVOT_PX*WISP_SCALE,WISP_TEXTURE.get_size()*WISP_SCALE),false)
+	draw_set_transform(Vector2.ZERO)
+
+## Impulsion du Totem de guerre : le dessin du lot de Codex (`Impulsion_totem.png`), centré sur son trajet.
+func _draw_totem_pulse(point: Vector2) -> void:
+	draw_texture_rect(TOTEM_PULSE_TEXTURE,Rect2(point-TOTEM_PULSE_PIVOT_PX*TOTEM_PULSE_SCALE,TOTEM_PULSE_TEXTURE.get_size()*TOTEM_PULSE_SCALE),false)
 
 ## Impulsion du totem de guerre (dorée) ou onde de l'ancien des tribus (cuivrée) : anneau qui grandit en avançant.
 func _draw_pulse(point: Vector2, age: float, color: Color) -> void:
@@ -923,29 +953,32 @@ func _draw_javelin(point: Vector2, direction: Vector2, side: Vector2, facing: fl
 	draw_line(tail,tail+direction*5.0-side*3.0,Color("e0b44a"),1.4,true)
 
 ## Pastilles d'état au-dessus de la barre de PV, dans l'ordre marque, pillage, volatilité, centrées avec 18 px d'entraxe.
-## `shots` (les tirs de la vague) : le losange d'une marque nouvelle de l'Éclaireur-observateur attend son geste pointé.
+## `shots` (les tirs de la vague) : le losange d'une marque nouvelle de l'Éclaireur-observateur ou du Totem de guerre attend son geste ou son impulsion.
 static func enemy_badges(enemy: Dictionary, elapsed: float, shots: Array = []) -> Array[String]:
 	var badges: Array[String] = []
-	if float(enemy.get("marked_until",-1.0)) > elapsed and not observer_mark_pending(enemy,elapsed,shots): badges.append("mark")
+	if float(enemy.get("marked_until",-1.0)) > elapsed and not mark_display_pending(enemy,elapsed,shots): badges.append("mark")
 	if float(enemy.get("loot_until",-1.0)) >= elapsed: badges.append("loot")
 	if float(enemy.get("volatile_until",-1.0)) >= elapsed and not enemy.get("exploded",false): badges.append("volatile")
 	return badges
 
-## Losange de l'Éclaireur-observateur (lot Codex 88784cf, v0.235) : une marque qu'il pose sur une cible non marquée s'affiche au premier geste pointé, 0,32 s après le tir.
-## Une marque déjà visible (renouvellement, Marque du chasseur) le reste ; une marque posée entre-temps par un autre tir (Marque du chasseur, autre marqueur) s'affiche aussitôt.
-## Rendu seulement : le modèle applique la marque et son bonus dès le tir.
-static func observer_mark_pending(enemy: Dictionary, elapsed: float, shots: Array) -> bool:
+## Losange différé (v0.235-v0.236) : une marque nouvelle de l'Éclaireur-observateur s'affiche à son geste pointé (0,32 s après le tir, lot Codex 88784cf),
+## celle du Totem de guerre à l'arrivée de son impulsion (0,42 s, lot b36a4eb). Le losange apparaît à la première arrivée visible d'un tir marqueur sur la cible
+## depuis la pose de la marque : une marque posée entre-temps par un autre tir (Marque du chasseur, autre marqueur sans délai) s'affiche aussitôt. Une marque déjà visible
+## (renouvellement, Marque du chasseur) le reste. Rendu seulement : le modèle applique la marque et son bonus dès le tir.
+const MARK_DISPLAY_DELAYS: Dictionary = {31: 0.32, 34: 0.42}
+
+static func mark_display_pending(enemy: Dictionary, elapsed: float, shots: Array) -> bool:
 	var id: int = int(enemy.get("id",-1))
+	var placed := -INF
 	for shot in shots:
-		if int(shot.get("type",-1)) != OBSERVER_TYPE or int(shot.get("target_id",-2)) != id or str(shot.get("mark","")) != "new": continue
-		var placed: float = float(shot.get("time",0.0))
-		if elapsed < placed or elapsed-placed >= float(LAUNCH_DELAYS[OBSERVER_TYPE]): continue
-		var revealed := false
-		for other in shots:
-			if int(other.get("type",-1)) != OBSERVER_TYPE and int(other.get("target_id",-2)) == id and other.has("mark") and float(other.get("time",0.0)) >= placed and float(other.get("time",0.0)) <= elapsed:
-				revealed = true;break
-		if not revealed: return true
-	return false
+		if int(shot.get("target_id",-2)) == id and str(shot.get("mark","")) == "new" and float(shot.get("time",0.0)) <= elapsed: placed = maxf(placed,float(shot.get("time",0.0)))
+	if placed == -INF: return false
+	var shown := INF
+	for shot in shots:
+		var time: float = float(shot.get("time",0.0))
+		if int(shot.get("target_id",-2)) == id and shot.has("mark") and time >= placed and time <= elapsed:
+			shown = minf(shown,time+float(MARK_DISPLAY_DELAYS.get(int(shot.get("type",-1)),0.0)))
+	return elapsed < shown
 
 func _draw_enemy_badges(enemy: Dictionary, bar_position: Vector2) -> void:
 	var badges: Array[String] = enemy_badges(enemy,model.elapsed,model.shots)
@@ -1075,7 +1108,7 @@ func _draw_impact(shot: Dictionary, age: float) -> void:
 	var flight: float = flight_time(shot)
 	if age < delay+flight:
 		var flight_color: Color = _impact_color(Model.family(shot.type))
-		if Model.family(shot.type) == 5 and int(shot.type) != EMBER_TYPE: _draw_cast_bolt(shot,age,flight_color,1.0)
+		if Model.family(shot.type) == 5 and int(shot.type) not in [EMBER_TYPE,WISP_TYPE]: _draw_cast_bolt(shot,age,flight_color,1.0) # pas d'éclair de famille avec le feu follet
 		_draw_projectile(shot,age-delay,flight_color)
 		return
 	_draw_impact_body(shot,age-delay-flight,false)
@@ -1152,7 +1185,7 @@ func _draw_impact_body(shot: Dictionary, age: float, flight: bool) -> void:
 	var target: Vector2 = project(shot.to)+height
 	# L'impact est visible dès le tir : le déplacement bref ne retarde aucun dégât.
 	_draw_hit_marker(target,alpha,true,type,age)
-	if type == 5 and flight and int(shot.type) != EMBER_TYPE:
+	if type == 5 and flight and int(shot.type) not in [EMBER_TYPE,WISP_TYPE]:
 		_draw_cast_bolt(shot,age,color,alpha)
 	elif type in [0,1,2]:
 		draw_line(origin,target,Color(color,alpha*0.22),1 if type != 1 else 1.5,true)

@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "defender.horde.swampshaman",
+  "facing": "right",
+  "foot": [
+    113.3529411764706,
+    231.93630573248407
+  ],
+  "display_height": 77.91563275434243,
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 1,
+      "frame_size": [
+        246,
+        252
+      ],
+      "fps": 1,
+      "mode": "time"
+    },
+    "attack": {
+      "file": "attack.png",
+      "frames": 33,
+      "frame_size": [
+        246,
+        252
+      ],
+      "duration": 0.88,
+      "mode": "event"
+    }
+  }
+}

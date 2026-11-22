@@ -13,6 +13,11 @@ func _initialize() -> void: call_deferred("run_checks")
 func run_checks() -> void:
 	verify_badges()
 	verify_observer_signal()
+	verify_wisp_and_totem()
+	verify_priest_and_elder()
+	verify_mercenary_coin()
+	verify_trapper_cartridge()
+	verify_alchemist_vial()
 	verify_explosion_events()
 	verify_resources()
 	print("SHOP_EFFECTS_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
@@ -66,6 +71,113 @@ func verify_observer_signal() -> void:
 		if int(alive.id) == int(first_mark.get("target_id",-1)): target = alive
 	check(target.is_empty() or is_equal_approx(float(target.marked_until),float(first_mark.time)+4.0),"La marque est posée par le moteur dès le tir (4 s)")
 	check(model.shots.filter(func(fired): return int(fired.type) == 0).all(func(fired): return fired.has("mark")),"Avec Marque du chasseur, chaque flèche note sa marque")
+
+## Chamane des marais (type 33, lot a89ce33) et Totem de guerre (type 34, lot b36a4eb), v0.236 : départs, repères, vols rectilignes et losange du Totem à l'arrivée de l'impulsion.
+func verify_wisp_and_totem() -> void:
+	var wisp: int = Shop.card("horde.swampshaman").type
+	var totem: int = Shop.card("horde.wartotem").type
+	check(wisp == View.WISP_TYPE and totem == View.TOTEM_TYPE,"Types de la Chamane des marais et du Totem de guerre")
+	check(is_equal_approx(float(View.LAUNCH_DELAYS[wisp]),0.40) and is_equal_approx(float(View.LAUNCH_DELAYS[totem]),0.30),"Feu follet à 0,40 s, impulsion à 0,30 s")
+	check(is_equal_approx(float(View.LAUNCH_DELAYS[totem])+View.PROJECTILE_FLIGHT,0.42) and is_equal_approx(float(View.MARK_DISPLAY_DELAYS[totem]),0.42),"L'impulsion arrive à 0,42 s, avec le premier losange du Totem")
+	var wisp_spec: Dictionary = Library.spec_for("defender.horde.swampshaman")
+	check(not wisp_spec.is_empty() and int(wisp_spec.animations.attack.frames) == 33 and is_equal_approx(float(wisp_spec.animations.attack.duration),0.88),"Rituel de la Chamane : 33 poses sur 0,88 s chargées")
+	check(is_equal_approx(15.0*float(wisp_spec.animations.attack.duration)/float(wisp_spec.animations.attack.frames),0.40),"La volute part sur la pose 15 (0,40 s)")
+	var totem_spec: Dictionary = Library.spec_for("defender.horde.wartotem")
+	check(not totem_spec.is_empty() and int(totem_spec.animations.attack.frames) == 24 and is_equal_approx(float(totem_spec.animations.attack.duration),0.72),"Impulsion du Totem : 24 poses sur 0,72 s chargées")
+	for type in [wisp,totem]:
+		var right := {"time":1.0,"slot":2,"type":type,"target_id":3,"from":Vector2(5,5),"to":Vector2(8,5),"secondary":[],"radius":0.0}
+		var left: Dictionary = right.duplicate();left.to = Vector2(1,5)
+		var tip: Vector2 = View.SINGLE_MUZZLES[type]
+		check(View.shot_origin(right).is_equal_approx(View.project(right.from)+tip) and View.shot_facing(right) == 1.0,"Départ au repère de Codex vers la droite (type %d)" % type)
+		check(View.shot_origin(left).is_equal_approx(View.project(left.from)+Vector2(-tip.x,tip.y)) and View.shot_facing(left) == -1.0,"Repère retourné avec la pose vers la gauche (type %d)" % type)
+		var half: Vector2 = View.shot_origin(right).lerp(View.project(right.to)+Vector2(0,-12),0.5)
+		check(View.projectile_position(right,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(half),"Vol rectiligne (type %d)" % type)
+	var enemy: Dictionary = Model.make_enemy(1,1,0.0,-1,100);enemy.id = 4;enemy.marked_until = 9.0
+	var pulse := {"time":5.0,"slot":2,"type":totem,"target_id":4,"from":Vector2(2,2),"to":Vector2(4,3),"secondary":[],"radius":0.0,"mark":"new"}
+	check(View.enemy_badges(enemy,5.41,[pulse]).is_empty() and View.enemy_badges(enemy,5.42,[pulse]) == ["mark"],"Totem : premier losange à l'arrivée de l'impulsion")
+	var renewed: Dictionary = pulse.duplicate();renewed.mark = "renewed"
+	check(View.enemy_badges(enemy,5.05,[renewed]) == ["mark"],"Totem : une marque déjà visible le reste")
+	var hunter := {"time":5.2,"slot":3,"type":3,"target_id":4,"from":Vector2(3,2),"to":Vector2(4,3),"secondary":[],"radius":0.0,"mark":"renewed"}
+	check(View.enemy_badges(enemy,5.19,[pulse,hunter]).is_empty() and View.enemy_badges(enemy,5.2,[pulse,hunter]) == ["mark"],"Totem : Marque du chasseur posée pendant l'impulsion, affichée aussitôt")
+	var observer := {"time":5.05,"slot":4,"type":View.OBSERVER_TYPE,"target_id":4,"from":Vector2(3,3),"to":Vector2(4,3),"secondary":[],"radius":0.0,"mark":"renewed"}
+	check(View.enemy_badges(enemy,5.36,[pulse,observer]).is_empty() and View.enemy_badges(enemy,5.37,[pulse,observer]) == ["mark"],"Totem puis Éclaireur : le losange suit la première arrivée visible")
+
+## Prêtre guerrier (type 32, lot c2d19e8) et Ancien des tribus (type 35, lot b1b0f16), v0.236.
+func verify_priest_and_elder() -> void:
+	var priest: int = Shop.card("alliance.priest").type
+	var elder: int = Shop.card("horde.elder").type
+	check(priest == View.GOLD_SHARD_TYPE and elder == View.ELDER_TYPE,"Types du Prêtre guerrier et de l'Ancien des tribus")
+	check(is_equal_approx(float(View.LAUNCH_DELAYS[priest]),0.32) and is_equal_approx(float(View.LAUNCH_DELAYS[elder]),0.36),"Éclat doré à 0,32 s, onde à 0,36 s")
+	var priest_spec: Dictionary = Library.spec_for("defender.alliance.priest")
+	check(not priest_spec.is_empty() and priest_spec.animations.has("attack_up") and priest_spec.animations.has("attack_down") and int(priest_spec.animations.attack.frames) == 20 and is_equal_approx(float(priest_spec.animations.attack.duration),0.8),"Prêtre : trois vues de 20 poses sur 0,8 s chargées")
+	check(is_equal_approx(8.0*0.8/20.0,0.32),"L'éclat part sur la pose 8 (0,32 s)")
+	var elder_spec: Dictionary = Library.spec_for("defender.horde.elder")
+	check(not elder_spec.is_empty() and int(elder_spec.animations.attack.frames) == 22 and is_equal_approx(float(elder_spec.animations.attack.duration),0.88),"Ancien : frappe de 22 poses sur 0,88 s chargée")
+	check(is_equal_approx(9.0*0.88/22.0,0.36),"L'onde part sur la pose 9 (0,36 s), au contact du tambour")
+	var used := {}
+	for target in [Vector2(9,1),Vector2(9,5),Vector2(9,9),Vector2(6,0),Vector2(6,10),Vector2(1,5),Vector2(2,1)]:
+		var shot := {"time":1.0,"slot":2,"type":priest,"target_id":3,"from":Vector2(5,5),"to":target,"secondary":[],"radius":0.0}
+		var pitch: int = View.aim_pitch(shot)
+		used[pitch] = true
+		var tip: Vector2 = View.PRIEST_TIPS[pitch]
+		var origin: Vector2 = View.project(shot.from)+Vector2(tip.x*View.shot_facing(shot),tip.y)
+		check(View.shot_origin(shot).is_equal_approx(origin) and View.tilted_variant(shot) == str(View.PRIEST_VARIANTS[pitch]),"Prêtre : paume et vue de l'inclinaison retenue")
+		var impact: Vector2 = View.project(shot.to)+Vector2(0,-12)
+		var best_error := INF
+		for candidate in View.PRIEST_TIPS:
+			var line: Vector2 = impact-(View.project(shot.from)+Vector2(View.PRIEST_TIPS[candidate].x*View.shot_facing(shot),View.PRIEST_TIPS[candidate].y))
+			best_error = minf(best_error,absf(rad_to_deg(atan2(line.y,maxf(absf(line.x),0.0001)))-float(View.PRIEST_PITCHES[candidate])))
+		var chosen: Vector2 = impact-origin
+		check(is_equal_approx(absf(rad_to_deg(atan2(chosen.y,maxf(absf(chosen.x),0.0001)))-float(View.PRIEST_PITCHES[pitch])),best_error),"Prêtre : vue la plus proche du trajet depuis sa paume")
+		if (impact.x-origin.x)*View.shot_facing(shot) > 0.0:
+			check(View.flight_time(shot) == View.PROJECTILE_FLIGHT and View.projectile_position(shot,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(origin.lerp(impact,0.5)),"Prêtre : éclat en ligne droite")
+		else: check(View.flight_time(shot) == 0.0,"Prêtre : impact seul si la cible est derrière la paume")
+	check(used.size() == 3,"Les trois vues du Prêtre sont employées (%d)" % used.size())
+	var drum := {"time":1.0,"slot":2,"type":elder,"target_id":3,"from":Vector2(5,5),"to":Vector2(1,5),"secondary":[],"radius":0.0}
+	var drum_tip: Vector2 = View.SINGLE_MUZZLES[elder]
+	check(View.shot_origin(drum).is_equal_approx(View.project(drum.from)+Vector2(-drum_tip.x,drum_tip.y)),"Ancien : départ au tambour, retourné avec le sprite")
+	check(View.projectile_position(drum,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(View.shot_origin(drum).lerp(View.project(drum.to)+Vector2(0,-12),0.5)),"Ancien : onde en ligne droite")
+
+## Marchand mercenaire (type 36, lot bcf83a3, validé dans fa8d42c), v0.236 : pièce lancée à 0,40 s depuis le repère de Codex, retourné avec la pose, vol rectiligne.
+func verify_mercenary_coin() -> void:
+	var merchant: int = Shop.card("alliance.mercenary").type
+	check(merchant == View.COIN_TYPE and is_equal_approx(float(View.LAUNCH_DELAYS[merchant]),0.40),"Marchand mercenaire : pièce lancée à 0,40 s")
+	var spec: Dictionary = Library.spec_for("defender.alliance.mercenary")
+	check(not spec.is_empty() and int(spec.animations.attack.frames) == 22 and is_equal_approx(float(spec.animations.attack.duration),0.88) and is_equal_approx(10.0*0.88/22.0,0.40),"Lancer de pièce de 22 poses sur 0,88 s chargé, départ sur la pose 10")
+	var tip: Vector2 = View.SINGLE_MUZZLES[merchant]
+	for target in [Vector2(9,5),Vector2(1,5)]:
+		var shot := {"time":1.0,"slot":2,"type":merchant,"target_id":3,"from":Vector2(5,5),"to":target,"secondary":[],"radius":0.0}
+		var origin: Vector2 = View.project(shot.from)+Vector2(tip.x*View.shot_facing(shot),tip.y)
+		check(View.shot_origin(shot).is_equal_approx(origin),"Pièce partie du repère, retourné avec la pose")
+		check(View.projectile_position(shot,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(origin.lerp(View.project(shot.to)+Vector2(0,-12),0.5)),"Pièce en vol rectiligne")
+
+## Piégeur nain (type 37, lot 4fb5e10, validé dans 19a06a2), v0.236 : cartouche lancée à 0,36 s de la main ouverte, un tour sur un arc de 16 px.
+func verify_trapper_cartridge() -> void:
+	var trapper: int = Shop.card("alliance.trapper").type
+	check(trapper == View.CARTRIDGE_TYPE and is_equal_approx(float(View.LAUNCH_DELAYS[trapper]),0.36),"Piégeur nain : cartouche lancée à 0,36 s")
+	var spec: Dictionary = Library.spec_for("defender.alliance.trapper")
+	check(not spec.is_empty() and int(spec.animations.attack.frames) == 22 and is_equal_approx(float(spec.animations.attack.duration),0.88) and is_equal_approx(9.0*0.88/22.0,0.36),"Lancer de 22 poses sur 0,88 s chargé, départ sur la pose 9")
+	var tip: Vector2 = View.SINGLE_MUZZLES[trapper]
+	for target in [Vector2(9,5),Vector2(1,5)]:
+		var shot := {"time":1.0,"slot":2,"type":trapper,"target_id":3,"from":Vector2(5,5),"to":target,"secondary":[],"radius":0.0}
+		var origin: Vector2 = View.project(shot.from)+Vector2(tip.x*View.shot_facing(shot),tip.y)
+		check(View.shot_origin(shot).is_equal_approx(origin),"Cartouche partie de la main ouverte, repère retourné avec la pose")
+		var middle: Vector2 = origin.lerp(View.project(shot.to)+Vector2(0,-12),0.5)-Vector2(0,View.CARTRIDGE_ARC)
+		check(View.projectile_position(shot,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(middle) and View.projectile_position(shot,View.PROJECTILE_FLIGHT).is_equal_approx(View.project(shot.to)+Vector2(0,-12)),"Cartouche : arc de 16 px au milieu du vol, arrivée sur la cible")
+	check(is_equal_approx(View.CARTRIDGE_WIDTH,12.0),"Cartouche de 12 px de large à l'écran")
+
+## Alchimiste gnome (type 39, lot 02cb36d, validé dans 68f4dea), v0.236 : fiole ambrée lancée à 0,40 s (image 20) de la main ouverte, arc existant de 10 px.
+func verify_alchemist_vial() -> void:
+	var alchemist: int = Shop.card("alliance.alchemist").type
+	check(alchemist == View.VIAL_TYPE and is_equal_approx(float(View.LAUNCH_DELAYS[alchemist]),0.40),"Alchimiste gnome : fiole lancée à 0,40 s")
+	var spec: Dictionary = Library.spec_for("defender.alliance.alchemist")
+	check(not spec.is_empty() and int(spec.animations.attack.frames) == 48 and is_equal_approx(float(spec.animations.attack.duration),0.96) and is_equal_approx(20.0*0.96/48.0,0.40),"Lancer de 48 images sur 0,96 s chargé, départ sur l'image 20")
+	var tip: Vector2 = View.SINGLE_MUZZLES[alchemist]
+	for target in [Vector2(9,5),Vector2(1,5)]:
+		var shot := {"time":1.0,"slot":2,"type":alchemist,"target_id":3,"from":Vector2(5,5),"to":target,"secondary":[],"radius":1.0}
+		var origin: Vector2 = View.project(shot.from)+Vector2(tip.x*View.shot_facing(shot),tip.y)
+		check(View.shot_origin(shot).is_equal_approx(origin),"Fiole partie de la main ouverte, repère retourné avec la pose")
+		check(View.projectile_position(shot,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(origin.lerp(View.project(shot.to)+Vector2(0,-12),0.5)-Vector2(0,10)),"Fiole : arc existant de 10 px")
 
 func verify_explosion_events() -> void:
 	var model := Model.new(true)
