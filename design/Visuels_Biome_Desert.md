@@ -32,3 +32,15 @@ La rafale publiée a été contrôlée en jeu sur les missions 111 à 120, avec 
 L’essai renforce la teinte claire du voile et allonge les traînées. Le bord lumineux de l’annonce est aussi renforcé. Les routes, les cases et le cercle de portée restent lisibles. Le comparatif est pris à 16,20 s simulées, à ×2, avec le même placement et le même état de combat. Les dimensions et cadences des deux planches restent celles de la v0.182. Les 40 passages ont été rejoués après la retouche. L’avertissement conserve la portée de départ, la rafale réduit la portée et la fin de rafale rétablit la portée normale dans chaque cas.
 
 [Comparatif en combat](essais/desert_ch12/Tempete_contraste_v0182.jpg)
+
+## Décor sur les nouveaux tracés des missions 101 à 110
+
+Les dix cartes réutilisent le grès, les colonnes brisées et les murs du désert. Les pièces s’organisent en arête rocheuse au Canyon Rouge, en alignement de colonnes sur la mission 104 et en paire d’obélisques à la Nécropole Ancienne. La citerne existante sert de repère à L’Oasis Asséchée et au Puits Perdu. Un sarcophage bas marque le flanc de la Nécropole.
+
+Les 50 emplacements ont été vérifiés contre les chaussées, les entrées, les six cases de défense et la forteresse. Les vingt captures montrent la vague 5 dans les deux factions sur une copie de la v0.238. Un rocher des Premières Dunes a été déplacé après inspection pour le distinguer du défenseur en E5. Les suites décor et chapitre du désert passent avec 11 240 et 4 714 contrôles respectivement.
+
+Le lot attend l’avis du porteur. Après validation, l’activation consiste à retirer les dix identifiants `dune_first` à `dune_necropolis` de `REWORKED_MAPS` dans `decor_art.gd`.
+
+- [Missions 101 à 104](essais/desert_refonte/Desert_101_104.jpg)
+- [Missions 105 à 107](essais/desert_refonte/Desert_105_107.jpg)
+- [Missions 108 à 110](essais/desert_refonte/Desert_108_110.jpg)
