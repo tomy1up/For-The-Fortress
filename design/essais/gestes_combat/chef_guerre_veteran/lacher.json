@@ -1,0 +1,14 @@
+{
+  "release": 0.4,
+  "muzzle": [
+    18.2418,
+    -62.7792
+  ],
+  "projectile": {
+    "file": "Hache_chef_guerre.png",
+    "height": 16,
+    "angle": 43.0,
+    "turns": 1,
+    "flight": "linear"
+  }
+}

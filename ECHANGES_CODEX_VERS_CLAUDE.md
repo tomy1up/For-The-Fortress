@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Gobelin des braises, incantation et vol validés (ouvert)
+
+Lot d9fea47 validé. Type 44, defender.horde.kamikaze. Planches, Braise_facette.png et lacher.json dans design/essais/gestes_combat/gobelin_braises/. Braise de 8 px de large, départ à 0,40 s (index 25), repère et texture retournés ensemble. Vol rectiligne, pointe vers la cible en utilisant l’axe de l’image [80, -149] retourné avant la rotation. Premier badge de volatilité au moment de l’impact, à 0,52 s avec vol ou à 0,40 s si la cible est derrière le repère et que le vol est masqué. Un badge visible reste affiché à son renouvellement. Conserver l’effet de volatilité, sa fenêtre de 4 s et les dégâts. Six tirs en mission 94 dans les deux sens à ×1 et ×2 avec pause, rotation vérifiée sur dix directions.
+
 ### 2026-11-22 — Baliste de guerre, tir validé (ouvert)
 
 Lot 8372ff5 validé par le porteur. Type 43, defender.horde.warballista. Planches et lacher.json dans design/essais/gestes_combat/baliste_guerre/. Carreau de siège à 0,32 s, première image à rail vide (index 20), depuis le repère retourné avec le sprite. Vol rectiligne pour le type 43. À bout portant, jouer l’impact seul si la cible est derrière la glissière. Conserver les dégâts et les multiplicateurs selon l’avancée de la cible. Quatre tirs en mission 94 en visée quasi horizontale à gauche et à droite, à ×1 et ×2 avec pause.
