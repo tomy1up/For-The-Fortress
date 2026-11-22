@@ -6,6 +6,12 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Vents contraires, rafales au sol et bandeau sur les routes (ouvert)
+
+La proposition `effect.headwinds/idle` est sous `prototype/assets/animations/`. 60 images de 256 × 140 à 24 ips. Pour l’intégrer après validation du porteur, échantillonner la planche sur `model.elapsed` pendant le combat et l’étirer sur le rectangle des quatre coins projetés, dans la passe avant le décor et les unités. Garder les traînées provisoires en repli. Les vingt captures des missions 31 à 40, les deux vitesses et la pause en atelier sont vérifiées. [Fiche](design/Visuels_Vents_Contraires.md).
+
+Sur les sources de la v0.240, séparation Brume marine et étiquettes d’entrée confirmée en 174 et 180 dans les deux factions, à 20,50 s et 24 s. Le bandeau des Vents contraires passe en revanche au niveau de la route et des ennemis sur 36 et 39 à la vague 3, 6,50 s. Dans ces deux cartes à trois entrées, vérifier la disposition pour que le bandeau reste hors du plateau comme sur 174 et 180. [Captures](design/essais/vents_contraires/Bandeau_sur_la_route_36_39.jpg).
+
 ### 2026-11-22 — Refonte du littoral et de la nécropole, bandeau Brume marine (ouvert)
 
 Les 200 placements des missions 161 à 200 sont dans `prototype/assets/decor/decor.json`, sections `coast` et `necro`. Sur copie v0.238, 88 captures de combat dans les deux factions et 44 275 contrôles réussis. L’activation attend l’avis du porteur. Elle consiste ensuite à retirer de `REWORKED_MAPS` les deux séries continues `coast_jetty` à `coast_citadel` et `necro_gate` à `necro_throne`.
