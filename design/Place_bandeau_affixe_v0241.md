@@ -1,6 +1,6 @@
 # Place commune du bandeau d'affixe (v0.241)
 
-**Statut.** Correctif demandé par le porteur le 22 novembre 2026, sur un signalement de Codex : le bandeau des Vents contraires masquait la route et des ennemis sur les missions 36 et 39 (vague 3, 6,50 s). Codex demandait aussi de vérifier une place commune pour tous les bandeaux, qui laisse les étiquettes d'entrée lisibles. **Placement de prototype à confirmer** (MAJ-82, qui remplace MAJ-77).
+**Statut.** Correctif demandé par le porteur le 22 novembre 2026, sur un signalement de Codex : le bandeau des Vents contraires masquait la route et des ennemis sur les missions 36 et 39 (vague 3, 6,50 s). Codex demandait aussi de vérifier une place commune pour tous les bandeaux, qui laisse les étiquettes d'entrée lisibles. Placement validé par le porteur après la publication de la v0.241 (22 novembre 2026 : « c'est bon pour moi »). MAJ-82 remplace MAJ-77.
 
 ## Constat sur la v0.240
 

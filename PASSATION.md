@@ -392,7 +392,7 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
   - GDD 0.78 (MAJ-80 à MAJ-83), `.docx` régénéré : le script `docx20.py` lit maintenant la couverture et le titre de la section 56 dans le `.md`.
   - Après un `--import` de Godot, les `.import` des nouvelles images sont réécrits en fins de ligne LF, sans changer de contenu (`git diff` vide). Il faut les laisser ainsi. Les restaurer avec `git checkout` fait échouer l'export : Godot les réécrit pendant la compilation et l'exporteur signale `SOURCE_CHANGED`.
 - Contrôles v0.241 : régression 144/144 (206 730 contrôles Godot, 17 tests Python), paquet 1 050 cas et 620 contrôles de sources ; captures du paquet inspectées : états de la forteresse, chapitre 15, bandeau et rafales (missions 31 à 40 et missions à affixe signalées). L'effacement du bandeau pendant l'annonce de vague n'est pas visible en capture (le mode capture n'affiche pas l'annonce) : vérifié par `test_affix_banner.gd` seulement.
-- En attente du porteur : décor du chapitre 10 (`60d007d`), du chapitre 16 (`a1ba5d3`), des côtes et de la nécropole (`8fb925c`), bassins des marais 41 à 45 (`5ae3c06`) ; avis sur la place commune du bandeau (MAJ-82).
+- En attente du porteur : décor du chapitre 10 (`60d007d`), du chapitre 16 (`a1ba5d3`), des côtes et de la nécropole (`8fb925c`), bassins des marais 41 à 45 (`5ae3c06`). Place commune du bandeau (MAJ-82) validée par le porteur après publication (« c'est bon pour moi »).
 - **O-028 tranchée** le 22 novembre 2026 (« Garder la cible », MAJ-79), consignée hors version (commit `1b437f5`).
 
 ### v0.240 (publiée)
