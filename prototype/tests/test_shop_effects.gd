@@ -20,6 +20,8 @@ func run_checks() -> void:
 	verify_alchemist_vial()
 	verify_veteran_bolt()
 	verify_pillager_token()
+	verify_minelayer_disc()
+	verify_kamikaze_ember()
 	verify_explosion_events()
 	verify_resources()
 	print("SHOP_EFFECTS_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
@@ -233,6 +235,47 @@ func verify_pillager_token() -> void:
 	check(not fired.is_empty() and str(fired.get("loot","")) == "new","Le premier jeton pose un pillage nouveau")
 	for alive in model.enemies:
 		if int(alive.id) == int(fired.get("target_id",-1)): check(is_equal_approx(float(alive.loot_until),float(fired.time)+4.0),"Le pillage dure toujours 4 s dès le tir")
+
+## Poseur de mines (type 42, lot 9aae568, validé dans bffb9e6), v0.238 : disque à 0,40 s (index 25), un tour sur l'arc de 15 px, impact seul derrière le repère.
+func verify_minelayer_disc() -> void:
+	var layer: int = Shop.card("horde.minelayer").type
+	check(layer == View.RUNE_TYPE and is_equal_approx(float(View.LAUNCH_DELAYS[layer]),0.40) and layer in View.NO_FLIGHT_TYPES,"Poseur de mines : disque lancé à 0,40 s, impact seul derrière le repère")
+	var spec: Dictionary = Library.spec_for("defender.horde.minelayer")
+	check(not spec.is_empty() and int(spec.animations.attack.frames) == 60 and is_equal_approx(float(spec.animations.attack.duration),0.96) and is_equal_approx(25.0*0.96/60.0,0.40),"Lancer de 60 images sur 0,96 s chargé, départ sur l'image 25")
+	var tip: Vector2 = View.SINGLE_MUZZLES[layer]
+	for target in [Vector2(9,5),Vector2(1,5)]:
+		var shot := {"time":1.0,"slot":2,"type":layer,"target_id":3,"from":Vector2(5,5),"to":target,"secondary":[],"radius":1.0}
+		var origin: Vector2 = View.project(shot.from)+Vector2(tip.x*View.shot_facing(shot),tip.y)
+		check(View.shot_origin(shot).is_equal_approx(origin) and View.flight_time(shot) == View.PROJECTILE_FLIGHT,"Disque parti de la main ouverte, repère retourné avec la pose")
+		check(View.projectile_position(shot,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(origin.lerp(View.project(shot.to)+Vector2(0,-12),0.5)-Vector2(0,15)),"Disque : arc existant de 15 px")
+	var close := {"time":1.0,"slot":2,"type":layer,"target_id":3,"from":Vector2(5,5),"to":Vector2(5.2,5.2),"secondary":[],"radius":1.0}
+	check(View.flight_time(close) == 0.0,"Cible derrière le repère : impact seul")
+	check(is_equal_approx(View.RUNE_WIDTH,14.0),"Disque de 14 px de large à l'écran")
+
+## Gobelin des braises (type 44, lot d9fea47, validé dans 7610ec7), v0.238 : braise à 0,40 s, vol rectiligne pointe vers la cible, badge de volatilité à l'impact.
+func verify_kamikaze_ember() -> void:
+	var goblin: int = Shop.card("horde.kamikaze").type
+	check(goblin == View.KAMIKAZE_TYPE and is_equal_approx(float(View.LAUNCH_DELAYS[goblin]),0.40) and goblin in View.NO_FLIGHT_TYPES,"Gobelin des braises : braise lancée à 0,40 s, impact seul derrière le repère")
+	var spec: Dictionary = Library.spec_for("defender.horde.kamikaze")
+	check(not spec.is_empty() and int(spec.animations.attack.frames) == 60 and is_equal_approx(float(spec.animations.attack.duration),0.96) and is_equal_approx(25.0*0.96/60.0,0.40),"Incantation de 60 images sur 0,96 s chargée, départ sur l'image 25")
+	var tip: Vector2 = View.SINGLE_MUZZLES[goblin]
+	for target in [Vector2(9,5),Vector2(1,5),Vector2(9,1),Vector2(2,9)]:
+		var shot := {"time":5.0,"slot":2,"type":goblin,"target_id":7,"from":Vector2(5,5),"to":target,"secondary":[],"radius":1.4,"volatile":"new"}
+		var facing: float = View.shot_facing(shot)
+		var origin: Vector2 = View.project(shot.from)+Vector2(tip.x*facing,tip.y)
+		var impact: Vector2 = View.project(shot.to)+Vector2(0,-12)
+		check(View.shot_origin(shot).is_equal_approx(origin) and View.projectile_position(shot,View.PROJECTILE_FLIGHT*0.5).is_equal_approx(origin.lerp(impact,0.5)),"Braise : départ au repère retourné, vol rectiligne")
+		var drawn: Transform2D = Transform2D(View.ember_shard_rotation((impact-origin).normalized(),facing),Vector2(facing,1.0),0.0,Vector2.ZERO)
+		check(is_equal_approx((drawn*View.EMBER_SHARD_AXIS).normalized().dot((impact-origin).normalized()),1.0),"Braise : pointe du dessin dirigée vers la cible")
+	var enemy: Dictionary = Model.make_enemy(1,1,0.0,-1,100);enemy.id = 7;enemy.volatile_until = 9.0
+	var ahead := {"time":5.0,"slot":2,"type":goblin,"target_id":7,"from":Vector2(5,5),"to":Vector2(9,5),"secondary":[],"radius":1.4,"volatile":"new"}
+	check(View.enemy_badges(enemy,5.51,[ahead]).is_empty() and View.enemy_badges(enemy,5.52,[ahead]) == ["volatile"],"Volatilité nouvelle : badge à l'impact de la braise (0,52 s)")
+	var close: Dictionary = ahead.duplicate();close.to = Vector2(5.2,5.2)
+	check(View.flight_time(close) == 0.0 and View.enemy_badges(enemy,5.39,[close]).is_empty() and View.enemy_badges(enemy,5.40,[close]) == ["volatile"],"Sans vol à bout portant : badge à 0,40 s")
+	var renewed: Dictionary = ahead.duplicate();renewed.volatile = "renewed"
+	check(View.enemy_badges(enemy,5.1,[renewed]) == ["volatile"],"Renouvellement : le badge déjà visible reste affiché")
+	var vial := {"time":5.0,"slot":3,"type":View.VIAL_TYPE,"target_id":7,"from":Vector2(3,2),"to":Vector2(4,3),"secondary":[],"radius":1.4,"volatile":"new"}
+	check(View.enemy_badges(enemy,5.0,[vial]) == ["volatile"],"Alchimiste gnome : badge immédiat, comme avant")
 
 func verify_explosion_events() -> void:
 	var model := Model.new(true)

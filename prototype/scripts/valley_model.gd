@@ -1303,6 +1303,8 @@ func _resolve_instant() -> void:
 		if float(stats.get("loot_seconds",0.0)) > 0.0:
 			primary.loot_until = elapsed+float(stats.loot_seconds)
 			primary.loot_bonus = maxf(float(primary.get("loot_bonus",0.0)),float(stats.get("loot_bonus",0.0)))
+		# Volatilité posée par ce tir : « new » si la cible n'était pas volatile, « renewed » sinon (lu par la vue pour le badge du Gobelin des braises, sans effet sur le combat).
+		var volatile_state: String = "renewed" if float(primary.get("volatile_until",-1.0)) >= elapsed else "new"
 		if float(stats.get("volatile_seconds",0.0)) > 0.0:
 			primary.volatile_until = elapsed+float(stats.volatile_seconds)
 			primary.volatile_damage = maxf(float(primary.get("volatile_damage",0.0)),float(stats.get("volatile_damage",0.0)))
@@ -1321,6 +1323,7 @@ func _resolve_instant() -> void:
 			"target_id": primary.id, "from": slots[slot], "to": impact, "secondary": [], "radius": stats.radius}
 		if placed_mark: shot.mark = mark_state
 		if float(stats.get("loot_seconds",0.0)) > 0.0: shot.loot = loot_state
+		if float(stats.get("volatile_seconds",0.0)) > 0.0: shot.volatile = volatile_state
 		event_log.append("%.9f tir E%d cible %d" % [elapsed, slot + 1, primary.id])
 		if family(defender.type) in [2, 3, 4]:
 			var hit_ids: Array[int] = [primary.id]
