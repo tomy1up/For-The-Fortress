@@ -44,9 +44,9 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Boutique étendue, premier lot (v0.192)** — douze unités (types 10 à 21 : sentinelle, tireur d'élite, arquebusier, bombarde, piquier, pyromancien côté Alliance ; veilleur, javelinier, lance-éclats, catapulte, lance-épieu, brûleur côté Horde) qui réutilisent l'illustration de leur famille. À illustrer (même cadrage que les alternatives `rodeur`, `mousquetaire`, `traqueur`, `grenadier`) puis à animer. Voir `design/Boutique_20_unites_proposition.md`.
 
-- [ ] **Revenant, chapitre 20** — portrait et planche de relève livrés pour branchement. [Aperçus](design/Visuels_Necropole.md#revenant).
+- [x] **Revenant, chapitre 20** — Portrait et relève intégrés, vérifiés sur v0.241. Glissement pendant les poses basses signalé pour correction visuelle. [Contrôles](design/Visuels_Aigle_Revenant_V0241.md).
 
-- [ ] **Aigle des cimes, chapitre 16 (v0.186)** — nouvel attaquant neutre, rapide et fragile (`enemy.neutral.eagle`). Vol livré en combat. Associer le portrait de l’aigle à la prévision et à l’éclaireur. Voir `design/Missions_151_160_Aigle.md`.
+- [x] **Aigle des cimes, chapitre 16** — Portrait chargé dans les prévisions et Rencontres, vol vérifié en combat dans les deux factions sur v0.241. [Contrôles](design/Visuels_Aigle_Revenant_V0241.md).
 
 - [x] **Variantes du décor volcanique** — basalte éclaté, ruine d’angle et 120 placements recomposés sur les missions 61–80. Contrôle en combat dans les deux factions et à ×2 sur les six cases du Cratère Fumant. [Variantes et captures](design/Visuels_Biome_Volcanique.md#variantes-et-placements-des-missions-61-à-80)
 
