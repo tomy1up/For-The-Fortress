@@ -395,6 +395,7 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 - **v0.242** (validation du porteur : « tous », puis lot 46–50 confirmé), fusion de `art/codex` jusqu'à `933da20` :
   - `DecorArt.REWORKED_MAPS` est vide : décor des chapitres 10 et 16 à 20 actif (MAJ-84). `test_decor_art.gd` contrôle aussi les marges des décors mine, sky, coast et necro (38 177 contrôles).
   - Marais 41 à 60 (MAJ-85, lot 51–60 validé ensuite par le porteur) : `marsh_art.gd` (`POOL_LAYERS`, `pool_layer`, `prop_key`, `prop_texture`) ; `valley_view.gd` dessine le calque à la place de `draw_ground` et les pièces dans `MarshArt.bounds`. Les PNG sont au double de la taille d'affichage. Rangées compactes des effets de boutique (MAJ-86, lots `815fc15` et `eb15ffb` validés) : `badge_compactness`, `blend_compactness`, `badge_compactness_now` (état `_badge_blend` par ennemi, vidé au changement de modèle), contrôles dans `test_shop_effects.gd` (174).
+  - Relève du Revenant (MAJ-87, lot `7cdfeaf`) : le modèle note `risen_distance` (observation), la vue dessine l'ennemi à `display_distance` (appui fixe 0,27 s puis raccord `rise_weight` jusqu'à la durée de `rise`). Contrôles dans `test_revenant.gd` (44).
   - GDD 0.79 (MAJ-84, MAJ-85), `.docx` régénéré.
 
 ### v0.241 (publiée)

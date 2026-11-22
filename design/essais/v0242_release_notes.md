@@ -1,4 +1,4 @@
-# Prototype v0.242 — Tous les décors refaits, marais dessinés, repères compacts
+# Prototype v0.242 — Tous les décors refaits, marais dessinés, repères compacts, relève du Revenant
 
 Habillages de Codex validés par le porteur le 22 novembre 2026. Rendu seulement : aucune règle de jeu ne change.
 
@@ -22,6 +22,11 @@ Habillages de Codex validés par le porteur le 22 novembre 2026. Rendu seulement
 
 - **Repères compacts** (lots 815fc15 et eb15ffb) : une cible isolée garde ses pastilles rondes (marque, pillage, volatilité). Quand une autre cible porteuse d'un état passe à moins de 64 px, les cercles s'effacent au profit d'une rangée de symboles sur fond sombre, reliée à la jauge de PV. La rangée est complète à 40 px.
 - Quand l'état d'une cible voisine apparaît, expire ou disparaît avec elle, le passage se fait en un quart de seconde de combat, sans saut. Il suit la vitesse du jeu et s'arrête avec la pause. Les bornes de distance et la durée sont des réglages de prototype à confirmer.
+
+## Revenant
+
+- **Relève sans glissement** (signalé par Codex, lot 7cdfeaf). Le Revenant continue d'avancer pendant ses 0,72 s de relève : la règle de combat ne change pas, et il se relève toujours avec 50 % de ses PV. Ses premières poses basses glissaient pourtant d'environ 20 px sur la route.
+- Son appui reste maintenant au point de chute pendant les poses basses (0,27 s). Il rejoint ensuite progressivement sa position de marche le long de la route, virages compris. Les tirs et le survol gardent sa position réelle. Réglage de prototype à confirmer.
 
 ## Contrôles
 
