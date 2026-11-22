@@ -1,4 +1,4 @@
-# Prototype v0.242 — Tous les décors refaits, marais dessinés
+# Prototype v0.242 — Tous les décors refaits, marais dessinés, repères compacts
 
 Habillages de Codex validés par le porteur le 22 novembre 2026. Rendu seulement : aucune règle de jeu ne change.
 
@@ -17,6 +17,11 @@ Habillages de Codex validés par le porteur le 22 novembre 2026. Rendu seulement
 - **Objets dessinés** : saules et roseaux, plus deux ruines, une petite arche et un pan de mur effondré. Ils remplacent les formes géométriques, dans les mêmes cadres. Le Cloître submergé garde l'arche, la Nef effondrée reçoit le mur effondré.
 - Les positions des bassins, des objets, des routes et des emplacements ne changent pas.
 - Aux missions 51 à 60, l'eau des bassins reste plus sombre que la chaussée inondée, où Gueule-de-Vase se régénère : les deux restent faciles à distinguer. Les calques des tronçons inondés ne changent pas.
+
+## Effets de boutique
+
+- **Repères compacts** (lots 815fc15 et eb15ffb) : une cible isolée garde ses pastilles rondes (marque, pillage, volatilité). Quand une autre cible porteuse d'un état passe à moins de 64 px, les cercles s'effacent au profit d'une rangée de symboles sur fond sombre, reliée à la jauge de PV. La rangée est complète à 40 px.
+- Quand l'état d'une cible voisine apparaît, expire ou disparaît avec elle, le passage se fait en un quart de seconde de combat, sans saut. Il suit la vitesse du jeu et s'arrête avec la pause. Les bornes de distance et la durée sont des réglages de prototype à confirmer.
 
 ## Contrôles
 

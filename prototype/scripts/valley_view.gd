@@ -1711,7 +1711,7 @@ func _draw() -> void:
 			if not model.defenders[slot].is_empty():
 				actors.append({"point": project(_map_slots()[slot]), "defender": model.defenders[slot],"slot":slot,"order":actors.size()})
 		for enemy in model.enemies:
-			actors.append({"point": project(model.enemy_position(enemy)), "enemy": enemy,"order":actors.size()})
+			actors.append({"point": project(model.position_at(display_distance(enemy),model.enemy_route_points(enemy),model.enemy_route_length(enemy))), "enemy": enemy,"order":actors.size()})
 		if not ghost.is_empty(): actors.append({"point":ghost.point,"ghost":ghost,"order":actors.size()})
 		actors.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.order < b.order if a.point.y == b.point.y else a.point.y < b.point.y)
 		for actor in actors:
@@ -2201,7 +2201,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	var walking: bool = EnemyWalkArt.supports(id)
 	var sheet_walk: bool = not walking and SheetAnimations.has_animation(id,"walk")
 	var route_points: Array[Vector2] = model.enemy_route_points(enemy)
-	var motion := EnemyWalkArt.path_motion(enemy.distance, route_points, AXIS)
+	var motion := EnemyWalkArt.path_motion(display_distance(enemy), route_points, AXIS)
 	var facing := route_facing(motion.direction)
 	var preview: Dictionary = {}
 	if walking and wolf_turn_preview.is_valid():
@@ -2249,6 +2249,24 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 			draw_arc(shell,10.0+4.0*(1.0-strength),PI,TAU,20,Color(0.86,1.0,0.62,0.90*strength),2.0,true)
 			break
 	draw_set_transform(Vector2.ZERO)
+
+## Relève du Revenant (v0.242, signalé par Codex, lot 7cdfeaf) : le modèle le fait avancer pendant les 0,72 s de relève (règle inchangée), ce qui
+## faisait glisser ses poses basses d'environ 20 px. L'affichage garde l'appui au point de chute pendant les poses basses (REVENANT_RISE_HOLD, images 0 à 8),
+## puis le raccorde progressivement à la position du modèle en avançant le long de la route (virages et orientation compris) jusqu'à la fin de la relève.
+## Réglage de prototype à confirmer. Rendu seulement : les tirs et le survol gardent la position du modèle.
+const REVENANT_RISE_HOLD := 0.27
+
+static func rise_weight(age: float, hold: float, duration: float) -> float:
+	if duration <= hold or age >= duration: return 1.0
+	return smoothstep(hold,duration,age)
+
+## Distance le long de la route où l'ennemi est dessiné : celle du modèle, sauf pendant la relève du Revenant.
+func display_distance(enemy: Dictionary) -> float:
+	if model == null or not enemy.has("risen_at") or not enemy.has("risen_distance"): return float(enemy.distance)
+	var rise: Dictionary = SheetAnimations.spec_for(enemy_art_id(enemy,model.faction)).get("animations",{}).get("rise",{})
+	var age: float = model.elapsed-float(enemy.risen_at)
+	if rise.is_empty() or age < 0.0: return float(enemy.distance)
+	return lerpf(float(enemy.risen_distance),float(enemy.distance),rise_weight(age,REVENANT_RISE_HOLD,float(rise.duration)))
 
 ## Ennemi animé par une planche d'images (format de `animation_library.gd`) : cycle de marche réglé sur la distance parcourue.
 func _draw_sheet_walker(id: String, enemy: Dictionary, motion: Dictionary, scale: float, facing: float, body: Transform2D, hit_strength: float) -> void:

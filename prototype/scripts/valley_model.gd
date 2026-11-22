@@ -1492,6 +1492,7 @@ func _settle_enemy(enemy: Dictionary, survivors: Array[Dictionary], blasts: Arra
 		# Le revenant se relève une seule fois avec la moitié de ses PV maximum ; aucune récompense ni élimination comptée à cet instant.
 		enemy.risen = true
 		enemy.risen_at = elapsed # Observation visuelle : lance l'animation de relève.
+		enemy.risen_distance = enemy.distance # Observation visuelle : point de chute, où l'affichage appuie la relève.
 		enemy.hp = enemy.max_hp*Revenant.RISE_FRACTION
 		event_log.append("%.9f relève %d" % [elapsed, enemy.id])
 		survivors.append(enemy)
