@@ -8,7 +8,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
-- [ ] **Nouveaux tracés des mines, missions 121 à 130** — 50 emplacements adaptés et contrôlés en combat dans les deux factions. [Captures](design/Visuels_Biome_Mines.md#décor-sur-les-nouveaux-tracés-des-missions-121-à-130). Avis du porteur attendu avant activation.
+- [x] **Nouveaux tracés des mines, missions 121 à 130** — 50 emplacements adaptés et contrôlés en combat dans les deux factions. [Captures](design/Visuels_Biome_Mines.md#décor-sur-les-nouveaux-tracés-des-missions-121-à-130). Lot 23713fc validé le 22 novembre 2026, à activer par Claude Code.
 
 - [x] **Nouveaux tracés du désert, missions 111 à 120** — 50 emplacements adaptés, vingt vues pendant la rafale et huit vues d’annonce ou de retour au calme. [Captures](design/Visuels_Biome_Desert.md#décor-sur-les-nouveaux-tracés-des-missions-111-à-120). Lot f438dd5 validé le 22 novembre 2026, à activer par Claude Code.
 

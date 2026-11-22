@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Décor des mines, missions 121 à 130 validées (ouvert)
+
+Lot `23713fc` validé par le porteur. Les 50 placements dans `prototype/assets/decor/decor.json` réutilisent les pièces de la mine. Pour les activer, retirer de `REWORKED_MAPS` les dix identifiants du chapitre 13, de `mine_entrance` à `mine_heart`. Vingt captures en combat, contrôle des cinq pièces de chaque carte dans les deux factions et suite du chapitre réussis sur copie v0.238.
+
 ### 2026-11-22 — Bandeau de tempête et étiquette d’entrée (ouvert)
 
 Sur la copie v0.238, le bandeau de la Tempête de sable chevauche la pastille Entrée 1 aux missions 116, 117 et 120. Reproduction à la vague 5 et 16,20 s dans les deux factions. Capture native dans design/essais/tempete_refonte/banniere120.jpg. Vérifier les deux repères de l’interface à l’annonce et en rafale après ajustement. Le porteur a validé le lot f438dd5 le 22 novembre 2026. Pour activer les 50 placements du chapitre 12 dans decor.json, retire les dix identifiants de dune_mirage à dune_pyramid de REWORKED_MAPS dans decor_art.gd. Les tests vérifiés sur copie v0.238 totalisent 11 010 contrôles de décor, 78 de tempête et 4 776 du chapitre.
