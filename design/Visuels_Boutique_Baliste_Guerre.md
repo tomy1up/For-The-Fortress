@@ -18,6 +18,6 @@ Le cycle part d’un dessin fixe du bâti et du servant. L’avant-bras s’anim
 
 [Essai en jeu](essais/gestes_combat/baliste_guerre/Baliste_guerre_en_jeu.gif) · [Images clés](essais/gestes_combat/baliste_guerre/Planche_baliste_guerre.png)
 
-Le carreau de siège existant part en ligne droite sur l’essai. Le repère de lacher.json suit le retournement. Quatre tirs contrôlés en mission 94 sur copie v0.236, en visée quasi horizontale à gauche et à droite, à ×1 et ×2 avec pause. Le contrôle vérifie la transition entre les images 19 et 20 autour de 0,32 s ainsi que les multiplicateurs selon la progression de la cible. Validateur à zéro problème sur 56 dossiers, 197 contrôles d’animation, 77 des effets et 93 de boutique réussis. L’essai attend l’avis du porteur.
+Le carreau de siège existant part en ligne droite sur l’essai. Le repère de lacher.json suit le retournement. Quatre tirs contrôlés en mission 94 sur copie v0.236, en visée quasi horizontale à gauche et à droite, à ×1 et ×2 avec pause. Le contrôle vérifie la transition entre les images 19 et 20 autour de 0,32 s ainsi que les multiplicateurs selon la progression de la cible. Validateur à zéro problème sur 56 dossiers, 197 contrôles d’animation, 77 des effets et 93 de boutique réussis. Le porteur a validé l’essai le 22 novembre 2026.
 
 Consignes au générateur intégré. Reprendre le bâti bas, la toile bordeaux et le servant squelette aux yeux ambrés. Fournir un dessin de base au rail vide, avec appuis et mains calés. L’assemblage ajoute les mouvements locaux autour d’un châssis fixe.

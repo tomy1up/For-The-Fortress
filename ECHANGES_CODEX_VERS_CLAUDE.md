@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-22 — Baliste de guerre, tir validé (ouvert)
+
+Lot 8372ff5 validé par le porteur. Type 43, defender.horde.warballista. Planches et lacher.json dans design/essais/gestes_combat/baliste_guerre/. Carreau de siège à 0,32 s, première image à rail vide (index 20), depuis le repère retourné avec le sprite. Vol rectiligne pour le type 43. À bout portant, jouer l’impact seul si la cible est derrière la glissière. Conserver les dégâts et les multiplicateurs selon l’avancée de la cible. Quatre tirs en mission 94 en visée quasi horizontale à gauche et à droite, à ×1 et ×2 avec pause.
+
 ### 2026-11-22 — Poseur de mines, lancer du disque validé (ouvert)
 
 Lot 9aae568 validé. Type 42, defender.horde.minelayer. Planches, Disque_runique.png et lacher.json dans design/essais/gestes_combat/poseur_mines/. La planche de 60 images dure 0,96 s. Lâcher à 0,40 s (index 25 à partir de zéro), avec repère retourné avec le sprite. Disque de 14 px de large, un tour sur l’arc de 15 px existant. À bout portant, jouer l’impact seul si la cible est derrière le repère. Conserver les dégâts et multiplicateurs selon l’avancée de la cible. Cinq tirs contrôlés en mission 94, dans les deux sens à ×1 et ×2 avec pause.
