@@ -386,13 +386,24 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 22 novembre 2026 — Claude Code (v0.240 publiée)
+## État au 22 novembre 2026 — Claude Code (v0.241 publiée)
+
+- **v0.241** (lots de Codex validés par le porteur, fusion de `art/codex` jusqu'à `5ae3c06`) :
+  - **Rafales des Vents contraires** (`208a6aa`) : `valley_view.gd::_draw_headwinds_sheet` (`headwinds_sheet_visible`, `headwinds_area`, `headwinds_frame`), dessinée avant le décor et les unités, en combat seulement, image donnée par `model.elapsed`. `_draw_headwinds` ne sert plus que de repli si la planche manque. Contrôles dans `test_headwinds.gd`.
+  - **Dégâts des forteresses** (`c81b52a`) : `fortress_art.gd::DAMAGE` et `damage_overlay`, dessinés sur `body` avec la luminosité du bâtiment, avant la fumée et le roi. Fissure générique retirée. Six PNG déclarés dans les trois listes d'export. Contrôles dans `test_fortress_condition.gd`.
+  - **Place commune du bandeau d'affixe** (MAJ-82, remplace MAJ-77) : `AFFIX_BANNER_AREA` = Rect2(395,24,430,34), fixe ; `affix_banner_shown()` renvoie faux tant que `top_notice_visible` est vrai, et `main.gd` règle ce drapeau sur `wave_notice.visible` dans `_update_interface`. Fiche `design/Place_bandeau_affixe_v0241.md`, contrôles dans `test_affix_banner.gd`.
+  - **Décor du chapitre 15** activé (`sky_pontoon` à `sky_summit`, `60d2efe`). Restent inactifs : `garrison_*`, `sky_aerie` à `sky_throne` (`a1ba5d3`, pas de validation reçue), `coast_*` et `necro_*` (`8fb925c`, en attente du porteur). Bassins des marais 41 à 45 (`5ae3c06`) fusionnés, non branchés (en attente du porteur).
+  - GDD 0.78 (MAJ-80 à MAJ-83), `.docx` régénéré : le script `docx20.py` lit maintenant la couverture et le titre de la section 56 dans le `.md`.
+  - Après un `--import` de Godot, les `.import` des nouvelles images sont réécrits en fins de ligne LF, sans changer de contenu (`git diff` vide). Il faut les laisser ainsi. Les restaurer avec `git checkout` fait échouer l'export : Godot les réécrit pendant la compilation et l'exporteur signale `SOURCE_CHANGED`.
+- Contrôles v0.241 : régression 144/144 (206 730 contrôles Godot, 17 tests Python), paquet 1 050 cas et 620 contrôles de sources ; captures du paquet inspectées : états de la forteresse, chapitre 15, bandeau et rafales (missions 31 à 40 et missions à affixe signalées). L'effacement du bandeau pendant l'annonce de vague n'est pas visible en capture (le mode capture n'affiche pas l'annonce) : vérifié par `test_affix_banner.gd` seulement.
+- En attente du porteur : décor du chapitre 10 (`60d007d`), du chapitre 16 (`a1ba5d3`), des côtes et de la nécropole (`8fb925c`), bassins des marais 41 à 45 (`5ae3c06`). Place commune du bandeau (MAJ-82) validée par le porteur après publication (« c'est bon pour moi »).
+- **O-028 tranchée** le 22 novembre 2026 (« Garder la cible », MAJ-79), consignée hors version (commit `1b437f5`).
+
+### v0.240 (publiée)
 
 - **v0.240** (correction demandée par le porteur, « Oui, corrige-le ») : étiquettes d'entrée écartées les unes des autres en préparation (`valley_view.gd::separate_entry_labels`, appelée par `entry_label_layouts`, MAJ-78). Une étiquette qui touche une étiquette déjà posée prend la place collée (4 px) à gauche, à droite, au-dessus ou au-dessous la plus proche de son origine, dans `ENTRY_LABEL_ZONE` et hors de `AFFIX_BANNER_HUD`. Plus aucun chevauchement sur 391 cas (114 missions à plusieurs entrées × chaque entrée principale possible) ; déplacements ≤ 40 px, presque tous verticaux ; au combat, 8 étiquettes descendent d'1 px, bandeau inchangé. Contrôles dans `test_affix_banner.gd` (`verify_entry_labels_apart`, 4 113 contrôles au total). 20 captures de préparation inspectées (missions 60, 70, 84, 97, 117, 134, 138, 170, 186, 200, deux factions).
 - Contrôles v0.240 : régression 144/144 (206 454 contrôles Godot, 17 tests Python), paquet 1 050 cas et 597 sources, préparation des 38 missions touchées inspectée dans les deux factions.
-- **O-028 tranchée** (porteur, 22 novembre 2026 : « Garder la cible ») : la cible de 40 à 70 % reste mesurée avec la première offre, aucun recalibrage (MAJ-79). GDD et `.docx` mis à jour hors version, comme pour O-026 ; fiches `design/Joueur_avise_v0239.md` et `design/Rebalancage_v0236.md` complétées. Piste non décidée : mesure du joueur avisé pour Héroïque et Mythique (O-014).
 - Correction du `.docx` : celui de la v0.240 portait encore « Version 0.76 | Jeu de référence 0.239 » en couverture (ligne écrite en dur dans le script de régénération) ; la couverture est désormais lue dans l'en-tête du `.md`.
-- En attente du porteur : décor refait du chapitre 10 (`60d007d`, fusionné mais inactif), décor des îles flottantes (`60d2efe`, non fusionné).
 
 ### v0.239 (publiée)
 

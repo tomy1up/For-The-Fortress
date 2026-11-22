@@ -158,8 +158,48 @@ func run_checks() -> void:
 		if not profile_path.is_empty():
 			for suffix in ["",".bak",".tmp"]:
 				if FileAccess.file_exists(profile_path+suffix): DirAccess.remove_absolute(profile_path+suffix)
+	verify_headwinds_sheet()
 	print("HEADWINDS_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
+
+## Rafales au sol (v0.241, lot 208a6aa de Codex) : planche `effect.headwinds/idle` étirée sur le rectangle du plateau,
+## sous le décor et les unités, pendant le combat, à la phase donnée par le temps de combat.
+func verify_headwinds_sheet() -> void:
+	var View = load("res://scripts/valley_view.gd")
+	var Library = load("res://scripts/animation_library.gd")
+	var Catalogue = load("res://scripts/campaign_catalogue.gd")
+	var spec: Dictionary = Library.spec_for("effect.headwinds")
+	check(not spec.is_empty() and spec.animations.has("idle"),"Planche des rafales chargée")
+	var anim: Dictionary = spec.animations.idle
+	check(int(anim.frames)==60 and int(anim.fps)==24 and str(anim.mode)=="time" and Vector2i(int(anim.frame_size[0]),int(anim.frame_size[1]))==Vector2i(256,140),"Rafales : 60 images de 256 × 140 à 24 par seconde")
+	check(Library.sheet_size("effect.headwinds",anim)==Vector2i(15360,140),"Planche des rafales complète")
+	var source: String = FileAccess.get_file_as_string("res://scripts/valley_view.gd")
+	var draw_start: int = source.find("func _draw() -> void:")
+	var sheet_call: int = source.find("_draw_headwinds_sheet()",draw_start)
+	check(sheet_call > draw_start and sheet_call < source.find("_draw_decor_props(model.map_definition)",draw_start) and sheet_call < source.find("var actors: Array[Dictionary] = []",draw_start),"Rafales dessinées avant le décor et les unités")
+	var view = View.new()
+	for number in range(31,41):
+		var model := Model.new(true,Model.Maps.for_id(str(Catalogue.definition(number).map_id)))
+		check(model.configure_combat_affix(Catalogue.definition(number).combat_affix) and model.select_faction(number%2),"Mission %d sous Vents contraires" % number)
+		view.model = model
+		check(not view.headwinds_sheet_visible(),"Pas de rafales en préparation (mission %d), le bandeau reste affiché" % number)
+		check(model.start() and view.headwinds_sheet_visible(),"Rafales affichées pendant le combat (mission %d)" % number)
+		var board := Vector2(model.map_definition.size)
+		var corners: Array = [Vector2.ZERO,Vector2(board.x,0),board,Vector2(0,board.y)].map(func(corner): return View.project(corner))
+		var area: Rect2 = view.headwinds_area()
+		check(corners.all(func(point: Vector2) -> bool: return area.grow(0.01).has_point(point)) and corners.any(func(point: Vector2) -> bool: return is_equal_approx(point.x,area.position.x)) and corners.any(func(point: Vector2) -> bool: return is_equal_approx(point.y,area.end.y)),"Rafales étirées sur le rectangle des quatre coins projetés (mission %d)" % number)
+		for case in [[0.0,0],[1.02,24],[2.49,59],[2.52,0],[3.02,12],[10.27,6]]: # Instants au milieu des images : la frontière exacte dépend de l'arrondi.
+			model.elapsed = case[0]
+			check(view.headwinds_frame()==case[1],"Image des rafales donnée par le temps de combat (%.2f s, mission %d)" % [case[0],number])
+		model.elapsed = 4.02
+		var before: int = view.headwinds_frame()
+		model.advance(0.5)
+		check(view.headwinds_frame()==(before+12)%60 or model.phase!="combat","Une demi-seconde de combat avance la boucle de douze images")
+	var calm := Model.new(true,Model.Maps.for_id(str(Catalogue.definition(21).map_id)))
+	check(calm.select_faction(0) and calm.start(),"Mission sans affixe démarrée")
+	view.model = calm
+	check(not view.headwinds_sheet_visible(),"Aucune rafale sans Vents contraires")
+	view.free()
 
 func play_policy(model: RefCounted, types: Array, slots: Array, extra: Array, seed_value: int = 7) -> void:
 	model.rng.seed = seed_value # Règles de bonus actuelles depuis la v0.235 (douze bonus historiques auparavant)

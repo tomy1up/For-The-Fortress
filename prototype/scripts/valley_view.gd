@@ -1643,6 +1643,7 @@ func _draw() -> void:
 		_draw_sandstorm()
 		_draw_rockfall()
 		_draw_seamist()
+		_draw_headwinds_sheet()
 		_draw_decor_props(model.map_definition)
 		var actors: Array[Dictionary] = []
 		for slot in range(model.defenders.size()):
@@ -1824,6 +1825,7 @@ const ATTACK_POSE_DURATION := 0.26
 const ERUPTION_EFFECT_ID := "effect.eruption"
 const REGEN_EFFECT_ID := "effect.regeneration"
 const STORM_EFFECT_ID := "effect.sandstorm"
+const HEADWINDS_EFFECT_ID := "effect.headwinds"
 ## Repères d'effets de la boutique (Codex, 14 novembre 2026) : dimensions d'affichage de la fiche `design/Visuels_Effets_Boutique.md`.
 const FX_SLOW := preload("res://assets/effects/shop/slow.png")
 const FX_MARK := preload("res://assets/effects/shop/mark.png")
@@ -2103,9 +2105,8 @@ func _draw_fortress(anchor: Vector2) -> void:
 	var brightness: float = 1.0-condition*0.13
 	if royal_hurt_age < 0.15: brightness += 0.22*(1.0-royal_hurt_age/0.15)
 	draw_texture_rect_region(FortressArt.BUILDINGS[faction],body,FortressArt.SOURCES[faction],Color(brightness,brightness,brightness,1))
-	if condition > 0:
-		var crack := PackedVector2Array([center+offset+Vector2(-12,-39),center+offset+Vector2(-8,-31),center+offset+Vector2(-11,-23),center+offset+Vector2(-6,-13)])
-		draw_polyline(crack,Color("352f25"),1.6,true)
+	var damage: Texture2D = FortressArt.damage_overlay(faction,condition) # Remplace la fissure générique (v0.241).
+	if damage != null: draw_texture_rect(damage,body,false,Color(brightness,brightness,brightness,1))
 	if condition >= 2:
 		for index in range(3):
 			var t: float = fmod(flag_phase/TAU+float(index)/3.0,1.0)
@@ -2363,10 +2364,34 @@ func _draw_sold_defenders() -> void:
 		if spec.is_empty() or SheetAnimations.defender_state(spec,{"sell_age":age}) != "sell": continue
 		_draw_sheet_defender(project(_map_slots()[int(ghost.slot)]),id,spec,{"sell_age":age})
 
-## Repère fonctionnel provisoire de l'affixe Vents contraires (chapitre 4) : traînées claires qui traversent le plateau
-## à contre-courant des défenseurs. L'habillage (poussière, herbes couchées, étendards) revient à Codex (TODO_VISUELS.md).
+## Rafales au sol des Vents contraires (lot 208a6aa de Codex, validé par le porteur le 22 novembre 2026) : la planche
+## `effect.headwinds/idle` (60 images, 24 par seconde, boucle de 2,5 s) est étirée sur le rectangle des quatre coins projetés
+## du plateau, sous le décor et les unités, pendant le combat seulement. Sa phase suit `model.elapsed` : elle suit la vitesse
+## du jeu et s'arrête avec la pause. Le bandeau reste affiché en préparation.
+func headwinds_sheet_visible() -> bool:
+	if model == null or model.combat_affix.get("id","") != "headwinds" or not model.active: return false
+	if not SheetAnimations.has_animation(HEADWINDS_EFFECT_ID,"idle"): return false
+	return SheetAnimations.texture_for(HEADWINDS_EFFECT_ID,SheetAnimations.spec_for(HEADWINDS_EFFECT_ID).animations.idle) != null
+
+func headwinds_area() -> Rect2:
+	var board := Vector2(model.map_definition.size)
+	var bounds := Rect2(project(Vector2.ZERO),Vector2.ZERO)
+	for corner in [Vector2(board.x,0),board,Vector2(0,board.y)]: bounds = bounds.expand(project(corner))
+	return bounds
+
+func headwinds_frame() -> int:
+	var anim: Dictionary = SheetAnimations.spec_for(HEADWINDS_EFFECT_ID).animations.idle
+	return SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,model.elapsed,0.0))
+
+func _draw_headwinds_sheet() -> void:
+	if not headwinds_sheet_visible(): return
+	var anim: Dictionary = SheetAnimations.spec_for(HEADWINDS_EFFECT_ID).animations.idle
+	draw_texture_rect_region(SheetAnimations.texture_for(HEADWINDS_EFFECT_ID,anim),headwinds_area(),SheetAnimations.frame_region(anim,headwinds_frame()))
+
+## Repli si la planche des rafales manque : traînées claires provisoires qui traversent le plateau à contre-courant des défenseurs.
 func _draw_headwinds() -> void:
 	if model == null or model.combat_affix.get("id","") != "headwinds": return
+	if SheetAnimations.has_animation(HEADWINDS_EFFECT_ID,"idle") and SheetAnimations.texture_for(HEADWINDS_EFFECT_ID,SheetAnimations.spec_for(HEADWINDS_EFFECT_ID).animations.idle) != null: return
 	var board := Vector2(model.map_definition.size)
 	var clock: float = _ambient_clock()
 	for index in range(16):
@@ -2457,35 +2482,28 @@ static func affix_banner(model) -> Dictionary:
 	if not effect.is_empty(): text += " · " + effect
 	return {"text":text,"state":str(status.state),"fraction":clampf(remaining/phase_length,0.0,1.0) if phase_length > 0.0 else 0.0}
 
-## Place du bandeau d'affixe (v0.239) : centré en haut du plateau ; s'il touche une étiquette d'entrée (6 px de marge), il glisse d'abord sur le côté, puis au-dessus
-## ou au-dessous des étiquettes (missions 116, 117 et 120 de la Tempête de sable). Les étiquettes ne dépendent que de la carte : la place reste la même pendant l'annonce et la rafale.
-## Il évite aussi le bloc d'informations en haut à droite (faction et vague, talents, invite et fiche d'ennemi de main.gd : 898 à 1256 px, 33 à 286 px), que la fiche couvrirait au survol.
+## Place commune du bandeau d'affixe (v0.241, après les missions 36 et 39 des Vents contraires et 173, 177 et 178 de la Brume marine) :
+## une place fixe, la même pour tous les affixes et toutes les cartes, dans la bande du haut de l'écran, entre le titre et le bloc
+## d'informations de droite (faction et vague, talents, fiche d'ennemi : 892 à 1260 px, 24 à 292 px). Elle reste hors du plateau
+## (sommet à 174 px) et au-dessus des étiquettes d'entrée (zone à partir de 64 px), sur l'axe de l'annonce de vague de main.gd
+## (350 à 870 px, 24 à 78 px). Le bandeau s'efface tant que cette annonce est affichée (`top_notice_visible`).
+## Remplace le placement glissant de la v0.239, qui finissait sur le plateau quand les étiquettes occupaient le haut de la carte.
 const AFFIX_BANNER_SIZE := Vector2(430,34)
-const AFFIX_BANNER_MARGIN := 6.0
+const AFFIX_BANNER_AREA := Rect2(Vector2(395,24),AFFIX_BANNER_SIZE)
 const AFFIX_BANNER_HUD := Rect2(892,24,368,268)
-static func affix_banner_area(labels: Array) -> Rect2:
-	var obstacles: Array[Rect2] = []
-	for label in labels: obstacles.append(Rect2(label.area).grow(AFFIX_BANNER_MARGIN))
-	var rows: Array[float] = [112.0]
-	for obstacle in obstacles:
-		if obstacle.position.y-AFFIX_BANNER_SIZE.y >= 56.0: rows.append(obstacle.position.y-AFFIX_BANNER_SIZE.y)
-		rows.append(obstacle.end.y)
-	obstacles.append(AFFIX_BANNER_HUD)
-	for y in rows:
-		for step in range(0,41):
-			for side in ([0.0] if step == 0 else [-1.0,1.0]):
-				var x: float = 640.0-AFFIX_BANNER_SIZE.x*0.5+side*float(step)*10.0
-				if x < 320.0 or x+AFFIX_BANNER_SIZE.x > 1260.0: continue
-				var area := Rect2(Vector2(x,y),AFFIX_BANNER_SIZE)
-				if obstacles.all(func(obstacle: Rect2) -> bool: return not obstacle.intersects(area)): return area
-	return Rect2(Vector2(640.0-AFFIX_BANNER_SIZE.x*0.5,112.0),AFFIX_BANNER_SIZE)
+var top_notice_visible: bool = false
+static func affix_banner_area() -> Rect2:
+	return AFFIX_BANNER_AREA
+
+func affix_banner_shown() -> bool:
+	return not top_notice_visible and not affix_banner(model).is_empty()
 
 func _draw_affix_banner() -> void:
+	if not affix_banner_shown(): return
 	var banner: Dictionary = affix_banner(model)
-	if banner.is_empty(): return
 	var font: Font = ThemeDB.fallback_font
 	var size := AFFIX_BANNER_SIZE
-	var area: Rect2 = affix_banner_area(entry_label_layouts())
+	var area: Rect2 = affix_banner_area()
 	var warning: bool = banner.state == "warning"
 	var pulse: float = 0.5+0.5*sin(_ambient_clock()*8.0)
 	var accent: Color = Color(1.0,0.62,0.16) if warning else Color(0.95,0.32,0.26) if banner.state == "active" else Color(0.6,0.8,0.95)

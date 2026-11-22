@@ -2855,6 +2855,7 @@ func _update_interface() -> void:
 	_update_wave_forecast()
 	_update_boss_status()
 	_update_wave_notice()
+	map_view.top_notice_visible = wave_notice.visible # Le bandeau d'affixe partage la bande du haut avec l'annonce de vague (v0.241).
 	_sync_keyboard_focus()
 
 func _guidance_text() -> String:

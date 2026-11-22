@@ -92,28 +92,60 @@ func verify_entry_labels_apart() -> void:
 	print("ENTRY_LABELS_MOVED=",moved)
 	view.free()
 
-## Le bandeau d'affixe ne chevauche aucune étiquette d'entrée (v0.239, signalé sur les missions 116, 117 et 120 de la Tempête de sable), pour toutes les missions à affixe, avec ou sans le décompte d'ennemis.
+## Place commune du bandeau d'affixe (v0.241) : la même place fixe pour tous les affixes, dans la bande du haut, hors du plateau, au-dessus des
+## étiquettes d'entrée et hors du bloc d'informations de droite. Signalé sur les missions 36 et 39 (Vents contraires), où le bandeau glissant de la
+## v0.239 descendait sur la route et les ennemis, et 173, 177 et 178 (Brume marine). Toutes les missions à affixe, au combat et en préparation.
 func verify_banner_clearance() -> void:
 	const Catalogue = preload("res://scripts/campaign_catalogue.gd")
 	var view = View.new()
-	var moved: Array[int] = []
+	var area: Rect2 = View.affix_banner_area()
+	check(area == Rect2(395,24,430,34),"Place commune du bandeau : 395 à 825 px, 24 à 58 px")
+	check(Rect2(350,24,520,54).encloses(area),"Le bandeau occupe la place de l'annonce de vague")
+	check(not area.intersects(Rect2(898,33,358,253)) and not area.intersects(View.AFFIX_BANNER_HUD),"Le bandeau laisse libres la fiche d'ennemi et les informations en haut à droite")
+	check(not area.intersects(Rect2(32,24,300,44)) and not area.intersects(Rect2(34,96,440,20)),"Le bandeau laisse libres le titre et la ligne d'affixe à gauche")
+	check(area.end.y+6.0 <= View.ENTRY_LABEL_ZONE.position.y,"Le bandeau reste au-dessus de la zone des étiquettes d'entrée")
+	var cases := 0
 	for number in range(1,201):
 		var entry: Dictionary = Catalogue.definition(number)
 		if entry.get("combat_affix",{}).is_empty(): continue
 		var m = Model.new(true,Model.Maps.for_id(str(entry.map_id)))
 		view.model = m
-		for with_counts in [false,true]:
+		var board := Vector2(m.map_definition.size)
+		var top: float = INF
+		var outline := PackedVector2Array()
+		for corner in [Vector2.ZERO,Vector2(board.x,0),board,Vector2(0,board.y)]:
+			outline.append(View.project(corner));top = minf(top,View.project(corner).y)
+		var banner_outline := PackedVector2Array([area.position,Vector2(area.end.x,area.position.y),area.end,Vector2(area.position.x,area.end.y)])
+		check(Geometry2D.intersect_polygons(banner_outline,outline).is_empty() and area.end.y+40.0 <= top,"Mission %d : le bandeau reste hors du plateau, au-dessus des ennemis à l'entrée" % number)
+		for busiest in range(-2,m.routes.size()):
 			var forecast: Array[Dictionary] = []
-			if with_counts:
-				for route in m.routes: forecast.append({"route_id":route.id,"count":12})
+			if busiest > -2:
+				for index in range(m.routes.size()): forecast.append({"route_id":m.routes[index].id,"count":12 if index == busiest else 8})
 			view.entry_forecast = forecast
-			var labels: Array = view.entry_label_layouts()
-			var area: Rect2 = View.affix_banner_area(labels)
-			check(labels.all(func(label) -> bool: return not Rect2(label.area).grow(View.AFFIX_BANNER_MARGIN-0.5).intersects(area)),"Mission %d : le bandeau d'affixe laisse de la place aux étiquettes d'entrée" % number)
-			check(area.position.x >= 320.0 and area.end.x <= 1260.0 and area.position.y >= 56.0,"Mission %d : le bandeau reste au-dessus du plateau, hors des panneaux" % number)
-			check(not area.intersects(Rect2(898,33,358,253)),"Mission %d : le bandeau laisse libres la fiche d'ennemi et les informations en haut à droite" % number)
-			if not with_counts and not area.position.is_equal_approx(Vector2(425,112)): moved.append(number)
-	for number in [116,117,120,134,140]: check(number in moved,"Mission %d : le bandeau s'écarte de l'étiquette « Entrée 1 »" % number)
-	check(View.affix_banner_area([]) == Rect2(Vector2(425,112),View.AFFIX_BANNER_SIZE),"Sans étiquette : place habituelle")
-	print("BANNER_MOVED=",moved)
+			cases += 1
+			for label in view.entry_label_layouts():
+				check(not Rect2(label.area).grow(5.5).intersects(area),"Mission %d (%s) : « %s » reste à 6 px au moins du bandeau" % [number,"combat" if busiest == -2 else "préparation",label.title])
+	check(cases >= 100,"Toutes les missions à affixe contrôlées (%d cas)" % cases)
+	var wind = combat({"id":"headwinds","cadence_percent":90},"slate_crossing")
+	view.model = wind
+	check(view.affix_banner_shown(),"Mission 36 : bandeau des Vents contraires affiché")
+	view.top_notice_visible = true
+	check(not view.affix_banner_shown(),"Le bandeau s'efface pendant l'annonce de vague, qui occupe la même place")
 	view.free()
+	verify_notice_link()
+
+## Lien avec l'annonce de vague de main.gd : le bandeau s'efface tant que l'annonce (départ de vague ou compte à rebours) est visible.
+func verify_notice_link() -> void:
+	const Main = preload("res://scripts/main.gd")
+	var scene = Main.new();root.add_child(scene);scene.set_process(false);scene._choose_faction(0)
+	scene._update_interface()
+	check(not scene.wave_notice.visible and not scene.map_view.top_notice_visible,"Préparation : ni annonce ni effacement du bandeau")
+	scene.model.buy(0,0);scene.model.buy(1,1);scene._start()
+	check(scene.wave_notice.visible and scene.map_view.top_notice_visible,"Départ de vague : le bandeau laisse la place à l'annonce")
+	scene._process(2.5)
+	check(not scene.wave_notice.visible and not scene.map_view.top_notice_visible,"Fin de l'annonce : le bandeau revient")
+	scene._process(1000)
+	check(scene.model.phase == "finished" and scene.countdown_remaining == 30,"Fin de la vague 1 : trente secondes de préparation")
+	scene._process(26)
+	check(scene.wave_notice.visible and scene.map_view.top_notice_visible,"Compte à rebours de la vague 2 : le bandeau laisse la place à l'annonce")
+	scene.free()
