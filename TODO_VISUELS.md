@@ -8,6 +8,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [ ] **Nouveaux tracés du désert, missions 111 à 120** — 50 emplacements adaptés, vingt vues pendant la rafale et huit vues d’annonce ou de retour au calme. [Captures](design/Visuels_Biome_Desert.md#décor-sur-les-nouveaux-tracés-des-missions-111-à-120). Avis du porteur attendu avant activation.
+
 - [x] **Nouveaux tracés du désert, missions 101 à 110** — 50 placements adaptés, vingt captures en combat dans les deux factions. [Captures](design/Visuels_Biome_Desert.md#décor-sur-les-nouveaux-tracés-des-missions-101-à-110). Lot a317885 validé le 22 novembre 2026, à activer par Claude Code.
 
 - [ ] **Nouveaux tracés des citadelles, missions 91 à 100** — 53 emplacements adaptés et contrôlés en combat dans les deux factions. [Captures](design/Visuels_Citadelles.md#décors-adaptés-aux-nouveaux-tracés-des-missions-91-à-100). Avis du porteur attendu avant activation.

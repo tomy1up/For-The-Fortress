@@ -44,3 +44,16 @@ Le porteur a validé le lot a317885 le 22 novembre 2026. L’activation par Clau
 - [Missions 101 à 104](essais/desert_refonte/Desert_101_104.jpg)
 - [Missions 105 à 107](essais/desert_refonte/Desert_105_107.jpg)
 - [Missions 108 à 110](essais/desert_refonte/Desert_108_110.jpg)
+
+## Décor sur les nouveaux tracés des missions 111 à 120
+
+Cinquante emplacements ont été adaptés à la nouvelle géométrie. Les deux citernes rythment la boucle de la mission 115. Le Sphinx brisé et son obélisque sont sur la bordure de la mission 116. Le sarcophage et ses fragments occupent le flanc de la mission 118. La pyramide et le sphinx encadrent la dernière carte.
+
+Vingt captures de la rafale ont été vérifiées à 16,20 s de combat dans les deux factions sur copie v0.238. Les Arches de Grès et la Pyramide Ensablée ont aussi été observées lors de l’annonce et du retour au calme dans les deux factions, soit 28 captures au total. Les suites décor, tempête et campagne passent avec respectivement 11 010, 78 et 4 776 contrôles. Sur les missions 116, 117 et 120, le bandeau de l’affixe chevauche l’étiquette Entrée 1. [Détail de la mission 120](essais/tempete_refonte/banniere120.jpg)
+
+Le lot de décor attend l’avis du porteur. Après validation, lever le masquage des dix cartes de dune_mirage à dune_pyramid dans REWORKED_MAPS.
+
+- [Missions 111 à 114](essais/tempete_refonte/Tempete_111_114.jpg)
+- [Missions 115 à 117](essais/tempete_refonte/Tempete_115_117.jpg)
+- [Missions 118 à 120](essais/tempete_refonte/Tempete_118_120.jpg)
+- [Les trois phases à la Pyramide](essais/tempete_refonte/Pyramide_phases_tempete.jpg)
