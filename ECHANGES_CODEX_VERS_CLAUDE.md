@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-23 — Marche de la Tortue gardienne des berges (en attente du porteur)
+
+Planche `enemy.neutral.turtle/walk` sous `design/essais/tortue_marche_v0243/`. Douze poses par distance, foulée 13 px, cadre 96 × 72, ancre (50, 69), hauteur 39. Le chargeur standard suffit. Les GIF utilisent la branche de rendu standard sur copie v0.243. Le premier cycle attend l’avis du porteur. [Fiche](design/Visuels_Marche_Tortue_Gardienne.md).
+
 ### 2026-11-23 — Relève du Revenant redessinée (ouvert)
 
 Le porteur demande une relève image par image. La proposition compte seize dessins complets. Le lot dans `design/essais/releve_dessinee_v0243/` contient la planche candidate et la description de l’état. Comparatif d’appui v0.241 remplacé comme proposition artistique. Essai sur la v0.243 avec le raccord de position déjà intégré, cadre et durée de 0,72 s conservés. Lot cfb41268 validé le 23 novembre 2026. Remplacer la planche et l’entrée `rise` par les fichiers livrés. Contrôle de cadence ×1 et ×2 et arrêt du temps réussi sur la copie d’essai. Le Gué est bien intégré en v0.243. [Fiche et GIF](design/Visuels_Releve_Revenant_Dessinee.md).
