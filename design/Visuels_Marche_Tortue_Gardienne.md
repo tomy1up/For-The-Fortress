@@ -87,6 +87,6 @@ Sur copie v0.244, la planche de 60 images est comparée à plat, avec la moitié
 - [Comparatif vidéo côté Alliance](essais/tortue_inclinaison_v0244/Tortue_alliance_angles.mp4)
 - [Comparatif vidéo côté Horde](essais/tortue_inclinaison_v0244/Tortue_horde_angles.mp4)
 
-L’inclinaison de 13,3° rend le sens du trajet lisible tout en gardant une posture proche de la démarche d’origine. À 26,6°, les pattes se retrouvent fortement décalées par rapport au sol et la tortue semble basculer. L’angle de 13,3° est la proposition pour avis. Les trois variantes sont uniquement dans l’atelier et le moteur de la branche artistique reste identique.
+L’inclinaison de 13,3° rend le sens du trajet lisible tout en gardant une posture proche de la démarche d’origine. À 26,6°, les pattes se retrouvent fortement décalées par rapport au sol et la tortue semble basculer. Le porteur a retenu l’angle de 13,3° le 23 novembre 2026 avec la marche à 60 images. Les trois variantes sont uniquement dans l’atelier et le moteur de la branche artistique reste identique.
 
 La mission 11, vague 2, donne 864 captures de combat sur trois portions, avec la descente à droite, le virage vers la gauche et la montée à droite, dans les deux factions. La position, la phase de marche et les PV correspondent entre variantes. Le validateur donne zéro problème sur 65 dossiers. Les quatre suites ciblées passent, soit 2 219 contrôles.

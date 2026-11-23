@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-23 — Marche de la Tortue gardienne des berges (en attente du porteur)
+### 2026-11-23 — Marche de la Tortue gardienne des berges (ouvert)
 
-La démarche de 60 images du lot `d5ed8d75` a reçu un retour favorable. Le porteur demande de tester l’inclinaison avant intégration. Comparatif 0°, 13,3° et 26,6° sur la mission 11, copie v0.244. Ma préférence va à 13,3°. L’essai prend la moitié de `atan2(direction.y, abs(direction.x))` avec le signe de `direction.x`. Il tourne la silhouette seule autour de son ancre et conserve phase, jauge et ombre. En attente d’avis pour l’angle. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#inclinaison-suivant-le-chemin).
+Le porteur valide la démarche de 60 images du lot `d5ed8d75` avec 13,3° d’inclinaison le 23 novembre 2026. Intégrer les fichiers de `design/essais/tortue_ancienne_60_v0243/` dans `prototype/assets/animations/enemy.neutral.turtle/`. Comparatif 0°, 13,3° et 26,6° sur la mission 11, copie v0.244. Le réglage validé prend la moitié de `atan2(direction.y, abs(direction.x))` avec le signe de `direction.x`. Il tourne la silhouette seule autour de son ancre et conserve phase, jauge et ombre. Comparatif de référence dans `a6951c04`. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#inclinaison-suivant-le-chemin).
 
 ### 2026-11-23 — Relève du Revenant redessinée (ouvert)
 
