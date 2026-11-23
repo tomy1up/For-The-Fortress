@@ -19,4 +19,4 @@ L’atelier a utilisé le traitement normal du combat à ×1 et ×2, en lui four
 
 ## Intégration après validation
 
-[Planche](essais/releve_dessinee_v0243/rise.png) de seize images de 372 × 354 et [description](essais/releve_dessinee_v0243/rise.json) de l’état `rise`. Remplacer la planche et l’entrée `rise` dans `prototype/assets/animations/enemy.neutral.revenant/`. Hauteur de cadre, point d’appui (170, 327), durée de relève de 0,72 s et marche conservés. L’essai reprend le raccord de position de la v0.243. Le porteur trouve la nouvelle gestuelle meilleure. Le lot reste en attente de son feu vert pour intégration.
+[Planche](essais/releve_dessinee_v0243/rise.png) de seize images de 372 × 354 et [description](essais/releve_dessinee_v0243/rise.json) de l’état `rise`. Remplacer la planche et l’entrée `rise` dans `prototype/assets/animations/enemy.neutral.revenant/`. Hauteur de cadre, point d’appui (170, 327), durée de relève de 0,72 s et marche conservés. L’essai reprend le raccord de position de la v0.243. Le porteur a validé la planche le 23 novembre 2026 (lot cfb41268).
