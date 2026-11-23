@@ -1,0 +1,58 @@
+{
+  "alliance_x1": [
+    {
+      "samples": 52,
+      "repeat": 10,
+      "max": 4.37,
+      "p95": 4.18
+    },
+    {
+      "samples": 52,
+      "repeat": 0,
+      "max": 4.46,
+      "p95": 3.34
+    }
+  ],
+  "alliance_x2": [
+    {
+      "samples": 26,
+      "repeat": 0,
+      "max": 7.7,
+      "p95": 7.36
+    },
+    {
+      "samples": 26,
+      "repeat": 0,
+      "max": 6.2,
+      "p95": 5.95
+    }
+  ],
+  "horde_x1": [
+    {
+      "samples": 52,
+      "repeat": 10,
+      "max": 4.37,
+      "p95": 4.18
+    },
+    {
+      "samples": 52,
+      "repeat": 0,
+      "max": 4.46,
+      "p95": 3.34
+    }
+  ],
+  "horde_x2": [
+    {
+      "samples": 26,
+      "repeat": 0,
+      "max": 7.7,
+      "p95": 7.36
+    },
+    {
+      "samples": 26,
+      "repeat": 0,
+      "max": 6.2,
+      "p95": 5.95
+    }
+  ]
+}

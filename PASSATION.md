@@ -4,6 +4,26 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**23 novembre — Ours sauvage, fragments de pattes corrigés.** Le découpage source des deux pattes avant dupliquait des griffes. Répartition exclusive sous le ventre, 120 poses et 2 880 contours testés à taille native, 1 188 captures en combat et quatre suites ciblées. Angle de 13,3° conservé. Le porteur valide les planches corrigées le 23 novembre 2026 (5a9e4c1e). Prêtes pour intégration par Claude Code. [Fiche](design/Visuels_Marche_Ours.md#correction-des-fragments-de-pattes).
+
+**23 novembre — Ours sauvage, quatre appuis et angle validé.** Le porteur valide 13,3° et demande de reprendre les pattes. Deux planches de 60 images, foulée de 19 px, comparées sur 1 188 captures et quatre suites ciblées au vert. La démarche attend l’avis du porteur. [Fiche et vidéos](design/Visuels_Marche_Ours.md#marche-reprise-à-partir-des-quatre-appuis).
+
+**23 novembre — Ours sauvage, patte avant et inclinaison.** Correction locale sur 19 images et comparaison de la même marche à plat et inclinée à 13,3°. 864 captures sur copie v0.244 en ligne droite, en virage et en montée. Contrôles ciblés réussis. En attente du porteur. [Fiche et vidéos](design/Visuels_Marche_Ours.md#correction-de-la-patte-avant-et-essai-dinclinaison).
+
+**23 novembre — Marche de l’Ours sauvage.** Cycle de 60 images essayé en combat sur la mission 1 à ×1 et ×2 dans les deux factions. 412 captures sur copie v0.244, validateur à zéro problème et 5 015 contrôles ciblés. Proposition en attente de l’avis du porteur. [Fiche et vidéos](design/Visuels_Marche_Ours.md).
+
+**23 novembre — Tortue gardienne, inclinaison sur le chemin.** Démarche à 60 images jugée satisfaisante, test demandé sur l’angle. Comparatif 0°, 13,3° et 26,6° sur copie v0.244, 864 captures et quatre suites ciblées. Le porteur valide 13,3° le 23 novembre 2026. Marche de 60 images (d5ed8d75) et résultat de l’essai (a6951c04) prêts pour intégration par Claude Code. [Fiche](design/Visuels_Marche_Tortue_Gardienne.md#inclinaison-suivant-le-chemin).
+
+**23 novembre — Tortue gardienne, démarche d’origine à 60 images.** Le porteur préfère le mouvement d’origine. Les douze poses clés sont conservées et la planche compte 60 images. Comparatifs à 60 et 120 IPS sur 1 040 captures, validateur et quatre suites ciblées au vert. Planche d’origine retenue avec l’inclinaison de 13,3°. [Fiche](design/Visuels_Marche_Tortue_Gardienne.md#démarche-dorigine-avec-60-images-par-foulée).
+
+**23 novembre — Tortue gardienne, démarche reconstruite autour des appuis.** Le porteur souhaitait encore plus de fluidité après l’essai 36–48. Cycle continu par patte, avec deux planches de 48 images. 936 captures comparées à ×1 et ×2 en ligne droite, au premier virage et sur une diagonale montante. Validateur à zéro problème, quatre suites ciblées au vert. Proposition en attente du porteur. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#marche-reconstruite-autour-des-appuis-au-sol).
+
+**23 novembre — Tortue gardienne, comparatif 36 et 48 images.** Sur 624 captures à pas de 1/60 s à ×1 et ×2, la version à 48 réduit les répétitions de poses à ×1 et les variations fréquentes à ×2. Validateur à zéro problème et quatre suites ciblées au vert. Planche proposée, intégration en attente de l’avis du porteur. [Comparatif](design/Visuels_Marche_Tortue_Gardienne.md#comparatif-entre-36-et-48-images-par-foulée).
+
+**23 novembre — Marche lissée de la Tortue gardienne.** Le porteur souhaitait plus de fluidité. Cycle à 36 images, foulée de 13 px conservée, 576 captures à ×1 et ×2 dans les deux factions. Validateur à zéro problème et quatre suites ciblées au vert. Proposition en attente de l’avis du porteur. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#cycle-lissé-sur-retour-du-porteur).
+
+**23 novembre — Marche de la Tortue gardienne des berges.** Premier cycle de douze dessins, essayé dans les deux factions à ×1 et ×2 sur copie v0.243. 146 captures, validateur à zéro problème et quatre suites ciblées au vert. Vue de trois quarts avec miroir en virage. Proposition en attente du porteur. [Fiche et GIF](design/Visuels_Marche_Tortue_Gardienne.md).
+
 **23 novembre — Relève du Revenant redessinée.** Après le retour du porteur sur l’ancienne gestuelle, nouvelle planche à 16 dessins complets proposée. Vue en combat sur copie v0.243 à la mission 191, dans les deux factions, avec 84 captures et trois suites ciblées. Le porteur trouve la nouvelle gestuelle meilleure. Contrôle supplémentaire de cadence réussi à ×1 et ×2 dans les deux factions, avec un arrêt du temps dans l’atelier. Validée par le porteur le 23 novembre 2026 (lot cfb41268), prête pour intégration. [Fiche et GIF](design/Visuels_Releve_Revenant_Dessinee.md).
 
 **23 novembre — Appui du Revenant lors de la relève.** Comparatif sur copie v0.241, en ligne droite et en virage dans les deux factions. 248 captures et trois suites réussies. Le point d’appui reste fixe pendant 0,15 s puis rejoint sa position à 0,72 s. Essai antérieur à la demande de redessiner la relève. [Fiche et GIF](design/Visuels_Appui_Releve_Revenant.md).

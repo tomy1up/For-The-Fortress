@@ -68,6 +68,10 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Boutique étendue, premier lot (v0.192)** — douze unités (types 10 à 21 : sentinelle, tireur d'élite, arquebusier, bombarde, piquier, pyromancien côté Alliance ; veilleur, javelinier, lance-éclats, catapulte, lance-épieu, brûleur côté Horde) qui réutilisent l'illustration de leur famille. À illustrer (même cadrage que les alternatives `rodeur`, `mousquetaire`, `traqueur`, `grenadier`) puis à animer. Voir `design/Boutique_20_unites_proposition.md`.
 
+- [x] **Marche de l’Ours sauvage** — Deux planches de 60 images et inclinaison de 13,3° validées le 23 novembre 2026 (5a9e4c1e). À intégrer par Claude Code. [Fiche et vidéos](design/Visuels_Marche_Ours.md#correction-des-fragments-de-pattes).
+
+- [x] **Marche de la Tortue gardienne des berges** — Le porteur valide 60 images par foulée et une inclinaison de 13,3° le 23 novembre 2026 (d5ed8d75 et a6951c04). À intégrer par Claude Code. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#inclinaison-suivant-le-chemin).
+
 - [x] **Relève du Revenant dessinée image par image** — Seize dessins complets validés par le porteur le 23 novembre 2026 (cfb41268). Prête pour intégration. [Fiche et GIF](design/Visuels_Releve_Revenant_Dessinee.md).
 
 - [x] **Revenant, chapitre 20** — Portrait et relève intégrés, vérifiés sur v0.241. Glissement pendant les poses basses signalé pour correction visuelle. [Contrôles](design/Visuels_Aigle_Revenant_V0241.md).

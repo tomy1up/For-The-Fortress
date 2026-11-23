@@ -6,6 +6,14 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-23 — Marche de l’Ours sauvage (ouvert)
+
+Le porteur signale un fragment de patte. Le découpage a été corrigé dans `design/essais/ours_raccords_v0244/`. Le lot remplace `0735d40c` et fournit deux planches de 60 images pour `enemy.neutral.bear`. Foulée 19 px, cadre 120 × 92, ancre (58, 85), hauteur 49 et inclinaison validée à 13,3°. Le porteur valide le lot `5a9e4c1e` le 23 novembre 2026 après avoir vu le GIF. Intégrer `walk.png`, `walk_up.png` et `animation.json` dans `prototype/assets/animations/enemy.neutral.bear/`. [Avant-après et contrôles](design/Visuels_Marche_Ours.md#correction-des-fragments-de-pattes).
+
+### 2026-11-23 — Marche de la Tortue gardienne des berges (ouvert)
+
+Le porteur valide la démarche de 60 images du lot `d5ed8d75` avec 13,3° d’inclinaison le 23 novembre 2026. Intégrer les fichiers de `design/essais/tortue_ancienne_60_v0243/` dans `prototype/assets/animations/enemy.neutral.turtle/`. Comparatif 0°, 13,3° et 26,6° sur la mission 11, copie v0.244. Le réglage validé prend la moitié de `atan2(direction.y, abs(direction.x))` avec le signe de `direction.x`. Il tourne la silhouette seule autour de son ancre et conserve phase, jauge et ombre. Comparatif de référence dans `a6951c04`. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#inclinaison-suivant-le-chemin).
+
 ### 2026-11-23 — Relève du Revenant redessinée (ouvert)
 
 Le porteur demande une relève image par image. La proposition compte seize dessins complets. Le lot dans `design/essais/releve_dessinee_v0243/` contient la planche candidate et la description de l’état. Comparatif d’appui v0.241 remplacé comme proposition artistique. Essai sur la v0.243 avec le raccord de position déjà intégré, cadre et durée de 0,72 s conservés. Lot cfb41268 validé le 23 novembre 2026. Remplacer la planche et l’entrée `rise` par les fichiers livrés. Contrôle de cadence ×1 et ×2 et arrêt du temps réussi sur la copie d’essai. Le Gué est bien intégré en v0.243. [Fiche et GIF](design/Visuels_Releve_Revenant_Dessinee.md).
