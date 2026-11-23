@@ -49,3 +49,18 @@ Le cycle conserve au moins deux appuis. La position prévue d’un coussinet res
 1 188 captures sur la mission 1, vague 4, en descente, au premier virage et en montée. Les positions, la phase de marche et les PV correspondent entre variantes. La vérification de silhouette couvre les 120 images sans rognage ni fragment séparé de plus de trois pixels. Le validateur donne zéro problème sur 65 dossiers, les anciennes planches présentes dans l’atelier étant signalées comme non référencées. Quatre suites ciblées passent, soit 5 015 contrôles. Le pivot demeure instantané.
 
 Deux planches de 60 images pour `enemy.neutral.bear`. Cadre 120 × 92, ancre (58, 85), hauteur 49 et foulée 19 px. [Description](essais/ours_appuis_v0244/animation.json) · [Marche](essais/ours_appuis_v0244/walk.png) · [Montée](essais/ours_appuis_v0244/walk_up.png). La marche attend l’avis du porteur. L’inclinaison de 13,3° est validée.
+
+## Correction des fragments de pattes
+
+Le porteur a signalé un morceau de patte qui flottait sous le poitrail. Dans la pose source, 566 pixels opaques de la zone des deux pattes avant étaient repris par les deux calques. Quand les pattes s’écartaient, une partie des griffes était entraînée dans chaque mouvement. Le découpage a été repris sur les espaces naturels entre les pattes. Sous le ventre, chaque pixel appartient à un seul membre. Le rythme des appuis, les vues de montée et de descente et l’inclinaison validée de 13,3° sont conservés.
+
+![Même instant et même ancre en jeu, avant et après, agrandis quatre fois](essais/ours_raccords_v0244/Detail_patte_avant.jpg)
+
+- Alliance [×1](essais/ours_raccords_v0244/Ours_alliance_x1_raccords.mp4) · [×2](essais/ours_raccords_v0244/Ours_alliance_x2_raccords.mp4)
+- Horde [×1](essais/ours_raccords_v0244/Ours_horde_x1_raccords.mp4) · [×2](essais/ours_raccords_v0244/Ours_horde_x2_raccords.mp4)
+
+L’ancien découpage a été repris comme contre-exemple pour vérifier que le contrôle détecte le chevauchement. Après correction, chaque semelle a une seule région continue aux trois seuils de transparence testés. Les 120 poses ont été examinées dans l’ordre et contrôlées pour les fragments et le rognage. 2 880 vérifications de contour à la taille du plateau combinent les 120 poses, les deux sens, quatre décalages d’un demi-pixel et trois seuils de transparence, avec une rotation de 13,3°. Le contrôle ne détecte aucun fragment isolé à ces seuils.
+
+1 188 captures de combat sur la mission 1, vague 4, à ×1 et ×2 dans les deux factions. Les positions, les PV et les phases correspondent exactement à l’ancienne version. Validateur à zéro problème sur 65 dossiers et quatre suites ciblées au vert, soit 5 015 contrôles. La bascule au premier virage suit toujours le changement de sens habituel du jeu.
+
+[Planche principale](essais/ours_raccords_v0244/walk.png) · [Montée](essais/ours_raccords_v0244/walk_up.png) · [Description](essais/ours_raccords_v0244/animation.json). Les planches corrigées attendent l’avis du porteur.

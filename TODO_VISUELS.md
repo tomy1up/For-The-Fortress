@@ -48,7 +48,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Boutique étendue, premier lot (v0.192)** — douze unités (types 10 à 21 : sentinelle, tireur d'élite, arquebusier, bombarde, piquier, pyromancien côté Alliance ; veilleur, javelinier, lance-éclats, catapulte, lance-épieu, brûleur côté Horde) qui réutilisent l'illustration de leur famille. À illustrer (même cadrage que les alternatives `rodeur`, `mousquetaire`, `traqueur`, `grenadier`) puis à animer. Voir `design/Boutique_20_unites_proposition.md`.
 
-- [ ] **Marche de l’Ours sauvage** — Inclinaison de 13,3° validée. Nouveau cycle à quatre appuis en attente de l’avis du porteur. [Fiche et vidéos](design/Visuels_Marche_Ours.md#marche-reprise-à-partir-des-quatre-appuis).
+- [ ] **Marche de l’Ours sauvage** — Fragments de pattes corrigés sur les deux planches, avec l’inclinaison validée de 13,3°. En attente de l’avis du porteur. [Fiche et vidéos](design/Visuels_Marche_Ours.md#correction-des-fragments-de-pattes).
 
 - [x] **Marche de la Tortue gardienne des berges** — Le porteur valide 60 images par foulée et une inclinaison de 13,3° le 23 novembre 2026 (d5ed8d75 et a6951c04). À intégrer par Claude Code. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#inclinaison-suivant-le-chemin).
 
