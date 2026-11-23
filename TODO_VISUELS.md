@@ -8,7 +8,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
-- [ ] **Décor du Gué, missions 1 à 20** — Sept images et essai sur les dix plateaux des deux premiers chapitres, en attente de l’avis du porteur. [Fiche et captures](design/Visuels_Gue_01_20.md).
+- [x] **Décor du Gué, missions 1 à 20** — Sept images sur dix plateaux, validées le 23 novembre 2026 (3feb9b09). Branchement à faire par Claude Code. [Fiche et captures](design/Visuels_Gue_01_20.md).
 
 - [x] **Décor des Ardoises, missions 21 à 40** — Six pièces sur onze cartes, validées le 22 novembre 2026 (6ecb5d3). Branchement à faire par Claude Code. [Fiche et captures](design/Visuels_Ardoises_21_40.md).
 
@@ -47,6 +47,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 - [ ] **Boutique étendue, second lot (v0.193)** — huit unités (types 22 à 29 : mage de la foudre, archer double, arbalète lourde, fronde elfe ; hache en chaîne, lanceur double, lanceur de masse, sarbacane), illustration de famille provisoire. À illustrer comme le premier lot. Voir `design/Boutique_20_unites_proposition.md`.
 
 - [ ] **Boutique étendue, premier lot (v0.192)** — douze unités (types 10 à 21 : sentinelle, tireur d'élite, arquebusier, bombarde, piquier, pyromancien côté Alliance ; veilleur, javelinier, lance-éclats, catapulte, lance-épieu, brûleur côté Horde) qui réutilisent l'illustration de leur famille. À illustrer (même cadrage que les alternatives `rodeur`, `mousquetaire`, `traqueur`, `grenadier`) puis à animer. Voir `design/Boutique_20_unites_proposition.md`.
+
+- [x] **Relève du Revenant dessinée image par image** — Seize dessins complets validés par le porteur le 23 novembre 2026 (cfb41268). Prête pour intégration. [Fiche et GIF](design/Visuels_Releve_Revenant_Dessinee.md).
 
 - [x] **Revenant, chapitre 20** — Portrait et relève intégrés, vérifiés sur v0.241. Glissement pendant les poses basses signalé pour correction visuelle. [Contrôles](design/Visuels_Aigle_Revenant_V0241.md).
 

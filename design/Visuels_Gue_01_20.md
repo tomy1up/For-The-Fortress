@@ -1,6 +1,6 @@
 # Décor du Gué · Missions 1 à 20
 
-Proposition présentée le 23 novembre 2026. Le rendu a été essayé sur une copie de la v0.241. L’habillage attend l’avis du porteur avant intégration.
+Proposition présentée le 23 novembre 2026. Le rendu a été essayé sur une copie de la v0.241. Le porteur a validé cet habillage le 23 novembre 2026 (lot 3feb9b09). Claude Code peut l’intégrer.
 
 ## Pièces et emplacements
 
