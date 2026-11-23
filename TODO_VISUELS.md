@@ -48,6 +48,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Boutique étendue, premier lot (v0.192)** — douze unités (types 10 à 21 : sentinelle, tireur d'élite, arquebusier, bombarde, piquier, pyromancien côté Alliance ; veilleur, javelinier, lance-éclats, catapulte, lance-épieu, brûleur côté Horde) qui réutilisent l'illustration de leur famille. À illustrer (même cadrage que les alternatives `rodeur`, `mousquetaire`, `traqueur`, `grenadier`) puis à animer. Voir `design/Boutique_20_unites_proposition.md`.
 
+- [ ] **Appui au sol pendant la relève du Revenant** — Essai comparé sur la mission 191, avec vrai déclenchement de la relève et raccord en virage. En attente de l’avis du porteur. [Fiche et GIF](design/Visuels_Appui_Releve_Revenant.md).
+
 - [x] **Revenant, chapitre 20** — Portrait et relève intégrés, vérifiés sur v0.241. Glissement pendant les poses basses signalé pour correction visuelle. [Contrôles](design/Visuels_Aigle_Revenant_V0241.md).
 
 - [x] **Aigle des cimes, chapitre 16** — Portrait chargé dans les prévisions et Rencontres, vol vérifié en combat dans les deux factions sur v0.241. [Contrôles](design/Visuels_Aigle_Revenant_V0241.md).

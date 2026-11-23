@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-23 — Essai d’appui du Revenant pendant la relève (en attente du porteur)
+
+Sur copie v0.241, la distance au déclenchement de la relève est conservée 0,15 s au rendu avant un raccord en douceur jusqu’à 0,72 s, en suivant la route. Le modèle et les planches sont inchangés dans la branche. Écart temporaire maximal observé de 6,85 px. Prévoir le raccord des impacts et du survol si la proposition est intégrée. [Mesures, contrôles et GIF](design/Visuels_Appui_Releve_Revenant.md).
+
 ### 2026-11-23 — Décor du Gué 1–20 (ouvert)
 
 Lot 3feb9b09 validé par le porteur le 23 novembre 2026. Sept PNG dans `prototype/assets/decor/gue/`. Réutiliser les ancrages existants. Sur `valley_ford`, le calque de rivière passe sous la chaussée et le pont passe au-dessus de la chaussée et sous les unités. Les captures de la v0.241, les dix identifiants et les coordonnées des sept pièces sont dans la [fiche](design/Visuels_Gue_01_20.md).
