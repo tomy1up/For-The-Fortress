@@ -15,7 +15,7 @@ Les deux planches sont déclarées dans `prototype/assets/animations/effect.rock
 | Tas au sol | `blocked`, boucle existante | 3,78 s | 12,68 à 16,46 s |
 | Dégagement | `death`, 32 images dans `clearance.png` | 0,54 s | 16,46 à 17,00 s |
 
-Dans l’essai, `valley_view.gd::_draw_rockfall` sélectionne ces états avec l’âge du blocage et le temps restant, en l’ancrant sur la route désignée par le modèle. Entre les transitions, la boucle du tas effectue un nombre entier de cycles pour raccorder sa première image aux deux planches. La réouverture reste à 17 s, puis à 29 s sur le deuxième cycle. Si une planche de transition manque, le rendu peut conserver le tas existant. Le branchement a été essayé dans une copie de jeu et reste à intégrer par Claude Code après avis du porteur.
+Dans l’essai, `valley_view.gd::_draw_rockfall` sélectionne ces états avec l’âge du blocage et le temps restant, en l’ancrant sur la route désignée par le modèle. Entre les transitions, la boucle du tas effectue un nombre entier de cycles pour raccorder sa première image aux deux planches. La réouverture reste à 17 s, puis à 29 s sur le deuxième cycle. Si une planche de transition manque, le rendu peut conserver le tas existant. Le porteur a validé les deux transitions le 24 novembre 2026. Le branchement a été essayé dans une copie de jeu et reste à intégrer par Claude Code.
 
 ## Contrôles
 

@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-24 — Chute et dégagement de l’Éboulement (ouvert)
 
-`effect.rockfall` déclare deux planches événementielles. `spawn` a été repris en cinq chutes successives. Utiliser 41 images sur 0,68 s dès l’activation. Le porteur a retenu le dégagement. Sa planche `death` occupe toujours les 0,54 dernières secondes du blocage. L’essai utilise le temps de combat et l’ancre de la route visée. Au milieu, jouer `blocked` sur un nombre entier de cycles pour raccorder son image 0 aux transitions. Conserver les horaires de réouverture. Le branchement testé est limité à la copie de capture. La chute révisée attend l’avis du porteur. [GIF, format et contrôles](design/Visuels_Transitions_Eboulement.md).
+`effect.rockfall` déclare deux planches événementielles. `spawn` a été repris en cinq chutes successives. Utiliser 41 images sur 0,68 s dès l’activation. Le porteur a retenu le dégagement. Sa planche `death` occupe toujours les 0,54 dernières secondes du blocage. L’essai utilise le temps de combat et l’ancre de la route visée. Au milieu, jouer `blocked` sur un nombre entier de cycles pour raccorder son image 0 aux transitions. Conserver les horaires de réouverture. Le branchement testé est limité à la copie de capture. Le porteur a validé aussi la chute révisée le 24 novembre 2026. Le lot ff4df682 est prêt à brancher. [GIF, format et contrôles](design/Visuels_Transitions_Eboulement.md).
 
 ### 2026-11-24 — Lisibilité des cinq affixes et réouverture des mines (ouvert)
 

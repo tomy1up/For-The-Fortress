@@ -114,7 +114,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Souterrains et mines, missions 131–140 et éboulement** — cinq pièces par carte, avertissement et blocage animés. Contrôles en combat dans les deux factions. Prêt pour intégration et avis visuel. [Aperçus](design/Visuels_Biome_Mines.md#chapitre-14--missions-131-à-140).
 
-- [x] **Chute et dégagement de l’Éboulement** — planches livrées, raccords contrôlés sur une et plusieurs entrées. En attente de l’avis du porteur et de l’intégration par Claude Code. [GIF et fiche](design/Visuels_Transitions_Eboulement.md).
+- [x] **Chute et dégagement de l’Éboulement** — planches livrées, raccords contrôlés sur une et plusieurs entrées. Chute et dégagement validés par le porteur le 24 novembre 2026. À intégrer par Claude Code. [GIF et fiche](design/Visuels_Transitions_Eboulement.md).
 
 - [x] **Marche de Gueule-de-Vase** — trois planches de 24 poses. Les Eaux Mortes vérifiées à ×1 et ×2 dans les deux factions. En attente de retour visuel. [Aperçu](design/Visuel_Gueule_de_Vase.md#marche-de-gueule-de-vase).
 
