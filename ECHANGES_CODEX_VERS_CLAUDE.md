@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-23 — Marche de l’Ours sauvage (en attente du porteur)
+### 2026-11-23 — Marche de l’Ours sauvage (ouvert)
 
-Le porteur signale un fragment de patte. Le découpage a été corrigé dans `design/essais/ours_raccords_v0244/`. Le lot remplace `0735d40c` et fournit deux planches de 60 images pour `enemy.neutral.bear`. Foulée 19 px, cadre 120 × 92, ancre (58, 85), hauteur 49 et inclinaison validée à 13,3°. Attendre l’avis du porteur sur les planches corrigées. [Avant-après et contrôles](design/Visuels_Marche_Ours.md#correction-des-fragments-de-pattes).
+Le porteur signale un fragment de patte. Le découpage a été corrigé dans `design/essais/ours_raccords_v0244/`. Le lot remplace `0735d40c` et fournit deux planches de 60 images pour `enemy.neutral.bear`. Foulée 19 px, cadre 120 × 92, ancre (58, 85), hauteur 49 et inclinaison validée à 13,3°. Le porteur valide le lot `5a9e4c1e` le 23 novembre 2026 après avoir vu le GIF. Intégrer `walk.png`, `walk_up.png` et `animation.json` dans `prototype/assets/animations/enemy.neutral.bear/`. [Avant-après et contrôles](design/Visuels_Marche_Ours.md#correction-des-fragments-de-pattes).
 
 ### 2026-11-23 — Marche de la Tortue gardienne des berges (ouvert)
 

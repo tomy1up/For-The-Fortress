@@ -63,4 +63,6 @@ L’ancien découpage a été repris comme contre-exemple pour vérifier que le 
 
 1 188 captures de combat sur la mission 1, vague 4, à ×1 et ×2 dans les deux factions. Les positions, les PV et les phases correspondent exactement à l’ancienne version. Validateur à zéro problème sur 65 dossiers et quatre suites ciblées au vert, soit 5 015 contrôles. La bascule au premier virage suit toujours le changement de sens habituel du jeu.
 
-[Planche principale](essais/ours_raccords_v0244/walk.png) · [Montée](essais/ours_raccords_v0244/walk_up.png) · [Description](essais/ours_raccords_v0244/animation.json). Les planches corrigées attendent l’avis du porteur.
+[Planche principale](essais/ours_raccords_v0244/walk.png) · [Montée](essais/ours_raccords_v0244/walk_up.png) · [Description](essais/ours_raccords_v0244/animation.json). Le porteur valide les planches corrigées le 23 novembre 2026, après examen du [GIF avant-après](essais/ours_raccords_v0244/Ours_patte_avant.gif).
+
+Pour les prochaines marches comparables, l’ours sert de repère d’essai avec 60 images par foulée et par vue, soit 120 images vérifiées pour les deux vues. Le nombre par foulée se règle selon sa durée et le rendu en jeu. Le format actuel accepte au plus 64 images par planche.

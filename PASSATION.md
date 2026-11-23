@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**23 novembre — Ours sauvage, fragments de pattes corrigés.** Le découpage source des deux pattes avant dupliquait des griffes. Répartition exclusive sous le ventre, 120 poses et 2 880 contours testés à taille native, 1 188 captures en combat et quatre suites ciblées. Angle de 13,3° conservé. En attente de l’avis du porteur. [Fiche](design/Visuels_Marche_Ours.md#correction-des-fragments-de-pattes).
+**23 novembre — Ours sauvage, fragments de pattes corrigés.** Le découpage source des deux pattes avant dupliquait des griffes. Répartition exclusive sous le ventre, 120 poses et 2 880 contours testés à taille native, 1 188 captures en combat et quatre suites ciblées. Angle de 13,3° conservé. Le porteur valide les planches corrigées le 23 novembre 2026 (5a9e4c1e). Prêtes pour intégration par Claude Code. [Fiche](design/Visuels_Marche_Ours.md#correction-des-fragments-de-pattes).
 
 **23 novembre — Ours sauvage, quatre appuis et angle validé.** Le porteur valide 13,3° et demande de reprendre les pattes. Deux planches de 60 images, foulée de 19 px, comparées sur 1 188 captures et quatre suites ciblées au vert. La démarche attend l’avis du porteur. [Fiche et vidéos](design/Visuels_Marche_Ours.md#marche-reprise-à-partir-des-quatre-appuis).
 
