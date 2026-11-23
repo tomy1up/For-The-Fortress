@@ -1380,6 +1380,7 @@ static func enemy_bounds(enemy: Dictionary, defending_faction: int = -1, route_p
 		if SheetAnimations.has_animation(enemy_art_id(enemy,defending_faction),"walk"):
 			var sheet: Dictionary = SheetAnimations.spec_for(enemy_art_id(enemy,defending_faction))
 			image = SheetAnimations.destination(sheet,sheet.animations.walk)
+			if enemy_art_id(enemy,defending_faction) in ROUTE_TILTED_WALKERS: image = route_tilted_bounds(image,EnemyWalkArt.path_motion(enemy.distance,route_points,AXIS).direction)
 		var facing: float
 		if EnemyWalkArt.supports(enemy_art_id(enemy,defending_faction)):
 			var motion: Dictionary=EnemyWalkArt.path_motion(enemy.distance,route_points,AXIS)
@@ -2281,6 +2282,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	var body: Transform2D = enemy_body_transform(enemy,facing,pose,model.elapsed,model.active and not walking and not sheet_walk, motion.get("direction", Vector2.ZERO))
 	if _ghost_squash != 1.0: body = body.scaled_local(Vector2(1.0,_ghost_squash))
 	body.origin += center
+	if sheet_walk and id in ROUTE_TILTED_WALKERS: body = route_tilted(body,motion.direction)
 	draw_set_transform_matrix(body)
 	if preview.has("texture"):
 		draw_set_transform(body.origin, 0.0, Vector2(preview.get("facing", 1.0), 1.0)*scale)
@@ -2324,6 +2326,23 @@ func display_distance(enemy: Dictionary) -> float:
 	var age: float = model.elapsed-float(enemy.risen_at)
 	if rise.is_empty() or age < 0.0: return float(enemy.distance)
 	return lerpf(float(enemy.risen_distance),float(enemy.distance),rise_weight(age,REVENANT_RISE_HOLD,float(rise.duration)))
+
+## Marche inclinée sur la pente du chemin (Tortue gardienne et Ours, validée par le porteur le 23 novembre 2026, lots Codex a6951c04 et 5a9e4c1e) :
+## la moitié de l'angle projeté, soit 13,3° sur les diagonales isométriques, signée selon le sens du trajet. Seule la silhouette tourne, autour de son ancre.
+const ROUTE_TILTED_WALKERS: Array[String] = ["enemy.neutral.turtle","enemy.neutral.bear"]
+
+static func route_tilt(direction: Vector2) -> float:
+	if absf(direction.x) < 0.05: return 0.0
+	return 0.5*atan2(direction.y,absf(direction.x))*signf(direction.x)
+
+static func route_tilted(body: Transform2D, direction: Vector2) -> Transform2D:
+	var tilted: Transform2D = Transform2D(route_tilt(direction),Vector2.ZERO)*body
+	tilted.origin = body.origin
+	return tilted
+
+## Emprise de la silhouette inclinée, avant le miroir appliqué par `enemy_bounds`.
+static func route_tilted_bounds(image: Rect2, direction: Vector2) -> Rect2:
+	return Transform2D(route_tilt(Vector2(absf(direction.x),direction.y)),Vector2.ZERO)*image
 
 ## Ennemi animé par une planche d'images (format de `animation_library.gd`) : cycle de marche réglé sur la distance parcourue.
 func _draw_sheet_walker(id: String, enemy: Dictionary, motion: Dictionary, scale: float, facing: float, body: Transform2D, hit_strength: float) -> void:

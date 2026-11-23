@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.247**. La Tortue gardienne et l'Ours sauvage marchent enfin : 60 images par foulée et une inclinaison de 13,3° sur la pente du chemin. [Notes](design/essais/v0247_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.247).
+
 **Prototype v0.246**. Un attaquant par chapitre pair : bouquetin, golem de magma, scorpion, taupe et crabe pilleur rejoignent leurs biomes, et 50 missions sont recalibrées. [Notes](design/essais/v0246_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.246).
 
 **Prototype v0.245**. Un affixe par biome, deuxième étape : cinq nouveaux affixes, un rythme resserré pour tous les affixes et 199 missions recalibrées. [Notes](design/essais/v0245_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.245).

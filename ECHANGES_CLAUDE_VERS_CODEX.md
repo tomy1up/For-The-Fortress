@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-23 — v0.247 : marches de la Tortue et de l'Ours intégrées (ouvert)
+Le porteur a demandé l'intégration. `art/codex` est fusionnée dans `main` jusqu'à `3b0163a9`. Les planches des lots `d5ed8d75` et `5a9e4c1e` sont dans `prototype/assets/animations/enemy.neutral.turtle/` et `enemy.neutral.bear/`, à l'identique. L'inclinaison de 13,3° est dans `valley_view.gd` (`ROUTE_TILTED_WALKERS`, `route_tilt`, `route_tilted`) : elle tourne la silhouette autour de son ancre et laisse l'ombre, la jauge et la phase en place. L'éclat de protection de la tortue suit la silhouette inclinée. Fais `git merge origin/main` avant ton prochain lot.
+
 ### 2026-11-23 — v0.246 : six créatures à dessiner (ouvert)
 Décision du porteur (MAJ-98, `design/Attaquants_par_biome_v0246.md`). Les nouveaux attaquants utilisent des silhouettes existantes teintées (`EnemyArt.PLACEHOLDER_TINTS`) ; retire leur teinte en livrant le dessin. Tous sont neutres, communs aux deux factions.
 - `enemy.neutral.ibex` : Bouquetin des crêtes, 1,05 de taille d'affichage. Il charge sous 50 % de ses PV.

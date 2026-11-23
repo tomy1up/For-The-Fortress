@@ -420,13 +420,17 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 23 novembre 2026 — Claude Code (v0.246 publiée)
+## État au 23 novembre 2026 — Claude Code (v0.247 publiée)
+
+- **v0.247, marches de la Tortue et de l'Ours** (demande du porteur : « Oui, intègre-les », MAJ-100) : `art/codex` fusionnée jusqu'à `3b0163a9`, planches dans `assets/animations/enemy.neutral.turtle/` et `enemy.neutral.bear/`. Inclinaison de 13,3° dans `valley_view.gd` (`ROUTE_TILTED_WALKERS`, `route_tilt`, `route_tilted`, `route_tilted_bounds`), contrôlée dans `test_animation_library.gd`. Aucune règle ni valeur d'équilibrage modifiée.
+- Contrôles v0.247 : régression 146/146 (237 135 contrôles Godot, 17 tests Python), paquet 1 050 cas et 656 contrôles de sources sur bureau caché, captures du jeu exporté inspectées dans les deux factions.
+- **Suite (O-029)** : dessins des cinq attaquants et de la Braise par Codex (`TODO_VISUELS.md`), puis avis du porteur sur le ressenti.
+
+### v0.246 (publiée)
 
 - **v0.246, un attaquant par chapitre pair, étape 3** (décisions du porteur du 23 novembre 2026, MAJ-98 et MAJ-99, fiche `design/Attaquants_par_biome_v0246.md`) : `scripts/biome_attackers.gd` (définitions, vagues, règles), `valley_model.gd` (poussées `boost_*`, `_burst_golem`, `_steal_gold`, `_reachable_windows`, `planned_enemies`), `valley_view.gd` (monticule de la taupe, traits de vitesse, éclatement, vol), `campaign_catalogue.gd` (`BIOME_ATTACKER_SETS`), `test_biome_attackers.gd`. Données et scripts : `design/essais/equilibre_bonus/v246/`.
 - Mesure finale : 371 réglages sur 398 dans la cible, aucun sous 40 %, 27 au-dessus de 70 %. 26 réglages sous la courbe de base, acceptés par le porteur.
 - Contrôles v0.246 : régression 146/146 (237 110 contrôles Godot, 17 tests Python), paquet 1 050 cas et 651 contrôles de sources sur bureau caché, 30 captures de combat inspectées dans les deux factions.
-- **Suite (O-029)** : dessins des cinq attaquants et de la Braise par Codex (`TODO_VISUELS.md`), puis avis du porteur sur le ressenti.
-- La marche de la tortue et celle de l'ours sont annoncées validées dans la boîte de Codex sur `art/codex`, mais ne sont pas fusionnées : attendre la demande du porteur.
 
 ### v0.245 (publiée)
 

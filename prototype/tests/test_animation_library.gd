@@ -17,6 +17,7 @@ func run_checks() -> void:
 	verify_assets_on_disk()
 	verify_event_animations()
 	verify_walk_variants_and_warning()
+	verify_route_tilted_walkers()
 	await verify_rendering()
 	await verify_event_rendering()
 	await verify_headwinds_marker()
@@ -24,6 +25,33 @@ func run_checks() -> void:
 	Library.clear_cache()
 	print("ANIMATION_LIBRARY_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
+
+## Marches de la Tortue et de l'Ours (v0.247) : planches validées par le porteur, inclinaison de 13,3° autour de l'ancre, attaquants provisoires inchangés.
+func verify_route_tilted_walkers() -> void:
+	var turtle: Dictionary = Library.spec_for("enemy.neutral.turtle")
+	var bear: Dictionary = Library.spec_for("enemy.neutral.bear")
+	check(not turtle.is_empty() and int(turtle.animations.walk.frames) == 60 and float(turtle.animations.walk.stride) == 13.0 and float(turtle.display_height) == 39.0,"Tortue : 60 images, foulée 13, hauteur 39")
+	check(not bear.is_empty() and int(bear.animations.walk.frames) == 60 and int(bear.animations.walk_up.frames) == 60 and float(bear.animations.walk.stride) == 19.0 and float(bear.display_height) == 49.0,"Ours : deux planches de 60 images, foulée 19, hauteur 49")
+	for id in ["enemy.neutral.turtle","enemy.neutral.bear"]:
+		check(Library.texture_for(id,Library.spec_for(id).animations.walk) != null,"Planche de marche chargée : %s" % id)
+		check(id in View.ROUTE_TILTED_WALKERS,"Inclinaison active : %s" % id)
+	check(Library.enemy_state(bear,{"direction":Vector2(2,-1).normalized()}) == "walk_up" and Library.enemy_state(bear,{"direction":Vector2(2,1).normalized()}) == "walk","Ours : vue montante sur un trajet qui monte")
+	check(Library.enemy_state(turtle,{"direction":Vector2(2,-1).normalized()}) == "walk","Tortue : une seule vue de marche")
+	for id in ["enemy.neutral.scorpion","enemy.neutral.crab","enemy.neutral.mole"]:
+		check(not Library.has_animation(id,"walk") and not id in View.ROUTE_TILTED_WALKERS,"Silhouette provisoire sans planche ni inclinaison : %s" % id)
+	var expected: float = deg_to_rad(13.28)
+	for item in [[Vector2(2,1),1.0],[Vector2(2,-1),-1.0],[Vector2(-2,1),-1.0],[Vector2(-2,-1),1.0]]:
+		check(absf(View.route_tilt(item[0].normalized())-expected*item[1]) < 0.001,"Angle signé de 13,3° : %s" % item[0])
+	check(View.route_tilt(Vector2.DOWN) == 0.0 and View.route_tilt(Vector2.RIGHT) == 0.0,"Aucune inclinaison sur un trajet frontal ou à plat")
+	var body := Transform2D(Vector2(-1.2,0),Vector2(0,1.2),Vector2(40,70))
+	var tilted: Transform2D = View.route_tilted(body,Vector2(-2,1).normalized())
+	check(tilted.origin.is_equal_approx(body.origin),"L'ancre au sol ne bouge pas")
+	check(absf(tilted.determinant()-body.determinant()) < 0.0001,"Le miroir et l'échelle sont conservés")
+	check(absf(Vector2(-1,0).angle_to(tilted.basis_xform(Vector2.RIGHT))-View.route_tilt(Vector2(-2,1).normalized())) < 0.001 and tilted.basis_xform(Vector2.RIGHT).y > 0.0,"En descendant vers la gauche, la tête penche vers le bas")
+	var image := Rect2(-30,-40,60,44)
+	var covered: Rect2 = View.route_tilted_bounds(image,Vector2(2,1).normalized())
+	for corner in [image.position,image.position+Vector2(image.size.x,0),image.end,image.position+Vector2(0,image.size.y)]:
+		check(covered.grow(0.001).has_point(Transform2D(View.route_tilt(Vector2(2,1).normalized()),Vector2.ZERO)*corner),"L'emprise couvre la silhouette inclinée")
 
 func sample() -> Dictionary:
 	return {"version":1,"id":"enemy.test.walker","display_height":34.0,"foot":[32,60],"facing":"right","muzzle":[50,20],"animations":{
