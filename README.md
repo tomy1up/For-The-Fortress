@@ -1,5 +1,9 @@
 # For the Fortress!
 
+**Prototype v0.243**. Décor du Gué dessiné sur les missions 1 à 20, avec la rivière et le pont de la carte d'ouverture : toutes les cartes ont désormais un décor dessiné. [Notes](design/essais/v0243_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.243).
+
+**Prototype v0.242**. Décor refait des chapitres 10 et 16 à 20 : toutes les cartes refondues ont leur décor. Pins et rochers dessinés sur les missions 21 à 40, bassins, saules, roseaux et ruines sur les missions 41 à 60. Repères compacts des effets de boutique sur les cibles groupées. Le Revenant ne glisse plus pendant sa relève. Éclat au sol à la chute des capitaines de garnison. [Notes](design/essais/v0242_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.242).
+
 **Prototype v0.241**. Rafales au sol des Vents contraires et dégâts dessinés des forteresses. Le bandeau d'affixe prend une place fixe en haut de l'écran, hors du plateau. Décor refait du chapitre 15. [Notes](design/essais/v0241_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.241).
 
 **Prototype v0.240**. Les étiquettes d'entrée ne se recouvrent plus en préparation (38 missions des chapitres 6 à 20). [Notes](design/essais/v0240_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.240).

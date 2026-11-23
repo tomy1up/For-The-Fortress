@@ -52,6 +52,7 @@ var model: RefCounted:
 	set(value):
 		model = value
 		reset_royal_animation()
+		_badge_blend.clear()
 		terrain_details.assign(scenery_for(model.map_definition) if model != null else [])
 var terrain_details: Array[Dictionary] = []
 var selected: int = -1
@@ -1069,14 +1070,69 @@ static func mark_display_pending(enemy: Dictionary, elapsed: float, shots: Array
 			shown = minf(shown,time+float(MARK_DISPLAY_DELAYS.get(int(shot.get("type",-1)),0.0)))
 	return elapsed < shown
 
+## Repères compacts des effets de boutique (lots 815fc15 et eb15ffb de Codex, validés par le porteur le 22 novembre 2026) : quand une autre cible
+## porteuse d'un état passe à moins de 64 px (distance projetée), les cercles s'effacent au profit d'une rangée sur fond sombre reliée à la jauge ;
+## l'espacement passe de 26 à 15 px et les symboles de 22 à 14 px, entièrement à 40 px. Quand un état voisin apparaît, expire ou meurt avec sa cible,
+## le passage se fait en BADGE_BLEND_TIME secondes de combat (il suit la vitesse et s'arrête avec la pause). Bornes : réglages de prototype à confirmer.
+const BADGE_COMPACT_FAR := 64.0
+const BADGE_COMPACT_NEAR := 40.0
+const BADGE_COMPACT_SPACING := 15.0
+const BADGE_COMPACT_SIZE := 14.0
+const BADGE_BLEND_TIME := 0.25
+var _badge_blend: Dictionary = {} # id d'ennemi -> {"value", "time"} : compacité affichée et temps de combat de la dernière image
+
+static func badge_compactness(nearest: float) -> float:
+	return 1.0-smoothstep(BADGE_COMPACT_NEAR,BADGE_COMPACT_FAR,nearest)
+
+static func blend_compactness(previous: float, target: float, dt: float) -> float:
+	return move_toward(previous,target,maxf(0.0,dt)/BADGE_BLEND_TIME)
+
+## Compacité visée : distance projetée à la plus proche autre cible qui affiche un état.
+func badge_target(enemy: Dictionary) -> float:
+	var nearest := INF
+	var here: Vector2 = project(model.enemy_position(enemy))
+	for other in model.enemies:
+		if other.id == enemy.id or float(other.get("hp",0.0)) <= 0.0 or enemy_badges(other,model.elapsed,model.shots).is_empty(): continue
+		nearest = minf(nearest,here.distance_to(project(model.enemy_position(other))))
+	return badge_compactness(nearest)
+
+## Compacité affichée : suit la cible sans saut quand un état voisin apparaît ou expire. Une cible qui reçoit son premier état part directement de la valeur visée.
+func badge_compactness_now(enemy: Dictionary) -> float:
+	var target: float = badge_target(enemy)
+	var previous: Dictionary = _badge_blend.get(enemy.id,{})
+	var value: float = target
+	if not previous.is_empty() and model.elapsed >= float(previous.time):
+		value = blend_compactness(float(previous.value),target,model.elapsed-float(previous.time))
+	_badge_blend[enemy.id] = {"value":value,"time":model.elapsed}
+	return value
+
 func _draw_enemy_badges(enemy: Dictionary, bar_position: Vector2) -> void:
 	var badges: Array[String] = enemy_badges(enemy,model.elapsed,model.shots)
+	if badges.is_empty():
+		_badge_blend.erase(enemy.id)
+		return
 	var textures := {"mark":FX_MARK,"loot":FX_LOOT,"volatile":FX_VOLATILE}
+	var compactness: float = badge_compactness_now(enemy)
+	var group_center: Vector2 = bar_position+Vector2(12,lerpf(-10.0,-13.0,compactness))
+	if compactness > 0.0:
+		var half_width: float = maxf(8.0,badges.size()*7.5+2.5)
+		var fill := Color(0.035,0.085,0.08,0.93*compactness)
+		draw_rect(Rect2(group_center+Vector2(-half_width+8,-8),Vector2(maxf(0.0,half_width*2-16),16)),fill)
+		draw_circle(group_center+Vector2(-half_width+8,0),8,fill,true,-1,true)
+		draw_circle(group_center+Vector2(half_width-8,0),8,fill,true,-1,true)
+		draw_line(group_center+Vector2(0,8),bar_position+Vector2(12,-1),Color(0.75,0.79,0.71,0.8*compactness),1.0,true)
+	var spacing: float = lerpf(FX_BADGE_SPACING,BADGE_COMPACT_SPACING,compactness)
+	var size: float = lerpf(FX_BADGE_SIZE.x,BADGE_COMPACT_SIZE,compactness)
 	for index in range(badges.size()):
-		var center := Vector2(bar_position.x+12.0+(float(index)-float(badges.size()-1)*0.5)*FX_BADGE_SPACING,bar_position.y-10.0)
-		draw_circle(center,FX_BADGE_SIZE.x*0.62,Color(0.05,0.07,0.06,0.78),true,-1,true) # fond sombre : le marqueur reste lisible sur tous les décors
-		draw_arc(center,FX_BADGE_SIZE.x*0.62,0.0,TAU,20,FX_BADGE_COLORS[badges[index]],1.6,true)
-		draw_texture_rect(textures[badges[index]],Rect2(center-FX_BADGE_SIZE*0.5,FX_BADGE_SIZE),false)
+		var center: Vector2 = group_center+Vector2((float(index)-float(badges.size()-1)*0.5)*spacing,0)
+		if compactness < 1.0: # Cercles des cibles isolées (fond sombre : le marqueur reste lisible sur tous les décors), effacés en groupe.
+			var fade: float = 1.0-compactness
+			draw_circle(center,FX_BADGE_SIZE.x*0.62,Color(0.05,0.07,0.06,0.78*fade),true,-1,true)
+			draw_arc(center,FX_BADGE_SIZE.x*0.62,0.0,TAU,20,Color(FX_BADGE_COLORS[badges[index]],fade),1.6,true)
+		var inset: float = (7.0 if badges[index] == "loot" else 3.0)*compactness # Recadrage de l'essai de Codex : symbole plus serré en rangée.
+		var texture: Texture2D = textures[badges[index]]
+		var source := Rect2(Vector2.ONE*inset,texture.get_size()-Vector2.ONE*2.0*inset)
+		draw_texture_rect_region(texture,Rect2(center-Vector2.ONE*size*0.5,Vector2.ONE*size),source)
 
 ## Explosions de réaction en chaîne : anneau bref et éclats, à la position de l'ennemi mort.
 func _draw_volatile_bursts() -> void:
@@ -1507,10 +1563,24 @@ static func scenery_for(definition: Dictionary) -> Array[Dictionary]:
 	result.sort_custom(func(a: Dictionary,b: Dictionary) -> bool: return project(a.point).y < project(b.point).y)
 	return result
 
+## Pièce de décor dessinée autour de son point d'appui, réduite et éventuellement retournée en miroir dans son cadre.
+func _draw_scaled_piece(center: Vector2, piece: Dictionary) -> void:
+	draw_set_transform(center,0.0,Vector2(float(piece.facing)*float(piece.scale),float(piece.scale)))
+	draw_texture_rect(piece.texture,piece.rect,false)
+	draw_set_transform(Vector2.ZERO)
+
 func _draw_terrain_detail(item: Dictionary) -> void:
 	var center: Vector2 = project(item.point)
+	var map_id: String = str(model.map_definition.get("id","")) if model != null else ""
+	var piece: Dictionary = DecorArt.slate_prop(map_id,item.kind,int(item.get("order",0))) # Pins et ardoises dessinés par Codex (missions 21 à 40).
+	if piece.is_empty(): piece = DecorArt.ford_prop(map_id,item.kind,int(item.get("order",0))) # Décor du Gué dessiné par Codex (missions 1 à 20).
+	if not piece.is_empty():
+		_draw_scaled_piece(center,piece)
+		return
 	if item.kind in ["willow","ruin","reeds"]:
-		MarshArt.draw_detail(self,center,item.kind)
+		var art: Texture2D = MarshArt.prop_texture(str(model.map_definition.get("id","")) if model != null else "",item.kind,int(item.get("order",0)))
+		if art != null: draw_texture_rect(art,MarshArt.bounds(center,item.kind),false) # Pièces dessinées par Codex (missions 41 à 50).
+		else: MarshArt.draw_detail(self,center,item.kind)
 		return
 	if item.kind == "pine": _draw_tree(center);return
 	if item.kind == "rock":
@@ -1547,12 +1617,18 @@ func _draw() -> void:
 		var face_color: Color = edge[2] if palette.is_empty() else palette.face_right if edge[0] == corners[1] else palette.face_left
 		draw_colored_polygon(PackedVector2Array([first,last,last+Vector2(0,16),first+Vector2(0,16)]),face_color)
 	polygon(corners, palette.ground if not palette.is_empty() else MarshArt.GROUND if marsh else Color("3d3837") if volcanic else Color("55555d") if citadel else Color("4a5b65") if mountain else Color("3a513e"))
-	if marsh: MarshArt.draw_ground(self,project,false,definition.get("water_areas",MarshArt.POOLS))
+	if marsh:
+		var ponds: Dictionary = MarshArt.pool_layer(str(definition.get("id","")))
+		if ponds.is_empty(): MarshArt.draw_ground(self,project,false,definition.get("water_areas",MarshArt.POOLS))
+		else: draw_texture_rect(ponds.texture,ponds.area,false) # Bassins dessinés par Codex (missions 41 à 50), avant la chaussée.
 	for x in range(board.x+1):
 		draw_line(project(Vector2(x, 0)), project(Vector2(x, board.y)), Color(0.75, 0.86, 0.7, 0.055), 1)
 	for y in range(board.y+1):
 		draw_line(project(Vector2(0, y)), project(Vector2(board.x, y)), Color(0.75, 0.86, 0.7, 0.055), 1)
-	if definition.decoration == "valley": _draw_valley_water()
+	if definition.decoration == "valley":
+		var river: Dictionary = DecorArt.ford_overlay(str(definition.get("id","")),"riviere_du_gue")
+		if river.is_empty(): _draw_valley_water()
+		else: draw_texture_rect(river.texture,river.rect,false) # Rivière dessinée par Codex, sous la chaussée.
 	var ash: Dictionary = DecorArt.overlay(str(definition.decoration))
 	if not ash.is_empty(): draw_texture(ash.texture,ash.position) # Cendres : après la couleur du sol, avant la chaussée.
 	var screen_routes: Array[PackedVector2Array] = []
@@ -1589,9 +1665,14 @@ func _draw() -> void:
 			highlighted_segments[segment] = tint
 	for segment: Vector4 in highlighted_segments:
 		draw_line(Vector2(segment.x, segment.y), Vector2(segment.z, segment.w), highlighted_segments[segment], 5.0, true)
-	if definition.decoration == "valley": _draw_valley_bridge()
-	for tree in definition.trees:
-		_draw_tree(project(tree))
+	if definition.decoration == "valley":
+		var bridge: Dictionary = DecorArt.ford_overlay(str(definition.get("id","")),"pont_du_gue")
+		if bridge.is_empty(): _draw_valley_bridge()
+		else: draw_texture_rect(bridge.texture,bridge.rect,false) # Pont dessiné par Codex, au-dessus de la chaussée, avant les unités.
+	for index in range(definition.trees.size()):
+		var pine: Dictionary = DecorArt.ford_tree(str(definition.get("id","")),index)
+		if pine.is_empty(): _draw_tree(project(definition.trees[index]))
+		else: _draw_scaled_piece(project(definition.trees[index]),pine)
 	for item in terrain_details: _draw_terrain_detail(item)
 	var preview: Dictionary = purchase_preview if not purchase_preview.is_empty() else upgrade_preview
 	if model != null and selected >= 0 and not preview.is_empty():
@@ -1650,7 +1731,7 @@ func _draw() -> void:
 			if not model.defenders[slot].is_empty():
 				actors.append({"point": project(_map_slots()[slot]), "defender": model.defenders[slot],"slot":slot,"order":actors.size()})
 		for enemy in model.enemies:
-			actors.append({"point": project(model.enemy_position(enemy)), "enemy": enemy,"order":actors.size()})
+			actors.append({"point": project(model.position_at(display_distance(enemy),model.enemy_route_points(enemy),model.enemy_route_length(enemy))), "enemy": enemy,"order":actors.size()})
 		if not ghost.is_empty(): actors.append({"point":ghost.point,"ghost":ghost,"order":actors.size()})
 		actors.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.order < b.order if a.point.y == b.point.y else a.point.y < b.point.y)
 		for actor in actors:
@@ -1701,8 +1782,31 @@ func _draw() -> void:
 
 ## Éliminations récentes : planche de mort quand l'ennemi en a une pour sa direction, sinon fondu de sa pose courante (orientation et équipement conservés)
 ## et bref éclat, regroupé quand plusieurs ennemis ordinaires tombent au même endroit au même moment.
+## Éclat au sol commun aux deux capitaines de garnison (lot 17c7c760 de Codex, validé par le porteur le 22 novembre 2026) : la planche
+## `effect.garrison_elimination/death` (0,25 s) se joue au point d'appui à l'instant visuel de l'élimination (après le vol du projectile) et remplace
+## les particules génériques de la Garnison ; la flexion, le fondu et la planche de mort du capitaine sont conservés. Des éliminations proches
+## (moins de 43 px et 45 ms d'écart) partagent un éclat centré, agrandi de 14 % par capitaine supplémentaire jusqu'à trois.
+const GARRISON_GLINT_ID := "effect.garrison_elimination"
+const GLINT_MERGE_DISTANCE := 43.0
+const GLINT_MERGE_TIME := 0.045
+const GLINT_GROWTH := 0.14
+
+static func merge_glint(glints: Array[Dictionary], point: Vector2, age: float) -> void:
+	for glint in glints:
+		if glint.point.distance_to(point) >= GLINT_MERGE_DISTANCE or absf(float(glint.age)-age) >= GLINT_MERGE_TIME: continue
+		glint.point = (glint.point*float(glint.count)+point)/float(glint.count+1)
+		glint.count += 1
+		return
+	glints.append({"point":point,"age":age,"count":1})
+
+static func glint_scale(count: int) -> float:
+	return 1.0+GLINT_GROWTH*float(clampi(count,1,3)-1)
+
 func _draw_eliminations() -> void:
 	var bursts: Array[Dictionary] = []
+	var glints: Array[Dictionary] = []
+	var glint_spec: Dictionary = SheetAnimations.spec_for(GARRISON_GLINT_ID)
+	var glint_duration: float = float(glint_spec.animations.death.duration) if not glint_spec.is_empty() and glint_spec.animations.has("death") and SheetAnimations.texture_for(GARRISON_GLINT_ID,glint_spec.animations.death) != null else 0.0
 	for effect in recent_eliminations(maxf(BOSS_ELIMINATION_DURATION,SheetAnimations.death_window())):
 		var event: Dictionary = effect.event
 		var age: float = effect.age
@@ -1712,6 +1816,7 @@ func _draw_eliminations() -> void:
 		var enemy := {"id":event.enemy_id,"type":type,"distance":float(event.get("distance",0.0)),"route_id":event.get("route_id",""),"hp":0.0}
 		var motion := EnemyWalkArt.path_motion(enemy.distance,model.enemy_route_points(enemy),AXIS)
 		var state: String = SheetAnimations.death_state(spec,motion.get("direction",Vector2.ZERO))
+		if type == Model.Garrison.TYPE and glint_duration > 0.0 and age >= 0.0 and age < glint_duration: merge_glint(glints,project(event.point),age)
 		if state != "" and age >= 0.0:
 			_draw_sheet_death(id,state,event,age)
 			continue
@@ -1722,6 +1827,7 @@ func _draw_eliminations() -> void:
 			continue
 		if age >= duration: continue
 		if type not in BOSS_TYPES: _draw_fading_enemy(enemy,event,age,duration,type in ELITE_TYPES)
+		if type == Model.Garrison.TYPE and glint_duration > 0.0: continue # L'éclat remplace les particules génériques.
 		var point: Vector2 = project(event.point)
 		var merged: bool = false
 		if type not in BOSS_TYPES and type not in ELITE_TYPES:
@@ -1732,6 +1838,12 @@ func _draw_eliminations() -> void:
 	for burst in bursts:
 		for particle in elimination_particles(burst.event,burst.age,burst.crowd):
 			draw_circle(particle.point,particle.radius,Color(Color("d6c7a6"),particle.alpha))
+	for glint in glints:
+		var anim: Dictionary = glint_spec.animations.death
+		var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,0.0,float(glint.age))))
+		var rect: Rect2 = SheetAnimations.destination(glint_spec,anim)
+		var scale: float = glint_scale(int(glint.count))
+		draw_texture_rect_region(SheetAnimations.texture_for(GARRISON_GLINT_ID,anim),Rect2(glint.point+rect.position*scale,rect.size*scale),region)
 
 ## Pose courante de l'ennemi éliminé, qui s'éclaircit jusqu'à disparaître ; les élites fléchissent légèrement sur place.
 func _draw_fading_enemy(enemy: Dictionary, event: Dictionary, age: float, duration: float, flex: bool, flash: bool = true) -> void:
@@ -2140,7 +2252,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	var walking: bool = EnemyWalkArt.supports(id)
 	var sheet_walk: bool = not walking and SheetAnimations.has_animation(id,"walk")
 	var route_points: Array[Vector2] = model.enemy_route_points(enemy)
-	var motion := EnemyWalkArt.path_motion(enemy.distance, route_points, AXIS)
+	var motion := EnemyWalkArt.path_motion(display_distance(enemy), route_points, AXIS)
 	var facing := route_facing(motion.direction)
 	var preview: Dictionary = {}
 	if walking and wolf_turn_preview.is_valid():
@@ -2188,6 +2300,24 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 			draw_arc(shell,10.0+4.0*(1.0-strength),PI,TAU,20,Color(0.86,1.0,0.62,0.90*strength),2.0,true)
 			break
 	draw_set_transform(Vector2.ZERO)
+
+## Relève du Revenant (v0.242, signalé par Codex, lot 7cdfeaf) : le modèle le fait avancer pendant les 0,72 s de relève (règle inchangée), ce qui
+## faisait glisser ses poses basses d'environ 20 px. L'affichage garde l'appui au point de chute pendant les poses basses (REVENANT_RISE_HOLD, images 0 à 8),
+## puis le raccorde progressivement à la position du modèle en avançant le long de la route (virages et orientation compris) jusqu'à la fin de la relève.
+## Réglage de prototype à confirmer. Rendu seulement : les tirs et le survol gardent la position du modèle.
+const REVENANT_RISE_HOLD := 0.27
+
+static func rise_weight(age: float, hold: float, duration: float) -> float:
+	if duration <= hold or age >= duration: return 1.0
+	return smoothstep(hold,duration,age)
+
+## Distance le long de la route où l'ennemi est dessiné : celle du modèle, sauf pendant la relève du Revenant.
+func display_distance(enemy: Dictionary) -> float:
+	if model == null or not enemy.has("risen_at") or not enemy.has("risen_distance"): return float(enemy.distance)
+	var rise: Dictionary = SheetAnimations.spec_for(enemy_art_id(enemy,model.faction)).get("animations",{}).get("rise",{})
+	var age: float = model.elapsed-float(enemy.risen_at)
+	if rise.is_empty() or age < 0.0: return float(enemy.distance)
+	return lerpf(float(enemy.risen_distance),float(enemy.distance),rise_weight(age,REVENANT_RISE_HOLD,float(rise.duration)))
 
 ## Ennemi animé par une planche d'images (format de `animation_library.gd`) : cycle de marche réglé sur la distance parcourue.
 func _draw_sheet_walker(id: String, enemy: Dictionary, motion: Dictionary, scale: float, facing: float, body: Transform2D, hit_strength: float) -> void:

@@ -61,7 +61,66 @@ static func overlay(decoration: String) -> Dictionary:
 ## Pièces de décor d'une carte, dans l'ordre de dessin : {"texture", "point" (logique), "destination" (pieds sur l'origine)}.
 ## Cartes refondues (v0.224, tracés nouveaux) : les pièces de décor posées à la main pour les anciens tracés ne leur conviennent plus ; elles sont désactivées
 ## jusqu'à ce que Codex en propose de nouvelles (voir ECHANGES_CLAUDE_VERS_CODEX.md).
-const REWORKED_MAPS: Array[String] = ["garrison_breach","garrison_siege","garrison_machicolations","garrison_hall","garrison_barracks","garrison_watchtower","garrison_armoury","garrison_stairs","garrison_throne","garrison_heart","sky_aerie","sky_nest","sky_twinpeaks","sky_triplenest","sky_ledge","sky_col","sky_raptors","sky_roost","sky_azurefall","sky_throne","coast_jetty","coast_lighthouse","coast_reefs","coast_wrecks","coast_quay","coast_cliff","coast_coves","coast_harbor","coast_skerry","coast_cape","coast_beacon","coast_causeway","coast_chalk","coast_graveyard","coast_shoal","coast_phantom","coast_twinrocks","coast_arsenal","coast_storm","coast_citadel","necro_gate","necro_road","necro_graveyard","necro_crypts","necro_fen","necro_hill","necro_mausoleums","necro_ossuary","necro_stelae","necro_royal","necro_tombgate","necro_wake","necro_catacombs","necro_bonefield","necro_mire","necro_gallows","necro_twintombs","necro_charnel","necro_obelisks","necro_throne"]
+const REWORKED_MAPS: Array[String] = [] # Toutes les cartes refondues ont leur décor depuis la v0.242.
+
+## Pins et ardoises des missions 21 à 40 (lot 6ecb5d3 de Codex, validé par le porteur le 22 novembre 2026) : sur les onze cartes des Ardoises, les pins et
+## rochers de `scenery_for` prennent les pièces dessinées de leur carte (pin pour les pins, rocher selon la parité de l'ordre de placement), réduites
+## (1, 0,89 ou 0,95 selon l'ordre modulo 3) et parfois tournées en miroir (ordre modulo 5 inférieur à 2), dans les cadres de `scenery_bounds`.
+const SLATE_ASSETS := {"pin_ardoises":["ardoises/pin_ardoises.png",Rect2(-16,-46,32,60)], "pin_des_cretes":["ardoises/pin_des_cretes.png",Rect2(-16,-46,32,60)], "cairn":["ardoises/cairn.png",Rect2(-13,-14,26,23)], "eboulis":["ardoises/eboulis.png",Rect2(-13,-14,26,23)], "dalles":["ardoises/dalles.png",Rect2(-13,-14,26,23)], "lichen":["ardoises/lichen.png",Rect2(-13,-14,26,23)]}
+const SLATE_MAPS := {
+	"slate_pass":["lichen","dalles","pin_ardoises"],
+	"slate_ridges":["dalles","eboulis","pin_des_cretes"],
+	"slate_scree":["eboulis","dalles","pin_des_cretes"],
+	"slate_ravine":["dalles","lichen","pin_ardoises"],
+	"slate_gates":["cairn","dalles","pin_des_cretes"],
+	"slate_crossing":["cairn","lichen","pin_ardoises"],
+	"slate_laces":["eboulis","lichen","pin_des_cretes"],
+	"slate_cirque":["lichen","dalles","pin_ardoises"],
+	"slate_high_passages":["cairn","eboulis","pin_des_cretes"],
+	"slate_bastion":["cairn","dalles","pin_ardoises"],
+	"slate_bastion_winds":["eboulis","cairn","pin_des_cretes"]}
+const SLATE_SCALES: Array[float] = [1.0,0.89,0.95]
+
+## Pièce dessinée d'un pin ou d'un rocher des Ardoises : {"texture", "rect" (autour du point d'appui), "scale", "facing"} ou {} (dessin vectoriel).
+static func slate_prop(map_id: String, kind: String, order: int) -> Dictionary:
+	if not SLATE_MAPS.has(map_id) or kind not in ["pine","rock"]: return {}
+	var options: Array = SLATE_MAPS[map_id]
+	var asset: Array = SLATE_ASSETS[options[2] if kind == "pine" else options[order%2]]
+	var image: Texture2D = texture(str(asset[0]))
+	if image == null: return {}
+	return {"texture":image,"rect":asset[1],"scale":SLATE_SCALES[order%3],"facing":-1.0 if order%5 < 2 else 1.0}
+
+## Décor du Gué, missions 1 à 20 (lot 3feb9b09 de Codex, validé par le porteur le 23 novembre 2026) : sur les dix cartes des chapitres 1 et 2, les pins,
+## rochers et buissons de `scenery_for` et les arbres fixes des cartes prennent cinq pièces dessinées (deux pins, roche moussue, buisson fleuri, fougères),
+## réduites à 0,91, 0,955 ou 1 selon leur ordre modulo 3 et tournées en miroir si l'ordre modulo 5 est inférieur à 2. Sur la carte d'ouverture
+## (`valley_ford`, missions 1 et 11), la rivière dessinée passe sous la chaussée et le pont au-dessus, avant les unités.
+const FORD_ASSETS := {"pin_du_gue":["gue/pin_du_gue.png",Rect2(-16,-46,32,60)], "pin_du_bois":["gue/pin_du_bois.png",Rect2(-16,-46,32,60)], "rocher_moussu":["gue/rocher_moussu.png",Rect2(-13,-14,26,23)], "buisson_fleuri":["gue/buisson_fleuri.png",Rect2(-13,-14,26,23)], "fougeres":["gue/fougeres.png",Rect2(-13,-14,26,23)]}
+const FORD_OVERLAYS := {"riviere_du_gue":["gue/riviere_du_gue.png",Rect2(540,245,318,166)], "pont_du_gue":["gue/pont_du_gue.png",Rect2(605,327,80,56)]}
+
+static func ford_map(map_id: String) -> bool:
+	return map_id == "valley_ford" or map_id.begins_with("ford_")
+
+static func _ford_piece(key: String, order: int) -> Dictionary:
+	var image: Texture2D = texture(str(FORD_ASSETS[key][0]))
+	if image == null: return {}
+	return {"texture":image,"rect":FORD_ASSETS[key][1],"scale":0.91+0.045*float(posmod(order,3)),"facing":-1.0 if posmod(order,5) < 2 else 1.0}
+
+## Pièce d'un objet de `scenery_for` : pin du bois ou du gué selon la parité de l'ordre, roche moussue, buisson fleuri ou fougères ; {} hors du Gué.
+static func ford_prop(map_id: String, kind: String, order: int) -> Dictionary:
+	if not ford_map(map_id) or kind not in ["pine","rock","shrub"]: return {}
+	var key: String = ("pin_du_bois" if order%2 == 0 else "pin_du_gue") if kind == "pine" else "rocher_moussu" if kind == "rock" else "buisson_fleuri" if order%2 == 0 else "fougeres"
+	return _ford_piece(key,order)
+
+## Pièce d'un arbre fixe de la carte (`definition.trees`), selon son rang.
+static func ford_tree(map_id: String, index: int) -> Dictionary:
+	if not ford_map(map_id): return {}
+	return _ford_piece("pin_du_gue" if index%2 == 0 else "pin_du_bois",index)
+
+## Calque de la carte d'ouverture (rivière ou pont), en coordonnées d'écran : {"texture", "rect"} ou {}.
+static func ford_overlay(map_id: String, key: String) -> Dictionary:
+	if map_id != "valley_ford" or not FORD_OVERLAYS.has(key): return {}
+	var image: Texture2D = texture(str(FORD_OVERLAYS[key][0]))
+	return {"texture":image,"rect":FORD_OVERLAYS[key][1]} if image != null else {}
 
 static func props(map_id: String, decoration: String, played_faction: int) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []

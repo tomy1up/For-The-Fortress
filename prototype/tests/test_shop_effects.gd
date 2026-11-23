@@ -26,6 +26,7 @@ func run_checks() -> void:
 	verify_siege_bolts()
 	verify_explosion_events()
 	verify_resources()
+	verify_compact_badges()
 	print("SHOP_EFFECTS_TESTS checks=%d failures=%d" % [checks,failures]);quit(0 if failures == 0 else 1)
 
 func verify_badges() -> void:
@@ -328,3 +329,49 @@ func verify_resources() -> void:
 	for name in ["slow","mark","loot","volatile","aura","volatile_burst"]:
 		var path := "res://assets/effects/shop/%s.png" % name
 		check(ResourceLoader.exists(path) and load(path) is Texture2D,"Ressource de repère présente : %s" % name)
+
+## Repères compacts (v0.242, lots 815fc15 et eb15ffb de Codex) : cercles en solitaire, rangée compacte en groupe, passage sans saut quand un état voisin
+## apparaît ou expire, figé pendant la pause, et repris d'emblée au début d'une nouvelle vague.
+func verify_compact_badges() -> void:
+	check(View.badge_compactness(64.0) == 0.0 and View.badge_compactness(200.0) == 0.0 and View.badge_compactness(INF) == 0.0,"Cible isolée (64 px ou plus) : cercles habituels")
+	check(View.badge_compactness(40.0) == 1.0 and View.badge_compactness(10.0) == 1.0,"Cible serrée (40 px ou moins) : rangée compacte")
+	check(is_equal_approx(View.badge_compactness(52.0),0.5) and View.badge_compactness(46.0) > View.badge_compactness(58.0),"Passage progressif entre 64 et 40 px")
+	check(is_equal_approx(View.blend_compactness(0.0,1.0,0.125),0.5) and View.blend_compactness(0.0,1.0,0.25) == 1.0 and is_equal_approx(View.blend_compactness(0.8,0.0,0.1),0.4),"Raccord en un quart de seconde de combat")
+	check(View.blend_compactness(0.3,1.0,0.0) == 0.3 and View.blend_compactness(0.3,1.0,-1.0) == 0.3,"Pause ou temps qui recule : aucun saut")
+	var model := Model.new(true)
+	model.select_faction(0)
+	check(model.start(),"Vague de contrôle démarrée")
+	var first: Dictionary = Model.make_enemy(900,1,0.0,0,100)
+	var second: Dictionary = Model.make_enemy(901,1,0.0,0,100)
+	first.distance = 6.0;second.distance = 7.6
+	first.marked_until = 50.0
+	model.enemies.assign([first,second])
+	var view := View.new();view.model = model
+	var gap: float = View.project(model.enemy_position(first)).distance_to(View.project(model.enemy_position(second)))
+	check(gap > 40.0 and gap < 64.0,"Deux cibles à distance de transition (%.1f px)" % gap)
+	var target: float = View.badge_compactness(gap)
+	model.elapsed = 2.0
+	check(view.badge_compactness_now(first) == 0.0,"Voisine sans état : la cible marquée garde ses cercles")
+	second.marked_until = 50.0
+	check(view.badge_compactness_now(first) == 0.0,"La marque voisine apparaît : pas de saut dans la même image")
+	model.elapsed = 2.1
+	var midway: float = view.badge_compactness_now(first)
+	check(is_equal_approx(midway,minf(target,0.4)),"Un dixième de seconde plus tard : rangée à moitié formée (%.2f)" % midway)
+	check(view.badge_compactness_now(first) == midway,"Image répétée sans temps de combat (pause) : rien ne bouge")
+	model.elapsed = 2.5
+	check(is_equal_approx(view.badge_compactness_now(first),target),"La rangée atteint la compacité visée")
+	second.marked_until = 2.55
+	model.elapsed = 2.6
+	var leaving: float = view.badge_compactness_now(first)
+	check(is_equal_approx(leaving,maxf(0.0,target-0.4)),"La marque voisine expire : les cercles reviennent progressivement (%.2f)" % leaving)
+	model.elapsed = 3.0
+	check(view.badge_compactness_now(first) == 0.0,"Retour complet aux cercles")
+	second.marked_until = 50.0
+	model.elapsed = 1.0
+	check(is_equal_approx(view.badge_compactness_now(first),target),"Nouvelle vague (temps de combat remis à zéro) : compacité reprise d'emblée")
+	second.hp = 0.0
+	model.elapsed = 1.1
+	check(is_equal_approx(view.badge_compactness_now(first),maxf(0.0,target-0.4)),"Voisine éliminée : retour progressif")
+	view.model = model
+	check(view._badge_blend.is_empty(),"Changer de partie efface les transitions en cours")
+	view.free()
