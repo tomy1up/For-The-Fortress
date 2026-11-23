@@ -76,4 +76,17 @@ Le plus grand écart moyen par pixel entre deux images consécutives de la planc
 
 1 040 captures sur la mission 11, dont 624 sur la grille à 60 IPS et 416 à 120 IPS. Les positions de jeu correspondent entre versions. Le validateur relève zéro problème sur 65 dossiers dans la copie, avec les avertissements des anciennes planches de comparaison. Quatre suites ciblées au vert, 2 219 contrôles.
 
-La [planche](essais/tortue_ancienne_60_v0243/walk.png) et sa [description](essais/tortue_ancienne_60_v0243/animation.json) sont prêtes pour avis du porteur.
+Le porteur a accueilli favorablement la démarche à 60 images (lot d5ed8d75) et a demandé un essai d’inclinaison. [Planche](essais/tortue_ancienne_60_v0243/walk.png) · [Description](essais/tortue_ancienne_60_v0243/animation.json).
+
+## Inclinaison suivant le chemin
+
+Sur copie v0.244, la planche de 60 images est comparée à plat, avec la moitié de l’angle projeté du chemin (13,3°), puis avec l’angle complet (26,6°). La rotation est rigide autour de l’ancre au sol. Le signe suit le sens du trajet et le miroir horizontal. L’ombre et la jauge restent ancrées sur le plateau. Le changement de sens garde son timing instantané.
+
+![Les trois angles sur le plateau, à taille native et agrandie](essais/tortue_inclinaison_v0244/Tortue_alliance_angles.jpg)
+
+- [Comparatif vidéo côté Alliance](essais/tortue_inclinaison_v0244/Tortue_alliance_angles.mp4)
+- [Comparatif vidéo côté Horde](essais/tortue_inclinaison_v0244/Tortue_horde_angles.mp4)
+
+L’inclinaison de 13,3° rend le sens du trajet lisible tout en gardant une posture proche de la démarche d’origine. À 26,6°, les pattes se retrouvent fortement décalées par rapport au sol et la tortue semble basculer. L’angle de 13,3° est la proposition pour avis. Les trois variantes sont uniquement dans l’atelier et le moteur de la branche artistique reste identique.
+
+La mission 11, vague 2, donne 864 captures de combat sur trois portions, avec la descente à droite, le virage vers la gauche et la montée à droite, dans les deux factions. La position, la phase de marche et les PV correspondent entre variantes. Le validateur donne zéro problème sur 65 dossiers. Les quatre suites ciblées passent, soit 2 219 contrôles.

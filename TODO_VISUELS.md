@@ -48,7 +48,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Boutique étendue, premier lot (v0.192)** — douze unités (types 10 à 21 : sentinelle, tireur d'élite, arquebusier, bombarde, piquier, pyromancien côté Alliance ; veilleur, javelinier, lance-éclats, catapulte, lance-épieu, brûleur côté Horde) qui réutilisent l'illustration de leur famille. À illustrer (même cadrage que les alternatives `rodeur`, `mousquetaire`, `traqueur`, `grenadier`) puis à animer. Voir `design/Boutique_20_unites_proposition.md`.
 
-- [ ] **Marche de la Tortue gardienne des berges** — Retour aux dessins d’origine, 60 images par foulée, comparatif à 60 et 120 IPS. En attente de l’avis du porteur. [Fiche et vidéos](design/Visuels_Marche_Tortue_Gardienne.md#démarche-dorigine-avec-60-images-par-foulée).
+- [ ] **Marche de la Tortue gardienne des berges** — Démarche d’origine à 60 images jugée satisfaisante. Essai d’inclinaison à 0°, 13,3° et 26,6° en attente de l’avis du porteur. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#inclinaison-suivant-le-chemin).
 
 - [x] **Relève du Revenant dessinée image par image** — Seize dessins complets validés par le porteur le 23 novembre 2026 (cfb41268). Prête pour intégration. [Fiche et GIF](design/Visuels_Releve_Revenant_Dessinee.md).
 
