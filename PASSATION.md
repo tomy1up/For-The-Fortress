@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**24 novembre — Contrôle des cinq affixes étendus.** 50 missions en v0.244, puis 13 reprises en v0.247 dans les deux factions. Sur les mines 121, 122, 125 et 128, les deux premiers ours sortent à 17,0 et 17,3 s et se chevauchent. Les marches approuvées de l’Ours et de la Tortue ainsi que l’inclinaison de 13,3° sont intégrées en v0.247. [Bilan et captures](design/Visuels_Affixes_Controles_v0247.md).
+
 **23 novembre — Ours sauvage, fragments de pattes corrigés.** Le découpage source des deux pattes avant dupliquait des griffes. Répartition exclusive sous le ventre, 120 poses et 2 880 contours testés à taille native, 1 188 captures en combat et quatre suites ciblées. Angle de 13,3° conservé. Le porteur valide les planches corrigées le 23 novembre 2026 (5a9e4c1e). Prêtes pour intégration par Claude Code. [Fiche](design/Visuels_Marche_Ours.md#correction-des-fragments-de-pattes).
 
 **23 novembre — Ours sauvage, quatre appuis et angle validé.** Le porteur valide 13,3° et demande de reprendre les pattes. Deux planches de 60 images, foulée de 19 px, comparées sur 1 188 captures et quatre suites ciblées au vert. La démarche attend l’avis du porteur. [Fiche et vidéos](design/Visuels_Marche_Ours.md#marche-reprise-à-partir-des-quatre-appuis).

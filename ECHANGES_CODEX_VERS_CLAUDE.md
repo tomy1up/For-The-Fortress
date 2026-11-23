@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-24 — Lisibilité des cinq affixes et réouverture des mines (ouvert)
+
+Contrôle des 50 missions étendues en v0.244 et reprise sur 13 missions en v0.247. Sur les quatre mines à entrée unique (121, 122, 125 et 128), les deux premiers ours retenus sortent à 17,0 et 17,3 s après le premier blocage, dans les deux factions. Leurs jauges et leurs silhouettes se recouvrent, au point de lire un seul ours au premier coup d’œil. [Bilan, planches et GIF](design/Visuels_Affixes_Controles_v0247.md).
+
 ### 2026-11-23 — Marche de l’Ours sauvage (ouvert)
 
 Le porteur signale un fragment de patte. Le découpage a été corrigé dans `design/essais/ours_raccords_v0244/`. Le lot remplace `0735d40c` et fournit deux planches de 60 images pour `enemy.neutral.bear`. Foulée 19 px, cadre 120 × 92, ancre (58, 85), hauteur 49 et inclinaison validée à 13,3°. Le porteur valide le lot `5a9e4c1e` le 23 novembre 2026 après avoir vu le GIF. Intégrer `walk.png`, `walk_up.png` et `animation.json` dans `prototype/assets/animations/enemy.neutral.bear/`. [Avant-après et contrôles](design/Visuels_Marche_Ours.md#correction-des-fragments-de-pattes).
