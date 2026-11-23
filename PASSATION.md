@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**23 novembre — Marche lissée de la Tortue gardienne.** Le porteur souhaitait plus de fluidité. Cycle à 36 images, foulée de 13 px conservée, 576 captures à ×1 et ×2 dans les deux factions. Validateur à zéro problème et quatre suites ciblées au vert. Proposition en attente de l’avis du porteur. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#cycle-lissé-sur-retour-du-porteur).
+
 **23 novembre — Marche de la Tortue gardienne des berges.** Premier cycle de douze dessins, essayé dans les deux factions à ×1 et ×2 sur copie v0.243. 146 captures, validateur à zéro problème et quatre suites ciblées au vert. Vue de trois quarts avec miroir en virage. Proposition en attente du porteur. [Fiche et GIF](design/Visuels_Marche_Tortue_Gardienne.md).
 
 **23 novembre — Relève du Revenant redessinée.** Après le retour du porteur sur l’ancienne gestuelle, nouvelle planche à 16 dessins complets proposée. Vue en combat sur copie v0.243 à la mission 191, dans les deux factions, avec 84 captures et trois suites ciblées. Le porteur trouve la nouvelle gestuelle meilleure. Contrôle supplémentaire de cadence réussi à ×1 et ×2 dans les deux factions, avec un arrêt du temps dans l’atelier. Validée par le porteur le 23 novembre 2026 (lot cfb41268), prête pour intégration. [Fiche et GIF](design/Visuels_Releve_Revenant_Dessinee.md).

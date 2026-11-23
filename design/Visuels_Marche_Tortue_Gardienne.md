@@ -17,3 +17,16 @@ Mission 11, vague 2, avec l’Alliance et la Horde sur une copie de la v0.243. L
 146 captures, dont deux avec l’illustration fixe. À temps de combat égal, les poses et les positions consignées correspondent à ×1 et ×2 dans les deux factions. Le validateur relève zéro problème sur 65 dossiers. Quatre suites ciblées passent. `test_bank_guardian.gd` (699), `test_guardian_inspection.gd` (36), `test_enemy_walk.gd` (1 278) et `test_animation_library.gd` (206).
 
 Les fichiers [animation.json](essais/tortue_marche_v0243/animation.json) et [walk.png](essais/tortue_marche_v0243/walk.png) forment la planche `enemy.neutral.turtle/walk`. Mode par distance, foulée de 13 px à l’échelle du cadre, ancre (50, 69) et hauteur de cadre 39. La proposition attend l’avis du porteur. La copie d’essai utilise les mêmes règles de combat et de protection que la v0.243.
+
+## Cycle lissé sur retour du porteur
+
+Le 23 novembre 2026, le porteur a demandé une marche plus fluide. Deux images intermédiaires par transition portent le cycle à 36 images, avec le même réglage de foulée. Les douze dessins sont conservés au pixel près. Les intermédiaires suivent le déplacement des contours dans les deux sens, y compris entre le dernier dessin et le premier.
+
+![Comparatif en combat à ×1 côté Alliance](essais/tortue_marche_souple_v0243/Tortue_alliance_x1_avant_apres.gif)
+
+- Alliance [×2](essais/tortue_marche_souple_v0243/Tortue_alliance_x2_avant_apres.gif)
+- Horde [×1](essais/tortue_marche_souple_v0243/Tortue_horde_x1_avant_apres.gif) · [×2](essais/tortue_marche_souple_v0243/Tortue_horde_x2_avant_apres.gif)
+
+Sur la mission 11, vague 2, 576 captures comparent les deux cycles à temps de combat égal. Les deux versions utilisent les mêmes positions. Le changement d’orientation au virage reste celui de la version à 12 images. Sur un cadre fixe à taille native, la plus grande différence moyenne entre deux images voisines du cycle passe de 10,65 à 4,37 niveaux de couleur sur 255, fermeture de boucle comprise. Le validateur relève zéro problème sur 65 dossiers, avec un avertissement pour l’image de référence de l’atelier. Les quatre suites ciblées repassent, soit 2 219 contrôles.
+
+Le lot à 36 images remplace la première proposition et attend l’avis du porteur. [Planche](essais/tortue_marche_souple_v0243/walk.png) · [Description](essais/tortue_marche_souple_v0243/animation.json).

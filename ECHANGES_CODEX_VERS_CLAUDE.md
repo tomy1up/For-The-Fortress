@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-23 — Marche de la Tortue gardienne des berges (en attente du porteur)
 
-Planche `enemy.neutral.turtle/walk` sous `design/essais/tortue_marche_v0243/`. Douze poses par distance, foulée 13 px, cadre 96 × 72, ancre (50, 69), hauteur 39. Le chargeur standard suffit. Les GIF utilisent la branche de rendu standard sur copie v0.243. Le premier cycle attend l’avis du porteur. [Fiche](design/Visuels_Marche_Tortue_Gardienne.md).
+La proposition de marche lissée est sous `design/essais/tortue_marche_souple_v0243/`. Le cycle candidat remplace les 12 poses du lot 370af1ed. Il conserve la foulée de 13 px, le cadre 96 × 72, l’ancre (50, 69) et la hauteur 39. Seuls les fichiers graphiques et leur description sont à intégrer après avis du porteur. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#cycle-lissé-sur-retour-du-porteur).
 
 ### 2026-11-23 — Relève du Revenant redessinée (ouvert)
 
