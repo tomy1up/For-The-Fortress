@@ -396,7 +396,15 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 23 novembre 2026 — Claude Code (v0.243 publiée)
+## État au 23 novembre 2026 — Claude Code (v0.244 publiée)
+
+- **v0.244, un affixe par biome, étape 1** (décision du porteur du 23 novembre 2026, MAJ-91 à MAJ-93, fiche `design/Affixe_par_biome_v0244.md`) : `campaign_catalogue.gd` (`BIOME_FIRST_CHAPTER_AFFIXES`, `REBALANCE_PERCENT`, `BELOW_CURVE_MISSIONS`) ; `valley_model.gd` (`rockfall_held_times`, `_hold_spawns_for_rockfall`, prévision retardée) ; bandeau, dessin, fiche de mission (`affix_tag`) et rapport adaptés. La suite des Ardoises joue désormais la référence de la Horde. Données et scripts : `design/essais/equilibre_bonus/v244/`.
+- Mesure finale (9 000 parties) : 96 cas sur 100 dans la cible ; hors cible Alliance 23 et 61, Horde 22 et 23. Huit cas sous la courbe de base, acceptés par le porteur (« Oui, baisse-les »).
+- Contrôles v0.244 : régression 144/144 (234 230 contrôles Godot, 17 tests Python), paquet 1 050 cas et 650 contrôles de sources, 44 captures de combat inspectées dans les deux factions.
+- **Proposition de l'étape 2 soumise au porteur, non validée** : voir « Proposition pour l'étape 2 » dans `design/Affixe_par_biome_v0244.md`. Ne rien coder avant sa réponse.
+- **Suite (O-029)** : proposer au porteur puis créer les 5 affixes manquants (Gué dès la mission 2, Marais, Citadelle, Îles, Nécropole), puis les 5 attaquants manquants (Ardoises, Volcan, Désert, Mines, Côtes) avec Codex. Recalibrer les missions touchées à chaque étape.
+
+### v0.243 (publiée)
 
 - **v0.243** (validation du porteur : « Oui, intègre-le ») : décor du Gué 1 à 20 (MAJ-90, lot `3feb9b09`, fusion jusqu'à `3feb9b09`). `DecorArt.FORD_ASSETS`, `FORD_OVERLAYS`, `ford_prop`, `ford_tree`, `ford_overlay` ; `valley_view.gd` dessine la rivière à la place de `_draw_valley_water`, le pont à la place de `_draw_valley_bridge`, les arbres fixes et les objets avec `_draw_scaled_piece`. Contrôles dans `test_decor_art.gd` (39 207). GDD 0.80.
 - Contrôles v0.243 : régression 144/144 (232 399 contrôles Godot, 17 tests Python), paquet 1 050 cas et 650 contrôles de sources, missions 1 à 10 inspectées en préparation dans les deux factions (11 à 20 : mêmes cartes, sans capture de jeu dédiée).

@@ -2391,6 +2391,8 @@ func _draw_rockfall() -> void:
 	for route in model.routes:
 		if route.id == status.route_id and not route.path_points.is_empty():
 			origin = project(route.path_points[0]);found = true;break
+	if not found and model.routes.size() < 2 and not model.path_points.is_empty():
+		origin = project(model.path_points[0]);found = true # Carte à une seule entrée.
 	if not found: return
 	# Habillage de Codex : planches de l'effet `effect.rockfall` posées au sol sur l'entrée visée (avertissement en progression, blocage en boucle).
 	var spec: Dictionary = SheetAnimations.spec_for(ROCKFALL_EFFECT_ID)
@@ -2602,8 +2604,10 @@ static func affix_banner(model) -> Dictionary:
 		"rockfall":
 			status = model.rockfall_status();name = "Éboulement"
 			if not status.is_empty():
-				for index in range(model.routes.size()):
-					if str(model.routes[index].id) == str(status.route_id): effect = "entrée %d %s" % [index+1,"sera bloquée" if status.state == "warning" else "bloquée"]
+				if model.routes.size() < 2: effect = "l'entrée sera bloquée" if status.state == "warning" else "entrée bloquée"
+				else:
+					for index in range(model.routes.size()):
+						if str(model.routes[index].id) == str(status.route_id): effect = "entrée %d %s" % [index+1,"sera bloquée" if status.state == "warning" else "bloquée"]
 	if status.is_empty(): return {}
 	var remaining: float = maxf(0.0,float(status.remaining))
 	var warning: bool = status.state == "warning"

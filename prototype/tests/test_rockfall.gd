@@ -4,6 +4,7 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 const View = preload("res://scripts/valley_view.gd")
 const Library = preload("res://scripts/animation_library.gd")
+const Catalogue = preload("res://scripts/campaign_catalogue.gd")
 const AFFIX := {"id":"rockfall","interval":18,"warning":3,"duration":7}
 var checks := 0
 var failures := 0
@@ -23,6 +24,8 @@ func run_checks() -> void:
 	verify_replay()
 	await verify_rendering()
 	await verify_sheets()
+	await verify_single_entry()
+	verify_biome_affixes()
 	print("ROCKFALL_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
 
@@ -46,7 +49,7 @@ func verify_validation() -> void:
 		var model := Model.new(true,Model.Maps.for_id("mine_crystals"))
 		check(not model.configure_combat_affix(bad) and model.combat_affix.is_empty(),"Affixe mal formé refusé sans effet : %s" % str(bad))
 	var single := Model.new(true,Model.Maps.for_id("mine_entrance"))
-	check(not single.configure_combat_affix(AFFIX) and single.combat_affix.is_empty(),"Une carte à une seule entrée refuse l'éboulement")
+	check(single.configure_combat_affix(AFFIX) and single.combat_affix == AFFIX,"Une carte à une seule entrée accepte l'éboulement depuis la décision du 23 novembre 2026")
 	var started := Model.new(true,Model.Maps.for_id("mine_crystals"));started.buy(3,0)
 	check(not started.configure_combat_affix(AFFIX),"Affixe refusé après une action")
 
@@ -201,3 +204,86 @@ func verify_sheets() -> void:
 	await process_frame
 	check(not model.rockfall_status().is_empty(),"Sans planche : repère provisoire dessiné sans erreur")
 	bare.free()
+
+## Éboulement sur une carte à une seule entrée (décision du porteur, 23 novembre 2026) : les ennemis attendent la fin du blocage, puis sortent groupés dans le même ordre.
+func verify_single_entry() -> void:
+	var expected: Array[float] = [0.0,1.0,17.0,25.0,25.3,25.6,25.9,26.2,30.0]
+	var held: Array[float] = Model.rockfall_held_times([0.0,1.0,17.0,18.0,19.0,24.9,25.0,26.0,30.0],18.0,7.0)
+	check(held.size() == expected.size() and range(held.size()).all(func(i: int) -> bool: return is_equal_approx(held[i],expected[i])),"Sorties retardées à la fin du blocage, espacées de 0,3 s, sans toucher aux apparitions hors blocage : %s" % str(held))
+	var chained: Array[float] = Model.rockfall_held_times([24.9,25.0,35.9,36.0,36.1],18.0,7.0)
+	check(is_equal_approx(chained[0],25.0) and is_equal_approx(chained[1],25.3) and is_equal_approx(chained[2],35.9) and is_equal_approx(chained[3],43.0) and is_equal_approx(chained[4],43.3),"Chaque blocage retient ses propres apparitions")
+	for number in [121,122,125,128]:
+		var definition: Dictionary = Catalogue.definition(number)
+		var map_id: String = str(definition.map_id)
+		for faction in range(2):
+			var model := rocky(map_id)
+			check(model.routes.size() < 2,"Mission %d : une seule entrée" % number)
+			model.select_faction(faction)
+			model.configure_enemy_hp(100)
+			model.gold = 2000
+			model.buy(3,faction*3);model.buy(4,faction*3+1);model.buy(2,faction*3)
+			for wave in range(1,5):
+				var base: Array = Model.Campaign.schedule(wave,model.wave_set_id)
+				var forecast: Dictionary = model.forecast_for_routes(wave)
+				check(model.start(),"Mission %d, vague %d démarrée" % [number,wave])
+				check(model.spawn_schedule.size() == base.size() and range(base.size()).all(func(i: int) -> bool: return int(model.spawn_schedule[i].type) == int(base[i].type) and float(model.spawn_schedule[i].time) >= float(base[i].time)-0.000001),"Mission %d, vague %d : mêmes ennemis, dans le même ordre, jamais en avance" % [number,wave])
+				for index in range(model.spawn_schedule.size()):
+					var time: float = float(model.spawn_schedule[index].time)
+					var block: int = int(floor((time+0.000001)/18.0))
+					check(block < 1 or time >= 18.0*block+7.0-0.000001,"Mission %d, vague %d : aucune sortie pendant un blocage (%.2f s)" % [number,wave,time])
+					if index > 0: check(time > float(model.spawn_schedule[index-1].time),"Mission %d, vague %d : sorties ordonnées et distinctes" % [number,wave])
+				var offset: int = 0
+				for group in forecast.groups:
+					check(is_equal_approx(float(group.first_at),float(model.spawn_schedule[offset].time)) and is_equal_approx(float(group.last_at),float(model.spawn_schedule[offset+int(group.count)-1].time)),"Mission %d, vague %d : la prévision annonce les sorties retardées" % [number,wave])
+					offset += int(group.count)
+				model.advance(15.5)
+				var warning: Dictionary = model.rockfall_status()
+				if model.active:
+					check(warning.get("state","") == "warning" and str(warning.route_id) == "","Mission %d : avertissement sur l'unique entrée" % number)
+					check(View.affix_banner(model).text.contains("l'entrée sera bloquée"),"Mission %d : le bandeau annonce le blocage de l'entrée" % number)
+					model.advance(3.0)
+					if model.active: check(View.affix_banner(model).text.contains("entrée bloquée"),"Mission %d : le bandeau indique l'entrée bloquée" % number)
+				model.advance(10000)
+				if model.phase != "finished" and model.phase != "bonus": break
+				if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+				model.prepare_next_wave()
+	check(rocky("mine_entrance").affix_tooltip().contains("sortent groupés") and rocky("mine_crystals").affix_tooltip().contains("entrée suivante"),"Explication adaptée au nombre d'entrées")
+	var big: Dictionary = play_wave(10000.0,"mine_entrance")
+	var small: Dictionary = play_wave(0.05,"mine_entrance")
+	var odd: Dictionary = play_wave(0.731,"mine_entrance")
+	check(JSON.stringify(big) == JSON.stringify(small) and JSON.stringify(big) == JSON.stringify(odd),"Une seule entrée : même déroulement quelle que soit la taille des pas")
+	for faction in range(2):
+		var model := rocky("mine_entrance")
+		model.select_faction(faction)
+		model.buy(3,faction*3);model.buy(4,faction*3+1)
+		for wave in range(1,11):
+			model.start();model.advance(10000)
+			if model.phase == "defeat": break
+			if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+			if wave < 10: model.prepare_next_wave()
+		var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
+		var replay: Dictionary = Replay.verify(report)
+		check(replay.ok,"Une seule entrée : rapport rejouable (faction %d) : %s" % [faction,str(replay.get("error",""))])
+		check(Report.markdown(report).contains("attendent, puis sortent groupés"),"Le rapport lisible décrit l'éboulement sur une seule entrée")
+	var view := View.new()
+	var drawn := rocky("mine_entrance");drawn.select_faction(0);drawn.buy(3,0);view.model = drawn;root.add_child(view)
+	drawn.start()
+	for time in [15.5,3.0,5.0]:
+		drawn.advance(time);view.queue_redraw()
+		await process_frame
+	check(true,"Dessin de l'éboulement sur l'unique entrée sans erreur")
+	view.free()
+
+## Un affixe par biome : le premier chapitre reprend exactement l'affixe du second.
+func verify_biome_affixes() -> void:
+	for pair in [[3,4],[7,8],[11,12],[13,14],[17,18]]:
+		var reference: Dictionary = Catalogue.definition(pair[1]*10).combat_affix
+		for number in range((pair[0]-1)*10+1,pair[1]*10+1):
+			check(Catalogue.definition(number).get("combat_affix",{}) == reference,"Mission %d : même affixe sur les deux chapitres du biome" % number)
+	for number in [1,11,20,41,60,81,100,141,160,181,200]:
+		check(Catalogue.definition(number).get("combat_affix",{}).is_empty(),"Mission %d : pas encore d'affixe (étape suivante)" % number)
+	for number in range(1,201):
+		var definition: Dictionary = Catalogue.definition(number)
+		if definition.has("combat_affix"):
+			var model := Model.new(true,Model.Maps.for_id(str(definition.map_id)))
+			check(model.configure_combat_affix(definition.combat_affix),"Mission %d : affixe accepté par sa carte" % number)

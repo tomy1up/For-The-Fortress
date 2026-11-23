@@ -2,6 +2,7 @@ extends SceneTree
 const Main = preload("res://scripts/main.gd")
 const Profile = preload("res://scripts/meta_profile.gd")
 const Replay = preload("res://tests/report_replay.gd")
+const Reference = preload("res://tests/reference_army.gd")
 var checks := 0
 var failures := 0
 func check(value: bool, message: String) -> void:
@@ -40,17 +41,10 @@ func run_checks() -> void:
 		check(model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(mission_number,model.faction) and model.gold==150 and model.fortress_hp==model.max_hp and model.bonuses.is_empty(),"Paramètres et remise à neuf avec les talents actifs")
 		model.rng.seed = 7
 		var slots: Array = [3,4,2]
-		if faction==1 and mission_number in [22,28]:
-			slots = [4,3,2]
-		if faction==1 and mission_number==23:
-			slots = [2,3,4]
 		if faction==0 and mission_number==30:
 			slots = [2,3,4]
-		var types: Array = [faction*3,faction*3+1,faction*3+2]
-		if faction==1 and mission_number==25:
-			types = [3,5,4]
-		if faction==1 and mission_number==30:
-			types = [3,3,5]
+		# Horde : composition de référence depuis que le chapitre 3 subit les Vents contraires (v0.244). Alliance : stratégie historique du chapitre.
+		var types: Array = [0,1,2] if faction==0 else Reference.types(1,mission_number)
 		check(model.buy(slots[0],types[0]) and model.buy(slots[1],types[1]),"Recrutement initial dans le budget")
 		for wave in range(1,11):
 			if wave==2: model.upgrade(slots[0])

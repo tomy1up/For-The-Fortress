@@ -354,8 +354,8 @@ func configure_combat_affix(value: Variant) -> bool:
 				if not _whole_number(m_interval) or not _whole_number(m_warning) or not _whole_number(m_duration) or not _whole_number(m_percent): return false
 				if m_interval < 10 or m_interval > 40 or m_warning < 1 or m_warning > 4 or m_duration < 2 or m_duration > 12 or m_percent < 10 or m_percent > 60 or m_duration+m_warning+1 > m_interval: return false
 			"rockfall":
-				# Éboulement : une entrée est bloquée `duration` s toutes les `interval` s, annoncée `warning` s avant ; les apparitions prévues pendant ce temps passent par l'entrée suivante. Exige au moins deux entrées.
-				if value.size() != 4 or routes.size() < 2: return false
+				# Éboulement : une entrée est bloquée `duration` s toutes les `interval` s, annoncée `warning` s avant ; les apparitions prévues pendant ce temps passent par l'entrée suivante. Sur une carte à une seule entrée, elles attendent la fin du blocage (décision du porteur, 23 novembre 2026). Auparavant : au moins deux entrées.
+				if value.size() != 4: return false
 				var r_interval: Variant = value.get("interval");var r_warning: Variant = value.get("warning");var r_duration: Variant = value.get("duration")
 				if not _whole_number(r_interval) or not _whole_number(r_warning) or not _whole_number(r_duration): return false
 				if r_interval < 10 or r_interval > 40 or r_warning < 1 or r_warning > 4 or r_duration < 2 or r_duration > 12 or r_duration+r_warning+1 > r_interval: return false
@@ -379,7 +379,7 @@ func affix_tooltip() -> String:
 	match combat_affix.get("id",""):
 		"headwinds": return "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
 		"seamist": return "Toutes les %d s de combat, une brume marine réduit de %d %% l'or gagné par élimination pendant %d s (arrondi à l'entier le plus proche, au moins 1 or). Elle est annoncée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.gold_percent),int(combat_affix.duration),int(combat_affix.warning)]
-		"rockfall": return "Toutes les %d s de combat, un éboulement bloque une entrée pendant %d s : les ennemis qui devaient y apparaître passent par l'entrée suivante. L'entrée touchée est signalée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.duration),int(combat_affix.warning)]
+		"rockfall": return ("Toutes les %d s de combat, un éboulement bloque l'entrée pendant %d s : les ennemis attendent, puis sortent groupés. Il est signalé %d s avant. Réglage d’essai." if routes.size() < 2 else "Toutes les %d s de combat, un éboulement bloque une entrée pendant %d s : les ennemis qui devaient y apparaître passent par l'entrée suivante. L'entrée touchée est signalée %d s avant. Réglage d’essai.") % [int(combat_affix.interval),int(combat_affix.duration),int(combat_affix.warning)]
 		"sandstorm": return "Toutes les %d s de combat, une rafale de sable réduit de %d %% la portée de tous les défenseurs pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.range_percent),int(combat_affix.duration),int(combat_affix.warning)]
 		"eruptions": return "Toutes les %d s de combat, un défenseur choisi au hasard parmi ceux en place est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Les dégâts périodiques déjà appliqués continuent. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.duration),int(combat_affix.warning)]
 	return ""
@@ -427,16 +427,44 @@ func rockfall_blocked_route(time: float, wave_number: int) -> String:
 	if number < 1 or time >= rockfall_time(number)+float(combat_affix.duration)-EPS: return ""
 	return str(routes[(number+wave_number)%routes.size()].id)
 
+func _rockfall_route_id(number: int) -> String:
+	return "" if routes.is_empty() else str(routes[(number+wave)%routes.size()].id)
+
+## Éboulement sur une carte à une seule entrée (décision du porteur, 23 novembre 2026) : les apparitions prévues pendant un blocage attendent sa fin, puis
+## sortent groupées, espacées de ROCKFALL_HOLD_GAP secondes (réglage de prototype à confirmer). L'ordre des ennemis ne change pas.
+const ROCKFALL_HOLD_GAP := 0.3
+
+static func rockfall_held_times(times: Array, interval: float, duration: float) -> Array[float]:
+	var result: Array[float] = []
+	var last: float = -INF
+	var holding: bool = false
+	for value in times:
+		var time: float = float(value)
+		var pushed: bool = holding and time < last+ROCKFALL_HOLD_GAP
+		if pushed: time = last+ROCKFALL_HOLD_GAP
+		var number: int = int(floor((time+EPS)/interval))
+		var blocked: bool = number >= 1 and time < interval*number+duration-EPS
+		if blocked: time = interval*number+duration
+		holding = blocked or pushed
+		result.append(time)
+		last = time
+	return result
+
+func _hold_spawns_for_rockfall() -> void:
+	if not rockfall_enabled() or routes.size() >= 2: return
+	var held: Array[float] = rockfall_held_times(spawn_schedule.map(func(entry: Dictionary) -> float: return float(entry.time)),float(combat_affix.interval),float(combat_affix.duration))
+	for index in range(spawn_schedule.size()): spawn_schedule[index].time = held[index]
+
 ## État observé par l'interface : {} hors combat, sinon l'avertissement ("warning") ou le blocage en cours ("active") avec l'entrée touchée.
 func rockfall_status() -> Dictionary:
 	if not rockfall_enabled() or not active: return {}
 	var interval: float = float(combat_affix.interval)
 	var number: int = int(floor((elapsed+EPS)/interval))
 	if number >= 1 and elapsed < rockfall_time(number)+float(combat_affix.duration)-EPS:
-		return {"state":"active","number":number,"route_id":str(routes[(number+wave)%routes.size()].id),"remaining":rockfall_time(number)+float(combat_affix.duration)-elapsed}
+		return {"state":"active","number":number,"route_id":_rockfall_route_id(number),"remaining":rockfall_time(number)+float(combat_affix.duration)-elapsed}
 	var upcoming: int = number+1
 	if elapsed >= rockfall_time(upcoming)-float(combat_affix.warning)-EPS:
-		return {"state":"warning","number":upcoming,"route_id":str(routes[(upcoming+wave)%routes.size()].id),"remaining":rockfall_time(upcoming)-elapsed}
+		return {"state":"warning","number":upcoming,"route_id":_rockfall_route_id(upcoming),"remaining":rockfall_time(upcoming)-elapsed}
 	return {}
 
 func eruption_enabled() -> bool:
@@ -566,6 +594,12 @@ func spawn_route_id(index: int, entry: Dictionary, forecast_wave: int = -1) -> S
 
 func forecast_for_routes(number: int) -> Dictionary:
 	var data: Dictionary = wave_forecast(number,faction,enemy_hp_percent,wave_set_id)
+	if not data.is_empty() and rockfall_enabled() and routes.size() < 2: # Une seule entrée : la prévision annonce les sorties retardées par l'éboulement.
+		var held: Array[float] = rockfall_held_times(Campaign.schedule(number,wave_set_id).map(func(entry: Dictionary) -> float: return float(entry.time)),float(combat_affix.interval),float(combat_affix.duration))
+		var first: int = 0
+		for group in data.groups:
+			group.first_at = held[first];group.last_at = held[first+int(group.count)-1]
+			first += int(group.count)
 	if data.is_empty() or routes.is_empty(): return data
 	var indices: Dictionary = {}
 	data.entries = []
@@ -1138,6 +1172,7 @@ func start() -> bool:
 		if not unit.is_empty(): army.append({"slot":slot,"type":unit.type,"level":unit.level,"branch":unit.branch,"paid":unit.paid,"instance_id":unit.instance_id})
 	_wave_record = {"wave":wave,"hp_before":fortress_hp,"max_hp":max_hp,"income_before":total_income,"army":army,"bonuses":bonuses.duplicate(),"planned":spawn_schedule.size()}
 	_wave_record["performance"] = Metrics.create(army)
+	_hold_spawns_for_rockfall()
 	phase = "combat"
 	for defender in defenders:
 		if not defender.is_empty():

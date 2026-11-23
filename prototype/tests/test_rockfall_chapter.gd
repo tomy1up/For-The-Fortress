@@ -100,7 +100,7 @@ func verify_mission(camp: int, number: int) -> void:
 		check(allocated,"Les points accessibles sont répartis légalement")
 		if not allocated: break
 	game._open_campaign(camp,14);game.campaign_menu._select(number-131)
-	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and game.campaign_menu.mission_detail.text.contains("Nouveau : Éboulement") and game.campaign_menu.rewards.text.contains("80 PO") and not game.campaign_menu.rewards.text.contains("XP"),"Mission %d : fiche standard, 80 PO sans mention d'XP" % number)
+	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and game.campaign_menu.mission_detail.text.contains("Affixe : Éboulement") and game.campaign_menu.rewards.text.contains("80 PO") and not game.campaign_menu.rewards.text.contains("XP"),"Mission %d : fiche standard, 80 PO sans mention d'XP" % number)
 	game.campaign_menu._launch()
 	var model: Model = game.model
 	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix.id == "rockfall" and model.rockfall_enabled() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)

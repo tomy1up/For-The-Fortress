@@ -22,6 +22,9 @@ func run_checks() -> void:
 			check(played >= 100 and played <= 400,"Mission %d, faction %d : PV joués dans les limites valides" % [number,faction])
 	for faction in [0,1]:
 		check(Catalogue.REBALANCE_PERCENT[faction].size() == Catalogue.TOTAL_MISSIONS,"Faction %d : un coefficient de rééquilibrage par mission" % faction)
-		for number in range(1,Catalogue.TOTAL_MISSIONS+1): check(Catalogue.REBALANCE_PERCENT[faction][number-1] >= 100 and Catalogue.REBALANCE_PERCENT[faction][number-1] <= 200,"Faction %d, mission %d : coefficient entre 100 et 200 %%" % [faction,number])
+		for number in range(1,Catalogue.TOTAL_MISSIONS+1):
+			var coefficient: int = Catalogue.REBALANCE_PERCENT[faction][number-1]
+			if number in Catalogue.BELOW_CURVE_MISSIONS[faction]: check(coefficient >= 92 and coefficient < 100,"Faction %d, mission %d : sous la courbe de base, de 92 à 99 %% (décision du porteur, 23 novembre 2026)" % [faction,number])
+			else: check(coefficient >= 100 and coefficient <= 200,"Faction %d, mission %d : coefficient entre 100 et 200 %%" % [faction,number])
 	print("HORDE_CURVE_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(0 if failures == 0 else 1)

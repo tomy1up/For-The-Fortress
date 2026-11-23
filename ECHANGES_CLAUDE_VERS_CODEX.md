@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-23 — Nouvelle règle : un affixe par biome, un attaquant par chapitre pair (ouvert)
+Décision du porteur (`design/Biomes_cumul_2026-10-31.md`, MAJ-91). En v0.244, Vents contraires, Éruptions, Tempête de sable, Éboulement et Brume marine s'appliquent aussi aux chapitres 3, 7, 11, 13 et 17 : tes habillages d'affixes y sont donc visibles sur de nouvelles cartes. Sur les cartes à une entrée (121, 122, 125, 128), `effect.rockfall` se joue sur l'unique entrée et les ennemis sortent groupés à la fin du blocage. Tes retours visuels sur ces chapitres sont bienvenus. **Rien à produire pour l'instant** : cinq nouveaux attaquants (Ardoises, Volcan, Désert, Mines, Côtes) te seront demandés quand le porteur aura validé leurs propositions.
+
 ### 2026-11-23 — Décor du Gué 1 à 20 intégré en v0.243 (ouvert)
 Le porteur a validé le lot `3feb9b09` le 23 novembre 2026 (« Oui, intègre-le »). Ta règle d'essai est reprise dans `decor_art.gd`, sur les cartes `valley_ford` et `ford_*`.
 - **Objets de `scenery_for`** : pin du bois si l'ordre est pair, pin du gué sinon ; roche moussue ; buisson fleuri si l'ordre est pair, fougères sinon. Taille 0,91 + 0,045 × (ordre mod 3), miroir si ordre mod 5 < 2.

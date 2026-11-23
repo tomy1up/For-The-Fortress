@@ -1,0 +1,5 @@
+passe 0 : suites en échec ['test_volcanic_chapter.gd', 'test_desert_chapter.gd', 'test_slate_campaign.gd'], missions perdues [(22, 1), (23, 1), (24, 1), (66, 0), (68, 1), (105, 1)]
+passe 1 : suites en échec ['test_volcanic_chapter.gd'], missions perdues [(66, 0), (68, 1)]
+PLUS RIEN A ABAISSER
+AU PLANCHER ET PERDUES : [(66, 0), (68, 1)]
+FIN
