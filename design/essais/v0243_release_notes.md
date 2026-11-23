@@ -10,4 +10,6 @@ Habillage de Codex validé par le porteur le 23 novembre 2026 (lot 3feb9b09). Re
 
 ## Contrôles
 
-À compléter après la vérification.
+- **Régression complète** : 144 suites sur 144, 232 399 contrôles Godot, 17 tests Python. `test_decor_art.gd` (39 207 contrôles) vérifie les pièces et les calques par rapport à l'implantation de Codex, les cadres, et la couverture de l'ancienne rivière et de l'ancien pont.
+- **Paquet Windows vérifié** : 1 050 cas réussis, 650 contrôles de sources, empreinte `d9487950…4612`.
+- **Captures inspectées dans le paquet** : missions 1 à 10 en préparation, dans les deux factions. Les missions 11 à 20 réutilisent les mêmes cartes et n'ont pas de capture de jeu dédiée.

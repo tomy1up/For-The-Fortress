@@ -396,9 +396,11 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 23 novembre 2026 — Claude Code (v0.243 en cours de vérification)
+## État au 23 novembre 2026 — Claude Code (v0.243 publiée)
 
 - **v0.243** (validation du porteur : « Oui, intègre-le ») : décor du Gué 1 à 20 (MAJ-90, lot `3feb9b09`, fusion jusqu'à `3feb9b09`). `DecorArt.FORD_ASSETS`, `FORD_OVERLAYS`, `ford_prop`, `ford_tree`, `ford_overlay` ; `valley_view.gd` dessine la rivière à la place de `_draw_valley_water`, le pont à la place de `_draw_valley_bridge`, les arbres fixes et les objets avec `_draw_scaled_piece`. Contrôles dans `test_decor_art.gd` (39 207). GDD 0.80.
+- Contrôles v0.243 : régression 144/144 (232 399 contrôles Godot, 17 tests Python), paquet 1 050 cas et 650 contrôles de sources, missions 1 à 10 inspectées en préparation dans les deux factions (11 à 20 : mêmes cartes, sans capture de jeu dédiée).
+- Plus aucun lot de décor en attente du porteur côté Claude Code.
 
 ### v0.242 (publiée)
 
