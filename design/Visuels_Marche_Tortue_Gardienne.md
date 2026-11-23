@@ -52,3 +52,14 @@ Après avoir isolé le sprite à taille native sur la portion droite, les deux f
 La version à 48 images réduit les poses répétées à ×1 et les écarts les plus fréquents aux deux vitesses. Le plus grand écart à ×1 reste du même ordre. Le pivot reste instantané dans les deux versions. L’essai vérifie la présentation du mouvement sur une grille à 60 IPS. Les performances d’affichage d’une partie jouée en direct restent hors de ce contrôle.
 
 La planche de 48 images est la proposition retenue pour avis. [Planche](essais/tortue_marche_48_v0243/walk.png) · [Description](essais/tortue_marche_48_v0243/animation.json). Validateur à zéro problème sur 65 dossiers, avec deux avertissements liés aux planches de référence de la copie, et 2 219 contrôles réussis dans quatre suites ciblées.
+
+## Marche reconstruite autour des appuis au sol
+
+Le porteur a jugé que le cycle de 48 images manquait encore de fluidité. Le nouveau cycle part du dessin fixe déjà en jeu. Chaque patte a une trajectoire continue et décalée. Durant l’appui, son recul relatif compense l’avance de la tortue sur la route. La patte se soulève et revient sous le corps en suivant une trajectoire arrondie. La tête et la carapace accompagnent les transferts de poids par de petits mouvements. Le cycle garde 48 images par foulée et une foulée de 13 px.
+
+- Alliance [×1](essais/tortue_appuis_v0243/Tortue_alliance_x1_appuis.mp4) · [×2](essais/tortue_appuis_v0243/Tortue_alliance_x2_appuis.mp4)
+- Horde [×1](essais/tortue_appuis_v0243/Tortue_horde_x1_appuis.mp4) · [×2](essais/tortue_appuis_v0243/Tortue_horde_x2_appuis.mp4)
+
+Sur les 936 captures comparées de la mission 11, les positions et la durée de la foulée correspondent image par image. Le suivi par motif autour des coussinets des deux pattes proches, sur la partie centrale des appuis, mesure au plus 0,16 pixel d’écart par axe par rapport à un appui idéal. Sur un cadre fixe à taille native, l’écart moyen au 95e percentile entre deux images voisines passe de 1,82 à 1,19 niveaux de couleur sur 255 pour la planche principale. L’écart sur le raccord de boucle passe de 1,90 à 0,75. Le virage emploie le changement de sens existant. La planche `walk_up` adapte l’appui à la diagonale montante.
+
+Les fichiers [animation.json](essais/tortue_appuis_v0243/animation.json), [walk.png](essais/tortue_appuis_v0243/walk.png) et [walk_up.png](essais/tortue_appuis_v0243/walk_up.png) constituent la nouvelle proposition. Cadres 116 × 90, ancre (59, 77) et hauteur 45. Le validateur relève zéro problème sur 65 dossiers avec des avertissements pour les trois planches archivées dans la copie d’essai. Les quatre suites passent, soit 2 219 vérifications. La proposition attend l’avis du porteur.

@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-23 — Marche de la Tortue gardienne des berges (en attente du porteur)
 
-La planche candidate de 48 images est sous `design/essais/tortue_marche_48_v0243/`. Elle conserve la foulée de 13 px, le cadre 96 × 72, l’ancre (50, 69) et la hauteur 39. Le comparatif face au lot de 36 images montre moins de poses répétées à ×1 et des transitions plus régulières à ×2. Attendre l’avis du porteur. [Mesures et vidéos](design/Visuels_Marche_Tortue_Gardienne.md#comparatif-entre-36-et-48-images-par-foulée).
+Le cycle de 48 images de `25ecb9c9` manquait encore de fluidité pour le porteur. La proposition actuelle est sous `design/essais/tortue_appuis_v0243/`. Deux planches `walk` et `walk_up`, foulée 13 px, cadres 116 × 90, ancre (59, 77), hauteur 45. La gestion existante des vues et du pas suffit. Attendre l’avis du porteur. [Mesures et vidéos](design/Visuels_Marche_Tortue_Gardienne.md#marche-reconstruite-autour-des-appuis-au-sol).
 
 ### 2026-11-23 — Relève du Revenant redessinée (ouvert)
 
