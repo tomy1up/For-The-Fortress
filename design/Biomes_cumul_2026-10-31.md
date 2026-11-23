@@ -96,3 +96,28 @@ La nouveauté du chapitre 10, la Garnison, est livrée en v0.173 : [fiche des mi
 ## Décision du 11 novembre 2026 — missions 101 à 200
 
 Cadrage des chapitres 11 à 20 : [fiche](Cadrage_missions_101_200.md). Un biome = deux chapitres, une seule nouveauté dans le second, comme les chapitres 1 à 10 (décision du porteur) ; le cumul des nouveautés est transposé au mode infini et aux difficultés suivantes. La courbe de PV ennemis continue à +1 % par mission, à mesurer chapitre par chapitre. PO de 65 à 105 selon le chapitre : choix de Claude Code sur délégation du porteur, valeurs à confirmer. **Sixième biome (chapitres 11 et 12) : désert et ruines**, choisi par le porteur le 11 novembre 2026 parce que la toundra et glace recoupait les Ardoises.
+
+## Décision du 23 novembre 2026 — un affixe par biome, un attaquant par chapitre pair
+
+Le porteur remplace la règle « une seule nouveauté par biome, dans son second chapitre » (MAJ-10, MAJ-22) :
+
+- **Dix biomes, dix affixes** : chaque biome a son affixe, actif sur ses deux chapitres.
+- **Dix attaquants** : le chapitre pair de chaque biome introduit en plus un nouvel attaquant (un ennemi, pas un défenseur).
+- **Gué** : la mission 1 reste sans affixe pour apprendre le jeu ; l'affixe du Gué s'applique dès la mission 2.
+- **Éboulement sur une carte à une seule entrée** (missions 121, 122, 125 et 128) : l'entrée est bloquée, les ennemis attendent puis sortent groupés à la fin du blocage.
+- **Livraison par étapes** : (1) étendre les cinq affixes existants à leur chapitre impair ; (2) proposer au porteur puis ajouter les cinq affixes manquants ; (3) proposer puis ajouter les cinq attaquants manquants, avec Codex. Le jeu reste jouable et équilibré à chaque version.
+
+| Biome | Chapitres | Affixe | Attaquant du chapitre pair |
+| --- | --- | --- | --- |
+| Gué | 1-2 | à proposer | Tortue gardienne |
+| Ardoises | 3-4 | Vents contraires | à proposer |
+| Marais | 5-6 | à proposer | Gueule-de-Vase |
+| Terres volcaniques | 7-8 | Éruptions | à proposer |
+| Citadelle | 9-10 | à proposer | Garnison |
+| Désert | 11-12 | Tempête de sable | à proposer |
+| Mines | 13-14 | Éboulement | à proposer |
+| Îles flottantes | 15-16 | à proposer | Aigle des cimes |
+| Côtes | 17-18 | Brume marine | à proposer |
+| Nécropole | 19-20 | à proposer | Revenant |
+
+Les valeurs des affixes et des attaquants restent des réglages de prototype à confirmer. La cible de difficulté reste celle du porteur (40 à 70 % de marge pour la meilleure composition, MAJ-69, MAJ-79).

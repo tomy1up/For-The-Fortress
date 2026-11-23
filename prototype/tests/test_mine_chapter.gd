@@ -35,7 +35,7 @@ func run_checks() -> void:
 	for number in range(121,131):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 13 and definition.map_id == EXPECTED[number].map and definition.hp_percent == 99+number and definition.po == 75 and definition.xp == 0 and definition.waves == 10,"Mission %d : carte, PV à 220 %% et plus, 75 PO sans XP" % number)
-		check(not definition.has("wave_set_id") and not definition.has("combat_affix") and Catalogue.runtime(definition.id).get("wave_set_id","ford") == "ford","Mission %d : rencontres standard du Gué, sans affixe (biome à confirmer par le porteur)" % number)
+		check(not definition.has("wave_set_id") and definition.get("combat_affix",{}) == Catalogue.BIOME_FIRST_CHAPTER_AFFIXES[13] and Catalogue.runtime(definition.id).get("wave_set_id","ford") == "ford","Mission %d : rencontres standard du Gué, avec l'affixe du biome (biome à confirmer par le porteur)" % number)
 		await verify_map(number)
 	for number in range(121,131):
 		for camp in range(2): await verify_mission(camp,number)
@@ -99,10 +99,10 @@ func verify_mission(camp: int, number: int) -> void:
 		check(allocated,"Les points accessibles sont répartis légalement")
 		if not allocated: break
 	game._open_campaign(camp,13);game.campaign_menu._select(number-121)
-	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and not game.campaign_menu.mission_detail.text.contains("Nouveau") and game.campaign_menu.rewards.text.contains("75 PO") and not game.campaign_menu.rewards.text.contains("XP"),"Mission %d : fiche standard, 75 PO sans mention d'XP" % number)
+	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and game.campaign_menu.mission_detail.text.contains("Nouveau : Éboulement") and game.campaign_menu.rewards.text.contains("75 PO") and not game.campaign_menu.rewards.text.contains("XP"),"Mission %d : fiche standard, 75 PO sans mention d'XP" % number)
 	game.campaign_menu._launch()
 	var model: Model = game.model
-	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix.is_empty() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
+	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix == Main.CampaignCatalogue.BIOME_FIRST_CHAPTER_AFFIXES[13] and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
 	play(model,Reference.types(camp,number),EXPECTED[number].order)
 	print("MINE_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])
@@ -110,7 +110,7 @@ func verify_mission(camp: int, number: int) -> void:
 	if not model.rules_v232: report.game_version = "0.231" # Références historiques : tirage de douze bonus
 	var replay: Dictionary = Replay.verify(report)
 	check(replay.ok,"Mission %d : le rapport est rejouable : %s" % [number,str(replay.get("error",""))])
-	check(not report.has("wave_set_id") and not report.has("combat_affix") and report.map_definition.decoration == "mine","Mission %d : le rapport conserve la carte des souterrains et les rencontres standard" % number)
+	check(not report.has("wave_set_id") and report.get("combat_affix",{}).get("id","") == "rockfall" and report.map_definition.decoration == "mine","Mission %d : le rapport conserve la carte des souterrains et les rencontres standard" % number)
 	game._sync_meta_rewards(true);game._sync_meta_rewards(true)
 	check(profile.campaign_status(camp).completed == number and profile.data.banks[camp].xp == 10000 and profile.data.banks[camp].resource == 6000+650+700+75*(number-120),"Mission %d : première victoire créditée une seule fois (75 PO, aucune XP)" % number)
 	check(profile.campaign_status(1-camp).completed == 0,"Le parcours adverse est inchangé")

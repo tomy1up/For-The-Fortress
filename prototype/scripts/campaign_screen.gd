@@ -132,6 +132,10 @@ var talents_button: Button
 var back_button: Button
 var footer: Label
 
+## Mention de l'affixe dans la fiche de mission : « Nouveau » au premier chapitre de son biome, « Affixe » au second (un affixe par biome, décision du porteur, 23 novembre 2026).
+static func affix_tag(number: int) -> String:
+	return "Nouveau" if ((number-1)/10)%2 == 0 else "Affixe"
+
 func label_at(parent: Control, text: String, rect: Rect2, size: int = 16, color: Color = Color("e0dbbf")) -> Label:
 	var label := Label.new();label.text = text;label.position = rect.position;label.size = rect.size
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART;label.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -342,17 +346,17 @@ func _refresh_detail() -> void:
 	mission_detail.tooltip_text = ""
 	if definition.get("combat_affix",{}).get("id","") == "seamist":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%
-Nouveau : Brume marine · or réduit" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
+%s : Brume marine · or réduit" % [definition.waves,Catalogue.faction_hp_percent(number,faction),affix_tag(number)]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, une brume marine réduit de %d %% l'or gagné par élimination pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.gold_percent),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.get("combat_affix",{}).get("id","") == "rockfall":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%
-Nouveau : Éboulement · entrée bloquée" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
-		mission_detail.tooltip_text = "Toutes les %d s de combat, un éboulement bloque une entrée pendant %d s : les ennemis qui devaient y apparaître passent par l'entrée suivante. L'entrée touchée est signalée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
+%s : Éboulement · entrée bloquée" % [definition.waves,Catalogue.faction_hp_percent(number,faction),affix_tag(number)]
+		mission_detail.tooltip_text = ("Toutes les %d s de combat, un éboulement bloque l'entrée pendant %d s : les ennemis attendent, puis sortent groupés. Il est signalé %d s avant. Réglage d’essai." if Maps.for_id(str(definition.map_id)).get("routes",[]).size() < 2 else "Toutes les %d s de combat, un éboulement bloque une entrée pendant %d s : les ennemis qui devaient y apparaître passent par l'entrée suivante. L'entrée touchée est signalée %d s avant. Réglage d’essai.") % [int(definition.combat_affix.interval),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.get("combat_affix",{}).get("id","") == "sandstorm":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Tempête de sable · portée réduite" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\n%s : Tempête de sable · portée réduite" % [definition.waves,Catalogue.faction_hp_percent(number,faction),affix_tag(number)]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, une rafale réduit de %d %% la portée de tous les défenseurs pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.range_percent),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.get("combat_affix",{}).get("id","") == "eruptions":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Éruptions · défenseur désactivé" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\n%s : Éruptions · défenseur désactivé" % [definition.waves,Catalogue.faction_hp_percent(number,faction),affix_tag(number)]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, un défenseur choisi au hasard est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.has("combat_affix"):
 		mission_detail.text = "%d vagues · PV ennemis : %d %%\nVents contraires · Cadence −10 %%" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]

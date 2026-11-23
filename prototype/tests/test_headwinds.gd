@@ -149,8 +149,8 @@ func run_checks() -> void:
 				var reopened := Profile.new(profile_path)
 				check(not reopened.blocked and reopened.campaign_status(camp).completed==40 and reopened.data.banks[camp].xp==4000 and reopened.data.banks[camp].resource==2400 and reopened.data.banks[camp].points==20 and reopened.campaign_status(1-camp).completed==0,"Fin des quatre chapitres et gains relus depuis la sauvegarde isolée")
 				game._show_run_summary();game._summary_to_campaign()
-			game.campaign_menu._chapter(3);game.campaign_menu._select(0);game.campaign_menu._launch()
-			check(not game.choosing_faction and game.mission_definition.id=="campaign.021" and game.model.combat_affix.is_empty() and not game.affix_label.visible,"Rejouer une mission antérieure ne conserve aucun vent ni son annonce")
+			game.campaign_menu._chapter(2);game.campaign_menu._select(0);game.campaign_menu._launch()
+			check(not game.choosing_faction and game.mission_definition.id=="campaign.011" and game.model.combat_affix.is_empty() and not game.affix_label.visible,"Rejouer une mission antérieure ne conserve aucun vent ni son annonce")
 			var candidate := {"type":camp*3,"level":1,"branch":-1}
 			var actual: Dictionary = game.model.get_stats(0,-1,candidate)
 			check(is_equal_approx(actual.interval,Model.ROSTER[camp*3].interval),"La cadence d'origine est restaurée sans modifier les talents")
