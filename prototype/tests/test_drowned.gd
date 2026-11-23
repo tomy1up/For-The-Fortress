@@ -32,7 +32,7 @@ func verify_catalogue() -> void:
 	var definition: Dictionary = Catalogue.definition(51)
 	check(definition.available and definition.map_id == "marsh_stagnant" and definition.wave_set_id == "marsh_drowned" and definition.hp_percent == 150 and definition.po == 60 and definition.xp == 100 and definition.waves == 10,"La mission 51 ouvre le chapitre 6 avec ses rencontres et ses gains habituels")
 	check(Catalogue.runtime("campaign.051").wave_set_id == "marsh_drowned" and Catalogue.definition(52).available and Catalogue.definition(61).available and Catalogue.definition(81).available and Catalogue.definition(91).available and Catalogue.definition(101).available and Catalogue.definition(111).available and not Catalogue.definition(201).get("available",false) and Catalogue.runtime("campaign.201").is_empty(),"La mission 91 reste à venir")
-	check(not Catalogue.definition(50).has("wave_set_id") and Catalogue.definition(50).get("combat_affix",{}).is_empty(),"Les missions précédentes n'héritent ni des rencontres ni d'un affixe")
+	check(not Catalogue.definition(50).has("wave_set_id") and Catalogue.definition(50).get("combat_affix",{}).get("id","") == "miasma","Les missions précédentes gardent l'affixe du biome et n'héritent ni des rencontres ni d'un affixe")
 	for faction in range(2):
 		var identity: Dictionary = Model.Enemies.for_profile(9,faction)
 		check(identity.id == "enemy.neutral.drowned" and identity.name == "Gueule-de-Vase" and identity.origin == "neutral" and identity.profile == 9,"Le Noyé est une faune neutre commune aux deux factions")
@@ -181,7 +181,7 @@ func verify_campaign(camp: int) -> void:
 	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("Gueule-de-Vase") and game.campaign_menu.mission_detail.tooltip_text.contains("%d %%" % roundi(Drowned.REGEN_PER_SECOND*100.0)),"La fiche de la mission 51 annonce le Noyé")
 	game.campaign_menu._launch()
 	var model: Model = game.model
-	check(not game.choosing_faction and game.mission_definition.id == "campaign.051" and model.map_definition.id == "marsh_stagnant" and model.wave_set_id == "marsh_drowned" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(51,model.faction) and model.gold == 150 and model.combat_affix.is_empty(),"La mission 51 démarre par le parcours normal avec ses rencontres")
+	check(not game.choosing_faction and game.mission_definition.id == "campaign.051" and model.map_definition.id == "marsh_stagnant" and model.wave_set_id == "marsh_drowned" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(51,model.faction) and model.gold == 150 and model.combat_affix.get("id","") == "miasma","La mission 51 démarre par le parcours normal avec ses rencontres")
 	var forecast: Dictionary = model.forecast_for_routes(2)
 	check(not forecast.is_empty() and forecast.groups[0].name == "Gueule-de-Vase","La prévision de la vague 2 annonce le Noyé")
 	play(model,Reference.types(camp,51))

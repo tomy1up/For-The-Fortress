@@ -8,7 +8,7 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 const Reference = preload("res://tests/reference_army.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 111 à 120.
-const AFFIX := {"id":"sandstorm","interval":15,"warning":3,"duration":5,"range_percent":25}
+const AFFIX := {"id":"sandstorm","interval":12,"warning":3,"duration":4,"range_percent":25}
 const EXPECTED: Dictionary = {
 	111:{"map":"dune_mirage","length":39.0,"routes":1},
 	112:{"map":"dune_scorpion","length":39.0,"routes":1},

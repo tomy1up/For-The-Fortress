@@ -44,17 +44,9 @@ Méthode : 30 compositions, tirages de bonus 7, 8 et 9, première offre. Pour ch
 
 Sous la courbe de base (décision du porteur, 23 novembre 2026) : Alliance 63, 64 et 65 à 98 %, 66 à 96 %, 68 à 94 %, 69 à 92 % ; Horde 66 à 96 %, 68 à 98 %.
 
-## Proposition pour l'étape 2 (non validée par le porteur)
+## Étape 2
 
-Cinq affixes à effet distinct des cinq existants (cadence, désactivation, portée, entrée bloquée, or). Tous sont annoncés 3 s avant et ne dépendent que du temps de combat. Valeurs de départ à confirmer.
-
-| Biome | Affixe proposé | Effet |
-| --- | --- | --- |
-| Gué (dès la mission 2) | Crue | Toutes les 20 s, pendant 5 s, les ennemis avancent 10 % plus vite |
-| Marais | Vapeurs toxiques | Toutes les 16 s, pendant 5 s, les défenseurs infligent 20 % de dégâts en moins |
-| Citadelle | Cor d'alarme | Toutes les 20 s, les ennemis présents reçoivent un bouclier de 10 % de leurs PV maximum |
-| Îles flottantes | Courants ascendants | Toutes les 20 s, les ennemis présents bondissent d'une case vers la forteresse |
-| Nécropole | Drain d'âmes | Toutes les 20 s, pendant 5 s, chaque ennemi éliminé soigne ses voisins proches de 10 % de leurs PV maximum |
+Réalisée en v0.245, avec un rythme plus court que la proposition initiale : voir `design/Affixe_par_biome_v0245.md`. Les coefficients et les rythmes décrits ci-dessus sont ceux de la v0.244.
 
 ## Limites
 

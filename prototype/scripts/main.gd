@@ -826,9 +826,10 @@ func _capture_campaign_menu(camp: int) -> void:
 		var id: int = meta_profile.begin_mission(camp,"campaign.001",60,10,100)
 		var credited: bool = meta_profile.credit_mission(id,camp,10,true)
 		if not credited: push_error("Échec du profil de contrôle de campagne.");return
-	var mountain_preview := variant in ["slate","slateplay","ridges","ridgesplay"] or variant.begins_with("mountain") or variant.begins_with("marsh") or variant.begins_with("volcano") or variant.begins_with("ash") or variant.begins_with("citadel") or variant.begins_with("garrison") or variant.begins_with("dune") or variant.begins_with("mine") or variant.begins_with("sky") or variant.begins_with("coast") or variant.begins_with("necro")
+	var mountain_preview := variant in ["slate","slateplay","ridges","ridgesplay"] or variant.begins_with("ford") or variant.begins_with("mountain") or variant.begins_with("marsh") or variant.begins_with("volcano") or variant.begins_with("ash") or variant.begins_with("citadel") or variant.begins_with("garrison") or variant.begins_with("dune") or variant.begins_with("mine") or variant.begins_with("sky") or variant.begins_with("coast") or variant.begins_with("necro")
 	var mountain_number := 21
 	if variant.begins_with("ridges"): mountain_number = 22
+	if variant.begins_with("ford"): mountain_number = clampi(variant.trim_prefix("ford").trim_suffix("play").trim_suffix("completed").to_int(),2,20)
 	if variant.begins_with("marsh"): mountain_number = clampi(variant.trim_prefix("marsh").trim_suffix("play").trim_suffix("completed").to_int(),41,60)
 	if variant.begins_with("volcano"): mountain_number = clampi(variant.trim_prefix("volcano").trim_suffix("play").trim_suffix("completed").to_int(),61,70)
 	if variant.begins_with("ash"): mountain_number = clampi(variant.trim_prefix("ash").trim_suffix("play").trim_suffix("completed").to_int(),71,80)
@@ -935,11 +936,15 @@ func _capture_sample_combat() -> void:
 	var positions: Array = [[1,2,4],[1,3,4],[1,2,4]][model.enemy_hp_percent-100] if model.enemy_hp_percent <= 102 else [0,1,2]
 	var types: Array = [0,2,1] if model.faction == 1 and model.enemy_hp_percent > 100 else [0,1,2]
 	if model.enemy_hp_percent in [104,107,108]: types = [0,1,2]
+	var third_wave: int = 4
+	var upgrade_wave: int = 5
+	if model.faction == 1 and model.flood_enabled(): # Depuis la Crue (v0.245), l'ancienne stratégie fixe de la Horde perd la mission 6.
+		types = [1,1,0];third_wave = 3;upgrade_wave = 4
 	model.buy(positions[0],model.faction*3+types[0]);model.buy(positions[1],model.faction*3+types[1])
 	for wave in range(1,11):
 		if wave == 2 and (model.faction == 1 or model.enemy_hp_percent > 102): model.upgrade(positions[0])
-		if wave >= 4 and model.defenders[positions[2]].is_empty(): model.buy(positions[2],model.faction*3+types[2])
-		if wave >= 5:
+		if wave >= third_wave and model.defenders[positions[2]].is_empty(): model.buy(positions[2],model.faction*3+types[2])
+		if wave >= upgrade_wave:
 			for slot in positions:
 				if not model.defenders[slot].is_empty(): model.upgrade(slot,0 if model.defenders[slot].level == 3 else -1)
 		model.start();model.advance(300)

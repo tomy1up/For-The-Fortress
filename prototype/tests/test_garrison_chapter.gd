@@ -35,7 +35,7 @@ func run_checks() -> void:
 	for number in range(91,101):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 10 and definition.map_id == EXPECTED[number].map and definition.hp_percent == 99+number and definition.po == 60 and definition.xp == 100 and definition.waves == 10,"Mission %d : carte, PV et gains habituels" % number)
-		check(definition.wave_set_id == "citadel_garrison" and not definition.has("combat_affix") and Catalogue.runtime(definition.id).wave_set_id == "citadel_garrison","Mission %d : rencontres de la citadelle avec la Garnison, sans affixe" % number)
+		check(definition.wave_set_id == "citadel_garrison" and definition.get("combat_affix",{}).get("id","") == "alarm" and Catalogue.runtime(definition.id).wave_set_id == "citadel_garrison","Mission %d : rencontres de la citadelle avec la Garnison, avec l'affixe du biome" % number)
 		await verify_map(number)
 	for number in range(91,101):
 		for camp in range(2): await verify_mission(camp,number)
@@ -102,14 +102,14 @@ func verify_mission(camp: int, number: int) -> void:
 	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and game.campaign_menu.mission_detail.text.contains("Garnison") and game.campaign_menu.mission_detail.tooltip_text.contains("520"),"Mission %d : la fiche annonce la Garnison" % number)
 	game.campaign_menu._launch()
 	var model: Model = game.model
-	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "citadel_garrison" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix.is_empty() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
+	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "citadel_garrison" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix.get("id","") == "alarm" and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
 	play(model,Reference.types(camp,number))
 	print("GARRISON_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])
 	var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
 	var replay: Dictionary = Replay.verify(report)
 	check(replay.ok,"Mission %d : le rapport est rejouable : %s" % [number,str(replay.get("error",""))])
-	check(report.wave_set_id == "citadel_garrison" and not report.has("combat_affix") and report.map_definition.decoration == "citadel" and report.enemy_catalog.any(func(item):return item.profile == 10),"Mission %d : le rapport conserve la carte de citadelle et la Garnison" % number)
+	check(report.wave_set_id == "citadel_garrison" and report.get("combat_affix",{}).get("id","") == "alarm" and report.map_definition.decoration == "citadel" and report.enemy_catalog.any(func(item):return item.profile == 10),"Mission %d : le rapport conserve la carte de citadelle et la Garnison" % number)
 	game._sync_meta_rewards(true);game._sync_meta_rewards(true)
 	check(profile.campaign_status(camp).completed == number and profile.data.banks[camp].xp == 100*number and profile.data.banks[camp].resource == 60*number,"Mission %d : première victoire créditée une seule fois" % number)
 	check(profile.campaign_status(1-camp).completed == 0,"Le parcours adverse est inchangé")

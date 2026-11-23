@@ -280,8 +280,7 @@ func verify_biome_affixes() -> void:
 		var reference: Dictionary = Catalogue.definition(pair[1]*10).combat_affix
 		for number in range((pair[0]-1)*10+1,pair[1]*10+1):
 			check(Catalogue.definition(number).get("combat_affix",{}) == reference,"Mission %d : même affixe sur les deux chapitres du biome" % number)
-	for number in [1,11,20,41,60,81,100,141,160,181,200]:
-		check(Catalogue.definition(number).get("combat_affix",{}).is_empty(),"Mission %d : pas encore d'affixe (étape suivante)" % number)
+	check(Catalogue.definition(1).get("combat_affix",{}).is_empty(),"Mission 1 : sans affixe, pour apprendre le jeu")
 	for number in range(1,201):
 		var definition: Dictionary = Catalogue.definition(number)
 		if definition.has("combat_affix"):

@@ -8,6 +8,16 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [ ] **Affixe Crue (Gué, missions 2 à 20)** — Pendant 4 s toutes les 12 s, les ennemis avancent 10 % plus vite, annonce 3 s avant. Provisoire dessiné par le code. Besoin : habillage de montée des eaux lisible sur le plateau, sans masquer la route. Identifiant `flood`.
+
+- [ ] **Affixe Vapeurs toxiques (Marais, missions 41 à 60)** — Pendant 4 s toutes les 12 s, les défenseurs infligent 20 % de dégâts en moins, annonce 3 s avant. Provisoire dessiné par le code. Besoin : voile de vapeurs sur le plateau. Identifiant `miasma`.
+
+- [ ] **Affixe Cor d'alarme (Citadelle, missions 81 à 100)** — Toutes les 15 s, les ennemis présents reçoivent un bouclier de 10 % de leurs PV maximum, annonce 3 s avant. Provisoire dessiné par le code. Besoin : signal du cor et bouclier lisible sur une unité, jusqu'aux groupes serrés. Identifiant `alarm`.
+
+- [ ] **Affixe Courants ascendants (Îles flottantes, missions 141 à 160)** — Toutes les 15 s, les ennemis présents bondissent d'une case vers la forteresse, annonce 3 s avant. Provisoire dessiné par le code. Besoin : souffle et trajectoire du bond. Identifiant `updraft`.
+
+- [ ] **Affixe Drain d'âmes (Nécropole, missions 181 à 200)** — Pendant 4 s toutes les 12 s, chaque ennemi éliminé soigne ses voisins blessés, annonce 3 s avant. Provisoire dessiné par le code. Besoin : ambiance de la fenêtre active et trait d'âme du mort vers le soigné. Identifiant `souldrain`.
+
 - [x] **Décor du Gué, missions 1 à 20** — Sept images sur dix plateaux, validées le 23 novembre 2026 (3feb9b09). Branchement à faire par Claude Code. [Fiche et captures](design/Visuels_Gue_01_20.md).
 
 - [x] **Décor des Ardoises, missions 21 à 40** — Six pièces sur onze cartes, validées le 22 novembre 2026 (6ecb5d3). Branchement à faire par Claude Code. [Fiche et captures](design/Visuels_Ardoises_21_40.md).

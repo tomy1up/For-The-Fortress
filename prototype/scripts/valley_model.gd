@@ -31,6 +31,9 @@ var enemy_hp_percent: int = 100
 var combat_affix: Dictionary = {}
 var eruption_next: int = 1 # Numéro de la prochaine éruption de la vague (affixe Éruptions).
 var storm_next: int = 0 # Indice de la prochaine frontière de tempête de sable (début puis fin de chaque rafale).
+var affix_next: int = 0 # Affixes de biome de la v0.245 : crues ou impulsions déjà passées dans la vague.
+var flood_start: float = -1.0 # Début de la crue en cours (-1 hors crue).
+var affix_events: Array[Dictionary] = [] # Observation visuelle des impulsions (cor, bonds, soins), sans effet sur le combat.
 var path_points: Array[Vector2] = []
 var slots: Array[Vector2] = []
 var path_length: float
@@ -258,6 +261,7 @@ func reset() -> void:
 	protection_events.clear()
 	explosion_events.clear()
 	elimination_events.clear()
+	affix_events.clear()
 	bought_waves.clear()
 	event_log.clear()
 	defenders.clear()
@@ -359,6 +363,8 @@ func configure_combat_affix(value: Variant) -> bool:
 				var r_interval: Variant = value.get("interval");var r_warning: Variant = value.get("warning");var r_duration: Variant = value.get("duration")
 				if not _whole_number(r_interval) or not _whole_number(r_warning) or not _whole_number(r_duration): return false
 				if r_interval < 10 or r_interval > 40 or r_warning < 1 or r_warning > 4 or r_duration < 2 or r_duration > 12 or r_duration+r_warning+1 > r_interval: return false
+			"flood","miasma","alarm","updraft","souldrain":
+				if not Campaign.valid_biome_affix(value): return false
 			_: return false
 	combat_affix = value.duplicate(true)
 	return true
@@ -367,6 +373,7 @@ static func _whole_number(value: Variant) -> bool:
 	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value))
 
 func affix_description() -> String:
+	if biome_affix_enabled(): return Campaign.biome_affix_description(combat_affix)
 	match combat_affix.get("id",""):
 		"headwinds": return "Vents contraires · −%d %% de cadence" % (100-int(combat_affix.cadence_percent))
 		"eruptions": return "Éruptions · un défenseur désactivé %d s toutes les %d s" % [int(combat_affix.duration),int(combat_affix.interval)]
@@ -376,6 +383,7 @@ func affix_description() -> String:
 	return ""
 
 func affix_tooltip() -> String:
+	if biome_affix_enabled(): return Campaign.biome_affix_rule(combat_affix)
 	match combat_affix.get("id",""):
 		"headwinds": return "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
 		"seamist": return "Toutes les %d s de combat, une brume marine réduit de %d %% l'or gagné par élimination pendant %d s (arrondi à l'entier le plus proche, au moins 1 or). Elle est annoncée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.gold_percent),int(combat_affix.duration),int(combat_affix.warning)]
@@ -383,6 +391,158 @@ func affix_tooltip() -> String:
 		"sandstorm": return "Toutes les %d s de combat, une rafale de sable réduit de %d %% la portée de tous les défenseurs pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.range_percent),int(combat_affix.duration),int(combat_affix.warning)]
 		"eruptions": return "Toutes les %d s de combat, un défenseur choisi au hasard parmi ceux en place est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Les dégâts périodiques déjà appliqués continuent. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.duration),int(combat_affix.warning)]
 	return ""
+
+## Affixes de biome de la v0.245 : Crue, Vapeurs toxiques, Cor d'alarme, Courants ascendants, Drain d'âmes. Fonctions du seul temps de combat,
+## résolues à leur instant exact : le résultat ne dépend pas du pas de simulation et les rapports se rejouent à l'identique.
+const BIOME_PULSE_DISPLAY := 2.0 # Durée du bandeau après une impulsion (Cor d'alarme, Courants ascendants).
+const UPDRAFT_MARGIN := 0.1 # Un bond ne dépose jamais un ennemi sur la forteresse.
+const SOULDRAIN_RADIUS := 1.5
+const MAX_AFFIX_EVENTS := 48
+
+func biome_affix_enabled() -> bool:
+	return Campaign.BIOME_AFFIX_IDS.has(str(combat_affix.get("id","")))
+
+func flood_enabled() -> bool:
+	return combat_affix.get("id","") == "flood"
+
+func _biome_window_now() -> bool:
+	var number: int = int(floor((elapsed+EPS)/float(combat_affix.interval)))
+	return number >= 1 and elapsed < float(combat_affix.interval)*number+float(combat_affix.duration)-EPS
+
+func miasma_factor_now() -> float:
+	return 1.0-float(combat_affix.damage_percent)/100.0 if combat_affix.get("id","") == "miasma" and _biome_window_now() else 1.0
+
+func souldrain_active_now() -> bool:
+	return combat_affix.get("id","") == "souldrain" and _biome_window_now()
+
+## État observé par l'interface : {} hors combat, sinon l'avertissement ("warning") ou l'effet en cours ("active").
+func biome_affix_status() -> Dictionary:
+	if not biome_affix_enabled() or not active: return {}
+	var interval: float = float(combat_affix.interval)
+	var length: float = float(combat_affix.get("duration",BIOME_PULSE_DISPLAY))
+	var number: int = int(floor((elapsed+EPS)/interval))
+	if number >= 1 and elapsed < interval*number+length-EPS:
+		return {"state":"active","number":number,"remaining":interval*number+length-elapsed}
+	var upcoming: int = number+1
+	if elapsed >= interval*upcoming-float(combat_affix.warning)-EPS:
+		return {"state":"warning","number":upcoming,"remaining":interval*upcoming-elapsed}
+	return {}
+
+func _affix_event(event: Dictionary) -> void:
+	event.time = elapsed
+	affix_events.append(event)
+	while affix_events.size() > MAX_AFFIX_EVENTS: affix_events.pop_front()
+
+func _flood_rate() -> float:
+	return float(combat_affix.speed_percent)/100.0
+
+func _flood_end() -> float:
+	return flood_start+float(combat_affix.duration)
+
+## Fin de crue : l'avance gagnée est reportée dans le retard de chaque ennemi, comme la fin d'un ralentissement.
+func _end_flood() -> void:
+	if flood_start < 0.0 or _flood_end() > elapsed+EPS: return
+	var end: float = _flood_end()
+	for enemy in enemies:
+		var from: float = maxf(flood_start,float(enemy.spawn_time))
+		if end > from: enemy.delay = float(enemy.get("delay",0.0))-_flood_rate()*(end-from)
+	event_log.append("%.9f crue %d fin" % [elapsed,affix_next+1])
+	flood_start = -1.0
+	affix_next += 1
+
+## Instant où l'ennemi atteint la distance `d` pendant une crue, avec un éventuel ralentissement en cours : courbe affine par morceaux.
+func _time_with_flood(enemy: Dictionary, d: float) -> float:
+	var target: float = d/float(enemy.get("speed",1.0))+float(enemy.spawn_time)+float(enemy.get("delay",0.0))
+	var flood_from: float = maxf(flood_start,float(enemy.spawn_time))
+	var flood_to: float = _flood_end()
+	var slow_from: float = float(enemy.get("slow_start",INF))
+	var slow_to: float = float(enemy.get("slow_until",INF))
+	var points: Array[float] = [flood_from,flood_to]
+	if enemy.has("slow_until"): points.append_array([slow_from,slow_to])
+	points.sort()
+	var previous: float = points[0]
+	if target <= previous: return target
+	var value: float = previous
+	for index in range(1,points.size()):
+		var point: float = points[index]
+		var middle: float = (previous+point)*0.5
+		var slope: float = 1.0-((1.0-SLOW_FACTOR) if middle >= slow_from and middle < slow_to else 0.0)+(_flood_rate() if middle >= flood_from and middle < flood_to else 0.0)
+		var reached: float = value+slope*(point-previous)
+		if target <= reached and slope > 0.0: return previous+(target-value)/slope
+		value = reached
+		previous = point
+	return previous+target-value
+
+## Début de crue et impulsions (bouclier du cor, bond des courants ascendants).
+func _biome_affix_pulses() -> void:
+	if not biome_affix_enabled(): return
+	var interval: float = float(combat_affix.interval)
+	var id: String = str(combat_affix.id)
+	if id == "flood":
+		if flood_start < 0.0 and interval*(affix_next+1) <= elapsed+EPS:
+			flood_start = interval*(affix_next+1)
+			event_log.append("%.9f crue %d début" % [elapsed,affix_next+1])
+		return
+	if id != "alarm" and id != "updraft": return
+	while interval*(affix_next+1) <= elapsed+EPS:
+		for enemy in enemies:
+			if id == "alarm":
+				enemy.shield = maxf(float(enemy.get("shield",0.0)),float(enemy.max_hp)*float(combat_affix.shield_percent)/100.0)
+				_affix_event({"kind":"alarm","at":enemy_position(enemy)})
+			else:
+				var hop: float = minf(float(combat_affix.tiles),maxf(0.0,enemy_route_length(enemy)-float(enemy.distance)-UPDRAFT_MARGIN))
+				if hop <= 0.0: continue
+				var from: Vector2 = enemy_position(enemy)
+				enemy.delay = float(enemy.get("delay",0.0))-hop/float(enemy.speed)
+				enemy.distance = distance_at(enemy,elapsed)
+				_affix_event({"kind":"updraft","from":from,"to":enemy_position(enemy)})
+		event_log.append("%.9f %s %d" % [elapsed,"cor" if id == "alarm" else "courant",affix_next+1])
+		affix_next += 1
+
+## Bouclier du cor d'alarme : absorbe les dégâts avant les PV ; les crédits de dégâts ne comptent que ce qui a touché les PV.
+func _absorb_shields(damage: Dictionary, hits: Array) -> Dictionary:
+	var ratios: Dictionary = {}
+	var result: Dictionary = damage.duplicate()
+	for enemy in enemies:
+		var incoming: float = float(damage.get(enemy.id,0.0))
+		var shield: float = float(enemy.get("shield",0.0))
+		if incoming <= 0.0 or shield <= 0.0: continue
+		var absorbed: float = minf(shield,incoming)
+		enemy.shield = shield-absorbed
+		if float(enemy.shield) <= EPS: enemy.erase("shield")
+		result[enemy.id] = incoming-absorbed
+		ratios[enemy.id] = (incoming-absorbed)/incoming
+	if ratios.is_empty(): return {"damage":damage,"hits":hits}
+	var kept: Array = []
+	for hit in hits:
+		var copy: Dictionary = hit.duplicate()
+		if ratios.has(hit.enemy_id): copy.amount = float(hit.amount)*float(ratios[hit.enemy_id])
+		kept.append(copy)
+	return {"damage":result,"hits":kept}
+
+## Dégâts d'une explosion en chaîne après Vapeurs toxiques et bouclier.
+func _mitigated(enemy: Dictionary, amount: float) -> float:
+	var result: float = amount*miasma_factor_now()
+	var shield: float = float(enemy.get("shield",0.0))
+	if shield > 0.0:
+		var absorbed: float = minf(shield,result)
+		enemy.shield = shield-absorbed
+		if float(enemy.shield) <= EPS: enemy.erase("shield")
+		result -= absorbed
+	return result
+
+## Drain d'âmes : pendant la fenêtre, chaque ennemi éliminé soigne ses voisins proches (boss exclus).
+func _drain_souls(before: Array, after: Array) -> void:
+	if not souldrain_active_now(): return
+	var alive: Dictionary = {}
+	for enemy in after: alive[enemy.id] = true
+	for dead in before:
+		if alive.has(dead.id): continue
+		for enemy in after:
+			if int(enemy.get("type",1)) == 7 or float(enemy.hp) >= float(enemy.max_hp): continue
+			if enemy_separation_squared(dead,enemy) > SOULDRAIN_RADIUS*SOULDRAIN_RADIUS: continue
+			enemy.hp = minf(float(enemy.max_hp),float(enemy.hp)+float(enemy.max_hp)*float(combat_affix.heal_percent)/100.0)
+			_affix_event({"kind":"soul","from":enemy_position(dead),"to":enemy_position(enemy)})
 
 func mist_enabled() -> bool:
 	return combat_affix.get("id","") == "seamist"
@@ -990,6 +1150,7 @@ func prepare_next_wave() -> bool:
 	protection_events.clear()
 	explosion_events.clear()
 	elimination_events.clear()
+	affix_events.clear()
 	bought_waves.clear()
 	curses.clear()
 	event_log.clear()
@@ -1180,6 +1341,8 @@ func start() -> bool:
 	_record_action("wave_start",{"army":army.duplicate(true),"bonuses":bonuses.duplicate()})
 	eruption_next = 1
 	storm_next = 0
+	affix_next = 0
+	flood_start = -1.0
 	_resolve_instant()
 	return true
 
@@ -1220,6 +1383,7 @@ static func enemy_is_slowed(enemy: Dictionary) -> bool:
 
 ## Instant où l'ennemi atteint la distance `d` sur sa route, compte tenu du ralentissement en cours (les ralentissements futurs recalculent à leur événement).
 func time_at_distance(enemy: Dictionary, d: float) -> float:
+	if flood_start >= 0.0: return _time_with_flood(enemy,d)
 	var speed: float = float(enemy.get("speed",1.0))
 	var delay: float = float(enemy.get("delay",0.0))
 	if enemy.has("slow_until"):
@@ -1234,6 +1398,7 @@ func distance_at(enemy: Dictionary, t: float) -> float:
 	var base: float = t-float(enemy.spawn_time)
 	if enemy.has("delay"): base -= float(enemy.delay)
 	if enemy.has("slow_until") and t > float(enemy.slow_start): base -= (1.0-SLOW_FACTOR)*(minf(t,float(enemy.slow_until))-float(enemy.slow_start))
+	if flood_start >= 0.0: base += _flood_rate()*maxf(0.0,minf(t,_flood_end())-maxf(flood_start,float(enemy.spawn_time)))
 	return clampf(base*speed,0.0,enemy_route_length(enemy))
 
 func _next_event_time() -> float:
@@ -1244,6 +1409,8 @@ func _next_event_time() -> float:
 		next_time = minf(next_time, curse.next_at)
 	if eruption_enabled(): next_time = minf(next_time,eruption_time(eruption_next))
 	if storm_enabled(): next_time = minf(next_time,storm_boundary_time(storm_next))
+	if flood_enabled(): next_time = minf(next_time,_flood_end() if flood_start >= 0.0 else float(combat_affix.interval)*(affix_next+1))
+	elif combat_affix.get("id","") in ["alarm","updraft"]: next_time = minf(next_time,float(combat_affix.interval)*(affix_next+1))
 	for enemy in enemies:
 		next_time = minf(next_time, time_at_distance(enemy,enemy_route_length(enemy)))
 		if enemy.has("slow_until") and float(enemy.slow_until) > elapsed+EPS: next_time = minf(next_time,float(enemy.slow_until))
@@ -1271,6 +1438,7 @@ func enemy_in_water(enemy: Dictionary) -> bool:
 
 func _resolve_instant() -> void:
 	_end_slows()
+	_end_flood()
 	# 1. Apparitions et positions ; les arrivants restent ciblables jusqu'à la phase 4.
 	while spawned < spawn_schedule.size() and spawn_schedule[spawned].time <= elapsed + EPS:
 		var entry: Dictionary = spawn_schedule[spawned]
@@ -1282,6 +1450,7 @@ func _resolve_instant() -> void:
 		enemies.append(enemy)
 		spawned += 1
 	_update_positions()
+	_biome_affix_pulses()
 	# 1 bis. Éruptions (affixe) : le défenseur frappé ne tire plus avant la fin de sa désactivation.
 	while eruption_enabled() and eruption_time(eruption_next) <= elapsed + EPS:
 		var struck: int = eruption_slot(eruption_next)
@@ -1479,6 +1648,16 @@ func _record_damage_sources(hits: Array) -> void:
 
 func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 	_record_damage_sources(hits)
+	var miasma: float = miasma_factor_now()
+	if miasma < 1.0: # Vapeurs toxiques : tous les dégâts infligés pendant la fenêtre sont réduits.
+		var weakened: Dictionary = {}
+		for id in damage: weakened[id] = float(damage[id])*miasma
+		var reduced: Array = []
+		for hit in hits:
+			var copy: Dictionary = hit.duplicate()
+			copy.amount = float(hit.amount)*miasma
+			reduced.append(copy)
+		damage = weakened;hits = reduced
 	if enemies.any(func(enemy): return enemy.get("type",1) == Banks.GUARD_TYPE):
 		var positions: Dictionary = {}
 		for enemy in enemies: positions[enemy.id] = enemy_position(enemy)
@@ -1489,6 +1668,9 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 			protection_events.append({"time":elapsed,"from":positions[transfer.protected_id],"to":positions[transfer.guardian_id],
 				"amount":transfer.amount,"guardian_id":transfer.guardian_id,"protected_id":transfer.protected_id})
 		while protection_events.size() > 24: protection_events.pop_front()
+	if combat_affix.get("id","") == "alarm":
+		var shielded: Dictionary = _absorb_shields(damage,hits)
+		damage = shielded.damage;hits = shielded.hits
 	Metrics.credit(_wave_record.get("performance",[]),enemies,damage,hits)
 	var survivors: Array[Dictionary] = []
 	var blasts: Array[Dictionary] = []
@@ -1512,12 +1694,14 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 			for blast in blasts:
 				if blast.source.id != enemy.id and enemy_separation_squared(blast.source,enemy) <= blast.radius*blast.radius: splash += blast.damage
 			if splash > 0.0:
+				splash = _mitigated(enemy,splash)
 				var before: float = enemy.hp
 				enemy.hp -= splash
 				damage_events.append({"time":elapsed,"enemy_id":enemy.id,"hp_before":before,"hp_after":maxf(0.0,enemy.hp)})
 			_settle_enemy(enemy,remaining,next_blasts)
 		survivors = remaining
 		blasts = next_blasts
+	_drain_souls(enemies,survivors)
 	enemies = survivors
 	_purge_curses()
 
@@ -1611,7 +1795,7 @@ func enemy_route_length(enemy: Dictionary) -> float:
 	return path_length if routes.is_empty() else float(enemy_route(enemy).path_length)
 
 func enemy_arrival_delay(enemy: Dictionary) -> float:
-	if enemy.has("slow_until") or enemy.has("delay"): return maxf(0.0,time_at_distance(enemy,enemy_route_length(enemy))-elapsed)
+	if flood_start >= 0.0 or enemy.has("slow_until") or enemy.has("delay"): return maxf(0.0,time_at_distance(enemy,enemy_route_length(enemy))-elapsed)
 	return maxf(0.0,enemy_route_length(enemy)-enemy.distance)/float(enemy.get("speed",1.0))
 
 func enemy_route_points(enemy: Dictionary) -> Array[Vector2]:

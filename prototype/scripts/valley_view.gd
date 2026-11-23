@@ -1724,6 +1724,7 @@ func _draw() -> void:
 		_draw_sandstorm()
 		_draw_rockfall()
 		_draw_seamist()
+		_draw_biome_affix()
 		_draw_headwinds_sheet()
 		_draw_decor_props(model.map_definition)
 		var actors: Array[Dictionary] = []
@@ -1749,6 +1750,7 @@ func _draw() -> void:
 				draw_rect(Rect2(bar_position, Vector2(24, 4)), Color("472f2a"))
 				draw_rect(Rect2(bar_position, Vector2(24 * ratio, 4)), Color("edcc80") if actor.enemy.id == inspected_enemy_id else Color("a1ba75"))
 				_draw_enemy_badges(actor.enemy,bar_position)
+				_draw_enemy_shield(actor.point,actor.enemy,bar_position)
 				for event in feedback:
 					if str(event.get("component","")) == "curse" and int(event.get("source_type",-1)) in FIRE_CURSE_TYPES:
 						_draw_burn_tick(actor.point,actor.enemy,float(event.hp_before)-float(event.hp_after),event_age(event))
@@ -1757,6 +1759,7 @@ func _draw() -> void:
 					if span.y > span.x:
 						draw_rect(Rect2(bar_position+Vector2(24*span.x,0),Vector2(24*(span.y-span.x),4)),Color(Color("f3dfba"),damage_opacity(event_age(event))))
 		_draw_volatile_bursts()
+		_draw_biome_affix_events()
 		_draw_eruption()
 		_draw_headwinds()
 		if model.active:
@@ -2161,7 +2164,7 @@ func _track_defenders() -> void:
 ## Vrai tant qu'une animation par planche exige un redessin continu (repos, achat, revente, niveau).
 func _sheet_animation_running() -> bool:
 	if model == null: return false
-	if model.combat_affix.get("id","") in ["headwinds","sandstorm","rockfall","seamist"]: return true
+	if model.combat_affix.get("id","") in ["headwinds","sandstorm","rockfall","seamist","flood","miasma","alarm","updraft","souldrain"]: return true
 	if not _sold_ghosts.is_empty(): return true
 	for defender in model.defenders:
 		if not defender.is_empty() and not SheetAnimations.spec_for(SheetAnimations.defender_id(int(defender.type))).is_empty(): return true
@@ -2302,7 +2305,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	draw_set_transform(Vector2.ZERO)
 
 ## Relève du Revenant (v0.242, signalé par Codex, lot 7cdfeaf) : le modèle le fait avancer pendant les 0,72 s de relève (règle inchangée), ce qui
-## faisait glisser ses poses basses d'environ 20 px. L'affichage garde l'appui au point de chute pendant les poses basses (REVENANT_RISE_HOLD, images 0 à 8),
+## faisait glisser ses poses basses d'environ 20 px. L'affichage garde l'appui au point de chute pendant les poses basses (REVENANT_RISE_HOLD, 0,27 s),
 ## puis le raccorde progressivement à la position du modèle en avançant le long de la route (virages et orientation compris) jusqu'à la fin de la relève.
 ## Réglage de prototype à confirmer. Rendu seulement : les tirs et le survol gardent la position du modèle.
 const REVENANT_RISE_HOLD := 0.27
@@ -2421,6 +2424,61 @@ func _draw_rockfall() -> void:
 
 ## Repère fonctionnel provisoire de l'affixe Brume marine (chapitre 18) : liséré clair pendant l'avertissement, voile blanc-bleu sur le plateau
 ## pendant la brume. L'habillage revient à Codex (TODO_VISUELS.md). Le mouvement suit le temps de combat.
+## Repères provisoires dessinés par le code pour les affixes de la v0.245 (habillage à produire par Codex, TODO_VISUELS.md) : liséré à l'annonce,
+## voile pendant l'effet, puis signaux brefs des impulsions (cor, bonds, soins). Rendu seulement.
+const BIOME_AFFIX_COLORS: Dictionary = {"flood":Color(0.30,0.62,0.85),"miasma":Color(0.52,0.72,0.32),"alarm":Color(0.95,0.72,0.30),"updraft":Color(0.72,0.90,0.98),"souldrain":Color(0.66,0.42,0.86)}
+const BIOME_EVENT_DURATION := 0.5
+
+func _draw_biome_affix() -> void:
+	if model == null or not model.biome_affix_enabled(): return
+	var status: Dictionary = model.biome_affix_status()
+	if status.is_empty(): return
+	var board: Vector2i = model.map_definition.size
+	var area := PackedVector2Array()
+	for corner in [Vector2.ZERO,Vector2(board.x,0),Vector2(board.x,board.y),Vector2(0,board.y)]: area.append(project(corner))
+	var color: Color = BIOME_AFFIX_COLORS[str(model.combat_affix.id)]
+	if status.state == "warning":
+		var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+		var outline: PackedVector2Array = area.duplicate();outline.append(outline[0])
+		draw_polyline(outline,Color(color,0.25+0.5*progress),2.0+4.0*progress,true)
+	elif model.combat_affix.has("duration"):
+		draw_colored_polygon(area,Color(color,0.16))
+		for index in range(10):
+			var lane: float = fposmod(float(index)*0.381966,1.0)
+			var shift: float = fposmod(model.elapsed*0.18+float(index)*0.173,1.0)
+			var start: Vector2 = project(Vector2(float(board.x)*shift,float(board.y)*lane))
+			draw_line(start,start+Vector2(34,-7),Color(color.lightened(0.35),0.32*sin(shift*PI)),2.5,true)
+
+func _draw_biome_affix_events() -> void:
+	if model == null or model.affix_events.is_empty(): return
+	var color: Color = BIOME_AFFIX_COLORS.get(str(model.combat_affix.get("id","")),Color.WHITE)
+	for event in model.affix_events:
+		var age: float = model.elapsed-float(event.time)
+		if age < 0.0 or age >= BIOME_EVENT_DURATION: continue
+		var t: float = age/BIOME_EVENT_DURATION
+		match str(event.kind):
+			"alarm":
+				draw_arc(project(event.at)+Vector2(0,-14),10.0+14.0*t,0.0,TAU,24,Color(color,0.85*(1.0-t)),2.0,true)
+			"updraft":
+				var from: Vector2 = project(event.from)
+				var to: Vector2 = project(event.to)
+				draw_line(from+Vector2(0,-6),to+Vector2(0,-6),Color(color,0.8*(1.0-t)),3.0,true)
+				draw_circle(to+Vector2(0,-6),4.0*(1.0-t)+1.0,Color(color,0.8*(1.0-t)),true,-1,true)
+			"soul":
+				var source: Vector2 = project(event.from)+Vector2(0,-12)
+				var target: Vector2 = project(event.to)+Vector2(0,-12)
+				draw_line(source,source.lerp(target,minf(1.0,t*2.0)),Color(color,0.8*(1.0-t)),2.0,true)
+				draw_circle(source.lerp(target,minf(1.0,t*2.0)),3.0,Color(color.lightened(0.3),0.9*(1.0-t)),true,-1,true)
+
+## Bouclier du Cor d'alarme : anneau autour de l'ennemi et jauge au-dessus de ses PV.
+func _draw_enemy_shield(point: Vector2, enemy: Dictionary, bar_position: Vector2) -> void:
+	var shield: float = float(enemy.get("shield",0.0))
+	if shield <= 0.0: return
+	var size: float = _enemy_scale(enemy)
+	draw_arc(point+Vector2(0,-16.0*size),16.0*size,0.0,TAU,28,Color(0.98,0.84,0.46,0.75),1.6,true)
+	var full: float = float(enemy.max_hp)*float(model.combat_affix.get("shield_percent",10))/100.0
+	draw_rect(Rect2(bar_position+Vector2(0,-3),Vector2(24.0*clampf(shield/full,0.0,1.0),2)),Color(0.98,0.84,0.46))
+
 func _draw_seamist() -> void:
 	if model == null or not model.mist_enabled(): return
 	var status: Dictionary = model.mist_status()
@@ -2594,6 +2652,8 @@ static func affix_banner(model) -> Dictionary:
 	var name: String = ""
 	var effect: String = ""
 	match id:
+		"flood","miasma","alarm","updraft","souldrain":
+			status = model.biome_affix_status();name = Model.Campaign.BIOME_AFFIX_NAMES[id];effect = Model.Campaign.biome_affix_effect(model.combat_affix)
 		"eruptions":
 			status = model.eruption_status();name = "Éruption"
 			if not status.is_empty(): effect = "E%d %s" % [int(status.slot)+1,"sera désactivé" if status.state == "warning" else "désactivé"]
@@ -2611,8 +2671,9 @@ static func affix_banner(model) -> Dictionary:
 	if status.is_empty(): return {}
 	var remaining: float = maxf(0.0,float(status.remaining))
 	var warning: bool = status.state == "warning"
-	var phase_length: float = float(model.combat_affix.warning) if warning else float(model.combat_affix.duration)
+	var phase_length: float = float(model.combat_affix.warning) if warning else float(model.combat_affix.get("duration",Model.BIOME_PULSE_DISPLAY))
 	var text: String = ("%s dans %d s" % [name,int(ceil(remaining))]) if warning else ("%s · encore %d s" % [name,int(ceil(remaining))])
+	if not warning and not model.combat_affix.has("duration"): text = name # Impulsion instantanée : pas de durée à afficher.
 	if not effect.is_empty(): text += " · " + effect
 	return {"text":text,"state":str(status.state),"fraction":clampf(remaining/phase_length,0.0,1.0) if phase_length > 0.0 else 0.0}
 

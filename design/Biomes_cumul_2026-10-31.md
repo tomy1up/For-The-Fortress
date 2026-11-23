@@ -99,6 +99,8 @@ Cadrage des chapitres 11 à 20 : [fiche](Cadrage_missions_101_200.md). Un biome 
 
 ## Décision du 23 novembre 2026 — un affixe par biome, un attaquant par chapitre pair
 
+**Étape 2 réalisée en v0.245** : le porteur a validé la création de Crue, Vapeurs toxiques, Cor d'alarme, Courants ascendants et Drain d'âmes (« Oui, code-les »), puis un rythme resserré pour tous les affixes temporisés (« Oui, ce rythme ») et 20 réglages sous la courbe de PV (« Oui, baisse-les »). Détails : `design/Affixe_par_biome_v0245.md`. Reste l'étape 3 : les cinq attaquants des Ardoises, du Volcan, du Désert, des Mines et des Côtes.
+
 Le porteur remplace la règle « une seule nouveauté par biome, dans son second chapitre » (MAJ-10, MAJ-22) :
 
 - **Dix biomes, dix affixes** : chaque biome a son affixe, actif sur ses deux chapitres.

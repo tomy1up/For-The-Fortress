@@ -20,7 +20,7 @@ const EXPECTED: Dictionary = {
 	139:{"map":"mine_crypt","length":32.0,"routes":3,"order":[3,4,2]},
 	140:{"map":"mine_core","length":37.0,"routes":2,"order":[3,4,2]},
 }
-const AFFIX := {"id":"rockfall","interval":18,"warning":3,"duration":7}
+const AFFIX := {"id":"rockfall","interval":12,"warning":3,"duration":5}
 var checks := 0
 var failures := 0
 func check(value: bool, message: String) -> void:
@@ -36,7 +36,7 @@ func run_checks() -> void:
 	for number in range(131,141):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 14 and definition.map_id == EXPECTED[number].map and definition.hp_percent == 99+number and definition.po == 80 and definition.xp == 0 and definition.waves == 10,"Mission %d : carte, PV à 230 %% et plus, 80 PO sans XP" % number)
-		check(not definition.has("wave_set_id") and definition.has("combat_affix") and definition.combat_affix.id == "rockfall" and int(definition.combat_affix.interval) == 18 and Catalogue.runtime(definition.id).get("wave_set_id","ford") == "ford" and Catalogue.runtime(definition.id).combat_affix.id == "rockfall","Mission %d : rencontres standard du Gué avec l'éboulement (valeurs d'essai)" % number)
+		check(not definition.has("wave_set_id") and definition.has("combat_affix") and definition.combat_affix.id == "rockfall" and int(definition.combat_affix.interval) == 12 and Catalogue.runtime(definition.id).get("wave_set_id","ford") == "ford" and Catalogue.runtime(definition.id).combat_affix.id == "rockfall","Mission %d : rencontres standard du Gué avec l'éboulement (valeurs d'essai)" % number)
 		await verify_map(number)
 	for number in range(131,141):
 		for camp in range(2): await verify_mission(camp,number)

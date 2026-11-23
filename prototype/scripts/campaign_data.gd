@@ -124,6 +124,56 @@ static func schedule(wave: int, set_id: String = "ford") -> Array[Dictionary]:
 		time += (group[1]-1)*group[2]+4.0
 	return result
 
+## Affixes de biome créés en v0.245 (décision du porteur, 23 novembre 2026 : un affixe par biome). Valeurs : réglages de prototype à confirmer.
+const BIOME_AFFIX_IDS: Array[String] = ["flood","miasma","alarm","updraft","souldrain"]
+const BIOME_AFFIX_NAMES: Dictionary = {"flood":"Crue","miasma":"Vapeurs toxiques","alarm":"Cor d'alarme","updraft":"Courants ascendants","souldrain":"Drain d'âmes"}
+const BIOME_AFFIX_HINTS: Dictionary = {"flood":"ennemis plus rapides","miasma":"dégâts réduits","alarm":"boucliers ennemis","updraft":"bonds en avant","souldrain":"morts qui soignent"}
+
+static func _whole_value(value: Variant) -> bool:
+	return (value is int or value is float) and is_finite(float(value)) and float(value) == floorf(float(value))
+
+static func valid_biome_affix(value: Dictionary) -> bool:
+	var id: String = str(value.get("id",""))
+	var timed: bool = id in ["flood","miasma","souldrain"]
+	var key: String = {"flood":"speed_percent","miasma":"damage_percent","souldrain":"heal_percent","alarm":"shield_percent","updraft":"tiles"}.get(id,"")
+	var limit: int = {"flood":50,"miasma":60,"souldrain":30,"alarm":50,"updraft":3}.get(id,0)
+	if key.is_empty() or value.size() != (5 if timed else 4): return false
+	for field in ["interval","warning",key]+(["duration"] if timed else []):
+		if not value.has(field) or not _whole_value(value[field]): return false
+	if value.interval < 10 or value.interval > 40 or value.warning < 1 or value.warning > 4 or value[key] < 1 or value[key] > limit: return false
+	if timed and (value.duration < 2 or value.duration > 12 or value.duration+value.warning+1 > value.interval): return false
+	return timed or value.warning+1 <= value.interval
+
+## Effet court, affiché dans le bandeau.
+static func biome_affix_effect(affix: Dictionary) -> String:
+	match str(affix.get("id","")):
+		"flood": return "vitesse +%d %%" % int(affix.speed_percent)
+		"miasma": return "dégâts −%d %%" % int(affix.damage_percent)
+		"alarm": return "bouclier +%d %% PV" % int(affix.shield_percent)
+		"updraft": return "bond d'une case" if int(affix.tiles) == 1 else "bond de %d cases" % int(affix.tiles)
+		"souldrain": return "soins à chaque mort"
+	return ""
+
+## Ligne permanente sous le titre de la mission.
+static func biome_affix_description(affix: Dictionary) -> String:
+	match str(affix.get("id","")):
+		"flood": return "Crue · ennemis +%d %% de vitesse %d s toutes les %d s" % [int(affix.speed_percent),int(affix.duration),int(affix.interval)]
+		"miasma": return "Vapeurs toxiques · dégâts −%d %% pendant %d s toutes les %d s" % [int(affix.damage_percent),int(affix.duration),int(affix.interval)]
+		"alarm": return "Cor d'alarme · bouclier de %d %% des PV toutes les %d s" % [int(affix.shield_percent),int(affix.interval)]
+		"updraft": return "Courants ascendants · bond d'une case toutes les %d s" % int(affix.interval) if int(affix.tiles) == 1 else "Courants ascendants · bond de %d cases toutes les %d s" % [int(affix.tiles),int(affix.interval)]
+		"souldrain": return "Drain d'âmes · chaque mort soigne ses voisins, %d s toutes les %d s" % [int(affix.duration),int(affix.interval)]
+	return ""
+
+## Règle complète : info-bulles et rapport de partie.
+static func biome_affix_rule(affix: Dictionary) -> String:
+	match str(affix.get("id","")):
+		"flood": return "Toutes les %d s de combat, une crue fait avancer les ennemis %d %% plus vite pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(affix.interval),int(affix.speed_percent),int(affix.duration),int(affix.warning)]
+		"miasma": return "Toutes les %d s de combat, des vapeurs toxiques réduisent de %d %% les dégâts des défenseurs pendant %d s. Elles sont annoncées %d s avant. Réglage d’essai." % [int(affix.interval),int(affix.damage_percent),int(affix.duration),int(affix.warning)]
+		"alarm": return "Toutes les %d s de combat, le cor d'alarme donne aux ennemis présents un bouclier de %d %% de leurs PV maximum, qui absorbe les dégâts et ne se cumule pas. Il est annoncé %d s avant. Réglage d’essai." % [int(affix.interval),int(affix.shield_percent),int(affix.warning)]
+		"updraft": return "Toutes les %d s de combat, un courant ascendant fait bondir les ennemis présents de %d case%s vers la forteresse, sans jamais les y déposer. Il est annoncé %d s avant. Réglage d’essai." % [int(affix.interval),int(affix.tiles),"" if int(affix.tiles) == 1 else "s",int(affix.warning)]
+		"souldrain": return "Toutes les %d s de combat, pendant %d s, chaque ennemi éliminé soigne ses voisins proches de %d %% de leurs PV maximum (boss exclus). Le drain est annoncé %d s avant. Réglage d’essai." % [int(affix.interval),int(affix.duration),int(affix.heal_percent),int(affix.warning)]
+	return ""
+
 static func bonus_description(code: int, faction: int) -> String:
 	if code < 0 or code >= BONUSES.size() or faction not in [0,1]: return ""
 	var data: Dictionary = BONUSES[code]

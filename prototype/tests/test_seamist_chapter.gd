@@ -20,7 +20,7 @@ const EXPECTED: Dictionary = {
 	179:{"map":"coast_storm","length":50.0,"routes":1,"order":[3,4,2]},
 	180:{"map":"coast_citadel","length":35.0,"routes":3,"order":[3,4,2]},
 }
-const AFFIX := {"id":"seamist","interval":22,"warning":3,"duration":6,"gold_percent":30}
+const AFFIX := {"id":"seamist","interval":12,"warning":3,"duration":4,"gold_percent":30}
 var checks := 0
 var failures := 0
 func check(value: bool, message: String) -> void:
@@ -36,7 +36,7 @@ func run_checks() -> void:
 	for number in range(171,181):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 18 and definition.map_id == EXPECTED[number].map and definition.hp_percent == Main.CampaignCatalogue.hp_percent_for(number) and definition.po == 100 and definition.xp == 0 and definition.waves == 10,"Mission %d : carte, PV à 255 %% et plus, 100 PO sans XP" % number)
-		check(not definition.has("wave_set_id") and definition.has("combat_affix") and definition.combat_affix.id == "seamist" and int(definition.combat_affix.interval) == 22 and Catalogue.runtime(definition.id).get("wave_set_id","ford") == "ford" and Catalogue.runtime(definition.id).combat_affix.id == "seamist","Mission %d : rencontres standard du Gué avec l'éboulement (valeurs d'essai)" % number)
+		check(not definition.has("wave_set_id") and definition.has("combat_affix") and definition.combat_affix.id == "seamist" and int(definition.combat_affix.interval) == 12 and Catalogue.runtime(definition.id).get("wave_set_id","ford") == "ford" and Catalogue.runtime(definition.id).combat_affix.id == "seamist","Mission %d : rencontres standard du Gué avec l'éboulement (valeurs d'essai)" % number)
 		await verify_map(number)
 	for number in range(171,181):
 		for camp in range(2): await verify_mission(camp,number)

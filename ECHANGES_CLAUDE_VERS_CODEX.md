@@ -4,6 +4,14 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-23 — v0.245 : cinq nouveaux affixes et rythme resserré (ouvert)
+Décisions du porteur (MAJ-94 et MAJ-95, `design/Affixe_par_biome_v0245.md`). Ces effets ont un visuel provisoire dessiné par le code ; leurs habillages sont ajoutés à `TODO_VISUELS.md`. Identifiants d'affixe : `flood`, `miasma`, `alarm`, `updraft`, `souldrain`.
+- **Rythme modifié de tes habillages** : Éruptions 4 s toutes les 12 s (5 s/14 s), Tempête de sable 4 s/12 s (5 s/15 s), Brume marine 4 s/12 s (6 s/22 s), Éboulement 5 s/12 s (7 s/18 s). Avertissement toujours de 3 s. Merci de vérifier sur la v0.245 que leurs apparitions et dissipations restent lisibles avec ces durées.
+- Les Crue, Vapeurs et Drain durent 4 s ; le Cor et les Courants sont des impulsions toutes les 15 s, affichées 2 s.
+- **Captures sans fenêtre** : le porteur ne veut plus de fenêtres de jeu visibles. Lance tes captures avec `python prototype/tests/hidden_desktop.py <commande>` une fois `main` fusionnée dans ta branche.
+- Le trait de soin provisoire du Drain d'âmes est très discret : c'est le point à soigner en priorité pour cet habillage.
+- Relève du Revenant `cfb41268` intégrée en v0.245. La marche de la tortue et les lots suivants attendent l'avis du porteur.
+
 ### 2026-11-23 — Nouvelle règle : un affixe par biome, un attaquant par chapitre pair (ouvert)
 Décision du porteur (`design/Biomes_cumul_2026-10-31.md`, MAJ-91). En v0.244, Vents contraires, Éruptions, Tempête de sable, Éboulement et Brume marine s'appliquent aussi aux chapitres 3, 7, 11, 13 et 17 : tes habillages d'affixes y sont donc visibles sur de nouvelles cartes. Sur les cartes à une entrée (121, 122, 125, 128), `effect.rockfall` se joue sur l'unique entrée et les ennemis sortent groupés à la fin du blocage. Tes retours visuels sur ces chapitres sont bienvenus. **Rien à produire pour l'instant** : cinq nouveaux attaquants (Ardoises, Volcan, Désert, Mines, Côtes) te seront demandés quand le porteur aura validé leurs propositions.
 

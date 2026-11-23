@@ -7,9 +7,11 @@ import os
 import re
 import struct
 import subprocess
+import sys
 import zipfile
 from concurrent.futures import ThreadPoolExecutor
 from export_sources import verify_sources
+from hidden_desktop import on_hidden_desktop, run as run_on_hidden_desktop
 
 def _rebalance_table():
     """Coefficients de rééquilibrage de la v0.232 (`REBALANCE_PERCENT` de `campaign_catalogue.gd`), lus dans les sources du jeu."""
@@ -34,12 +36,14 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('archive',type=Path)
 parser.add_argument('--destination',required=True,type=Path)
 parser.add_argument('--screen',type=int,help='Écran réservé aux essais graphiques (index Godot).')
-parser.add_argument('--background',action='store_true',help='Ouvrir les captures avec une fenêtre minimisée pour laisser la main au joueur.')
+parser.add_argument('--background',action='store_true',help='Exécuter les captures sur un bureau Windows caché : aucune fenêtre visible, clavier et souris laissés au joueur.')
 parser.add_argument('--source-project',type=Path,help='Comparer les sources déclarées aux fichiers de ce projet local.')
 parser.add_argument('--case',action='append',dest='selected_cases',help='Limiter la vérification aux cas nommés ; répétable. Sans option, tous les cas sont exécutés.')
 parser.add_argument('--jobs',type=int,default=4,help='Cas lancés en parallèle (défaut : 4 ; 1 pour l’ancien mode séquentiel).')
 args=parser.parse_args()
 assert os.name=='nt','Ce contrôle lance le binaire Windows sur Windows.'
+if args.background and not on_hidden_desktop():
+    raise SystemExit(run_on_hidden_desktop([sys.executable,*sys.argv]))
 archive=args.archive.resolve()
 destination=args.destination.resolve()
 destination.mkdir(parents=True,exist_ok=True)
@@ -201,7 +205,6 @@ def run_case(name,state,faction):
     if state is None: command+=['--headless','--quit-after','3']
     else:
         if args.screen is not None: command+=['--screen',str(args.screen)]
-        if args.background: command+=['--minimized']
         image=destination/(name+'.png')
         command+=['--','--capture='+str(image),'--capture-state='+state]
         if faction: command+=['--capture-faction='+faction]
@@ -429,7 +432,7 @@ for name,state,faction in cases:
             assert launch=={'map':map_id,'routes':routes,'hp_percent':played_hp(number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
             if number>=111:
                 storm=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SANDSTORM_SNAPSHOT=')))
-                assert storm['affix']=={'id':'sandstorm','interval':15,'warning':3,'duration':5,'range_percent':25} and storm['visible'] and storm['text'].startswith('Tempête de sable')
+                assert storm['affix']=={'id':'sandstorm','interval':12,'warning':3,'duration':4,'range_percent':25} and storm['visible'] and storm['text'].startswith('Tempête de sable')
     elif '_campaign_menu_mine' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
@@ -481,7 +484,7 @@ for name,state,faction in cases:
             assert launch=={'map':map_id,'routes':routes,'hp_percent':horde_hp(239+((number-139)>>1),number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
             if number>=171:
                 mist=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SEAMIST_SNAPSHOT=')))
-                assert mist['affix']=={'id':'seamist','interval':22,'warning':3,'duration':6,'gold_percent':30} and mist['visible'] and mist['text'].startswith('Brume marine')
+                assert mist['affix']=={'id':'seamist','interval':12,'warning':3,'duration':4,'gold_percent':30} and mist['visible'] and mist['text'].startswith('Brume marine')
     elif '_campaign_menu_necro' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
@@ -544,7 +547,7 @@ for name,state,faction in cases:
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
             assert launch=={'map':map_id,'routes':routes,'hp_percent':played_hp(number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
             eruptions=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('ERUPTIONS_SNAPSHOT=')))
-            assert eruptions['affix']=={'id':'eruptions','interval':14,'warning':3,'duration':5} and eruptions['visible'] and eruptions['text'].startswith('Éruptions')
+            assert eruptions['affix']=={'id':'eruptions','interval':12,'warning':3,'duration':4} and eruptions['visible'] and eruptions['text'].startswith('Éruptions')
     elif '_campaign_menu_marsh' in name:
         snap=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('CAMPAIGN_SNAPSHOT=')))
         camp=0 if faction=='alliance' else 1
@@ -560,7 +563,7 @@ for name,state,faction in cases:
         if name.endswith('play'):
             marsh=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('MARSH_SNAPSHOT=')))
             assert marsh['isolated'] and marsh['map']==map_id and marsh['decoration']=='marsh'
-            assert marsh['scenery_count']>0 and marsh['affix_empty'] and not marsh['affix_visible']
+            assert marsh['scenery_count']>0 and not marsh['affix_empty'] and marsh['affix_visible']
             launch=json.loads(next(line.split('=',1)[1] for line in text.splitlines() if line.startswith('SLATE_MISSION=')))
             assert launch=={'map':map_id,'routes':routes,'hp_percent':played_hp(number,camp),'mission':f'campaign.{number:03d}','faction':camp,'menu':False,'hp':20,'gold':150,'forecast':routes,'active_profile_run':True}
     elif name.endswith(('_campaign_menu_slate','_campaign_menu_slateplay','_campaign_menu_ridges','_campaign_menu_ridgesplay')) or '_campaign_menu_mountain' in name:

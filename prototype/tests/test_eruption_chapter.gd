@@ -8,7 +8,7 @@ const Replay = preload("res://tests/report_replay.gd")
 const Report = preload("res://scripts/run_report.gd")
 const Reference = preload("res://tests/reference_army.gd")
 ## Longueur mesurée du premier trajet et nombre d'entrées attendus des missions 61 à 70.
-const AFFIX := {"id":"eruptions","interval":14,"warning":3,"duration":5}
+const AFFIX := {"id":"eruptions","interval":12,"warning":3,"duration":4}
 ## Longueur mesurée du premier trajet, nombre d'entrées et ordre d'achat de référence des missions 71 à 80 (l'éruption désigne un emplacement occupé : l'ordre fait partie de la mesure).
 const EXPECTED: Dictionary = {
 	71:{"map":"ash_crater","order":[4,2,3],"length":36.0,"routes":1},
@@ -101,7 +101,7 @@ func verify_mission(camp: int, number: int) -> void:
 		check(allocated,"Les points accessibles sont répartis légalement")
 		if not allocated: break
 	game._open_campaign(camp,8);game.campaign_menu._select(number-71)
-	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and game.campaign_menu.mission_detail.text.contains("Éruptions") and game.campaign_menu.mission_detail.tooltip_text.contains("14 s"),"Mission %d : la fiche annonce les éruptions" % number)
+	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and game.campaign_menu.mission_detail.text.contains("Éruptions") and game.campaign_menu.mission_detail.tooltip_text.contains("12 s"),"Mission %d : la fiche annonce les éruptions" % number)
 	game.campaign_menu._launch()
 	var model: Model = game.model
 	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix == AFFIX and game.affix_label.visible and game.affix_label.text.begins_with("Éruptions") and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)

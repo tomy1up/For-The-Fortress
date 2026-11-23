@@ -46,7 +46,7 @@ static func definition(number: int) -> Dictionary:
 		# Chapitre 8 : nouveauté du biome volcanique, l'affixe Éruptions (décision du porteur, 10 novembre 2026). Valeurs d'essai.
 		var maps: Array[String] = ["ash_crater","ash_chimneys","ash_cone","ash_rift","ash_geysers","ash_flow","ash_embers","ash_dome","ash_gorge","ash_heart"]
 		var titles: Array[String] = ["Le Cratère Fumant","Les Cheminées","Le Cône Ardent","La Faille Rougeoyante","Les Geysers de Cendres","La Coulée Noire","Les Braises Dormantes","Le Dôme d'Obsidienne","La Gorge de Feu","Le Cœur en Éruption"]
-		result.merge({"title":titles[number-71],"available":true,"map_id":maps[number-71],"hp_percent":99+number,"po":60,"xp":100,"waves":10,"combat_affix":{"id":"eruptions","interval":14,"warning":3,"duration":5}},true)
+		result.merge({"title":titles[number-71],"available":true,"map_id":maps[number-71],"hp_percent":99+number,"po":60,"xp":100,"waves":10,"combat_affix":{"id":"eruptions","interval":12,"warning":3,"duration":4}},true)
 	elif number <= 90:
 		# Chapitre 9 : citadelle de la faction adverse (décision du porteur, 11 novembre 2026), sans règle propre. Noms et tracés d'essai.
 		var maps: Array[String] = ["citadel_glacis","citadel_drawbridge","citadel_barbican","citadel_ramparts","citadel_court","citadel_towers","citadel_gates","citadel_wall","citadel_dungeons","citadel_keep"]
@@ -67,7 +67,7 @@ static func definition(number: int) -> Dictionary:
 		# Chapitre 12 : nouveauté du biome du désert, la tempête de sable (décision du porteur, 11 novembre 2026). Valeurs d'essai.
 		var maps: Array[String] = ["dune_mirage","dune_scorpion","dune_ruins","dune_arches","dune_cistern","dune_sphinx","dune_wind","dune_sarcophagus","dune_crater","dune_pyramid"]
 		var titles: Array[String] = ["Le Mirage","La Vallée des Scorpions","Les Ruines Englouties","Les Arches de Grès","La Citerne Perdue","Le Sphinx Brisé","Le Col des Vents de Sable","La Salle du Sarcophage","Le Cratère de Verre","La Pyramide Ensablée"]
-		result.merge({"title":titles[number-111],"available":true,"map_id":maps[number-111],"hp_percent":99+number,"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"sandstorm","interval":15,"warning":3,"duration":5,"range_percent":25}},true)
+		result.merge({"title":titles[number-111],"available":true,"map_id":maps[number-111],"hp_percent":99+number,"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"sandstorm","interval":12,"warning":3,"duration":4,"range_percent":25}},true)
 	elif number <= 130:
 		# Chapitre 13 : souterrains et mines, premier chapitre du septième biome, sans règle propre (recommandation de Claude Code, biome à confirmer par le porteur).
 		var maps: Array[String] = ["mine_entrance","mine_shaft","mine_gallery","mine_crystals","mine_cart","mine_forge","mine_lake","mine_vault","mine_collapse","mine_heart"]
@@ -77,7 +77,7 @@ static func definition(number: int) -> Dictionary:
 		# Chapitre 14 : nouveauté du biome des souterrains, l'éboulement (décision du porteur, 12 novembre 2026). Valeurs d'essai.
 		var maps: Array[String] = ["mine_pillars","mine_vein","mine_tunnel","mine_arch","mine_twins","mine_abyss","mine_sluice","mine_crossing","mine_crypt","mine_core"]
 		var titles: Array[String] = ["Les Piliers Fissurés","La Veine Oubliée","Le Tunnel Éventré","La Voûte Instable","Les Galeries Jumelles","Le Gouffre Noir","L'Écluse Souterraine","Le Carrefour des Éboulis","La Crypte des Mineurs","Le Cœur Effondré"]
-		result.merge({"title":titles[number-131],"available":true,"map_id":maps[number-131],"hp_percent":99+number,"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"rockfall","interval":18,"warning":3,"duration":7}},true)
+		result.merge({"title":titles[number-131],"available":true,"map_id":maps[number-131],"hp_percent":99+number,"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"rockfall","interval":12,"warning":3,"duration":5}},true)
 	elif number <= 150:
 		# Chapitre 15 : huitième biome, îles flottantes et cité céleste, sans règle propre (recommandation de Claude Code sur délégation du porteur, 12 novembre 2026 ; biome à confirmer).
 		var maps: Array[String] = ["sky_pontoon","sky_mistbridge","sky_cloudgate","sky_spires","sky_gardens","sky_belvedere","sky_updrafts","sky_dome","sky_fallen","sky_summit"]
@@ -97,7 +97,7 @@ static func definition(number: int) -> Dictionary:
 		# Chapitre 18 : nouveauté du biome des côtes, l'affixe Brume marine (décision du porteur, 12 novembre 2026). Valeurs d'essai.
 		var maps: Array[String] = ["coast_beacon","coast_causeway","coast_chalk","coast_graveyard","coast_shoal","coast_phantom","coast_twinrocks","coast_arsenal","coast_storm","coast_citadel"]
 		var titles: Array[String] = ["Le Phare des Brumes","La Digue Noyée","Les Falaises Blanches","Le Cimetière des Navires","Le Banc de Sable","La Baie Fantôme","Les Écueils Jumeaux","L'Arsenal Englouti","Le Cap des Tempêtes","La Citadelle des Embruns"]
-		result.merge({"title":titles[number-171],"available":true,"map_id":maps[number-171],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"seamist","interval":22,"warning":3,"duration":6,"gold_percent":30}},true)
+		result.merge({"title":titles[number-171],"available":true,"map_id":maps[number-171],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10,"combat_affix":{"id":"seamist","interval":12,"warning":3,"duration":4,"gold_percent":30}},true)
 	elif number <= 190:
 		# Chapitre 19 : dixième biome, nécropole et terres maudites, sans règle propre (choix du porteur, 13 novembre 2026).
 		var maps: Array[String] = ["necro_gate","necro_road","necro_graveyard","necro_crypts","necro_fen","necro_hill","necro_mausoleums","necro_ossuary","necro_stelae","necro_royal"]
@@ -109,16 +109,26 @@ static func definition(number: int) -> Dictionary:
 		var titles: Array[String] = ["La Porte des Tombeaux","La Veillée Funèbre","Les Catacombes","Le Champ d'Ossements","Le Bourbier des Âmes","Le Gibet Oublié","Les Tombes Jumelles","Le Charnier","Les Obélisques Noirs","Le Trône du Roi Mort"]
 		result.merge({"title":titles[number-191],"available":true,"map_id":maps[number-191],"hp_percent":hp_percent_for(number),"po":reward_po(chapter),"xp":0,"waves":10,"wave_set_id":"necro_revenants"},true)
 	if BIOME_FIRST_CHAPTER_AFFIXES.has(chapter): result.combat_affix = BIOME_FIRST_CHAPTER_AFFIXES[chapter].duplicate(true)
+	if NEW_BIOME_AFFIXES.has(chapter) and number > 1: result.combat_affix = NEW_BIOME_AFFIXES[chapter].duplicate(true) # La mission 1 reste sans affixe pour apprendre le jeu.
 	return result
 
 ## Un affixe par biome, actif sur ses deux chapitres (décision du porteur, 23 novembre 2026, `design/Biomes_cumul_2026-10-31.md`) : les cinq affixes existants
 ## s'appliquent aussi au premier chapitre de leur biome, avec les mêmes valeurs (réglages de prototype à confirmer). Les cinq autres biomes recevront le leur à l'étape suivante.
 const BIOME_FIRST_CHAPTER_AFFIXES := {
 	3:{"id":"headwinds","cadence_percent":90},
-	7:{"id":"eruptions","interval":14,"warning":3,"duration":5},
-	11:{"id":"sandstorm","interval":15,"warning":3,"duration":5,"range_percent":25},
-	13:{"id":"rockfall","interval":18,"warning":3,"duration":7},
-	17:{"id":"seamist","interval":22,"warning":3,"duration":6,"gold_percent":30}}
+	7:{"id":"eruptions","interval":12,"warning":3,"duration":4},
+	11:{"id":"sandstorm","interval":12,"warning":3,"duration":4,"range_percent":25},
+	13:{"id":"rockfall","interval":12,"warning":3,"duration":5},
+	17:{"id":"seamist","interval":12,"warning":3,"duration":4,"gold_percent":30}}
+
+## Les cinq affixes créés en v0.245 pour les biomes qui n'en avaient pas (décision du porteur, 23 novembre 2026 ; valeurs : réglages de prototype à confirmer).
+## Rythme revu en v0.245 après mesure de 3 816 vagues (décision du porteur, 23 novembre 2026) : effets de 4 s toutes les 12 s (Éboulement 5 s), impulsions toutes les 15 s.
+const FLOOD_AFFIX := {"id":"flood","interval":12,"warning":3,"duration":4,"speed_percent":10}
+const MIASMA_AFFIX := {"id":"miasma","interval":12,"warning":3,"duration":4,"damage_percent":20}
+const ALARM_AFFIX := {"id":"alarm","interval":15,"warning":3,"shield_percent":10}
+const UPDRAFT_AFFIX := {"id":"updraft","interval":15,"warning":3,"tiles":1}
+const SOULDRAIN_AFFIX := {"id":"souldrain","interval":12,"warning":3,"duration":4,"heal_percent":10}
+const NEW_BIOME_AFFIXES := {1:FLOOD_AFFIX,2:FLOOD_AFFIX,5:MIASMA_AFFIX,6:MIASMA_AFFIX,9:ALARM_AFFIX,10:ALARM_AFFIX,15:UPDRAFT_AFFIX,16:UPDRAFT_AFFIX,19:SOULDRAIN_AFFIX,20:SOULDRAIN_AFFIX}
 
 ## Révision de la courbe de la Horde (décision du porteur, 15 novembre 2026, mesure dans `design/Mesure_boutique_finales_O016.md`) : à partir de la mission 150, les ennemis affrontés par la Horde ont 10 % de PV en moins (réglage de prototype à confirmer).
 const HORDE_HP_FROM := 150
@@ -132,10 +142,10 @@ const HORDE_FINALE_FACTOR := 0.85
 ## Recalibrage v0.234 (suite demandée par le porteur le 21 novembre 2026 : même cible avec les 60 bonus, la rareté et la relance de la v0.233) : même méthode, meilleure marge moyennée sur trois tirages de bonus (7, 8, 9), grille de PV affinée par pas de 5 %. Fiche : `design/Rebalancage_v0234.md`. Les rapports antérieurs gardent leurs PV enregistrés.
 ## Horde v0.235 (décision du porteur, 21 novembre 2026, O-028 : changer la référence) : référence des tests deux sapeurs et un chaman (arbre Démolition) à partir de la mission 71, suites des chapitres 4, 7 et 13 jouées avec les règles de bonus actuelles ; coefficients de la Horde des missions 31-40 et 61-200 recalculés. Fiche : `design/Rebalancage_v0235.md`.
 ## Sous la courbe de base (décision du porteur, 23 novembre 2026) : avec les Éruptions au chapitre 7, huit cas restaient trop durs à 100 % ; Alliance 63, 64, 65, 66, 68, 69 et Horde 66, 68 passent de 92 à 98 %.
-const BELOW_CURVE_MISSIONS := {0:[63,64,65,66,68,69],1:[66,68]}
+const BELOW_CURVE_MISSIONS := {0:[23,32,33,41,46,60,63,64,65,66,68,69,75,90,93,96,97,113,127,143,147,148,170,191],1:[32,66,68]}
 const REBALANCE_PERCENT := [
-	[100,119,120,115,116,148,135,133,126,146,104,125,128,115,110,131,123,123,113,129,105,100,100,107,100,109,105,111,100,100,102,100,100,106,104,104,103,112,100,104,104,121,111,113,122,102,117,123,117,116,104,107,109,108,104,126,120,112,120,103,109,117,98,98,98,96,104,94,92,100,102,117,103,101,100,102,101,103,120,104,109,116,117,103,123,121,120,117,118,107,117,124,111,119,131,111,111,116,130,115,133,112,111,103,156,100,100,100,109,100,140,123,100,105,124,106,114,106,105,103,134,111,111,109,131,104,103,115,108,104,112,105,103,106,105,106,102,107,102,107,134,113,103,104,126,106,100,101,111,105,109,136,108,112,108,116,114,108,108,108,118,109,105,103,113,106,102,113,109,100,111,106,104,106,112,103,104,110,108,102,120,112,117,105,110,107,108,111,110,107,103,107,114,100,118,105,103,110,104,100],
-	[100,121,120,117,119,123,140,127,110,122,105,128,112,117,113,118,136,123,108,117,111,100,100,114,100,111,118,115,103,100,105,100,100,118,103,107,113,113,102,100,114,123,107,108,118,114,117,118,127,112,110,117,108,112,105,108,110,114,106,104,111,118,100,106,104,96,114,98,103,111,112,118,112,108,111,113,106,112,117,118,117,128,117,110,133,115,133,122,119,116,117,119,125,155,124,122,120,123,154,153,124,135,127,135,164,110,124,124,111,132,158,135,114,116,152,135,138,108,118,140,156,135,123,142,165,134,127,128,126,120,140,143,134,124,129,120,130,135,123,121,148,119,125,120,142,125,128,113,104,135,150,178,152,154,151,146,140,148,133,149,147,148,143,140,141,126,132,140,141,121,132,139,137,148,147,148,144,143,139,112,157,140,144,141,142,138,141,140,140,144,131,138,136,133,151,140,141,127,140,142]
+	[100,110,118,115,113,136,135,133,120,146,104,119,125,109,104,123,123,122,112,123,105,100,98,107,100,109,105,111,100,100,102,94,96,109,104,104,103,109,100,104,98,109,105,104,116,96,105,117,111,104,100,100,104,100,100,112,114,105,111,98,110,123,98,96,98,96,105,94,92,100,100,117,103,102,96,102,101,101,120,110,100,105,100,100,117,100,106,100,109,96,104,106,96,107,107,96,96,100,106,100,121,115,111,109,156,100,100,112,109,100,140,117,98,105,127,106,114,105,105,106,137,111,111,109,125,104,98,115,108,104,112,108,103,107,111,105,102,105,100,107,128,107,98,100,114,100,94,98,105,100,101,124,100,106,101,104,102,104,102,100,118,109,100,100,111,103,102,113,109,96,105,107,104,106,112,101,100,110,108,100,117,109,114,103,107,109,104,110,107,107,96,105,114,100,118,105,100,109,100,100],
+	[100,112,111,117,107,121,134,124,119,122,104,123,115,111,107,112,125,121,108,111,111,100,100,114,100,111,118,115,103,100,105,96,100,118,103,113,117,113,102,100,103,120,103,102,113,111,111,112,121,106,100,111,100,106,100,100,107,108,103,100,111,115,103,103,104,96,108,98,103,111,112,118,112,113,111,113,106,112,118,117,108,116,105,100,121,100,109,109,113,102,102,103,107,131,100,105,100,111,124,129,124,135,127,135,167,110,121,121,111,138,160,147,114,119,152,138,138,108,118,140,162,129,122,148,165,134,121,122,126,126,140,146,140,133,135,126,130,141,121,127,141,107,110,108,142,113,116,107,104,126,132,166,140,136,133,128,129,136,127,128,147,148,146,140,141,126,132,140,141,120,132,139,137,148,144,146,144,143,139,112,151,137,141,141,142,135,135,134,142,141,125,132,136,121,151,134,135,121,134,136]
 ]
 
 static func rebalance_percent(number: int, faction: int) -> float:

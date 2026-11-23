@@ -48,7 +48,7 @@ func run_checks() -> void:
 			if not allocated: break
 		game._open_campaign(camp,5);game.campaign_menu._select(mission-41);game.campaign_menu._launch()
 		check(not game.choosing_faction and game.mission_definition.id==Main.CampaignCatalogue.id_for(mission),"La mission des marais démarre par le parcours normal")
-		check(game.model.combat_affix.is_empty() and not game.affix_label.visible and game.model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(mission,game.model.faction) and game.model.gold==150 and game.model.fortress_hp==game.model.max_hp,"Nouveau biome sans vent, avec ses paramètres et une forteresse intacte")
+		check(game.model.combat_affix.get("id","") == "miasma" and game.affix_label.visible and game.model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(mission,game.model.faction) and game.model.gold==150 and game.model.fortress_hp==game.model.max_hp,"Nouveau biome sans vent, avec ses paramètres et une forteresse intacte")
 		var types: Array = Reference.types(camp,mission)
 		play(game.model,types)
 		check(game.model.phase=="victory","Une composition accessible gagne dans chaque faction (mission %d, faction %d)" % [mission,camp])

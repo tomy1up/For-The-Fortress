@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.245**. Un affixe par biome, deuxième étape : cinq nouveaux affixes, un rythme resserré pour tous les affixes et 199 missions recalibrées. [Notes](design/essais/v0245_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.245).
+
 **Prototype v0.244**. Un affixe par biome, première étape : les cinq affixes existants couvrent les deux chapitres de leur biome, et 50 missions sont recalibrées. [Notes](design/essais/v0244_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.244).
 
 **Prototype v0.243**. Décor du Gué dessiné sur les missions 1 à 20, avec la rivière et le pont de la carte d'ouverture : toutes les cartes ont désormais un décor dessiné. [Notes](design/essais/v0243_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.243).

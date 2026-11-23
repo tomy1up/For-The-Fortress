@@ -37,7 +37,7 @@ func run_checks() -> void:
 	for number in range(191,201):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 20 and definition.map_id == EXPECTED[number].map and definition.hp_percent == Main.CampaignCatalogue.hp_percent_for(number) and definition.po == 110 and definition.xp == 0 and definition.waves == 10,"Mission %d : carte, PV à 262 %% et plus, 110 PO sans XP" % number)
-		check(definition.get("wave_set_id","") == "necro_revenants" and not definition.has("combat_affix") and Catalogue.runtime(definition.id).get("wave_set_id","") == "necro_revenants","Mission %d : rencontres des revenants, sans affixe" % number)
+		check(definition.get("wave_set_id","") == "necro_revenants" and definition.get("combat_affix",{}).get("id","") == "souldrain" and Catalogue.runtime(definition.id).get("wave_set_id","") == "necro_revenants","Mission %d : rencontres des revenants, avec l'affixe du biome" % number)
 		await verify_map(number)
 	for number in range(191,201):
 		for camp in range(2): await verify_mission(camp,number)
@@ -111,14 +111,14 @@ func verify_mission(camp: int, number: int) -> void:
 	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and game.campaign_menu.mission_detail.text.contains("Nouveau : revenant") and game.campaign_menu.rewards.text.contains("110 PO") and not game.campaign_menu.rewards.text.contains("XP"),"Mission %d : fiche standard, 110 PO sans mention d'XP" % number)
 	game.campaign_menu._launch()
 	var model: Model = game.model
-	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "necro_revenants" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,camp) and model.gold == 150 and model.combat_affix.is_empty() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
+	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "necro_revenants" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,camp) and model.gold == 150 and model.combat_affix.get("id","") == "souldrain" and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
 	play(model,Reference.types(camp,number),EXPECTED[number].order)
 	print("REVENANT_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])
 	var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
 	var replay: Dictionary = Replay.verify(report)
 	check(replay.ok,"Mission %d : le rapport est rejouable : %s" % [number,str(replay.get("error",""))])
-	check(report.get("wave_set_id","") == "necro_revenants" and not report.has("combat_affix") and report.map_definition.decoration == "necro","Mission %d : le rapport conserve la carte de la nécropole et les rencontres standard" % number)
+	check(report.get("wave_set_id","") == "necro_revenants" and report.get("combat_affix",{}).get("id","") == "souldrain" and report.map_definition.decoration == "necro","Mission %d : le rapport conserve la carte de la nécropole et les rencontres standard" % number)
 	game._sync_meta_rewards(true);game._sync_meta_rewards(true)
 	check(profile.campaign_status(camp).completed == number and profile.data.banks[camp].xp == 10000 and profile.data.banks[camp].resource == 6000+650+700+750+800+850+900+950+1000+1050+110*(number-190),"Mission %d : première victoire créditée une seule fois (110 PO, aucune XP)" % number)
 	check(profile.campaign_status(1-camp).completed == 0,"Le parcours adverse est inchangé")

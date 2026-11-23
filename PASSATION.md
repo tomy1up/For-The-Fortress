@@ -400,13 +400,21 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 23 novembre 2026 — Claude Code (v0.244 publiée)
+## État au 23 novembre 2026 — Claude Code (v0.245 publiée)
+
+- **v0.245, un affixe par biome, étape 2** (décisions du porteur du 23 novembre 2026, MAJ-94 à MAJ-97, fiche `design/Affixe_par_biome_v0245.md`) : `campaign_catalogue.gd` (`NEW_BIOME_AFFIXES`, rythme, `REBALANCE_PERCENT`, `BELOW_CURVE_MISSIONS`), `campaign_data.gd` (noms et descriptions), `valley_model.gd` (crue en temps fermé, boucliers, bonds, drain), `valley_view.gd` (effets provisoires dessinés par le code), `test_biome_affixes.gd`. Données et scripts : `design/essais/equilibre_bonus/v245/`.
+- Mesure finale : 379 réglages sur 398 dans la cible, aucun sous 40 %, 19 au-dessus de 70 %. 27 réglages sous la courbe de base, acceptés par le porteur.
+- Contrôles v0.245 : régression 145/145 (236 108 contrôles Godot, 17 tests Python), paquet 1 050 cas et 650 contrôles de sources, 88 captures de combat inspectées dans les deux factions.
+- **Fenêtres de jeu (consigne du porteur, 23 novembre 2026)** : `verify_windows_export.py --background` s'exécute désormais sur un bureau Windows caché (`prototype/tests/hidden_desktop.py`). Pour toute autre capture ou `visual_regression.py`, passer par `python prototype/tests/hidden_desktop.py <commande>`. Ne plus ouvrir de fenêtre visible sans accord du porteur. `AGENTS.md` décrit encore l'ancien mode : à modifier seulement avec son accord.
+- Outil de capture : variante `ford<N>play` (missions 2 à 20) et stratégie fixe de la Horde adaptée à la Crue.
+- **Suite (O-029)** : proposer au porteur puis créer les 5 attaquants manquants (Ardoises, Volcan, Désert, Mines, Côtes) avec Codex, puis recalibrer les missions touchées.
+- La marche de la tortue et les lots suivants de `art/codex` ne sont pas fusionnés : ils attendent l'avis du porteur.
+
+### v0.244 (publiée)
 
 - **v0.244, un affixe par biome, étape 1** (décision du porteur du 23 novembre 2026, MAJ-91 à MAJ-93, fiche `design/Affixe_par_biome_v0244.md`) : `campaign_catalogue.gd` (`BIOME_FIRST_CHAPTER_AFFIXES`, `REBALANCE_PERCENT`, `BELOW_CURVE_MISSIONS`) ; `valley_model.gd` (`rockfall_held_times`, `_hold_spawns_for_rockfall`, prévision retardée) ; bandeau, dessin, fiche de mission (`affix_tag`) et rapport adaptés. La suite des Ardoises joue désormais la référence de la Horde. Données et scripts : `design/essais/equilibre_bonus/v244/`.
 - Mesure finale (9 000 parties) : 96 cas sur 100 dans la cible ; hors cible Alliance 23 et 61, Horde 22 et 23. Huit cas sous la courbe de base, acceptés par le porteur (« Oui, baisse-les »).
 - Contrôles v0.244 : régression 144/144 (234 230 contrôles Godot, 17 tests Python), paquet 1 050 cas et 650 contrôles de sources, 44 captures de combat inspectées dans les deux factions.
-- **Proposition de l'étape 2 soumise au porteur, non validée** : voir « Proposition pour l'étape 2 » dans `design/Affixe_par_biome_v0244.md`. Ne rien coder avant sa réponse.
-- **Suite (O-029)** : proposer au porteur puis créer les 5 affixes manquants (Gué dès la mission 2, Marais, Citadelle, Îles, Nécropole), puis les 5 attaquants manquants (Ardoises, Volcan, Désert, Mines, Côtes) avec Codex. Recalibrer les missions touchées à chaque étape.
 
 ### v0.243 (publiée)
 
@@ -501,7 +509,7 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 ## Questions ouvertes pour le porteur
 
-- **Éruptions** : valeurs (5 s toutes les 14 s, 3 s d'avertissement) à confirmer en jeu ; choix visuel lave ou cendres délégué à Codex avec recommandation (voir `TODO_VISUELS.md`).
+- **Éruptions** : valeurs (4 s toutes les 12 s depuis la v0.245, 3 s d'avertissement) à confirmer en jeu ; choix visuel lave ou cendres délégué à Codex avec recommandation (voir `TODO_VISUELS.md`).
 - **Courbe de difficulté du chapitre 7** : le Pont d'Obsidienne (66) est la carte la plus dure des deux factions (7 et 12 victoires sur 108 avec l'armée de chaque arbre), alors que le Seuil des Cendres, les Coulées Figées et le Cœur du Volcan côté Horde sont presque toujours gagnés. À lisser ?
 - **Unités chères** : les arbres du mage et du chaman supposent d'acheter cette unité (100 or) à l'ouverture. Si les joueurs achètent d'abord les unités peu chères, ces arbres seront moins rentables.
 - Équilibrage à confirmer en jeu : talents des deux factions, chapitres 4 à 7. Les chapitres 1 à 3 n'ont pas été remesurés avec les talents abaissés de l'Alliance (leurs tests de campagne passent).
