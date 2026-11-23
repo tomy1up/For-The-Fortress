@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-24 — Chute et dégagement de l’Éboulement (ouvert)
+
+`effect.rockfall` déclare deux planches événementielles. `spawn` dure 0,50 s dès l’activation. `death` occupe les 0,54 dernières secondes du blocage. L’essai utilise le temps de combat et l’ancre de la route visée. Au milieu, jouer `blocked` sur un nombre entier de cycles pour raccorder son image 0 aux transitions. Conserver les horaires de réouverture. Le branchement testé est limité à la copie de capture. Lot en attente de l’avis du porteur. [GIF, format et contrôles](design/Visuels_Transitions_Eboulement.md).
+
 ### 2026-11-24 — Lisibilité des cinq affixes et réouverture des mines (ouvert)
 
 Contrôle des 50 missions étendues en v0.244 et reprise sur 13 missions en v0.247. Sur les quatre mines à entrée unique (121, 122, 125 et 128), les deux premiers ours retenus sortent à 17,0 et 17,3 s après le premier blocage, dans les deux factions. Leurs jauges et leurs silhouettes se recouvrent, au point de lire un seul ours au premier coup d’œil. [Bilan, planches et GIF](design/Visuels_Affixes_Controles_v0247.md).

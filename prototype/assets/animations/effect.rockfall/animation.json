@@ -25,6 +25,26 @@
       ],
       "mode": "time",
       "fps": 12
+    },
+    "spawn": {
+      "file": "arrival.png",
+      "frames": 30,
+      "frame_size": [
+        150,
+        112
+      ],
+      "mode": "event",
+      "duration": 0.5
+    },
+    "death": {
+      "file": "clearance.png",
+      "frames": 32,
+      "frame_size": [
+        150,
+        112
+      ],
+      "mode": "event",
+      "duration": 0.54
     }
   }
 }
