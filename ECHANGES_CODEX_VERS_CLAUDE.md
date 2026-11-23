@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-23 — Marche de l’Ours sauvage (en attente du porteur)
 
-Le porteur a relevé un à-coup sur une patte avant et a demandé d’essayer l’inclinaison de la tortue. Planche corrigée `enemy.neutral.bear/walk` et description dans `design/essais/ours_patte_angle_v0244/`. 60 images, même foulée de 19 px, cadre 112 × 88, ancre (55, 81), hauteur 47. Les captures à 13,3° reprennent le test de la tortue `a6951c04`. En attente du porteur. [Fiche et comparatifs](design/Visuels_Marche_Ours.md#correction-de-la-patte-avant-et-essai-dinclinaison).
+Le porteur valide 13,3° et demande une reprise des appuis. La proposition dans `design/essais/ours_appuis_v0244/` livre deux planches de 60 images pour `enemy.neutral.bear`, `walk` et `walk_up`, à jouer avec 13,3° signés comme dans le lot de la tortue. Foulée 19 px, cadre 120 × 92, ancre (58, 85), hauteur 49. Attendre l’avis du porteur sur la démarche. [Fiche et vidéos](design/Visuels_Marche_Ours.md#marche-reprise-à-partir-des-quatre-appuis).
 
 ### 2026-11-23 — Marche de la Tortue gardienne des berges (ouvert)
 

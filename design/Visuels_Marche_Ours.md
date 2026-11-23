@@ -33,4 +33,19 @@ Les trois vues utilisent la même simulation sur la mission 1, vague 4, avec un 
 
 864 captures sur copie v0.244. Positions, PV et indices d’animation identiques entre variantes. Validateur à zéro problème sur 65 dossiers, avec l’avertissement de la planche archivée dans la copie. Quatre suites ciblées passent, soit 5 015 contrôles. Les essais de correction et d’inclinaison ont été échantillonnés à ×1.
 
-[Planche corrigée](essais/ours_patte_angle_v0244/walk.png) et [description](essais/ours_patte_angle_v0244/animation.json). Foulée 19 px, cadre 112 × 88, ancre (55, 81) et hauteur 47. Le code d’inclinaison sert à l’essai local. L’angle et la retouche attendent l’avis du porteur.
+[Planche corrigée](essais/ours_patte_angle_v0244/walk.png) et [description](essais/ours_patte_angle_v0244/animation.json). Foulée 19 px, cadre 112 × 88, ancre (55, 81) et hauteur 47. Le code d’inclinaison sert à l’essai local. Le porteur a retenu l’angle de 13,3° le 23 novembre 2026 et a demandé de reprendre la marche des quatre pattes.
+
+## Marche reprise à partir des quatre appuis
+
+Le porteur jugeait le mouvement des pattes encore irrégulier et a confirmé l’inclinaison de 13,3°. La nouvelle marche part d’une seule pose cohérente de l’ours déjà dessiné. Chaque patte a son propre appui et son propre retour. Une patte arrière se pose, puis la patte avant du même côté, puis le mouvement se répète de l’autre côté. Cet ordre s’inspire de la marche lente observée chez le grizzly. [Étude de Shine et al.](https://doi.org/10.1242/jeb.121806)
+
+Le cycle conserve au moins deux appuis. La position prévue d’un coussinet reste fixe sur le chemin pendant son contact, puis la patte se replie et avance avant le contact suivant. Les pattes éloignées sont dessinées derrière le poitrail et les pattes proches. La tête, les épaules et le bassin accompagnent le cycle. La variante montante compense la pente apparente dans le sens opposé. L’inclinaison validée de 13,3° est appliquée aux deux versions comparées.
+
+![Comparatif de la marche de l’ours à taille native et agrandie](essais/ours_appuis_v0244/Ours_alliance_x1_appuis.jpg)
+
+- Alliance [×1](essais/ours_appuis_v0244/Ours_alliance_x1_appuis.mp4) · [×2](essais/ours_appuis_v0244/Ours_alliance_x2_appuis.mp4)
+- Horde [×1](essais/ours_appuis_v0244/Ours_horde_x1_appuis.mp4) · [×2](essais/ours_appuis_v0244/Ours_horde_x2_appuis.mp4)
+
+1 188 captures sur la mission 1, vague 4, en descente, au premier virage et en montée. Les positions, la phase de marche et les PV correspondent entre variantes. La vérification de silhouette couvre les 120 images sans rognage ni fragment séparé de plus de trois pixels. Le validateur donne zéro problème sur 65 dossiers, les anciennes planches présentes dans l’atelier étant signalées comme non référencées. Quatre suites ciblées passent, soit 5 015 contrôles. Le pivot demeure instantané.
+
+Deux planches de 60 images pour `enemy.neutral.bear`. Cadre 120 × 92, ancre (58, 85), hauteur 49 et foulée 19 px. [Description](essais/ours_appuis_v0244/animation.json) · [Marche](essais/ours_appuis_v0244/walk.png) · [Montée](essais/ours_appuis_v0244/walk_up.png). La marche attend l’avis du porteur. L’inclinaison de 13,3° est validée.

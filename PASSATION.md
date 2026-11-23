@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**23 novembre — Ours sauvage, quatre appuis et angle validé.** Le porteur valide 13,3° et demande de reprendre les pattes. Deux planches de 60 images, foulée de 19 px, comparées sur 1 188 captures et quatre suites ciblées au vert. La démarche attend l’avis du porteur. [Fiche et vidéos](design/Visuels_Marche_Ours.md#marche-reprise-à-partir-des-quatre-appuis).
+
 **23 novembre — Ours sauvage, patte avant et inclinaison.** Correction locale sur 19 images et comparaison de la même marche à plat et inclinée à 13,3°. 864 captures sur copie v0.244 en ligne droite, en virage et en montée. Contrôles ciblés réussis. En attente du porteur. [Fiche et vidéos](design/Visuels_Marche_Ours.md#correction-de-la-patte-avant-et-essai-dinclinaison).
 
 **23 novembre — Marche de l’Ours sauvage.** Cycle de 60 images essayé en combat sur la mission 1 à ×1 et ×2 dans les deux factions. 412 captures sur copie v0.244, validateur à zéro problème et 5 015 contrôles ciblés. Proposition en attente de l’avis du porteur. [Fiche et vidéos](design/Visuels_Marche_Ours.md).
