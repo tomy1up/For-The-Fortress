@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**23 novembre — Tortue gardienne, comparatif 36 et 48 images.** Sur 624 captures à pas de 1/60 s à ×1 et ×2, la version à 48 réduit les répétitions de poses à ×1 et les variations fréquentes à ×2. Validateur à zéro problème et quatre suites ciblées au vert. Planche proposée, intégration en attente de l’avis du porteur. [Comparatif](design/Visuels_Marche_Tortue_Gardienne.md#comparatif-entre-36-et-48-images-par-foulée).
+
 **23 novembre — Marche lissée de la Tortue gardienne.** Le porteur souhaitait plus de fluidité. Cycle à 36 images, foulée de 13 px conservée, 576 captures à ×1 et ×2 dans les deux factions. Validateur à zéro problème et quatre suites ciblées au vert. Proposition en attente de l’avis du porteur. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#cycle-lissé-sur-retour-du-porteur).
 
 **23 novembre — Marche de la Tortue gardienne des berges.** Premier cycle de douze dessins, essayé dans les deux factions à ×1 et ×2 sur copie v0.243. 146 captures, validateur à zéro problème et quatre suites ciblées au vert. Vue de trois quarts avec miroir en virage. Proposition en attente du porteur. [Fiche et GIF](design/Visuels_Marche_Tortue_Gardienne.md).

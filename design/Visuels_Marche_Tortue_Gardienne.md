@@ -30,3 +30,25 @@ Le 23 novembre 2026, le porteur a demandé une marche plus fluide. Deux images i
 Sur la mission 11, vague 2, 576 captures comparent les deux cycles à temps de combat égal. Les deux versions utilisent les mêmes positions. Le changement d’orientation au virage reste celui de la version à 12 images. Sur un cadre fixe à taille native, la plus grande différence moyenne entre deux images voisines du cycle passe de 10,65 à 4,37 niveaux de couleur sur 255, fermeture de boucle comprise. Le validateur relève zéro problème sur 65 dossiers, avec un avertissement pour l’image de référence de l’atelier. Les quatre suites ciblées repassent, soit 2 219 contrôles.
 
 Le lot à 36 images remplace la première proposition et attend l’avis du porteur. [Planche](essais/tortue_marche_souple_v0243/walk.png) · [Description](essais/tortue_marche_souple_v0243/animation.json).
+
+## Comparatif entre 36 et 48 images par foulée
+
+Le 23 novembre 2026, le porteur a demandé un essai à une cadence supérieure. Les deux planches partent des douze mêmes dessins et parcourent la même foulée en environ 0,75 s à vitesse ×1. La cadence de la planche passe d’environ 48 à 64 IPS. Les 624 captures de la mission 11, vague 2, sont prises à intervalles équivalents à un rendu de 60 IPS. Les vidéos à 60 IPS font défiler le même extrait quatre fois.
+
+- Alliance [×1](essais/tortue_marche_48_v0243/Tortue_alliance_x1_36_vs_48.mp4) · [×2](essais/tortue_marche_48_v0243/Tortue_alliance_x2_36_vs_48.mp4)
+- Horde [×1](essais/tortue_marche_48_v0243/Tortue_horde_x1_36_vs_48.mp4) · [×2](essais/tortue_marche_48_v0243/Tortue_horde_x2_36_vs_48.mp4)
+
+Après avoir isolé le sprite à taille native sur la portion droite, les deux factions donnent les mêmes résultats. L’écart entre images représente une moyenne de niveaux de couleur par pixel sur 255.
+
+| Mesure | 36 images | 48 images |
+| --- | ---: | ---: |
+| Pose répétée à ×1, sur 51 transitions à l’écran | 10 | 0 |
+| Écart au 95e percentile à ×1 | 4,18 | 3,34 |
+| Plus grand écart à ×1 | 4,37 | 4,46 |
+| Pose répétée à ×2, sur 25 transitions à l’écran | 0 | 0 |
+| Écart au 95e percentile à ×2 | 7,36 | 5,95 |
+| Plus grand écart à ×2 | 7,70 | 6,20 |
+
+La version à 48 images réduit les poses répétées à ×1 et les écarts les plus fréquents aux deux vitesses. Le plus grand écart à ×1 reste du même ordre. Le pivot reste instantané dans les deux versions. L’essai vérifie la présentation du mouvement sur une grille à 60 IPS. Les performances d’affichage d’une partie jouée en direct restent hors de ce contrôle.
+
+La planche de 48 images est la proposition retenue pour avis. [Planche](essais/tortue_marche_48_v0243/walk.png) · [Description](essais/tortue_marche_48_v0243/animation.json). Validateur à zéro problème sur 65 dossiers, avec deux avertissements liés aux planches de référence de la copie, et 2 219 contrôles réussis dans quatre suites ciblées.
