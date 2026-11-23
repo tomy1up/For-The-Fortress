@@ -43,7 +43,7 @@ func verify_catalogue() -> void:
 		var enemy: Dictionary = Model.make_enemy(0,9,0.0,faction,150)
 		check(enemy.hp == 225.0 and enemy.max_hp == 225.0 and enemy.speed == 0.85 and enemy.fortress_damage == 2 and enemy.reward == 8 and enemy.name == "Gueule-de-Vase","Statistiques du Noyé à 150 % de PV")
 		check(not Scout.encounter_data(51,faction).is_empty() and Scout.encounter_data(51,faction).any(func(item):return item.type == 9),"L'éclaireur annonce le Noyé")
-	check(Model.Enemies.for_profile(13,0).is_empty(),"Un profil inconnu reste refusé")
+	check(Model.Enemies.for_profile(19,0).is_empty(),"Un profil inconnu reste refusé")
 	var forecast: Dictionary = Model.wave_forecast(2,0,150,"marsh_drowned")
 	check(forecast.groups[0].type == 9 and forecast.groups[0].count == 1 and forecast.groups[0].name == "Gueule-de-Vase" and Model.wave_forecast(2,0,150,"inconnu").is_empty(),"La prévision de la vague 2 annonce un Noyé")
 	check(Model.valid_enemy_hp_percent(150) and Model.valid_enemy_hp_percent(264) and Model.valid_enemy_hp_percent(400) and not Model.valid_enemy_hp_percent(401),"Les PV ennemis montent jusqu'à 400 %")

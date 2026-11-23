@@ -36,7 +36,7 @@ func run_checks() -> void:
 	for number in range(111,121):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 12 and definition.map_id == EXPECTED[number].map and definition.hp_percent == 99+number and definition.po == 70 and definition.xp == 0 and definition.waves == 10,"Mission %d : carte, PV à 210 %% et plus, 70 PO sans XP" % number)
-		check(not definition.has("wave_set_id") and definition.combat_affix == AFFIX and Catalogue.runtime(definition.id).combat_affix == AFFIX and Catalogue.runtime(definition.id).get("wave_set_id","ford") == "ford","Mission %d : rencontres standard du Gué avec la tempête de sable, nouveauté du chapitre 12" % number)
+		check(definition.get("wave_set_id","") == "dune_scorpions" and definition.combat_affix == AFFIX and Catalogue.runtime(definition.id).combat_affix == AFFIX and Catalogue.runtime(definition.id).get("wave_set_id","ford") == "dune_scorpions","Mission %d : rencontres du biome avec la tempête de sable, nouveauté du chapitre 12" % number)
 		await verify_map(number)
 	for number in range(111,121):
 		for camp in range(2): await verify_mission(camp,number)
@@ -103,14 +103,14 @@ func verify_mission(camp: int, number: int) -> void:
 	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and game.campaign_menu.mission_detail.text.contains("Tempête de sable") and game.campaign_menu.mission_detail.tooltip_text.contains("25 %") and game.campaign_menu.rewards.text.contains("70 PO") and not game.campaign_menu.rewards.text.contains("XP"),"Mission %d : la fiche annonce la tempête de sable, 70 PO sans XP" % number)
 	game.campaign_menu._launch()
 	var model: Model = game.model
-	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix == AFFIX and game.affix_label.visible and game.affix_label.text.begins_with("Tempête de sable") and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
+	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "dune_scorpions" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix == AFFIX and game.affix_label.visible and game.affix_label.text.begins_with("Tempête de sable") and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
 	play(model,Reference.types(camp,number))
 	print("SANDSTORM_CHAPTER_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])
 	var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
 	var replay: Dictionary = Replay.verify(report)
 	check(replay.ok,"Mission %d : le rapport est rejouable : %s" % [number,str(replay.get("error",""))])
-	check(not report.has("wave_set_id") and report.combat_affix == JSON.parse_string(JSON.stringify(AFFIX)) and report.map_definition.decoration == "desert","Mission %d : le rapport conserve la carte du désert et l'affixe" % number)
+	check(report.get("wave_set_id","") == "dune_scorpions" and report.combat_affix == JSON.parse_string(JSON.stringify(AFFIX)) and report.map_definition.decoration == "desert","Mission %d : le rapport conserve la carte du désert et l'affixe" % number)
 	game._sync_meta_rewards(true);game._sync_meta_rewards(true)
 	check(profile.campaign_status(camp).completed == number and profile.data.banks[camp].xp == 10000 and profile.data.banks[camp].resource == 6650+70*(number-110),"Mission %d : première victoire créditée une seule fois (70 PO, aucune XP)" % number)
 	check(profile.campaign_status(1-camp).completed == 0,"Le parcours adverse est inchangé")

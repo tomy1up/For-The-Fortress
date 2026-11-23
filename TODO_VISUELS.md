@@ -8,6 +8,16 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [ ] **Bouquetin des crêtes (Ardoises, missions 31 à 40)** — Marche et mort, `enemy.neutral.ibex`, taille 1,05. Il charge sous 50 % de ses PV : une pose de course serait un plus. Silhouette provisoire teintée. [Fiche](design/Attaquants_par_biome_v0246.md).
+
+- [ ] **Golem de magma et Braise (Volcan, missions 71 à 80)** — Marche et mort, `enemy.neutral.magma_golem` (taille 1,45) et `enemy.neutral.ember` (taille 0,55). Le golem éclate en deux Braises à sa mort. Silhouettes provisoires teintées. [Fiche](design/Attaquants_par_biome_v0246.md).
+
+- [ ] **Scorpion des dunes (Désert, missions 111 à 120)** — Marche et mort, `enemy.neutral.scorpion`, taille 1,0. Il court deux fois plus vite pendant la Tempête de sable. Silhouette provisoire teintée. [Fiche](design/Attaquants_par_biome_v0246.md).
+
+- [ ] **Taupe des galeries (Mines, missions 131 à 140)** — Marche et mort, `enemy.neutral.mole`, taille 0,85, et si possible un monticule en mouvement pour ses passages sous terre (dessiné par le code pour l'instant). Silhouette provisoire teintée. [Fiche](design/Attaquants_par_biome_v0246.md).
+
+- [ ] **Crabe pilleur (Côtes, missions 171 à 180)** — Marche et mort, `enemy.neutral.crab`, taille 1,0. Il vole de l'or en atteignant la forteresse. Silhouette provisoire teintée. [Fiche](design/Attaquants_par_biome_v0246.md).
+
 - [ ] **Affixe Crue (Gué, missions 2 à 20)** — Pendant 4 s toutes les 12 s, les ennemis avancent 10 % plus vite, annonce 3 s avant. Provisoire dessiné par le code. Besoin : habillage de montée des eaux lisible sur le plateau, sans masquer la route. Identifiant `flood`.
 
 - [ ] **Affixe Vapeurs toxiques (Marais, missions 41 à 60)** — Pendant 4 s toutes les 12 s, les défenseurs infligent 20 % de dégâts en moins, annonce 3 s avant. Provisoire dessiné par le code. Besoin : voile de vapeurs sur le plateau. Identifiant `miasma`.

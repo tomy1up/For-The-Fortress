@@ -99,7 +99,8 @@ Cadrage des chapitres 11 à 20 : [fiche](Cadrage_missions_101_200.md). Un biome 
 
 ## Décision du 23 novembre 2026 — un affixe par biome, un attaquant par chapitre pair
 
-**Étape 2 réalisée en v0.245** : le porteur a validé la création de Crue, Vapeurs toxiques, Cor d'alarme, Courants ascendants et Drain d'âmes (« Oui, code-les »), puis un rythme resserré pour tous les affixes temporisés (« Oui, ce rythme ») et 20 réglages sous la courbe de PV (« Oui, baisse-les »). Détails : `design/Affixe_par_biome_v0245.md`. Reste l'étape 3 : les cinq attaquants des Ardoises, du Volcan, du Désert, des Mines et des Côtes.
+**Étape 2 réalisée en v0.245** : le porteur a validé la création de Crue, Vapeurs toxiques, Cor d'alarme, Courants ascendants et Drain d'âmes (« Oui, code-les »), puis un rythme resserré pour tous les affixes temporisés (« Oui, ce rythme ») et 20 réglages sous la courbe de PV (« Oui, baisse-les »). Détails : `design/Affixe_par_biome_v0245.md`. 
+**Étape 3 réalisée en v0.246** : le porteur a validé le Bouquetin des crêtes, le Golem de magma, le Scorpion des dunes (coureur de tempête, à la place d'une carapace jugée trop complexe), la Taupe des galeries et le Crabe pilleur. Détails : `design/Attaquants_par_biome_v0246.md`.
 
 Le porteur remplace la règle « une seule nouveauté par biome, dans son second chapitre » (MAJ-10, MAJ-22) :
 
@@ -111,15 +112,15 @@ Le porteur remplace la règle « une seule nouveauté par biome, dans son second
 
 | Biome | Chapitres | Affixe | Attaquant du chapitre pair |
 | --- | --- | --- | --- |
-| Gué | 1-2 | à proposer | Tortue gardienne |
-| Ardoises | 3-4 | Vents contraires | à proposer |
-| Marais | 5-6 | à proposer | Gueule-de-Vase |
-| Terres volcaniques | 7-8 | Éruptions | à proposer |
-| Citadelle | 9-10 | à proposer | Garnison |
-| Désert | 11-12 | Tempête de sable | à proposer |
-| Mines | 13-14 | Éboulement | à proposer |
-| Îles flottantes | 15-16 | à proposer | Aigle des cimes |
-| Côtes | 17-18 | Brume marine | à proposer |
-| Nécropole | 19-20 | à proposer | Revenant |
+| Gué | 1-2 | Crue | Tortue gardienne |
+| Ardoises | 3-4 | Vents contraires | Bouquetin des crêtes |
+| Marais | 5-6 | Vapeurs toxiques | Gueule-de-Vase |
+| Terres volcaniques | 7-8 | Éruptions | Golem de magma |
+| Citadelle | 9-10 | Cor d'alarme | Garnison |
+| Désert | 11-12 | Tempête de sable | Scorpion des dunes |
+| Mines | 13-14 | Éboulement | Taupe des galeries |
+| Îles flottantes | 15-16 | Courants ascendants | Aigle des cimes |
+| Côtes | 17-18 | Brume marine | Crabe pilleur |
+| Nécropole | 19-20 | Drain d'âmes | Revenant |
 
 Les valeurs des affixes et des attaquants restent des réglages de prototype à confirmer. La cible de difficulté reste celle du porteur (40 à 70 % de marge pour la meilleure composition, MAJ-69, MAJ-79).

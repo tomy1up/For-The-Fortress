@@ -6,6 +6,7 @@ const Maps = preload("res://scripts/map_definition.gd")
 const MarshArt = preload("res://scripts/marsh_art.gd")
 const Drowned = preload("res://scripts/drowned_encounters.gd")
 const Campaign = preload("res://scripts/campaign_data.gd")
+const Attackers = preload("res://scripts/biome_attackers.gd")
 signal mission_requested(id: String)
 signal talents_requested(faction: int)
 signal shop_requested(faction: int)
@@ -366,6 +367,10 @@ func _refresh_detail() -> void:
 	elif definition.has("combat_affix"):
 		mission_detail.text = "%d vagues · PV ennemis : %d %%\nVents contraires · Cadence −10 %%" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
+	var affix_rule: String = mission_detail.tooltip_text # Règle de l'affixe, reprise sous celle du nouvel attaquant au chapitre pair.
+	if Attackers.valid_set(definition.get("wave_set_id","")):
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\n%s" % [definition.waves,Catalogue.faction_hp_percent(number,faction),Attackers.SHEET_LINES[definition.wave_set_id]]
+		mission_detail.tooltip_text = "Essai : "+Attackers.rule_for_set(str(definition.wave_set_id)).replace(" Réglage d’essai.","")+" Valeurs provisoires."
 	if definition.get("wave_set_id","") == "ford_banks":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : tortue gardienne" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Essai : la tortue encaisse 25 % des dégâts des voisins proches, dans la limite de ses PV. Ne protège ni les autres tortues ni les boss. Mêmes tracés que le chapitre 1 ; nouvelles rencontres. Valeurs provisoires."
@@ -383,10 +388,10 @@ func _refresh_detail() -> void:
 Nouveau : Gueule-de-Vase · eau régénérante" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
 		mission_detail.tooltip_text = "Essai : Gueule-de-Vase régénère %d %% de ses PV maximum par seconde dans les tronçons inondés de la carte, repérés en bleu sur le chemin. Valeurs provisoires." % roundi(Drowned.REGEN_PER_SECOND*100.0)
 	# Chapitre pair : le nouvel attaquant occupe la seconde ligne, l'affixe du biome rejoint la première.
-	if definition.has("wave_set_id") and Campaign.BIOME_AFFIX_IDS.has(str(definition.get("combat_affix",{}).get("id",""))):
+	if definition.has("wave_set_id") and Campaign.AFFIX_NAMES.has(str(definition.get("combat_affix",{}).get("id",""))):
 		var unit_line: String = mission_detail.text.split("\n")[-1]
-		mission_detail.text = "PV ennemis : %d %% · Affixe : %s\n%s" % [Catalogue.faction_hp_percent(number,faction),Campaign.BIOME_AFFIX_NAMES[str(definition.combat_affix.id)],unit_line]
-		mission_detail.tooltip_text += "\n"+Campaign.biome_affix_rule(definition.combat_affix)
+		mission_detail.text = "PV ennemis : %d %% · Affixe : %s\n%s" % [Catalogue.faction_hp_percent(number,faction),Campaign.AFFIX_NAMES[str(definition.combat_affix.id)],unit_line]
+		mission_detail.tooltip_text += "\n"+affix_rule
 	if status.is_empty():
 		mission_detail.text = "La progression n’est pas disponible."
 		rewards.text = profile.error if profile != null and not profile.error.is_empty() else "Revenez au choix de faction pour vérifier votre progression."

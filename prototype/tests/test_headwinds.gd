@@ -67,7 +67,7 @@ func run_checks() -> void:
 		game.meta_profile = profile
 		game._open_campaign(camp,4)
 		game.campaign_menu._select(mission-31)
-		check(game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("−10 %"),"Affixe expliqué avant le déblocage de la mission")
+		check(game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("Vents contraires") and game.campaign_menu.mission_detail.tooltip_text.contains("10 %"),"Affixe expliqué avant le déblocage de la mission")
 		for number in range(1,mission):
 			var run: int = profile.begin_mission(camp,Main.CampaignCatalogue.id_for(number),60,10,100)
 			check(profile.credit_mission(run,camp,10,true),"Préparation du parcours isolé")

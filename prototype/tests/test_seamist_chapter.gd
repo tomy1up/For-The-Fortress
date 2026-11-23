@@ -36,7 +36,7 @@ func run_checks() -> void:
 	for number in range(171,181):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 18 and definition.map_id == EXPECTED[number].map and definition.hp_percent == Main.CampaignCatalogue.hp_percent_for(number) and definition.po == 100 and definition.xp == 0 and definition.waves == 10,"Mission %d : carte, PV à 255 %% et plus, 100 PO sans XP" % number)
-		check(not definition.has("wave_set_id") and definition.has("combat_affix") and definition.combat_affix.id == "seamist" and int(definition.combat_affix.interval) == 12 and Catalogue.runtime(definition.id).get("wave_set_id","ford") == "ford" and Catalogue.runtime(definition.id).combat_affix.id == "seamist","Mission %d : rencontres standard du Gué avec l'éboulement (valeurs d'essai)" % number)
+		check(definition.get("wave_set_id","") == "coast_crabs" and definition.has("combat_affix") and definition.combat_affix.id == "seamist" and int(definition.combat_affix.interval) == 12 and Catalogue.runtime(definition.id).get("wave_set_id","ford") == "coast_crabs" and Catalogue.runtime(definition.id).combat_affix.id == "seamist","Mission %d : rencontres du biome avec l'éboulement (valeurs d'essai)" % number)
 		await verify_map(number)
 	for number in range(171,181):
 		for camp in range(2): await verify_mission(camp,number)
@@ -103,14 +103,14 @@ func verify_mission(camp: int, number: int) -> void:
 	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and game.campaign_menu.mission_detail.text.contains("Affixe : Brume marine") and game.campaign_menu.rewards.text.contains("100 PO") and not game.campaign_menu.rewards.text.contains("XP"),"Mission %d : fiche standard, 100 PO sans mention d'XP" % number)
 	game.campaign_menu._launch()
 	var model: Model = game.model
-	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,camp) and model.gold == 150 and model.combat_affix.id == "seamist" and model.mist_enabled() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
+	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "coast_crabs" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,camp) and model.gold == 150 and model.combat_affix.id == "seamist" and model.mist_enabled() and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
 	play(model,Reference.types(camp,number),EXPECTED[number].order)
 	print("SEAMIST_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])
 	var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
 	var replay: Dictionary = Replay.verify(report)
 	check(replay.ok,"Mission %d : le rapport est rejouable : %s" % [number,str(replay.get("error",""))])
-	check(not report.has("wave_set_id") and report.has("combat_affix") and report.combat_affix.id == "seamist" and report.map_definition.decoration == "coast","Mission %d : le rapport conserve la carte des côtes et les rencontres standard" % number)
+	check(report.get("wave_set_id","") == "coast_crabs" and report.has("combat_affix") and report.combat_affix.id == "seamist" and report.map_definition.decoration == "coast","Mission %d : le rapport conserve la carte des côtes et les rencontres standard" % number)
 	game._sync_meta_rewards(true);game._sync_meta_rewards(true)
 	check(profile.campaign_status(camp).completed == number and profile.data.banks[camp].xp == 10000 and profile.data.banks[camp].resource == 6000+650+700+750+800+850+900+950+100*(number-170),"Mission %d : première victoire créditée une seule fois (100 PO, aucune XP)" % number)
 	check(profile.campaign_status(1-camp).completed == 0,"Le parcours adverse est inchangé")

@@ -91,6 +91,8 @@ func open(number: int,camp: int) -> bool:
 		note.text="Le revenant est un attaquant neutre (%d PV de base, vitesse %s) qui se relève une fois avec la moitié de ses PV maximum, à partir de la vague 4."%[int(Model.Revenant.DEFINITION.hp),str(Model.Revenant.DEFINITION.speed).replace(".",",")]
 	if definition.get("wave_set_id","")==Model.Eagle.ID:
 		note.text="L'aigle des cimes est un attaquant neutre rapide et fragile (%d PV de base, vitesse %s) qui arrive en groupes serrés à partir de la vague 3."%[int(Model.Eagle.DEFINITION.hp),str(Model.Eagle.DEFINITION.speed).replace(".",",")]
+	if Model.Attackers.valid_set(definition.get("wave_set_id","")):
+		note.text=Model.Attackers.rule_for_set(str(definition.wave_set_id)).replace(" Réglage d’essai.","")
 	if definition.get("wave_set_id","")==Model.Drowned.ID:
 		note.text="Gueule-de-Vase régénère %d %% de ses PV maximum par seconde dans les tronçons inondés du chemin."%roundi(Model.Drowned.REGEN_PER_SECOND*100.0)
 	show();close_button.grab_focus();return true
@@ -111,7 +113,7 @@ func _show_wave(wave: int) -> void:
 		if not card.visible: continue
 		var enemy: Dictionary=visible_entries[index]
 		var atlas:=AtlasTexture.new();atlas.atlas=Art.TEXTURES[enemy.identity_id];atlas.region=Art.FRAMES[enemy.identity_id].source
-		card.get_node("Portrait").texture=atlas
+		card.get_node("Portrait").texture=atlas;card.get_node("Portrait").modulate=Art.placeholder_tint(enemy.identity_id)
 		card.get_node("Name").text=enemy.name
 		card.get_node("Origin").text=Model.Enemies.origin_label(enemy.origin)
 		var wave_details := PackedStringArray()

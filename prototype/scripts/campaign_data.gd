@@ -111,9 +111,10 @@ const Drowned = preload("res://scripts/drowned_encounters.gd")
 const Garrison = preload("res://scripts/garrison_encounters.gd")
 const Eagle = preload("res://scripts/eagle_encounters.gd")
 const Revenant = preload("res://scripts/revenant_encounters.gd")
+const Attackers = preload("res://scripts/biome_attackers.gd")
 
 static func waves_for(set_id: String = "ford") -> Array:
-	return Banks.WAVES if set_id == Banks.ID else Drowned.WAVES if set_id == Drowned.ID else Garrison.WAVES if set_id == Garrison.ID else Eagle.WAVES if set_id == Eagle.ID else Revenant.WAVES if set_id == Revenant.ID else WAVES
+	return Banks.WAVES if set_id == Banks.ID else Drowned.WAVES if set_id == Drowned.ID else Garrison.WAVES if set_id == Garrison.ID else Eagle.WAVES if set_id == Eagle.ID else Revenant.WAVES if set_id == Revenant.ID else Attackers.WAVES[set_id] if Attackers.WAVES.has(set_id) else WAVES
 
 static func schedule(wave: int, set_id: String = "ford") -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
@@ -127,6 +128,8 @@ static func schedule(wave: int, set_id: String = "ford") -> Array[Dictionary]:
 ## Affixes de biome créés en v0.245 (décision du porteur, 23 novembre 2026 : un affixe par biome). Valeurs : réglages de prototype à confirmer.
 const BIOME_AFFIX_IDS: Array[String] = ["flood","miasma","alarm","updraft","souldrain"]
 const BIOME_AFFIX_NAMES: Dictionary = {"flood":"Crue","miasma":"Vapeurs toxiques","alarm":"Cor d'alarme","updraft":"Courants ascendants","souldrain":"Drain d'âmes"}
+## Nom de chaque affixe, pour la fiche de mission d'un chapitre pair (attaquant et affixe sur deux lignes).
+const AFFIX_NAMES: Dictionary = {"headwinds":"Vents contraires","eruptions":"Éruptions","sandstorm":"Tempête de sable","rockfall":"Éboulement","seamist":"Brume marine","flood":"Crue","miasma":"Vapeurs toxiques","alarm":"Cor d'alarme","updraft":"Courants ascendants","souldrain":"Drain d'âmes"}
 const BIOME_AFFIX_HINTS: Dictionary = {"flood":"ennemis plus rapides","miasma":"dégâts réduits","alarm":"boucliers ennemis","updraft":"bonds en avant","souldrain":"morts qui soignent"}
 
 static func _whole_value(value: Variant) -> bool:

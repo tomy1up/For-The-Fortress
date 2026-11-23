@@ -1741,10 +1741,13 @@ func _draw() -> void:
 			elif actor.has("defender"):
 				if model.guardian_aura(actor.slot) > 0.0: draw_texture_rect(FX_AURA,Rect2(actor.point+Vector2(-13.0,-3.0),Vector2(26,17)),false)
 				_draw_defender(actor.point, actor.defender.type, actor.defender.get("level", 1), actor.defender.get("branch", -1), defender_pose(actor.slot))
+			elif model.enemy_underground(actor.enemy):
+				_draw_burrow(actor.point,actor.enemy)
 			else:
 				if Model.enemy_is_slowed(actor.enemy): draw_texture_rect(FX_SLOW,Rect2(actor.point+Vector2(-19.0,-7.0),Vector2(38,19)),false)
 				var feedback: Array[Dictionary] = recent_enemy_damage(actor.enemy.id)
 				_draw_pillager(actor.point, actor.enemy,enemy_hit_strength(feedback),enemy_reaction_pose(actor.enemy,feedback,model.elapsed))
+				if actor.enemy.has("boost_until"): _draw_speed_lines(actor.point,actor.enemy)
 				var ratio: float = clampf(visual_hp(actor.enemy) / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
 				var bar_position: Vector2 = actor.point + Vector2(-12, -39 * _enemy_scale(actor.enemy))
 				draw_rect(Rect2(bar_position, Vector2(24, 4)), Color("472f2a"))
@@ -2244,10 +2247,10 @@ func _draw_fortress(anchor: Vector2) -> void:
 	draw_string(font,center+Vector2(-width/2,34),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("ed9989") if condition >= 2 else Color("d7bd83") if condition == 1 else INK)
 
 static func _enemy_scale(enemy: Dictionary) -> float:
-	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7, 1.4, 1.1, 1.6, 0.8, 1.1][enemy.get("type", 1)]
+	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7, 1.4, 1.1, 1.6, 0.8, 1.1, 1.05, 1.45, 0.55, 1.0, 0.85, 1.0][enemy.get("type", 1)]
 
 static func enemy_color(type: int) -> Color:
-	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384"),Color("91ab72"),Color("5f9aa0"),Color("b8a05c"),Color("8fb4d8"),Color("8a7f9c")][type]
+	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384"),Color("91ab72"),Color("5f9aa0"),Color("b8a05c"),Color("8fb4d8"),Color("8a7f9c"),Color("c9cfe0"),Color("d9683a"),Color("f09a35"),Color("e3c25c"),Color("7a6d80"),Color("d85c52")][type]
 
 func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.0, pose: Dictionary = {}) -> void:
 	var id: String = enemy_art_id(enemy,model.faction)
@@ -2290,7 +2293,7 @@ func _draw_pillager(center: Vector2, enemy: Dictionary, hit_strength: float = 0.
 	elif sheet_walk:
 		_draw_sheet_walker(id,enemy,motion,scale,facing,body,hit_strength)
 	else:
-		draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,_enemy_tint(hit_strength))
+		draw_texture_rect_region(EnemyArt.TEXTURES[id],EnemyArt.destination(id),EnemyArt.FRAMES[id].source,_enemy_tint(hit_strength)*EnemyArt.placeholder_tint(id))
 	if enemy.type == Model.Banks.GUARD_TYPE and model.active and _ghost_alpha >= 1.0:
 		for index in range(model.protection_events.size()-1,-1,-1):
 			var event: Dictionary = model.protection_events[index]
@@ -2454,9 +2457,20 @@ func _draw_biome_affix_events() -> void:
 	var color: Color = BIOME_AFFIX_COLORS.get(str(model.combat_affix.get("id","")),Color.WHITE)
 	for event in model.affix_events:
 		var age: float = model.elapsed-float(event.time)
-		if age < 0.0 or age >= BIOME_EVENT_DURATION: continue
-		var t: float = age/BIOME_EVENT_DURATION
+		var lifetime: float = THEFT_EVENT_DURATION if str(event.kind) == "theft" else BIOME_EVENT_DURATION
+		if age < 0.0 or age >= lifetime: continue
+		var t: float = age/lifetime
 		match str(event.kind):
+			"charge":
+				draw_arc(project(event.at)+Vector2(0,2),8.0+16.0*t,0.0,TAU,24,Color(0.86,0.9,1.0,0.85*(1.0-t)),2.0,true)
+			"burst":
+				draw_circle(project(event.at)+Vector2(0,-10),6.0+18.0*t,Color(1.0,0.55,0.18,0.45*(1.0-t)),true,-1,true)
+				draw_arc(project(event.at)+Vector2(0,-10),8.0+22.0*t,0.0,TAU,24,Color(1.0,0.78,0.35,0.9*(1.0-t)),2.0,true)
+			"theft":
+				var label: String = "−%d or" % int(event.amount)
+				var spot: Vector2 = project(event.at)+Vector2(-font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,15).x/2.0,-52.0-20.0*t)
+				draw_string_outline(font,spot,label,HORIZONTAL_ALIGNMENT_LEFT,-1,15,4,Color(0.1,0.07,0.05,1.0-t))
+				draw_string(font,spot,label,HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color(1.0,0.83,0.32,1.0-t))
 			"alarm":
 				draw_arc(project(event.at)+Vector2(0,-14),10.0+14.0*t,0.0,TAU,24,Color(color,0.85*(1.0-t)),2.0,true)
 			"updraft":
@@ -2469,6 +2483,35 @@ func _draw_biome_affix_events() -> void:
 				var target: Vector2 = project(event.to)+Vector2(0,-12)
 				draw_line(source,source.lerp(target,minf(1.0,t*2.0)),Color(color,0.8*(1.0-t)),2.0,true)
 				draw_circle(source.lerp(target,minf(1.0,t*2.0)),3.0,Color(color.lightened(0.3),0.9*(1.0-t)),true,-1,true)
+
+const THEFT_EVENT_DURATION := 1.2
+
+## Taupe sous terre : un monticule qui avance, sans corps ni jauge, pour montrer qu'elle ne peut pas être visée.
+func _draw_burrow(point: Vector2, enemy: Dictionary) -> void:
+	var size: float = _enemy_scale(enemy)
+	var mound := PackedVector2Array()
+	for step in range(17):
+		var angle: float = PI+PI*step/16.0
+		mound.append(point+Vector2(cos(angle)*20.0,sin(angle)*12.0+1.0)*size)
+	draw_colored_polygon(mound,Color("6b5442"))
+	draw_polyline(mound,Color("a58a6a"),1.5,true)
+	var wobble: float = sin(model.elapsed*9.0+float(enemy.id))*2.0
+	draw_circle(point+Vector2(-13.0+wobble,3.0)*size,2.4,Color("c7a981"),true,-1,true)
+	draw_circle(point+Vector2(13.0-wobble,3.0)*size,2.2,Color("c7a981"),true,-1,true)
+	draw_circle(point+Vector2(wobble*0.5,-5.0)*size,1.8,Color("c7a981"),true,-1,true)
+
+## Traits de vitesse derrière un ennemi poussé (charge du bouquetin, scorpion dans la tempête).
+func _draw_speed_lines(point: Vector2, enemy: Dictionary) -> void:
+	var distance: float = display_distance(enemy)
+	var behind: Vector2 = project(model.position_at(maxf(0.0,distance-0.6),model.enemy_route_points(enemy),model.enemy_route_length(enemy)))
+	if behind.is_equal_approx(point): return
+	var back: Vector2 = (behind-point).normalized()
+	var size: float = _enemy_scale(enemy)
+	for index in range(4):
+		var phase: float = fposmod(model.elapsed*3.0+float(index)/4.0,1.0)
+		var from: Vector2 = point+Vector2(0.0,(-3.0-7.0*index)*size)+back*(17.0+9.0*phase)*size
+		draw_line(from,from+back*17.0*size,Color(0.14,0.1,0.07,0.55*(1.0-phase*0.6)),4.5,true)
+		draw_line(from,from+back*17.0*size,Color(1.0,0.96,0.78,1.0-phase*0.6),2.5,true)
 
 ## Bouclier du Cor d'alarme : anneau autour de l'ennemi et jauge au-dessus de ses PV.
 func _draw_enemy_shield(point: Vector2, enemy: Dictionary, bar_position: Vector2) -> void:

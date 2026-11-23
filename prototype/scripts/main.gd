@@ -1380,6 +1380,7 @@ func _update_wave_forecast(pointer := Vector2.INF) -> void:
 			for entry in group.get("entries", []):
 				map_view.highlighted_entries.append(int(entry.number)-1)
 		forecast_portraits[index].texture = _forecast_portrait(group.type)
+		forecast_portraits[index].modulate = MapView.EnemyArt.placeholder_tint(Model.Enemies.for_profile(group.type,model.faction).id)
 		forecast_marks[index].color = MapView.enemy_color(group.type)
 		forecast_names[index].text = "%d × %s%s" % [group.count,group.name," · BOSS" if group.type == 7 else ""]
 		var fatal: bool = group.fortress_damage >= model.fortress_hp
@@ -1389,6 +1390,7 @@ func _update_wave_forecast(pointer := Vector2.INF) -> void:
 		if group.type == Model.Drowned.TYPE: forecast_rows[index].tooltip_text += "
 Gueule-de-Vase : régénère %d %% de ses PV maximum par seconde tant qu’il traverse un tronçon inondé. Réglage d’essai." % roundi(Model.Drowned.REGEN_PER_SECOND*100.0)
 		if group.type == Model.Revenant.TYPE: forecast_rows[index].tooltip_text += "\nRevenant : attaquant neutre qui se relève une fois avec la moitié de ses PV maximum. Réglage d’essai."
+		if Model.Attackers.RULES.has(group.type): forecast_rows[index].tooltip_text += "\n"+Model.Attackers.RULES[group.type]
 		if group.type == Model.Eagle.TYPE: forecast_rows[index].tooltip_text += "\nAigle des cimes : attaquant neutre rapide et fragile, en groupes serrés. Réglage d’essai."
 		if group.type == Model.Garrison.TYPE: forecast_rows[index].tooltip_text += "\nGarnison : unité d’élite de la citadelle, plus résistante que l’élite ordinaire. Réglage d’essai."
 		if group.type == Model.Banks.GUARD_TYPE: forecast_rows[index].tooltip_text += "\nGardienne : encaisse 25 % des dégâts de ses voisins proches. Ne protège ni les boss ni les autres tortues. La protection cesse à sa mort."
@@ -2672,8 +2674,8 @@ func _toggle_combat_numbers() -> void:
 
 func _combat_tally_text() -> String:
 	if combat_numbers_visible:
-		return "Apparus : %d / %d\nÉliminés : %d · Passés : %d\nEn chemin : %d" % [model.spawned,model.spawn_schedule.size(),model.killed,model.escaped,model.enemies.size()]
-	var first: String = "Éliminés : %d sur %d" % [model.killed,model.spawn_schedule.size()] if model.phase in ["finished","bonus","victory","defeat"] else "Ennemis restants : %d" % maxi(0,model.spawn_schedule.size()-model.killed-model.escaped)
+		return "Apparus : %d / %d\nÉliminés : %d · Passés : %d\nEn chemin : %d" % [model.spawned+model.extra_enemies,model.planned_enemies(),model.killed,model.escaped,model.enemies.size()]
+	var first: String = "Éliminés : %d sur %d" % [model.killed,model.planned_enemies()] if model.phase in ["finished","bonus","victory","defeat"] else "Ennemis restants : %d" % maxi(0,model.planned_enemies()-model.killed-model.escaped)
 	var arrivals := first+"\nOnt atteint la forteresse : %d" % model.escaped
 	if model.routes.size() == 2:
 		arrivals += "\nEntrée 1 : %d · Entrée 2 : %d" % [

@@ -19,7 +19,7 @@ const WAVES: Array = [
 ]
 
 static func valid_set(id: Variant) -> bool:
-	return id is String and id in ["ford",ID,"marsh_drowned","citadel_garrison","sky_eagles","necro_revenants"]
+	return id is String and id in ["ford",ID,"marsh_drowned","citadel_garrison","sky_eagles","necro_revenants","slate_ibex","ash_golems","dune_scorpions","mine_moles","coast_crabs"]
 
 static func guardian_for(enemy: Dictionary, guards: Array, positions: Dictionary, damage: Dictionary = {}) -> int:
 	if enemy.get("type",1) in [GUARD_TYPE,7] or enemy.hp <= 0.0: return -1

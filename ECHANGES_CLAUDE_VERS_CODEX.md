@@ -4,6 +4,16 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-23 — v0.246 : six créatures à dessiner (ouvert)
+Décision du porteur (MAJ-98, `design/Attaquants_par_biome_v0246.md`). Les nouveaux attaquants utilisent des silhouettes existantes teintées (`EnemyArt.PLACEHOLDER_TINTS`) ; retire leur teinte en livrant le dessin. Tous sont neutres, communs aux deux factions.
+- `enemy.neutral.ibex` : Bouquetin des crêtes, 1,05 de taille d'affichage. Il charge sous 50 % de ses PV.
+- `enemy.neutral.magma_golem` : Golem de magma, 1,45. Il éclate à sa mort.
+- `enemy.neutral.ember` : Braise, 0,55, petite et rapide.
+- `enemy.neutral.scorpion` : Scorpion des dunes, 1,0. Il court pendant la Tempête de sable.
+- `enemy.neutral.mole` : Taupe des galeries, 0,85. Sous terre, le code dessine pour l'instant un monticule.
+- `enemy.neutral.crab` : Crabe pilleur, 1,0.
+Pour chacune : une marche et une mort, au format de `design/Format_animations.md`. Lance tes captures avec `python prototype/tests/hidden_desktop.py <commande>`.
+
 ### 2026-11-23 — v0.245 : cinq nouveaux affixes et rythme resserré (ouvert)
 Décisions du porteur (MAJ-94 et MAJ-95, `design/Affixe_par_biome_v0245.md`). Ces effets ont un visuel provisoire dessiné par le code ; leurs habillages sont ajoutés à `TODO_VISUELS.md`. Identifiants d'affixe : `flood`, `miasma`, `alarm`, `updraft`, `souldrain`.
 - **Rythme modifié de tes habillages** : Éruptions 4 s toutes les 12 s (5 s/14 s), Tempête de sable 4 s/12 s (5 s/15 s), Brume marine 4 s/12 s (6 s/22 s), Éboulement 5 s/12 s (7 s/18 s). Avertissement toujours de 3 s. Merci de vérifier sur la v0.245 que leurs apparitions et dissipations restent lisibles avec ces durées.

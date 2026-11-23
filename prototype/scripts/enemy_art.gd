@@ -10,6 +10,13 @@ const TEXTURES: Dictionary = {
 	"enemy.neutral.bear": preload("res://assets/enemies/rosters/neutres_v001.png"),
 	"enemy.neutral.eagle": preload("res://assets/enemies/rosters/aigle_des_cimes_v001.png"),
 	"enemy.neutral.revenant": preload("res://assets/enemies/rosters/revenant_v001.png"),
+	# Attaquants de la v0.246 : silhouettes existantes teintées (PLACEHOLDER_TINTS), en attendant les dessins de Codex.
+	"enemy.neutral.ibex": preload("res://assets/enemies/rosters/neutres_v001.png"),
+	"enemy.neutral.magma_golem": preload("res://assets/enemies/rosters/horde_v003.png"),
+	"enemy.neutral.ember": preload("res://assets/enemies/rosters/neutres_v001.png"),
+	"enemy.neutral.scorpion": preload("res://assets/enemies/rosters/tortue_gardienne_v001.png"),
+	"enemy.neutral.mole": preload("res://assets/enemies/rosters/neutres_v001.png"),
+	"enemy.neutral.crab": preload("res://assets/enemies/rosters/tortue_gardienne_v001.png"),
 	"enemy.alliance.infantry": preload("res://assets/enemies/rosters/alliance_v002.png"),
 	"enemy.alliance.scout": preload("res://assets/enemies/rosters/alliance_v002.png"),
 	"enemy.alliance.siegebreaker": preload("res://assets/enemies/rosters/alliance_v002.png"),
@@ -31,6 +38,12 @@ const FRAMES: Dictionary = {
 	"enemy.neutral.bear": {"source":Rect2(1412,100,741,553),"foot":Vector2(1758.409,653),"height":34.0},
 	"enemy.neutral.eagle": {"source":Rect2(0,0,336,256),"foot":Vector2(179,234),"height":52.0},
 	"enemy.neutral.revenant": {"source":Rect2(0,0,372,354),"foot":Vector2(170,327),"height":45.5},
+	"enemy.neutral.ibex": {"source":Rect2(742,198,618,452),"foot":Vector2(1026.745,650),"height":34.0},
+	"enemy.neutral.magma_golem": {"source":Rect2(866,200,370,399),"foot":Vector2(1045.418,599),"height":34.0},
+	"enemy.neutral.ember": {"source":Rect2(27,208,633,437),"foot":Vector2(354.164,645),"height":34.0},
+	"enemy.neutral.scorpion": {"source":Rect2(90,265,1075,732),"foot":Vector2(650,997),"height":34.0},
+	"enemy.neutral.mole": {"source":Rect2(1412,100,741,553),"foot":Vector2(1758.409,653),"height":34.0},
+	"enemy.neutral.crab": {"source":Rect2(90,265,1075,732),"foot":Vector2(650,997),"height":34.0},
 	"enemy.alliance.infantry": {"source":Rect2(64,314,246,308),"foot":Vector2(176.077,622),"height":34.0},
 	"enemy.alliance.scout": {"source":Rect2(492,316,283,305),"foot":Vector2(607.628,621),"height":34.0},
 	"enemy.alliance.siegebreaker": {"source":Rect2(904,304,312,317),"foot":Vector2(1059.396,621),"height":34.0},
@@ -44,6 +57,18 @@ const FRAMES: Dictionary = {
 	"enemy.horde.warchief": {"source":Rect2(1716,182,416,417),"foot":Vector2(1920.095,599),"height":34.0},
 	"enemy.horde.garrison": {"source":Rect2(0,0,1084,999),"foot":Vector2(559,999),"height":34.0},
 }
+## Teintes des silhouettes provisoires : elles distinguent les nouveaux attaquants jusqu'à leurs dessins.
+const PLACEHOLDER_TINTS: Dictionary = {
+	"enemy.neutral.ibex":Color(0.62,0.74,1.0),
+	"enemy.neutral.magma_golem":Color(1.0,0.48,0.26),
+	"enemy.neutral.ember":Color(1.0,0.62,0.18),
+	"enemy.neutral.scorpion":Color(1.0,0.88,0.22),
+	"enemy.neutral.mole":Color(0.5,0.45,0.6),
+	"enemy.neutral.crab":Color(1.0,0.42,0.38),
+}
+
+static func placeholder_tint(id: String) -> Color:
+	return PLACEHOLDER_TINTS.get(id,Color.WHITE)
 
 static func destination(id: String) -> Rect2:
 	var frame: Dictionary = FRAMES[id]

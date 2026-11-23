@@ -23,6 +23,7 @@ const Drowned = preload("res://scripts/drowned_encounters.gd")
 const Garrison = preload("res://scripts/garrison_encounters.gd")
 const Eagle = preload("res://scripts/eagle_encounters.gd")
 const Revenant = preload("res://scripts/revenant_encounters.gd")
+const Attackers = preload("res://scripts/biome_attackers.gd")
 var wave_set_id: String = "ford"
 var route_target_policy: String = "arrival_time"
 var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
@@ -33,7 +34,8 @@ var eruption_next: int = 1 # Numéro de la prochaine éruption de la vague (affi
 var storm_next: int = 0 # Indice de la prochaine frontière de tempête de sable (début puis fin de chaque rafale).
 var affix_next: int = 0 # Affixes de biome de la v0.245 : crues ou impulsions déjà passées dans la vague.
 var flood_start: float = -1.0 # Début de la crue en cours (-1 hors crue).
-var affix_events: Array[Dictionary] = [] # Observation visuelle des impulsions (cor, bonds, soins), sans effet sur le combat.
+var affix_events: Array[Dictionary] = [] # Observation visuelle des impulsions (cor, bonds, soins, attaquants de biome), sans effet sur le combat.
+var extra_enemies: int = 0 # Ennemis créés pendant la vague, hors calendrier (Braises du golem de magma).
 var path_points: Array[Vector2] = []
 var slots: Array[Vector2] = []
 var path_length: float
@@ -262,6 +264,7 @@ func reset() -> void:
 	explosion_events.clear()
 	elimination_events.clear()
 	affix_events.clear()
+	extra_enemies = 0
 	bought_waves.clear()
 	event_log.clear()
 	defenders.clear()
@@ -450,15 +453,23 @@ func _end_flood() -> void:
 	flood_start = -1.0
 	affix_next += 1
 
-## Instant où l'ennemi atteint la distance `d` pendant une crue, avec un éventuel ralentissement en cours : courbe affine par morceaux.
-func _time_with_flood(enemy: Dictionary, d: float) -> float:
+## Instant où l'ennemi atteint la distance `d` avec une crue, un ralentissement ou une poussée en cours : courbe affine par morceaux.
+func _time_piecewise(enemy: Dictionary, d: float) -> float:
 	var target: float = d/float(enemy.get("speed",1.0))+float(enemy.spawn_time)+float(enemy.get("delay",0.0))
-	var flood_from: float = maxf(flood_start,float(enemy.spawn_time))
-	var flood_to: float = _flood_end()
+	var flooded: bool = flood_start >= 0.0
+	var flood_from: float = maxf(flood_start,float(enemy.spawn_time)) if flooded else INF
+	var flood_to: float = _flood_end() if flooded else INF
+	var flood_rate: float = _flood_rate() if flooded else 0.0
 	var slow_from: float = float(enemy.get("slow_start",INF))
 	var slow_to: float = float(enemy.get("slow_until",INF))
-	var points: Array[float] = [flood_from,flood_to]
+	var boost_from: float = float(enemy.get("boost_start",INF))
+	var boost_to: float = float(enemy.get("boost_until",INF))
+	var boost_rate: float = float(enemy.get("boost_rate",0.0))
+	var points: Array[float] = []
+	if flooded: points.append_array([flood_from,flood_to])
 	if enemy.has("slow_until"): points.append_array([slow_from,slow_to])
+	if enemy.has("boost_until"): points.append_array([boost_from,boost_to])
+	if points.is_empty(): return target
 	points.sort()
 	var previous: float = points[0]
 	if target <= previous: return target
@@ -466,12 +477,29 @@ func _time_with_flood(enemy: Dictionary, d: float) -> float:
 	for index in range(1,points.size()):
 		var point: float = points[index]
 		var middle: float = (previous+point)*0.5
-		var slope: float = 1.0-((1.0-SLOW_FACTOR) if middle >= slow_from and middle < slow_to else 0.0)+(_flood_rate() if middle >= flood_from and middle < flood_to else 0.0)
+		var slope: float = 1.0-((1.0-SLOW_FACTOR) if middle >= slow_from and middle < slow_to else 0.0)+(flood_rate if middle >= flood_from and middle < flood_to else 0.0)+(boost_rate if middle >= boost_from and middle < boost_to else 0.0)
 		var reached: float = value+slope*(point-previous)
 		if target <= reached and slope > 0.0: return previous+(target-value)/slope
 		value = reached
 		previous = point
 	return previous+target-value
+
+## Fin d'une poussée (charge du bouquetin, scorpion dans la tempête) : l'avance gagnée est reportée dans le retard, comme à la fin d'une crue.
+func _end_boosts() -> void:
+	for enemy in enemies:
+		if enemy.has("boost_until") and float(enemy.boost_until) <= elapsed+EPS:
+			enemy.delay = float(enemy.get("delay",0.0))-float(enemy.boost_rate)*(float(enemy.boost_until)-float(enemy.boost_start))
+			enemy.erase("boost_start");enemy.erase("boost_until");enemy.erase("boost_rate")
+
+## Scorpion des dunes : deux fois plus rapide pendant une rafale de la Tempête de sable, y compris s'il apparaît pendant celle-ci.
+func _boost_scorpions_in_storm() -> void:
+	if not storm_active_now(): return
+	var number: int = int(floor((elapsed+EPS)/float(combat_affix.interval)))
+	for enemy in enemies:
+		if int(enemy.get("type",1)) != Attackers.SCORPION or enemy.has("boost_until"): continue
+		enemy.boost_start = maxf(storm_start_time(number),float(enemy.spawn_time))
+		enemy.boost_until = storm_start_time(number)+float(combat_affix.duration)
+		enemy.boost_rate = Attackers.STORM_RATE
 
 ## Début de crue et impulsions (bouclier du cor, bond des courants ascendants).
 func _biome_affix_pulses() -> void:
@@ -705,7 +733,7 @@ func configure_wave_set(value: Variant) -> bool:
 	wave_set_id = value;spawn_schedule = Campaign.schedule(wave,wave_set_id);return true
 
 static func enemy_definition(type: int) -> Dictionary:
-	return Banks.GUARD if type == Banks.GUARD_TYPE else Drowned.DEFINITION if type == Drowned.TYPE else Garrison.DEFINITION if type == Garrison.TYPE else Eagle.DEFINITION if type == Eagle.TYPE else Revenant.DEFINITION if type == Revenant.TYPE else ENEMY_TYPES[type]
+	return Banks.GUARD if type == Banks.GUARD_TYPE else Drowned.DEFINITION if type == Drowned.TYPE else Garrison.DEFINITION if type == Garrison.TYPE else Eagle.DEFINITION if type == Eagle.TYPE else Revenant.DEFINITION if type == Revenant.TYPE else Attackers.DEFINITIONS[type] if Attackers.DEFINITIONS.has(type) else ENEMY_TYPES[type]
 
 static func scaled_enemy_hp(type: int, percent: int = 100) -> float:
 	return float(enemy_definition(type).hp) if percent == 100 else float(enemy_definition(type).hp)*(float(percent)/100.0)
@@ -1014,9 +1042,9 @@ func damage_for(stats: Dictionary, component: String, victim: Dictionary) -> flo
 	return _damage_with_bonuses(stats,component,victim,bonuses)
 
 ## Types d'ennemis lourds, petits et rapides pour les règles des unités de boutique (valeurs de prototype à confirmer).
-const HEAVY_ENEMY_TYPES: Array[int] = [3,5,6,7,10]
-const SMALL_ENEMY_TYPES: Array[int] = [0,1,2,4,11]
-const FAST_ENEMY_TYPES: Array[int] = [0,2,4,11]
+const HEAVY_ENEMY_TYPES: Array[int] = [3,5,6,7,10,14]
+const SMALL_ENEMY_TYPES: Array[int] = [0,1,2,4,11,15,17]
+const FAST_ENEMY_TYPES: Array[int] = [0,2,4,11,15]
 
 ## Multiplicateur propre à l'unité selon la cible, sur le tir direct : ennemi déjà blessé, lourd, petit ou rapide.
 static func target_multiplier(stats: Dictionary, victim: Dictionary) -> float:
@@ -1151,6 +1179,7 @@ func prepare_next_wave() -> bool:
 	explosion_events.clear()
 	elimination_events.clear()
 	affix_events.clear()
+	extra_enemies = 0
 	bought_waves.clear()
 	curses.clear()
 	event_log.clear()
@@ -1383,7 +1412,7 @@ static func enemy_is_slowed(enemy: Dictionary) -> bool:
 
 ## Instant où l'ennemi atteint la distance `d` sur sa route, compte tenu du ralentissement en cours (les ralentissements futurs recalculent à leur événement).
 func time_at_distance(enemy: Dictionary, d: float) -> float:
-	if flood_start >= 0.0: return _time_with_flood(enemy,d)
+	if flood_start >= 0.0 or enemy.has("boost_until"): return _time_piecewise(enemy,d)
 	var speed: float = float(enemy.get("speed",1.0))
 	var delay: float = float(enemy.get("delay",0.0))
 	if enemy.has("slow_until"):
@@ -1399,6 +1428,7 @@ func distance_at(enemy: Dictionary, t: float) -> float:
 	if enemy.has("delay"): base -= float(enemy.delay)
 	if enemy.has("slow_until") and t > float(enemy.slow_start): base -= (1.0-SLOW_FACTOR)*(minf(t,float(enemy.slow_until))-float(enemy.slow_start))
 	if flood_start >= 0.0: base += _flood_rate()*maxf(0.0,minf(t,_flood_end())-maxf(flood_start,float(enemy.spawn_time)))
+	if enemy.has("boost_until") and t > float(enemy.boost_start): base += float(enemy.boost_rate)*(minf(t,float(enemy.boost_until))-float(enemy.boost_start))
 	return clampf(base*speed,0.0,enemy_route_length(enemy))
 
 func _next_event_time() -> float:
@@ -1414,11 +1444,12 @@ func _next_event_time() -> float:
 	for enemy in enemies:
 		next_time = minf(next_time, time_at_distance(enemy,enemy_route_length(enemy)))
 		if enemy.has("slow_until") and float(enemy.slow_until) > elapsed+EPS: next_time = minf(next_time,float(enemy.slow_until))
+		if enemy.has("boost_until") and float(enemy.boost_until) > elapsed+EPS: next_time = minf(next_time,float(enemy.boost_until))
 	for defender in defenders:
 		if defender.is_empty():
 			continue
 		for enemy in enemies:
-			for window in _windows_for(defender,enemy):
+			for window in _reachable_windows(defender,enemy):
 				var first: float = maxf(defender.ready_at, time_at_distance(enemy,window.first))
 				var last: float = time_at_distance(enemy,window.last)
 				if first > elapsed + EPS and first <= last + EPS:
@@ -1439,6 +1470,7 @@ func enemy_in_water(enemy: Dictionary) -> bool:
 func _resolve_instant() -> void:
 	_end_slows()
 	_end_flood()
+	_end_boosts()
 	# 1. Apparitions et positions ; les arrivants restent ciblables jusqu'à la phase 4.
 	while spawned < spawn_schedule.size() and spawn_schedule[spawned].time <= elapsed + EPS:
 		var entry: Dictionary = spawn_schedule[spawned]
@@ -1449,6 +1481,7 @@ func _resolve_instant() -> void:
 		if entry_slow > 0.0: _slow_enemy(enemy,entry_slow)
 		enemies.append(enemy)
 		spawned += 1
+	_boost_scorpions_in_storm()
 	_update_positions()
 	_biome_affix_pulses()
 	# 1 bis. Éruptions (affixe) : le défenseur frappé ne tire plus avant la fin de sa désactivation.
@@ -1488,7 +1521,7 @@ func _resolve_instant() -> void:
 		var stats: Dictionary = get_stats(slot)
 		var targets: Array[Dictionary] = []
 		for enemy in enemies:
-			for window in _windows_for(defender,enemy):
+			for window in _reachable_windows(defender,enemy):
 				if enemy.distance >= window.first - EPS and enemy.distance <= window.last + EPS:
 					targets.append(enemy)
 					break
@@ -1536,7 +1569,7 @@ func _resolve_instant() -> void:
 				var candidates: Array[Dictionary] = []
 				for enemy in enemies:
 					var squared: float = enemy_separation_squared(origin,enemy)
-					if enemy.id not in hit_ids and squared < stats.radius * stats.radius:
+					if enemy.id not in hit_ids and squared < stats.radius * stats.radius and not enemy_underground(enemy):
 						candidates.append({"enemy": enemy, "squared": squared})
 				if candidates.is_empty():
 					break
@@ -1573,7 +1606,9 @@ func _resolve_instant() -> void:
 				# Herse (R-47) : le premier ennemi qui atteint la forteresse dans la vague ne lui inflige aucun dégât.
 				gate_wave = wave
 				event_log.append("%.9f herse %d" % [elapsed, enemy.id])
-			else: arrival_damage += enemy.get("fortress_damage", 1)
+			else:
+				arrival_damage += enemy.get("fortress_damage", 1)
+				if int(enemy.get("type",1)) == Attackers.CRAB: _steal_gold(enemy)
 			event_log.append("%.9f arrivee %d" % [elapsed, enemy.id])
 		else:
 			survivors.append(enemy)
@@ -1613,9 +1648,10 @@ func _wave_cleared_bonuses() -> void:
 func _finish_wave_record() -> void:
 	if _wave_record.is_empty() or _wave_record.wave != wave: return
 	var record: Dictionary = _wave_record.duplicate(true)
+	record.planned = planned_enemies()
 	if not routes.is_empty():
 		record["arrivals_by_route"] = wave_arrivals_by_route.duplicate()
-	record.merge({"hp_after":fortress_hp,"hp_lost":record.hp_before-fortress_hp,"income":total_income-record.income_before,"killed":killed,"escaped":escaped,"spawned":spawned,"remaining":enemies.size(),"seconds":elapsed,"result":"defeat" if phase == "defeat" else "cleared"})
+	record.merge({"hp_after":fortress_hp,"hp_lost":record.hp_before-fortress_hp,"income":total_income-record.income_before,"killed":killed,"escaped":escaped,"spawned":spawned+extra_enemies,"remaining":enemies.size(),"seconds":elapsed,"result":"defeat" if phase == "defeat" else "cleared"})
 	wave_history.append(record)
 	_record_action("wave_end",{"result":record.result,"killed":killed,"escaped":escaped,"income":record.income,"seconds":elapsed})
 	_wave_record.clear()
@@ -1692,7 +1728,7 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 		for enemy in survivors:
 			var splash := 0.0
 			for blast in blasts:
-				if blast.source.id != enemy.id and enemy_separation_squared(blast.source,enemy) <= blast.radius*blast.radius: splash += blast.damage
+				if blast.source.id != enemy.id and not enemy_underground(enemy) and enemy_separation_squared(blast.source,enemy) <= blast.radius*blast.radius: splash += blast.damage
 			if splash > 0.0:
 				splash = _mitigated(enemy,splash)
 				var before: float = enemy.hp
@@ -1735,8 +1771,45 @@ func _settle_enemy(enemy: Dictionary, survivors: Array[Dictionary], blasts: Arra
 			explosion_events.append({"time":elapsed,"position":enemy_position(enemy),"radius":float(enemy.get("volatile_radius",1.0))})
 			while explosion_events.size() > 24: explosion_events.pop_front()
 			blasts.append({"source":enemy,"damage":float(enemy.get("volatile_damage",0.0)),"radius":float(enemy.get("volatile_radius",1.0))})
+		if int(enemy.get("type",1)) == Attackers.GOLEM: _burst_golem(enemy,survivors)
 	else:
+		if int(enemy.get("type",1)) == Attackers.IBEX and not enemy.get("charged",false) and float(enemy.hp) < float(enemy.max_hp)*Attackers.CHARGE_THRESHOLD: _start_charge(enemy)
 		survivors.append(enemy)
+
+## Bouquetin des crêtes : une seule charge, dès qu'il passe sous la moitié de ses PV.
+func _start_charge(enemy: Dictionary) -> void:
+	enemy.charged = true
+	enemy.boost_start = elapsed
+	enemy.boost_until = elapsed+Attackers.CHARGE_SECONDS
+	enemy.boost_rate = Attackers.CHARGE_RATE
+	event_log.append("%.9f charge %d" % [elapsed, enemy.id])
+	_affix_event({"kind":"charge","at":enemy_position(enemy)})
+
+## Golem de magma : à sa mort, deux Braises repartent de sa position, sur sa route. Elles comptent comme des ennemis de la vague.
+func _burst_golem(golem: Dictionary, survivors: Array[Dictionary]) -> void:
+	event_log.append("%.9f éclatement %d" % [elapsed, golem.id])
+	_affix_event({"kind":"burst","at":enemy_position(golem)})
+	for index in range(Attackers.EMBERS):
+		var ember: Dictionary = make_enemy(Attackers.FIRST_EXTRA_ID+extra_enemies,Attackers.EMBER,elapsed,faction,enemy_hp_percent)
+		extra_enemies += 1
+		if golem.has("route_id"): ember.route_id = golem.route_id
+		var start: float = maxf(0.0,float(golem.distance)-index*Attackers.EMBER_SPACING)
+		ember.distance = start
+		ember.delay = -start/float(ember.speed)
+		var entry_slow: float = 4.0 if B_STASIS in bonuses else 2.0 if B_CALTROPS in bonuses else 0.0
+		if entry_slow > 0.0: _slow_enemy(ember,entry_slow)
+		survivors.append(ember)
+
+## Crabe pilleur : vole de l'or en atteignant la forteresse, sans jamais rendre le trésor négatif ; la Herse l'en empêche.
+func _steal_gold(enemy: Dictionary) -> void:
+	var stolen: int = mini(gold,Attackers.CRAB_THEFT)
+	gold -= stolen
+	event_log.append("%.9f vol %d -%d" % [elapsed, enemy.id, stolen])
+	if stolen > 0: _affix_event({"kind":"theft","at":enemy_position(enemy),"amount":stolen})
+
+## Ennemis de la vague : calendrier et Braises créées en combat.
+func planned_enemies() -> int:
+	return spawn_schedule.size()+extra_enemies
 
 func _apply_curse(source_id: int, enemy_id: int, damage: float) -> void:
 	var surviving: Array[Dictionary] = []
@@ -1795,7 +1868,7 @@ func enemy_route_length(enemy: Dictionary) -> float:
 	return path_length if routes.is_empty() else float(enemy_route(enemy).path_length)
 
 func enemy_arrival_delay(enemy: Dictionary) -> float:
-	if flood_start >= 0.0 or enemy.has("slow_until") or enemy.has("delay"): return maxf(0.0,time_at_distance(enemy,enemy_route_length(enemy))-elapsed)
+	if flood_start >= 0.0 or enemy.has("slow_until") or enemy.has("delay") or enemy.has("boost_until"): return maxf(0.0,time_at_distance(enemy,enemy_route_length(enemy))-elapsed)
 	return maxf(0.0,enemy_route_length(enemy)-enemy.distance)/float(enemy.get("speed",1.0))
 
 func enemy_route_points(enemy: Dictionary) -> Array[Vector2]:
@@ -1808,6 +1881,15 @@ func enemy_position(enemy: Dictionary) -> Vector2:
 
 func enemy_separation_squared(first: Dictionary, second: Dictionary) -> float:
 	return Routes.cross_separation_squared(first.distance,enemy_route_points(first),enemy_route_length(first),second.distance,enemy_route_points(second),enemy_route_length(second))
+
+## Fenêtres où ce défenseur peut viser cet ennemi : sa portée, moins les passages sous terre de la taupe.
+func _reachable_windows(defender: Dictionary, enemy: Dictionary) -> Array:
+	var windows: Array = _windows_for(defender,enemy)
+	return windows if int(enemy.get("type",1)) != Attackers.MOLE else Attackers.surface_windows(windows,enemy_route_length(enemy))
+
+## Vrai si l'ennemi est une taupe actuellement sous terre : elle ne peut être ni visée, ni touchée par une zone.
+func enemy_underground(enemy: Dictionary) -> bool:
+	return int(enemy.get("type",1)) == Attackers.MOLE and Attackers.underground(float(enemy.distance),enemy_route_length(enemy))
 
 func _windows_for(defender: Dictionary, enemy: Dictionary) -> Array:
 	var stormy: bool = storm_active_now() and defender.has("storm_windows")

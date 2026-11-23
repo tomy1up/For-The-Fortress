@@ -37,7 +37,7 @@ func run_checks() -> void:
 	for number in range(71,81):
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.chapter == 8 and definition.map_id == EXPECTED[number].map and definition.hp_percent == 99+number and definition.po == 60 and definition.xp == 100 and definition.waves == 10,"Mission %d : carte, PV et gains habituels" % number)
-		check(not definition.has("wave_set_id") and definition.combat_affix == AFFIX and Catalogue.runtime(definition.id).combat_affix == AFFIX and Catalogue.runtime(definition.id).get("wave_set_id","ford") == "ford","Mission %d : rencontres standard avec l'affixe Éruptions, nouveauté du chapitre 8" % number)
+		check(definition.get("wave_set_id","") == "ash_golems" and definition.combat_affix == AFFIX and Catalogue.runtime(definition.id).combat_affix == AFFIX and Catalogue.runtime(definition.id).get("wave_set_id","ford") == "ash_golems","Mission %d : rencontres standard avec l'affixe Éruptions, nouveauté du chapitre 8" % number)
 		await verify_map(number)
 	for number in range(71,81):
 		for camp in range(2): await verify_mission(camp,number)
@@ -104,14 +104,14 @@ func verify_mission(camp: int, number: int) -> void:
 	check(not game.campaign_menu.start_button.disabled and game.campaign_menu.mission_detail.text.contains("PV ennemis : %d %%" % Main.CampaignCatalogue.faction_hp_percent(number,camp)) and game.campaign_menu.mission_detail.text.contains("Éruptions") and game.campaign_menu.mission_detail.tooltip_text.contains("12 s"),"Mission %d : la fiche annonce les éruptions" % number)
 	game.campaign_menu._launch()
 	var model: Model = game.model
-	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ford" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix == AFFIX and game.affix_label.visible and game.affix_label.text.begins_with("Éruptions") and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
+	check(not game.choosing_faction and game.mission_definition.id == Main.CampaignCatalogue.id_for(number) and model.map_definition.id == EXPECTED[number].map and model.wave_set_id == "ash_golems" and model.enemy_hp_percent == Main.CampaignCatalogue.faction_hp_percent(number,model.faction) and model.gold == 150 and model.combat_affix == AFFIX and game.affix_label.visible and game.affix_label.text.begins_with("Éruptions") and model.fortress_hp == model.max_hp and model.routes.size() == (0 if EXPECTED[number].routes == 1 else EXPECTED[number].routes),"Mission %d : démarrage par le parcours normal" % number)
 	play(model,Reference.types(camp,number),EXPECTED[number].order)
 	print("ERUPTION_RESULT=",camp,",",number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 	check(model.phase == "victory","Mission %d : une composition accessible gagne (faction %d)" % [number,camp])
 	var report: Dictionary = JSON.parse_string(JSON.stringify(Report.build(model)))
 	var replay: Dictionary = Replay.verify(report)
 	check(replay.ok,"Mission %d : le rapport est rejouable : %s" % [number,str(replay.get("error",""))])
-	check(not report.has("wave_set_id") and report.combat_affix == JSON.parse_string(JSON.stringify(AFFIX)) and report.map_definition.decoration == "volcanic","Mission %d : le rapport conserve la carte volcanique et l'affixe" % number)
+	check(report.get("wave_set_id","") == "ash_golems" and report.combat_affix == JSON.parse_string(JSON.stringify(AFFIX)) and report.map_definition.decoration == "volcanic","Mission %d : le rapport conserve la carte volcanique et l'affixe" % number)
 	game._sync_meta_rewards(true);game._sync_meta_rewards(true)
 	check(profile.campaign_status(camp).completed == number and profile.data.banks[camp].xp == 100*number and profile.data.banks[camp].resource == 60*number,"Mission %d : première victoire créditée une seule fois" % number)
 	check(profile.campaign_status(1-camp).completed == 0,"Le parcours adverse est inchangé")
