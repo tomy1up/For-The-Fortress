@@ -4,7 +4,9 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**23 novembre — Appui du Revenant lors de la relève.** Comparatif sur copie v0.241, en ligne droite et en virage dans les deux factions. 248 captures et trois suites réussies. Le point d’appui reste fixe pendant 0,15 s puis rejoint sa position à 0,72 s. Proposition en attente de l’avis du porteur. [Fiche et GIF](design/Visuels_Appui_Releve_Revenant.md).
+**23 novembre — Relève du Revenant redessinée.** Après le retour du porteur sur l’ancienne gestuelle, nouvelle planche à 16 dessins complets proposée. Vue en combat sur copie v0.243 à la mission 191, dans les deux factions, avec 84 captures et trois suites ciblées. Export et intégration en attente de l’avis du porteur. [Fiche et GIF](design/Visuels_Releve_Revenant_Dessinee.md).
+
+**23 novembre — Appui du Revenant lors de la relève.** Comparatif sur copie v0.241, en ligne droite et en virage dans les deux factions. 248 captures et trois suites réussies. Le point d’appui reste fixe pendant 0,15 s puis rejoint sa position à 0,72 s. Essai antérieur à la demande de redessiner la relève. [Fiche et GIF](design/Visuels_Appui_Releve_Revenant.md).
 
 **23 novembre — Décor du Gué, missions 1 à 20.** Cinq pièces pour dix plateaux, plus rivière et pont pour les missions 1 et 11. 48 captures en combat et trois suites ciblées réussies sur copie v0.241. Lot 3feb9b09 validé par le porteur le 23 novembre 2026, à intégrer par Claude Code. [Fiche](design/Visuels_Gue_01_20.md).
 

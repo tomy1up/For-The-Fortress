@@ -17,4 +17,4 @@ Mission 191, vague 4. L’atelier déclenche le coup fatal à 25,40 s sur une li
 - Les déplacements de combat et les PV observés sont identiques image par image. La première relève redonne exactement 50 % des PV maximum. Les tirs restent calculés sur la position de combat. Le raccord du survol et des effets d’impact avec le point affiché reste à vérifier lors d’une éventuelle intégration.
 - 248 captures réussies sur la copie, et trois suites ciblées au vert. `test_revenant.gd` (28), `test_enemy_walk.gd` (1 278), `test_animation_library.gd` (205).
 
-L’essai attend la validation du porteur. Les changements de rendu de l’atelier restent dans la copie locale.
+Le porteur a demandé une nouvelle animation image par image le 23 novembre 2026. La proposition qui succède à cet essai est dans la [fiche de la relève dessinée](Visuels_Releve_Revenant_Dessinee.md).

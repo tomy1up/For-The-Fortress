@@ -6,9 +6,9 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
-### 2026-11-23 — Essai d’appui du Revenant pendant la relève (en attente du porteur)
+### 2026-11-23 — Relève du Revenant redessinée (en attente du porteur)
 
-Sur copie v0.241, la distance au déclenchement de la relève est conservée 0,15 s au rendu avant un raccord en douceur jusqu’à 0,72 s, en suivant la route. Le modèle et les planches sont inchangés dans la branche. Écart temporaire maximal observé de 6,85 px. Prévoir le raccord des impacts et du survol si la proposition est intégrée. [Mesures, contrôles et GIF](design/Visuels_Appui_Releve_Revenant.md).
+Le porteur demande une relève image par image. La proposition compte seize dessins complets. Le lot dans `design/essais/releve_dessinee_v0243/` contient la planche candidate et la description de l’état. Comparatif d’appui v0.241 remplacé comme proposition artistique. Essai sur la v0.243 avec le raccord de position déjà intégré, cadre et durée de 0,72 s conservés. Le Gué est bien intégré en v0.243. [Fiche et GIF](design/Visuels_Releve_Revenant_Dessinee.md).
 
 ### 2026-11-23 — Décor du Gué 1–20 (ouvert)
 
