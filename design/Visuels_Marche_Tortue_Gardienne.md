@@ -63,3 +63,17 @@ Le porteur a jugé que le cycle de 48 images manquait encore de fluidité. Le no
 Sur les 936 captures comparées de la mission 11, les positions et la durée de la foulée correspondent image par image. Le suivi par motif autour des coussinets des deux pattes proches, sur la partie centrale des appuis, mesure au plus 0,16 pixel d’écart par axe par rapport à un appui idéal. Sur un cadre fixe à taille native, l’écart moyen au 95e percentile entre deux images voisines passe de 1,82 à 1,19 niveaux de couleur sur 255 pour la planche principale. L’écart sur le raccord de boucle passe de 1,90 à 0,75. Le virage emploie le changement de sens existant. La planche `walk_up` adapte l’appui à la diagonale montante.
 
 Les fichiers [animation.json](essais/tortue_appuis_v0243/animation.json), [walk.png](essais/tortue_appuis_v0243/walk.png) et [walk_up.png](essais/tortue_appuis_v0243/walk_up.png) constituent la nouvelle proposition. Cadres 116 × 90, ancre (59, 77) et hauteur 45. Le validateur relève zéro problème sur 65 dossiers avec des avertissements pour les trois planches archivées dans la copie d’essai. Les quatre suites passent, soit 2 219 vérifications. La proposition attend l’avis du porteur.
+
+## Démarche d’origine avec 60 images par foulée
+
+Le porteur préfère la démarche dessinée des premiers essais et souhaite y ajouter des images intermédiaires. Les douze dessins clés sont repris à l’identique, avec quatre intermédiaires entre chacun. Les 60 images suivent les mêmes positions clés. Le cadrage reprend 96 × 72, l’ancre (50, 69) et la hauteur 39. La foulée de 13 px dure toujours environ 0,75 s à ×1. L’essai de démarche reconstruite autour des appuis reste archivé.
+
+- Alliance, échantillonnage à 60 IPS [×1](essais/tortue_ancienne_60_v0243/Tortue_alliance_x1_48_vs_60.mp4) · [×2](essais/tortue_ancienne_60_v0243/Tortue_alliance_x2_48_vs_60.mp4)
+- Horde, échantillonnage à 60 IPS [×1](essais/tortue_ancienne_60_v0243/Tortue_horde_x1_48_vs_60.mp4) · [×2](essais/tortue_ancienne_60_v0243/Tortue_horde_x2_48_vs_60.mp4)
+- [Alliance à ×1, échantillonnage à 120 IPS](essais/tortue_ancienne_60_v0243/Tortue_alliance_x1_48_vs_60_120ips.mp4)
+
+Le plus grand écart moyen par pixel entre deux images consécutives de la planche à taille native, raccord de boucle compris, passe de 3,37 à 2,74 niveaux de couleur sur 255. À 60 IPS, les deux versions changent de pose à chaque image sur l’extrait en ligne droite. L’échantillonnage saute parfois des poses et le 95e percentile des écarts augmente avec la planche de 60 à ×1 (3,34 à 4,43) comme à ×2 (5,95 à 6,78). À 120 IPS, côté Alliance à ×1, les transitions qui réaffichent la même pose passent de 49 à 35 sur 103. La cadence de rendu est échantillonnée par l’atelier et sa tenue en partie dépend de la machine.
+
+1 040 captures sur la mission 11, dont 624 sur la grille à 60 IPS et 416 à 120 IPS. Les positions de jeu correspondent entre versions. Le validateur relève zéro problème sur 65 dossiers dans la copie, avec les avertissements des anciennes planches de comparaison. Quatre suites ciblées au vert, 2 219 contrôles.
+
+La [planche](essais/tortue_ancienne_60_v0243/walk.png) et sa [description](essais/tortue_ancienne_60_v0243/animation.json) sont prêtes pour avis du porteur.

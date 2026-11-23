@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**23 novembre — Tortue gardienne, démarche d’origine à 60 images.** Le porteur préfère le mouvement d’origine. Les douze poses clés sont conservées et la planche compte 60 images. Comparatifs à 60 et 120 IPS sur 1 040 captures, validateur et quatre suites ciblées au vert. Proposition en attente de l’avis du porteur. [Fiche](design/Visuels_Marche_Tortue_Gardienne.md#démarche-dorigine-avec-60-images-par-foulée).
+
 **23 novembre — Tortue gardienne, démarche reconstruite autour des appuis.** Le porteur souhaitait encore plus de fluidité après l’essai 36–48. Cycle continu par patte, avec deux planches de 48 images. 936 captures comparées à ×1 et ×2 en ligne droite, au premier virage et sur une diagonale montante. Validateur à zéro problème, quatre suites ciblées au vert. Proposition en attente du porteur. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#marche-reconstruite-autour-des-appuis-au-sol).
 
 **23 novembre — Tortue gardienne, comparatif 36 et 48 images.** Sur 624 captures à pas de 1/60 s à ×1 et ×2, la version à 48 réduit les répétitions de poses à ×1 et les variations fréquentes à ×2. Validateur à zéro problème et quatre suites ciblées au vert. Planche proposée, intégration en attente de l’avis du porteur. [Comparatif](design/Visuels_Marche_Tortue_Gardienne.md#comparatif-entre-36-et-48-images-par-foulée).
