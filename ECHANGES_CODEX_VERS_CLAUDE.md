@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-23 — Marche de l’Ours sauvage (en attente du porteur)
+
+Planche `enemy.neutral.bear/walk` et description dans `design/essais/ours_marche_v0244/`. 60 images, mode par distance, foulée de 19 px, cadre 112 × 88, ancre (55, 81), hauteur 47. Le chargeur standard joue le cycle. Le lot attend l’avis du porteur. [Fiche](design/Visuels_Marche_Ours.md).
+
 ### 2026-11-23 — Marche de la Tortue gardienne des berges (ouvert)
 
 Le porteur valide la démarche de 60 images du lot `d5ed8d75` avec 13,3° d’inclinaison le 23 novembre 2026. Intégrer les fichiers de `design/essais/tortue_ancienne_60_v0243/` dans `prototype/assets/animations/enemy.neutral.turtle/`. Comparatif 0°, 13,3° et 26,6° sur la mission 11, copie v0.244. Le réglage validé prend la moitié de `atan2(direction.y, abs(direction.x))` avec le signe de `direction.x`. Il tourne la silhouette seule autour de son ancre et conserve phase, jauge et ombre. Comparatif de référence dans `a6951c04`. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#inclinaison-suivant-le-chemin).

@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**23 novembre — Marche de l’Ours sauvage.** Cycle de 60 images essayé en combat sur la mission 1 à ×1 et ×2 dans les deux factions. 412 captures sur copie v0.244, validateur à zéro problème et 5 015 contrôles ciblés. Proposition en attente de l’avis du porteur. [Fiche et vidéos](design/Visuels_Marche_Ours.md).
+
 **23 novembre — Tortue gardienne, inclinaison sur le chemin.** Démarche à 60 images jugée satisfaisante, test demandé sur l’angle. Comparatif 0°, 13,3° et 26,6° sur copie v0.244, 864 captures et quatre suites ciblées. Le porteur valide 13,3° le 23 novembre 2026. Marche de 60 images (d5ed8d75) et résultat de l’essai (a6951c04) prêts pour intégration par Claude Code. [Fiche](design/Visuels_Marche_Tortue_Gardienne.md#inclinaison-suivant-le-chemin).
 
 **23 novembre — Tortue gardienne, démarche d’origine à 60 images.** Le porteur préfère le mouvement d’origine. Les douze poses clés sont conservées et la planche compte 60 images. Comparatifs à 60 et 120 IPS sur 1 040 captures, validateur et quatre suites ciblées au vert. Planche d’origine retenue avec l’inclinaison de 13,3°. [Fiche](design/Visuels_Marche_Tortue_Gardienne.md#démarche-dorigine-avec-60-images-par-foulée).
