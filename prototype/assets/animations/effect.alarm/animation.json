@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "id": "effect.alarm",
+  "foot": [
+    52,
+    66
+  ],
+  "display_height": 96,
+  "animations": {
+    "warning": {
+      "file": "warning.png",
+      "frames": 24,
+      "frame_size": [
+        104,
+        96
+      ],
+      "mode": "progress"
+    },
+    "spawn": {
+      "file": "spawn.png",
+      "frames": 33,
+      "frame_size": [
+        104,
+        96
+      ],
+      "mode": "event",
+      "duration": 0.55
+    },
+    "idle": {
+      "file": "idle.png",
+      "frames": 24,
+      "frame_size": [
+        104,
+        96
+      ],
+      "mode": "time",
+      "fps": 18
+    },
+    "level_up": {
+      "file": "level_up.png",
+      "frames": 20,
+      "frame_size": [
+        104,
+        96
+      ],
+      "mode": "event",
+      "duration": 0.4
+    },
+    "death": {
+      "file": "death.png",
+      "frames": 16,
+      "frame_size": [
+        104,
+        96
+      ],
+      "mode": "event",
+      "duration": 0.27
+    }
+  }
+}

@@ -22,7 +22,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [x] **Affixe Vapeurs toxiques (Marais, missions 41 à 60)** — Volutes autour des bassins à l’annonce et au pied des défenseurs une fois actives. Planches et vérifications livrées. Premier jet validé le 24 novembre 2026. À intégrer par Claude Code. [GIF et fiche](design/Visuels_Vapeurs_Toxiques.md).
 
-- [ ] **Affixe Cor d'alarme (Citadelle, missions 81 à 100)** — Toutes les 15 s, les ennemis présents reçoivent un bouclier de 10 % de leurs PV maximum, annonce 3 s avant. Provisoire dessiné par le code. Besoin : signal du cor et bouclier lisible sur une unité, jusqu'aux groupes serrés. Identifiant `alarm`.
+- [x] **Affixe Cor d’alarme (Citadelle, missions 81 à 100)** — Cor animé dans le bandeau, bouclier doré et éclats d’application et de rupture. Essai en groupes serrés livré. Attend l’avis du porteur avant branchement. [GIF et fiche](design/Visuels_Cor_Alarme.md).
 
 - [ ] **Affixe Courants ascendants (Îles flottantes, missions 141 à 160)** — Toutes les 15 s, les ennemis présents bondissent d'une case vers la forteresse, annonce 3 s avant. Provisoire dessiné par le code. Besoin : souffle et trajectoire du bond. Identifiant `updraft`.
 

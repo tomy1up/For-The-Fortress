@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-24 — Habillage du Cor d’alarme (ouvert)
+
+`effect.alarm` contient `warning` et `spawn` pour le cor dans le bandeau, `level_up` à l’application, `idle` tant que le bouclier est présent et `death` à sa rupture. L’essai suit l’ennemi par son identifiant et atténue le contour dans les groupes. La jauge dorée suit la réserve. Le branchement reste en attente d’avis du porteur. [GIF, placement et contrôles](design/Visuels_Cor_Alarme.md).
+
 ### 2026-11-24 — Habillage des Vapeurs toxiques (ouvert)
 
 `effect.miasma` fournit `warning` pour les bassins pendant l’annonce et `mist` pour les bassins et les emplacements occupés pendant la fenêtre active. La copie d’essai place les volutes avant les silhouettes et joue les fondus en temps de combat. Bandeau, durée et réduction des dégâts pilotés par le moteur. Le porteur valide ce premier jet le 24 novembre 2026. Le lot 5069d4fd est prêt à brancher. [GIF, ancrages et contrôles](design/Visuels_Vapeurs_Toxiques.md).
