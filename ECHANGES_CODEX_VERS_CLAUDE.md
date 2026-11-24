@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-24 — Habillage des Vapeurs toxiques (ouvert)
+
+`effect.miasma` fournit `warning` pour les bassins pendant l’annonce et `mist` pour les bassins et les emplacements occupés pendant la fenêtre active. La copie d’essai place les volutes avant les silhouettes et joue les fondus en temps de combat. Bandeau, durée et réduction des dégâts pilotés par le moteur. Visuel prêt pour avis du porteur. [GIF, ancrages et contrôles](design/Visuels_Vapeurs_Toxiques.md).
+
 ### 2026-11-24 — Habillage de la Crue du Gué (ouvert)
 
 `effect.flood` fournit `warning` en progression et `storm` en temps. Dessiner les rides et la lame d’eau sur la chaussée puis recouvrir par le pont. Utiliser le temps de combat pour les fondus et la dérive de l’écume. Les règles, le bandeau et la durée restent ceux du moteur. Essai sur quatre missions dans les deux factions. Le porteur valide cette première version le 24 novembre 2026. Le lot 1220a07b est prêt à brancher. [GIF, réglages et contrôles](design/Visuels_Crue_Gue.md).
