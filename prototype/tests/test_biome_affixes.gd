@@ -35,6 +35,7 @@ func run_checks() -> void:
 	verify_texts()
 	await verify_mission_sheet()
 	await verify_souldrain_sheets()
+	await verify_flood_and_miasma_sheets()
 	await verify_rendering()
 	print("BIOME_AFFIXES_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
@@ -312,6 +313,34 @@ func verify_souldrain_sheets() -> void:
 	model.enemies.erase(healed)
 	check(view._soul_target_foot(souls[0]).is_equal_approx(View.project(souls[0].to)),"Ennemi disparu : repli sur sa position au moment du soin")
 	view.free()
+	Library.clear_cache()
+
+## Habillages de la Crue et des Vapeurs toxiques livrés par Codex (v0.250) : planches, montée et retrait, tronçons partagés, échelle des bassins, aucun effet sur le combat.
+func verify_flood_and_miasma_sheets() -> void:
+	Library.clear_cache()
+	for id in ["effect.flood","effect.miasma"]:
+		var spec: Dictionary = Library.spec_for(id)
+		check(not spec.is_empty() and spec.animations.keys().all(func(name): return Library.texture_for(id,spec.animations[name]) != null),"Planches chargées : %s" % id)
+	check(View.flood_level(0.0,4.0) == 0.0 and is_equal_approx(View.flood_level(0.26,3.74),0.5) and View.flood_level(2.0,2.0) == 1.0,"La crue monte en 0,52 s")
+	check(is_equal_approx(View.flood_level(3.69,0.31),0.5) and View.flood_level(4.0,0.0) == 0.0,"L'eau se retire sur les 0,62 dernières secondes")
+	check(View.flood_edge_alpha(0.0,100.0) == 0.0 and is_equal_approx(View.flood_edge_alpha(7.0,100.0),0.5) and View.flood_edge_alpha(50.0,100.0) == 1.0 and View.flood_edge_alpha(100.0,100.0) == 0.0,"L'écume s'efface aux extrémités des tronçons")
+	var shared: Array[PackedVector2Array] = [PackedVector2Array([Vector2(0,0),Vector2(50,25),Vector2(100,0)]),PackedVector2Array([Vector2(0,60),Vector2(50,25),Vector2(100,0)])]
+	check(View.unique_segments(shared).size() == 3,"Un tronçon partagé par deux entrées n'est dessiné qu'une fois")
+	check(is_equal_approx(View.miasma_alpha(0.215,3.785),0.5) and View.miasma_alpha(2.0,2.0) == 1.0 and is_equal_approx(View.miasma_alpha(3.64,0.36),0.5),"Les vapeurs montent en 0,43 s et se dissipent sur 0,72 s")
+	check(is_equal_approx(View.miasma_pool_scale(Rect2(0,0,1.095,1.095)),0.74) and is_equal_approx(View.miasma_pool_scale(Rect2(0,0,3.399,3.399)),1.27) and is_equal_approx(View.miasma_pool_scale(Rect2(0,0,20,20)),1.27),"Échelle des bassins de 0,74 à 1,27")
+	for affix in [FLOOD,MIASMA]:
+		var model := arena(affix,[0.0,1.0,2.0],0.05)
+		model.gold = 600;model.buy(3,0)
+		var view := View.new();view.model = model;root.add_child(view)
+		var state := func() -> String: return JSON.stringify([model.gold,model.rng.state,model.fortress_hp,model.defenders,model.enemies.map(func(enemy): return [enemy.id,enemy.hp,enemy.distance])])
+		for time in [float(affix.interval)-1.5,float(affix.interval)+0.2,float(affix.interval)+2.0,float(affix.interval)+float(affix.duration)-0.3]:
+			go(model,time)
+			var before: String = state.call()
+			view.queue_redraw()
+			await process_frame
+			await process_frame
+			check(before == state.call(),"%s : dessiner les planches à %.1f s ne change pas le combat" % [affix.id,time])
+		view.free()
 	Library.clear_cache()
 
 func verify_rendering() -> void:

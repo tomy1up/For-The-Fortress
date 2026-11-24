@@ -430,11 +430,16 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 24 novembre 2026 — Claude Code (v0.249 publiée)
+## État au 24 novembre 2026 — Claude Code (v0.250 publiée)
+
+- **v0.250, Crue et Vapeurs toxiques dessinées** (demande du porteur : « Oui, intègre-les », MAJ-103) : `art/codex` fusionnée jusqu'à `1aeca7ee`. `valley_view.gd` : `_draw_flood`, `unique_segments`, `flood_level`, `flood_edge_alpha`, `_draw_miasma_sheets`, `miasma_alpha`, `miasma_pool_scale`. Contrôles dans `test_biome_affixes.gd`. Aucune règle ni valeur d'équilibrage modifiée.
+- Contrôles v0.250 : régression 146/146 (237 182 contrôles Godot, 17 tests Python), paquet 1 050 cas et 670 contrôles de sources sur bureau caché, captures du jeu exporté inspectées dans les deux factions sur 4, 11, 51 et 58.
+- `art/codex` contient après `1aeca7ee` le Cor d'alarme (`1ceb2750`), en attente de l'avis du porteur : ne pas fusionner sans sa demande.
+
+### v0.249 (publiée)
 
 - **v0.249, Éboulement et Drain d'âmes dessinés** (demande du porteur : « Oui, intègre-les », MAJ-102) : `art/codex` fusionnée jusqu'à `46260d90`. `valley_view.gd` : `rockfall_sheet`, `_draw_souldrain_sheets`, `_draw_soul_sheet`, `soul_point`. `valley_model.gd` : les événements `soul` portent `source_id` et `target_id`. `animation_library.gd` : `NON_ELIMINATION_EFFECTS`. Contrôles dans `test_rockfall.gd` et `test_biome_affixes.gd`. Aucune règle ni valeur d'équilibrage modifiée.
 - Contrôles v0.249 : régression 146/146 (237 160 contrôles Godot, 17 tests Python), paquet 1 050 cas et 664 contrôles de sources sur bureau caché, captures du jeu exporté inspectées dans les deux factions sur 121, 134, 181 et 191.
-- `art/codex` contient après `46260d90` la Crue et les Vapeurs toxiques, annoncées validées : ne pas fusionner sans la demande du porteur.
 - Signalement de Codex non tranché (O-017) : aux missions 121, 122, 125 et 128, les deux premiers ours sortent à 0,3 s d'écart après l'Éboulement et se lisent comme un seul.
 
 ### v0.248 (publiée)

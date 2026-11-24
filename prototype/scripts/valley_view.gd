@@ -1666,6 +1666,7 @@ func _draw() -> void:
 			highlighted_segments[segment] = tint
 	for segment: Vector4 in highlighted_segments:
 		draw_line(Vector2(segment.x, segment.y), Vector2(segment.z, segment.w), highlighted_segments[segment], 5.0, true)
+	if model != null: _draw_flood(screen_routes,MarshArt.ROAD if marsh else Color("b3a17b"))
 	if definition.decoration == "valley":
 		var bridge: Dictionary = DecorArt.ford_overlay(str(definition.get("id","")),"pont_du_gue")
 		if bridge.is_empty(): _draw_valley_bridge()
@@ -2481,6 +2482,8 @@ func _draw_biome_affix() -> void:
 	for corner in [Vector2.ZERO,Vector2(board.x,0),Vector2(board.x,board.y),Vector2(0,board.y)]: area.append(project(corner))
 	var color: Color = BIOME_AFFIX_COLORS[str(model.combat_affix.id)]
 	if str(model.combat_affix.id) == "souldrain" and _draw_souldrain_sheets(status,area,color): return
+	if str(model.combat_affix.id) == "flood" and _flood_ready(): return # Eau dessinée sur la chaussée, sous le pont (`_draw_flood`).
+	if str(model.combat_affix.id) == "miasma" and _draw_miasma_sheets(status): return
 	if status.state == "warning":
 		var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
 		var outline: PackedVector2Array = area.duplicate();outline.append(outline[0])
@@ -2492,6 +2495,141 @@ func _draw_biome_affix() -> void:
 			var shift: float = fposmod(model.elapsed*0.18+float(index)*0.173,1.0)
 			var start: Vector2 = project(Vector2(float(board.x)*shift,float(board.y)*lane))
 			draw_line(start,start+Vector2(34,-7),Color(color.lightened(0.35),0.32*sin(shift*PI)),2.5,true)
+
+## Habillage de la Crue (lot Codex 1220a07b, validé par le porteur le 24 novembre 2026) : filets d'eau à l'annonce, puis lame d'eau au centre de la chaussée,
+## rides et écume orientées sur chaque tronçon, avec un fondu aux extrémités. Dessinée après la chaussée et son surlignage, sous le pont, le décor et les unités.
+## L'eau est pré-mélangée à la couleur de la chaussée : les tronçons et les raccords arrondis se recouvrent sans former de taches plus sombres.
+const FLOOD_EFFECT_ID := "effect.flood"
+const FLOOD_COLOR := Color(0.10,0.47,0.57)
+const FLOOD_OPACITY := 0.62
+const FLOOD_WIDTH := 16.1
+const FLOOD_RISE := 0.52
+const FLOOD_RECEDE := 0.62
+const FLOOD_EDGE_FADE := 14.0
+
+static func flood_level(age: float, remaining: float) -> float:
+	return clampf(minf(age/FLOOD_RISE,remaining/FLOOD_RECEDE),0.0,1.0)
+
+## Tronçons de chaussée à l'écran, une seule fois chacun quand plusieurs entrées les partagent.
+static func unique_segments(routes: Array[PackedVector2Array]) -> Array[PackedVector2Array]:
+	var seen: Dictionary = {}
+	var result: Array[PackedVector2Array] = []
+	for route in routes:
+		for index in range(1,route.size()):
+			var start: Vector2 = route[index-1]
+			var finish: Vector2 = route[index]
+			if start.is_equal_approx(finish): continue
+			var key: String = "%.2f,%.2f,%.2f,%.2f" % [start.x,start.y,finish.x,finish.y]
+			if seen.has(key): continue
+			seen[key] = true
+			result.append(PackedVector2Array([start,finish]))
+	return result
+
+## Opacité de l'écume à une distance `along` du début d'un tronçon de longueur `length`.
+static func flood_edge_alpha(along: float, length: float) -> float:
+	return clampf(minf(along,length-along)/FLOOD_EDGE_FADE,0.0,1.0)
+
+func _flood_ready() -> bool:
+	var spec: Dictionary = SheetAnimations.spec_for(FLOOD_EFFECT_ID)
+	if spec.is_empty(): return false
+	for sheet_name in ["warning","storm"]:
+		if not spec.animations.has(sheet_name) or SheetAnimations.texture_for(FLOOD_EFFECT_ID,spec.animations[sheet_name]) == null: return false
+	return true
+
+func _draw_flood(screen_routes: Array[PackedVector2Array], road: Color) -> void:
+	if str(model.combat_affix.get("id","")) != "flood" or not _flood_ready(): return
+	var status: Dictionary = model.biome_affix_status()
+	if status.is_empty(): return
+	var spec: Dictionary = SheetAnimations.spec_for(FLOOD_EFFECT_ID)
+	var warning: bool = status.state == "warning"
+	var anim: Dictionary = spec.animations["warning" if warning else "storm"]
+	var level: float = 1.0
+	var cycle: float = 0.0
+	if warning:
+		cycle = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+	else:
+		level = flood_level(float(model.combat_affix.duration)-float(status.remaining),float(status.remaining))
+		cycle = SheetAnimations.phase(anim,0.0,model.elapsed,0.0)
+	if level <= 0.0: return
+	var segments: Array[PackedVector2Array] = unique_segments(screen_routes)
+	if not warning:
+		var water: Color = road.lerp(FLOOD_COLOR,FLOOD_OPACITY*level)
+		var width: float = FLOOD_WIDTH*level
+		for segment in segments: draw_line(segment[0],segment[1],water,width,true)
+		for route in screen_routes:
+			for index in range(1,route.size()-1): draw_circle(route[index],width/2.0,water,true,-1,true)
+	var texture: Texture2D = SheetAnimations.texture_for(FLOOD_EFFECT_ID,anim)
+	var frame: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle))
+	var tile: Rect2 = SheetAnimations.destination(spec,anim)
+	var sheet_width: float = float(texture.get_width())
+	for segment in segments:
+		var length: float = segment[0].distance_to(segment[1])
+		var along: Vector2 = (segment[1]-segment[0])/length
+		var across := Vector2(-along.y,along.x)
+		var cuts: Array[float] = [0.0,length,minf(FLOOD_EDGE_FADE,length),maxf(0.0,length-FLOOD_EDGE_FADE)]
+		var step: float = tile.size.x
+		var mark: float = step
+		while mark < length:
+			cuts.append(mark);mark += step
+		cuts.sort()
+		for index in range(1,cuts.size()):
+			var from: float = cuts[index-1]
+			var to: float = cuts[index]
+			if to-from < 0.01: continue
+			var start_in_tile: float = from-floorf((from+0.001)/step)*step
+			var u0: float = (frame.position.x+start_in_tile/step*frame.size.x)/sheet_width
+			var u1: float = (frame.position.x+(start_in_tile+to-from)/step*frame.size.x)/sheet_width
+			var top: float = tile.position.y
+			var bottom: float = tile.end.y
+			var points := PackedVector2Array([segment[0]+along*from+across*top,segment[0]+along*to+across*top,segment[0]+along*to+across*bottom,segment[0]+along*from+across*bottom])
+			var a0 := Color(1.0,1.0,1.0,level*flood_edge_alpha(from,length))
+			var a1 := Color(1.0,1.0,1.0,level*flood_edge_alpha(to,length))
+			draw_polygon(points,PackedColorArray([a0,a1,a1,a0]),PackedVector2Array([Vector2(u0,0.0),Vector2(u1,0.0),Vector2(u1,1.0),Vector2(u0,1.0)]),texture)
+
+## Habillage des Vapeurs toxiques (lot Codex 5069d4fd, validé par le porteur le 24 novembre 2026) : une volute sur chaque bassin à l'annonce,
+## puis des nappes sur les bassins et une volute plus petite au pied de chaque défenseur pendant l'effet. Dessiné avant les silhouettes et les jauges.
+const MIASMA_EFFECT_ID := "effect.miasma"
+const MIASMA_RISE := 0.43
+const MIASMA_FADE := 0.72
+const MIASMA_SLOT_SCALE := 0.67
+const MIASMA_SLOT_OPACITY := 0.88
+const MIASMA_SLOT_DROP := 4.0
+## Côté (racine de l'aire, en cases) du plus petit et du plus grand bassin des missions 41 à 60 : échelle de 0,74 à 1,27 entre les deux.
+const MIASMA_POOL_SIDES := Vector2(1.095,3.399)
+const MIASMA_POOL_SCALES := Vector2(0.74,1.27)
+
+static func miasma_alpha(age: float, remaining: float) -> float:
+	return clampf(minf(age/MIASMA_RISE,remaining/MIASMA_FADE),0.0,1.0)
+
+static func miasma_pool_scale(pool: Rect2) -> float:
+	var t: float = clampf((sqrt(pool.get_area())-MIASMA_POOL_SIDES.x)/(MIASMA_POOL_SIDES.y-MIASMA_POOL_SIDES.x),0.0,1.0)
+	return lerpf(MIASMA_POOL_SCALES.x,MIASMA_POOL_SCALES.y,t)
+
+func _draw_miasma_sheets(status: Dictionary) -> bool:
+	var spec: Dictionary = SheetAnimations.spec_for(MIASMA_EFFECT_ID)
+	var warning: bool = status.state == "warning"
+	var sheet_name: String = "warning" if warning else "mist"
+	if spec.is_empty() or not spec.animations.has(sheet_name): return false
+	var anim: Dictionary = spec.animations[sheet_name]
+	var texture: Texture2D = SheetAnimations.texture_for(MIASMA_EFFECT_ID,anim)
+	if texture == null: return false
+	var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0) if warning else 0.0
+	var alpha: float = 1.0 if warning else miasma_alpha(float(model.combat_affix.duration)-float(status.remaining),float(status.remaining))
+	var destination: Rect2 = SheetAnimations.destination(spec,anim)
+	var spots: Array[Dictionary] = []
+	for pool in model.map_definition.get("water_areas",MarshArt.POOLS):
+		spots.append({"point":project(pool.get_center()),"scale":miasma_pool_scale(pool),"alpha":alpha})
+	if not warning:
+		for slot in range(model.defenders.size()):
+			if model.defenders[slot].is_empty(): continue
+			spots.append({"point":project(_map_slots()[slot])+Vector2(0.0,MIASMA_SLOT_DROP),"scale":MIASMA_SLOT_SCALE,"alpha":alpha*MIASMA_SLOT_OPACITY})
+	for spot in spots:
+		var point: Vector2 = spot.point
+		var cycle: float = progress if warning else SheetAnimations.phase(anim,0.0,model.elapsed,0.0,fposmod(point.x*0.013+point.y*0.029,1.0))
+		draw_set_transform(point,0.0,Vector2.ONE*float(spot.scale))
+		draw_texture_rect_region(texture,destination,SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle)),Color(1.0,1.0,1.0,float(spot.alpha)))
+	draw_set_transform(Vector2.ZERO)
+	return true
 
 ## Habillage du Drain d'âmes (lot Codex 666c6ac9, validé par le porteur le 24 novembre 2026) : volutes près des bords à l'annonce et pendant l'effet,
 ## puis, à chaque soin, un éclat au point de chute, une âme qui file vers l'ennemi soigné et un éclat d'absorption. Rendu seulement, sur le temps de combat.

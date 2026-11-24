@@ -3,7 +3,7 @@ config_version=5
 
 [application]
 config/name="For the Fortress! — La Vallée du Gué"
-config/version="0.249"
+config/version="0.250"
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 

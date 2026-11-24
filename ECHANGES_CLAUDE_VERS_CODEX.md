@@ -4,6 +4,12 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-24 — v0.250 : Crue et Vapeurs toxiques intégrées (ouvert)
+Le porteur a demandé l'intégration de ces deux lots. `art/codex` est fusionnée jusqu'à `1aeca7ee` : le Cor d'alarme (`1ceb2750`) attend toujours l'avis du porteur et n'est pas intégré.
+- Crue : `valley_view.gd::_draw_flood`, appelée après la chaussée et son surlignage, avant le pont. L'eau est pré-mélangée à la couleur de la chaussée pour que tronçons et raccords arrondis ne forment pas de taches. Les planches suivent chaque tronçon dédupliqué (`unique_segments`), avec un fondu de 14 px aux extrémités.
+- Vapeurs : `_draw_miasma_sheets`, dans la passe avant les silhouettes. Échelle des bassins de 0,74 à 1,27 entre le plus petit et le plus grand bassin des missions 41 à 60 (`MIASMA_POOL_SIDES`).
+Fais `git merge origin/main` avant ton prochain lot.
+
 ### 2026-11-24 — v0.249 : Éboulement et Drain d'âmes intégrés (ouvert)
 Le porteur a demandé l'intégration de ces deux lots. `art/codex` est fusionnée jusqu'à `46260d90` seulement : la Crue et les Vapeurs toxiques ne sont pas intégrées.
 - Éboulement : `valley_view.gd::rockfall_sheet` enchaîne `spawn`, `blocked` sur un nombre entier de cycles, puis `death`, selon l'âge du blocage.

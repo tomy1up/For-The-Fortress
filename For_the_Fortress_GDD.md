@@ -1,6 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.86 — 24 novembre 2026
+Game Design Document — Version 0.87 — 24 novembre 2026
+
+Version 0.250 du jeu (24 novembre 2026) : **Crue et Vapeurs toxiques dessinées** (MAJ-103) : eau sur la chaussée du Gué, volutes des bassins et des défenseurs dans le Marais, sans changement de règle ni d'équilibrage.
 
 Version 0.249 du jeu (24 novembre 2026) : **Éboulement et Drain d'âmes dessinés** (MAJ-102) : chute et dégagement des rochers, volutes et transfert des âmes, sans changement de règle ni d'équilibrage.
 
@@ -1774,6 +1776,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-51 | **Orientation par défaut des défenseurs : face au tronçon de route le plus proche** au placement et entre les vagues ; en combat, la dernière cible garde la priorité — V | Décision du porteur, 15 novembre 2026 ; `valley_view.gd` (`road_facing`), `tests/test_defender_facing.gd` |
 | MAJ-52 | **Visée inclinée du Tireur d’élite elfe (type 11)** : sept planches (0°, ±8°, ±16°, ±24°), un seul angle pour la pose, l’origine de la flèche et sa direction de départ ; lâcher à 0,27 s — V (geste validé par le porteur) ; angles et lâcher — rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `a2cdab9` ; `tests/test_marksman_aim.gd` |
 | MAJ-53 | **Estoc du Piquier humain (type 14)** : trois planches (−12°, 0°, +12°), la pique est dessinée dans les planches, éclat de contact à 0,256 s à la pointe donnée par angle — V (geste validé par le porteur) ; rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `9a7d3d8` ; `tests/test_marksman_aim.gd` |
+| MAJ-103 | **Habillage de la Crue et des Vapeurs toxiques** (dessins de Codex, lots `1220a07b` et `5069d4fd`) : filets d'eau à l'annonce, lame d'eau, rides et écume sur la chaussée du Gué, sous le pont ; volutes sur chaque bassin à l'annonce, nappes sur les bassins et volute au pied de chaque défenseur pendant les Vapeurs. Règles, durées et équilibrage inchangés | Validation du porteur, 24 novembre 2026 ; `design/Visuels_Crue_Gue.md`, `design/Visuels_Vapeurs_Toxiques.md` |
 | MAJ-102 | **Habillage de l'Éboulement et du Drain d'âmes** (dessins de Codex, lots `ff4df682` et `666c6ac9`) : chute de 0,68 s, tas en boucle et dégagement de 0,54 s aux entrées des mines ; volutes à l'annonce et pendant l'effet, âme dirigée vers chaque ennemi soigné et éclat d'absorption dans la Nécropole. Règles, horaires et équilibrage inchangés | Validation du porteur, 24 novembre 2026 ; `design/Visuels_Transitions_Eboulement.md`, `design/Visuels_Drain_Ames.md` |
 | MAJ-101 | **Trois missions de la Horde durcies** : coefficients de PV des missions 34 (124 → 125), 37 (118 → 119) et 64 (103 → 104). Sur toute la campagne, **374 réglages sur 398 dans la cible**, aucun en dessous, 24 au-dessus. L'armée de référence reste garantie sur toutes les missions : l'option de la laisser perdre pour durcir davantage n'est pas retenue. Valeurs à confirmer en jeu | Décision du porteur, 24 novembre 2026 ; `design/Missions_trop_faciles_v0248.md` |
 | MAJ-100 | **Marches de la Tortue gardienne et de l'Ours sauvage** (dessins de Codex, lots `d5ed8d75`, `a6951c04` et `5a9e4c1e`) : 60 images par foulée, deux vues pour l'Ours ; la silhouette penche de la moitié de l'angle projeté du chemin (13,3°), signée selon le sens du trajet, l'ombre et la jauge restant au sol. Règles et équilibrage inchangés | Validation du porteur, 23 novembre 2026 ; `design/Visuels_Marche_Tortue_Gardienne.md`, `design/Visuels_Marche_Ours.md` |
@@ -2035,6 +2038,8 @@ Version 0.84 — 23 novembre 2026 : jeu 0.247. **Marches de la Tortue gardienne 
 Version 0.85 — 24 novembre 2026 : jeu 0.248. **Trois missions de la Horde durcies** (MAJ-101) : missions 34, 37 et 64 à +1 % de PV ; 374 réglages sur 398 dans la cible, aucun en dessous, 24 au-dessus.
 
 Version 0.86 — 24 novembre 2026 : jeu 0.249. **Éboulement et Drain d'âmes dessinés** (MAJ-102) : chute et dégagement des rochers, volutes et transfert des âmes, sans changement de règle ni d'équilibrage.
+
+Version 0.87 — 24 novembre 2026 : jeu 0.250. **Crue et Vapeurs toxiques dessinées** (MAJ-103) : eau sur la chaussée du Gué, volutes des bassins et des défenseurs dans le Marais, sans changement de règle ni d'équilibrage.
 
 <a id="s51"></a>
 
@@ -2328,7 +2333,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 24 novembre 2026 (GDD 0.86, jeu 0.249)
+### État au 24 novembre 2026 (GDD 0.87, jeu 0.250)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2350,7 +2355,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.86, jeu 0.249 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.87, jeu 0.250 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2760,5 +2765,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.247 | Marches de la Tortue gardienne et de l'Ours sauvage, inclinaison de 13,3° sur le chemin ; GDD 0.84 |
 | 0.248 | Trois missions de la Horde durcies (34, 37 et 64), 374 réglages sur 398 dans la cible ; GDD 0.85 |
 | 0.249 | Éboulement et Drain d'âmes dessinés ; GDD 0.86 |
+| 0.250 | Crue et Vapeurs toxiques dessinées ; GDD 0.87 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.
