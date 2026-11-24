@@ -211,10 +211,15 @@ static func death_state(spec: Dictionary, direction: Vector2) -> String:
 static func is_four_view(spec: Dictionary) -> bool:
 	return spec.get("directions","") == "four"
 
+## Effets dont la planche `death` ne suit pas une élimination (dégagement de l'Éboulement, absorption d'une âme).
+const NON_ELIMINATION_EFFECTS: Array[String] = ["effect.rockfall","effect.souldrain"]
+
 ## Durée de la plus longue animation de mort chargée : fenêtre pendant laquelle un ennemi éliminé reste dessiné.
 static func death_window() -> float:
 	var longest: float = 0.0
-	for spec in _specs.values():
+	for id in _specs:
+		if id in NON_ELIMINATION_EFFECTS: continue
+		var spec: Dictionary = _specs[id]
 		if spec.is_empty(): continue
 		for name in ["death","death_nw","death_ne","death_sw","death_se"]:
 			if spec.animations.has(name): longest = maxf(longest,float(spec.animations[name].duration))

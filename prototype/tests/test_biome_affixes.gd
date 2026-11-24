@@ -7,6 +7,7 @@ const Catalogue = preload("res://scripts/campaign_catalogue.gd")
 const Report = preload("res://scripts/run_report.gd")
 const Replay = preload("res://tests/report_replay.gd")
 const Profile = preload("res://scripts/meta_profile.gd")
+const Library = preload("res://scripts/animation_library.gd")
 const FLOOD := {"id":"flood","interval":20,"warning":3,"duration":5,"speed_percent":10}
 const MIASMA := {"id":"miasma","interval":16,"warning":3,"duration":5,"damage_percent":20}
 const ALARM := {"id":"alarm","interval":20,"warning":3,"shield_percent":10}
@@ -33,6 +34,7 @@ func run_checks() -> void:
 	verify_replay()
 	verify_texts()
 	await verify_mission_sheet()
+	await verify_souldrain_sheets()
 	await verify_rendering()
 	print("BIOME_AFFIXES_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)
@@ -274,6 +276,43 @@ func verify_mission_sheet() -> void:
 			for line in lines: check(font.get_string_size(line,HORIZONTAL_ALIGNMENT_LEFT,-1,14).x <= 358.0,"Chapitre %d : ligne contenue dans la fiche (%s)" % [chapter,line])
 	await process_frame
 	game.free()
+
+## Habillage du Drain d'âmes livré par Codex (v0.249) : planches, fondus, trajet de l'âme, suivi de l'ennemi soigné, aucun effet sur le combat.
+func verify_souldrain_sheets() -> void:
+	Library.clear_cache()
+	var spec: Dictionary = Library.spec_for("effect.souldrain")
+	check(not spec.is_empty() and ["spawn","idle","death","warning","mist"].all(func(name): return spec.animations.has(name) and Library.texture_for("effect.souldrain",spec.animations[name]) != null),"Les cinq planches du Drain d'âmes sont chargées")
+	check(View.souldrain_mist_alpha(0.0,5.0) == 0.0 and is_equal_approx(View.souldrain_mist_alpha(0.13,4.87),0.5) and View.souldrain_mist_alpha(2.0,3.0) == 1.0,"Les volutes montent en 0,26 s")
+	check(is_equal_approx(View.souldrain_mist_alpha(4.83,0.17),0.5) and View.souldrain_mist_alpha(5.0,0.0) == 0.0,"Les volutes se dissipent avant la fin de l'effet")
+	check(View.soul_arc_height(5.0) == 4.0 and View.soul_arc_height(200.0) == 11.0,"Courbe de l'âme entre 4 et 11 px")
+	check(View.soul_size(5.0) == 0.32 and View.soul_size(200.0) == 1.0,"Taille de l'âme entre 0,32 et 1 selon le trajet")
+	var from := Vector2(10,40);var to := Vector2(70,20)
+	check(View.soul_point(from,to,0.0).is_equal_approx(from) and View.soul_point(from,to,1.0).is_equal_approx(to) and View.soul_point(from,to,0.5).y < from.lerp(to,0.5).y,"L'âme part de la chute, s'élève puis rejoint sa cible")
+	Library.spec_for("effect.rockfall")
+	check(Library.death_window() == 0.0,"Le dégagement et l'absorption n'allongent pas l'affichage des éliminations")
+	var model := arena(SOULDRAIN,[0.0,0.0,0.0])
+	go(model,21.0)
+	var dying: Dictionary = model.enemies[0]
+	var healed: Dictionary = model.enemies[1]
+	healed.hp = float(healed.max_hp)*0.5
+	var dead_id: int = int(dying.id)
+	model._apply_damage({dying.id:99999.0})
+	var souls: Array = model.affix_events.filter(func(event): return event.kind == "soul")
+	check(souls.size() == 1 and int(souls[0].target_id) == int(healed.id) and int(souls[0].source_id) == dead_id,"Chaque soin désigne l'ennemi éliminé et l'ennemi soigné")
+	var view := View.new();view.model = model;root.add_child(view)
+	var state := func() -> String: return JSON.stringify([model.gold,model.rng.state,model.fortress_hp,float(healed.hp)])
+	var before: String = state.call()
+	for step in range(6):
+		view.queue_redraw()
+		await process_frame
+		await process_frame
+		model.advance(0.1)
+	check(before == state.call(),"Dessiner le transfert ne change pas le combat")
+	check(view._soul_target_foot(souls[0]).is_equal_approx(View.project(model.position_at(view.display_distance(healed),model.enemy_route_points(healed),model.enemy_route_length(healed)))) and not view._soul_target_foot(souls[0]).is_equal_approx(View.project(souls[0].to)),"L'absorption suit l'ennemi soigné pendant sa marche")
+	model.enemies.erase(healed)
+	check(view._soul_target_foot(souls[0]).is_equal_approx(View.project(souls[0].to)),"Ennemi disparu : repli sur sa position au moment du soin")
+	view.free()
+	Library.clear_cache()
 
 func verify_rendering() -> void:
 	for affix in ALL:

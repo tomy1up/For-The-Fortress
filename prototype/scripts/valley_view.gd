@@ -2405,6 +2405,28 @@ func _draw_sandstorm() -> void:
 			var start: Vector2 = project(Vector2(float(board.x)*(shift*1.2-0.1),float(board.y)*lane))
 			draw_line(start,start+Vector2(34,-7),Color(0.97,0.88,0.62,0.45),1.5,true)
 
+## État et phase de la planche d'Éboulement (lot Codex ff4df682, validé par le porteur le 24 novembre 2026) : chute dès l'activation, tas en boucle sur un nombre entier
+## de cycles pour raccorder son image 0 aux deux transitions, dégagement sur la fin du blocage. Rendu seulement : les horaires de réouverture ne changent pas.
+static func rockfall_sheet(spec: Dictionary, status: Dictionary, duration: float, warning: float, elapsed: float) -> Dictionary:
+	if spec.is_empty() or status.is_empty(): return {}
+	var animations: Dictionary = spec.animations
+	if status.state == "warning":
+		if not animations.has("warning"): return {}
+		return {"state":"warning","phase":clampf(1.0-float(status.remaining)/warning,0.0,1.0)}
+	if not animations.has("blocked"): return {}
+	var blocked: Dictionary = animations.blocked
+	var arrival: float = float(animations.spawn.duration) if animations.has("spawn") else 0.0
+	var clearance: float = float(animations.death.duration) if animations.has("death") else 0.0
+	if arrival+clearance <= 0.0 or arrival+clearance >= duration:
+		return {"state":"blocked","phase":SheetAnimations.phase(blocked,0.0,elapsed,0.0)}
+	var remaining: float = float(status.remaining)
+	var age: float = duration-remaining
+	if age < arrival: return {"state":"spawn","phase":age/arrival}
+	if remaining <= clearance: return {"state":"death","phase":1.0-remaining/clearance}
+	var middle: float = duration-arrival-clearance
+	var cycles: float = maxf(1.0,round(middle*float(blocked.fps)/float(blocked.frames)))
+	return {"state":"blocked","phase":fposmod((age-arrival)/middle*cycles,1.0)}
+
 ## Repère fonctionnel provisoire de l'affixe Éboulement (chapitre 14) : anneau qui pulse à l'entrée touchée pendant l'avertissement,
 ## éboulis gris pendant le blocage. L'habillage revient à Codex (TODO_VISUELS.md). Le mouvement suit le temps de combat.
 func _draw_rockfall() -> void:
@@ -2421,13 +2443,12 @@ func _draw_rockfall() -> void:
 	if not found: return
 	# Habillage de Codex : planches de l'effet `effect.rockfall` posées au sol sur l'entrée visée (avertissement en progression, blocage en boucle).
 	var spec: Dictionary = SheetAnimations.spec_for(ROCKFALL_EFFECT_ID)
-	var sheet_name: String = "warning" if status.state == "warning" else "blocked"
-	if not spec.is_empty() and spec.animations.has(sheet_name):
-		var anim: Dictionary = spec.animations[sheet_name]
+	var sheet: Dictionary = rockfall_sheet(spec,status,float(model.combat_affix.duration),float(model.combat_affix.warning),model.elapsed)
+	if not sheet.is_empty():
+		var anim: Dictionary = spec.animations[sheet.state]
 		var texture: Texture2D = SheetAnimations.texture_for(ROCKFALL_EFFECT_ID,anim)
 		if texture != null:
-			var progress_value: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0) if status.state == "warning" else 0.0
-			var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,model.elapsed,progress_value)))
+			var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,float(sheet.phase)))
 			draw_set_transform(origin,0.0,Vector2.ONE)
 			draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
 			draw_set_transform(Vector2.ZERO)
@@ -2459,6 +2480,7 @@ func _draw_biome_affix() -> void:
 	var area := PackedVector2Array()
 	for corner in [Vector2.ZERO,Vector2(board.x,0),Vector2(board.x,board.y),Vector2(0,board.y)]: area.append(project(corner))
 	var color: Color = BIOME_AFFIX_COLORS[str(model.combat_affix.id)]
+	if str(model.combat_affix.id) == "souldrain" and _draw_souldrain_sheets(status,area,color): return
 	if status.state == "warning":
 		var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
 		var outline: PackedVector2Array = area.duplicate();outline.append(outline[0])
@@ -2471,9 +2493,105 @@ func _draw_biome_affix() -> void:
 			var start: Vector2 = project(Vector2(float(board.x)*shift,float(board.y)*lane))
 			draw_line(start,start+Vector2(34,-7),Color(color.lightened(0.35),0.32*sin(shift*PI)),2.5,true)
 
+## Habillage du Drain d'âmes (lot Codex 666c6ac9, validé par le porteur le 24 novembre 2026) : volutes près des bords à l'annonce et pendant l'effet,
+## puis, à chaque soin, un éclat au point de chute, une âme qui file vers l'ennemi soigné et un éclat d'absorption. Rendu seulement, sur le temps de combat.
+const SOULDRAIN_EFFECT_ID := "effect.souldrain"
+const SOULDRAIN_WISPS: Array[Vector2] = [Vector2(0.17,0.08),Vector2(0.53,0.09),Vector2(0.88,0.10),Vector2(0.91,0.49),Vector2(0.89,0.84),Vector2(0.58,0.91),Vector2(0.25,0.89),Vector2(0.11,0.48)]
+const SOULDRAIN_WISP_SCALE := 0.83
+const SOULDRAIN_FADE_IN := 0.26
+const SOULDRAIN_FADE_OUT := 0.34
+const SOULDRAIN_TINT := 0.052
+const SOUL_FLIGHT_START := 0.10
+const SOUL_FLIGHT_END := 0.33
+const SOUL_ABSORB_START := 0.30
+const SOUL_SOURCE_LIFT := 9.0
+const SOUL_TARGET_LIFT := 12.0
+const SOUL_TRAIL_SEGMENTS := 6
+
+static func souldrain_mist_alpha(age: float, remaining: float) -> float:
+	return clampf(minf(age/SOULDRAIN_FADE_IN,remaining/SOULDRAIN_FADE_OUT),0.0,1.0)
+
+static func soul_arc_height(length: float) -> float:
+	return clampf(length*0.2,4.0,11.0)
+
+static func soul_size(length: float) -> float:
+	return clampf(length/48.0,0.32,1.0)
+
+static func soul_point(source: Vector2, target: Vector2, t: float) -> Vector2:
+	return source.lerp(target,t)+Vector2(0.0,-sin(clampf(t,0.0,1.0)*PI)*soul_arc_height(source.distance_to(target)))
+
+func _draw_souldrain_sheets(status: Dictionary, area: PackedVector2Array, color: Color) -> bool:
+	var spec: Dictionary = SheetAnimations.spec_for(SOULDRAIN_EFFECT_ID)
+	var warning: bool = status.state == "warning"
+	var sheet_name: String = "warning" if warning else "mist"
+	if spec.is_empty() or not spec.animations.has(sheet_name): return false
+	var anim: Dictionary = spec.animations[sheet_name]
+	var texture: Texture2D = SheetAnimations.texture_for(SOULDRAIN_EFFECT_ID,anim)
+	if texture == null: return false
+	var progress: float = 0.0
+	var alpha: float = 1.0
+	if warning:
+		progress = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+		var outline: PackedVector2Array = area.duplicate();outline.append(outline[0])
+		draw_polyline(outline,Color(color,0.25+0.5*progress),2.0,true)
+	else:
+		alpha = souldrain_mist_alpha(float(model.combat_affix.duration)-float(status.remaining),float(status.remaining))
+		draw_colored_polygon(area,Color(color,SOULDRAIN_TINT*alpha))
+	var board: Vector2i = model.map_definition.size
+	var destination: Rect2 = SheetAnimations.destination(spec,anim)
+	for index in range(SOULDRAIN_WISPS.size()):
+		var spot: Vector2 = SOULDRAIN_WISPS[index]
+		var cycle: float = progress if warning else SheetAnimations.phase(anim,0.0,model.elapsed,0.0,float(index)*0.137)
+		draw_set_transform(project(Vector2(float(board.x)*spot.x,float(board.y)*spot.y)),0.0,Vector2.ONE*SOULDRAIN_WISP_SCALE)
+		draw_texture_rect_region(texture,destination,SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle)),Color(1.0,1.0,1.0,alpha))
+	draw_set_transform(Vector2.ZERO)
+	return true
+
+## Appui de l'ennemi soigné, suivi pendant sa marche ; sa position au moment du soin sert de repli s'il a disparu.
+func _soul_target_foot(event: Dictionary) -> Vector2:
+	var id: int = int(event.get("target_id",-1))
+	for enemy in model.enemies:
+		if int(enemy.id) == id: return project(model.position_at(display_distance(enemy),model.enemy_route_points(enemy),model.enemy_route_length(enemy)))
+	return project(event.to)
+
+func _draw_soul_frame(spec: Dictionary, sheet_name: String, point: Vector2, cycle: float, rotation_value: float = 0.0, size: float = 1.0) -> void:
+	var anim: Dictionary = spec.animations[sheet_name]
+	draw_set_transform(point,rotation_value,Vector2.ONE*size)
+	draw_texture_rect_region(SheetAnimations.texture_for(SOULDRAIN_EFFECT_ID,anim),SheetAnimations.destination(spec,anim),SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,cycle)))
+	draw_set_transform(Vector2.ZERO)
+
+## Faux si les planches manquent : le repère provisoire reste alors dessiné. `bursts` retient les éclats de départ déjà posés pour cet événement.
+func _draw_soul_sheet(event: Dictionary, age: float, color: Color, bursts: Dictionary) -> bool:
+	var spec: Dictionary = SheetAnimations.spec_for(SOULDRAIN_EFFECT_ID)
+	if spec.is_empty(): return false
+	for sheet_name in ["spawn","idle","death"]:
+		if not spec.animations.has(sheet_name) or SheetAnimations.texture_for(SOULDRAIN_EFFECT_ID,spec.animations[sheet_name]) == null: return false
+	var source: Vector2 = project(event.from)+Vector2(0.0,-SOUL_SOURCE_LIFT)
+	var target: Vector2 = _soul_target_foot(event)+Vector2(0.0,-SOUL_TARGET_LIFT)
+	var burst_key: String = "%s:%s" % [str(event.time),str(event.get("source_id",event.from))]
+	var burst_time: float = float(spec.animations.spawn.duration)
+	if age < burst_time and not bursts.has(burst_key):
+		bursts[burst_key] = true
+		_draw_soul_frame(spec,"spawn",source,age/burst_time)
+	if age >= SOUL_FLIGHT_START and age < SOUL_FLIGHT_END:
+		var t: float = (age-SOUL_FLIGHT_START)/(SOUL_FLIGHT_END-SOUL_FLIGHT_START)
+		var head: Vector2 = soul_point(source,target,t)
+		for step in range(SOUL_TRAIL_SEGMENTS):
+			var near: float = maxf(0.0,t-0.035*step)
+			var far: float = maxf(0.0,t-0.035*(step+1))
+			draw_line(soul_point(source,target,near),soul_point(source,target,far),Color(color.lightened(0.25),0.55*(1.0-float(step)/SOUL_TRAIL_SEGMENTS)),1.2,true)
+		var ahead: Vector2 = soul_point(source,target,minf(1.0,t+0.04))-head
+		var heading: float = ahead.angle() if ahead.length_squared() > 0.0001 else (target-source).angle()
+		_draw_soul_frame(spec,"idle",head,SheetAnimations.phase(spec.animations.idle,0.0,age,0.0),heading,soul_size(source.distance_to(target)))
+	var absorb: Dictionary = spec.animations.death
+	if age >= SOUL_ABSORB_START and age < SOUL_ABSORB_START+float(absorb.duration):
+		_draw_soul_frame(spec,"death",target,(age-SOUL_ABSORB_START)/float(absorb.duration))
+	return true
+
 func _draw_biome_affix_events() -> void:
 	if model == null or model.affix_events.is_empty(): return
 	var color: Color = BIOME_AFFIX_COLORS.get(str(model.combat_affix.get("id","")),Color.WHITE)
+	var soul_bursts: Dictionary = {}
 	for event in model.affix_events:
 		var age: float = model.elapsed-float(event.time)
 		var lifetime: float = THEFT_EVENT_DURATION if str(event.kind) == "theft" else BIOME_EVENT_DURATION
@@ -2498,6 +2616,7 @@ func _draw_biome_affix_events() -> void:
 				draw_line(from+Vector2(0,-6),to+Vector2(0,-6),Color(color,0.8*(1.0-t)),3.0,true)
 				draw_circle(to+Vector2(0,-6),4.0*(1.0-t)+1.0,Color(color,0.8*(1.0-t)),true,-1,true)
 			"soul":
+				if _draw_soul_sheet(event,age,color,soul_bursts): continue
 				var source: Vector2 = project(event.from)+Vector2(0,-12)
 				var target: Vector2 = project(event.to)+Vector2(0,-12)
 				draw_line(source,source.lerp(target,minf(1.0,t*2.0)),Color(color,0.8*(1.0-t)),2.0,true)

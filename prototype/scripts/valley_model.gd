@@ -570,7 +570,7 @@ func _drain_souls(before: Array, after: Array) -> void:
 			if int(enemy.get("type",1)) == 7 or float(enemy.hp) >= float(enemy.max_hp): continue
 			if enemy_separation_squared(dead,enemy) > SOULDRAIN_RADIUS*SOULDRAIN_RADIUS: continue
 			enemy.hp = minf(float(enemy.max_hp),float(enemy.hp)+float(enemy.max_hp)*float(combat_affix.heal_percent)/100.0)
-			_affix_event({"kind":"soul","from":enemy_position(dead),"to":enemy_position(enemy)})
+			_affix_event({"kind":"soul","from":enemy_position(dead),"to":enemy_position(enemy),"source_id":dead.id,"target_id":enemy.id})
 
 func mist_enabled() -> bool:
 	return combat_affix.get("id","") == "seamist"

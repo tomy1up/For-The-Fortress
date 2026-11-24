@@ -426,12 +426,18 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 24 novembre 2026 — Claude Code (v0.248 publiée)
+## État au 24 novembre 2026 — Claude Code (v0.249 publiée)
+
+- **v0.249, Éboulement et Drain d'âmes dessinés** (demande du porteur : « Oui, intègre-les », MAJ-102) : `art/codex` fusionnée jusqu'à `46260d90`. `valley_view.gd` : `rockfall_sheet`, `_draw_souldrain_sheets`, `_draw_soul_sheet`, `soul_point`. `valley_model.gd` : les événements `soul` portent `source_id` et `target_id`. `animation_library.gd` : `NON_ELIMINATION_EFFECTS`. Contrôles dans `test_rockfall.gd` et `test_biome_affixes.gd`. Aucune règle ni valeur d'équilibrage modifiée.
+- Contrôles v0.249 : régression 146/146 (237 160 contrôles Godot, 17 tests Python), paquet 1 050 cas et 664 contrôles de sources sur bureau caché, captures du jeu exporté inspectées dans les deux factions sur 121, 134, 181 et 191.
+- `art/codex` contient après `46260d90` la Crue et les Vapeurs toxiques, annoncées validées : ne pas fusionner sans la demande du porteur.
+- Signalement de Codex non tranché (O-017) : aux missions 121, 122, 125 et 128, les deux premiers ours sortent à 0,3 s d'écart après l'Éboulement et se lisent comme un seul.
+
+### v0.248 (publiée)
 
 - **v0.248, trois missions de la Horde durcies** (décision du porteur du 24 novembre 2026 : « Les trois hausses », MAJ-101, fiche `design/Missions_trop_faciles_v0248.md`) : `REBALANCE_PERCENT` des missions 34 (125), 37 (119) et 64 (104). Mesure : 374 réglages sur 398 dans la cible, aucun sous 40 %, 24 au-dessus. Données et scripts : `design/essais/equilibre_bonus/v248/`.
 - Les 24 réglages restants ne rejoignent pas la cible par les PV : 10 basculent sous 40 % au point suivant, 14 sont limités par l'armée de référence. Le porteur garde la référence garantie.
 - Contrôles v0.248 : régression 146/146 (237 135 contrôles Godot, 17 tests Python), paquet 1 050 cas et 656 contrôles de sources sur bureau caché, captures du jeu exporté inspectées sur les trois missions.
-- `art/codex` a six commits non fusionnés (Éboulement, Drain d'âmes, contrôle de lisibilité des affixes) : attendre la demande du porteur.
 
 ### v0.247 (publiée)
 

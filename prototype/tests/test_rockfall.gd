@@ -23,6 +23,7 @@ func run_checks() -> void:
 	verify_status()
 	verify_replay()
 	await verify_rendering()
+	verify_rockfall_transitions()
 	await verify_sheets()
 	await verify_single_entry()
 	verify_biome_affixes()
@@ -172,6 +173,27 @@ func verify_rendering() -> void:
 	check(not model.rockfall_status().is_empty() or model.elapsed > 0.0,"Le combat avance pendant le dessin")
 	view.free()
 	check(before != "","Dessin de l'avertissement et du blocage sans erreur")
+
+## Chute, tas et dégagement livrés par Codex (v0.249) : enchaînement sur l'âge du blocage, raccord sur l'image 0, réouverture inchangée.
+func verify_rockfall_transitions() -> void:
+	Library.clear_cache()
+	var spec: Dictionary = Library.spec_for("effect.rockfall")
+	check(not spec.is_empty() and int(spec.animations.spawn.frames) == 41 and is_equal_approx(float(spec.animations.spawn.duration),0.68) and int(spec.animations.death.frames) == 32 and is_equal_approx(float(spec.animations.death.duration),0.54),"Planches de chute et de dégagement chargées")
+	var at := func(age: float) -> Dictionary: return View.rockfall_sheet(spec,{"state":"active","remaining":5.0-age},5.0,3.0,12.0+age)
+	var index := func(sheet: Dictionary) -> int: return Library.frame_index(spec.animations[sheet.state],float(sheet.phase))
+	check(at.call(0.0).state == "spawn" and index.call(at.call(0.0)) == 0,"La chute commence dès l'activation")
+	check(at.call(0.679).state == "spawn" and index.call(at.call(0.679)) == 40,"La chute va jusqu'à sa dernière image")
+	check(at.call(0.681).state == "blocked" and index.call(at.call(0.681)) == 0,"Le tas reprend sur son image 0")
+	check(at.call(4.459).state == "blocked" and index.call(at.call(4.459)) == 23,"Le tas finit son dernier cycle sur sa dernière image")
+	check(at.call(4.461).state == "death" and index.call(at.call(4.461)) == 0,"Le dégagement part de l'image 0")
+	check(at.call(4.999).state == "death" and index.call(at.call(4.999)) == 31,"Le dégagement va jusqu'à sa dernière image")
+	check(View.rockfall_sheet(spec,{"state":"warning","remaining":1.5},5.0,3.0,10.5).state == "warning" and is_equal_approx(float(View.rockfall_sheet(spec,{"state":"warning","remaining":1.5},5.0,3.0,10.5).phase),0.5),"L'annonce suit sa progression")
+	var short: Dictionary = View.rockfall_sheet(spec,{"state":"active","remaining":0.5},1.0,1.0,12.5)
+	check(short.state == "blocked","Blocage trop court pour les transitions : le tas reste affiché")
+	var old: Dictionary = spec.duplicate(true);old.animations.erase("spawn");old.animations.erase("death")
+	check(View.rockfall_sheet(old,{"state":"active","remaining":4.9},5.0,3.0,12.1).state == "blocked","Sans transition : le tas reste affiché")
+	check(View.rockfall_sheet({},{"state":"active","remaining":4.0},5.0,3.0,13.0).is_empty(),"Sans planche : repli sur le repère provisoire")
+	Library.clear_cache()
 
 ## Habillage par planches (`effect.rockfall`) : accepté, dessiné sans modifier le jeu, repli sur le repère provisoire sans planche.
 func verify_sheets() -> void:

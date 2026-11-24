@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.249**. Éboulement et Drain d'âmes dessinés : chute et dégagement des rochers dans les mines, volutes et âmes qui soignent les ennemis dans la Nécropole. [Notes](design/essais/v0249_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.249).
+
 **Prototype v0.248**. Trois missions de la Horde durcies (34, 37 et 64) : 374 réglages sur 398 sont désormais dans la cible de difficulté. [Notes](design/essais/v0248_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.248).
 
 **Prototype v0.247**. La Tortue gardienne et l'Ours sauvage marchent enfin : 60 images par foulée et une inclinaison de 13,3° sur la pente du chemin. [Notes](design/essais/v0247_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.247).
