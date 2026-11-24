@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-24 — Habillage du Drain d’âmes (ouvert)
 
-Cinq planches dans `effect.souldrain`. `warning` et `mist` s’ancrent près des bords du plateau. Dans la copie, les événements `soul` exploitent `spawn` à l’élimination, `idle` pendant le transfert et `death` à l’absorption. Le destinataire est suivi par son identifiant, avec la position initiale en repli. Le soin reste au moment de l’élimination. Proposition à brancher après avis du porteur. [GIF, durées et réglages](design/Visuels_Drain_Ames.md).
+Cinq planches dans `effect.souldrain`. `warning` et `mist` s’ancrent près des bords du plateau. Dans la copie, les événements `soul` exploitent `spawn` à l’élimination, `idle` pendant le transfert et `death` à l’absorption. Le destinataire est suivi par son identifiant, avec la position initiale en repli. Le soin reste au moment de l’élimination. Le porteur valide l’habillage le 24 novembre 2026. Le lot 666c6ac9 est prêt à brancher. [GIF, durées et réglages](design/Visuels_Drain_Ames.md).
 
 ### 2026-11-24 — Chute et dégagement de l’Éboulement (ouvert)
 
