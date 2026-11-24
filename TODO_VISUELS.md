@@ -18,9 +18,9 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Crabe pilleur (Côtes, missions 171 à 180)** — Marche et mort, `enemy.neutral.crab`, taille 1,0. Il vole de l'or en atteignant la forteresse. Silhouette provisoire teintée. [Fiche](design/Attaquants_par_biome_v0246.md).
 
-- [ ] **Affixe Crue (Gué, missions 2 à 20)** — Pendant 4 s toutes les 12 s, les ennemis avancent 10 % plus vite, annonce 3 s avant. Provisoire dessiné par le code. Besoin : habillage de montée des eaux lisible sur le plateau, sans masquer la route. Identifiant `flood`.
+- [x] **Affixe Crue (Gué, missions 2 à 20)** — Filets d’annonce, lame d’eau qui s’élargit et écume orientée dans les virages, sous le pont. Planches et essais livrés. Première version validée le 24 novembre 2026. À intégrer par Claude Code. [GIF et fiche](design/Visuels_Crue_Gue.md).
 
-- [ ] **Affixe Vapeurs toxiques (Marais, missions 41 à 60)** — Pendant 4 s toutes les 12 s, les défenseurs infligent 20 % de dégâts en moins, annonce 3 s avant. Provisoire dessiné par le code. Besoin : voile de vapeurs sur le plateau. Identifiant `miasma`.
+- [x] **Affixe Vapeurs toxiques (Marais, missions 41 à 60)** — Volutes autour des bassins à l’annonce et au pied des défenseurs une fois actives. Planches et vérifications livrées. Premier jet validé le 24 novembre 2026. À intégrer par Claude Code. [GIF et fiche](design/Visuels_Vapeurs_Toxiques.md).
 
 - [ ] **Affixe Cor d'alarme (Citadelle, missions 81 à 100)** — Toutes les 15 s, les ennemis présents reçoivent un bouclier de 10 % de leurs PV maximum, annonce 3 s avant. Provisoire dessiné par le code. Besoin : signal du cor et bouclier lisible sur une unité, jusqu'aux groupes serrés. Identifiant `alarm`.
 

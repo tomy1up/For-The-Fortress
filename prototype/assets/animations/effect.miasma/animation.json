@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "id": "effect.miasma",
+  "foot": [
+    72,
+    65
+  ],
+  "display_height": 90,
+  "animations": {
+    "warning": {
+      "file": "warning.png",
+      "frames": 32,
+      "frame_size": [
+        144,
+        90
+      ],
+      "mode": "progress"
+    },
+    "mist": {
+      "file": "mist.png",
+      "frames": 36,
+      "frame_size": [
+        144,
+        90
+      ],
+      "mode": "time",
+      "fps": 24
+    }
+  }
+}
