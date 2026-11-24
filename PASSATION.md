@@ -430,7 +430,13 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 24 novembre 2026 — Claude Code (v0.252 publiée)
+## État au 24 novembre 2026 — Claude Code (v0.253 publiée)
+
+- **v0.253, offres de bonus utiles** (décisions du porteur : « Offres utiles seulement », puis « Garder et recaler l'Alliance », MAJ-107, fiche `design/Offres_utiles_v0253.md`) : `ValleyModel.bonus_useful`, `_useful_substitute`, `rules_v253` ; `Replay.rules_v253_for`. Nouvel outil `tools/bonus_study.gd` (bonus imposé au premier choix de la référence) et option `V252` de `tools/faction_study.gd`. Nouvelle suite `test_useful_offers.gd`. Recalage : 57 coefficients de l'Alliance (+1 à +7), Alliance 64 sortie de `BELOW_CURVE_MISSIONS`. 386 réglages sur 398 dans la cible ; nouvelle base `design/essais/equilibre_bonus/v253/marges_campagne.json`.
+- Piste ouverte, non retenue : bonus faibles ou trop forts (vrai levier du poids du tirage) ; second recalage de l'Alliance vers sa marge d'avant (63 % contre 55 %).
+- Contrôles v0.253 : régression 148/148 (249 807 contrôles Godot, 17 tests Python), campagne remesurée (398 réglages) et garde des 28 suites de campagne, paquet 1 050 cas et 670 contrôles de sources sur bureau caché, offres de bonus inspectées dans les deux factions.
+
+### v0.252 (publiée)
 
 - **v0.252, renforts de vague** (demande du porteur : « attaque ce sujet », MAJ-106, fiche `design/Missions_renforts_v0252.md`) : `Campaign.groups_for`, `valid_reinforcements`, `ValleyModel.wave_reinforcements` et `configure_wave_reinforcements`, `CampaignCatalogue.WAVE_REINFORCEMENTS` et `wave_reinforcements(number, faction)`. Rapport : champ `wave_reinforcements`, refusé au rejeu avant la v0.252. Outil : `REINFORCE` dans `tools/faction_study.gd`. Nouvelle suite `test_wave_reinforcements.gd`. 392 réglages sur 398 dans la cible ; restent au-dessus A2, A3, H2, H3 (prise en main) et H23, H39 (référence). Données : `design/essais/equilibre_bonus/v252/` (`marges_campagne.json` est la nouvelle base).
 - Son : en attente de longue durée sur décision du porteur du 24 novembre 2026 (O-019) ; ne plus le proposer.

@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.253**. Offres de bonus utiles : une carte sans effet sur vos défenseurs est remplacée par un bonus utile, et 57 missions de l'Alliance sont recalées. [Notes](design/essais/v0253_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.253).
+
 **Prototype v0.252**. Renforts de vague : dix-huit missions trop faciles reçoivent des groupes d'ennemis en plus, et 392 réglages sur 398 sont dans la cible de difficulté. [Notes](design/essais/v0252_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.252).
 
 **Prototype v0.251**. Ours mieux espacés après l'Éboulement : sur les mines à une seule entrée, les ennemis retenus ressortent à 0,6 s d'écart, et deux réglages sont recalés. [Notes](design/essais/v0251_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.251).

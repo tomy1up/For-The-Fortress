@@ -1,0 +1,4 @@
+Alliance avant : victoires 89 %, PV moyens 53 %, ecart-type 31, ecart moyen entre tirages d'une mission 76 points (400 parties)
+Alliance apres : victoires 92 %, PV moyens 62 %, ecart-type 31, ecart moyen entre tirages d'une mission 81 points (400 parties)
+Horde avant : victoires 75 %, PV moyens 41 %, ecart-type 31, ecart moyen entre tirages d'une mission 76 points (400 parties)
+Horde apres : victoires 79 %, PV moyens 44 %, ecart-type 32, ecart moyen entre tirages d'une mission 79 points (400 parties)

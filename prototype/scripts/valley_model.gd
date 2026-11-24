@@ -155,6 +155,9 @@ const B_LOOT := 35
 ## Règles de la v0.233 (second lot, décision du porteur, 21 novembre 2026) : rareté des offres (commun, rare, épique, plus de rares en fin de partie), une relance gratuite par partie,
 ## et 24 bonus rares et épiques (R-37 à R-60). Faux pour rejouer un rapport plus ancien (tirage uniforme parmi les 36 premiers bonus, sans relance).
 var rules_v233: bool = true
+## Offres utiles (v0.253, décision du porteur, 24 novembre 2026) : une carte tirée qui ne sert à aucun défenseur déployé est remplacée par le bonus utile suivant
+## (critère : `bonus_useful`, remplacement : `_useful_substitute`). Faux pour rejouer un rapport plus ancien, dont les offres gardaient toute carte tirée.
+var rules_v253: bool = true
 const B_RUNIC := 36
 const B_ECHO := 37
 const B_TENACIOUS := 38
@@ -1270,17 +1273,31 @@ func _draw_offers(excluded: Array) -> Array[int]:
 		return offer
 	var rank: int = clampi(bonus_waves().find(wave),0,Campaign.RARITY_WEIGHTS.size()-1)
 	var weights: Array = Campaign.RARITY_WEIGHTS[rank]
+	var drawn_codes: Array[int] = [] # cartes tirées avant remplacement : elles seules sont exclues des tirages suivants, comme avant la v0.253
 	for index in range(3):
 		var roll: int = rng.randi_range(0,99)
 		var tier: int = 0 if roll < int(weights[0]) else 1 if roll < int(weights[0])+int(weights[1]) else 2
 		var candidates: Array[int] = []
 		for attempt in [tier,tier-1,tier-2,tier+1,tier+2]:
 			if attempt < 0 or attempt > 2: continue
-			candidates = _offer_candidates(Campaign.RARITIES[attempt],offer,excluded)
+			candidates = _offer_candidates(Campaign.RARITIES[attempt],drawn_codes,excluded)
 			if not candidates.is_empty(): break
-		if candidates.is_empty(): candidates = _offer_candidates("",offer,[])
-		offer.append(candidates[rng.randi_range(0,candidates.size()-1)])
+		if candidates.is_empty(): candidates = _offer_candidates("",drawn_codes,[])
+		var drawn: int = rng.randi_range(0,candidates.size()-1)
+		drawn_codes.append(candidates[drawn])
+		offer.append(_useful_substitute(candidates,drawn,offer,excluded) if rules_v253 else candidates[drawn])
 	return offer
+
+## Offres utiles (v0.253) : la carte tirée est gardée si elle sert à un défenseur déployé ; sinon elle est remplacée par le premier bonus utile qui la suit dans la même liste
+## (même rareté, ordre des codes, en boucle), sans nouveau tirage aléatoire : les offres déjà utiles et toute la suite de la partie restent celles d'avant la v0.253.
+## Si aucun bonus de cette rareté n'est utile, le premier bonus utile de tout le catalogue, à défaut la carte tirée.
+func _useful_substitute(candidates: Array[int], drawn: int, offer: Array, excluded: Array) -> int:
+	for step in range(candidates.size()):
+		var code: int = candidates[(drawn+step)%candidates.size()]
+		if code not in offer and bonus_useful(code): return code
+	for code in _offer_candidates("",offer,excluded):
+		if bonus_useful(code): return code
+	return candidates[drawn] if candidates[drawn] not in offer else _offer_candidates("",offer,[])[0]
 
 func _offer_candidates(rarity: String, offer: Array, excluded: Array) -> Array[int]:
 	var result: Array[int] = []
@@ -1288,6 +1305,40 @@ func _offer_candidates(rarity: String, offer: Array, excluded: Array) -> Array[i
 		if code in bonuses or code in offer or code in excluded: continue
 		if rarity.is_empty() or Campaign.bonus_rarity(code) == rarity: result.append(code)
 	return result
+
+## Offres utiles (v0.253) : vrai si au moins un défenseur déployé profite du bonus, avec les mêmes critères que le combat (`_stats_with_bonuses`, `_extra_bonus_effects`,
+## `promoted_level`, malédictions). Les bonus généraux (dégâts de tous, portée, forteresse, or, prix, ennemis visés, ralentissement à l'apparition) et ceux qui suivent
+## le niveau des défenseurs au fil de la partie (Recrues aguerries, Vétérans, Élite sacrifiée) sont toujours utiles. Sans défenseur déployé, tout bonus est utile.
+func bonus_useful(code: int) -> bool:
+	var deployed: Array[int] = []
+	for slot in range(defenders.size()):
+		if not defenders[slot].is_empty(): deployed.append(slot)
+	if deployed.is_empty(): return true
+	if code not in [1,3,4,B_RAPID,B_SLOW,B_BARRAGE,B_ECHO,B_FIRESTORM,B_CURSE,B_TENACIOUS,B_FAR,B_COVER,B_CLOSE,B_SUPPORT,B_TIGHT,B_LONE,B_PROMOTION,B_ASCENSION]: return true
+	for slot in deployed:
+		var defender: Dictionary = defenders[slot]
+		var type: int = int(defender.type)
+		var reference: Dictionary = ROSTER[type]
+		var useful: bool = false
+		if code == 1: useful = family(type) != 5 or (rules_v222 and type >= 6) # Exercice de tir : pas le chaman orc de base ni ses spécialisations
+		elif code in [3,4,B_BARRAGE,B_ECHO,B_FIRESTORM]:
+			# Cibles secondaires (explosions, rebonds) : Éclats meurtriers et Propagation seulement pour le mage, les haches et le sapeur ; un rayon plus grand ne sert à rien sans elles.
+			var own: Dictionary = stats_for(type,int(defender.get("level",1)),int(defender.get("branch",-1)))
+			useful = int(own.get("secondary_cap",0)) > 0 and (code not in [3,4] or family(type) in [2,3,4]) and (code != 3 or float(own.get("secondary_damage",0.0)) > 0.0)
+		elif code == B_RAPID: useful = float(reference.interval) <= 1.3+EPS
+		elif code == B_SLOW: useful = float(reference.interval) >= 2.4-EPS
+		elif code in [B_CURSE,B_TENACIOUS]: useful = float(reference.get("curse_damage",0.0)) > 0.0
+		elif code in [B_FAR,B_COVER]: useful = float(reference.range) >= 4.5-EPS
+		elif code == B_CLOSE: useful = float(reference.range) <= 3.6+EPS
+		elif code == B_SUPPORT: useful = reference.has("aura_bonus") or reference.has("mark_bonus") or reference.has("slow_seconds") or reference.has("loot_bonus") or reference.has("volatile_damage")
+		elif code in [B_TIGHT,B_LONE]:
+			var nearest: float = INF
+			for other in deployed:
+				if other != slot: nearest = minf(nearest,slots[slot].distance_to(slots[other]))
+			useful = nearest <= 3.0+EPS if code == B_TIGHT else nearest > 4.2+EPS
+		elif code in [B_PROMOTION,B_ASCENSION]: useful = promoted_level(code,defender) > 0
+		if useful: return true
+	return false
 
 ## Relance (règles v0.233) : remplace les trois offres par trois autres, une fois par partie, sans coût. Le tirage suit les mêmes raretés que l'offre remplacée.
 func reroll_bonus() -> bool:

@@ -81,6 +81,10 @@ static func rules_v233_for(version: String) -> bool:
 	if parts.size() < 2 or parts[0] != "0" or not parts[1].is_valid_int(): return true
 	return int(parts[1]) >= 233
 
+## Offres utiles (v0.253) : les rapports plus anciens tiraient leurs offres parmi tous les bonus non pris.
+static func rules_v253_for(version: String) -> bool:
+	return _minor_version(version) >= 253
+
 ## Écart de sortie après un Éboulement sur une carte à une seule entrée : 0,6 s depuis la v0.251, 0,3 s avant.
 static func rockfall_hold_gap_for(version: String) -> float:
 	return Model.ROCKFALL_HOLD_GAP if _minor_version(version) >= 251 else Model.ROCKFALL_HOLD_GAP_V244
@@ -105,6 +109,7 @@ static func verify(data: Variant) -> Dictionary:
 	model.rules_v232 = rules_v232_for(data.game_version)
 	model.rules_v233 = rules_v233_for(data.game_version)
 	model.rockfall_hold_gap = rockfall_hold_gap_for(data.game_version)
+	model.rules_v253 = rules_v253_for(data.game_version)
 	model.talent_rules = talent_rules_for(data.game_version) # Chaque rapport garde les valeurs de talents de sa version.
 	if data.has("combat_affix") and not model.configure_combat_affix(data.combat_affix): return _fail("Affixe de combat invalide.")
 	if not model.routes.is_empty():

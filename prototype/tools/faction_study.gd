@@ -52,6 +52,7 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 	m.rng.seed = int(OS.get_environment("SEED")) if OS.get_environment("SEED") != "" else 7
 	if OS.get_environment("LEGACY") == "1": m.rules_v232 = false # anciennes règles : douze bonus, choix après les vagues 3, 6 et 9
 	if OS.get_environment("V232") == "1": m.rules_v233 = false # règles de la v0.232 : 36 bonus tirés uniformément, sans rareté ni relance
+	if OS.get_environment("V252") == "1": m.rules_v253 = false # offres d'avant la v0.253 : tous les bonus non pris, même sans effet sur l'armée
 	var slots := [3,4,2]
 	types = types.duplicate()
 	types.sort_custom(func(x, y): return m.purchase_cost(x) < m.purchase_cost(y)) # les deux moins chères à l'ouverture, la plus chère à la vague 2
