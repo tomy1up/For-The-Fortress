@@ -432,6 +432,9 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 ## État au 24 novembre 2026 — Claude Code (v0.251 publiée)
 
+- **Finales remesurées (GDD 0.89, jeu 0.251 inchangé)** : le porteur a choisi « Clore la question ». O-016 et O-018 sont closes (MAJ-105, fiche `design/Finales_remesure_v0251.md`). Les vingt finales de la Horde sont dans la cible ; l'armée de référence dépend du tirage des bonus (tirage 8 : 85 victoires sur 200 côté Horde). Données : `design/essais/equilibre_bonus/v251/reference_trois_tirages.json`.
+- Codex n'a plus de crédit jusqu'au 28 novembre 2026 environ (annonce du porteur) : aucun lot visuel n'arrivera d'ici là ; le Cor d'alarme (`1ceb2750`) reste en attente.
+
 - **v0.251, ours mieux espacés après l'Éboulement** (décision du porteur : « Espacer les ours », MAJ-104, fiche `design/Missions_mines_ecart_eboulement_v0251.md`) : `ROCKFALL_HOLD_GAP` 0,6 s, `rockfall_hold_gap` sur le modèle, `Replay.rockfall_hold_gap_for` (0,3 s avant la v0.251). Recalage `REBALANCE_PERCENT` : Horde 121 (163), Alliance 125 (126). 374 réglages sur 398 dans la cible. Données : `design/essais/equilibre_bonus/v251/`.
 - Contrôles v0.251 : régression 146/146 (237 183 contrôles Godot, 17 tests Python), paquet 1 050 cas et 670 contrôles de sources sur bureau caché, captures du jeu exporté inspectées sur 121, 125 et 128.
 
