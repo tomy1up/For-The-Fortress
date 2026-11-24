@@ -18,7 +18,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Crabe pilleur (Côtes, missions 171 à 180)** — Marche et mort, `enemy.neutral.crab`, taille 1,0. Il vole de l'or en atteignant la forteresse. Silhouette provisoire teintée. [Fiche](design/Attaquants_par_biome_v0246.md).
 
-- [x] **Affixe Crue (Gué, missions 2 à 20)** — Filets d’annonce, lame d’eau qui s’élargit et écume orientée dans les virages, sous le pont. Planches et essais livrés. Attend l’avis du porteur avant branchement. [GIF et fiche](design/Visuels_Crue_Gue.md).
+- [x] **Affixe Crue (Gué, missions 2 à 20)** — Filets d’annonce, lame d’eau qui s’élargit et écume orientée dans les virages, sous le pont. Planches et essais livrés. Première version validée le 24 novembre 2026. À intégrer par Claude Code. [GIF et fiche](design/Visuels_Crue_Gue.md).
 
 - [ ] **Affixe Vapeurs toxiques (Marais, missions 41 à 60)** — Pendant 4 s toutes les 12 s, les défenseurs infligent 20 % de dégâts en moins, annonce 3 s avant. Provisoire dessiné par le code. Besoin : voile de vapeurs sur le plateau. Identifiant `miasma`.
 

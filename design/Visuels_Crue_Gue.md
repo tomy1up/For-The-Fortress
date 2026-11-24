@@ -20,4 +20,4 @@ Le branchement a été essayé dans une copie isolée. Repli possible sur le rep
 
 ## Contrôles
 
-145 captures des missions 2, 4, 11 et 20 sur les deux factions. Deux cycles de crue contrôlés, dont la transition sous le pont de la mission 11 et les virages de la mission 4. Le GIF présente la fin de l’annonce, la montée et le retrait. La partie centrale de la crue est raccourcie dans le GIF. Validateur à zéro problème sur 68 dossiers. 232 contrôles de bibliothèque d’animations et 1 160 contrôles d’affixes réussis. Proposition en attente de validation avant branchement par Claude Code.
+145 captures des missions 2, 4, 11 et 20 sur les deux factions. Deux cycles de crue contrôlés, dont la transition sous le pont de la mission 11 et les virages de la mission 4. Le GIF présente la fin de l’annonce, la montée et le retrait. La partie centrale de la crue est raccourcie dans le GIF. Validateur à zéro problème sur 68 dossiers. 232 contrôles de bibliothèque d’animations et 1 160 contrôles d’affixes réussis. Première version validée par le porteur le 24 novembre 2026. Branchement à faire par Claude Code.

@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-24 — Habillage de la Crue du Gué (ouvert)
 
-`effect.flood` fournit `warning` en progression et `storm` en temps. Dessiner les rides et la lame d’eau sur la chaussée puis recouvrir par le pont. Utiliser le temps de combat pour les fondus et la dérive de l’écume. Les règles, le bandeau et la durée restent ceux du moteur. Essai sur quatre missions dans les deux factions. Lot en attente de l’avis du porteur. [GIF, réglages et contrôles](design/Visuels_Crue_Gue.md).
+`effect.flood` fournit `warning` en progression et `storm` en temps. Dessiner les rides et la lame d’eau sur la chaussée puis recouvrir par le pont. Utiliser le temps de combat pour les fondus et la dérive de l’écume. Les règles, le bandeau et la durée restent ceux du moteur. Essai sur quatre missions dans les deux factions. Le porteur valide cette première version le 24 novembre 2026. Le lot 1220a07b est prêt à brancher. [GIF, réglages et contrôles](design/Visuels_Crue_Gue.md).
 
 ### 2026-11-24 — Habillage du Drain d’âmes (ouvert)
 
