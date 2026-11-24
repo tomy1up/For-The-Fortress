@@ -8,7 +8,7 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ### 2026-11-24 — Habillage des Vapeurs toxiques (ouvert)
 
-`effect.miasma` fournit `warning` pour les bassins pendant l’annonce et `mist` pour les bassins et les emplacements occupés pendant la fenêtre active. La copie d’essai place les volutes avant les silhouettes et joue les fondus en temps de combat. Bandeau, durée et réduction des dégâts pilotés par le moteur. Visuel prêt pour avis du porteur. [GIF, ancrages et contrôles](design/Visuels_Vapeurs_Toxiques.md).
+`effect.miasma` fournit `warning` pour les bassins pendant l’annonce et `mist` pour les bassins et les emplacements occupés pendant la fenêtre active. La copie d’essai place les volutes avant les silhouettes et joue les fondus en temps de combat. Bandeau, durée et réduction des dégâts pilotés par le moteur. Le porteur valide ce premier jet le 24 novembre 2026. Le lot 5069d4fd est prêt à brancher. [GIF, ancrages et contrôles](design/Visuels_Vapeurs_Toxiques.md).
 
 ### 2026-11-24 — Habillage de la Crue du Gué (ouvert)
 

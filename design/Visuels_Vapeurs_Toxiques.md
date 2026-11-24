@@ -18,4 +18,4 @@ Utiliser le centre projeté de chaque bassin dans `map_definition.water_areas`, 
 
 ## Contrôles
 
-151 captures des missions 41, 48, 51 et 58 dans les deux factions. Deux cycles contrôlés, dont des vues à six défenseurs et trois entrées en 58. Le GIF raccourcit l’annonce et le milieu de la phase active. Validateur à zéro problème sur 69 dossiers. Bibliothèque d’animations et affixes de biome au vert, 233 et 1 160 contrôles réussis. Le branchement de production reste à faire par Claude Code après avis du porteur.
+151 captures des missions 41, 48, 51 et 58 dans les deux factions. Deux cycles contrôlés, dont des vues à six défenseurs et trois entrées en 58. Le GIF raccourcit l’annonce et le milieu de la phase active. Validateur à zéro problème sur 69 dossiers. Bibliothèque d’animations et affixes de biome au vert, 233 et 1 160 contrôles réussis. Premier jet validé par le porteur le 24 novembre 2026. Le branchement de production reste à faire par Claude Code.

@@ -4,7 +4,7 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
-**24 novembre — Habillage des Vapeurs toxiques.** Deux planches pour `effect.miasma`, émises depuis les bassins puis autour des pieds des défenseurs. 151 captures v0.248 sur quatre cartes (41, 48, 51 et 58) dans les deux factions. Validateur et 1 393 contrôles ciblés réussis. En attente d’avis du porteur et de branchement. [GIF et fiche](design/Visuels_Vapeurs_Toxiques.md).
+**24 novembre — Habillage des Vapeurs toxiques.** Deux planches pour `effect.miasma`, émises depuis les bassins puis autour des pieds des défenseurs. 151 captures v0.248 sur quatre cartes (41, 48, 51 et 58) dans les deux factions. Validateur et 1 393 contrôles ciblés réussis. Premier jet validé par le porteur le 24 novembre 2026. Prêt à brancher par Claude Code (5069d4fd). [GIF et fiche](design/Visuels_Vapeurs_Toxiques.md).
 
 **24 novembre — Habillage de la Crue du Gué.** Deux planches pour `effect.flood`. Eau au centre des routes, écume qui suit les tronçons et retrait progressif. 145 captures des missions 2, 4, 11 et 20 dans les deux factions. Validateur à zéro problème, 1 392 contrôles ciblés réussis. Première version validée par le porteur le 24 novembre 2026. Prête à brancher par Claude Code (1220a07b). [GIF et fiche](design/Visuels_Crue_Gue.md).
 
