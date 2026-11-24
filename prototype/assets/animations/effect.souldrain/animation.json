@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "id": "effect.souldrain",
+  "display_height": 72,
+  "foot": [
+    52,
+    36
+  ],
+  "animations": {
+    "spawn": {
+      "file": "spawn.png",
+      "frames": 10,
+      "frame_size": [
+        104,
+        72
+      ],
+      "mode": "event",
+      "duration": 0.17
+    },
+    "idle": {
+      "file": "idle.png",
+      "frames": 16,
+      "frame_size": [
+        104,
+        72
+      ],
+      "mode": "time",
+      "fps": 36
+    },
+    "death": {
+      "file": "death.png",
+      "frames": 12,
+      "frame_size": [
+        104,
+        72
+      ],
+      "mode": "event",
+      "duration": 0.2
+    },
+    "warning": {
+      "file": "warning.png",
+      "frames": 16,
+      "frame_size": [
+        104,
+        72
+      ],
+      "mode": "progress"
+    },
+    "mist": {
+      "file": "mist.png",
+      "frames": 24,
+      "frame_size": [
+        104,
+        72
+      ],
+      "mode": "time",
+      "fps": 18
+    }
+  }
+}

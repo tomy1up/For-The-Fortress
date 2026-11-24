@@ -26,7 +26,7 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Affixe Courants ascendants (Îles flottantes, missions 141 à 160)** — Toutes les 15 s, les ennemis présents bondissent d'une case vers la forteresse, annonce 3 s avant. Provisoire dessiné par le code. Besoin : souffle et trajectoire du bond. Identifiant `updraft`.
 
-- [ ] **Affixe Drain d'âmes (Nécropole, missions 181 à 200)** — Pendant 4 s toutes les 12 s, chaque ennemi éliminé soigne ses voisins blessés, annonce 3 s avant. Provisoire dessiné par le code. Besoin : ambiance de la fenêtre active et trait d'âme du mort vers le soigné. Identifiant `souldrain`.
+- [x] **Affixe Drain d’âmes (Nécropole, missions 181 à 200)** — Volutes d’annonce et d’activité, âme dirigée vers chaque ennemi soigné et éclat d’absorption. Planches et contrôles livrés. Validé par le porteur le 24 novembre 2026. À intégrer par Claude Code. [GIF et fiche](design/Visuels_Drain_Ames.md).
 
 - [x] **Décor du Gué, missions 1 à 20** — Sept images sur dix plateaux, validées le 23 novembre 2026 (3feb9b09). Branchement à faire par Claude Code. [Fiche et captures](design/Visuels_Gue_01_20.md).
 
@@ -68,9 +68,9 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 - [ ] **Boutique étendue, premier lot (v0.192)** — douze unités (types 10 à 21 : sentinelle, tireur d'élite, arquebusier, bombarde, piquier, pyromancien côté Alliance ; veilleur, javelinier, lance-éclats, catapulte, lance-épieu, brûleur côté Horde) qui réutilisent l'illustration de leur famille. À illustrer (même cadrage que les alternatives `rodeur`, `mousquetaire`, `traqueur`, `grenadier`) puis à animer. Voir `design/Boutique_20_unites_proposition.md`.
 
-- [x] **Marche de l’Ours sauvage** — Deux planches de 60 images et inclinaison de 13,3° validées le 23 novembre 2026 (5a9e4c1e). À intégrer par Claude Code. [Fiche et vidéos](design/Visuels_Marche_Ours.md#correction-des-fragments-de-pattes).
+- [x] **Marche de l’Ours sauvage** — Deux planches de 60 images et inclinaison de 13,3° validées le 23 novembre 2026 (5a9e4c1e). Intégrée en v0.247. [Fiche et vidéos](design/Visuels_Marche_Ours.md#correction-des-fragments-de-pattes).
 
-- [x] **Marche de la Tortue gardienne des berges** — Le porteur valide 60 images par foulée et une inclinaison de 13,3° le 23 novembre 2026 (d5ed8d75 et a6951c04). À intégrer par Claude Code. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#inclinaison-suivant-le-chemin).
+- [x] **Marche de la Tortue gardienne des berges** — Le porteur valide 60 images par foulée et une inclinaison de 13,3° le 23 novembre 2026 (d5ed8d75 et a6951c04). Intégrée en v0.247. [Comparatifs](design/Visuels_Marche_Tortue_Gardienne.md#inclinaison-suivant-le-chemin).
 
 - [x] **Relève du Revenant dessinée image par image** — Seize dessins complets validés par le porteur le 23 novembre 2026 (cfb41268). Prête pour intégration. [Fiche et GIF](design/Visuels_Releve_Revenant_Dessinee.md).
 
@@ -113,6 +113,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 - [x] **Îles flottantes et cité céleste, missions 141–150** — cinq pièces par carte, nuages et falaises. Prêt pour intégration et avis visuel. [Aperçus](design/Visuels_Iles_Flottantes.md).
 
 - [x] **Souterrains et mines, missions 131–140 et éboulement** — cinq pièces par carte, avertissement et blocage animés. Contrôles en combat dans les deux factions. Prêt pour intégration et avis visuel. [Aperçus](design/Visuels_Biome_Mines.md#chapitre-14--missions-131-à-140).
+
+- [x] **Chute et dégagement de l’Éboulement** — planches livrées, raccords contrôlés sur une et plusieurs entrées. Chute et dégagement validés par le porteur le 24 novembre 2026. À intégrer par Claude Code. [GIF et fiche](design/Visuels_Transitions_Eboulement.md).
 
 - [x] **Marche de Gueule-de-Vase** — trois planches de 24 poses. Les Eaux Mortes vérifiées à ×1 et ×2 dans les deux factions. En attente de retour visuel. [Aperçu](design/Visuel_Gueule_de_Vase.md#marche-de-gueule-de-vase).
 
