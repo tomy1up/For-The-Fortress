@@ -4,6 +4,8 @@ Mettre ce fichier à jour à chaque fin de mission ou changement d'agent (voir `
 
 ## État au 14 novembre 2026 — Codex
 
+**24 novembre — Habillage du Drain d’âmes.** Cinq planches pour `effect.souldrain`. Volutes de lisière et transfert violet vers l’ennemi soigné. Essai d’un et trois soins, plus un déclenchement par les défenseurs. 95 captures, validateur à zéro problème et 7 753 contrôles ciblés réussis. Attend l’avis du porteur puis le branchement par Claude Code. [GIF et fiche](design/Visuels_Drain_Ames.md).
+
 **24 novembre — Chute et dégagement de l’Éboulement.** Le porteur retient le dégagement de l’amas. La chute a été reprise en cinq arrivées successives (41 images en 0,68 s). Essai en combat sur les missions 121 et 134 dans les deux factions. Les temps de réouverture sont identiques. Validateur et suites ciblées réussis. Le porteur valide aussi la chute révisée le 24 novembre 2026. Lot prêt à brancher par Claude Code (ff4df682). [GIF et raccords](design/Visuels_Transitions_Eboulement.md).
 
 **24 novembre — Contrôle des cinq affixes étendus.** 50 missions en v0.244, puis 13 reprises en v0.247 dans les deux factions. Sur les mines 121, 122, 125 et 128, les deux premiers ours sortent à 17,0 et 17,3 s et se chevauchent. Les marches approuvées de l’Ours et de la Tortue ainsi que l’inclinaison de 13,3° sont intégrées en v0.247. [Bilan et captures](design/Visuels_Affixes_Controles_v0247.md).

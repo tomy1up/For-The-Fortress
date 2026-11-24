@@ -6,6 +6,10 @@ Format d'une entrée : `### AAAA-MM-JJ — Titre (ouvert)` puis le contenu : fic
 
 ## Ouvert
 
+### 2026-11-24 — Habillage du Drain d’âmes (ouvert)
+
+Cinq planches dans `effect.souldrain`. `warning` et `mist` s’ancrent près des bords du plateau. Dans la copie, les événements `soul` exploitent `spawn` à l’élimination, `idle` pendant le transfert et `death` à l’absorption. Le destinataire est suivi par son identifiant, avec la position initiale en repli. Le soin reste au moment de l’élimination. Proposition à brancher après avis du porteur. [GIF, durées et réglages](design/Visuels_Drain_Ames.md).
+
 ### 2026-11-24 — Chute et dégagement de l’Éboulement (ouvert)
 
 `effect.rockfall` déclare deux planches événementielles. `spawn` a été repris en cinq chutes successives. Utiliser 41 images sur 0,68 s dès l’activation. Le porteur a retenu le dégagement. Sa planche `death` occupe toujours les 0,54 dernières secondes du blocage. L’essai utilise le temps de combat et l’ancre de la route visée. Au milieu, jouer `blocked` sur un nombre entier de cycles pour raccorder son image 0 aux transitions. Conserver les horaires de réouverture. Le branchement testé est limité à la copie de capture. Le porteur a validé aussi la chute révisée le 24 novembre 2026. Le lot ff4df682 est prêt à brancher. [GIF, format et contrôles](design/Visuels_Transitions_Eboulement.md).
