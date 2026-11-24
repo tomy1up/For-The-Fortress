@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "id": "effect.flood",
+  "foot": [
+    44,
+    24
+  ],
+  "display_height": 48,
+  "animations": {
+    "warning": {
+      "file": "warning.png",
+      "frames": 28,
+      "frame_size": [
+        88,
+        48
+      ],
+      "mode": "progress"
+    },
+    "storm": {
+      "file": "storm.png",
+      "frames": 32,
+      "frame_size": [
+        88,
+        48
+      ],
+      "mode": "time",
+      "fps": 32
+    }
+  }
+}
