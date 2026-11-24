@@ -1,6 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.84 — 23 novembre 2026
+Game Design Document — Version 0.85 — 24 novembre 2026
+
+Version 0.248 du jeu (24 novembre 2026) : **trois missions de la Horde durcies** (34, 37 et 64, +1 % de PV, MAJ-101) ; 374 réglages sur 398 dans la cible de difficulté.
 
 Version 0.247 du jeu (23 novembre 2026) : **marches de la Tortue gardienne et de l'Ours sauvage** (60 images par foulée, inclinaison de 13,3° sur la pente du chemin, MAJ-100), sans changement de règle ni d'équilibrage.
 
@@ -1770,6 +1772,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-51 | **Orientation par défaut des défenseurs : face au tronçon de route le plus proche** au placement et entre les vagues ; en combat, la dernière cible garde la priorité — V | Décision du porteur, 15 novembre 2026 ; `valley_view.gd` (`road_facing`), `tests/test_defender_facing.gd` |
 | MAJ-52 | **Visée inclinée du Tireur d’élite elfe (type 11)** : sept planches (0°, ±8°, ±16°, ±24°), un seul angle pour la pose, l’origine de la flèche et sa direction de départ ; lâcher à 0,27 s — V (geste validé par le porteur) ; angles et lâcher — rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `a2cdab9` ; `tests/test_marksman_aim.gd` |
 | MAJ-53 | **Estoc du Piquier humain (type 14)** : trois planches (−12°, 0°, +12°), la pique est dessinée dans les planches, éclat de contact à 0,256 s à la pointe donnée par angle — V (geste validé par le porteur) ; rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `9a7d3d8` ; `tests/test_marksman_aim.gd` |
+| MAJ-101 | **Trois missions de la Horde durcies** : coefficients de PV des missions 34 (124 → 125), 37 (118 → 119) et 64 (103 → 104). Sur toute la campagne, **374 réglages sur 398 dans la cible**, aucun en dessous, 24 au-dessus. L'armée de référence reste garantie sur toutes les missions : l'option de la laisser perdre pour durcir davantage n'est pas retenue. Valeurs à confirmer en jeu | Décision du porteur, 24 novembre 2026 ; `design/Missions_trop_faciles_v0248.md` |
 | MAJ-100 | **Marches de la Tortue gardienne et de l'Ours sauvage** (dessins de Codex, lots `d5ed8d75`, `a6951c04` et `5a9e4c1e`) : 60 images par foulée, deux vues pour l'Ours ; la silhouette penche de la moitié de l'angle projeté du chemin (13,3°), signée selon le sens du trajet, l'ombre et la jauge restant au sol. Règles et équilibrage inchangés | Validation du porteur, 23 novembre 2026 ; `design/Visuels_Marche_Tortue_Gardienne.md`, `design/Visuels_Marche_Ours.md` |
 | MAJ-99 | **Recalibrage des 50 missions qui reçoivent un attaquant** (chapitres 4, 8, 12, 14 et 18) : coefficients de PV remesurés vers 55 % de meilleure marge puis abaissés là où une référence perdait ; sur toute la campagne, **371 réglages sur 398 dans la cible** de 40 à 70 %, aucun sous 40 %, 27 au-dessus. **26 réglages sous la courbe de base** (92 à 98 %), dont trois décidés pour cette version : Alliance 113 (96 %), 118 (92 %) et 180 (94 %) — V pour la baisse sous la courbe (porteur, 23 novembre 2026 : « Oui, baisse-les ») ; coefficients — H (réglages de prototype à confirmer) | Décision du porteur, 23 novembre 2026 ; `design/Attaquants_par_biome_v0246.md` |
 | MAJ-98 | **Cinq nouveaux attaquants, étape 3 de MAJ-91** : Bouquetin des crêtes (Ardoises, charge une fois sous 50 % de ses PV), Golem de magma (Volcan, éclate en deux Braises), Scorpion des dunes (Désert, deux fois plus rapide pendant la Tempête de sable), Taupe des galeries (Mines, une case sur trois sous terre) et Crabe pilleur (Côtes, vole 20 or en atteignant la forteresse). Neutres, propres à leur chapitre pair. Le porteur a écarté la carapace d'abord proposée pour le Scorpion, jugée trop complexe à expliquer — V pour les cinq unités et leurs capacités (porteur, 23 novembre 2026) ; statistiques et compositions — H ; silhouettes provisoires teintées, dessins à produire par Codex | Décision du porteur, 23 novembre 2026 ; `design/Attaquants_par_biome_v0246.md` |
@@ -2022,9 +2025,11 @@ Version 0.81 — 23 novembre 2026 : jeu 0.244. **Un affixe par biome, étape 1**
 
 Version 0.82 — 23 novembre 2026 : jeu 0.245. **Un affixe par biome, étape 2** (MAJ-94) : cinq nouveaux affixes ; rythme resserré pour tous les affixes temporisés (MAJ-95) ; 199 missions recalibrées, 379 réglages sur 398 dans la cible et 27 sous la courbe de base sur décision du porteur (MAJ-96) ; relève du Revenant redessinée (MAJ-97) ; O-029 ne porte plus que sur les cinq attaquants à proposer.
 
+Version 0.83 — 23 novembre 2026 : jeu 0.246. **Un attaquant par chapitre pair, étape 3** (MAJ-98) : Bouquetin des crêtes, Golem de magma et Braises, Scorpion des dunes, Taupe des galeries, Crabe pilleur ; 50 missions recalibrées, 371 réglages sur 398 dans la cible et 26 sous la courbe de base sur décision du porteur (MAJ-99) ; O-029 ne porte plus que sur les dessins et le ressenti.
+
 Version 0.84 — 23 novembre 2026 : jeu 0.247. **Marches de la Tortue gardienne et de l'Ours sauvage** (MAJ-100) : 60 images par foulée et inclinaison de 13,3° sur le chemin, sans changement de règle ni d'équilibrage.
 
-Version 0.83 — 23 novembre 2026 : jeu 0.246. **Un attaquant par chapitre pair, étape 3** (MAJ-98) : Bouquetin des crêtes, Golem de magma et Braises, Scorpion des dunes, Taupe des galeries, Crabe pilleur ; 50 missions recalibrées, 371 réglages sur 398 dans la cible et 26 sous la courbe de base sur décision du porteur (MAJ-99) ; O-029 ne porte plus que sur les dessins et le ressenti.
+Version 0.85 — 24 novembre 2026 : jeu 0.248. **Trois missions de la Horde durcies** (MAJ-101) : missions 34, 37 et 64 à +1 % de PV ; 374 réglages sur 398 dans la cible, aucun en dessous, 24 au-dessus.
 
 <a id="s51"></a>
 
@@ -2318,7 +2323,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 23 novembre 2026 (GDD 0.84, jeu 0.247)
+### État au 24 novembre 2026 (GDD 0.85, jeu 0.248)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2340,7 +2345,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.84, jeu 0.247 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.85, jeu 0.248 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2581,6 +2586,9 @@ Résultat : **379 réglages sur 398 dans la cible** de 40 à 70 %, aucun sous 40
 ### Un attaquant par chapitre pair : recalibrage de la v0.246
 Décision du porteur du 23 novembre 2026 (MAJ-98 et MAJ-99). Les 50 missions des chapitres 4, 8, 12, 14 et 18 ont été remesurées avec leur nouvel attaquant (30 compositions, tirages 7, 8 et 9, première offre). Sur ces 100 réglages, 86 sont dans la cible de 40 à 70 %, aucun en dessous et 14 au-dessus. Sur toute la campagne : **371 réglages sur 398 dans la cible**, 27 au-dessus de 70 %. Les missions 37, 38 et 39 de la Horde sont les plus faciles (90 à 100 %), car quelques points de PV de plus y feraient perdre son armée de référence. Vingt-six réglages sont sous la courbe de base, de 92 à 98 %, sur décision du porteur (MAJ-93, MAJ-96 et MAJ-99). Fiche : `design/Attaquants_par_biome_v0246.md`.
 
+### Trois missions de la Horde durcies : v0.248
+Décision du porteur du 24 novembre 2026 (MAJ-101). Missions 34, 37 et 64 de la Horde à +1 % de PV : meilleure marge de 72 à 48 %, de 93 à 70 % et de 75 à 68 %. Sur toute la campagne, **374 réglages sur 398 dans la cible**, aucun sous 40 %, 24 au-dessus de 70 %. Parmi ces 24, dix basculent sous 40 % au point de PV suivant et quatorze sont limités par l'armée de référence (`design/Missions_trop_faciles_v0248.md`).
+
 ### Récompenses de première victoire
 PO : 60 jusqu’au chapitre 10, puis 60 + 5 par chapitre au-delà du dixième (MAJ-31, H). XP : 100 par mission jusqu’à la mission 100, aucune ensuite. Les PO financent la boutique (section 57) ; leur usage après la mission 100 reste ouvert (O-013).
 
@@ -2745,5 +2753,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.245 | Un affixe par biome, étape 2 : cinq nouveaux affixes, rythme resserré, 199 missions recalibrées, relève du Revenant redessinée ; GDD 0.82 |
 | 0.246 | Un attaquant par chapitre pair, étape 3 : cinq nouveaux attaquants, 50 missions recalibrées ; GDD 0.83 |
 | 0.247 | Marches de la Tortue gardienne et de l'Ours sauvage, inclinaison de 13,3° sur le chemin ; GDD 0.84 |
+| 0.248 | Trois missions de la Horde durcies (34, 37 et 64), 374 réglages sur 398 dans la cible ; GDD 0.85 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.
