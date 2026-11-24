@@ -44,6 +44,8 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 		var before: float = float(m.enemy_hp_percent)*100.0/Catalogue.rebalance_percent(mission,played_faction)
 		m.enemy_hp_percent = int(round(before*float(OS.get_environment("HPMUL"))/100.0))
 	m.configure_combat_affix(catalogue.get("combat_affix",{}))
+	# REINFORCE="vague:type:quantité:intervalle;…" : renforts essayés à la place de ceux du catalogue (calibrage v0.252) ; REINFORCE=none : aucun renfort.
+	m.configure_wave_reinforcements(Catalogue.wave_reinforcements(mission,faction) if OS.get_environment("REINFORCE") == "" else _reinforcements_from_env())
 	if auxiliary >= 0: m.configure_auxiliary(auxiliary)
 	m.meta_ranks = ranks_for(tree,faction,mission)
 	m.select_faction(faction)
@@ -56,6 +58,14 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 	if not (m.buy(slots[0],types[0]) and m.buy(slots[1],types[1])): return {"result":"refus","hp":-1,"max":m.max_hp}
 	_play_waves(m,1,slots,types,OS.get_environment("POLICY") in ["look","wise"])
 	return {"result":m.phase,"hp":m.fortress_hp,"max":m.max_hp}
+
+static func _reinforcements_from_env() -> Array:
+	var result: Array = []
+	if OS.get_environment("REINFORCE") == "none": return result
+	for spec in OS.get_environment("REINFORCE").split(";",false):
+		var part: PackedStringArray = spec.split(":")
+		result.append([int(part[0]),int(part[1]),int(part[2]),float(part[3])])
+	return result
 
 ## Suite de la partie à partir de la vague `first` (achats et améliorations fixes). `look` : choix de bonus guidé par simulation (voir `_look_pick`).
 func _play_waves(m, first: int, slots: Array, types: Array, look: bool) -> void:

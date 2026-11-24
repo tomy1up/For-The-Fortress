@@ -37,6 +37,7 @@ func play(mission: int, faction: int, slots: Array = [3,4,2]) -> Dictionary:
 	m.configure_wave_set(catalogue.get("wave_set_id","ford"))
 	m.configure_enemy_hp(Catalogue.faction_hp_percent(mission,faction))
 	m.configure_combat_affix(catalogue.get("combat_affix",{}))
+	m.configure_wave_reinforcements(Catalogue.wave_reinforcements(mission,faction)) # renforts de mission (v0.252)
 	m.meta_ranks = ranks_for(faction,mission)
 	m.select_faction(faction)
 	m.rng.seed = 7

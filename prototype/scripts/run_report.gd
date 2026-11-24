@@ -100,6 +100,7 @@ static func build(model: RefCounted) -> Dictionary:
 	if model.enemy_hp_percent != 100: report.enemy_hp_percent = model.enemy_hp_percent
 	if model.wave_set_id != "ford": report.wave_set_id = model.wave_set_id
 	if not model.combat_affix.is_empty(): report.combat_affix = model.combat_affix.duplicate(true)
+	if not model.wave_reinforcements.is_empty(): report.wave_reinforcements = model.wave_reinforcements.duplicate(true)
 	return report
 
 static func markdown(report: Dictionary) -> String:

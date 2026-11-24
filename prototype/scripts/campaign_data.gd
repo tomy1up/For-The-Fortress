@@ -116,10 +116,39 @@ const Attackers = preload("res://scripts/biome_attackers.gd")
 static func waves_for(set_id: String = "ford") -> Array:
 	return Banks.WAVES if set_id == Banks.ID else Drowned.WAVES if set_id == Drowned.ID else Garrison.WAVES if set_id == Garrison.ID else Eagle.WAVES if set_id == Eagle.ID else Revenant.WAVES if set_id == Revenant.ID else Attackers.WAVES[set_id] if Attackers.WAVES.has(set_id) else WAVES
 
-static func schedule(wave: int, set_id: String = "ford") -> Array[Dictionary]:
+## Renforts de mission (v0.252) : groupes `[vague, type, quantité, intervalle]` ajoutés après ceux du jeu de vagues, pour une mission et une faction
+## (`CampaignCatalogue.WAVE_REINFORCEMENTS`). Types d'ennemis de base seulement, hors Seigneur de siège. Réglages de prototype à confirmer.
+const REINFORCEMENT_TYPES: Array[int] = [0,1,2,3,4,5,6]
+const REINFORCEMENT_MAX_COUNT: int = 30
+
+static func valid_reinforcements(value: Variant) -> bool:
+	if not value is Array or value.size() > 20: return false
+	for extra in value:
+		if not extra is Array or extra.size() != 4: return false
+		for index in range(3):
+			if not _whole_value(extra[index]): return false
+		if not (extra[3] is int or extra[3] is float) or not is_finite(float(extra[3])): return false
+		if int(extra[0]) < 1 or int(extra[0]) > WAVES.size() or int(extra[1]) not in REINFORCEMENT_TYPES: return false
+		if int(extra[2]) < 1 or int(extra[2]) > REINFORCEMENT_MAX_COUNT or float(extra[3]) < 0.2 or float(extra[3]) > 5.0: return false
+	return true
+
+## Copie normalisée `[int, int, int, float]`, dans l'ordre reçu.
+static func normalized_reinforcements(value: Array) -> Array:
+	var result: Array = []
+	for extra in value: result.append([int(extra[0]),int(extra[1]),int(extra[2]),float(extra[3])])
+	return result
+
+## Groupes d'une vague : ceux du jeu de vagues, puis les renforts de cette vague.
+static func groups_for(wave: int, set_id: String = "ford", reinforcements: Array = []) -> Array:
+	var groups: Array = waves_for(set_id)[wave-1].duplicate()
+	for extra in reinforcements:
+		if int(extra[0]) == wave: groups.append([int(extra[1]),int(extra[2]),float(extra[3])])
+	return groups
+
+static func schedule(wave: int, set_id: String = "ford", reinforcements: Array = []) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	var time: float = 0.0
-	for group in waves_for(set_id)[wave-1]:
+	for group in groups_for(wave,set_id,reinforcements):
 		for index in range(group[1]):
 			result.append({"type":group[0],"time":time+index*group[2]})
 		time += (group[1]-1)*group[2]+4.0

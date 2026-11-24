@@ -430,7 +430,13 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 24 novembre 2026 — Claude Code (v0.251 publiée)
+## État au 24 novembre 2026 — Claude Code (v0.252 publiée)
+
+- **v0.252, renforts de vague** (demande du porteur : « attaque ce sujet », MAJ-106, fiche `design/Missions_renforts_v0252.md`) : `Campaign.groups_for`, `valid_reinforcements`, `ValleyModel.wave_reinforcements` et `configure_wave_reinforcements`, `CampaignCatalogue.WAVE_REINFORCEMENTS` et `wave_reinforcements(number, faction)`. Rapport : champ `wave_reinforcements`, refusé au rejeu avant la v0.252. Outil : `REINFORCE` dans `tools/faction_study.gd`. Nouvelle suite `test_wave_reinforcements.gd`. 392 réglages sur 398 dans la cible ; restent au-dessus A2, A3, H2, H3 (prise en main) et H23, H39 (référence). Données : `design/essais/equilibre_bonus/v252/` (`marges_campagne.json` est la nouvelle base).
+- Son : en attente de longue durée sur décision du porteur du 24 novembre 2026 (O-019) ; ne plus le proposer.
+- Contrôles v0.252 : régression 147/147 (237 586 contrôles Godot, 17 tests Python), paquet 1 050 cas et 670 contrôles de sources sur bureau caché, captures du jeu exporté inspectées sur 180 (deux factions), 11, 38 et 41 (Horde). `verify_windows_export.py` lit désormais `WAVE_REINFORCEMENTS` pour la préparation de mission (ordre et première vague des ennemis).
+
+### v0.251 (publiée) et finales remesurées (GDD 0.89)
 
 - **Finales remesurées (GDD 0.89, jeu 0.251 inchangé)** : le porteur a choisi « Clore la question ». O-016 et O-018 sont closes (MAJ-105, fiche `design/Finales_remesure_v0251.md`). Les vingt finales de la Horde sont dans la cible ; l'armée de référence dépend du tirage des bonus (tirage 8 : 85 victoires sur 200 côté Horde). Données : `design/essais/equilibre_bonus/v251/reference_trois_tirages.json`.
 - Codex n'a plus de crédit jusqu'au 28 novembre 2026 environ (annonce du porteur) : aucun lot visuel n'arrivera d'ici là ; le Cor d'alarme (`1ceb2750`) reste en attente.

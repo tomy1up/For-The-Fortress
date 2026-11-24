@@ -25,6 +25,8 @@ const Eagle = preload("res://scripts/eagle_encounters.gd")
 const Revenant = preload("res://scripts/revenant_encounters.gd")
 const Attackers = preload("res://scripts/biome_attackers.gd")
 var wave_set_id: String = "ford"
+## Renforts de la mission pour la faction jouée (v0.252), voir `Campaign.groups_for`.
+var wave_reinforcements: Array = []
 var route_target_policy: String = "arrival_time"
 var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
 var explosion_events: Array[Dictionary] = [] # Explosions de réaction en chaîne (instant, position, rayon) : observation visuelle, aucun effet de jeu.
@@ -249,7 +251,7 @@ func reset() -> void:
 	rerolls_left = REROLLS_PER_RUN
 	last_stand_used = false
 	gate_wave = -1
-	spawn_schedule = Campaign.schedule(wave,wave_set_id)
+	spawn_schedule = Campaign.schedule(wave,wave_set_id,wave_reinforcements)
 	fortress_hp = INITIAL_HP
 	elapsed = 0.0
 	phase = "preparation"
@@ -733,7 +735,11 @@ func configure_enemy_hp(value: Variant) -> bool:
 
 func configure_wave_set(value: Variant) -> bool:
 	if not Banks.valid_set(value) or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
-	wave_set_id = value;spawn_schedule = Campaign.schedule(wave,wave_set_id);return true
+	wave_set_id = value;spawn_schedule = Campaign.schedule(wave,wave_set_id,wave_reinforcements);return true
+
+func configure_wave_reinforcements(value: Variant) -> bool:
+	if not Campaign.valid_reinforcements(value) or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
+	wave_reinforcements = Campaign.normalized_reinforcements(value);spawn_schedule = Campaign.schedule(wave,wave_set_id,wave_reinforcements);return true
 
 static func enemy_definition(type: int) -> Dictionary:
 	return Banks.GUARD if type == Banks.GUARD_TYPE else Drowned.DEFINITION if type == Drowned.TYPE else Garrison.DEFINITION if type == Garrison.TYPE else Eagle.DEFINITION if type == Eagle.TYPE else Revenant.DEFINITION if type == Revenant.TYPE else Attackers.DEFINITIONS[type] if Attackers.DEFINITIONS.has(type) else ENEMY_TYPES[type]
@@ -752,15 +758,15 @@ static func make_enemy(id: int, type: int, spawn_time: float, defending_faction:
 		enemy.merge({"identity_id":identity.id,"name":identity.name,"origin":identity.origin})
 	return enemy
 
-static func wave_forecast(number: int, defending_faction: int = -1, hp_percent: int = 100, set_id: String = "ford") -> Dictionary:
-	if not Banks.valid_set(set_id): return {}
+static func wave_forecast(number: int, defending_faction: int = -1, hp_percent: int = 100, set_id: String = "ford", reinforcements: Array = []) -> Dictionary:
+	if not Banks.valid_set(set_id) or not Campaign.valid_reinforcements(reinforcements): return {}
 	if number < 1 or number > Campaign.WAVES.size() or not valid_enemy_hp_percent(hp_percent): return {}
 	if defending_faction != -1 and defending_faction not in [0,1]: return {}
-	var schedule: Array[Dictionary] = Campaign.schedule(number,set_id)
+	var schedule: Array[Dictionary] = Campaign.schedule(number,set_id,reinforcements)
 	var groups: Array[Dictionary] = []
 	var offset: int = 0
 	var income: int = 0
-	for source in Campaign.waves_for(set_id)[number-1]:
+	for source in Campaign.groups_for(number,set_id,reinforcements):
 		var type: int = source[0]
 		var count: int = source[1]
 		var enemy: Dictionary = enemy_definition(type)
@@ -784,9 +790,9 @@ func spawn_route_id(index: int, entry: Dictionary, forecast_wave: int = -1) -> S
 	return routes[route_index].id
 
 func forecast_for_routes(number: int) -> Dictionary:
-	var data: Dictionary = wave_forecast(number,faction,enemy_hp_percent,wave_set_id)
+	var data: Dictionary = wave_forecast(number,faction,enemy_hp_percent,wave_set_id,wave_reinforcements)
 	if not data.is_empty() and rockfall_enabled() and routes.size() < 2: # Une seule entrée : la prévision annonce les sorties retardées par l'éboulement.
-		var held: Array[float] = rockfall_held_times(Campaign.schedule(number,wave_set_id).map(func(entry: Dictionary) -> float: return float(entry.time)),float(combat_affix.interval),float(combat_affix.duration),rockfall_hold_gap)
+		var held: Array[float] = rockfall_held_times(Campaign.schedule(number,wave_set_id,wave_reinforcements).map(func(entry: Dictionary) -> float: return float(entry.time)),float(combat_affix.interval),float(combat_affix.duration),rockfall_hold_gap)
 		var first: int = 0
 		for group in data.groups:
 			group.first_at = held[first];group.last_at = held[first+int(group.count)-1]
@@ -797,7 +803,7 @@ func forecast_for_routes(number: int) -> Dictionary:
 	for index in range(routes.size()):
 		indices[routes[index].id] = index
 		data.entries.append({"route_id":routes[index].id,"number":index+1,"count":0,"first_at":-1.0,"last_at":-1.0})
-	var schedule: Array[Dictionary] = Campaign.schedule(number,wave_set_id)
+	var schedule: Array[Dictionary] = Campaign.schedule(number,wave_set_id,wave_reinforcements)
 	var offset: int = 0
 	for group in data.groups:
 		var allocations: Array[Dictionary] = []
@@ -1186,7 +1192,7 @@ func prepare_next_wave() -> bool:
 	bought_waves.clear()
 	curses.clear()
 	event_log.clear()
-	spawn_schedule = Campaign.schedule(wave,wave_set_id)
+	spawn_schedule = Campaign.schedule(wave,wave_set_id,wave_reinforcements)
 	phase = "preparation"
 	_record_action("wave_prepare")
 	return true

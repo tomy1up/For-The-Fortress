@@ -151,6 +151,21 @@ const REBALANCE_PERCENT := [
 	[100,112,111,117,107,121,134,124,119,122,104,123,115,111,107,112,125,121,108,111,111,100,100,114,100,111,118,115,103,100,117,102,112,125,115,119,119,116,102,106,103,120,103,102,113,111,111,112,121,106,100,111,100,106,100,100,107,108,103,100,111,115,103,104,104,96,108,98,103,111,114,118,113,114,108,113,109,112,117,120,108,116,105,100,121,100,109,109,113,102,102,103,107,131,100,105,100,111,124,129,124,135,127,135,167,110,121,121,111,138,148,123,108,107,140,126,120,100,106,128,163,129,122,148,165,134,121,122,126,126,146,143,134,133,135,114,130,141,127,127,141,107,110,108,142,113,116,107,104,126,132,166,140,136,133,128,129,136,127,128,147,148,146,140,141,126,132,140,141,120,132,139,143,148,144,146,144,143,142,106,151,137,141,141,142,135,135,134,142,141,125,132,136,121,151,134,135,121,134,136]
 ]
 
+## Renforts de vague v0.252 (demande du porteur, 24 novembre 2026 : réglages encore au-dessus de la cible malgré les PV) : par faction (Alliance, Horde),
+## numéro de mission -> groupes `[vague, type, quantité, intervalle]` ajoutés après ceux du jeu de vagues (`Campaign.groups_for`). Réglages de prototype à confirmer.
+## Sprinters (type 2) aux vagues 3, 5 et 7, maraudeurs (type 4) aux vagues 4, 6 et 8 ou élites (type 6) aux vagues 5, 7 et 9 ; jamais à la vague 10 du boss.
+## Mesurés pour ramener la meilleure marge entre 40 et 70 % (30 compositions, tirages 7, 8 et 9) sans faire perdre l'armée de référence des suites.
+## Restent au-dessus de la cible : missions 2 et 3 des deux factions (la stratégie simple de premier joueur perdrait), Horde 23 et 39 (la référence perdrait).
+## Fiche : `design/Missions_renforts_v0252.md`.
+const WAVE_REINFORCEMENTS := [
+	{16:[[3,2,5,0.6],[5,2,5,0.6],[7,2,5,0.6]],23:[[3,2,8,0.6],[5,2,8,0.6],[7,2,8,0.6]],33:[[3,2,1,0.6],[5,2,1,0.6],[7,2,1,0.6]],39:[[3,2,4,0.6],[5,2,4,0.6],[7,2,4,0.6]],72:[[3,2,5,0.6],[5,2,5,0.6],[7,2,5,0.6]],79:[[3,2,7,0.6],[5,2,7,0.6],[7,2,7,0.6]],105:[[3,2,3,0.6],[5,2,3,0.6],[7,2,3,0.6]],173:[[3,2,5,0.6],[5,2,5,0.6],[7,2,5,0.6]],178:[[3,2,3,0.6],[5,2,3,0.6],[7,2,3,0.6]],180:[[3,2,8,0.6],[5,2,8,0.6],[7,2,8,0.6]]},
+	{11:[[5,6,2,3.0],[7,6,2,3.0],[9,6,2,3.0]],22:[[3,2,3,0.6],[5,2,3,0.6],[7,2,3,0.6]],38:[[3,2,7,0.6],[5,2,7,0.6],[7,2,7,0.6]],41:[[4,4,1,1.5],[6,4,1,1.5],[8,4,1,1.5]],44:[[3,2,10,0.6],[5,2,10,0.6],[7,2,10,0.6]],79:[[3,2,5,0.6],[5,2,5,0.6],[7,2,5,0.6]],131:[[3,2,5,0.6],[5,2,5,0.6],[7,2,5,0.6]],175:[[3,2,5,0.6],[5,2,5,0.6],[7,2,5,0.6]]}
+]
+
+static func wave_reinforcements(number: int, faction: int) -> Array:
+	if faction not in [0,1]: return []
+	return WAVE_REINFORCEMENTS[faction].get(number,[]).duplicate(true)
+
 static func rebalance_percent(number: int, faction: int) -> float:
 	return float(REBALANCE_PERCENT[faction][clampi(number,1,REBALANCE_PERCENT[faction].size())-1])
 

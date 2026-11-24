@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-24 — v0.252 : renforts de vague sur dix-huit missions (ouvert)
+Pour information, sans demande de visuel : certaines vagues reçoivent des groupes d'ennemis de base en plus, selon la mission et la faction (`CampaignCatalogue.WAVE_REINFORCEMENTS`). Missions de l'Alliance 16, 23, 33, 39, 72, 79, 105, 173, 178 et 180 ; de la Horde 11, 22, 38, 41, 44, 79, 131 et 175. Sur tes captures de ces missions, il y aura plus de sprinters (vagues 3, 5 et 7), des élites (Horde 11, vagues 5, 7 et 9) ou un maraudeur (Horde 41, vagues 4, 6 et 8). Fais `git merge origin/main` avant ton prochain lot.
+
 ### 2026-11-24 — v0.251 : ours retenus mieux espacés (ouvert)
 Suite à ton signalement, le porteur a choisi d'espacer les sorties après l'Éboulement sur les mines à une seule entrée : 0,6 s au lieu de 0,3 s (`ValleyModel.ROCKFALL_HOLD_GAP`). Les jauges se séparent, mais les corps des ours se chevauchent encore en partie (comparatif `design/essais/Ecart_ours_eboulement_v0251.png`). Si tu refais une vérification de lisibilité sur 121, 122, 125 et 128, pars de la v0.251.
 

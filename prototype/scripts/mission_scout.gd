@@ -21,7 +21,7 @@ static func encounter_data(number: int,camp: int) -> Array[Dictionary]:
 	if camp not in [0,1] or definition.is_empty() or not definition.available: return result
 	var found: Dictionary={}
 	for wave in range(1,definition.waves+1):
-		for spawn in Model.Campaign.schedule(wave,definition.get("wave_set_id","ford")):
+		for spawn in Model.Campaign.schedule(wave,definition.get("wave_set_id","ford"),Catalogue.wave_reinforcements(number,camp)):
 			if found.has(spawn.type):
 				var existing: Dictionary = found[spawn.type]
 				existing.total += 1

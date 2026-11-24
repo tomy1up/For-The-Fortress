@@ -736,7 +736,7 @@ func _ready() -> void:
 			for argument in OS.get_cmdline_user_args():
 				if argument.begins_with("--capture-route-wave="):
 					model.wave = clampi(argument.trim_prefix("--capture-route-wave=").to_int(), 1, 10)
-					model.spawn_schedule = Model.Campaign.schedule(model.wave, model.wave_set_id)
+					model.spawn_schedule = Model.Campaign.schedule(model.wave, model.wave_set_id, model.wave_reinforcements)
 					_update_interface()
 				if argument.begins_with("--capture-route-entry="):
 					set_process(false)
@@ -1355,7 +1355,7 @@ func _update_wave_forecast(pointer := Vector2.INF) -> void:
 	if choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase not in ["preparation","finished"]: return
 	var number: int = model.wave+1 if model.phase == "finished" else model.wave
 	if number < 1 or number > Model.Campaign.WAVES.size(): return
-	var key: String = JSON.stringify([number,model.faction,model.enemy_hp_percent,model.wave_set_id,model.routes.map(func(route: Dictionary):return route.id)])
+	var key: String = JSON.stringify([number,model.faction,model.enemy_hp_percent,model.wave_set_id,model.wave_reinforcements,model.routes.map(func(route: Dictionary):return route.id)])
 	if forecast_wave != number or forecast_key != key:
 		forecast_wave = number
 		forecast_key = key
@@ -2098,6 +2098,7 @@ func _launch_campaign_mission(id: String) -> void:
 	var prepared = Model.new(true,definition)
 	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(CampaignCatalogue.faction_hp_percent(CampaignCatalogue.number_for(id),campaign_menu.faction)) or not prepared.configure_wave_set(candidate.get("wave_set_id","ford")): return
 	if not prepared.configure_combat_affix(candidate.get("combat_affix",{})): return
+	if not prepared.configure_wave_reinforcements(CampaignCatalogue.wave_reinforcements(CampaignCatalogue.number_for(id),campaign_menu.faction)): return
 	mission_definition = candidate
 	_choose_faction(campaign_menu.faction,prepared)
 	if choosing_faction:
@@ -2751,7 +2752,7 @@ func _update_interface() -> void:
 	countdown_fill.bg_color = Color("77968e") if _countdown_paused() else Color("e49a7b") if countdown_remaining <= WAVE_COUNTDOWN_NOTICE_SECONDS else Color("d0b874")
 	var preview_wave: int = mini(10, model.wave+1 if model.phase == "finished" else model.wave)
 	var preview: Array[String] = []
-	for group in Model.Campaign.waves_for(model.wave_set_id)[preview_wave-1]:
+	for group in Model.Campaign.groups_for(preview_wave,model.wave_set_id,model.wave_reinforcements):
 		preview.append("%d %s · %s" % [group[1],Model.Enemies.for_profile(group[0],model.faction).name,"ennemi unique" if group[1] == 1 else "intervalle %s s" % _number(group[2])])
 	start_button.tooltip_text = "Vague %d\n%s\n4 s entre la dernière apparition d’un groupe et la première du suivant.\nHoraires et intervalles à vitesse ×1 ; divisés par 2 en ×2 et par 10 en ×10 debug." % [preview_wave,"\n".join(preview)]
 	if countdown_remaining >= 0.0:

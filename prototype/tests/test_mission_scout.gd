@@ -26,7 +26,7 @@ func run_checks() -> void:
 			var expected: Array[Dictionary]=[];var seen: Array[int]=[]
 			var definition: Dictionary=menu.Catalogue.definition(number)
 			for wave in range(1,11):
-				for group in Model.Campaign.waves_for(definition.get("wave_set_id","ford"))[wave-1]:
+				for group in Model.Campaign.groups_for(wave,definition.get("wave_set_id","ford"),menu.Catalogue.wave_reinforcements(number,camp)): # renforts de la faction (v0.252)
 					if group[0] in seen:
 						var existing: Dictionary = expected[seen.find(group[0])]
 						existing.total += group[1]

@@ -21,6 +21,18 @@ def _rebalance_table():
     return [[int(v) for v in row.split(',')] for row in rows[:2]]
 REBALANCE=_rebalance_table()
 
+def _reinforcement_table():
+    """Renforts de vague de la v0.252 (`WAVE_REINFORCEMENTS` de `campaign_catalogue.gd`) : {(faction, mission): [[vague, type, quantité, intervalle], ...]}."""
+    text=(Path(__file__).resolve().parents[1]/'scripts'/'campaign_catalogue.gd').read_text(encoding='utf-8')
+    block=text[text.index('const WAVE_REINFORCEMENTS := ['):]
+    block=block[:block.index('static func wave_reinforcements')]
+    table={}
+    for camp,row in enumerate(re.findall(r'\{(.*?)\}',block)[:2]):
+        for number,groups in re.findall(r'(\d+):\[((?:\[[^\]]*\],?)*)\]',row):
+            table[(camp,int(number))]=[[float(v) for v in group.split(',')] for group in re.findall(r'\[([^\]]*)\]',groups)]
+    return table
+REINFORCEMENTS=_reinforcement_table()
+
 def horde_hp(base, number, camp):
     """PV d'ennemis joués : la Horde a 10 % de PV en moins à partir de la mission 150 (v0.212), puis coefficient de rééquilibrage de la v0.232 (arrondis comme Godot)."""
     if camp==1 and number==200: base=int(base*0.85+0.5)
@@ -766,12 +778,18 @@ for name,state,faction in cases:
             assert snapshot['isolated'] and snapshot['visible'] and snapshot['blocked'] and snapshot['unchanged']
             assert snapshot['faction']==camp and snapshot['mission']==number
             types=[1,0,2,3,4,5,6,7] if number==1 else [1,8,0,2,4,5,6,7]
-            assert [e['type'] for e in snapshot['entries']]==types
+            base_first={1:1,0:2,2:3,3:4,4:5,5:6,6:7,7:10,8:2}
+            reinforced={}
+            for wave,kind,count,interval in REINFORCEMENTS.get((camp,number),[]): # v0.252 : un renfort peut avancer la première vague d'un type, placé après les groupes de sa vague
+                if int(wave)<base_first[int(kind)] and int(wave)<reinforced.get(int(kind),11): reinforced[int(kind)]=int(wave)
+            types=sorted(types,key=lambda t:(reinforced[t],100+t) if t in reinforced else (base_first[t],types.index(t)))
+            assert [e['type'] for e in snapshot['entries']]==types,([e['type'] for e in snapshot['entries']],types)
             assert snapshot['names']==[e['name'] for e in snapshot['entries']]
             assert all(e['origin'] in ['neutral','horde' if camp==0 else 'alliance'] for e in snapshot['entries'])
             base_hp=[12,40,24,120,80,240,360,600,180]
             first={1:1,0:2,2:3,3:4,4:5,5:6,6:7,7:10,8:2}
             if number>1: first[0]=2
+            first.update(reinforced)
             for e,text_row in zip(snapshot['entries'],snapshot['details']):
                 assert abs(e['max_hp']-base_hp[e['type']]*played_hp(number,camp)/100)<0.000001
                 assert e['first_wave']==first[e['type']] and 'Forteresse :' in text_row
