@@ -619,17 +619,20 @@ func _rockfall_route_id(number: int) -> String:
 	return "" if routes.is_empty() else str(routes[(number+wave)%routes.size()].id)
 
 ## Éboulement sur une carte à une seule entrée (décision du porteur, 23 novembre 2026) : les apparitions prévues pendant un blocage attendent sa fin, puis
-## sortent groupées, espacées de ROCKFALL_HOLD_GAP secondes (réglage de prototype à confirmer). L'ordre des ennemis ne change pas.
-const ROCKFALL_HOLD_GAP := 0.3
+## sortent groupées, espacées de `rockfall_hold_gap` secondes (réglage de prototype à confirmer). L'ordre des ennemis ne change pas.
+## Écart porté de 0,3 à 0,6 s en v0.251 (décision du porteur du 24 novembre 2026) : deux ours retenus se lisaient comme un seul. Les rapports plus anciens se rejouent à 0,3 s.
+const ROCKFALL_HOLD_GAP := 0.6
+const ROCKFALL_HOLD_GAP_V244 := 0.3
+var rockfall_hold_gap: float = ROCKFALL_HOLD_GAP
 
-static func rockfall_held_times(times: Array, interval: float, duration: float) -> Array[float]:
+static func rockfall_held_times(times: Array, interval: float, duration: float, gap: float = ROCKFALL_HOLD_GAP) -> Array[float]:
 	var result: Array[float] = []
 	var last: float = -INF
 	var holding: bool = false
 	for value in times:
 		var time: float = float(value)
-		var pushed: bool = holding and time < last+ROCKFALL_HOLD_GAP
-		if pushed: time = last+ROCKFALL_HOLD_GAP
+		var pushed: bool = holding and time < last+gap
+		if pushed: time = last+gap
 		var number: int = int(floor((time+EPS)/interval))
 		var blocked: bool = number >= 1 and time < interval*number+duration-EPS
 		if blocked: time = interval*number+duration
@@ -640,7 +643,7 @@ static func rockfall_held_times(times: Array, interval: float, duration: float) 
 
 func _hold_spawns_for_rockfall() -> void:
 	if not rockfall_enabled() or routes.size() >= 2: return
-	var held: Array[float] = rockfall_held_times(spawn_schedule.map(func(entry: Dictionary) -> float: return float(entry.time)),float(combat_affix.interval),float(combat_affix.duration))
+	var held: Array[float] = rockfall_held_times(spawn_schedule.map(func(entry: Dictionary) -> float: return float(entry.time)),float(combat_affix.interval),float(combat_affix.duration),rockfall_hold_gap)
 	for index in range(spawn_schedule.size()): spawn_schedule[index].time = held[index]
 
 ## État observé par l'interface : {} hors combat, sinon l'avertissement ("warning") ou le blocage en cours ("active") avec l'entrée touchée.
@@ -783,7 +786,7 @@ func spawn_route_id(index: int, entry: Dictionary, forecast_wave: int = -1) -> S
 func forecast_for_routes(number: int) -> Dictionary:
 	var data: Dictionary = wave_forecast(number,faction,enemy_hp_percent,wave_set_id)
 	if not data.is_empty() and rockfall_enabled() and routes.size() < 2: # Une seule entrée : la prévision annonce les sorties retardées par l'éboulement.
-		var held: Array[float] = rockfall_held_times(Campaign.schedule(number,wave_set_id).map(func(entry: Dictionary) -> float: return float(entry.time)),float(combat_affix.interval),float(combat_affix.duration))
+		var held: Array[float] = rockfall_held_times(Campaign.schedule(number,wave_set_id).map(func(entry: Dictionary) -> float: return float(entry.time)),float(combat_affix.interval),float(combat_affix.duration),rockfall_hold_gap)
 		var first: int = 0
 		for group in data.groups:
 			group.first_at = held[first];group.last_at = held[first+int(group.count)-1]

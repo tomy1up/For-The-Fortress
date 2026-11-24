@@ -430,7 +430,12 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 24 novembre 2026 — Claude Code (v0.250 publiée)
+## État au 24 novembre 2026 — Claude Code (v0.251 publiée)
+
+- **v0.251, ours mieux espacés après l'Éboulement** (décision du porteur : « Espacer les ours », MAJ-104, fiche `design/Missions_mines_ecart_eboulement_v0251.md`) : `ROCKFALL_HOLD_GAP` 0,6 s, `rockfall_hold_gap` sur le modèle, `Replay.rockfall_hold_gap_for` (0,3 s avant la v0.251). Recalage `REBALANCE_PERCENT` : Horde 121 (163), Alliance 125 (126). 374 réglages sur 398 dans la cible. Données : `design/essais/equilibre_bonus/v251/`.
+- Contrôles v0.251 : régression 146/146 (237 183 contrôles Godot, 17 tests Python), paquet 1 050 cas et 670 contrôles de sources sur bureau caché, captures du jeu exporté inspectées sur 121, 125 et 128.
+
+### v0.250 (publiée)
 
 - **v0.250, Crue et Vapeurs toxiques dessinées** (demande du porteur : « Oui, intègre-les », MAJ-103) : `art/codex` fusionnée jusqu'à `1aeca7ee`. `valley_view.gd` : `_draw_flood`, `unique_segments`, `flood_level`, `flood_edge_alpha`, `_draw_miasma_sheets`, `miasma_alpha`, `miasma_pool_scale`. Contrôles dans `test_biome_affixes.gd`. Aucune règle ni valeur d'équilibrage modifiée.
 - Contrôles v0.250 : régression 146/146 (237 182 contrôles Godot, 17 tests Python), paquet 1 050 cas et 670 contrôles de sources sur bureau caché, captures du jeu exporté inspectées dans les deux factions sur 4, 11, 51 et 58.

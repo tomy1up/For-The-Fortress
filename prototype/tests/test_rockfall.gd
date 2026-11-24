@@ -230,9 +230,13 @@ func verify_sheets() -> void:
 ## Éboulement sur une carte à une seule entrée (décision du porteur, 23 novembre 2026) : les ennemis attendent la fin du blocage, puis sortent groupés dans le même ordre.
 func verify_single_entry() -> void:
 	var expected: Array[float] = [0.0,1.0,17.0,25.0,25.3,25.6,25.9,26.2,30.0]
-	var held: Array[float] = Model.rockfall_held_times([0.0,1.0,17.0,18.0,19.0,24.9,25.0,26.0,30.0],18.0,7.0)
-	check(held.size() == expected.size() and range(held.size()).all(func(i: int) -> bool: return is_equal_approx(held[i],expected[i])),"Sorties retardées à la fin du blocage, espacées de 0,3 s, sans toucher aux apparitions hors blocage : %s" % str(held))
-	var chained: Array[float] = Model.rockfall_held_times([24.9,25.0,35.9,36.0,36.1],18.0,7.0)
+	var held: Array[float] = Model.rockfall_held_times([0.0,1.0,17.0,18.0,19.0,24.9,25.0,26.0,30.0],18.0,7.0,Model.ROCKFALL_HOLD_GAP_V244)
+	check(held.size() == expected.size() and range(held.size()).all(func(i: int) -> bool: return is_equal_approx(held[i],expected[i])),"Écart de 0,3 s (rapports d'avant la v0.251) : sorties retardées à la fin du blocage, sans toucher aux apparitions hors blocage : %s" % str(held))
+	var spaced: Array[float] = Model.rockfall_held_times([0.0,1.0,17.0,18.0,19.0,24.9,25.0,26.0,30.0],18.0,7.0)
+	var spaced_expected: Array[float] = [0.0,1.0,17.0,25.0,25.6,26.2,26.8,27.4,30.0]
+	check(is_equal_approx(Model.ROCKFALL_HOLD_GAP,0.6) and range(spaced.size()).all(func(i: int) -> bool: return is_equal_approx(spaced[i],spaced_expected[i])),"Depuis la v0.251, les ennemis retenus sortent à 0,6 s d'écart : %s" % str(spaced))
+	check(is_equal_approx(Replay.rockfall_hold_gap_for("0.250"),0.3) and is_equal_approx(Replay.rockfall_hold_gap_for("0.251"),0.6) and is_equal_approx(Model.new().rockfall_hold_gap,0.6),"Les rapports d'avant la v0.251 se rejouent avec l'écart de 0,3 s")
+	var chained: Array[float] = Model.rockfall_held_times([24.9,25.0,35.9,36.0,36.1],18.0,7.0,Model.ROCKFALL_HOLD_GAP_V244)
 	check(is_equal_approx(chained[0],25.0) and is_equal_approx(chained[1],25.3) and is_equal_approx(chained[2],35.9) and is_equal_approx(chained[3],43.0) and is_equal_approx(chained[4],43.3),"Chaque blocage retient ses propres apparitions")
 	for number in [121,122,125,128]:
 		var definition: Dictionary = Catalogue.definition(number)

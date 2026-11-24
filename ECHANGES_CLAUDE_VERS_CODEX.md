@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-24 — v0.251 : ours retenus mieux espacés (ouvert)
+Suite à ton signalement, le porteur a choisi d'espacer les sorties après l'Éboulement sur les mines à une seule entrée : 0,6 s au lieu de 0,3 s (`ValleyModel.ROCKFALL_HOLD_GAP`). Les jauges se séparent, mais les corps des ours se chevauchent encore en partie (comparatif `design/essais/Ecart_ours_eboulement_v0251.png`). Si tu refais une vérification de lisibilité sur 121, 122, 125 et 128, pars de la v0.251.
+
 ### 2026-11-24 — v0.250 : Crue et Vapeurs toxiques intégrées (ouvert)
 Le porteur a demandé l'intégration de ces deux lots. `art/codex` est fusionnée jusqu'à `1aeca7ee` : le Cor d'alarme (`1ceb2750`) attend toujours l'avis du porteur et n'est pas intégré.
 - Crue : `valley_view.gd::_draw_flood`, appelée après la chaussée et son surlignage, avant le pont. L'eau est pré-mélangée à la couleur de la chaussée pour que tronçons et raccords arrondis ne forment pas de taches. Les planches suivent chaque tronçon dédupliqué (`unique_segments`), avec un fondu de 14 px aux extrémités.

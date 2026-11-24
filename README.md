@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.251**. Ours mieux espacés après l'Éboulement : sur les mines à une seule entrée, les ennemis retenus ressortent à 0,6 s d'écart, et deux réglages sont recalés. [Notes](design/essais/v0251_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.251).
+
 **Prototype v0.250**. Crue et Vapeurs toxiques dessinées : l'eau monte sur les routes du Gué, les bassins du Marais fument jusqu'au pied des défenseurs. [Notes](design/essais/v0250_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.250).
 
 **Prototype v0.249**. Éboulement et Drain d'âmes dessinés : chute et dégagement des rochers dans les mines, volutes et âmes qui soignent les ennemis dans la Nécropole. [Notes](design/essais/v0249_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.249).
