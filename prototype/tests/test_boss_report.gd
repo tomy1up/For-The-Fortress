@@ -30,7 +30,7 @@ func run_checks() -> void:
 		var before: String = fingerprint(m)
 		var boss: Dictionary = Report.boss_encounter(m)
 		check(boss.status == "killed" and boss.max_hp == 600 and absf(boss.removed_hp-600.0)<0.000001 and boss.remaining_hp<0.000001,"Boss éliminé : 600 PV observés pour chaque faction")
-		check(boss.resolved_seconds>0 and boss.resolved_seconds<=m.elapsed and absf(boss.duration_seconds-(boss.resolved_seconds-boss.spawn_seconds))<0.000001,"Temps mesuré depuis l’apparition et le début de vague")
+		check(boss.resolved_seconds>0 and boss.resolved_seconds<=m.elapsed+0.000001 and absf(boss.duration_seconds-(boss.resolved_seconds-boss.spawn_seconds))<0.000001,"Temps mesuré depuis l’apparition et le début de vague")
 		var report: Dictionary = Report.build(m)
 		check(Report.markdown(report).contains("## Boss final") and Report.markdown(report).contains("Boss final éliminé"),"Résultat du boss lisible dans le rapport Markdown")
 		scene._update_interface(); scene._show_run_summary()

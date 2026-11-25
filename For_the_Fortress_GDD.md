@@ -1,6 +1,8 @@
 # For the Fortress!
 
-Game Design Document — Version 0.91 — 24 novembre 2026
+Game Design Document — Version 0.92 — 25 novembre 2026
+
+Version 0.254 du jeu (25 novembre 2026) : **bonus faibles et trop forts rééquilibrés** (MAJ-108) : Lames runiques, Exercice de tir, Cadence effrénée et Pari risqué baissés ; Chausse-trappes, Temps suspendu, Malédiction tenace, Marché noir, Forteresse blindée et Élite sacrifiée relevés ; 62 missions recalées ; 379 réglages sur 398 dans la cible.
 
 Version 0.253 du jeu (24 novembre 2026) : **offres de bonus utiles** (MAJ-107) : une carte sans effet sur les défenseurs déployés est remplacée par le bonus utile suivant de même rareté ; 57 missions de l'Alliance recalées ; 386 réglages sur 398 dans la cible.
 
@@ -988,7 +990,7 @@ Douze bonus sont approuvés pour le prototype — V ; noms provisoires et valeur
 | Code | Nom provisoire | Effet de référence — H | Limite et contrepartie de choix |
 | --- | --- | --- | --- |
 | R-01 | Armes affûtées | +10 % à tous les dégâts des défenseurs | Dégâts directs, secondaires et périodiques ; aucun gain de portée ou de cadence |
-| R-02 | Exercice de tir | +12 % de fréquence d’attaque à l’archer, l’arbalétrier, le mage, le troll et le sapeur | Exclut explicitement le chaman pour préserver ses deux échéances de malédiction |
+| R-02 | Exercice de tir | +8 % de fréquence d’attaque (+12 % avant la v0.254, MAJ-108) à l’archer, l’arbalétrier, le mage, le troll et le sapeur | Exclut explicitement le chaman pour préserver ses deux échéances de malédiction |
 | R-03 | Postes d’observation | +0,5 unité à la portée principale de chaque défenseur | Ne modifie pas les rayons, rebonds, plafonds de victimes ou dégâts |
 | R-04 | Éclats meurtriers | +20 % aux dégâts des victimes secondaires des explosions et rebonds | Mage, troll et sapeur ; aucun effet sur le dégât principal ou la malédiction |
 | R-05 | Propagation | +0,2 unité aux rayons d’explosion et à la distance de chaque rebond | Mage, troll et sapeur ; plafonds de victimes et dégâts inchangés |
@@ -1027,12 +1029,12 @@ Premier lot demandé par le porteur (MAJ-67, 17 novembre 2026), réalisé en v0.
 | R-17 | Vue dégagée | +20 % à tous les dégâts des défenseurs à longue portée (portée de base de 4,5 ou plus), actuels et futurs. |
 | R-18 | Mêlée acharnée | +25 % à tous les dégâts des défenseurs à courte portée (portée de base de 3,6 ou moins), actuels et futurs. |
 | R-19 | Soutien efficace | +30 % à la force des effets de soutien : marque, aura des gardiens, ralentissement, pillage et charge volatile. |
-| R-20 | Pari risqué | +30 % à tous les dégâts, mais −4 PV maximum de forteresse (PV actuels réduits d’autant, jamais sous 1). |
-| R-21 | Cadence effrénée | +25 % de fréquence d’attaque pour tous les défenseurs, mais −0,5 de portée. |
+| R-20 | Pari risqué | +20 % (+30 % avant la v0.254) à tous les dégâts, mais −4 PV maximum de forteresse (PV actuels réduits d’autant, jamais sous 1). |
+| R-21 | Cadence effrénée | +15 % (+25 % avant la v0.254) de fréquence d’attaque pour tous les défenseurs, mais −0,5 de portée. |
 | R-22 | Tir tendu | +1 de portée pour tous les défenseurs, mais −10 % à tous les dégâts. |
-| R-23 | Marché noir | −25 % au prix des achats futurs, mais +15 % au prix des améliorations et spécialisations futures. Arrondi supérieur. |
-| R-24 | Forteresse blindée | +8 PV actuels et maximum de forteresse, mais −10 % à tous les dégâts. |
-| R-25 | Élite sacrifiée | +30 % aux dégâts des défenseurs de niveau 3 ou 4, mais −10 % à ceux des défenseurs de niveau 1 ou 2. |
+| R-23 | Marché noir | −25 % au prix des achats futurs, mais +5 % (+15 % avant la v0.254) au prix des améliorations et spécialisations futures. Arrondi supérieur. |
+| R-24 | Forteresse blindée | +8 PV actuels et maximum de forteresse, mais −5 % (−10 % avant la v0.254) à tous les dégâts. |
+| R-25 | Élite sacrifiée | +30 % aux dégâts des défenseurs de niveau 3 ou 4, mais −5 % (−10 % avant la v0.254) à ceux des défenseurs de niveau 1 ou 2. |
 | R-26 | Formation serrée | +15 % à tous les dégâts d’un défenseur qui a un autre défenseur à 3 de distance ou moins. |
 | R-27 | Francs-tireurs | +25 % à tous les dégâts et +0,5 de portée pour un défenseur sans autre défenseur à 4,2 de distance ou moins. |
 | R-28 | Armée variée | +5 % à tous les dégâts par type de défenseur différent déployé (jusqu’à +20 % avec quatre types). |
@@ -1052,10 +1054,10 @@ Décision du porteur, 21 novembre 2026 (MAJ-70) : bonus « à part, uniques et p
 
 | Code | Nom provisoire | Rareté | Effet de référence — H |
 | --- | --- | --- | --- |
-| R-37 | Lames runiques | Rare | +20 % à tous les dégâts et +10 % de cadence |
+| R-37 | Lames runiques | Rare | +12 % à tous les dégâts et +6 % de cadence (+20 % et +10 % avant la v0.254) |
 | R-38 | Écho des ricochets | Rare | +2 victimes secondaires et +25 % aux dégâts secondaires des unités à effet de zone |
-| R-39 | Malédiction tenace | Rare | Dégâts sur la durée : trois échéances au lieu de deux |
-| R-40 | Chausse-trappes | Rare | Chaque ennemi ralenti 2 s à son apparition (vitesse ×0,6) |
+| R-39 | Malédiction tenace | Rare | Dégâts sur la durée : trois échéances au lieu de deux, et +100 % depuis la v0.254 |
+| R-40 | Chausse-trappes | Rare | Chaque ennemi ralenti 3 s au premier tir direct reçu (vitesse ×0,6) ; 2 s à l’apparition avant la v0.254 |
 | R-41 | Réparations | Rare | +2 PV de forteresse à chaque vague gagnée, sans dépasser le maximum |
 | R-42 | Trésor de guerre | Rare | +100 or immédiatement |
 | R-43 | Intérêts | Rare | +10 % de l’or possédé à chaque vague gagnée (25 au plus) |
@@ -1075,7 +1077,7 @@ Décision du porteur, 21 novembre 2026 (MAJ-70) : bonus « à part, uniques et p
 | R-57 | Forteresse imprenable | Épique | +12 PV maximum et soin complet |
 | R-58 | Pluie de feu | Épique | +2 victimes secondaires, +0,5 de rayon ou de rebond, +40 % aux dégâts secondaires |
 | R-59 | Fortune royale | Épique | +150 or et −20 % aux prix futurs |
-| R-60 | Temps suspendu | Épique | Ennemis ralentis 4 s à l’apparition ; ralentissements de vos unités +50 % |
+| R-60 | Temps suspendu | Épique | Ennemis ralentis 8 s au premier tir direct reçu (4 s à l’apparition avant la v0.254) ; ralentissements de vos unités +50 % |
 
 Les promotions gratuites ne changent pas l’or payé (revente inchangée). Les réductions de prix se multiplient entre elles (arrondi supérieur). Les cadences se multiplient ; les pourcentages de dégâts s’additionnent avec ceux de la section 27.
 
@@ -1134,7 +1136,7 @@ R-05 ajoute 0,2 au rayon d’explosion ou à la distance de chaque rebond, aprè
 
 R-02 modifie la fréquence d’attaque, et non directement le pourcentage de réduction de l’intervalle :
 
-Nouvel intervalle = intervalle de référence ÷ 1,12.
+Nouvel intervalle = intervalle de référence ÷ 1,08 depuis la v0.254 (÷ 1,12 avant).
 
 L’archer de base passe de 1 s à environ 0,892857 s ; l’arbalétrier de 2,5 s à environ 2,232143 s. Ne pas utiliser intervalle × 0,88 : ce serait un autre réglage. Conserver la valeur non arrondie dans les calculs.
 
@@ -1172,7 +1174,7 @@ Les revenus maximaux des vagues ne changent pas : R-10 et R-11 réduisent des d�
 | Archer N4 avec R-01 et R-06 | 26 × (1 + 0,10 + 0,15) = 32,5 dégâts par tir ; cadence inchangée |
 | Mage N1 avec R-01 et R-06 | Principal : 27 × 1,25 = 33,75 ; secondaire : 10,8 × 1,10 = 11,88 par victime |
 | Mage N1 avec R-01 et R-04 | Principal : 29,7 ; secondaire : 10,8 × 1,30 = 14,04 par victime |
-| Archer N4 avec R-01 et R-02 | 28,6 dégâts, intervalle 1 ÷ 1,12 ; DPS continu 32,032 |
+| Archer N4 avec R-01 et R-02 | 28,6 dégâts, intervalle 1 ÷ 1,08 ; DPS continu 30,888 (1 ÷ 1,12 et 32,032 avant la v0.254) |
 | Chaman N1 avec R-01 | 13,2 directs et deux ticks de 5,28 ; DPS continu 11,88 si cycle complet |
 | Archer N2 avec R-07, puis passage N3 | N2 : 12 × 1,15 = 13,8 ; N3 : 18, R-07 ne s’applique plus |
 | Archer N3 avec R-08 et R-12 contre une Brute | 18 × (1 + 0,12 + 0,20) = 23,76 dégâts ; contre un Pillard : 20,16 |
@@ -1785,6 +1787,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | MAJ-51 | **Orientation par défaut des défenseurs : face au tronçon de route le plus proche** au placement et entre les vagues ; en combat, la dernière cible garde la priorité — V | Décision du porteur, 15 novembre 2026 ; `valley_view.gd` (`road_facing`), `tests/test_defender_facing.gd` |
 | MAJ-52 | **Visée inclinée du Tireur d’élite elfe (type 11)** : sept planches (0°, ±8°, ±16°, ±24°), un seul angle pour la pose, l’origine de la flèche et sa direction de départ ; lâcher à 0,27 s — V (geste validé par le porteur) ; angles et lâcher — rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `a2cdab9` ; `tests/test_marksman_aim.gd` |
 | MAJ-53 | **Estoc du Piquier humain (type 14)** : trois planches (−12°, 0°, +12°), la pique est dessinée dans les planches, éclat de contact à 0,256 s à la pointe donnée par angle — V (geste validé par le porteur) ; rendu seulement | Décision du porteur, 15 novembre 2026 ; lot de Codex `9a7d3d8` ; `tests/test_marksman_aim.gd` |
+| MAJ-108 | **Dix bonus rééquilibrés** pour que le tirage pèse moins : Lames runiques +12 % de dégâts et +6 % de cadence (+20 % et +10 % avant) ; Exercice de tir +8 % de cadence (+12 %) ; Cadence effrénée +15 % (+25 %) ; Pari risqué +20 % (+30 %) ; Chausse-trappes et Temps suspendu ralentissent 3 s et 8 s au premier tir direct reçu (2 s et 4 s à l'apparition avant) ; Malédiction tenace : trois échéances et +100 % aux dégâts sur la durée ; Marché noir : améliorations +5 % (+15 %) ; Forteresse blindée −5 % (−10 %) ; Élite sacrifiée −5 % aux niveaux 1-2 (−10 %). Les rapports plus anciens gardent les anciennes valeurs. Recalage : 62 coefficients (12 hausses, 50 baisses, dont 23 pour que l'armée de référence gagne) ; sous la courbe : Alliance 84, Horde 22, 23, 25, 60, 84, 91 ajoutées. Sur toute la campagne, **379 réglages sur 398 dans la cible**, 2 juste sous 40 % (Alliance 67, Horde 40), 17 au-dessus. L'écart de valeur entre bonus se resserre ; le poids du tirage pour l'armée de référence baisse peu (écart entre tirages 81 → 78 points pour l'Alliance, 79 → 77 pour la Horde). Valeurs à confirmer en jeu | Décision du porteur, 24 novembre 2026 (« Tout valider ») ; `design/Bonus_reequilibres_v0254.md` |
 | MAJ-107 | **Offres de bonus utiles** : une carte tirée qui ne sert à aucun défenseur déployé (critère identique à l'effet en combat : cibles secondaires, dégâts sur la durée, cadence, portée, soutien, voisinage, niveau) est remplacée par le premier bonus utile qui la suit dans sa rareté, sans nouveau tirage ; offres déjà utiles, valeurs des bonus et relance inchangées. Mesure préalable : environ un quart du catalogue est sans effet pour une armée donnée. Effet : Horde inchangée ; Alliance nettement plus forte avec la stratégie de mesure (première offre), d'où **57 coefficients de PV de l'Alliance relevés de 1 à 7 points** ; le poids du tirage pour l'armée de référence ne baisse pas. Sur toute la campagne, **386 réglages sur 398 dans la cible**, aucun en dessous, 12 au-dessus (Alliance 2, 3, 12, 13, 33, 137, 164, 178 ; Horde 2, 3, 23, 39). Critère et coefficients à confirmer en jeu | Décisions du porteur, 24 novembre 2026 (« Offres utiles seulement », puis « Garder et recaler l'Alliance ») ; `design/Offres_utiles_v0253.md` |
 | MAJ-106 | **Renforts de vague par mission et par faction** : des groupes d'ennemis de base s'ajoutent après ceux de certaines vagues (sprinters aux vagues 3, 5 et 7, maraudeur aux vagues 4, 6 et 8 ou élites aux vagues 5, 7 et 9, jamais à la vague 10 du boss), propres à chaque faction, enregistrés dans les rapports. Dix-huit réglages concernés : Alliance 16, 23, 33, 39, 72, 79, 105, 173, 178, 180 ; Horde 11, 22, 38, 41, 44, 79, 131, 175. Sur toute la campagne, **392 réglages sur 398 dans la cible**, aucun en dessous ; restent au-dessus les missions 2 et 3 des deux factions (la stratégie simple de premier joueur perdrait) et les missions 23 et 39 de la Horde (la référence perdrait). Quantités, types et vagues à confirmer en jeu | Demande du porteur, 24 novembre 2026 ; `design/Missions_renforts_v0252.md` |
 | MAJ-105 | **Finales remesurées, questions O-016 et O-018 closes, sans changement de jeu** : les vingt finales de la Horde sont dans la cible (meilleure des 30 compositions : 42 à 62 %, moyenne 53 % ; Alliance : moyenne 55 %, la finale 180 au-dessus de la cible). L'armée de référence, à stratégie fixe, dépend du tirage des bonus : sur trois tirages, elle gagne 477 missions sur 600 côté Horde et 522 côté Alliance. Piste écartée pour l'instant : rendre les bonus moins décisifs en début de partie | Décision du porteur, 24 novembre 2026 ; `design/Finales_remesure_v0251.md` |
@@ -1869,7 +1872,7 @@ For the Fortress! reste un nom de travail. Sa disponibilité juridique doit êtr
 | O-023 | **Talents et dots du Pyromancien : tranchée le 16 novembre 2026** (les talents du Mage s’appliquent aussi aux dégâts sur la durée, MAJ-59) | Décision du porteur ; valeurs à confirmer en jeu |
 | O-024 | **Exercice de tir (R-02) : tranchée le 16 novembre 2026** (texte explicite, alternatives du chaman incluses, MAJ-59) | Décision du porteur ; valeurs à confirmer en jeu |
 | O-029 | **Un affixe par biome et un attaquant par chapitre pair (MAJ-91)** : les dix affixes (v0.245) et les dix attaquants (v0.246) existent ; restent les dessins des cinq nouveaux attaquants et de la Braise par Codex, et la confirmation en partie réelle de leurs valeurs | Avis du porteur sur les visuels et le ressenti |
-| O-028 | **Cible de difficulté : tranchée le 22 novembre 2026** (le porteur garde la cible actuelle, MAJ-79). Rééquilibrage de la v0.232 (recalibré avec les 60 bonus en v0.234, nouvelle référence de la Horde en v0.235, terminé en v0.236) : la cible (40 à 70 % de marge pour la meilleure composition) reste mesurée avec une stratégie fixe qui prend toujours la première offre de bonus. Mesures conservées pour mémoire : avec un choix de bonus guidé (borne haute), la meilleure armée finit vers 90 % de marge dans les deux factions ; un joueur avisé qui juge chaque offre sans connaître les suivantes finit vers 84 % (Alliance) et 80 % (Horde) (`design/Joueur_avise_v0239.md`). Restent ouverts : la difficulté ressentie en partie réelle (missions jugées trop dures ou trop faciles), le rythme de quatre choix, les noms et valeurs des 48 bonus ajoutés en v0.232 et v0.233, les pondérations de rareté, et les douze réglages encore au-dessus de la cible depuis les offres utiles de la v0.253 (missions 2 et 3 des deux factions, Alliance 12, 13, 33, 137, 164, 178, Horde 23 et 39, MAJ-107) ; le poids du tirage des bonus pour une armée fixe reste fort (bonus faibles ou très forts, pistes non retenues le 24 novembre 2026) | Essai du porteur en partie réelle |
+| O-028 | **Cible de difficulté : tranchée le 22 novembre 2026** (le porteur garde la cible actuelle, MAJ-79). Rééquilibrage de la v0.232 (recalibré avec les 60 bonus en v0.234, nouvelle référence de la Horde en v0.235, terminé en v0.236) : la cible (40 à 70 % de marge pour la meilleure composition) reste mesurée avec une stratégie fixe qui prend toujours la première offre de bonus. Mesures conservées pour mémoire : avec un choix de bonus guidé (borne haute), la meilleure armée finit vers 90 % de marge dans les deux factions ; un joueur avisé qui juge chaque offre sans connaître les suivantes finit vers 84 % (Alliance) et 80 % (Horde) (`design/Joueur_avise_v0239.md`). Restent ouverts : la difficulté ressentie en partie réelle (missions jugées trop dures ou trop faciles), le rythme de quatre choix, les noms et valeurs des 48 bonus ajoutés en v0.232 et v0.233, les pondérations de rareté, et les dix-neuf réglages hors cible depuis le rééquilibrage des bonus de la v0.254 (17 au-dessus, dont les missions 2 et 3 des deux factions et plusieurs missions de la Horde baissées pour que l'armée de référence gagne ; Alliance 67 et Horde 40 juste sous 40 %, MAJ-108) ; le poids du tirage des bonus pour une armée fixe reste fort, porté par les épiques et les rares les plus forts | Essai du porteur en partie réelle |
 | O-027 | **Catalogue de bonus : réalisé** (36 bonus en v0.232, 60 avec rareté et relance en v0.233, MAJ-68 et MAJ-70). Restent ouverts : d'autres sources de relance (bonus, talent, boutique) si le porteur en veut | Décision du porteur |
 | O-026 | **Équilibre entre factions en fin de campagne : écart jugé acceptable par le porteur (17 novembre 2026), aucun réglage ; le porteur observe qu'une réussite à 100 % pour qui connaît les bonnes unités est peu satisfaisante et attend la variété des bonus (voir O-027).** Mesures : L'étude multi-compositions (`design/Equilibre_factions_fin_campagne_v0232.md`) montre, avec les seules unités de base, un avantage net de la Horde aux chapitres 11 à 20 (+18 points de meilleure marge aux chapitres 11 à 15, +23 aux chapitres 16 à 20) ; **avec une unité de boutique, la puissance maximale devient comparable (100 % pour les deux factions en fin de campagne) et il reste une différence de largeur** : aux chapitres 12 à 20, la Horde réussit avec plus de combinaisons d'unités, d'arbres et d'unités de boutique (27 % contre 18 % de combinaisons gagnantes en fin de campagne) ; l'Alliance a l'avantage de largeur aux chapitres 1 à 9. La réduction de PV d'ennemis de la Horde (v0.212) n'explique que 5 points de l'écart avec les unités de base. Le porteur veut des puissances assez similaires : à lui de dire si la largeur compte, ou seulement la puissance maximale | Étude du 17 novembre 2026 ; décision du porteur attendue |
 | O-025 | **Aura du Prêtre et de l’Ancien : tranchée le 16 novembre 2026** (rayon 4,2, cartes inchangées, MAJ-59) | Décision du porteur ; valeurs à confirmer en jeu |
@@ -2061,6 +2064,8 @@ Version 0.89 — 24 novembre 2026 : jeu 0.251 inchangé. **Finales remesurées**
 Version 0.90 — 24 novembre 2026 : jeu 0.252. **Renforts de vague** (MAJ-106) : dix-huit réglages trop faciles reçoivent des groupes d'ennemis en plus ; 392 réglages sur 398 dans la cible. Le son passe en attente de longue durée sur décision du porteur (O-019).
 
 Version 0.91 — 24 novembre 2026 : jeu 0.253. **Offres de bonus utiles** (MAJ-107) : une carte sans effet sur les défenseurs déployés est remplacée ; 57 missions de l'Alliance recalées ; 386 réglages sur 398 dans la cible.
+
+Version 0.92 — 25 novembre 2026 : jeu 0.254. **Bonus faibles et trop forts rééquilibrés** (MAJ-108) : dix bonus changent de valeur, 62 missions recalées ; 379 réglages sur 398 dans la cible.
 
 <a id="s51"></a>
 
@@ -2354,7 +2359,7 @@ Les tableaux suivants reprennent le catalogue de référence v0.89, toujours uti
 
 ## 56 État vérifié et prochaines décisions
 
-### État au 24 novembre 2026 (GDD 0.91, jeu 0.253)
+### État au 25 novembre 2026 (GDD 0.92, jeu 0.254)
 Le prototype Windows 0.185 est publié en préversion sur le dépôt privé. Sa régression complète passe 127 suites, 159 855 contrôles Godot et 17 tests Python. Le paquet Windows est vérifié sur des cas ciblés (cartes des chapitres 13 à 20 dans les deux factions), avec comparaison des sources et inspection de captures.
 
 La campagne compte 200 missions jouables (vingt chapitres, dix biomes) : elle est entièrement jouable dans les deux factions, avec des parcours indépendants ; les 100 premières missions donnent 51 points de talent au total, les suivantes uniquement des PO. Cinq affixes de combat sont réalisés (Vents contraires, Éruptions, tempête de sable, éboulement, brume marine) et quatre attaquants propres aux biomes (Gueule-de-Vase, capitaine de garnison, aigle des cimes, revenant). Toutes les valeurs de ces mécaniques sont des réglages de prototype à confirmer (H).
@@ -2376,7 +2381,7 @@ Priorités : recueillir les retours sur le placement du loup, le sanglier, la Ga
 ### Sources et preuves
 Les versions historiques gardent leurs preuves propres. La référence actuelle est reliée aux documents de la Gardienne, des réactions corporelles et des souverains, à `design/Atelier_routes_v0107.md`, `design/Marche_loup_v0108.md`, `design/Orientation_loup_v0109.md` et `design/Feuille_de_route_long_terme.md`. Les preuves de publication courante sont `design/essais/v0109_regression.json` et `design/Distribution_Windows_v0109.json`. Le dossier `design/essais/sanglier_peau_continue/README.md` décrit séparément une proposition non intégrée au jeu. Les conditions futures des biomes, difficultés, succès et accès à l’infini restent celles des sections 47, 52 et 58.
 
-La documentation est versionnée séparément du binaire : GDD 0.91, jeu 0.253 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
+La documentation est versionnée séparément du binaire : GDD 0.92, jeu 0.254 (les paragraphes ci-dessus décrivent l’état du 2 novembre, conservé pour mémoire). Cette consolidation ne constitue pas un nouvel essai humain ; les chiffres de l’état actuel proviennent des régressions et des exports réellement lancés.
 
 <a id="s57"></a>
 
@@ -2626,6 +2631,9 @@ Demande du porteur du 24 novembre 2026 (MAJ-106). Sur ces missions, la partie se
 ### Offres utiles et recalage de l'Alliance : v0.253
 Décisions du porteur du 24 novembre 2026 (MAJ-107). Une carte de bonus sans effet sur les défenseurs déployés est remplacée par le bonus utile suivant de même rareté. La Horde n'est pas touchée ; l'Alliance, qui tirait le plus de cartes sans effet, gagnait 11,6 points de marge moyenne : 57 de ses coefficients sont relevés de 1 à 7 points. Sur toute la campagne, **386 réglages sur 398 dans la cible**, aucun sous 40 %, 12 au-dessus de 70 % ; marge moyenne de la meilleure composition 63 % (Alliance) et 57 % (Horde). Fiche : `design/Offres_utiles_v0253.md`.
 
+### Bonus rééquilibrés : v0.254
+Décision du porteur du 24 novembre 2026 (MAJ-108). Quatre bonus trop forts baissés et six bonus faibles relevés ; Chausse-trappes et Temps suspendu ralentissent au premier tir direct reçu. 62 coefficients recalés, dont 23 baissés pour que l'armée de référence gagne : sur le tirage des suites, elle reçoit Exercice de tir dès le premier choix. Sur toute la campagne, **379 réglages sur 398 dans la cible**, 2 juste sous 40 %, 17 au-dessus ; marge moyenne de la meilleure composition 58 % (Alliance) et 53 % (Horde). Fiche : `design/Bonus_reequilibres_v0254.md`.
+
 ### Récompenses de première victoire
 PO : 60 jusqu’au chapitre 10, puis 60 + 5 par chapitre au-delà du dixième (MAJ-31, H). XP : 100 par mission jusqu’à la mission 100, aucune ensuite. Les PO financent la boutique (section 57) ; leur usage après la mission 100 reste ouvert (O-013).
 
@@ -2796,5 +2804,6 @@ Moteur Godot 4.7.2 ; Python pour la régression et les contrats du GDD ; `protot
 | 0.251 | Ours mieux espacés après l'Éboulement, missions 121 et 125 recalées ; GDD 0.88 |
 | 0.252 | Renforts de vague sur dix-huit réglages trop faciles, 392 réglages sur 398 dans la cible ; GDD 0.90 |
 | 0.253 | Offres de bonus utiles, 57 missions de l'Alliance recalées, 386 réglages sur 398 dans la cible ; GDD 0.91 |
+| 0.254 | Dix bonus rééquilibrés, 62 missions recalées, 379 réglages sur 398 dans la cible ; GDD 0.92 |
 
 Les notes détaillées de chaque version sont dans `design/essais/` et les annonces dans `README.md`.

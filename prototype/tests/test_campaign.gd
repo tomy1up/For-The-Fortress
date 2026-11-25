@@ -76,7 +76,7 @@ func run_checks() -> void:
 	m.bonuses.assign([0,3])
 	check(close(m.get_stats(0).damage,29.7) and close(m.get_stats(0).secondary_damage,14.04),"R01+R04 additifs")
 	m.bonuses.assign([1,2,4])
-	check(close(m.get_stats(0).interval,2.5/1.12) and m.get_stats(0).range == 4 and close(m.get_stats(0).radius,1.2) and m.get_stats(0).secondary_cap == 2,"Cadence, portée et rayon, plafond inchangé")
+	check(close(m.get_stats(0).interval,2.5/1.08) and m.get_stats(0).range == 4 and close(m.get_stats(0).radius,1.2) and m.get_stats(0).secondary_cap == 2,"Cadence, portée et rayon, plafond inchangé")
 	for branch in [-1,0,1]:
 		m = fixture(1)
 		if branch == -1: m.buy(0,5)

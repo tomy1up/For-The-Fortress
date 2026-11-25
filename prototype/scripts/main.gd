@@ -3217,7 +3217,7 @@ func _bonus_card_content(code: int) -> Dictionary:
 	var alliance: bool = model.faction == 0
 	match code:
 		0: return {"effect":"+10 % à tous les dégâts","scope":"Tous vos défenseurs.","note":"Actuels et futurs."}
-		1: return {"effect":"Tirs 12 % plus rapides","scope":"Tous vos défenseurs." if alliance else "Tous sauf les chamans.","note":"Spécialisations incluses."}
+		1: return {"effect":"Tirs 8 % plus rapides","scope":"Tous vos défenseurs." if alliance else "Tous sauf les chamans.","note":"Spécialisations incluses."}
 		2: return {"effect":"Portée +0,5","scope":"Tous vos défenseurs.","note":"Le cercle d’attaque s’agrandit."}
 		3: return {"effect":"Dégâts d’explosion +20 %" if alliance else "Dégâts rebonds et\nexplosions +20 %","scope":"Vos mages." if alliance else "Trolls et gobelins, alternatives incluses.","note":"Tirs directs inchangés."}
 		4: return {"effect":"Rayon d’explosion +0,2" if alliance else "Explosions / rebonds\n+0,2 de distance","scope":"Vos mages." if alliance else "Trolls et gobelins, alternatives incluses.","note":"Maximum de cibles inchangé."}

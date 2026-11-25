@@ -766,7 +766,7 @@ for name,state,faction in cases:
             markdown=(report_folder/'rapport.md').read_text(encoding='utf-8')
             assert '## Talents permanents de la partie' in markdown and ('Bastion' if faction=='alliance' else 'Fureur de guerre') in markdown
         assert run_report['boss_encounter']['status']=='killed' and abs(run_report['boss_encounter']['removed_hp']-600)<0.000001
-        assert 0<run_report['boss_encounter']['resolved_seconds']<=run_report['waves'][-1]['seconds']
+        assert 0<run_report['boss_encounter']['resolved_seconds']<=run_report['waves'][-1]['seconds']+0.000001  # arrondi à 9 décimales du bilan
         assert abs(sum(unit['boss_hp'] for unit in run_report['performance'])-600)<0.000001
         assert len([action for action in run_report['actions'] if action['kind']=='bonus_choice'])==4  # v0.232 : quatre choix de bonus (vagues 2, 4, 6 et 8)
         assert 'Bonus proposés' in (report_folder/'rapport.md').read_text(encoding='utf-8')

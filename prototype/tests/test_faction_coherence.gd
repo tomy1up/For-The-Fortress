@@ -76,7 +76,7 @@ func run_checks() -> void:
 		for slot in range(3): intervals.append(m.get_stats(slot).interval)
 		m.phase = "bonus"; m.bonus_offer.assign([1]); m.choose_bonus(1)
 		for slot in range(3):
-			check(is_equal_approx(m.get_stats(slot).interval,intervals[slot] if m.defenders[slot].type == 5 else intervals[slot]/1.12),"Effet réel de R-02 sur les trois recrues du camp, chaman exclu uniquement en Horde")
+			check(is_equal_approx(m.get_stats(slot).interval,intervals[slot] if m.defenders[slot].type == 5 else intervals[slot]/1.08),"Effet réel de R-02 sur les trois recrues du camp, chaman exclu uniquement en Horde")
 	for rule in Model.Campaign.PROXIMITY+Model.Campaign.SPECIALISATIONS:
 		check(int(rule.types[0]/3) == int(rule.types[1]/3),"Aucune définition de synergie entre factions")
 	check(Model.Campaign.bonus_description(-1,0).is_empty() and Model.Campaign.bonus_description(0,2).is_empty(),"Aucune description arbitraire pour code ou faction invalide")

@@ -49,7 +49,7 @@ func run_checks() -> void:
 		var before: float = m.get_stats(3).interval
 		m.bonuses.assign([1])
 		var after: float = m.get_stats(3).interval
-		check(is_equal_approx(before/after,1.12 if type >= 6 else 1.0),"R-02 : cadence %s (type %d)" % ["+12 %" if type >= 6 else "inchangée pour le chaman orc de base",type])
+		check(is_equal_approx(before/after,1.08 if type >= 6 else 1.0),"R-02 : cadence %s (type %d)" % ["+8 %" if type >= 6 else "inchangée pour le chaman orc de base",type])
 		m.rules_v222 = false
 		check(is_equal_approx(m.get_stats(3).interval,before),"R-02, anciennes règles : le chaman et ses alternatives sont exclus (type %d)" % type)
 	for bonus in Model.Campaign.BONUSES:

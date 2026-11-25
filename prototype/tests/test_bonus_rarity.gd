@@ -107,7 +107,7 @@ func run_checks() -> void:
 			var base: Dictionary = stats_with(type,faction,[])
 			var group: bool = int(ref.get("secondary_cap",0)) > 0
 			var runic: Dictionary = stats_with(type,faction,[Model.B_RUNIC])
-			check(is_equal_approx(runic.damage/base.damage,1.20) and is_equal_approx(base.interval/runic.interval,1.10),"R-37 : +20 %% et cadence +10 %% (%s)" % name)
+			check(is_equal_approx(runic.damage/base.damage,1.12) and is_equal_approx(base.interval/runic.interval,1.06),"R-37 : +12 %% et cadence +6 %% (%s)" % name)
 			var echo: Dictionary = stats_with(type,faction,[Model.B_ECHO])
 			check(int(echo.secondary_cap) == int(base.secondary_cap)+(2 if int(base.secondary_cap) > 0 else 0),"R-38 : +2 cibles secondaires (%s)" % name)
 			if group and float(base.secondary_damage) > 0.0: check(is_equal_approx(echo.secondary_damage/base.secondary_damage,1.25) and is_equal_approx(echo.damage,base.damage),"R-38 : secondaires +25 %%, tir direct inchangé (%s)" % name)
@@ -204,12 +204,13 @@ func run_checks() -> void:
 	g._apply_damage({1:10000.0})
 	check(g.gold-gold_g == reward+2,"R-52 : +2 or par élimination (%d → %d)" % [reward,g.gold-gold_g])
 
-	# 9. Combat réel : ralentissements d'entrée, malédiction tenace, herse, dernier souffle, marque.
+	# 9. Combat réel : ralentissements d'entrée (avant la v0.254 ; depuis, au premier tir reçu : `test_bonus_values_v254.gd`), malédiction tenace, herse, dernier souffle, marque.
 	for code in [Model.B_CALTROPS,Model.B_STASIS]:
 		var sl = fresh(0)
+		sl.rules_v254 = false
 		sl.bonuses.assign([code])
 		sl.start();sl.advance(0.01)
-		check(not sl.enemies.is_empty() and sl.enemies.all(func(x): return Model.enemy_is_slowed(x) and is_equal_approx(float(x.slow_until)-float(x.slow_start),4.0 if code == Model.B_STASIS else 2.0)),"R-%d : ennemis ralentis dès l'apparition" % (code+1))
+		check(not sl.enemies.is_empty() and sl.enemies.all(func(x): return Model.enemy_is_slowed(x) and is_equal_approx(float(x.slow_until)-float(x.slow_start),4.0 if code == Model.B_STASIS else 2.0)),"R-%d, règles d'avant la v0.254 : ennemis ralentis dès l'apparition" % (code+1))
 	var curse = fresh(1)
 	curse.bonuses.assign([Model.B_TENACIOUS])
 	curse._apply_curse(1,1,5.0)

@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.254**. Bonus rééquilibrés : quatre bonus trop forts baissés, six bonus faibles relevés (Chausse-trappes et Temps suspendu ralentissent au premier tir reçu), 62 missions recalées. [Notes](design/essais/v0254_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.254).
+
 **Prototype v0.253**. Offres de bonus utiles : une carte sans effet sur vos défenseurs est remplacée par un bonus utile, et 57 missions de l'Alliance sont recalées. [Notes](design/essais/v0253_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.253).
 
 **Prototype v0.252**. Renforts de vague : dix-huit missions trop faciles reçoivent des groupes d'ennemis en plus, et 392 réglages sur 398 sont dans la cible de difficulté. [Notes](design/essais/v0252_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.252).

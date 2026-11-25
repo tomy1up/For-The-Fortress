@@ -85,17 +85,17 @@ func run_checks() -> void:
 			for key in ["mark_bonus","loot_bonus","volatile_damage","slow_seconds"]:
 				if base.has(key): check(is_equal_approx(float(r19[key]),float(base[key])*1.3),"R-19 : %s +30 %% (%s)" % [key,name])
 			check(is_equal_approx(r19.damage,base.damage),"R-19 : dégâts directs inchangés (%s)" % name)
-			# R-20 : +30 % ; R-21 : cadence +25 % et portée −0,5 ; R-22 : portée +1 et dégâts −10 % ; R-24 : dégâts −10 %.
-			check(is_equal_approx(ratio(stats_with(type,faction,[19]).damage,base.damage),1.30),"R-20 : +30 %% (%s)" % name)
+			# Depuis la v0.254 : R-20 : +20 % ; R-21 : cadence +15 % et portée −0,5 ; R-24 : dégâts −5 %. R-22 : portée +1 et dégâts −10 %.
+			check(is_equal_approx(ratio(stats_with(type,faction,[19]).damage,base.damage),1.20),"R-20 : +20 %% (%s)" % name)
 			var r21: Dictionary = stats_with(type,faction,[20])
-			check(is_equal_approx(ratio(base.interval,r21.interval),1.25) and is_equal_approx(base.range-r21.range,0.5),"R-21 : cadence +25 %% et portée −0,5 (%s)" % name)
+			check(is_equal_approx(ratio(base.interval,r21.interval),1.15) and is_equal_approx(base.range-r21.range,0.5),"R-21 : cadence +15 %% et portée −0,5 (%s)" % name)
 			var r22: Dictionary = stats_with(type,faction,[21])
 			check(is_equal_approx(r22.range-base.range,1.0) and is_equal_approx(ratio(r22.damage,base.damage),0.9),"R-22 : portée +1 et dégâts −10 %% (%s)" % name)
-			check(is_equal_approx(ratio(stats_with(type,faction,[23]).damage,base.damage),0.9),"R-24 : dégâts −10 %% (%s)" % name)
-			# R-25 : élite sacrifiée (niveau 1-2 : −10 %, niveau 3-4 : +30 %).
+			check(is_equal_approx(ratio(stats_with(type,faction,[23]).damage,base.damage),0.95),"R-24 : dégâts −5 %% (%s)" % name)
+			# R-25 : élite sacrifiée (niveau 1-2 : −5 % depuis la v0.254, niveau 3-4 : +30 %).
 			for level in [1,3]:
 				var level_base: Dictionary = stats_with(type,faction,[],level)
-				check(is_equal_approx(ratio(stats_with(type,faction,[24],level).damage,level_base.damage),1.3 if level >= 3 else 0.9),"R-25 : niveau %d (%s)" % [level,name])
+				check(is_equal_approx(ratio(stats_with(type,faction,[24],level).damage,level_base.damage),1.3 if level >= 3 else 0.95),"R-25 : niveau %d (%s)" % [level,name])
 			# R-28 : armée variée (un seul type : +5 %).
 			check(is_equal_approx(ratio(stats_with(type,faction,[27]).damage,base.damage),1.05),"R-28 : +5 %% pour un seul type (%s)" % name)
 			# R-33 : moral montant, +2 % par vague déjà jouée.
@@ -168,9 +168,9 @@ func run_checks() -> void:
 	e.phase = "bonus";e.bonus_offer.assign([23,22,19])
 	check(e.choose_bonus(23) and e.max_hp == max_before+4 and e.fortress_hp == hp+4,"R-24 : +8 PV après −4")
 	e.bonuses.assign([22])
-	check(e.purchase_cost(1) == int(ceil(purchase*0.75-0.000000001)) and e.upgrade_cost(3) == int(ceil(upgrade*1.15-0.000000001)),"R-23 : achats −25 %% (%d → %d), améliorations +15 %% (%d → %d)" % [purchase,e.purchase_cost(1),upgrade,e.upgrade_cost(3)])
+	check(e.purchase_cost(1) == int(ceil(purchase*0.75-0.000000001)) and e.upgrade_cost(3) == int(ceil(upgrade*1.05-0.000000001)),"R-23 : achats −25 %% (%d → %d), améliorations +5 %% (%d → %d)" % [purchase,e.purchase_cost(1),upgrade,e.upgrade_cost(3)])
 	e.bonuses.assign([22,9,10])
-	check(e.purchase_cost(1) == int(ceil(purchase*0.9*0.75-0.000000001)) and e.upgrade_cost(3) == int(ceil(upgrade*0.9*1.15-0.000000001)),"R-23 se cumule avec R-10 et R-11")
+	check(e.purchase_cost(1) == int(ceil(purchase*0.9*0.75-0.000000001)) and e.upgrade_cost(3) == int(ceil(upgrade*0.9*1.05-0.000000001)),"R-23 se cumule avec R-10 et R-11")
 	var weak = fresh(0)
 	weak.fortress_hp = 3
 	weak.phase = "bonus";weak.bonus_offer.assign([19,0,1])

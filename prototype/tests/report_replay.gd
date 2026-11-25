@@ -85,6 +85,24 @@ static func rules_v233_for(version: String) -> bool:
 static func rules_v253_for(version: String) -> bool:
 	return _minor_version(version) >= 253
 
+## Textes des bonus rééquilibrés en v0.254, tels qu'ils étaient enregistrés dans les rapports plus anciens (par faction : Alliance, Horde).
+const BONUS_TEXTS_V253 := {
+	1:["+12 % de fréquence d’attaque : archer elfe, rôdeur elfe, arbalétrier nain, mousquetaire nain et mage humain. Spécialisations incluses.", "+12 % de fréquence d’attaque : lanceur de haches troll, traqueur troll, sapeur gobelin, grenadier gobelin, Brûleur de cendres et Chaman des marais. Le chaman orc de base et ses spécialisations sont exclus."],
+	19:["+30 % à tous les dégâts, mais −4 PV maximum de forteresse (PV actuels réduits d’autant, jamais sous 1).", "+30 % à tous les dégâts, mais −4 PV maximum de forteresse (PV actuels réduits d’autant, jamais sous 1)."],
+	20:["+25 % de fréquence d’attaque pour tous les défenseurs, mais −0,5 de portée.", "+25 % de fréquence d’attaque pour tous les défenseurs, mais −0,5 de portée."],
+	22:["−25 % au prix des achats futurs, mais +15 % au prix des améliorations et spécialisations futures. Arrondi supérieur.", "−25 % au prix des achats futurs, mais +15 % au prix des améliorations et spécialisations futures. Arrondi supérieur."],
+	23:["+8 PV actuels et maximum de forteresse, mais −10 % à tous les dégâts.", "+8 PV actuels et maximum de forteresse, mais −10 % à tous les dégâts."],
+	24:["+30 % aux dégâts des défenseurs de niveau 3 ou 4, mais −10 % à ceux des défenseurs de niveau 1 ou 2.", "+30 % aux dégâts des défenseurs de niveau 3 ou 4, mais −10 % à ceux des défenseurs de niveau 1 ou 2."],
+	36:["+20 % à tous les dégâts et +10 % de fréquence d’attaque pour tous les défenseurs.", "+20 % à tous les dégâts et +10 % de fréquence d’attaque pour tous les défenseurs."],
+	38:["La brûlure du Pyromancien humain et de vos autres unités à dégâts sur la durée frappe trois fois au lieu de deux.", "Les malédictions du chaman orc, du Brûleur de cendres et de vos autres unités à dégâts sur la durée frappent trois fois au lieu de deux."],
+	39:["Chaque ennemi est ralenti pendant 2 s à son apparition (vitesse ×0,6).", "Chaque ennemi est ralenti pendant 2 s à son apparition (vitesse ×0,6)."],
+	59:["Chaque ennemi est ralenti pendant 4 s à son apparition (vitesse ×0,6), et vos ralentissements durent 50 % de plus.", "Chaque ennemi est ralenti pendant 4 s à son apparition (vitesse ×0,6), et vos ralentissements durent 50 % de plus."]
+}
+
+## Bonus rééquilibrés (v0.254) : les rapports plus anciens gardent les anciennes valeurs.
+static func rules_v254_for(version: String) -> bool:
+	return _minor_version(version) >= 254
+
 ## Écart de sortie après un Éboulement sur une carte à une seule entrée : 0,6 s depuis la v0.251, 0,3 s avant.
 static func rockfall_hold_gap_for(version: String) -> float:
 	return Model.ROCKFALL_HOLD_GAP if _minor_version(version) >= 251 else Model.ROCKFALL_HOLD_GAP_V244
@@ -110,6 +128,7 @@ static func verify(data: Variant) -> Dictionary:
 	model.rules_v233 = rules_v233_for(data.game_version)
 	model.rockfall_hold_gap = rockfall_hold_gap_for(data.game_version)
 	model.rules_v253 = rules_v253_for(data.game_version)
+	model.rules_v254 = rules_v254_for(data.game_version)
 	model.talent_rules = talent_rules_for(data.game_version) # Chaque rapport garde les valeurs de talents de sa version.
 	if data.has("combat_affix") and not model.configure_combat_affix(data.combat_affix): return _fail("Affixe de combat invalide.")
 	if not model.routes.is_empty():
@@ -164,6 +183,10 @@ static func verify(data: Variant) -> Dictionary:
 		# Avant la v0.176, Gueule-de-Vase s'appelait « Noyé » dans le catalogue des ennemis.
 		for item in observed.enemy_catalog:
 			if item.id == "enemy.neutral.drowned": item.name = "Noyé"
+	if _minor_version(str(data.get("game_version",""))) < 254:
+		# v0.254 : dix bonus ont changé de valeur et de texte ; les rapports plus anciens gardent leur texte d'origine.
+		for bonus in observed.bonuses:
+			if BONUS_TEXTS_V253.has(int(bonus.index)): bonus.description = BONUS_TEXTS_V253[int(bonus.index)][model.faction]
 	if not data.has("enemy_catalog"):
 		# Les rapports historiques gardent les noms de profils et le libellé R-12.
 		observed.boss_encounter.name = Model.ENEMY_TYPES[7].name

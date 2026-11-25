@@ -158,6 +158,12 @@ var rules_v233: bool = true
 ## Offres utiles (v0.253, décision du porteur, 24 novembre 2026) : une carte tirée qui ne sert à aucun défenseur déployé est remplacée par le bonus utile suivant
 ## (critère : `bonus_useful`, remplacement : `_useful_substitute`). Faux pour rejouer un rapport plus ancien, dont les offres gardaient toute carte tirée.
 var rules_v253: bool = true
+## Bonus rééquilibrés (v0.254, décision du porteur, 24 novembre 2026 : « Tout valider ») : Exercice de tir +8 % de cadence, Pari risqué +20 %, Cadence effrénée +15 %,
+## Lames runiques +12 % et +6 %, Marché noir +5 % aux améliorations, Forteresse blindée −5 %, Élite sacrifiée −5 % aux niveaux 1-2, Malédiction tenace +100 % aux dégâts
+## sur la durée, Chausse-trappes et Temps suspendu ralentissent au premier tir direct reçu (3 s et 8 s) au lieu de l'apparition. Faux pour rejouer un rapport plus ancien.
+var rules_v254: bool = true
+const CALTROPS_HIT_SECONDS := 3.0
+const STASIS_HIT_SECONDS := 8.0
 const B_RUNIC := 36
 const B_ECHO := 37
 const B_TENACIOUS := 38
@@ -952,7 +958,7 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	stats.secondary_damage = stats.reference_secondary * (1.0+stats.secondary_bonus)
 	stats.curse_damage = stats.reference_curse * (1.0+stats.curse_bonus)
 	stats.range += synergy.range + meta.range + (0.5 if 2 in active_bonuses else 0.0)
-	if 1 in active_bonuses and (family(defender.type) != 5 or (rules_v222 and defender.type >= 6)): stats.interval /= 1.12 # v0.222 : les alternatives de boutique du chaman en profitent
+	if 1 in active_bonuses and (family(defender.type) != 5 or (rules_v222 and defender.type >= 6)): stats.interval /= 1.08 if rules_v254 else 1.12 # v0.254 : +8 % (+12 % avant) ; v0.222 : les alternatives de boutique du chaman en profitent
 	if combat_affix.get("id","") == "headwinds": stats.interval /= float(combat_affix.cadence_percent)/100.0
 	if 4 in active_bonuses and family(defender.type) in [2,3,4]: stats.radius += 0.2
 	if float(extra_bonus.range) != 0.0: stats.range = maxf(1.0,stats.range+float(extra_bonus.range))
@@ -988,15 +994,15 @@ func _extra_bonus_effects(slot: int, defender: Dictionary, level: int, active_bo
 	if B_FAR in active_bonuses and base_range >= 4.5-EPS: common += 0.20
 	if B_CLOSE in active_bonuses and base_range <= 3.6+EPS: common += 0.25
 	if B_SUPPORT in active_bonuses and (reference.has("aura_bonus") or reference.has("mark_bonus") or reference.has("slow_seconds") or reference.has("loot_bonus") or reference.has("volatile_damage")): result.support = 1.3
-	if B_GAMBLE in active_bonuses: common += 0.30
+	if B_GAMBLE in active_bonuses: common += 0.20 if rules_v254 else 0.30
 	if B_FRENZY in active_bonuses:
-		result.rate *= 1.25
+		result.rate *= 1.15 if rules_v254 else 1.25
 		result.range -= 0.5
 	if B_LONG in active_bonuses:
 		result.range += 1.0
 		common -= 0.10
-	if B_FORTRESS in active_bonuses: common -= 0.10
-	if B_ELITE in active_bonuses: common += 0.30 if level >= 3 else -0.10
+	if B_FORTRESS in active_bonuses: common -= 0.05 if rules_v254 else 0.10
+	if B_ELITE in active_bonuses: common += 0.30 if level >= 3 else (-0.05 if rules_v254 else -0.10)
 	if B_MORALE in active_bonuses: common += 0.02*float(maxi(0,wave-1))
 	if B_TIGHT in active_bonuses or B_LONE in active_bonuses or B_MIXED in active_bonuses:
 		var nearest: float = INF
@@ -1013,8 +1019,9 @@ func _extra_bonus_effects(slot: int, defender: Dictionary, level: int, active_bo
 	# Rares et épiques (règles v0.233).
 	var group: bool = int(reference.get("secondary_cap",0)) > 0
 	if B_RUNIC in active_bonuses:
-		common += 0.20
-		result.rate *= 1.10
+		common += 0.12 if rules_v254 else 0.20
+		result.rate *= 1.06 if rules_v254 else 1.10
+	if B_TENACIOUS in active_bonuses and rules_v254 and float(reference.get("curse_damage",0.0)) > 0.0: result.curse += 1.0 # Malédiction tenace (v0.254) : +100 % aux dégâts sur la durée
 	if B_ECHO in active_bonuses:
 		result.cap += 2
 		if group: result.secondary += 0.25
@@ -1122,15 +1129,19 @@ func _refresh_windows() -> void:
 func purchase_cost(type: int) -> int:
 	return _discounted_cost(base_recruit_cost(type),10,bonuses)
 
+## Marché noir (R-23) : améliorations +5 % depuis la v0.254, +15 % avant.
+func _market_upgrade_factor() -> float:
+	return 1.05 if rules_v254 else 1.15
+
 func _discounted_cost(base: float, discount_code: int, active_bonuses: Array) -> int:
 	if B_LEVY in active_bonuses or B_ROYAL in active_bonuses:
 		# Levée en masse (R-50, −30 %) et Fortune royale (R-59, −20 %) : achats et améliorations ; multipliés avec R-10, R-11 et R-23. Arrondi supérieur.
 		var reduced: float = (0.9 if discount_code in active_bonuses else 1.0)*(0.7 if B_LEVY in active_bonuses else 1.0)*(0.8 if B_ROYAL in active_bonuses else 1.0)
-		if B_MARKET in active_bonuses: reduced *= 0.75 if discount_code == 10 else 1.15
+		if B_MARKET in active_bonuses: reduced *= 0.75 if discount_code == 10 else _market_upgrade_factor()
 		return maxi(1,int(ceil(base*reduced-0.000000001)))
 	if B_MARKET in active_bonuses:
 		# Marché noir (R-23) : achats −25 %, améliorations +15 % ; marge d'un milliardième contre les erreurs d'arrondi des flottants.
-		var factor: float = (0.9 if discount_code in active_bonuses else 1.0)*(0.75 if discount_code == 10 else 1.15)
+		var factor: float = (0.9 if discount_code in active_bonuses else 1.0)*(0.75 if discount_code == 10 else _market_upgrade_factor())
 		return maxi(1,int(ceil(base*factor-0.000000001)))
 	return maxi(1,int(ceil(base * (0.9 if discount_code in active_bonuses else 1.0))))
 
@@ -1460,6 +1471,12 @@ func _end_slows() -> void:
 			enemy.delay = float(enemy.get("delay",0.0))+(1.0-SLOW_FACTOR)*(float(enemy.slow_until)-float(enemy.slow_start))
 			enemy.erase("slow_until");enemy.erase("slow_start")
 
+## Chausse-trappes (R-40, 3 s) et Temps suspendu (R-60, 8 s), depuis la v0.254 : ralenti au premier tir direct reçu, une seule fois par ennemi.
+func _trap_on_first_hit(enemy: Dictionary) -> void:
+	if not rules_v254 or enemy.has("trap_hit") or not (B_CALTROPS in bonuses or B_STASIS in bonuses): return
+	enemy.trap_hit = true
+	_slow_enemy(enemy,STASIS_HIT_SECONDS if B_STASIS in bonuses else CALTROPS_HIT_SECONDS)
+
 func _slow_enemy(enemy: Dictionary, seconds: float) -> void:
 	var until: float = elapsed+seconds
 	if enemy.has("slow_until"): enemy.slow_until = maxf(float(enemy.slow_until),until)
@@ -1536,8 +1553,8 @@ func _resolve_instant() -> void:
 		var entry: Dictionary = spawn_schedule[spawned]
 		var enemy: Dictionary = make_enemy(spawned, entry.type, entry.time,faction,enemy_hp_percent)
 		if not routes.is_empty(): enemy.route_id = spawn_route_id(spawned,entry)
-		# Chausse-trappes (R-40, 2 s) et Temps suspendu (R-60, 4 s) : ralenti dès l'apparition.
-		var entry_slow: float = 4.0 if B_STASIS in bonuses else 2.0 if B_CALTROPS in bonuses else 0.0
+		# Chausse-trappes (R-40, 2 s) et Temps suspendu (R-60, 4 s) : ralenti dès l'apparition avant la v0.254 ; depuis, au premier tir direct reçu (`_trap_on_first_hit`).
+		var entry_slow: float = 0.0 if rules_v254 else 4.0 if B_STASIS in bonuses else 2.0 if B_CALTROPS in bonuses else 0.0
 		if entry_slow > 0.0: _slow_enemy(enemy,entry_slow)
 		enemies.append(enemy)
 		spawned += 1
@@ -1595,6 +1612,7 @@ func _resolve_instant() -> void:
 		_add_damage(damage, primary.id, direct_damage)
 		hits.append({"source_id":defender.instance_id,"enemy_id":primary.id,"component":"direct","amount":direct_damage})
 		if float(stats.get("slow_seconds",0.0)) > 0.0: _slow_enemy(primary,float(stats.slow_seconds))
+		_trap_on_first_hit(primary)
 		# Pillage posé par ce tir : « new » si la cible n'était pas pillée, « renewed » sinon (lu par la vue pour le badge du Pillard gobelin, sans effet sur le combat).
 		var loot_state: String = "renewed" if float(primary.get("loot_until",-1.0)) >= elapsed else "new"
 		if float(stats.get("loot_seconds",0.0)) > 0.0:
@@ -1856,7 +1874,7 @@ func _burst_golem(golem: Dictionary, survivors: Array[Dictionary]) -> void:
 		var start: float = maxf(0.0,float(golem.distance)-index*Attackers.EMBER_SPACING)
 		ember.distance = start
 		ember.delay = -start/float(ember.speed)
-		var entry_slow: float = 4.0 if B_STASIS in bonuses else 2.0 if B_CALTROPS in bonuses else 0.0
+		var entry_slow: float = 0.0 if rules_v254 else 4.0 if B_STASIS in bonuses else 2.0 if B_CALTROPS in bonuses else 0.0
 		if entry_slow > 0.0: _slow_enemy(ember,entry_slow)
 		survivors.append(ember)
 
