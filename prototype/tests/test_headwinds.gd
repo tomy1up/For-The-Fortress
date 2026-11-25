@@ -1,4 +1,5 @@
 extends SceneTree
+const Reference = preload("res://tests/reference_army.gd")
 const Model = preload("res://scripts/valley_model.gd")
 const Main = preload("res://scripts/main.gd")
 const Profile = preload("res://scripts/meta_profile.gd")
@@ -120,7 +121,9 @@ func run_checks() -> void:
 		var spent := 0
 		for action in model.action_history:
 			if action.kind in ["buy","upgrade"]: spent += int(action.cost)
-		check(model.gold==150+model.total_income-spent and model.gold>=0,"Tous les recrutements et améliorations sont financés par les revenus du combat")
+		var bonus_gold := 0 # or donné par un bonus (Trésor de guerre, Fortune royale) que le choix avisé peut retenir
+		for code in model.bonuses: bonus_gold += Model.bonus_gold_change(int(code))
+		check(model.gold==150+model.total_income+bonus_gold-spent and model.gold>=0,"Tous les recrutements et améliorations sont financés par les revenus du combat")
 		if camp==1 and mission==32:
 			check(model.defenders.filter(func(unit):return not unit.is_empty()).size()==4 and model.defenders.filter(func(unit):return unit.get("type",-1)==3).size()==2 and model.defenders.filter(func(unit):return unit.get("type",-1)==4).size()==2,"Défense à quatre unités conforme à la limite de deux exemplaires par type")
 		check(Replay.verify(_report(model)).ok,"Rapport complet de mission affectée rejouable")
@@ -203,6 +206,8 @@ func verify_headwinds_sheet() -> void:
 
 func play_policy(model: RefCounted, types: Array, slots: Array, extra: Array, seed_value: int = 7) -> void:
 	model.rng.seed = seed_value # Règles de bonus actuelles depuis la v0.235 (douze bonus historiques auparavant)
+	# v0.255 : quand la composition jouée est celle de l'armée de référence, elle choisit ses bonus en joueur avisé (`Reference.choose_bonus`).
+	var wise: bool = types == (Reference.ALLIANCE if model.faction == 0 else Reference.HORDE_EARLY)
 	var army_slots: Array = slots.duplicate()
 	for recruit in extra: army_slots.append(recruit[0])
 	check(model.buy(slots[0],types[0]) and model.buy(slots[1],types[1]),"Défense initiale dans le budget normal")
@@ -217,7 +222,8 @@ func play_policy(model: RefCounted, types: Array, slots: Array, extra: Array, se
 		check(model.start(),"Départ d'une vague sous Vents contraires")
 		model.advance(10000)
 		if model.phase=="defeat": break
-		if model.phase=="bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
+		if model.phase=="bonus" and wise: Reference.choose_bonus(model)
+		elif model.phase=="bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
 		if wave<10: model.prepare_next_wave()
 
 ## Rapport rejouable : un modèle aux anciennes règles de tirage (douze bonus) porte la version antérieure à la 0.232.

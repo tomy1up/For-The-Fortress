@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+DROWNED_RESULT=0,52,victory,hp=10,wave=10
+DROWNED_RESULT=1,52,victory,hp=15,wave=10
+DROWNED_RESULT=0,53,victory,hp=13,wave=10
+DROWNED_RESULT=1,53,victory,hp=13,wave=10
+DROWNED_RESULT=0,54,victory,hp=11,wave=10
+DROWNED_RESULT=1,54,victory,hp=11,wave=10
+DROWNED_RESULT=0,55,victory,hp=13,wave=10
+DROWNED_RESULT=1,55,victory,hp=18,wave=10
+DROWNED_RESULT=0,56,victory,hp=16,wave=10
+DROWNED_RESULT=1,56,victory,hp=14,wave=10
+DROWNED_RESULT=0,57,victory,hp=10,wave=10
+DROWNED_RESULT=1,57,victory,hp=8,wave=10
+DROWNED_RESULT=0,58,victory,hp=14,wave=10
+DROWNED_RESULT=1,58,victory,hp=19,wave=10
+DROWNED_RESULT=0,59,victory,hp=14,wave=10
+DROWNED_RESULT=1,59,victory,hp=16,wave=10
+DROWNED_RESULT=0,60,victory,hp=4,wave=10
+DROWNED_RESULT=1,60,victory,hp=10,wave=10
+DROWNED_CHAPTER_TESTS checks=4632 failures=0

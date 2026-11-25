@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+EAGLE_RESULT=0,151,victory,hp=18,wave=10
+EAGLE_RESULT=1,151,victory,hp=26,wave=10
+EAGLE_RESULT=0,152,victory,hp=17,wave=10
+EAGLE_RESULT=1,152,victory,hp=20,wave=10
+EAGLE_RESULT=0,153,victory,hp=12,wave=10
+EAGLE_RESULT=1,153,victory,hp=17,wave=10
+EAGLE_RESULT=0,154,victory,hp=17,wave=10
+EAGLE_RESULT=1,154,victory,hp=25,wave=10
+EAGLE_RESULT=0,155,victory,hp=16,wave=10
+EAGLE_RESULT=1,155,victory,hp=23,wave=10
+EAGLE_RESULT=0,156,victory,hp=17,wave=10
+EAGLE_RESULT=1,156,victory,hp=22,wave=10
+EAGLE_RESULT=0,157,victory,hp=17,wave=10
+EAGLE_RESULT=1,157,victory,hp=22,wave=10
+EAGLE_RESULT=0,158,victory,hp=16,wave=10
+EAGLE_RESULT=1,158,victory,hp=26,wave=10
+EAGLE_RESULT=0,159,victory,hp=18,wave=10
+EAGLE_RESULT=1,159,victory,hp=22,wave=10
+EAGLE_RESULT=0,160,victory,hp=17,wave=10
+EAGLE_RESULT=1,160,victory,hp=23,wave=10
+EAGLE_CHAPTER_TESTS checks=5786 failures=0

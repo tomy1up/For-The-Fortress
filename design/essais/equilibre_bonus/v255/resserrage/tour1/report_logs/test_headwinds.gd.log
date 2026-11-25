@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+HEADWINDS_TESTS checks=2660 failures=3
+ERROR: Victoire avec les ressources et talents normalement accessibles (mission 34, faction 1)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_headwinds.gd:16)
+       [1] run_checks (res://tests/test_headwinds.gd:120)
+ERROR: Crédit unique de première victoire
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_headwinds.gd:16)
+       [1] run_checks (res://tests/test_headwinds.gd:131)
+ERROR: Points de talents acquis selon la courbe d'XP de la faction
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_headwinds.gd:16)
+       [1] run_checks (res://tests/test_headwinds.gd:132)

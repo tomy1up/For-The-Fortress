@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+MINE_RESULT=0,121,victory,hp=15,wave=10
+MINE_RESULT=1,121,victory,hp=23,wave=10
+MINE_RESULT=0,122,victory,hp=15,wave=10
+MINE_RESULT=1,122,victory,hp=25,wave=10
+MINE_RESULT=0,123,victory,hp=10,wave=10
+MINE_RESULT=1,123,victory,hp=23,wave=10
+MINE_RESULT=0,124,victory,hp=13,wave=10
+MINE_RESULT=1,124,victory,hp=19,wave=10
+MINE_RESULT=0,125,victory,hp=16,wave=10
+MINE_RESULT=1,125,victory,hp=20,wave=10
+MINE_RESULT=0,126,victory,hp=16,wave=10
+MINE_RESULT=1,126,victory,hp=24,wave=10
+MINE_RESULT=0,127,victory,hp=16,wave=10
+MINE_RESULT=1,127,victory,hp=22,wave=10
+MINE_RESULT=0,128,victory,hp=16,wave=10
+MINE_RESULT=1,128,victory,hp=15,wave=10
+MINE_RESULT=0,129,victory,hp=12,wave=10
+MINE_RESULT=1,129,victory,hp=25,wave=10
+MINE_RESULT=0,130,victory,hp=11,wave=10
+MINE_RESULT=1,130,victory,hp=23,wave=10
+MINE_CHAPTER_TESTS checks=5024 failures=0

@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+GARRISON_RESULT=0,91,victory,hp=14,wave=10
+GARRISON_RESULT=1,91,victory,hp=13,wave=10
+GARRISON_RESULT=0,92,victory,hp=16,wave=10
+GARRISON_RESULT=1,92,victory,hp=23,wave=10
+GARRISON_RESULT=0,93,victory,hp=12,wave=10
+GARRISON_RESULT=1,93,victory,hp=15,wave=10
+GARRISON_RESULT=0,94,victory,hp=13,wave=10
+GARRISON_RESULT=1,94,victory,hp=14,wave=10
+GARRISON_RESULT=0,95,victory,hp=4,wave=10
+GARRISON_RESULT=1,95,victory,hp=23,wave=10
+GARRISON_RESULT=0,96,victory,hp=13,wave=10
+GARRISON_RESULT=1,96,victory,hp=19,wave=10
+GARRISON_RESULT=0,97,victory,hp=13,wave=10
+GARRISON_RESULT=1,97,victory,hp=14,wave=10
+GARRISON_RESULT=0,98,victory,hp=16,wave=10
+GARRISON_RESULT=1,98,victory,hp=16,wave=10
+GARRISON_RESULT=0,99,victory,hp=16,wave=10
+GARRISON_RESULT=1,99,victory,hp=17,wave=10
+GARRISON_RESULT=0,100,victory,hp=16,wave=10
+GARRISON_RESULT=1,100,victory,hp=20,wave=10
+GARRISON_CHAPTER_TESTS checks=4474 failures=0

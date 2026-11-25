@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SKY_RESULT=0,141,victory,hp=16,wave=10
+SKY_RESULT=1,141,victory,hp=16,wave=10
+SKY_RESULT=0,142,victory,hp=11,wave=10
+SKY_RESULT=1,142,victory,hp=22,wave=10
+SKY_RESULT=0,143,victory,hp=17,wave=10
+SKY_RESULT=1,143,victory,hp=22,wave=10
+SKY_RESULT=0,144,victory,hp=13,wave=10
+SKY_RESULT=1,144,victory,hp=24,wave=10
+SKY_RESULT=0,145,victory,hp=7,wave=10
+SKY_RESULT=1,145,victory,hp=21,wave=10
+SKY_RESULT=0,146,victory,hp=12,wave=10
+SKY_RESULT=1,146,victory,hp=23,wave=10
+SKY_RESULT=0,147,victory,hp=12,wave=10
+SKY_RESULT=1,147,victory,hp=21,wave=10
+SKY_RESULT=0,148,victory,hp=16,wave=10
+SKY_RESULT=1,148,victory,hp=23,wave=10
+SKY_RESULT=0,149,victory,hp=14,wave=10
+SKY_RESULT=1,149,victory,hp=14,wave=10
+SKY_RESULT=0,150,victory,hp=8,wave=10
+SKY_RESULT=1,150,victory,hp=24,wave=10
+SKY_CHAPTER_TESTS checks=5580 failures=0

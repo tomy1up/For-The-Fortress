@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+REVENANT_RESULT=0,191,victory,hp=14,wave=10
+REVENANT_RESULT=1,191,victory,hp=19,wave=10
+REVENANT_RESULT=0,192,victory,hp=18,wave=10
+REVENANT_RESULT=1,192,victory,hp=20,wave=10
+REVENANT_RESULT=0,193,victory,hp=12,wave=10
+REVENANT_RESULT=1,193,victory,hp=20,wave=10
+REVENANT_RESULT=0,194,victory,hp=15,wave=10
+REVENANT_RESULT=1,194,victory,hp=20,wave=10
+REVENANT_RESULT=0,195,victory,hp=13,wave=10
+REVENANT_RESULT=1,195,victory,hp=19,wave=10
+REVENANT_RESULT=0,196,victory,hp=17,wave=10
+REVENANT_RESULT=1,196,victory,hp=22,wave=10
+REVENANT_RESULT=0,197,victory,hp=14,wave=10
+REVENANT_RESULT=1,197,victory,hp=20,wave=10
+REVENANT_RESULT=0,198,victory,hp=17,wave=10
+REVENANT_RESULT=1,198,victory,hp=24,wave=10
+REVENANT_RESULT=0,199,victory,hp=17,wave=10
+REVENANT_RESULT=1,199,victory,hp=21,wave=10
+REVENANT_RESULT=0,200,victory,hp=15,wave=10
+REVENANT_RESULT=1,200,victory,hp=18,wave=10
+REVENANT_CHAPTER_TESTS checks=6562 failures=0

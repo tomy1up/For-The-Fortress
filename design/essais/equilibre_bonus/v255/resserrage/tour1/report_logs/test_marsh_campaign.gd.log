@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+MARSH_SCENERY={"count":6,"kinds":["reeds","willow","ruin"]}
+MARSH_SCENERY={"count":2,"kinds":["reeds","ruin"]}
+MARSH_SCENERY={"count":4,"kinds":["reeds","willow","ruin"]}
+MARSH_SCENERY={"count":3,"kinds":["reeds","ruin"]}
+MARSH_SCENERY={"count":3,"kinds":["ruin","reeds"]}
+MARSH_SCENERY={"count":6,"kinds":["ruin","reeds"]}
+MARSH_SCENERY={"count":4,"kinds":["reeds","willow","ruin"]}
+MARSH_SCENERY={"count":3,"kinds":["ruin","reeds","willow"]}
+MARSH_SCENERY={"count":4,"kinds":["reeds","willow","ruin"]}
+MARSH_SCENERY={"count":4,"kinds":["ruin","reeds"]}
+MARSH_SCENERY={"count":2,"kinds":["reeds","ruin"]}
+MARSH_CAMPAIGN_TESTS checks=4448 failures=0

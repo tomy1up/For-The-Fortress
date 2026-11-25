@@ -75,12 +75,14 @@ func play(model: RefCounted, types: Array) -> void:
 				if not model.defenders[slot].is_empty(): model.upgrade(slot,0 if model.defenders[slot].level==3 else -1)
 		check(model.start(),"Vague de marais lancée par les règles normales");model.advance(10000)
 		if model.phase=="defeat": break
-		if model.phase=="bonus": model.choose_bonus(Model.reference_bonus(model.bonus_offer))
+		if model.phase == "bonus": Reference.choose_bonus(model) # choix avisé de la référence (v0.255)
 		if wave<10: model.prepare_next_wave()
 	var spent := 0
 	for action in model.action_history:
 		if action.kind in ["buy","upgrade"]: spent += int(action.cost)
-	check(model.gold==150+model.total_income-spent and model.gold>=0,"Recrutements et améliorations sont couverts par les revenus normaux")
+	var bonus_gold := 0 # or donné par un bonus (Trésor de guerre, Fortune royale) que le choix avisé peut retenir
+	for code in model.bonuses: bonus_gold += Model.bonus_gold_change(int(code))
+	check(model.gold==150+model.total_income+bonus_gold-spent and model.gold>=0,"Recrutements et améliorations sont couverts par les revenus normaux")
 
 func verify_terrain(number: int) -> void:
 	var definition: Dictionary = Model.Maps.for_id(Main.CampaignCatalogue.definition(number).map_id)

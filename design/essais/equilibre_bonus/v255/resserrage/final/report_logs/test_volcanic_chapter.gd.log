@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+VOLCANIC_RESULT=0,61,victory,hp=11,wave=10
+VOLCANIC_RESULT=1,61,victory,hp=16,wave=10
+VOLCANIC_RESULT=0,62,victory,hp=13,wave=10
+VOLCANIC_RESULT=1,62,victory,hp=16,wave=10
+VOLCANIC_RESULT=0,63,victory,hp=15,wave=10
+VOLCANIC_RESULT=1,63,victory,hp=13,wave=10
+VOLCANIC_RESULT=0,64,victory,hp=12,wave=10
+VOLCANIC_RESULT=1,64,victory,hp=18,wave=10
+VOLCANIC_RESULT=0,65,victory,hp=11,wave=10
+VOLCANIC_RESULT=1,65,victory,hp=9,wave=10
+VOLCANIC_RESULT=0,66,victory,hp=7,wave=10
+VOLCANIC_RESULT=1,66,victory,hp=9,wave=10
+VOLCANIC_RESULT=0,67,victory,hp=8,wave=10
+VOLCANIC_RESULT=1,67,victory,hp=12,wave=10
+VOLCANIC_RESULT=0,68,victory,hp=13,wave=10
+VOLCANIC_RESULT=1,68,victory,hp=3,wave=10
+VOLCANIC_RESULT=0,69,victory,hp=11,wave=10
+VOLCANIC_RESULT=1,69,victory,hp=12,wave=10
+VOLCANIC_RESULT=0,70,victory,hp=11,wave=10
+VOLCANIC_RESULT=1,70,victory,hp=9,wave=10
+VOLCANIC_CHAPTER_TESTS checks=3316 failures=0

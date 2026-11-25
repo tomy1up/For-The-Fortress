@@ -55,7 +55,8 @@ func run_checks() -> void:
 			check(model.start(),"Vague lancée normalement")
 			model.advance(10000)
 			if model.phase=="defeat": break
-			if model.phase=="bonus": model.choose_bonus(Main.Model.reference_bonus(model.bonus_offer))
+			if model.phase == "bonus" and faction == 1: Reference.choose_bonus(model) # Horde : armée de référence, choix avisé (v0.255)
+			elif model.phase == "bonus": model.choose_bonus(Main.Model.reference_bonus(model.bonus_offer)) # Alliance : stratégie historique du chapitre
 			if wave<10: model.prepare_next_wave()
 		print("SLATE_RESULT=",faction,",",mission_number,",",model.phase,",hp=",model.fortress_hp,",wave=",model.wave)
 		check(model.phase=="victory","Une politique gagnante dans chaque faction sans revenu ajouté")

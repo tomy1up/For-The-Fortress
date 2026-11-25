@@ -1,0 +1,44 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROCKFALL_RESULT=0,131,victory,hp=16,wave=10
+ROCKFALL_RESULT=1,131,victory,hp=24,wave=10
+ROCKFALL_RESULT=0,132,defeat,hp=0,wave=4
+ROCKFALL_RESULT=1,132,victory,hp=23,wave=10
+ROCKFALL_RESULT=0,133,victory,hp=16,wave=10
+ROCKFALL_RESULT=1,133,victory,hp=23,wave=10
+ROCKFALL_RESULT=0,134,victory,hp=11,wave=10
+ROCKFALL_RESULT=1,134,victory,hp=20,wave=10
+ROCKFALL_RESULT=0,135,victory,hp=13,wave=10
+ROCKFALL_RESULT=1,135,victory,hp=16,wave=10
+ROCKFALL_RESULT=0,136,victory,hp=7,wave=10
+ROCKFALL_RESULT=1,136,victory,hp=19,wave=10
+ROCKFALL_RESULT=0,137,victory,hp=15,wave=10
+ROCKFALL_RESULT=1,137,victory,hp=22,wave=10
+ROCKFALL_RESULT=0,138,victory,hp=10,wave=10
+ROCKFALL_RESULT=1,138,victory,hp=24,wave=10
+ROCKFALL_RESULT=0,139,victory,hp=5,wave=10
+ROCKFALL_RESULT=1,139,victory,hp=24,wave=10
+ROCKFALL_RESULT=0,140,victory,hp=15,wave=10
+ROCKFALL_RESULT=1,140,victory,hp=19,wave=10
+ROCKFALL_CHAPTER_TESTS checks=5740 failures=3
+ERROR: Mission 132 : une composition accessible gagne (faction 0)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_rockfall_chapter.gd:30)
+       [1] verify_mission (res://tests/test_rockfall_chapter.gd:109)
+       [2] run_checks (res://tests/test_rockfall_chapter.gd:42)
+       [3] verify_map (res://tests/test_rockfall_chapter.gd:68)
+ERROR: Mission 132 : première victoire créditée une seule fois (80 PO, aucune XP)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_rockfall_chapter.gd:30)
+       [1] verify_mission (res://tests/test_rockfall_chapter.gd:115)
+       [2] run_checks (res://tests/test_rockfall_chapter.gd:42)
+       [3] verify_map (res://tests/test_rockfall_chapter.gd:68)
+ERROR: Mission 132 : retour sur le chapitre avec la suivante disponible
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_rockfall_chapter.gd:30)
+       [1] verify_mission (res://tests/test_rockfall_chapter.gd:118)
+       [2] run_checks (res://tests/test_rockfall_chapter.gd:42)
+       [3] verify_map (res://tests/test_rockfall_chapter.gd:68)

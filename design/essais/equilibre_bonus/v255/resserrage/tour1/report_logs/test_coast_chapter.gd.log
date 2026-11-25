@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+COAST_RESULT=0,161,victory,hp=17,wave=10
+COAST_RESULT=1,161,victory,hp=28,wave=10
+COAST_RESULT=0,162,victory,hp=10,wave=10
+COAST_RESULT=1,162,victory,hp=28,wave=10
+COAST_RESULT=0,163,victory,hp=11,wave=10
+COAST_RESULT=1,163,victory,hp=27,wave=10
+COAST_RESULT=0,164,victory,hp=7,wave=10
+COAST_RESULT=1,164,victory,hp=23,wave=10
+COAST_RESULT=0,165,victory,hp=16,wave=10
+COAST_RESULT=1,165,victory,hp=28,wave=10
+COAST_RESULT=0,166,victory,hp=14,wave=10
+COAST_RESULT=1,166,victory,hp=23,wave=10
+COAST_RESULT=0,167,victory,hp=12,wave=10
+COAST_RESULT=1,167,victory,hp=20,wave=10
+COAST_RESULT=0,168,victory,hp=12,wave=10
+COAST_RESULT=1,168,victory,hp=28,wave=10
+COAST_RESULT=0,169,victory,hp=9,wave=10
+COAST_RESULT=1,169,victory,hp=29,wave=10
+COAST_RESULT=0,170,victory,hp=15,wave=10
+COAST_RESULT=1,170,victory,hp=23,wave=10
+COAST_CHAPTER_TESTS checks=5920 failures=0

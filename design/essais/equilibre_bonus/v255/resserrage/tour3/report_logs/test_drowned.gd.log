@@ -1,0 +1,5 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+DROWNED_RESULT=0,victory,hp=3,wave=10
+DROWNED_RESULT=1,victory,hp=17,wave=10
+DROWNED_TESTS checks=267 failures=0

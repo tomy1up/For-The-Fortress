@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SLATE_RESULT=0,21,victory,hp=2,wave=10
+SLATE_RESULT=1,21,victory,hp=7,wave=10
+SLATE_RESULT=0,22,victory,hp=7,wave=10
+SLATE_RESULT=1,22,victory,hp=13,wave=10
+SLATE_RESULT=0,23,victory,hp=5,wave=10
+SLATE_RESULT=1,23,victory,hp=3,wave=10
+SLATE_RESULT=0,24,victory,hp=1,wave=10
+SLATE_RESULT=1,24,victory,hp=13,wave=10
+SLATE_RESULT=0,25,victory,hp=16,wave=10
+SLATE_RESULT=1,25,victory,hp=16,wave=10
+SLATE_RESULT=0,26,victory,hp=10,wave=10
+SLATE_RESULT=1,26,victory,hp=6,wave=10
+SLATE_RESULT=0,27,victory,hp=6,wave=10
+SLATE_RESULT=1,27,victory,hp=6,wave=10
+SLATE_RESULT=0,28,victory,hp=9,wave=10
+SLATE_RESULT=1,28,victory,hp=5,wave=10
+SLATE_RESULT=0,29,victory,hp=12,wave=10
+SLATE_RESULT=1,29,victory,hp=10,wave=10
+SLATE_RESULT=0,30,victory,hp=3,wave=10
+SLATE_RESULT=1,30,victory,hp=12,wave=10
+SLATE_CAMPAIGN_TESTS checks=1110 failures=0

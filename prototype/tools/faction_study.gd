@@ -82,6 +82,7 @@ func _play_waves(m, first: int, slots: Array, types: Array, look: bool) -> void:
 		if m.phase == "bonus":
 			if look and OS.get_environment("POLICY") == "wise": _wise_pick(m,wave,slots,types)
 			elif look: _look_pick(m,wave,slots,types)
+			elif OS.get_environment("POLICY") == "refwise": Reference.choose_bonus(m) # v0.255 : choix avisé de l'armée de référence des suites
 			else: m.choose_bonus(_pick(m))
 		if wave < 10: m.prepare_next_wave()
 

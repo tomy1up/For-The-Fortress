@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERUPTION_RESULT=0,71,victory,hp=5,wave=10
+ERUPTION_RESULT=1,71,victory,hp=17,wave=10
+ERUPTION_RESULT=0,72,victory,hp=18,wave=10
+ERUPTION_RESULT=1,72,victory,hp=22,wave=10
+ERUPTION_RESULT=0,73,victory,hp=16,wave=10
+ERUPTION_RESULT=1,73,victory,hp=18,wave=10
+ERUPTION_RESULT=0,74,victory,hp=17,wave=10
+ERUPTION_RESULT=1,74,victory,hp=19,wave=10
+ERUPTION_RESULT=0,75,victory,hp=20,wave=10
+ERUPTION_RESULT=1,75,victory,hp=19,wave=10
+ERUPTION_RESULT=0,76,victory,hp=17,wave=10
+ERUPTION_RESULT=1,76,victory,hp=19,wave=10
+ERUPTION_RESULT=0,77,victory,hp=14,wave=10
+ERUPTION_RESULT=1,77,victory,hp=22,wave=10
+ERUPTION_RESULT=0,78,victory,hp=17,wave=10
+ERUPTION_RESULT=1,78,victory,hp=19,wave=10
+ERUPTION_RESULT=0,79,victory,hp=17,wave=10
+ERUPTION_RESULT=1,79,victory,hp=19,wave=10
+ERUPTION_RESULT=0,80,victory,hp=14,wave=10
+ERUPTION_RESULT=1,80,victory,hp=18,wave=10
+ERUPTION_CHAPTER_TESTS checks=3820 failures=0

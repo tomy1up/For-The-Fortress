@@ -430,7 +430,12 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 25 novembre 2026 — Claude Code (v0.254 publiée)
+## État au 25 novembre 2026 — Claude Code (v0.255 publiée)
+
+- **v0.255, armée de référence en joueur avisé** (décisions du porteur : « Joueur avisé d'abord », « Garantie des tests seulement », MAJ-109, fiche `design/Reference_avisee_v0255.md`) : `tests/reference_army.gd` (`BONUS_VALUES`, `REROLL_BELOW`, `best_bonus`, `choose_bonus`) branché dans les 18 suites de la référence, dans `test_slate_campaign.gd` pour la Horde et dans `test_headwinds.gd` quand la composition est celle de la référence. Contrôles de budget de `test_marsh_campaign.gd` et `test_headwinds.gd` : or des bonus compté. Nouvelle suite `test_reference_wise.gd` ; option `POLICY=refwise` de `tools/faction_study.gd`. 21 coefficients de la Horde remontés ; 386 réglages sur 398 dans la cible ; nouvelle base `design/essais/equilibre_bonus/v255/marges_campagne.json`.
+- Contrôles v0.255 : régression 150/150 (249 833 contrôles Godot, 17 tests Python), garde des 28 suites sans défaite, campagne remesurée, paquet 1 050 cas et 670 contrôles de sources sur bureau caché.
+
+### v0.254 (publiée)
 
 - **v0.254, bonus rééquilibrés** (décision du porteur : « Tout valider », MAJ-108, fiche `design/Bonus_reequilibres_v0254.md`) : `ValleyModel.rules_v254` (valeurs de R-02, R-20, R-21, R-23, R-24, R-25, R-37, R-39, R-40, R-60), `_trap_on_first_hit`, `_market_upgrade_factor` ; `Replay.rules_v254_for`. Textes des cartes dans `campaign_data.gd` et `main.gd`. Nouvelle suite `test_bonus_values_v254.gd` ; tests de bonus mis aux nouvelles valeurs. Recalage : 62 coefficients (dont 23 baissés par la garde de l'armée de référence), `BELOW_CURVE_MISSIONS` suit les coefficients. 379 réglages sur 398 dans la cible ; nouvelle base `design/essais/equilibre_bonus/v254/marges_campagne.json`.
 - Le poids du tirage baisse peu (écart entre tirages 78 et 77 points) : épiques et rares forts, et stratégie de référence sans relance.
