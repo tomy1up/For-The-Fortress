@@ -432,6 +432,7 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 ## État au 25 novembre 2026 — Claude Code (v0.256 publiée)
 
+- **Cadrage Héroïque et Mythique (GDD 0.95, jeu 0.256 inchangé)** : décisions du porteur du 25 novembre 2026 et propositions à confirmer dans `design/Cadrage_Heroique_Mythique_2026-11-25.md` (MAJ-111, O-014). Prochaine étape proposée : lot 1, socle des difficultés (progression par faction et difficulté, onglets, lancement en Héroïque, rapports).
 - **v0.256, derniers réglages par renforts** (demande du porteur : « Derniers réglages », MAJ-110, fiche `design/Missions_renforts_v0256.md`) : `CampaignCatalogue.WAVE_REINFORCEMENTS` passe à 23 réglages (Alliance 13, 40, 132 et Horde 34, 43 ajoutés) ; `test_wave_reinforcements.gd` mis à jour. 391 réglages sur 398 dans la cible ; nouvelle base `design/essais/equilibre_bonus/v256/marges_campagne.json`. Restent hors cible : missions 2 et 3 des deux factions, Alliance 33 (au-dessus), Alliance 67 et Horde 40 (39,9 %).
 - Contrôles v0.256 : régression 150/150 (249 877 contrôles Godot, 17 tests Python), garde des 28 suites sans défaite, paquet 1 050 cas et 670 contrôles de sources sur bureau caché.
 
