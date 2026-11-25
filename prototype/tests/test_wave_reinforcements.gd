@@ -121,8 +121,8 @@ func verify_catalogue() -> void:
 			for entry in scout: counted += int(entry.total)
 			check(counted == expected,"Faction %d, mission %d : la reconnaissance compte les renforts" % [faction,number])
 	check(Catalogue.wave_reinforcements(1,0).is_empty() and Catalogue.wave_reinforcements(1,2).is_empty(),"Pas de renfort hors du tableau ni pour une faction inconnue")
-	# Réglages de la v0.252 (fiche `design/Missions_renforts_v0252.md`) : dix de l'Alliance, huit de la Horde ; missions 2, 3 et Horde 23, 39 laissées sans renfort.
-	check(Catalogue.WAVE_REINFORCEMENTS[0].keys() == [16,23,33,39,72,79,105,173,178,180] and Catalogue.WAVE_REINFORCEMENTS[1].keys() == [11,22,38,41,44,79,131,175],"Les dix-huit réglages renforcés de la v0.252")
+	# Réglages de la v0.252 (fiche `design/Missions_renforts_v0252.md`), plus cinq en v0.256 (Alliance 13, 40, 132 ; Horde 34, 43 ; fiche `design/Missions_renforts_v0256.md`) ; missions 2 et 3 laissées sans renfort.
+	check(Catalogue.WAVE_REINFORCEMENTS[0].keys() == [13,16,23,33,39,40,72,79,105,132,173,178,180] and Catalogue.WAVE_REINFORCEMENTS[1].keys() == [11,22,34,38,41,43,44,79,131,175],"Les vingt-trois réglages renforcés (v0.252 et v0.256)")
 	for faction in [0,1]:
 		for number in [2,3]: check(Catalogue.wave_reinforcements(number,faction).is_empty(),"Faction %d, mission %d : la prise en main reste sans renfort" % [faction,number])
 		for number in Catalogue.WAVE_REINFORCEMENTS[faction]:

@@ -430,7 +430,12 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 25 novembre 2026 — Claude Code (v0.255 publiée)
+## État au 25 novembre 2026 — Claude Code (v0.256 publiée)
+
+- **v0.256, derniers réglages par renforts** (demande du porteur : « Derniers réglages », MAJ-110, fiche `design/Missions_renforts_v0256.md`) : `CampaignCatalogue.WAVE_REINFORCEMENTS` passe à 23 réglages (Alliance 13, 40, 132 et Horde 34, 43 ajoutés) ; `test_wave_reinforcements.gd` mis à jour. 391 réglages sur 398 dans la cible ; nouvelle base `design/essais/equilibre_bonus/v256/marges_campagne.json`. Restent hors cible : missions 2 et 3 des deux factions, Alliance 33 (au-dessus), Alliance 67 et Horde 40 (39,9 %).
+- Contrôles v0.256 : régression 150/150 (249 877 contrôles Godot, 17 tests Python), garde des 28 suites sans défaite, paquet 1 050 cas et 670 contrôles de sources sur bureau caché.
+
+### v0.255 (publiée)
 
 - **v0.255, armée de référence en joueur avisé** (décisions du porteur : « Joueur avisé d'abord », « Garantie des tests seulement », MAJ-109, fiche `design/Reference_avisee_v0255.md`) : `tests/reference_army.gd` (`BONUS_VALUES`, `REROLL_BELOW`, `best_bonus`, `choose_bonus`) branché dans les 18 suites de la référence, dans `test_slate_campaign.gd` pour la Horde et dans `test_headwinds.gd` quand la composition est celle de la référence. Contrôles de budget de `test_marsh_campaign.gd` et `test_headwinds.gd` : or des bonus compté. Nouvelle suite `test_reference_wise.gd` ; option `POLICY=refwise` de `tools/faction_study.gd`. 21 coefficients de la Horde remontés ; 386 réglages sur 398 dans la cible ; nouvelle base `design/essais/equilibre_bonus/v255/marges_campagne.json`.
 - Contrôles v0.255 : régression 150/150 (249 833 contrôles Godot, 17 tests Python), garde des 28 suites sans défaite, campagne remesurée, paquet 1 050 cas et 670 contrôles de sources sur bureau caché.

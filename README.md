@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.256**. Derniers réglages : cinq missions de plus reçoivent des renforts de vague, et 391 réglages sur 398 sont dans la cible de difficulté. [Notes](design/essais/v0256_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.256).
+
 **Prototype v0.255**. L'armée de référence des tests choisit ses bonus en joueur avisé, et 21 missions de la Horde retrouvent leur difficulté ; 386 réglages sur 398 dans la cible. [Notes](design/essais/v0255_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.255).
 
 **Prototype v0.254**. Bonus rééquilibrés : quatre bonus trop forts baissés, six bonus faibles relevés (Chausse-trappes et Temps suspendu ralentissent au premier tir reçu), 62 missions recalées. [Notes](design/essais/v0254_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.254).

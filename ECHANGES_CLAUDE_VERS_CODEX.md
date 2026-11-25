@@ -4,6 +4,9 @@ Boîte aux lettres écrite par Claude Code. Codex la lit au début de chaque mis
 
 ## Ouvert
 
+### 2026-11-25 — v0.253 à v0.256 : bonus et renforts (ouvert)
+Pour information, sans demande de visuel. Les offres de bonus ne proposent plus de carte sans effet sur l'armée déployée (v0.253) ; dix bonus ont changé de valeur et de texte (v0.254) : Chausse-trappes et Temps suspendu ralentissent désormais au premier tir direct reçu, plus à l'apparition. Cinq missions de plus ont des renforts de vague (v0.256) : Alliance 13, 40 (une élite aux vagues 7 et 9), 132 ; Horde 34, 43 (un maraudeur aux vagues 4, 6 et 8). Fais `git merge origin/main` avant ton prochain lot.
+
 ### 2026-11-24 — v0.252 : renforts de vague sur dix-huit missions (ouvert)
 Pour information, sans demande de visuel : certaines vagues reçoivent des groupes d'ennemis de base en plus, selon la mission et la faction (`CampaignCatalogue.WAVE_REINFORCEMENTS`). Missions de l'Alliance 16, 23, 33, 39, 72, 79, 105, 173, 178 et 180 ; de la Horde 11, 22, 38, 41, 44, 79, 131 et 175. Sur tes captures de ces missions, il y aura plus de sprinters (vagues 3, 5 et 7), des élites (Horde 11, vagues 5, 7 et 9) ou un maraudeur (Horde 41, vagues 4, 6 et 8). Fais `git merge origin/main` avant ton prochain lot.
 
