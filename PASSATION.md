@@ -430,7 +430,12 @@ Outil de contrôle : `--capture-timeline=<instants>` (dans `main.gd`, `_capture_
 
 **v0.217** : boutique à 20 unités (`Shop.RETIRED`, migration dans `meta_profile.gd::_accept_loaded`, rejeu des anciens rapports conservé), signal bref d'élimination (`valley_view.gd::_draw_eliminations`, `death_state` pour les quatre vues), garde vers la route (`road_facing`), visée inclinée du type 11 (`aim_pitch`, variantes `attack_up*|down*`). En attente de Codex : mort du Capitaine orc pour les trois autres diagonales (repli : fondu), gestes des autres unités, orientations des autres attaquants.
 
-## État au 25 novembre 2026 — Claude Code (v0.256 publiée)
+## État au 25 novembre 2026 — Claude Code (v0.257 publiée)
+
+- **v0.257, socle des difficultés** (lot 1 du cadrage, MAJ-112, fiche `design/Difficultes_socle_v0257.md`) : identifiants `heroic.NNN` / `mythic.NNN` (`CampaignCatalogue.difficulty_for`, `difficulty_open`, `difficulty_playable`, `reward_po_for`, `reward_xp_for`, `faction_hp_percent(…, difficulty)`, `HEROIC_HP_PERCENT` 130 provisoire, `HEROIC_PO_PERCENT` 150), `MetaProfile.campaign_status(faction, difficulty)` et `campaign_statuses`, onglets de `campaign_screen.gd`, `ValleyModel.difficulty` / `configure_difficulty`, champ `difficulty` du rapport (rejeu ≥ 0.257), `MAX_ENEMY_HP_PERCENT` 800, option de capture `--capture-difficulty=N`. Nouvelle suite `test_difficulties.gd`. Prochain lot proposé : champions mutants (liste des traits à soumettre au porteur d'abord).
+- Contrôles v0.257 : régression 151/151 (249 930 contrôles Godot, 17 tests Python), paquet 1 050 cas et 670 contrôles de sources sur bureau caché, captures des onglets et d'une partie héroïque inspectées (sources et jeu exporté). Les 17 suites qui vérifiaient la limite de 400 % de PV la vérifient à 800 %.
+
+### v0.256 (publiée)
 
 - **Cadrage Héroïque et Mythique (GDD 0.95, jeu 0.256 inchangé)** : décisions du porteur du 25 novembre 2026 et propositions à confirmer dans `design/Cadrage_Heroique_Mythique_2026-11-25.md` (MAJ-111, O-014). Prochaine étape proposée : lot 1, socle des difficultés (progression par faction et difficulté, onglets, lancement en Héroïque, rapports).
 - **v0.256, derniers réglages par renforts** (demande du porteur : « Derniers réglages », MAJ-110, fiche `design/Missions_renforts_v0256.md`) : `CampaignCatalogue.WAVE_REINFORCEMENTS` passe à 23 réglages (Alliance 13, 40, 132 et Horde 34, 43 ajoutés) ; `test_wave_reinforcements.gd` mis à jour. 391 réglages sur 398 dans la cible ; nouvelle base `design/essais/equilibre_bonus/v256/marges_campagne.json`. Restent hors cible : missions 2 et 3 des deux factions, Alliance 33 (au-dessus), Alliance 67 et Horde 40 (39,9 %).

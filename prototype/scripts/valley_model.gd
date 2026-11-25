@@ -27,6 +27,8 @@ const Attackers = preload("res://scripts/biome_attackers.gd")
 var wave_set_id: String = "ford"
 ## Renforts de la mission pour la faction jouée (v0.252), voir `Campaign.groups_for`.
 var wave_reinforcements: Array = []
+## Difficulté de campagne de la partie (v0.257) : 0 Normal, 1 Héroïque, 2 Mythique (`CampaignCatalogue.DIFFICULTY_NAMES`).
+var difficulty: int = 0
 var route_target_policy: String = "arrival_time"
 var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
 var explosion_events: Array[Dictionary] = [] # Explosions de réaction en chaîne (instant, position, rayon) : observation visuelle, aucun effet de jeu.
@@ -340,7 +342,7 @@ func _record_action(kind: String, details: Dictionary = {}) -> void:
 	action_history.append(entry)
 
 ## Limite des PV ennemis : 264 % jusqu'à la v0.231, 400 % depuis le rééquilibrage de la v0.232 (les anciens rapports restent valides).
-const MAX_ENEMY_HP_PERCENT := 400
+const MAX_ENEMY_HP_PERCENT := 800 # 400 avant la v0.257 : les PV de l'Héroïque dépassent les 370 % du Normal
 
 static func valid_enemy_hp_percent(value: Variant) -> bool:
 	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= MAX_ENEMY_HP_PERCENT
@@ -745,6 +747,10 @@ func configure_enemy_hp(value: Variant) -> bool:
 func configure_wave_set(value: Variant) -> bool:
 	if not Banks.valid_set(value) or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
 	wave_set_id = value;spawn_schedule = Campaign.schedule(wave,wave_set_id,wave_reinforcements);return true
+
+func configure_difficulty(value: Variant) -> bool:
+	if not (value is int or value is float) or float(value) != floorf(float(value)) or int(value) < 0 or int(value) > 2 or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
+	difficulty = int(value);return true
 
 func configure_wave_reinforcements(value: Variant) -> bool:
 	if not Campaign.valid_reinforcements(value) or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false

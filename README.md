@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.257**. Socle des difficultés : onglets Normal, Héroïque et Mythique ; l'Héroïque s'ouvre après les 100 premières missions du Normal et se joue sur les mêmes missions, plus dures. [Notes](design/essais/v0257_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.257).
+
 **Prototype v0.256**. Derniers réglages : cinq missions de plus reçoivent des renforts de vague, et 391 réglages sur 398 sont dans la cible de difficulté. [Notes](design/essais/v0256_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.256).
 
 **Prototype v0.255**. L'armée de référence des tests choisit ses bonus en joueur avisé, et 21 missions de la Horde retrouvent leur difficulté ; 386 réglages sur 398 dans la cible. [Notes](design/essais/v0255_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.255).

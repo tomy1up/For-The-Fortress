@@ -852,7 +852,10 @@ func _capture_campaign_menu(camp: int) -> void:
 	if variant == "blocked":
 		meta_profile.blocked = true;meta_profile.error = "Sauvegarde indisponible simulée pour le contrôle."
 	_open_campaign(camp,20 if variant == "future" else (mountain_number-1)/10+1 if mountain_preview else 1)
-	if mountain_preview: campaign_menu._select((mountain_number-1)%10)
+	# --capture-difficulty=1 : onglet de difficulté affiché (v0.257), avant un éventuel lancement « play ».
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--capture-difficulty="): campaign_menu._difficulty(clampi(argument.trim_prefix("--capture-difficulty=").to_int(),0,2))
+	if mountain_preview and campaign_menu.difficulty == 0: campaign_menu._select((mountain_number-1)%10)
 	if variant.begins_with("terrain") or variant == "locked2":
 		campaign_menu._select(clampi(int(variant.trim_prefix("terrain")),2,10)-1 if variant != "locked2" else 1)
 		campaign_menu.initial_focus().grab_focus()
@@ -1536,7 +1539,8 @@ func _build_run_summary(screen: Control) -> void:
 
 func _summary_mission_caption() -> String:
 	var number: int = CampaignCatalogue.number_for(mission_definition.get("id",""))
-	return "Mission %d · %s" % [number,model.map_definition.title] if number > 0 else model.map_definition.title
+	var level: String = " · "+CampaignCatalogue.DIFFICULTY_NAMES[model.difficulty] if model.difficulty > 0 else "" # difficulté de campagne (v0.257)
+	return ("Mission %d · %s" % [number,model.map_definition.title] if number > 0 else model.map_definition.title)+level
 
 func _set_summary_tab(index: int) -> void:
 	if not summary_open or index not in [0,1,2,3] or (index == 3 and not _run_finished()): return
@@ -2092,11 +2096,13 @@ func _meta_closed() -> void:
 func _launch_campaign_mission(id: String) -> void:
 	if not choosing_faction or not campaign_menu.visible or meta_menu.visible or meta_profile == null or meta_profile.blocked: return
 	var candidate: Dictionary = CampaignCatalogue.runtime(id)
-	if candidate.is_empty() or not CampaignCatalogue.unlocked(CampaignCatalogue.number_for(id),meta_profile.campaign_status(campaign_menu.faction)): return
+	var difficulty: int = CampaignCatalogue.difficulty_for(id)
+	if candidate.is_empty() or not CampaignCatalogue.difficulty_open(difficulty,meta_profile.campaign_statuses(campaign_menu.faction)) or not CampaignCatalogue.unlocked(CampaignCatalogue.number_for(id),meta_profile.campaign_status(campaign_menu.faction,difficulty)): return
 	var definition: Dictionary = Model.Maps.for_id(candidate.map_id)
 	if definition.is_empty(): return
 	var prepared = Model.new(true,definition)
-	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(CampaignCatalogue.faction_hp_percent(CampaignCatalogue.number_for(id),campaign_menu.faction)) or not prepared.configure_wave_set(candidate.get("wave_set_id","ford")): return
+	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(CampaignCatalogue.faction_hp_percent(CampaignCatalogue.number_for(id),campaign_menu.faction,difficulty)) or not prepared.configure_wave_set(candidate.get("wave_set_id","ford")): return
+	if not prepared.configure_difficulty(difficulty): return
 	if not prepared.configure_combat_affix(candidate.get("combat_affix",{})): return
 	if not prepared.configure_wave_reinforcements(CampaignCatalogue.wave_reinforcements(CampaignCatalogue.number_for(id),campaign_menu.faction)): return
 	mission_definition = candidate
@@ -2121,7 +2127,7 @@ func _choose_faction(choice: int, replacement: RefCounted = null) -> void:
 			_update_interface();return
 	if replacement != null:
 		model = replacement;map_view.model = model
-		map_caption.text = model.map_definition.title.to_upper()
+		map_caption.text = model.map_definition.title.to_upper()+(" · "+CampaignCatalogue.DIFFICULTY_NAMES[model.difficulty].to_upper() if model.difficulty > 0 else "")
 		get_window().title = "%s · v%s" % ["For the Fortress! — "+model.map_definition.title,ProjectSettings.get_setting("application/config/version")]
 	if meta_profile != null: model.meta_ranks = prepared_ranks
 	if model.select_faction(choice):

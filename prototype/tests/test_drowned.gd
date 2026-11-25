@@ -46,7 +46,7 @@ func verify_catalogue() -> void:
 	check(Model.Enemies.for_profile(19,0).is_empty(),"Un profil inconnu reste refusé")
 	var forecast: Dictionary = Model.wave_forecast(2,0,150,"marsh_drowned")
 	check(forecast.groups[0].type == 9 and forecast.groups[0].count == 1 and forecast.groups[0].name == "Gueule-de-Vase" and Model.wave_forecast(2,0,150,"inconnu").is_empty(),"La prévision de la vague 2 annonce un Noyé")
-	check(Model.valid_enemy_hp_percent(150) and Model.valid_enemy_hp_percent(264) and Model.valid_enemy_hp_percent(400) and not Model.valid_enemy_hp_percent(401),"Les PV ennemis montent jusqu'à 400 %")
+	check(Model.valid_enemy_hp_percent(150) and Model.valid_enemy_hp_percent(264) and Model.valid_enemy_hp_percent(800) and not Model.valid_enemy_hp_percent(801),"Les PV ennemis montent jusqu'à 800 % (400 % avant la v0.257)")
 
 func verify_flood_rules() -> void:
 	var stretches: Array = [{"route":"","from":2.0,"to":5.0},{"route":"","from":8.0,"to":9.0},{"route":"b","from":0.0,"to":4.0}]

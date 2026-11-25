@@ -280,9 +280,13 @@ func begin_mission(faction: int, mission_id: String, reward: int, wave_count: in
 	if not Missions.valid_id(mission_id): return -1
 	return begin_run(faction,mission_id,reward,wave_count,xp_reward)
 
-func campaign_status(faction: int) -> Dictionary:
-	if blocked or faction not in [0,1]: return {}
-	return Missions.campaign_status(data.banks[faction].mission_rewards)
+func campaign_status(faction: int, difficulty: int = 0) -> Dictionary:
+	if blocked or faction not in [0,1] or difficulty < 0 or difficulty > 2: return {}
+	return Missions.campaign_status(data.banks[faction].mission_rewards,difficulty)
+
+## États des trois difficultés d'une faction, pour savoir lesquelles sont ouvertes (`Catalogue.difficulty_open`).
+func campaign_statuses(faction: int) -> Array:
+	return [campaign_status(faction,0),campaign_status(faction,1),campaign_status(faction,2)]
 
 func credit_mission(run_id: int, faction: int, completed: int, victory: bool) -> bool:
 	if blocked or not data.run.has("mission_id") or run_id <= 0 or data.run.id != run_id or data.run.faction != faction: return false

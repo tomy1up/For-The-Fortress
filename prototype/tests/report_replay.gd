@@ -135,6 +135,8 @@ static func verify(data: Variant) -> Dictionary:
 		if not model.configure_route_target_policy(data.get("route_target_policy","remaining_distance")): return _fail("Règle de ciblage multitrajet invalide.")
 	elif data.has("route_target_policy"): return _fail("Règle multitrajet sans réseau de routes.")
 	if data.has("wave_set_id") and not model.configure_wave_set(data.wave_set_id): return _fail("Rencontres de mission invalides.")
+	if data.has("difficulty"): # Difficulté de campagne depuis la v0.257 seulement.
+		if _minor_version(str(data.get("game_version",""))) < 257 or not model.configure_difficulty(data.difficulty): return _fail("Difficulté de campagne invalide.")
 	if data.has("wave_reinforcements"): # Renforts de mission depuis la v0.252 seulement.
 		if _minor_version(str(data.get("game_version",""))) < 252 or not model.configure_wave_reinforcements(data.wave_reinforcements): return _fail("Renforts de mission invalides.")
 	if data.has("auxiliary_type") and not model.configure_auxiliary(data.auxiliary_type): return _fail("Alternative de boutique invalide.")

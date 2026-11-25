@@ -112,6 +112,10 @@ var faction: int = 0
 var chapter: int = 1
 var selected: int = 0
 var status: Dictionary = {}
+## Difficulté affichée (v0.257) et états des trois difficultés de la faction.
+var difficulty: int = 0
+var statuses: Array = []
+var difficulty_buttons: Array[Button] = []
 var overlay_blocked: bool = false
 var heading: Label
 var progress_label: Label
@@ -166,6 +170,8 @@ func panel(rect: Rect2) -> void:
 func _ready() -> void:
 	color = Color("080f0c");set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	heading = label_at(self,"Campagne",Rect2(32,20,830,40),28)
+	for index in range(Catalogue.DIFFICULTY_NAMES.size()):
+		difficulty_buttons.append(button_at(Catalogue.DIFFICULTY_NAMES[index],Rect2(470+index*112,24,104,32),_difficulty.bind(index)))
 	progress_label = label_at(self,"",Rect2(32,68,830,28),16,Color("aabeb0"))
 	balance = label_at(self,"",Rect2(900,28,348,28),16,Color("e5c779"))
 	points_label = label_at(self,"",Rect2(900,68,348,28),14,Color("aabeb0"))
@@ -211,7 +217,7 @@ func open(for_profile: RefCounted, for_faction: int, for_chapter: int = 0) -> vo
 	if scout.visible: scout.close()
 	profile = for_profile;faction = for_faction;chapter = clampi(for_chapter,1,Catalogue.CHAPTER_COUNT);selected = 0
 	if for_chapter == 0:
-		var number: int = Catalogue.suggested_mission(profile.campaign_status(faction) if profile != null else {})
+		var number: int = Catalogue.suggested_mission(profile.campaign_status(faction,difficulty) if profile != null else {})
 		chapter = (number-1)/Catalogue.CHAPTER_SIZE+1;selected = (number-1)%Catalogue.CHAPTER_SIZE
 	set_overlay_blocked(false);show();refresh();initial_focus().grab_focus()
 
@@ -228,7 +234,7 @@ func set_overlay_blocked(value: bool) -> void:
 	value = value or scout.visible
 	if overlay_blocked == value: return
 	overlay_blocked = value
-	for button in chapter_buttons+nodes+[start_button,talents_button,shop_button,scout_button,back_button]:
+	for button in chapter_buttons+nodes+difficulty_buttons+[start_button,talents_button,shop_button,scout_button,back_button]:
 		button.focus_mode = Control.FOCUS_NONE if value else Control.FOCUS_ALL
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -236,6 +242,21 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		scout._unhandled_key_input(event);return
 	if visible and not overlay_blocked and event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		close();get_viewport().set_input_as_handled()
+
+## Onglet de difficulté : la vue suit la mission conseillée de cette difficulté.
+func _difficulty(index: int) -> void:
+	if overlay_blocked or index < 0 or index >= Catalogue.DIFFICULTY_NAMES.size(): return
+	difficulty = index
+	var number: int = Catalogue.suggested_mission(profile.campaign_status(faction,difficulty) if profile != null else {})
+	chapter = (number-1)/Catalogue.CHAPTER_SIZE+1;selected = (number-1)%Catalogue.CHAPTER_SIZE
+	refresh();difficulty_buttons[index].grab_focus()
+
+## Difficulté ouverte pour la faction et déjà jouable (le Mythique est en préparation).
+func difficulty_ready() -> bool:
+	return not statuses.is_empty() and Catalogue.difficulty_open(difficulty,statuses) and Catalogue.difficulty_playable(difficulty)
+
+func _unlocked(number: int) -> bool:
+	return difficulty_ready() and Catalogue.unlocked(number,status)
 
 func _chapter(number: int) -> void:
 	if overlay_blocked or number < 1 or number > Catalogue.CHAPTER_COUNT: return
@@ -261,22 +282,32 @@ func _mission_state(number: int) -> String:
 	if not Catalogue.definition(number).available: return "future"
 	if status.is_empty(): return "unavailable"
 	if status.missions[number-1]: return "completed"
-	return "available" if Catalogue.unlocked(number,status) else "locked"
+	return "available" if _unlocked(number) else "locked"
 
 func refresh() -> void:
 	if profile != null:
 		var extra: Dictionary = profile.Shop.card(profile.data.banks[faction].shop_selected)
 		shop_note.text = "Trois types habituels + option boutique : "+("indisponible" if profile.blocked else "aucune" if extra.is_empty() else extra.name)+" · Choix fixé pendant la mission."
-	status = profile.campaign_status(faction) if profile != null else {}
+	statuses = profile.campaign_statuses(faction) if profile != null else []
+	status = statuses[difficulty] if not statuses.is_empty() else {}
 	var camp: String = "Alliance" if faction == 0 else "Horde"
 	heading.text = "Campagne · "+camp
+	for index in range(difficulty_buttons.size()):
+		var open: bool = not statuses.is_empty() and Catalogue.difficulty_open(index,statuses)
+		style(difficulty_buttons[index],Color("254434") if index == difficulty else Color("142f24") if open else Color("101a15"),Color("d8c481") if index == difficulty else Color("394e40"))
+		difficulty_buttons[index].add_theme_color_override("font_color",Color("e0dbbf") if open else Color("7d8c80"))
+		difficulty_buttons[index].tooltip_text = "Ouvert" if open else "Réussir les 100 premières missions en %s" % Catalogue.DIFFICULTY_NAMES[index-1]
 	if status.is_empty():
 		progress_label.text = "Progression à vérifier";balance.text = "PO et XP : indisponibles";points_label.text = ""
 		infinite_label.text = "Progression indisponible."
 		talents_button.text = "Consulter les talents"
 	else:
 		var bank: Dictionary = profile.data.banks[faction]
-		progress_label.text = "%d / %d missions réussies · %d missions dans l’échantillon" % [status.completed,Catalogue.TOTAL_MISSIONS,Catalogue.available_count()]
+		progress_label.text = "%s · %d / %d missions réussies" % [Catalogue.DIFFICULTY_NAMES[difficulty],status.completed,Catalogue.TOTAL_MISSIONS] if difficulty > 0 else "%d / %d missions réussies · %d missions dans l’échantillon" % [status.completed,Catalogue.TOTAL_MISSIONS,Catalogue.available_count()]
+		if not Catalogue.difficulty_open(difficulty,statuses):
+			progress_label.text = "%s verrouillé · %d / 100 premières missions réussies en %s" % [Catalogue.DIFFICULTY_NAMES[difficulty],int(statuses[difficulty-1].first_hundred),Catalogue.DIFFICULTY_NAMES[difficulty-1]]
+		elif not Catalogue.difficulty_playable(difficulty):
+			progress_label.text = "%s · en préparation (course par chapitre)" % Catalogue.DIFFICULTY_NAMES[difficulty]
 		balance.text = "PO %s : %d · XP : %d" % [camp,bank.resource,bank.xp]
 		var free: int = maxi(0,mini(int(bank.points),51)-profile.Talents.spent(bank.ranks))
 		points_label.text = "%d/51 points débloqués · %d à placer" % [bank.points,free]
@@ -303,13 +334,13 @@ func _refresh_nodes() -> void:
 		var definition: Dictionary = Catalogue.definition(number)
 		var done: bool = not status.is_empty() and status.missions[number-1]
 		var state: String = _mission_state(number)
-		var border: Color = Color("a7ca8b") if done else Color("d8c481") if Catalogue.unlocked(number,status) else Color("42574a")
+		var border: Color = Color("a7ca8b") if done else Color("d8c481") if _unlocked(number) else Color("42574a")
 		if state == "future": border = Color.TRANSPARENT
 		if index == selected: border = Color("e5cd91")
 		style(nodes[index],Color("14241c") if state == "future" else Color("254934") if done else Color("1b3027"),border,21)
 		nodes[index].add_theme_color_override("font_color",Color("aabeb0") if state == "future" else Color("e0dbbf"))
 		nodes[index].text = str(number);nodes[index].completed = done;nodes[index].locked = state == "locked";nodes[index].state = state;nodes[index].queue_redraw()
-		var description: String = {"future":"À venir","unavailable":"Progression indisponible","completed":"Déjà réussie","available":"Disponible","locked":"Terminez la mission précédente"}[state]
+		var description: String = {"future":"À venir","unavailable":"Progression indisponible","completed":"Déjà réussie","available":"Disponible","locked":"Terminez la mission précédente" if difficulty_ready() else "Difficulté verrouillée"}[state]
 		nodes[index].tooltip_text = "%s · %s" % [definition.title,description]
 		path_drawing.completed.append(done)
 	path_drawing.queue_redraw()
@@ -330,9 +361,13 @@ func _refresh_detail() -> void:
 		mission_detail.text = "Contenu à venir."
 		rewards.text = "Vagues et récompenses à définir."
 		start_button.text = "Mission à venir"
-	elif not Catalogue.unlocked(number,status):
+	elif not difficulty_ready():
+		mission_detail.text = ("Réussissez les 100 premières missions en %s avec cette faction." % Catalogue.DIFFICULTY_NAMES[difficulty-1]) if not Catalogue.difficulty_open(difficulty,statuses) else "Course par chapitre en préparation."
+		rewards.text = "%s\nPremière victoire uniquement." % Catalogue.reward_text(Catalogue.reward_po_for(number,difficulty),Catalogue.reward_xp_for(number,difficulty))
+		start_button.text = ("%s verrouillé" if not Catalogue.difficulty_open(difficulty,statuses) else "%s à venir") % Catalogue.DIFFICULTY_NAMES[difficulty]
+	elif not _unlocked(number):
 		mission_detail.text = "Terminez la mission %d avec cette faction." % (number-1)
-		rewards.text = "%s\nPremière victoire uniquement." % Catalogue.reward_text(int(definition.po),int(definition.xp))
+		rewards.text = "%s\nPremière victoire uniquement." % Catalogue.reward_text(Catalogue.reward_po_for(number,difficulty),Catalogue.reward_xp_for(number,difficulty))
 		start_button.text = "Mission verrouillée"
 	elif done:
 		mission_detail.text = "%d vagues · Mission déjà réussie" % definition.waves
@@ -340,58 +375,65 @@ func _refresh_detail() -> void:
 		start_button.text = "Rejouer sans nouveau gain"
 	else:
 		mission_detail.text = "%d vagues · Première victoire" % definition.waves
-		rewards.text = "%s\nUne seule fois pour cette faction." % Catalogue.reward_text(int(definition.po),int(definition.xp))
+		rewards.text = "%s\nUne seule fois pour cette faction%s." % [Catalogue.reward_text(Catalogue.reward_po_for(number,difficulty),Catalogue.reward_xp_for(number,difficulty)),(" en "+Catalogue.DIFFICULTY_NAMES[difficulty]) if difficulty > 0 else ""]
 		start_button.text = "Jouer la mission %d" % number
 	scout_button.disabled = not definition.available
-	start_button.disabled = not Catalogue.unlocked(number,status)
-	if definition.available and not status.is_empty(): mission_detail.text += "\nPV ennemis : %d %% · Barème d’essai" % Catalogue.faction_hp_percent(number,faction)
+	start_button.disabled = not _unlocked(number)
+	if definition.available and not status.is_empty(): mission_detail.text += "\nPV ennemis : %d %% · Barème d’essai" % Catalogue.faction_hp_percent(number,faction,difficulty)
 	mission_detail.tooltip_text = ""
 	if definition.get("combat_affix",{}).get("id","") == "seamist":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%
-%s : Brume marine · or réduit" % [definition.waves,Catalogue.faction_hp_percent(number,faction),affix_tag(number)]
+%s : Brume marine · or réduit" % [definition.waves,Catalogue.faction_hp_percent(number,faction,difficulty),affix_tag(number)]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, une brume marine réduit de %d %% l'or gagné par élimination pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.gold_percent),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.get("combat_affix",{}).get("id","") == "rockfall":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%
-%s : Éboulement · entrée bloquée" % [definition.waves,Catalogue.faction_hp_percent(number,faction),affix_tag(number)]
+%s : Éboulement · entrée bloquée" % [definition.waves,Catalogue.faction_hp_percent(number,faction,difficulty),affix_tag(number)]
 		mission_detail.tooltip_text = ("Toutes les %d s de combat, un éboulement bloque l'entrée pendant %d s : les ennemis attendent, puis sortent groupés. Il est signalé %d s avant. Réglage d’essai." if Maps.for_id(str(definition.map_id)).get("routes",[]).size() < 2 else "Toutes les %d s de combat, un éboulement bloque une entrée pendant %d s : les ennemis qui devaient y apparaître passent par l'entrée suivante. L'entrée touchée est signalée %d s avant. Réglage d’essai.") % [int(definition.combat_affix.interval),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.get("combat_affix",{}).get("id","") == "sandstorm":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\n%s : Tempête de sable · portée réduite" % [definition.waves,Catalogue.faction_hp_percent(number,faction),affix_tag(number)]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\n%s : Tempête de sable · portée réduite" % [definition.waves,Catalogue.faction_hp_percent(number,faction,difficulty),affix_tag(number)]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, une rafale réduit de %d %% la portée de tous les défenseurs pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.range_percent),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif definition.get("combat_affix",{}).get("id","") == "eruptions":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\n%s : Éruptions · défenseur désactivé" % [definition.waves,Catalogue.faction_hp_percent(number,faction),affix_tag(number)]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\n%s : Éruptions · défenseur désactivé" % [definition.waves,Catalogue.faction_hp_percent(number,faction,difficulty),affix_tag(number)]
 		mission_detail.tooltip_text = "Toutes les %d s de combat, un défenseur choisi au hasard est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Réglage d’essai." % [int(definition.combat_affix.interval),int(definition.combat_affix.duration),int(definition.combat_affix.warning)]
 	elif Campaign.BIOME_AFFIX_IDS.has(str(definition.get("combat_affix",{}).get("id",""))):
 		var affix_id: String = str(definition.combat_affix.id)
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\n%s : %s · %s" % [definition.waves,Catalogue.faction_hp_percent(number,faction),affix_tag(number),Campaign.BIOME_AFFIX_NAMES[affix_id],Campaign.BIOME_AFFIX_HINTS[affix_id]]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\n%s : %s · %s" % [definition.waves,Catalogue.faction_hp_percent(number,faction,difficulty),affix_tag(number),Campaign.BIOME_AFFIX_NAMES[affix_id],Campaign.BIOME_AFFIX_HINTS[affix_id]]
 		mission_detail.tooltip_text = Campaign.biome_affix_rule(definition.combat_affix)
 	elif definition.has("combat_affix"):
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nVents contraires · Cadence −10 %%" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nVents contraires · Cadence −10 %%" % [definition.waves,Catalogue.faction_hp_percent(number,faction,difficulty)]
 		mission_detail.tooltip_text = "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
 	var affix_rule: String = mission_detail.tooltip_text # Règle de l'affixe, reprise sous celle du nouvel attaquant au chapitre pair.
 	if Attackers.valid_set(definition.get("wave_set_id","")):
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\n%s" % [definition.waves,Catalogue.faction_hp_percent(number,faction),Attackers.SHEET_LINES[definition.wave_set_id]]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\n%s" % [definition.waves,Catalogue.faction_hp_percent(number,faction,difficulty),Attackers.SHEET_LINES[definition.wave_set_id]]
 		mission_detail.tooltip_text = "Essai : "+Attackers.rule_for_set(str(definition.wave_set_id)).replace(" Réglage d’essai.","")+" Valeurs provisoires."
 	if definition.get("wave_set_id","") == "ford_banks":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : tortue gardienne" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : tortue gardienne" % [definition.waves,Catalogue.faction_hp_percent(number,faction,difficulty)]
 		mission_detail.tooltip_text = "Essai : la tortue encaisse 25 % des dégâts des voisins proches, dans la limite de ses PV. Ne protège ni les autres tortues ni les boss. Mêmes tracés que le chapitre 1 ; nouvelles rencontres. Valeurs provisoires."
 	if definition.get("wave_set_id","") == "necro_revenants":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : revenant · se relève une fois" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : revenant · se relève une fois" % [definition.waves,Catalogue.faction_hp_percent(number,faction,difficulty)]
 		mission_detail.tooltip_text = "Essai : le revenant est un attaquant neutre (30 PV, vitesse 0,9) qui se relève une seule fois avec la moitié de ses PV maximum ; il apparaît à partir de la vague 4. Valeurs provisoires."
 	if definition.get("wave_set_id","") == "sky_eagles":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : aigle des cimes · groupes rapides" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : aigle des cimes · groupes rapides" % [definition.waves,Catalogue.faction_hp_percent(number,faction,difficulty)]
 		mission_detail.tooltip_text = "Essai : l'aigle des cimes est un attaquant neutre rapide et fragile (14 PV, vitesse 1,5) qui arrive en groupes serrés à partir de la vague 3. Valeurs provisoires."
 	if definition.get("wave_set_id","") == "citadel_garrison":
-		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Garnison · capitaine d'élite" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
+		mission_detail.text = "%d vagues · PV ennemis : %d %%\nNouveau : Garnison · capitaine d'élite" % [definition.waves,Catalogue.faction_hp_percent(number,faction,difficulty)]
 		mission_detail.tooltip_text = "Essai : la Garnison est l'unité d'élite de la citadelle (520 PV, vitesse 0,6, −4 PV de forteresse) ; elle accompagne les vagues 5, 7, 9 et 10. Valeurs provisoires."
 	if definition.get("wave_set_id","") == "marsh_drowned":
 		mission_detail.text = "%d vagues · PV ennemis : %d %%
-Nouveau : Gueule-de-Vase · eau régénérante" % [definition.waves,Catalogue.faction_hp_percent(number,faction)]
+Nouveau : Gueule-de-Vase · eau régénérante" % [definition.waves,Catalogue.faction_hp_percent(number,faction,difficulty)]
 		mission_detail.tooltip_text = "Essai : Gueule-de-Vase régénère %d %% de ses PV maximum par seconde dans les tronçons inondés de la carte, repérés en bleu sur le chemin. Valeurs provisoires." % roundi(Drowned.REGEN_PER_SECOND*100.0)
 	# Chapitre pair : le nouvel attaquant occupe la seconde ligne, l'affixe du biome rejoint la première.
 	if definition.has("wave_set_id") and Campaign.AFFIX_NAMES.has(str(definition.get("combat_affix",{}).get("id",""))):
 		var unit_line: String = mission_detail.text.split("\n")[-1]
-		mission_detail.text = "PV ennemis : %d %% · Affixe : %s\n%s" % [Catalogue.faction_hp_percent(number,faction),Campaign.AFFIX_NAMES[str(definition.combat_affix.id)],unit_line]
+		mission_detail.text = "PV ennemis : %d %% · Affixe : %s\n%s" % [Catalogue.faction_hp_percent(number,faction,difficulty),Campaign.AFFIX_NAMES[str(definition.combat_affix.id)],unit_line]
 		mission_detail.tooltip_text += "\n"+affix_rule
+	# Difficulté verrouillée ou en préparation (v0.257) : la condition d'ouverture passe avant le détail de la mission.
+	if not status.is_empty() and not Catalogue.difficulty_playable(difficulty):
+		mission_detail.text = "Course par chapitre : règles en préparation.";mission_detail.tooltip_text = ""
+		rewards.text = "Récompenses à définir."
+	elif not status.is_empty() and not Catalogue.difficulty_open(difficulty,statuses):
+		mission_detail.text = "Ouvert après 100 missions réussies en %s.\nPV ennemis : %d %% · Barème d’essai" % [Catalogue.DIFFICULTY_NAMES[difficulty-1],Catalogue.faction_hp_percent(number,faction,difficulty)]
+		mission_detail.tooltip_text = ""
 	if status.is_empty():
 		mission_detail.text = "La progression n’est pas disponible."
 		rewards.text = profile.error if profile != null and not profile.error.is_empty() else "Revenez au choix de faction pour vérifier votre progression."
@@ -399,8 +441,8 @@ Nouveau : Gueule-de-Vase · eau régénérante" % [definition.waves,Catalogue.fa
 
 func _launch() -> void:
 	if overlay_blocked or not visible or start_button.disabled or profile == null or profile.blocked: return
-	var id: String = Catalogue.id_for((chapter-1)*10+selected+1)
-	if Catalogue.runtime(id).is_empty() or not Catalogue.unlocked(Catalogue.number_for(id),profile.campaign_status(faction)): return
+	var id: String = Catalogue.id_for((chapter-1)*10+selected+1,difficulty)
+	if Catalogue.runtime(id).is_empty() or not _unlocked(Catalogue.number_for(id)): return
 	mission_requested.emit(id)
 
 func _talents() -> void:
@@ -411,7 +453,7 @@ func _shop() -> void:
 
 func _scout() -> void:
 	if overlay_blocked or not visible or scout_button.disabled: return
-	if scout.open((chapter-1)*10+selected+1,faction): set_overlay_blocked(true)
+	if scout.open((chapter-1)*10+selected+1,faction,difficulty): set_overlay_blocked(true)
 func _scout_closed() -> void:
 	set_overlay_blocked(false)
 	if visible: scout_button.grab_focus()

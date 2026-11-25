@@ -5,15 +5,53 @@ const CHAPTER_SIZE: int = 10
 const CHAPTER_COUNT: int = TOTAL_MISSIONS/CHAPTER_SIZE
 const INFINITE_REQUIREMENT: int = 100
 
-static func id_for(number: int) -> String:
-	return "campaign.%03d" % number if number >= 1 and number <= TOTAL_MISSIONS else ""
+## Difficultés de campagne (CAMP-020 ; cadrage du 25 novembre 2026, `design/Cadrage_Heroique_Mythique_2026-11-25.md`). Chaque difficulté a ses propres
+## identifiants de mission, donc ses propres réussites et récompenses dans le profil ; les identifiants « campaign.NNN » restent ceux du Normal.
+const NORMAL := 0
+const HEROIC := 1
+const MYTHIC := 2
+const DIFFICULTY_NAMES: Array[String] = ["Normal","Héroïque","Mythique"]
+const DIFFICULTY_PREFIXES: Array[String] = ["campaign","heroic","mythic"]
+## Héroïque, lot 1 (v0.257) : PV ennemis du Normal × 1,3 (réglage provisoire, recalibré au lot 5) ; PO de première victoire majorées de moitié, sans XP
+## (proposition de Claude Code à confirmer par le porteur). Le Mythique (course par chapitre) n'est pas encore jouable.
+const HEROIC_HP_PERCENT := 130
+const HEROIC_PO_PERCENT := 150
+const PLAYABLE_DIFFICULTIES: Array[int] = [NORMAL,HEROIC]
+
+static func id_for(number: int, difficulty: int = NORMAL) -> String:
+	if number < 1 or number > TOTAL_MISSIONS or difficulty < NORMAL or difficulty > MYTHIC: return ""
+	return "%s.%03d" % [DIFFICULTY_PREFIXES[difficulty],number]
+
+static func difficulty_for(id: Variant) -> int:
+	if not id is String: return -1
+	for difficulty in range(DIFFICULTY_PREFIXES.size()):
+		var prefix: String = DIFFICULTY_PREFIXES[difficulty]+"."
+		if id.begins_with(prefix):
+			var suffix: String = id.trim_prefix(prefix)
+			if suffix.is_valid_int() and id_for(int(suffix),difficulty) == id: return difficulty
+	return -1
 
 static func number_for(id: Variant) -> int:
-	if not id is String or not id.begins_with("campaign."): return 0
-	var suffix: String = id.trim_prefix("campaign.")
-	if not suffix.is_valid_int(): return 0
-	var number: int = int(suffix)
-	return number if id_for(number) == id else 0
+	var difficulty: int = difficulty_for(id)
+	return int(str(id).trim_prefix(DIFFICULTY_PREFIXES[difficulty]+".")) if difficulty >= 0 else 0
+
+## Une difficulté est ouverte pour une faction quand les 100 premières missions de la précédente sont réussies (CAMP-020). `statuses[d]` : état de la difficulté d.
+static func difficulty_open(difficulty: int, statuses: Array) -> bool:
+	if difficulty == NORMAL: return true
+	if difficulty < NORMAL or difficulty > MYTHIC or statuses.size() < difficulty: return false
+	var previous: Dictionary = statuses[difficulty-1]
+	return not previous.is_empty() and int(previous.get("first_hundred",0)) >= INFINITE_REQUIREMENT
+
+static func difficulty_playable(difficulty: int) -> bool:
+	return difficulty in PLAYABLE_DIFFICULTIES
+
+## PO de première victoire d'une mission dans une difficulté ; l'XP n'existe qu'en Normal.
+static func reward_po_for(number: int, difficulty: int = NORMAL) -> int:
+	var po: int = int(definition(number).get("po",0))
+	return int(round(po*HEROIC_PO_PERCENT/100.0)) if difficulty == HEROIC else po
+
+static func reward_xp_for(number: int, difficulty: int = NORMAL) -> int:
+	return int(definition(number).get("xp",0)) if difficulty == NORMAL else 0
 
 static func definition(number: int) -> Dictionary:
 	if number < 1 or number > TOTAL_MISSIONS: return {}
@@ -177,7 +215,8 @@ static func rebalance_percent(number: int, faction: int) -> float:
 	return float(REBALANCE_PERCENT[faction][clampi(number,1,REBALANCE_PERCENT[faction].size())-1])
 
 ## PV ennemis effectivement joués par une faction : `hp_percent` de la mission, réduit de 10 % pour la Horde à partir de la mission 150, puis multiplié par le coefficient de rééquilibrage.
-static func faction_hp_percent(number: int, faction: int) -> int:
+static func faction_hp_percent(number: int, faction: int, difficulty: int = NORMAL) -> int:
+	if difficulty == HEROIC: return int(round(faction_hp_percent(number,faction)*HEROIC_HP_PERCENT/100.0))
 	var base: float = float(definition(number).get("hp_percent",hp_percent_for(number)))
 	if faction == 1 and number == HORDE_FINALE_MISSION: base = float(int(round(base*HORDE_FINALE_FACTOR)))
 	elif faction == 1 and number >= HORDE_HP_FROM: base = float(int(round(base*HORDE_HP_FACTOR)))
@@ -199,9 +238,12 @@ static func reward_text(po: int, xp: int, signed: bool = true) -> String:
 	return "%s%d PO · %s%d XP" % [plus,po,plus,xp] if xp > 0 else "%s%d PO" % [plus,po]
 
 static func runtime(id: String) -> Dictionary:
+	var difficulty: int = difficulty_for(id)
 	var data: Dictionary = definition(number_for(id))
-	if data.is_empty() or not data.available: return {}
-	var result: Dictionary = {"id":data.id,"po":data.po,"xp":data.xp,"waves":data.waves,"map_id":data.map_id,"hp_percent":data.hp_percent}
+	if data.is_empty() or not data.available or not difficulty_playable(difficulty): return {}
+	var number: int = number_for(id)
+	var result: Dictionary = {"id":id,"po":reward_po_for(number,difficulty),"xp":reward_xp_for(number,difficulty),"waves":data.waves,"map_id":data.map_id,"hp_percent":data.hp_percent}
+	if difficulty != NORMAL: result.difficulty = difficulty
 	if data.has("wave_set_id"): result.wave_set_id = data.wave_set_id
 	if data.has("combat_affix"): result.combat_affix = data.combat_affix.duplicate(true)
 	return result

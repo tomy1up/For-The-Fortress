@@ -35,7 +35,7 @@ func run_checks() -> void:
 		var definition: Dictionary = Catalogue.definition(number)
 		check(definition.available and definition.map_id == EXPECTED[number].map and definition.wave_set_id == "marsh_drowned" and definition.hp_percent == 99+number and definition.po == 60 and definition.xp == 100 and definition.waves == 10 and definition.get("combat_affix",{}).get("id","") == "miasma","Mission %d : carte, rencontres du Noyé, PV et gains habituels" % number)
 		await verify_map(number)
-	check(Model.valid_enemy_hp_percent(159) and Model.valid_enemy_hp_percent(264) and Model.valid_enemy_hp_percent(400) and not Model.valid_enemy_hp_percent(401),"Les PV ennemis montent jusqu'à 400 %")
+	check(Model.valid_enemy_hp_percent(159) and Model.valid_enemy_hp_percent(264) and Model.valid_enemy_hp_percent(800) and not Model.valid_enemy_hp_percent(801),"Les PV ennemis montent jusqu'à 800 % (400 % avant la v0.257)")
 	for number in range(52,61):
 		for camp in range(2): await verify_mission(camp,number)
 	print("DROWNED_CHAPTER_TESTS checks=%d failures=%d" % [checks,failures])

@@ -14,8 +14,9 @@ var cards: Array[Panel]=[]
 var entries: Array[Dictionary]=[]
 var mission_number: int=0
 var faction: int=-1
+var difficulty: int=0 # difficulté de campagne affichée (v0.257)
 
-static func encounter_data(number: int,camp: int) -> Array[Dictionary]:
+static func encounter_data(number: int,camp: int,difficulty: int=0) -> Array[Dictionary]:
 	var definition: Dictionary=Catalogue.definition(number)
 	var result: Array[Dictionary]=[]
 	if camp not in [0,1] or definition.is_empty() or not definition.available: return result
@@ -28,7 +29,7 @@ static func encounter_data(number: int,camp: int) -> Array[Dictionary]:
 				existing.last_wave = wave
 				existing.wave_counts[wave] = existing.wave_counts.get(wave, 0)+1
 				continue
-			var enemy: Dictionary=Model.make_enemy(0,spawn.type,0,camp,Catalogue.faction_hp_percent(number,camp)) # PV réellement joués par cette faction (réduction de la Horde et rééquilibrage v0.232)
+			var enemy: Dictionary=Model.make_enemy(0,spawn.type,0,camp,Catalogue.faction_hp_percent(number,camp,difficulty)) # PV réellement joués par cette faction (réduction de la Horde et rééquilibrage v0.232)
 			enemy.first_wave = wave
 			enemy.last_wave = wave
 			enemy.total = 1
@@ -69,13 +70,13 @@ func _ready() -> void:
 		style.set_border_width_all(2 if state=="focus" else 1);style.set_corner_radius_all(6);close_button.add_theme_stylebox_override(state,style)
 	close_button.add_theme_font_size_override("font_size",16);close_button.pressed.connect(close);panel.add_child(close_button)
 	hide()
-func open(number: int,camp: int) -> bool:
-	var data: Array[Dictionary]=encounter_data(number,camp)
+func open(number: int,camp: int,for_difficulty: int=0) -> bool:
+	var data: Array[Dictionary]=encounter_data(number,camp,for_difficulty)
 	if data.is_empty():
 		close();return false
-	mission_number=number;faction=camp;entries=data
+	mission_number=number;faction=camp;difficulty=for_difficulty;entries=data
 	var definition: Dictionary=Catalogue.definition(number)
-	heading.text="Rencontres · Mission %d · %s"%[number,"Alliance" if camp==0 else "Horde"]
+	heading.text="Rencontres · Mission %d · %s"%[number,"Alliance" if camp==0 else "Horde"]+(" · "+Catalogue.DIFFICULTY_NAMES[for_difficulty] if for_difficulty>0 else "")
 	wave_filter.clear()
 	wave_filter.add_item("Toute la mission")
 	for wave in range(1, definition.waves+1):
@@ -107,7 +108,7 @@ func _show_wave(wave: int) -> void:
 			total += count
 			visible_entries.append(enemy)
 	var scope := "%d vagues" % definition.waves if wave == 0 else "Vague %d sur %d" % [wave, definition.waves]
-	subtitle.text="%s · %s · %d ennemis prévus · PV : %d %%"%[definition.title,scope,total,Catalogue.faction_hp_percent(mission_number,faction)]
+	subtitle.text="%s · %s · %d ennemis prévus · PV : %d %%"%[definition.title,scope,total,Catalogue.faction_hp_percent(mission_number,faction,difficulty)]
 	for index in range(cards.size()):
 		var card: Panel=cards[index];card.visible=index<visible_entries.size()
 		if not card.visible: continue

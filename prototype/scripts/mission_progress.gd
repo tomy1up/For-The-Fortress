@@ -2,12 +2,13 @@ extends RefCounted
 ## Calcul sans profil ni effet de jeu. Aucun barème de campagne définitif.
 const Catalogue = preload("res://scripts/campaign_catalogue.gd")
 
-static func campaign_status(receipts: Dictionary) -> Dictionary:
+## État d'une difficulté (Normal par défaut) : chaque difficulté lit les reçus de ses propres identifiants de mission.
+static func campaign_status(receipts: Dictionary, difficulty: int = Catalogue.NORMAL) -> Dictionary:
 	var missions: Array[bool] = []
 	var chapters: Array[int] = [];chapters.resize(Catalogue.CHAPTER_COUNT);chapters.fill(0)
 	var total: int = 0;var first_hundred: int = 0;var next_unwon: int = 0
 	for number in range(1,Catalogue.TOTAL_MISSIONS+1):
-		var completed: bool = _valid_receipt(receipts.get(Catalogue.id_for(number)))
+		var completed: bool = _valid_receipt(receipts.get(Catalogue.id_for(number,difficulty)))
 		missions.append(completed)
 		if completed:
 			total += 1;chapters[(number-1)/Catalogue.CHAPTER_SIZE] += 1

@@ -69,7 +69,7 @@
 
 | Lot | Contenu | Dépend de Codex |
 | --- | --- | --- |
-| 1. Socle des difficultés | Progression par faction et par difficulté (migration des profils), onglets dans l'écran de campagne, lancement d'une mission en Héroïque, rapports et rejeu qui portent la difficulté, récompense | Non |
+| 1. Socle des difficultés | **Livré en v0.257** (`Difficultes_socle_v0257.md`) : progression par faction et par difficulté (identifiants propres, sans migration), onglets, Héroïque jouable, rapports et rejeu, récompense | Non |
 | 2. Champions mutants | Catalogue de traits (après validation de la liste), introduction par chapitre, aura et icône dessinées par le code | Non (icônes plus tard) |
 | 3. Cumul des nouveautés | Affixes et attaquants des biomes précédents dans les missions héroïques | Non |
 | 4. Bonus héroïques | Liste validée par le porteur, introduction par chapitre | Non |
