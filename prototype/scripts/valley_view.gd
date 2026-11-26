@@ -1748,6 +1748,7 @@ func _draw() -> void:
 			else:
 				if Model.enemy_is_slowed(actor.enemy): draw_texture_rect(FX_SLOW,Rect2(actor.point+Vector2(-19.0,-7.0),Vector2(38,19)),false)
 				var feedback: Array[Dictionary] = recent_enemy_damage(actor.enemy.id)
+				_draw_champion_aura(actor.point,actor.enemy)
 				_draw_pillager(actor.point, actor.enemy,enemy_hit_strength(feedback),enemy_reaction_pose(actor.enemy,feedback,model.elapsed))
 				if actor.enemy.has("boost_until"): _draw_speed_lines(actor.point,actor.enemy)
 				var ratio: float = clampf(visual_hp(actor.enemy) / actor.enemy.get("max_hp", 40.0), 0.0, 1.0)
@@ -1756,6 +1757,7 @@ func _draw() -> void:
 				draw_rect(Rect2(bar_position, Vector2(24 * ratio, 4)), Color("edcc80") if actor.enemy.id == inspected_enemy_id else Color("a1ba75"))
 				_draw_enemy_badges(actor.enemy,bar_position)
 				_draw_enemy_shield(actor.point,actor.enemy,bar_position)
+				_draw_champion_glyphs(actor.enemy,bar_position)
 				for event in feedback:
 					if str(event.get("component","")) == "curse" and int(event.get("source_type",-1)) in FIRE_CURSE_TYPES:
 						_draw_burn_tick(actor.point,actor.enemy,float(event.hp_before)-float(event.hp_after),event_age(event))
@@ -2249,7 +2251,8 @@ func _draw_fortress(anchor: Vector2) -> void:
 	draw_string(font,center+Vector2(-width/2,34),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("ed9989") if condition >= 2 else Color("d7bd83") if condition == 1 else INK)
 
 static func _enemy_scale(enemy: Dictionary) -> float:
-	return [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7, 1.4, 1.1, 1.6, 0.8, 1.1, 1.05, 1.45, 0.55, 1.0, 0.85, 1.0][enemy.get("type", 1)]
+	var scale: float = [0.7, 1.0, 0.85, 1.2, 1.0, 1.5, 1.3, 1.7, 1.4, 1.1, 1.6, 0.8, 1.1, 1.05, 1.45, 0.55, 1.0, 0.85, 1.0][enemy.get("type", 1)]
+	return scale*Model.Champions.COLOSSUS_SCALE if Model.Champions.has_trait(enemy,"colossus") else scale
 
 static func enemy_color(type: int) -> Color:
 	return [Color("789263"), Color("b45f4c"), Color("c6a16a"), Color("9e6659"), Color("967556"), Color("838e85"), Color("9777a6"), Color("aca384"),Color("91ab72"),Color("5f9aa0"),Color("b8a05c"),Color("8fb4d8"),Color("8a7f9c"),Color("c9cfe0"),Color("d9683a"),Color("f09a35"),Color("e3c25c"),Color("7a6d80"),Color("d85c52")][type]
@@ -2795,8 +2798,36 @@ func _draw_enemy_shield(point: Vector2, enemy: Dictionary, bar_position: Vector2
 	if shield <= 0.0: return
 	var size: float = _enemy_scale(enemy)
 	draw_arc(point+Vector2(0,-16.0*size),16.0*size,0.0,TAU,28,Color(0.98,0.84,0.46,0.75),1.6,true)
-	var full: float = float(enemy.max_hp)*float(model.combat_affix.get("shield_percent",10))/100.0
+	var full: float = float(enemy.max_hp)*(Model.Champions.SHIELD_FRACTION if Model.Champions.has_trait(enemy,"shield") else float(model.combat_affix.get("shield_percent",10))/100.0)
 	draw_rect(Rect2(bar_position+Vector2(0,-3),Vector2(24.0*clampf(shield/full,0.0,1.0),2)),Color(0.98,0.84,0.46))
+
+## Champion mutant (v0.258) : aura au sol, couleur du premier trait, liseré du second. Dessin provisoire en attendant les icônes de Codex.
+func _draw_champion_aura(point: Vector2, enemy: Dictionary) -> void:
+	if not enemy.get("champion",false): return
+	var traits: Array = enemy.get("traits",[])
+	if traits.is_empty(): return
+	var size: float = _enemy_scale(enemy)
+	var color: Color = Model.Champions.COLORS.get(traits[0],Color.WHITE)
+	var pulse: float = 0.5+0.5*sin(model.elapsed*4.0)
+	var ring := PackedVector2Array()
+	for index in range(24):
+		var angle: float = TAU*index/24.0
+		ring.append(point+Vector2(cos(angle)*17.0,sin(angle)*7.0)*size)
+	draw_colored_polygon(ring,Color(color,0.22+0.12*pulse))
+	ring.append(ring[0])
+	draw_polyline(ring,Model.Champions.COLORS.get(traits[-1],color),1.6,true)
+
+## Icônes des traits, à gauche de la jauge : pastille de la couleur du trait et sa lettre.
+func _draw_champion_glyphs(enemy: Dictionary, bar_position: Vector2) -> void:
+	if not enemy.get("champion",false): return
+	var traits: Array = enemy.get("traits",[])
+	for index in range(traits.size()):
+		var center: Vector2 = bar_position+Vector2(-7.0-11.0*index,2.0)
+		draw_circle(center,5.5,Color(0.08,0.06,0.05,0.9),true,-1,true)
+		draw_circle(center,4.5,Model.Champions.COLORS.get(traits[index],Color.WHITE),true,-1,true)
+		var glyph: String = Model.Champions.GLYPHS.get(traits[index],"?")
+		var width: float = font.get_string_size(glyph,HORIZONTAL_ALIGNMENT_LEFT,-1,8).x
+		draw_string(font,center+Vector2(-width/2.0,3.0),glyph,HORIZONTAL_ALIGNMENT_LEFT,-1,8,Color(0.08,0.06,0.05))
 
 func _draw_seamist() -> void:
 	if model == null or not model.mist_enabled(): return

@@ -102,6 +102,7 @@ static func build(model: RefCounted) -> Dictionary:
 	if not model.combat_affix.is_empty(): report.combat_affix = model.combat_affix.duplicate(true)
 	if not model.wave_reinforcements.is_empty(): report.wave_reinforcements = model.wave_reinforcements.duplicate(true)
 	if model.difficulty != 0: report.difficulty = model.difficulty
+	if model.champion_chapter > 0: report.champion_chapter = model.champion_chapter
 	return report
 
 static func markdown(report: Dictionary) -> String:

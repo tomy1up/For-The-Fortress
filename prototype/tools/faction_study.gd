@@ -44,10 +44,15 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 		var before: float = float(m.enemy_hp_percent)*100.0/Catalogue.rebalance_percent(mission,played_faction)
 		m.enemy_hp_percent = int(round(before*float(OS.get_environment("HPMUL"))/100.0))
 	m.configure_combat_affix(catalogue.get("combat_affix",{}))
+	# HEROIC=hp : PV de l'Héroïque seuls ; HEROIC=1 : PV et champions mutants du chapitre (v0.258).
+	if OS.get_environment("HEROIC") in ["1","hp"]:
+		m.enemy_hp_percent = Catalogue.faction_hp_percent(mission,faction,1)
+		m.configure_difficulty(1)
+		if OS.get_environment("HEROIC") == "1": m.configure_champions((mission-1)/Catalogue.CHAPTER_SIZE+1)
 	# REINFORCE="vague:type:quantité:intervalle;…" : renforts essayés à la place de ceux du catalogue (calibrage v0.252) ; REINFORCE=none : aucun renfort.
 	m.configure_wave_reinforcements(Catalogue.wave_reinforcements(mission,faction) if OS.get_environment("REINFORCE") == "" else _reinforcements_from_env())
 	if auxiliary >= 0: m.configure_auxiliary(auxiliary)
-	m.meta_ranks = ranks_for(tree,faction,mission)
+	m.meta_ranks = ranks_for(tree,faction,Catalogue.INFINITE_REQUIREMENT+1 if OS.get_environment("HEROIC") in ["1","hp"] else mission) # Héroïque : ouvert après 100 missions, donc 51 points
 	m.select_faction(faction)
 	m.rng.seed = int(OS.get_environment("SEED")) if OS.get_environment("SEED") != "" else 7
 	if OS.get_environment("LEGACY") == "1": m.rules_v232 = false # anciennes règles : douze bonus, choix après les vagues 3, 6 et 9

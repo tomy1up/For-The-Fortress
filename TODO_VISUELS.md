@@ -8,6 +8,8 @@ Format : une case par tâche, avec le contexte (mission, unité, écran), ce qui
 
 ## À faire
 
+- [ ] **Icônes des 12 traits de champions mutants (Héroïque, v0.258)** — Pastilles provisoires dessinées par le code : cercle de la couleur du trait et lettre (`scripts/champions.gd`, `COLORS` et `GLYPHS` ; dessin dans `valley_view.gd::_draw_champion_glyphs`, à gauche de la jauge de PV, environ 11 px). Traits : Hâte, Bouclier, Régénération, Colosse, Scission, Blindé, Soigneur, Vengeur, Insensible, Galvanisant, Pillard, Revenant. Besoin : une icône lisible à cette taille pour chaque trait, et si possible une aura au sol plus marquée que l'ellipse actuelle (`_draw_champion_aura`), visible même dans une meute serrée. [Fiche](design/Champions_mutants_v0258.md).
+
 - [ ] **Bouquetin des crêtes (Ardoises, missions 31 à 40)** — Marche et mort, `enemy.neutral.ibex`, taille 1,05. Il charge sous 50 % de ses PV : une pose de course serait un plus. Silhouette provisoire teintée. [Fiche](design/Attaquants_par_biome_v0246.md).
 
 - [ ] **Golem de magma et Braise (Volcan, missions 71 à 80)** — Marche et mort, `enemy.neutral.magma_golem` (taille 1,45) et `enemy.neutral.ember` (taille 0,55). Le golem éclate en deux Braises à sa mort. Silhouettes provisoires teintées. [Fiche](design/Attaquants_par_biome_v0246.md).

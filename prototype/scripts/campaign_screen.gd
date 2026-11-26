@@ -7,6 +7,7 @@ const MarshArt = preload("res://scripts/marsh_art.gd")
 const Drowned = preload("res://scripts/drowned_encounters.gd")
 const Campaign = preload("res://scripts/campaign_data.gd")
 const Attackers = preload("res://scripts/biome_attackers.gd")
+const Champions = preload("res://scripts/champions.gd")
 signal mission_requested(id: String)
 signal talents_requested(faction: int)
 signal shop_requested(faction: int)
@@ -427,6 +428,11 @@ Nouveau : Gueule-de-Vase · eau régénérante" % [definition.waves,Catalogue.fa
 		var unit_line: String = mission_detail.text.split("\n")[-1]
 		mission_detail.text = "PV ennemis : %d %% · Affixe : %s\n%s" % [Catalogue.faction_hp_percent(number,faction,difficulty),Campaign.AFFIX_NAMES[str(definition.combat_affix.id)],unit_line]
 		mission_detail.tooltip_text += "\n"+affix_rule
+	# Champions mutants de l'Héroïque (v0.258) : traits possibles dans ce chapitre, au survol.
+	if difficulty == Catalogue.HEROIC and definition.available:
+		var champion_names: Array[String] = []
+		for id_trait in Champions.traits_for(chapter): champion_names.append(Champions.NAMES[id_trait])
+		mission_detail.tooltip_text = (mission_detail.tooltip_text+"\n" if not mission_detail.tooltip_text.is_empty() else "")+"Héroïque : un champion par vague à partir de la vague 3 (+50 %% PV, or doublé). Traits possibles : %s." % ", ".join(champion_names)
 	# Difficulté verrouillée ou en préparation (v0.257) : la condition d'ouverture passe avant le détail de la mission.
 	if not status.is_empty() and not Catalogue.difficulty_playable(difficulty):
 		mission_detail.text = "Course par chapitre : règles en préparation.";mission_detail.tooltip_text = ""

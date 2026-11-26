@@ -878,6 +878,8 @@ func _capture_campaign_menu(camp: int) -> void:
 	print("CAMPAIGN_SNAPSHOT=",JSON.stringify({"mission_states":campaign_menu.nodes.map(func(node): return node.state),"chapter_visible":campaign_menu.chapter_in_view(),"start_label":campaign_menu.start_button.text,"preview_map":preview.get("id",""),"preview_slots":preview.get("slots",[]).size(),"preview_routes":paths.size(),"preview_segments":0 if paths.is_empty() else paths[0].size()-1,"variant":variant,"faction":camp,"isolated":meta_profile.path.is_empty(),"menu":campaign_menu.visible,"talents":meta_menu.visible,"chapter":campaign_menu.chapter,"selected":(campaign_menu.chapter-1)*10+campaign_menu.selected+1,"completed":status.get("completed",-1),"other_completed":other.get("completed",-1),"disabled":campaign_menu.start_button.disabled,"po":bank.resource,"xp":bank.xp,"nodes":campaign_menu.nodes.size(),"chapters":campaign_menu.chapter_buttons.size(),"fresh":model.gold == 150 and model.bonuses.is_empty() and model.defenders.all(func(unit): return unit.is_empty()),"choosing":choosing_faction}))
 	if mountain_preview and variant.ends_with("play"):
 		campaign_menu._launch()
+		for argument in OS.get_cmdline_user_args(): # --capture-seed=N : graine fixe de la partie (tirages des bonus et des champions), pour des captures reproductibles.
+			if argument.begins_with("--capture-seed="): model.rng.seed = argument.trim_prefix("--capture-seed=").to_int()
 		print("SLATE_MISSION=",JSON.stringify({"map":model.map_definition.id,"routes":model.routes.size(),"hp_percent":model.enemy_hp_percent,"mission":mission_definition.get("id",""),"faction":model.faction,"menu":campaign_menu.visible,"hp":model.fortress_hp,"gold":model.gold,"forecast":map_view.entry_forecast.size(),"active_profile_run":meta_run_id > 0}))
 		if variant.begins_with("marsh"): print("MARSH_SNAPSHOT=",JSON.stringify({"isolated":meta_profile.path.is_empty(),"map":model.map_definition.id,"decoration":model.map_definition.decoration,"scenery_count":map_view.terrain_details.size(),"affix_empty":model.combat_affix.is_empty(),"affix_visible":affix_label.visible}))
 		if model.combat_affix.get("id","") == "headwinds": print("HEADWINDS_SNAPSHOT=",JSON.stringify({"affix":model.combat_affix,"visible":affix_label.visible,"text":affix_label.text}))
@@ -1819,7 +1821,7 @@ func _update_enemy_inspector() -> void:
 		map_view.inspected_enemy_id = id
 		enemy_inspector.visible = true
 		enemy_prompt.visible = false
-		enemy_name.text = Model.Enemies.for_profile(enemy.type,model.faction).name + (" · BOSS" if enemy.type == 7 else "")
+		enemy_name.text = Model.Enemies.for_profile(enemy.type,model.faction).name + (" · BOSS" if enemy.type == 7 else " · CHAMPION" if enemy.get("champion",false) else "")
 		enemy_health.text = _enemy_health_text(enemy)
 		enemy_health_bar.max_value = enemy.max_hp
 		enemy_health_bar.value = enemy.hp
@@ -1852,6 +1854,13 @@ func _update_enemy_inspector() -> void:
 		else:
 			enemy_status.text = origin + (" · Malédiction active" if cursed else " · Lecture sans pause")
 		enemy_status.add_theme_color_override("font_color",Color("d3afe4") if cursed else Color("aabbb0"))
+		enemy_status.tooltip_text = ""
+		if enemy.get("champion",false): # Champion mutant (v0.258) : traits en clair, règles au survol.
+			var names: Array[String] = []
+			for id_trait in enemy.get("traits",[]): names.append(Model.Champions.NAMES.get(id_trait,id_trait))
+			enemy_status.text = "Champion · " + " · ".join(names) + (" · Maudit" if cursed else "")
+			enemy_status.tooltip_text = Model.Champions.describe(enemy.get("traits",[]))
+			enemy_status.add_theme_color_override("font_color",Color("e5c779"))
 		return
 
 func _build_faction_selector(screen: Control) -> void:
@@ -2103,6 +2112,7 @@ func _launch_campaign_mission(id: String) -> void:
 	var prepared = Model.new(true,definition)
 	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(CampaignCatalogue.faction_hp_percent(CampaignCatalogue.number_for(id),campaign_menu.faction,difficulty)) or not prepared.configure_wave_set(candidate.get("wave_set_id","ford")): return
 	if not prepared.configure_difficulty(difficulty): return
+	if difficulty > 0 and not prepared.configure_champions((CampaignCatalogue.number_for(id)-1)/CampaignCatalogue.CHAPTER_SIZE+1): return # champions mutants (v0.258)
 	if not prepared.configure_combat_affix(candidate.get("combat_affix",{})): return
 	if not prepared.configure_wave_reinforcements(CampaignCatalogue.wave_reinforcements(CampaignCatalogue.number_for(id),campaign_menu.faction)): return
 	mission_definition = candidate

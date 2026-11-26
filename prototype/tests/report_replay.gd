@@ -137,6 +137,8 @@ static func verify(data: Variant) -> Dictionary:
 	if data.has("wave_set_id") and not model.configure_wave_set(data.wave_set_id): return _fail("Rencontres de mission invalides.")
 	if data.has("difficulty"): # Difficulté de campagne depuis la v0.257 seulement.
 		if _minor_version(str(data.get("game_version",""))) < 257 or not model.configure_difficulty(data.difficulty): return _fail("Difficulté de campagne invalide.")
+	if data.has("champion_chapter"): # Champions mutants depuis la v0.258 seulement.
+		if _minor_version(str(data.get("game_version",""))) < 258 or not model.configure_champions(data.champion_chapter): return _fail("Champions invalides.")
 	if data.has("wave_reinforcements"): # Renforts de mission depuis la v0.252 seulement.
 		if _minor_version(str(data.get("game_version",""))) < 252 or not model.configure_wave_reinforcements(data.wave_reinforcements): return _fail("Renforts de mission invalides.")
 	if data.has("auxiliary_type") and not model.configure_auxiliary(data.auxiliary_type): return _fail("Alternative de boutique invalide.")

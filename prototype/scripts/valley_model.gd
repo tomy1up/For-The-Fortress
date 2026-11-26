@@ -24,11 +24,16 @@ const Garrison = preload("res://scripts/garrison_encounters.gd")
 const Eagle = preload("res://scripts/eagle_encounters.gd")
 const Revenant = preload("res://scripts/revenant_encounters.gd")
 const Attackers = preload("res://scripts/biome_attackers.gd")
+const Champions = preload("res://scripts/champions.gd")
 var wave_set_id: String = "ford"
 ## Renforts de la mission pour la faction jouée (v0.252), voir `Campaign.groups_for`.
 var wave_reinforcements: Array = []
 ## Difficulté de campagne de la partie (v0.257) : 0 Normal, 1 Héroïque, 2 Mythique (`CampaignCatalogue.DIFFICULTY_NAMES`).
 var difficulty: int = 0
+## Champions mutants (v0.258) : chapitre de la mission en Héroïque, 0 sans champion ; prochaine impulsion (régénération, soins, élan) et champions tirés par vague.
+var champion_chapter: int = 0
+var champion_pulse_next: float = Champions.PULSE
+var _champion_plans: Dictionary = {}
 var route_target_policy: String = "arrival_time"
 var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effet de jeu.
 var explosion_events: Array[Dictionary] = [] # Explosions de réaction en chaîne (instant, position, rayon) : observation visuelle, aucun effet de jeu.
@@ -262,6 +267,8 @@ func reset() -> void:
 	rerolls_left = REROLLS_PER_RUN
 	last_stand_used = false
 	gate_wave = -1
+	champion_pulse_next = Champions.PULSE
+	_champion_plans.clear()
 	spawn_schedule = Campaign.schedule(wave,wave_set_id,wave_reinforcements)
 	fortress_hp = INITIAL_HP
 	elapsed = 0.0
@@ -752,6 +759,10 @@ func configure_difficulty(value: Variant) -> bool:
 	if not (value is int or value is float) or float(value) != floorf(float(value)) or int(value) < 0 or int(value) > 2 or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
 	difficulty = int(value);return true
 
+func configure_champions(chapter: Variant) -> bool:
+	if not (chapter is int or chapter is float) or float(chapter) != floorf(float(chapter)) or int(chapter) < 0 or int(chapter) > 20 or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
+	champion_chapter = int(chapter);return true
+
 func configure_wave_reinforcements(value: Variant) -> bool:
 	if not Campaign.valid_reinforcements(value) or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
 	wave_reinforcements = Campaign.normalized_reinforcements(value);spawn_schedule = Campaign.schedule(wave,wave_set_id,wave_reinforcements);return true
@@ -1064,7 +1075,9 @@ func guardian_aura(slot: int, active_bonuses: Variant = null) -> float:
 	return bonus
 
 func damage_for(stats: Dictionary, component: String, victim: Dictionary) -> float:
-	return _damage_with_bonuses(stats,component,victim,bonuses)
+	var amount: float = _damage_with_bonuses(stats,component,victim,bonuses)
+	if component == "direct" and Champions.has_trait(victim,"armored"): amount *= Champions.ARMOR_FACTOR # Champion Blindé (v0.258)
+	return amount
 
 ## Types d'ennemis lourds, petits et rapides pour les règles des unités de boutique (valeurs de prototype à confirmer).
 const HEAVY_ENEMY_TYPES: Array[int] = [3,5,6,7,10,14]
@@ -1212,6 +1225,7 @@ func prepare_next_wave() -> bool:
 	bought_waves.clear()
 	curses.clear()
 	event_log.clear()
+	champion_pulse_next = Champions.PULSE
 	spawn_schedule = Campaign.schedule(wave,wave_set_id,wave_reinforcements)
 	phase = "preparation"
 	_record_action("wave_prepare")
@@ -1484,6 +1498,7 @@ func _trap_on_first_hit(enemy: Dictionary) -> void:
 	_slow_enemy(enemy,STASIS_HIT_SECONDS if B_STASIS in bonuses else CALTROPS_HIT_SECONDS)
 
 func _slow_enemy(enemy: Dictionary, seconds: float) -> void:
+	if Champions.has_trait(enemy,"immune"): return # Champion Insensible (v0.258)
 	var until: float = elapsed+seconds
 	if enemy.has("slow_until"): enemy.slow_until = maxf(float(enemy.slow_until),until)
 	else:
@@ -1528,6 +1543,7 @@ func _next_event_time() -> float:
 		next_time = minf(next_time, time_at_distance(enemy,enemy_route_length(enemy)))
 		if enemy.has("slow_until") and float(enemy.slow_until) > elapsed+EPS: next_time = minf(next_time,float(enemy.slow_until))
 		if enemy.has("boost_until") and float(enemy.boost_until) > elapsed+EPS: next_time = minf(next_time,float(enemy.boost_until))
+		if _pulsing_champion(enemy): next_time = minf(next_time,champion_pulse_next)
 	for defender in defenders:
 		if defender.is_empty():
 			continue
@@ -1562,11 +1578,15 @@ func _resolve_instant() -> void:
 		# Chausse-trappes (R-40, 2 s) et Temps suspendu (R-60, 4 s) : ralenti dès l'apparition avant la v0.254 ; depuis, au premier tir direct reçu (`_trap_on_first_hit`).
 		var entry_slow: float = 0.0 if rules_v254 else 4.0 if B_STASIS in bonuses else 2.0 if B_CALTROPS in bonuses else 0.0
 		if entry_slow > 0.0: _slow_enemy(enemy,entry_slow)
+		if champion_chapter > 0:
+			var champion_plan: Dictionary = champion_plan_for_wave()
+			if not champion_plan.is_empty() and int(champion_plan.index) == spawned: _make_champion(enemy,champion_plan.traits)
 		enemies.append(enemy)
 		spawned += 1
 	_boost_scorpions_in_storm()
 	_update_positions()
 	_biome_affix_pulses()
+	_champion_pulses()
 	# 1 bis. Éruptions (affixe) : le défenseur frappé ne tire plus avant la fin de sa désactivation.
 	while eruption_enabled() and eruption_time(eruption_next) <= elapsed + EPS:
 		var struck: int = eruption_slot(eruption_next)
@@ -1634,11 +1654,11 @@ func _resolve_instant() -> void:
 		var mark_state: String = "renewed" if float(primary.get("marked_until",-1.0)) > elapsed else "new"
 		var placed_mark: bool = float(stats.get("mark_seconds",0.0)) > 0.0 or B_HUNTMARK in bonuses
 		if float(stats.get("mark_seconds",0.0)) > 0.0:
-			primary.marked_until = elapsed+float(stats.mark_seconds)
+			if not Champions.has_trait(primary,"immune"): primary.marked_until = elapsed+float(stats.mark_seconds)
 			primary.mark_bonus = maxf(float(primary.get("mark_bonus",0.0)),float(stats.get("mark_bonus",0.0)))
 		elif B_HUNTMARK in bonuses:
 			# Marque du chasseur (R-51) : tout tir direct marque sa cible 3 s, +10 % de dégâts des autres défenseurs ; une marque plus forte ou plus longue est conservée.
-			primary.marked_until = maxf(float(primary.get("marked_until",-1.0)),elapsed+3.0)
+			if not Champions.has_trait(primary,"immune"): primary.marked_until = maxf(float(primary.get("marked_until",-1.0)),elapsed+3.0)
 			primary.mark_bonus = maxf(float(primary.get("mark_bonus",0.0)),0.10)
 		var shot: Dictionary = {"time": elapsed, "slot": slot, "type": defender.type,
 			"target_id": primary.id, "from": slots[slot], "to": impact, "secondary": [], "radius": stats.radius}
@@ -1788,7 +1808,7 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 			protection_events.append({"time":elapsed,"from":positions[transfer.protected_id],"to":positions[transfer.guardian_id],
 				"amount":transfer.amount,"guardian_id":transfer.guardian_id,"protected_id":transfer.protected_id})
 		while protection_events.size() > 24: protection_events.pop_front()
-	if combat_affix.get("id","") == "alarm":
+	if combat_affix.get("id","") == "alarm" or champion_chapter > 0:
 		var shielded: Dictionary = _absorb_shields(damage,hits)
 		damage = shielded.damage;hits = shielded.hits
 	Metrics.credit(_wave_record.get("performance",[]),enemies,damage,hits)
@@ -1802,6 +1822,7 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 			enemy.hp = 0.0
 			event_log.append("%.9f exécution %d" % [elapsed, enemy.id])
 		if enemy.hp < hp_before:
+			if enemy.get("champion",false): enemy.last_hit_at = elapsed # Régénération du champion : seulement après 2 s sans être touché.
 			var origin: Dictionary = _damage_sources.get(enemy.id,{})
 			damage_events.append({"time":elapsed,"enemy_id":enemy.id,"hp_before":hp_before,"hp_after":maxf(0.0,enemy.hp),"source_type":int(origin.get("source_type",-1)),"component":str(origin.get("component",""))})
 		_settle_enemy(enemy,survivors,blasts)
@@ -1836,6 +1857,15 @@ func _settle_enemy(enemy: Dictionary, survivors: Array[Dictionary], blasts: Arra
 		event_log.append("%.9f relève %d" % [elapsed, enemy.id])
 		survivors.append(enemy)
 		return
+	if enemy.hp <= 0.0 and Champions.has_trait(enemy,"revenant") and not enemy.get("risen",false):
+		# Champion Revenant : se relève une seule fois avec 40 % de ses PV maximum, comme le revenant de la Nécropole.
+		enemy.risen = true
+		enemy.risen_at = elapsed
+		enemy.risen_distance = enemy.distance
+		enemy.hp = enemy.max_hp*Champions.REVENANT_FRACTION
+		event_log.append("%.9f relève champion %d" % [elapsed, enemy.id])
+		survivors.append(enemy)
+		return
 	if enemy.hp <= 0.0:
 		var origin_of_death: Dictionary = _damage_sources.get(enemy.id,{})
 		elimination_events.append({"time":elapsed,"enemy_id":enemy.id,"type":enemy.get("type",1),"point":enemy_position(enemy),"distance":enemy.distance,"route_id":str(enemy.get("route_id","")),"source_type":int(origin_of_death.get("source_type",-1)),"component":str(origin_of_death.get("component",""))})
@@ -1856,6 +1886,7 @@ func _settle_enemy(enemy: Dictionary, survivors: Array[Dictionary], blasts: Arra
 			while explosion_events.size() > 24: explosion_events.pop_front()
 			blasts.append({"source":enemy,"damage":float(enemy.get("volatile_damage",0.0)),"radius":float(enemy.get("volatile_radius",1.0))})
 		if int(enemy.get("type",1)) == Attackers.GOLEM: _burst_golem(enemy,survivors)
+		if enemy.get("champion",false): _champion_death(enemy,survivors)
 	else:
 		if int(enemy.get("type",1)) == Attackers.IBEX and not enemy.get("charged",false) and float(enemy.hp) < float(enemy.max_hp)*Attackers.CHARGE_THRESHOLD: _start_charge(enemy)
 		survivors.append(enemy)
@@ -1883,6 +1914,66 @@ func _burst_golem(golem: Dictionary, survivors: Array[Dictionary]) -> void:
 		var entry_slow: float = 0.0 if rules_v254 else 4.0 if B_STASIS in bonuses else 2.0 if B_CALTROPS in bonuses else 0.0
 		if entry_slow > 0.0: _slow_enemy(ember,entry_slow)
 		survivors.append(ember)
+
+## Champion de la vague en cours (v0.258) : tiré une fois par vague avec la graine de la partie (`Champions.plan`), sans toucher au générateur des bonus.
+func champion_plan_for_wave() -> Dictionary:
+	if champion_chapter <= 0: return {}
+	if not _champion_plans.has(wave):
+		_champion_plans[wave] = Champions.plan(spawn_schedule,wave,champion_chapter,posmod(int(initial_rng_seed),2147483629))
+	return _champion_plans[wave]
+
+## Transforme un ennemi en champion : PV (+50 %, doublés pour le Colosse), or doublé, puis effets permanents des traits.
+func _make_champion(enemy: Dictionary, traits: Array) -> void:
+	enemy.champion = true
+	enemy.traits = traits.duplicate()
+	var factor: float = Champions.COLOSSUS_HP_FACTOR if "colossus" in traits else Champions.HP_FACTOR
+	enemy.max_hp = float(enemy.max_hp)*factor
+	enemy.hp = enemy.max_hp
+	enemy.reward = int(enemy.get("reward",3))*Champions.REWARD_FACTOR
+	enemy.last_hit_at = float(enemy.spawn_time)
+	if "haste" in traits: enemy.speed = float(enemy.speed)*Champions.HASTE_SPEED
+	if "colossus" in traits: enemy.speed = float(enemy.speed)*Champions.COLOSSUS_SPEED
+	if "shield" in traits: enemy.shield = float(enemy.max_hp)*Champions.SHIELD_FRACTION
+	if "plunderer" in traits: enemy.fortress_damage = int(enemy.get("fortress_damage",1))*Champions.PLUNDER_FACTOR
+	event_log.append("%.9f champion %d %s" % [elapsed,enemy.id,",".join(traits)])
+
+func _pulsing_champion(enemy: Dictionary) -> bool:
+	return enemy.get("champion",false) and (Champions.has_trait(enemy,"regen") or Champions.has_trait(enemy,"healer") or Champions.has_trait(enemy,"galvanizing"))
+
+## Impulsion d'une seconde : régénération, soins des voisins et élan des voisins. Événement du moteur : même résultat quel que soit le pas.
+func _champion_pulses() -> void:
+	if champion_chapter <= 0: return
+	while champion_pulse_next <= elapsed+EPS:
+		for champion in enemies:
+			if not _pulsing_champion(champion) or float(champion.hp) <= 0.0: continue
+			if Champions.has_trait(champion,"regen") and champion_pulse_next-float(champion.get("last_hit_at",-INF)) >= Champions.REGEN_QUIET-EPS:
+				champion.hp = minf(float(champion.max_hp),float(champion.hp)+float(champion.max_hp)*Champions.REGEN_FRACTION)
+			for other in enemies:
+				if other.id == champion.id or float(other.hp) <= 0.0 or enemy_underground(other) or enemy_separation_squared(champion,other) > Champions.NEAR_RADIUS*Champions.NEAR_RADIUS: continue
+				if Champions.has_trait(champion,"healer"): other.hp = minf(float(other.max_hp),float(other.hp)+float(other.max_hp)*Champions.HEAL_FRACTION)
+				if Champions.has_trait(champion,"galvanizing") and not other.has("boost_until"):
+					other.boost_start = elapsed;other.boost_until = elapsed+Champions.PULSE;other.boost_rate = Champions.GALVANIZE_RATE
+		champion_pulse_next += Champions.PULSE
+
+## À la mort d'un champion : Scission (deux petits ennemis à 25 % de ses PV, sur sa route) et Vengeur (élan des voisins pendant 3 s).
+func _champion_death(champion: Dictionary, survivors: Array[Dictionary]) -> void:
+	if Champions.has_trait(champion,"split"):
+		for index in range(Champions.SPLIT_PARTS):
+			var part: Dictionary = make_enemy(Attackers.FIRST_EXTRA_ID+extra_enemies,Champions.SPLIT_TYPE,elapsed,faction,enemy_hp_percent)
+			extra_enemies += 1
+			if champion.has("route_id"): part.route_id = champion.route_id
+			part.max_hp = float(champion.max_hp)*Champions.SPLIT_FRACTION
+			part.hp = part.max_hp
+			var start: float = maxf(0.0,float(champion.distance)-index*Attackers.EMBER_SPACING)
+			part.distance = start
+			part.delay = -start/float(part.speed)
+			survivors.append(part)
+		event_log.append("%.9f scission %d" % [elapsed,champion.id])
+	if Champions.has_trait(champion,"avenger"):
+		for other in enemies+survivors: # ennemis encore présents, y compris ceux pas encore traités dans cet instant et les morceaux d'une Scission
+			if other.id == champion.id or float(other.hp) <= 0.0 or other.has("boost_until") or enemy_separation_squared(champion,other) > Champions.AVENGER_RADIUS*Champions.AVENGER_RADIUS: continue
+			other.boost_start = elapsed;other.boost_until = elapsed+Champions.AVENGER_SECONDS;other.boost_rate = Champions.AVENGER_RATE
+		event_log.append("%.9f vengeur %d" % [elapsed,champion.id])
 
 ## Crabe pilleur : vole de l'or en atteignant la forteresse, sans jamais rendre le trésor négatif ; la Herse l'en empêche.
 func _steal_gold(enemy: Dictionary) -> void:

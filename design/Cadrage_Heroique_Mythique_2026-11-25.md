@@ -70,7 +70,7 @@
 | Lot | Contenu | Dépend de Codex |
 | --- | --- | --- |
 | 1. Socle des difficultés | **Livré en v0.257** (`Difficultes_socle_v0257.md`) : progression par faction et par difficulté (identifiants propres, sans migration), onglets, Héroïque jouable, rapports et rejeu, récompense | Non |
-| 2. Champions mutants | Catalogue de traits (après validation de la liste), introduction par chapitre, aura et icône dessinées par le code | Non (icônes plus tard) |
+| 2. Champions mutants | **Livré en v0.258** (`Champions_mutants_v0258.md`) : douze traits validés le 25 novembre 2026, un par chapitre jusqu'au chapitre 11, aura et pastilles dessinées par le code | Non (icônes plus tard) |
 | 3. Cumul des nouveautés | Affixes et attaquants des biomes précédents dans les missions héroïques | Non |
 | 4. Bonus héroïques | Liste validée par le porteur, introduction par chapitre | Non |
 | 5. Calibrage de l'Héroïque | Coefficients de PV par mission pour la cible du joueur avisé, garde des tests | Non |
