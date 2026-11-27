@@ -52,7 +52,7 @@ func run_checks() -> void:
 			count = scene.impact_calls; scene._update_interface()
 			check(scene.impact_calls == count,"Nouvel état réutilisé sans recalcul ("+field+")")
 		scene.model.phase = "defeat"; scene._update_interface(); scene._reset()
-		check(scene.bonus_impact_keys == ["","","",""] and scene.bonus_contexts == ["","","",""],"Nouvel essai vide le cache et le contexte de défilement (quatre emplacements depuis la v0.232)")
+		check(scene.bonus_impact_keys == ["","","","","",""] and scene.bonus_contexts == ["","","","","",""],"Nouvel essai vide le cache et le contexte de défilement (six emplacements depuis la v0.261, quatre depuis la v0.232)")
 		scene.free()
 	print("BONUS_PANEL_CACHE_TESTS checks=%d failures=%d" % [checks,failures])
 	quit(0 if failures == 0 else 1)

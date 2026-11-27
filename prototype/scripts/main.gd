@@ -149,8 +149,8 @@ var bonus_body: Panel
 var bonus_impacts: Array[Label] = []
 var bonus_impact_titles: Array[Label] = []
 var bonus_impact_scrollers: Array[ScrollContainer] = []
-var bonus_contexts: Array[String] = ["","","",""]
-var bonus_impact_keys: Array[String] = ["","","",""]
+var bonus_contexts: Array[String] = ["","","","","",""]
+var bonus_impact_keys: Array[String] = ["","","","","",""]
 var bonus_title: Label
 var bonus_subtitle: Label
 var bonus_names: Array[Label] = []
@@ -1072,6 +1072,9 @@ func _sync_countdown() -> void:
 func _prepare_campaign_capture(state: String) -> void:
 	# Référence financée au budget normal ; même politique que test_campaign.gd.
 	model.rng.seed = 42
+	# --capture-heroic (v0.261, contrôle seulement) : partie à bonus héroïques du chapitre 20 (second choix aux vagues 4 et 8).
+	var heroic: bool = "--capture-heroic" in OS.get_cmdline_user_args()
+	if heroic: model.heroic_bonus_chapter = 20
 	model.buy(0,model.faction*3)
 	model.buy(1,model.faction*3+1)
 	selected = 0
@@ -1089,9 +1092,12 @@ func _prepare_campaign_capture(state: String) -> void:
 			model.advance(5)
 			return
 		model.advance(300)
-		if state == "bonus" and wave == model.bonus_waves()[0]: return
+		if state == "bonus" and wave == (Model.Campaign.HEROIC_OFFER_WAVES[0] if heroic else model.bonus_waves()[0]):
+			if heroic and model.phase == "bonus": model.choose_bonus(model.bonus_offer[0]) # second choix héroïque affiché
+			return
 		if model.phase == "defeat": return
-		if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
+		for _choice in range(3):
+			if model.phase == "bonus": model.choose_bonus(model.bonus_offer[0])
 		if (state == "forecast" and wave == 8) or (state == "forecast_boss" and wave == 9): return
 		if state == "overview" and wave == 9:
 			overview_open = true
@@ -2545,8 +2551,8 @@ func _reset() -> void:
 	purchase_quiet_rect = Rect2()
 	breach_remaining = 0.0
 	map_view.breach_feedback = {}
-	bonus_contexts.assign(["","","",""])
-	bonus_impact_keys.assign(["","","",""])
+	bonus_contexts.assign(["","","","","",""])
+	bonus_impact_keys.assign(["","","","","",""])
 	bonus_detail_index = -1
 	bonus_view_context = ""
 	for scroll in bonus_impact_scrollers: scroll.scroll_vertical = 0
@@ -2809,7 +2815,7 @@ func _update_interface() -> void:
 		"defeat": status_label.text = "Forteresse détruite\nRelancez un nouvel essai"
 	if countdown_remaining >= 0.0:
 		status_label.text = "Vague %d terminée\n%s" % [model.wave,"Décompte suspendu" if _countdown_paused() else "Préparation : %d s" % ceili(countdown_remaining)]
-	bonus_summary_button.text = "Bonus acquis · %d/%d" % [model.bonuses.size(),model.bonus_waves().size()]
+	bonus_summary_button.text = "Bonus acquis · %d/%d" % [model.bonuses.size(),model.max_bonuses()]
 	bonus_summary_button.disabled = modal
 	_update_bonus_panel()
 	tally_label.text = _combat_tally_text()
@@ -3047,8 +3053,8 @@ func _build_bonus_selector(screen: Control) -> void:
 	bonus_title = _label(panel,"",Vector2(28,24),Vector2(1024,40),26,Color("e0dbbf"))
 	bonus_subtitle = _label(panel,"",Vector2(28,78),Vector2(1024,46),15,Color("aabbb0"))
 	bonus_subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	# Quatre emplacements : trois offres au choix, jusqu'à quatre bonus acquis (quatre choix par partie depuis la v0.232).
-	for index in range(4):
+	# Six emplacements : trois offres au choix, jusqu'à six bonus acquis (quatre choix par partie depuis la v0.232, plus deux choix héroïques en Héroïque depuis la v0.261).
+	for index in range(6):
 		var x: int = 28+index*348
 		bonus_cards.append(_panel(panel,Rect2(x,126,328,464)))
 		bonus_names.append(_label(panel,"",Vector2(x,148),Vector2(328,54),18,Color("e0dbbf")))
@@ -3113,7 +3119,7 @@ const BONUS_RARITY_COLORS: Dictionary = {"rare":Color("8fb8e8"),"epic":Color("d6
 func _reroll_bonus() -> void:
 	if model.phase != "bonus" or bonus_detail_index >= 0: return
 	if model.reroll_bonus():
-		bonus_impact_keys.assign(["","","",""])
+		bonus_impact_keys.assign(["","","","","",""])
 		_update_interface()
 
 func _choose_bonus(index: int) -> void:
@@ -3138,24 +3144,29 @@ func _update_bonus_panel() -> void:
 	var detailed: bool = bonus_detail_index >= 0 and bonus_detail_index < entries.size()
 	bonus_body.position.y = 95 if choosing or detailed else 166
 	bonus_body.size.y = 610 if choosing or detailed else 468
-	bonus_title.text = Model.Campaign.BONUSES[entries[bonus_detail_index]].name if detailed else "Choisissez un bonus" if choosing else "Vos bonus de partie"
+	bonus_title.text = Model.Campaign.BONUSES[entries[bonus_detail_index]].name if detailed else ("Choisissez un bonus héroïque" if model.heroic_choice else "Choisissez un bonus") if choosing else "Vos bonus de partie"
 	bonus_subtitle.text = "Règle complète et effet sur votre défense." if detailed and choosing else "Ce bonus reste actif pour cette partie." if detailed else "Vague %d terminée · Prenez votre temps. Après le choix : 30 s de préparation." % model.wave if choosing else "Aucun bonus acquis." if entries.is_empty() else "Actifs jusqu’à la fin de cette partie."
 	# Le choix suspend le combat ; recalculer uniquement si une donnée d’aperçu change.
 	var impact_key: String = JSON.stringify([model.faction,model.wave,model.bonus_offer,model.bonuses,model.defenders,model.gold,model.fortress_hp,model.max_hp,model.synergies_enabled]) if choosing else ""
-	# Quatre bonus acquis : cartes plus étroites pour tenir sur une ligne ; sinon trois colonnes.
-	var four_columns: bool = not choosing and entries.size() > 3
+	# Quatre bonus acquis : cartes plus étroites pour tenir sur une ligne ; cinq ou six (Héroïque, v0.261) : deux rangées de trois ; sinon trois colonnes.
+	var two_rows: bool = not choosing and entries.size() > 4
+	var four_columns: bool = not choosing and entries.size() == 4
 	var step: int = 262 if four_columns else 348
 	var card_width: int = 246 if four_columns else 328
-	for index in range(4):
-		var x: int = 28+index*step
+	if two_rows:
+		bonus_body.position.y = 95
+		bonus_body.size.y = 610
+	for index in range(6):
+		var x: int = 28+(index%3 if two_rows else index)*step
+		var dy: int = (index/3)*246 if two_rows else 0
 		var inner: int = card_width-36
 		var listed: bool = index < entries.size() and not detailed
 		var selected_detail: bool = detailed and index == bonus_detail_index
 		bonus_cards[index].visible = listed
-		bonus_cards[index].position.x = x
-		bonus_cards[index].size = Vector2(card_width,464 if choosing else 250)
+		bonus_cards[index].position = Vector2(x,126+dy)
+		bonus_cards[index].size = Vector2(card_width,464 if choosing else 236 if two_rows else 250)
 		bonus_names[index].visible = listed
-		bonus_names[index].position = Vector2(x+18,148)
+		bonus_names[index].position = Vector2(x+18,148+dy)
 		bonus_names[index].size = Vector2(inner,56)
 		bonus_names[index].add_theme_font_size_override("font_size",20)
 		var rarity: String = Model.Campaign.bonus_rarity(entries[index]) if index < entries.size() else ""
@@ -3163,18 +3174,18 @@ func _update_bonus_panel() -> void:
 		bonus_rarity_labels[index].visible = listed and rarity in ["rare","epic","heroic"]
 		bonus_rarity_labels[index].text = {"rare":"Rare","epic":"Épique","heroic":"Héroïque"}.get(rarity,"")
 		bonus_rarity_labels[index].add_theme_color_override("font_color",BONUS_RARITY_COLORS.get(rarity,Color("e0dbbf")))
-		bonus_rarity_labels[index].position = Vector2(x+card_width-118,131)
+		bonus_rarity_labels[index].position = Vector2(x+card_width-118,131+dy)
 		bonus_effects[index].visible = listed
-		bonus_effects[index].position = Vector2(x+18,218 if choosing else 206)
+		bonus_effects[index].position = Vector2(x+18,(218 if choosing else 200 if two_rows else 206)+dy)
 		bonus_effects[index].size = Vector2(inner,78 if choosing else 60)
 		bonus_effects[index].add_theme_font_size_override("font_size",25 if choosing else 17 if four_columns else 19)
 		bonus_scopes[index].visible = listed
-		bonus_scopes[index].position = Vector2(x+18,310 if choosing else 274)
+		bonus_scopes[index].position = Vector2(x+18,(310 if choosing else 264 if two_rows else 274)+dy)
 		bonus_scopes[index].size = Vector2(inner,60 if choosing else 48)
 		bonus_notes[index].visible = listed and choosing
 		bonus_notes[index].position.x = x+18
 		bonus_detail_buttons[index].visible = listed
-		bonus_detail_buttons[index].position = Vector2(x+18,468 if choosing else 330)
+		bonus_detail_buttons[index].position = Vector2(x+18,468 if choosing else (324 if two_rows else 330)+dy)
 		bonus_detail_buttons[index].size.x = inner
 		bonus_descriptions[index].visible = selected_detail
 		bonus_descriptions[index].position = Vector2(28,96)
@@ -3209,6 +3220,7 @@ func _update_bonus_panel() -> void:
 			elif not choosing:
 				bonus_impacts[index].text = card.scope+"\n\n"+_bonus_audience_text(entries[index])+"\n"+card.note
 	bonus_close.visible = not choosing and not detailed
+	bonus_close.position = Vector2(784,26) if two_rows else Vector2(442,408)
 	bonus_details_back.visible = detailed
 	var rerolls: int = model.rerolls_available()
 	bonus_reroll.visible = choosing and not detailed and model.rules_v232 and model.rules_v233

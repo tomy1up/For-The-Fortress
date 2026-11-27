@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.261**. Héroïque : bonus héroïques renforcés, avec un second choix entre deux bonus héroïques aux vagues 4 et 8, en plus du choix ordinaire. [Notes](design/essais/v0261_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.261).
+
 **Prototype v0.260**. Héroïque : quinze bonus héroïques, une carte aux choix des vagues 4 et 8, débloqués au fil des chapitres (Héros du rempart, Hiver éternel, Pacte de sang…). [Notes](design/essais/v0260_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.260).
 
 **Prototype v0.259**. Héroïque : à partir du chapitre 3, chaque mission rappelle un ancien attaquant ou un ancien affixe d'un biome déjà traversé, deux à partir du chapitre 11. [Notes](design/essais/v0259_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.259).

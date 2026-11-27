@@ -24,11 +24,11 @@ static func first_talent(faction: int, mission: int) -> int:
 ## contrepartie (`Model.reference_bonus`), elle choisit la carte la mieux notée pour sa faction et relance une fois si la meilleure carte proposée est sous la médiane.
 ## Notes : PV de forteresse restants (en %) quand le bonus est imposé au premier choix de la référence, 40 missions, tirages 7, 8 et 9, règles v0.254
 ## (`design/essais/equilibre_bonus/v255/valeur_bonus.txt`). La cible de difficulté, elle, reste mesurée avec la première offre (MAJ-79).
-## Bonus héroïques (codes 60 à 74, v0.260) : imposés au premier choix en contexte héroïque (champions, rappels) aux PV du Normal, notes ramenées à cette échelle
-## par trois repères (Armes affûtées, Lames runiques, Armée d'élite) ; `design/essais/equilibre_bonus/v260/`.
+## Bonus héroïques (codes 60 à 74, valeurs de la v0.261) : imposés au premier choix en contexte héroïque (champions, rappels, second choix héroïque) aux PV du Normal,
+## notes ramenées à cette échelle par trois repères (Armes affûtées, Lames runiques, Armée d'élite) ; `design/essais/equilibre_bonus/v261/`. Elles départagent les deux cartes du second choix.
 const BONUS_VALUES: Array = [
-	[51,62,52,32,32,61,59,36,41,41,43,50,59,58,31,31,63,31,31,62,63,49,45,34,28,42,53,52,53,50,47,52,50,53,59,61,82,24,24,27,70,76,39,56,55,54,45,65,50,60,40,61,31,96,93,90,46,21,88,28,52,60,68,57,72,69,83,50,75,61,69,69,59,50,66],
-	[31,46,38,15,30,34,38,11,15,14,21,25,10,40,13,15,17,55,9,46,37,26,25,8,6,20,32,24,30,17,17,28,24,28,30,41,59,15,30,34,32,68,23,64,42,32,22,20,47,55,22,56,14,93,93,85,19,72,83,53,36,43,58,43,60,48,58,37,50,44,52,60,42,36,41]
+	[51,62,52,32,32,61,59,36,41,41,43,50,59,58,31,31,63,31,31,62,63,49,45,34,28,42,53,52,53,50,47,52,50,53,59,61,82,24,24,27,70,76,39,56,55,54,45,65,50,60,40,61,31,96,93,90,46,21,88,28,54,66,66,84,90,84,89,50,88,66,84,53,61,50,82],
+	[31,46,38,15,30,34,38,11,15,14,21,25,10,40,13,15,17,55,9,46,37,26,25,8,6,20,32,24,30,17,17,28,24,28,30,41,59,15,30,34,32,68,23,64,42,32,22,20,47,55,22,56,14,93,93,85,19,72,83,53,38,54,68,76,89,79,71,47,73,57,84,58,53,37,68]
 ]
 ## Relance si la meilleure carte vaut moins que la médiane de la faction.
 const REROLL_BELOW: Array = [50,30]

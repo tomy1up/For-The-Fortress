@@ -1,5 +1,7 @@
 # Bonus héroïques (v0.260)
 
+> **Renforcés en v0.261** (validation du porteur, 27 novembre 2026) : second choix héroïque aux vagues 4 et 8 et valeurs relevées. Voir `Bonus_heroiques_v0261.md`. Cette fiche décrit la v0.260.
+
 **Statut.** Lot 4 du cadrage du 25 novembre 2026 (`Cadrage_Heroique_Mythique_2026-11-25.md`). La liste, les valeurs et la règle d'apparition ont été validées par le porteur le 27 novembre 2026 (« Tout valider », sur la proposition de Claude Code). Ce sont des réglages de prototype à confirmer en jeu.
 
 ## Règles

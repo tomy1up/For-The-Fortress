@@ -99,6 +99,26 @@ const BONUS_TEXTS_V253 := {
 	59:["Chaque ennemi est ralenti pendant 4 s à son apparition (vitesse ×0,6), et vos ralentissements durent 50 % de plus.", "Chaque ennemi est ralenti pendant 4 s à son apparition (vitesse ×0,6), et vos ralentissements durent 50 % de plus."]
 }
 
+## Bonus héroïques renforcés en v0.261 : textes de la v0.260 (identiques pour les deux factions) et règle de la carte de remplacement.
+const BONUS_TEXTS_V260 := {
+	60:["+60 % à tous les dégâts contre les champions mutants et le boss.","+60 % à tous les dégâts contre les champions mutants et le boss."],
+	61:["Chaque champion mutant éliminé rapporte 30 or de plus, en plus de son or doublé.","Chaque champion mutant éliminé rapporte 30 or de plus, en plus de son or doublé."],
+	63:["L'affixe rappelé de l'Héroïque n'a plus d'effet, et les attaquants rappelés ont 40 % de PV en moins.","L'affixe rappelé de l'Héroïque n'a plus d'effet, et les attaquants rappelés ont 40 % de PV en moins."],
+	64:["Tous les ennemis avancent 20 % moins vite.","Tous les ennemis avancent 20 % moins vite."],
+	65:["Chaque ennemi éliminé explose et inflige 25 % de ses PV maximum aux ennemis à 1,2 case ou moins ; les explosions peuvent s'enchaîner.","Chaque ennemi éliminé explose et inflige 25 % de ses PV maximum aux ennemis à 1,2 case ou moins ; les explosions peuvent s'enchaîner."],
+	67:["+50 % à tous les dégâts si tous vos défenseurs sont de la même famille, spécialisations comprises.","+50 % à tous les dégâts si tous vos défenseurs sont de la même famille, spécialisations comprises."],
+	68:["+10 % à tous les dégâts par défenseur déployé, jusqu'à +60 % avec six.","+10 % à tous les dégâts par défenseur déployé, jusqu'à +60 % avec six."],
+	69:["Vos dégâts ignorent les boucliers (Cor d'alarme, champions Bouclier) et le trait Blindé, et font +25 % contre les ennemis lourds.","Vos dégâts ignorent les boucliers (Cor d'alarme, champions Bouclier) et le trait Blindé, et font +25 % contre les ennemis lourds."],
+	70:["Les trois premiers ennemis qui atteignent la forteresse à chaque vague ne lui infligent aucun dégât.","Les trois premiers ennemis qui atteignent la forteresse à chaque vague ne lui infligent aucun dégât."],
+	71:["+60 % à tous les dégâts, mais la forteresse perd 1 PV maximum à la fin de chaque vague gagnée (jamais sous 1).","+60 % à tous les dégâts, mais la forteresse perd 1 PV maximum à la fin de chaque vague gagnée (jamais sous 1)."],
+	72:["−40 % au prix des améliorations et des spécialisations futures. Arrondi supérieur.","−40 % au prix des améliorations et des spécialisations futures. Arrondi supérieur."],
+	73:["Les malédictions infligent +50 %, et quand un ennemi maudit meurt, sa malédiction passe entière à l'ennemi le plus proche, à 2 cases ou moins.","Les malédictions infligent +50 %, et quand un ennemi maudit meurt, sa malédiction passe entière à l'ennemi le plus proche, à 2 cases ou moins."],
+	74:["+100 % à tous les dégâts contre les ennemis qui ont parcouru plus de 80 % de leur route.","+100 % à tous les dégâts contre les ennemis qui ont parcouru plus de 80 % de leur route."]
+}
+
+static func rules_v261_for(version: String) -> bool:
+	return _minor_version(version) >= 261
+
 ## Bonus rééquilibrés (v0.254) : les rapports plus anciens gardent les anciennes valeurs.
 static func rules_v254_for(version: String) -> bool:
 	return _minor_version(version) >= 254
@@ -129,6 +149,7 @@ static func verify(data: Variant) -> Dictionary:
 	model.rockfall_hold_gap = rockfall_hold_gap_for(data.game_version)
 	model.rules_v253 = rules_v253_for(data.game_version)
 	model.rules_v254 = rules_v254_for(data.game_version)
+	model.rules_v261 = rules_v261_for(data.game_version)
 	model.talent_rules = talent_rules_for(data.game_version) # Chaque rapport garde les valeurs de talents de sa version.
 	if data.has("combat_affix") and not model.configure_combat_affix(data.combat_affix): return _fail("Affixe de combat invalide.")
 	if not model.routes.is_empty():
@@ -197,6 +218,10 @@ static func verify(data: Variant) -> Dictionary:
 		# v0.254 : dix bonus ont changé de valeur et de texte ; les rapports plus anciens gardent leur texte d'origine.
 		for bonus in observed.bonuses:
 			if BONUS_TEXTS_V253.has(int(bonus.index)): bonus.description = BONUS_TEXTS_V253[int(bonus.index)][model.faction]
+	if _minor_version(str(data.get("game_version",""))) < 261:
+		# v0.261 : treize bonus héroïques renforcés ; les rapports de la v0.260 gardent leur texte d'origine.
+		for bonus in observed.bonuses:
+			if BONUS_TEXTS_V260.has(int(bonus.index)): bonus.description = BONUS_TEXTS_V260[int(bonus.index)][model.faction]
 	if not data.has("enemy_catalog"):
 		# Les rapports historiques gardent les noms de profils et le libellé R-12.
 		observed.boss_encounter.name = Model.ENEMY_TYPES[7].name

@@ -89,7 +89,8 @@ func _play_waves(m, first: int, slots: Array, types: Array, look: bool) -> void:
 		if not m.start(): break
 		m.advance(10000)
 		if m.phase == "defeat": break
-		if m.phase == "bonus":
+		for _choice in range(3): # second choix héroïque (v0.261) : une seconde phase de bonus aux vagues 4 et 8
+			if m.phase != "bonus": break
 			if look and OS.get_environment("POLICY") == "wise": _wise_pick(m,wave,slots,types)
 			elif look: _look_pick(m,wave,slots,types)
 			elif OS.get_environment("POLICY") == "refwise": Reference.choose_bonus(m) # v0.255 : choix avisé de l'armée de référence des suites
@@ -107,6 +108,7 @@ func _look_pick(m, wave: int, slots: Array, types: Array) -> void:
 		for code in base.bonus_offer.duplicate():
 			var trial = _clone(base)
 			trial.choose_bonus(int(code))
+			if trial.phase == "bonus": trial.choose_bonus(int(trial.bonus_offer[0])) # second choix héroïque (v0.261) : première carte
 			if wave < 10: trial.prepare_next_wave()
 			if wave < 10: _play_waves(trial,wave+1,slots,types,false)
 			var score: float = (1000.0 if trial.phase == "victory" else 0.0)+float(trial.fortress_hp)*10.0+float(trial.wave)
@@ -121,6 +123,7 @@ func _wise_score(base, code: int, wave: int, slots: Array, types: Array, salt: i
 	var trial = _clone(base)
 	trial.rng.seed = hash([str(base.rng.state),code,salt,wave])
 	trial.choose_bonus(code)
+	if trial.phase == "bonus": trial.choose_bonus(int(trial.bonus_offer[0])) # second choix héroïque (v0.261) : première carte
 	if wave < 10:
 		trial.prepare_next_wave()
 		_play_waves(trial,wave+1,slots,types,false)

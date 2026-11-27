@@ -72,6 +72,6 @@
 | 1. Socle des difficultés | **Livré en v0.257** (`Difficultes_socle_v0257.md`) : progression par faction et par difficulté (identifiants propres, sans migration), onglets, Héroïque jouable, rapports et rejeu, récompense | Non |
 | 2. Champions mutants | **Livré en v0.258** (`Champions_mutants_v0258.md`) : douze traits validés le 25 novembre 2026, un par chapitre jusqu'au chapitre 11, aura et pastilles dessinées par le code | Non (icônes plus tard) |
 | 3. Cumul des nouveautés | **Livré en v0.259** (`Cumul_nouveautes_v0259.md`) : règles validées le 26 novembre 2026, un rappel par mission à partir du chapitre 3, deux à partir du chapitre 11 | Non |
-| 4. Bonus héroïques | **Livré en v0.260** (`Bonus_heroiques_v0260.md`) : quinze bonus validés le 27 novembre 2026, une carte aux choix des vagues 4 et 8, introduits du chapitre 1 au chapitre 14 | Non |
+| 4. Bonus héroïques | **Livré en v0.260** (`Bonus_heroiques_v0260.md`) : quinze bonus validés le 27 novembre 2026, introduits du chapitre 1 au chapitre 14 ; **renforcé en v0.261** (`Bonus_heroiques_v0261.md`) : second choix héroïque aux vagues 4 et 8, valeurs relevées | Non |
 | 5. Calibrage de l'Héroïque | Coefficients de PV par mission pour la cible du joueur avisé, garde des tests | Non |
 | 6. Mythique | Questions ci-dessus tranchées, puis course par chapitre | Non |
