@@ -134,6 +134,7 @@ var terrain_preview: TerrainPreview
 var mission_detail: Label
 var rewards: Label
 var infinite_label: Label
+var infinite_title: Label # « Mode infini », ou « Rappels de l'Héroïque » en Héroïque (v0.259).
 var start_button: Button
 var talents_button: Button
 var back_button: Button
@@ -203,7 +204,7 @@ func _ready() -> void:
 	rewards = label_at(self,"",Rect2(870,436,358,50),16,Color("e5c779"))
 	start_button = button_at("Jouer",Rect2(870,500,358,44),_launch)
 	talents_button = button_at("Préparer les talents",Rect2(870,556,358,42),_talents)
-	label_at(self,"Mode infini",Rect2(870,608,358,24),16)
+	infinite_title = label_at(self,"Mode infini",Rect2(870,608,358,24),16)
 	infinite_label = label_at(self,"",Rect2(870,636,358,40),13,Color("aabeb0"))
 	shop_note = label_at(self,"",Rect2(32,704,1216,28),14,Color("9eb3a4"))
 	shop_button = button_at("Boutique · Option supplémentaire",Rect2(292,744,330,38),_shop)
@@ -433,6 +434,12 @@ Nouveau : Gueule-de-Vase · eau régénérante" % [definition.waves,Catalogue.fa
 		var champion_names: Array[String] = []
 		for id_trait in Champions.traits_for(chapter): champion_names.append(Champions.NAMES[id_trait])
 		mission_detail.tooltip_text = (mission_detail.tooltip_text+"\n" if not mission_detail.tooltip_text.is_empty() else "")+"Héroïque : un champion par vague à partir de la vague 3 (+50 %% PV, or doublé). Traits possibles : %s." % ", ".join(champion_names)
+	# Cumul de l'Héroïque (v0.259) : les rappels de la mission prennent la place du bloc du mode infini, propre au Normal.
+	infinite_title.text = "Rappels de l'Héroïque" if difficulty == Catalogue.HEROIC else "Mode infini"
+	if difficulty == Catalogue.HEROIC and definition.available:
+		infinite_label.text = recall_lines(number)
+		infinite_label.tooltip_text = "À partir du chapitre 3, chaque mission rappelle un ancien attaquant ou un ancien affixe d'un biome déjà traversé ; deux rappels à partir du chapitre 11. L'affixe rappelé est décalé de 6 s. Réglages de prototype à confirmer."
+	else: infinite_label.tooltip_text = ""
 	# Difficulté verrouillée ou en préparation (v0.257) : la condition d'ouverture passe avant le détail de la mission.
 	if not status.is_empty() and not Catalogue.difficulty_playable(difficulty):
 		mission_detail.text = "Course par chapitre : règles en préparation.";mission_detail.tooltip_text = ""
@@ -444,6 +451,17 @@ Nouveau : Gueule-de-Vase · eau régénérante" % [definition.waves,Catalogue.fa
 		mission_detail.text = "La progression n’est pas disponible."
 		rewards.text = profile.error if profile != null and not profile.error.is_empty() else "Revenez au choix de faction pour vérifier votre progression."
 		start_button.text = "Progression indisponible"
+
+## Lignes du bloc des rappels : attaquant puis affixe, ou l'absence de rappel aux chapitres 1 et 2.
+static func recall_lines(number: int) -> String:
+	var recall: Dictionary = Catalogue.Recalls.plan(number)
+	var lines: Array[String] = []
+	if int(recall.attacker) > 0:
+		var spec: Dictionary = Catalogue.Recalls.ATTACKERS[int(recall.attacker)]
+		lines.append("%s (%s) · vagues %s" % [spec.name,Catalogue.Recalls.BIOME_NAMES[int(recall.attacker)],", ".join(spec.waves.map(func(wave): return str(wave)))])
+	if int(recall.affix) > 0:
+		lines.append("%s (%s) · décalé de 6 s" % [Catalogue.AFFIX_NAMES.get(str(Catalogue.biome_affix(int(recall.affix)).get("id","")),""),Catalogue.Recalls.BIOME_NAMES[int(recall.affix)]])
+	return "\n".join(lines) if not lines.is_empty() else "Aucun rappel avant le chapitre 3."
 
 func _launch() -> void:
 	if overlay_blocked or not visible or start_button.disabled or profile == null or profile.blocked: return

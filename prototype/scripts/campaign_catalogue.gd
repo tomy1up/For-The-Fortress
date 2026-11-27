@@ -211,6 +211,33 @@ static func wave_reinforcements(number: int, faction: int) -> Array:
 	if faction not in [0,1]: return []
 	return WAVE_REINFORCEMENTS[faction].get(number,[]).duplicate(true)
 
+## Cumul des nouveautés de l'Héroïque (v0.259, validé par le porteur le 26 novembre 2026) : à partir du chapitre 3, ancien attaquant ou ancien affixe d'un biome
+## déjà traversé ; deux rappels à partir du chapitre 11 (`scripts/heroic_recalls.gd`). Rien en Normal.
+const Recalls = preload("res://scripts/heroic_recalls.gd")
+const AFFIX_NAMES: Dictionary = {"headwinds":"Vents contraires","eruptions":"Éruptions","sandstorm":"Tempête de sable","rockfall":"Éboulement","seamist":"Brume marine","flood":"Crue","miasma":"Vapeurs toxiques","alarm":"Cor d'alarme","updraft":"Courants ascendants","souldrain":"Drain d'âmes"}
+
+## Affixe d'un biome (1 à 10), avec les valeurs de son premier chapitre.
+static func biome_affix(biome: int) -> Dictionary:
+	var chapter: int = 2*biome-1
+	if NEW_BIOME_AFFIXES.has(chapter): return NEW_BIOME_AFFIXES[chapter].duplicate(true)
+	return BIOME_FIRST_CHAPTER_AFFIXES.get(chapter,{}).duplicate(true)
+
+static func recalled_affix(number: int, difficulty: int) -> Dictionary:
+	if difficulty == NORMAL: return {}
+	var biome: int = int(Recalls.plan(number).affix)
+	return biome_affix(biome) if biome > 0 else {}
+
+static func recalled_attackers(number: int, difficulty: int) -> Array:
+	if difficulty == NORMAL: return []
+	return Recalls.attacker_groups(int(Recalls.plan(number).attacker))
+
+## « Rappel : Golem de magma (Terres volcaniques) · Crue (Gué) », vide en Normal ou sans rappel.
+static func recall_text(number: int, difficulty: int) -> String:
+	if difficulty == NORMAL: return ""
+	var ids: Dictionary = {}
+	for biome in range(1,11): ids[biome] = str(biome_affix(biome).get("id",""))
+	return Recalls.describe(number,AFFIX_NAMES,ids)
+
 static func rebalance_percent(number: int, faction: int) -> float:
 	return float(REBALANCE_PERCENT[faction][clampi(number,1,REBALANCE_PERCENT[faction].size())-1])
 

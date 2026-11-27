@@ -22,7 +22,7 @@ static func encounter_data(number: int,camp: int,difficulty: int=0) -> Array[Dic
 	if camp not in [0,1] or definition.is_empty() or not definition.available: return result
 	var found: Dictionary={}
 	for wave in range(1,definition.waves+1):
-		for spawn in Model.Campaign.schedule(wave,definition.get("wave_set_id","ford"),Catalogue.wave_reinforcements(number,camp)):
+		for spawn in Model.Campaign.schedule(wave,definition.get("wave_set_id","ford"),Catalogue.wave_reinforcements(number,camp)+Catalogue.recalled_attackers(number,difficulty)): # attaquants rappelés de l'Héroïque (v0.259)
 			if found.has(spawn.type):
 				var existing: Dictionary = found[spawn.type]
 				existing.total += 1

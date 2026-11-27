@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.259**. Héroïque : à partir du chapitre 3, chaque mission rappelle un ancien attaquant ou un ancien affixe d'un biome déjà traversé, deux à partir du chapitre 11. [Notes](design/essais/v0259_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.259).
+
 **Prototype v0.258**. Héroïque : un champion mutant par vague à partir de la vague 3, avec douze traits introduits au fil des chapitres (Hâte, Bouclier, Régénération, Colosse, Scission…). [Notes](design/essais/v0258_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.258).
 
 **Prototype v0.257**. Socle des difficultés : onglets Normal, Héroïque et Mythique ; l'Héroïque s'ouvre après les 100 premières missions du Normal et se joue sur les mêmes missions, plus dures. [Notes](design/essais/v0257_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.257).

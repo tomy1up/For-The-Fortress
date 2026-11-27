@@ -103,6 +103,8 @@ static func build(model: RefCounted) -> Dictionary:
 	if not model.wave_reinforcements.is_empty(): report.wave_reinforcements = model.wave_reinforcements.duplicate(true)
 	if model.difficulty != 0: report.difficulty = model.difficulty
 	if model.champion_chapter > 0: report.champion_chapter = model.champion_chapter
+	if not model.recalled_affix.is_empty(): report.recalled_affix = model.recalled_affix.duplicate(true) # cumul de l'Héroïque (v0.259)
+	if not model.recalled_attackers.is_empty(): report.recalled_attackers = model.recalled_attackers.duplicate(true)
 	return report
 
 static func markdown(report: Dictionary) -> String:
@@ -117,6 +119,7 @@ static func markdown(report: Dictionary) -> String:
 		elif Model.Campaign.BIOME_AFFIX_IDS.has(str(report.combat_affix.get("id",""))): lines.insert(5,"%s · %s" % [Model.Campaign.BIOME_AFFIX_NAMES[str(report.combat_affix.id)],Model.Campaign.biome_affix_rule(report.combat_affix)])
 		elif report.combat_affix.get("id","") == "sandstorm": lines.insert(5,"Tempête de sable · toutes les %d s de combat, la portée de tous les défenseurs est réduite de %d %% pendant %d s (annoncée %d s avant)." % [int(report.combat_affix.interval),int(report.combat_affix.range_percent),int(report.combat_affix.duration),int(report.combat_affix.warning)])
 		else: lines.insert(5,"Vents contraires · −%d %% de cadence pour tous les défenseurs. Les dégâts périodiques déjà appliqués gardent leur rythme." % (100-int(report.combat_affix.cadence_percent)))
+	if report.has("recalled_affix"): lines.insert(6 if report.has("combat_affix") else 5,"Rappel de l'Héroïque · %s, décalé de 6 s." % Model.Campaign.AFFIX_NAMES.get(str(report.recalled_affix.get("id","")),"?"))
 	var map: Dictionary = report.get("map_definition",{})
 	if map.has("routes"):
 		var allocation := "Une apparition par entrée à tour de rôle."

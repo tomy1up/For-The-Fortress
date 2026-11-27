@@ -736,7 +736,7 @@ func _ready() -> void:
 			for argument in OS.get_cmdline_user_args():
 				if argument.begins_with("--capture-route-wave="):
 					model.wave = clampi(argument.trim_prefix("--capture-route-wave=").to_int(), 1, 10)
-					model.spawn_schedule = Model.Campaign.schedule(model.wave, model.wave_set_id, model.wave_reinforcements)
+					model.spawn_schedule = Model.Campaign.schedule(model.wave, model.wave_set_id, model.extra_groups())
 					_update_interface()
 				if argument.begins_with("--capture-route-entry="):
 					set_process(false)
@@ -855,6 +855,16 @@ func _capture_campaign_menu(camp: int) -> void:
 	# --capture-difficulty=1 : onglet de difficulté affiché (v0.257), avant un éventuel lancement « play ».
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture-difficulty="): campaign_menu._difficulty(clampi(argument.trim_prefix("--capture-difficulty=").to_int(),0,2))
+	# Difficulté supérieure (v0.259) : les missions qui précèdent celle de la variante sont aussi réussies dans cette difficulté, puis la mission est choisie.
+	if mountain_preview and campaign_menu.difficulty > 0:
+		for number in range(mountain_number if variant.ends_with("completed") else mountain_number-1,CampaignCatalogue.INFINITE_REQUIREMENT): # ouverture : 100 missions du Normal
+			var normal_run: int = meta_profile.begin_mission(camp,CampaignCatalogue.id_for(number+1),1,10,0)
+			meta_profile.credit_mission(normal_run,camp,10,true)
+		for number in range(1,mountain_number):
+			var heroic_run: int = meta_profile.begin_mission(camp,CampaignCatalogue.id_for(number,campaign_menu.difficulty),1,10,0)
+			meta_profile.credit_mission(heroic_run,camp,10,true)
+		campaign_menu._difficulty(campaign_menu.difficulty)
+		campaign_menu._chapter((mountain_number-1)/10+1);campaign_menu._select((mountain_number-1)%10)
 	if mountain_preview and campaign_menu.difficulty == 0: campaign_menu._select((mountain_number-1)%10)
 	if variant.begins_with("terrain") or variant == "locked2":
 		campaign_menu._select(clampi(int(variant.trim_prefix("terrain")),2,10)-1 if variant != "locked2" else 1)
@@ -1360,7 +1370,7 @@ func _update_wave_forecast(pointer := Vector2.INF) -> void:
 	if choosing_faction or pending_slot >= 0 or overview_open or summary_open or model.phase not in ["preparation","finished"]: return
 	var number: int = model.wave+1 if model.phase == "finished" else model.wave
 	if number < 1 or number > Model.Campaign.WAVES.size(): return
-	var key: String = JSON.stringify([number,model.faction,model.enemy_hp_percent,model.wave_set_id,model.wave_reinforcements,model.routes.map(func(route: Dictionary):return route.id)])
+	var key: String = JSON.stringify([number,model.faction,model.enemy_hp_percent,model.wave_set_id,model.extra_groups(),model.recalled_affix,model.routes.map(func(route: Dictionary):return route.id)])
 	if forecast_wave != number or forecast_key != key:
 		forecast_wave = number
 		forecast_key = key
@@ -2115,6 +2125,9 @@ func _launch_campaign_mission(id: String) -> void:
 	if difficulty > 0 and not prepared.configure_champions((CampaignCatalogue.number_for(id)-1)/CampaignCatalogue.CHAPTER_SIZE+1): return # champions mutants (v0.258)
 	if not prepared.configure_combat_affix(candidate.get("combat_affix",{})): return
 	if not prepared.configure_wave_reinforcements(CampaignCatalogue.wave_reinforcements(CampaignCatalogue.number_for(id),campaign_menu.faction)): return
+	# Cumul de l'Héroïque (v0.259) : ancien affixe décalé de 6 s et anciens attaquants, fixés par mission.
+	if not prepared.configure_recalled_affix(CampaignCatalogue.recalled_affix(CampaignCatalogue.number_for(id),difficulty)): return
+	if not prepared.configure_recalled_attackers(CampaignCatalogue.recalled_attackers(CampaignCatalogue.number_for(id),difficulty)): return
 	mission_definition = candidate
 	_choose_faction(campaign_menu.faction,prepared)
 	if choosing_faction:
@@ -2708,7 +2721,11 @@ func _combat_tally_text() -> String:
 func _update_interface() -> void:
 	affix_label.text = model.affix_description()
 	affix_label.tooltip_text = model.affix_tooltip()
-	affix_label.visible = not choosing_faction and not model.combat_affix.is_empty()
+	if not model.recalled_affix.is_empty(): # Affixe rappelé de l'Héroïque (v0.259) : noms courts sur la ligne, règles complètes au survol.
+		var recalled_name: String = str(CampaignCatalogue.AFFIX_NAMES.get(str(model.recalled_affix.id),""))
+		affix_label.text = ("%s · rappel : %s" % [CampaignCatalogue.AFFIX_NAMES.get(str(model.combat_affix.get("id","")),""),recalled_name]) if not model.combat_affix.is_empty() else "Rappel : " + model.describe_affix(model.recalled_affix)
+		affix_label.tooltip_text = (model.affix_tooltip()+"\n\n" if not model.combat_affix.is_empty() else "")+"Rappel d'un biome déjà traversé, décalé de 6 s : "+model.affix_rule(model.recalled_affix)
+	affix_label.visible = not choosing_faction and not (model.combat_affix.is_empty() and model.recalled_affix.is_empty())
 	_refresh_loadout_label()
 	_refresh_home_progress()
 	_refresh_purchase_quiet(get_global_mouse_position())
@@ -2768,7 +2785,7 @@ func _update_interface() -> void:
 	countdown_fill.bg_color = Color("77968e") if _countdown_paused() else Color("e49a7b") if countdown_remaining <= WAVE_COUNTDOWN_NOTICE_SECONDS else Color("d0b874")
 	var preview_wave: int = mini(10, model.wave+1 if model.phase == "finished" else model.wave)
 	var preview: Array[String] = []
-	for group in Model.Campaign.groups_for(preview_wave,model.wave_set_id,model.wave_reinforcements):
+	for group in Model.Campaign.groups_for(preview_wave,model.wave_set_id,model.extra_groups()):
 		preview.append("%d %s · %s" % [group[1],Model.Enemies.for_profile(group[0],model.faction).name,"ennemi unique" if group[1] == 1 else "intervalle %s s" % _number(group[2])])
 	start_button.tooltip_text = "Vague %d\n%s\n4 s entre la dernière apparition d’un groupe et la première du suivant.\nHoraires et intervalles à vitesse ×1 ; divisés par 2 en ×2 et par 10 en ×10 debug." % [preview_wave,"\n".join(preview)]
 	if countdown_remaining >= 0.0:

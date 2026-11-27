@@ -2032,7 +2032,7 @@ func defender_pose(slot: int) -> Dictionary:
 	var eruption: Dictionary = model.eruption_status()
 	if not eruption.is_empty() and eruption.state == "active" and eruption.slot == slot:
 		pose.disabled = true
-		pose.disabled_age = float(model.combat_affix.duration)-float(eruption.remaining)
+		pose.disabled_age = float(model.affix_of("eruptions").duration)-float(eruption.remaining)
 	# Garder le côté du dernier tir de cet emplacement après la fin du mouvement.
 	for index in range(model.shots.size()-1,-1,-1):
 		var shot: Dictionary = with_arm(model.shots[index])
@@ -2171,7 +2171,8 @@ func _track_defenders() -> void:
 ## Vrai tant qu'une animation par planche exige un redessin continu (repos, achat, revente, niveau).
 func _sheet_animation_running() -> bool:
 	if model == null: return false
-	if model.combat_affix.get("id","") in ["headwinds","sandstorm","rockfall","seamist","flood","miasma","alarm","updraft","souldrain"]: return true
+	for affix in [model.combat_affix,model.recalled_affix]:
+		if affix.get("id","") in ["headwinds","sandstorm","rockfall","seamist","flood","miasma","alarm","updraft","souldrain"]: return true
 	if not _sold_ghosts.is_empty(): return true
 	for defender in model.defenders:
 		if not defender.is_empty() and not SheetAnimations.spec_for(SheetAnimations.defender_id(int(defender.type))).is_empty(): return true
@@ -2392,12 +2393,12 @@ func _draw_sandstorm() -> void:
 		if texture != null:
 			var bounds := Rect2(area[0],Vector2.ZERO)
 			for point in area: bounds = bounds.expand(point)
-			var progress_value: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0) if status.state == "warning" else 0.0
+			var progress_value: float = clampf(1.0-float(status.remaining)/float(model.affix_of("sandstorm").warning),0.0,1.0) if status.state == "warning" else 0.0
 			var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,model.elapsed,progress_value)))
 			draw_texture_rect_region(texture,bounds,region)
 			return
 	if status.state == "warning":
-		var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+		var progress: float = clampf(1.0-float(status.remaining)/float(model.affix_of("sandstorm").warning),0.0,1.0)
 		var outline: PackedVector2Array = area.duplicate();outline.append(outline[0])
 		draw_polyline(outline,Color(0.93,0.78,0.45,0.25+0.5*progress),2.0+4.0*progress,true)
 	else:
@@ -2447,7 +2448,7 @@ func _draw_rockfall() -> void:
 	if not found: return
 	# Habillage de Codex : planches de l'effet `effect.rockfall` posées au sol sur l'entrée visée (avertissement en progression, blocage en boucle).
 	var spec: Dictionary = SheetAnimations.spec_for(ROCKFALL_EFFECT_ID)
-	var sheet: Dictionary = rockfall_sheet(spec,status,float(model.combat_affix.duration),float(model.combat_affix.warning),model.elapsed)
+	var sheet: Dictionary = rockfall_sheet(spec,status,float(model.affix_of("rockfall").duration),float(model.affix_of("rockfall").warning),model.elapsed)
 	if not sheet.is_empty():
 		var anim: Dictionary = spec.animations[sheet.state]
 		var texture: Texture2D = SheetAnimations.texture_for(ROCKFALL_EFFECT_ID,anim)
@@ -2458,7 +2459,7 @@ func _draw_rockfall() -> void:
 			draw_set_transform(Vector2.ZERO)
 			return
 	if status.state == "warning":
-		var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+		var progress: float = clampf(1.0-float(status.remaining)/float(model.affix_of("rockfall").warning),0.0,1.0)
 		var pulse: float = 0.5+0.5*sin(model.elapsed*TAU*2.0)
 		draw_arc(origin,16.0+10.0*progress,0.0,TAU,32,Color(0.95,0.55,0.25,0.35+0.4*pulse),2.0+2.0*progress,true)
 	else:
@@ -2477,21 +2478,26 @@ const BIOME_AFFIX_COLORS: Dictionary = {"flood":Color(0.30,0.62,0.85),"miasma":C
 const BIOME_EVENT_DURATION := 0.5
 
 func _draw_biome_affix() -> void:
-	if model == null or not model.biome_affix_enabled(): return
-	var status: Dictionary = model.biome_affix_status()
+	if model == null: return
+	for id in model.biome_affix_ids(): _draw_biome_affix_for(id)
+
+## Un affixe de biome (celui du biome ou le rappelé de l'Héroïque, v0.259).
+func _draw_biome_affix_for(id: String) -> void:
+	var affix: Dictionary = model.affix_of(id)
+	var status: Dictionary = model.biome_affix_status(id)
 	if status.is_empty(): return
 	var board: Vector2i = model.map_definition.size
 	var area := PackedVector2Array()
 	for corner in [Vector2.ZERO,Vector2(board.x,0),Vector2(board.x,board.y),Vector2(0,board.y)]: area.append(project(corner))
-	var color: Color = BIOME_AFFIX_COLORS[str(model.combat_affix.id)]
-	if str(model.combat_affix.id) == "souldrain" and _draw_souldrain_sheets(status,area,color): return
-	if str(model.combat_affix.id) == "flood" and _flood_ready(): return # Eau dessinée sur la chaussée, sous le pont (`_draw_flood`).
-	if str(model.combat_affix.id) == "miasma" and _draw_miasma_sheets(status): return
+	var color: Color = BIOME_AFFIX_COLORS[id]
+	if id == "souldrain" and _draw_souldrain_sheets(status,area,color): return
+	if id == "flood" and _flood_ready(): return # Eau dessinée sur la chaussée, sous le pont (`_draw_flood`).
+	if id == "miasma" and _draw_miasma_sheets(status): return
 	if status.state == "warning":
-		var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+		var progress: float = clampf(1.0-float(status.remaining)/float(affix.warning),0.0,1.0)
 		var outline: PackedVector2Array = area.duplicate();outline.append(outline[0])
 		draw_polyline(outline,Color(color,0.25+0.5*progress),2.0+4.0*progress,true)
-	elif model.combat_affix.has("duration"):
+	elif affix.has("duration"):
 		draw_colored_polygon(area,Color(color,0.16))
 		for index in range(10):
 			var lane: float = fposmod(float(index)*0.381966,1.0)
@@ -2540,8 +2546,8 @@ func _flood_ready() -> bool:
 	return true
 
 func _draw_flood(screen_routes: Array[PackedVector2Array], road: Color) -> void:
-	if str(model.combat_affix.get("id","")) != "flood" or not _flood_ready(): return
-	var status: Dictionary = model.biome_affix_status()
+	if not model.flood_enabled() or not _flood_ready(): return
+	var status: Dictionary = model.biome_affix_status("flood")
 	if status.is_empty(): return
 	var spec: Dictionary = SheetAnimations.spec_for(FLOOD_EFFECT_ID)
 	var warning: bool = status.state == "warning"
@@ -2549,9 +2555,9 @@ func _draw_flood(screen_routes: Array[PackedVector2Array], road: Color) -> void:
 	var level: float = 1.0
 	var cycle: float = 0.0
 	if warning:
-		cycle = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+		cycle = clampf(1.0-float(status.remaining)/float(model.affix_of("flood").warning),0.0,1.0)
 	else:
-		level = flood_level(float(model.combat_affix.duration)-float(status.remaining),float(status.remaining))
+		level = flood_level(float(model.affix_of("flood").duration)-float(status.remaining),float(status.remaining))
 		cycle = SheetAnimations.phase(anim,0.0,model.elapsed,0.0)
 	if level <= 0.0: return
 	var segments: Array[PackedVector2Array] = unique_segments(screen_routes)
@@ -2616,8 +2622,8 @@ func _draw_miasma_sheets(status: Dictionary) -> bool:
 	var anim: Dictionary = spec.animations[sheet_name]
 	var texture: Texture2D = SheetAnimations.texture_for(MIASMA_EFFECT_ID,anim)
 	if texture == null: return false
-	var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0) if warning else 0.0
-	var alpha: float = 1.0 if warning else miasma_alpha(float(model.combat_affix.duration)-float(status.remaining),float(status.remaining))
+	var progress: float = clampf(1.0-float(status.remaining)/float(model.affix_of("miasma").warning),0.0,1.0) if warning else 0.0
+	var alpha: float = 1.0 if warning else miasma_alpha(float(model.affix_of("miasma").duration)-float(status.remaining),float(status.remaining))
 	var destination: Rect2 = SheetAnimations.destination(spec,anim)
 	var spots: Array[Dictionary] = []
 	for pool in model.map_definition.get("water_areas",MarshArt.POOLS):
@@ -2672,11 +2678,11 @@ func _draw_souldrain_sheets(status: Dictionary, area: PackedVector2Array, color:
 	var progress: float = 0.0
 	var alpha: float = 1.0
 	if warning:
-		progress = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+		progress = clampf(1.0-float(status.remaining)/float(model.affix_of("souldrain").warning),0.0,1.0)
 		var outline: PackedVector2Array = area.duplicate();outline.append(outline[0])
 		draw_polyline(outline,Color(color,0.25+0.5*progress),2.0,true)
 	else:
-		alpha = souldrain_mist_alpha(float(model.combat_affix.duration)-float(status.remaining),float(status.remaining))
+		alpha = souldrain_mist_alpha(float(model.affix_of("souldrain").duration)-float(status.remaining),float(status.remaining))
 		draw_colored_polygon(area,Color(color,SOULDRAIN_TINT*alpha))
 	var board: Vector2i = model.map_definition.size
 	var destination: Rect2 = SheetAnimations.destination(spec,anim)
@@ -2731,9 +2737,10 @@ func _draw_soul_sheet(event: Dictionary, age: float, color: Color, bursts: Dicti
 
 func _draw_biome_affix_events() -> void:
 	if model == null or model.affix_events.is_empty(): return
-	var color: Color = BIOME_AFFIX_COLORS.get(str(model.combat_affix.get("id","")),Color.WHITE)
+	var default_color: Color = BIOME_AFFIX_COLORS.get(str(model.combat_affix.get("id","")),Color.WHITE)
 	var soul_bursts: Dictionary = {}
 	for event in model.affix_events:
+		var color: Color = BIOME_AFFIX_COLORS.get({"alarm":"alarm","updraft":"updraft","soul":"souldrain"}.get(str(event.kind),""),default_color)
 		var age: float = model.elapsed-float(event.time)
 		var lifetime: float = THEFT_EVENT_DURATION if str(event.kind) == "theft" else BIOME_EVENT_DURATION
 		if age < 0.0 or age >= lifetime: continue
@@ -2798,7 +2805,7 @@ func _draw_enemy_shield(point: Vector2, enemy: Dictionary, bar_position: Vector2
 	if shield <= 0.0: return
 	var size: float = _enemy_scale(enemy)
 	draw_arc(point+Vector2(0,-16.0*size),16.0*size,0.0,TAU,28,Color(0.98,0.84,0.46,0.75),1.6,true)
-	var full: float = float(enemy.max_hp)*(Model.Champions.SHIELD_FRACTION if Model.Champions.has_trait(enemy,"shield") else float(model.combat_affix.get("shield_percent",10))/100.0)
+	var full: float = float(enemy.max_hp)*(Model.Champions.SHIELD_FRACTION if Model.Champions.has_trait(enemy,"shield") else float(model.affix_of("alarm").get("shield_percent",10))/100.0)
 	draw_rect(Rect2(bar_position+Vector2(0,-3),Vector2(24.0*clampf(shield/full,0.0,1.0),2)),Color(0.98,0.84,0.46))
 
 ## Champion mutant (v0.258) : aura au sol, couleur du premier trait, liseré du second. Dessin provisoire en attendant les icônes de Codex.
@@ -2845,12 +2852,12 @@ func _draw_seamist() -> void:
 		if texture != null:
 			var bounds := Rect2(area[0],Vector2.ZERO)
 			for point in area: bounds = bounds.expand(point)
-			var progress_value: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0) if status.state == "warning" else 0.0
+			var progress_value: float = clampf(1.0-float(status.remaining)/float(model.affix_of("seamist").warning),0.0,1.0) if status.state == "warning" else 0.0
 			var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,model.elapsed,progress_value)))
 			draw_texture_rect_region(texture,bounds,region)
 			return
 	if status.state == "warning":
-		var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+		var progress: float = clampf(1.0-float(status.remaining)/float(model.affix_of("seamist").warning),0.0,1.0)
 		var outline: PackedVector2Array = area.duplicate();outline.append(outline[0])
 		draw_polyline(outline,Color(0.85,0.93,0.96,0.25+0.5*progress),2.0+4.0*progress,true)
 	else:
@@ -2909,7 +2916,7 @@ func _draw_sold_defenders() -> void:
 ## du plateau, sous le décor et les unités, pendant le combat seulement. Sa phase suit `model.elapsed` : elle suit la vitesse
 ## du jeu et s'arrête avec la pause. Le bandeau reste affiché en préparation.
 func headwinds_sheet_visible() -> bool:
-	if model == null or model.combat_affix.get("id","") != "headwinds" or not model.active: return false
+	if model == null or model.affix_of("headwinds").is_empty() or not model.active: return false
 	if not SheetAnimations.has_animation(HEADWINDS_EFFECT_ID,"idle"): return false
 	return SheetAnimations.texture_for(HEADWINDS_EFFECT_ID,SheetAnimations.spec_for(HEADWINDS_EFFECT_ID).animations.idle) != null
 
@@ -2930,7 +2937,7 @@ func _draw_headwinds_sheet() -> void:
 
 ## Repli si la planche des rafales manque : traînées claires provisoires qui traversent le plateau à contre-courant des défenseurs.
 func _draw_headwinds() -> void:
-	if model == null or model.combat_affix.get("id","") != "headwinds": return
+	if model == null or model.affix_of("headwinds").is_empty(): return
 	if SheetAnimations.has_animation(HEADWINDS_EFFECT_ID,"idle") and SheetAnimations.texture_for(HEADWINDS_EFFECT_ID,SheetAnimations.spec_for(HEADWINDS_EFFECT_ID).animations.idle) != null: return
 	var board := Vector2(model.map_definition.size)
 	var clock: float = _ambient_clock()
@@ -2956,7 +2963,7 @@ func _draw_eruption_warning() -> void:
 	var anim: Dictionary = spec.animations.warning
 	var texture: Texture2D = SheetAnimations.texture_for(ERUPTION_EFFECT_ID,anim)
 	if texture == null: return
-	var progress: float = clampf(1.0-float(status.remaining)/float(model.combat_affix.warning),0.0,1.0)
+	var progress: float = clampf(1.0-float(status.remaining)/float(model.affix_of("eruptions").warning),0.0,1.0)
 	var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,0.0,progress)))
 	draw_set_transform(project(_map_slots()[status.slot]),0.0,Vector2.ONE)
 	draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
@@ -2974,7 +2981,7 @@ func _draw_eruption() -> void:
 		var anim: Dictionary = spec.animations.disabled
 		var texture: Texture2D = SheetAnimations.texture_for(ERUPTION_EFFECT_ID,anim)
 		if texture != null:
-			var age: float = float(model.combat_affix.duration)-float(status.remaining)
+			var age: float = float(model.affix_of("eruptions").duration)-float(status.remaining)
 			var region: Rect2 = SheetAnimations.frame_region(anim,SheetAnimations.frame_index(anim,SheetAnimations.phase(anim,0.0,0.0,age)))
 			draw_set_transform(center,0.0,Vector2.ONE)
 			draw_texture_rect_region(texture,SheetAnimations.destination(spec,anim),region)
@@ -2994,23 +3001,33 @@ func _draw_eruption() -> void:
 ## Bandeau d'affixe de la mission (lisibilité, v0.223) : annonce, compte à rebours et effet de l'événement en cours, au-dessus du plateau.
 ## Retourne {} sans affixe actif ; sinon {"text", "state" ("warning", "active" ou "permanent"), "fraction" (temps restant / durée de la phase)}.
 static func affix_banner(model) -> Dictionary:
-	if model == null or model.combat_affix.is_empty(): return {}
-	var id: String = str(model.combat_affix.get("id",""))
+	if model == null: return {}
+	var banners: Array[Dictionary] = [affix_banner_for(model,model.combat_affix),affix_banner_for(model,model.recalled_affix,true)]
+	for state in ["active","warning","permanent"]:
+		for banner in banners:
+			if not banner.is_empty() and banner.state == state: return banner
+	return {}
+
+## Bandeau d'un affixe : celui du biome ou, préfixé « Rappel », l'affixe rappelé de l'Héroïque (v0.259).
+static func affix_banner_for(model, affix: Dictionary, recalled: bool = false) -> Dictionary:
+	if model == null or affix.is_empty(): return {}
+	var id: String = str(affix.get("id",""))
+	var prefix: String = "Rappel · " if recalled else ""
 	if id == "headwinds":
-		return {"text":"Vents contraires · cadence −%d %%" % (100-int(model.combat_affix.cadence_percent)),"state":"permanent","fraction":1.0}
+		return {"text":prefix+"Vents contraires · cadence −%d %%" % (100-int(affix.cadence_percent)),"state":"permanent","fraction":1.0}
 	var status: Dictionary = {}
 	var name: String = ""
 	var effect: String = ""
 	match id:
 		"flood","miasma","alarm","updraft","souldrain":
-			status = model.biome_affix_status();name = Model.Campaign.BIOME_AFFIX_NAMES[id];effect = Model.Campaign.biome_affix_effect(model.combat_affix)
+			status = model.biome_affix_status(id);name = Model.Campaign.BIOME_AFFIX_NAMES[id];effect = Model.Campaign.biome_affix_effect(affix)
 		"eruptions":
 			status = model.eruption_status();name = "Éruption"
 			if not status.is_empty(): effect = "E%d %s" % [int(status.slot)+1,"sera désactivé" if status.state == "warning" else "désactivé"]
 		"sandstorm":
-			status = model.storm_status();name = "Tempête de sable";effect = "portée −%d %%" % int(model.combat_affix.range_percent)
+			status = model.storm_status();name = "Tempête de sable";effect = "portée −%d %%" % int(affix.range_percent)
 		"seamist":
-			status = model.mist_status();name = "Brume marine";effect = "or −%d %%" % int(model.combat_affix.gold_percent)
+			status = model.mist_status();name = "Brume marine";effect = "or −%d %%" % int(affix.gold_percent)
 		"rockfall":
 			status = model.rockfall_status();name = "Éboulement"
 			if not status.is_empty():
@@ -3021,11 +3038,11 @@ static func affix_banner(model) -> Dictionary:
 	if status.is_empty(): return {}
 	var remaining: float = maxf(0.0,float(status.remaining))
 	var warning: bool = status.state == "warning"
-	var phase_length: float = float(model.combat_affix.warning) if warning else float(model.combat_affix.get("duration",Model.BIOME_PULSE_DISPLAY))
+	var phase_length: float = float(affix.warning) if warning else float(affix.get("duration",Model.BIOME_PULSE_DISPLAY))
 	var text: String = ("%s dans %d s" % [name,int(ceil(remaining))]) if warning else ("%s · encore %d s" % [name,int(ceil(remaining))])
-	if not warning and not model.combat_affix.has("duration"): text = name # Impulsion instantanée : pas de durée à afficher.
+	if not warning and not affix.has("duration"): text = name # Impulsion instantanée : pas de durée à afficher.
 	if not effect.is_empty(): text += " · " + effect
-	return {"text":text,"state":str(status.state),"fraction":clampf(remaining/phase_length,0.0,1.0) if phase_length > 0.0 else 0.0}
+	return {"text":prefix+text,"state":str(status.state),"fraction":clampf(remaining/phase_length,0.0,1.0) if phase_length > 0.0 else 0.0}
 
 ## Place commune du bandeau d'affixe (v0.241, après les missions 36 et 39 des Vents contraires et 173, 177 et 178 de la Brume marine) :
 ## une place fixe, la même pour tous les affixes et toutes les cartes, dans la bande du haut de l'écran, entre le titre et le bloc

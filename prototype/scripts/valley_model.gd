@@ -25,6 +25,7 @@ const Eagle = preload("res://scripts/eagle_encounters.gd")
 const Revenant = preload("res://scripts/revenant_encounters.gd")
 const Attackers = preload("res://scripts/biome_attackers.gd")
 const Champions = preload("res://scripts/champions.gd")
+const Recalls = preload("res://scripts/heroic_recalls.gd")
 var wave_set_id: String = "ford"
 ## Renforts de la mission pour la faction jouée (v0.252), voir `Campaign.groups_for`.
 var wave_reinforcements: Array = []
@@ -39,6 +40,11 @@ var protection_events: Array[Dictionary] = [] # Observation visuelle, aucun effe
 var explosion_events: Array[Dictionary] = [] # Explosions de réaction en chaîne (instant, position, rayon) : observation visuelle, aucun effet de jeu.
 var enemy_hp_percent: int = 100
 var combat_affix: Dictionary = {}
+## Cumul de l'Héroïque (v0.259) : affixe d'un biome déjà traversé, décalé de `Recalls.AFFIX_OFFSET` s (jamais celui du biome), et attaquants rappelés,
+## ajoutés aux vagues comme des renforts. Vides en Normal.
+var recalled_affix: Dictionary = {}
+var recalled_attackers: Array = []
+var recall_next: int = 0 # Crues ou impulsions de l'affixe rappelé déjà passées dans la vague (pendant de `affix_next`).
 var eruption_next: int = 1 # Numéro de la prochaine éruption de la vague (affixe Éruptions).
 var storm_next: int = 0 # Indice de la prochaine frontière de tempête de sable (début puis fin de chaque rafale).
 var affix_next: int = 0 # Affixes de biome de la v0.245 : crues ou impulsions déjà passées dans la vague.
@@ -269,7 +275,7 @@ func reset() -> void:
 	gate_wave = -1
 	champion_pulse_next = Champions.PULSE
 	_champion_plans.clear()
-	spawn_schedule = Campaign.schedule(wave,wave_set_id,wave_reinforcements)
+	spawn_schedule = Campaign.schedule(wave,wave_set_id,extra_groups())
 	fortress_hp = INITIAL_HP
 	elapsed = 0.0
 	phase = "preparation"
@@ -354,65 +360,120 @@ const MAX_ENEMY_HP_PERCENT := 800 # 400 avant la v0.257 : les PV de l'Héroïque
 static func valid_enemy_hp_percent(value: Variant) -> bool:
 	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value)) and value >= 100 and value <= MAX_ENEMY_HP_PERCENT
 
+## Affixe de combat valide (dictionnaire non vide) : mêmes règles pour l'affixe du biome et pour l'affixe rappelé.
+static func valid_affix(value: Variant) -> bool:
+	if not value is Dictionary or value.is_empty(): return false
+	match value.get("id"):
+		"headwinds":
+			if value.size() != 2: return false
+			var percent: Variant = value.get("cadence_percent")
+			if not _whole_number(percent) or percent < 1 or percent > 100: return false
+		"eruptions":
+			# Intervalle entre deux éruptions, délai d'annonce et durée de désactivation, en secondes de combat.
+			if value.size() != 4: return false
+			var interval: Variant = value.get("interval");var warning: Variant = value.get("warning");var duration: Variant = value.get("duration")
+			if not _whole_number(interval) or not _whole_number(warning) or not _whole_number(duration): return false
+			if interval < 8 or interval > 40 or warning < 1 or warning > 4 or duration < 2 or duration > 12 or duration+warning+1 > interval: return false
+		"sandstorm":
+			# Tempête de sable : portée de tous les défenseurs réduite de `range_percent` % pendant `duration` s, toutes les `interval` s, annoncée `warning` s avant.
+			if value.size() != 5: return false
+			var s_interval: Variant = value.get("interval");var s_warning: Variant = value.get("warning");var s_duration: Variant = value.get("duration");var s_percent: Variant = value.get("range_percent")
+			if not _whole_number(s_interval) or not _whole_number(s_warning) or not _whole_number(s_duration) or not _whole_number(s_percent): return false
+			if s_interval < 10 or s_interval > 40 or s_warning < 1 or s_warning > 4 or s_duration < 2 or s_duration > 12 or s_percent < 5 or s_percent > 60 or s_duration+s_warning+1 > s_interval: return false
+		"seamist":
+			# Brume marine : l'or d'élimination est réduit de `gold_percent` % pendant `duration` s, toutes les `interval` s, annoncée `warning` s avant.
+			if value.size() != 5: return false
+			var m_interval: Variant = value.get("interval");var m_warning: Variant = value.get("warning");var m_duration: Variant = value.get("duration");var m_percent: Variant = value.get("gold_percent")
+			if not _whole_number(m_interval) or not _whole_number(m_warning) or not _whole_number(m_duration) or not _whole_number(m_percent): return false
+			if m_interval < 10 or m_interval > 40 or m_warning < 1 or m_warning > 4 or m_duration < 2 or m_duration > 12 or m_percent < 10 or m_percent > 60 or m_duration+m_warning+1 > m_interval: return false
+		"rockfall":
+			# Éboulement : une entrée est bloquée `duration` s toutes les `interval` s, annoncée `warning` s avant ; les apparitions prévues pendant ce temps passent par l'entrée suivante. Sur une carte à une seule entrée, elles attendent la fin du blocage (décision du porteur, 23 novembre 2026). Auparavant : au moins deux entrées.
+			if value.size() != 4: return false
+			var r_interval: Variant = value.get("interval");var r_warning: Variant = value.get("warning");var r_duration: Variant = value.get("duration")
+			if not _whole_number(r_interval) or not _whole_number(r_warning) or not _whole_number(r_duration): return false
+			if r_interval < 10 or r_interval > 40 or r_warning < 1 or r_warning > 4 or r_duration < 2 or r_duration > 12 or r_duration+r_warning+1 > r_interval: return false
+		"flood","miasma","alarm","updraft","souldrain":
+			if not Campaign.valid_biome_affix(value): return false
+		_: return false
+	return true
+
 func configure_combat_affix(value: Variant) -> bool:
 	if not value is Dictionary or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
-	if not value.is_empty():
-		match value.get("id"):
-			"headwinds":
-				if value.size() != 2: return false
-				var percent: Variant = value.get("cadence_percent")
-				if not _whole_number(percent) or percent < 1 or percent > 100: return false
-			"eruptions":
-				# Intervalle entre deux éruptions, délai d'annonce et durée de désactivation, en secondes de combat.
-				if value.size() != 4: return false
-				var interval: Variant = value.get("interval");var warning: Variant = value.get("warning");var duration: Variant = value.get("duration")
-				if not _whole_number(interval) or not _whole_number(warning) or not _whole_number(duration): return false
-				if interval < 8 or interval > 40 or warning < 1 or warning > 4 or duration < 2 or duration > 12 or duration+warning+1 > interval: return false
-			"sandstorm":
-				# Tempête de sable : portée de tous les défenseurs réduite de `range_percent` % pendant `duration` s, toutes les `interval` s, annoncée `warning` s avant.
-				if value.size() != 5: return false
-				var s_interval: Variant = value.get("interval");var s_warning: Variant = value.get("warning");var s_duration: Variant = value.get("duration");var s_percent: Variant = value.get("range_percent")
-				if not _whole_number(s_interval) or not _whole_number(s_warning) or not _whole_number(s_duration) or not _whole_number(s_percent): return false
-				if s_interval < 10 or s_interval > 40 or s_warning < 1 or s_warning > 4 or s_duration < 2 or s_duration > 12 or s_percent < 5 or s_percent > 60 or s_duration+s_warning+1 > s_interval: return false
-			"seamist":
-				# Brume marine : l'or d'élimination est réduit de `gold_percent` % pendant `duration` s, toutes les `interval` s, annoncée `warning` s avant.
-				if value.size() != 5: return false
-				var m_interval: Variant = value.get("interval");var m_warning: Variant = value.get("warning");var m_duration: Variant = value.get("duration");var m_percent: Variant = value.get("gold_percent")
-				if not _whole_number(m_interval) or not _whole_number(m_warning) or not _whole_number(m_duration) or not _whole_number(m_percent): return false
-				if m_interval < 10 or m_interval > 40 or m_warning < 1 or m_warning > 4 or m_duration < 2 or m_duration > 12 or m_percent < 10 or m_percent > 60 or m_duration+m_warning+1 > m_interval: return false
-			"rockfall":
-				# Éboulement : une entrée est bloquée `duration` s toutes les `interval` s, annoncée `warning` s avant ; les apparitions prévues pendant ce temps passent par l'entrée suivante. Sur une carte à une seule entrée, elles attendent la fin du blocage (décision du porteur, 23 novembre 2026). Auparavant : au moins deux entrées.
-				if value.size() != 4: return false
-				var r_interval: Variant = value.get("interval");var r_warning: Variant = value.get("warning");var r_duration: Variant = value.get("duration")
-				if not _whole_number(r_interval) or not _whole_number(r_warning) or not _whole_number(r_duration): return false
-				if r_interval < 10 or r_interval > 40 or r_warning < 1 or r_warning > 4 or r_duration < 2 or r_duration > 12 or r_duration+r_warning+1 > r_interval: return false
-			"flood","miasma","alarm","updraft","souldrain":
-				if not Campaign.valid_biome_affix(value): return false
-			_: return false
+	if not value.is_empty() and (not valid_affix(value) or str(value.get("id")) == str(recalled_affix.get("id",""))): return false
 	combat_affix = value.duplicate(true)
 	return true
+
+## Affixe rappelé (v0.259) : vide, ou un affixe valide différent de celui du biome.
+func configure_recalled_affix(value: Variant) -> bool:
+	if not value is Dictionary or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
+	if not value.is_empty() and (not valid_affix(value) or str(value.get("id")) == str(combat_affix.get("id",""))): return false
+	recalled_affix = value.duplicate(true)
+	return true
+
+## Attaquants rappelés (v0.259) : groupes `[vague, type, nombre, espacement]` ajoutés après les renforts de la mission.
+func configure_recalled_attackers(value: Variant) -> bool:
+	if not Recalls.valid_attackers(value) or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
+	recalled_attackers = Recalls.normalized_attackers(value);spawn_schedule = Campaign.schedule(wave,wave_set_id,extra_groups());return true
+
+## Groupes ajoutés aux jeux de vagues : renforts de la mission, puis attaquants rappelés.
+func extra_groups() -> Array:
+	return wave_reinforcements+recalled_attackers
+
+## Affixe actif d'identifiant `id` (celui du biome ou le rappelé), {} sinon. Les deux ne portent jamais le même identifiant.
+func affix_of(id: String) -> Dictionary:
+	if str(combat_affix.get("id","")) == id: return combat_affix
+	if str(recalled_affix.get("id","")) == id: return recalled_affix
+	return {}
+
+## Décalage de l'affixe `id` en secondes de combat : 0 pour l'affixe du biome, −6 s pour l'affixe rappelé (déclenchements à 6, 18, 30 s pour 12 s).
+func affix_shift(id: String) -> float:
+	return -Recalls.AFFIX_OFFSET if str(combat_affix.get("id","")) != id and str(recalled_affix.get("id","")) == id else 0.0
+
+## Numéro du déclenchement en cours ou passé de l'affixe `id` à l'instant `time` (0 avant le premier).
+func _affix_number(id: String, time: float) -> int:
+	return int(floor((time-affix_shift(id)+EPS)/float(affix_of(id).interval)))
+
+func _pulse_count(id: String) -> int:
+	return affix_next if str(combat_affix.get("id","")) == id else recall_next
+
+func _advance_pulse(id: String) -> void:
+	if str(combat_affix.get("id","")) == id: affix_next += 1
+	else: recall_next += 1
+
+## Identifiants des affixes de biome de la v0.245 actifs (affixe du biome puis rappelé).
+func biome_affix_ids() -> Array[String]:
+	var result: Array[String] = []
+	for affix in [combat_affix,recalled_affix]:
+		if Campaign.BIOME_AFFIX_IDS.has(str(affix.get("id",""))): result.append(str(affix.id))
+	return result
 
 static func _whole_number(value: Variant) -> bool:
 	return (value is int or value is float) and is_finite(float(value)) and value == floorf(float(value))
 
 func affix_description() -> String:
-	if biome_affix_enabled(): return Campaign.biome_affix_description(combat_affix)
-	match combat_affix.get("id",""):
-		"headwinds": return "Vents contraires · −%d %% de cadence" % (100-int(combat_affix.cadence_percent))
-		"eruptions": return "Éruptions · un défenseur désactivé %d s toutes les %d s" % [int(combat_affix.duration),int(combat_affix.interval)]
-		"seamist": return "Brume marine · or d'élimination −%d %% pendant %d s toutes les %d s" % [int(combat_affix.gold_percent),int(combat_affix.duration),int(combat_affix.interval)]
-		"rockfall": return "Éboulement · une entrée bloquée %d s toutes les %d s" % [int(combat_affix.duration),int(combat_affix.interval)]
-		"sandstorm": return "Tempête de sable · portée −%d %% pendant %d s toutes les %d s" % [int(combat_affix.range_percent),int(combat_affix.duration),int(combat_affix.interval)]
+	return describe_affix(combat_affix)
+
+func describe_affix(affix: Dictionary) -> String:
+	if Campaign.BIOME_AFFIX_IDS.has(str(affix.get("id",""))): return Campaign.biome_affix_description(affix)
+	match affix.get("id",""):
+		"headwinds": return "Vents contraires · −%d %% de cadence" % (100-int(affix.cadence_percent))
+		"eruptions": return "Éruptions · un défenseur désactivé %d s toutes les %d s" % [int(affix.duration),int(affix.interval)]
+		"seamist": return "Brume marine · or d'élimination −%d %% pendant %d s toutes les %d s" % [int(affix.gold_percent),int(affix.duration),int(affix.interval)]
+		"rockfall": return "Éboulement · une entrée bloquée %d s toutes les %d s" % [int(affix.duration),int(affix.interval)]
+		"sandstorm": return "Tempête de sable · portée −%d %% pendant %d s toutes les %d s" % [int(affix.range_percent),int(affix.duration),int(affix.interval)]
 	return ""
 
 func affix_tooltip() -> String:
-	if biome_affix_enabled(): return Campaign.biome_affix_rule(combat_affix)
-	match combat_affix.get("id",""):
+	return affix_rule(combat_affix)
+
+func affix_rule(affix: Dictionary) -> String:
+	if Campaign.BIOME_AFFIX_IDS.has(str(affix.get("id",""))): return Campaign.biome_affix_rule(affix)
+	match affix.get("id",""):
 		"headwinds": return "Tous les défenseurs attaquent 10 % moins souvent. Les dégâts périodiques déjà appliqués gardent leur rythme. Réglage d’essai."
-		"seamist": return "Toutes les %d s de combat, une brume marine réduit de %d %% l'or gagné par élimination pendant %d s (arrondi à l'entier le plus proche, au moins 1 or). Elle est annoncée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.gold_percent),int(combat_affix.duration),int(combat_affix.warning)]
-		"rockfall": return ("Toutes les %d s de combat, un éboulement bloque l'entrée pendant %d s : les ennemis attendent, puis sortent groupés. Il est signalé %d s avant. Réglage d’essai." if routes.size() < 2 else "Toutes les %d s de combat, un éboulement bloque une entrée pendant %d s : les ennemis qui devaient y apparaître passent par l'entrée suivante. L'entrée touchée est signalée %d s avant. Réglage d’essai.") % [int(combat_affix.interval),int(combat_affix.duration),int(combat_affix.warning)]
-		"sandstorm": return "Toutes les %d s de combat, une rafale de sable réduit de %d %% la portée de tous les défenseurs pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.range_percent),int(combat_affix.duration),int(combat_affix.warning)]
-		"eruptions": return "Toutes les %d s de combat, un défenseur choisi au hasard parmi ceux en place est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Les dégâts périodiques déjà appliqués continuent. Réglage d’essai." % [int(combat_affix.interval),int(combat_affix.duration),int(combat_affix.warning)]
+		"seamist": return "Toutes les %d s de combat, une brume marine réduit de %d %% l'or gagné par élimination pendant %d s (arrondi à l'entier le plus proche, au moins 1 or). Elle est annoncée %d s avant. Réglage d’essai." % [int(affix.interval),int(affix.gold_percent),int(affix.duration),int(affix.warning)]
+		"rockfall": return ("Toutes les %d s de combat, un éboulement bloque l'entrée pendant %d s : les ennemis attendent, puis sortent groupés. Il est signalé %d s avant. Réglage d’essai." if routes.size() < 2 else "Toutes les %d s de combat, un éboulement bloque une entrée pendant %d s : les ennemis qui devaient y apparaître passent par l'entrée suivante. L'entrée touchée est signalée %d s avant. Réglage d’essai.") % [int(affix.interval),int(affix.duration),int(affix.warning)]
+		"sandstorm": return "Toutes les %d s de combat, une rafale de sable réduit de %d %% la portée de tous les défenseurs pendant %d s. Elle est annoncée %d s avant. Réglage d’essai." % [int(affix.interval),int(affix.range_percent),int(affix.duration),int(affix.warning)]
+		"eruptions": return "Toutes les %d s de combat, un défenseur choisi au hasard parmi ceux en place est désactivé pendant %d s : il ne tire plus. Son emplacement est signalé %d s avant. Les dégâts périodiques déjà appliqués continuent. Réglage d’essai." % [int(affix.interval),int(affix.duration),int(affix.warning)]
 	return ""
 
 ## Affixes de biome de la v0.245 : Crue, Vapeurs toxiques, Cor d'alarme, Courants ascendants, Drain d'âmes. Fonctions du seul temps de combat,
@@ -426,29 +487,35 @@ func biome_affix_enabled() -> bool:
 	return Campaign.BIOME_AFFIX_IDS.has(str(combat_affix.get("id","")))
 
 func flood_enabled() -> bool:
-	return combat_affix.get("id","") == "flood"
+	return not affix_of("flood").is_empty()
 
-func _biome_window_now() -> bool:
-	var number: int = int(floor((elapsed+EPS)/float(combat_affix.interval)))
-	return number >= 1 and elapsed < float(combat_affix.interval)*number+float(combat_affix.duration)-EPS
+func _biome_window_now(id: String) -> bool:
+	var affix: Dictionary = affix_of(id)
+	if affix.is_empty(): return false
+	var number: int = _affix_number(id,elapsed)
+	return number >= 1 and elapsed < affix_shift(id)+float(affix.interval)*number+float(affix.duration)-EPS
 
 func miasma_factor_now() -> float:
-	return 1.0-float(combat_affix.damage_percent)/100.0 if combat_affix.get("id","") == "miasma" and _biome_window_now() else 1.0
+	return 1.0-float(affix_of("miasma").damage_percent)/100.0 if _biome_window_now("miasma") else 1.0
 
 func souldrain_active_now() -> bool:
-	return combat_affix.get("id","") == "souldrain" and _biome_window_now()
+	return _biome_window_now("souldrain")
 
 ## État observé par l'interface : {} hors combat, sinon l'avertissement ("warning") ou l'effet en cours ("active").
-func biome_affix_status() -> Dictionary:
-	if not biome_affix_enabled() or not active: return {}
-	var interval: float = float(combat_affix.interval)
-	var length: float = float(combat_affix.get("duration",BIOME_PULSE_DISPLAY))
-	var number: int = int(floor((elapsed+EPS)/interval))
-	if number >= 1 and elapsed < interval*number+length-EPS:
-		return {"state":"active","number":number,"remaining":interval*number+length-elapsed}
+## `id` vide : l'affixe de biome du biome (v0.245) ; sinon l'affixe de biome `id`, rappelé compris (v0.259).
+func biome_affix_status(id: String = "") -> Dictionary:
+	if id.is_empty(): id = str(combat_affix.get("id",""))
+	var affix: Dictionary = affix_of(id)
+	if not Campaign.BIOME_AFFIX_IDS.has(id) or affix.is_empty() or not active: return {}
+	var shift: float = affix_shift(id)
+	var interval: float = float(affix.interval)
+	var length: float = float(affix.get("duration",BIOME_PULSE_DISPLAY))
+	var number: int = _affix_number(id,elapsed)
+	if number >= 1 and elapsed < shift+interval*number+length-EPS:
+		return {"state":"active","number":number,"remaining":shift+interval*number+length-elapsed}
 	var upcoming: int = number+1
-	if elapsed >= interval*upcoming-float(combat_affix.warning)-EPS:
-		return {"state":"warning","number":upcoming,"remaining":interval*upcoming-elapsed}
+	if elapsed >= shift+interval*upcoming-float(affix.warning)-EPS:
+		return {"state":"warning","number":upcoming,"remaining":shift+interval*upcoming-elapsed}
 	return {}
 
 func _affix_event(event: Dictionary) -> void:
@@ -457,10 +524,10 @@ func _affix_event(event: Dictionary) -> void:
 	while affix_events.size() > MAX_AFFIX_EVENTS: affix_events.pop_front()
 
 func _flood_rate() -> float:
-	return float(combat_affix.speed_percent)/100.0
+	return float(affix_of("flood").speed_percent)/100.0
 
 func _flood_end() -> float:
-	return flood_start+float(combat_affix.duration)
+	return flood_start+float(affix_of("flood").duration)
 
 ## Fin de crue : l'avance gagnée est reportée dans le retard de chaque ennemi, comme la fin d'un ralentissement.
 func _end_flood() -> void:
@@ -469,9 +536,9 @@ func _end_flood() -> void:
 	for enemy in enemies:
 		var from: float = maxf(flood_start,float(enemy.spawn_time))
 		if end > from: enemy.delay = float(enemy.get("delay",0.0))-_flood_rate()*(end-from)
-	event_log.append("%.9f crue %d fin" % [elapsed,affix_next+1])
+	event_log.append("%.9f crue %d fin" % [elapsed,_pulse_count("flood")+1])
 	flood_start = -1.0
-	affix_next += 1
+	_advance_pulse("flood")
 
 ## Instant où l'ennemi atteint la distance `d` avec une crue, un ralentissement ou une poussée en cours : courbe affine par morceaux.
 func _time_piecewise(enemy: Dictionary, d: float) -> float:
@@ -514,38 +581,41 @@ func _end_boosts() -> void:
 ## Scorpion des dunes : deux fois plus rapide pendant une rafale de la Tempête de sable, y compris s'il apparaît pendant celle-ci.
 func _boost_scorpions_in_storm() -> void:
 	if not storm_active_now(): return
-	var number: int = int(floor((elapsed+EPS)/float(combat_affix.interval)))
+	var number: int = _affix_number("sandstorm",elapsed)
 	for enemy in enemies:
 		if int(enemy.get("type",1)) != Attackers.SCORPION or enemy.has("boost_until"): continue
 		enemy.boost_start = maxf(storm_start_time(number),float(enemy.spawn_time))
-		enemy.boost_until = storm_start_time(number)+float(combat_affix.duration)
+		enemy.boost_until = storm_start_time(number)+float(affix_of("sandstorm").duration)
 		enemy.boost_rate = Attackers.STORM_RATE
 
 ## Début de crue et impulsions (bouclier du cor, bond des courants ascendants).
 func _biome_affix_pulses() -> void:
-	if not biome_affix_enabled(): return
-	var interval: float = float(combat_affix.interval)
-	var id: String = str(combat_affix.id)
+	for id in biome_affix_ids(): _biome_pulses_for(id)
+
+func _biome_pulses_for(id: String) -> void:
+	var affix: Dictionary = affix_of(id)
+	var interval: float = float(affix.interval)
+	var shift: float = affix_shift(id)
 	if id == "flood":
-		if flood_start < 0.0 and interval*(affix_next+1) <= elapsed+EPS:
-			flood_start = interval*(affix_next+1)
-			event_log.append("%.9f crue %d début" % [elapsed,affix_next+1])
+		if flood_start < 0.0 and shift+interval*(_pulse_count(id)+1) <= elapsed+EPS:
+			flood_start = shift+interval*(_pulse_count(id)+1)
+			event_log.append("%.9f crue %d début" % [elapsed,_pulse_count(id)+1])
 		return
 	if id != "alarm" and id != "updraft": return
-	while interval*(affix_next+1) <= elapsed+EPS:
+	while shift+interval*(_pulse_count(id)+1) <= elapsed+EPS:
 		for enemy in enemies:
 			if id == "alarm":
-				enemy.shield = maxf(float(enemy.get("shield",0.0)),float(enemy.max_hp)*float(combat_affix.shield_percent)/100.0)
+				enemy.shield = maxf(float(enemy.get("shield",0.0)),float(enemy.max_hp)*float(affix.shield_percent)/100.0)
 				_affix_event({"kind":"alarm","at":enemy_position(enemy)})
 			else:
-				var hop: float = minf(float(combat_affix.tiles),maxf(0.0,enemy_route_length(enemy)-float(enemy.distance)-UPDRAFT_MARGIN))
+				var hop: float = minf(float(affix.tiles),maxf(0.0,enemy_route_length(enemy)-float(enemy.distance)-UPDRAFT_MARGIN))
 				if hop <= 0.0: continue
 				var from: Vector2 = enemy_position(enemy)
 				enemy.delay = float(enemy.get("delay",0.0))-hop/float(enemy.speed)
 				enemy.distance = distance_at(enemy,elapsed)
 				_affix_event({"kind":"updraft","from":from,"to":enemy_position(enemy)})
-		event_log.append("%.9f %s %d" % [elapsed,"cor" if id == "alarm" else "courant",affix_next+1])
-		affix_next += 1
+		event_log.append("%.9f %s %d" % [elapsed,"cor" if id == "alarm" else "courant",_pulse_count(id)+1])
+		_advance_pulse(id)
 
 ## Bouclier du cor d'alarme : absorbe les dégâts avant les PV ; les crédits de dégâts ne comptent que ce qui a touché les PV.
 func _absorb_shields(damage: Dictionary, hits: Array) -> Dictionary:
@@ -589,50 +659,50 @@ func _drain_souls(before: Array, after: Array) -> void:
 		for enemy in after:
 			if int(enemy.get("type",1)) == 7 or float(enemy.hp) >= float(enemy.max_hp): continue
 			if enemy_separation_squared(dead,enemy) > SOULDRAIN_RADIUS*SOULDRAIN_RADIUS: continue
-			enemy.hp = minf(float(enemy.max_hp),float(enemy.hp)+float(enemy.max_hp)*float(combat_affix.heal_percent)/100.0)
+			enemy.hp = minf(float(enemy.max_hp),float(enemy.hp)+float(enemy.max_hp)*float(affix_of("souldrain").heal_percent)/100.0)
 			_affix_event({"kind":"soul","from":enemy_position(dead),"to":enemy_position(enemy),"source_id":dead.id,"target_id":enemy.id})
 
 func mist_enabled() -> bool:
-	return combat_affix.get("id","") == "seamist"
+	return not affix_of("seamist").is_empty()
 
 ## Instant de la vague (secondes de combat) où la brume numéro `number` (à partir de 1) se lève.
 func mist_start_time(number: int) -> float:
-	return float(combat_affix.interval)*number
+	return affix_shift("seamist")+float(affix_of("seamist").interval)*number
 
 func mist_active_now() -> bool:
 	if not mist_enabled(): return false
-	var number: int = int(floor((elapsed+EPS)/float(combat_affix.interval)))
-	return number >= 1 and elapsed < mist_start_time(number)+float(combat_affix.duration)-EPS
+	var number: int = _affix_number("seamist",elapsed)
+	return number >= 1 and elapsed < mist_start_time(number)+float(affix_of("seamist").duration)-EPS
 
 ## Or d'une élimination à l'instant courant : réduit pendant la brume, arrondi à l'entier le plus proche, au moins 1 or.
 func kill_reward(base: int) -> int:
 	if not mist_active_now(): return base
-	return maxi(1,roundi(float(base)*(100.0-float(combat_affix.gold_percent))/100.0))
+	return maxi(1,roundi(float(base)*(100.0-float(affix_of("seamist").gold_percent))/100.0))
 
 ## État observé par l'interface : {} hors combat, sinon l'avertissement ("warning") ou la brume en cours ("active").
 func mist_status() -> Dictionary:
 	if not mist_enabled() or not active: return {}
-	var interval: float = float(combat_affix.interval)
-	var number: int = int(floor((elapsed+EPS)/interval))
-	if number >= 1 and elapsed < mist_start_time(number)+float(combat_affix.duration)-EPS:
-		return {"state":"active","number":number,"remaining":mist_start_time(number)+float(combat_affix.duration)-elapsed}
+	var affix: Dictionary = affix_of("seamist")
+	var number: int = _affix_number("seamist",elapsed)
+	if number >= 1 and elapsed < mist_start_time(number)+float(affix.duration)-EPS:
+		return {"state":"active","number":number,"remaining":mist_start_time(number)+float(affix.duration)-elapsed}
 	var upcoming: int = number+1
-	if elapsed >= mist_start_time(upcoming)-float(combat_affix.warning)-EPS:
+	if elapsed >= mist_start_time(upcoming)-float(affix.warning)-EPS:
 		return {"state":"warning","number":upcoming,"remaining":mist_start_time(upcoming)-elapsed}
 	return {}
 
 func rockfall_enabled() -> bool:
-	return combat_affix.get("id","") == "rockfall"
+	return not affix_of("rockfall").is_empty()
 
 ## Instant de la vague (secondes de combat) où l'éboulement numéro `number` (à partir de 1) bloque son entrée.
 func rockfall_time(number: int) -> float:
-	return float(combat_affix.interval)*number
+	return affix_shift("rockfall")+float(affix_of("rockfall").interval)*number
 
 ## Entrée bloquée à l'instant `time` de la vague `wave_number` ("" si aucune) : l'éboulement n tombe sur l'entrée (n + vague) modulo le nombre d'entrées.
 func rockfall_blocked_route(time: float, wave_number: int) -> String:
 	if not rockfall_enabled() or routes.size() < 2: return ""
-	var number: int = int(floor((time+EPS)/float(combat_affix.interval)))
-	if number < 1 or time >= rockfall_time(number)+float(combat_affix.duration)-EPS: return ""
+	var number: int = _affix_number("rockfall",time)
+	if number < 1 or time >= rockfall_time(number)+float(affix_of("rockfall").duration)-EPS: return ""
 	return str(routes[(number+wave_number)%routes.size()].id)
 
 func _rockfall_route_id(number: int) -> String:
@@ -645,7 +715,7 @@ const ROCKFALL_HOLD_GAP := 0.6
 const ROCKFALL_HOLD_GAP_V244 := 0.3
 var rockfall_hold_gap: float = ROCKFALL_HOLD_GAP
 
-static func rockfall_held_times(times: Array, interval: float, duration: float, gap: float = ROCKFALL_HOLD_GAP) -> Array[float]:
+static func rockfall_held_times(times: Array, interval: float, duration: float, gap: float = ROCKFALL_HOLD_GAP, shift: float = 0.0) -> Array[float]:
 	var result: Array[float] = []
 	var last: float = -INF
 	var holding: bool = false
@@ -653,9 +723,9 @@ static func rockfall_held_times(times: Array, interval: float, duration: float, 
 		var time: float = float(value)
 		var pushed: bool = holding and time < last+gap
 		if pushed: time = last+gap
-		var number: int = int(floor((time+EPS)/interval))
-		var blocked: bool = number >= 1 and time < interval*number+duration-EPS
-		if blocked: time = interval*number+duration
+		var number: int = int(floor((time-shift+EPS)/interval))
+		var blocked: bool = number >= 1 and time < shift+interval*number+duration-EPS
+		if blocked: time = shift+interval*number+duration
 		holding = blocked or pushed
 		result.append(time)
 		last = time
@@ -663,61 +733,61 @@ static func rockfall_held_times(times: Array, interval: float, duration: float, 
 
 func _hold_spawns_for_rockfall() -> void:
 	if not rockfall_enabled() or routes.size() >= 2: return
-	var held: Array[float] = rockfall_held_times(spawn_schedule.map(func(entry: Dictionary) -> float: return float(entry.time)),float(combat_affix.interval),float(combat_affix.duration),rockfall_hold_gap)
+	var held: Array[float] = rockfall_held_times(spawn_schedule.map(func(entry: Dictionary) -> float: return float(entry.time)),float(affix_of("rockfall").interval),float(affix_of("rockfall").duration),rockfall_hold_gap,affix_shift("rockfall"))
 	for index in range(spawn_schedule.size()): spawn_schedule[index].time = held[index]
 
 ## État observé par l'interface : {} hors combat, sinon l'avertissement ("warning") ou le blocage en cours ("active") avec l'entrée touchée.
 func rockfall_status() -> Dictionary:
 	if not rockfall_enabled() or not active: return {}
-	var interval: float = float(combat_affix.interval)
-	var number: int = int(floor((elapsed+EPS)/interval))
-	if number >= 1 and elapsed < rockfall_time(number)+float(combat_affix.duration)-EPS:
-		return {"state":"active","number":number,"route_id":_rockfall_route_id(number),"remaining":rockfall_time(number)+float(combat_affix.duration)-elapsed}
+	var affix: Dictionary = affix_of("rockfall")
+	var number: int = _affix_number("rockfall",elapsed)
+	if number >= 1 and elapsed < rockfall_time(number)+float(affix.duration)-EPS:
+		return {"state":"active","number":number,"route_id":_rockfall_route_id(number),"remaining":rockfall_time(number)+float(affix.duration)-elapsed}
 	var upcoming: int = number+1
-	if elapsed >= rockfall_time(upcoming)-float(combat_affix.warning)-EPS:
+	if elapsed >= rockfall_time(upcoming)-float(affix.warning)-EPS:
 		return {"state":"warning","number":upcoming,"route_id":_rockfall_route_id(upcoming),"remaining":rockfall_time(upcoming)-elapsed}
 	return {}
 
 func eruption_enabled() -> bool:
-	return combat_affix.get("id","") == "eruptions"
+	return not affix_of("eruptions").is_empty()
 
 ## Tempête de sable (affixe) : rafales régulières qui réduisent la portée de tous les défenseurs.
 func storm_enabled() -> bool:
-	return combat_affix.get("id","") == "sandstorm"
+	return not affix_of("sandstorm").is_empty()
 
 func storm_start_time(number: int) -> float:
-	return float(combat_affix.interval)*number
+	return affix_shift("sandstorm")+float(affix_of("sandstorm").interval)*number
 
 ## Frontières de rafale : indice 2k = début de la rafale k+1, 2k+1 = sa fin.
 func storm_boundary_time(index: int) -> float:
 	var number: int = index/2+1
-	return storm_start_time(number)+(float(combat_affix.duration) if index%2 == 1 else 0.0)
+	return storm_start_time(number)+(float(affix_of("sandstorm").duration) if index%2 == 1 else 0.0)
 
 ## Vrai pendant une rafale (instant de combat courant) ; la portée est alors réduite.
 func storm_active_now() -> bool:
 	if not storm_enabled(): return false
-	var number: int = int(floor((elapsed+EPS)/float(combat_affix.interval)))
-	return number >= 1 and elapsed < storm_start_time(number)+float(combat_affix.duration)-EPS
+	var number: int = _affix_number("sandstorm",elapsed)
+	return number >= 1 and elapsed < storm_start_time(number)+float(affix_of("sandstorm").duration)-EPS
 
 ## Coefficient de portée en vigueur : 1 hors rafale, 1 − pourcentage pendant la rafale.
 func range_factor_now() -> float:
-	return 1.0-float(combat_affix.range_percent)/100.0 if storm_active_now() else 1.0
+	return 1.0-float(affix_of("sandstorm").range_percent)/100.0 if storm_active_now() else 1.0
 
 ## État observé par l'interface : {} hors combat, sinon l'avertissement ("warning") ou la rafale en cours ("active").
 func storm_status() -> Dictionary:
 	if not storm_enabled() or not active: return {}
-	var interval: float = float(combat_affix.interval)
-	var number: int = int(floor((elapsed+EPS)/interval))
-	if number >= 1 and elapsed < storm_start_time(number)+float(combat_affix.duration)-EPS:
-		return {"state":"active","number":number,"remaining":storm_start_time(number)+float(combat_affix.duration)-elapsed}
+	var affix: Dictionary = affix_of("sandstorm")
+	var number: int = _affix_number("sandstorm",elapsed)
+	if number >= 1 and elapsed < storm_start_time(number)+float(affix.duration)-EPS:
+		return {"state":"active","number":number,"remaining":storm_start_time(number)+float(affix.duration)-elapsed}
 	var upcoming: int = number+1
-	if elapsed >= storm_start_time(upcoming)-float(combat_affix.warning)-EPS:
+	if elapsed >= storm_start_time(upcoming)-float(affix.warning)-EPS:
 		return {"state":"warning","number":upcoming,"remaining":storm_start_time(upcoming)-elapsed}
 	return {}
 
 ## Instant de la vague (secondes de combat) où l'éruption numéro `number` désactive son défenseur.
 func eruption_time(number: int) -> float:
-	return float(combat_affix.interval)*number
+	return affix_shift("eruptions")+float(affix_of("eruptions").interval)*number
 
 # Tirage déterministe, sans toucher au générateur du combat : mêmes éruptions quel que soit le pas de temps et au rejeu.
 func _eruption_roll(number: int) -> int:
@@ -736,13 +806,14 @@ func eruption_slot(number: int) -> int:
 ## État observé par l'interface : {} hors combat, sinon l'éruption annoncée ("warning") ou en cours ("active").
 func eruption_status() -> Dictionary:
 	if not eruption_enabled() or not active: return {}
-	var interval: float = float(combat_affix.interval)
-	var number: int = int(floor(elapsed/interval+EPS))
-	if number >= 1 and elapsed < eruption_time(number)+float(combat_affix.duration)-EPS:
+	var affix: Dictionary = affix_of("eruptions")
+	var interval: float = float(affix.interval)
+	var number: int = int(floor((elapsed-affix_shift("eruptions"))/interval+EPS))
+	if number >= 1 and elapsed < eruption_time(number)+float(affix.duration)-EPS:
 		var struck: int = eruption_slot(number)
-		if struck >= 0: return {"slot":struck,"state":"active","number":number,"remaining":eruption_time(number)+float(combat_affix.duration)-elapsed}
+		if struck >= 0: return {"slot":struck,"state":"active","number":number,"remaining":eruption_time(number)+float(affix.duration)-elapsed}
 	var upcoming: int = number+1
-	if elapsed >= eruption_time(upcoming)-float(combat_affix.warning)-EPS:
+	if elapsed >= eruption_time(upcoming)-float(affix.warning)-EPS:
 		var announced: int = eruption_slot(upcoming)
 		if announced >= 0: return {"slot":announced,"state":"warning","number":upcoming,"remaining":eruption_time(upcoming)-elapsed}
 	return {}
@@ -753,7 +824,7 @@ func configure_enemy_hp(value: Variant) -> bool:
 
 func configure_wave_set(value: Variant) -> bool:
 	if not Banks.valid_set(value) or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
-	wave_set_id = value;spawn_schedule = Campaign.schedule(wave,wave_set_id,wave_reinforcements);return true
+	wave_set_id = value;spawn_schedule = Campaign.schedule(wave,wave_set_id,extra_groups());return true
 
 func configure_difficulty(value: Variant) -> bool:
 	if not (value is int or value is float) or float(value) != floorf(float(value)) or int(value) < 0 or int(value) > 2 or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
@@ -765,7 +836,7 @@ func configure_champions(chapter: Variant) -> bool:
 
 func configure_wave_reinforcements(value: Variant) -> bool:
 	if not Campaign.valid_reinforcements(value) or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
-	wave_reinforcements = Campaign.normalized_reinforcements(value);spawn_schedule = Campaign.schedule(wave,wave_set_id,wave_reinforcements);return true
+	wave_reinforcements = Campaign.normalized_reinforcements(value);spawn_schedule = Campaign.schedule(wave,wave_set_id,extra_groups());return true
 
 static func enemy_definition(type: int) -> Dictionary:
 	return Banks.GUARD if type == Banks.GUARD_TYPE else Drowned.DEFINITION if type == Drowned.TYPE else Garrison.DEFINITION if type == Garrison.TYPE else Eagle.DEFINITION if type == Eagle.TYPE else Revenant.DEFINITION if type == Revenant.TYPE else Attackers.DEFINITIONS[type] if Attackers.DEFINITIONS.has(type) else ENEMY_TYPES[type]
@@ -784,8 +855,9 @@ static func make_enemy(id: int, type: int, spawn_time: float, defending_faction:
 		enemy.merge({"identity_id":identity.id,"name":identity.name,"origin":identity.origin})
 	return enemy
 
-static func wave_forecast(number: int, defending_faction: int = -1, hp_percent: int = 100, set_id: String = "ford", reinforcements: Array = []) -> Dictionary:
-	if not Banks.valid_set(set_id) or not Campaign.valid_reinforcements(reinforcements): return {}
+static func wave_forecast(number: int, defending_faction: int = -1, hp_percent: int = 100, set_id: String = "ford", reinforcements: Array = [], recalled: Array = []) -> Dictionary:
+	if not Banks.valid_set(set_id) or not Campaign.valid_reinforcements(reinforcements) or not Recalls.valid_attackers(recalled): return {}
+	reinforcements = reinforcements+recalled
 	if number < 1 or number > Campaign.WAVES.size() or not valid_enemy_hp_percent(hp_percent): return {}
 	if defending_faction != -1 and defending_faction not in [0,1]: return {}
 	var schedule: Array[Dictionary] = Campaign.schedule(number,set_id,reinforcements)
@@ -816,9 +888,9 @@ func spawn_route_id(index: int, entry: Dictionary, forecast_wave: int = -1) -> S
 	return routes[route_index].id
 
 func forecast_for_routes(number: int) -> Dictionary:
-	var data: Dictionary = wave_forecast(number,faction,enemy_hp_percent,wave_set_id,wave_reinforcements)
+	var data: Dictionary = wave_forecast(number,faction,enemy_hp_percent,wave_set_id,wave_reinforcements,recalled_attackers)
 	if not data.is_empty() and rockfall_enabled() and routes.size() < 2: # Une seule entrée : la prévision annonce les sorties retardées par l'éboulement.
-		var held: Array[float] = rockfall_held_times(Campaign.schedule(number,wave_set_id,wave_reinforcements).map(func(entry: Dictionary) -> float: return float(entry.time)),float(combat_affix.interval),float(combat_affix.duration),rockfall_hold_gap)
+		var held: Array[float] = rockfall_held_times(Campaign.schedule(number,wave_set_id,extra_groups()).map(func(entry: Dictionary) -> float: return float(entry.time)),float(affix_of("rockfall").interval),float(affix_of("rockfall").duration),rockfall_hold_gap,affix_shift("rockfall"))
 		var first: int = 0
 		for group in data.groups:
 			group.first_at = held[first];group.last_at = held[first+int(group.count)-1]
@@ -829,7 +901,7 @@ func forecast_for_routes(number: int) -> Dictionary:
 	for index in range(routes.size()):
 		indices[routes[index].id] = index
 		data.entries.append({"route_id":routes[index].id,"number":index+1,"count":0,"first_at":-1.0,"last_at":-1.0})
-	var schedule: Array[Dictionary] = Campaign.schedule(number,wave_set_id,wave_reinforcements)
+	var schedule: Array[Dictionary] = Campaign.schedule(number,wave_set_id,extra_groups())
 	var offset: int = 0
 	for group in data.groups:
 		var allocations: Array[Dictionary] = []
@@ -976,7 +1048,7 @@ func _stats_with_bonuses(slot: int, branch_override: int, candidate: Dictionary,
 	stats.curse_damage = stats.reference_curse * (1.0+stats.curse_bonus)
 	stats.range += synergy.range + meta.range + (0.5 if 2 in active_bonuses else 0.0)
 	if 1 in active_bonuses and (family(defender.type) != 5 or (rules_v222 and defender.type >= 6)): stats.interval /= 1.08 if rules_v254 else 1.12 # v0.254 : +8 % (+12 % avant) ; v0.222 : les alternatives de boutique du chaman en profitent
-	if combat_affix.get("id","") == "headwinds": stats.interval /= float(combat_affix.cadence_percent)/100.0
+	if not affix_of("headwinds").is_empty(): stats.interval /= float(affix_of("headwinds").cadence_percent)/100.0
 	if 4 in active_bonuses and family(defender.type) in [2,3,4]: stats.radius += 0.2
 	if float(extra_bonus.range) != 0.0: stats.range = maxf(1.0,stats.range+float(extra_bonus.range))
 	if float(extra_bonus.rate) != 1.0: stats.interval /= float(extra_bonus.rate)
@@ -1141,7 +1213,7 @@ func _refresh_windows() -> void:
 			defenders[slot].windows = coverage_windows(slots[slot], get_stats(slot).range, path_points)
 			if not routes.is_empty(): defenders[slot].route_windows = Routes.network_coverage(slots[slot],get_stats(slot).range,routes)
 			if storm_enabled():
-				var reduced: float = get_stats(slot).range*(1.0-float(combat_affix.range_percent)/100.0)
+				var reduced: float = get_stats(slot).range*(1.0-float(affix_of("sandstorm").range_percent)/100.0)
 				defenders[slot].storm_windows = coverage_windows(slots[slot], reduced, path_points)
 				if not routes.is_empty(): defenders[slot].storm_route_windows = Routes.network_coverage(slots[slot],reduced,routes)
 
@@ -1226,7 +1298,7 @@ func prepare_next_wave() -> bool:
 	curses.clear()
 	event_log.clear()
 	champion_pulse_next = Champions.PULSE
-	spawn_schedule = Campaign.schedule(wave,wave_set_id,wave_reinforcements)
+	spawn_schedule = Campaign.schedule(wave,wave_set_id,extra_groups())
 	phase = "preparation"
 	_record_action("wave_prepare")
 	return true
@@ -1462,6 +1534,7 @@ func start() -> bool:
 	eruption_next = 1
 	storm_next = 0
 	affix_next = 0
+	recall_next = 0
 	flood_start = -1.0
 	_resolve_instant()
 	return true
@@ -1537,8 +1610,9 @@ func _next_event_time() -> float:
 		next_time = minf(next_time, curse.next_at)
 	if eruption_enabled(): next_time = minf(next_time,eruption_time(eruption_next))
 	if storm_enabled(): next_time = minf(next_time,storm_boundary_time(storm_next))
-	if flood_enabled(): next_time = minf(next_time,_flood_end() if flood_start >= 0.0 else float(combat_affix.interval)*(affix_next+1))
-	elif combat_affix.get("id","") in ["alarm","updraft"]: next_time = minf(next_time,float(combat_affix.interval)*(affix_next+1))
+	if flood_enabled(): next_time = minf(next_time,_flood_end() if flood_start >= 0.0 else affix_shift("flood")+float(affix_of("flood").interval)*(_pulse_count("flood")+1))
+	for id in ["alarm","updraft"]:
+		if not affix_of(id).is_empty(): next_time = minf(next_time,affix_shift(id)+float(affix_of(id).interval)*(_pulse_count(id)+1))
 	for enemy in enemies:
 		next_time = minf(next_time, time_at_distance(enemy,enemy_route_length(enemy)))
 		if enemy.has("slow_until") and float(enemy.slow_until) > elapsed+EPS: next_time = minf(next_time,float(enemy.slow_until))
@@ -1591,7 +1665,7 @@ func _resolve_instant() -> void:
 	while eruption_enabled() and eruption_time(eruption_next) <= elapsed + EPS:
 		var struck: int = eruption_slot(eruption_next)
 		if struck >= 0:
-			defenders[struck].ready_at = maxf(float(defenders[struck].ready_at),eruption_time(eruption_next)+float(combat_affix.duration))
+			defenders[struck].ready_at = maxf(float(defenders[struck].ready_at),eruption_time(eruption_next)+float(affix_of("eruptions").duration))
 			event_log.append("%.9f éruption %d emplacement %d" % [elapsed,eruption_next,struck])
 		eruption_next += 1
 	# 1 ter. Tempête de sable (affixe) : les frontières de rafale sont des événements ; les fenêtres de portée suivent l'instant courant.
@@ -1808,7 +1882,7 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 			protection_events.append({"time":elapsed,"from":positions[transfer.protected_id],"to":positions[transfer.guardian_id],
 				"amount":transfer.amount,"guardian_id":transfer.guardian_id,"protected_id":transfer.protected_id})
 		while protection_events.size() > 24: protection_events.pop_front()
-	if combat_affix.get("id","") == "alarm" or champion_chapter > 0:
+	if not affix_of("alarm").is_empty() or champion_chapter > 0:
 		var shielded: Dictionary = _absorb_shields(damage,hits)
 		damage = shielded.damage;hits = shielded.hits
 	Metrics.credit(_wave_record.get("performance",[]),enemies,damage,hits)
