@@ -42,8 +42,8 @@ func run_checks() -> void:
 	for code in range(data.BONUSES.size()):
 		var rarity: String = data.bonus_rarity(code)
 		counts[rarity] = counts.get(rarity,0)+1
-		check(rarity == ("common" if code < 36 else "rare" if code < 52 else "epic"),"Bonus %d : rareté %s" % [code+1,rarity])
-	check(counts.common == 36 and counts.rare == 16 and counts.epic == 8,"36 communs, 16 rares et 8 épiques")
+		check(rarity == ("common" if code < 36 else "rare" if code < 52 else "epic" if code < 60 else "heroic"),"Bonus %d : rareté %s" % [code+1,rarity])
+	check(counts.common == 36 and counts.rare == 16 and counts.epic == 8 and counts.get("heroic",0) == 15,"36 communs, 16 rares, 8 épiques et 15 héroïques (v0.260)")
 	var average: Array = [0.0,0.0,0.0]
 	for weights in data.RARITY_WEIGHTS:
 		check(int(weights[0])+int(weights[1])+int(weights[2]) == 100,"Pondérations de rareté sur 100")

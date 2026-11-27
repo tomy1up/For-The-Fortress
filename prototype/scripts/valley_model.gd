@@ -193,6 +193,40 @@ const B_DESPAIR := 48
 const B_LEVY := 49
 const B_HUNTMARK := 50
 const B_BOUNTY := 51
+## Bonus héroïques (v0.260, validés par le porteur le 27 novembre 2026) : codes 60 à 74, proposés seulement en Héroïque.
+const H_HUNTER := 60
+const H_CHAMPION_GOLD := 61
+const H_FORGE := 62
+const H_SEAL := 63
+const H_WINTER := 64
+const H_CHAIN := 65
+const H_HERO := 66
+const H_DOCTRINE := 67
+const H_NUMBERS := 68
+const H_PIERCE := 69
+const H_WALL := 70
+const H_PACT := 71
+const H_ARSENAL := 72
+const H_PLAGUE := 73
+const H_LAST_SQUARE := 74
+const HUNTER_BONUS := 0.60
+const CHAMPION_GOLD := 30
+const SEAL_HP_FACTOR := 0.60
+const WINTER_SPEED := 0.80
+const CHAIN_FRACTION := 0.25
+const CHAIN_RADIUS := 1.2
+const HERO_BONUS := 0.60
+const HERO_RANGE := 1.0
+const DOCTRINE_BONUS := 0.50
+const NUMBERS_BONUS := 0.10
+const PIERCE_HEAVY_BONUS := 0.25
+const WALL_BLOCKS := 3
+const PACT_BONUS := 0.60
+const ARSENAL_FACTOR := 0.60
+const PLAGUE_BONUS := 0.50
+const PLAGUE_RADIUS := 2.0
+const LAST_SQUARE_FROM := 0.80
+const LAST_SQUARE_BONUS := 1.00
 const B_LASTSTAND := 52
 const B_ELITEARMY := 53
 const B_ASCENSION := 54
@@ -206,6 +240,10 @@ const REROLLS_PER_RUN := 1
 var rerolls_left: int = 0
 var last_stand_used: bool = false # Dernier souffle (R-53) : une fois par partie.
 var gate_wave: int = -1 # Herse (R-47) : vague où le premier passage a déjà été bloqué.
+var wall_wave: int = -1 # Muraille vivante (v0.260) : vague des passages déjà bloqués…
+var wall_blocked: int = 0 # … et leur nombre (trois au plus par vague).
+## Bonus héroïques (v0.260) : chapitre de la mission en Héroïque (0 : aucune carte héroïque).
+var heroic_bonus_chapter: int = 0
 const AURA_RADIUS := 4.2 # plus petit rayon qui garantit un voisin sur chacune des 181 cartes de la campagne (distance maximale entre deux emplacements voisins : 4,12)
 const LEGACY_AURA_RADIUS := 3.6
 ## Brûlure des unités à `curse_damage` hors famille du chaman (Pyromancien humain), appliquée depuis la v0.221 (décision du porteur, 16 novembre 2026) ; faux pour rejouer un ancien rapport.
@@ -273,6 +311,8 @@ func reset() -> void:
 	rerolls_left = REROLLS_PER_RUN
 	last_stand_used = false
 	gate_wave = -1
+	wall_wave = -1
+	wall_blocked = 0
 	champion_pulse_next = Champions.PULSE
 	_champion_plans.clear()
 	spawn_schedule = Campaign.schedule(wave,wave_set_id,extra_groups())
@@ -422,8 +462,12 @@ func extra_groups() -> Array:
 ## Affixe actif d'identifiant `id` (celui du biome ou le rappelé), {} sinon. Les deux ne portent jamais le même identifiant.
 func affix_of(id: String) -> Dictionary:
 	if str(combat_affix.get("id","")) == id: return combat_affix
-	if str(recalled_affix.get("id","")) == id: return recalled_affix
+	if str(recalled_affix.get("id","")) == id and H_SEAL not in bonuses: return recalled_affix # Sceau des anciens (v0.260) : affixe rappelé sans effet
 	return {}
+
+## Affixe rappelé encore actif ({} sans rappel ou sous le Sceau des anciens).
+func active_recalled_affix() -> Dictionary:
+	return {} if H_SEAL in bonuses else recalled_affix
 
 ## Décalage de l'affixe `id` en secondes de combat : 0 pour l'affixe du biome, −6 s pour l'affixe rappelé (déclenchements à 6, 18, 30 s pour 12 s).
 func affix_shift(id: String) -> float:
@@ -443,7 +487,7 @@ func _advance_pulse(id: String) -> void:
 ## Identifiants des affixes de biome de la v0.245 actifs (affixe du biome puis rappelé).
 func biome_affix_ids() -> Array[String]:
 	var result: Array[String] = []
-	for affix in [combat_affix,recalled_affix]:
+	for affix in [combat_affix,active_recalled_affix()]:
 		if Campaign.BIOME_AFFIX_IDS.has(str(affix.get("id",""))): result.append(str(affix.id))
 	return result
 
@@ -642,7 +686,7 @@ func _absorb_shields(damage: Dictionary, hits: Array) -> Dictionary:
 func _mitigated(enemy: Dictionary, amount: float) -> float:
 	var result: float = amount*miasma_factor_now()
 	var shield: float = float(enemy.get("shield",0.0))
-	if shield > 0.0:
+	if shield > 0.0 and H_PIERCE not in bonuses:
 		var absorbed: float = minf(shield,result)
 		enemy.shield = shield-absorbed
 		if float(enemy.shield) <= EPS: enemy.erase("shield")
@@ -829,6 +873,12 @@ func configure_wave_set(value: Variant) -> bool:
 func configure_difficulty(value: Variant) -> bool:
 	if not (value is int or value is float) or float(value) != floorf(float(value)) or int(value) < 0 or int(value) > 2 or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
 	difficulty = int(value);return true
+
+## Bonus héroïques (v0.260) : 0 hors Héroïque, sinon le chapitre de la mission (1 à 20), qui fixe les bonus héroïques proposables.
+func configure_heroic_bonuses(chapter: Variant) -> bool:
+	if not (chapter is int or chapter is float) or float(chapter) != floorf(float(chapter)) or int(chapter) < 0 or int(chapter) > 20: return false
+	if not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
+	heroic_bonus_chapter = int(chapter);return true
 
 func configure_champions(chapter: Variant) -> bool:
 	if not (chapter is int or chapter is float) or float(chapter) != floorf(float(chapter)) or int(chapter) < 0 or int(chapter) > 20 or not action_history.is_empty() or phase != "preparation" or wave != 1 or gold != INITIAL_GOLD: return false
@@ -1127,7 +1177,37 @@ func _extra_bonus_effects(slot: int, defender: Dictionary, level: int, active_bo
 		result.radius += 0.5
 		if group: result.secondary += 0.40
 	if B_STASIS in active_bonuses: result.slow = 1.5
+	# Bonus héroïques (v0.260).
+	if H_HERO in active_bonuses and slot >= 0 and slot == hero_slot():
+		common += HERO_BONUS
+		result.range += HERO_RANGE
+	if H_DOCTRINE in active_bonuses and deployed_families().size() == 1: common += DOCTRINE_BONUS
+	if H_NUMBERS in active_bonuses: common += NUMBERS_BONUS*float(deployed_count())
+	if H_PACT in active_bonuses: common += PACT_BONUS
+	if H_PLAGUE in active_bonuses and float(reference.get("curse_damage",0.0)) > 0.0: result.curse += PLAGUE_BONUS
 	result.common = common
+	return result
+
+## Héros du rempart (v0.260) : le défenseur déployé de plus haut niveau, puis qui a coûté le plus d'or, puis le premier emplacement ; -1 sans défenseur.
+func hero_slot() -> int:
+	var best: int = -1
+	for slot in range(defenders.size()):
+		if defenders[slot].is_empty(): continue
+		if best < 0: best = slot;continue
+		var level: int = int(defenders[slot].level);var best_level: int = int(defenders[best].level)
+		if level > best_level or (level == best_level and int(defenders[slot].get("paid",0)) > int(defenders[best].get("paid",0))): best = slot
+	return best
+
+func deployed_count() -> int:
+	var count: int = 0
+	for defender in defenders:
+		if not defender.is_empty(): count += 1
+	return count
+
+func deployed_families() -> Array[int]:
+	var result: Array[int] = []
+	for defender in defenders:
+		if not defender.is_empty() and family(int(defender.type)) not in result: result.append(family(int(defender.type)))
 	return result
 
 ## Unité-pivot : +`pivot_bonus` par vague survivée depuis son achat, plafonné à +90 %.
@@ -1148,7 +1228,7 @@ func guardian_aura(slot: int, active_bonuses: Variant = null) -> float:
 
 func damage_for(stats: Dictionary, component: String, victim: Dictionary) -> float:
 	var amount: float = _damage_with_bonuses(stats,component,victim,bonuses)
-	if component == "direct" and Champions.has_trait(victim,"armored"): amount *= Champions.ARMOR_FACTOR # Champion Blindé (v0.258)
+	if component == "direct" and Champions.has_trait(victim,"armored") and H_PIERCE not in bonuses: amount *= Champions.ARMOR_FACTOR # Champion Blindé (v0.258), ignoré par Perce-armures (v0.260)
 	return amount
 
 ## Types d'ennemis lourds, petits et rapides pour les règles des unités de boutique (valeurs de prototype à confirmer).
@@ -1193,12 +1273,15 @@ func _victim_bonus(component: String, victim: Dictionary, active_bonuses: Array)
 			any = true
 			break
 	if not any: return extra
-	if (B_LAST in active_bonuses or B_AMBUSH in active_bonuses) and victim.has("distance"):
+	if (B_LAST in active_bonuses or B_AMBUSH in active_bonuses or H_LAST_SQUARE in active_bonuses) and victim.has("distance"):
 		var length: float = enemy_route_length(victim) if victim.has("route_id") or routes.is_empty() else path_length
 		if length > 0.0:
 			var fraction: float = float(victim.distance)/length
 			if B_LAST in active_bonuses and fraction > 0.65: extra += 0.25
 			if B_AMBUSH in active_bonuses and fraction < 0.35: extra += 0.25
+			if H_LAST_SQUARE in active_bonuses and fraction > LAST_SQUARE_FROM: extra += LAST_SQUARE_BONUS # Dernier carré (v0.260)
+	if H_HUNTER in active_bonuses and (victim.get("champion",false) or int(victim.get("type",-1)) == 7): extra += HUNTER_BONUS # Chasseur de champions (v0.260)
+	if H_PIERCE in active_bonuses and int(victim.get("type",-1)) in HEAVY_ENEMY_TYPES: extra += PIERCE_HEAVY_BONUS # Perce-armures (v0.260)
 	if victim.has("hp") and victim.has("max_hp"):
 		if B_FIRST in active_bonuses and component == "direct" and float(victim.hp) >= float(victim.max_hp)-EPS: extra += 0.25
 		if B_FINISH in active_bonuses and float(victim.hp) < 0.5*float(victim.max_hp)-EPS: extra += 0.30
@@ -1225,6 +1308,7 @@ func _market_upgrade_factor() -> float:
 	return 1.05 if rules_v254 else 1.15
 
 func _discounted_cost(base: float, discount_code: int, active_bonuses: Array) -> int:
+	if discount_code == 9 and H_ARSENAL in active_bonuses: base *= ARSENAL_FACTOR # Arsenal royal (v0.260) : améliorations et spécialisations −40 %
 	if B_LEVY in active_bonuses or B_ROYAL in active_bonuses:
 		# Levée en masse (R-50, −30 %) et Fortune royale (R-59, −20 %) : achats et améliorations ; multipliés avec R-10, R-11 et R-23. Arrondi supérieur.
 		var reduced: float = (0.9 if discount_code in active_bonuses else 1.0)*(0.7 if B_LEVY in active_bonuses else 1.0)*(0.8 if B_ROYAL in active_bonuses else 1.0)
@@ -1351,7 +1435,7 @@ static func promoted_level(code: int, defender: Dictionary) -> int:
 ## Politique de choix de référence des essais automatiques (non jouée) : le premier bonus proposé qui ne comporte aucune contrepartie ; sinon le premier proposé.
 static func reference_bonus(offer: Array) -> int:
 	for code in offer:
-		if int(code) not in [B_GAMBLE,B_FRENZY,B_LONG,B_MARKET,B_FORTRESS,B_ELITE]: return int(code)
+		if int(code) not in [B_GAMBLE,B_FRENZY,B_LONG,B_MARKET,B_FORTRESS,B_ELITE,H_PACT]: return int(code)
 	return int(offer[0])
 
 func _offer_bonus() -> void:
@@ -1389,6 +1473,14 @@ func _draw_offers(excluded: Array) -> Array[int]:
 		var drawn: int = rng.randi_range(0,candidates.size()-1)
 		drawn_codes.append(candidates[drawn])
 		offer.append(_useful_substitute(candidates,drawn,offer,excluded) if rules_v253 else candidates[drawn])
+	if heroic_bonus_chapter > 0 and wave in Campaign.HEROIC_OFFER_WAVES:
+		# Héroïque (v0.260) : la troisième carte devient un bonus héroïque débloqué, pas encore pris et utile ; à la relance, un autre si possible.
+		var heroic: Array[int] = []
+		for code in Campaign.heroic_bonuses_for(heroic_bonus_chapter):
+			if code not in bonuses and code not in offer and bonus_useful(code): heroic.append(code)
+		var fresh: Array[int] = heroic.filter(func(code): return code not in excluded)
+		if not fresh.is_empty(): heroic = fresh
+		if not heroic.is_empty(): offer[2] = heroic[rng.randi_range(0,heroic.size()-1)]
 	return offer
 
 ## Offres utiles (v0.253) : la carte tirée est gardée si elle sert à un défenseur déployé ; sinon elle est remplacée par le premier bonus utile qui la suit dans la même liste
@@ -1404,7 +1496,7 @@ func _useful_substitute(candidates: Array[int], drawn: int, offer: Array, exclud
 
 func _offer_candidates(rarity: String, offer: Array, excluded: Array) -> Array[int]:
 	var result: Array[int] = []
-	for code in range(Campaign.BONUSES.size()):
+	for code in range(Campaign.HEROIC_FIRST): # bonus héroïques (v0.260) : jamais dans les tirages ordinaires
 		if code in bonuses or code in offer or code in excluded: continue
 		if rarity.is_empty() or Campaign.bonus_rarity(code) == rarity: result.append(code)
 	return result
@@ -1417,7 +1509,13 @@ func bonus_useful(code: int) -> bool:
 	for slot in range(defenders.size()):
 		if not defenders[slot].is_empty(): deployed.append(slot)
 	if deployed.is_empty(): return true
-	if code not in [1,3,4,B_RAPID,B_SLOW,B_BARRAGE,B_ECHO,B_FIRESTORM,B_CURSE,B_TENACIOUS,B_FAR,B_COVER,B_CLOSE,B_SUPPORT,B_TIGHT,B_LONE,B_PROMOTION,B_ASCENSION]: return true
+	if code == H_SEAL: return not recalled_affix.is_empty() or not recalled_attackers.is_empty() # Sceau des anciens : seulement avec des rappels
+	if code == H_DOCTRINE: # Doctrine unique : seulement si l'armée déployée n'a qu'une famille
+		var families: Array[int] = []
+		for slot in deployed:
+			if family(int(defenders[slot].type)) not in families: families.append(family(int(defenders[slot].type)))
+		return families.size() == 1
+	if code not in [1,3,4,B_RAPID,B_SLOW,B_BARRAGE,B_ECHO,B_FIRESTORM,B_CURSE,B_TENACIOUS,B_FAR,B_COVER,B_CLOSE,B_SUPPORT,B_TIGHT,B_LONE,B_PROMOTION,B_ASCENSION,H_PLAGUE]: return true
 	for slot in deployed:
 		var defender: Dictionary = defenders[slot]
 		var type: int = int(defender.type)
@@ -1430,7 +1528,7 @@ func bonus_useful(code: int) -> bool:
 			useful = int(own.get("secondary_cap",0)) > 0 and (code not in [3,4] or family(type) in [2,3,4]) and (code != 3 or float(own.get("secondary_damage",0.0)) > 0.0)
 		elif code == B_RAPID: useful = float(reference.interval) <= 1.3+EPS
 		elif code == B_SLOW: useful = float(reference.interval) >= 2.4-EPS
-		elif code in [B_CURSE,B_TENACIOUS]: useful = float(reference.get("curse_damage",0.0)) > 0.0
+		elif code in [B_CURSE,B_TENACIOUS,H_PLAGUE]: useful = float(reference.get("curse_damage",0.0)) > 0.0
 		elif code in [B_FAR,B_COVER]: useful = float(reference.range) >= 4.5-EPS
 		elif code == B_CLOSE: useful = float(reference.range) <= 3.6+EPS
 		elif code == B_SUPPORT: useful = reference.has("aura_bonus") or reference.has("mark_bonus") or reference.has("slow_seconds") or reference.has("loot_bonus") or reference.has("volatile_damage")
@@ -1649,6 +1747,7 @@ func _resolve_instant() -> void:
 		var entry: Dictionary = spawn_schedule[spawned]
 		var enemy: Dictionary = make_enemy(spawned, entry.type, entry.time,faction,enemy_hp_percent)
 		if not routes.is_empty(): enemy.route_id = spawn_route_id(spawned,entry)
+		_heroic_spawn(enemy,true)
 		# Chausse-trappes (R-40, 2 s) et Temps suspendu (R-60, 4 s) : ralenti dès l'apparition avant la v0.254 ; depuis, au premier tir direct reçu (`_trap_on_first_hit`).
 		var entry_slow: float = 0.0 if rules_v254 else 4.0 if B_STASIS in bonuses else 2.0 if B_CALTROPS in bonuses else 0.0
 		if entry_slow > 0.0: _slow_enemy(enemy,entry_slow)
@@ -1780,10 +1879,15 @@ func _resolve_instant() -> void:
 				var route_id: String = enemy.route_id
 				arrivals_by_route[route_id] = arrivals_by_route.get(route_id, 0)+1
 				wave_arrivals_by_route[route_id] = wave_arrivals_by_route.get(route_id, 0)+1
+			if wall_wave != wave: wall_wave = wave;wall_blocked = 0
 			if B_GATE in bonuses and gate_wave != wave:
 				# Herse (R-47) : le premier ennemi qui atteint la forteresse dans la vague ne lui inflige aucun dégât.
 				gate_wave = wave
 				event_log.append("%.9f herse %d" % [elapsed, enemy.id])
+			elif H_WALL in bonuses and wall_blocked < WALL_BLOCKS:
+				# Muraille vivante (v0.260) : les trois premiers passages de la vague (après la Herse) sont sans dégâts.
+				wall_blocked += 1
+				event_log.append("%.9f muraille %d" % [elapsed, enemy.id])
 			else:
 				arrival_damage += enemy.get("fortress_damage", 1)
 				if int(enemy.get("type",1)) == Attackers.CRAB: _steal_gold(enemy)
@@ -1822,6 +1926,19 @@ func _wave_cleared_bonuses() -> void:
 			gold += interest
 			total_income += interest
 			event_log.append("%.9f intérêts +%d" % [elapsed, interest])
+	if H_FORGE in bonuses: # Forge ardente (v0.260) : le défenseur de plus bas niveau (premier emplacement à égalité) gagne un niveau, jusqu'au niveau 3.
+		var lowest: int = -1
+		for slot in range(defenders.size()):
+			if defenders[slot].is_empty() or int(defenders[slot].level) >= 3: continue
+			if lowest < 0 or int(defenders[slot].level) < int(defenders[lowest].level): lowest = slot
+		if lowest >= 0:
+			defenders[lowest].level = int(defenders[lowest].level)+1
+			event_log.append("%.9f forge %d niveau %d" % [elapsed, lowest, int(defenders[lowest].level)])
+			_refresh_windows()
+	if H_PACT in bonuses and max_hp > 1: # Pacte de sang (v0.260) : −1 PV maximum par vague gagnée, jamais sous 1.
+		max_hp -= 1
+		fortress_hp = mini(fortress_hp,max_hp)
+		event_log.append("%.9f pacte %d" % [elapsed, max_hp])
 
 func _finish_wave_record() -> void:
 	if _wave_record.is_empty() or _wave_record.wave != wave: return
@@ -1882,7 +1999,7 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 			protection_events.append({"time":elapsed,"from":positions[transfer.protected_id],"to":positions[transfer.guardian_id],
 				"amount":transfer.amount,"guardian_id":transfer.guardian_id,"protected_id":transfer.protected_id})
 		while protection_events.size() > 24: protection_events.pop_front()
-	if not affix_of("alarm").is_empty() or champion_chapter > 0:
+	if (not affix_of("alarm").is_empty() or champion_chapter > 0) and H_PIERCE not in bonuses: # Perce-armures (v0.260) : boucliers ignorés
 		var shielded: Dictionary = _absorb_shields(damage,hits)
 		damage = shielded.damage;hits = shielded.hits
 	Metrics.credit(_wave_record.get("performance",[]),enemies,damage,hits)
@@ -1917,8 +2034,29 @@ func _apply_damage(damage: Dictionary, hits: Array = []) -> void:
 		survivors = remaining
 		blasts = next_blasts
 	_drain_souls(enemies,survivors)
+	if H_PLAGUE in bonuses: _spread_plague(enemies,survivors)
 	enemies = survivors
 	_purge_curses()
+
+## Fléau (v0.260) : la malédiction d'un ennemi mort passe, entière, à l'ennemi survivant le plus proche à 2 cases ou moins, s'il n'a pas déjà celle de cette source.
+func _spread_plague(before: Array, after: Array) -> void:
+	var alive: Dictionary = {}
+	for enemy in after: alive[enemy.id] = enemy
+	var by_id: Dictionary = {}
+	for enemy in before: by_id[enemy.id] = enemy
+	for curse in curses:
+		if alive.has(curse.enemy_id) or not by_id.has(curse.enemy_id): continue
+		var dead: Dictionary = by_id[curse.enemy_id]
+		var best: Dictionary = {}
+		var best_distance: float = PLAGUE_RADIUS*PLAGUE_RADIUS+EPS
+		for enemy in after:
+			if curses.any(func(other): return other.source_id == curse.source_id and other.enemy_id == enemy.id): continue
+			var separation: float = enemy_separation_squared(dead,enemy)
+			if separation <= best_distance and (best.is_empty() or separation < best_distance or int(enemy.id) < int(best.id)):
+				best = enemy;best_distance = separation
+		if not best.is_empty():
+			event_log.append("%.9f fléau %d vers %d" % [elapsed,dead.id,best.id])
+			curse.enemy_id = best.id
 
 ## Règle d'un ennemi après dégâts : relève du revenant (une seule fois), élimination avec or (pillage et brume marine compris) et explosion éventuelle, sinon survie.
 func _settle_enemy(enemy: Dictionary, survivors: Array[Dictionary], blasts: Array[Dictionary]) -> void:
@@ -1950,6 +2088,7 @@ func _settle_enemy(enemy: Dictionary, survivors: Array[Dictionary], blasts: Arra
 		if float(enemy.get("loot_until",-1.0)) >= elapsed-EPS: base = roundi(float(base)*(1.0+float(enemy.get("loot_bonus",0.0))))
 		if B_LOOT in bonuses: base = roundi(float(base)*1.25) # Prime de butin (R-36)
 		var reward: int = kill_reward(base)
+		if enemy.get("champion",false) and H_CHAMPION_GOLD in bonuses: reward += CHAMPION_GOLD # Prime des champions (v0.260)
 		gold += reward
 		total_income += reward
 		event_log.append("%.9f mort %d +%d" % [elapsed, enemy.id, reward])
@@ -1959,6 +2098,13 @@ func _settle_enemy(enemy: Dictionary, survivors: Array[Dictionary], blasts: Arra
 			explosion_events.append({"time":elapsed,"position":enemy_position(enemy),"radius":float(enemy.get("volatile_radius",1.0))})
 			while explosion_events.size() > 24: explosion_events.pop_front()
 			blasts.append({"source":enemy,"damage":float(enemy.get("volatile_damage",0.0)),"radius":float(enemy.get("volatile_radius",1.0))})
+		if H_CHAIN in bonuses and not enemy.get("chained",false):
+			# Charges en chaîne (v0.260) : chaque mort explose, 25 % des PV maximum de la victime à 1,2 case ; une seule fois par ennemi.
+			enemy.chained = true
+			event_log.append("%.9f chaîne %d" % [elapsed, enemy.id])
+			explosion_events.append({"time":elapsed,"position":enemy_position(enemy),"radius":CHAIN_RADIUS})
+			while explosion_events.size() > 24: explosion_events.pop_front()
+			blasts.append({"source":enemy,"damage":float(enemy.max_hp)*CHAIN_FRACTION,"radius":CHAIN_RADIUS})
 		if int(enemy.get("type",1)) == Attackers.GOLEM: _burst_golem(enemy,survivors)
 		if enemy.get("champion",false): _champion_death(enemy,survivors)
 	else:
@@ -1980,6 +2126,7 @@ func _burst_golem(golem: Dictionary, survivors: Array[Dictionary]) -> void:
 	_affix_event({"kind":"burst","at":enemy_position(golem)})
 	for index in range(Attackers.EMBERS):
 		var ember: Dictionary = make_enemy(Attackers.FIRST_EXTRA_ID+extra_enemies,Attackers.EMBER,elapsed,faction,enemy_hp_percent)
+		_heroic_spawn(ember,false)
 		extra_enemies += 1
 		if golem.has("route_id"): ember.route_id = golem.route_id
 		var start: float = maxf(0.0,float(golem.distance)-index*Attackers.EMBER_SPACING)
@@ -1988,6 +2135,14 @@ func _burst_golem(golem: Dictionary, survivors: Array[Dictionary]) -> void:
 		var entry_slow: float = 0.0 if rules_v254 else 4.0 if B_STASIS in bonuses else 2.0 if B_CALTROPS in bonuses else 0.0
 		if entry_slow > 0.0: _slow_enemy(ember,entry_slow)
 		survivors.append(ember)
+
+## Bonus héroïques à l'apparition (v0.260) : Hiver éternel (vitesse ×0,8) pour tout ennemi ; Sceau des anciens (PV ×0,6) pour les attaquants rappelés
+## du calendrier de la vague. Les types rappelés ne sont jamais des attaquants propres au biome de la mission.
+func _heroic_spawn(enemy: Dictionary, scheduled: bool) -> void:
+	if H_WINTER in bonuses: enemy.speed = float(enemy.speed)*WINTER_SPEED
+	if scheduled and H_SEAL in bonuses and recalled_attackers.any(func(group): return int(group[1]) == int(enemy.type)):
+		enemy.max_hp = float(enemy.max_hp)*SEAL_HP_FACTOR
+		enemy.hp = enemy.max_hp
 
 ## Champion de la vague en cours (v0.258) : tiré une fois par vague avec la graine de la partie (`Champions.plan`), sans toucher au générateur des bonus.
 func champion_plan_for_wave() -> Dictionary:
@@ -2034,6 +2189,7 @@ func _champion_death(champion: Dictionary, survivors: Array[Dictionary]) -> void
 	if Champions.has_trait(champion,"split"):
 		for index in range(Champions.SPLIT_PARTS):
 			var part: Dictionary = make_enemy(Attackers.FIRST_EXTRA_ID+extra_enemies,Champions.SPLIT_TYPE,elapsed,faction,enemy_hp_percent)
+			_heroic_spawn(part,false)
 			extra_enemies += 1
 			if champion.has("route_id"): part.route_id = champion.route_id
 			part.max_hp = float(champion.max_hp)*Champions.SPLIT_FRACTION

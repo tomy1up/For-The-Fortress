@@ -75,7 +75,24 @@ const BONUSES: Array[Dictionary] = [
 	{"code":"R-57","name":"Forteresse imprenable","rarity":"epic","description":"+12 PV maximum de forteresse, et PV actuels remis au maximum.","effect":"PV maximum +12\nSoin complet","scope":"Votre forteresse.","note":"Effet immédiat.","audience":"fortress"},
 	{"code":"R-58","name":"Pluie de feu","rarity":"epic","description":"+2 victimes secondaires maximales, +0,5 au rayon des explosions et à la distance des rebonds, et +40 % aux dégâts secondaires des défenseurs qui touchent plusieurs ennemis.","faction_descriptions":["+2 victimes secondaires, +0,5 de rayon et +40 % aux dégâts des explosions du mage humain et de vos autres unités à effet de zone.","+2 victimes secondaires, +0,5 de rayon ou de distance de rebond et +40 % aux dégâts secondaires de vos trolls, gobelins et autres unités à effet de zone."],"effect":"+2 cibles, rayon +0,5\nSecondaires +40 %","scope":"Défenseurs à effet de zone.","note":"Tirs directs inchangés.","audience":"units"},
 	{"code":"R-59","name":"Fortune royale","rarity":"epic","description":"+150 or immédiatement, et −20 % au prix des achats, des améliorations et des spécialisations futurs. Arrondi supérieur.","effect":"+150 or\nPrix −20 %","scope":"Votre trésor et vos prochains achats.","note":"Achats passés inchangés.","audience":"gold"},
-	{"code":"R-60","name":"Temps suspendu","rarity":"epic","description":"Chaque ennemi est ralenti pendant 8 s au premier tir direct qu’il reçoit (vitesse ×0,6), et vos ralentissements durent 50 % de plus.","effect":"Premier tir : ralenti 8 s\nRalentissements +50 %","scope":"Tous les ennemis.","note":"Vitesse ×0,6.","audience":"enemies"}
+	{"code":"R-60","name":"Temps suspendu","rarity":"epic","description":"Chaque ennemi est ralenti pendant 8 s au premier tir direct qu’il reçoit (vitesse ×0,6), et vos ralentissements durent 50 % de plus.","effect":"Premier tir : ralenti 8 s\nRalentissements +50 %","scope":"Tous les ennemis.","note":"Vitesse ×0,6.","audience":"enemies"},
+	# Bonus héroïques (v0.260, lot 4 du cadrage ; liste et valeurs validées par le porteur le 27 novembre 2026, « Tout valider » ; réglages de prototype à confirmer) :
+	# proposés seulement en Héroïque, une carte parmi trois aux choix des vagues 4 et 8 ; `chapter` : chapitre qui les débloque. Fiche : `design/Bonus_heroiques_v0260.md`.
+	{"code":"H-01","name":"Chasseur de champions","rarity":"heroic","chapter":1,"description":"+60 % à tous les dégâts contre les champions mutants et le boss.","effect":"Dégâts +60 %\ncontre champions et boss","scope":"Tous vos défenseurs.","note":"Tirs, explosions, rebonds et malédictions.","audience":"all"},
+	{"code":"H-02","name":"Prime des champions","rarity":"heroic","chapter":1,"description":"Chaque champion mutant éliminé rapporte 30 or de plus, en plus de son or doublé.","effect":"+30 or par champion","scope":"Vos éliminations de champions.","note":"Ajouté après la brume marine.","audience":"gold"},
+	{"code":"H-03","name":"Forge ardente","rarity":"heroic","chapter":2,"description":"À la fin de chaque vague gagnée, votre défenseur de plus bas niveau gagne gratuitement un niveau, jusqu'au niveau 3.","effect":"+1 niveau gratuit\npar vague gagnée","scope":"Votre défenseur le moins avancé.","note":"Gratuit ; la revente reste calculée sur l'or payé.","audience":"units"},
+	{"code":"H-04","name":"Sceau des anciens","rarity":"heroic","chapter":3,"description":"L'affixe rappelé de l'Héroïque n'a plus d'effet, et les attaquants rappelés ont 40 % de PV en moins.","effect":"Affixe rappelé annulé\nRappelés : PV −40 %","scope":"Les rappels de la mission.","note":"Dès la vague suivante.","audience":"enemies"},
+	{"code":"H-05","name":"Hiver éternel","rarity":"heroic","chapter":4,"description":"Tous les ennemis avancent 20 % moins vite.","effect":"Ennemis −20 % de vitesse","scope":"Tous les ennemis.","note":"Cumulable avec les ralentissements.","audience":"enemies"},
+	{"code":"H-06","name":"Charges en chaîne","rarity":"heroic","chapter":5,"description":"Chaque ennemi éliminé explose et inflige 25 % de ses PV maximum aux ennemis à 1,2 case ou moins ; les explosions peuvent s'enchaîner.","effect":"Explosion à chaque mort\n25 % des PV max","scope":"Tous les ennemis éliminés.","note":"Chaque ennemi n'explose qu'une fois.","audience":"enemies"},
+	{"code":"H-07","name":"Héros du rempart","rarity":"heroic","chapter":6,"description":"Votre défenseur le plus avancé (niveau, puis or investi) gagne +60 % à tous les dégâts et +1 de portée.","effect":"Héros : dégâts +60 %\nportée +1","scope":"Votre défenseur le plus avancé.","note":"Le héros change si un autre le dépasse.","audience":"units"},
+	{"code":"H-08","name":"Doctrine unique","rarity":"heroic","chapter":7,"description":"+50 % à tous les dégâts si tous vos défenseurs sont de la même famille, spécialisations comprises.","effect":"Dégâts +50 %\narmée d'une seule famille","scope":"Tous vos défenseurs.","note":"Sans effet avec deux familles ou plus.","audience":"units"},
+	{"code":"H-09","name":"Supériorité numérique","rarity":"heroic","chapter":8,"description":"+10 % à tous les dégâts par défenseur déployé, jusqu'à +60 % avec six.","effect":"+10 % par défenseur","scope":"Tous vos défenseurs.","note":"+60 % au plus.","audience":"units"},
+	{"code":"H-10","name":"Perce-armures","rarity":"heroic","chapter":9,"description":"Vos dégâts ignorent les boucliers (Cor d'alarme, champions Bouclier) et le trait Blindé, et font +25 % contre les ennemis lourds.","effect":"Boucliers et Blindé ignorés\nLourds +25 %","scope":"Tous vos défenseurs.","note":"Les boucliers restent, mais n'absorbent plus vos dégâts.","audience":"all"},
+	{"code":"H-11","name":"Muraille vivante","rarity":"heroic","chapter":10,"description":"Les trois premiers ennemis qui atteignent la forteresse à chaque vague ne lui infligent aucun dégât.","effect":"3 arrivées sans dégâts\npar vague","scope":"Votre forteresse.","note":"S'ajoute à la Herse.","audience":"fortress"},
+	{"code":"H-12","name":"Pacte de sang","rarity":"heroic","chapter":11,"description":"+60 % à tous les dégâts, mais la forteresse perd 1 PV maximum à la fin de chaque vague gagnée (jamais sous 1).","effect":"Dégâts +60 %\n−1 PV max par vague","scope":"Tous vos défenseurs et votre forteresse.","note":"Les PV actuels suivent le maximum.","audience":"all"},
+	{"code":"H-13","name":"Arsenal royal","rarity":"heroic","chapter":12,"description":"−40 % au prix des améliorations et des spécialisations futures. Arrondi supérieur.","effect":"Améliorations −40 %","scope":"Vos prochaines améliorations.","note":"Achats inchangés.","audience":"upgrades"},
+	{"code":"H-14","name":"Fléau","rarity":"heroic","chapter":13,"description":"Les malédictions infligent +50 %, et quand un ennemi maudit meurt, sa malédiction passe entière à l'ennemi le plus proche, à 2 cases ou moins.","effect":"Malédictions +50 %\nContagion à la mort","scope":"Défenseurs à malédiction.","note":"Une seule malédiction par source et par cible.","audience":"units"},
+	{"code":"H-15","name":"Dernier carré","rarity":"heroic","chapter":14,"description":"+100 % à tous les dégâts contre les ennemis qui ont parcouru plus de 80 % de leur route.","effect":"Dégâts +100 %\nau-delà de 80 % de la route","scope":"Tous vos défenseurs.","note":"Selon la cible.","audience":"all"}
 ]
 ## Nombre de bonus des règles précédentes (avant la v0.232) : les rapports plus anciens se rejouent avec ce seul catalogue.
 const LEGACY_BONUS_COUNT := 12
@@ -85,6 +102,21 @@ const V232_BONUS_COUNT := 36
 ## Moyenne sur les quatre choix : environ 68 % de communs, 26 % de rares et 6 % d’épiques ; les rares et les épiques deviennent plus fréquents en fin de partie.
 const RARITY_WEIGHTS: Array = [[80,18,2],[72,24,4],[64,29,7],[56,34,10]]
 const RARITIES: Array[String] = ["common","rare","epic"]
+## Bonus héroïques (v0.260) : codes 60 à 74, hors des tirages ordinaires ; deux débloqués au chapitre 1, puis un par chapitre jusqu'au chapitre 14.
+const HEROIC_FIRST: int = 60
+const HEROIC_COUNT: int = 15
+## Choix (vagues) qui reçoivent une carte héroïque en Héroïque.
+const HEROIC_OFFER_WAVES: Array[int] = [4,8]
+
+static func is_heroic_bonus(code: int) -> bool:
+	return code >= HEROIC_FIRST and code < HEROIC_FIRST+HEROIC_COUNT
+
+## Bonus héroïques débloqués au chapitre `chapter` (0 : aucun).
+static func heroic_bonuses_for(chapter: int) -> Array[int]:
+	var result: Array[int] = []
+	for code in range(HEROIC_FIRST,HEROIC_FIRST+HEROIC_COUNT):
+		if chapter >= 1 and int(BONUSES[code].chapter) <= chapter: result.append(code)
+	return result
 ## Rareté d'un bonus : « common », « rare » ou « epic ».
 static func bonus_rarity(code: int) -> String:
 	if code < 0 or code >= BONUSES.size(): return ""

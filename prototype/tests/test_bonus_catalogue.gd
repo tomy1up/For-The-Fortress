@@ -33,7 +33,7 @@ func unit_types(faction: int) -> Array:
 
 func run_checks() -> void:
 	var data = Model.Campaign
-	check(data.BONUSES.size() == 60 and data.LEGACY_BONUS_COUNT == 12 and data.V232_BONUS_COUNT == 36,"Le catalogue compte 60 bonus : 12 historiques, 36 jusqu'à la v0.232 (rares et épiques : test_bonus_rarity.gd)")
+	check(data.BONUSES.size() == 75 and data.HEROIC_FIRST == 60 and data.LEGACY_BONUS_COUNT == 12 and data.V232_BONUS_COUNT == 36,"Le catalogue compte 75 bonus : 60 ordinaires (12 historiques, 36 jusqu'à la v0.232 ; rares et épiques : test_bonus_rarity.gd) et 15 héroïques depuis la v0.260 (test_heroic_bonuses.gd)")
 	for index in range(60):
 		var entry: Dictionary = data.BONUSES[index]
 		check(entry.code == "R-%02d" % (index+1) and not str(entry.name).is_empty() and not str(entry.description).is_empty(),"Bonus %d : code, nom et description" % (index+1))

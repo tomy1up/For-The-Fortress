@@ -47,12 +47,13 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 	# HEROIC=hp : PV de l'Héroïque seuls ; HEROIC=champ : PV et champions mutants du chapitre (jeu v0.258) ; HEROIC=1 : Héroïque complet, rappels du cumul compris (v0.259).
 	var heroic: bool = OS.get_environment("HEROIC") in ["1","hp","champ"]
 	if heroic:
-		m.enemy_hp_percent = Catalogue.faction_hp_percent(mission,faction,1)
+		if OS.get_environment("HEROIC_HP") != "normal": m.enemy_hp_percent = Catalogue.faction_hp_percent(mission,faction,1) # HEROIC_HP=normal : contexte héroïque aux PV du Normal (notes des bonus héroïques, v0.260)
 		m.configure_difficulty(1)
 		if OS.get_environment("HEROIC") in ["1","champ"]: m.configure_champions((mission-1)/Catalogue.CHAPTER_SIZE+1)
 	# REINFORCE="vague:type:quantité:intervalle;…" : renforts essayés à la place de ceux du catalogue (calibrage v0.252) ; REINFORCE=none : aucun renfort.
 	m.configure_wave_reinforcements(Catalogue.wave_reinforcements(mission,faction) if OS.get_environment("REINFORCE") == "" else _reinforcements_from_env())
 	if OS.get_environment("HEROIC") == "1":
+		m.configure_heroic_bonuses((mission-1)/Catalogue.CHAPTER_SIZE+1) # bonus héroïques (v0.260)
 		m.configure_recalled_affix(Catalogue.recalled_affix(mission,1))
 		m.configure_recalled_attackers(Catalogue.recalled_attackers(mission,1))
 	if auxiliary >= 0: m.configure_auxiliary(auxiliary)

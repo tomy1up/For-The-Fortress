@@ -3002,7 +3002,7 @@ func _draw_eruption() -> void:
 ## Retourne {} sans affixe actif ; sinon {"text", "state" ("warning", "active" ou "permanent"), "fraction" (temps restant / durée de la phase)}.
 static func affix_banner(model) -> Dictionary:
 	if model == null: return {}
-	var banners: Array[Dictionary] = [affix_banner_for(model,model.combat_affix),affix_banner_for(model,model.recalled_affix,true)]
+	var banners: Array[Dictionary] = [affix_banner_for(model,model.combat_affix),affix_banner_for(model,model.active_recalled_affix(),true)]
 	for state in ["active","warning","permanent"]:
 		for banner in banners:
 			if not banner.is_empty() and banner.state == state: return banner

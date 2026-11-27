@@ -2123,6 +2123,7 @@ func _launch_campaign_mission(id: String) -> void:
 	if not prepared.map_error.is_empty() or not prepared.configure_enemy_hp(CampaignCatalogue.faction_hp_percent(CampaignCatalogue.number_for(id),campaign_menu.faction,difficulty)) or not prepared.configure_wave_set(candidate.get("wave_set_id","ford")): return
 	if not prepared.configure_difficulty(difficulty): return
 	if difficulty > 0 and not prepared.configure_champions((CampaignCatalogue.number_for(id)-1)/CampaignCatalogue.CHAPTER_SIZE+1): return # champions mutants (v0.258)
+	if difficulty > 0 and not prepared.configure_heroic_bonuses((CampaignCatalogue.number_for(id)-1)/CampaignCatalogue.CHAPTER_SIZE+1): return # bonus héroïques (v0.260)
 	if not prepared.configure_combat_affix(candidate.get("combat_affix",{})): return
 	if not prepared.configure_wave_reinforcements(CampaignCatalogue.wave_reinforcements(CampaignCatalogue.number_for(id),campaign_menu.faction)): return
 	# Cumul de l'Héroïque (v0.259) : ancien affixe décalé de 6 s et anciens attaquants, fixés par mission.
@@ -2725,6 +2726,9 @@ func _update_interface() -> void:
 		var recalled_name: String = str(CampaignCatalogue.AFFIX_NAMES.get(str(model.recalled_affix.id),""))
 		affix_label.text = ("%s · rappel : %s" % [CampaignCatalogue.AFFIX_NAMES.get(str(model.combat_affix.get("id","")),""),recalled_name]) if not model.combat_affix.is_empty() else "Rappel : " + model.describe_affix(model.recalled_affix)
 		affix_label.tooltip_text = (model.affix_tooltip()+"\n\n" if not model.combat_affix.is_empty() else "")+"Rappel d'un biome déjà traversé, décalé de 6 s : "+model.affix_rule(model.recalled_affix)
+		if model.active_recalled_affix().is_empty(): # Sceau des anciens (v0.260)
+			affix_label.text += " (scellé)"
+			affix_label.tooltip_text += "\nSceau des anciens : cet affixe rappelé n'a plus d'effet."
 	affix_label.visible = not choosing_faction and not (model.combat_affix.is_empty() and model.recalled_affix.is_empty())
 	_refresh_loadout_label()
 	_refresh_home_progress()
@@ -3104,7 +3108,7 @@ func _close_bonus_details() -> void:
 		bonus_detail_buttons[previous].grab_focus()
 
 ## Couleurs des raretés de bonus (habillage fonctionnel de prototype, à confirmer) : rare bleu, épique violet.
-const BONUS_RARITY_COLORS: Dictionary = {"rare":Color("8fb8e8"),"epic":Color("d6a6f0")}
+const BONUS_RARITY_COLORS: Dictionary = {"rare":Color("8fb8e8"),"epic":Color("d6a6f0"),"heroic":Color("f2a65a")} # héroïque : ambre (v0.260), habillage de prototype
 
 func _reroll_bonus() -> void:
 	if model.phase != "bonus" or bonus_detail_index >= 0: return
@@ -3156,8 +3160,8 @@ func _update_bonus_panel() -> void:
 		bonus_names[index].add_theme_font_size_override("font_size",20)
 		var rarity: String = Model.Campaign.bonus_rarity(entries[index]) if index < entries.size() else ""
 		bonus_names[index].add_theme_color_override("font_color",BONUS_RARITY_COLORS.get(rarity,Color("e0dbbf")))
-		bonus_rarity_labels[index].visible = listed and rarity in ["rare","epic"]
-		bonus_rarity_labels[index].text = {"rare":"Rare","epic":"Épique"}.get(rarity,"")
+		bonus_rarity_labels[index].visible = listed and rarity in ["rare","epic","heroic"]
+		bonus_rarity_labels[index].text = {"rare":"Rare","epic":"Épique","heroic":"Héroïque"}.get(rarity,"")
 		bonus_rarity_labels[index].add_theme_color_override("font_color",BONUS_RARITY_COLORS.get(rarity,Color("e0dbbf")))
 		bonus_rarity_labels[index].position = Vector2(x+card_width-118,131)
 		bonus_effects[index].visible = listed

@@ -36,7 +36,7 @@ func run_checks() -> void:
 						for upgrade in range(level-1): m.upgrade(slot,branch if upgrade == 2 else -1)
 					if boosted:
 						for existing in range(Model.Campaign.BONUSES.size()):
-							if existing != code: m.bonuses.append(existing)
+							if existing != code and existing != Model.H_HUNTER: m.bonuses.append(existing) # Chasseur de champions (v0.260) hors du cumul : il distingue le boss des autres lourds
 					m._refresh_windows(); m.fortress_hp = 13; m.phase = "bonus"; m.bonus_offer.assign([code])
 					var original: String = signature(m)
 					var preview: Dictionary = m.bonus_preview(code)
@@ -48,7 +48,7 @@ func run_checks() -> void:
 						check(unit.before == m.get_stats(unit.slot) and unit.after == actual.get_stats(unit.slot),"Toutes les statistiques prévues égales à l'état réellement choisi")
 						check(unit.upgrade_before == m.upgrade_cost(unit.slot) and unit.upgrade_after == actual.upgrade_cost(unit.slot),"Prix d'amélioration réduit et niveau maximum fidèles")
 						for component in ["direct","secondary","curse"]:
-							for type in [3,5,6,7]:
+							for type in ([7] if code == Model.H_HUNTER else [3,5,6,7]): # Chasseur de champions (v0.260) : le boss seul, l'aperçu le prend pour cible
 								check(is_equal_approx(unit.large_before[component],m.damage_for(m.get_stats(unit.slot),component,{"type":type})) and is_equal_approx(unit.large_after[component],actual.damage_for(actual.get_stats(unit.slot),component,{"type":type})),"Dégâts conditionnels de chaque composante fidèles contre les quatre familles")
 					for purchase in preview.purchases:
 						check(purchase.before == m.purchase_cost(purchase.type) and purchase.after == actual.purchase_cost(purchase.type),"Prix de recrutement et arrondis identiques au jeu")

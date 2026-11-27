@@ -141,6 +141,8 @@ static func verify(data: Variant) -> Dictionary:
 		if _minor_version(str(data.get("game_version",""))) < 258 or not model.configure_champions(data.champion_chapter): return _fail("Champions invalides.")
 	if data.has("wave_reinforcements"): # Renforts de mission depuis la v0.252 seulement.
 		if _minor_version(str(data.get("game_version",""))) < 252 or not model.configure_wave_reinforcements(data.wave_reinforcements): return _fail("Renforts de mission invalides.")
+	if data.has("heroic_bonus_chapter"): # Bonus héroïques depuis la v0.260 seulement.
+		if _minor_version(str(data.get("game_version",""))) < 260 or not model.configure_heroic_bonuses(data.heroic_bonus_chapter): return _fail("Bonus héroïques invalides.")
 	if data.has("recalled_affix"): # Cumul de l'Héroïque depuis la v0.259 seulement.
 		if _minor_version(str(data.get("game_version",""))) < 259 or not model.configure_recalled_affix(data.recalled_affix): return _fail("Rappels invalides.")
 	if data.has("recalled_attackers"):

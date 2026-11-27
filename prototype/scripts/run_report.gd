@@ -105,6 +105,7 @@ static func build(model: RefCounted) -> Dictionary:
 	if model.champion_chapter > 0: report.champion_chapter = model.champion_chapter
 	if not model.recalled_affix.is_empty(): report.recalled_affix = model.recalled_affix.duplicate(true) # cumul de l'Héroïque (v0.259)
 	if not model.recalled_attackers.is_empty(): report.recalled_attackers = model.recalled_attackers.duplicate(true)
+	if model.heroic_bonus_chapter > 0: report.heroic_bonus_chapter = model.heroic_bonus_chapter # bonus héroïques (v0.260)
 	return report
 
 static func markdown(report: Dictionary) -> String:

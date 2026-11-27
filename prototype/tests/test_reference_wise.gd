@@ -24,7 +24,7 @@ func run_checks() -> void:
 	for faction in [0,1]:
 		check(Reference.BONUS_VALUES[faction].size() == Model.Campaign.BONUSES.size(),"Faction %d : une note par bonus" % faction)
 		check(Reference.BONUS_VALUES[faction].all(func(v): return int(v) >= 0 and int(v) <= 100),"Faction %d : notes entre 0 et 100" % faction)
-		var sorted_values: Array = Reference.BONUS_VALUES[faction].duplicate()
+		var sorted_values: Array = Reference.BONUS_VALUES[faction].slice(0,Model.Campaign.HEROIC_FIRST) # médiane des 60 bonus ordinaires (v0.260 : les héroïques n'entrent pas dans les offres du Normal)
 		sorted_values.sort()
 		check(abs(Reference.REROLL_BELOW[faction]-int(sorted_values[sorted_values.size()/2])) <= 1,"Faction %d : seuil de relance à la médiane des notes" % faction)
 	# Choix de la carte la mieux notée ; à égalité, la première de l'offre.
