@@ -24,9 +24,14 @@ const HEROIC_HP_COEFFICIENTS := [
 	[224,217,224,202,206,224,188,202,214,202,179,170,193,202,185,202,183,190,202,202,151,163,162,161,175,159,151,161,163,166,166,167,152,141,146,160,141,144,148,154,151,127,150,145,145,127,145,157,139,157,142,148,144,126,160,163,148,142,161,154,139,125,134,139,139,145,139,121,139,125,117,133,121,115,117,120,133,121,133,116,128,111,134,127,130,112,127,125,125,125,149,128,113,105,134,149,149,117,120,106,90,104,105,90,101,101,108,88,92,112,107,104,98,109,119,102,114,102,105,98,101,94,107,91,101,114,101,102,87,100,99,85,94,91,85,85,96,101,104,85,99,101,100,99,99,102,114,99,98,82,93,99,113,106,98,99,106,111,102,118,97,99,96,93,100,100,102,85,101,104,91,91,103,109,100,108,94,96,96,96,95,97,90,95,103,96,105,108,98,96,91,103,90,109,120,94,93,112,97,97]
 ]
 
+## Plancher (v0.263, décision du porteur du 28 novembre 2026) : l'Héroïque a toujours plus de PV que le Normal, et le Mythique en aura plus que l'Héroïque ;
+## ce sont les bonus qui portent le joueur. Coefficient au moins égal à `HEROIC_MIN_COEFFICIENT` (PV du Normal + 5 %, choisi par le porteur, à confirmer en jeu).
+## Les coefficients calibrés de la v0.262 restent dans `HEROIC_HP_COEFFICIENTS` ; 149 réglages sur 400 (chapitres 10 à 20) sont relevés au plancher.
+const HEROIC_MIN_COEFFICIENT := 105
+
 static func heroic_hp_coefficient(number: int, faction: int) -> int:
 	if faction not in [0,1] or number < 1 or number > TOTAL_MISSIONS: return 100
-	return int(HEROIC_HP_COEFFICIENTS[faction][number-1])
+	return maxi(int(HEROIC_HP_COEFFICIENTS[faction][number-1]),HEROIC_MIN_COEFFICIENT)
 const HEROIC_PO_PERCENT := 150
 const PLAYABLE_DIFFICULTIES: Array[int] = [NORMAL,HEROIC]
 

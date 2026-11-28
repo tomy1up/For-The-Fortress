@@ -1,5 +1,7 @@
 # Calibrage de l'Héroïque (v0.262)
 
+> **Plancher en v0.263** (décision du porteur, 28 novembre 2026) : l'Héroïque a toujours plus de PV que le Normal, au moins + 5 %. Les 95 réglages sous les PV du Normal, et 54 autres, sont relevés. Voir `Plancher_Heroique_v0263.md`. Cette fiche décrit la v0.262.
+
 **Statut.** Lot 5 du cadrage du 25 novembre 2026 (`Cadrage_Heroique_Mythique_2026-11-25.md`). Le porteur a validé la cible le 27 novembre 2026 (« Oui, calibrer »). La meilleure des 30 compositions, jouée par un joueur avisé, doit finir chaque mission héroïque avec 40 à 70 % de ses PV de forteresse, mission par mission et faction par faction. Les coefficients obtenus sont des réglages de prototype à confirmer en jeu.
 
 ## Ce qui change

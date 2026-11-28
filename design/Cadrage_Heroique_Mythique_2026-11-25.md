@@ -17,6 +17,10 @@
    - **les bonus héroïques** : des bonus inédits, proposés seulement en Héroïque (et en Mythique).
 3. **Le Mythique a sa propre identité : la course par chapitre.** Les dix missions d'un chapitre se jouent d'une traite ; les PV de la forteresse et les bonus se gardent d'une mission à l'autre ; une défaite fait recommencer le chapitre.
 
+## Décision du porteur du 28 novembre 2026
+
+4. **Les PV ennemis montent avec la difficulté, mission par mission : l'Héroïque a toujours plus de PV que le Normal, et le Mythique plus que l'Héroïque.** Ce sont les bonus qui doivent porter le joueur au fil des parties. Cette règle s'impose au calibrage de la v0.262, qui laissait 95 réglages des chapitres 11 à 20 sous les PV du Normal. Plancher choisi le même jour parmi trois planchers mesurés : **l'Héroïque garde au moins les PV du Normal + 5 %** (v0.263, `Plancher_Heroique_v0263.md`). Le porteur demande aussi un **renfort des bonus**, à proposer par Claude Code, pour ramener le joueur avisé dans la cible aux chapitres 11 à 20.
+
 ## Propositions de Claude Code, à confirmer
 
 ### Durcissement de l'Héroïque
@@ -73,5 +77,5 @@
 | 2. Champions mutants | **Livré en v0.258** (`Champions_mutants_v0258.md`) : douze traits validés le 25 novembre 2026, un par chapitre jusqu'au chapitre 11, aura et pastilles dessinées par le code | Non (icônes plus tard) |
 | 3. Cumul des nouveautés | **Livré en v0.259** (`Cumul_nouveautes_v0259.md`) : règles validées le 26 novembre 2026, un rappel par mission à partir du chapitre 3, deux à partir du chapitre 11 | Non |
 | 4. Bonus héroïques | **Livré en v0.260** (`Bonus_heroiques_v0260.md`) : quinze bonus validés le 27 novembre 2026, introduits du chapitre 1 au chapitre 14 ; **renforcé en v0.261** (`Bonus_heroiques_v0261.md`) : second choix héroïque aux vagues 4 et 8, valeurs relevées | Non |
-| 5. Calibrage de l'Héroïque | **Livré en v0.262** (`Calibrage_Heroique_v0262.md`) : cible validée le 27 novembre 2026, coefficient de PV par mission et par faction, 386 réglages sur 400 dans la cible, 95 sous les PV du Normal (chapitres 11 à 20) | Non |
+| 5. Calibrage de l'Héroïque | **Livré en v0.262** (`Calibrage_Heroique_v0262.md`) : cible validée le 27 novembre 2026, coefficient de PV par mission et par faction, 386 réglages sur 400 dans la cible, 95 sous les PV du Normal (chapitres 11 à 20) ; **plancher de + 5 % en v0.263** (`Plancher_Heroique_v0263.md`), renfort des bonus à proposer | Non |
 | 6. Mythique | Questions ci-dessus tranchées, puis course par chapitre | Non |

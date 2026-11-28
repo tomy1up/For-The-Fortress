@@ -1,5 +1,7 @@
 # For the Fortress!
 
+**Prototype v0.263**. Héroïque : toujours plus de PV ennemis que le Normal, au moins + 5 % (149 réglages relevés aux chapitres 10 à 20). [Notes](design/essais/v0263_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.263).
+
 **Prototype v0.262**. Héroïque calibré mission par mission : la meilleure composition d'un joueur avisé finit avec 40 à 70 % de ses PV de forteresse (386 réglages sur 400) ; premiers chapitres plus durs, derniers chapitres enfin jouables. [Notes](design/essais/v0262_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.262).
 
 **Prototype v0.261**. Héroïque : bonus héroïques renforcés, avec un second choix entre deux bonus héroïques aux vagues 4 et 8, en plus du choix ordinaire. [Notes](design/essais/v0261_release_notes.md) · [Version Windows](https://github.com/tomy1up/For-The-Fortress/releases/tag/v0.261).

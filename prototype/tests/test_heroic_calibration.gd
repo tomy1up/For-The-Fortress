@@ -1,6 +1,7 @@
 extends SceneTree
 ## Calibrage de l'Héroïque (v0.262, lot 5 ; cible validée par le porteur le 27 novembre 2026) : un coefficient de PV par mission et par faction,
 ## appliqué aux PV du Normal de la faction ; PV bornés de 100 à 800 % ; Normal inchangé ; écran de campagne et lancement.
+## Plancher (v0.263, décision du porteur du 28 novembre 2026) : l'Héroïque a toujours plus de PV que le Normal (coefficient d'au moins 105).
 const Main = preload("res://scripts/main.gd")
 const Model = preload("res://scripts/valley_model.gd")
 const Catalogue = preload("res://scripts/campaign_catalogue.gd")
@@ -23,16 +24,22 @@ func run_checks() -> void:
 func verify_table() -> void:
 	check(Catalogue.HEROIC_HP_COEFFICIENTS.size() == 2 and Catalogue.HEROIC_HP_COEFFICIENTS.all(func(row): return row.size() == 200),"Un coefficient par mission et par faction")
 	var below: int = 0
+	var raised: int = 0
 	for faction in [0,1]:
 		for number in range(1,201):
 			var coefficient: int = Catalogue.heroic_hp_coefficient(number,faction)
-			check(coefficient >= 30 and coefficient <= 320,"Mission %d, faction %d : coefficient dans les bornes de la recherche (%d)" % [number,faction,coefficient])
+			var calibrated: int = int(Catalogue.HEROIC_HP_COEFFICIENTS[faction][number-1])
+			check(calibrated >= 30 and calibrated <= 320,"Mission %d, faction %d : coefficient calibré dans les bornes de la recherche (%d)" % [number,faction,calibrated])
+			check(coefficient == maxi(calibrated,Catalogue.HEROIC_MIN_COEFFICIENT) and coefficient >= 105,"Mission %d, faction %d : coefficient relevé au plancher" % [number,faction])
 			var normal: int = Catalogue.faction_hp_percent(number,faction)
 			var heroic: int = Catalogue.faction_hp_percent(number,faction,Catalogue.HEROIC)
 			check(heroic == clampi(int(round(normal*coefficient/100.0)),100,Model.MAX_ENEMY_HP_PERCENT) and Model.valid_enemy_hp_percent(heroic),"Mission %d, faction %d : PV héroïques = PV du Normal × coefficient, bornés" % [number,faction])
 			check(Catalogue.faction_hp_percent(number,faction,Catalogue.NORMAL) == normal,"Mission %d : Normal inchangé" % number)
-			if heroic < normal: below += 1
-	print("HEROIC_BELOW_NORMAL=",below)
+			check(heroic > normal,"Mission %d, faction %d : l'Héroïque a plus de PV que le Normal (%d contre %d)" % [number,faction,heroic,normal])
+			if heroic <= normal: below += 1
+			if coefficient > calibrated: raised += 1
+	print("HEROIC_NOT_ABOVE_NORMAL=",below," HEROIC_RAISED_TO_FLOOR=",raised)
+	check(below == 0 and raised == 149,"Plancher : aucun réglage au niveau du Normal ou dessous, 149 réglages relevés")
 	check(Catalogue.heroic_hp_coefficient(0,0) == 100 and Catalogue.heroic_hp_coefficient(201,1) == 100 and Catalogue.heroic_hp_coefficient(5,2) == 100,"Hors campagne : coefficient neutre")
 
 func winner(faction: int, normal: int, heroic: int) -> Profile:
