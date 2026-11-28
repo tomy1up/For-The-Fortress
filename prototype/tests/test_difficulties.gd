@@ -42,8 +42,8 @@ func verify_catalogue() -> void:
 		for number in range(1,Catalogue.TOTAL_MISSIONS+1):
 			var normal: int = Catalogue.faction_hp_percent(number,faction)
 			var hard: int = Catalogue.faction_hp_percent(number,faction,1)
-			if hard != int(round(normal*1.3)) or not Model.valid_enemy_hp_percent(hard):
-				check(false,"Faction %d, mission %d : PV héroïques = PV du Normal × 1,3, dans les limites" % [faction,number])
+			if hard != clampi(int(round(normal*Catalogue.heroic_hp_coefficient(number,faction)/100.0)),100,Model.MAX_ENEMY_HP_PERCENT) or not Model.valid_enemy_hp_percent(hard): # × 1,3 jusqu'à la v0.261, coefficient calibré par mission depuis la v0.262
+				check(false,"Faction %d, mission %d : PV héroïques = PV du Normal × coefficient calibré, dans les limites" % [faction,number])
 			if Catalogue.reward_po_for(number,1) != int(round(Catalogue.definition(number).po*1.5)) or Catalogue.reward_xp_for(number,1) != 0:
 				check(false,"Mission %d : récompense héroïque" % number)
 	check(true,"PV et récompenses héroïques des 200 missions")

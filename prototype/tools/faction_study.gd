@@ -48,6 +48,7 @@ func play(mission: int, faction: int, tree: int, types: Array, auxiliary: int = 
 	var heroic: bool = OS.get_environment("HEROIC") in ["1","hp","champ"]
 	if heroic:
 		if OS.get_environment("HEROIC_HP") != "normal": m.enemy_hp_percent = Catalogue.faction_hp_percent(mission,faction,1) # HEROIC_HP=normal : contexte héroïque aux PV du Normal (notes des bonus héroïques, v0.260)
+		if OS.get_environment("HEROIC_COEF") != "": m.enemy_hp_percent = clampi(int(round(Catalogue.faction_hp_percent(mission,faction)*float(OS.get_environment("HEROIC_COEF"))/100.0)),100,Model.MAX_ENEMY_HP_PERCENT) # HEROIC_COEF=NNN : coefficient héroïque essayé (calibrage v0.262), en % des PV du Normal de la faction
 		m.configure_difficulty(1)
 		if OS.get_environment("HEROIC") in ["1","champ"]: m.configure_champions((mission-1)/Catalogue.CHAPTER_SIZE+1)
 	# REINFORCE="vague:type:quantité:intervalle;…" : renforts essayés à la place de ceux du catalogue (calibrage v0.252) ; REINFORCE=none : aucun renfort.

@@ -14,7 +14,19 @@ const DIFFICULTY_NAMES: Array[String] = ["Normal","Héroïque","Mythique"]
 const DIFFICULTY_PREFIXES: Array[String] = ["campaign","heroic","mythic"]
 ## Héroïque, lot 1 (v0.257) : PV ennemis du Normal × 1,3 (réglage provisoire, recalibré au lot 5) ; PO de première victoire majorées de moitié, sans XP
 ## (proposition de Claude Code à confirmer par le porteur). Le Mythique (course par chapitre) n'est pas encore jouable.
-const HEROIC_HP_PERCENT := 130
+const HEROIC_HP_PERCENT := 130 # PV héroïques uniformes de la v0.257 à la v0.261 (× 1,3), remplacés en v0.262 par `HEROIC_HP_COEFFICIENTS`.
+## Calibrage de l'Héroïque (v0.262, lot 5 du cadrage ; cible validée par le porteur le 27 novembre 2026) : coefficient (en %) des PV du Normal de la faction,
+## mission par mission (Alliance, Horde), tel que la meilleure des 30 compositions d'un joueur avisé (bonus choisis d'après leur note, relance) finisse entre
+## 40 et 70 % de ses PV de forteresse, en moyenne sur les tirages 7, 8 et 9, avec champions, rappels et bonus héroïques. Réglages de prototype à confirmer.
+## Mesure : `design/essais/equilibre_bonus/v262/`.
+const HEROIC_HP_COEFFICIENTS := [
+	[199,199,200,184,183,163,167,176,172,154,155,150,156,161,164,156,154,162,166,154,145,150,141,159,159,144,147,142,146,145,145,139,133,143,142,133,144,133,128,137,139,125,142,145,133,130,147,133,137,124,131,134,136,121,132,134,134,122,137,127,137,114,130,123,135,124,135,118,135,113,116,116,122,114,114,129,122,135,111,107,126,115,129,115,116,106,123,124,116,108,115,115,120,102,120,123,123,112,119,117,85,106,99,98,103,97,109,85,90,115,100,96,96,98,113,99,106,104,106,100,99,96,100,94,109,109,99,107,94,91,102,95,103,85,92,100,103,100,97,107,92,107,97,97,106,104,109,101,100,91,94,108,114,108,99,104,105,104,100,108,92,101,94,99,101,108,112,92,100,106,92,91,94,103,101,110,95,96,96,99,98,105,91,100,104,98,100,99,96,100,96,101,94,109,106,109,106,111,104,105],
+	[224,217,224,202,206,224,188,202,214,202,179,170,193,202,185,202,183,190,202,202,151,163,162,161,175,159,151,161,163,166,166,167,152,141,146,160,141,144,148,154,151,127,150,145,145,127,145,157,139,157,142,148,144,126,160,163,148,142,161,154,139,125,134,139,139,145,139,121,139,125,117,133,121,115,117,120,133,121,133,116,128,111,134,127,130,112,127,125,125,125,149,128,113,105,134,149,149,117,120,106,90,104,105,90,101,101,108,88,92,112,107,104,98,109,119,102,114,102,105,98,101,94,107,91,101,114,101,102,87,100,99,85,94,91,85,85,96,101,104,85,99,101,100,99,99,102,114,99,98,82,93,99,113,106,98,99,106,111,102,118,97,99,96,93,100,100,102,85,101,104,91,91,103,109,100,108,94,96,96,96,95,97,90,95,103,96,105,108,98,96,91,103,90,109,120,94,93,112,97,97]
+]
+
+static func heroic_hp_coefficient(number: int, faction: int) -> int:
+	if faction not in [0,1] or number < 1 or number > TOTAL_MISSIONS: return 100
+	return int(HEROIC_HP_COEFFICIENTS[faction][number-1])
 const HEROIC_PO_PERCENT := 150
 const PLAYABLE_DIFFICULTIES: Array[int] = [NORMAL,HEROIC]
 
@@ -243,7 +255,7 @@ static func rebalance_percent(number: int, faction: int) -> float:
 
 ## PV ennemis effectivement joués par une faction : `hp_percent` de la mission, réduit de 10 % pour la Horde à partir de la mission 150, puis multiplié par le coefficient de rééquilibrage.
 static func faction_hp_percent(number: int, faction: int, difficulty: int = NORMAL) -> int:
-	if difficulty == HEROIC: return int(round(faction_hp_percent(number,faction)*HEROIC_HP_PERCENT/100.0))
+	if difficulty == HEROIC: return clampi(int(round(faction_hp_percent(number,faction)*heroic_hp_coefficient(number,faction)/100.0)),100,800) # calibrage mission par mission (v0.262)
 	var base: float = float(definition(number).get("hp_percent",hp_percent_for(number)))
 	if faction == 1 and number == HORDE_FINALE_MISSION: base = float(int(round(base*HORDE_FINALE_FACTOR)))
 	elif faction == 1 and number >= HORDE_HP_FROM: base = float(int(round(base*HORDE_HP_FACTOR)))

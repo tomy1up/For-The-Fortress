@@ -126,5 +126,5 @@ Meilleure des 30 compositions, 40 missions (une sur cinq), tirages 7, 8 et 9, 51
 ## Limites
 
 - Les valeurs n'ont pas été essayées en jeu par le porteur.
-- L'Héroïque n'est toujours pas calibré (lot 5).
+- L'Héroïque n'est pas encore calibré dans cette version : il l'est en v0.262 (lot 5, `Calibrage_Heroique_v0262.md`).
 - Le récapitulatif à six cartes réduit un peu leur hauteur : leurs textes sont plus serrés.
